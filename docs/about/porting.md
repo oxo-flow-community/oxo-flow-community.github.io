@@ -633,7 +633,7 @@ jobs:
           oxo-flow --version
 
       - name: Validate, lint, dry-run
-        run: ./test/run.sh
+        run: bash ./test/run.sh
 ```
 
 **CI badge** (README §9 header):
