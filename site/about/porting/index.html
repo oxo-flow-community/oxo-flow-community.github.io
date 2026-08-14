@@ -1,0 +1,2844 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="20 battle-tested bioinformatics workflows — faithful ports of the most-used nf-core and Snakemake pipelines for the oxo-flow engine. Search the catalog, read the run instructions, copy the command.">
+      
+      
+      
+        <link rel="canonical" href="https://oxo-flow-community.github.io/about/porting/">
+      
+      
+        <link rel="prev" href="../selection/">
+      
+      
+        <link rel="next" href="../contributing/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/favicon.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Porting guide - oxo-flow-community</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#oxo-flow-porting-playbook" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="oxo-flow-community" class="md-header__button md-logo" aria-label="oxo-flow-community" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            oxo-flow-community
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Porting guide
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="oxo-flow-community" class="md-nav__button md-logo" aria-label="oxo-flow-community" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    oxo-flow-community
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipelines/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pipelines
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../selection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Selection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Porting guide
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Porting guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#0-environment-facts-fixed-do-not-re-derive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0. Environment facts (fixed, do not re-derive)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-purpose-audience" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Purpose &amp; audience
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-oxo-flow-format-essentials-cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. oxo-flow format essentials — cheat sheet
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. oxo-flow format essentials — cheat sheet">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-minimal-skeleton" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Minimal skeleton
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-rule-fields-the-ones-ports-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Rule fields (the ones ports use)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-wildcards-and-fan-out" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Wildcards and fan-out
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-sample-sources-choose-one-for-the-default-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Sample sources (choose ONE for the default path)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-fan-in-gather-collect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 Fan-in (gather / collect)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#26-environments-one-backend-per-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6 Environments — one backend per rule
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#261-conda-env-file-envsyaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6.1 Conda env file (envs/*.yaml)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#27-modules-and-composition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.7 Modules and composition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#28-cli-surface-ports-actually-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.8 CLI surface ports actually use
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-nextflow-oxo-flow-mapping-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Nextflow → oxo-flow mapping table
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Nextflow → oxo-flow mapping table">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-nf-core-scattergather-transform" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 nf-core scatter/gather → transform
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-snakemake-oxo-flow-mapping-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Snakemake → oxo-flow mapping table
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Snakemake → oxo-flow mapping table">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-snakemake-expand-corner" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Snakemake expand() corner
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-version-pinning-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Version pinning policy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-fidelity-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Fidelity policy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-repo-layout-test-standard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Repo layout + test standard
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Repo layout + test standard">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-exact-tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 Exact tree
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-testfixtures-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 test/fixtures requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-testrunsh-mandatory-exact-shape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 test/run.sh (mandatory, exact shape)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#74-iterate-to-green-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 Iterate-to-green instructions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-ci-template-githubworkflowsciyml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. CI template (.github/workflows/ci.yml)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-readmemd-template-80-lines-exact-skeleton" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. README.md template (~80 lines, exact skeleton)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Requirements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#license" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        License
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#community" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Community
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-license" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. LICENSE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-metadatajson-exact-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. metadata.json — exact schema
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-gotchas-verified-behaviors-ports-must-work-around" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Gotchas — verified behaviors ports must work around
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-definition-of-done" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. Definition of done
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix-a-verification-record-2026-08-15-oxo-flow-0110" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix A. Verification record (2026-08-15, oxo-flow 0.11.0)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix-b-doc-citations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix B. Doc citations
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#0-environment-facts-fixed-do-not-re-derive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0. Environment facts (fixed, do not re-derive)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-purpose-audience" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Purpose &amp; audience
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-oxo-flow-format-essentials-cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. oxo-flow format essentials — cheat sheet
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. oxo-flow format essentials — cheat sheet">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-minimal-skeleton" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Minimal skeleton
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-rule-fields-the-ones-ports-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Rule fields (the ones ports use)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-wildcards-and-fan-out" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Wildcards and fan-out
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-sample-sources-choose-one-for-the-default-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Sample sources (choose ONE for the default path)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-fan-in-gather-collect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 Fan-in (gather / collect)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#26-environments-one-backend-per-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6 Environments — one backend per rule
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#261-conda-env-file-envsyaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6.1 Conda env file (envs/*.yaml)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#27-modules-and-composition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.7 Modules and composition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#28-cli-surface-ports-actually-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.8 CLI surface ports actually use
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-nextflow-oxo-flow-mapping-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Nextflow → oxo-flow mapping table
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Nextflow → oxo-flow mapping table">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-nf-core-scattergather-transform" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 nf-core scatter/gather → transform
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-snakemake-oxo-flow-mapping-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Snakemake → oxo-flow mapping table
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Snakemake → oxo-flow mapping table">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-snakemake-expand-corner" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Snakemake expand() corner
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-version-pinning-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Version pinning policy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-fidelity-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Fidelity policy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-repo-layout-test-standard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Repo layout + test standard
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Repo layout + test standard">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-exact-tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 Exact tree
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-testfixtures-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 test/fixtures requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-testrunsh-mandatory-exact-shape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 test/run.sh (mandatory, exact shape)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#74-iterate-to-green-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 Iterate-to-green instructions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-ci-template-githubworkflowsciyml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. CI template (.github/workflows/ci.yml)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-readmemd-template-80-lines-exact-skeleton" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. README.md template (~80 lines, exact skeleton)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Requirements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#license" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        License
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#community" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Community
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-license" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. LICENSE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-metadatajson-exact-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. metadata.json — exact schema
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-gotchas-verified-behaviors-ports-must-work-around" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Gotchas — verified behaviors ports must work around
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-definition-of-done" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. Definition of done
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix-a-verification-record-2026-08-15-oxo-flow-0110" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix A. Verification record (2026-08-15, oxo-flow 0.11.0)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix-b-doc-citations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix B. Doc citations
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="oxo-flow-porting-playbook">oxo-flow Porting Playbook</h1>
+<p><strong>Porting Nextflow (nf-core DSL2) and Snakemake workflows to oxo-flow v0.11.0 TOML repositories.</strong></p>
+<p>Version: 1.0 (2026-08-15)
+Engine target: oxo-flow <strong>0.11.0</strong> (pin this; format features below are v0.11.0 surface)
+Audience: ~20 parallel porting agents, each owning one workflow port.</p>
+<p>This is an execution spec. Every TOML snippet in this document was either
+(a) taken verbatim from a canonical, CI-validated gallery workflow in the
+oxo-flow source repo, or (b) written by the author and verified against the
+real 0.11.0 binary on 2026-08-15 (marked <code>[V]</code> — verified). <strong>Never invent
+syntax.</strong> When in doubt, copy from this document, run the verification
+commands in §7.4, and if something does not pass, fix the TOML — do not
+"fix" the expectation.</p>
+<hr />
+<h2 id="0-environment-facts-fixed-do-not-re-derive">0. Environment facts (fixed, do not re-derive)</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Engine source repo</td>
+<td><code>/Users/wsx/Documents/GitHub/oxo-flow</code> — <strong>READ-ONLY</strong>. It carries unrelated uncommitted work; never modify, never commit from it.</td>
+</tr>
+<tr>
+<td>Development binary</td>
+<td><code>/Users/wsx/Documents/GitHub/oxo-community/bin/oxo-flow</code> — v0.11.0 fresh build. Use <strong>this</strong> for every local run (<code>alias oxoflow=/Users/wsx/Documents/GitHub/oxo-community/bin/oxo-flow</code> is recommended).</td>
+</tr>
+<tr>
+<td>CI install</td>
+<td>Release tarball <code>https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz</code> — <strong>verified layout: the archive contains a single file <code>oxo-flow</code> at its root</strong> (no directory prefix). Exact install steps in §8.</td>
+</tr>
+<tr>
+<td>bioconda package</td>
+<td><code>oxo-flow-cli</code>, latest <strong>0.10.2</strong> — lags local 0.11.0. Mentioned in user-facing README only (<code>conda install -c bioconda oxo-flow-cli</code>); <strong>never</strong> used in CI.</td>
+</tr>
+<tr>
+<td>License</td>
+<td>oxo-flow is Apache-2.0 (<code>LICENSE</code> in the source repo: full Apache 2.0 text, <code>Copyright 2025 Traitome</code>, appendix notice). Ports are Apache-2.0, "Copyright (c) 2026 oxo-flow-community" (see §10, §11).</td>
+</tr>
+<tr>
+<td>Scratch space</td>
+<td><code>/tmp/pb-check/</code> — the only writable scratch area for verification runs. Never create files in the oxo-flow repo.</td>
+</tr>
+<tr>
+<td>Docs (format authority)</td>
+<td><code>/Users/wsx/Documents/GitHub/oxo-flow/docs/guide/src/reference/workflow-format.md</code>, <code>wildcards.md</code>, <code>dag-engine.md</code>, <code>environment-system.md</code>, <code>execution-backends.md</code>; commands in <code>docs/guide/src/commands/{validate,dry-run,run,debug,lint}.md</code>.</td>
+</tr>
+<tr>
+<td>Canonical verified TOML</td>
+<td><code>/Users/wsx/Documents/GitHub/oxo-flow/examples/gallery/*.oxoflow</code> (16 files, CI-validated). The CLI embeds a mirrored copy (<code>crates/oxo-flow-cli/src/commands/project.rs</code> <code>EMBEDDED_GALLERY</code>, mirror in <code>crates/oxo-flow-cli/templates/</code>, drift-guarded by a unit test). Snippets below marked <code>[gallery]</code> are verbatim from these files.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="1-purpose-audience">1. Purpose &amp; audience</h2>
+<p>Each porting agent receives one upstream workflow (nf-core DSL2 Nextflow
+pipeline, or Snakemake pipeline) and produces one self-contained oxo-flow
+repository that:</p>
+<ol>
+<li>Replicates the upstream <strong>default-parameters main execution path</strong> — same
+   tools, same versions, same command logic (flags, file naming), same
+   outputs — in a single <code>.oxoflow</code> TOML file (or one main + <code>[[include]]</code>
+   fragments).</li>
+<li>Passes <code>oxo-flow validate</code>, <code>oxo-flow dry-run</code>, and <code>oxo-flow lint</code>
+   locally and in CI, with a fixture set that makes the dry-run
+   deterministic and meaningful.</li>
+<li>Ships the full compliance kit: <code>README.md</code> with a fidelity table, <code>NOTICE.md</code>,
+   <code>LICENSE</code> (Apache-2.0), <code>metadata.json</code>, <code>.github/workflows/ci.yml</code>.</li>
+</ol>
+<p>Non-goals: re-implementing upstream cluster profiles, Tower
+reporting/launchpad features, Nextflow DSL1, parameterized multi-profile
+matrices beyond what <code>[config]</code> + <code>profiles/</code> natively cover, and upstream
+"dev" branches. Port the default path; record everything else in the
+fidelity table (§6).</p>
+<p>A port that cannot be made faithful (missing tool, missing format feature,
+undocumented upstream behavior) is not a port — it is a draft. Return it
+with the specific blocker documented in the fidelity table, per §6.</p>
+<hr />
+<h2 id="2-oxo-flow-format-essentials-cheat-sheet">2. oxo-flow format essentials — cheat sheet</h2>
+<h3 id="21-minimal-skeleton">2.1 Minimal skeleton</h3>
+<p>Every workflow is one TOML file with the <code>.oxoflow</code> extension. <code>[workflow]</code>
+and at least one <code>[[rules]]</code> entry are required (validated by <code>oxo-flow
+validate</code>; also required by the JSON Schema output of <code>oxo-flow schema</code>).</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">[workflow]</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;my-pipeline&quot;</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;1.0.0&quot;</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;What this pipeline does&quot;</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">author</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;oxo-flow-community&quot;</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="k">[config]</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">reference</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;/data/refs/hg38.fa&quot;</span><span class="w">      </span><span class="c1"># {config.reference} in rules</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">out_dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;results&quot;</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="k">[defaults]</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="n">threads</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="n">memory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;8G&quot;</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="k">[[sample_groups]]</span><span class="w">                     </span><span class="c1"># sample source for {sample} expansion</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;cohort&quot;</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="n">samples</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;S1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;S2&quot;</span><span class="p">]</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="k">[[rules]]</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;align&quot;</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="n">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;raw/{sample}_R1.fastq.gz&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;raw/{sample}_R2.fastq.gz&quot;</span><span class="p">]</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="n">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;{config.out_dir}/aligned/{sample}.bam&quot;</span><span class="p">]</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="n">shell</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;bwa mem -t {threads} {config.reference} {input[0]} {input[1]} &gt; {output[0]}&quot;</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="k">[rules.resources]</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="n">threads</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">16</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="n">memory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;32G&quot;</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="k">[rules.environment]</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="n">conda</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;envs/alignment.yaml&quot;</span>
+</code></pre></div>
+<p>This exact skeleton — <code>[workflow]</code> + <code>[config]</code> + <code>[defaults]</code> +
+<code>[[sample_groups]]</code> + <code>[[rules]]</code> with <code>[rules.resources]</code> and
+<code>[rules.environment]</code> — is verbatim-shaped from the canonical
+<code>examples/gallery/06_rnaseq_quantification.oxoflow</code> and
+<code>07_wgs_germline.oxoflow</code> [gallery]. Field names below were double-checked
+against the <code>oxo-flow schema</code> dump and the reference docs.</p>
+<h3 id="22-rule-fields-the-ones-ports-use">2.2 Rule fields (the ones ports use)</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>string</td>
+<td>Required, unique. Expands with <code>_&lt;group&gt;_&lt;sample&gt;</code> / <code>_&lt;pair_id&gt;</code> suffixes.</td>
+</tr>
+<tr>
+<td><code>input</code></td>
+<td>array of strings</td>
+<td>Path patterns; wildcard-bearing patterns trigger per-value fan-out.</td>
+</tr>
+<tr>
+<td><code>output</code></td>
+<td>array of strings</td>
+<td>Path patterns. <strong>Every declared output is verified to exist after the rule succeeds</strong>; a missing output fails the rule (exit sentinel -1).</td>
+</tr>
+<tr>
+<td><code>shell</code></td>
+<td>string</td>
+<td>Command template; supports <code>{input}</code>, <code>{input[N]}</code>, <code>{output}</code>, <code>{output[N]}</code>, <code>{threads}</code>, <code>{memory}</code>, <code>{config.x}</code>, wildcards. Triple-quoted for multi-line.</td>
+</tr>
+<tr>
+<td><code>script</code></td>
+<td>string</td>
+<td>Script path; interpreter auto-detected (<code>.py</code>→python, <code>.R</code>→Rscript, <code>.sh</code>→bash, <code>.smk</code>→snakemake, <code>.nextflow</code>→nextflow run…). <code>shell</code> runs first, then <code>script</code>.</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>string</td>
+<td>One line on what the rule does.</td>
+</tr>
+<tr>
+<td><code>depends_on</code></td>
+<td>array of strings</td>
+<td>Explicit rule dependencies. Needed whenever file-based edges cannot express ordering (see §13.3).</td>
+</tr>
+<tr>
+<td><code>when</code></td>
+<td>string</td>
+<td>Condition over config; false ⇒ rule skipped (<code>JobStatus::Skipped</code>). Forms: <code>config.run_qc</code>, <code>config.mode == "WGS"</code>, <code>config.min_cov &gt;= 20</code>, <code>file_exists("panel.bed")</code>, <code>!</code>, <code>&amp;&amp;</code>, <code>||</code>, parens.</td>
+</tr>
+<tr>
+<td><code>retries</code> / <code>retry_delay</code></td>
+<td>int / string</td>
+<td><code>retries = 3</code>, <code>retry_delay = "30s"</code>.</td>
+</tr>
+<tr>
+<td><code>pre_exec</code> / <code>on_success</code> / <code>on_failure</code></td>
+<td>string</td>
+<td>Lifecycle hooks, same placeholder expansion as <code>shell</code>. <code>on_failure</code> runs after all retries are exhausted.</td>
+</tr>
+<tr>
+<td><code>checkpoint</code> / <code>checkpoint_manifest</code></td>
+<td>bool / string</td>
+<td>Snakemake-style re-entry: rule writes a TOML manifest declaring new samples/pairs; engine re-expands mid-run (max 32 rounds). Checkpoint rules must not use <code>{sample}</code>/<code>{group}</code> (validation error E014).</td>
+</tr>
+<tr>
+<td><code>localrule</code></td>
+<td>bool</td>
+<td>Never submitted to a cluster scheduler.</td>
+</tr>
+<tr>
+<td><code>temporary</code></td>
+<td>bool</td>
+<td>Delete outputs after the run once every dependent completed (tombstone + lazy regeneration).</td>
+</tr>
+<tr>
+<td><code>temp_output</code> / <code>protected_output</code> / <code>ancient</code></td>
+<td>arrays</td>
+<td>Clean-after-use / never-delete / never-trigger-rebuild.</td>
+</tr>
+<tr>
+<td><code>log</code> / <code>benchmark</code></td>
+<td>string</td>
+<td><code>log = "logs/align_{sample}.log"</code>, <code>benchmark = "benchmarks/{sample}.tsv"</code>.</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td>array</td>
+<td><code>["qc", "alignment"]</code>.</td>
+</tr>
+<tr>
+<td><code>optional</code></td>
+<td>bool</td>
+<td>Missing inputs become warnings, rule skipped instead of failing.</td>
+</tr>
+<tr>
+<td><code>required</code></td>
+<td>bool</td>
+<td>Rule failure fails the pipeline even without dependents.</td>
+</tr>
+<tr>
+<td><code>priority</code> / <code>target</code></td>
+<td>int / bool</td>
+<td>Scheduler tie-break; default target when running without <code>-t</code>.</td>
+</tr>
+<tr>
+<td><code>params</code></td>
+<td>table</td>
+<td>Rule-scoped template variables: <code>[rules.params] min_qual = 20</code>, used as <code>{params.min_qual}</code>. Precedence over config during interpolation.</td>
+</tr>
+<tr>
+<td><code>envvars</code></td>
+<td>table</td>
+<td><code>[rules.envvars] CUDA_VISIBLE_DEVICES = "0"</code>.</td>
+</tr>
+<tr>
+<td><code>input_function</code></td>
+<td>string</td>
+<td>Dynamic input resolver (advanced; prefer config-driven <code>expand_inputs</code>, §2.5).</td>
+</tr>
+<tr>
+<td><code>extends</code></td>
+<td>string</td>
+<td>Inherit settings from a base rule (<code>align_fast extends = "align_default"</code>), override in own <code>[rules.resources]</code>.</td>
+</tr>
+<tr>
+<td><code>shadow</code></td>
+<td>string</td>
+<td><code>"minimal" | "shallow" | "full"</code> shadow directory mode.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Resources</strong> (<code>[rules.resources]</code> sub-table; the top-level <code>threads</code> /
+<code>memory</code> rule fields are deprecated but accepted):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">[rules.resources]</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">threads</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">memory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;32G&quot;</span><span class="w">        </span><span class="c1"># &quot;16G&quot;, &quot;8000M&quot;, …</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">gpu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w">               </span><span class="c1"># optional</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">disk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;200G&quot;</span><span class="w">         </span><span class="c1"># optional; pre-flight warning if workdir free space is short</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="n">time_limit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;48h&quot;</span><span class="w">    </span><span class="c1"># optional; SIGKILLs the whole process group after the limit</span>
+</code></pre></div>
+<p><strong>Deprecation note:</strong> the schema and docs still accept <code>threads</code>/<code>memory</code>
+directly on a rule, but <code>docs/guide/src/reference/workflow-format.md</code> marks
+them deprecated — ports must use <code>[rules.resources]</code>. <code>[defaults] threads</code> /
+<code>[defaults] memory</code> set rule-wide defaults; a rule with no explicit threads
+declares <strong><code>threads=1</code></strong> in dry-run output (the "unset" sentinel, §13.1).</p>
+<h3 id="23-wildcards-and-fan-out">2.3 Wildcards and fan-out</h3>
+<ul>
+<li><code>{sample}</code> in any of <code>input</code>, <code>output</code>, <code>shell</code> <strong>clones the rule once per
+  (group, sample)</strong> across all sample sources (§13.8 double-source trap).
+  Expanded names: <code>align_cohort_S1</code>; the filesystem-discovery group is
+  named <code>auto-discovered</code> (<code>align_auto-discovered_S1</code>) [V].</li>
+<li><code>{pair_id}</code>, <code>{experiment}</code>, <code>{control}</code> expand once per <code>[[pairs]]</code>
+  entry: <code>mutect2_CASE_001</code> [V]. E003 fires when a pair wildcard appears in
+  <code>output</code>/<code>shell</code> but no <code>[[pairs]]</code> block declares it and it is not in
+  <code>input</code> [V] — declare pairs, or put the wildcard in <code>input</code> too.</li>
+<li><code>{config.x}</code> is <strong>text substitution only</strong> — never clones, never splits
+  lists.</li>
+<li>A wildcard appearing in a rule's paths with <strong>no value source</strong> leaves the
+  rule unexpanded — it shows in the preview with literal <code>{...}</code> placeholders
+  and never executes [V].</li>
+<li>Built-in placeholders: <code>{input}</code> (space-joined), <code>{input[N]}</code> (0-indexed),
+  <code>{input.name}</code> (named_input), <code>{output}</code>, <code>{output[N]}</code>, <code>{output.name}</code>
+  (named_output), <code>{threads}</code>, <code>{memory}</code>, <code>{config.*}</code>.</li>
+<li><code>named_input</code> / <code>named_output</code> sub-tables exist for many-file rules:
+  <code>[rules.named_input] reads1 = "raw/{sample}_R1.fastq.gz"</code> used as
+  <code>{input.reads1}</code> [gallery, workflow-format.md].</li>
+</ul>
+<h3 id="24-sample-sources-choose-one-for-the-default-path">2.4 Sample sources (choose ONE for the default path)</h3>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Syntax</th>
+<th>Expansion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Filesystem discovery</td>
+<td><code>[workflow] sample_pattern = "raw/{sample}_R1.fastq.gz"</code></td>
+<td>Scans disk at load; group name <code>auto-discovered</code>. Supports <code>{sample}</code>, <code>{replicate}</code>, <code>{read}</code>; <strong><code>{config.x}</code> inside the pattern works</strong> [V].</td>
+</tr>
+<tr>
+<td>Inline groups</td>
+<td><code>[[sample_groups]] name = "cohort"; samples = [...]</code></td>
+<td>Per (group, sample).</td>
+</tr>
+<tr>
+<td>Groups file</td>
+<td><code>[workflow] sample_groups_file = "metadata/groups.tsv"</code> (or .csv/.json)</td>
+<td>TSV: <code>name&lt;TAB&gt;samples</code> (comma-separated ok).</td>
+</tr>
+<tr>
+<td>Pairs</td>
+<td><code>[[pairs]] pair_id/experiment/control[/experiment_type][/metadata]</code> or <code>[workflow] pairs_file = "metadata/pairs.tsv"</code></td>
+<td>Per pair. <code>control</code> may be omitted (tumor-only; <code>{control}</code> renders empty).</td>
+</tr>
+<tr>
+<td>Pairs from disk</td>
+<td><code>[workflow] pairs_pattern = "aligned/{pair_id}/{experiment}_vs_{control}.bam"</code></td>
+<td>Scans disk.</td>
+</tr>
+<tr>
+<td>CLI</td>
+<td><code>oxo-flow run wf.oxoflow --sample EXTRA_01</code></td>
+<td>Merged with all sources.</td>
+</tr>
+</tbody>
+</table>
+<p>All sample sources merge (deduplicated, sorted, comma-joined) into
+<strong><code>config.samples_list</code></strong>; per-group lists exist as
+<code>config.samples_&lt;group_name&gt;</code>. These are engine-injected and never trigger
+checkpoint invalidation. <strong>There is no <code>config.pairs_list</code></strong> (§13.7) [V].</p>
+<h3 id="25-fan-in-gather-collect">2.5 Fan-in (gather / collect)</h3>
+<p>A gather rule runs <strong>once</strong> and collects per-sample files via
+<code>expand_inputs</code> — the rule itself must NOT contain <code>{sample}</code> in its paths
+(that would clone it):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">[[rules]]</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;combine_gvcfs&quot;</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[]</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">expand_inputs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="n">pattern</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s2">&quot;variants/{sample}.g.vcf.gz&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">variables</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">sample</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s2">&quot;config.samples_list&quot;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="p">]</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="n">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;variants/cohort.g.vcf.gz&quot;</span><span class="p">]</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="n">shell</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;&quot;</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="s2">gatk CombineGVCFs -R {config.reference} </span><span class="se">\</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="s2">    $(for f in {input}; do echo &quot;-V $f &quot;; done) </span><span class="se">\</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="s2">    -O {output[0]}</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="s2">&quot;&quot;&quot;</span>
+</code></pre></div>
+<p>Verbatim from <code>examples/gallery/07_wgs_germline.oxoflow</code> [gallery];
+expansion to the concrete per-sample paths verified [V]. <code>variables</code> values
+resolve as: <code>config.&lt;key&gt;</code> (array, or comma-joined string that is split),
+inline list (<code>"[\"1\", \"2\"]"</code>), or single literal. Comma-splitting
+applies <strong>only</strong> to <code>config.*</code> references — a single-element array
+<code>["A,B"]</code> is the escape hatch for comma-containing values [V].</p>
+<h3 id="26-environments-one-backend-per-rule">2.6 Environments — one backend per rule</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Conda (env yaml with exact pins — §5)</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">environment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">conda</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s2">&quot;envs/fastp.yaml&quot;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># Docker image (verified accepted by validate; dry-run shows env=docker)</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="n">environment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">docker</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s2">&quot;quay.io/biocontainers/bwa:0.7.17&quot;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="c1"># Singularity</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="n">environment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">singularity</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s2">&quot;docker://broadinstitute/gatk:4.5.0.0&quot;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="c1"># mamba/pixi/venv/modules: same shape</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="c1"># environment = { mamba = &quot;envs/qc.yaml&quot; }</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="c1"># environment = { pixi = &quot;envs/pixi.toml&quot; }</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="c1"># environment = { venv = &quot;.venv/&quot;, venv_requirements = &quot;envs/dev-req.txt&quot; }</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="c1"># environment = { modules = [&quot;gcc/11.2.0&quot;, &quot;openmpi/4.1.1&quot;] }</span>
+</code></pre></div>
+<p>All eight forms (conda, mamba, pixi, docker, singularity, venv, modules,
+system) documented in <code>docs/guide/src/reference/execution-backends.md</code> and
+<code>environment-system.md</code>. A rule with no <code>environment</code> runs on the <strong>system</strong>
+backend (<code>lint</code> info W008). <code>[env_groups]</code> defines named reusable specs
+referenced by <code>env_group = "qc_env"</code>. <code>[defaults] environment</code> sets a
+default for every rule.</p>
+<p><strong>Container runtime wrapper</strong> (observed in live run logs): docker rules
+execute as
+<code>docker run --rm --user $(id -u):$(id -g) -v .:. -w . &lt;image&gt; sh -c '&lt;shell&gt;'</code>
+— the workdir is bind-mounted, the command runs as the invoking user [V].</p>
+<h3 id="261-conda-env-file-envsyaml">2.6.1 Conda env file (envs/*.yaml)</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fastp</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nt">channels</span><span class="p">:</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bioconda</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">conda-forge</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="nt">dependencies</span><span class="p">:</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fastp=0.23.4</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fastqc=0.12.1</span>
+</code></pre></div>
+<p>Setup command is <code>conda env create -f &lt;yaml&gt;</code> (mamba auto-detects
+mamba/micromamba/conda). Exact-pin policy in §5.</p>
+<h3 id="27-modules-and-composition">2.7 Modules and composition</h3>
+<ul>
+<li><code>[[include]]</code> with <code>path</code> + optional <code>namespace</code>: included rule names
+  become <code>namespace::rule</code>; internal <code>depends_on</code> in the included file is
+  re-prefixed automatically; external references use the prefixed name
+  (<code>depends_on = ["qc::trim"]</code>). Included fragments may carry their own
+  <code>[workflow]</code> table. Verified end-to-end: <code>qc::fastqc_cohort_S1</code> etc. [V].
+  Fragment files validate standalone with <code>validate --as-include</code> [V].</li>
+<li><code>profiles/&lt;NAME&gt;.toml</code>: <code>--profile &lt;NAME&gt;</code> applies <code>[config]</code> values
+  that <strong>fill in keys the workflow does not set — workflow values are never
+  overridden</strong> [V]. <code>.toml</code> is tried before <code>.oxoflow</code>.</li>
+<li><code>[defaults]</code>, <code>[report]</code>, <code>[[references]]</code> (auto-built indexes, incl.
+  auto-derivation when <code>reference_dir</code> is set), <code>[wildcard_constraints]</code>,
+  <code>[cluster]</code>, <code>[env_groups]</code>, <code>[resource_groups]</code>, <code>[resource_budget]</code>,
+  <code>[[execution_group]]</code> — see workflow-format.md.</li>
+</ul>
+<h3 id="28-cli-surface-ports-actually-use">2.8 CLI surface ports actually use</h3>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>oxo-flow validate wf.oxoflow</code></td>
+<td>TOML parse + DAG construction + warnings on missing inputs. Exit 0/1.</td>
+</tr>
+<tr>
+<td><code>oxo-flow validate --as-include frag.oxoflow</code></td>
+<td>Validate an include fragment (skips DAG + input checks).</td>
+</tr>
+<tr>
+<td><code>oxo-flow dry-run [wf] [KEY=VALUE]...</code></td>
+<td>Read-only preview: DAG, per-rule threads/memory/env, <strong>fully expanded shell commands</strong>, input ✓/✗ markers, checkpoint-aware run/skip prediction.</td>
+</tr>
+<tr>
+<td><code>oxo-flow debug wf.oxoflow</code></td>
+<td>Expanded commands for every rule instance (same content dry-run shows, without plan context).</td>
+</tr>
+<tr>
+<td><code>oxo-flow debug wf.oxoflow -r &lt;INSTANCE_NAME&gt;</code></td>
+<td>One expanded rule — <strong>use the expanded instance name</strong> (<code>stats_auto-discovered_sampleA</code>), template names error with "rule not found" [V].</td>
+</tr>
+<tr>
+<td><code>oxo-flow run wf.oxoflow -j N [KEY=VALUE]...</code></td>
+<td>Execute. <code>-j</code> default 1; <code>--rerun</code>, <code>--samples first:N|ready</code>, <code>--resume-failed</code>, <code>--keep-going</code>, <code>--max-threads/--max-memory</code>, <code>--skip-env-setup</code>, <code>--profile</code>.</td>
+</tr>
+<tr>
+<td><code>oxo-flow lint wf.oxoflow</code></td>
+<td>validate + style linting + secret scanning; <code>--strict</code> turns warnings into exit 1 [V].</td>
+</tr>
+<tr>
+<td><code>oxo-flow schema</code></td>
+<td>JSON Schema dump — <strong>a subset of the real format</strong> (§13.10).</td>
+</tr>
+<tr>
+<td><code>oxo-flow graph wf.oxoflow -f dot</code></td>
+<td>DAG visualization (dev aid).</td>
+</tr>
+</tbody>
+</table>
+<p>Flag details recorded from <code>--help</code> on the 0.11.0 binary and
+<code>docs/guide/src/commands/{validate,dry-run,run,debug,lint}.md</code>.</p>
+<hr />
+<h2 id="3-nextflow-oxo-flow-mapping-table">3. Nextflow → oxo-flow mapping table</h2>
+<p>Concepts verified against the gallery and scratch runs; where a Nextflow
+feature has no direct equivalent, the "Port strategy" column says exactly
+what to do.</p>
+<table>
+<thead>
+<tr>
+<th>Nextflow (nf-core DSL2)</th>
+<th>oxo-flow</th>
+<th>Port strategy / notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>process NAME { ... }</code></td>
+<td><code>[[rules]] name = "name"</code></td>
+<td>One <code>[[rules]]</code> entry per process. Lowercase snake_case rule names.</td>
+</tr>
+<tr>
+<td><code>input: tuple val(meta), path(reads)</code></td>
+<td><code>input = ["raw/{sample}_R1.fastq.gz", "raw/{sample}_R2.fastq.gz"]</code></td>
+<td>Declare the concrete file patterns. The <code>meta</code> map's fields that the command actually uses become <code>{config.x}</code> or wildcard values; the rest move to <code>[rules.rule_metadata]</code> (informational).</td>
+</tr>
+<tr>
+<td><code>output: tuple val(meta), path("*.bam"), emit: bam</code></td>
+<td><code>output = ["aligned/{sample}.bam"]</code></td>
+<td>Declared outputs are the contract: they are verified to exist post-run and drive DAG edges. There is no <code>emit</code>; downstream rules reference files by path pattern.</td>
+</tr>
+<tr>
+<td><code>script:</code> block</td>
+<td><code>shell = """ ... """</code></td>
+<td>Copy the command verbatim, replacing <code>$reads</code>, <code>params.x</code> with <code>{input}</code>, <code>{config.x}</code> etc. Keep flags and file naming <strong>byte-identical</strong>.</td>
+</tr>
+<tr>
+<td><code>params.foo</code> (incl. <code>params.input</code>, <code>params.genome</code>)</td>
+<td><code>[config] foo = "..."</code> + <code>{config.foo}</code></td>
+<td>Every <code>params.*</code> referenced by the default path becomes a config key with the upstream default as its value.</td>
+</tr>
+<tr>
+<td><code>nextflow run ... --foo bar</code></td>
+<td><code>oxo-flow run wf.oxoflow --foo bar</code> (or <code>foo=bar</code> positional)</td>
+<td>Every <code>[config]</code> key is a CLI flag automatically; positional <code>KEY=VALUE</code> after the workflow file works too [V].</td>
+</tr>
+<tr>
+<td><code>Channel.fromPath('data/*_R1.fastq.gz')</code></td>
+<td><code>sample_pattern = "data/{sample}_R1.fastq.gz"</code></td>
+<td>Filesystem discovery; group <code>auto-discovered</code>.</td>
+</tr>
+<tr>
+<td><code>Channel.fromFilePairs('data/*_{1,2}.fastq.gz')</code></td>
+<td><code>sample_pattern = "data/{sample}_R1.fastq.gz"</code> + second input <code>"data/{sample}_R2.fastq.gz"</code></td>
+<td>Pattern discovers the sample set; rules take both mates as <code>{input[0]}</code>, <code>{input[1]}</code>.</td>
+</tr>
+<tr>
+<td><code>Channel.fromSamplesheet('samplesheet.csv')</code></td>
+<td><code>[[sample_groups]]</code> / <code>sample_groups_file</code> / <code>[[pairs]]</code> / <code>pairs_file</code></td>
+<td>Column semantics decide the mapping: sample-only → groups; experiment/control → pairs.</td>
+</tr>
+<tr>
+<td><code>Channel.fromFilePairs</code> with meta columns</td>
+<td><code>[rules.rule_metadata]</code> + config</td>
+<td>Static metadata → config keys or <code>rule_metadata</code>; runtime-discovered → <code>checkpoint</code> re-entry (advanced).</td>
+</tr>
+<tr>
+<td><code>input: path(reads)</code> single file</td>
+<td><code>input = ["reads/{sample}.fastq.gz"]</code></td>
+<td>Identical shape.</td>
+</tr>
+<tr>
+<td><code>collect()</code> on a channel</td>
+<td><code>expand_inputs</code> with <code>config.samples_list</code></td>
+<td>The gather rule stays a <strong>single instance</strong>; per-sample files become its input list (§2.5) [V].</td>
+</tr>
+<tr>
+<td><code>mix()</code> / <code>join()</code> / <code>combine()</code></td>
+<td><code>depends_on</code> + multi-input rule</td>
+<td>Merge semantics are expressed by the input list and explicit ordering.</td>
+</tr>
+<tr>
+<td><code>scatter</code>/<code>gather</code> in a process (per-chromosome)</td>
+<td><code>transform</code> operator (§3.1) or legacy <code>scatter</code> field</td>
+<td><code>transform</code> is the recommended unified split→map→combine.</td>
+</tr>
+<tr>
+<td><code>publishDir 'results/'</code></td>
+<td>No equivalent — outputs are written where <code>output = [...]</code> says</td>
+<td>Declare outputs directly at <code>results/...</code> paths; <code>publishDir</code> options (mode, overwrite, pattern) have no equivalent, note in fidelity table.</td>
+</tr>
+<tr>
+<td><code>container 'quay.io/biocontainers/fastp:0.23.4'</code></td>
+<td><code>environment = { docker = "quay.io/biocontainers/fastp:0.23.4" }</code></td>
+<td>Copy the image string verbatim (§5). Verified syntax [V].</td>
+</tr>
+<tr>
+<td><code>container 'docker://broadinstitute/gatk:4.5.0.0'</code></td>
+<td><code>environment = { singularity = "docker://broadinstitute/gatk:4.5.0.0" }</code></td>
+<td>Copy verbatim. Verified syntax [V].</td>
+</tr>
+<tr>
+<td><code>conda 'envs/fastp.yml'</code></td>
+<td><code>environment = { conda = "envs/fastp.yaml" }</code></td>
+<td>Port the env yaml with exact pins (§5).</td>
+</tr>
+<tr>
+<td><code>cpus 4</code></td>
+<td><code>[rules.resources] threads = 4</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>memory '8.GB'</code></td>
+<td><code>[rules.resources] memory = "8G"</code></td>
+<td>Convert Groovy GByte notation: <code>'8.GB'</code>→<code>"8G"</code>, <code>'8000.MB'</code>→<code>"8000M"</code>.</td>
+</tr>
+<tr>
+<td><code>time '2.h'</code></td>
+<td><code>[rules.resources] time_limit = "2h"</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>label 'process_high'</code></td>
+<td><code>[rules.resources]</code> values or <code>[defaults]</code></td>
+<td>Labels are group policies; bake the actual values into resources (per-rule or defaults), record in fidelity table.</td>
+</tr>
+<tr>
+<td><code>withName: 'TRIM' { cpus = 8 }</code></td>
+<td>Per-rule <code>[rules.resources]</code></td>
+<td>The <code>withName</code>/<code>withLabel</code>/<code>withProcessName</code> scope IS the per-rule table.</td>
+</tr>
+<tr>
+<td><code>withParams: [foo: 'x']</code></td>
+<td><code>[config]</code> defaults / <code>profiles/*.toml</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>when: params.foo</code></td>
+<td><code>when = "config.foo"</code></td>
+<td>Same truthiness; full expression grammar in §2.2.</td>
+</tr>
+<tr>
+<td><code>errorStrategy 'retry'</code> + <code>maxRetries 3</code></td>
+<td><code>retries = 3</code> (+ <code>retry_delay = "30s"</code>)</td>
+<td><code>retry</code> → <code>retries = N</code>; <code>ignore</code>/<code>finish</code> → <code>-k</code>/<code>required</code> semantics; record non-default strategies in fidelity table.</td>
+</tr>
+<tr>
+<td><code>maxForks</code></td>
+<td><code>-j &lt;N&gt;</code></td>
+<td>Runtime knob, not workflow metadata.</td>
+</tr>
+<tr>
+<td><code>executor 'slurm'</code>, cluster profiles</td>
+<td><code>[cluster]</code> / <code>--profile</code></td>
+<td>Out of scope for the default path; <code>localrule</code> exists for always-local steps.</td>
+</tr>
+<tr>
+<td><code>env</code> directive</td>
+<td><code>[rules.envvars]</code></td>
+<td>Same shape.</td>
+</tr>
+<tr>
+<td><code>module 'gcc/11.2.0'</code></td>
+<td><code>environment = { modules = ["gcc/11.2.0"] }</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>tag</code>, <code>label</code> (cosmetic)</td>
+<td><code>tags = [...]</code>, <code>description</code></td>
+<td>Cosmetic mapping.</td>
+</tr>
+<tr>
+<td><code>afterScript</code> / <code>onError</code></td>
+<td><code>pre_exec</code> / <code>on_success</code> / <code>on_failure</code></td>
+<td><code>afterScript</code> has no exact twin — if it produces a file the next process needs, make it part of <code>shell</code>; else <code>on_success</code>.</td>
+</tr>
+<tr>
+<td><code>exec</code> (Groovy blocks)</td>
+<td><code>script = "scripts/x.py"</code></td>
+<td>Move logic into a script file; keep <code>shell</code>/<code>script</code> declarative.</td>
+</tr>
+<tr>
+<td><code>params.genomes</code> (nf-core genome config)</td>
+<td><code>[config]</code> + <code>[config] genome = { default = "GRCh38", choices = [...] }</code></td>
+<td>Declarative config form (<code>{default, choices, type}</code>) mirrors the nf-core genome matrix.</td>
+</tr>
+<tr>
+<td><code>include { ... }</code> from modules</td>
+<td><code>[[include]] path = "modules/x.oxoflow" namespace = "x"</code></td>
+<td>Module per file; namespaces keep <code>x::process</code> names (nf-core module names) [V].</td>
+</tr>
+<tr>
+<td><code>stub</code> runs</td>
+<td>Not supported</td>
+<td>Forbidden in ports anyway (§6).</td>
+</tr>
+<tr>
+<td><code>-resume</code></td>
+<td>Checkpoint resume (automatic)</td>
+<td>Ports get resume for free: re-running <code>run</code> skips completed rules [V].</td>
+</tr>
+</tbody>
+</table>
+<h3 id="31-nf-core-scattergather-transform">3.1 nf-core scatter/gather → <code>transform</code></h3>
+<p>nf-core splits per chromosome via channel grouping. In oxo-flow the
+canonical form is the unified <code>transform</code> operator (verbatim from
+<code>examples/gallery/10_transform_operator.oxoflow</code> [gallery], chunk naming
+verified [V]):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">[[rules]]</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;variant_calling&quot;</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;aligned/sample.bam&quot;</span><span class="p">]</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;variants/sample.g.vcf.gz&quot;</span><span class="p">]</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="k">[rules.resources]</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="n">threads</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="k">[rules.transform.split]</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="n">by</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;chr&quot;</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="n">values_from</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;config.chromosomes&quot;</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="k">[rules.transform]</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="n">map</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;gatk HaplotypeCaller -R {config.reference} -I {input} -L {chr} -O {output} -ERC GVCF&quot;</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="n">cleanup</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="k">[rules.transform.combine]</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="n">shell</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;gatk GatherVcfs $(for f in {chunks}; do echo </span><span class="se">\&quot;</span><span class="s2">-I $f </span><span class="se">\&quot;</span><span class="s2">; done) -O {output}&quot;</span>
+</code></pre></div>
+<p>Verified expansion: map rules <code>variant_calling_chr1</code>, <code>variant_calling_chr2</code>;
+chunk outputs at <code>.oxo-flow/chunks/chr/chr1.g.vcf.gz</code> (full multi-part
+extension preserved); combine rule <code>variant_calling_combine</code>; combine's
+<code>{chunks}</code>/<code>{input}</code> = the chunk list [V]. <code>cleanup = true</code> deletes chunks
+after a fully successful run. Split priority: <code>values</code> → <code>values_from</code> →
+<code>n</code> → <code>glob</code>. Aggregate mode (<code>aggregate = true, method = "concat"</code>) exists
+for trivial merges. Failures retry at chunk level; combine waits for all
+chunks.</p>
+<hr />
+<h2 id="4-snakemake-oxo-flow-mapping-table">4. Snakemake → oxo-flow mapping table</h2>
+<table>
+<thead>
+<tr>
+<th>Snakemake</th>
+<th>oxo-flow</th>
+<th>Port strategy / notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>rule align:</code></td>
+<td><code>[[rules]] name = "align"</code></td>
+<td>Same shape.</td>
+</tr>
+<tr>
+<td><code>input: "data/{sample}.fq.gz"</code></td>
+<td><code>input = ["data/{sample}.fq.gz"]</code></td>
+<td>Identical wildcard semantics (fan-out).</td>
+</tr>
+<tr>
+<td><code>output: "aligned/{sample}.bam"</code></td>
+<td><code>output = ["aligned/{sample}.bam"]</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>shell: "bwa mem ..."</code></td>
+<td><code>shell = "bwa mem ..."</code></td>
+<td>Same command text; <code>{sample}</code> interpolates identically.</td>
+</tr>
+<tr>
+<td><code>run:</code> (Python) / <code>script: "x.py"</code></td>
+<td><code>script = "scripts/x.py"</code></td>
+<td>Interpreter auto-detected from extension; <code>run:</code> bodies become script files (the port must keep the script and its tool deps in the env).</td>
+</tr>
+<tr>
+<td><code>params: prefix=lambda wc: ...</code></td>
+<td><code>[config]</code> or <code>[rules.params]</code></td>
+<td>Simple params → <code>{config.x}</code>; rule-scoped params → <code>[rules.params]</code> (<code>{params.min_qual}</code>); Python lambdas must be resolved to plain values at port time.</td>
+</tr>
+<tr>
+<td><code>wildcards.sample</code> in shell</td>
+<td><code>{sample}</code></td>
+<td>Same syntax.</td>
+</tr>
+<tr>
+<td><code>config["x"]</code>, <code>config.x</code></td>
+<td><code>{config.x}</code></td>
+<td>Same.</td>
+</tr>
+<tr>
+<td><code>configfile: "config.yaml"</code></td>
+<td><code>[config]</code> + <code>profiles/&lt;NAME&gt;.toml</code></td>
+<td>Merge the yaml into <code>[config]</code>; alternate configs become profiles (fill-in only, workflow values win [V]).</td>
+</tr>
+<tr>
+<td><code>threads: 8</code></td>
+<td><code>[rules.resources] threads = 8</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>resources: mem_mb=8000</code></td>
+<td><code>[rules.resources] memory = "8000M"</code></td>
+<td>Convert <code>mem_mb</code> → <code>"&lt;N&gt;M"</code>, <code>mem_gb</code> → <code>"&lt;N&gt;G"</code>; <code>time_min</code> → <code>time_limit</code>.</td>
+</tr>
+<tr>
+<td><code>conda: "envs/foo.yaml"</code></td>
+<td><code>environment = { conda = "envs/foo.yaml" }</code></td>
+<td>Port the yaml <strong>with exact pins</strong> (§5). Verified syntax [V].</td>
+</tr>
+<tr>
+<td><code>container: "docker://..."</code></td>
+<td><code>environment = { singularity = "docker://..." }</code></td>
+<td>Copy the URI verbatim.</td>
+</tr>
+<tr>
+<td><code>expand("results/{sample}.txt", sample=SAMPLES)</code></td>
+<td><code>expand_inputs = [{ pattern = "results/{sample}.txt", variables = { sample = "config.samples_list" } }]</code></td>
+<td>Gather/fan-in (§2.5) [V].</td>
+</tr>
+<tr>
+<td><code>input functions</code> (<code>lambda wc: ...</code>)</td>
+<td><code>expand_inputs</code> with config references, or <code>depends_on</code></td>
+<td>Resolve the function to the concrete list at port time; keep it config-driven so CLI overrides work. <code>input_function</code> exists but is a runtime hook — prefer declarative.</td>
+</tr>
+<tr>
+<td><code>checkpoint:</code> + <code>input: functions.get_sample_names</code></td>
+<td><code>checkpoint = true</code> + <code>checkpoint_manifest = "manifest.toml"</code></td>
+<td>Native feature — the rule writes a TOML manifest declaring <code>sample = [...]</code> / <code>pairs = [...]</code>; engine re-expands and runs new instances in the same run (max 32 rounds, E013/E014 guards).</td>
+</tr>
+<tr>
+<td><code>wildcard_constraints:</code></td>
+<td><code>[wildcard_constraints] sample = "[A-Z0-9]+"</code></td>
+<td>Same semantics (non-matching discovered values ignored).</td>
+</tr>
+<tr>
+<td><code>log: "logs/{sample}.log"</code></td>
+<td><code>log = "logs/{sample}.log"</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>benchmark:</code></td>
+<td><code>benchmark = "benchmarks/{sample}.tsv"</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>temp("...")</code></td>
+<td><code>temp_output = [...]</code> or <code>temporary = true</code></td>
+<td><code>temp_output</code>: cleaned after downstream completes. <code>temporary = true</code>: whole-rule outputs deleted after the run once dependents finished, tombstone + lazy regeneration (leaf rules keep outputs).</td>
+</tr>
+<tr>
+<td><code>protected("...")</code></td>
+<td><code>protected_output = [...]</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ancient("...")</code></td>
+<td><code>ancient = [...]</code></td>
+<td>Never triggers re-execution.</td>
+</tr>
+<tr>
+<td><code>localrule:</code></td>
+<td><code>localrule = true</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>group:</code></td>
+<td><code>group = "label"</code></td>
+<td>Cluster grouping.</td>
+</tr>
+<tr>
+<td><code>ruleorder:</code></td>
+<td><code>depends_on</code> + unambiguous paths</td>
+<td>oxo-flow has no <code>ruleorder</code>; make the chain unambiguous by distinct output paths and explicit <code>depends_on</code> where the DAG cannot infer (§13.3).</td>
+</tr>
+<tr>
+<td><code>onerror:</code>/<code>onsuccess:</code> (workflow-level)</td>
+<td><code>on_failure</code> / <code>on_success</code> per rule</td>
+<td>Per-rule hooks; workflow-level equivalents don't exist.</td>
+</tr>
+<tr>
+<td><code>shadow: "shallow"</code></td>
+<td><code>shadow = "shallow"</code></td>
+<td>Same modes.</td>
+</tr>
+<tr>
+<td><code>priority:</code></td>
+<td><code>priority = N</code></td>
+<td>Higher runs first among ready rules.</td>
+</tr>
+<tr>
+<td><code>latency-wait</code></td>
+<td>Not needed</td>
+<td>File-system latency guard has no equivalent; declared outputs are verified directly.</td>
+</tr>
+<tr>
+<td><code>--cores</code> / <code>-j</code></td>
+<td><code>-j &lt;N&gt;</code> / <code>--max-threads &lt;N&gt;</code></td>
+<td>Same knobs.</td>
+</tr>
+<tr>
+<td><code>--config x=y</code></td>
+<td><code>x=y</code> positional or <code>--x y</code></td>
+<td>Verified [V].</td>
+</tr>
+<tr>
+<td><code>--until</code>, <code>--target</code></td>
+<td><code>-t &lt;rule&gt;</code> (prefix matching)</td>
+<td><code>-t final_output</code> runs only it plus upstream.</td>
+</tr>
+<tr>
+<td><code>--forceall</code></td>
+<td><code>--rerun</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>--rerun-incomplete</code></td>
+<td><code>--resume-failed</code></td>
+<td>Resume only failed rules.</td>
+</tr>
+<tr>
+<td><code>--dry-run</code> / <code>--printshellcmds</code></td>
+<td><code>dry-run</code> / <code>debug</code></td>
+<td>dry-run shows expanded commands; <code>debug -r &lt;instance&gt;</code> shows one [V].</td>
+</tr>
+<tr>
+<td><code>Snakefile</code> includes/modules</td>
+<td><code>[[include]]</code> + <code>namespace</code></td>
+<td>Module files per include; namespaced rule names [V].</td>
+</tr>
+</tbody>
+</table>
+<h3 id="41-snakemake-expand-corner">4.1 Snakemake <code>expand()</code> corner</h3>
+<p><code>expand("results/{sample}.txt", sample=config["samples"])</code> inside an input
+list is exactly <code>expand_inputs</code>. But Snakemake also uses <code>expand()</code> inside
+<strong>shell</strong> strings (e.g. a loop); oxo-flow's <code>{config.samples_list}</code> renders
+the merged list as a <strong>comma-joined string</strong> — the documented shell pattern
+is:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">shell</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;for s in $(echo {config.samples_list} | tr &#39;,&#39; &#39; &#39;); do ...; done&quot;</span>
+</code></pre></div>
+<p>Verified: <code>config.samples_list</code> renders comma-joined in shell expansion [V].</p>
+<hr />
+<h2 id="5-version-pinning-policy">5. Version pinning policy</h2>
+<p><strong>Every tool that ships in a port must carry an exact version. <code>latest</code> is
+forbidden — in container tags and in conda pins.</strong></p>
+<ol>
+<li><strong>nf-core / Nextflow processes with a container directive:</strong> copy the
+   exact image string from the module, e.g.
+   <code>container 'quay.io/biocontainers/fastp:0.23.4--0'</code> →
+   <code>environment = { docker = "quay.io/biocontainers/fastp:0.23.4--0" }</code>.
+   Keep the full tag including the <code>--&lt;build&gt;</code> suffix — that is the actual
+   reproducible artifact. Verified: arbitrary image strings with tags pass
+   <code>validate</code> [V].</li>
+<li><strong>nf-core processes with a conda directive:</strong> copy the module's env
+   yaml, pins included (<code>fastp=0.23.4</code>), and map it to
+   <code>environment = { conda = "envs/&lt;tool&gt;.yaml" }</code>.</li>
+<li><strong>Snakemake rules with <code>conda: "envs/foo.yaml"</code>:</strong> copy the yaml
+   verbatim — the pins (<code>- fastp=0.23.4</code>, <code>- samtools=1.19.2</code>) carry the
+   reproducibility. If the upstream env has unpinned packages, pin them to
+   the versions present in the upstream lockfile if one exists, else resolve
+   at port time from bioconda and record the resolution in the fidelity
+   table.</li>
+<li><strong>Snakemake rules with <code>container:</code>:</strong> copy the URI verbatim
+   (<code>docker://quay.io/biocontainers/fastp:0.23.4--0</code>).</li>
+<li><strong>No upstream pin at all</strong> (rare): use the biocontainers <code>latest</code> tag at
+   port time for the container, e.g. <code>quay.io/biocontainers/&lt;tool&gt;:latest</code>,
+   and <strong>mark it in the fidelity table</strong> with the exact tag resolution date
+   and the version observed. The reviewer (Definition of Done §14) must be
+   able to see every unpinned-by-upstream tool at a glance.</li>
+<li><strong>Inferring versions from tool output is forbidden.</strong> If the upstream
+   does not declare a version anywhere, the port records "upstream does not
+   pin" in the fidelity table and applies rule 5.</li>
+</ol>
+<hr />
+<h2 id="6-fidelity-policy">6. Fidelity policy</h2>
+<p>The port's contract:</p>
+<ul>
+<li><strong>Replicate the default-parameters main execution path 100%</strong>: same
+  tools, same versions, same command logic — flags, orderings, file naming,
+  output formats. A diff of <code>debug</code> output against the upstream command text
+  should show only the mechanical substitutions (paths, params).</li>
+<li><strong>Fidelity table is mandatory</strong> in <code>README.md</code> (§9): one row per upstream
+  process/rule: <code>Upstream process | oxo-flow rule | Tool (version) | Notes</code>.
+  Any deviation — renamed output, merged steps, dropped cosmetic branch,
+  profile-only config — goes in the Notes column.</li>
+<li><strong>Forbidden in ports:</strong></li>
+<li>placeholder/echo rules (<code>shell = "echo 'Alignment placeholder' &gt; ..."</code> —
+    the gallery uses these for <em>demonstration</em>; ports must not),</li>
+<li>unversioned tools (<code>latest</code>),</li>
+<li>silently dropped steps (a step that cannot be ported must be listed in
+    the fidelity table as <code>not ported</code> with the reason),</li>
+<li>reordering or re-flagging commands to "make it cleaner" — the command
+    logic is the product.</li>
+<li>nf-core <code>params.*</code> that default to <code>false</code>/empty and gate optional
+  branches: map to <code>[config]</code> with the same default; the branch is preserved
+  via <code>when</code> conditions, and the fidelity table notes it as "off by default,
+  same as upstream".</li>
+<li>If the port cannot meet the contract (missing tool, no equivalent
+  feature), stop and return the blocker in the fidelity table instead of
+  approximating.</li>
+</ul>
+<hr />
+<h2 id="7-repo-layout-test-standard">7. Repo layout + test standard</h2>
+<h3 id="71-exact-tree">7.1 Exact tree</h3>
+<p>Every port lives in its own repository/package directory, e.g.
+<code>/Users/wsx/Documents/GitHub/oxo-community/pipelines/&lt;pipeline-name&gt;/</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>&lt;pipeline-name&gt;/
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>├── main.oxoflow              # the workflow (single file unless &gt; ~30 rules;
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>│                             #   then + modules/ fragments via [[include]])
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>├── envs/                     # conda env yamls, one per environment
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>│   └── &lt;tool&gt;.yaml
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>├── scripts/                  # helper scripts (only if the upstream has them)
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>├── profiles/                 # optional: profiles/&lt;NAME&gt;.toml
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>├── test/
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>│   ├── fixtures/             # tiny real input files (never synthetic blobs)
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>│   │   └── raw/…
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>│   └── run.sh                # the acceptance test (§7.3)
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>├── .github/
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>│   └── workflows/ci.yml      # §8
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>├── README.md                 # §9 template
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>├── NOTICE.md                 # §10 template
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>├── LICENSE                   # §11
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>└── metadata.json             # §12
+</code></pre></div>
+<p>Naming: <code>&lt;pipeline-name&gt;</code> = the upstream repo's name, kebab-case. Rule
+names = upstream process/rule names in snake_case.</p>
+<h3 id="72-testfixtures-requirements">7.2 test/fixtures requirements</h3>
+<ul>
+<li>Real, tiny data of the same format as upstream inputs (e.g. a 2-read
+  FASTQ pair, a 10-line CSV) — <strong>not</strong> placeholder text files where the
+  workflow does real parsing. If a step cannot run on the tiny fixture (a
+  BWA index needs ~700MB), the fixture covers it up to the point where the
+  tool would fail, and run.sh still exercises <code>validate</code> + <code>dry-run</code> for
+  the whole DAG.</li>
+<li>Fixture sample names: <code>S1</code>, <code>S2</code> (or upstream example names) — recorded
+  in <code>[[sample_groups]]</code> so the dry-run is deterministic without
+  <code>sample_pattern</code> needing real files on CI.</li>
+<li>Keep fixtures checked into the repo (a few KB to a few MB).</li>
+</ul>
+<h3 id="73-testrunsh-mandatory-exact-shape">7.3 test/run.sh (mandatory, exact shape)</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="ch">#!/usr/bin/env bash</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="c1"># Acceptance test for &lt;pipeline-name&gt; port.</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="c1"># Usage: ./test/run.sh            (uses ./main.oxoflow)</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="nb">set</span><span class="w"> </span>-euo<span class="w"> </span>pipefail
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="nb">cd</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>dirname<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$0</span><span class="s2">&quot;</span><span class="k">)</span><span class="s2">/..&quot;</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="nv">OXO</span><span class="o">=</span><span class="si">${</span><span class="nv">OXO</span><span class="k">:-</span><span class="nv">oxo</span><span class="p">-flow</span><span class="si">}</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;==&gt; validate&quot;</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="s2">&quot;</span><span class="nv">$OXO</span><span class="s2">&quot;</span><span class="w"> </span>validate<span class="w"> </span>main.oxoflow
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;==&gt; lint (warnings are acceptable, errors are not)&quot;</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="s2">&quot;</span><span class="nv">$OXO</span><span class="s2">&quot;</span><span class="w"> </span>lint<span class="w"> </span>main.oxoflow
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;==&gt; dry-run with default config&quot;</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="s2">&quot;</span><span class="nv">$OXO</span><span class="s2">&quot;</span><span class="w"> </span>dry-run<span class="w"> </span>main.oxoflow<span class="w"> </span>--samples<span class="w"> </span>first:1<span class="w"> </span>&gt;<span class="w"> </span>/tmp/oxo-dryrun-<span class="nv">$$</span>.txt
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>grep<span class="w"> </span>-q<span class="w"> </span><span class="s2">&quot;would execute&quot;</span><span class="w"> </span>/tmp/oxo-dryrun-<span class="nv">$$</span>.txt
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;==&gt; debug: expanded commands contain no literal {wildcards}&quot;</span>
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="s2">&quot;</span><span class="nv">$OXO</span><span class="s2">&quot;</span><span class="w"> </span>debug<span class="w"> </span>main.oxoflow<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-q<span class="w"> </span><span class="s1">&#39;{sample}&#39;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;unexpanded wildcards in debug output&quot;</span><span class="p">;</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span><span class="p">;</span><span class="w"> </span><span class="o">}</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">true</span>
+<a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a>
+<a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;PASS&quot;</span>
+</code></pre></div>
+<p>Requirements: <code>set -euo pipefail</code>; exit non-zero on any failure; run
+<code>validate</code>, <code>lint</code>, <code>dry-run</code> (default config, <code>--samples first:1</code> when the
+workflow is sample-scoped), and a <code>debug</code> assertion that no literal
+<code>{sample}</code>/<code>{config.</code> placeholders survive expansion. Local runs use
+<code>OXO=/Users/wsx/Documents/GitHub/oxo-community/bin/oxo-flow</code>.</p>
+<h3 id="74-iterate-to-green-instructions">7.4 Iterate-to-green instructions</h3>
+<ol>
+<li>Write <code>main.oxoflow</code> + envs + fixtures.</li>
+<li><code>oxo-flow validate main.oxoflow</code> → fix TOML/DAG errors. Exit 0 required;
+   warnings about missing inputs are expected pre-fixture, but note that
+   <code>validate</code> warns only for inputs <strong>not produced by any rule output</strong>
+   (literal patterns, globs, dirs, and files with no producer) [V].</li>
+<li><code>oxo-flow dry-run main.oxoflow</code> → inspect the expanded plan:</li>
+<li>every sample/pair rule expanded (instance names <code>rule_group_sample</code> /
+     <code>rule_pair_id</code>),</li>
+<li>gather rules present exactly once with the full input list,</li>
+<li><code>input ✗</code> markers on fixture files you forgot,</li>
+<li>threads/memory/env per rule as intended.</li>
+<li><code>oxo-flow debug main.oxoflow</code> → diff the expanded commands against the
+   upstream command text (with <code>{...}</code> placeholders substituted by the
+   dry-run values). This is the fidelity check.</li>
+<li><code>./test/run.sh</code> green locally with
+   <code>OXO=/Users/wsx/Documents/GitHub/oxo-community/bin/oxo-flow</code>.</li>
+<li>Push → CI (§8) green.</li>
+</ol>
+<hr />
+<h2 id="8-ci-template-githubworkflowsciyml">8. CI template (<code>.github/workflows/ci.yml</code>)</h2>
+<p>ubuntu-latest; install oxo-flow from the v0.11.0 release tarball (layout
+verified: single <code>oxo-flow</code> file at archive root — no directory prefix, so
+<code>tar xzf</code> + <code>mv</code> of the bare file is correct); timeout 10m.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CI</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="nt">on</span><span class="p">:</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">  </span><span class="nt">push</span><span class="p">:</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">  </span><span class="nt">pull_request</span><span class="p">:</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="nt">jobs</span><span class="p">:</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">  </span><span class="nt">test</span><span class="p">:</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">    </span><span class="nt">timeout-minutes</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install oxo-flow 0.11.0 (release tarball)</span>
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a><span class="w">          </span><span class="no">curl -fL -o oxo-flow.tar.gz \</span>
+<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="w">            </span><span class="no">https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz</span>
+<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a><span class="w">          </span><span class="no">tar xzf oxo-flow.tar.gz</span>
+<a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a><span class="w">          </span><span class="no">sudo mv oxo-flow /usr/local/bin/</span>
+<a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a><span class="w">          </span><span class="no">oxo-flow --version</span>
+<a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a>
+<a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Validate, lint, dry-run</span>
+<a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./test/run.sh</span>
+</code></pre></div>
+<p><strong>CI badge</strong> (README §9 header):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>[<span class="nt">![CI</span>](<span class="na">https://github.com/&lt;org&gt;/&lt;pipeline-name&gt;/actions/workflows/ci.yml/badge.svg</span>)](https://github.com/&lt;org&gt;/&lt;pipeline-name&gt;/actions/workflows/ci.yml)
+</code></pre></div>
+<p>The tarball URL above is the <strong>verified</strong> install path: the archive is
+<code>oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz</code> and contains exactly one
+file, <code>oxo-flow</code>.</p>
+<hr />
+<h2 id="9-readmemd-template-80-lines-exact-skeleton">9. README.md template (~80 lines, exact skeleton)</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="gh"># &lt;Pipeline Display Name&gt;</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>[<span class="nt">![CI</span>](<span class="na">https://github.com/&lt;org&gt;/&lt;repo&gt;/actions/workflows/ci.yml/badge.svg</span>)](https://github.com/&lt;org&gt;/&lt;repo&gt;/actions/workflows/ci.yml)
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>[<span class="nt">![License</span>](<span class="na">https://img.shields.io/badge/license-Apache%202.0-blue.svg</span>)](LICENSE)
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>&lt;One-paragraph description: what the pipeline analyzes and produces.&gt;
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="gu">## Source</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>Ported from <span class="gs">**[&lt;upstream-name&gt;](&lt;upstream-repo-url&gt;)**</span>, version
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="sb">`&lt;tag-or-commit&gt;`</span> (&lt;upstream license, e.g. MIT/Apache-2.0&gt;). This port is
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>maintained independently and <span class="gs">**may lag the upstream**</span> — check the
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="sb">`&lt;tag-or-commit&gt;`</span> above and the fidelity table below for the exact ported
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>state.
+<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>
+<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="gu">## Fidelity</span>
+<a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>
+<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a>| Upstream process/rule | oxo-flow rule | Tool (version) | Notes |
+<a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a>|---|---|---|---|
+<a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a>| FASTQC | <span class="sb">`fastqc`</span> | fastqc 0.12.1 | identical command |
+<a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a>| ... | | | |
+<a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a>
+<a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a>Rows cover <span class="gs">**every**</span> upstream process/rule. &quot;not ported&quot; rows are allowed
+<a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a>only with a reason.
+<a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a>
+<a id="__codelineno-11-26" name="__codelineno-11-26" href="#__codelineno-11-26"></a><span class="gu">## Quickstart</span>
+<a id="__codelineno-11-27" name="__codelineno-11-27" href="#__codelineno-11-27"></a>
+<a id="__codelineno-11-28" name="__codelineno-11-28" href="#__codelineno-11-28"></a>```bash
+<a id="__codelineno-11-29" name="__codelineno-11-29" href="#__codelineno-11-29"></a><span class="gh"># 1. install oxo-flow (see Requirements)</span>
+<a id="__codelineno-11-30" name="__codelineno-11-30" href="#__codelineno-11-30"></a><span class="gh"># 2. prepare data: raw/&lt;sample&gt;_R1.fastq.gz / _R2.fastq.gz (see fixtures/)</span>
+<a id="__codelineno-11-31" name="__codelineno-11-31" href="#__codelineno-11-31"></a><span class="gh"># 3. preview the plan</span>
+<a id="__codelineno-11-32" name="__codelineno-11-32" href="#__codelineno-11-32"></a>oxo-flow dry-run main.oxoflow
+<a id="__codelineno-11-33" name="__codelineno-11-33" href="#__codelineno-11-33"></a><span class="gh"># 4. run</span>
+<a id="__codelineno-11-34" name="__codelineno-11-34" href="#__codelineno-11-34"></a>oxo-flow run main.oxoflow -j 8
+<a id="__codelineno-11-35" name="__codelineno-11-35" href="#__codelineno-11-35"></a><span class="gh"># 5. run a subset</span>
+<a id="__codelineno-11-36" name="__codelineno-11-36" href="#__codelineno-11-36"></a>oxo-flow run main.oxoflow -t &lt;final-rule&gt; --samples first:2
+</code></pre></div>
+<h2 id="requirements">Requirements</h2>
+<ul>
+<li><strong>oxo-flow ≥ 0.11.0</strong> — install the prebuilt binary:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>curl<span class="w"> </span>-fL<span class="w"> </span>-o<span class="w"> </span>oxo-flow.tar.gz<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span>https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>tar<span class="w"> </span>xzf<span class="w"> </span>oxo-flow.tar.gz
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>sudo<span class="w"> </span>mv<span class="w"> </span>oxo-flow<span class="w"> </span>/usr/local/bin/
+</code></pre></div>
+<ul>
+<li>Conda users may alternatively <code>conda install -c bioconda oxo-flow-cli</code>
+  (note: the bioconda package currently lags the release binary at 0.10.2 —
+  some 0.11.0 format features may not validate).</li>
+<li>Docker/Singularity/conda at runtime, per the environments declared in
+  <code>main.oxoflow</code>.</li>
+</ul>
+<h2 id="license">License</h2>
+<p>Apache-2.0. Copyright (c) 2026 oxo-flow-community. Upstream attribution in
+<code>NOTICE.md</code>.</p>
+<h2 id="community">Community</h2>
+<p>https://oxo-flow-community.github.io/
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>---
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>## 10. NOTICE.md template
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>```text
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>&lt;pipeline-name&gt;
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>Copyright (c) 2026 oxo-flow-community
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>This pipeline is a port of &lt;upstream-name&gt;
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>(&lt;upstream-repo-url&gt;), version &lt;tag-or-commit&gt;, authored by
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>&lt;upstream-authors-or-org&gt;.
+<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>
+<a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+<a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a>you may not use this file except in compliance with the License.
+<a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a>You may obtain a copy of the License at
+<a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a>
+<a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a>    http://www.apache.org/licenses/LICENSE-2.0
+<a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a>
+<a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a>Unless required by applicable law or agreed to in writing, software
+<a id="__codelineno-13-20" name="__codelineno-13-20" href="#__codelineno-13-20"></a>distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+<a id="__codelineno-13-21" name="__codelineno-13-21" href="#__codelineno-13-21"></a>WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+<a id="__codelineno-13-22" name="__codelineno-13-22" href="#__codelineno-13-22"></a>See the License for the specific language governing permissions and
+<a id="__codelineno-13-23" name="__codelineno-13-23" href="#__codelineno-13-23"></a>limitations under the License.
+<a id="__codelineno-13-24" name="__codelineno-13-24" href="#__codelineno-13-24"></a>
+<a id="__codelineno-13-25" name="__codelineno-13-25" href="#__codelineno-13-25"></a>---------------------------------------------------------------------
+<a id="__codelineno-13-26" name="__codelineno-13-26" href="#__codelineno-13-26"></a>Upstream license
+<a id="__codelineno-13-27" name="__codelineno-13-27" href="#__codelineno-13-27"></a>
+<a id="__codelineno-13-28" name="__codelineno-13-28" href="#__codelineno-13-28"></a>This port is derived from &lt;upstream-name&gt; under the &lt;license-name&gt;
+<a id="__codelineno-13-29" name="__codelineno-13-29" href="#__codelineno-13-29"></a>license. The upstream LICENSE must be included **verbatim** in this
+<a id="__codelineno-13-30" name="__codelineno-13-30" href="#__codelineno-13-30"></a>repository: fetch it from the upstream repository at the ported
+<a id="__codelineno-13-31" name="__codelineno-13-31" href="#__codelineno-13-31"></a>&lt;tag-or-commit&gt; and place it at LICENSE.upstream. (Apache-2.0 §4(d):
+<a id="__codelineno-13-32" name="__codelineno-13-32" href="#__codelineno-13-32"></a>attribution notices from the Source form must be retained.)
+<a id="__codelineno-13-33" name="__codelineno-13-33" href="#__codelineno-13-33"></a>---------------------------------------------------------------------
+</code></pre></div></p>
+<p>Rule: the NOTICE instructs the port author to fetch the upstream LICENSE
+from the upstream repo at the ported commit and commit it verbatim as
+<code>LICENSE.upstream</code> — the porting agent must actually do this, not just
+write the instruction.</p>
+<hr />
+<h2 id="11-license">11. LICENSE</h2>
+<p>Port repositories carry the <strong>full Apache-2.0 text</strong> — copy the file from
+<code>/Users/wsx/Documents/GitHub/oxo-flow/LICENSE</code> (it is the standard Apache
+2.0 text with the appendix, §178–190: "Copyright 2025 Traitome / Licensed
+under the Apache License…"). Conventions to mirror:</p>
+<ol>
+<li>Keep the complete Terms and Conditions text (§1–9) verbatim.</li>
+<li>Replace the appendix copyright line with the port's:
+   <code>Copyright (c) 2026 oxo-flow-community</code>
+   (keep the "Licensed under the Apache License…" appendix boilerplate).</li>
+<li>The oxo-flow source repo has <strong>no NOTICE file</strong>; attribution lives in
+   this port's <code>NOTICE.md</code> (§10) plus the retained upstream license file.</li>
+<li>Add <code>LICENSE.upstream</code> (the upstream repo's license, verbatim) per §10.</li>
+</ol>
+<hr />
+<h2 id="12-metadatajson-exact-schema">12. metadata.json — exact schema</h2>
+<p>Every port ships <code>metadata.json</code> validating against this schema:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="p">{</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span><span class="nt">&quot;$schema&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://json-schema.org/draft-07/schema#&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;oxo-flow port metadata&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">  </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">    </span><span class="s2">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;title&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;engine&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;source&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;created&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;domain&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="w">    </span><span class="s2">&quot;tags&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;description&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;scope&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;excluded&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;rule_count&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="w">    </span><span class="s2">&quot;tools&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;status&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;repo_url&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;site_page&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;upstream_license&quot;</span>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="w">  </span><span class="p">],</span>
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="w">  </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a><span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;kebab-case repo name, e.g. &#39;nf-core-rnaseq&#39;&quot;</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a><span class="w">    </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Display title&quot;</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a><span class="w">    </span><span class="nt">&quot;engine&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;const&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;oxo-flow&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Engine this port targets&quot;</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a><span class="w">    </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a><span class="w">      </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;repo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;url&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;tag&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;sha&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;license&quot;</span><span class="p">],</span>
+<a id="__codelineno-14-17" name="__codelineno-14-17" href="#__codelineno-14-17"></a><span class="w">      </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-14-18" name="__codelineno-14-18" href="#__codelineno-14-18"></a><span class="w">        </span><span class="nt">&quot;repo&quot;</span><span class="p">:</span><span class="w">     </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Upstream repo short name&quot;</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-14-19" name="__codelineno-14-19" href="#__codelineno-14-19"></a><span class="w">        </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w">      </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;uri&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Upstream repo URL&quot;</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-14-20" name="__codelineno-14-20" href="#__codelineno-14-20"></a><span class="w">        </span><span class="nt">&quot;tag&quot;</span><span class="p">:</span><span class="w">      </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Upstream release tag or branch&quot;</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-14-21" name="__codelineno-14-21" href="#__codelineno-14-21"></a><span class="w">        </span><span class="nt">&quot;sha&quot;</span><span class="p">:</span><span class="w">      </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Upstream commit SHA at port time (full 40-hex)&quot;</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-14-22" name="__codelineno-14-22" href="#__codelineno-14-22"></a><span class="w">        </span><span class="nt">&quot;license&quot;</span><span class="p">:</span><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Upstream license SPDX id&quot;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-14-23" name="__codelineno-14-23" href="#__codelineno-14-23"></a><span class="w">      </span><span class="p">}</span>
+<a id="__codelineno-14-24" name="__codelineno-14-24" href="#__codelineno-14-24"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-14-25" name="__codelineno-14-25" href="#__codelineno-14-25"></a><span class="w">    </span><span class="nt">&quot;created&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;date&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Port date, ISO 8601 (2026-08-15)&quot;</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-14-26" name="__codelineno-14-26" href="#__codelineno-14-26"></a><span class="w">    </span><span class="nt">&quot;domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;genomics&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;transcriptomics&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;single-cell&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;metagenomics&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;proteomics&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;multi-omics&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;other&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-14-27" name="__codelineno-14-27" href="#__codelineno-14-27"></a><span class="w">    </span><span class="nt">&quot;tags&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;array&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Search tags, e.g. [&#39;rna-seq&#39;, &#39;differential-expression&#39;]&quot;</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-14-28" name="__codelineno-14-28" href="#__codelineno-14-28"></a><span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;One-paragraph pipeline description&quot;</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-14-29" name="__codelineno-14-29" href="#__codelineno-14-29"></a><span class="w">    </span><span class="nt">&quot;scope&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;array&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Upstream steps included in this port (rule names)&quot;</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-14-30" name="__codelineno-14-30" href="#__codelineno-14-30"></a><span class="w">    </span><span class="nt">&quot;excluded&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;array&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Upstream steps NOT ported, with reasons&quot;</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-14-31" name="__codelineno-14-31" href="#__codelineno-14-31"></a><span class="w">    </span><span class="nt">&quot;rule_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;integer&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Number of [[rules]] entries in the port&quot;</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-14-32" name="__codelineno-14-32" href="#__codelineno-14-32"></a><span class="w">    </span><span class="nt">&quot;tools&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;array&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Tool@version list, e.g. [&#39;fastp@0.23.4&#39;, &#39;STAR@2.7.11b&#39;]&quot;</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-14-33" name="__codelineno-14-33" href="#__codelineno-14-33"></a><span class="w">    </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;draft&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ready&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;archived&quot;</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&#39;ready&#39; only when §14 passes&quot;</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-14-34" name="__codelineno-14-34" href="#__codelineno-14-34"></a><span class="w">    </span><span class="nt">&quot;repo_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;uri&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;URL of this port&#39;s repository&quot;</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-14-35" name="__codelineno-14-35" href="#__codelineno-14-35"></a><span class="w">    </span><span class="nt">&quot;site_page&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;uri&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Community site page, https://oxo-flow-community.github.io/&lt;name&gt;/&quot;</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-14-36" name="__codelineno-14-36" href="#__codelineno-14-36"></a><span class="w">    </span><span class="nt">&quot;upstream_license&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Upstream license SPDX id (mirrors source.license)&quot;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-14-37" name="__codelineno-14-37" href="#__codelineno-14-37"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-14-38" name="__codelineno-14-38" href="#__codelineno-14-38"></a><span class="p">}</span>
+</code></pre></div>
+<p>Example values for an nf-core rnaseq port:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="p">{</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;nf-core-rnaseq&quot;</span><span class="p">,</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;nf-core rnaseq (port)&quot;</span><span class="p">,</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">  </span><span class="nt">&quot;engine&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;oxo-flow&quot;</span><span class="p">,</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">  </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">    </span><span class="nt">&quot;repo&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;nf-core/rnaseq&quot;</span><span class="p">,</span>
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="w">    </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://github.com/nf-core/rnaseq&quot;</span><span class="p">,</span>
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="w">    </span><span class="nt">&quot;tag&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;3.14.2&quot;</span><span class="p">,</span>
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="w">    </span><span class="nt">&quot;sha&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;40-hex-sha-of-tag&gt;&quot;</span><span class="p">,</span>
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="w">    </span><span class="nt">&quot;license&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MIT&quot;</span>
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="w">  </span><span class="nt">&quot;created&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-08-15&quot;</span><span class="p">,</span>
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a><span class="w">  </span><span class="nt">&quot;domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;transcriptomics&quot;</span><span class="p">,</span>
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a><span class="w">  </span><span class="nt">&quot;tags&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;rna-seq&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;differential-expression&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;nf-core&quot;</span><span class="p">],</span>
+<a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a><span class="w">  </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;oxo-flow port of the nf-core/rnaseq pipeline: QC, trimming, STAR alignment, quantification, DE.&quot;</span><span class="p">,</span>
+<a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a><span class="w">  </span><span class="nt">&quot;scope&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;fastqc&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;trim&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;star_align&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;featurecounts&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;multiqc&quot;</span><span class="p">],</span>
+<a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a><span class="w">  </span><span class="nt">&quot;excluded&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;umicollapse&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;upstream branch steps — not in default path&quot;</span><span class="p">],</span>
+<a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a><span class="w">  </span><span class="nt">&quot;rule_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span>
+<a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a><span class="w">  </span><span class="nt">&quot;tools&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;fastqc@0.12.1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;fastp@0.23.4&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;STAR@2.7.11b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;subread@2.0.6&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;multiqc@1.21&quot;</span><span class="p">],</span>
+<a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a><span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ready&quot;</span><span class="p">,</span>
+<a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a><span class="w">  </span><span class="nt">&quot;repo_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://github.com/&lt;org&gt;/nf-core-rnaseq&quot;</span><span class="p">,</span>
+<a id="__codelineno-15-22" name="__codelineno-15-22" href="#__codelineno-15-22"></a><span class="w">  </span><span class="nt">&quot;site_page&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://oxo-flow-community.github.io/nf-core-rnaseq/&quot;</span><span class="p">,</span>
+<a id="__codelineno-15-23" name="__codelineno-15-23" href="#__codelineno-15-23"></a><span class="w">  </span><span class="nt">&quot;upstream_license&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MIT&quot;</span>
+<a id="__codelineno-15-24" name="__codelineno-15-24" href="#__codelineno-15-24"></a><span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="13-gotchas-verified-behaviors-ports-must-work-around">13. Gotchas — verified behaviors ports must work around</h2>
+<p>Each item is marked with what it is based on: <code>[V]</code> = observed against the
+0.11.0 binary on 2026-08-15, <code>[docs]</code> = documented in
+<code>docs/guide/src/reference/{workflow-format,wildcards,dag-engine,execution-backends}.md</code>
+or <code>docs/guide/src/commands/*.md</code>, <code>[gallery]</code> = canonical example file.</p>
+<ol>
+<li><strong><code>threads</code> unset ⇒ sentinel 1.</strong> A rule without <code>[rules.resources]
+   threads</code> (and no <code>[defaults] threads</code>) reports <code>threads=1</code> in dry-run
+   output. This is the documented "unset" convention — do not confuse it
+   with an actual one-thread declaration. <code>[V]</code></li>
+<li><strong>Engine-internal/reserved keys.</strong> <code>cleanup_chunks</code> is engine-internal
+   (serde <code>skip_deserializing</code>): a user-set value is <strong>silently ignored</strong>,
+   <code>validate</code> passes [V]. Chunk cleanup is controlled only by
+   <code>[rules.transform] cleanup = true</code>. Engine-injected config keys:
+   <code>config.samples_list</code>, <code>config.samples_&lt;group&gt;</code> — set by the engine,
+   never trigger invalidation, and referencing them before any sample source
+   exists yields a literal <code>config.&lt;key&gt;</code> in expanded paths (observed as
+   <code>variants/config.pairs_list.vcf</code>) [V]. <code>[docs]</code> + <code>[V]</code></li>
+<li><strong>DAG edges are exact-string matches on file paths.</strong> <code>input</code> string ≡
+   <code>output</code> string ⇒ edge; everything else ⇒ no edge. Consequently:
+   <strong>glob inputs (<code>data/*.txt</code>) and directory inputs (<code>data</code>) form NO DAG
+   edges</strong> — a consumer may race its producer and fail (<code>cat: data/*.txt:
+   No such file or directory</code> observed) [V]. Fix: <code>depends_on = ["producer"]</code>
+   on the consumer. This is the single most common wiring bug in ports.
+   <code>[docs: dag-engine.md]</code> + <code>[V]</code></li>
+<li><strong>Config list comma-splitting.</strong> A <code>config.*</code> value referenced by
+   <code>expand_inputs</code> / <code>transform.split.values_from</code> / <code>scatter.values_from</code>
+   is split on commas when it is a string: <code>"A,B,C"</code> → 3 values [V]. A
+   TOML array <code>["X","Y"]</code> → 2 values [V]. Escape hatch: single-element
+   array <code>["A,B"]</code> → one value [V]. <strong>Inline literals written directly in
+   <code>variables</code> are never split.</strong> <code>[docs: workflow-format.md]</code> + <code>[V]</code></li>
+<li><strong>Output parent directories are created by the executor</strong> — a rule whose
+   output is <code>out/combined.txt</code> runs fine with no <code>mkdir -p out</code> [V]
+   (gallery still writes <code>mkdir -p</code> lines for multi-directory outputs and
+   for <code>-o qc/</code>-style tools; harmless either way). Directory <strong>inputs</strong>,
+   though, must exist or the rule fails at runtime [V].</li>
+<li><strong>Dry-run is checkpoint-aware and read-only.</strong> With a checkpoint
+   present it classifies every rule exactly like <code>run</code> would
+   (<code>[skip: up to date]</code>, <code>[run: input changed]</code>, <code>[rerun: downstream of
+   X]</code>, <code>[skip: when condition false]</code>). Without one it says so and treats
+   everything as never completed [V]. <code>[docs: commands/dry-run.md]</code></li>
+<li><strong>Plain-file input invalidation is content-based (≤64 MiB).</strong> A <code>touch</code>
+   does NOT invalidate a completed rule [V]; changing file content DOES
+   (<code>[run: input changed]</code> observed) [V]. <code>[docs: commands/run.md]</code> —
+   debugging "why won't my rule re-run" usually comes back to this.</li>
+<li><strong><code>sample_pattern</code> discovery and <code>[[sample_groups]]</code> are separate
+   sources that BOTH fan out.</strong> A rule referencing <code>{sample}</code> expands once
+   per group — including the <code>auto-discovered</code> group — so declaring both
+   yields duplicate instances writing the same outputs [V]. Ports must
+   choose <strong>one</strong> sample source for the default path (§2.4). <code>[V]</code></li>
+<li><strong>There is no <code>config.pairs_list</code>.</strong> Only samples are merged into an
+   injected config key. To gather across pairs, add a user config array
+   (<code>[config] pair_ids = ["CASE_001", ...]</code>) and reference it in
+   <code>expand_inputs</code> — verified working [V]. Keep it in sync with
+   <code>[[pairs]]</code>; the README must document that.</li>
+<li><strong><code>oxo-flow schema</code> output is a subset.</strong> The dumped JSON Schema
+    contains only <code>workflow</code>, <code>references</code>, <code>config</code>, <code>cluster</code>,
+    <code>webhooks</code>, <code>rules</code> (with a reduced rule-field set) — it omits
+    <code>defaults</code>, <code>pairs</code>, <code>sample_groups</code>, <code>env_groups</code>, <code>include</code>,
+    <code>transform</code>, <code>resources</code>, <code>environment</code>, <code>expand_inputs</code>, and more,
+    all of which <code>validate</code> accepts [V]. Use <code>validate</code> + the reference
+    docs as the format authority, not the schema dump. <code>[V]</code></li>
+<li><strong><code>debug -r</code> needs the expanded instance name.</strong> <code>debug wf.oxoflow -r
+    stats</code> errors "rule not found"; <code>-r stats_auto-discovered_sampleA</code>
+    works [V]. Get instance names from <code>dry-run</code>/<code>debug</code> output.</li>
+<li><strong>Expanded rule naming.</strong> <code>rule_group_sample</code> (samples), <code>rule_pair_id</code>
+    (pairs), <code>namespace::rule_group_sample</code> (included + expanded),
+    <code>rule_&lt;split_value&gt;</code> and <code>rule_combine</code> (transform), <code>rule_&lt;pair_id&gt;</code>
+    (pairs). <code>[V]</code> + <code>[docs: wildcards.md]</code></li>
+<li><strong>One backend per rule, and the backend must contain every tool in the
+    rule's command.</strong> A <code>bwa-mem2 … | samtools sort</code> pipe cannot run in a
+    single-tool container — the gallery explicitly uses a combined conda
+    env for this ("single-tool docker images cannot run it") [gallery:
+    07_wgs_germline.oxoflow, 13_simple_variant_calling.oxoflow]. Ports must
+    group tools per rule accordingly.</li>
+<li><strong>Missing declared outputs fail the rule.</strong> After a rule's shell exits
+    0, every declared output is checked on disk; a missing one fails the
+    rule with exit sentinel -1 and runs <code>on_failure</code>. This is how
+    "cleanup masked a tool failure" is caught. <code>[docs: workflow-format.md]</code></li>
+<li><strong><code>validate</code> exit 0 ≠ clean.</strong> Missing-input warnings print and exit 0
+    [V]; they are listed for every input not produced by an exact output
+    match — globs, directories, and dead paths included. <code>lint --strict</code>
+    turns warnings into exit 1 [V]. CI uses <code>validate</code> + <code>lint</code> +
+    <code>dry-run</code>, not exit codes alone.</li>
+<li><strong>E003: wildcard in output but not in input.</strong> <code>{pair_id}</code> in <code>output</code>
+    with no <code>[[pairs]]</code> block and no <code>{pair_id}</code> in <code>input</code> fails
+    validation [V]. Declare the pair source or add the wildcard to an
+    input path.</li>
+<li><strong>Wildcard constraints.</strong> <code>[wildcard_constraints] sample = "[A-Z0-9]+"</code>
+    filters discovered values (non-matching ones are ignored).
+    <code>[docs: wildcards.md]</code></li>
+<li><strong>Run flags must precede <code>KEY=VALUE</code> overrides.</strong> <code>run wf.oxoflow
+    min_quality=30 --json</code> errors with guidance; the override list is
+    trailing [docs: commands/run.md]. CI/test scripts: flags first.</li>
+<li><strong>Workflow file auto-discovery.</strong> <code>dry-run</code>/<code>run</code> with no WORKFLOW
+    argument picks <code>main.oxoflow</code> first, then the alphabetically first
+    <code>*.oxoflow</code> [docs]. Ports name the file <code>main.oxoflow</code> so plain
+    <code>oxo-flow run</code> works.</li>
+<li><strong>The <code>.oxoflow</code> extension is mandatory</strong> for validation tooling
+    ([docs: workflow-format.md]).</li>
+<li><strong>Output collisions warn but don't fail.</strong> Two rules producing
+    overlapping wildcard patterns (both <code>{sample}.vcf</code>) produce
+    <code>detect_output_collisions</code> warnings — resolve by distinct output dirs.
+    <code>[docs: dag-engine.md]</code></li>
+<li><strong>Included fragments validate standalone with <code>validate --as-include</code></strong>
+    (skips DAG + input checks) [V]; plain <code>validate</code> on a fragment still
+    checks its own internal DAG, which is fine for fragments with
+    <code>depends_on</code> chains [V].</li>
+<li><strong>Profile merge is fill-in only</strong> — a <code>profiles/cluster.toml</code>
+    <code>threads = "32"</code> does not override the workflow's <code>[config] threads</code>
+    [V]. To make profiles actually switch values, the workflow config must
+    leave the key unset (or use distinct keys).</li>
+<li><strong>Checkpoint re-entry cap and guards.</strong> Checkpoint rules can't use
+    <code>{sample}</code>/<code>{group}</code> (E014), need <code>checkpoint_manifest</code> (E013), and
+    re-entry is capped at 32 rounds. Missing/unparsable manifest fails the
+    rule. <code>[docs: workflow-format.md]</code></li>
+<li><strong><code>temporary = true</code> deletes outputs only after a fully successful
+    run</strong>, tombstone-aware (a plain re-run does NOT regenerate them; only a
+    dependent needing them triggers lazy cascade-up). Failed runs keep
+    outputs. Leaf rules keep outputs. <code>[docs: commands/run.md]</code></li>
+<li><strong><code>when</code>-false rules are skipped, not dropped</strong> — they stay in the DAG
+    with <code>JobStatus::Skipped</code> ("condition evaluated to false") [V].</li>
+<li><strong>Output verification counts sizes</strong> — run summary prints
+    <code>✓ N output files verified (X MB total)</code> [V]; CI failures show up as
+    rule failures with exit code 1.</li>
+<li><strong>Version pinning must survive the port.</strong> Container tags carry the
+    <code>--&lt;build&gt;</code> suffix; conda pins use <code>tool=version</code>. Copy both verbatim
+    (§5). <code>[V]</code> for syntax acceptance; policy is §5.</li>
+</ol>
+<hr />
+<h2 id="14-definition-of-done">14. Definition of done</h2>
+<p>A port is DONE only when <strong>all</strong> of the following hold (checked before
+submission):</p>
+<ul>
+<li>[ ] <code>oxo-flow validate main.oxoflow</code> exits 0 (CI-green locally with
+      <code>OXO=/Users/wsx/Documents/GitHub/oxo-community/bin/oxo-flow</code>).</li>
+<li>[ ] <code>./test/run.sh</code> passes locally and in CI (ubuntu-latest, §8) —
+      validate + lint + dry-run with default config + no unexpanded
+      wildcards in <code>debug</code> output.</li>
+<li>[ ] <code>oxo-flow dry-run main.oxoflow</code> shows the full plan with correct
+      expansion: every per-sample/per-pair rule instance present, gather
+      rules single-instance with full input lists, <code>input ✓</code> for every
+      fixture file, no <code>input ✗</code> other than files intentionally provided at
+      run time by the user.</li>
+<li>[ ] <code>oxo-flow debug main.oxoflow</code> output matches the upstream command
+      logic (tool flags, orderings, file naming) after placeholder
+      substitution.</li>
+<li>[ ] Fidelity table complete — every upstream process/rule has a row;
+      every deviation is explained; nothing silently dropped.</li>
+<li>[ ] No unpinned tools: no <code>latest</code> container tags, no unpinned conda
+      deps; any upstream-unpinned tool is pinned at port time and flagged
+      in the fidelity table (§5).</li>
+<li>[ ] Exactly one sample source on the default path (no §13.8
+      double-fan-out).</li>
+<li>[ ] <code>README.md</code> (title, CI badge, description, Source block with
+      tag/commit + upstream license, Created note "2026-08-15" + may-lag
+      sentence, fidelity table, quickstart, requirements incl. bioconda
+      caveat, license summary, community link) — §9 skeleton followed.</li>
+<li>[ ] <code>NOTICE.md</code> present; <code>LICENSE</code> = full Apache-2.0 with
+      "Copyright (c) 2026 oxo-flow-community"; <code>LICENSE.upstream</code> = the
+      upstream license fetched from the upstream repo at the ported commit
+      (§10, §11).</li>
+<li>[ ] <code>metadata.json</code> validates against the §12 schema; <code>rule_count</code> and
+      <code>tools</code> match the port; <code>status = "ready"</code>.</li>
+<li>[ ] <code>.github/workflows/ci.yml</code> present with the v0.11.0 tarball install
+      (§8); CI is green with the badge URL resolving.</li>
+<li>[ ] No files written into <code>/Users/wsx/Documents/GitHub/oxo-flow/</code>; all
+      scratch work stayed under <code>/tmp/pb-check/</code> (or equivalent).</li>
+</ul>
+<hr />
+<h2 id="appendix-a-verification-record-2026-08-15-oxo-flow-0110">Appendix A. Verification record (2026-08-15, oxo-flow 0.11.0)</h2>
+<p>Everything marked <code>[V]</code> above was reproduced in <code>/tmp/pb-check/</code> with the
+binary <code>/Users/wsx/Documents/GitHub/oxo-community/bin/oxo-flow</code>. Summary of
+the runs:</p>
+<table>
+<thead>
+<tr>
+<th>Scratch workflow</th>
+<th>Verified</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>wf1</td>
+<td><code>sample_pattern</code> discovery ("Auto-discovered 2 samples"), docker/singularity/conda env syntax accepted, <code>[defaults]</code> vs <code>[rules.resources]</code> precedence in dry-run (threads=2 default vs 4 override), debug <code>-r</code> instance-name requirement, docker wrapper command shape, positional config overrides (<code>greeting=hi threshold=42</code> → output "hi 42")</td>
+</tr>
+<tr>
+<td>wf2</td>
+<td>Exact-string DAG edges (glob/dir inputs form no edges; consumer raced producer and failed), output parent-dir auto-creation, runtime glob/dir input behavior with <code>depends_on</code> fix, <code>threads=1</code> sentinel, missing-input warnings in validate + <code>input ✗</code> in dry-run, validate skips warnings for producer-owned files</td>
+</tr>
+<tr>
+<td>wf3</td>
+<td><code>[[pairs]]</code> fan-out (<code>pair_rule_CASE_001</code>), <code>[[sample_groups]]</code> fan-out (<code>group_rule_cohort_S1</code>), <strong>absence of <code>config.pairs_list</code></strong> (literal <code>variants/config.pairs_list.vcf</code>)</td>
+</tr>
+<tr>
+<td>wf4</td>
+<td>E003 (wildcard in output not in input without pair source), transform split→map→combine expansion (chunk paths <code>.oxo-flow/chunks/chr/chr1.g.vcf.gz</code>, combine command), config-array-driven <code>expand_inputs</code> gather across pairs, <code>config.samples_list</code> gather</td>
+</tr>
+<tr>
+<td>wf5</td>
+<td><code>[[include]]</code> + namespace (<code>qc::fastqc_cohort_S1</code>), cross-file <code>depends_on = ["qc::trim"]</code>, fragment <code>validate --as-include</code>, profile fill-in-only merge</td>
+</tr>
+<tr>
+<td>wf6</td>
+<td><code>{config.x}</code> inside <code>sample_pattern</code>, <code>cleanup_chunks</code> silently ignored, <code>config.samples_list</code> comma-joined in shell, auto-discovered + group double fan-out</td>
+</tr>
+<tr>
+<td>wf7</td>
+<td>Config comma-splitting + single-element-array escape hatch, <code>lint</code> warning codes (W004/W007/W008), <code>lint --strict</code> exit 1</td>
+</tr>
+<tr>
+<td>wf8</td>
+<td>Checkpoint: run→skip on re-run ("0 succeeded, 2 skipped"), dry-run <code>[skip: up to date]</code>, <code>touch</code> does not invalidate, content change invalidates (<code>[run: input changed]</code>)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="appendix-b-doc-citations">Appendix B. Doc citations</h2>
+<ul>
+<li>Format authority: <code>docs/guide/src/reference/workflow-format.md</code> (all rule
+  fields, config forms, pairs/groups, transform, include, checkpoint
+  re-entry), <code>wildcards.md</code> (fan-out vs fan-in, expand_inputs), <code>dag-engine.md</code>
+  (edge inference, collisions), <code>environment-system.md</code> +
+  <code>execution-backends.md</code> (backends, setup commands), <code>glossary.md</code>.</li>
+<li>Commands: <code>docs/guide/src/commands/validate.md</code>, <code>dry-run.md</code>, <code>run.md</code>,
+  <code>debug.md</code>, <code>lint.md</code>, <code>graph.md</code>, <code>schema.md</code>.</li>
+<li>Gallery (canonical TOML): <code>examples/gallery/{01_hello_world,
+  02_file_pipeline,03_parallel_samples,04_scatter_gather,05_conda_environments,
+  06_rnaseq_quantification,07_wgs_germline,08_multiomics_integration,
+  09_single_cell_rnaseq,10_transform_operator,11_conditional_workflow,
+  12_cohort_analysis,13_simple_variant_calling,14_paired_experiment_control,
+  15_paired_experiment_control_pairs,16_16s_qiime2_amplicon}.oxoflow</code>;
+  docs at <code>docs/guide/src/gallery/*.md</code>.</li>
+<li>CLI embedded gallery: <code>crates/oxo-flow-cli/src/commands/project.rs</code>
+  (<code>EMBEDDED_GALLERY</code>, mirror in <code>crates/oxo-flow-cli/templates/</code>,
+  drift-guarded).</li>
+<li>License: <code>/Users/wsx/Documents/GitHub/oxo-flow/LICENSE</code> (Apache-2.0,
+  "Copyright 2025 Traitome"; no NOTICE file exists in the repo).</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      © 2026 oxo-flow-community · Apache-2.0 · Ports are based on their upstream workflows — see each repository's NOTICE.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.copy", "content.code.annotate", "navigation.top", "navigation.indexes", "search.highlight", "search.suggest", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/pipelines-data.js"></script>
+      
+        <script src="../../javascripts/catalog.js"></script>
+      
+    
+  </body>
+</html>

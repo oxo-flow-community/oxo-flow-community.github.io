@@ -1,0 +1,981 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="20 battle-tested bioinformatics workflows — faithful ports of the most-used nf-core and Snakemake pipelines for the oxo-flow engine. Search the catalog, read the run instructions, copy the command.">
+      
+      
+      
+        <link rel="canonical" href="https://oxo-flow-community.github.io/pipelines/oxo-flow-viralrecon/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/favicon.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Viral assembly and intrahost variant calling - oxo-flow-community</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#viral-assembly-and-intrahost-variant-calling" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="oxo-flow-community" class="md-header__button md-logo" aria-label="oxo-flow-community" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            oxo-flow-community
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Viral assembly and intrahost variant calling
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="oxo-flow-community" class="md-nav__button md-logo" aria-label="oxo-flow-community" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    oxo-flow-community
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pipelines
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/selection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Selection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/porting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Porting guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#run-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run it
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scope
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fidelity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fidelity
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#links" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Links
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="viral-assembly-and-intrahost-variant-calling">Viral assembly and intrahost variant calling</h1>
+<p>oxo-flow port of the nf-core/viralrecon pipeline (default illumina + amplicon path): FastQC, fastp trimming, Kraken2 host removal, Bowtie2 alignment, iVar primer trimming and intrahost variant calling, snpEff/SnpSift annotation, bcftools consensus with low-coverage masking, Pangolin/Nextclade lineage assignment, Freyja lineage deconvolution, Cutadapt primer trimming and SPAdes de novo assembly with Bandage/BLAST/QUAST/ABACAS QC, and a final MultiQC report.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;"></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;"><strong>Engine</strong></td>
+<td>nf-core</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>Source</strong></td>
+<td><a href="https://github.com/nf-core/viralrecon">nf-core/viralrecon</a></td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>Pinned version</strong></td>
+<td><code>3.0.0</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>Ported</strong></td>
+<td>2026-08-15</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>Rules</strong></td>
+<td>51</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>Tools</strong></td>
+<td>abacas · bandage · bcftools · bedtools · blast · bowtie2 · cutadapt · fastp · fastqc · freyja · htslib · ivar · kraken2 · mosdepth · multiqc · nextclade · pangolin · picard · pigz · python · quast · r · samtools · snpeff · snpsift · spades</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>Domain</strong></td>
+<td>genomics</td>
+</tr>
+</tbody>
+</table>
+<h2 id="run-it">Run it</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>oxo-flow<span class="w"> </span>run<span class="w"> </span>workflow/viralrecon.toml
+</code></pre></div>
+<h2 id="scope">Scope</h2>
+<p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
+<p><strong>In scope</strong></p>
+<ul>
+<li>gunzip_fasta</li>
+<li>gunzip_gff</li>
+<li>gunzip_primer_bed</li>
+<li>prepare_genome</li>
+<li>untar_kraken2_db</li>
+<li>collapse_primers</li>
+<li>get_primer_fasta</li>
+<li>build_bowtie2_index</li>
+<li>get_nextclade_dataset</li>
+<li>make_blast_db</li>
+<li>build_snpeff_db</li>
+<li>cat_fastq</li>
+<li>fastqc_raw</li>
+<li>fastp</li>
+<li>fastqc_trim</li>
+<li>kraken2</li>
+<li>align_bowtie2</li>
+<li>bam_sort_index</li>
+<li>ivar_trim</li>
+<li>bam_sort_index_trimmed</li>
+<li>picard_metrics</li>
+<li>mosdepth_genome</li>
+<li>plot_mosdepth_genome</li>
+<li>mosdepth_amplicon</li>
+<li>plot_mosdepth_amplicon</li>
+<li>freyja_variants</li>
+<li>freyja_demix</li>
+<li>freyja_boot</li>
+<li>call_variants_ivar</li>
+<li>ivar_to_vcf</li>
+<li>sort_vcf</li>
+<li>snpeff_ann</li>
+<li>snpsift_extract</li>
+<li>consensus_filter</li>
+<li>consensus_call</li>
+<li>quast_consensus</li>
+<li>pangolin</li>
+<li>nextclade</li>
+<li>plot_base_density</li>
+<li>nextclade_clade_mqc</li>
+<li>variants_long_table</li>
+<li>assembly_fastq</li>
+<li>prepare_primer_fasta</li>
+<li>cutadapt</li>
+<li>fastqc_primers</li>
+<li>assemble_spades</li>
+<li>bandage</li>
+<li>blast_assembly</li>
+<li>quast_assembly</li>
+<li>abacas</li>
+<li>multiqc</li>
+</ul>
+<p><strong>Excluded</strong></p>
+<ul>
+<li>nanopore platform branch (ARTIC_GUPPYPLEX, ARTIC_MINION, NANOPLOT, PYCOQC, VCFLIB_VCFUNIQ, PREPARE_GENOME_NANOPORE) — illumina only</li>
+<li>variant_caller='bcftools' branch (VARIANTS_BCFTOOLS subworkflow: BCFTOOLS_MPILEUP, BCFTOOLS_NORM, BCFTOOLS_MPILEUP_FILTER) — non-default; only the iVar caller (the amplicon default) is ported</li>
+<li>consensus_caller='ivar' branch (CONSENSUS_IVAR subworkflow: IVAR_CONSENSUS) — non-default; only bcftools consensus (the default) is ported</li>
+<li>wgs (shotgun) protocol variant branch — the port runs the amplicon protocol gates; non-amplicon variant calling is not ported</li>
+<li>unicycler and minia assemblers (ASSEMBLY_UNICYCLER / ASSEMBLY_MINIA) — assemblers fixed to the upstream default 'spades'</li>
+<li>PICARD_MARKDUPLICATES — skip_markduplicates defaults to true upstream and in this port</li>
+<li>PLASMIDID — skip_plasmidid defaults to true upstream and in this port</li>
+<li>KRAKEN2_BUILD — upstream downloads the human host database over the network; port takes a local kraken2_db tar.gz (empty-stub fixture provided)</li>
+<li>FREYJA_UPDATE — upstream downloads barcodes/lineages over the network; port takes config.freyja_barcodes / config.freyja_lineages (fixtures provided)</li>
+<li>PANGOLIN_UPDATEDATA — upstream downloads the pangolin data directory over the network; port takes config.pango_database (fixture placeholder provided)</li>
+<li>ADDITIONAL_ANNOTATION — off by default upstream</li>
+<li>channel-level runtime filters — fastp reads-after-filtering empty check, min_mapped_reads flagstat gate, zero-variant-sample filter and optional-file gates have no oxo-flow equivalent (documented deviations)</li>
+<li>save_<em> extra outputs — save_unaligned, save_trimmed_fail, save_mpileup, save_ivar_trimmed_bam and other save_</em> flags are off by default and not ported</li>
+<li>MultiQC extras — multiqc_data/versions.yml software table and *_plots directory not emitted; report HTML, data dir and the two metrics CSVs are</li>
+</ul>
+<h2 id="fidelity">Fidelity</h2>
+<p>Every upstream process and subworkflow on the default path, and what happened
+to it in this port:</p>
+<table>
+<thead>
+<tr>
+<th>Upstream process (module)</th>
+<th>Port rule</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CAT_FASTQ</td>
+<td><code>cat_fastq</code></td>
+<td><code>cat</code> to <code>fastp/{sample}_{1,2}.fastq.gz</code></td>
+</tr>
+<tr>
+<td>FASTQC_RAW</td>
+<td><code>fastqc_raw</code></td>
+<td>same args; upstream input-rename step kept (reads symlinked to <code>{sample}_{1,2}.fastq.gz</code> before FastQC so output names match), then renamed into <code>results/fastqc/raw/</code></td>
+</tr>
+<tr>
+<td>FASTP</td>
+<td><code>fastp</code></td>
+<td><code>ext.args</code> baked in verbatim (cut_front/cut_tail/trim_poly_x/cut_mean_quality 30/...) + <code>--detect_adapter_for_pe</code>, <code>2&gt;| &gt;(tee log &gt;&amp;2)</code></td>
+</tr>
+<tr>
+<td>FASTQC_TRIM</td>
+<td><code>fastqc_trim</code></td>
+<td>same args; upstream input-rename step kept (trimmed reads symlinked to <code>{sample}_{1,2}.fastq.gz</code> before FastQC), then renamed into <code>results/fastqc/trim/</code></td>
+</tr>
+<tr>
+<td>KRAKEN2_KRAKEN2</td>
+<td><code>kraken2</code></td>
+<td><code>--db</code> (local), <code>--report-zero-counts</code>, pigz of classified/unclassified pairs; gated on <code>skip_kraken2</code></td>
+</tr>
+<tr>
+<td>(channel wiring)</td>
+<td><code>assembly_fastq</code></td>
+<td>passthrough of fastp reads to <code>kraken2/{sample}.unclassified_*.fastq.gz</code> when host filtering is off — replaces upstream <code>ch_assembly_fastq = ch_variants_fastq</code>; see deviations</td>
+</tr>
+<tr>
+<td>BOWTIE2_ALIGN</td>
+<td><code>align_bowtie2</code></td>
+<td>index found by <code>find -L</code> on <code>*.rev.1.bt2[l]</code>, <code>--local --very-sensitive-local --seed 1</code>, unmapped-filtered <code>samtools view -F4</code>, log tee'd</td>
+</tr>
+<tr>
+<td>IVAR_TRIM</td>
+<td><code>ivar_trim</code></td>
+<td><code>-m 30 -q 20 -e</code> (noprimer-gated), optional <code>-x offset</code>, log captured; gated amplicon</td>
+</tr>
+<tr>
+<td>BAM_SORT_STATS_SAMTOOLS</td>
+<td><code>bam_sort_index_trimmed</code></td>
+<td>merged: <code>samtools cat</code> (single input, dropped) → sort → index → stats/flagstat/idxstats</td>
+</tr>
+<tr>
+<td>(align branch)</td>
+<td><code>bam_sort_index</code></td>
+<td>same merged trio for the untrimmed BAM</td>
+</tr>
+<tr>
+<td>PICARD_MARKDUPLICATES</td>
+<td>—</td>
+<td>excluded: <code>skip_markduplicates=true</code> by default</td>
+</tr>
+<tr>
+<td>PICARD_COLLECTMULTIPLEMETRICS</td>
+<td><code>picard_metrics</code></td>
+<td><code>-Xmx4800M</code> (= 6 GB task × 0.8), LENIENT, <code>--TMP_DIR tmp</code>, all 5 metric files + pdf</td>
+</tr>
+<tr>
+<td>MOSDEPTH_AMPLICON</td>
+<td><code>mosdepth_amplicon</code></td>
+<td><code>--fast-mode --use-median --thresholds 0,1,10,50,100,500 --by collapsed.bed</code></td>
+</tr>
+<tr>
+<td>MOSDEPTH_GENOME</td>
+<td><code>mosdepth_genome</code></td>
+<td><code>--fast-mode --by 200</code></td>
+</tr>
+<tr>
+<td>PLOT_MOSDEPTH_REGIONS (×2)</td>
+<td><code>plot_mosdepth_genome</code> / <code>plot_mosdepth_amplicon</code></td>
+<td>glob-gather over <code>*.regions.bed.gz</code>, <code>all_samples.mosdepth.*</code> outputs</td>
+</tr>
+<tr>
+<td>FREYJA_VARIANTS</td>
+<td><code>freyja_variants</code></td>
+<td><code>--ref --variants --depths</code></td>
+</tr>
+<tr>
+<td>FREYJA_DEMIX</td>
+<td><code>freyja_demix</code></td>
+<td><code>--output --barcodes --meta</code>, <code>--depthcutoff</code> when non-zero</td>
+</tr>
+<tr>
+<td>FREYJA_BOOT</td>
+<td><code>freyja_boot</code></td>
+<td><code>--nt --nb {freyja_repeats} --boxplot pdf</code>, boot outputs renamed to <code>{sample}.lineages.csv</code> / <code>{sample}_summarized.csv</code></td>
+</tr>
+<tr>
+<td>IVAR_VARIANTS</td>
+<td><code>call_variants_ivar</code></td>
+<td><code>samtools mpileup</code> (<code>--ignore-overlaps --count-orphans --no-BAQ --max-depth 0 --min-BQ 0</code>) | <code>ivar variants -t 0.25 -q 20 -m 10 -g -r -p</code></td>
+</tr>
+<tr>
+<td>IVAR_VARIANTS_TO_VCF</td>
+<td><code>ivar_to_vcf</code></td>
+<td><code>--ignore_strand_bias</code>, variant-counts log + header-cat MQC tsv</td>
+</tr>
+<tr>
+<td>BCFTOOLS_SORT</td>
+<td><code>sort_vcf</code></td>
+<td><code>--output --temp-dir .</code> (default <code>--output-type z</code>); process_medium label (6c/36 GB/8 h)</td>
+</tr>
+<tr>
+<td>VCF_TABIX_STATS</td>
+<td><code>sort_vcf</code></td>
+<td>merged: tabix (<code>--threads -p vcf -f</code>) + <code>bcftools stats</code></td>
+</tr>
+<tr>
+<td>SNPEFF_ANN</td>
+<td><code>snpeff_ann</code></td>
+<td><code>-Xmx36g</code>, <code>-config/-dataDir</code> locals, <code>-csvStats</code>, summary html move</td>
+</tr>
+<tr>
+<td>VCF_BGZIP_TABIX_STATS</td>
+<td><code>snpeff_ann</code></td>
+<td>merged: bgzip + tabix + <code>bcftools stats</code></td>
+</tr>
+<tr>
+<td>SNPSIFT_EXTRACTFIELDS</td>
+<td><code>snpsift_extract</code></td>
+<td>same ANN[<em>]/EFF[</em>] field list, <code>-s "," -e "."</code></td>
+</tr>
+<tr>
+<td>BCFTOOLS_FILTER</td>
+<td><code>consensus_filter</code></td>
+<td><code>--include 'FORMAT/ALT_FREQ &gt;= 0.75'</code></td>
+</tr>
+<tr>
+<td>TABIX_TABIX</td>
+<td><code>consensus_filter</code></td>
+<td>merged</td>
+</tr>
+<tr>
+<td>MAKE_BED_MASK</td>
+<td><code>consensus_call</code></td>
+<td>merged: mpileup <code>-a</code> + awk low-coverage (&lt;10) positions + <code>make_bed_mask.py</code></td>
+</tr>
+<tr>
+<td>BEDTOOLS_MERGE</td>
+<td><code>consensus_call</code></td>
+<td>merged</td>
+</tr>
+<tr>
+<td>BEDTOOLS_MASKFASTA</td>
+<td><code>consensus_call</code></td>
+<td>merged</td>
+</tr>
+<tr>
+<td>BCFTOOLS_CONSENSUS</td>
+<td><code>consensus_call</code></td>
+<td><code>cat fasta \| bcftools consensus</code></td>
+</tr>
+<tr>
+<td>RENAME_FASTA_HEADER</td>
+<td><code>consensus_call</code></td>
+<td><code>sed "s/&gt;/&gt;{sample} /g"</code> (byte-identical to upstream)</td>
+</tr>
+<tr>
+<td>QUAST (consensus)</td>
+<td><code>quast_consensus</code></td>
+<td><code>-r --features --threads</code>, report.tsv symlink; batch run over the whole cohort into one <code>quast.consensus/</code> dir — upstream runs one QUAST per sample (<code>ext.prefix</code> → per-sample dirs), so MultiQC shows one aggregated sample row here instead of per-sample rows (numeric results equivalent)</td>
+</tr>
+<tr>
+<td>PANGOLIN_RUN</td>
+<td><code>pangolin</code></td>
+<td><code>XDG_CACHE_HOME=/tmp/.cache</code>, <code>--datadir --outfile --threads</code></td>
+</tr>
+<tr>
+<td>NEXTCLADE_RUN</td>
+<td><code>nextclade</code></td>
+<td><code>--jobs --input-dataset --output-all --output-basename</code></td>
+</tr>
+<tr>
+<td>PLOT_BASE_DENSITY</td>
+<td><code>plot_base_density</code></td>
+<td>same script args, <code>base_qc/</code> outputs</td>
+</tr>
+<tr>
+<td>(channel code)</td>
+<td><code>nextclade_clade_mqc</code></td>
+<td>upstream builds <code>nextclade_clade_mqc.tsv</code> in Nextflow channel code (<code>getNextcladeFieldMapFromCsv</code> + <code>multiqcTsvFromList</code>); ported as an inline python gather over the per-sample CSVs</td>
+</tr>
+<tr>
+<td>BCFTOOLS_QUERY</td>
+<td><code>variants_long_table</code></td>
+<td><code>-H -f '%CHROM\t%POS...'</code> per sample</td>
+</tr>
+<tr>
+<td>MAKE_VARIANTS_LONG_TABLE</td>
+<td><code>variants_long_table</code></td>
+<td>merged with query; symlink-collect pattern, <code>--variant_caller ivar</code></td>
+</tr>
+<tr>
+<td>PREPARE_PRIMER_FASTA</td>
+<td><code>prepare_primer_fasta</code></td>
+<td><code>sed -r '/^[ACTGactg]+$/ s/^/X/g'</code></td>
+</tr>
+<tr>
+<td>CUTADAPT</td>
+<td><code>cutadapt</code></td>
+<td><code>-Z --cores --overlap 5 --minimum-length 30 --error-rate 0.1 -g file: -G file:</code></td>
+</tr>
+<tr>
+<td>FASTQC (assembly)</td>
+<td><code>fastqc_primers</code></td>
+<td>prefix <code>{sample}.primer_trim</code> via symlink rename</td>
+</tr>
+<tr>
+<td>SPADES</td>
+<td><code>assemble_spades</code></td>
+<td><code>--{config.spades_mode} --memory 72</code> (upstream <code>ext.args</code>; default <code>rnaviral</code>), output renames (scaffolds/contigs/gfa gzipped, spades.log)</td>
+</tr>
+<tr>
+<td>BANDAGE_IMAGE</td>
+<td><code>bandage</code></td>
+<td><code>--height 1000</code>, png + svg; upstream GUNZIP_GFA merged in (Bandage 0.9.0 cannot read <code>.gz</code> graphs — <code>gzip -cd</code> to <code>{sample}.assembly.gfa</code> first)</td>
+</tr>
+<tr>
+<td>BLAST_BLASTN</td>
+<td><code>blast_assembly</code></td>
+<td><code>-outfmt '6 stitle staxids std slen qlen qcovs'</code>, DB <code>find -L *.nin</code>, header-cat</td>
+</tr>
+<tr>
+<td>FILTER_BLASTN</td>
+<td><code>blast_assembly</code></td>
+<td>merged: awk <code>$16 &gt; min_contig_length &amp;&amp; $18 &gt; min_perc_contig_aligned &amp;&amp; $1 !~ /phage/</code> + header-cat</td>
+</tr>
+<tr>
+<td>QUAST (assembly)</td>
+<td><code>quast_assembly</code></td>
+<td>gunzip of scaffolds in shell, <code>quast.spades/</code> dir + tsv symlink; batch run over the whole cohort into one <code>quast.spades/</code> dir — upstream runs one QUAST per sample (per-sample <code>S1.spades/</code> dirs), so MultiQC shows one aggregated sample row here instead of per-sample rows (numeric results equivalent)</td>
+</tr>
+<tr>
+<td>ABACAS</td>
+<td><code>abacas</code></td>
+<td><code>-m -p nucmer</code>, sorted <code>.bin</code>, nucmer delta/filtered/tiling + unused contigs moves</td>
+</tr>
+<tr>
+<td>GUNZIP_FASTA/GFF/PRIMER_BED</td>
+<td><code>gunzip_fasta/gff/primer_bed</code></td>
+<td>gated on <code>*_ends_gz</code>; output to fixed <code>reference/</code> paths</td>
+</tr>
+<tr>
+<td>UNTAR_KRAKEN2_DB</td>
+<td><code>untar_kraken2_db</code></td>
+<td>upstream single-top-level-dir strip logic kept + upstream <code>ext.args2 --no-same-owner</code> on both tar invocations</td>
+</tr>
+<tr>
+<td>CUSTOM_GETCHROMSIZES</td>
+<td><code>prepare_genome</code></td>
+<td><code>samtools faidx</code> + <code>cut -f 1,2</code></td>
+</tr>
+<tr>
+<td>COLLAPSE_PRIMERS</td>
+<td><code>collapse_primers</code></td>
+<td><code>--left_primer_suffix/--right_primer_suffix</code>; process_medium label (6c/36 GB/8 h)</td>
+</tr>
+<tr>
+<td>BEDTOOLS_GETFASTA</td>
+<td><code>get_primer_fasta</code></td>
+<td><code>-s -nameOnly</code></td>
+</tr>
+<tr>
+<td>BOWTIE2_BUILD</td>
+<td><code>build_bowtie2_index</code></td>
+<td><code>--seed 1 --threads</code>; process_high label (12c/72 GB/16 h)</td>
+</tr>
+<tr>
+<td>NEXTCLADE_DATASETGET</td>
+<td><code>get_nextclade_dataset</code></td>
+<td><code>--name sars-cov-2 --tag 2024-10-17--16-48-48Z</code> (v3pl tag of the MN908947.3 genome config); skips when a local <code>nextclade_dataset</code> path is set</td>
+</tr>
+<tr>
+<td>BLAST_MAKEBLASTDB</td>
+<td><code>make_blast_db</code></td>
+<td><code>-parse_seqids -dbtype nucl</code></td>
+</tr>
+<tr>
+<td>SNPEFF_BUILD</td>
+<td><code>build_snpeff_db</code></td>
+<td><code>-Xmx12g</code>, <code>-gff3</code>, genomes/genome symlinks, <code>snpeff.config</code> echo</td>
+</tr>
+<tr>
+<td>MULTIQC</td>
+<td><code>multiqc</code></td>
+<td>both passes kept (parse pass + <code>-e general_stats --ignore *nextclade_clade_mqc.tsv</code> final pass), <code>grep -q "&gt;skip_assembly&lt;"</code> / <code>&gt;skip_variants&lt;</code> / <code>platform=illumina</code> rm rules, <code>multiqc_config_illumina.yml</code>; inputs mirror upstream <code>ch_multiqc_files</code> — snpeff <code>-csvStats</code> per-sample csv added (SnpEff section), mosdepth fed as genome <code>global.dist.txt</code> (distribution plots) + amplicon <code>all_samples.mosdepth.coverage.tsv</code> (heatmap), with the genome <code>summary.txt</code> additionally kept for the General Stats table (the inert genome coverage.tsv and amplicon per-sample summary.txt are not fed)</td>
+</tr>
+<tr>
+<td>multiqc_to_custom_csv.py</td>
+<td><code>multiqc</code></td>
+<td>merged, <code>--platform illumina</code> → <code>variants_metrics_mqc.csv</code> / <code>assembly_metrics_mqc.csv</code></td>
+</tr>
+</tbody>
+</table>
+<p>Excluded branches (not on the default path; see metadata.json for the full
+list): nanopore platform (ARTIC_GUPPYPLEX/ARTIC_MINION/NANOPLOT/PYCOQC/
+VCFLIB_VCFUNIQ), <code>variant_caller='bcftools'</code>, <code>consensus_caller='ivar'</code>,
+unicycler/minia assemblers, PICARD_MARKDUPLICATES, PLASMIDID, and the
+network-download processes KRAKEN2_BUILD / FREYJA_UPDATE / PANGOLIN_UPDATEDATA
+/ ADDITIONAL_ANNOTATION.</p>
+<h2 id="links">Links</h2>
+<ul>
+<li>Repository: <a href="https://github.com/oxo-flow-community/oxo-flow-viralrecon">oxo-flow-viralrecon</a></li>
+<li>Upstream: <a href="https://github.com/nf-core/viralrecon">nf-core/viralrecon</a> @ <code>3.0.0</code></li>
+<li>License: Apache-2.0 (port) · MIT (upstream)</li>
+</ul>
+<p>This port was created on 2026-08-15 and may lag behind upstream releases. See the repository's NOTICE for full attribution.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      © 2026 oxo-flow-community · Apache-2.0 · Ports are based on their upstream workflows — see each repository's NOTICE.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.copy", "content.code.annotate", "navigation.top", "navigation.indexes", "search.highlight", "search.suggest", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/pipelines-data.js"></script>
+      
+        <script src="../../javascripts/catalog.js"></script>
+      
+    
+  </body>
+</html>

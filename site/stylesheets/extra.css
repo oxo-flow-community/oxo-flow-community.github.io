@@ -1,0 +1,444 @@
+/* oxo-flow-community — terminal-identity design system
+   Palette validated for CVD safety (dataviz skill): badge marks
+   dark #1FA87A/#2E86D9 · light #0C8A5D/#1A64B8 (always paired with text). */
+
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../assets/fonts/space-grotesk-latin-500-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../assets/fonts/space-grotesk-latin-700-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../assets/fonts/jetbrains-mono-latin-400-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../assets/fonts/jetbrains-mono-latin-600-normal.woff2") format("woff2");
+}
+
+:root {
+  --ox-bg: #f4f8f6;
+  --ox-panel: #ffffff;
+  --ox-panel-2: #edf4f0;
+  --ox-edge: #d8e4de;
+  --ox-ink: #14201b;
+  --ox-dim: #4e6158;
+  --ox-faint: #7c8f85;
+  --ox-nf: #0c8a5d;
+  --ox-sn: #1a64b8;
+  --ox-cy: #0a9bc4;
+  --ox-gr: #0c8a5d;
+  --ox-warn: #b26a00;
+  --ox-code-bg: #eef4f1;
+  --ox-shadow: 0 1px 2px rgb(20 32 27 / 0.06);
+}
+
+[data-md-color-scheme="slate"] {
+  --ox-bg: #0b1210;
+  --ox-panel: #101a16;
+  --ox-panel-2: #14211c;
+  --ox-edge: #1e2e27;
+  --ox-ink: #e8f2ec;
+  --ox-dim: #8fa89c;
+  --ox-faint: #5a6e63;
+  --ox-nf: #1fa87a;
+  --ox-sn: #2e86d9;
+  --ox-cy: #29d0ff;
+  --ox-gr: #2ee6a8;
+  --ox-warn: #ffb454;
+  --ox-code-bg: #0e1613;
+  --ox-shadow: 0 1px 2px rgb(0 0 0 / 0.4);
+}
+
+/* ---- Material theme overrides ---- */
+:root,
+[data-md-color-scheme="slate"] {
+  --md-default-bg-color: var(--ox-bg);
+  --md-default-bg-color--light: var(--ox-panel);
+  --md-default-bg-color--lighter: var(--ox-panel-2);
+  --md-default-fg-color: var(--ox-ink);
+  --md-default-fg-color--light: var(--ox-dim);
+  --md-default-fg-color--lighter: var(--ox-faint);
+  --md-default-fg-color--lightest: var(--ox-faint);
+  --md-typeset-color: var(--ox-ink);
+  --md-typeset-a-color: var(--ox-gr);
+  --md-primary-fg-color: var(--ox-bg);
+  --md-primary-fg-color--dark: var(--ox-bg);
+  --md-primary-fg-color--light: var(--ox-panel);
+  --md-accent-fg-color: var(--ox-cy);
+  --md-code-bg-color: var(--ox-code-bg);
+  --md-footer-bg-color: var(--ox-bg);
+  --md-footer-fg-color: var(--ox-dim);
+  --md-footer-fg-color--light: var(--ox-faint);
+  --md-shadow-z1: var(--ox-shadow);
+}
+
+html {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+}
+
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3,
+.ox-display {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ox-ink);
+}
+
+.md-typeset code,
+.ox-mono {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas,
+    monospace;
+}
+
+.md-header {
+  background: color-mix(in srgb, var(--ox-bg) 92%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--ox-edge);
+  color: var(--ox-ink);
+}
+
+.md-tabs,
+.md-footer {
+  background: var(--ox-bg);
+  color: var(--ox-dim);
+  border-top: 1px solid var(--ox-edge);
+}
+
+.md-tabs__link--active,
+.md-tabs__link {
+  color: var(--ox-ink);
+}
+
+/* ---- Terminal window ---- */
+.ox-hero {
+  margin: 2.5rem 0 1.5rem;
+}
+
+.ox-eyebrow {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ox-gr);
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.ox-hero h1 {
+  font-size: clamp(2rem, 4.5vw, 3.1rem);
+  line-height: 1.08;
+  margin: 0 0 0.9rem;
+  background: linear-gradient(100deg, var(--ox-cy) 0%, var(--ox-gr) 75%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--ox-gr);
+}
+
+.ox-hero .ox-sub {
+  font-size: 1.05rem;
+  color: var(--ox-dim);
+  max-width: 46rem;
+  margin: 0 0 1.75rem;
+  line-height: 1.6;
+}
+
+.ox-term {
+  background: var(--ox-panel);
+  border: 1px solid var(--ox-edge);
+  border-radius: 10px;
+  box-shadow: var(--ox-shadow);
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+}
+
+.ox-term-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.9rem;
+  border-bottom: 1px solid var(--ox-edge);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.75rem;
+  color: var(--ox-dim);
+}
+
+.ox-term-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--ox-edge);
+}
+.ox-term-dot + .ox-term-dot { margin-left: -0.2rem; }
+.ox-term-dot:nth-child(1) { background: #ff7a7a; }
+.ox-term-dot:nth-child(2) { background: var(--ox-warn); }
+.ox-term-dot:nth-child(3) { background: var(--ox-gr); }
+
+.ox-term-title {
+  margin-left: 0.5rem;
+}
+
+.ox-term-body {
+  padding: 0.9rem 1rem 1.1rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.82rem;
+  line-height: 1.9;
+  color: var(--ox-dim);
+  overflow-x: auto;
+}
+
+.ox-term-body .p { color: var(--ox-gr); font-weight: 600; }
+.ox-term-body .ok { color: var(--ox-gr); }
+.ox-term-body .faint { color: var(--ox-faint); }
+
+/* ---- Stats readout ---- */
+.ox-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--ox-edge);
+  border: 1px solid var(--ox-edge);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 0 0 3rem;
+}
+
+.ox-stat {
+  background: var(--ox-panel);
+  padding: 0.9rem 1.1rem;
+}
+
+.ox-stat .v {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 1.7rem;
+  line-height: 1.1;
+  color: var(--ox-ink);
+}
+
+.ox-stat .k {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ox-faint);
+}
+
+/* ---- Cards ---- */
+.ox-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 0.9rem;
+  margin: 1rem 0 2.5rem;
+}
+
+.ox-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: var(--ox-panel);
+  border: 1px solid var(--ox-edge);
+  border-radius: 10px;
+  padding: 0.95rem 1rem;
+  box-shadow: var(--ox-shadow);
+  transition: border-color 120ms ease, transform 120ms ease;
+}
+
+.ox-card:hover {
+  border-color: var(--ox-gr);
+  transform: translateY(-1px);
+}
+
+.ox-card .name {
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--ox-ink);
+  text-decoration: none;
+}
+
+.ox-card .name:hover { color: var(--ox-gr); }
+
+.ox-card .title {
+  font-size: 0.88rem;
+  color: var(--ox-dim);
+  line-height: 1.45;
+  margin: 0;
+}
+
+.ox-card .meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.ox-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.68rem;
+  padding: 0.1rem 0.5rem;
+  border: 1px solid var(--ox-edge);
+  border-radius: 999px;
+  color: var(--ox-dim);
+  background: var(--ox-panel-2);
+}
+
+.ox-badge .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ox-faint);
+}
+
+.ox-badge--nf .dot { background: var(--ox-nf); }
+.ox-badge--sn .dot { background: var(--ox-sn); }
+
+.ox-card .tools {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.7rem;
+  color: var(--ox-faint);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ox-card .cmd {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.72rem;
+  color: var(--ox-dim);
+  background: var(--ox-code-bg);
+  border: 1px solid var(--ox-edge);
+  border-radius: 6px;
+  padding: 0.45rem 0.6rem;
+  overflow-x: auto;
+  white-space: nowrap;
+  margin: 0;
+}
+
+.ox-card .links {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.8rem;
+  margin-top: auto;
+}
+
+/* ---- Filter bar ---- */
+.ox-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin: 1.25rem 0 0.5rem;
+}
+
+.ox-filter input[type="search"] {
+  flex: 1 1 16rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.85rem;
+  color: var(--ox-ink);
+  background: var(--ox-panel);
+  border: 1px solid var(--ox-edge);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+}
+
+.ox-filter input[type="search"]::placeholder { color: var(--ox-faint); }
+
+.ox-chip {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.72rem;
+  color: var(--ox-dim);
+  background: var(--ox-panel);
+  border: 1px solid var(--ox-edge);
+  border-radius: 999px;
+  padding: 0.28rem 0.7rem;
+  cursor: pointer;
+}
+
+.ox-chip[aria-pressed="true"] {
+  color: var(--ox-bg);
+  background: var(--ox-gr);
+  border-color: var(--ox-gr);
+}
+
+.ox-empty {
+  font-family: "JetBrains Mono", monospace;
+  color: var(--ox-faint);
+  padding: 2.5rem 0;
+  text-align: center;
+}
+
+/* ---- DAG animation ---- */
+.ox-dag-wrap {
+  margin: 0.5rem 0 1rem;
+}
+.ox-dag-wrap svg {
+  width: 100%;
+  height: auto;
+  max-height: 240px;
+}
+
+.ox-dag .edge {
+  stroke-dasharray: 6 4;
+  animation: ox-dash 1.2s linear infinite;
+}
+
+.ox-dag .node {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ox-pulse 2.6s ease-in-out infinite;
+}
+
+.ox-dag .label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  fill: var(--ox-faint);
+  text-anchor: middle;
+}
+
+@keyframes ox-dash {
+  to { stroke-dashoffset: -10; }
+}
+
+@keyframes ox-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.18); opacity: 0.75; }
+}
+
+/* ---- Focus + reduced motion ---- */
+:focus-visible {
+  outline: 2px solid var(--ox-cy);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ox-dag .edge, .ox-dag .node { animation: none; }
+  .ox-card { transition: none; }
+}
+
+@media (max-width: 720px) {
+  .ox-stats { grid-template-columns: repeat(2, 1fr); }
+  .ox-term-body { font-size: 0.72rem; }
+}

@@ -1,0 +1,823 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="20 battle-tested bioinformatics workflows — faithful ports of the most-used nf-core and Snakemake pipelines for the oxo-flow engine. Search the catalog, read the run instructions, copy the command.">
+      
+      
+      
+        <link rel="canonical" href="https://oxo-flow-community.github.io/pipelines/oxo-flow-sarek/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/favicon.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>WGS/WES germline and somatic variant calling - oxo-flow-community</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#wgswes-germline-and-somatic-variant-calling" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="oxo-flow-community" class="md-header__button md-logo" aria-label="oxo-flow-community" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            oxo-flow-community
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              WGS/WES germline and somatic variant calling
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="oxo-flow-community" class="md-nav__button md-logo" aria-label="oxo-flow-community" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    oxo-flow-community
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pipelines
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/selection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Selection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/porting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Porting guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#run-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run it
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scope
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fidelity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fidelity
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#links" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Links
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="wgswes-germline-and-somatic-variant-calling">WGS/WES germline and somatic variant calling</h1>
+<p>oxo-flow port of nf-core/sarek 3.10.0 default main path: FastQC, fastp trim/split, BWA-MEM alignment, MarkDuplicates, BQSR, HaplotypeCaller, VEP annotation, VCF QC and MultiQC aggregation for WGS/WES germline and somatic variant calling.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;"></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;"><strong>Engine</strong></td>
+<td>nf-core</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>Source</strong></td>
+<td><a href="https://github.com/nf-core/sarek">nf-core/sarek</a></td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>Pinned version</strong></td>
+<td><code>3.10.0</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>Ported</strong></td>
+<td>2026-08-15</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>Rules</strong></td>
+<td>18</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>Tools</strong></td>
+<td>fastqc@0.12.1 · fastp@1.1.0 · bwa@0.7.18 · samtools@1.24 · gatk@4.7.1.0 · mosdepth@0.3.8 · bcftools@1.23.1 · vcftools@0.1.17 · ensembl-vep@116.0 · multiqc@1.35</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>Domain</strong></td>
+<td>genomics</td>
+</tr>
+</tbody>
+</table>
+<h2 id="run-it">Run it</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>oxo-flow<span class="w"> </span>dry-run<span class="w"> </span>main.oxoflow
+</code></pre></div>
+<h2 id="scope">Scope</h2>
+<p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
+<p><strong>In scope</strong></p>
+<ul>
+<li>fastqc</li>
+<li>fastp</li>
+<li>bwa_mem</li>
+<li>gatk_markduplicates</li>
+<li>mosdepth_md</li>
+<li>samtools_stats_md</li>
+<li>gatk_baserecalibrator</li>
+<li>gatk_applybqsr</li>
+<li>samtools_index_recal</li>
+<li>mosdepth_recal</li>
+<li>samtools_stats_recal</li>
+<li>gatk_haplotypecaller</li>
+<li>bcftools_stats</li>
+<li>vcftools_tstv_count</li>
+<li>vcftools_tstv_qual</li>
+<li>vcftools_filter_summary</li>
+<li>ensemblvep_vep</li>
+<li>multiqc</li>
+</ul>
+<p><strong>Excluded</strong></p>
+<ul>
+<li>deepvariant (--tools alternative, not on default path)</li>
+<li>strelka (--tools alternative, not on default path)</li>
+<li>manta (--tools alternative, not on default path)</li>
+<li>cnvkit (--tools alternative, not on default path)</li>
+<li>ascat (--tools alternative, not on default path)</li>
+<li>mutect2/msisensor/somalier/freebayes/snpeff/vep-somatic etc. (optional --tools callers)</li>
+<li>NGSCheckMate (BAM_NGSCHECKMATE + BCFTOOLS_MPILEUP) — sample-identity QC on default path but outside port scope</li>
+<li>TrimGalore trimming (--trim_fastq_trimgalore alternative; fastp is upstream default)</li>
+<li>bwa-mem2 aligner (upstream default aligner is bwa-mem)</li>
+<li>save_output_as_bam=true BAM branch of MarkDuplicates (CRAM-only port)</li>
+<li>prepare_genome/bed-prep/interval-prep — reference prep, not default execution path</li>
+<li>joint_germline GVCF joint-genotyping subworkflow (default joint_germline=false)</li>
+<li>UMI workflows (SAREK_UMI_*) — not on default path</li>
+<li>fastp split parts beyond 0001. — only first split part wired fastp-&gt;BWA (upstream-compatible naming, documented)</li>
+</ul>
+<h2 id="fidelity">Fidelity</h2>
+<p>Rows cover every upstream process/rule on the default main execution path.
+"not ported" rows carry a reason.</p>
+<table>
+<thead>
+<tr>
+<th>Upstream process/rule</th>
+<th>oxo-flow rule</th>
+<th>Tool (version)</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FASTQC</td>
+<td><code>fastqc</code></td>
+<td>fastqc 0.12.1</td>
+<td>identical command</td>
+</tr>
+<tr>
+<td>FASTP</td>
+<td><code>fastp</code></td>
+<td>fastp 1.1.0</td>
+<td>upstream default trimming/fastp module; TrimGalore is the <code>--trim_fastq_trimgalore</code> alternative and is not ported</td>
+</tr>
+<tr>
+<td>BWA_MEM</td>
+<td><code>bwa_mem</code></td>
+<td>bwa 0.7.19</td>
+<td>upstream default aligner is <code>bwa-mem</code>, not <code>bwa-mem2</code>; read-group flags from sarek.nf; prefix <code>{meta.id}.{reads[0] token}</code> = <code>test.0001</code> under split_fastq; the same image also carries samtools 1.22.1 (used for <code>samtools sort</code>)</td>
+</tr>
+<tr>
+<td>GATK4_MARKDUPLICATES</td>
+<td><code>gatk_markduplicates</code></td>
+<td>gatk4 4.6.2.0</td>
+<td>CRAM-only port (<code>save_output_as_bam=false</code>); upstream's <code>if [[ ${prefix} == *.cram ]]</code> BAM branch not ported — conversion is unconditional</td>
+</tr>
+<tr>
+<td>MOSDEPTH (post-MD)</td>
+<td><code>mosdepth_md</code></td>
+<td>mosdepth 0.3.14</td>
+<td>ext.prefix <code>{meta.id}.md</code>; WGS <code>--by 500</code> mode</td>
+</tr>
+<tr>
+<td>SAMTOOLS_STATS (post-MD)</td>
+<td><code>samtools_stats_md</code></td>
+<td>samtools 1.24</td>
+<td>ext.prefix <code>{meta.id}.md.cram</code>; 1.24 is the version in the <code>htslib_samtools</code> stats/index images (the BWA image carries 1.22.1)</td>
+</tr>
+<tr>
+<td>GATK4_BASERECALIBRATOR</td>
+<td><code>gatk_baserecalibrator</code></td>
+<td>gatk4 4.6.2.0</td>
+<td>known-sites = dbsnp + Mills gold standard + known indels (GRCh38); single whole-genome job, no per-interval scatter (see deviations)</td>
+</tr>
+<tr>
+<td>GATK4_APPLYBQSR</td>
+<td><code>gatk_applybqsr</code></td>
+<td>gatk4 4.6.2.0</td>
+<td>output CRAM (not BAM) per default; single whole-genome job, no per-interval scatter (see deviations)</td>
+</tr>
+<tr>
+<td>SAMTOOLS_INDEX (recal)</td>
+<td><code>samtools_index_recal</code></td>
+<td>samtools 1.24</td>
+<td>indexes the recalibrated CRAM</td>
+</tr>
+<tr>
+<td>MOSDEPTH (recal)</td>
+<td><code>mosdepth_recal</code></td>
+<td>mosdepth 0.3.14</td>
+<td>ext.prefix <code>{meta.id}.recal</code></td>
+</tr>
+<tr>
+<td>SAMTOOLS_STATS (recal)</td>
+<td><code>samtools_stats_recal</code></td>
+<td>samtools 1.24</td>
+<td>ext.prefix <code>{meta.id}.recal.cram</code></td>
+</tr>
+<tr>
+<td>GATK4_HAPLOTYPECALLER</td>
+<td><code>gatk_haplotypecaller</code></td>
+<td>gatk4 4.6.2.0</td>
+<td>default <code>tools=haplotypecaller,vep</code> → <code>call_haplotypecaller=true</code>; single-sample mode (no <code>-ERC GVCF</code>), <code>--pcr-indel-model CONSERVATIVE</code>; single whole-genome job, no per-interval scatter (see deviations)</td>
+</tr>
+<tr>
+<td>GATK4_CNNSCOREVARIANTS</td>
+<td><code>gatk_cnnscorevariants</code></td>
+<td>gatk4 4.6.2.0</td>
+<td>VCF_VARIANT_FILTERING_GATK part 1; CNN 1D scoring (module default <code>--tensor-type 1D</code>); upstream keeps the <code>{sample}.cnn.vcf.gz</code> intermediate unpublished — the port stores it under <code>results/variant_calling/cnnscorevariants/</code> for DAG handoff</td>
+</tr>
+<tr>
+<td>GATK4_FILTERVARIANTTRANCHES</td>
+<td><code>gatk_filtervarianttranches</code></td>
+<td>gatk4 4.6.2.0</td>
+<td>VCF_VARIANT_FILTERING_GATK part 2; ext.args <code>--info-key CNN_1D</code>, ext.prefix <code>{meta.id}.haplotypecaller</code>, known sites (dbsnp + 2 GRCh38 indel sets) passed as <code>--resource</code>; produces <code>{sample}.haplotypecaller.filtered.vcf.gz</code></td>
+</tr>
+<tr>
+<td>BCFTOOLS_STATS</td>
+<td><code>bcftools_stats</code></td>
+<td>bcftools 1.23.1</td>
+<td>VCF_QC_BCFTOOLS_VCFTOOLS part 1; runs on the filtered VCF (prefix <code>{meta.id}.haplotypecaller.filtered</code>)</td>
+</tr>
+<tr>
+<td>VCFTOOLS_TSTV_COUNT</td>
+<td><code>vcftools_tstv_count</code></td>
+<td>vcftools 0.1.17</td>
+<td>VCF_QC_BCFTOOLS_VCFTOOLS part 2; runs on the filtered VCF</td>
+</tr>
+<tr>
+<td>VCFTOOLS_TSTV_QUAL</td>
+<td><code>vcftools_tstv_qual</code></td>
+<td>vcftools 0.1.17</td>
+<td>VCF_QC_BCFTOOLS_VCFTOOLS part 3; runs on the filtered VCF</td>
+</tr>
+<tr>
+<td>VCFTOOLS_SUMMARY</td>
+<td><code>vcftools_filter_summary</code></td>
+<td>vcftools 0.1.17</td>
+<td>VCF_QC_BCFTOOLS_VCFTOOLS part 4; runs on the filtered VCF</td>
+</tr>
+<tr>
+<td>ENSEMBLVEP_VEP</td>
+<td><code>ensemblvep_vep</code></td>
+<td>ensembl-vep 116.0</td>
+<td>annotates the filtered VCF (<code>{sample}.haplotypecaller.filtered_VEP.ann.vcf.gz</code>); requires a VEP cache mounted at <code>/.vep</code> in the container (upstream bundles it via <code>--vep_cache</code>); <code>--cache_version 116</code>, GRCh38</td>
+</tr>
+<tr>
+<td>MULTIQC</td>
+<td><code>multiqc</code></td>
+<td>multiqc 1.35</td>
+<td>fan-in over all report producers; scans the results dir with the upstream <code>assets/multiqc_config.yml</code></td>
+</tr>
+<tr>
+<td>NGSCheckMate (BAM_NGSCHECKMATE + BCFTOOLS_MPILEUP)</td>
+<td>— not ported</td>
+<td>—</td>
+<td>sample-identity QC on the CRAM; outside this port's scope (QC fan-in, needs a cohort reference)</td>
+</tr>
+<tr>
+<td>PREPARE_GENOME (BWA_INDEX, GATK4_CREATESEQUENCEDICTIONARY, SAMTOOLS_FAIDX)</td>
+<td>— not ported</td>
+<td>—</td>
+<td>reference preparation; the port requires a pre-built reference bundle (upstream also accepts pre-built index/dict/fai via <code>params.bwa</code>/<code>dict</code>/<code>fasta_fai</code>, so this is an upstream-compatible shortcut, not a behavior change)</td>
+</tr>
+<tr>
+<td>BED_PREPARE_INTERVALS (BUILD_INTERVALS, CREATE_INTERVALS_BED, TABIX bgzip/tabix interval split) + per-interval scatter/gather (GATK4_GATHERBQSRREPORTS, CRAM_MERGE_INDEX_SAMTOOLS, GATK4_MERGEVCFS)</td>
+<td>— not ported</td>
+<td>—</td>
+<td>interval preparation and the per-interval scatter/gather of BQSR/ApplyBQSR/HaplotypeCaller; the port runs single whole-genome GATK jobs without <code>--intervals</code> (gathers are exact, so results are equivalent, but the per-contig parallelism of the upstream default path is absent)</td>
+</tr>
+<tr>
+<td>SAREK_UMI_* / Strelka2 / Mutect2 / Manta / DeepVariant / CNVkit / ASCAT / MSIsensor / ...</td>
+<td>— not ported</td>
+<td>—</td>
+<td>UMI workflows, <code>--tools</code> alternatives and optional callers; out of scope (default <code>haplotypecaller,vep</code> only)</td>
+</tr>
+</tbody>
+</table>
+<p>Deviations (all documented, nothing silently dropped):</p>
+<ul>
+<li><strong>fastp split parts — supported input cap</strong>: upstream <code>--split_by_lines</code>
+  produces <code>0001.</code>-prefixed outputs; only the first split part (<code>0001.</code>) is
+  wired to BWA-MEM (the nf-core bwa/mem prefix logic <code>tokenize('.')[0]</code> gives
+  <code>{sample}.0001.bam</code>). The supported input size is therefore capped at one
+  split part — ~50M read pairs / 200M lines per sample (the upstream default
+  <code>split_fastq=50,000,000</code> threshold). Datasets above the threshold are a
+  <strong>known unsupported upstream behavior</strong>: upstream aligns every part and
+  merges the part BAMs before MarkDuplicates (<code>BAM_MERGE_INDEX_SAMTOOLS</code>),
+  which this port does not reproduce — <strong>do not run WGS data above ~50M read
+  pairs per sample</strong> with this port until the multi-part path is wired.</li>
+<li><strong>no per-interval scatter/gather</strong>: BQSR, ApplyBQSR and HaplotypeCaller run
+  as single whole-genome jobs (no <code>--intervals</code>, no
+  GATK4_GATHERBQSRREPORTS / CRAM_MERGE_INDEX_SAMTOOLS / GATK4_MERGEVCFS).
+  Gathers are exact, so the results are mathematically equivalent to
+  upstream's, but wall-time and per-contig parallelism differ substantially.</li>
+<li><strong>CNN-scored intermediate location</strong>: upstream disables the
+  CNNSCOREVARIANTS publishDir (the <code>{sample}.cnn.vcf.gz</code> stays in the task
+  workdir); oxo-flow hands files between rules through <code>results/</code>, so the
+  port keeps it under <code>results/variant_calling/cnnscorevariants/</code>.</li>
+<li><strong>markduplicates CRAM branch</strong>: unconditional <code>samtools view -Ch</code> +
+  <code>samtools index</code> replaces upstream's bash conditional; BAM output mode
+  (<code>save_output_as_bam=true</code>) is not ported.</li>
+<li><strong>Docker staging</strong>: only the rule workdir is mounted, so reference files are
+  copied into the workdir under fixed local names (<code>reference.fasta</code>,
+  <code>reference.fasta.fai</code>, <code>reference.dict</code>) — same effect as Nextflow's
+  staging of the reference into the task directory.</li>
+<li><strong><code>known_indels</code></strong> is a TOML array (2 GRCh38 files); both it and
+  <code>known_indels_tbi</code> must be updated together when changing references.</li>
+</ul>
+<h2 id="links">Links</h2>
+<ul>
+<li>Repository: <a href="https://github.com/oxo-flow-community/oxo-flow-sarek">oxo-flow-sarek</a></li>
+<li>Upstream: <a href="https://github.com/nf-core/sarek">nf-core/sarek</a> @ <code>3.10.0</code></li>
+<li>License: Apache-2.0 (port) · MIT (upstream)</li>
+</ul>
+<p>This port was created on 2026-08-15 and may lag behind upstream releases. See the repository's NOTICE for full attribution.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      © 2026 oxo-flow-community · Apache-2.0 · Ports are based on their upstream workflows — see each repository's NOTICE.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.copy", "content.code.annotate", "navigation.top", "navigation.indexes", "search.highlight", "search.suggest", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/pipelines-data.js"></script>
+      
+        <script src="../../javascripts/catalog.js"></script>
+      
+    
+  </body>
+</html>

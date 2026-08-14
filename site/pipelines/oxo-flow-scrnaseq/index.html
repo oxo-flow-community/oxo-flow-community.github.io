@@ -1,0 +1,783 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="20 battle-tested bioinformatics workflows — faithful ports of the most-used nf-core and Snakemake pipelines for the oxo-flow engine. Search the catalog, read the run instructions, copy the command.">
+      
+      
+      
+        <link rel="canonical" href="https://oxo-flow-community.github.io/pipelines/oxo-flow-scrnaseq/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/favicon.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Single-cell RNA-seq (10x / DropSeq / SmartSeq) - oxo-flow-community</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#single-cell-rna-seq-10x-dropseq-smartseq" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="oxo-flow-community" class="md-header__button md-logo" aria-label="oxo-flow-community" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            oxo-flow-community
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Single-cell RNA-seq (10x / DropSeq / SmartSeq)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="oxo-flow-community" class="md-nav__button md-logo" aria-label="oxo-flow-community" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    oxo-flow-community
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pipelines
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/selection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Selection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/porting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Porting guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#run-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run it
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scope
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fidelity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fidelity
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#links" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Links
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="single-cell-rna-seq-10x-dropseq-smartseq">Single-cell RNA-seq (10x / DropSeq / SmartSeq)</h1>
+<p>oxo-flow port of the nf-core/scrnaseq pipeline restricted to the aligner=cellranger default execution path: FastQC read QC, genome preparation (gunzip, GTF gene filter), Cell Ranger reference building and per-sample count, 10x mtx-to-h5ad conversion, CellBender background removal, h5ad concatenation, Seurat/SingleCellExperiment conversion, and MultiQC aggregation. 23 rules; validate + dry-run + acceptance test all green.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;"></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;"><strong>Engine</strong></td>
+<td>nf-core</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>Source</strong></td>
+<td><a href="https://github.com/nf-core/scrnaseq">nf-core/scrnaseq</a></td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>Pinned version</strong></td>
+<td><code>4.2.0</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>Ported</strong></td>
+<td>2026-08-15</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>Rules</strong></td>
+<td>23</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>Tools</strong></td>
+<td>cellranger · fastqc · multiqc · scanpy · anndata · cellbender · bioconductor-anndatar · r-seurat · bioconductor-singlecellexperiment · bioconductor-rhdf5 · gzip · gawk · python</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>Domain</strong></td>
+<td>single-cell</td>
+</tr>
+</tbody>
+</table>
+<h2 id="run-it">Run it</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>oxo-flow<span class="w"> </span>dry-run<span class="w"> </span>main.oxoflow
+</code></pre></div>
+<h2 id="scope">Scope</h2>
+<p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
+<p><strong>In scope</strong></p>
+<ul>
+<li>PIPELINE_INITIALISATION (samplesheet input check)</li>
+<li>FASTQC</li>
+<li>GUNZIP_FASTA</li>
+<li>GUNZIP_GTF</li>
+<li>GTF_GENE_FILTER</li>
+<li>GTF_SOURCE_FIX (opt-in, off by default)</li>
+<li>CELLRANGER_MKGTF</li>
+<li>CELLRANGER_MKREF</li>
+<li>CELLRANGER_COUNT</li>
+<li>MTX_TO_H5AD</li>
+<li>CELLBENDER_REMOVEBACKGROUND</li>
+<li>ANNDATA_BARCODES</li>
+<li>CONCAT_H5AD</li>
+<li>ANNDATAR_CONVERT</li>
+<li>softwareVersionsToYAML + collectFile (collated versions)</li>
+<li>MULTIQC</li>
+</ul>
+<p><strong>Excluded</strong></p>
+<ul>
+<li>simpleaf: aligner=simpleaf branch (upstream default aligner) — not on the ported cellranger path</li>
+<li>kallisto: aligner=kallisto branch (kallisto/bustools)</li>
+<li>star: aligner=star branch (STARsolo, incl. smartseq/dropseq protocols)</li>
+<li>smartseq: STARsolo/kallisto smartseq protocol — off the ported cellranger path</li>
+<li>dropseq: STARsolo/kallisto/simpleaf dropseq protocol — off the ported cellranger path</li>
+<li>scdna: not a scrnaseq 4.2.0 feature; excluded upstream feature list</li>
+<li>cellranger_atac: aligner=cellrangerarc branch (ATAC + barcode fastqs)</li>
+<li>cellrangermulti: aligner=cellrangermulti branch (multiome VDJ/Ab-seq, barcodes samplesheet)</li>
+<li>PIPELINE_COMPLETION: email/notification completion subworkflow (nf-core boilerplate)</li>
+<li>paramsSummaryMultiqc + methods_description_template.yml: workflow summary/methods MultiQC inputs (nf-core reporting boilerplate)</li>
+</ul>
+<h2 id="fidelity">Fidelity</h2>
+<p>Rows cover every upstream process/subworkflow involved in the default path; the
+<code>aligner</code> branches not ported are listed at the bottom with reasons. Container image
+strings and conda pins are copied verbatim from the upstream modules (all pinned, no
+<code>latest</code>).</p>
+<table>
+<thead>
+<tr>
+<th>Upstream process/rule</th>
+<th>oxo-flow rule</th>
+<th>Tool (version)</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PIPELINE_INITIALISATION</code> (samplesheet check)</td>
+<td>sample source + <code>config.samplesheet</code></td>
+<td>—</td>
+<td>Samplesheet (<code>sample, fastq_1, fastq_2, protocol, expected_cells</code>) maps to <code>[[sample_groups]]</code>; <code>expected_cells</code> column → <code>config.expected_cells</code>; per-sample <code>protocol</code> column is informational (chemistry comes from <code>--protocol</code>). Schema checks are enforced by the port's fixtures + README contract.</td>
+</tr>
+<tr>
+<td><code>FASTQC</code></td>
+<td><code>fastqc</code></td>
+<td>fastqc 0.12.1</td>
+<td>Identical command: <code>printf … \| while read; ln -s</code> staging loop, <code>fastqc --quiet --threads N --memory &lt;12G/N clamped 100-10000&gt;</code>. Published under <code>results/fastqc/</code> (upstream default publishDir). <code>--memory</code> computed in-shell from the process_low 12G/2 cpus.</td>
+</tr>
+<tr>
+<td><code>GUNZIP</code> (as <code>GUNZIP_FASTA</code>)</td>
+<td><code>gunzip_fasta</code></td>
+<td>gzip 1.13</td>
+<td>Identical command (<code>gzip -cd &lt;fasta&gt; &gt; &lt;out&gt;</code>). Runs only when <code>config.fasta_gz</code> (upstream decides by <code>.endsWith('.gz')</code> at runtime — port uses an explicit flag, see Gotchas).</td>
+</tr>
+<tr>
+<td><code>GUNZIP</code> (as <code>GUNZIP_GTF</code>)</td>
+<td><code>gunzip_gtf</code></td>
+<td>gzip 1.13</td>
+<td>Same as above for the GTF.</td>
+</tr>
+<tr>
+<td><code>GTF_GENE_FILTER</code></td>
+<td><code>gtf_gene_filter</code></td>
+<td>python 3.9</td>
+<td>Same bundled script <code>filter_gtf_for_genes_in_genome.py</code>, same flags (<code>--gtf --fasta -o</code>); output name <code>&lt;fasta_stem&gt;_genes.gtf</code> is <code>config.gtf_filtered</code>.</td>
+</tr>
+<tr>
+<td><code>GAWK</code> (as <code>GTF_SOURCE_FIX</code>)</td>
+<td><code>gtf_source_fix</code></td>
+<td>gawk 5.3.1</td>
+<td>Same awk program (<code>FS=OFS="\t"</code>, source-field spaces→underscores, output suffix <code>gtf</code>). Off by default, exactly like upstream (only fires for iGenomes entries flagged <code>gtf_source_has_spaces</code>).</td>
+</tr>
+<tr>
+<td><code>CELLRANGER_MKGTF</code></td>
+<td><code>cellranger_mkgtf</code></td>
+<td>cellranger 10.0.0</td>
+<td>Same command incl. the three <code>--attribute=gene_biotype:</code> filters. Runs only when <code>build_cellranger_index=true</code> (mirrors upstream <code>if (!cellranger_index)</code>).</td>
+</tr>
+<tr>
+<td><code>CELLRANGER_MKREF</code></td>
+<td><code>cellranger_mkref</code></td>
+<td>cellranger 10.0.0</td>
+<td>Same command (<code>--genome=… --fasta=… --genes=… --localcores --localmem --nthreads</code>). <code>--genome</code> is <code>config.transcriptome</code> (default <code>refs/cellranger_reference</code>) instead of a bare workdir name — same reference name, path relocated to the workflow tree.</td>
+</tr>
+<tr>
+<td><code>CELLRANGER_COUNT</code></td>
+<td><code>cellranger_count</code></td>
+<td>cellranger 10.0.0</td>
+<td>Same command: reads staged under Cell Ranger naming (<code>&lt;sample&gt;_S1_L001_R1/R2_001.fastq.gz</code>), <code>cellranger count --id &lt;sample&gt; --fastqs fastq_all --transcriptome … --localcores … --localmem … --chemistry &lt;protocol&gt; --create-bam &lt;bool&gt;</code> + <code>--expect-cells</code> when set. The outs tree is then relocated to <code>results/cellranger/count/&lt;sample&gt;/outs/</code> (upstream publishDir <code>outdir/cellranger/count</code>). Multi-lane samples (several fastq pairs per sample) are not represented — one pair per sample.</td>
+</tr>
+<tr>
+<td><code>MTX_TO_H5AD</code></td>
+<td><code>mtx_to_h5ad_raw</code>, <code>mtx_to_h5ad_filtered</code></td>
+<td>scanpy 1.10.2 / pandas / anndata</td>
+<td>Same template script <code>mtx_to_h5ad_cellranger.py</code> (read_10x_h5, gene_symbols, gene_ids index, version-stripped gene ids, <code>var_names_make_unique</code>), one rule per input_type (upstream runs the process once per raw/filtered channel). Outputs <code>&lt;sample&gt;_{raw,filtered}_matrix.h5ad</code>.</td>
+</tr>
+<tr>
+<td><code>CELLBENDER_REMOVEBACKGROUND</code></td>
+<td><code>cellbender_removebackground</code></td>
+<td>cellbender 0.3.2</td>
+<td>Same command <code>TMPDIR=. cellbender remove-background --cpu-threads … --estimator-multiple-cpu --input … --output &lt;sample&gt;.h5</code> (no <code>--cuda</code>: GPU profile is out of scope). Full output file set moved to <code>results/cellranger/&lt;sample&gt;/cellbender_removebackground/</code>.</td>
+</tr>
+<tr>
+<td><code>ANNDATA_BARCODES</code></td>
+<td><code>anndata_barcodes</code></td>
+<td>anndata 0.11.4 / pandas</td>
+<td>Same template script (barcode CSV → subset → write), same output name <code>&lt;sample&gt;_cellbender_filter_matrix.h5ad</code>.</td>
+</tr>
+<tr>
+<td><code>CONCAT_H5AD</code></td>
+<td><code>concat_h5ad_filtered</code>, <code>concat_h5ad_cellbender_filter</code>, <code>concat_h5ad_raw</code></td>
+<td>scanpy 1.10.2</td>
+<td>Same template script (<code>ad.concat(label="sample", merge="unique", index_unique="_")</code> + samplesheet join on <code>sample</code>). Upstream runs one process per input_type; the port has one rule per input_type. <code>concat_h5ad_raw</code> only runs when <code>skip_cellbender=true</code>, mirroring upstream's channel replacement (raw is superseded by the CellBender-filtered h5ad).</td>
+</tr>
+<tr>
+<td><code>ANNDATAR_CONVERT</code></td>
+<td><code>anndatar_convert_{filtered,cellbender_filter,raw}</code> + <code>anndatar_convert_combined_{…}</code></td>
+<td>anndataR 1.0.2, SeuratObject 5.5.0, SingleCellExperiment 1.32.0</td>
+<td>Same R template (read_h5ad → <code>as_Seurat()</code>/<code>as_SingleCellExperiment()</code> → saveRDS). Six rules: per sample and per combined h5ad, per input_type; type gating mirrors the concat rules. Upstream <code>dir.create(&lt;sample&gt;)</code> calls and versions.yml writing dropped (output dirs are pre-created by the engine; versions are recorded in <code>collect_versions</code>).</td>
+</tr>
+<tr>
+<td><code>softwareVersionsToYAML</code> + <code>collectFile</code></td>
+<td><code>collect_versions</code></td>
+<td>—</td>
+<td>Writes the same file <code>results/pipeline_info/nf_core_scrnaseq_software_mqc_versions.yml</code> consumed by MultiQC. Content is the port's pinned versions (upstream collates live tool versions from a channel topic, which has no oxo-flow equivalent); since containers are pinned, the recorded versions equal the executed ones.</td>
+</tr>
+<tr>
+<td><code>MULTIQC</code></td>
+<td><code>multiqc</code></td>
+<td>multiqc 1.34</td>
+<td>Same command (<code>multiqc --force [--title] --config &lt;assets/multiqc_config.yml&gt; .</code>) with inputs staged flat like the module's <code>stageAs '?/*'</code>. Default <code>assets/multiqc_config.yml</code> copied verbatim from upstream.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Not ported (with reasons):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Upstream branch</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>aligner = simpleaf</code> (upstream default aligner; alevin-fry)</td>
+<td>Not on the ported cellranger default path; requires qcatch protocol handling and a simpleaf index/whitelist matrix.</td>
+</tr>
+<tr>
+<td><code>aligner = kallisto</code> (kallisto/bustools, incl. <code>smartseq</code>/<code>dropseq</code> protocols)</td>
+<td>Not on the ported cellranger path.</td>
+</tr>
+<tr>
+<td><code>aligner = star</code> (STARsolo, incl. <code>smartseq</code>/<code>dropseq</code> protocols)</td>
+<td>Not on the ported cellranger path.</td>
+</tr>
+<tr>
+<td><code>aligner = cellrangerarc</code> (ATAC, <code>fastq_barcode</code> samplesheet column)</td>
+<td>Not on the ported cellranger path.</td>
+</tr>
+<tr>
+<td><code>aligner = cellrangermulti</code> (multiome: VDJ/Ab-seq/CRO, <code>cellranger_multi_barcodes</code>)</td>
+<td>Not on the ported cellranger path.</td>
+</tr>
+<tr>
+<td><code>PIPELINE_COMPLETION</code> (email/notification)</td>
+<td>nf-core boilerplate, out of scope.</td>
+</tr>
+<tr>
+<td><code>paramsSummaryMultiqc</code> / methods-description MultiQC inputs</td>
+<td>nf-core reporting boilerplate; MultiQC still aggregates FastQC + Cell Ranger + versions.</td>
+</tr>
+<tr>
+<td><code>skip_cellranger_renaming</code> (multi-lane samples)</td>
+<td>One fastq pair per sample is supported; the staging rename hard-codes lane <code>L001</code>.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="links">Links</h2>
+<ul>
+<li>Repository: <a href="https://github.com/oxo-flow-community/oxo-flow-scrnaseq">oxo-flow-scrnaseq</a></li>
+<li>Upstream: <a href="https://github.com/nf-core/scrnaseq">nf-core/scrnaseq</a> @ <code>4.2.0</code></li>
+<li>License: Apache-2.0 (port) · MIT (upstream)</li>
+</ul>
+<p>This port was created on 2026-08-15 and may lag behind upstream releases. See the repository's NOTICE for full attribution.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      © 2026 oxo-flow-community · Apache-2.0 · Ports are based on their upstream workflows — see each repository's NOTICE.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.copy", "content.code.annotate", "navigation.top", "navigation.indexes", "search.highlight", "search.suggest", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/pipelines-data.js"></script>
+      
+        <script src="../../javascripts/catalog.js"></script>
+      
+    
+  </body>
+</html>

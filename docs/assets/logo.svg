@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="oxg" x1="0" y1="64" x2="64" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#29D0FF"/>
+      <stop offset="1" stop-color="#2EE6A8"/>
+    </linearGradient>
+  </defs>
+  <g stroke="url(#oxg)" stroke-width="3" stroke-linecap="round">
+    <path d="M14 50 L30 36 L30 20"/>
+    <path d="M30 20 L46 12"/>
+    <path d="M30 36 L50 44"/>
+    <path d="M30 20 L30 6"/>
+    <path d="M30 36 L14 28"/>
+  </g>
+  <g fill="url(#oxg)">
+    <circle cx="14" cy="50" r="4"/>
+    <circle cx="30" cy="20" r="5"/>
+    <circle cx="46" cy="12" r="4"/>
+    <circle cx="50" cy="44" r="4"/>
+    <circle cx="30" cy="6" r="4"/>
+    <circle cx="14" cy="28" r="4"/>
+  </g>
+</svg>

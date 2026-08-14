@@ -1,0 +1,111 @@
+# Amplicon sequencing (16S/ITS) with DADA2 and QIIME2
+
+oxo-flow port of the nf-core/ampliseq pipeline: amplicon sequencing analysis (16S/ITS) with FastQC, cutadapt primer trimming, DADA2 denoising (quality profiles, trunclen, filterAndTrim, learnErrors, dada, mergePairs, chimera removal, read tracking), DADA2 taxonomy assignment (assignTaxonomy + addSpecies, SBDI-GTDB reference DB), QIIME2 taxa barplots and MultiQC. Default-parameters main path of nf-core/ampliseq 2.18.0; optional branches (ITS, nanopore, syncom, QIIME2 diversity/classifier) not ported.
+
+| | |
+|---:|---|
+| **Engine** | nf-core |
+| **Source** | [nf-core/ampliseq](https://github.com/nf-core/ampliseq) |
+| **Pinned version** | `2.18.0` |
+| **Ported** | 2026-08-15 |
+| **Rules** | 26 |
+| **Tools** | fastqc · cutadapt · python · pandas · r-base · dada2 · digest · curl · biocontainers · qiime2 · multiqc |
+| **Domain** | genomics |
+
+## Run it
+
+```bash
+oxo-flow dry-run main.oxoflow
+```
+
+## Scope
+
+The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.
+
+**In scope**
+
+- rename_raw_data_files
+- fastqc
+- cutadapt
+- cutadapt_summary
+- cutadapt_summary_merge
+- dada2_quality_fw
+- dada2_quality_rv
+- trunclen_fw
+- trunclen_rv
+- dada2_filtntrim
+- dada2_quality_fw_preprocessed
+- dada2_quality_rv_preprocessed
+- dada2_err
+- dada2_denoising
+- dada2_rmchimera
+- dada2_stats
+- dada2_merge
+- merge_stats
+- download_taxonomy_db
+- format_taxonomy
+- dada2_taxonomy
+- qiime2_inasv
+- qiime2_inseq
+- qiime2_intax
+- qiime2_barplot
+- multiqc
+
+**Excluded**
+
+- qiime2: QIIME2 analyses beyond the default taxa barplot (diversity, ANCOM, classifier training/prediction) — params.qiime2 false by default
+- dada2_its: ITS (fungal) analysis branch — params.its false by default
+- nanopore: nanopore sequencing branch — params.nanopore false by default
+- syncom: synthetic community controls branch — params.syncom false by default
+- multi-run merge: DADA2_MERGE mergeSequenceTables branch for multiple --run_ids — single-run default path only
+- versions.yml per-module tool version files; PICRUSt and other optional reports
+
+## Fidelity
+
+| Upstream process/rule | oxo-flow rule | Tool (version) | Notes |
+|---|---|---|---|
+| RENAME_RAW_DATA_FILES | `rename_raw_data_files` | nf-core/ubuntu 20.04 | identical command (soft links) |
+| FASTQC | `fastqc` | fastqc 0.12.1 | identical command; upstream publishes only `*.html` — the port also declares the `*.zip` files because MultiQC consumes them |
+| CUTADAPT_BASIC | `cutadapt` | cutadapt 5.2 | identical `ext.args` (`-O 3 -e 0.1 -g/-G --discard-untrimmed`) |
+| CUTADAPT_SUMMARY | `cutadapt_summary` | python 3.8.3 | verbatim `bin/cutadapt_summary.py`, `paired_end` mode |
+| CUTADAPT_SUMMARY_MERGE | `cutadapt_summary_merge` | — | copy action |
+| DADA2_QUALITY1 / DADA2_QUALITY2 | `dada2_quality_fw`, `dada2_quality_rv`, `dada2_quality_fw_preprocessed`, `dada2_quality_rv_preprocessed` | r-base 4.0.3 / dada2 1.26.0 | upstream runs the same process twice per stage with different prefixes; the port splits each into one rule per prefix |
+| TRUNCLEN | `trunclen_fw`, `trunclen_rv` | pandas 1.1.5 | verbatim `bin/trunclen.py` |
+| DADA2_FILTNTRIM | `dada2_filtntrim` | dada2 1.26.0 | identical `filterAndTrim` args; args file renamed `{sample}.filterAndTrim.args.txt` (all oxo-flow rules share one workdir, upstream name would collide); `ID` column uses the file basename so read-tracking sample names match upstream |
+| DADA2_ERR | `dada2_err` | dada2 1.26.0 | identical `learnErrors` args + `checkConvergence`/`plotErrors` outputs |
+| DADA2_DENOISING | `dada2_denoising` | dada2 1.26.0 | identical `dada` (incl. `getDadaOpt` defaults) + `mergePairs` + `makeSequenceTable`; `params.sample_inference` wired to `pool =` (upstream only records it in the args file); retries=3 (upstream `error_retry`), 48h limit (`process_long`) |
+| DADA2_RMCHIMERA | `dada2_rmchimera` | dada2 1.26.0 | identical `removeBimeraDenovo` args |
+| DADA2_STATS | `dada2_stats` | dada2 1.26.0 | identical read-tracking table |
+| DADA2_MERGE | `dada2_merge` | dada2 1.26.0 / digest 0.6.27 | single-run default path only; multi-run `mergeSequenceTables` branch not ported |
+| MERGE_STATS_STD | `merge_stats` | r-base 4.0.3 | identical merge by `sample` |
+| DB download (launcher) | `download_taxonomy_db` | curl | upstream downloads the reference DB in the Nextflow launcher (`file(url)`); the port makes it an explicit system-backend rule |
+| FORMAT_TAXONOMY | `format_taxonomy` | biocontainers 1.2.0 | verbatim `bin/taxref_reformat_sbdi-gtdb.sh`; runs in a scratch dir (the script globs `*`) |
+| DADA2_TAXONOMY + DADA2_ADDSPECIES + collectFile | `dada2_taxonomy` | dada2 1.26.0 | **merged**: upstream splits `ASV_seqs.fasta` into 10000-sequence chunks (`splitFasta by: 10000`) and runs assignTaxonomy + addSpecies per chunk, then concatenates chunk tables with header + sorted rows (`collectFile keepHeader, skip 1, sort`). The port replicates chunking with `awk` + per-chunk `Rscript` calls + `head`/`tail -n +2 | sort` concatenation — same chunk files, same args, same outputs. addSpecies resource hint (1 cpu/50G) becomes rule-level 10 cpus/20G, 24h limit |
+| QIIME2_INASV | `qiime2_inasv` | qiime2 2026.4 | identical: biom convert + `tools import` `BIOMV210Format` |
+| QIIME2_INSEQ | `qiime2_inseq` | qiime2 2026.4 | identical `FeatureData[Sequence]` import |
+| QIIME2_INTAX | `qiime2_intax` | qiime2 2026.4 | verbatim `bin/parse_dada2_taxonomy.r` (porting change: output path is argv[2]) + `HeaderlessTSVTaxonomyFormat` import |
+| QIIME2_BARPLOT | `qiime2_barplot` | qiime2 2026.4 | identical `taxa barplot` + `tools export` |
+| MULTIQC | `multiqc` | multiqc 1.34 | identical command in a scratch dir (`multiqc` scans cwd `.`); verbatim `assets/multiqc_config.yml` |
+| — (not ported) | — | — | ITS branch (`params.its`, default false), nanopore branch (`params.nanopore`, default false), syncom controls (`params.syncom`, default false), QIIME2 analyses beyond the barplot (diversity, ANCOM, classifier — `params.qiime2` default false), multi-run merge, `versions.yml` per-module tool version files, PICRUSt and other optional reports |
+
+Other notes:
+
+- `params.FW_primer`/`RV_primer` default to `null` upstream, which renders
+  a literal `null` adapter into the cutadapt command; the port defaults
+  them to empty strings (`-g ""`/`-G ""` = no 5'/3' adapter trimming), the
+  behavior the upstream docs describe.
+- All skip flags map 1:1 to `params.skip_*` (default false = full path).
+  `skip_fastqc` requires `skip_multiqc` too — the MultiQC rule consumes the
+  FastQC zips. `skip_taxonomy`/`skip_dada_taxonomy` additionally gate the
+  QIIME2 taxonomy import and barplot, mirroring upstream's empty-taxonomy
+  channel handling.
+- `metadata_file` is a config key (default `test/fixtures/metadata.tsv`);
+  upstream takes it from the samplesheet.
+
+## Links
+
+- Repository: [oxo-flow-ampliseq](https://github.com/oxo-flow-community/oxo-flow-ampliseq)
+- Upstream: [nf-core/ampliseq](https://github.com/nf-core/ampliseq) @ `2.18.0`
+- License: Apache-2.0 (port) · MIT (upstream)
+
+This port was created on 2026-08-15 and may lag behind upstream releases. See the repository's NOTICE for full attribution.
