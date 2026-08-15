@@ -1984,7 +1984,7 @@ window.OXO_PIPELINES = [
       "multiqc"
     ],
     "installation": {
-      "engine": "oxo-flow >= 0.11.0",
+      "engine": "oxo-flow >= 0.12.0",
       "toolchain": "conda envs \u2014 pinned (envs/*.yaml, one per tool)",
       "requirements": [
         "reference_dir with genome.fa, genes.gtf, hg38_ref.txt, CIRIquant.yml",
@@ -2068,7 +2068,7 @@ window.OXO_PIPELINES = [
       "R >= 4.4 (knitr, data.table, gpgr via post-deploy)"
     ],
     "installation": {
-      "engine": "oxo-flow >= 0.11.0",
+      "engine": "oxo-flow >= 0.12.0",
       "toolchain": "conda envs (envs/*.yaml) + pinned Singularity/Docker containers for GATK, VarDict, MuSE, CaVEMan; VEP cache installed via the clindet_vep env post-deploy",
       "requirements": [
         "Reference data: genome FASTA + .fai + .dict, target BED, dbSNP / Mills indels / gnomAD VCFs (paths in [config])",

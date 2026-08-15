@@ -22,7 +22,7 @@ oxo-flow run circrna.oxoflow -j 16
 
 ## Installation
 
-**Engine.** oxo-flow >= 0.11.0
+**Engine.** oxo-flow >= 0.12.0
 
 **Toolchain.** conda envs — pinned (envs/*.yaml, one per tool)
 
