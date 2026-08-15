@@ -2,7 +2,7 @@
 
 **Porting Nextflow (nf-core DSL2) and Snakemake workflows to oxo-flow v0.11.0 TOML repositories.**
 
-Version: 1.0 (2026-08-15)
+Version: 1.1 (2026-08-15)
 Engine target: oxo-flow **0.11.0** (pin this; format features below are v0.11.0 surface)
 Audience: ~20 parallel porting agents, each owning one workflow port.
 
@@ -172,6 +172,11 @@ declares **`threads=1`** in dry-run output (the "unset" sentinel, §13.1).
 - Built-in placeholders: `{input}` (space-joined), `{input[N]}` (0-indexed),
   `{input.name}` (named_input), `{output}`, `{output[N]}`, `{output.name}`
   (named_output), `{threads}`, `{memory}`, `{config.*}`.
+- **`{log}` is NOT a placeholder.** The `log` field is metadata only — the
+  engine never expands `{log}` in `shell` (it would leave a literal `{log}`
+  in the command). Inline the log path in the shell command
+  (`> {config.out_dir}/logs/{sample}.log 2>&1`) and keep the `log` field for
+  metadata [V].
 - `named_input` / `named_output` sub-tables exist for many-file rules:
   `[rules.named_input] reads1 = "raw/{sample}_R1.fastq.gz"` used as
   `{input.reads1}` [gallery, workflow-format.md].
@@ -982,6 +987,29 @@ or `docs/guide/src/commands/*.md`, `[gallery]` = canonical example file.
 28. **Version pinning must survive the port.** Container tags carry the
     `--<build>` suffix; conda pins use `tool=version`. Copy both verbatim
     (§5). `[V]` for syntax acceptance; policy is §5.
+29. **TOML triple-quoted string escapes.** In `"""..."""` strings: `\|` is an
+    *invalid* TOML escape (parse error — double-escape as `\\|`); `\n`
+    renders as a **real newline character** (printf format strings need
+    `\\n` to keep the two characters); a trailing `\` at end of line triggers
+    TOML line-continuation trimming — it joins the next line, which is
+    semantically equivalent to the shell backslash-newline it replaced, so
+    arg-continuation lines are safe as-is. Perl one-liners containing
+    `{(...)}` survive engine expansion untouched. `[V]`
+30. **`validate --as-include` still runs E005 config checks.** A fragment
+    whose paths/shells reference `{config.*}` keys defined in the *including*
+    file fails standalone `--as-include` validation ("undefined config
+    variable"). When `[config]` lives in `main.oxoflow`, do not add fragment
+    validation to `test/run.sh` — validate the composed workflow only. `[V]`
+31. **Directory outputs pass output verification.** The post-run check uses
+    `path.exists()`, which is true for directories — Snakemake
+    `directory(...)` outputs (rMATS `--od`, SplAdder `--outdir`, Voila
+    `-d`) port as-is with the directory path as the declared output. `[V]`
+32. **`-t` prefix targeting works across include namespaces.** With
+    namespaced fragments (`alignment::*` / `as_calling::*`), `-t alignment`
+    runs exactly the `alignment::*` rules; `-t as_calling` additionally
+    pulls upstream producers (bams) but not sibling consumers of the same
+    bams (verified: 17-rule port → `-t alignment` 5 rules, `-t as_calling`
+    15). Use this to mirror multi-Snakefile upstreams in one DAG. `[V]`
 
 ---
 
@@ -1046,6 +1074,7 @@ the runs:
 | wf6 | `{config.x}` inside `sample_pattern`, `cleanup_chunks` silently ignored, `config.samples_list` comma-joined in shell, auto-discovered + group double fan-out |
 | wf7 | Config comma-splitting + single-element-array escape hatch, `lint` warning codes (W004/W007/W008), `lint --strict` exit 1 |
 | wf8 | Checkpoint: run→skip on re-run ("0 succeeded, 2 skipped"), dry-run `[skip: up to date]`, `touch` does not invalidate, content change invalidates (`[run: input changed]`) |
+| oxo-flow-tcasia (live port, #24) | `{log}` metadata-only (literal in shell, must inline path), TOML triple-quote escape semantics (§13.29), `--as-include` E005 on main-file config, directory outputs via `path.exists()`, `-t` namespace targeting (§13.32), namespaced two-stage DAG chaining |
 
 ## Appendix B. Doc citations
 
