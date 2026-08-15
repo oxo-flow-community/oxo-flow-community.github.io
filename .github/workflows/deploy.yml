@@ -27,8 +27,27 @@ jobs:
           python-version: "3.12"
       - name: Install dependencies
         run: pip install "mkdocs-material>=9.5" "pymdown-extensions>=10"
+      - name: Validate registry + regenerate pages (must be drift-free)
+        run: |
+          python3 scripts/generate.py
+          git diff --exit-code -- docs/ data/ scripts/ || {
+            echo "::error::generated pages drift from data/pipelines.json — run scripts/generate.py and commit"
+            exit 1
+          }
       - name: Build site
         run: mkdocs build --strict
+      - name: Verify every registry entry has a built page
+        run: |
+          python3 - <<'EOF'
+          import json, pathlib
+          data = json.loads(pathlib.Path("data/pipelines.json").read_text())
+          missing = [p["name"] for p in data
+                     if not pathlib.Path(f"site/pipelines/{p['name']}/index.html").is_file()]
+          if missing:
+              print(f"::error::built pages missing for: {missing}")
+              raise SystemExit(1)
+          print(f"verified: {len(data)} pages present")
+          EOF
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

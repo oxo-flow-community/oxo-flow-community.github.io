@@ -32,6 +32,27 @@ def load() -> list[dict]:
     return json.loads(DATA.read_text())
 
 
+REQUIRED_FIELDS = ("name", "title", "description", "repo_url", "domain", "tags", "tools")
+
+
+def validate(pipelines: list[dict]) -> None:
+    """Fail loudly instead of emitting a broken/empty run-notes page."""
+    names = []
+    for p in pipelines:
+        missing = [f for f in REQUIRED_FIELDS if not p.get(f)]
+        inst = p.get("installation") or {}
+        if not inst.get("engine") or not inst.get("toolchain"):
+            missing.append("installation.engine/toolchain")
+        if not p.get("quickstart"):
+            missing.append("quickstart (or a staging README with Usage)")
+        if missing:
+            raise SystemExit(f"registry entry '{p.get('name', '?')}' missing: {', '.join(missing)}")
+        names.append(p["name"])
+    dupes = {n for n in names if names.count(n) > 1}
+    if dupes:
+        raise SystemExit(f"duplicate registry names: {sorted(dupes)}")
+
+
 def norm(heading: str) -> str:
     return heading.lower().replace(" ", "").replace("-", "").lstrip("#")
 
@@ -68,10 +89,10 @@ def enrich(pipelines: list[dict]) -> list[dict]:
         if readme.exists():
             text = readme.read_text()
             cmd = quickstart_command(text)
-            if cmd:
+            if cmd and not p.get("quickstart"):
                 p["quickstart"] = cmd
             fidelity = section(text, "Fidelity")
-            if fidelity:
+            if fidelity and not p.get("fidelity_md"):
                 p["fidelity_md"] = fidelity
         p.setdefault("quickstart", f"oxo-flow run workflow/{p['name'].removeprefix('oxo-flow-')}.toml")
     return pipelines
@@ -211,6 +232,7 @@ def make_page(p: dict) -> str:
 
 def main() -> int:
     pipelines = enrich(load())
+    validate(pipelines)
     emit_js(pipelines)
     OUT_PAGES.mkdir(parents=True, exist_ok=True)
     for p in pipelines:
