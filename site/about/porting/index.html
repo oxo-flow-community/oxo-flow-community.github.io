@@ -612,6 +612,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#42-custom-per-file-wildcards-eg-sra-the-script-rule-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Custom per-file wildcards (e.g. {sra}) — the script-rule pattern
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -619,6 +630,17 @@
       
         <li class="md-nav__item">
   <a href="#5-version-pinning-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Version pinning policy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-version-pinning-policy_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         5. Version pinning policy
@@ -1132,6 +1154,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#42-custom-per-file-wildcards-eg-sra-the-script-rule-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Custom per-file wildcards (e.g. {sra}) — the script-rule pattern
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1139,6 +1172,17 @@
       
         <li class="md-nav__item">
   <a href="#5-version-pinning-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Version pinning policy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-version-pinning-policy_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         5. Version pinning policy
@@ -1424,9 +1468,21 @@
 
 <h1 id="oxo-flow-porting-playbook">oxo-flow Porting Playbook</h1>
 <p><strong>Porting Nextflow (nf-core DSL2) and Snakemake workflows to oxo-flow v0.11.0 TOML repositories.</strong></p>
-<p>Version: 1.0 (2026-08-15)
+<p>Version: 1.2 (2026-08-15)
 Engine target: oxo-flow <strong>0.11.0</strong> (pin this; format features below are v0.11.0 surface)
 Audience: ~20 parallel porting agents, each owning one workflow port.</p>
+<p>v1.1 (TCASIA port, #24): <code>{log}</code> is metadata-only (never a shell
+placeholder), TOML triple-quote escape semantics (§13.29), <code>validate
+--as-include</code> E005 on main-file config (§13.30), directory outputs pass
+output verification (§13.31), <code>-t</code> prefix targeting across include
+namespaces (§13.32).</p>
+<p>v1.2 (SRA port, #23): fan-out trigger fields (§2.3, §13.33), empty
+<code>output</code> script rules (§13.34), template-name <code>depends_on</code> (§13.35),
+dry-run <code>input ✗</code> semantics (§13.36), <code>pairs_pattern</code> three-wildcard
+constraint (§2.4, §13.37), literal resource numbers + resource-group
+syntax (§13.38), the per-sample-routing limitation (§13.39), no-license
+upstream handling (§10, §13.40), and the <code>{sra}</code>-style custom-wildcard
+pattern (§4.2).</p>
 <p>This is an execution spec. Every TOML snippet in this document was either
 (a) taken verbatim from a canonical, CI-validated gallery workflow in the
 oxo-flow source repo, or (b) written by the author and verified against the
@@ -1568,7 +1624,7 @@ against the <code>oxo-flow schema</code> dump and the reference docs.</p>
 <tr>
 <td><code>output</code></td>
 <td>array of strings</td>
-<td>Path patterns. <strong>Every declared output is verified to exist after the rule succeeds</strong>; a missing output fails the rule (exit sentinel -1).</td>
+<td>Path patterns. <strong>Every declared output is verified to exist after the rule succeeds</strong>; a missing output fails the rule (exit sentinel -1). May be <code>[]</code> for script-only rules with dynamic outputs (§13.34).</td>
 </tr>
 <tr>
 <td><code>shell</code></td>
@@ -1709,6 +1765,13 @@ declares <strong><code>threads=1</code></strong> in dry-run output (the "unset" 
 <li>Built-in placeholders: <code>{input}</code> (space-joined), <code>{input[N]}</code> (0-indexed),
   <code>{input.name}</code> (named_input), <code>{output}</code>, <code>{output[N]}</code>, <code>{output.name}</code>
   (named_output), <code>{threads}</code>, <code>{memory}</code>, <code>{config.*}</code>.</li>
+<li><strong>Fan-out trigger fields:</strong> a rule clones per sample/pair only when a
+  wildcard appears in <code>input</code>, <code>output</code>, or <code>shell</code> (§13.33).</li>
+<li><strong><code>{log}</code> is NOT a placeholder.</strong> The <code>log</code> field is metadata only — the
+  engine never expands <code>{log}</code> in <code>shell</code> (it would leave a literal <code>{log}</code>
+  in the command). Inline the log path in the shell command
+  (<code>&gt; {config.out_dir}/logs/{sample}.log 2&gt;&amp;1</code>) and keep the <code>log</code> field for
+  metadata [V].</li>
 <li><code>named_input</code> / <code>named_output</code> sub-tables exist for many-file rules:
   <code>[rules.named_input] reads1 = "raw/{sample}_R1.fastq.gz"</code> used as
   <code>{input.reads1}</code> [gallery, workflow-format.md].</li>
@@ -1746,7 +1809,7 @@ declares <strong><code>threads=1</code></strong> in dry-run output (the "unset" 
 <tr>
 <td>Pairs from disk</td>
 <td><code>[workflow] pairs_pattern = "aligned/{pair_id}/{experiment}_vs_{control}.bam"</code></td>
-<td>Scans disk.</td>
+<td>Scans disk. <strong>The pattern MUST contain all three wildcards <code>{pair_id}</code>, <code>{experiment}</code>, <code>{control}</code></strong> — a single-token pattern (e.g. SRR discovery <code>sra/{pair_id}/{pair_id}.sra</code>) is rejected at load (§13.37).</td>
 </tr>
 <tr>
 <td>CLI</td>
@@ -2319,8 +2382,29 @@ is:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">shell</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;for s in $(echo {config.samples_list} | tr &#39;,&#39; &#39; &#39;); do ...; done&quot;</span>
 </code></pre></div>
 <p>Verified: <code>config.samples_list</code> renders comma-joined in shell expansion [V].</p>
+<h3 id="42-custom-per-file-wildcards-eg-sra-the-script-rule-pattern">4.2 Custom per-file wildcards (e.g. <code>{sra}</code>) — the script-rule pattern</h3>
+<p>Snakemake workflows that fan out over a non-sample wildcard whose values
+come from a table at load time (e.g. <code>{sra}</code> in
+<code>auto_sra_rnaseq_pipeline</code>) have no direct fan-out source in oxo-flow:
+only <code>{sample}</code>/<code>{pair_id}</code>/<code>{experiment}</code>/<code>{control}</code> clone rules, and
+<code>pairs_pattern</code> cannot help (§13.37). Port them as <strong>single-instance
+script rules</strong> [V, workflow #23]:</p>
+<ul>
+<li>The rule declares <code>output = []</code> (§13.34) and
+  <code>script = "scripts/x.py …"</code>; the script iterates the table (pandas) and
+  runs the identical per-value command.</li>
+<li>Downstream per-sample rules consume the dynamic paths inside their own
+  scripts and order via <code>depends_on = ["&lt;template-name&gt;"]</code> (§13.35).</li>
+<li>Preserve upstream concurrency caps: a run.py-style global cap
+  (<code>--resources limit_dump=2</code>) becomes an internal worker pool of 2 in the
+  script; a per-job resource with a global cap becomes <code>[resource_groups]</code>
+  (§13.38).</li>
+<li>Record the structural deviation (rule granularity change) in the
+  fidelity table — the commands per value stay byte-identical.</li>
+</ul>
 <hr />
 <h2 id="5-version-pinning-policy">5. Version pinning policy</h2>
+<h2 id="5-version-pinning-policy_1">5. Version pinning policy</h2>
 <p><strong>Every tool that ships in a port must carry an exact version. <code>latest</code> is
 forbidden — in container tags and in conda pins.</strong></p>
 <ol>
@@ -2623,6 +2707,9 @@ workflow <strong>may lag upstream releases</strong>. Attribution in
 from the upstream repo at the ported commit and commit it verbatim as
 <code>LICENSE.upstream</code> — the porting agent must actually do this, not just
 write the instruction.</p>
+<p><strong>Upstream has no license file</strong> (GitHub reports "no license"): skip
+<code>LICENSE.upstream</code> and replace the NOTICE's upstream-license paragraph
+with an explicit statement of the absence (§13.40).</p>
 <hr />
 <h2 id="11-license">11. LICENSE</h2>
 <p>Port repositories carry the <strong>full Apache-2.0 text</strong> — copy the file from
@@ -2821,6 +2908,83 @@ or <code>docs/guide/src/commands/*.md</code>, <code>[gallery]</code> = canonical
 <li><strong>Version pinning must survive the port.</strong> Container tags carry the
     <code>--&lt;build&gt;</code> suffix; conda pins use <code>tool=version</code>. Copy both verbatim
     (§5). <code>[V]</code> for syntax acceptance; policy is §5.</li>
+<li><strong>TOML triple-quoted string escapes.</strong> In <code>"""..."""</code> strings: <code>\|</code> is an
+    <em>invalid</em> TOML escape (parse error — double-escape as <code>\\|</code>); <code>\n</code>
+    renders as a <strong>real newline character</strong> (printf format strings need
+    <code>\\n</code> to keep the two characters); a trailing <code>\</code> at end of line triggers
+    TOML line-continuation trimming — it joins the next line, which is
+    semantically equivalent to the shell backslash-newline it replaced, so
+    arg-continuation lines are safe as-is. Perl one-liners containing
+    <code>{(...)}</code> survive engine expansion untouched. <code>[V]</code></li>
+<li><strong><code>validate --as-include</code> still runs E005 config checks.</strong> A fragment
+    whose paths/shells reference <code>{config.*}</code> keys defined in the <em>including</em>
+    file fails standalone <code>--as-include</code> validation ("undefined config
+    variable"). When <code>[config]</code> lives in <code>main.oxoflow</code>, do not add fragment
+    validation to <code>test/run.sh</code> — validate the composed workflow only. <code>[V]</code></li>
+<li><strong>Directory outputs pass output verification.</strong> The post-run check uses
+    <code>path.exists()</code>, which is true for directories — Snakemake
+    <code>directory(...)</code> outputs (rMATS <code>--od</code>, SplAdder <code>--outdir</code>, Voila
+    <code>-d</code>) port as-is with the directory path as the declared output. <code>[V]</code></li>
+<li><strong><code>-t</code> prefix targeting works across include namespaces.</strong> With
+    namespaced fragments (<code>alignment::*</code> / <code>as_calling::*</code>), <code>-t alignment</code>
+    runs exactly the <code>alignment::*</code> rules; <code>-t as_calling</code> additionally
+    pulls upstream producers (bams) but not sibling consumers of the same
+    bams (verified: 17-rule port → <code>-t alignment</code> 5 rules, <code>-t as_calling</code>
+    15). Use this to mirror multi-Snakefile upstreams in one DAG. <code>[V]</code></li>
+<li><strong>Fan-out trigger fields are <code>input</code>/<code>output</code>/<code>shell</code> only.</strong> A
+    placeholder appearing <em>exclusively</em> in <code>script</code>, <code>log</code>, <code>benchmark</code>,
+    hooks, <code>params</code>, or <code>when</code> does NOT clone the rule — it stays a single
+    instance with the literal placeholder in those fields (probe wf9:
+    script-only <code>{sample}</code> → no fan-out). <code>script</code> strings ARE
+    placeholder-expanded <strong>at runtime</strong> for the executing instance (the
+    same <code>render_shell_command</code> renderer as <code>shell</code>), so
+    <code>script = "scripts/x.py --sample {sample}"</code> works once a wildcard in
+    input/output/shell clones the rule. <code>debug</code> output renders shell
+    commands only — script commands are not shown; the script file is the
+    fidelity-check source. <code>[V]</code></li>
+<li><strong><code>output = []</code> is valid for script-only rules.</strong> Rules with an empty
+    output list and a <code>script</code> pass <code>validate</code>, appear in dry-run, and
+    execute; nothing is verified on disk afterwards — the script exit code
+    is the contract. Use for metadata-driven steps whose outputs are
+    dynamic (e.g. per-SRR FASTQ dumps, §4.2). <code>[V]</code></li>
+<li><strong><code>depends_on</code> on a template name resolves to ALL expanded instances.</strong>
+    <code>depends_on = ["data_conversion_pair"]</code> on a per-sample rule creates
+    edges from every <code>data_conversion_pair_&lt;group&gt;_&lt;sample&gt;</code> instance (the
+    engine builds an original-name → expanded-names map during
+    <code>expand_wildcards</code>); for single-instance rules the name matches
+    directly. <code>[V]</code></li>
+<li><strong>dry-run <code>input ✗</code> means "file absent on disk at preview time"</strong> — it
+    is NOT a missing-producer diagnostic. Producer-owned intermediates show
+    <code>input ✗</code> too in a no-checkpoint dry-run (all reference ports do);
+    files present on disk (fixtures) show <strong>no marker at all</strong>. The §14 DoD
+    input check is therefore: no <code>✗</code> for files the run consumes from disk,
+    and DAG wiring verified via the <code>Dependencies:</code> lines in <code>debug</code>. <code>[V]</code></li>
+<li><strong><code>pairs_pattern</code> requires <code>{pair_id}</code>, <code>{experiment}</code>, AND <code>{control}</code>.</strong>
+    A pattern missing any of the three is rejected at config load
+    ("pairs_pattern must contain {pair_id}, {experiment}, and {control}") —
+    single-token discovery (e.g. <code>sra/{pair_id}/{pair_id}.sra</code> for SRR
+    archives) is impossible; use the §4.2 script-rule pattern instead. <code>[V]</code></li>
+<li><strong><code>[rules.resources]</code> numbers are literals — no <code>{config.x}</code>.</strong>
+    <code>threads</code> is <code>u32</code>; upstream config thread keys (<code>fastp_threads</code>,
+    <code>star_threads</code>) must be baked into <code>[rules.resources] threads</code> with the
+    upstream default and a fidelity-table note. Shared concurrency caps:
+    declare <code>[resource_groups] limit_merge = { max = 2 }</code> (optional
+    <code>wait = "queue"|"fail"</code>, default queue) and claim per rule
+    <code>[rules.resources] groups = { limit_merge = 1 }</code>; undeclared-group or
+    over-capacity claims fail fast (<code>ResourceGroupExhausted</code>). <code>[V]</code></li>
+<li><strong><code>when</code> branches are workflow-level, not per-sample.</strong> Snakemake input
+    functions that route <em>per sample</em> by a metadata column (<code>paired</code> ==
+    "PAIRED"/"SINGLE") cannot be replicated — <code>when</code> evaluates config only,
+    and both branches cannot coexist (outputs collide). Port the branch the
+    upstream example uses and record the other as not-ported with the
+    reason (precedent: rnaseq-star-deseq2 <code>fastp_se</code>, auto_sra_rnaseq
+    <code>data_conversion_single</code>). <code>[V]</code></li>
+<li><strong>Upstream without a license file</strong> (GitHub reports "no license"): there
+    is no <code>LICENSE.upstream</code> to copy — NOTICE.md states the absence
+    explicitly (repo, ported commit, "ships no LICENSE file"), metadata.json
+    uses <code>source.license = "none"</code> / <code>upstream_license = "none"</code>, and the
+    README Source section says so. The port itself stays Apache-2.0.
+    [workflow #23]</li>
 </ol>
 <hr />
 <h2 id="14-definition-of-done">14. Definition of done</h2>
@@ -2909,6 +3073,18 @@ the runs:</p>
 <tr>
 <td>wf8</td>
 <td>Checkpoint: run→skip on re-run ("0 succeeded, 2 skipped"), dry-run <code>[skip: up to date]</code>, <code>touch</code> does not invalidate, content change invalidates (<code>[run: input changed]</code>)</td>
+</tr>
+<tr>
+<td>wf9</td>
+<td>Fan-out triggered by input/output/shell only (script-only <code>{sample}</code> stays single-instance), <code>output = []</code> accepted, <code>depends_on</code> template→all-instances, <code>expand_inputs</code> + <code>config.samples_list</code> gather, script placeholder expansion at runtime (<code>render_shell_command</code>), <code>[resource_groups]</code>/<code>groups</code> claim syntax</td>
+</tr>
+<tr>
+<td>oxo-flow-tcasia (live port, #24)</td>
+<td><code>{log}</code> metadata-only (literal in shell, must inline path), TOML triple-quote escape semantics (§13.29), <code>--as-include</code> E005 on main-file config, directory outputs via <code>path.exists()</code>, <code>-t</code> namespace targeting (§13.32), namespaced two-stage DAG chaining</td>
+</tr>
+<tr>
+<td>oxo-flow-auto-sra-rnaseq-pipeline (live port, #23)</td>
+<td><code>{sra}</code>-style custom wildcards → single-instance no-output script rules (§4.2, §13.34), template-name <code>depends_on</code> (§13.35), <code>pairs_pattern</code> three-wildcard constraint (§13.37), resource-group cap port (limit_dump→worker pool, limit_merge→<code>[resource_groups]</code>), no-license upstream handling (§13.40)</td>
 </tr>
 </tbody>
 </table>

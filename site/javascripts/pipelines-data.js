@@ -2082,5 +2082,160 @@ window.OXO_PIPELINES = [
     "upstream_license": "MIT",
     "quickstart": "oxo-flow dry-run main.oxoflow",
     "fidelity_md": "| Upstream process/rule | oxo-flow rule | Tool (version) | Notes |\n|---|---|---|---|\n| fastp (T/N) | `fastp_tumor_sample` / `fastp_normal_sample` | fastp | identical flags (`-w 8 -Q -c -L`) |\n| bam flagstat (T/N) | `bam_flagstat_tumor` / `bam_flagstat_normal` | samtools | identical command |\n| map_reads (T/N) | `map_reads_tumor` / `map_reads_normal` | bwa >=0.7.18, samtools | `bwa mem -MR` + `fixmate` + `sort` |\n| mark_duplicates (T/N) | `mark_duplicates_tumor` / `mark_duplicates_normal` | gatk4 4.6.2.0 (container) | `MarkDuplicates --CREATE_INDEX true`, `VALIDATION_STRINGENCY SILENT` |\n| recal_link (T/N) | `recal_link_tumor` / `recal_link_normal` | ln -s | BQSR off (upstream mini-test default) |\n| bed_to_interval_list | `bed_to_interval_list` | gatk4 (container) | `BedToIntervalList --SORT true` |\n| picard_collect_wes (T/N) | `picard_collect_wes_tumor` / `picard_collect_wes_normal` | gatk4 (container) | `CollectHsMetrics` |\n| call_variants_HaplotypeCaller | `call_variants_HaplotypeCaller` | gatk4 (container) | identical `-A` annotation flags |\n| vardict_paired_mode | `vardict_paired_mode` | vardict-java 1.8.3 (container) | `vardict-java` + `testsomatic.R` + `var2vcf_paired.pl` |\n| vardict_filter_somatic | `vardict_filter_somatic` | bcftools >=1.22 | StrongSomatic/LikelySomatic + `SSF <= 0.05` |\n| varscan2 mpileup/call/processSomatic/filter | `varscan2_mpileup` \u2026 `merge_somatic` | varscan 2.4.6, samtools, bcftools | `--strand-filter 1`, `--output-vcf 1`, concat chain |\n| muse_call / muse_sump | `muse_call` / `muse_sump` | muse 2.1.2 (container) | `sump -E -n {threads} -D {dbsnp_gz}` |\n| mutect2 chain | `M2_ST`/`M2_SNC`/`M2_contam`/`mutect2`/`M2_filter` | gatk4 (container) | `-pon` only when `wes_pon` set (upstream hg38_chr21 has none) |\n| call_config_strelka | `call_config_strelka` | manta | `configManta.py --exome --callRegions` |\n| call_strelka_manta_germline | `call_strelka_manta_germline` | strelka2, manta | `configureStrelkaGermlineWorkflow` + `runWorkflow.py` |\n| merge_strelka_manta | `merge_strelka_manta` | bcftools | upstream `{params.indel}` bug fixed (single concat+sort) |\n| strelka somatic (via manta) | `call_strelka_somatic_manta` + `merge_strelka_somatic_manta` | strelka2, manta, bcftools | same pipeline on somatic config |\n| CM_cnv | `CM_cnv` | touch | empty tumour/normal CNV beds (upstream default) |\n| CM_call / CM_flag | `CM_call` / `CM_flag` | caveman 1.15.3 (container) | `-td 2 -nd 2 -seqType WGS -no-flagging`, flag with `-umv .` |\n| CM_germ_flag | `CM_germ_flag` | bcftools | `-e 'DP<=30' -s LowDP --mode x` |\n| vcf_norm (per caller) | `vcf_norm_{Mutect2,vardict,varscan2,muse,HaplotypeCaller,germline_strelkamanta,germline_caveman}` | bcftools >=1.22 | verbatim per-caller FILTER rules incl. vardict contig-header branch |\n| loop_vcf2maf_paired | `vcf2maf_{Mutect2,vardict,varscan2,muse,HaplotypeCaller}` | vcf2maf 1.6.22, ensembl-vep 114.2 | verbatim tumor/normal IDs per `get_vcf_name` |\n| loop_vcf2maf_germ_paired | `vcf2maf_germ_strelkamanta` / `vcf2maf_germ_caveman` | vcf2maf 1.6.22 | TUMOUR/NORMAL for CaVEMan |\n| merge_loop (somatic) | `merge_paired_maf` | merge_maf.R (verbatim) | driven via scripts/smk.R shim |\n| merge_loop_germline | `merge_paired_germ_maf` | merge_maf.R (verbatim) | |\n| make_region_bed_list + flag_mutation_pairead_maf | `make_region_bed_list` + `flag_mutation_pairead_maf` | flag_mutation_maf.R (verbatim) | empty bed_list = header-only TSV |\n| run_cancer_report | `run_cancer_report` | R >=4.4 (knitr, gpgr via post-deploy) | only MAF/panel/Rmd params; CNV/QC params unset (NULL) as in upstream default path |\n| combined_multiqc | `prep_multiqc_data` + `combined_multiqc_prep_multiqc_data` + `combined_multiqc` | multiqc | conpair/purple inputs out of scope |\n\n**Not ported** (upstream branches outside the default paired WES path, with\nreasons): CNV branch (purple/amber/cobalt/ASCAT/FACETS/sequenza/freec/\nexomedepth \u2014 Broad-only, unbuildable without commercial licenses and heavy\nreference data), extended SV branch (delly/gridss/svaba/BRASS/linx/\nigv-caller/jasmine \u2014 reference-data heavy), RNA branch (arriba/TRUST4/\nisofox/RNA SNV \u2014 separate sample type), unpaired (single-sample) mode."
+  },
+  {
+    "name": "oxo-flow-auto-sra-rnaseq-pipeline",
+    "title": "SRA-powered RNA-seq: .sra archives to differential expression",
+    "origin": "port",
+    "rating": "verified",
+    "engine": "snakemake",
+    "source": {
+      "repo": "xuzhougeng/auto_sra_rnaseq_pipeline",
+      "url": "https://github.com/xuzhougeng/auto_sra_rnaseq_pipeline",
+      "tag": "main",
+      "sha": "923b9e98669a02d7b63ac8743e7ed960f3d0a86e",
+      "license": "none"
+    },
+    "created": "2026-08-15",
+    "domain": "transcriptomics",
+    "tags": [
+      "rna-seq",
+      "sra",
+      "fasterq-dump",
+      "fastp",
+      "star",
+      "deseq2",
+      "differential-expression",
+      "bigwig"
+    ],
+    "scope": [
+      "get_sra",
+      "data_conversion_pair",
+      "merge_R1_data",
+      "merge_R2_data",
+      "data_clean_pair",
+      "align_and_count",
+      "build_bam_index",
+      "bamtobw",
+      "combine_count",
+      "DGE_analysis"
+    ],
+    "excluded": [
+      "data_conversion_single \u2014 single-end branch; upstream routes per sample by the metadata 'paired' column, oxo-flow cannot branch per sample (upstream example dataset D21122 is all-PAIRED)",
+      "merge_data \u2014 single-end branch, not ported",
+      "data_clean_single \u2014 single-end branch, not ported",
+      "Snakefile_ENCODE \u2014 alternate entry point (ENCODE metadata format, DESeq2_diff_encode.R)",
+      "run.py \u2014 batch runner over multiple metadata files (validation, bark/feishu notifications, --restart-times 3)",
+      "bark/feishu notification flags \u2014 consumed only by run.py",
+      "snakemake onerror email \u2014 oxo-flow has per-rule on_failure hooks, no workflow-level error hook",
+      "slurm/config.yaml \u2014 cluster profile (use oxo-flow [cluster] instead)",
+      "scripts/update_json.py \u2014 file_dict.json tracker used by external orchestration",
+      "pigz_threads config key \u2014 merge rules use plain cat (pigz pipe commented out upstream)"
+    ],
+    "rule_count": 10,
+    "tools": [
+      "sra-tools",
+      "fastp",
+      "star",
+      "samtools",
+      "deeptools",
+      "pandas",
+      "bioconductor-deseq2",
+      "r-ashr",
+      "r-data.table"
+    ],
+    "description": "Automated RNA-seq analysis from locally downloaded SRA archives to differential expression results: verify and symlink .sra files, fasterq-dump conversion to FASTQ, read merging across multiple SRR runs per sample, fastp trimming, STAR alignment with gene counts, BAM indexing, BPM-normalized bigWig signal tracks, a merged count matrix, and DESeq2 differential analysis with ashr shrinkage. Every tool is pinned to an exact conda version for reproducibility.",
+    "installation": {
+      "engine": "oxo-flow >= 0.11.0",
+      "toolchain": "conda envs \u2014 pinned",
+      "requirements": [
+        "Reference data: STAR index dir and GTF (config index / GTF, e.g. GRCh38)",
+        "Pre-downloaded .sra files at <sra_data_path>/<SRR>/<SRR>.sra, one metadata TSV row per sample (GSM) with columns: Dataset GSE GSM gene method celline group group_name type platform SRR paired",
+        "Sample list in [[sample_groups]] and config db_id must match the metadata file (see repo README Usage)",
+        "Compute: up to 20 threads / 10 GB per rule (align_and_count); 8 (data_clean_pair); 10 (bamtobw); 4 (build_bam_index)",
+        "Disk: FASTQ, BAM and bigWig intermediates \u2014 several tens of GB for a typical cohort"
+      ]
+    },
+    "repo_url": "https://github.com/oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipeline",
+    "license": "Apache-2.0",
+    "upstream_license": "none",
+    "quickstart": "oxo-flow dry-run main.oxoflow",
+    "fidelity_md": "Scope: the **default-parameters main execution path** (upstream `rule all`).\nRows cover every upstream rule; \"not ported\" rows carry a reason.\n\n| Upstream rule | oxo-flow rule | Tool (version) | Notes |\n|---|---|---|---|\n| get_sra | `get_sra` | python 3.11 + pandas 3.0.5 | run: block ported to `scripts/get_sra.py` (identical symlink logic); single-instance script rule (oxo-flow fans out over `{sample}`/`{pair_id}` only, upstream `{sra}` values come from the metadata TSV). Splits multi-SRR values on `srr_separator` like the upstream merge input functions and run.py `check_sra_files` (upstream get_sra itself does not split \u2014 latent bug for multi-SRR rows). No declared outputs (per-SRR paths are dynamic) |\n| data_conversion_pair | `data_conversion_pair` | sra-tools 3.1.1 | `fasterq-dump sra/<SRR> -O sra` identical per SRR; upstream per-SRR jobs capped at 2 concurrent dumps (run.py `--resources limit_dump=2`) \u2192 script with an internal worker pool of 2. Script deps (python/pandas) join the download env \u2014 oxo-flow runs one environment per rule (upstream split input function + command across base/download envs) |\n| data_conversion_single | not ported | \u2014 | single-end branch; upstream routes per sample by the metadata `paired` column, oxo-flow cannot branch per sample (upstream example dataset D21122 is all-PAIRED) |\n| merge_R1_data | `merge_R1_data` | coreutils `cat` (via python script) | input function `get_merged_input_data_R1` ported to `scripts/merge_reads.py --read 1`; identical `cat ... > 00_raw_data/{sample}_R1.fq`. `limit_merge` cap preserved: 1 unit per rule + `[resource_groups] limit_merge = { max = 2 }` (upstream run.py `--resources limit_merge=2`) |\n| merge_R2_data | `merge_R2_data` | coreutils `cat` (via python script) | same, `--read 2` |\n| merge_data | not ported | \u2014 | single-end branch |\n| data_clean_pair | `data_clean_pair` | fastp 1.3.6 | command byte-identical (`-w`, `-i/-I`, `-o/-O`, `-j log/{sample}.json`, `-h log/{sample}.html`, `&> log/{sample}_fastp.log`). Upstream does not pin fastp; resolved from bioconda on 2026-08-15. Threads 8 (upstream `fastp_threads` baked into `[rules.resources]`) |\n| data_clean_single | not ported | \u2014 | single-end branch |\n| align_and_count | `align_and_count` | star 2.7.1a | command byte-identical (flags, `--outFileNamePrefix`, `--limitBAMsortRAM $((10000 * 1000000))`, `--quantMode GeneCounts`, `--outTmpKeep None`, `mv ..._Log.final.out` to log). Threads 20 (upstream `star_threads` baked in). Attempt-based memory escalation lambda (`10000` \u2192 `60000*(attempt-1)`) not expressible \u2014 first-attempt value pinned (`resources.memory = \"10G\"`) |\n| build_bam_index | `build_bam_index` | samtools 1.24 | `samtools index -@ 4 {input}` identical; upstream unpinned, resolved from bioconda 2026-08-15 |\n| bamtobw | `bamtobw` | deeptools 3.5.6 | command byte-identical (`-p 10 --binSize 50 --effectiveGenomeSize 2913022398 --normalizeUsing BPM -b ... -o 04_bigwig/{sample}.bw`); upstream unpinned, resolved from bioconda 2026-08-15 |\n| combine_count | `combine_count` | python 3.11 + pandas 3.0.5 | run: block ported verbatim to `scripts/combine_count.py` (same merge order and column renaming); per-sample counts gathered via `expand_inputs`. Adds a fail-fast check that `[config] db_id` matches the metadata file name. Upstream runs in the snakemake base env (`snakemake==8.16 pandas`); snakemake itself not needed \u2014 oxo-flow is the orchestrator |\n| DGE_analysis | `DGE_analysis` | R 4.3.2, DESeq2 1.42.0, ashr 2.2.63, data.table 1.18.4 | `scripts/DESeq2_diff.R` ported verbatim (design `~group`, contrast `treat`/`control`, `lfcShrink(type=\"ashr\")`, saves exprSet + metadata + diffResults). Env pins from the upstream Dockerfile (r432 env); r-data.table resolved from conda-forge 2026-08-15; python added for the on_success mail hook |\n| onsuccess | `on_success` (DGE_analysis) | shell + smtplib | workflow-level `onsuccess` \u2192 final rule's hook: `rm -rf 02_read_align` + conditional email via `scripts/send_mail.py` (port of `send_mail()`; upstream `client.quit()` NameError on SMTP failure fixed; notification failures exit 0 so they never fail a finished workflow). `mail` defaults to false, as upstream |\n| onerror | not ported | \u2014 | oxo-flow has per-rule `on_failure` hooks, no workflow-level error hook |\n| Snakefile_ENCODE | not ported | \u2014 | alternate entry point (ENCODE metadata columns, `DESeq2_diff_encode.R`) |\n| run.py | not ported | \u2014 | batch runner over multiple metadata files (validation, bark/feishu, `--restart-times 3`); its `limit_dump`/`limit_merge` caps are ported as described above; for re-runs use `oxo-flow run --resume-failed` |\n| slurm/config.yaml | not ported | \u2014 | cluster profile; oxo-flow's `[cluster]` section covers this |\n| scripts/update_json.py | not ported | \u2014 | `file_dict.json` tracker used by external orchestration |\n| pigz_threads config key | dropped | \u2014 | merge rules use plain `cat`; the pigz pipe is commented out upstream |\n\n**Port-level conventions** (config-shape deviations, commands unchanged):\nupstream derives the sample list (GSM column), the per-sample SRR lists and\nDB_ID from the metadata TSV at load time; the port declares the samples in\n`[[sample_groups]]`, reads SRR lists in the ported scripts, and takes DB_ID\nfrom `[config] db_id` \u2014 all three must match the metadata file (see the\nrepo README Usage). Upstream `fastp_threads`/`star_threads` config keys are\nbaked into `[rules.resources] threads` (oxo-flow resource numbers are\nliterals). Upstream example metadata `doc/D21122.txt` (16 GSM samples,\nall PAIRED) ships as the default fixture at\ntest/fixtures/metadata/D21122.txt."
+  },
+  {
+    "name": "oxo-flow-tcasia",
+    "title": "Paired-end RNA-seq alignment and four-caller alternative-splicing analysis",
+    "origin": "port",
+    "rating": "verified",
+    "engine": "snakemake",
+    "source": {
+      "repo": "OncoHarmony-Network/TCASIA_pipeline",
+      "url": "https://github.com/OncoHarmony-Network/TCASIA_pipeline",
+      "tag": "main@06564ff1",
+      "sha": "06564ff19e7f5d952f5d98175ee6b5d86c08ec49",
+      "license": "MIT"
+    },
+    "created": "2026-08-15",
+    "domain": "transcriptomics",
+    "tags": [
+      "alternative-splicing",
+      "rna-seq",
+      "rmats",
+      "majiq",
+      "suppa2",
+      "spladder",
+      "star",
+      "snakemake"
+    ],
+    "description": "Paired-end RNA-seq from FASTQ to per-sample alternative-splicing calls: reads are trimmed with fastp, aligned with two-pass STAR and counted per gene with featureCounts; each sample's splicing is then quantified independently with four callers \u2014 rMATS, MAJIQ (with Voila export), SUPPA2 (via Salmon transcript quantification) and SplAdder. The alignment and AS-calling stages are one chained DAG (run one stage with -t alignment / -t as_calling).",
+    "scope": [
+      "fastp_qc",
+      "star_align",
+      "sort_bam",
+      "index_bam",
+      "featurecounts",
+      "salmon_quant",
+      "select_suppa_fields",
+      "format_suppa_fields",
+      "suppa_run",
+      "rmats_create_input",
+      "rmats_run",
+      "majiq_create_ini",
+      "majiq_build",
+      "majiq_psi",
+      "voila_modulize",
+      "voila_tsv",
+      "spladder_run"
+    ],
+    "excluded": [],
+    "rule_count": 17,
+    "tools": [
+      "fastp",
+      "star",
+      "samtools",
+      "subread",
+      "salmon",
+      "suppa",
+      "rmats",
+      "majiq",
+      "voila",
+      "spladder",
+      "perl"
+    ],
+    "installation": {
+      "engine": "oxo-flow >= 0.11.0",
+      "toolchain": "conda envs \u2014 pinned versions (fastp 0.23.4, STAR 2.7.7a, samtools 1.13/1.15, subread 2.0.1, salmon 1.10.3, suppa 2.3, rMATS 4.3.0, MAJIQ 2.5, SplAdder 3.1.1; conda-forge + bioconda)",
+      "requirements": [
+        "reference data (GRCh38 + GENCODE v34): STAR index (STAR 2.7.7a), annotation GTF + GFF3, Salmon transcript index, SUPPA2 events file, MAJIQ academic license",
+        "paired-end reads at reads_dir/<sample>_1.fastq.gz / <sample>_2.fastq.gz for each sample in the [[sample_groups]] list",
+        "compute: up to 10 threads per rule (STAR/rMATS), no memory limits set",
+        "conda or mamba at runtime to create the pinned envs/*.yaml environments"
+      ]
+    },
+    "repo_url": "https://github.com/oxo-flow-community/oxo-flow-tcasia",
+    "license": "Apache-2.0",
+    "upstream_license": "MIT",
+    "quickstart": "oxo-flow dry-run main.oxoflow",
+    "fidelity_md": "Scope: the **default-parameters main execution path** (upstream `rule all` of both Snakefiles). Rows cover every upstream rule; no \"not ported\" rows \u2014 the full default path is ported.\n\n| Upstream rule | oxo-flow rule | Tool (version) | Notes |\n|---|---|---|---|\n| fastp_qc | `alignment::fastp_qc` | fastp 0.23.4 | identical command; input layout from `[[sample_groups]]` + `reads_dir` instead of samples.tsv |\n| star_align | `alignment::star_align` | STAR 2.7.7a | identical command; `params.prefix` inlined |\n| sort_bam | `alignment::sort_bam` | samtools 1.15 | identical command |\n| index_bam | `alignment::index_bam` | samtools 1.15 | identical command |\n| featurecounts | `alignment::featurecounts` | subread 2.0.1 | identical command; upstream runs without a strandness flag (oxo-flow preflight warns \u2014 upstream behavior kept) |\n| salmon_quant | `as_calling::salmon_quant` | salmon 1.10.3 | identical command; `-l` from explicit `salmon_library_type` (upstream derives it from `strandness` in tcasia_config.py) |\n| select_suppa_fields | `as_calling::select_suppa_fields` | suppa 2.3 | identical command |\n| format_suppa_fields | `as_calling::format_suppa_fields` | suppa 2.3 | identical perl one-liner |\n| suppa_run | `as_calling::suppa_run` | suppa 2.3 | identical command; output prefix inlined |\n| rmats_create_input | `as_calling::rmats_create_input` | rMATS 4.3.0 | identical command |\n| rmats_run | `as_calling::rmats_run` | rMATS 4.3.0 | identical command; `--od` directory declared as the rule output |\n| majiq_create_ini | `as_calling::majiq_create_ini` | MAJIQ 2.5 | identical printf; `bam_dir`/`bam_stem` params inlined |\n| majiq_build | `as_calling::majiq_build` | MAJIQ 2.5 | identical command |\n| majiq_psi | `as_calling::majiq_psi` | MAJIQ 2.5 | identical command |\n| voila_modulize | `as_calling::voila_modulize` | MAJIQ 2.5 (Voila) | identical command; `modulized/` directory declared as the rule output |\n| voila_tsv | `as_calling::voila_tsv` | MAJIQ 2.5 (Voila) | identical command |\n| spladder_run | `as_calling::spladder_run` | SplAdder 3.1.1 | identical command; output directory declared as the rule output |\n| rule all | \u2014 (DAG targets) | \u2014 | every output above is a default target of the single chained DAG |\n\n**Port-level conventions** (config-shape deviations, commands unchanged):\n- **Sample sheet**: upstream reads per-sample fastq paths from a TSV (`sample_id/fastq_1/fastq_2`); the port uses `[[sample_groups]]` plus the `reads_dir/{sample}_1.fastq.gz` / `{sample}_2.fastq.gz` layout.\n- **One workflow file, one DAG**: the two upstream Snakefiles (+ the four `rules/snakefile_*` fragments) are `modules/alignment.oxoflow` + `modules/as_calling.oxoflow`, included from `main.oxoflow`; the two `config.yml` files merge into one `[config]`. Upstream `01 output_dir/aligned` and `02 bam_dir` are the single key `aligned_dir`, making the alignment \u2192 AS-calling chain structural. Run one stage only with `-t alignment` / `-t as_calling`.\n- **Strandness-derived values are explicit config keys**: upstream computes `salmon_library_type` (`fr-firststrand\u2192ISR`, `fr-secondstrand\u2192ISF`, `fr-unstranded\u2192IU`) and `majiq_strandness` (`fr-firststrand\u2192reverse`, `fr-secondstrand\u2192forward`, `fr-unstranded\u2192none`) in `tcasia_config.py`; rMATS uses the `strandness` value directly (as upstream). Change `strandness` **and** the two derived keys together.\n- **Helper scripts not ported**: `scripts/validate_config.py` and `scripts/read_length.sh` are user-facing helpers; oxo-flow validates config/inputs natively.\n- **Threads only, no memory**: upstream declares threads per tool and no memory; the port mirrors that exactly."
   }
 ];
