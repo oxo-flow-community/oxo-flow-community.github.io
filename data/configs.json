@@ -1,0 +1,6651 @@
+{
+  "oxo-flow-rnaseq": {
+    "workflow": "main.oxoflow",
+    "config": [
+      {
+        "default": "star_salmon",
+        "key": "aligner",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/reference/chrom_sizes.txt",
+        "key": "chrom_sizes",
+        "used_by": [
+          "bigwig::bedclip_combined",
+          "bigwig::bedclip_fw",
+          "bigwig::bedclip_rev",
+          "bigwig::bigwig_combined",
+          "bigwig::bigwig_fw",
+          "bigwig::bigwig_rev"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": true,
+        "key": "deseq2_vst",
+        "used_by": [
+          "quantification::deseq2_qc"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "--disable-validator P001",
+        "key": "extra_fqlint_args",
+        "used_by": [
+          "fastq_qc::fq_lint_raw",
+          "fastq_qc::fq_lint_trimmed"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/reference/genome.fa",
+        "key": "fasta",
+        "used_by": [
+          "alignment::picard_markduplicates",
+          "alignment::samtools_sort",
+          "alignment::samtools_stats_markdup",
+          "alignment::samtools_stats_sorted",
+          "bam_qc::samtools_sort_qualimap"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "exon",
+        "key": "featurecounts_feature_type",
+        "used_by": [
+          "bam_qc::featurecounts"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "gene_biotype",
+        "key": "featurecounts_group_type",
+        "used_by": [
+          "bam_qc::featurecounts"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/reference/gene.bed",
+        "key": "gene_bed",
+        "used_by": [
+          "bam_qc::rseqc_infer_experiment",
+          "bam_qc::rseqc_inner_distance",
+          "bam_qc::rseqc_junction_annotation",
+          "bam_qc::rseqc_junction_saturation",
+          "bam_qc::rseqc_read_distribution"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/reference/genes.gtf",
+        "key": "gtf",
+        "used_by": [
+          "alignment::star_align",
+          "bam_qc::dupradar",
+          "bam_qc::featurecounts",
+          "bam_qc::qualimap_rnaseq",
+          "quantification::salmon_quant",
+          "quantification::stringtie",
+          "quantification::tx2gene"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 5,
+        "key": "min_mapped_reads",
+        "used_by": [
+          "multiqc_custom_content"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 10000,
+        "key": "min_trimmed_reads",
+        "used_by": [
+          "multiqc_custom_content"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "results",
+        "key": "out_dir",
+        "used_by": [
+          "alignment::picard_markduplicates",
+          "alignment::samtools_flagstat_markdup",
+          "alignment::samtools_flagstat_sorted",
+          "alignment::samtools_idxstats_markdup",
+          "alignment::samtools_idxstats_sorted",
+          "alignment::samtools_index_markdup",
+          "alignment::samtools_index_sorted",
+          "alignment::samtools_sort",
+          "alignment::samtools_stats_markdup",
+          "alignment::samtools_stats_sorted",
+          "alignment::star_align",
+          "bam_qc::biotype_multiqc",
+          "bam_qc::dupradar",
+          "bam_qc::featurecounts",
+          "bam_qc::qualimap_rnaseq",
+          "bam_qc::rseqc_bam_stat",
+          "bam_qc::rseqc_infer_experiment",
+          "bam_qc::rseqc_inner_distance",
+          "bam_qc::rseqc_junction_annotation",
+          "bam_qc::rseqc_junction_saturation",
+          "bam_qc::rseqc_read_distribution",
+          "bam_qc::rseqc_read_duplication",
+          "bam_qc::samtools_sort_qualimap",
+          "bigwig::bedclip_combined",
+          "bigwig::bedclip_fw",
+          "bigwig::bedclip_rev",
+          "bigwig::bigwig_combined",
+          "bigwig::bigwig_fw",
+          "bigwig::bigwig_rev",
+          "bigwig::genomecov_combined",
+          "bigwig::genomecov_fw",
+          "bigwig::genomecov_rev",
+          "fastq_qc::fastqc_raw",
+          "fastq_qc::fq_lint_raw",
+          "fastq_qc::fq_lint_trimmed",
+          "fastq_qc::trimgalore",
+          "multiqc",
+          "multiqc_custom_content",
+          "quantification::deseq2_qc",
+          "quantification::salmon_quant",
+          "quantification::stringtie",
+          "quantification::summarizedexperiment",
+          "quantification::tx2gene",
+          "quantification::tximport"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/raw",
+        "key": "reads_dir",
+        "used_by": [
+          "fastq_qc::fastqc_raw",
+          "fastq_qc::fq_lint_raw",
+          "fastq_qc::trimgalore",
+          "multiqc_custom_content"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "salmon_quant_libtype",
+        "used_by": [
+          "quantification::salmon_quant"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "save_align_intermeds",
+        "used_by": [],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "save_trimmed",
+        "used_by": [],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_bigwig",
+        "used_by": [
+          "bigwig::bedclip_combined",
+          "bigwig::bedclip_fw",
+          "bigwig::bedclip_rev",
+          "bigwig::bigwig_combined",
+          "bigwig::bigwig_fw",
+          "bigwig::bigwig_rev",
+          "bigwig::genomecov_combined",
+          "bigwig::genomecov_fw",
+          "bigwig::genomecov_rev"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_deseq2_qc",
+        "used_by": [
+          "quantification::deseq2_qc"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_fastqc",
+        "used_by": [
+          "fastq_qc::fastqc_raw"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_linting",
+        "used_by": [
+          "fastq_qc::fq_lint_raw",
+          "fastq_qc::fq_lint_trimmed"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_markduplicates",
+        "used_by": [
+          "alignment::picard_markduplicates",
+          "alignment::samtools_flagstat_markdup",
+          "alignment::samtools_idxstats_markdup",
+          "alignment::samtools_index_markdup",
+          "alignment::samtools_stats_markdup"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_qc",
+        "used_by": [
+          "bam_qc::biotype_multiqc",
+          "bam_qc::dupradar",
+          "bam_qc::featurecounts",
+          "bam_qc::qualimap_rnaseq",
+          "bam_qc::rseqc_bam_stat",
+          "bam_qc::rseqc_infer_experiment",
+          "bam_qc::rseqc_inner_distance",
+          "bam_qc::rseqc_junction_annotation",
+          "bam_qc::rseqc_junction_saturation",
+          "bam_qc::rseqc_read_distribution",
+          "bam_qc::rseqc_read_duplication",
+          "bam_qc::samtools_sort_qualimap",
+          "quantification::deseq2_qc"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_quantification_merge",
+        "used_by": [
+          "quantification::deseq2_qc",
+          "quantification::summarizedexperiment",
+          "quantification::tximport"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_stringtie",
+        "used_by": [
+          "quantification::stringtie"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_trimming",
+        "used_by": [
+          "fastq_qc::trimgalore"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "test/fixtures/reference/star_index",
+        "key": "star_index",
+        "used_by": [
+          "alignment::star_align"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 0.8,
+        "key": "stranded_threshold",
+        "used_by": [
+          "multiqc_custom_content"
+        ],
+        "value_type": "float"
+      },
+      {
+        "default": "unstranded",
+        "key": "strandedness",
+        "used_by": [
+          "bam_qc::dupradar",
+          "bam_qc::featurecounts",
+          "bam_qc::qualimap_rnaseq",
+          "bigwig::bedclip_fw",
+          "bigwig::bedclip_rev",
+          "bigwig::bigwig_fw",
+          "bigwig::bigwig_rev",
+          "bigwig::genomecov_fw",
+          "bigwig::genomecov_rev",
+          "multiqc_custom_content",
+          "quantification::salmon_quant",
+          "quantification::stringtie"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/reference/transcripts.fa",
+        "key": "transcript_fasta",
+        "used_by": [
+          "quantification::salmon_quant"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 0.1,
+        "key": "unstranded_threshold",
+        "used_by": [
+          "multiqc_custom_content"
+        ],
+        "value_type": "float"
+      }
+    ]
+  },
+  "oxo-flow-sarek": {
+    "workflow": "main.oxoflow",
+    "config": [
+      {
+        "default": "bwa-mem",
+        "key": "aligner",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": true,
+        "key": "annotate_vep",
+        "used_by": [
+          "ensemblvep_vep"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "/data/references/GRCh38/Sequence/BWAIndex/",
+        "key": "bwa_index_dir",
+        "used_by": [
+          "bwa_mem"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": true,
+        "key": "call_haplotypecaller",
+        "used_by": [
+          "bcftools_stats",
+          "ensemblvep_vep",
+          "gatk_cnnscorevariants",
+          "gatk_filtervarianttranches",
+          "gatk_haplotypecaller",
+          "vcftools_filter_summary",
+          "vcftools_tstv_count",
+          "vcftools_tstv_qual"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "/data/references/GRCh38/Annotation/GATKBundle/dbsnp_146.hg38.vcf.gz",
+        "key": "dbsnp",
+        "used_by": [
+          "gatk_baserecalibrator",
+          "gatk_filtervarianttranches",
+          "gatk_haplotypecaller"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "/data/references/GRCh38/Annotation/GATKBundle/dbsnp_146.hg38.vcf.gz.tbi",
+        "key": "dbsnp_tbi",
+        "used_by": [
+          "gatk_baserecalibrator",
+          "gatk_filtervarianttranches",
+          "gatk_haplotypecaller"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "/data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.dict",
+        "key": "dict",
+        "used_by": [
+          "gatk_applybqsr",
+          "gatk_baserecalibrator",
+          "gatk_cnnscorevariants",
+          "gatk_filtervarianttranches",
+          "gatk_haplotypecaller",
+          "gatk_markduplicates"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "/data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.fasta",
+        "key": "fasta",
+        "used_by": [
+          "bwa_mem",
+          "gatk_applybqsr",
+          "gatk_baserecalibrator",
+          "gatk_cnnscorevariants",
+          "gatk_filtervarianttranches",
+          "gatk_haplotypecaller",
+          "gatk_markduplicates",
+          "mosdepth_md",
+          "mosdepth_recal",
+          "samtools_stats_md",
+          "samtools_stats_recal"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "/data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.fasta.fai",
+        "key": "fasta_fai",
+        "used_by": [
+          "gatk_applybqsr",
+          "gatk_baserecalibrator",
+          "gatk_cnnscorevariants",
+          "gatk_filtervarianttranches",
+          "gatk_haplotypecaller",
+          "gatk_markduplicates"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "CONSERVATIVE",
+        "key": "gatk_pcr_indel_model",
+        "used_by": [
+          "gatk_haplotypecaller"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "GRCh38",
+        "key": "genome",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "joint_germline",
+        "used_by": [],
+        "value_type": "bool"
+      },
+      {
+        "default": [
+          "/data/references/GRCh38/Annotation/GATKBundle/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz",
+          "/data/references/GRCh38/Annotation/GATKBundle/Homo_sapiens_assembly38.known_indels.vcf.gz"
+        ],
+        "key": "known_indels",
+        "used_by": [
+          "gatk_baserecalibrator",
+          "gatk_filtervarianttranches"
+        ],
+        "value_type": "array"
+      },
+      {
+        "default": [
+          "/data/references/GRCh38/Annotation/GATKBundle/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz.tbi",
+          "/data/references/GRCh38/Annotation/GATKBundle/Homo_sapiens_assembly38.known_indels.vcf.gz.tbi"
+        ],
+        "key": "known_indels_tbi",
+        "used_by": [
+          "gatk_baserecalibrator",
+          "gatk_filtervarianttranches"
+        ],
+        "value_type": "array"
+      },
+      {
+        "default": "test_L1",
+        "key": "lane",
+        "used_by": [
+          "bwa_mem",
+          "fastp",
+          "fastqc"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 15,
+        "key": "length_required",
+        "used_by": [
+          "fastp"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "results",
+        "key": "out_dir",
+        "used_by": [
+          "bcftools_stats",
+          "bwa_mem",
+          "ensemblvep_vep",
+          "fastp",
+          "fastqc",
+          "gatk_applybqsr",
+          "gatk_baserecalibrator",
+          "gatk_cnnscorevariants",
+          "gatk_filtervarianttranches",
+          "gatk_haplotypecaller",
+          "gatk_markduplicates",
+          "mosdepth_md",
+          "mosdepth_recal",
+          "multiqc",
+          "samtools_index_recal",
+          "samtools_stats_md",
+          "samtools_stats_recal",
+          "vcftools_filter_summary",
+          "vcftools_tstv_count",
+          "vcftools_tstv_qual"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test",
+        "key": "patient",
+        "used_by": [
+          "bwa_mem"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "save_output_as_bam",
+        "used_by": [],
+        "value_type": "bool"
+      },
+      {
+        "default": "ILLUMINA",
+        "key": "seq_platform",
+        "used_by": [
+          "bwa_mem"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "XX",
+        "key": "sex",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "skip_bcftools",
+        "used_by": [
+          "bcftools_stats"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_fastqc",
+        "used_by": [
+          "fastqc"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_mosdepth",
+        "used_by": [
+          "mosdepth_md",
+          "mosdepth_recal"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_multiqc",
+        "used_by": [
+          "multiqc"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_samtools",
+        "used_by": [
+          "samtools_stats_md",
+          "samtools_stats_recal"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_vcftools",
+        "used_by": [
+          "vcftools_filter_summary",
+          "vcftools_tstv_count",
+          "vcftools_tstv_qual"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": 50000000,
+        "key": "split_fastq",
+        "used_by": [
+          "fastp"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 0,
+        "key": "status",
+        "used_by": [],
+        "value_type": "int"
+      },
+      {
+        "default": false,
+        "key": "trim_fastq",
+        "used_by": [
+          "fastp"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": 116,
+        "key": "vep_cache_version",
+        "used_by": [
+          "ensemblvep_vep"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "GRCh38",
+        "key": "vep_genome",
+        "used_by": [
+          "ensemblvep_vep"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "homo_sapiens",
+        "key": "vep_species",
+        "used_by": [
+          "ensemblvep_vep"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "wes",
+        "used_by": [],
+        "value_type": "bool"
+      }
+    ]
+  },
+  "oxo-flow-scrnaseq": {
+    "workflow": "main.oxoflow",
+    "config": [
+      {
+        "default": "cellranger",
+        "key": "aligner",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": true,
+        "key": "build_cellranger_index",
+        "used_by": [
+          "cellranger_mkgtf",
+          "cellranger_mkref"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "",
+        "key": "expected_cells",
+        "used_by": [
+          "cellranger_count"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "refs/refdata.fa.gz",
+        "key": "fasta",
+        "used_by": [
+          "gunzip_fasta"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": true,
+        "key": "fasta_gz",
+        "used_by": [
+          "gunzip_fasta"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "refs/refdata.fa",
+        "key": "fasta_prepared",
+        "used_by": [
+          "cellranger_mkref",
+          "gtf_gene_filter",
+          "gunzip_fasta"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "refs/refdata.gtf.gz",
+        "key": "gtf",
+        "used_by": [
+          "gunzip_gtf"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "refs/refdata_genes.gtf",
+        "key": "gtf_filtered",
+        "used_by": [
+          "gtf_gene_filter",
+          "gtf_source_fix"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": true,
+        "key": "gtf_gz",
+        "used_by": [
+          "gunzip_gtf"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "refs/refdata_genes.filtered.gtf",
+        "key": "gtf_mkgtf",
+        "used_by": [
+          "cellranger_mkgtf",
+          "cellranger_mkref"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "refs/refdata_genes.gtf",
+        "key": "gtf_mkgtf_input",
+        "used_by": [
+          "cellranger_mkgtf"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "refs/refdata.gtf",
+        "key": "gtf_prepared",
+        "used_by": [
+          "gtf_gene_filter",
+          "gunzip_gtf"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "gtf_source_fix",
+        "used_by": [
+          "gtf_source_fix"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "refs/refdata_genes.source_fixed.gtf",
+        "key": "gtf_source_fixed",
+        "used_by": [
+          "gtf_source_fix"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "assets/multiqc_config.yml",
+        "key": "multiqc_config",
+        "used_by": [
+          "multiqc"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "multiqc_title",
+        "used_by": [
+          "multiqc"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "results",
+        "key": "out_dir",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": "auto",
+        "key": "protocol",
+        "used_by": [
+          "cellranger_count"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "samplesheet.csv",
+        "key": "samplesheet",
+        "used_by": [
+          "concat_h5ad_cellbender_filter",
+          "concat_h5ad_filtered",
+          "concat_h5ad_raw"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": true,
+        "key": "save_align_intermeds",
+        "used_by": [
+          "cellranger_count"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_cellbender",
+        "used_by": [
+          "anndata_barcodes",
+          "anndatar_convert_cellbender_filter",
+          "anndatar_convert_combined_cellbender_filter",
+          "anndatar_convert_combined_raw",
+          "anndatar_convert_raw",
+          "cellbender_removebackground",
+          "concat_h5ad_cellbender_filter",
+          "concat_h5ad_raw"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_fastqc",
+        "used_by": [
+          "fastqc"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_multiqc",
+        "used_by": [
+          "multiqc"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "refs/cellranger_reference",
+        "key": "transcriptome",
+        "used_by": [
+          "cellranger_count",
+          "cellranger_mkref"
+        ],
+        "value_type": "string"
+      }
+    ]
+  },
+  "oxo-flow-mag": {
+    "workflow": "main.oxoflow",
+    "config": [
+      {
+        "default": false,
+        "key": "ale_per_base_output",
+        "used_by": [],
+        "value_type": "bool"
+      },
+      {
+        "default": 10000,
+        "key": "bin_concoct_chunksize",
+        "used_by": [
+          "concoct_cutup_megahit",
+          "concoct_cutup_spades"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": false,
+        "key": "bin_concoct_donotconcatlast",
+        "used_by": [],
+        "value_type": "bool"
+      },
+      {
+        "default": 0,
+        "key": "bin_concoct_overlap",
+        "used_by": [
+          "concoct_cutup_megahit",
+          "concoct_cutup_spades"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "",
+        "key": "bin_max_size",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": "large",
+        "key": "bin_metabinner_scale",
+        "used_by": [
+          "metabinner_run_megahit",
+          "metabinner_run_spades"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 0,
+        "key": "bin_min_size",
+        "used_by": [],
+        "value_type": "int"
+      },
+      {
+        "default": "S1 S2",
+        "key": "cohort_samples",
+        "used_by": [
+          "bowtie2_align_megahit",
+          "bowtie2_align_spades",
+          "semibin_megahit",
+          "semibin_spades"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 15,
+        "key": "fastp_cut_mean_quality",
+        "used_by": [
+          "fastp"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 15,
+        "key": "fastp_qualified_quality",
+        "used_by": [
+          "fastp"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": false,
+        "key": "fastp_trim_polyg",
+        "used_by": [
+          "fastp"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "https://data.gtdb.aau.ecogenomic.org/releases/release232/232.0/auxillary_files/gtdbtk_package/full_package/gtdbtk_r232_data.tar.gz",
+        "key": "gtdb_db",
+        "used_by": [
+          "gtdbtk_db_preparation"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 10.0,
+        "key": "gtdbtk_max_contamination",
+        "used_by": [
+          "gtdbtk_megahit_comebin",
+          "gtdbtk_megahit_concoct",
+          "gtdbtk_megahit_maxbin2",
+          "gtdbtk_megahit_metabat2",
+          "gtdbtk_megahit_metabinner",
+          "gtdbtk_megahit_semibin2",
+          "gtdbtk_spades_comebin",
+          "gtdbtk_spades_concoct",
+          "gtdbtk_spades_maxbin2",
+          "gtdbtk_spades_metabat2",
+          "gtdbtk_spades_metabinner",
+          "gtdbtk_spades_semibin2"
+        ],
+        "value_type": "float"
+      },
+      {
+        "default": 0.65,
+        "key": "gtdbtk_min_af",
+        "used_by": [
+          "gtdbtk_megahit_comebin",
+          "gtdbtk_megahit_concoct",
+          "gtdbtk_megahit_maxbin2",
+          "gtdbtk_megahit_metabat2",
+          "gtdbtk_megahit_metabinner",
+          "gtdbtk_megahit_semibin2",
+          "gtdbtk_spades_comebin",
+          "gtdbtk_spades_concoct",
+          "gtdbtk_spades_maxbin2",
+          "gtdbtk_spades_metabat2",
+          "gtdbtk_spades_metabinner",
+          "gtdbtk_spades_semibin2"
+        ],
+        "value_type": "float"
+      },
+      {
+        "default": 50.0,
+        "key": "gtdbtk_min_completeness",
+        "used_by": [
+          "gtdbtk_megahit_comebin",
+          "gtdbtk_megahit_concoct",
+          "gtdbtk_megahit_maxbin2",
+          "gtdbtk_megahit_metabat2",
+          "gtdbtk_megahit_metabinner",
+          "gtdbtk_megahit_semibin2",
+          "gtdbtk_spades_comebin",
+          "gtdbtk_spades_concoct",
+          "gtdbtk_spades_maxbin2",
+          "gtdbtk_spades_metabat2",
+          "gtdbtk_spades_metabinner",
+          "gtdbtk_spades_semibin2"
+        ],
+        "value_type": "float"
+      },
+      {
+        "default": 10,
+        "key": "gtdbtk_min_perc_aa",
+        "used_by": [
+          "gtdbtk_megahit_comebin",
+          "gtdbtk_megahit_concoct",
+          "gtdbtk_megahit_maxbin2",
+          "gtdbtk_megahit_metabat2",
+          "gtdbtk_megahit_metabinner",
+          "gtdbtk_megahit_semibin2",
+          "gtdbtk_spades_comebin",
+          "gtdbtk_spades_concoct",
+          "gtdbtk_spades_maxbin2",
+          "gtdbtk_spades_metabat2",
+          "gtdbtk_spades_metabinner",
+          "gtdbtk_spades_semibin2"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": false,
+        "key": "gtdbtk_place_species",
+        "used_by": [],
+        "value_type": "bool"
+      },
+      {
+        "default": 1,
+        "key": "gtdbtk_pplacer_cpus",
+        "used_by": [
+          "gtdbtk_megahit_comebin",
+          "gtdbtk_megahit_concoct",
+          "gtdbtk_megahit_maxbin2",
+          "gtdbtk_megahit_metabat2",
+          "gtdbtk_megahit_metabinner",
+          "gtdbtk_megahit_semibin2",
+          "gtdbtk_spades_comebin",
+          "gtdbtk_spades_concoct",
+          "gtdbtk_spades_maxbin2",
+          "gtdbtk_spades_metabat2",
+          "gtdbtk_spades_metabinner",
+          "gtdbtk_spades_semibin2"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": false,
+        "key": "gtdbtk_use_full_tree",
+        "used_by": [],
+        "value_type": "bool"
+      },
+      {
+        "default": "test/fixtures/raw",
+        "key": "input_dir",
+        "used_by": [
+          "fastp",
+          "fastqc_raw"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 100,
+        "key": "max_unbinned_contigs",
+        "used_by": [
+          "split_fasta_maxbin2_megahit",
+          "split_fasta_maxbin2_spades",
+          "split_fasta_metabat2_megahit",
+          "split_fasta_metabat2_spades",
+          "split_fasta_metabinner_megahit",
+          "split_fasta_metabinner_spades"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 1,
+        "key": "metabat_rng_seed",
+        "used_by": [
+          "metabat2_megahit",
+          "metabat2_spades"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 1500,
+        "key": "min_contig_size",
+        "used_by": [
+          "metabat2_megahit",
+          "metabat2_spades",
+          "metabinner_bins_megahit",
+          "metabinner_bins_spades",
+          "metabinner_kmer_megahit",
+          "metabinner_kmer_spades",
+          "metabinner_run_megahit",
+          "metabinner_run_spades",
+          "metabinner_tooshort_megahit",
+          "metabinner_tooshort_spades",
+          "semibin_megahit",
+          "semibin_spades",
+          "split_fasta_maxbin2_megahit",
+          "split_fasta_maxbin2_spades",
+          "split_fasta_metabat2_megahit",
+          "split_fasta_metabat2_spades",
+          "split_fasta_metabinner_megahit",
+          "split_fasta_metabinner_spades"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 1000000,
+        "key": "min_length_unbinned_contigs",
+        "used_by": [
+          "split_fasta_maxbin2_megahit",
+          "split_fasta_maxbin2_spades",
+          "split_fasta_metabat2_megahit",
+          "split_fasta_metabat2_spades",
+          "split_fasta_metabinner_megahit",
+          "split_fasta_metabinner_spades"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "results",
+        "key": "out_dir",
+        "used_by": [
+          "ale_megahit",
+          "ale_spades",
+          "bin_summary",
+          "bowtie2_align_megahit",
+          "bowtie2_align_spades",
+          "busco_megahit_comebin",
+          "busco_megahit_concoct",
+          "busco_megahit_maxbin2",
+          "busco_megahit_metabat2",
+          "busco_megahit_metabinner",
+          "busco_megahit_semibin2",
+          "busco_spades_comebin",
+          "busco_spades_concoct",
+          "busco_spades_maxbin2",
+          "busco_spades_metabat2",
+          "busco_spades_metabinner",
+          "busco_spades_semibin2",
+          "comebin_megahit",
+          "comebin_spades",
+          "concat_busco",
+          "concat_quast",
+          "concoct_extract_megahit",
+          "concoct_extract_spades",
+          "concoct_merge_megahit",
+          "concoct_merge_spades",
+          "depths_megahit",
+          "depths_spades",
+          "fastp",
+          "fastqc_raw",
+          "fastqc_trimmed",
+          "gtdbtk_megahit_comebin",
+          "gtdbtk_megahit_concoct",
+          "gtdbtk_megahit_maxbin2",
+          "gtdbtk_megahit_metabat2",
+          "gtdbtk_megahit_metabinner",
+          "gtdbtk_megahit_semibin2",
+          "gtdbtk_spades_comebin",
+          "gtdbtk_spades_concoct",
+          "gtdbtk_spades_maxbin2",
+          "gtdbtk_spades_metabat2",
+          "gtdbtk_spades_metabinner",
+          "gtdbtk_spades_semibin2",
+          "gtdbtk_summary",
+          "mag_depths_megahit_comebin",
+          "mag_depths_megahit_concoct",
+          "mag_depths_megahit_maxbin2",
+          "mag_depths_megahit_metabat2",
+          "mag_depths_megahit_metabinner",
+          "mag_depths_megahit_semibin2",
+          "mag_depths_spades_comebin",
+          "mag_depths_spades_concoct",
+          "mag_depths_spades_maxbin2",
+          "mag_depths_spades_metabat2",
+          "mag_depths_spades_metabinner",
+          "mag_depths_spades_semibin2",
+          "mag_depths_summary",
+          "maxbin2_megahit",
+          "maxbin2_spades",
+          "megahit",
+          "metabat2_megahit",
+          "metabat2_spades",
+          "metabinner_bins_megahit",
+          "metabinner_bins_spades",
+          "multiqc",
+          "phix_align",
+          "prodigal_megahit",
+          "prodigal_spades",
+          "prokka_megahit_comebin",
+          "prokka_megahit_concoct",
+          "prokka_megahit_maxbin2",
+          "prokka_megahit_metabat2",
+          "prokka_megahit_metabinner",
+          "prokka_megahit_semibin2",
+          "prokka_spades_comebin",
+          "prokka_spades_concoct",
+          "prokka_spades_maxbin2",
+          "prokka_spades_metabat2",
+          "prokka_spades_metabinner",
+          "prokka_spades_semibin2",
+          "quast_bins_megahit_comebin",
+          "quast_bins_megahit_concoct",
+          "quast_bins_megahit_maxbin2",
+          "quast_bins_megahit_metabat2",
+          "quast_bins_megahit_metabinner",
+          "quast_bins_megahit_semibin2",
+          "quast_bins_spades_comebin",
+          "quast_bins_spades_concoct",
+          "quast_bins_spades_maxbin2",
+          "quast_bins_spades_metabat2",
+          "quast_bins_spades_metabinner",
+          "quast_bins_spades_semibin2",
+          "quast_megahit",
+          "quast_spades",
+          "semibin_megahit",
+          "semibin_spades",
+          "seqkit_megahit_comebin",
+          "seqkit_megahit_concoct",
+          "seqkit_megahit_maxbin2",
+          "seqkit_megahit_metabat2",
+          "seqkit_megahit_metabinner",
+          "seqkit_megahit_semibin",
+          "seqkit_spades_comebin",
+          "seqkit_spades_concoct",
+          "seqkit_spades_maxbin2",
+          "seqkit_spades_metabat2",
+          "seqkit_spades_metabinner",
+          "seqkit_spades_semibin",
+          "spades",
+          "split_fasta_maxbin2_megahit",
+          "split_fasta_maxbin2_spades",
+          "split_fasta_metabat2_megahit",
+          "split_fasta_metabat2_spades",
+          "split_fasta_metabinner_megahit",
+          "split_fasta_metabinner_spades"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "assets/data/GCA_002596845.1_ASM259684v1_genomic.fna.gz",
+        "key": "phix_reference",
+        "used_by": [
+          "phix_build"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "prokka_fast_mode",
+        "used_by": [],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "prokka_with_compliance",
+        "used_by": [],
+        "value_type": "bool"
+      },
+      {
+        "default": 15,
+        "key": "reads_minlength",
+        "used_by": [
+          "fastp"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "global",
+        "key": "semibin_environment",
+        "used_by": [
+          "semibin_megahit",
+          "semibin_spades"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 1,
+        "key": "semibin_rng_seed",
+        "used_by": [
+          "semibin_megahit",
+          "semibin_spades"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "",
+        "key": "shortread_percentidentity",
+        "used_by": [],
+        "value_type": "string"
+      }
+    ]
+  },
+  "oxo-flow-ampliseq": {
+    "workflow": "main.oxoflow",
+    "config": [
+      {
+        "default": "",
+        "key": "FW_primer",
+        "used_by": [
+          "cutadapt"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "RV_primer",
+        "used_by": [
+          "cutadapt"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 0.1,
+        "key": "cutadapt_max_error_rate",
+        "used_by": [
+          "cutadapt"
+        ],
+        "value_type": "float"
+      },
+      {
+        "default": 3,
+        "key": "cutadapt_min_overlap",
+        "used_by": [
+          "cutadapt"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": false,
+        "key": "dada_addspecies_allowmultiple",
+        "used_by": [
+          "dada2_taxonomy"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": 10000,
+        "key": "dada_assign_chunksize",
+        "used_by": [
+          "dada2_taxonomy"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "Domain,Kingdom,Phylum,Class,Order,Family,Genus,Species",
+        "key": "dada_assign_taxlevels",
+        "used_by": [
+          "dada2_taxonomy"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 50,
+        "key": "dada_min_boot",
+        "used_by": [
+          "dada2_taxonomy"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "sbdi-gtdb=R11-RS232-1",
+        "key": "dada_ref_taxonomy",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": "Lundin D, Andersson A. SBDI Sativa curated 16S GTDB database. FigShare. doi: 10.17044/scilifelab.14869077.v12",
+        "key": "dada_ref_taxonomy_citation",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": "SBDI-GTDB-R11-RS232-1 (https://figshare.scilifelab.se/articles/dataset/SBDI_Sativa_curated_16S_GTDB_database/14869077/10)",
+        "key": "dada_ref_taxonomy_dbversion",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": "SBDI-GTDB - Sativa curated 16S GTDB database - Release R11-RS232-1",
+        "key": "dada_ref_taxonomy_title",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": "https://ndownloader.figshare.com/files/64711203,https://ndownloader.figshare.com/files/64711218",
+        "key": "dada_ref_taxonomy_urls",
+        "used_by": [
+          "download_taxonomy_db"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "dada_taxonomy_rc",
+        "used_by": [
+          "dada2_taxonomy"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": 2,
+        "key": "max_ee",
+        "used_by": [
+          "dada2_filtntrim"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "Inf",
+        "key": "max_len",
+        "used_by": [
+          "dada2_filtntrim"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "merge",
+        "key": "mergepairs_strategy",
+        "used_by": [
+          "dada2_denoising"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/metadata.tsv",
+        "key": "metadata_file",
+        "used_by": [
+          "qiime2_barplot"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 50,
+        "key": "min_len",
+        "used_by": [
+          "dada2_filtntrim"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "Auto",
+        "key": "quality_type",
+        "used_by": [
+          "dada2_denoising",
+          "dada2_err",
+          "dada2_filtntrim"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "1",
+        "key": "run_id",
+        "used_by": [
+          "dada2_denoising",
+          "dada2_err",
+          "dada2_merge",
+          "dada2_rmchimera",
+          "dada2_stats"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "independent",
+        "key": "sample_inference",
+        "used_by": [
+          "dada2_denoising"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 100,
+        "key": "seed",
+        "used_by": [
+          "dada2_denoising",
+          "dada2_err",
+          "dada2_taxonomy"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": false,
+        "key": "skip_barplot",
+        "used_by": [
+          "qiime2_barplot"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_dada_taxonomy",
+        "used_by": [
+          "dada2_taxonomy",
+          "download_taxonomy_db",
+          "format_taxonomy",
+          "qiime2_barplot",
+          "qiime2_intax"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_fastqc",
+        "used_by": [
+          "fastqc"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_multiqc",
+        "used_by": [
+          "multiqc"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_qiime",
+        "used_by": [
+          "qiime2_barplot",
+          "qiime2_inasv",
+          "qiime2_inseq",
+          "qiime2_intax"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_taxonomy",
+        "used_by": [
+          "dada2_taxonomy",
+          "download_taxonomy_db",
+          "format_taxonomy",
+          "qiime2_barplot",
+          "qiime2_intax"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": 25,
+        "key": "trunc_qmin",
+        "used_by": [
+          "trunclen_fw",
+          "trunclen_rv"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 0.75,
+        "key": "trunc_rmin",
+        "used_by": [
+          "trunclen_fw",
+          "trunclen_rv"
+        ],
+        "value_type": "float"
+      },
+      {
+        "default": 2,
+        "key": "truncq",
+        "used_by": [
+          "dada2_filtntrim"
+        ],
+        "value_type": "int"
+      }
+    ]
+  },
+  "oxo-flow-chipseq": {
+    "workflow": "main.oxoflow",
+    "config": [
+      {
+        "default": "H3K4me3",
+        "key": "antibody",
+        "used_by": [
+          "consensus::annotate_boolean_peaks",
+          "consensus::deseq2_qc",
+          "consensus::homer_annotate_consensus",
+          "consensus::macs3_consensus",
+          "consensus::subread_featurecounts",
+          "report::igv",
+          "report::multiqc"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/references/blacklist.bed",
+        "key": "blacklist",
+        "used_by": [
+          "filter::bamtools_filter"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 0.1,
+        "key": "broad_cutoff",
+        "used_by": [
+          "peaks::macs3_callpeak"
+        ],
+        "value_type": "float"
+      },
+      {
+        "default": "test/fixtures/references/bwa_index",
+        "key": "bwa_index",
+        "used_by": [
+          "align::bwa_mem"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 0,
+        "key": "bwa_min_score",
+        "used_by": [
+          "align::bwa_mem"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "test/fixtures/references/chrom.sizes",
+        "key": "chrom_sizes",
+        "used_by": [
+          "tracks::ucsc_bedgraphtobigwig"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 0,
+        "key": "clip_r1",
+        "used_by": [
+          "qc::trimgalore"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 0,
+        "key": "clip_r2",
+        "used_by": [
+          "qc::trimgalore"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "test/fixtures/references/genome.fa.fai",
+        "key": "fai",
+        "used_by": [
+          "align::markduplicates",
+          "filter::picard_collectmultiplemetrics"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/references/genome.fa",
+        "key": "fasta",
+        "used_by": [
+          "align::bwa_mem",
+          "align::index_align",
+          "align::index_markdup",
+          "align::markduplicates",
+          "align::mergesamfiles",
+          "align::sort_align",
+          "align::stats_align",
+          "align::stats_markdup",
+          "consensus::homer_annotate_consensus",
+          "filter::index_filter",
+          "filter::picard_collectmultiplemetrics",
+          "filter::sort_filter",
+          "filter::sort_name",
+          "filter::stats_filter",
+          "peaks::homer_annotatepeaks",
+          "report::igv",
+          "tracks::khmer"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 500000,
+        "key": "fingerprint_bins",
+        "used_by": [
+          "tracks::deeptools_plotfingerprint"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 0,
+        "key": "fragment_size",
+        "used_by": [],
+        "value_type": "int"
+      },
+      {
+        "default": "test/fixtures/references/gene.bed",
+        "key": "gene_bed",
+        "used_by": [
+          "tracks::deeptools_computematrix"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/references/genome.gtf",
+        "key": "gtf",
+        "used_by": [
+          "consensus::homer_annotate_consensus",
+          "peaks::homer_annotatepeaks"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": [
+          "S1_REP1",
+          "S1_REP2"
+        ],
+        "key": "ip_ids",
+        "used_by": [],
+        "value_type": "array"
+      },
+      {
+        "default": false,
+        "key": "keep_dups",
+        "used_by": [
+          "filter::bamtools_filter"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "keep_multi_map",
+        "used_by": [
+          "filter::bamtools_filter"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": 0,
+        "key": "macs_fdr",
+        "used_by": [
+          "peaks::macs3_callpeak"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "",
+        "key": "macs_gsize",
+        "used_by": [
+          "peaks::macs3_callpeak",
+          "tracks::khmer"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 0,
+        "key": "macs_pvalue",
+        "used_by": [
+          "peaks::macs3_callpeak"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 1,
+        "key": "min_reps_consensus",
+        "used_by": [
+          "consensus::macs3_consensus"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": false,
+        "key": "multiple_groups",
+        "used_by": [
+          "consensus::annotate_boolean_peaks",
+          "consensus::deseq2_qc",
+          "consensus::homer_annotate_consensus",
+          "consensus::macs3_consensus",
+          "consensus::subread_featurecounts"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "",
+        "key": "multiqc_title",
+        "used_by": [
+          "report::multiqc"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": [
+          "S1_REP1",
+          "S1_REP2",
+          "C1_REP1",
+          "C1_REP2"
+        ],
+        "key": "pair_ids",
+        "used_by": [],
+        "value_type": "array"
+      },
+      {
+        "default": "test/fixtures/raw",
+        "key": "raw_dir",
+        "used_by": [
+          "qc::fastqc",
+          "qc::trimgalore"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 75,
+        "key": "read_length",
+        "used_by": [
+          "tracks::khmer"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": true,
+        "key": "replicates_exist",
+        "used_by": [
+          "consensus::annotate_boolean_peaks",
+          "consensus::deseq2_qc",
+          "consensus::homer_annotate_consensus",
+          "consensus::macs3_consensus",
+          "consensus::subread_featurecounts"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "save_macs_pileup",
+        "used_by": [
+          "peaks::macs3_callpeak"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "",
+        "key": "seq_center",
+        "used_by": [
+          "align::bwa_mem"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "skip_consensus_peaks",
+        "used_by": [
+          "consensus::annotate_boolean_peaks",
+          "consensus::deseq2_qc",
+          "consensus::homer_annotate_consensus",
+          "consensus::macs3_consensus",
+          "consensus::subread_featurecounts"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_deseq2_qc",
+        "used_by": [
+          "consensus::deseq2_qc"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_fastqc",
+        "used_by": [
+          "qc::fastqc"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_igv",
+        "used_by": [
+          "report::igv"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_multiqc",
+        "used_by": [
+          "report::multiqc"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_peak_annotation",
+        "used_by": [
+          "consensus::annotate_boolean_peaks",
+          "consensus::homer_annotate_consensus",
+          "peaks::homer_annotatepeaks",
+          "peaks::plot_homer_annotatepeaks",
+          "peaks::plot_macs3_qc"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_peak_qc",
+        "used_by": [
+          "peaks::plot_homer_annotatepeaks",
+          "peaks::plot_macs3_qc"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_picard_metrics",
+        "used_by": [
+          "filter::picard_collectmultiplemetrics"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_plot_fingerprint",
+        "used_by": [
+          "tracks::deeptools_plotfingerprint"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_plot_profile",
+        "used_by": [
+          "tracks::deeptools_computematrix",
+          "tracks::deeptools_plotheatmap",
+          "tracks::deeptools_plotprofile"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_preseq",
+        "used_by": [
+          "filter::preseq"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_qc",
+        "used_by": [
+          "qc::fastqc"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_spp",
+        "used_by": [
+          "filter::multiqc_custom_phantompeakqualtools",
+          "filter::phantompeakqualtools"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_trimming",
+        "used_by": [
+          "qc::trimgalore"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": 0,
+        "key": "three_prime_clip_r1",
+        "used_by": [
+          "qc::trimgalore"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 0,
+        "key": "three_prime_clip_r2",
+        "used_by": [
+          "qc::trimgalore"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 0,
+        "key": "trim_nextseq",
+        "used_by": [
+          "qc::trimgalore"
+        ],
+        "value_type": "int"
+      }
+    ]
+  },
+  "oxo-flow-atacseq": {
+    "workflow": "main.oxoflow",
+    "config": [
+      {
+        "default": "",
+        "key": "blacklist",
+        "used_by": [
+          "bamtools_filter"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 0.1,
+        "key": "broad_cutoff",
+        "used_by": [
+          "macs2_callpeak"
+        ],
+        "value_type": "float"
+      },
+      {
+        "default": "test/fixtures/genome/genome.fa",
+        "key": "bwa_index",
+        "used_by": [
+          "bwa_mem"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/genome/genome.fa.sizes",
+        "key": "chrom_sizes",
+        "used_by": [
+          "ucsc_bedgraphtobigwig"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 500000,
+        "key": "fingerprint_bins",
+        "used_by": [
+          "plotfingerprint"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 200,
+        "key": "fragment_size",
+        "used_by": [
+          "bedtools_genomecov",
+          "plotfingerprint"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "test/fixtures/genome/gene.bed",
+        "key": "gene_bed",
+        "used_by": [
+          "deeptools_plots"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/genome/genes.gtf",
+        "key": "gtf",
+        "used_by": [
+          "homer_annotatepeaks"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "keep_dups",
+        "used_by": [],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "keep_multi_map",
+        "used_by": [],
+        "value_type": "bool"
+      },
+      {
+        "default": "2.7e9",
+        "key": "macs_gsize",
+        "used_by": [
+          "macs2_callpeak"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 10000,
+        "key": "min_trimmed_reads",
+        "used_by": [],
+        "value_type": "int"
+      },
+      {
+        "default": false,
+        "key": "narrow_peak",
+        "used_by": [],
+        "value_type": "bool"
+      },
+      {
+        "default": "results",
+        "key": "out_dir",
+        "used_by": [
+          "bamtools_filter",
+          "bedtools_genomecov",
+          "bwa_mem",
+          "deeptools_plots",
+          "fastqc",
+          "frip_score",
+          "homer_annotatepeaks",
+          "macs2_callpeak",
+          "multiqc",
+          "picard_markduplicates",
+          "picard_mergesamfiles",
+          "plotfingerprint",
+          "samtools_sort_stats",
+          "trimgalore",
+          "ucsc_bedgraphtobigwig"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/raw",
+        "key": "raw_dir",
+        "used_by": [
+          "fastqc",
+          "trimgalore"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/genome/genome.fa",
+        "key": "reference",
+        "used_by": [
+          "bamtools_filter",
+          "homer_annotatepeaks",
+          "picard_markduplicates",
+          "samtools_sort_stats"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "save_trimmed",
+        "used_by": [],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_fastqc",
+        "used_by": [
+          "fastqc"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_multiqc",
+        "used_by": [
+          "multiqc"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_plot_fingerprint",
+        "used_by": [
+          "plotfingerprint"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_plot_profile",
+        "used_by": [
+          "deeptools_plots"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_qc",
+        "used_by": [
+          "fastqc"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_trimming",
+        "used_by": [
+          "trimgalore"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "test/fixtures/genome/tss.bed",
+        "key": "tss_bed",
+        "used_by": [
+          "deeptools_plots"
+        ],
+        "value_type": "string"
+      }
+    ]
+  },
+  "oxo-flow-methylseq": {
+    "workflow": "main.oxoflow",
+    "config": [
+      {
+        "default": false,
+        "key": "accel",
+        "used_by": [
+          "trimgalore"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "bismark",
+        "key": "aligner",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": 0,
+        "key": "clip_r1",
+        "used_by": [
+          "trimgalore"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 0,
+        "key": "clip_r2",
+        "used_by": [
+          "trimgalore"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": false,
+        "key": "comprehensive",
+        "used_by": [
+          "bismark_methylationextractor"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "cytosine_report",
+        "used_by": [
+          "bismark_coverage2cytosine"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "em_seq",
+        "used_by": [
+          "bismark_align",
+          "trimgalore"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "test/fixtures/refs/genome.fa",
+        "key": "fasta",
+        "used_by": [
+          "bismark_genomepreparation"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 0,
+        "key": "ignore_3prime_r1",
+        "used_by": [
+          "bismark_methylationextractor"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 2,
+        "key": "ignore_3prime_r2",
+        "used_by": [
+          "bismark_methylationextractor"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 0,
+        "key": "ignore_r1",
+        "used_by": [
+          "bismark_methylationextractor"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 2,
+        "key": "ignore_r2",
+        "used_by": [
+          "bismark_methylationextractor"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 0,
+        "key": "length_trim",
+        "used_by": [
+          "trimgalore"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": false,
+        "key": "local_alignment",
+        "used_by": [
+          "bismark_align"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "",
+        "key": "maxins",
+        "used_by": [
+          "bismark_align"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "meth_cutoff",
+        "used_by": [
+          "bismark_methylationextractor"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "minins",
+        "used_by": [
+          "bismark_align"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "multiqc_title",
+        "used_by": [
+          "multiqc"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 0,
+        "key": "nextseq_trim",
+        "used_by": [
+          "trimgalore"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": true,
+        "key": "no_overlap",
+        "used_by": [
+          "bismark_methylationextractor"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "nomeseq",
+        "used_by": [
+          "bismark_coverage2cytosine",
+          "bismark_methylationextractor"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "non_directional",
+        "used_by": [
+          "bismark_align"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": 0.6,
+        "key": "num_mismatches",
+        "used_by": [
+          "bismark_align"
+        ],
+        "value_type": "float"
+      },
+      {
+        "default": "results",
+        "key": "out_dir",
+        "used_by": [
+          "bismark_align",
+          "bismark_coverage2cytosine",
+          "bismark_deduplicate",
+          "bismark_methylationextractor",
+          "bismark_report",
+          "bismark_summary",
+          "fastqc",
+          "multiqc",
+          "multiqc_versions",
+          "samtools_index",
+          "samtools_sort",
+          "trimgalore"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "pbat",
+        "used_by": [
+          "bismark_align",
+          "trimgalore"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "test/fixtures/raw",
+        "key": "raw_dir",
+        "used_by": [
+          "fastqc",
+          "trimgalore"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "relax_mismatches",
+        "used_by": [
+          "bismark_align"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "rrbs",
+        "used_by": [
+          "bismark_deduplicate",
+          "trimgalore"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "single_cell",
+        "used_by": [
+          "bismark_align",
+          "trimgalore"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_deduplication",
+        "used_by": [
+          "bismark_deduplicate"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_fastqc",
+        "used_by": [
+          "fastqc"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_multiqc",
+        "used_by": [
+          "multiqc"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_trimming",
+        "used_by": [
+          "trimgalore"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_trimming_presets",
+        "used_by": [
+          "trimgalore"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "slamseq",
+        "used_by": [],
+        "value_type": "bool"
+      },
+      {
+        "default": 0,
+        "key": "three_prime_clip_r1",
+        "used_by": [
+          "trimgalore"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 0,
+        "key": "three_prime_clip_r2",
+        "used_by": [
+          "trimgalore"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": false,
+        "key": "unmapped",
+        "used_by": [
+          "bismark_align"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "zymo",
+        "used_by": [
+          "bismark_align",
+          "trimgalore"
+        ],
+        "value_type": "bool"
+      }
+    ]
+  },
+  "oxo-flow-nanoseq": {
+    "workflow": "main.oxoflow",
+    "config": [
+      {
+        "default": "minimap2",
+        "key": "aligner",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": "Auto",
+        "key": "barcode_kit",
+        "used_by": [
+          "qcat"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "call_variants",
+        "used_by": [
+          "minimap2_align"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "",
+        "key": "gtf",
+        "used_by": [
+          "gtf2bed"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "gtf_base",
+        "used_by": [
+          "gtf2bed",
+          "minimap2_align",
+          "minimap2_index"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/samplesheet.csv",
+        "key": "input",
+        "used_by": [
+          "samplesheet_check"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/raw/sample.fastq.gz",
+        "key": "input_path",
+        "used_by": [
+          "qcat"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "multiqc_config",
+        "used_by": [
+          "multiqc"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "multiqc_title",
+        "used_by": [
+          "multiqc"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "results",
+        "key": "out_dir",
+        "used_by": [
+          "bedtools_genomecov",
+          "dumpsoftwareversions",
+          "fastqc",
+          "get_chrom_sizes",
+          "gtf2bed",
+          "minimap2_align",
+          "minimap2_index",
+          "multiqc",
+          "nanoplot",
+          "qcat",
+          "samplesheet_check",
+          "samtools_faidx",
+          "samtools_flagstat",
+          "samtools_idxstats",
+          "samtools_index",
+          "samtools_sort",
+          "samtools_stats",
+          "samtools_view",
+          "ucsc_bedgraphtobigwig"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "DNA",
+        "key": "protocol",
+        "used_by": [
+          "minimap2_align",
+          "minimap2_index"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "qcat_detect_middle",
+        "used_by": [
+          "qcat"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": 60,
+        "key": "qcat_min_score",
+        "used_by": [
+          "qcat"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "test/fixtures/refs/genome.fa",
+        "key": "reference",
+        "used_by": [
+          "get_chrom_sizes",
+          "minimap2_index",
+          "samtools_faidx",
+          "samtools_stats"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "genome.fa",
+        "key": "reference_name",
+        "used_by": [
+          "get_chrom_sizes",
+          "minimap2_align",
+          "minimap2_index",
+          "samtools_faidx",
+          "ucsc_bedgraphtobigwig"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "run_nanolyse",
+        "used_by": [],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_alignment",
+        "used_by": [
+          "bedtools_genomecov",
+          "get_chrom_sizes",
+          "minimap2_align",
+          "minimap2_index",
+          "samtools_faidx",
+          "samtools_flagstat",
+          "samtools_idxstats",
+          "samtools_index",
+          "samtools_sort",
+          "samtools_stats",
+          "samtools_view",
+          "ucsc_bedgraphtobigwig"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_bigbed",
+        "used_by": [],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_bigwig",
+        "used_by": [
+          "bedtools_genomecov",
+          "ucsc_bedgraphtobigwig"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_demultiplexing",
+        "used_by": [
+          "qcat"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_fastqc",
+        "used_by": [
+          "fastqc"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_multiqc",
+        "used_by": [
+          "multiqc"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_nanoplot",
+        "used_by": [
+          "nanoplot"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_qc",
+        "used_by": [
+          "fastqc",
+          "nanoplot"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "stranded",
+        "used_by": [
+          "minimap2_align",
+          "minimap2_index"
+        ],
+        "value_type": "bool"
+      }
+    ]
+  },
+  "oxo-flow-viralrecon": {
+    "workflow": "main.oxoflow",
+    "config": [
+      {
+        "default": "spades",
+        "key": "assemblers",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": "bcftools",
+        "key": "consensus_caller",
+        "used_by": [
+          "consensus_call",
+          "consensus_filter"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "reference/genome.fa",
+        "key": "fasta",
+        "used_by": [
+          "gunzip_fasta"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "fasta_ends_gz",
+        "used_by": [
+          "gunzip_fasta"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "test/fixtures/refs/freyja_barcodes.csv",
+        "key": "freyja_barcodes",
+        "used_by": [
+          "freyja_boot",
+          "freyja_demix"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 0,
+        "key": "freyja_depthcutoff",
+        "used_by": [
+          "freyja_boot",
+          "freyja_demix"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "test/fixtures/refs/freyja_lineages.csv",
+        "key": "freyja_lineages",
+        "used_by": [
+          "freyja_boot",
+          "freyja_demix"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 100,
+        "key": "freyja_repeats",
+        "used_by": [
+          "freyja_boot"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "reference/genome.gff",
+        "key": "gff",
+        "used_by": [
+          "gunzip_gff"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "gff_ends_gz",
+        "used_by": [
+          "gunzip_gff"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "ivar_trim_noprimer",
+        "used_by": [
+          "ivar_trim"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "",
+        "key": "ivar_trim_offset",
+        "used_by": [
+          "ivar_trim"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": true,
+        "key": "kraken2_assembly_host_filter",
+        "used_by": [
+          "assembly_fastq"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "reference/kraken2_db.tar.gz",
+        "key": "kraken2_db",
+        "used_by": [
+          "untar_kraken2_db"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "kraken2_variants_host_filter",
+        "used_by": [],
+        "value_type": "bool"
+      },
+      {
+        "default": 200,
+        "key": "min_contig_length",
+        "used_by": [
+          "blast_assembly"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 1000,
+        "key": "min_mapped_reads",
+        "used_by": [],
+        "value_type": "int"
+      },
+      {
+        "default": 0.7,
+        "key": "min_perc_contig_aligned",
+        "used_by": [
+          "blast_assembly"
+        ],
+        "value_type": "float"
+      },
+      {
+        "default": "",
+        "key": "multiqc_title",
+        "used_by": [
+          "multiqc"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "nextclade_dataset",
+        "used_by": [
+          "get_nextclade_dataset"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "sars-cov-2",
+        "key": "nextclade_dataset_name",
+        "used_by": [
+          "get_nextclade_dataset"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "2024-10-17--16-48-48Z",
+        "key": "nextclade_dataset_tag",
+        "used_by": [
+          "get_nextclade_dataset"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "results",
+        "key": "out_dir",
+        "used_by": [
+          "fastqc_primers",
+          "fastqc_raw",
+          "fastqc_trim",
+          "multiqc"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/refs/pangolin_db",
+        "key": "pango_database",
+        "used_by": [
+          "pangolin"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "illumina",
+        "key": "platform",
+        "used_by": [
+          "multiqc"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "reference/primers.bed",
+        "key": "primer_bed",
+        "used_by": [
+          "gunzip_primer_bed"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "primer_bed_ends_gz",
+        "used_by": [
+          "gunzip_primer_bed"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "_LEFT",
+        "key": "primer_left_suffix",
+        "used_by": [
+          "collapse_primers"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "_RIGHT",
+        "key": "primer_right_suffix",
+        "used_by": [
+          "collapse_primers"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "amplicon",
+        "key": "protocol",
+        "used_by": [
+          "bam_sort_index_trimmed",
+          "call_variants_ivar",
+          "collapse_primers",
+          "consensus_call",
+          "consensus_filter",
+          "cutadapt",
+          "fastqc_primers",
+          "freyja_boot",
+          "freyja_demix",
+          "freyja_variants",
+          "get_primer_fasta",
+          "ivar_to_vcf",
+          "ivar_trim",
+          "mosdepth_amplicon",
+          "mosdepth_genome",
+          "nextclade",
+          "nextclade_clade_mqc",
+          "pangolin",
+          "picard_metrics",
+          "plot_base_density",
+          "plot_mosdepth_amplicon",
+          "plot_mosdepth_genome",
+          "prepare_primer_fasta",
+          "quast_consensus",
+          "snpeff_ann",
+          "snpsift_extract",
+          "sort_vcf",
+          "variants_long_table"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/raw",
+        "key": "raw_dir",
+        "used_by": [
+          "cat_fastq",
+          "fastqc_raw"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "save_mpileup",
+        "used_by": [],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "save_trimmed_fail",
+        "used_by": [],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "save_unaligned",
+        "used_by": [],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_abacas",
+        "used_by": [
+          "abacas"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_assembly",
+        "used_by": [
+          "abacas",
+          "assemble_spades",
+          "bandage",
+          "blast_assembly",
+          "cutadapt",
+          "fastqc_primers",
+          "get_primer_fasta",
+          "make_blast_db",
+          "prepare_primer_fasta",
+          "quast_assembly"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_assembly_quast",
+        "used_by": [
+          "quast_assembly"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_bandage",
+        "used_by": [
+          "bandage"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_blast",
+        "used_by": [
+          "blast_assembly",
+          "make_blast_db"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_consensus",
+        "used_by": [
+          "consensus_call",
+          "consensus_filter",
+          "get_nextclade_dataset",
+          "nextclade",
+          "nextclade_clade_mqc",
+          "pangolin",
+          "plot_base_density",
+          "quast_consensus"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_consensus_plots",
+        "used_by": [
+          "plot_base_density"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_cutadapt",
+        "used_by": [
+          "cutadapt",
+          "fastqc_primers",
+          "get_primer_fasta",
+          "prepare_primer_fasta"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_fastp",
+        "used_by": [
+          "fastp",
+          "fastqc_trim"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_fastqc",
+        "used_by": [
+          "fastqc_primers",
+          "fastqc_raw",
+          "fastqc_trim"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_freyja",
+        "used_by": [
+          "freyja_boot",
+          "freyja_demix",
+          "freyja_variants"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_freyja_boot",
+        "used_by": [
+          "freyja_boot"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_ivar_trim",
+        "used_by": [
+          "bam_sort_index_trimmed",
+          "ivar_trim"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_kraken2",
+        "used_by": [
+          "assembly_fastq",
+          "kraken2",
+          "untar_kraken2_db"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": true,
+        "key": "skip_markduplicates",
+        "used_by": [],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_mosdepth",
+        "used_by": [
+          "collapse_primers",
+          "mosdepth_amplicon",
+          "mosdepth_genome",
+          "plot_mosdepth_amplicon",
+          "plot_mosdepth_genome"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_nextclade",
+        "used_by": [
+          "get_nextclade_dataset",
+          "nextclade",
+          "nextclade_clade_mqc"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_noninternal_primers",
+        "used_by": [
+          "prepare_primer_fasta"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_pangolin",
+        "used_by": [
+          "pangolin"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_picard_metrics",
+        "used_by": [
+          "picard_metrics"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": true,
+        "key": "skip_plasmidid",
+        "used_by": [],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_snpeff",
+        "used_by": [
+          "build_snpeff_db",
+          "snpeff_ann",
+          "snpsift_extract",
+          "variants_long_table"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_variants",
+        "used_by": [
+          "align_bowtie2",
+          "bam_sort_index",
+          "bam_sort_index_trimmed",
+          "build_bowtie2_index",
+          "build_snpeff_db",
+          "call_variants_ivar",
+          "collapse_primers",
+          "freyja_boot",
+          "freyja_demix",
+          "freyja_variants",
+          "ivar_to_vcf",
+          "ivar_trim",
+          "mosdepth_amplicon",
+          "mosdepth_genome",
+          "picard_metrics",
+          "plot_mosdepth_amplicon",
+          "plot_mosdepth_genome",
+          "snpeff_ann",
+          "snpsift_extract",
+          "sort_vcf",
+          "variants_long_table"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_variants_long_table",
+        "used_by": [
+          "variants_long_table"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_variants_quast",
+        "used_by": [
+          "quast_consensus"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "rnaviral",
+        "key": "spades_mode",
+        "used_by": [
+          "assemble_spades"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "threeprime_adapters",
+        "used_by": [],
+        "value_type": "bool"
+      },
+      {
+        "default": "ivar",
+        "key": "variant_caller",
+        "used_by": [
+          "call_variants_ivar",
+          "ivar_to_vcf",
+          "sort_vcf"
+        ],
+        "value_type": "string"
+      }
+    ]
+  },
+  "oxo-flow-eager": {
+    "workflow": "main.oxoflow",
+    "config": [
+      {
+        "default": 2,
+        "key": "bwaalnk",
+        "used_by": [
+          "bwa_aln"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 1024,
+        "key": "bwaalnl",
+        "used_by": [
+          "bwa_aln"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 0.01,
+        "key": "bwaalnn",
+        "used_by": [
+          "bwa_aln"
+        ],
+        "value_type": "float"
+      },
+      {
+        "default": 2,
+        "key": "bwaalno",
+        "used_by": [
+          "bwa_aln"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC",
+        "key": "clip_forward_adaptor",
+        "used_by": [
+          "adapter_removal"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 20,
+        "key": "clip_min_read_quality",
+        "used_by": [
+          "adapter_removal"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 30,
+        "key": "clip_readlength",
+        "used_by": [
+          "adapter_removal"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTA",
+        "key": "clip_reverse_adaptor",
+        "used_by": [
+          "adapter_removal"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 4,
+        "key": "colour_chemistry",
+        "used_by": [
+          "fastp"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": false,
+        "key": "complexity_filter_poly_g",
+        "used_by": [
+          "fastp"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": 10,
+        "key": "complexity_filter_poly_g_min",
+        "used_by": [
+          "fastp"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "damageprofiler",
+        "key": "damage_calculation_tool",
+        "used_by": [
+          "damageprofiler"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 100,
+        "key": "damageprofiler_length",
+        "used_by": [
+          "damageprofiler"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 15,
+        "key": "damageprofiler_threshold",
+        "used_by": [
+          "damageprofiler"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "0.30",
+        "key": "damageprofiler_yaxis",
+        "used_by": [
+          "damageprofiler"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "dedup_all_merged",
+        "used_by": [],
+        "value_type": "bool"
+      },
+      {
+        "default": "markduplicates",
+        "key": "dedupper",
+        "used_by": [
+          "dedup",
+          "markduplicates"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/reference/genome.fa",
+        "key": "fasta",
+        "used_by": [
+          "make_bwa_index",
+          "make_fasta_index",
+          "make_seq_dict"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "raw",
+        "key": "genotyping_source",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "genotyping_tool",
+        "used_by": [
+          "eigenstrat_snp_coverage",
+          "genotyping_pileupcaller"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 0,
+        "key": "lane",
+        "used_by": [
+          "adapter_removal",
+          "bwa_aln",
+          "fastp",
+          "fastqc_after_clipping"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": false,
+        "key": "large_ref",
+        "used_by": [],
+        "value_type": "bool"
+      },
+      {
+        "default": "bwaaln",
+        "key": "mapper",
+        "used_by": [
+          "bwa_aln"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "mergedonly",
+        "used_by": [],
+        "value_type": "bool"
+      },
+      {
+        "default": 1,
+        "key": "min_adap_overlap",
+        "used_by": [
+          "adapter_removal"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "results",
+        "key": "out_dir",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "pileupcaller_bedfile",
+        "used_by": [
+          "genotyping_pileupcaller"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "randomHaploid",
+        "key": "pileupcaller_method",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": 30,
+        "key": "pileupcaller_min_base_quality",
+        "used_by": [
+          "genotyping_pileupcaller"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 30,
+        "key": "pileupcaller_min_map_quality",
+        "used_by": [
+          "genotyping_pileupcaller"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "",
+        "key": "pileupcaller_snpfile",
+        "used_by": [
+          "genotyping_pileupcaller"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "AllSites",
+        "key": "pileupcaller_transitions_mode",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": 100,
+        "key": "preseq_bootstrap",
+        "used_by": [],
+        "value_type": "int"
+      },
+      {
+        "default": 0.95,
+        "key": "preseq_cval",
+        "used_by": [],
+        "value_type": "float"
+      },
+      {
+        "default": 10000000000,
+        "key": "preseq_maxextrap",
+        "used_by": [],
+        "value_type": "int"
+      },
+      {
+        "default": "c_curve",
+        "key": "preseq_mode",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": 1000,
+        "key": "preseq_step_size",
+        "used_by": [
+          "preseq"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 100,
+        "key": "preseq_terms",
+        "used_by": [],
+        "value_type": "int"
+      },
+      {
+        "default": false,
+        "key": "preserve5p",
+        "used_by": [],
+        "value_type": "bool"
+      },
+      {
+        "default": 41,
+        "key": "qualitymax",
+        "used_by": [
+          "adapter_removal"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": false,
+        "key": "run_genotyping",
+        "used_by": [
+          "eigenstrat_snp_coverage",
+          "genotyping_pileupcaller"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "save_reference",
+        "used_by": [],
+        "value_type": "bool"
+      },
+      {
+        "default": "PE",
+        "key": "seqtype",
+        "used_by": [
+          "bwa_aln"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "single_end",
+        "used_by": [],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_adapterremoval",
+        "used_by": [
+          "adapter_removal",
+          "fastqc_after_clipping"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_collapse",
+        "used_by": [],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_damage_calculation",
+        "used_by": [
+          "damageprofiler"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_deduplication",
+        "used_by": [
+          "dedup",
+          "markduplicates"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_fastqc",
+        "used_by": [
+          "fastqc",
+          "fastqc_after_clipping"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_preseq",
+        "used_by": [
+          "preseq"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_qualimap",
+        "used_by": [
+          "qualimap"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_trim",
+        "used_by": [],
+        "value_type": "bool"
+      },
+      {
+        "default": "none",
+        "key": "udg_type",
+        "used_by": [],
+        "value_type": "string"
+      }
+    ]
+  },
+  "oxo-flow-fetchngs": {
+    "workflow": "main.oxoflow",
+    "config": [
+      {
+        "default": "ftp",
+        "key": "download_method",
+        "used_by": [
+          "sra_fastq_ftp"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "ena_metadata_fields",
+        "used_by": [
+          "sra_ids_to_runinfo"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/ids.txt",
+        "key": "input",
+        "used_by": [
+          "check_ids"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "nf_core_pipeline",
+        "used_by": [
+          "sra_to_samplesheet"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "auto",
+        "key": "nf_core_rnaseq_strandedness",
+        "used_by": [
+          "sra_to_samplesheet"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "results",
+        "key": "out_dir",
+        "used_by": [
+          "check_ids",
+          "combine_mappings",
+          "combine_samplesheets",
+          "multiqc_mappings_config",
+          "sra_fastq_ftp",
+          "sra_ids_to_runinfo",
+          "sra_runinfo_to_ftp",
+          "sra_to_samplesheet"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "experiment_accession,run_accession,sample_accession,experiment_alias,run_alias,sample_alias,experiment_title,sample_title,sample_description",
+        "key": "sample_mapping_fields",
+        "used_by": [
+          "multiqc_mappings_config",
+          "sra_to_samplesheet"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "skip_fastq_download",
+        "used_by": [
+          "combine_mappings",
+          "combine_samplesheets",
+          "sra_fastq_ftp",
+          "sra_to_samplesheet"
+        ],
+        "value_type": "bool"
+      }
+    ]
+  },
+  "oxo-flow-rnaseq-star-deseq2": {
+    "workflow": "main.oxoflow",
+    "config": [
+      {
+        "default": "ftp://ftp.ensembl.org/pub/release-115/gtf/homo_sapiens/Homo_sapiens.GRCh38.115.gtf.gz",
+        "key": "annotation_url",
+        "used_by": [
+          "get_annotation"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "hsapiens",
+        "key": "biomart_species",
+        "used_by": [
+          "gene_2_symbol_counts",
+          "gene_2_symbol_diffexp",
+          "gene_2_symbol_normcounts"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "treated",
+        "key": "contrast_levels",
+        "used_by": [
+          "deseq2"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "treatment_1",
+        "key": "contrast_variables",
+        "used_by": [
+          "deseq2"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "treatment_1",
+        "key": "contrasts",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": "untreated,untreated",
+        "key": "diffexp_base_levels",
+        "used_by": [
+          "deseq2",
+          "deseq2_init"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "jointly_handled",
+        "key": "diffexp_batch_effects",
+        "used_by": [
+          "deseq2_init"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "diffexp_model",
+        "used_by": [
+          "deseq2_init"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "treatment_1,treatment_2",
+        "key": "diffexp_variables",
+        "used_by": [
+          "deseq2",
+          "deseq2_init"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "--detect_adapter_for_pe",
+        "key": "fastp_adapters",
+        "used_by": [
+          "fastp_pe"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "--trim_poly_x --poly_x_min_len 7 --trim_poly_g --poly_g_min_len 7",
+        "key": "fastp_extra",
+        "used_by": [
+          "fastp_pe"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "https://ftp.ensembl.org/pub/release-115/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz",
+        "key": "genome_url",
+        "used_by": [
+          "get_genome"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "https://ftp.ensembl.org/pub/release-115/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.toplevel.fa.gz",
+        "key": "genome_url_toplevel",
+        "used_by": [
+          "get_genome"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": true,
+        "key": "pca_activate",
+        "used_by": [
+          "pca"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "",
+        "key": "pca_labels",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": "treatment_1,treatment_2,jointly_handled",
+        "key": "pca_variables",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/raw",
+        "key": "raw_dir",
+        "used_by": [
+          "fastp_pe"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "GRCh38",
+        "key": "ref_build",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": "115",
+        "key": "ref_release",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": "homo_sapiens",
+        "key": "ref_species",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "star_align_extra",
+        "used_by": [
+          "star_align"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "star_index_extra",
+        "used_by": [
+          "star_index"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": true,
+        "key": "trimming_activate",
+        "used_by": [
+          "fastp_pe"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "config/units.tsv",
+        "key": "units_file",
+        "used_by": [
+          "count_matrix"
+        ],
+        "value_type": "string"
+      }
+    ]
+  },
+  "oxo-flow-varlociraptor": {
+    "workflow": "main.oxoflow",
+    "config": [
+      {
+        "default": "test/fixtures/raw",
+        "key": "reads_dir",
+        "used_by": [
+          "mapping::merge_trimmed_fastqs_r1",
+          "mapping::merge_trimmed_fastqs_r2",
+          "qc::fastqc_r1",
+          "qc::fastqc_r2"
+        ],
+        "value_type": "string"
+      }
+    ]
+  },
+  "oxo-flow-snparcher": {
+    "workflow": "main.oxoflow",
+    "config": [
+      {
+        "default": "low",
+        "key": "expected_coverage",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "intervals_enabled",
+        "used_by": [],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "mark_duplicates",
+        "used_by": [],
+        "value_type": "bool"
+      },
+      {
+        "default": 2,
+        "key": "ploidy",
+        "used_by": [
+          "gatk_haplotypecaller"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "my_organism",
+        "key": "reference_name",
+        "used_by": [
+          "bwa_mem",
+          "gatk_haplotypecaller",
+          "index_reference",
+          "prepare_reference"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/ref/genome.fa",
+        "key": "reference_source",
+        "used_by": [
+          "prepare_reference"
+        ],
+        "value_type": "string"
+      }
+    ]
+  },
+  "oxo-flow-enrichment": {
+    "workflow": "main.oxoflow",
+    "config": [
+      {
+        "default": 4,
+        "key": "adjp_cap",
+        "used_by": [
+          "visualize_GREAT_Azimuth_2023_ATAC",
+          "visualize_GREAT_Reactome_ATAC",
+          "visualize_LOLA_LOLACore_ATAC",
+          "visualize_ORA_GSEApy_Azimuth_2023_ATAC",
+          "visualize_ORA_GSEApy_Reactome_ATAC",
+          "visualize_preranked_GSEApy_Azimuth_2023_RNA",
+          "visualize_preranked_GSEApy_Reactome_RNA",
+          "visualize_pycisTarget_hg38_screen_v10clust_ATAC"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 0.01,
+        "key": "adjp_th_GREAT",
+        "used_by": [
+          "region_enrichment_analysis_GREAT_Azimuth_2023",
+          "region_enrichment_analysis_GREAT_Reactome",
+          "visualize_GREAT_Azimuth_2023_ATAC",
+          "visualize_GREAT_Reactome_ATAC"
+        ],
+        "value_type": "float"
+      },
+      {
+        "default": 0.01,
+        "key": "adjp_th_LOLA",
+        "used_by": [
+          "visualize_LOLA_LOLACore_ATAC"
+        ],
+        "value_type": "float"
+      },
+      {
+        "default": 0.05,
+        "key": "adjp_th_ORA_GSEApy",
+        "used_by": [
+          "visualize_ORA_GSEApy_Azimuth_2023_ATAC",
+          "visualize_ORA_GSEApy_Reactome_ATAC"
+        ],
+        "value_type": "float"
+      },
+      {
+        "default": 0.05,
+        "key": "adjp_th_preranked_GSEApy",
+        "used_by": [
+          "visualize_preranked_GSEApy_Azimuth_2023_RNA",
+          "visualize_preranked_GSEApy_Reactome_RNA"
+        ],
+        "value_type": "float"
+      },
+      {
+        "default": 5,
+        "key": "adjp_th_pycisTarget",
+        "used_by": [
+          "visualize_pycisTarget_hg38_screen_v10clust_ATAC"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": [
+          "Bcell_open_regions",
+          "Ery_open_regions",
+          "all_regions"
+        ],
+        "key": "all_region_sets",
+        "used_by": [],
+        "value_type": "array"
+      },
+      {
+        "default": "config/annotation.csv",
+        "key": "annotation",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": "all_regions",
+        "key": "background_name",
+        "used_by": [
+          "gene_ORA_GSEApy_Azimuth_2023",
+          "gene_ORA_GSEApy_Reactome",
+          "region_enrichment_analysis_GREAT_Azimuth_2023",
+          "region_enrichment_analysis_GREAT_Reactome",
+          "region_enrichment_analysis_LOLA"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 1,
+        "key": "cluster_summary",
+        "used_by": [
+          "visualize_GREAT_Azimuth_2023_ATAC",
+          "visualize_GREAT_Reactome_ATAC",
+          "visualize_LOLA_LOLACore_ATAC",
+          "visualize_ORA_GSEApy_Azimuth_2023_ATAC",
+          "visualize_ORA_GSEApy_Reactome_ATAC",
+          "visualize_preranked_GSEApy_Azimuth_2023_RNA",
+          "visualize_preranked_GSEApy_Reactome_RNA",
+          "visualize_pycisTarget_hg38_screen_v10clust_ATAC"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "p_adjust_hyper",
+        "key": "cn_GREAT_adj_pvalue",
+        "used_by": [
+          "plot_enrichment_result_GREAT_Azimuth_2023",
+          "plot_enrichment_result_GREAT_Reactome",
+          "region_enrichment_analysis_GREAT_Azimuth_2023",
+          "region_enrichment_analysis_GREAT_Reactome",
+          "visualize_GREAT_Azimuth_2023_ATAC",
+          "visualize_GREAT_Reactome_ATAC"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "fold_enrichment_hyper",
+        "key": "cn_GREAT_effect_size",
+        "used_by": [
+          "plot_enrichment_result_GREAT_Azimuth_2023",
+          "plot_enrichment_result_GREAT_Reactome",
+          "visualize_GREAT_Azimuth_2023_ATAC",
+          "visualize_GREAT_Reactome_ATAC"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "observed_region_hits",
+        "key": "cn_GREAT_overlap",
+        "used_by": [
+          "plot_enrichment_result_GREAT_Azimuth_2023",
+          "plot_enrichment_result_GREAT_Reactome"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "p_value_hyper",
+        "key": "cn_GREAT_p_value",
+        "used_by": [
+          "plot_enrichment_result_GREAT_Azimuth_2023",
+          "plot_enrichment_result_GREAT_Reactome"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "description",
+        "key": "cn_GREAT_term",
+        "used_by": [
+          "plot_enrichment_result_GREAT_Azimuth_2023",
+          "plot_enrichment_result_GREAT_Reactome",
+          "visualize_GREAT_Azimuth_2023_ATAC",
+          "visualize_GREAT_Reactome_ATAC"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 25,
+        "key": "cn_GREAT_top_n",
+        "used_by": [
+          "plot_enrichment_result_GREAT_Azimuth_2023",
+          "plot_enrichment_result_GREAT_Reactome"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "qValue",
+        "key": "cn_LOLA_adj_pvalue",
+        "used_by": [
+          "plot_enrichment_result_LOLA_LOLACore",
+          "visualize_LOLA_LOLACore_ATAC"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "oddsRatio",
+        "key": "cn_LOLA_effect_size",
+        "used_by": [
+          "plot_enrichment_result_LOLA_LOLACore",
+          "visualize_LOLA_LOLACore_ATAC"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "support",
+        "key": "cn_LOLA_overlap",
+        "used_by": [
+          "plot_enrichment_result_LOLA_LOLACore"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "pValue",
+        "key": "cn_LOLA_p_value",
+        "used_by": [
+          "plot_enrichment_result_LOLA_LOLACore"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "description",
+        "key": "cn_LOLA_term",
+        "used_by": [
+          "plot_enrichment_result_LOLA_LOLACore",
+          "visualize_LOLA_LOLACore_ATAC"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 25,
+        "key": "cn_LOLA_top_n",
+        "used_by": [
+          "plot_enrichment_result_LOLA_LOLACore"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "Adjusted_P_value",
+        "key": "cn_ORA_GSEApy_adj_pvalue",
+        "used_by": [
+          "plot_enrichment_result_ORA_GSEApy_Azimuth_2023",
+          "plot_enrichment_result_ORA_GSEApy_Reactome",
+          "visualize_ORA_GSEApy_Azimuth_2023_ATAC",
+          "visualize_ORA_GSEApy_Reactome_ATAC"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "Odds_Ratio",
+        "key": "cn_ORA_GSEApy_effect_size",
+        "used_by": [
+          "plot_enrichment_result_ORA_GSEApy_Azimuth_2023",
+          "plot_enrichment_result_ORA_GSEApy_Reactome",
+          "visualize_ORA_GSEApy_Azimuth_2023_ATAC",
+          "visualize_ORA_GSEApy_Reactome_ATAC"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "Overlap",
+        "key": "cn_ORA_GSEApy_overlap",
+        "used_by": [
+          "plot_enrichment_result_ORA_GSEApy_Azimuth_2023",
+          "plot_enrichment_result_ORA_GSEApy_Reactome"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "P_value",
+        "key": "cn_ORA_GSEApy_p_value",
+        "used_by": [
+          "plot_enrichment_result_ORA_GSEApy_Azimuth_2023",
+          "plot_enrichment_result_ORA_GSEApy_Reactome"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "Term",
+        "key": "cn_ORA_GSEApy_term",
+        "used_by": [
+          "plot_enrichment_result_ORA_GSEApy_Azimuth_2023",
+          "plot_enrichment_result_ORA_GSEApy_Reactome",
+          "visualize_ORA_GSEApy_Azimuth_2023_ATAC",
+          "visualize_ORA_GSEApy_Reactome_ATAC"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 25,
+        "key": "cn_ORA_GSEApy_top_n",
+        "used_by": [
+          "plot_enrichment_result_ORA_GSEApy_Azimuth_2023",
+          "plot_enrichment_result_ORA_GSEApy_Reactome"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "FDR_q_val",
+        "key": "cn_preranked_GSEApy_adj_pvalue",
+        "used_by": [
+          "plot_enrichment_result_preranked_GSEApy_Azimuth_2023",
+          "plot_enrichment_result_preranked_GSEApy_Reactome",
+          "visualize_preranked_GSEApy_Azimuth_2023_RNA",
+          "visualize_preranked_GSEApy_Reactome_RNA"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "NES",
+        "key": "cn_preranked_GSEApy_effect_size",
+        "used_by": [
+          "plot_enrichment_result_preranked_GSEApy_Azimuth_2023",
+          "plot_enrichment_result_preranked_GSEApy_Reactome",
+          "visualize_preranked_GSEApy_Azimuth_2023_RNA",
+          "visualize_preranked_GSEApy_Reactome_RNA"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "Tag",
+        "key": "cn_preranked_GSEApy_overlap",
+        "used_by": [
+          "plot_enrichment_result_preranked_GSEApy_Azimuth_2023",
+          "plot_enrichment_result_preranked_GSEApy_Reactome"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "NOM_p_val",
+        "key": "cn_preranked_GSEApy_p_value",
+        "used_by": [
+          "plot_enrichment_result_preranked_GSEApy_Azimuth_2023",
+          "plot_enrichment_result_preranked_GSEApy_Reactome"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "Term",
+        "key": "cn_preranked_GSEApy_term",
+        "used_by": [
+          "plot_enrichment_result_preranked_GSEApy_Azimuth_2023",
+          "plot_enrichment_result_preranked_GSEApy_Reactome",
+          "visualize_preranked_GSEApy_Azimuth_2023_RNA",
+          "visualize_preranked_GSEApy_Reactome_RNA"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 25,
+        "key": "cn_preranked_GSEApy_top_n",
+        "used_by": [
+          "plot_enrichment_result_preranked_GSEApy_Azimuth_2023",
+          "plot_enrichment_result_preranked_GSEApy_Reactome"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "NES",
+        "key": "cn_pycisTarget_adj_pvalue",
+        "used_by": [
+          "plot_enrichment_result_pycisTarget_hg38_screen_v10clust",
+          "visualize_pycisTarget_hg38_screen_v10clust_ATAC"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "NES",
+        "key": "cn_pycisTarget_effect_size",
+        "used_by": [
+          "plot_enrichment_result_pycisTarget_hg38_screen_v10clust",
+          "visualize_pycisTarget_hg38_screen_v10clust_ATAC"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "Motif_hits",
+        "key": "cn_pycisTarget_overlap",
+        "used_by": [
+          "plot_enrichment_result_pycisTarget_hg38_screen_v10clust"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "AUC",
+        "key": "cn_pycisTarget_p_value",
+        "used_by": [
+          "plot_enrichment_result_pycisTarget_hg38_screen_v10clust"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "description",
+        "key": "cn_pycisTarget_term",
+        "used_by": [
+          "plot_enrichment_result_pycisTarget_hg38_screen_v10clust",
+          "visualize_pycisTarget_hg38_screen_v10clust_ATAC"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 25,
+        "key": "cn_pycisTarget_top_n",
+        "used_by": [
+          "plot_enrichment_result_pycisTarget_hg38_screen_v10clust"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "test/resources/enrichment_analysis/Azimuth_2023.json",
+        "key": "db_Azimuth_2023",
+        "used_by": [
+          "prepare_databases_Azimuth_2023"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/resources/enrichment_analysis/ReactomePathways.gmt",
+        "key": "db_Reactome",
+        "used_by": [
+          "prepare_databases_Reactome"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "hg38",
+        "key": "genome",
+        "used_by": [
+          "region_enrichment_analysis_GREAT_Azimuth_2023",
+          "region_enrichment_analysis_GREAT_Reactome",
+          "region_enrichment_analysis_LOLA",
+          "region_gene_association_GREAT"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 1000,
+        "key": "great_basal_downstream",
+        "used_by": [
+          "region_enrichment_analysis_GREAT_Azimuth_2023",
+          "region_enrichment_analysis_GREAT_Reactome",
+          "region_gene_association_GREAT"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 5000,
+        "key": "great_basal_upstream",
+        "used_by": [
+          "region_enrichment_analysis_GREAT_Azimuth_2023",
+          "region_enrichment_analysis_GREAT_Reactome",
+          "region_gene_association_GREAT"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 1000000,
+        "key": "great_extension",
+        "used_by": [
+          "region_enrichment_analysis_GREAT_Azimuth_2023",
+          "region_enrichment_analysis_GREAT_Reactome",
+          "region_gene_association_GREAT"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 1,
+        "key": "great_map_associated_regions",
+        "used_by": [
+          "region_enrichment_analysis_GREAT_Azimuth_2023",
+          "region_enrichment_analysis_GREAT_Reactome"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 0,
+        "key": "great_min_gene_set_size",
+        "used_by": [
+          "region_enrichment_analysis_GREAT_Azimuth_2023",
+          "region_enrichment_analysis_GREAT_Reactome",
+          "region_gene_association_GREAT"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "basalPlusExt",
+        "key": "great_mode",
+        "used_by": [
+          "region_enrichment_analysis_GREAT_Azimuth_2023",
+          "region_enrichment_analysis_GREAT_Reactome",
+          "region_gene_association_GREAT"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/resources/LOLACore/hg38",
+        "key": "lola_db_LOLACore",
+        "used_by": [
+          "region_enrichment_analysis_LOLA"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 5,
+        "key": "nes_cap",
+        "used_by": [
+          "visualize_preranked_GSEApy_Azimuth_2023_RNA",
+          "visualize_preranked_GSEApy_Reactome_RNA"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 5,
+        "key": "or_cap",
+        "used_by": [
+          "visualize_GREAT_Azimuth_2023_ATAC",
+          "visualize_GREAT_Reactome_ATAC",
+          "visualize_LOLA_LOLACore_ATAC",
+          "visualize_ORA_GSEApy_Azimuth_2023_ATAC",
+          "visualize_ORA_GSEApy_Reactome_ATAC",
+          "visualize_pycisTarget_hg38_screen_v10clust_ATAC"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "test/resources/enrichment_analysis/89_motifs_test.tbl",
+        "key": "path_to_motif_annotations",
+        "used_by": [
+          "region_motif_enrichment_analysis_pycisTarget"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "Corces_CellTypes",
+        "key": "project_name",
+        "used_by": [
+          "annot_export",
+          "config_export",
+          "gene_ORA_GSEApy_Azimuth_2023",
+          "gene_ORA_GSEApy_Reactome",
+          "gene_preranked_GSEApy_Azimuth_2023",
+          "gene_preranked_GSEApy_Reactome",
+          "prepare_databases_Azimuth_2023",
+          "prepare_databases_Reactome",
+          "region_enrichment_analysis_GREAT_Azimuth_2023",
+          "region_enrichment_analysis_GREAT_Reactome",
+          "region_gene_association_GREAT"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "v10nr_clust",
+        "key": "pycistarget_annotation_version",
+        "used_by": [
+          "region_motif_enrichment_analysis_pycisTarget"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "['Direct_annot', 'Motif_similarity_annot', 'Orthology_annot', 'Motif_similarity_and_Orthology_annot']",
+        "key": "pycistarget_annotations_to_use",
+        "used_by": [
+          "region_motif_enrichment_analysis_pycisTarget"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 0.005,
+        "key": "pycistarget_auc_threshold",
+        "used_by": [
+          "region_motif_enrichment_analysis_pycisTarget"
+        ],
+        "value_type": "float"
+      },
+      {
+        "default": "test/resources/enrichment_analysis/600regions_test.regions_vs_motifs.rankings.feather",
+        "key": "pycistarget_db_hg38_screen_v10clust",
+        "used_by": [
+          "region_motif_enrichment_analysis_pycisTarget"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 0.4,
+        "key": "pycistarget_fraction_overlap_w_cistarget_database",
+        "used_by": [
+          "region_motif_enrichment_analysis_pycisTarget"
+        ],
+        "value_type": "float"
+      },
+      {
+        "default": 0.001,
+        "key": "pycistarget_motif_similarity_fdr",
+        "used_by": [
+          "region_motif_enrichment_analysis_pycisTarget"
+        ],
+        "value_type": "float"
+      },
+      {
+        "default": 3,
+        "key": "pycistarget_nes_threshold",
+        "used_by": [
+          "region_motif_enrichment_analysis_pycisTarget"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 0,
+        "key": "pycistarget_orthologous_identity_threshold",
+        "used_by": [
+          "region_motif_enrichment_analysis_pycisTarget"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 0.05,
+        "key": "pycistarget_rank_threshold",
+        "used_by": [
+          "region_motif_enrichment_analysis_pycisTarget"
+        ],
+        "value_type": "float"
+      },
+      {
+        "default": "Direct_annot",
+        "key": "pycistarget_term_col",
+        "used_by": [
+          "process_results_pycisTarget"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/data/CorcesATAC",
+        "key": "region_beds",
+        "used_by": [
+          "region_enrichment_analysis_GREAT_Azimuth_2023",
+          "region_enrichment_analysis_GREAT_Reactome",
+          "region_enrichment_analysis_LOLA",
+          "region_gene_association_GREAT",
+          "region_motif_enrichment_analysis_pycisTarget"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": [
+          "Bcell_open_regions",
+          "Ery_open_regions"
+        ],
+        "key": "region_sets",
+        "used_by": [],
+        "value_type": "array"
+      },
+      {
+        "default": "test/results/enrichment_analysis",
+        "key": "result_path",
+        "used_by": [
+          "aggregate_GREAT_Azimuth_2023_ATAC",
+          "aggregate_GREAT_Reactome_ATAC",
+          "aggregate_LOLA_LOLACore_ATAC",
+          "aggregate_ORA_GSEApy_Azimuth_2023_ATAC",
+          "aggregate_ORA_GSEApy_Reactome_ATAC",
+          "aggregate_preranked_GSEApy_Azimuth_2023_RNA",
+          "aggregate_preranked_GSEApy_Reactome_RNA",
+          "aggregate_pycisTarget_hg38_screen_v10clust_ATAC",
+          "annot_export",
+          "config_export",
+          "gene_ORA_GSEApy_Azimuth_2023",
+          "gene_ORA_GSEApy_Reactome",
+          "gene_preranked_GSEApy_Azimuth_2023",
+          "gene_preranked_GSEApy_Reactome",
+          "plot_enrichment_result_GREAT_Azimuth_2023",
+          "plot_enrichment_result_GREAT_Reactome",
+          "plot_enrichment_result_LOLA_LOLACore",
+          "plot_enrichment_result_ORA_GSEApy_Azimuth_2023",
+          "plot_enrichment_result_ORA_GSEApy_Reactome",
+          "plot_enrichment_result_preranked_GSEApy_Azimuth_2023",
+          "plot_enrichment_result_preranked_GSEApy_Reactome",
+          "plot_enrichment_result_pycisTarget_hg38_screen_v10clust",
+          "process_results_pycisTarget",
+          "region_enrichment_analysis_GREAT_Azimuth_2023",
+          "region_enrichment_analysis_GREAT_Reactome",
+          "region_enrichment_analysis_LOLA",
+          "region_gene_association_GREAT",
+          "region_motif_enrichment_analysis_pycisTarget",
+          "visualize_GREAT_Azimuth_2023_ATAC",
+          "visualize_GREAT_Reactome_ATAC",
+          "visualize_LOLA_LOLACore_ATAC",
+          "visualize_ORA_GSEApy_Azimuth_2023_ATAC",
+          "visualize_ORA_GSEApy_Reactome_ATAC",
+          "visualize_preranked_GSEApy_Azimuth_2023_RNA",
+          "visualize_preranked_GSEApy_Reactome_RNA",
+          "visualize_pycisTarget_hg38_screen_v10clust_ATAC"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/data/CorcesRNA",
+        "key": "rnk_dir",
+        "used_by": [
+          "gene_preranked_GSEApy_Azimuth_2023",
+          "gene_preranked_GSEApy_Reactome"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": [
+          "Bcell_ranked",
+          "Ery_ranked"
+        ],
+        "key": "rnk_sets",
+        "used_by": [],
+        "value_type": "array"
+      },
+      {
+        "default": "homo_sapiens",
+        "key": "species",
+        "used_by": [
+          "region_motif_enrichment_analysis_pycisTarget"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 5,
+        "key": "top_terms_n",
+        "used_by": [
+          "visualize_GREAT_Azimuth_2023_ATAC",
+          "visualize_GREAT_Reactome_ATAC",
+          "visualize_LOLA_LOLACore_ATAC",
+          "visualize_ORA_GSEApy_Azimuth_2023_ATAC",
+          "visualize_ORA_GSEApy_Reactome_ATAC",
+          "visualize_preranked_GSEApy_Azimuth_2023_RNA",
+          "visualize_preranked_GSEApy_Reactome_RNA",
+          "visualize_pycisTarget_hg38_screen_v10clust_ATAC"
+        ],
+        "value_type": "int"
+      }
+    ]
+  },
+  "oxo-flow-genome-tracks": {
+    "workflow": "main.oxoflow",
+    "config": [
+      {
+        "default": "-p max --binSize 10  --normalizeUsing RPGC --effectiveGenomeSize 2407883318",
+        "key": "bamCoverage_parameters",
+        "used_by": [
+          "coverage"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/bams",
+        "key": "bam_dir",
+        "used_by": [
+          "merge_bams"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "2000",
+        "key": "base_buffer",
+        "used_by": [
+          "annotate_genes"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "sreichl@cemm.at",
+        "key": "email",
+        "used_by": [
+          "ucsc_hub"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "pdf",
+        "key": "file_type",
+        "used_by": [
+          "plot_tracks"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/genes.csv",
+        "key": "gene_list",
+        "used_by": [
+          "annotate_genes",
+          "gene_list_export",
+          "plot_tracks"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "mm10",
+        "key": "genome",
+        "used_by": [
+          "ucsc_hub"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/genome_bed/ref.bed.gz",
+        "key": "genome_bed",
+        "used_by": [
+          "annotate_genes",
+          "plot_tracks"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "myData",
+        "key": "project_name",
+        "used_by": [
+          "annot_export",
+          "config_export",
+          "ucsc_hub"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "results",
+        "key": "result_path",
+        "used_by": [
+          "annot_export",
+          "annotate_genes",
+          "config_export",
+          "coverage",
+          "gene_list_export",
+          "merge_bams",
+          "plot_tracks",
+          "ucsc_hub"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/annotation.csv",
+        "key": "sample_annotation",
+        "used_by": [
+          "annot_export"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "untreated=#800080,treated=#00FFFF",
+        "key": "track_colors",
+        "used_by": [
+          "plot_tracks",
+          "ucsc_hub"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "20",
+        "key": "width",
+        "used_by": [
+          "plot_tracks"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "bottom",
+        "key": "x_axis",
+        "used_by": [
+          "plot_tracks"
+        ],
+        "value_type": "string"
+      }
+    ]
+  },
+  "oxo-flow-mixscape": {
+    "workflow": "main.oxoflow",
+    "config": [
+      {
+        "default": "test/fixtures/annotation.csv",
+        "key": "annotation",
+        "used_by": [
+          "annot_export",
+          "config_export"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "AB",
+        "key": "antibody_capture",
+        "used_by": [
+          "config_export",
+          "visualize"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "SCT",
+        "key": "assay",
+        "used_by": [
+          "config_export",
+          "lda",
+          "mixscape"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "cps_split_by_col",
+        "used_by": [
+          "config_export",
+          "mixscape",
+          "visualize"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/data",
+        "key": "data_dir",
+        "used_by": [
+          "mixscape"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "FALSE",
+        "key": "fine_mode",
+        "used_by": [
+          "config_export",
+          "mixscape"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "KOcall",
+        "key": "gene_col",
+        "used_by": [
+          "config_export",
+          "lda",
+          "mixscape",
+          "visualize"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "gRNAcall",
+        "key": "grna_col",
+        "used_by": [
+          "config_export",
+          "mixscape"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "-",
+        "key": "grna_split_symbol",
+        "used_by": [
+          "config_export",
+          "mixscape"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "10",
+        "key": "lda_npcs",
+        "used_by": [
+          "config_export",
+          "lda",
+          "mixscape"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "0.1",
+        "key": "lfc_th",
+        "used_by": [
+          "config_export",
+          "lda",
+          "mixscape"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "32000",
+        "key": "mem",
+        "used_by": [
+          "config_export"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "5",
+        "key": "min_cells",
+        "used_by": [
+          "config_export",
+          "mixscape"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "5",
+        "key": "min_de_genes",
+        "used_by": [
+          "config_export",
+          "mixscape"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "mixscape_split_by_col",
+        "used_by": [
+          "config_export",
+          "mixscape",
+          "visualize"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "30",
+        "key": "n_neighbors",
+        "used_by": [
+          "config_export",
+          "mixscape"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "40",
+        "key": "ndims",
+        "used_by": [
+          "config_export",
+          "mixscape"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "NonTargeting",
+        "key": "nt_term",
+        "used_by": [
+          "config_export",
+          "lda",
+          "mixscape",
+          "visualize"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "myCROPseq",
+        "key": "project_name",
+        "used_by": [
+          "annot_export",
+          "config_export"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "KO",
+        "key": "prtb_type",
+        "used_by": [
+          "config_export",
+          "lda",
+          "mixscape",
+          "visualize"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "results",
+        "key": "result_path",
+        "used_by": [
+          "annot_export",
+          "config_export",
+          "env_export_lda",
+          "env_export_mixscape",
+          "lda",
+          "mixscape",
+          "visualize"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "1",
+        "key": "threads",
+        "used_by": [
+          "config_export"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "0",
+        "key": "variable_features_only",
+        "used_by": [
+          "config_export",
+          "mixscape"
+        ],
+        "value_type": "string"
+      }
+    ]
+  },
+  "oxo-flow-bgcflow": {
+    "workflow": "main.oxoflow",
+    "config": [
+      {
+        "default": "resources/antismash_db",
+        "key": "antismash_db_path",
+        "used_by": [
+          "antismash",
+          "antismash_db_setup"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "7",
+        "key": "antismash_major",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": "bacteria",
+        "key": "antismash_taxon",
+        "used_by": [
+          "antismash"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "7.1.0",
+        "key": "antismash_version",
+        "used_by": [
+          "antismash",
+          "antismash_overview",
+          "antismash_overview_gather",
+          "antismash_summary",
+          "bgc_count",
+          "copy_antismash",
+          "copy_log_changes",
+          "csv_to_parquet",
+          "downstream_bgc_prep"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "data/interim/bgcs/datasets.tsv",
+        "key": "bgc_dataset",
+        "used_by": [
+          "downstream_bgc_prep"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "1.1.2",
+        "key": "bgcflow_version",
+        "used_by": [
+          "format_gbk"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "https://gtdb-api.ecogenomic.org",
+        "key": "gtdb_api_base",
+        "used_by": [
+          "gtdb_prep"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "False",
+        "key": "gtdb_offline",
+        "used_by": [
+          "gtdb_prep"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "220.0",
+        "key": "gtdb_release",
+        "used_by": [
+          "gtdb_prep"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "220",
+        "key": "gtdb_release_major",
+        "used_by": [
+          "gtdb_prep"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "r220",
+        "key": "gtdb_release_version",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": "[]",
+        "key": "gtdb_tax_paths",
+        "used_by": [
+          "gtdb_prep"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "fna",
+        "key": "input_type",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": "3.1",
+        "key": "mibig_version",
+        "used_by": [
+          "get_mibig_table"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "genomes",
+        "key": "project",
+        "used_by": [
+          "antismash_overview_gather",
+          "antismash_summary",
+          "copy_log_changes",
+          "copy_mibig_table",
+          "csv_to_parquet",
+          "downstream_bgc_prep",
+          "fix_gtdb_taxonomy"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/raw",
+        "key": "raw_dir",
+        "used_by": [
+          "copy_custom_fasta"
+        ],
+        "value_type": "string"
+      }
+    ]
+  },
+  "oxo-flow-unsupervised": {
+    "workflow": "main.oxoflow",
+    "config": [
+      {
+        "default": "majority",
+        "key": "clustree_categorical_label_option",
+        "used_by": [
+          "clustree_analysis_custom",
+          "clustree_analysis_default",
+          "clustree_analysis_metadata"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 0,
+        "key": "clustree_count_filter",
+        "used_by": [
+          "clustree_analysis_custom",
+          "clustree_analysis_default",
+          "clustree_analysis_metadata"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "tree",
+        "key": "clustree_layout",
+        "used_by": [
+          "clustree_analysis_custom",
+          "clustree_analysis_default",
+          "clustree_analysis_metadata"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "mean",
+        "key": "clustree_numerical_aggregation_option",
+        "used_by": [
+          "clustree_analysis_custom",
+          "clustree_analysis_default",
+          "clustree_analysis_metadata"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 0.1,
+        "key": "clustree_prop_filter",
+        "used_by": [
+          "clustree_analysis_custom",
+          "clustree_analysis_default",
+          "clustree_analysis_metadata"
+        ],
+        "value_type": "float"
+      },
+      {
+        "default": 0,
+        "key": "coord_fixed",
+        "used_by": [
+          "plot_dimred_clustering_densmap",
+          "plot_dimred_clustering_pca",
+          "plot_dimred_clustering_umap",
+          "plot_dimred_metadata_densmap",
+          "plot_dimred_metadata_pca",
+          "plot_dimred_metadata_umap"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "test/fixtures",
+        "key": "data_dir",
+        "used_by": [
+          "aggregate_clustering_results",
+          "clustree_analysis_custom",
+          "clustree_analysis_default",
+          "clustree_analysis_metadata",
+          "densmap_embed_2d",
+          "densmap_embed_3d",
+          "distance_matrix_features_correlation",
+          "distance_matrix_features_cosine",
+          "distance_matrix_observations_correlation",
+          "distance_matrix_observations_cosine",
+          "leiden_ModularityVertexPartition_NA",
+          "leiden_RBConfigurationVertexPartition_0p5",
+          "leiden_RBConfigurationVertexPartition_1",
+          "leiden_RBConfigurationVertexPartition_1p5",
+          "leiden_RBConfigurationVertexPartition_2",
+          "leiden_RBConfigurationVertexPartition_4",
+          "pca",
+          "plot_dimred_interactive_densmap_2d",
+          "plot_dimred_interactive_densmap_3d",
+          "plot_dimred_interactive_pca_2d",
+          "plot_dimred_interactive_pca_3d",
+          "plot_dimred_interactive_umap_2d",
+          "plot_dimred_interactive_umap_3d",
+          "plot_dimred_metadata_densmap",
+          "plot_dimred_metadata_pca",
+          "plot_dimred_metadata_umap",
+          "plot_heatmap_correlation",
+          "plot_heatmap_cosine",
+          "plot_pca_diagnostics",
+          "prep_feature_plot",
+          "umap_embed_2d",
+          "umap_embed_3d",
+          "umap_graph",
+          "validation_external",
+          "validation_internal_BIC",
+          "validation_internal_C_index",
+          "validation_internal_Calinski_Harabasz",
+          "validation_internal_Davies_Bouldin",
+          "validation_internal_Dunn",
+          "validation_internal_Silhouette"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": [],
+        "key": "features_to_plot",
+        "used_by": [
+          "prep_feature_plot"
+        ],
+        "value_type": "array"
+      },
+      {
+        "default": "complete",
+        "key": "heatmap_hclust_method",
+        "used_by": [
+          "plot_heatmap_correlation",
+          "plot_heatmap_cosine"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 0.5,
+        "key": "heatmap_n_features",
+        "used_by": [
+          "distance_matrix_features_correlation",
+          "distance_matrix_features_cosine",
+          "distance_matrix_observations_correlation",
+          "distance_matrix_observations_cosine"
+        ],
+        "value_type": "float"
+      },
+      {
+        "default": 1,
+        "key": "heatmap_n_observations",
+        "used_by": [
+          "distance_matrix_features_correlation",
+          "distance_matrix_features_cosine",
+          "distance_matrix_observations_correlation",
+          "distance_matrix_observations_cosine"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "euclidean",
+        "key": "leiden_metric",
+        "used_by": [
+          "leiden_ModularityVertexPartition_NA",
+          "leiden_RBConfigurationVertexPartition_0p5",
+          "leiden_RBConfigurationVertexPartition_1",
+          "leiden_RBConfigurationVertexPartition_1p5",
+          "leiden_RBConfigurationVertexPartition_2",
+          "leiden_RBConfigurationVertexPartition_4"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 2,
+        "key": "leiden_n_iterations",
+        "used_by": [
+          "leiden_ModularityVertexPartition_NA",
+          "leiden_RBConfigurationVertexPartition_0p5",
+          "leiden_RBConfigurationVertexPartition_1",
+          "leiden_RBConfigurationVertexPartition_1p5",
+          "leiden_RBConfigurationVertexPartition_2",
+          "leiden_RBConfigurationVertexPartition_4"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 15,
+        "key": "leiden_n_neighbors",
+        "used_by": [
+          "leiden_ModularityVertexPartition_NA",
+          "leiden_RBConfigurationVertexPartition_0p5",
+          "leiden_RBConfigurationVertexPartition_1",
+          "leiden_RBConfigurationVertexPartition_1p5",
+          "leiden_RBConfigurationVertexPartition_2",
+          "leiden_RBConfigurationVertexPartition_4"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 32000,
+        "key": "mem_mb",
+        "used_by": [],
+        "value_type": "int"
+      },
+      {
+        "default": [
+          "target"
+        ],
+        "key": "metadata_of_interest",
+        "used_by": [
+          "clustree_analysis_custom",
+          "clustree_analysis_default",
+          "clustree_analysis_metadata",
+          "plot_heatmap_correlation",
+          "plot_heatmap_cosine",
+          "plot_pca_diagnostics",
+          "validation_internal_BIC",
+          "validation_internal_C_index",
+          "validation_internal_Calinski_Harabasz",
+          "validation_internal_Davies_Bouldin",
+          "validation_internal_Dunn",
+          "validation_internal_Silhouette"
+        ],
+        "value_type": "array"
+      },
+      {
+        "default": 0.9,
+        "key": "pca_n_components",
+        "used_by": [
+          "pca",
+          "plot_dimred_clustering_pca",
+          "plot_dimred_interactive_pca_2d",
+          "plot_dimred_interactive_pca_3d",
+          "plot_dimred_metadata_pca",
+          "plot_pca_diagnostics",
+          "validation_internal_BIC",
+          "validation_internal_C_index",
+          "validation_internal_Calinski_Harabasz",
+          "validation_internal_Davies_Bouldin",
+          "validation_internal_Dunn",
+          "validation_internal_Silhouette"
+        ],
+        "value_type": "float"
+      },
+      {
+        "default": "auto",
+        "key": "pca_svd_solver",
+        "used_by": [
+          "pca",
+          "plot_dimred_clustering_pca",
+          "plot_dimred_interactive_pca_2d",
+          "plot_dimred_interactive_pca_3d",
+          "plot_dimred_metadata_pca",
+          "plot_pca_diagnostics",
+          "validation_internal_BIC",
+          "validation_internal_C_index",
+          "validation_internal_Calinski_Harabasz",
+          "validation_internal_Davies_Bouldin",
+          "validation_internal_Dunn",
+          "validation_internal_Silhouette"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "digits",
+        "key": "project_name",
+        "used_by": [
+          "annot_export"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "results",
+        "key": "result_path",
+        "used_by": [
+          "aggregate_all_clustering_results",
+          "aggregate_clustering_results",
+          "aggregate_rank_internal",
+          "annot_export",
+          "clustree_analysis_custom",
+          "clustree_analysis_default",
+          "clustree_analysis_metadata",
+          "densmap_embed_2d",
+          "densmap_embed_3d",
+          "distance_matrix_features_correlation",
+          "distance_matrix_features_cosine",
+          "distance_matrix_observations_correlation",
+          "distance_matrix_observations_cosine",
+          "leiden_ModularityVertexPartition_NA",
+          "leiden_RBConfigurationVertexPartition_0p5",
+          "leiden_RBConfigurationVertexPartition_1",
+          "leiden_RBConfigurationVertexPartition_1p5",
+          "leiden_RBConfigurationVertexPartition_2",
+          "leiden_RBConfigurationVertexPartition_4",
+          "pca",
+          "plot_dimred_clustering_densmap",
+          "plot_dimred_clustering_pca",
+          "plot_dimred_clustering_umap",
+          "plot_dimred_interactive_densmap_2d",
+          "plot_dimred_interactive_densmap_3d",
+          "plot_dimred_interactive_pca_2d",
+          "plot_dimred_interactive_pca_3d",
+          "plot_dimred_interactive_umap_2d",
+          "plot_dimred_interactive_umap_3d",
+          "plot_dimred_metadata_densmap",
+          "plot_dimred_metadata_pca",
+          "plot_dimred_metadata_umap",
+          "plot_heatmap_correlation",
+          "plot_heatmap_cosine",
+          "plot_indices_external",
+          "plot_indices_internal",
+          "plot_pca_diagnostics",
+          "plot_umap_connectivity_densmap",
+          "plot_umap_connectivity_umap",
+          "plot_umap_diagnostics_densmap",
+          "plot_umap_diagnostics_umap",
+          "prep_feature_plot",
+          "umap_embed_2d",
+          "umap_embed_3d",
+          "umap_graph",
+          "validation_external",
+          "validation_internal_BIC",
+          "validation_internal_C_index",
+          "validation_internal_Calinski_Harabasz",
+          "validation_internal_Davies_Bouldin",
+          "validation_internal_Dunn",
+          "validation_internal_Silhouette"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 1,
+        "key": "sample_proportion",
+        "used_by": [
+          "validation_internal_BIC",
+          "validation_internal_C_index",
+          "validation_internal_Calinski_Harabasz",
+          "validation_internal_Davies_Bouldin",
+          "validation_internal_Dunn",
+          "validation_internal_Silhouette"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 1,
+        "key": "scatterplot2d_alpha",
+        "used_by": [
+          "plot_dimred_clustering_densmap",
+          "plot_dimred_clustering_pca",
+          "plot_dimred_clustering_umap",
+          "plot_dimred_interactive_densmap_2d",
+          "plot_dimred_interactive_densmap_3d",
+          "plot_dimred_interactive_pca_2d",
+          "plot_dimred_interactive_pca_3d",
+          "plot_dimred_interactive_umap_2d",
+          "plot_dimred_interactive_umap_3d",
+          "plot_dimred_metadata_densmap",
+          "plot_dimred_metadata_pca",
+          "plot_dimred_metadata_umap",
+          "plot_pca_diagnostics"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 1,
+        "key": "scatterplot2d_size",
+        "used_by": [
+          "plot_dimred_clustering_densmap",
+          "plot_dimred_clustering_pca",
+          "plot_dimred_clustering_umap",
+          "plot_dimred_interactive_densmap_2d",
+          "plot_dimred_interactive_densmap_3d",
+          "plot_dimred_interactive_pca_2d",
+          "plot_dimred_interactive_pca_3d",
+          "plot_dimred_interactive_umap_2d",
+          "plot_dimred_interactive_umap_3d",
+          "plot_dimred_metadata_densmap",
+          "plot_dimred_metadata_pca",
+          "plot_dimred_metadata_umap",
+          "plot_pca_diagnostics"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 2,
+        "key": "threads",
+        "used_by": [],
+        "value_type": "int"
+      },
+      {
+        "default": 1,
+        "key": "umap_connectivity",
+        "used_by": [],
+        "value_type": "int"
+      },
+      {
+        "default": 1,
+        "key": "umap_densmap",
+        "used_by": [],
+        "value_type": "int"
+      },
+      {
+        "default": 1,
+        "key": "umap_diagnostics",
+        "used_by": [],
+        "value_type": "int"
+      },
+      {
+        "default": "euclidean",
+        "key": "umap_metric",
+        "used_by": [
+          "densmap_embed_2d",
+          "densmap_embed_3d",
+          "plot_dimred_clustering_densmap",
+          "plot_dimred_clustering_umap",
+          "plot_dimred_interactive_densmap_2d",
+          "plot_dimred_interactive_densmap_3d",
+          "plot_dimred_interactive_umap_2d",
+          "plot_dimred_interactive_umap_3d",
+          "plot_dimred_metadata_densmap",
+          "plot_dimred_metadata_umap",
+          "plot_umap_connectivity_densmap",
+          "plot_umap_connectivity_umap",
+          "plot_umap_diagnostics_densmap",
+          "plot_umap_diagnostics_umap",
+          "umap_embed_2d",
+          "umap_embed_3d",
+          "umap_graph"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 0.1,
+        "key": "umap_min_dist",
+        "used_by": [
+          "densmap_embed_2d",
+          "densmap_embed_3d",
+          "plot_dimred_clustering_densmap",
+          "plot_dimred_clustering_umap",
+          "plot_dimred_interactive_densmap_2d",
+          "plot_dimred_interactive_densmap_3d",
+          "plot_dimred_interactive_umap_2d",
+          "plot_dimred_interactive_umap_3d",
+          "plot_dimred_metadata_densmap",
+          "plot_dimred_metadata_umap",
+          "plot_umap_connectivity_densmap",
+          "plot_umap_connectivity_umap",
+          "plot_umap_diagnostics_densmap",
+          "plot_umap_diagnostics_umap",
+          "umap_embed_2d",
+          "umap_embed_3d"
+        ],
+        "value_type": "float"
+      },
+      {
+        "default": 15,
+        "key": "umap_n_neighbors",
+        "used_by": [
+          "densmap_embed_2d",
+          "densmap_embed_3d",
+          "plot_dimred_clustering_densmap",
+          "plot_dimred_clustering_umap",
+          "plot_dimred_interactive_densmap_2d",
+          "plot_dimred_interactive_densmap_3d",
+          "plot_dimred_interactive_umap_2d",
+          "plot_dimred_interactive_umap_3d",
+          "plot_dimred_metadata_densmap",
+          "plot_dimred_metadata_umap",
+          "plot_umap_connectivity_densmap",
+          "plot_umap_connectivity_umap",
+          "plot_umap_diagnostics_densmap",
+          "plot_umap_diagnostics_umap",
+          "umap_embed_2d",
+          "umap_embed_3d",
+          "umap_graph"
+        ],
+        "value_type": "int"
+      }
+    ]
+  },
+  "oxo-flow-circrna": {
+    "workflow": "circrna.oxoflow",
+    "config": [
+      {
+        "default": "/data/references/GRCh38/bowtie2/genome.fa",
+        "key": "bowtie2_index",
+        "used_by": [
+          "find_circ"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "/data/references/GRCh38/bwa/genome.fa",
+        "key": "bwa_index",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": "/data/references/GRCh38/bwamem2/genome.fa",
+        "key": "bwamem2_index",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": "{config.reference_dir}/hg38_ref.txt",
+        "key": "circexplorer2_ref",
+        "used_by": [
+          "circexplorer2"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "{config.reference_dir}/CIRIquant.yml",
+        "key": "ciriquant_config",
+        "used_by": [
+          "ciriquant"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "/data/references/GRCh38/genome.dict",
+        "key": "gatk_dict",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": "{config.reference_dir}/genes.gtf",
+        "key": "gene_annotation",
+        "used_by": [
+          "aggregate"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "/data/references/GRCh38/hisat2/genome.fa",
+        "key": "hisat2_index",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": "/data/references/GRCh38/genome.fa.mmi",
+        "key": "minimap2_index",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": "/data/references/GRCh38",
+        "key": "reference_dir",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": "{config.reference_dir}/genome.fa",
+        "key": "reference_fasta",
+        "used_by": [
+          "circexplorer2",
+          "find_circ"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "/data/references/GRCh38/genome.fa.fai",
+        "key": "samtools_faidx",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": "/data/references/GRCh38/star",
+        "key": "star_index",
+        "used_by": [
+          "circrna_finder"
+        ],
+        "value_type": "string"
+      }
+    ]
+  },
+  "oxo-flow-clindet": {
+    "workflow": "main.oxoflow",
+    "config": [
+      {
+        "default": "",
+        "key": "annotate_beds_file",
+        "used_by": [
+          "make_region_bed_list"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/refs/annotations/dbsnp_146.hg38_chr21.vcf.gz",
+        "key": "dbsnp",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/refs/annotations/dbsnp_146.hg38_chr21.vcf.gz",
+        "key": "dbsnp_gz",
+        "used_by": [
+          "muse_sump"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/refs/annotations/Mills_and_1000G_gold_standard.indels.hg38_chr21.vcf.gz",
+        "key": "dbsnp_indel",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": "hg38_chr21",
+        "key": "genome_version",
+        "used_by": [
+          "CM_call",
+          "CM_cnv",
+          "CM_flag",
+          "CM_germ_flag",
+          "M2_SNC",
+          "M2_ST",
+          "M2_contam",
+          "M2_filter",
+          "all",
+          "bam_flagstat_normal",
+          "bam_flagstat_tumor",
+          "bed_to_interval_list",
+          "call_config_strelka",
+          "call_strelka_manta_germline",
+          "call_strelka_somatic_manta",
+          "call_variants_HaplotypeCaller",
+          "combined_multiqc",
+          "combined_multiqc_prep_multiqc_data",
+          "fastp_normal_sample",
+          "fastp_tumor_sample",
+          "flag_mutation_pairead_maf",
+          "make_region_bed_list",
+          "map_reads_normal",
+          "map_reads_tumor",
+          "mark_duplicates_normal",
+          "mark_duplicates_tumor",
+          "merge_paired_germ_maf",
+          "merge_paired_maf",
+          "merge_strelka_manta",
+          "merge_strelka_somatic_manta",
+          "muse_call",
+          "muse_sump",
+          "mutect2",
+          "picard_collect_wes_normal",
+          "picard_collect_wes_tumor",
+          "prep_multiqc_data",
+          "recal_link_normal",
+          "recal_link_tumor",
+          "run_cancer_report",
+          "vardict_filter_somatic",
+          "vardict_paired_mode",
+          "varscan2_call",
+          "varscan2_merge_somatic",
+          "varscan2_mpileup",
+          "varscan2_processSomatic",
+          "varscan2_som_filter",
+          "vcf2maf_HaplotypeCaller",
+          "vcf2maf_Mutect2",
+          "vcf2maf_germ_caveman",
+          "vcf2maf_germ_strelkamanta",
+          "vcf2maf_muse",
+          "vcf2maf_vardict",
+          "vcf2maf_varscan2",
+          "vcf_norm_HaplotypeCaller",
+          "vcf_norm_Mutect2",
+          "vcf_norm_germline_caveman",
+          "vcf_norm_germline_strelkamanta",
+          "vcf_norm_muse",
+          "vcf_norm_vardict",
+          "vcf_norm_varscan2"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": [
+          "strelkamanta",
+          "caveman"
+        ],
+        "key": "germ_caller_list",
+        "used_by": [],
+        "value_type": "array"
+      },
+      {
+        "default": "/tmp",
+        "key": "java_temp_dir",
+        "used_by": [
+          "M2_SNC",
+          "M2_ST",
+          "M2_contam",
+          "M2_filter",
+          "bed_to_interval_list",
+          "call_variants_HaplotypeCaller",
+          "mark_duplicates_normal",
+          "mark_duplicates_tumor",
+          "mutect2",
+          "picard_collect_wes_normal",
+          "picard_collect_wes_tumor"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/refs/annotations/gnomAD.r2.1.1.GRCh38.PASS.AC.AF.only_chr21.vcf.gz",
+        "key": "mutect2_germline_vcf",
+        "used_by": [
+          "mutect2"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/refs/annotations/gnomAD.r2.1.1.GRCh38.PASS.AC.AF.only_chr21.vcf.gz",
+        "key": "mutect2_vcf",
+        "used_by": [
+          "M2_SNC",
+          "M2_ST"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "GRCh38",
+        "key": "ncbi_build",
+        "used_by": [
+          "vcf2maf_HaplotypeCaller",
+          "vcf2maf_Mutect2",
+          "vcf2maf_germ_caveman",
+          "vcf2maf_germ_strelkamanta",
+          "vcf2maf_muse",
+          "vcf2maf_vardict",
+          "vcf2maf_varscan2"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/reads/mini-NC_R1.fq.gz",
+        "key": "normal_fastq_r1",
+        "used_by": [
+          "fastp_normal_sample"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/reads/mini-NC_R2.fq.gz",
+        "key": "normal_fastq_r2",
+        "used_by": [
+          "fastp_normal_sample"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "mini_test",
+        "key": "output_dir",
+        "used_by": [
+          "CM_call",
+          "CM_cnv",
+          "CM_flag",
+          "CM_germ_flag",
+          "M2_SNC",
+          "M2_ST",
+          "M2_contam",
+          "M2_filter",
+          "all",
+          "bam_flagstat_normal",
+          "bam_flagstat_tumor",
+          "bed_to_interval_list",
+          "call_config_strelka",
+          "call_strelka_manta_germline",
+          "call_strelka_somatic_manta",
+          "call_variants_HaplotypeCaller",
+          "combined_multiqc",
+          "combined_multiqc_prep_multiqc_data",
+          "fastp_normal_sample",
+          "fastp_tumor_sample",
+          "flag_mutation_pairead_maf",
+          "make_region_bed_list",
+          "map_reads_normal",
+          "map_reads_tumor",
+          "mark_duplicates_normal",
+          "mark_duplicates_tumor",
+          "merge_paired_germ_maf",
+          "merge_paired_maf",
+          "merge_strelka_manta",
+          "merge_strelka_somatic_manta",
+          "muse_call",
+          "muse_sump",
+          "mutect2",
+          "picard_collect_wes_normal",
+          "picard_collect_wes_tumor",
+          "prep_multiqc_data",
+          "recal_link_normal",
+          "recal_link_tumor",
+          "run_cancer_report",
+          "vardict_filter_somatic",
+          "vardict_paired_mode",
+          "varscan2_call",
+          "varscan2_merge_somatic",
+          "varscan2_mpileup",
+          "varscan2_processSomatic",
+          "varscan2_som_filter",
+          "vcf2maf_HaplotypeCaller",
+          "vcf2maf_Mutect2",
+          "vcf2maf_germ_caveman",
+          "vcf2maf_germ_strelkamanta",
+          "vcf2maf_muse",
+          "vcf2maf_vardict",
+          "vcf2maf_varscan2",
+          "vcf_norm_HaplotypeCaller",
+          "vcf_norm_Mutect2",
+          "vcf_norm_germline_caveman",
+          "vcf_norm_germline_strelkamanta",
+          "vcf_norm_muse",
+          "vcf_norm_vardict",
+          "vcf_norm_varscan2"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": [
+          "mini"
+        ],
+        "key": "pair_ids",
+        "used_by": [],
+        "value_type": "array"
+      },
+      {
+        "default": "test/fixtures/refs/sequence/Homo_sapiens_assembly38_chr21.fasta",
+        "key": "reference",
+        "used_by": [
+          "CM_call",
+          "CM_flag",
+          "M2_SNC",
+          "M2_ST",
+          "M2_filter",
+          "call_config_strelka",
+          "call_strelka_manta_germline",
+          "call_strelka_somatic_manta",
+          "call_variants_HaplotypeCaller",
+          "map_reads_normal",
+          "map_reads_tumor",
+          "muse_call",
+          "mutect2",
+          "picard_collect_wes_normal",
+          "picard_collect_wes_tumor",
+          "vardict_paired_mode",
+          "varscan2_call",
+          "varscan2_mpileup",
+          "vcf2maf_HaplotypeCaller",
+          "vcf2maf_Mutect2",
+          "vcf2maf_germ_caveman",
+          "vcf2maf_germ_strelkamanta",
+          "vcf2maf_muse",
+          "vcf2maf_vardict",
+          "vcf2maf_varscan2",
+          "vcf_norm_HaplotypeCaller",
+          "vcf_norm_Mutect2",
+          "vcf_norm_germline_caveman",
+          "vcf_norm_germline_strelkamanta",
+          "vcf_norm_muse",
+          "vcf_norm_vardict",
+          "vcf_norm_varscan2"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/refs/sequence/Homo_sapiens_assembly38_chr21.dict",
+        "key": "reference_dict",
+        "used_by": [
+          "bed_to_interval_list"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": true,
+        "key": "run_report",
+        "used_by": [
+          "combined_multiqc",
+          "combined_multiqc_prep_multiqc_data",
+          "prep_multiqc_data",
+          "run_cancer_report"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": [
+          "HaplotypeCaller",
+          "vardict",
+          "varscan2",
+          "muse",
+          "Mutect2"
+        ],
+        "key": "somatic_caller_list",
+        "used_by": [],
+        "value_type": "array"
+      },
+      {
+        "default": "test/fixtures/bed/exome_target_hg38_chr21.bed",
+        "key": "target_bed",
+        "used_by": [
+          "M2_SNC",
+          "M2_ST",
+          "M2_filter",
+          "bed_to_interval_list",
+          "call_config_strelka",
+          "call_strelka_manta_germline",
+          "call_strelka_somatic_manta",
+          "call_variants_HaplotypeCaller",
+          "muse_call",
+          "mutect2",
+          "vardict_paired_mode",
+          "varscan2_call",
+          "varscan2_mpileup"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/reads/mini-T_R1.fq.gz",
+        "key": "tumor_fastq_r1",
+        "used_by": [
+          "fastp_tumor_sample"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/reads/mini-T_R2.fq.gz",
+        "key": "tumor_fastq_r2",
+        "used_by": [
+          "fastp_tumor_sample"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "110",
+        "key": "vep_cache_version",
+        "used_by": [
+          "vcf2maf_HaplotypeCaller",
+          "vcf2maf_Mutect2",
+          "vcf2maf_germ_caveman",
+          "vcf2maf_germ_strelkamanta",
+          "vcf2maf_muse",
+          "vcf2maf_vardict",
+          "vcf2maf_varscan2"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "resources/ref_genome/hg38/vep",
+        "key": "vep_data",
+        "used_by": [
+          "vcf2maf_HaplotypeCaller",
+          "vcf2maf_Mutect2",
+          "vcf2maf_germ_caveman",
+          "vcf2maf_germ_strelkamanta",
+          "vcf2maf_muse",
+          "vcf2maf_vardict",
+          "vcf2maf_varscan2"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "homo_sapiens",
+        "key": "vep_species",
+        "used_by": [
+          "vcf2maf_HaplotypeCaller",
+          "vcf2maf_Mutect2",
+          "vcf2maf_germ_caveman",
+          "vcf2maf_germ_strelkamanta",
+          "vcf2maf_muse",
+          "vcf2maf_vardict",
+          "vcf2maf_varscan2"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "wes_pon",
+        "used_by": [
+          "mutect2"
+        ],
+        "value_type": "string"
+      }
+    ]
+  },
+  "oxo-flow-auto-sra-rnaseq-pipeline": {
+    "workflow": "main.oxoflow",
+    "config": [
+      {
+        "default": "/data/reference/genome/GRCh38/Homo_sapiens.GRCh38.95.sort.gtf",
+        "key": "GTF",
+        "used_by": [
+          "align_and_count"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "D21122",
+        "key": "db_id",
+        "used_by": [
+          "DGE_analysis",
+          "combine_count"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "/data/reference/genome/GRCh38/STAR",
+        "key": "index",
+        "used_by": [
+          "align_and_count"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "mail",
+        "used_by": [],
+        "value_type": "bool"
+      },
+      {
+        "default": "",
+        "key": "mail_to",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/metadata/D21122.txt",
+        "key": "metadata",
+        "used_by": [
+          "DGE_analysis",
+          "combine_count",
+          "data_conversion_pair",
+          "get_sra",
+          "merge_R1_data",
+          "merge_R2_data"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "sender",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "sender_password",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": "sra",
+        "key": "sra_data_path",
+        "used_by": [
+          "get_sra"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": ",",
+        "key": "srr_separator",
+        "used_by": [
+          "data_conversion_pair",
+          "get_sra",
+          "merge_R1_data",
+          "merge_R2_data"
+        ],
+        "value_type": "string"
+      }
+    ]
+  },
+  "oxo-flow-tcasia": {
+    "workflow": "main.oxoflow",
+    "config": [
+      {
+        "default": "/path/to/output/alignment",
+        "key": "align_out_dir",
+        "used_by": [
+          "alignment::fastp_qc",
+          "alignment::featurecounts",
+          "alignment::index_bam",
+          "alignment::sort_bam",
+          "alignment::star_align"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "/path/to/output/alignment/aligned",
+        "key": "aligned_dir",
+        "used_by": [
+          "alignment::featurecounts",
+          "alignment::index_bam",
+          "alignment::sort_bam",
+          "alignment::star_align",
+          "as_calling::majiq_create_ini",
+          "as_calling::rmats_create_input",
+          "as_calling::spladder_run"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "/path/to/output/as_calling",
+        "key": "as_out_dir",
+        "used_by": [
+          "as_calling::format_suppa_fields",
+          "as_calling::majiq_build",
+          "as_calling::majiq_create_ini",
+          "as_calling::majiq_psi",
+          "as_calling::rmats_create_input",
+          "as_calling::rmats_run",
+          "as_calling::salmon_quant",
+          "as_calling::select_suppa_fields",
+          "as_calling::spladder_run",
+          "as_calling::suppa_run",
+          "as_calling::voila_modulize",
+          "as_calling::voila_tsv"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 36,
+        "key": "fastp_min_length",
+        "used_by": [
+          "alignment::fastp_qc"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 5,
+        "key": "fastp_n_base_limit",
+        "used_by": [
+          "alignment::fastp_qc"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 20,
+        "key": "fastp_qualified_quality_phred",
+        "used_by": [
+          "alignment::fastp_qc"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 40,
+        "key": "fastp_unqualified_percent_limit",
+        "used_by": [
+          "alignment::fastp_qc"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "/path/to/references/gencode.v34.annotation.gff3",
+        "key": "gff",
+        "used_by": [
+          "as_calling::majiq_build"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "hg38",
+        "key": "majiq_genome",
+        "used_by": [
+          "as_calling::majiq_create_ini"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "/path/to/majiq_license_academic_official.lic",
+        "key": "majiq_license",
+        "used_by": [
+          "as_calling::majiq_build",
+          "as_calling::majiq_psi",
+          "as_calling::voila_modulize",
+          "as_calling::voila_tsv"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 10,
+        "key": "majiq_minreads",
+        "used_by": [
+          "as_calling::majiq_build"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "reverse",
+        "key": "majiq_strandness",
+        "used_by": [
+          "as_calling::majiq_create_ini"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 150,
+        "key": "read_len",
+        "used_by": [
+          "as_calling::majiq_create_ini",
+          "as_calling::rmats_run"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "test/fixtures/raw",
+        "key": "reads_dir",
+        "used_by": [
+          "alignment::fastp_qc",
+          "as_calling::salmon_quant"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "/path/to/references/gencode.v34.annotation.gtf",
+        "key": "ref",
+        "used_by": [
+          "alignment::featurecounts",
+          "as_calling::rmats_run",
+          "as_calling::spladder_run"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 0.0001,
+        "key": "rmats_cstat",
+        "used_by": [
+          "as_calling::rmats_run"
+        ],
+        "value_type": "float"
+      },
+      {
+        "default": "",
+        "key": "rmats_extra",
+        "used_by": [
+          "as_calling::rmats_run"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "/path/to/references/gencode.v34.transcripts.salmon.index",
+        "key": "salmon_index",
+        "used_by": [
+          "as_calling::salmon_quant"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "ISR",
+        "key": "salmon_library_type",
+        "used_by": [
+          "as_calling::salmon_quant"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 3,
+        "key": "spladder_confidence",
+        "used_by": [
+          "as_calling::spladder_run"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "exon_skip,intron_retention,alt_3prime,alt_5prime,mutex_exons",
+        "key": "spladder_event_types",
+        "used_by": [
+          "as_calling::spladder_run"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "single",
+        "key": "spladder_merge_strategy",
+        "used_by": [
+          "as_calling::spladder_run"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "/path/to/references/STAR_index",
+        "key": "star_index_dir",
+        "used_by": [
+          "alignment::star_align"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 39050942993,
+        "key": "star_limit_bam_sort_ram",
+        "used_by": [
+          "alignment::star_align"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 15,
+        "key": "star_out_filter_mismatch_nmax",
+        "used_by": [
+          "alignment::star_align"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "fr-firststrand",
+        "key": "strandness",
+        "used_by": [
+          "as_calling::rmats_run"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "/path/to/references/gencode.v34.events.ioe",
+        "key": "suppa2_events",
+        "used_by": [
+          "as_calling::suppa_run"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 1,
+        "key": "suppa2_min_tpm",
+        "used_by": [
+          "as_calling::suppa_run"
+        ],
+        "value_type": "int"
+      }
+    ]
+  }
+}

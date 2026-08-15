@@ -456,6 +456,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#scope" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -579,6 +590,144 @@
 <a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># 2. get this workflow</span>
 <a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/oxo-flow-community/oxo-flow-nanoseq
 </code></pre></div>
+<h2 id="parameters">Parameters</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Parameter</th>
+<th>Default</th>
+<th>Used by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;"><code>aligner</code></td>
+<td><code>minimap2</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>barcode_kit</code></td>
+<td><code>Auto</code></td>
+<td><code>qcat</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>call_variants</code></td>
+<td><code>false</code></td>
+<td><code>minimap2_align</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>gtf</code></td>
+<td>``</td>
+<td><code>gtf2bed</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>gtf_base</code></td>
+<td>``</td>
+<td><code>gtf2bed</code>, <code>minimap2_align</code>, <code>minimap2_index</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>input</code></td>
+<td><code>test/fixtures/samplesheet.csv</code></td>
+<td><code>samplesheet_check</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>input_path</code></td>
+<td><code>test/fixtures/raw/sample.fastq.gz</code></td>
+<td><code>qcat</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>multiqc_config</code></td>
+<td>``</td>
+<td><code>multiqc</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>multiqc_title</code></td>
+<td>``</td>
+<td><code>multiqc</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>out_dir</code></td>
+<td><code>results</code></td>
+<td><code>bedtools_genomecov</code>, <code>dumpsoftwareversions</code>, <code>fastqc</code>, <code>get_chrom_sizes</code>, <code>gtf2bed</code>, <code>minimap2_align</code>, <code>minimap2_index</code>, <code>multiqc</code>, <code>nanoplot</code>, <code>qcat</code>, <code>samplesheet_check</code>, <code>samtools_faidx</code>, <code>samtools_flagstat</code>, <code>samtools_idxstats</code>, <code>samtools_index</code>, <code>samtools_sort</code>, <code>samtools_stats</code>, <code>samtools_view</code>, <code>ucsc_bedgraphtobigwig</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>protocol</code></td>
+<td><code>DNA</code></td>
+<td><code>minimap2_align</code>, <code>minimap2_index</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>qcat_detect_middle</code></td>
+<td><code>false</code></td>
+<td><code>qcat</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>qcat_min_score</code></td>
+<td><code>60</code></td>
+<td><code>qcat</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>reference</code></td>
+<td><code>test/fixtures/refs/genome.fa</code></td>
+<td><code>get_chrom_sizes</code>, <code>minimap2_index</code>, <code>samtools_faidx</code>, <code>samtools_stats</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>reference_name</code></td>
+<td><code>genome.fa</code></td>
+<td><code>get_chrom_sizes</code>, <code>minimap2_align</code>, <code>minimap2_index</code>, <code>samtools_faidx</code>, <code>ucsc_bedgraphtobigwig</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>run_nanolyse</code></td>
+<td><code>false</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_alignment</code></td>
+<td><code>false</code></td>
+<td><code>bedtools_genomecov</code>, <code>get_chrom_sizes</code>, <code>minimap2_align</code>, <code>minimap2_index</code>, <code>samtools_faidx</code>, <code>samtools_flagstat</code>, <code>samtools_idxstats</code>, <code>samtools_index</code>, <code>samtools_sort</code>, <code>samtools_stats</code>, <code>samtools_view</code>, <code>ucsc_bedgraphtobigwig</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_bigbed</code></td>
+<td><code>false</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_bigwig</code></td>
+<td><code>false</code></td>
+<td><code>bedtools_genomecov</code>, <code>ucsc_bedgraphtobigwig</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_demultiplexing</code></td>
+<td><code>false</code></td>
+<td><code>qcat</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_fastqc</code></td>
+<td><code>false</code></td>
+<td><code>fastqc</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_multiqc</code></td>
+<td><code>false</code></td>
+<td><code>multiqc</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_nanoplot</code></td>
+<td><code>false</code></td>
+<td><code>nanoplot</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_qc</code></td>
+<td><code>false</code></td>
+<td><code>fastqc</code>, <code>nanoplot</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>stranded</code></td>
+<td><code>false</code></td>
+<td><code>minimap2_align</code>, <code>minimap2_index</code></td>
+</tr>
+</tbody>
+</table>
+<p>Derived from the workflow's <code>[config]</code> section — no schema file to maintain.</p>
 <h2 id="scope">Scope</h2>
 <p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
 <p><strong>In scope</strong></p>

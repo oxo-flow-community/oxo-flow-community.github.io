@@ -456,6 +456,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#scope" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -578,6 +589,159 @@
 <a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># 2. get this workflow</span>
 <a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/oxo-flow-community/oxo-flow-tcasia
 </code></pre></div>
+<h2 id="parameters">Parameters</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Parameter</th>
+<th>Default</th>
+<th>Used by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;"><code>align_out_dir</code></td>
+<td><code>/path/to/output/alignment</code></td>
+<td><code>alignment::fastp_qc</code>, <code>alignment::featurecounts</code>, <code>alignment::index_bam</code>, <code>alignment::sort_bam</code>, <code>alignment::star_align</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>aligned_dir</code></td>
+<td><code>/path/to/output/alignment/aligned</code></td>
+<td><code>alignment::featurecounts</code>, <code>alignment::index_bam</code>, <code>alignment::sort_bam</code>, <code>alignment::star_align</code>, <code>as_calling::majiq_create_ini</code>, <code>as_calling::rmats_create_input</code>, <code>as_calling::spladder_run</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>as_out_dir</code></td>
+<td><code>/path/to/output/as_calling</code></td>
+<td><code>as_calling::format_suppa_fields</code>, <code>as_calling::majiq_build</code>, <code>as_calling::majiq_create_ini</code>, <code>as_calling::majiq_psi</code>, <code>as_calling::rmats_create_input</code>, <code>as_calling::rmats_run</code>, <code>as_calling::salmon_quant</code>, <code>as_calling::select_suppa_fields</code>, <code>as_calling::spladder_run</code>, <code>as_calling::suppa_run</code>, <code>as_calling::voila_modulize</code>, <code>as_calling::voila_tsv</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>fastp_min_length</code></td>
+<td><code>36</code></td>
+<td><code>alignment::fastp_qc</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>fastp_n_base_limit</code></td>
+<td><code>5</code></td>
+<td><code>alignment::fastp_qc</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>fastp_qualified_quality_phred</code></td>
+<td><code>20</code></td>
+<td><code>alignment::fastp_qc</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>fastp_unqualified_percent_limit</code></td>
+<td><code>40</code></td>
+<td><code>alignment::fastp_qc</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>gff</code></td>
+<td><code>/path/to/references/gencode.v34.annotation.gff3</code></td>
+<td><code>as_calling::majiq_build</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>majiq_genome</code></td>
+<td><code>hg38</code></td>
+<td><code>as_calling::majiq_create_ini</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>majiq_license</code></td>
+<td><code>/path/to/majiq_license_academic_official.lic</code></td>
+<td><code>as_calling::majiq_build</code>, <code>as_calling::majiq_psi</code>, <code>as_calling::voila_modulize</code>, <code>as_calling::voila_tsv</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>majiq_minreads</code></td>
+<td><code>10</code></td>
+<td><code>as_calling::majiq_build</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>majiq_strandness</code></td>
+<td><code>reverse</code></td>
+<td><code>as_calling::majiq_create_ini</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>read_len</code></td>
+<td><code>150</code></td>
+<td><code>as_calling::majiq_create_ini</code>, <code>as_calling::rmats_run</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>reads_dir</code></td>
+<td><code>test/fixtures/raw</code></td>
+<td><code>alignment::fastp_qc</code>, <code>as_calling::salmon_quant</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>ref</code></td>
+<td><code>/path/to/references/gencode.v34.annotation.gtf</code></td>
+<td><code>alignment::featurecounts</code>, <code>as_calling::rmats_run</code>, <code>as_calling::spladder_run</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>rmats_cstat</code></td>
+<td><code>0.0001</code></td>
+<td><code>as_calling::rmats_run</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>rmats_extra</code></td>
+<td>``</td>
+<td><code>as_calling::rmats_run</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>salmon_index</code></td>
+<td><code>/path/to/references/gencode.v34.transcripts.salmon.index</code></td>
+<td><code>as_calling::salmon_quant</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>salmon_library_type</code></td>
+<td><code>ISR</code></td>
+<td><code>as_calling::salmon_quant</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>spladder_confidence</code></td>
+<td><code>3</code></td>
+<td><code>as_calling::spladder_run</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>spladder_event_types</code></td>
+<td><code>exon_skip,intron_retention,alt_3prime,alt_5prime,mutex_exons</code></td>
+<td><code>as_calling::spladder_run</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>spladder_merge_strategy</code></td>
+<td><code>single</code></td>
+<td><code>as_calling::spladder_run</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>star_index_dir</code></td>
+<td><code>/path/to/references/STAR_index</code></td>
+<td><code>alignment::star_align</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>star_limit_bam_sort_ram</code></td>
+<td><code>39050942993</code></td>
+<td><code>alignment::star_align</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>star_out_filter_mismatch_nmax</code></td>
+<td><code>15</code></td>
+<td><code>alignment::star_align</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>strandness</code></td>
+<td><code>fr-firststrand</code></td>
+<td><code>as_calling::rmats_run</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>suppa2_events</code></td>
+<td><code>/path/to/references/gencode.v34.events.ioe</code></td>
+<td><code>as_calling::suppa_run</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>suppa2_min_tpm</code></td>
+<td><code>1</code></td>
+<td><code>as_calling::suppa_run</code></td>
+</tr>
+</tbody>
+</table>
+<p>Derived from the workflow's <code>[config]</code> section — no schema file to maintain.</p>
 <h2 id="scope">Scope</h2>
 <p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
 <p><strong>In scope</strong></p>

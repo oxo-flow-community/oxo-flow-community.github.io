@@ -456,6 +456,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#scope" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -600,6 +611,249 @@
 <a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># 2. get this workflow</span>
 <a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/oxo-flow-community/oxo-flow-chipseq
 </code></pre></div>
+<h2 id="parameters">Parameters</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Parameter</th>
+<th>Default</th>
+<th>Used by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;"><code>antibody</code></td>
+<td><code>H3K4me3</code></td>
+<td><code>consensus::annotate_boolean_peaks</code>, <code>consensus::deseq2_qc</code>, <code>consensus::homer_annotate_consensus</code>, <code>consensus::macs3_consensus</code>, <code>consensus::subread_featurecounts</code>, <code>report::igv</code>, <code>report::multiqc</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>blacklist</code></td>
+<td><code>test/fixtures/references/blacklist.bed</code></td>
+<td><code>filter::bamtools_filter</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>broad_cutoff</code></td>
+<td><code>0.1</code></td>
+<td><code>peaks::macs3_callpeak</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>bwa_index</code></td>
+<td><code>test/fixtures/references/bwa_index</code></td>
+<td><code>align::bwa_mem</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>bwa_min_score</code></td>
+<td><code>0</code></td>
+<td><code>align::bwa_mem</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>chrom_sizes</code></td>
+<td><code>test/fixtures/references/chrom.sizes</code></td>
+<td><code>tracks::ucsc_bedgraphtobigwig</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>clip_r1</code></td>
+<td><code>0</code></td>
+<td><code>qc::trimgalore</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>clip_r2</code></td>
+<td><code>0</code></td>
+<td><code>qc::trimgalore</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>fai</code></td>
+<td><code>test/fixtures/references/genome.fa.fai</code></td>
+<td><code>align::markduplicates</code>, <code>filter::picard_collectmultiplemetrics</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>fasta</code></td>
+<td><code>test/fixtures/references/genome.fa</code></td>
+<td><code>align::bwa_mem</code>, <code>align::index_align</code>, <code>align::index_markdup</code>, <code>align::markduplicates</code>, <code>align::mergesamfiles</code>, <code>align::sort_align</code>, <code>align::stats_align</code>, <code>align::stats_markdup</code>, <code>consensus::homer_annotate_consensus</code>, <code>filter::index_filter</code>, <code>filter::picard_collectmultiplemetrics</code>, <code>filter::sort_filter</code>, <code>filter::sort_name</code>, <code>filter::stats_filter</code>, <code>peaks::homer_annotatepeaks</code>, <code>report::igv</code>, <code>tracks::khmer</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>fingerprint_bins</code></td>
+<td><code>500000</code></td>
+<td><code>tracks::deeptools_plotfingerprint</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>fragment_size</code></td>
+<td><code>0</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>gene_bed</code></td>
+<td><code>test/fixtures/references/gene.bed</code></td>
+<td><code>tracks::deeptools_computematrix</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>gtf</code></td>
+<td><code>test/fixtures/references/genome.gtf</code></td>
+<td><code>consensus::homer_annotate_consensus</code>, <code>peaks::homer_annotatepeaks</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>ip_ids</code></td>
+<td><code>'S1_REP1', 'S1_REP2'</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>keep_dups</code></td>
+<td><code>false</code></td>
+<td><code>filter::bamtools_filter</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>keep_multi_map</code></td>
+<td><code>false</code></td>
+<td><code>filter::bamtools_filter</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>macs_fdr</code></td>
+<td><code>0</code></td>
+<td><code>peaks::macs3_callpeak</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>macs_gsize</code></td>
+<td>``</td>
+<td><code>peaks::macs3_callpeak</code>, <code>tracks::khmer</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>macs_pvalue</code></td>
+<td><code>0</code></td>
+<td><code>peaks::macs3_callpeak</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>min_reps_consensus</code></td>
+<td><code>1</code></td>
+<td><code>consensus::macs3_consensus</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>multiple_groups</code></td>
+<td><code>false</code></td>
+<td><code>consensus::annotate_boolean_peaks</code>, <code>consensus::deseq2_qc</code>, <code>consensus::homer_annotate_consensus</code>, <code>consensus::macs3_consensus</code>, <code>consensus::subread_featurecounts</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>multiqc_title</code></td>
+<td>``</td>
+<td><code>report::multiqc</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>pair_ids</code></td>
+<td><code>'S1_REP1', 'S1_REP2', 'C1_REP1', 'C1_REP2'</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>raw_dir</code></td>
+<td><code>test/fixtures/raw</code></td>
+<td><code>qc::fastqc</code>, <code>qc::trimgalore</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>read_length</code></td>
+<td><code>75</code></td>
+<td><code>tracks::khmer</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>replicates_exist</code></td>
+<td><code>true</code></td>
+<td><code>consensus::annotate_boolean_peaks</code>, <code>consensus::deseq2_qc</code>, <code>consensus::homer_annotate_consensus</code>, <code>consensus::macs3_consensus</code>, <code>consensus::subread_featurecounts</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>save_macs_pileup</code></td>
+<td><code>false</code></td>
+<td><code>peaks::macs3_callpeak</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>seq_center</code></td>
+<td>``</td>
+<td><code>align::bwa_mem</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_consensus_peaks</code></td>
+<td><code>false</code></td>
+<td><code>consensus::annotate_boolean_peaks</code>, <code>consensus::deseq2_qc</code>, <code>consensus::homer_annotate_consensus</code>, <code>consensus::macs3_consensus</code>, <code>consensus::subread_featurecounts</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_deseq2_qc</code></td>
+<td><code>false</code></td>
+<td><code>consensus::deseq2_qc</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_fastqc</code></td>
+<td><code>false</code></td>
+<td><code>qc::fastqc</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_igv</code></td>
+<td><code>false</code></td>
+<td><code>report::igv</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_multiqc</code></td>
+<td><code>false</code></td>
+<td><code>report::multiqc</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_peak_annotation</code></td>
+<td><code>false</code></td>
+<td><code>consensus::annotate_boolean_peaks</code>, <code>consensus::homer_annotate_consensus</code>, <code>peaks::homer_annotatepeaks</code>, <code>peaks::plot_homer_annotatepeaks</code>, <code>peaks::plot_macs3_qc</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_peak_qc</code></td>
+<td><code>false</code></td>
+<td><code>peaks::plot_homer_annotatepeaks</code>, <code>peaks::plot_macs3_qc</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_picard_metrics</code></td>
+<td><code>false</code></td>
+<td><code>filter::picard_collectmultiplemetrics</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_plot_fingerprint</code></td>
+<td><code>false</code></td>
+<td><code>tracks::deeptools_plotfingerprint</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_plot_profile</code></td>
+<td><code>false</code></td>
+<td><code>tracks::deeptools_computematrix</code>, <code>tracks::deeptools_plotheatmap</code>, <code>tracks::deeptools_plotprofile</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_preseq</code></td>
+<td><code>false</code></td>
+<td><code>filter::preseq</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_qc</code></td>
+<td><code>false</code></td>
+<td><code>qc::fastqc</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_spp</code></td>
+<td><code>false</code></td>
+<td><code>filter::multiqc_custom_phantompeakqualtools</code>, <code>filter::phantompeakqualtools</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_trimming</code></td>
+<td><code>false</code></td>
+<td><code>qc::trimgalore</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>three_prime_clip_r1</code></td>
+<td><code>0</code></td>
+<td><code>qc::trimgalore</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>three_prime_clip_r2</code></td>
+<td><code>0</code></td>
+<td><code>qc::trimgalore</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>trim_nextseq</code></td>
+<td><code>0</code></td>
+<td><code>qc::trimgalore</code></td>
+</tr>
+</tbody>
+</table>
+<p>Derived from the workflow's <code>[config]</code> section — no schema file to maintain.</p>
 <h2 id="scope">Scope</h2>
 <p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
 <p><strong>In scope</strong></p>

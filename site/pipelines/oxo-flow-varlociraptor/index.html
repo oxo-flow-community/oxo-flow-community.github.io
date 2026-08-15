@@ -456,6 +456,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#scope" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -579,6 +590,24 @@
 <a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># 2. get this workflow</span>
 <a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/oxo-flow-community/oxo-flow-varlociraptor
 </code></pre></div>
+<h2 id="parameters">Parameters</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Parameter</th>
+<th>Default</th>
+<th>Used by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;"><code>reads_dir</code></td>
+<td><code>test/fixtures/raw</code></td>
+<td><code>mapping::merge_trimmed_fastqs_r1</code>, <code>mapping::merge_trimmed_fastqs_r2</code>, <code>qc::fastqc_r1</code>, <code>qc::fastqc_r2</code></td>
+</tr>
+</tbody>
+</table>
+<p>Derived from the workflow's <code>[config]</code> section — no schema file to maintain.</p>
 <h2 id="scope">Scope</h2>
 <p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
 <p><strong>In scope</strong></p>

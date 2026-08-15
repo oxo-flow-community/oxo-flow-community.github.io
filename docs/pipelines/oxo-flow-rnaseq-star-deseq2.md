@@ -45,6 +45,37 @@ tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
 git clone https://github.com/oxo-flow-community/oxo-flow-rnaseq-star-deseq2
 ```
 
+## Parameters
+
+| Parameter | Default | Used by |
+|---:|---|---|
+| `annotation_url` | `ftp://ftp.ensembl.org/pub/release-115/gtf/homo_sapiens/Homo_sapiens.GRCh38.115.gtf.gz` | `get_annotation` |
+| `biomart_species` | `hsapiens` | `gene_2_symbol_counts`, `gene_2_symbol_diffexp`, `gene_2_symbol_normcounts` |
+| `contrast_levels` | `treated` | `deseq2` |
+| `contrast_variables` | `treatment_1` | `deseq2` |
+| `contrasts` | `treatment_1` | — |
+| `diffexp_base_levels` | `untreated,untreated` | `deseq2`, `deseq2_init` |
+| `diffexp_batch_effects` | `jointly_handled` | `deseq2_init` |
+| `diffexp_model` | `` | `deseq2_init` |
+| `diffexp_variables` | `treatment_1,treatment_2` | `deseq2`, `deseq2_init` |
+| `fastp_adapters` | `--detect_adapter_for_pe` | `fastp_pe` |
+| `fastp_extra` | `--trim_poly_x --poly_x_min_len 7 --trim_poly_g --poly_g_min_len 7` | `fastp_pe` |
+| `genome_url` | `https://ftp.ensembl.org/pub/release-115/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz` | `get_genome` |
+| `genome_url_toplevel` | `https://ftp.ensembl.org/pub/release-115/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.toplevel.fa.gz` | `get_genome` |
+| `pca_activate` | `true` | `pca` |
+| `pca_labels` | `` | — |
+| `pca_variables` | `treatment_1,treatment_2,jointly_handled` | — |
+| `raw_dir` | `test/fixtures/raw` | `fastp_pe` |
+| `ref_build` | `GRCh38` | — |
+| `ref_release` | `115` | — |
+| `ref_species` | `homo_sapiens` | — |
+| `star_align_extra` | `` | `star_align` |
+| `star_index_extra` | `` | `star_index` |
+| `trimming_activate` | `true` | `fastp_pe` |
+| `units_file` | `config/units.tsv` | `count_matrix` |
+
+Derived from the workflow's `[config]` section — no schema file to maintain.
+
 ## Scope
 
 The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.

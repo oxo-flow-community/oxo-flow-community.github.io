@@ -43,6 +43,26 @@ tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
 git clone https://github.com/WangLabCSU/oxo-flow-circrna
 ```
 
+## Parameters
+
+| Parameter | Default | Used by |
+|---:|---|---|
+| `bowtie2_index` | `/data/references/GRCh38/bowtie2/genome.fa` | `find_circ` |
+| `bwa_index` | `/data/references/GRCh38/bwa/genome.fa` | — |
+| `bwamem2_index` | `/data/references/GRCh38/bwamem2/genome.fa` | — |
+| `circexplorer2_ref` | `{config.reference_dir}/hg38_ref.txt` | `circexplorer2` |
+| `ciriquant_config` | `{config.reference_dir}/CIRIquant.yml` | `ciriquant` |
+| `gatk_dict` | `/data/references/GRCh38/genome.dict` | — |
+| `gene_annotation` | `{config.reference_dir}/genes.gtf` | `aggregate` |
+| `hisat2_index` | `/data/references/GRCh38/hisat2/genome.fa` | — |
+| `minimap2_index` | `/data/references/GRCh38/genome.fa.mmi` | — |
+| `reference_dir` | `/data/references/GRCh38` | — |
+| `reference_fasta` | `{config.reference_dir}/genome.fa` | `circexplorer2`, `find_circ` |
+| `samtools_faidx` | `/data/references/GRCh38/genome.fa.fai` | — |
+| `star_index` | `/data/references/GRCh38/star` | `circrna_finder` |
+
+Derived from the workflow's `[config]` section — no schema file to maintain.
+
 ## Links
 
 - Repository: [oxo-flow-circrna](https://github.com/WangLabCSU/oxo-flow-circrna)

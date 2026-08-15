@@ -46,6 +46,38 @@ tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
 git clone https://github.com/oxo-flow-community/oxo-flow-nanoseq
 ```
 
+## Parameters
+
+| Parameter | Default | Used by |
+|---:|---|---|
+| `aligner` | `minimap2` | — |
+| `barcode_kit` | `Auto` | `qcat` |
+| `call_variants` | `false` | `minimap2_align` |
+| `gtf` | `` | `gtf2bed` |
+| `gtf_base` | `` | `gtf2bed`, `minimap2_align`, `minimap2_index` |
+| `input` | `test/fixtures/samplesheet.csv` | `samplesheet_check` |
+| `input_path` | `test/fixtures/raw/sample.fastq.gz` | `qcat` |
+| `multiqc_config` | `` | `multiqc` |
+| `multiqc_title` | `` | `multiqc` |
+| `out_dir` | `results` | `bedtools_genomecov`, `dumpsoftwareversions`, `fastqc`, `get_chrom_sizes`, `gtf2bed`, `minimap2_align`, `minimap2_index`, `multiqc`, `nanoplot`, `qcat`, `samplesheet_check`, `samtools_faidx`, `samtools_flagstat`, `samtools_idxstats`, `samtools_index`, `samtools_sort`, `samtools_stats`, `samtools_view`, `ucsc_bedgraphtobigwig` |
+| `protocol` | `DNA` | `minimap2_align`, `minimap2_index` |
+| `qcat_detect_middle` | `false` | `qcat` |
+| `qcat_min_score` | `60` | `qcat` |
+| `reference` | `test/fixtures/refs/genome.fa` | `get_chrom_sizes`, `minimap2_index`, `samtools_faidx`, `samtools_stats` |
+| `reference_name` | `genome.fa` | `get_chrom_sizes`, `minimap2_align`, `minimap2_index`, `samtools_faidx`, `ucsc_bedgraphtobigwig` |
+| `run_nanolyse` | `false` | — |
+| `skip_alignment` | `false` | `bedtools_genomecov`, `get_chrom_sizes`, `minimap2_align`, `minimap2_index`, `samtools_faidx`, `samtools_flagstat`, `samtools_idxstats`, `samtools_index`, `samtools_sort`, `samtools_stats`, `samtools_view`, `ucsc_bedgraphtobigwig` |
+| `skip_bigbed` | `false` | — |
+| `skip_bigwig` | `false` | `bedtools_genomecov`, `ucsc_bedgraphtobigwig` |
+| `skip_demultiplexing` | `false` | `qcat` |
+| `skip_fastqc` | `false` | `fastqc` |
+| `skip_multiqc` | `false` | `multiqc` |
+| `skip_nanoplot` | `false` | `nanoplot` |
+| `skip_qc` | `false` | `fastqc`, `nanoplot` |
+| `stranded` | `false` | `minimap2_align`, `minimap2_index` |
+
+Derived from the workflow's `[config]` section — no schema file to maintain.
+
 ## Scope
 
 The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.

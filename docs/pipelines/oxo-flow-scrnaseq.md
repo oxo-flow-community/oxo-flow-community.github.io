@@ -47,6 +47,37 @@ tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
 git clone https://github.com/oxo-flow-community/oxo-flow-scrnaseq
 ```
 
+## Parameters
+
+| Parameter | Default | Used by |
+|---:|---|---|
+| `aligner` | `cellranger` | — |
+| `build_cellranger_index` | `true` | `cellranger_mkgtf`, `cellranger_mkref` |
+| `expected_cells` | `` | `cellranger_count` |
+| `fasta` | `refs/refdata.fa.gz` | `gunzip_fasta` |
+| `fasta_gz` | `true` | `gunzip_fasta` |
+| `fasta_prepared` | `refs/refdata.fa` | `cellranger_mkref`, `gtf_gene_filter`, `gunzip_fasta` |
+| `gtf` | `refs/refdata.gtf.gz` | `gunzip_gtf` |
+| `gtf_filtered` | `refs/refdata_genes.gtf` | `gtf_gene_filter`, `gtf_source_fix` |
+| `gtf_gz` | `true` | `gunzip_gtf` |
+| `gtf_mkgtf` | `refs/refdata_genes.filtered.gtf` | `cellranger_mkgtf`, `cellranger_mkref` |
+| `gtf_mkgtf_input` | `refs/refdata_genes.gtf` | `cellranger_mkgtf` |
+| `gtf_prepared` | `refs/refdata.gtf` | `gtf_gene_filter`, `gunzip_gtf` |
+| `gtf_source_fix` | `false` | `gtf_source_fix` |
+| `gtf_source_fixed` | `refs/refdata_genes.source_fixed.gtf` | `gtf_source_fix` |
+| `multiqc_config` | `assets/multiqc_config.yml` | `multiqc` |
+| `multiqc_title` | `` | `multiqc` |
+| `out_dir` | `results` | — |
+| `protocol` | `auto` | `cellranger_count` |
+| `samplesheet` | `samplesheet.csv` | `concat_h5ad_cellbender_filter`, `concat_h5ad_filtered`, `concat_h5ad_raw` |
+| `save_align_intermeds` | `true` | `cellranger_count` |
+| `skip_cellbender` | `false` | `anndata_barcodes`, `anndatar_convert_cellbender_filter`, `anndatar_convert_combined_cellbender_filter`, `anndatar_convert_combined_raw`, `anndatar_convert_raw`, `cellbender_removebackground`, `concat_h5ad_cellbender_filter`, `concat_h5ad_raw` |
+| `skip_fastqc` | `false` | `fastqc` |
+| `skip_multiqc` | `false` | `multiqc` |
+| `transcriptome` | `refs/cellranger_reference` | `cellranger_count`, `cellranger_mkref` |
+
+Derived from the workflow's `[config]` section — no schema file to maintain.
+
 ## Scope
 
 The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.

@@ -46,6 +46,23 @@ tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
 git clone https://github.com/oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipeline
 ```
 
+## Parameters
+
+| Parameter | Default | Used by |
+|---:|---|---|
+| `GTF` | `/data/reference/genome/GRCh38/Homo_sapiens.GRCh38.95.sort.gtf` | `align_and_count` |
+| `db_id` | `D21122` | `DGE_analysis`, `combine_count` |
+| `index` | `/data/reference/genome/GRCh38/STAR` | `align_and_count` |
+| `mail` | `false` | — |
+| `mail_to` | `` | — |
+| `metadata` | `test/fixtures/metadata/D21122.txt` | `DGE_analysis`, `combine_count`, `data_conversion_pair`, `get_sra`, `merge_R1_data`, `merge_R2_data` |
+| `sender` | `` | — |
+| `sender_password` | `` | — |
+| `sra_data_path` | `sra` | `get_sra` |
+| `srr_separator` | `,` | `data_conversion_pair`, `get_sra`, `merge_R1_data`, `merge_R2_data` |
+
+Derived from the workflow's `[config]` section — no schema file to maintain.
+
 ## Scope
 
 The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.

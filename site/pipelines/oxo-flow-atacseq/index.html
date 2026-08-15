@@ -456,6 +456,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#scope" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -595,6 +606,139 @@
 <a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># 2. get this workflow</span>
 <a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/oxo-flow-community/oxo-flow-atacseq
 </code></pre></div>
+<h2 id="parameters">Parameters</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Parameter</th>
+<th>Default</th>
+<th>Used by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;"><code>blacklist</code></td>
+<td>``</td>
+<td><code>bamtools_filter</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>broad_cutoff</code></td>
+<td><code>0.1</code></td>
+<td><code>macs2_callpeak</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>bwa_index</code></td>
+<td><code>test/fixtures/genome/genome.fa</code></td>
+<td><code>bwa_mem</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>chrom_sizes</code></td>
+<td><code>test/fixtures/genome/genome.fa.sizes</code></td>
+<td><code>ucsc_bedgraphtobigwig</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>fingerprint_bins</code></td>
+<td><code>500000</code></td>
+<td><code>plotfingerprint</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>fragment_size</code></td>
+<td><code>200</code></td>
+<td><code>bedtools_genomecov</code>, <code>plotfingerprint</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>gene_bed</code></td>
+<td><code>test/fixtures/genome/gene.bed</code></td>
+<td><code>deeptools_plots</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>gtf</code></td>
+<td><code>test/fixtures/genome/genes.gtf</code></td>
+<td><code>homer_annotatepeaks</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>keep_dups</code></td>
+<td><code>false</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>keep_multi_map</code></td>
+<td><code>false</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>macs_gsize</code></td>
+<td><code>2.7e9</code></td>
+<td><code>macs2_callpeak</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>min_trimmed_reads</code></td>
+<td><code>10000</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>narrow_peak</code></td>
+<td><code>false</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>out_dir</code></td>
+<td><code>results</code></td>
+<td><code>bamtools_filter</code>, <code>bedtools_genomecov</code>, <code>bwa_mem</code>, <code>deeptools_plots</code>, <code>fastqc</code>, <code>frip_score</code>, <code>homer_annotatepeaks</code>, <code>macs2_callpeak</code>, <code>multiqc</code>, <code>picard_markduplicates</code>, <code>picard_mergesamfiles</code>, <code>plotfingerprint</code>, <code>samtools_sort_stats</code>, <code>trimgalore</code>, <code>ucsc_bedgraphtobigwig</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>raw_dir</code></td>
+<td><code>test/fixtures/raw</code></td>
+<td><code>fastqc</code>, <code>trimgalore</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>reference</code></td>
+<td><code>test/fixtures/genome/genome.fa</code></td>
+<td><code>bamtools_filter</code>, <code>homer_annotatepeaks</code>, <code>picard_markduplicates</code>, <code>samtools_sort_stats</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>save_trimmed</code></td>
+<td><code>false</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_fastqc</code></td>
+<td><code>false</code></td>
+<td><code>fastqc</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_multiqc</code></td>
+<td><code>false</code></td>
+<td><code>multiqc</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_plot_fingerprint</code></td>
+<td><code>false</code></td>
+<td><code>plotfingerprint</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_plot_profile</code></td>
+<td><code>false</code></td>
+<td><code>deeptools_plots</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_qc</code></td>
+<td><code>false</code></td>
+<td><code>fastqc</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_trimming</code></td>
+<td><code>false</code></td>
+<td><code>trimgalore</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>tss_bed</code></td>
+<td><code>test/fixtures/genome/tss.bed</code></td>
+<td><code>deeptools_plots</code></td>
+</tr>
+</tbody>
+</table>
+<p>Derived from the workflow's <code>[config]</code> section — no schema file to maintain.</p>
 <h2 id="scope">Scope</h2>
 <p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
 <p><strong>In scope</strong></p>

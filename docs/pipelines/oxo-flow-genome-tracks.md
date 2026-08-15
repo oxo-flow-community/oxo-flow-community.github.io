@@ -48,6 +48,27 @@ tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
 git clone https://github.com/oxo-flow-community/oxo-flow-genome-tracks
 ```
 
+## Parameters
+
+| Parameter | Default | Used by |
+|---:|---|---|
+| `bamCoverage_parameters` | `-p max --binSize 10  --normalizeUsing RPGC --effectiveGenomeSize 2407883318` | `coverage` |
+| `bam_dir` | `test/fixtures/bams` | `merge_bams` |
+| `base_buffer` | `2000` | `annotate_genes` |
+| `email` | `sreichl@cemm.at` | `ucsc_hub` |
+| `file_type` | `pdf` | `plot_tracks` |
+| `gene_list` | `test/fixtures/genes.csv` | `annotate_genes`, `gene_list_export`, `plot_tracks` |
+| `genome` | `mm10` | `ucsc_hub` |
+| `genome_bed` | `test/fixtures/genome_bed/ref.bed.gz` | `annotate_genes`, `plot_tracks` |
+| `project_name` | `myData` | `annot_export`, `config_export`, `ucsc_hub` |
+| `result_path` | `results` | `annot_export`, `annotate_genes`, `config_export`, `coverage`, `gene_list_export`, `merge_bams`, `plot_tracks`, `ucsc_hub` |
+| `sample_annotation` | `test/fixtures/annotation.csv` | `annot_export` |
+| `track_colors` | `untreated=#800080,treated=#00FFFF` | `plot_tracks`, `ucsc_hub` |
+| `width` | `20` | `plot_tracks` |
+| `x_axis` | `bottom` | `plot_tracks` |
+
+Derived from the workflow's `[config]` section — no schema file to maintain.
+
 ## Scope
 
 The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.

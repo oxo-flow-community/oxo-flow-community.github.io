@@ -47,6 +47,66 @@ tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
 git clone https://github.com/oxo-flow-community/oxo-flow-eager
 ```
 
+## Parameters
+
+| Parameter | Default | Used by |
+|---:|---|---|
+| `bwaalnk` | `2` | `bwa_aln` |
+| `bwaalnl` | `1024` | `bwa_aln` |
+| `bwaalnn` | `0.01` | `bwa_aln` |
+| `bwaalno` | `2` | `bwa_aln` |
+| `clip_forward_adaptor` | `AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC` | `adapter_removal` |
+| `clip_min_read_quality` | `20` | `adapter_removal` |
+| `clip_readlength` | `30` | `adapter_removal` |
+| `clip_reverse_adaptor` | `AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTA` | `adapter_removal` |
+| `colour_chemistry` | `4` | `fastp` |
+| `complexity_filter_poly_g` | `false` | `fastp` |
+| `complexity_filter_poly_g_min` | `10` | `fastp` |
+| `damage_calculation_tool` | `damageprofiler` | `damageprofiler` |
+| `damageprofiler_length` | `100` | `damageprofiler` |
+| `damageprofiler_threshold` | `15` | `damageprofiler` |
+| `damageprofiler_yaxis` | `0.30` | `damageprofiler` |
+| `dedup_all_merged` | `false` | — |
+| `dedupper` | `markduplicates` | `dedup`, `markduplicates` |
+| `fasta` | `test/fixtures/reference/genome.fa` | `make_bwa_index`, `make_fasta_index`, `make_seq_dict` |
+| `genotyping_source` | `raw` | — |
+| `genotyping_tool` | `` | `eigenstrat_snp_coverage`, `genotyping_pileupcaller` |
+| `lane` | `0` | `adapter_removal`, `bwa_aln`, `fastp`, `fastqc_after_clipping` |
+| `large_ref` | `false` | — |
+| `mapper` | `bwaaln` | `bwa_aln` |
+| `mergedonly` | `false` | — |
+| `min_adap_overlap` | `1` | `adapter_removal` |
+| `out_dir` | `results` | — |
+| `pileupcaller_bedfile` | `` | `genotyping_pileupcaller` |
+| `pileupcaller_method` | `randomHaploid` | — |
+| `pileupcaller_min_base_quality` | `30` | `genotyping_pileupcaller` |
+| `pileupcaller_min_map_quality` | `30` | `genotyping_pileupcaller` |
+| `pileupcaller_snpfile` | `` | `genotyping_pileupcaller` |
+| `pileupcaller_transitions_mode` | `AllSites` | — |
+| `preseq_bootstrap` | `100` | — |
+| `preseq_cval` | `0.95` | — |
+| `preseq_maxextrap` | `10000000000` | — |
+| `preseq_mode` | `c_curve` | — |
+| `preseq_step_size` | `1000` | `preseq` |
+| `preseq_terms` | `100` | — |
+| `preserve5p` | `false` | — |
+| `qualitymax` | `41` | `adapter_removal` |
+| `run_genotyping` | `false` | `eigenstrat_snp_coverage`, `genotyping_pileupcaller` |
+| `save_reference` | `false` | — |
+| `seqtype` | `PE` | `bwa_aln` |
+| `single_end` | `false` | — |
+| `skip_adapterremoval` | `false` | `adapter_removal`, `fastqc_after_clipping` |
+| `skip_collapse` | `false` | — |
+| `skip_damage_calculation` | `false` | `damageprofiler` |
+| `skip_deduplication` | `false` | `dedup`, `markduplicates` |
+| `skip_fastqc` | `false` | `fastqc`, `fastqc_after_clipping` |
+| `skip_preseq` | `false` | `preseq` |
+| `skip_qualimap` | `false` | `qualimap` |
+| `skip_trim` | `false` | — |
+| `udg_type` | `none` | — |
+
+Derived from the workflow's `[config]` section — no schema file to maintain.
+
 ## Scope
 
 The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.

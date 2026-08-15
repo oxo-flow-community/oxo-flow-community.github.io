@@ -45,3 +45,29 @@ To list a workflow that lives **in your own repository**:
 Workflows the community team maintains directly live in the
 [oxo-flow-community organization](https://github.com/oxo-flow-community)
 under the same layout and criteria.
+
+## Machine-derived content
+
+Two parts of every workflow page are not hand-written — they are derived from
+the workflow file itself with `oxo-flow info`, so they cannot drift from the
+code:
+
+- **Parameters table.** Every run-notes page lists the workflow's `[config]`
+  section: parameter, default value, and the rules that use it. A `—` in the
+  *Used by* column means the key is defined but not wired into any rule — a
+  documented knob kept for fidelity with the source pipeline. No schema file
+  to maintain.
+- **Metadata cross-checks.** `rule_count`, tools, resources, and environments
+  are derived the same way and diffed against the hand-maintained registry
+  entry when a workflow is listed or reviewed.
+
+The derived data is committed as `data/configs.json` in the site repository
+and regenerated locally (never in CI) with:
+
+```bash
+scripts/regen-configs.py    # reads the staged clones, writes data/configs.json
+scripts/generate.py         # regenerates the run-notes pages (CI checks for drift)
+```
+
+Run both whenever a staged workflow changes and commit the result — site CI
+only builds MkDocs and never downloads the engine.

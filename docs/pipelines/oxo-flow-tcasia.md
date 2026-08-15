@@ -45,6 +45,41 @@ tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
 git clone https://github.com/oxo-flow-community/oxo-flow-tcasia
 ```
 
+## Parameters
+
+| Parameter | Default | Used by |
+|---:|---|---|
+| `align_out_dir` | `/path/to/output/alignment` | `alignment::fastp_qc`, `alignment::featurecounts`, `alignment::index_bam`, `alignment::sort_bam`, `alignment::star_align` |
+| `aligned_dir` | `/path/to/output/alignment/aligned` | `alignment::featurecounts`, `alignment::index_bam`, `alignment::sort_bam`, `alignment::star_align`, `as_calling::majiq_create_ini`, `as_calling::rmats_create_input`, `as_calling::spladder_run` |
+| `as_out_dir` | `/path/to/output/as_calling` | `as_calling::format_suppa_fields`, `as_calling::majiq_build`, `as_calling::majiq_create_ini`, `as_calling::majiq_psi`, `as_calling::rmats_create_input`, `as_calling::rmats_run`, `as_calling::salmon_quant`, `as_calling::select_suppa_fields`, `as_calling::spladder_run`, `as_calling::suppa_run`, `as_calling::voila_modulize`, `as_calling::voila_tsv` |
+| `fastp_min_length` | `36` | `alignment::fastp_qc` |
+| `fastp_n_base_limit` | `5` | `alignment::fastp_qc` |
+| `fastp_qualified_quality_phred` | `20` | `alignment::fastp_qc` |
+| `fastp_unqualified_percent_limit` | `40` | `alignment::fastp_qc` |
+| `gff` | `/path/to/references/gencode.v34.annotation.gff3` | `as_calling::majiq_build` |
+| `majiq_genome` | `hg38` | `as_calling::majiq_create_ini` |
+| `majiq_license` | `/path/to/majiq_license_academic_official.lic` | `as_calling::majiq_build`, `as_calling::majiq_psi`, `as_calling::voila_modulize`, `as_calling::voila_tsv` |
+| `majiq_minreads` | `10` | `as_calling::majiq_build` |
+| `majiq_strandness` | `reverse` | `as_calling::majiq_create_ini` |
+| `read_len` | `150` | `as_calling::majiq_create_ini`, `as_calling::rmats_run` |
+| `reads_dir` | `test/fixtures/raw` | `alignment::fastp_qc`, `as_calling::salmon_quant` |
+| `ref` | `/path/to/references/gencode.v34.annotation.gtf` | `alignment::featurecounts`, `as_calling::rmats_run`, `as_calling::spladder_run` |
+| `rmats_cstat` | `0.0001` | `as_calling::rmats_run` |
+| `rmats_extra` | `` | `as_calling::rmats_run` |
+| `salmon_index` | `/path/to/references/gencode.v34.transcripts.salmon.index` | `as_calling::salmon_quant` |
+| `salmon_library_type` | `ISR` | `as_calling::salmon_quant` |
+| `spladder_confidence` | `3` | `as_calling::spladder_run` |
+| `spladder_event_types` | `exon_skip,intron_retention,alt_3prime,alt_5prime,mutex_exons` | `as_calling::spladder_run` |
+| `spladder_merge_strategy` | `single` | `as_calling::spladder_run` |
+| `star_index_dir` | `/path/to/references/STAR_index` | `alignment::star_align` |
+| `star_limit_bam_sort_ram` | `39050942993` | `alignment::star_align` |
+| `star_out_filter_mismatch_nmax` | `15` | `alignment::star_align` |
+| `strandness` | `fr-firststrand` | `as_calling::rmats_run` |
+| `suppa2_events` | `/path/to/references/gencode.v34.events.ioe` | `as_calling::suppa_run` |
+| `suppa2_min_tpm` | `1` | `as_calling::suppa_run` |
+
+Derived from the workflow's `[config]` section — no schema file to maintain.
+
 ## Scope
 
 The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.

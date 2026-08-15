@@ -456,6 +456,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#scope" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -583,6 +594,169 @@
 <a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># 2. get this workflow</span>
 <a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/oxo-flow-community/oxo-flow-rnaseq
 </code></pre></div>
+<h2 id="parameters">Parameters</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Parameter</th>
+<th>Default</th>
+<th>Used by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;"><code>aligner</code></td>
+<td><code>star_salmon</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>chrom_sizes</code></td>
+<td><code>test/fixtures/reference/chrom_sizes.txt</code></td>
+<td><code>bigwig::bedclip_combined</code>, <code>bigwig::bedclip_fw</code>, <code>bigwig::bedclip_rev</code>, <code>bigwig::bigwig_combined</code>, <code>bigwig::bigwig_fw</code>, <code>bigwig::bigwig_rev</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>deseq2_vst</code></td>
+<td><code>true</code></td>
+<td><code>quantification::deseq2_qc</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>extra_fqlint_args</code></td>
+<td><code>--disable-validator P001</code></td>
+<td><code>fastq_qc::fq_lint_raw</code>, <code>fastq_qc::fq_lint_trimmed</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>fasta</code></td>
+<td><code>test/fixtures/reference/genome.fa</code></td>
+<td><code>alignment::picard_markduplicates</code>, <code>alignment::samtools_sort</code>, <code>alignment::samtools_stats_markdup</code>, <code>alignment::samtools_stats_sorted</code>, <code>bam_qc::samtools_sort_qualimap</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>featurecounts_feature_type</code></td>
+<td><code>exon</code></td>
+<td><code>bam_qc::featurecounts</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>featurecounts_group_type</code></td>
+<td><code>gene_biotype</code></td>
+<td><code>bam_qc::featurecounts</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>gene_bed</code></td>
+<td><code>test/fixtures/reference/gene.bed</code></td>
+<td><code>bam_qc::rseqc_infer_experiment</code>, <code>bam_qc::rseqc_inner_distance</code>, <code>bam_qc::rseqc_junction_annotation</code>, <code>bam_qc::rseqc_junction_saturation</code>, <code>bam_qc::rseqc_read_distribution</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>gtf</code></td>
+<td><code>test/fixtures/reference/genes.gtf</code></td>
+<td><code>alignment::star_align</code>, <code>bam_qc::dupradar</code>, <code>bam_qc::featurecounts</code>, <code>bam_qc::qualimap_rnaseq</code>, <code>quantification::salmon_quant</code>, <code>quantification::stringtie</code>, <code>quantification::tx2gene</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>min_mapped_reads</code></td>
+<td><code>5</code></td>
+<td><code>multiqc_custom_content</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>min_trimmed_reads</code></td>
+<td><code>10000</code></td>
+<td><code>multiqc_custom_content</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>out_dir</code></td>
+<td><code>results</code></td>
+<td><code>alignment::picard_markduplicates</code>, <code>alignment::samtools_flagstat_markdup</code>, <code>alignment::samtools_flagstat_sorted</code>, <code>alignment::samtools_idxstats_markdup</code>, <code>alignment::samtools_idxstats_sorted</code>, <code>alignment::samtools_index_markdup</code>, <code>alignment::samtools_index_sorted</code>, <code>alignment::samtools_sort</code>, <code>alignment::samtools_stats_markdup</code>, <code>alignment::samtools_stats_sorted</code>, <code>alignment::star_align</code>, <code>bam_qc::biotype_multiqc</code>, <code>bam_qc::dupradar</code>, <code>bam_qc::featurecounts</code>, <code>bam_qc::qualimap_rnaseq</code>, <code>bam_qc::rseqc_bam_stat</code>, <code>bam_qc::rseqc_infer_experiment</code>, <code>bam_qc::rseqc_inner_distance</code>, <code>bam_qc::rseqc_junction_annotation</code>, <code>bam_qc::rseqc_junction_saturation</code>, <code>bam_qc::rseqc_read_distribution</code>, <code>bam_qc::rseqc_read_duplication</code>, <code>bam_qc::samtools_sort_qualimap</code>, <code>bigwig::bedclip_combined</code>, <code>bigwig::bedclip_fw</code>, <code>bigwig::bedclip_rev</code>, <code>bigwig::bigwig_combined</code>, <code>bigwig::bigwig_fw</code>, <code>bigwig::bigwig_rev</code>, <code>bigwig::genomecov_combined</code>, <code>bigwig::genomecov_fw</code>, <code>bigwig::genomecov_rev</code>, <code>fastq_qc::fastqc_raw</code>, <code>fastq_qc::fq_lint_raw</code>, <code>fastq_qc::fq_lint_trimmed</code>, <code>fastq_qc::trimgalore</code>, <code>multiqc</code>, <code>multiqc_custom_content</code>, <code>quantification::deseq2_qc</code>, <code>quantification::salmon_quant</code>, <code>quantification::stringtie</code>, <code>quantification::summarizedexperiment</code>, <code>quantification::tx2gene</code>, <code>quantification::tximport</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>reads_dir</code></td>
+<td><code>test/fixtures/raw</code></td>
+<td><code>fastq_qc::fastqc_raw</code>, <code>fastq_qc::fq_lint_raw</code>, <code>fastq_qc::trimgalore</code>, <code>multiqc_custom_content</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>salmon_quant_libtype</code></td>
+<td>``</td>
+<td><code>quantification::salmon_quant</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>save_align_intermeds</code></td>
+<td><code>false</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>save_trimmed</code></td>
+<td><code>false</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_bigwig</code></td>
+<td><code>false</code></td>
+<td><code>bigwig::bedclip_combined</code>, <code>bigwig::bedclip_fw</code>, <code>bigwig::bedclip_rev</code>, <code>bigwig::bigwig_combined</code>, <code>bigwig::bigwig_fw</code>, <code>bigwig::bigwig_rev</code>, <code>bigwig::genomecov_combined</code>, <code>bigwig::genomecov_fw</code>, <code>bigwig::genomecov_rev</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_deseq2_qc</code></td>
+<td><code>false</code></td>
+<td><code>quantification::deseq2_qc</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_fastqc</code></td>
+<td><code>false</code></td>
+<td><code>fastq_qc::fastqc_raw</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_linting</code></td>
+<td><code>false</code></td>
+<td><code>fastq_qc::fq_lint_raw</code>, <code>fastq_qc::fq_lint_trimmed</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_markduplicates</code></td>
+<td><code>false</code></td>
+<td><code>alignment::picard_markduplicates</code>, <code>alignment::samtools_flagstat_markdup</code>, <code>alignment::samtools_idxstats_markdup</code>, <code>alignment::samtools_index_markdup</code>, <code>alignment::samtools_stats_markdup</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_qc</code></td>
+<td><code>false</code></td>
+<td><code>bam_qc::biotype_multiqc</code>, <code>bam_qc::dupradar</code>, <code>bam_qc::featurecounts</code>, <code>bam_qc::qualimap_rnaseq</code>, <code>bam_qc::rseqc_bam_stat</code>, <code>bam_qc::rseqc_infer_experiment</code>, <code>bam_qc::rseqc_inner_distance</code>, <code>bam_qc::rseqc_junction_annotation</code>, <code>bam_qc::rseqc_junction_saturation</code>, <code>bam_qc::rseqc_read_distribution</code>, <code>bam_qc::rseqc_read_duplication</code>, <code>bam_qc::samtools_sort_qualimap</code>, <code>quantification::deseq2_qc</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_quantification_merge</code></td>
+<td><code>false</code></td>
+<td><code>quantification::deseq2_qc</code>, <code>quantification::summarizedexperiment</code>, <code>quantification::tximport</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_stringtie</code></td>
+<td><code>false</code></td>
+<td><code>quantification::stringtie</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_trimming</code></td>
+<td><code>false</code></td>
+<td><code>fastq_qc::trimgalore</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>star_index</code></td>
+<td><code>test/fixtures/reference/star_index</code></td>
+<td><code>alignment::star_align</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>stranded_threshold</code></td>
+<td><code>0.8</code></td>
+<td><code>multiqc_custom_content</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>strandedness</code></td>
+<td><code>unstranded</code></td>
+<td><code>bam_qc::dupradar</code>, <code>bam_qc::featurecounts</code>, <code>bam_qc::qualimap_rnaseq</code>, <code>bigwig::bedclip_fw</code>, <code>bigwig::bedclip_rev</code>, <code>bigwig::bigwig_fw</code>, <code>bigwig::bigwig_rev</code>, <code>bigwig::genomecov_fw</code>, <code>bigwig::genomecov_rev</code>, <code>multiqc_custom_content</code>, <code>quantification::salmon_quant</code>, <code>quantification::stringtie</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>transcript_fasta</code></td>
+<td><code>test/fixtures/reference/transcripts.fa</code></td>
+<td><code>quantification::salmon_quant</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>unstranded_threshold</code></td>
+<td><code>0.1</code></td>
+<td><code>multiqc_custom_content</code></td>
+</tr>
+</tbody>
+</table>
+<p>Derived from the workflow's <code>[config]</code> section — no schema file to maintain.</p>
 <h2 id="scope">Scope</h2>
 <p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
 <p><strong>In scope</strong></p>

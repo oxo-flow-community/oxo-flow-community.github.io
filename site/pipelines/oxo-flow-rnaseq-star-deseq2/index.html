@@ -456,6 +456,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#scope" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -578,6 +589,139 @@
 <a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># 2. get this workflow</span>
 <a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/oxo-flow-community/oxo-flow-rnaseq-star-deseq2
 </code></pre></div>
+<h2 id="parameters">Parameters</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Parameter</th>
+<th>Default</th>
+<th>Used by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;"><code>annotation_url</code></td>
+<td><code>ftp://ftp.ensembl.org/pub/release-115/gtf/homo_sapiens/Homo_sapiens.GRCh38.115.gtf.gz</code></td>
+<td><code>get_annotation</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>biomart_species</code></td>
+<td><code>hsapiens</code></td>
+<td><code>gene_2_symbol_counts</code>, <code>gene_2_symbol_diffexp</code>, <code>gene_2_symbol_normcounts</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>contrast_levels</code></td>
+<td><code>treated</code></td>
+<td><code>deseq2</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>contrast_variables</code></td>
+<td><code>treatment_1</code></td>
+<td><code>deseq2</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>contrasts</code></td>
+<td><code>treatment_1</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>diffexp_base_levels</code></td>
+<td><code>untreated,untreated</code></td>
+<td><code>deseq2</code>, <code>deseq2_init</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>diffexp_batch_effects</code></td>
+<td><code>jointly_handled</code></td>
+<td><code>deseq2_init</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>diffexp_model</code></td>
+<td>``</td>
+<td><code>deseq2_init</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>diffexp_variables</code></td>
+<td><code>treatment_1,treatment_2</code></td>
+<td><code>deseq2</code>, <code>deseq2_init</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>fastp_adapters</code></td>
+<td><code>--detect_adapter_for_pe</code></td>
+<td><code>fastp_pe</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>fastp_extra</code></td>
+<td><code>--trim_poly_x --poly_x_min_len 7 --trim_poly_g --poly_g_min_len 7</code></td>
+<td><code>fastp_pe</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>genome_url</code></td>
+<td><code>https://ftp.ensembl.org/pub/release-115/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz</code></td>
+<td><code>get_genome</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>genome_url_toplevel</code></td>
+<td><code>https://ftp.ensembl.org/pub/release-115/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.toplevel.fa.gz</code></td>
+<td><code>get_genome</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>pca_activate</code></td>
+<td><code>true</code></td>
+<td><code>pca</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>pca_labels</code></td>
+<td>``</td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>pca_variables</code></td>
+<td><code>treatment_1,treatment_2,jointly_handled</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>raw_dir</code></td>
+<td><code>test/fixtures/raw</code></td>
+<td><code>fastp_pe</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>ref_build</code></td>
+<td><code>GRCh38</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>ref_release</code></td>
+<td><code>115</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>ref_species</code></td>
+<td><code>homo_sapiens</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>star_align_extra</code></td>
+<td>``</td>
+<td><code>star_align</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>star_index_extra</code></td>
+<td>``</td>
+<td><code>star_index</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>trimming_activate</code></td>
+<td><code>true</code></td>
+<td><code>fastp_pe</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>units_file</code></td>
+<td><code>config/units.tsv</code></td>
+<td><code>count_matrix</code></td>
+</tr>
+</tbody>
+</table>
+<p>Derived from the workflow's <code>[config]</code> section — no schema file to maintain.</p>
 <h2 id="scope">Scope</h2>
 <p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
 <p><strong>In scope</strong></p>

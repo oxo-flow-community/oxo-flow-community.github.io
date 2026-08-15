@@ -456,6 +456,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#scope" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -579,6 +590,214 @@
 <a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># 2. get this workflow</span>
 <a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/oxo-flow-community/oxo-flow-methylseq
 </code></pre></div>
+<h2 id="parameters">Parameters</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Parameter</th>
+<th>Default</th>
+<th>Used by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;"><code>accel</code></td>
+<td><code>false</code></td>
+<td><code>trimgalore</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>aligner</code></td>
+<td><code>bismark</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>clip_r1</code></td>
+<td><code>0</code></td>
+<td><code>trimgalore</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>clip_r2</code></td>
+<td><code>0</code></td>
+<td><code>trimgalore</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>comprehensive</code></td>
+<td><code>false</code></td>
+<td><code>bismark_methylationextractor</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>cytosine_report</code></td>
+<td><code>false</code></td>
+<td><code>bismark_coverage2cytosine</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>em_seq</code></td>
+<td><code>false</code></td>
+<td><code>bismark_align</code>, <code>trimgalore</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>fasta</code></td>
+<td><code>test/fixtures/refs/genome.fa</code></td>
+<td><code>bismark_genomepreparation</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>ignore_3prime_r1</code></td>
+<td><code>0</code></td>
+<td><code>bismark_methylationextractor</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>ignore_3prime_r2</code></td>
+<td><code>2</code></td>
+<td><code>bismark_methylationextractor</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>ignore_r1</code></td>
+<td><code>0</code></td>
+<td><code>bismark_methylationextractor</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>ignore_r2</code></td>
+<td><code>2</code></td>
+<td><code>bismark_methylationextractor</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>length_trim</code></td>
+<td><code>0</code></td>
+<td><code>trimgalore</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>local_alignment</code></td>
+<td><code>false</code></td>
+<td><code>bismark_align</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>maxins</code></td>
+<td>``</td>
+<td><code>bismark_align</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>meth_cutoff</code></td>
+<td>``</td>
+<td><code>bismark_methylationextractor</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>minins</code></td>
+<td>``</td>
+<td><code>bismark_align</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>multiqc_title</code></td>
+<td>``</td>
+<td><code>multiqc</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>nextseq_trim</code></td>
+<td><code>0</code></td>
+<td><code>trimgalore</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>no_overlap</code></td>
+<td><code>true</code></td>
+<td><code>bismark_methylationextractor</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>nomeseq</code></td>
+<td><code>false</code></td>
+<td><code>bismark_coverage2cytosine</code>, <code>bismark_methylationextractor</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>non_directional</code></td>
+<td><code>false</code></td>
+<td><code>bismark_align</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>num_mismatches</code></td>
+<td><code>0.6</code></td>
+<td><code>bismark_align</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>out_dir</code></td>
+<td><code>results</code></td>
+<td><code>bismark_align</code>, <code>bismark_coverage2cytosine</code>, <code>bismark_deduplicate</code>, <code>bismark_methylationextractor</code>, <code>bismark_report</code>, <code>bismark_summary</code>, <code>fastqc</code>, <code>multiqc</code>, <code>multiqc_versions</code>, <code>samtools_index</code>, <code>samtools_sort</code>, <code>trimgalore</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>pbat</code></td>
+<td><code>false</code></td>
+<td><code>bismark_align</code>, <code>trimgalore</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>raw_dir</code></td>
+<td><code>test/fixtures/raw</code></td>
+<td><code>fastqc</code>, <code>trimgalore</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>relax_mismatches</code></td>
+<td><code>false</code></td>
+<td><code>bismark_align</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>rrbs</code></td>
+<td><code>false</code></td>
+<td><code>bismark_deduplicate</code>, <code>trimgalore</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>single_cell</code></td>
+<td><code>false</code></td>
+<td><code>bismark_align</code>, <code>trimgalore</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_deduplication</code></td>
+<td><code>false</code></td>
+<td><code>bismark_deduplicate</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_fastqc</code></td>
+<td><code>false</code></td>
+<td><code>fastqc</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_multiqc</code></td>
+<td><code>false</code></td>
+<td><code>multiqc</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_trimming</code></td>
+<td><code>false</code></td>
+<td><code>trimgalore</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_trimming_presets</code></td>
+<td><code>false</code></td>
+<td><code>trimgalore</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>slamseq</code></td>
+<td><code>false</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>three_prime_clip_r1</code></td>
+<td><code>0</code></td>
+<td><code>trimgalore</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>three_prime_clip_r2</code></td>
+<td><code>0</code></td>
+<td><code>trimgalore</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>unmapped</code></td>
+<td><code>false</code></td>
+<td><code>bismark_align</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>zymo</code></td>
+<td><code>false</code></td>
+<td><code>bismark_align</code>, <code>trimgalore</code></td>
+</tr>
+</tbody>
+</table>
+<p>Derived from the workflow's <code>[config]</code> section — no schema file to maintain.</p>
 <h2 id="scope">Scope</h2>
 <p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
 <p><strong>In scope</strong></p>

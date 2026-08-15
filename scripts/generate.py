@@ -18,6 +18,7 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 DATA = ROOT / "data" / "pipelines.json"
+CONFIGS = ROOT / "data" / "configs.json"
 OUT_JS = ROOT / "docs" / "javascripts" / "pipelines-data.js"
 OUT_PAGES = ROOT / "docs" / "pipelines"
 STAGING = pathlib.Path.home() / "Documents" / "GitHub" / "oxo-community" / "staging"
@@ -30,6 +31,13 @@ ENGINE_URL = (
 
 def load() -> list[dict]:
     return json.loads(DATA.read_text())
+
+
+def load_configs() -> dict:
+    """Committed `oxo-flow info` output per pipeline (see regen-configs.py)."""
+    if not CONFIGS.is_file():
+        return {}
+    return json.loads(CONFIGS.read_text())
 
 
 REQUIRED_FIELDS = ("name", "title", "description", "repo_url", "domain", "tags", "tools")
@@ -170,7 +178,40 @@ def install_section(p: dict) -> str:
     return "\n".join(lines)
 
 
-def make_page(p: dict) -> str:
+def fmt_default(value) -> str:
+    """Render a `[config]` default as a code span (JSON/TOML-style scalars)."""
+    if isinstance(value, bool):
+        value = "true" if value else "false"
+    elif isinstance(value, list):
+        value = ", ".join(fmt_default(item) for item in value)
+    elif value is None:
+        value = "—"
+    text = str(value).replace("`", "'").replace("|", "\\|").replace("\n", " ")
+    return f"`{text}`"
+
+
+def params_section(p: dict, config: list[dict] | None) -> list[str]:
+    """`## Parameters` table derived from `oxo-flow info` (regen-configs.py)."""
+    if not config:
+        return []
+    rows = []
+    for record in config:
+        key = record.get("key", "?")
+        used_by = ", ".join(f"`{rule}`" for rule in record.get("used_by", [])) or "—"
+        rows.append(f"| `{key}` | {fmt_default(record.get('default'))} | {used_by} |")
+    return [
+        "",
+        "## Parameters",
+        "",
+        "| Parameter | Default | Used by |",
+        "|---:|---|---|",
+        *rows,
+        "",
+        "Derived from the workflow's `[config]` section — no schema file to maintain.",
+    ]
+
+
+def make_page(p: dict, configs: dict) -> str:
     src = p.get("source") or {}
     scope = "\n".join(f"- {s}" for s in p.get("scope", []))
     excluded = "\n".join(f"- {s}" for s in p.get("excluded", [])) or "- none"
@@ -191,6 +232,7 @@ def make_page(p: dict) -> str:
         "```",
         "",
         install_section(p),
+        *params_section(p, configs.get(p["name"], {}).get("config")),
     ]
     if src:
         parts += [
@@ -233,10 +275,11 @@ def make_page(p: dict) -> str:
 def main() -> int:
     pipelines = enrich(load())
     validate(pipelines)
+    configs = load_configs()
     emit_js(pipelines)
     OUT_PAGES.mkdir(parents=True, exist_ok=True)
     for p in pipelines:
-        (OUT_PAGES / f"{p['name']}.md").write_text(make_page(p))
+        (OUT_PAGES / f"{p['name']}.md").write_text(make_page(p, configs))
     print(f"generated: {len(pipelines)} pages + pipelines-data.js")
     return 0
 

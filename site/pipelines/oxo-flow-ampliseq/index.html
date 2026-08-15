@@ -456,6 +456,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#scope" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -579,6 +590,179 @@
 <a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># 2. get this workflow</span>
 <a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/oxo-flow-community/oxo-flow-ampliseq
 </code></pre></div>
+<h2 id="parameters">Parameters</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Parameter</th>
+<th>Default</th>
+<th>Used by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;"><code>FW_primer</code></td>
+<td>``</td>
+<td><code>cutadapt</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>RV_primer</code></td>
+<td>``</td>
+<td><code>cutadapt</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>cutadapt_max_error_rate</code></td>
+<td><code>0.1</code></td>
+<td><code>cutadapt</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>cutadapt_min_overlap</code></td>
+<td><code>3</code></td>
+<td><code>cutadapt</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>dada_addspecies_allowmultiple</code></td>
+<td><code>false</code></td>
+<td><code>dada2_taxonomy</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>dada_assign_chunksize</code></td>
+<td><code>10000</code></td>
+<td><code>dada2_taxonomy</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>dada_assign_taxlevels</code></td>
+<td><code>Domain,Kingdom,Phylum,Class,Order,Family,Genus,Species</code></td>
+<td><code>dada2_taxonomy</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>dada_min_boot</code></td>
+<td><code>50</code></td>
+<td><code>dada2_taxonomy</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>dada_ref_taxonomy</code></td>
+<td><code>sbdi-gtdb=R11-RS232-1</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>dada_ref_taxonomy_citation</code></td>
+<td><code>Lundin D, Andersson A. SBDI Sativa curated 16S GTDB database. FigShare. doi: 10.17044/scilifelab.14869077.v12</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>dada_ref_taxonomy_dbversion</code></td>
+<td><code>SBDI-GTDB-R11-RS232-1 (https://figshare.scilifelab.se/articles/dataset/SBDI_Sativa_curated_16S_GTDB_database/14869077/10)</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>dada_ref_taxonomy_title</code></td>
+<td><code>SBDI-GTDB - Sativa curated 16S GTDB database - Release R11-RS232-1</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>dada_ref_taxonomy_urls</code></td>
+<td><code>https://ndownloader.figshare.com/files/64711203,https://ndownloader.figshare.com/files/64711218</code></td>
+<td><code>download_taxonomy_db</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>dada_taxonomy_rc</code></td>
+<td><code>false</code></td>
+<td><code>dada2_taxonomy</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>max_ee</code></td>
+<td><code>2</code></td>
+<td><code>dada2_filtntrim</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>max_len</code></td>
+<td><code>Inf</code></td>
+<td><code>dada2_filtntrim</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>mergepairs_strategy</code></td>
+<td><code>merge</code></td>
+<td><code>dada2_denoising</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>metadata_file</code></td>
+<td><code>test/fixtures/metadata.tsv</code></td>
+<td><code>qiime2_barplot</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>min_len</code></td>
+<td><code>50</code></td>
+<td><code>dada2_filtntrim</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>quality_type</code></td>
+<td><code>Auto</code></td>
+<td><code>dada2_denoising</code>, <code>dada2_err</code>, <code>dada2_filtntrim</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>run_id</code></td>
+<td><code>1</code></td>
+<td><code>dada2_denoising</code>, <code>dada2_err</code>, <code>dada2_merge</code>, <code>dada2_rmchimera</code>, <code>dada2_stats</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>sample_inference</code></td>
+<td><code>independent</code></td>
+<td><code>dada2_denoising</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>seed</code></td>
+<td><code>100</code></td>
+<td><code>dada2_denoising</code>, <code>dada2_err</code>, <code>dada2_taxonomy</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_barplot</code></td>
+<td><code>false</code></td>
+<td><code>qiime2_barplot</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_dada_taxonomy</code></td>
+<td><code>false</code></td>
+<td><code>dada2_taxonomy</code>, <code>download_taxonomy_db</code>, <code>format_taxonomy</code>, <code>qiime2_barplot</code>, <code>qiime2_intax</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_fastqc</code></td>
+<td><code>false</code></td>
+<td><code>fastqc</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_multiqc</code></td>
+<td><code>false</code></td>
+<td><code>multiqc</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_qiime</code></td>
+<td><code>false</code></td>
+<td><code>qiime2_barplot</code>, <code>qiime2_inasv</code>, <code>qiime2_inseq</code>, <code>qiime2_intax</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_taxonomy</code></td>
+<td><code>false</code></td>
+<td><code>dada2_taxonomy</code>, <code>download_taxonomy_db</code>, <code>format_taxonomy</code>, <code>qiime2_barplot</code>, <code>qiime2_intax</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>trunc_qmin</code></td>
+<td><code>25</code></td>
+<td><code>trunclen_fw</code>, <code>trunclen_rv</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>trunc_rmin</code></td>
+<td><code>0.75</code></td>
+<td><code>trunclen_fw</code>, <code>trunclen_rv</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>truncq</code></td>
+<td><code>2</code></td>
+<td><code>dada2_filtntrim</code></td>
+</tr>
+</tbody>
+</table>
+<p>Derived from the workflow's <code>[config]</code> section — no schema file to maintain.</p>
 <h2 id="scope">Scope</h2>
 <p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
 <p><strong>In scope</strong></p>

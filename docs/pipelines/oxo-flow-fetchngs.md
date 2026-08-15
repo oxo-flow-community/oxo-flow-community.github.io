@@ -46,6 +46,21 @@ tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
 git clone https://github.com/oxo-flow-community/oxo-flow-fetchngs
 ```
 
+## Parameters
+
+| Parameter | Default | Used by |
+|---:|---|---|
+| `download_method` | `ftp` | `sra_fastq_ftp` |
+| `ena_metadata_fields` | `` | `sra_ids_to_runinfo` |
+| `input` | `test/fixtures/ids.txt` | `check_ids` |
+| `nf_core_pipeline` | `` | `sra_to_samplesheet` |
+| `nf_core_rnaseq_strandedness` | `auto` | `sra_to_samplesheet` |
+| `out_dir` | `results` | `check_ids`, `combine_mappings`, `combine_samplesheets`, `multiqc_mappings_config`, `sra_fastq_ftp`, `sra_ids_to_runinfo`, `sra_runinfo_to_ftp`, `sra_to_samplesheet` |
+| `sample_mapping_fields` | `experiment_accession,run_accession,sample_accession,experiment_alias,run_alias,sample_alias,experiment_title,sample_title,sample_description` | `multiqc_mappings_config`, `sra_to_samplesheet` |
+| `skip_fastq_download` | `false` | `combine_mappings`, `combine_samplesheets`, `sra_fastq_ftp`, `sra_to_samplesheet` |
+
+Derived from the workflow's `[config]` section — no schema file to maintain.
+
 ## Scope
 
 The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.

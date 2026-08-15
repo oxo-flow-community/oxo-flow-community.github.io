@@ -49,6 +49,84 @@ tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
 git clone https://github.com/oxo-flow-community/oxo-flow-enrichment
 ```
 
+## Parameters
+
+| Parameter | Default | Used by |
+|---:|---|---|
+| `adjp_cap` | `4` | `visualize_GREAT_Azimuth_2023_ATAC`, `visualize_GREAT_Reactome_ATAC`, `visualize_LOLA_LOLACore_ATAC`, `visualize_ORA_GSEApy_Azimuth_2023_ATAC`, `visualize_ORA_GSEApy_Reactome_ATAC`, `visualize_preranked_GSEApy_Azimuth_2023_RNA`, `visualize_preranked_GSEApy_Reactome_RNA`, `visualize_pycisTarget_hg38_screen_v10clust_ATAC` |
+| `adjp_th_GREAT` | `0.01` | `region_enrichment_analysis_GREAT_Azimuth_2023`, `region_enrichment_analysis_GREAT_Reactome`, `visualize_GREAT_Azimuth_2023_ATAC`, `visualize_GREAT_Reactome_ATAC` |
+| `adjp_th_LOLA` | `0.01` | `visualize_LOLA_LOLACore_ATAC` |
+| `adjp_th_ORA_GSEApy` | `0.05` | `visualize_ORA_GSEApy_Azimuth_2023_ATAC`, `visualize_ORA_GSEApy_Reactome_ATAC` |
+| `adjp_th_preranked_GSEApy` | `0.05` | `visualize_preranked_GSEApy_Azimuth_2023_RNA`, `visualize_preranked_GSEApy_Reactome_RNA` |
+| `adjp_th_pycisTarget` | `5` | `visualize_pycisTarget_hg38_screen_v10clust_ATAC` |
+| `all_region_sets` | `'Bcell_open_regions', 'Ery_open_regions', 'all_regions'` | — |
+| `annotation` | `config/annotation.csv` | — |
+| `background_name` | `all_regions` | `gene_ORA_GSEApy_Azimuth_2023`, `gene_ORA_GSEApy_Reactome`, `region_enrichment_analysis_GREAT_Azimuth_2023`, `region_enrichment_analysis_GREAT_Reactome`, `region_enrichment_analysis_LOLA` |
+| `cluster_summary` | `1` | `visualize_GREAT_Azimuth_2023_ATAC`, `visualize_GREAT_Reactome_ATAC`, `visualize_LOLA_LOLACore_ATAC`, `visualize_ORA_GSEApy_Azimuth_2023_ATAC`, `visualize_ORA_GSEApy_Reactome_ATAC`, `visualize_preranked_GSEApy_Azimuth_2023_RNA`, `visualize_preranked_GSEApy_Reactome_RNA`, `visualize_pycisTarget_hg38_screen_v10clust_ATAC` |
+| `cn_GREAT_adj_pvalue` | `p_adjust_hyper` | `plot_enrichment_result_GREAT_Azimuth_2023`, `plot_enrichment_result_GREAT_Reactome`, `region_enrichment_analysis_GREAT_Azimuth_2023`, `region_enrichment_analysis_GREAT_Reactome`, `visualize_GREAT_Azimuth_2023_ATAC`, `visualize_GREAT_Reactome_ATAC` |
+| `cn_GREAT_effect_size` | `fold_enrichment_hyper` | `plot_enrichment_result_GREAT_Azimuth_2023`, `plot_enrichment_result_GREAT_Reactome`, `visualize_GREAT_Azimuth_2023_ATAC`, `visualize_GREAT_Reactome_ATAC` |
+| `cn_GREAT_overlap` | `observed_region_hits` | `plot_enrichment_result_GREAT_Azimuth_2023`, `plot_enrichment_result_GREAT_Reactome` |
+| `cn_GREAT_p_value` | `p_value_hyper` | `plot_enrichment_result_GREAT_Azimuth_2023`, `plot_enrichment_result_GREAT_Reactome` |
+| `cn_GREAT_term` | `description` | `plot_enrichment_result_GREAT_Azimuth_2023`, `plot_enrichment_result_GREAT_Reactome`, `visualize_GREAT_Azimuth_2023_ATAC`, `visualize_GREAT_Reactome_ATAC` |
+| `cn_GREAT_top_n` | `25` | `plot_enrichment_result_GREAT_Azimuth_2023`, `plot_enrichment_result_GREAT_Reactome` |
+| `cn_LOLA_adj_pvalue` | `qValue` | `plot_enrichment_result_LOLA_LOLACore`, `visualize_LOLA_LOLACore_ATAC` |
+| `cn_LOLA_effect_size` | `oddsRatio` | `plot_enrichment_result_LOLA_LOLACore`, `visualize_LOLA_LOLACore_ATAC` |
+| `cn_LOLA_overlap` | `support` | `plot_enrichment_result_LOLA_LOLACore` |
+| `cn_LOLA_p_value` | `pValue` | `plot_enrichment_result_LOLA_LOLACore` |
+| `cn_LOLA_term` | `description` | `plot_enrichment_result_LOLA_LOLACore`, `visualize_LOLA_LOLACore_ATAC` |
+| `cn_LOLA_top_n` | `25` | `plot_enrichment_result_LOLA_LOLACore` |
+| `cn_ORA_GSEApy_adj_pvalue` | `Adjusted_P_value` | `plot_enrichment_result_ORA_GSEApy_Azimuth_2023`, `plot_enrichment_result_ORA_GSEApy_Reactome`, `visualize_ORA_GSEApy_Azimuth_2023_ATAC`, `visualize_ORA_GSEApy_Reactome_ATAC` |
+| `cn_ORA_GSEApy_effect_size` | `Odds_Ratio` | `plot_enrichment_result_ORA_GSEApy_Azimuth_2023`, `plot_enrichment_result_ORA_GSEApy_Reactome`, `visualize_ORA_GSEApy_Azimuth_2023_ATAC`, `visualize_ORA_GSEApy_Reactome_ATAC` |
+| `cn_ORA_GSEApy_overlap` | `Overlap` | `plot_enrichment_result_ORA_GSEApy_Azimuth_2023`, `plot_enrichment_result_ORA_GSEApy_Reactome` |
+| `cn_ORA_GSEApy_p_value` | `P_value` | `plot_enrichment_result_ORA_GSEApy_Azimuth_2023`, `plot_enrichment_result_ORA_GSEApy_Reactome` |
+| `cn_ORA_GSEApy_term` | `Term` | `plot_enrichment_result_ORA_GSEApy_Azimuth_2023`, `plot_enrichment_result_ORA_GSEApy_Reactome`, `visualize_ORA_GSEApy_Azimuth_2023_ATAC`, `visualize_ORA_GSEApy_Reactome_ATAC` |
+| `cn_ORA_GSEApy_top_n` | `25` | `plot_enrichment_result_ORA_GSEApy_Azimuth_2023`, `plot_enrichment_result_ORA_GSEApy_Reactome` |
+| `cn_preranked_GSEApy_adj_pvalue` | `FDR_q_val` | `plot_enrichment_result_preranked_GSEApy_Azimuth_2023`, `plot_enrichment_result_preranked_GSEApy_Reactome`, `visualize_preranked_GSEApy_Azimuth_2023_RNA`, `visualize_preranked_GSEApy_Reactome_RNA` |
+| `cn_preranked_GSEApy_effect_size` | `NES` | `plot_enrichment_result_preranked_GSEApy_Azimuth_2023`, `plot_enrichment_result_preranked_GSEApy_Reactome`, `visualize_preranked_GSEApy_Azimuth_2023_RNA`, `visualize_preranked_GSEApy_Reactome_RNA` |
+| `cn_preranked_GSEApy_overlap` | `Tag` | `plot_enrichment_result_preranked_GSEApy_Azimuth_2023`, `plot_enrichment_result_preranked_GSEApy_Reactome` |
+| `cn_preranked_GSEApy_p_value` | `NOM_p_val` | `plot_enrichment_result_preranked_GSEApy_Azimuth_2023`, `plot_enrichment_result_preranked_GSEApy_Reactome` |
+| `cn_preranked_GSEApy_term` | `Term` | `plot_enrichment_result_preranked_GSEApy_Azimuth_2023`, `plot_enrichment_result_preranked_GSEApy_Reactome`, `visualize_preranked_GSEApy_Azimuth_2023_RNA`, `visualize_preranked_GSEApy_Reactome_RNA` |
+| `cn_preranked_GSEApy_top_n` | `25` | `plot_enrichment_result_preranked_GSEApy_Azimuth_2023`, `plot_enrichment_result_preranked_GSEApy_Reactome` |
+| `cn_pycisTarget_adj_pvalue` | `NES` | `plot_enrichment_result_pycisTarget_hg38_screen_v10clust`, `visualize_pycisTarget_hg38_screen_v10clust_ATAC` |
+| `cn_pycisTarget_effect_size` | `NES` | `plot_enrichment_result_pycisTarget_hg38_screen_v10clust`, `visualize_pycisTarget_hg38_screen_v10clust_ATAC` |
+| `cn_pycisTarget_overlap` | `Motif_hits` | `plot_enrichment_result_pycisTarget_hg38_screen_v10clust` |
+| `cn_pycisTarget_p_value` | `AUC` | `plot_enrichment_result_pycisTarget_hg38_screen_v10clust` |
+| `cn_pycisTarget_term` | `description` | `plot_enrichment_result_pycisTarget_hg38_screen_v10clust`, `visualize_pycisTarget_hg38_screen_v10clust_ATAC` |
+| `cn_pycisTarget_top_n` | `25` | `plot_enrichment_result_pycisTarget_hg38_screen_v10clust` |
+| `db_Azimuth_2023` | `test/resources/enrichment_analysis/Azimuth_2023.json` | `prepare_databases_Azimuth_2023` |
+| `db_Reactome` | `test/resources/enrichment_analysis/ReactomePathways.gmt` | `prepare_databases_Reactome` |
+| `genome` | `hg38` | `region_enrichment_analysis_GREAT_Azimuth_2023`, `region_enrichment_analysis_GREAT_Reactome`, `region_enrichment_analysis_LOLA`, `region_gene_association_GREAT` |
+| `great_basal_downstream` | `1000` | `region_enrichment_analysis_GREAT_Azimuth_2023`, `region_enrichment_analysis_GREAT_Reactome`, `region_gene_association_GREAT` |
+| `great_basal_upstream` | `5000` | `region_enrichment_analysis_GREAT_Azimuth_2023`, `region_enrichment_analysis_GREAT_Reactome`, `region_gene_association_GREAT` |
+| `great_extension` | `1000000` | `region_enrichment_analysis_GREAT_Azimuth_2023`, `region_enrichment_analysis_GREAT_Reactome`, `region_gene_association_GREAT` |
+| `great_map_associated_regions` | `1` | `region_enrichment_analysis_GREAT_Azimuth_2023`, `region_enrichment_analysis_GREAT_Reactome` |
+| `great_min_gene_set_size` | `0` | `region_enrichment_analysis_GREAT_Azimuth_2023`, `region_enrichment_analysis_GREAT_Reactome`, `region_gene_association_GREAT` |
+| `great_mode` | `basalPlusExt` | `region_enrichment_analysis_GREAT_Azimuth_2023`, `region_enrichment_analysis_GREAT_Reactome`, `region_gene_association_GREAT` |
+| `lola_db_LOLACore` | `test/resources/LOLACore/hg38` | `region_enrichment_analysis_LOLA` |
+| `nes_cap` | `5` | `visualize_preranked_GSEApy_Azimuth_2023_RNA`, `visualize_preranked_GSEApy_Reactome_RNA` |
+| `or_cap` | `5` | `visualize_GREAT_Azimuth_2023_ATAC`, `visualize_GREAT_Reactome_ATAC`, `visualize_LOLA_LOLACore_ATAC`, `visualize_ORA_GSEApy_Azimuth_2023_ATAC`, `visualize_ORA_GSEApy_Reactome_ATAC`, `visualize_pycisTarget_hg38_screen_v10clust_ATAC` |
+| `path_to_motif_annotations` | `test/resources/enrichment_analysis/89_motifs_test.tbl` | `region_motif_enrichment_analysis_pycisTarget` |
+| `project_name` | `Corces_CellTypes` | `annot_export`, `config_export`, `gene_ORA_GSEApy_Azimuth_2023`, `gene_ORA_GSEApy_Reactome`, `gene_preranked_GSEApy_Azimuth_2023`, `gene_preranked_GSEApy_Reactome`, `prepare_databases_Azimuth_2023`, `prepare_databases_Reactome`, `region_enrichment_analysis_GREAT_Azimuth_2023`, `region_enrichment_analysis_GREAT_Reactome`, `region_gene_association_GREAT` |
+| `pycistarget_annotation_version` | `v10nr_clust` | `region_motif_enrichment_analysis_pycisTarget` |
+| `pycistarget_annotations_to_use` | `['Direct_annot', 'Motif_similarity_annot', 'Orthology_annot', 'Motif_similarity_and_Orthology_annot']` | `region_motif_enrichment_analysis_pycisTarget` |
+| `pycistarget_auc_threshold` | `0.005` | `region_motif_enrichment_analysis_pycisTarget` |
+| `pycistarget_db_hg38_screen_v10clust` | `test/resources/enrichment_analysis/600regions_test.regions_vs_motifs.rankings.feather` | `region_motif_enrichment_analysis_pycisTarget` |
+| `pycistarget_fraction_overlap_w_cistarget_database` | `0.4` | `region_motif_enrichment_analysis_pycisTarget` |
+| `pycistarget_motif_similarity_fdr` | `0.001` | `region_motif_enrichment_analysis_pycisTarget` |
+| `pycistarget_nes_threshold` | `3` | `region_motif_enrichment_analysis_pycisTarget` |
+| `pycistarget_orthologous_identity_threshold` | `0` | `region_motif_enrichment_analysis_pycisTarget` |
+| `pycistarget_rank_threshold` | `0.05` | `region_motif_enrichment_analysis_pycisTarget` |
+| `pycistarget_term_col` | `Direct_annot` | `process_results_pycisTarget` |
+| `region_beds` | `test/data/CorcesATAC` | `region_enrichment_analysis_GREAT_Azimuth_2023`, `region_enrichment_analysis_GREAT_Reactome`, `region_enrichment_analysis_LOLA`, `region_gene_association_GREAT`, `region_motif_enrichment_analysis_pycisTarget` |
+| `region_sets` | `'Bcell_open_regions', 'Ery_open_regions'` | — |
+| `result_path` | `test/results/enrichment_analysis` | `aggregate_GREAT_Azimuth_2023_ATAC`, `aggregate_GREAT_Reactome_ATAC`, `aggregate_LOLA_LOLACore_ATAC`, `aggregate_ORA_GSEApy_Azimuth_2023_ATAC`, `aggregate_ORA_GSEApy_Reactome_ATAC`, `aggregate_preranked_GSEApy_Azimuth_2023_RNA`, `aggregate_preranked_GSEApy_Reactome_RNA`, `aggregate_pycisTarget_hg38_screen_v10clust_ATAC`, `annot_export`, `config_export`, `gene_ORA_GSEApy_Azimuth_2023`, `gene_ORA_GSEApy_Reactome`, `gene_preranked_GSEApy_Azimuth_2023`, `gene_preranked_GSEApy_Reactome`, `plot_enrichment_result_GREAT_Azimuth_2023`, `plot_enrichment_result_GREAT_Reactome`, `plot_enrichment_result_LOLA_LOLACore`, `plot_enrichment_result_ORA_GSEApy_Azimuth_2023`, `plot_enrichment_result_ORA_GSEApy_Reactome`, `plot_enrichment_result_preranked_GSEApy_Azimuth_2023`, `plot_enrichment_result_preranked_GSEApy_Reactome`, `plot_enrichment_result_pycisTarget_hg38_screen_v10clust`, `process_results_pycisTarget`, `region_enrichment_analysis_GREAT_Azimuth_2023`, `region_enrichment_analysis_GREAT_Reactome`, `region_enrichment_analysis_LOLA`, `region_gene_association_GREAT`, `region_motif_enrichment_analysis_pycisTarget`, `visualize_GREAT_Azimuth_2023_ATAC`, `visualize_GREAT_Reactome_ATAC`, `visualize_LOLA_LOLACore_ATAC`, `visualize_ORA_GSEApy_Azimuth_2023_ATAC`, `visualize_ORA_GSEApy_Reactome_ATAC`, `visualize_preranked_GSEApy_Azimuth_2023_RNA`, `visualize_preranked_GSEApy_Reactome_RNA`, `visualize_pycisTarget_hg38_screen_v10clust_ATAC` |
+| `rnk_dir` | `test/data/CorcesRNA` | `gene_preranked_GSEApy_Azimuth_2023`, `gene_preranked_GSEApy_Reactome` |
+| `rnk_sets` | `'Bcell_ranked', 'Ery_ranked'` | — |
+| `species` | `homo_sapiens` | `region_motif_enrichment_analysis_pycisTarget` |
+| `top_terms_n` | `5` | `visualize_GREAT_Azimuth_2023_ATAC`, `visualize_GREAT_Reactome_ATAC`, `visualize_LOLA_LOLACore_ATAC`, `visualize_ORA_GSEApy_Azimuth_2023_ATAC`, `visualize_ORA_GSEApy_Reactome_ATAC`, `visualize_preranked_GSEApy_Azimuth_2023_RNA`, `visualize_preranked_GSEApy_Reactome_RNA`, `visualize_pycisTarget_hg38_screen_v10clust_ATAC` |
+
+Derived from the workflow's `[config]` section — no schema file to maintain.
+
 ## Scope
 
 The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.

@@ -49,6 +49,47 @@ tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
 git clone https://github.com/oxo-flow-community/oxo-flow-sarek
 ```
 
+## Parameters
+
+| Parameter | Default | Used by |
+|---:|---|---|
+| `aligner` | `bwa-mem` | — |
+| `annotate_vep` | `true` | `ensemblvep_vep` |
+| `bwa_index_dir` | `/data/references/GRCh38/Sequence/BWAIndex/` | `bwa_mem` |
+| `call_haplotypecaller` | `true` | `bcftools_stats`, `ensemblvep_vep`, `gatk_cnnscorevariants`, `gatk_filtervarianttranches`, `gatk_haplotypecaller`, `vcftools_filter_summary`, `vcftools_tstv_count`, `vcftools_tstv_qual` |
+| `dbsnp` | `/data/references/GRCh38/Annotation/GATKBundle/dbsnp_146.hg38.vcf.gz` | `gatk_baserecalibrator`, `gatk_filtervarianttranches`, `gatk_haplotypecaller` |
+| `dbsnp_tbi` | `/data/references/GRCh38/Annotation/GATKBundle/dbsnp_146.hg38.vcf.gz.tbi` | `gatk_baserecalibrator`, `gatk_filtervarianttranches`, `gatk_haplotypecaller` |
+| `dict` | `/data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.dict` | `gatk_applybqsr`, `gatk_baserecalibrator`, `gatk_cnnscorevariants`, `gatk_filtervarianttranches`, `gatk_haplotypecaller`, `gatk_markduplicates` |
+| `fasta` | `/data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.fasta` | `bwa_mem`, `gatk_applybqsr`, `gatk_baserecalibrator`, `gatk_cnnscorevariants`, `gatk_filtervarianttranches`, `gatk_haplotypecaller`, `gatk_markduplicates`, `mosdepth_md`, `mosdepth_recal`, `samtools_stats_md`, `samtools_stats_recal` |
+| `fasta_fai` | `/data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.fasta.fai` | `gatk_applybqsr`, `gatk_baserecalibrator`, `gatk_cnnscorevariants`, `gatk_filtervarianttranches`, `gatk_haplotypecaller`, `gatk_markduplicates` |
+| `gatk_pcr_indel_model` | `CONSERVATIVE` | `gatk_haplotypecaller` |
+| `genome` | `GRCh38` | — |
+| `joint_germline` | `false` | — |
+| `known_indels` | `'/data/references/GRCh38/Annotation/GATKBundle/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz', '/data/references/GRCh38/Annotation/GATKBundle/Homo_sapiens_assembly38.known_indels.vcf.gz'` | `gatk_baserecalibrator`, `gatk_filtervarianttranches` |
+| `known_indels_tbi` | `'/data/references/GRCh38/Annotation/GATKBundle/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz.tbi', '/data/references/GRCh38/Annotation/GATKBundle/Homo_sapiens_assembly38.known_indels.vcf.gz.tbi'` | `gatk_baserecalibrator`, `gatk_filtervarianttranches` |
+| `lane` | `test_L1` | `bwa_mem`, `fastp`, `fastqc` |
+| `length_required` | `15` | `fastp` |
+| `out_dir` | `results` | `bcftools_stats`, `bwa_mem`, `ensemblvep_vep`, `fastp`, `fastqc`, `gatk_applybqsr`, `gatk_baserecalibrator`, `gatk_cnnscorevariants`, `gatk_filtervarianttranches`, `gatk_haplotypecaller`, `gatk_markduplicates`, `mosdepth_md`, `mosdepth_recal`, `multiqc`, `samtools_index_recal`, `samtools_stats_md`, `samtools_stats_recal`, `vcftools_filter_summary`, `vcftools_tstv_count`, `vcftools_tstv_qual` |
+| `patient` | `test` | `bwa_mem` |
+| `save_output_as_bam` | `false` | — |
+| `seq_platform` | `ILLUMINA` | `bwa_mem` |
+| `sex` | `XX` | — |
+| `skip_bcftools` | `false` | `bcftools_stats` |
+| `skip_fastqc` | `false` | `fastqc` |
+| `skip_mosdepth` | `false` | `mosdepth_md`, `mosdepth_recal` |
+| `skip_multiqc` | `false` | `multiqc` |
+| `skip_samtools` | `false` | `samtools_stats_md`, `samtools_stats_recal` |
+| `skip_vcftools` | `false` | `vcftools_filter_summary`, `vcftools_tstv_count`, `vcftools_tstv_qual` |
+| `split_fastq` | `50000000` | `fastp` |
+| `status` | `0` | — |
+| `trim_fastq` | `false` | `fastp` |
+| `vep_cache_version` | `116` | `ensemblvep_vep` |
+| `vep_genome` | `GRCh38` | `ensemblvep_vep` |
+| `vep_species` | `homo_sapiens` | `ensemblvep_vep` |
+| `wes` | `false` | — |
+
+Derived from the workflow's `[config]` section — no schema file to maintain.
+
 ## Scope
 
 The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.

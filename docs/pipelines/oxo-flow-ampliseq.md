@@ -46,6 +46,45 @@ tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
 git clone https://github.com/oxo-flow-community/oxo-flow-ampliseq
 ```
 
+## Parameters
+
+| Parameter | Default | Used by |
+|---:|---|---|
+| `FW_primer` | `` | `cutadapt` |
+| `RV_primer` | `` | `cutadapt` |
+| `cutadapt_max_error_rate` | `0.1` | `cutadapt` |
+| `cutadapt_min_overlap` | `3` | `cutadapt` |
+| `dada_addspecies_allowmultiple` | `false` | `dada2_taxonomy` |
+| `dada_assign_chunksize` | `10000` | `dada2_taxonomy` |
+| `dada_assign_taxlevels` | `Domain,Kingdom,Phylum,Class,Order,Family,Genus,Species` | `dada2_taxonomy` |
+| `dada_min_boot` | `50` | `dada2_taxonomy` |
+| `dada_ref_taxonomy` | `sbdi-gtdb=R11-RS232-1` | — |
+| `dada_ref_taxonomy_citation` | `Lundin D, Andersson A. SBDI Sativa curated 16S GTDB database. FigShare. doi: 10.17044/scilifelab.14869077.v12` | — |
+| `dada_ref_taxonomy_dbversion` | `SBDI-GTDB-R11-RS232-1 (https://figshare.scilifelab.se/articles/dataset/SBDI_Sativa_curated_16S_GTDB_database/14869077/10)` | — |
+| `dada_ref_taxonomy_title` | `SBDI-GTDB - Sativa curated 16S GTDB database - Release R11-RS232-1` | — |
+| `dada_ref_taxonomy_urls` | `https://ndownloader.figshare.com/files/64711203,https://ndownloader.figshare.com/files/64711218` | `download_taxonomy_db` |
+| `dada_taxonomy_rc` | `false` | `dada2_taxonomy` |
+| `max_ee` | `2` | `dada2_filtntrim` |
+| `max_len` | `Inf` | `dada2_filtntrim` |
+| `mergepairs_strategy` | `merge` | `dada2_denoising` |
+| `metadata_file` | `test/fixtures/metadata.tsv` | `qiime2_barplot` |
+| `min_len` | `50` | `dada2_filtntrim` |
+| `quality_type` | `Auto` | `dada2_denoising`, `dada2_err`, `dada2_filtntrim` |
+| `run_id` | `1` | `dada2_denoising`, `dada2_err`, `dada2_merge`, `dada2_rmchimera`, `dada2_stats` |
+| `sample_inference` | `independent` | `dada2_denoising` |
+| `seed` | `100` | `dada2_denoising`, `dada2_err`, `dada2_taxonomy` |
+| `skip_barplot` | `false` | `qiime2_barplot` |
+| `skip_dada_taxonomy` | `false` | `dada2_taxonomy`, `download_taxonomy_db`, `format_taxonomy`, `qiime2_barplot`, `qiime2_intax` |
+| `skip_fastqc` | `false` | `fastqc` |
+| `skip_multiqc` | `false` | `multiqc` |
+| `skip_qiime` | `false` | `qiime2_barplot`, `qiime2_inasv`, `qiime2_inseq`, `qiime2_intax` |
+| `skip_taxonomy` | `false` | `dada2_taxonomy`, `download_taxonomy_db`, `format_taxonomy`, `qiime2_barplot`, `qiime2_intax` |
+| `trunc_qmin` | `25` | `trunclen_fw`, `trunclen_rv` |
+| `trunc_rmin` | `0.75` | `trunclen_fw`, `trunclen_rv` |
+| `truncq` | `2` | `dada2_filtntrim` |
+
+Derived from the workflow's `[config]` section — no schema file to maintain.
+
 ## Scope
 
 The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.

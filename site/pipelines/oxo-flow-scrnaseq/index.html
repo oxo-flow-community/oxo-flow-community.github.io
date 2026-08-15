@@ -456,6 +456,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#scope" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -580,6 +591,139 @@
 <a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># 2. get this workflow</span>
 <a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/oxo-flow-community/oxo-flow-scrnaseq
 </code></pre></div>
+<h2 id="parameters">Parameters</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Parameter</th>
+<th>Default</th>
+<th>Used by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;"><code>aligner</code></td>
+<td><code>cellranger</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>build_cellranger_index</code></td>
+<td><code>true</code></td>
+<td><code>cellranger_mkgtf</code>, <code>cellranger_mkref</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>expected_cells</code></td>
+<td>``</td>
+<td><code>cellranger_count</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>fasta</code></td>
+<td><code>refs/refdata.fa.gz</code></td>
+<td><code>gunzip_fasta</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>fasta_gz</code></td>
+<td><code>true</code></td>
+<td><code>gunzip_fasta</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>fasta_prepared</code></td>
+<td><code>refs/refdata.fa</code></td>
+<td><code>cellranger_mkref</code>, <code>gtf_gene_filter</code>, <code>gunzip_fasta</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>gtf</code></td>
+<td><code>refs/refdata.gtf.gz</code></td>
+<td><code>gunzip_gtf</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>gtf_filtered</code></td>
+<td><code>refs/refdata_genes.gtf</code></td>
+<td><code>gtf_gene_filter</code>, <code>gtf_source_fix</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>gtf_gz</code></td>
+<td><code>true</code></td>
+<td><code>gunzip_gtf</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>gtf_mkgtf</code></td>
+<td><code>refs/refdata_genes.filtered.gtf</code></td>
+<td><code>cellranger_mkgtf</code>, <code>cellranger_mkref</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>gtf_mkgtf_input</code></td>
+<td><code>refs/refdata_genes.gtf</code></td>
+<td><code>cellranger_mkgtf</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>gtf_prepared</code></td>
+<td><code>refs/refdata.gtf</code></td>
+<td><code>gtf_gene_filter</code>, <code>gunzip_gtf</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>gtf_source_fix</code></td>
+<td><code>false</code></td>
+<td><code>gtf_source_fix</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>gtf_source_fixed</code></td>
+<td><code>refs/refdata_genes.source_fixed.gtf</code></td>
+<td><code>gtf_source_fix</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>multiqc_config</code></td>
+<td><code>assets/multiqc_config.yml</code></td>
+<td><code>multiqc</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>multiqc_title</code></td>
+<td>``</td>
+<td><code>multiqc</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>out_dir</code></td>
+<td><code>results</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>protocol</code></td>
+<td><code>auto</code></td>
+<td><code>cellranger_count</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>samplesheet</code></td>
+<td><code>samplesheet.csv</code></td>
+<td><code>concat_h5ad_cellbender_filter</code>, <code>concat_h5ad_filtered</code>, <code>concat_h5ad_raw</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>save_align_intermeds</code></td>
+<td><code>true</code></td>
+<td><code>cellranger_count</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_cellbender</code></td>
+<td><code>false</code></td>
+<td><code>anndata_barcodes</code>, <code>anndatar_convert_cellbender_filter</code>, <code>anndatar_convert_combined_cellbender_filter</code>, <code>anndatar_convert_combined_raw</code>, <code>anndatar_convert_raw</code>, <code>cellbender_removebackground</code>, <code>concat_h5ad_cellbender_filter</code>, <code>concat_h5ad_raw</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_fastqc</code></td>
+<td><code>false</code></td>
+<td><code>fastqc</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_multiqc</code></td>
+<td><code>false</code></td>
+<td><code>multiqc</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>transcriptome</code></td>
+<td><code>refs/cellranger_reference</code></td>
+<td><code>cellranger_count</code>, <code>cellranger_mkref</code></td>
+</tr>
+</tbody>
+</table>
+<p>Derived from the workflow's <code>[config]</code> section — no schema file to maintain.</p>
 <h2 id="scope">Scope</h2>
 <p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
 <p><strong>In scope</strong></p>

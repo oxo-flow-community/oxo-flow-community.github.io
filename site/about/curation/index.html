@@ -402,6 +402,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#machine-derived-content" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Machine-derived content
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -550,6 +561,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#machine-derived-content" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Machine-derived content
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -641,6 +663,27 @@ To list a workflow that lives <strong>in your own repository</strong>:</p>
 <p>Workflows the community team maintains directly live in the
 <a href="https://github.com/oxo-flow-community">oxo-flow-community organization</a>
 under the same layout and criteria.</p>
+<h2 id="machine-derived-content">Machine-derived content</h2>
+<p>Two parts of every workflow page are not hand-written — they are derived from
+the workflow file itself with <code>oxo-flow info</code>, so they cannot drift from the
+code:</p>
+<ul>
+<li><strong>Parameters table.</strong> Every run-notes page lists the workflow's <code>[config]</code>
+  section: parameter, default value, and the rules that use it. A <code>—</code> in the
+  <em>Used by</em> column means the key is defined but not wired into any rule — a
+  documented knob kept for fidelity with the source pipeline. No schema file
+  to maintain.</li>
+<li><strong>Metadata cross-checks.</strong> <code>rule_count</code>, tools, resources, and environments
+  are derived the same way and diffed against the hand-maintained registry
+  entry when a workflow is listed or reviewed.</li>
+</ul>
+<p>The derived data is committed as <code>data/configs.json</code> in the site repository
+and regenerated locally (never in CI) with:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>scripts/regen-configs.py<span class="w">    </span><span class="c1"># reads the staged clones, writes data/configs.json</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>scripts/generate.py<span class="w">         </span><span class="c1"># regenerates the run-notes pages (CI checks for drift)</span>
+</code></pre></div>
+<p>Run both whenever a staged workflow changes and commit the result — site CI
+only builds MkDocs and never downloads the engine.</p>
 
 
 

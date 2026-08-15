@@ -456,6 +456,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#scope" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -579,6 +590,59 @@
 <a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># 2. get this workflow</span>
 <a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/oxo-flow-community/oxo-flow-fetchngs
 </code></pre></div>
+<h2 id="parameters">Parameters</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Parameter</th>
+<th>Default</th>
+<th>Used by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;"><code>download_method</code></td>
+<td><code>ftp</code></td>
+<td><code>sra_fastq_ftp</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>ena_metadata_fields</code></td>
+<td>``</td>
+<td><code>sra_ids_to_runinfo</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>input</code></td>
+<td><code>test/fixtures/ids.txt</code></td>
+<td><code>check_ids</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>nf_core_pipeline</code></td>
+<td>``</td>
+<td><code>sra_to_samplesheet</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>nf_core_rnaseq_strandedness</code></td>
+<td><code>auto</code></td>
+<td><code>sra_to_samplesheet</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>out_dir</code></td>
+<td><code>results</code></td>
+<td><code>check_ids</code>, <code>combine_mappings</code>, <code>combine_samplesheets</code>, <code>multiqc_mappings_config</code>, <code>sra_fastq_ftp</code>, <code>sra_ids_to_runinfo</code>, <code>sra_runinfo_to_ftp</code>, <code>sra_to_samplesheet</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>sample_mapping_fields</code></td>
+<td><code>experiment_accession,run_accession,sample_accession,experiment_alias,run_alias,sample_alias,experiment_title,sample_title,sample_description</code></td>
+<td><code>multiqc_mappings_config</code>, <code>sra_to_samplesheet</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_fastq_download</code></td>
+<td><code>false</code></td>
+<td><code>combine_mappings</code>, <code>combine_samplesheets</code>, <code>sra_fastq_ftp</code>, <code>sra_to_samplesheet</code></td>
+</tr>
+</tbody>
+</table>
+<p>Derived from the workflow's <code>[config]</code> section — no schema file to maintain.</p>
 <h2 id="scope">Scope</h2>
 <p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
 <p><strong>In scope</strong></p>

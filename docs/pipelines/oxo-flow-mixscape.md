@@ -45,6 +45,36 @@ tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
 git clone https://github.com/oxo-flow-community/oxo-flow-mixscape
 ```
 
+## Parameters
+
+| Parameter | Default | Used by |
+|---:|---|---|
+| `annotation` | `test/fixtures/annotation.csv` | `annot_export`, `config_export` |
+| `antibody_capture` | `AB` | `config_export`, `visualize` |
+| `assay` | `SCT` | `config_export`, `lda`, `mixscape` |
+| `cps_split_by_col` | `` | `config_export`, `mixscape`, `visualize` |
+| `data_dir` | `test/fixtures/data` | `mixscape` |
+| `fine_mode` | `FALSE` | `config_export`, `mixscape` |
+| `gene_col` | `KOcall` | `config_export`, `lda`, `mixscape`, `visualize` |
+| `grna_col` | `gRNAcall` | `config_export`, `mixscape` |
+| `grna_split_symbol` | `-` | `config_export`, `mixscape` |
+| `lda_npcs` | `10` | `config_export`, `lda`, `mixscape` |
+| `lfc_th` | `0.1` | `config_export`, `lda`, `mixscape` |
+| `mem` | `32000` | `config_export` |
+| `min_cells` | `5` | `config_export`, `mixscape` |
+| `min_de_genes` | `5` | `config_export`, `mixscape` |
+| `mixscape_split_by_col` | `` | `config_export`, `mixscape`, `visualize` |
+| `n_neighbors` | `30` | `config_export`, `mixscape` |
+| `ndims` | `40` | `config_export`, `mixscape` |
+| `nt_term` | `NonTargeting` | `config_export`, `lda`, `mixscape`, `visualize` |
+| `project_name` | `myCROPseq` | `annot_export`, `config_export` |
+| `prtb_type` | `KO` | `config_export`, `lda`, `mixscape`, `visualize` |
+| `result_path` | `results` | `annot_export`, `config_export`, `env_export_lda`, `env_export_mixscape`, `lda`, `mixscape`, `visualize` |
+| `threads` | `1` | `config_export` |
+| `variable_features_only` | `0` | `config_export`, `mixscape` |
+
+Derived from the workflow's `[config]` section — no schema file to maintain.
+
 ## Scope
 
 The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.

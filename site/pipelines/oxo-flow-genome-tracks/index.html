@@ -456,6 +456,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#scope" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -581,6 +592,89 @@
 <a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># 2. get this workflow</span>
 <a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/oxo-flow-community/oxo-flow-genome-tracks
 </code></pre></div>
+<h2 id="parameters">Parameters</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Parameter</th>
+<th>Default</th>
+<th>Used by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;"><code>bamCoverage_parameters</code></td>
+<td><code>-p max --binSize 10  --normalizeUsing RPGC --effectiveGenomeSize 2407883318</code></td>
+<td><code>coverage</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>bam_dir</code></td>
+<td><code>test/fixtures/bams</code></td>
+<td><code>merge_bams</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>base_buffer</code></td>
+<td><code>2000</code></td>
+<td><code>annotate_genes</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>email</code></td>
+<td><code>sreichl@cemm.at</code></td>
+<td><code>ucsc_hub</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>file_type</code></td>
+<td><code>pdf</code></td>
+<td><code>plot_tracks</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>gene_list</code></td>
+<td><code>test/fixtures/genes.csv</code></td>
+<td><code>annotate_genes</code>, <code>gene_list_export</code>, <code>plot_tracks</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>genome</code></td>
+<td><code>mm10</code></td>
+<td><code>ucsc_hub</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>genome_bed</code></td>
+<td><code>test/fixtures/genome_bed/ref.bed.gz</code></td>
+<td><code>annotate_genes</code>, <code>plot_tracks</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>project_name</code></td>
+<td><code>myData</code></td>
+<td><code>annot_export</code>, <code>config_export</code>, <code>ucsc_hub</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>result_path</code></td>
+<td><code>results</code></td>
+<td><code>annot_export</code>, <code>annotate_genes</code>, <code>config_export</code>, <code>coverage</code>, <code>gene_list_export</code>, <code>merge_bams</code>, <code>plot_tracks</code>, <code>ucsc_hub</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>sample_annotation</code></td>
+<td><code>test/fixtures/annotation.csv</code></td>
+<td><code>annot_export</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>track_colors</code></td>
+<td><code>untreated=#800080,treated=#00FFFF</code></td>
+<td><code>plot_tracks</code>, <code>ucsc_hub</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>width</code></td>
+<td><code>20</code></td>
+<td><code>plot_tracks</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>x_axis</code></td>
+<td><code>bottom</code></td>
+<td><code>plot_tracks</code></td>
+</tr>
+</tbody>
+</table>
+<p>Derived from the workflow's <code>[config]</code> section — no schema file to maintain.</p>
 <h2 id="scope">Scope</h2>
 <p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
 <p><strong>In scope</strong></p>

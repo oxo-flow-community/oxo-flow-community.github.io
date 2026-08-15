@@ -46,6 +46,52 @@ tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
 git clone https://github.com/oxo-flow-community/oxo-flow-methylseq
 ```
 
+## Parameters
+
+| Parameter | Default | Used by |
+|---:|---|---|
+| `accel` | `false` | `trimgalore` |
+| `aligner` | `bismark` | — |
+| `clip_r1` | `0` | `trimgalore` |
+| `clip_r2` | `0` | `trimgalore` |
+| `comprehensive` | `false` | `bismark_methylationextractor` |
+| `cytosine_report` | `false` | `bismark_coverage2cytosine` |
+| `em_seq` | `false` | `bismark_align`, `trimgalore` |
+| `fasta` | `test/fixtures/refs/genome.fa` | `bismark_genomepreparation` |
+| `ignore_3prime_r1` | `0` | `bismark_methylationextractor` |
+| `ignore_3prime_r2` | `2` | `bismark_methylationextractor` |
+| `ignore_r1` | `0` | `bismark_methylationextractor` |
+| `ignore_r2` | `2` | `bismark_methylationextractor` |
+| `length_trim` | `0` | `trimgalore` |
+| `local_alignment` | `false` | `bismark_align` |
+| `maxins` | `` | `bismark_align` |
+| `meth_cutoff` | `` | `bismark_methylationextractor` |
+| `minins` | `` | `bismark_align` |
+| `multiqc_title` | `` | `multiqc` |
+| `nextseq_trim` | `0` | `trimgalore` |
+| `no_overlap` | `true` | `bismark_methylationextractor` |
+| `nomeseq` | `false` | `bismark_coverage2cytosine`, `bismark_methylationextractor` |
+| `non_directional` | `false` | `bismark_align` |
+| `num_mismatches` | `0.6` | `bismark_align` |
+| `out_dir` | `results` | `bismark_align`, `bismark_coverage2cytosine`, `bismark_deduplicate`, `bismark_methylationextractor`, `bismark_report`, `bismark_summary`, `fastqc`, `multiqc`, `multiqc_versions`, `samtools_index`, `samtools_sort`, `trimgalore` |
+| `pbat` | `false` | `bismark_align`, `trimgalore` |
+| `raw_dir` | `test/fixtures/raw` | `fastqc`, `trimgalore` |
+| `relax_mismatches` | `false` | `bismark_align` |
+| `rrbs` | `false` | `bismark_deduplicate`, `trimgalore` |
+| `single_cell` | `false` | `bismark_align`, `trimgalore` |
+| `skip_deduplication` | `false` | `bismark_deduplicate` |
+| `skip_fastqc` | `false` | `fastqc` |
+| `skip_multiqc` | `false` | `multiqc` |
+| `skip_trimming` | `false` | `trimgalore` |
+| `skip_trimming_presets` | `false` | `trimgalore` |
+| `slamseq` | `false` | — |
+| `three_prime_clip_r1` | `0` | `trimgalore` |
+| `three_prime_clip_r2` | `0` | `trimgalore` |
+| `unmapped` | `false` | `bismark_align` |
+| `zymo` | `false` | `bismark_align`, `trimgalore` |
+
+Derived from the workflow's `[config]` section — no schema file to maintain.
+
 ## Scope
 
 The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.

@@ -47,6 +47,29 @@ tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
 git clone https://github.com/oxo-flow-community/oxo-flow-bgcflow
 ```
 
+## Parameters
+
+| Parameter | Default | Used by |
+|---:|---|---|
+| `antismash_db_path` | `resources/antismash_db` | `antismash`, `antismash_db_setup` |
+| `antismash_major` | `7` | — |
+| `antismash_taxon` | `bacteria` | `antismash` |
+| `antismash_version` | `7.1.0` | `antismash`, `antismash_overview`, `antismash_overview_gather`, `antismash_summary`, `bgc_count`, `copy_antismash`, `copy_log_changes`, `csv_to_parquet`, `downstream_bgc_prep` |
+| `bgc_dataset` | `data/interim/bgcs/datasets.tsv` | `downstream_bgc_prep` |
+| `bgcflow_version` | `1.1.2` | `format_gbk` |
+| `gtdb_api_base` | `https://gtdb-api.ecogenomic.org` | `gtdb_prep` |
+| `gtdb_offline` | `False` | `gtdb_prep` |
+| `gtdb_release` | `220.0` | `gtdb_prep` |
+| `gtdb_release_major` | `220` | `gtdb_prep` |
+| `gtdb_release_version` | `r220` | — |
+| `gtdb_tax_paths` | `[]` | `gtdb_prep` |
+| `input_type` | `fna` | — |
+| `mibig_version` | `3.1` | `get_mibig_table` |
+| `project` | `genomes` | `antismash_overview_gather`, `antismash_summary`, `copy_log_changes`, `copy_mibig_table`, `csv_to_parquet`, `downstream_bgc_prep`, `fix_gtdb_taxonomy` |
+| `raw_dir` | `test/fixtures/raw` | `copy_custom_fasta` |
+
+Derived from the workflow's `[config]` section — no schema file to maintain.
+
 ## Scope
 
 The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.

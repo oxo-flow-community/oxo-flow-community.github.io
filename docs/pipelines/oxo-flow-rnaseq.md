@@ -50,6 +50,43 @@ tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
 git clone https://github.com/oxo-flow-community/oxo-flow-rnaseq
 ```
 
+## Parameters
+
+| Parameter | Default | Used by |
+|---:|---|---|
+| `aligner` | `star_salmon` | — |
+| `chrom_sizes` | `test/fixtures/reference/chrom_sizes.txt` | `bigwig::bedclip_combined`, `bigwig::bedclip_fw`, `bigwig::bedclip_rev`, `bigwig::bigwig_combined`, `bigwig::bigwig_fw`, `bigwig::bigwig_rev` |
+| `deseq2_vst` | `true` | `quantification::deseq2_qc` |
+| `extra_fqlint_args` | `--disable-validator P001` | `fastq_qc::fq_lint_raw`, `fastq_qc::fq_lint_trimmed` |
+| `fasta` | `test/fixtures/reference/genome.fa` | `alignment::picard_markduplicates`, `alignment::samtools_sort`, `alignment::samtools_stats_markdup`, `alignment::samtools_stats_sorted`, `bam_qc::samtools_sort_qualimap` |
+| `featurecounts_feature_type` | `exon` | `bam_qc::featurecounts` |
+| `featurecounts_group_type` | `gene_biotype` | `bam_qc::featurecounts` |
+| `gene_bed` | `test/fixtures/reference/gene.bed` | `bam_qc::rseqc_infer_experiment`, `bam_qc::rseqc_inner_distance`, `bam_qc::rseqc_junction_annotation`, `bam_qc::rseqc_junction_saturation`, `bam_qc::rseqc_read_distribution` |
+| `gtf` | `test/fixtures/reference/genes.gtf` | `alignment::star_align`, `bam_qc::dupradar`, `bam_qc::featurecounts`, `bam_qc::qualimap_rnaseq`, `quantification::salmon_quant`, `quantification::stringtie`, `quantification::tx2gene` |
+| `min_mapped_reads` | `5` | `multiqc_custom_content` |
+| `min_trimmed_reads` | `10000` | `multiqc_custom_content` |
+| `out_dir` | `results` | `alignment::picard_markduplicates`, `alignment::samtools_flagstat_markdup`, `alignment::samtools_flagstat_sorted`, `alignment::samtools_idxstats_markdup`, `alignment::samtools_idxstats_sorted`, `alignment::samtools_index_markdup`, `alignment::samtools_index_sorted`, `alignment::samtools_sort`, `alignment::samtools_stats_markdup`, `alignment::samtools_stats_sorted`, `alignment::star_align`, `bam_qc::biotype_multiqc`, `bam_qc::dupradar`, `bam_qc::featurecounts`, `bam_qc::qualimap_rnaseq`, `bam_qc::rseqc_bam_stat`, `bam_qc::rseqc_infer_experiment`, `bam_qc::rseqc_inner_distance`, `bam_qc::rseqc_junction_annotation`, `bam_qc::rseqc_junction_saturation`, `bam_qc::rseqc_read_distribution`, `bam_qc::rseqc_read_duplication`, `bam_qc::samtools_sort_qualimap`, `bigwig::bedclip_combined`, `bigwig::bedclip_fw`, `bigwig::bedclip_rev`, `bigwig::bigwig_combined`, `bigwig::bigwig_fw`, `bigwig::bigwig_rev`, `bigwig::genomecov_combined`, `bigwig::genomecov_fw`, `bigwig::genomecov_rev`, `fastq_qc::fastqc_raw`, `fastq_qc::fq_lint_raw`, `fastq_qc::fq_lint_trimmed`, `fastq_qc::trimgalore`, `multiqc`, `multiqc_custom_content`, `quantification::deseq2_qc`, `quantification::salmon_quant`, `quantification::stringtie`, `quantification::summarizedexperiment`, `quantification::tx2gene`, `quantification::tximport` |
+| `reads_dir` | `test/fixtures/raw` | `fastq_qc::fastqc_raw`, `fastq_qc::fq_lint_raw`, `fastq_qc::trimgalore`, `multiqc_custom_content` |
+| `salmon_quant_libtype` | `` | `quantification::salmon_quant` |
+| `save_align_intermeds` | `false` | — |
+| `save_trimmed` | `false` | — |
+| `skip_bigwig` | `false` | `bigwig::bedclip_combined`, `bigwig::bedclip_fw`, `bigwig::bedclip_rev`, `bigwig::bigwig_combined`, `bigwig::bigwig_fw`, `bigwig::bigwig_rev`, `bigwig::genomecov_combined`, `bigwig::genomecov_fw`, `bigwig::genomecov_rev` |
+| `skip_deseq2_qc` | `false` | `quantification::deseq2_qc` |
+| `skip_fastqc` | `false` | `fastq_qc::fastqc_raw` |
+| `skip_linting` | `false` | `fastq_qc::fq_lint_raw`, `fastq_qc::fq_lint_trimmed` |
+| `skip_markduplicates` | `false` | `alignment::picard_markduplicates`, `alignment::samtools_flagstat_markdup`, `alignment::samtools_idxstats_markdup`, `alignment::samtools_index_markdup`, `alignment::samtools_stats_markdup` |
+| `skip_qc` | `false` | `bam_qc::biotype_multiqc`, `bam_qc::dupradar`, `bam_qc::featurecounts`, `bam_qc::qualimap_rnaseq`, `bam_qc::rseqc_bam_stat`, `bam_qc::rseqc_infer_experiment`, `bam_qc::rseqc_inner_distance`, `bam_qc::rseqc_junction_annotation`, `bam_qc::rseqc_junction_saturation`, `bam_qc::rseqc_read_distribution`, `bam_qc::rseqc_read_duplication`, `bam_qc::samtools_sort_qualimap`, `quantification::deseq2_qc` |
+| `skip_quantification_merge` | `false` | `quantification::deseq2_qc`, `quantification::summarizedexperiment`, `quantification::tximport` |
+| `skip_stringtie` | `false` | `quantification::stringtie` |
+| `skip_trimming` | `false` | `fastq_qc::trimgalore` |
+| `star_index` | `test/fixtures/reference/star_index` | `alignment::star_align` |
+| `stranded_threshold` | `0.8` | `multiqc_custom_content` |
+| `strandedness` | `unstranded` | `bam_qc::dupradar`, `bam_qc::featurecounts`, `bam_qc::qualimap_rnaseq`, `bigwig::bedclip_fw`, `bigwig::bedclip_rev`, `bigwig::bigwig_fw`, `bigwig::bigwig_rev`, `bigwig::genomecov_fw`, `bigwig::genomecov_rev`, `multiqc_custom_content`, `quantification::salmon_quant`, `quantification::stringtie` |
+| `transcript_fasta` | `test/fixtures/reference/transcripts.fa` | `quantification::salmon_quant` |
+| `unstranded_threshold` | `0.1` | `multiqc_custom_content` |
+
+Derived from the workflow's `[config]` section — no schema file to maintain.
+
 ## Scope
 
 The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.

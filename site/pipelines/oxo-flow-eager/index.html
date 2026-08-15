@@ -456,6 +456,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#scope" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -580,6 +591,284 @@
 <a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># 2. get this workflow</span>
 <a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/oxo-flow-community/oxo-flow-eager
 </code></pre></div>
+<h2 id="parameters">Parameters</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Parameter</th>
+<th>Default</th>
+<th>Used by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;"><code>bwaalnk</code></td>
+<td><code>2</code></td>
+<td><code>bwa_aln</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>bwaalnl</code></td>
+<td><code>1024</code></td>
+<td><code>bwa_aln</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>bwaalnn</code></td>
+<td><code>0.01</code></td>
+<td><code>bwa_aln</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>bwaalno</code></td>
+<td><code>2</code></td>
+<td><code>bwa_aln</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>clip_forward_adaptor</code></td>
+<td><code>AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC</code></td>
+<td><code>adapter_removal</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>clip_min_read_quality</code></td>
+<td><code>20</code></td>
+<td><code>adapter_removal</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>clip_readlength</code></td>
+<td><code>30</code></td>
+<td><code>adapter_removal</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>clip_reverse_adaptor</code></td>
+<td><code>AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTA</code></td>
+<td><code>adapter_removal</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>colour_chemistry</code></td>
+<td><code>4</code></td>
+<td><code>fastp</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>complexity_filter_poly_g</code></td>
+<td><code>false</code></td>
+<td><code>fastp</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>complexity_filter_poly_g_min</code></td>
+<td><code>10</code></td>
+<td><code>fastp</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>damage_calculation_tool</code></td>
+<td><code>damageprofiler</code></td>
+<td><code>damageprofiler</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>damageprofiler_length</code></td>
+<td><code>100</code></td>
+<td><code>damageprofiler</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>damageprofiler_threshold</code></td>
+<td><code>15</code></td>
+<td><code>damageprofiler</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>damageprofiler_yaxis</code></td>
+<td><code>0.30</code></td>
+<td><code>damageprofiler</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>dedup_all_merged</code></td>
+<td><code>false</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>dedupper</code></td>
+<td><code>markduplicates</code></td>
+<td><code>dedup</code>, <code>markduplicates</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>fasta</code></td>
+<td><code>test/fixtures/reference/genome.fa</code></td>
+<td><code>make_bwa_index</code>, <code>make_fasta_index</code>, <code>make_seq_dict</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>genotyping_source</code></td>
+<td><code>raw</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>genotyping_tool</code></td>
+<td>``</td>
+<td><code>eigenstrat_snp_coverage</code>, <code>genotyping_pileupcaller</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>lane</code></td>
+<td><code>0</code></td>
+<td><code>adapter_removal</code>, <code>bwa_aln</code>, <code>fastp</code>, <code>fastqc_after_clipping</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>large_ref</code></td>
+<td><code>false</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>mapper</code></td>
+<td><code>bwaaln</code></td>
+<td><code>bwa_aln</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>mergedonly</code></td>
+<td><code>false</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>min_adap_overlap</code></td>
+<td><code>1</code></td>
+<td><code>adapter_removal</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>out_dir</code></td>
+<td><code>results</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>pileupcaller_bedfile</code></td>
+<td>``</td>
+<td><code>genotyping_pileupcaller</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>pileupcaller_method</code></td>
+<td><code>randomHaploid</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>pileupcaller_min_base_quality</code></td>
+<td><code>30</code></td>
+<td><code>genotyping_pileupcaller</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>pileupcaller_min_map_quality</code></td>
+<td><code>30</code></td>
+<td><code>genotyping_pileupcaller</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>pileupcaller_snpfile</code></td>
+<td>``</td>
+<td><code>genotyping_pileupcaller</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>pileupcaller_transitions_mode</code></td>
+<td><code>AllSites</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>preseq_bootstrap</code></td>
+<td><code>100</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>preseq_cval</code></td>
+<td><code>0.95</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>preseq_maxextrap</code></td>
+<td><code>10000000000</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>preseq_mode</code></td>
+<td><code>c_curve</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>preseq_step_size</code></td>
+<td><code>1000</code></td>
+<td><code>preseq</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>preseq_terms</code></td>
+<td><code>100</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>preserve5p</code></td>
+<td><code>false</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>qualitymax</code></td>
+<td><code>41</code></td>
+<td><code>adapter_removal</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>run_genotyping</code></td>
+<td><code>false</code></td>
+<td><code>eigenstrat_snp_coverage</code>, <code>genotyping_pileupcaller</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>save_reference</code></td>
+<td><code>false</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>seqtype</code></td>
+<td><code>PE</code></td>
+<td><code>bwa_aln</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>single_end</code></td>
+<td><code>false</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_adapterremoval</code></td>
+<td><code>false</code></td>
+<td><code>adapter_removal</code>, <code>fastqc_after_clipping</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_collapse</code></td>
+<td><code>false</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_damage_calculation</code></td>
+<td><code>false</code></td>
+<td><code>damageprofiler</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_deduplication</code></td>
+<td><code>false</code></td>
+<td><code>dedup</code>, <code>markduplicates</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_fastqc</code></td>
+<td><code>false</code></td>
+<td><code>fastqc</code>, <code>fastqc_after_clipping</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_preseq</code></td>
+<td><code>false</code></td>
+<td><code>preseq</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_qualimap</code></td>
+<td><code>false</code></td>
+<td><code>qualimap</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_trim</code></td>
+<td><code>false</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>udg_type</code></td>
+<td><code>none</code></td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>Derived from the workflow's <code>[config]</code> section — no schema file to maintain.</p>
 <h2 id="scope">Scope</h2>
 <p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
 <p><strong>In scope</strong></p>

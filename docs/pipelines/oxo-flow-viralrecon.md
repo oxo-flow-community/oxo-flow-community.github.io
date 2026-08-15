@@ -49,6 +49,75 @@ tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
 git clone https://github.com/oxo-flow-community/oxo-flow-viralrecon
 ```
 
+## Parameters
+
+| Parameter | Default | Used by |
+|---:|---|---|
+| `assemblers` | `spades` | — |
+| `consensus_caller` | `bcftools` | `consensus_call`, `consensus_filter` |
+| `fasta` | `reference/genome.fa` | `gunzip_fasta` |
+| `fasta_ends_gz` | `false` | `gunzip_fasta` |
+| `freyja_barcodes` | `test/fixtures/refs/freyja_barcodes.csv` | `freyja_boot`, `freyja_demix` |
+| `freyja_depthcutoff` | `0` | `freyja_boot`, `freyja_demix` |
+| `freyja_lineages` | `test/fixtures/refs/freyja_lineages.csv` | `freyja_boot`, `freyja_demix` |
+| `freyja_repeats` | `100` | `freyja_boot` |
+| `gff` | `reference/genome.gff` | `gunzip_gff` |
+| `gff_ends_gz` | `false` | `gunzip_gff` |
+| `ivar_trim_noprimer` | `false` | `ivar_trim` |
+| `ivar_trim_offset` | `` | `ivar_trim` |
+| `kraken2_assembly_host_filter` | `true` | `assembly_fastq` |
+| `kraken2_db` | `reference/kraken2_db.tar.gz` | `untar_kraken2_db` |
+| `kraken2_variants_host_filter` | `false` | — |
+| `min_contig_length` | `200` | `blast_assembly` |
+| `min_mapped_reads` | `1000` | — |
+| `min_perc_contig_aligned` | `0.7` | `blast_assembly` |
+| `multiqc_title` | `` | `multiqc` |
+| `nextclade_dataset` | `` | `get_nextclade_dataset` |
+| `nextclade_dataset_name` | `sars-cov-2` | `get_nextclade_dataset` |
+| `nextclade_dataset_tag` | `2024-10-17--16-48-48Z` | `get_nextclade_dataset` |
+| `out_dir` | `results` | `fastqc_primers`, `fastqc_raw`, `fastqc_trim`, `multiqc` |
+| `pango_database` | `test/fixtures/refs/pangolin_db` | `pangolin` |
+| `platform` | `illumina` | `multiqc` |
+| `primer_bed` | `reference/primers.bed` | `gunzip_primer_bed` |
+| `primer_bed_ends_gz` | `false` | `gunzip_primer_bed` |
+| `primer_left_suffix` | `_LEFT` | `collapse_primers` |
+| `primer_right_suffix` | `_RIGHT` | `collapse_primers` |
+| `protocol` | `amplicon` | `bam_sort_index_trimmed`, `call_variants_ivar`, `collapse_primers`, `consensus_call`, `consensus_filter`, `cutadapt`, `fastqc_primers`, `freyja_boot`, `freyja_demix`, `freyja_variants`, `get_primer_fasta`, `ivar_to_vcf`, `ivar_trim`, `mosdepth_amplicon`, `mosdepth_genome`, `nextclade`, `nextclade_clade_mqc`, `pangolin`, `picard_metrics`, `plot_base_density`, `plot_mosdepth_amplicon`, `plot_mosdepth_genome`, `prepare_primer_fasta`, `quast_consensus`, `snpeff_ann`, `snpsift_extract`, `sort_vcf`, `variants_long_table` |
+| `raw_dir` | `test/fixtures/raw` | `cat_fastq`, `fastqc_raw` |
+| `save_mpileup` | `false` | — |
+| `save_trimmed_fail` | `false` | — |
+| `save_unaligned` | `false` | — |
+| `skip_abacas` | `false` | `abacas` |
+| `skip_assembly` | `false` | `abacas`, `assemble_spades`, `bandage`, `blast_assembly`, `cutadapt`, `fastqc_primers`, `get_primer_fasta`, `make_blast_db`, `prepare_primer_fasta`, `quast_assembly` |
+| `skip_assembly_quast` | `false` | `quast_assembly` |
+| `skip_bandage` | `false` | `bandage` |
+| `skip_blast` | `false` | `blast_assembly`, `make_blast_db` |
+| `skip_consensus` | `false` | `consensus_call`, `consensus_filter`, `get_nextclade_dataset`, `nextclade`, `nextclade_clade_mqc`, `pangolin`, `plot_base_density`, `quast_consensus` |
+| `skip_consensus_plots` | `false` | `plot_base_density` |
+| `skip_cutadapt` | `false` | `cutadapt`, `fastqc_primers`, `get_primer_fasta`, `prepare_primer_fasta` |
+| `skip_fastp` | `false` | `fastp`, `fastqc_trim` |
+| `skip_fastqc` | `false` | `fastqc_primers`, `fastqc_raw`, `fastqc_trim` |
+| `skip_freyja` | `false` | `freyja_boot`, `freyja_demix`, `freyja_variants` |
+| `skip_freyja_boot` | `false` | `freyja_boot` |
+| `skip_ivar_trim` | `false` | `bam_sort_index_trimmed`, `ivar_trim` |
+| `skip_kraken2` | `false` | `assembly_fastq`, `kraken2`, `untar_kraken2_db` |
+| `skip_markduplicates` | `true` | — |
+| `skip_mosdepth` | `false` | `collapse_primers`, `mosdepth_amplicon`, `mosdepth_genome`, `plot_mosdepth_amplicon`, `plot_mosdepth_genome` |
+| `skip_nextclade` | `false` | `get_nextclade_dataset`, `nextclade`, `nextclade_clade_mqc` |
+| `skip_noninternal_primers` | `false` | `prepare_primer_fasta` |
+| `skip_pangolin` | `false` | `pangolin` |
+| `skip_picard_metrics` | `false` | `picard_metrics` |
+| `skip_plasmidid` | `true` | — |
+| `skip_snpeff` | `false` | `build_snpeff_db`, `snpeff_ann`, `snpsift_extract`, `variants_long_table` |
+| `skip_variants` | `false` | `align_bowtie2`, `bam_sort_index`, `bam_sort_index_trimmed`, `build_bowtie2_index`, `build_snpeff_db`, `call_variants_ivar`, `collapse_primers`, `freyja_boot`, `freyja_demix`, `freyja_variants`, `ivar_to_vcf`, `ivar_trim`, `mosdepth_amplicon`, `mosdepth_genome`, `picard_metrics`, `plot_mosdepth_amplicon`, `plot_mosdepth_genome`, `snpeff_ann`, `snpsift_extract`, `sort_vcf`, `variants_long_table` |
+| `skip_variants_long_table` | `false` | `variants_long_table` |
+| `skip_variants_quast` | `false` | `quast_consensus` |
+| `spades_mode` | `rnaviral` | `assemble_spades` |
+| `threeprime_adapters` | `false` | — |
+| `variant_caller` | `ivar` | `call_variants_ivar`, `ivar_to_vcf`, `sort_vcf` |
+
+Derived from the workflow's `[config]` section — no schema file to maintain.
+
 ## Scope
 
 The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.

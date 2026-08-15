@@ -45,6 +45,19 @@ tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
 git clone https://github.com/oxo-flow-community/oxo-flow-snparcher
 ```
 
+## Parameters
+
+| Parameter | Default | Used by |
+|---:|---|---|
+| `expected_coverage` | `low` | — |
+| `intervals_enabled` | `false` | — |
+| `mark_duplicates` | `false` | — |
+| `ploidy` | `2` | `gatk_haplotypecaller` |
+| `reference_name` | `my_organism` | `bwa_mem`, `gatk_haplotypecaller`, `index_reference`, `prepare_reference` |
+| `reference_source` | `test/fixtures/ref/genome.fa` | `prepare_reference` |
+
+Derived from the workflow's `[config]` section — no schema file to maintain.
+
 ## Scope
 
 The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.
