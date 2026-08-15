@@ -1,9 +1,9 @@
 # oxo-flow Porting Playbook
 
-**Porting Nextflow (nf-core DSL2) and Snakemake workflows to oxo-flow v0.11.0 TOML repositories.**
+**Porting Nextflow (nf-core DSL2) and Snakemake workflows to oxo-flow v0.12.0 TOML repositories.**
 
-Version: 1.2 (2026-08-15)
-Engine target: oxo-flow **0.11.0** (pin this; format features below are v0.11.0 surface)
+Version: 1.3 (2026-08-15)
+Engine target: oxo-flow **0.12.0** (pin this; format features below are the 0.11.0+ surface)
 Audience: ~20 parallel porting agents, each owning one workflow port.
 
 v1.1 (TCASIA port, #24): `{log}` is metadata-only (never a shell
@@ -20,6 +20,12 @@ syntax (§13.38), the per-sample-routing limitation (§13.39), no-license
 upstream handling (§10, §13.40), and the `{sra}`-style custom-wildcard
 pattern (§4.2).
 
+v1.3 (2026-08-15): CI and install references now use the **stable latest
+tarball** — `releases/latest/download/oxo-flow-latest-x86_64-unknown-linux-gnu.tar.gz`
+(a byte-identical copy of the versioned CLI tarball, published by the
+release pipeline since v0.12.0) — and the engine floor is **0.12.0**
+(all 22 ports re-verified against the v0.12.0 release binary).
+
 This is an execution spec. Every TOML snippet in this document was either
 (a) taken verbatim from a canonical, CI-validated gallery workflow in the
 oxo-flow source repo, or (b) written by the author and verified against the
@@ -35,9 +41,9 @@ commands in §7.4, and if something does not pass, fix the TOML — do not
 | Item | Value |
 |---|---|
 | Engine source repo | [github.com/Traitome/oxo-flow](https://github.com/Traitome/oxo-flow) — treat as a **READ-ONLY** reference; never commit to it from porting work. |
-| Development binary | Any oxo-flow **≥ 0.11.0**. For development against the latest main: `cargo build -p oxo-flow-cli` and use `target/debug/oxo-flow` (referred to as `$OXO` below). |
-| CI install | Release tarball `https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz` — **verified layout: the archive contains a single file `oxo-flow` at its root** (no directory prefix). Exact install steps in §8. |
-| bioconda package | `oxo-flow-cli`, latest **0.10.2** — lags local 0.11.0. Mentioned in user-facing README only (`conda install -c bioconda oxo-flow-cli`); **never** used in CI. |
+| Development binary | Any oxo-flow **≥ 0.12.0**. For development against the latest main: `cargo build -p oxo-flow-cli` and use `target/debug/oxo-flow` (referred to as `$OXO` below). |
+| CI install | Release tarball `https://github.com/Traitome/oxo-flow/releases/latest/download/oxo-flow-latest-x86_64-unknown-linux-gnu.tar.gz` — **verified layout: the archive contains a single file `oxo-flow` at its root** (no directory prefix). Exact install steps in §8. |
+| bioconda package | `oxo-flow-cli`, latest **0.10.2** — lags local 0.12.0. Mentioned in user-facing README only (`conda install -c bioconda oxo-flow-cli`); **never** used in CI. |
 | License | oxo-flow is Apache-2.0 (`LICENSE` in the source repo: full Apache 2.0 text, `Copyright 2025 Traitome`, appendix notice). Ports are Apache-2.0, "Copyright (c) 2026 oxo-flow-community" (see §10, §11). |
 | Scratch space | Any throwaway directory (e.g. `/tmp/pb-check/`) for verification runs. Never create files in the engine repo. |
 | Docs (format authority) | In the engine repo: `docs/guide/src/reference/` (`workflow-format.md`, `wildcards.md`, `dag-engine.md`, `environment-system.md`, `execution-backends.md`) and `docs/guide/src/commands/{validate,dry-run,run,debug,lint}.md`. |
@@ -650,7 +656,7 @@ workflow is sample-scoped), and a `debug` assertion that no literal
 
 ## 8. CI template (`.github/workflows/ci.yml`)
 
-ubuntu-latest; install oxo-flow from the v0.11.0 release tarball (layout
+ubuntu-latest; install oxo-flow from the latest release tarball (stable asset, layout
 verified: single `oxo-flow` file at archive root — no directory prefix, so
 `tar xzf` + `mv` of the bare file is correct); timeout 10m.
 
@@ -668,10 +674,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install oxo-flow 0.11.0 (release tarball)
+      - name: Install oxo-flow (latest release tarball)
         run: |
           curl -fL -o oxo-flow.tar.gz \
-            https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz
+            https://github.com/Traitome/oxo-flow/releases/latest/download/oxo-flow-latest-x86_64-unknown-linux-gnu.tar.gz
           tar xzf oxo-flow.tar.gz
           sudo mv oxo-flow /usr/local/bin/
           oxo-flow --version
@@ -687,7 +693,7 @@ jobs:
 ```
 
 The tarball URL above is the **verified** install path: the archive is
-`oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz` and contains exactly one
+`oxo-flow-latest-x86_64-unknown-linux-gnu.tar.gz` (a byte-identical copy of the versioned tarball) and contains exactly one
 file, `oxo-flow`.
 
 ---
@@ -710,11 +716,11 @@ steps. No "port" framing outside the blockquote.>
 
 ### 1. Install oxo-flow
 
-Requires **oxo-flow ≥ 0.11.0**. Release binary (recommended):
+Requires **oxo-flow ≥ 0.12.0**. Release binary (recommended):
 
 ```bash
 curl -fL -o oxo-flow.tar.gz \
-  https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz
+  https://github.com/Traitome/oxo-flow/releases/latest/download/oxo-flow-latest-x86_64-unknown-linux-gnu.tar.gz
 tar xzf oxo-flow.tar.gz
 sudo mv oxo-flow /usr/local/bin/
 ```
@@ -870,7 +876,7 @@ registry (`data/pipelines.json` in the site repo). Catalog v2 fields:
   "rule_count": 44,
   "tools": ["fastqc", "star", "samtools", "..."],
   "installation": {
-    "engine": "oxo-flow >= 0.11.0",
+    "engine": "oxo-flow >= 0.12.0",
     "toolchain": "containers (Docker/Singularity) — pinned images",
     "requirements": [
       "Reference data: genome FASTA, annotation GTF, chrom sizes",
@@ -1148,7 +1154,7 @@ submission):
       "port"`, `rating = "verified"` (only when every other DoD item
       holds), truthful `installation` block, `tools` without versions,
       valid JSON.
-- [ ] `.github/workflows/ci.yml` present with the v0.11.0 tarball install
+- [ ] `.github/workflows/ci.yml` present with the latest-tarball install
       (§8); CI is green with the badge URL resolving.
 - [ ] No files written into the engine repo; all scratch work stayed
       under a throwaway directory.

@@ -24,7 +24,7 @@ oxo-flow dry-run main.oxoflow
 
 ## Installation
 
-**Engine.** oxo-flow >= 0.11.0
+**Engine.** oxo-flow >= 0.12.0
 
 **Toolchain.** conda envs — pinned versions (fastp 0.23.4, STAR 2.7.7a, samtools 1.13/1.15, subread 2.0.1, salmon 1.10.3, suppa 2.3, rMATS 4.3.0, MAJIQ 2.5, SplAdder 3.1.1; conda-forge + bioconda)
 

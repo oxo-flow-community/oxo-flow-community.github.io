@@ -24,7 +24,7 @@ oxo-flow dry-run main.oxoflow
 
 ## Installation
 
-**Engine.** oxo-flow >= 0.11.0
+**Engine.** oxo-flow >= 0.12.0
 
 **Toolchain.** conda envs — pinned versions (declared in main.oxoflow: envs/antismash.yaml, envs/prokka.yaml, envs/bgc_analytics.yaml; a few antiSMASH helper packages use unpinned ranges)
 

@@ -24,7 +24,7 @@ oxo-flow dry-run main.oxoflow
 
 ## Installation
 
-**Engine.** oxo-flow >= 0.11.0
+**Engine.** oxo-flow >= 0.12.0
 
 **Toolchain.** conda envs — pinned (r-seurat 4.4.0, r-seuratobject 4.1.4, r-irlba 2.3.5.1, r-matrix, r-mixtools 2.0.0, r-ggplot2 3.5.2, r-scales 1.3.0, r-patchwork 1.2.0, r-data.table 1.14.10, pyyaml 6.0.1); conda/mamba required at runtime, conda binary on PATH for env export
 

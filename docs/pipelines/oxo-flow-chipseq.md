@@ -24,7 +24,7 @@ oxo-flow dry-run main.oxoflow       # prints the 154-instance plan
 
 ## Installation
 
-**Engine.** oxo-flow >= 0.11.0
+**Engine.** oxo-flow >= 0.12.0
 
 **Toolchain.** containers (Docker/Singularity) — pinned images
 

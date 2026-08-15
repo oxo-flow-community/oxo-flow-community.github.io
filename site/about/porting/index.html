@@ -1467,9 +1467,9 @@
 
 
 <h1 id="oxo-flow-porting-playbook">oxo-flow Porting Playbook</h1>
-<p><strong>Porting Nextflow (nf-core DSL2) and Snakemake workflows to oxo-flow v0.11.0 TOML repositories.</strong></p>
-<p>Version: 1.2 (2026-08-15)
-Engine target: oxo-flow <strong>0.11.0</strong> (pin this; format features below are v0.11.0 surface)
+<p><strong>Porting Nextflow (nf-core DSL2) and Snakemake workflows to oxo-flow v0.12.0 TOML repositories.</strong></p>
+<p>Version: 1.3 (2026-08-15)
+Engine target: oxo-flow <strong>0.12.0</strong> (pin this; format features below are the 0.11.0+ surface)
 Audience: ~20 parallel porting agents, each owning one workflow port.</p>
 <p>v1.1 (TCASIA port, #24): <code>{log}</code> is metadata-only (never a shell
 placeholder), TOML triple-quote escape semantics (§13.29), <code>validate
@@ -1483,6 +1483,11 @@ constraint (§2.4, §13.37), literal resource numbers + resource-group
 syntax (§13.38), the per-sample-routing limitation (§13.39), no-license
 upstream handling (§10, §13.40), and the <code>{sra}</code>-style custom-wildcard
 pattern (§4.2).</p>
+<p>v1.3 (2026-08-15): CI and install references now use the <strong>stable latest
+tarball</strong> — <code>releases/latest/download/oxo-flow-latest-x86_64-unknown-linux-gnu.tar.gz</code>
+(a byte-identical copy of the versioned CLI tarball, published by the
+release pipeline since v0.12.0) — and the engine floor is <strong>0.12.0</strong>
+(all 22 ports re-verified against the v0.12.0 release binary).</p>
 <p>This is an execution spec. Every TOML snippet in this document was either
 (a) taken verbatim from a canonical, CI-validated gallery workflow in the
 oxo-flow source repo, or (b) written by the author and verified against the
@@ -1506,15 +1511,15 @@ commands in §7.4, and if something does not pass, fix the TOML — do not
 </tr>
 <tr>
 <td>Development binary</td>
-<td>Any oxo-flow <strong>≥ 0.11.0</strong>. For development against the latest main: <code>cargo build -p oxo-flow-cli</code> and use <code>target/debug/oxo-flow</code> (referred to as <code>$OXO</code> below).</td>
+<td>Any oxo-flow <strong>≥ 0.12.0</strong>. For development against the latest main: <code>cargo build -p oxo-flow-cli</code> and use <code>target/debug/oxo-flow</code> (referred to as <code>$OXO</code> below).</td>
 </tr>
 <tr>
 <td>CI install</td>
-<td>Release tarball <code>https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz</code> — <strong>verified layout: the archive contains a single file <code>oxo-flow</code> at its root</strong> (no directory prefix). Exact install steps in §8.</td>
+<td>Release tarball <code>https://github.com/Traitome/oxo-flow/releases/latest/download/oxo-flow-latest-x86_64-unknown-linux-gnu.tar.gz</code> — <strong>verified layout: the archive contains a single file <code>oxo-flow</code> at its root</strong> (no directory prefix). Exact install steps in §8.</td>
 </tr>
 <tr>
 <td>bioconda package</td>
-<td><code>oxo-flow-cli</code>, latest <strong>0.10.2</strong> — lags local 0.11.0. Mentioned in user-facing README only (<code>conda install -c bioconda oxo-flow-cli</code>); <strong>never</strong> used in CI.</td>
+<td><code>oxo-flow-cli</code>, latest <strong>0.10.2</strong> — lags local 0.12.0. Mentioned in user-facing README only (<code>conda install -c bioconda oxo-flow-cli</code>); <strong>never</strong> used in CI.</td>
 </tr>
 <tr>
 <td>License</td>
@@ -2551,7 +2556,7 @@ workflow is sample-scoped), and a <code>debug</code> assertion that no literal
 </ol>
 <hr />
 <h2 id="8-ci-template-githubworkflowsciyml">8. CI template (<code>.github/workflows/ci.yml</code>)</h2>
-<p>ubuntu-latest; install oxo-flow from the v0.11.0 release tarball (layout
+<p>ubuntu-latest; install oxo-flow from the latest release tarball (stable asset, layout
 verified: single <code>oxo-flow</code> file at archive root — no directory prefix, so
 <code>tar xzf</code> + <code>mv</code> of the bare file is correct); timeout 10m.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CI</span>
@@ -2567,10 +2572,10 @@ verified: single <code>oxo-flow</code> file at archive root — no directory pre
 <a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
 <a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
 <a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>
-<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install oxo-flow 0.11.0 (release tarball)</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install oxo-flow (latest release tarball)</span>
 <a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a><span class="w">          </span><span class="no">curl -fL -o oxo-flow.tar.gz \</span>
-<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="w">            </span><span class="no">https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz</span>
+<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="w">            </span><span class="no">https://github.com/Traitome/oxo-flow/releases/latest/download/oxo-flow-latest-x86_64-unknown-linux-gnu.tar.gz</span>
 <a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a><span class="w">          </span><span class="no">tar xzf oxo-flow.tar.gz</span>
 <a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a><span class="w">          </span><span class="no">sudo mv oxo-flow /usr/local/bin/</span>
 <a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a><span class="w">          </span><span class="no">oxo-flow --version</span>
@@ -2582,7 +2587,7 @@ verified: single <code>oxo-flow</code> file at archive root — no directory pre
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>[<span class="nt">![CI</span>](<span class="na">https://github.com/&lt;org&gt;/&lt;pipeline-name&gt;/actions/workflows/ci.yml/badge.svg</span>)](https://github.com/&lt;org&gt;/&lt;pipeline-name&gt;/actions/workflows/ci.yml)
 </code></pre></div>
 <p>The tarball URL above is the <strong>verified</strong> install path: the archive is
-<code>oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz</code> and contains exactly one
+<code>oxo-flow-latest-x86_64-unknown-linux-gnu.tar.gz</code> (a byte-identical copy of the versioned tarball) and contains exactly one
 file, <code>oxo-flow</code>.</p>
 <hr />
 <h2 id="9-readmemd-template-80-lines-exact-skeleton">9. README.md template (~80 lines, exact skeleton)</h2>
@@ -2601,11 +2606,11 @@ file, <code>oxo-flow</code>.</p>
 <a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>
 <a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="gu">### 1. Install oxo-flow</span>
 <a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>
-<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a>Requires <span class="gs">**oxo-flow ≥ 0.11.0**</span>. Release binary (recommended):
+<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a>Requires <span class="gs">**oxo-flow ≥ 0.12.0**</span>. Release binary (recommended):
 <a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>
 <a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a>```bash
 <a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a>curl -fL -o oxo-flow.tar.gz \
-<a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a>  https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz
+<a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a>  https://github.com/Traitome/oxo-flow/releases/latest/download/oxo-flow-latest-x86_64-unknown-linux-gnu.tar.gz
 <a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a>tar xzf oxo-flow.tar.gz
 <a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a>sudo mv oxo-flow /usr/local/bin/
 </code></pre></div>
@@ -2751,7 +2756,7 @@ registry (<code>data/pipelines.json</code> in the site repo). Catalog v2 fields:
 <a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a><span class="w">  </span><span class="nt">&quot;rule_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">44</span><span class="p">,</span>
 <a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a><span class="w">  </span><span class="nt">&quot;tools&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;fastqc&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;star&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;samtools&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="p">],</span>
 <a id="__codelineno-16-22" name="__codelineno-16-22" href="#__codelineno-16-22"></a><span class="w">  </span><span class="nt">&quot;installation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-16-23" name="__codelineno-16-23" href="#__codelineno-16-23"></a><span class="w">    </span><span class="nt">&quot;engine&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;oxo-flow &gt;= 0.11.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-23" name="__codelineno-16-23" href="#__codelineno-16-23"></a><span class="w">    </span><span class="nt">&quot;engine&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;oxo-flow &gt;= 0.12.0&quot;</span><span class="p">,</span>
 <a id="__codelineno-16-24" name="__codelineno-16-24" href="#__codelineno-16-24"></a><span class="w">    </span><span class="nt">&quot;toolchain&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;containers (Docker/Singularity) — pinned images&quot;</span><span class="p">,</span>
 <a id="__codelineno-16-25" name="__codelineno-16-25" href="#__codelineno-16-25"></a><span class="w">    </span><span class="nt">&quot;requirements&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <a id="__codelineno-16-26" name="__codelineno-16-26" href="#__codelineno-16-26"></a><span class="w">      </span><span class="s2">&quot;Reference data: genome FASTA, annotation GTF, chrom sizes&quot;</span><span class="p">,</span>
@@ -3024,7 +3029,7 @@ submission):</p>
       "port"</code>, <code>rating = "verified"</code> (only when every other DoD item
       holds), truthful <code>installation</code> block, <code>tools</code> without versions,
       valid JSON.</li>
-<li>[ ] <code>.github/workflows/ci.yml</code> present with the v0.11.0 tarball install
+<li>[ ] <code>.github/workflows/ci.yml</code> present with the latest-tarball install
       (§8); CI is green with the badge URL resolving.</li>
 <li>[ ] No files written into the engine repo; all scratch work stayed
       under a throwaway directory.</li>

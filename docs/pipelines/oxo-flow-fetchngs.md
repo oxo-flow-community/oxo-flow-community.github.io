@@ -24,7 +24,7 @@ oxo-flow dry-run main.oxoflow
 
 ## Installation
 
-**Engine.** oxo-flow >= 0.11.0
+**Engine.** oxo-flow >= 0.12.0
 
 **Toolchain.** containers (Docker) — pinned images (quay.io/biocontainers, identical to upstream)
 

@@ -24,7 +24,7 @@ oxo-flow run main.oxoflow reference_source=/path/to/genome.fa.gz
 
 ## Installation
 
-**Engine.** oxo-flow >= 0.11.0
+**Engine.** oxo-flow >= 0.12.0
 
 **Toolchain.** conda envs — pinned versions (fastp 1.3.6, bwa 0.7.19, samtools 1.24, gatk4 4.6.2.0; conda-forge + bioconda)
 

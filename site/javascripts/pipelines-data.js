@@ -104,7 +104,7 @@ window.OXO_PIPELINES = [
     ],
     "description": "End-to-end bulk RNA-seq analysis for paired-end reads: fq lint and FastQC raw-read QC, TrimGalore adapter/quality trimming, STAR alignment, Picard MarkDuplicates, Salmon alignment-mode quantification with tximport-merged gene/transcript count tables and SummarizedExperiment R objects, StringTie reference-guided assembly and quantification, featureCounts gene counts with biotype tables, RSeQC / dupRadar / Qualimap QC, DESeq2 sample-level QC (PCA, sample distances, size factors), strand-specific bigWig tracks, and one final MultiQC report with the nf-core/rnaseq custom content (fail_trimmed / fail_mapped tables, strandedness checks, software versions). A faithful port of the nf-core/rnaseq 3.26.0 default star_salmon path \u2014 same tools, same versions, same commands.",
     "installation": {
-      "engine": "oxo-flow >= 0.11.0",
+      "engine": "oxo-flow >= 0.12.0",
       "toolchain": "conda envs \u2014 pinned (envs/*.yaml, versions pinned to the upstream nf-core/rnaseq 3.26.0 module environments; requires conda or mamba)",
       "requirements": [
         "paired-end FASTQ reads: reads_dir/<sample>_R1.fastq.gz + _R2.fastq.gz, cohort declared in [[sample_groups]]",
@@ -199,7 +199,7 @@ window.OXO_PIPELINES = [
     ],
     "description": "GATK best-practice variant calling for whole-genome and whole-exome sequencing (WGS/WES), germline by default: FastQC quality control, fastp trimming and splitting, BWA-MEM alignment, MarkDuplicates with CRAM conversion, base quality score recalibration (BQSR), single-sample HaplotypeCaller variant calling, CNN 1D scoring with tranche filtering, VEP annotation, per-sample VCF QC and a final MultiQC report.",
     "installation": {
-      "engine": "oxo-flow >= 0.11.0",
+      "engine": "oxo-flow >= 0.12.0",
       "toolchain": "containers (Docker) \u2014 pinned images",
       "requirements": [
         "paired-end FASTQ reads at raw/{sample}_R1.fastq.gz / raw/{sample}_R2.fastq.gz",
@@ -288,7 +288,7 @@ window.OXO_PIPELINES = [
     ],
     "description": "Single-cell RNA-seq analysis from raw 10x Genomics FASTQ reads to a final MultiQC report: FastQC read QC, Cell Ranger reference preparation and per-sample cellranger count (alignment and quantification, optional BAM output), conversion of raw and filtered 10x matrices to h5ad, CellBender ambient-RNA background removal, sample-wise h5ad concatenation, and optional export to Seurat and SingleCellExperiment objects. Covers the Cell Ranger execution path of nf-core/scrnaseq; other aligners and assays (ATAC, multiome) are not included.",
     "installation": {
-      "engine": "oxo-flow >= 0.11.0",
+      "engine": "oxo-flow >= 0.12.0",
       "toolchain": "containers (Docker/Singularity) \u2014 pinned images; conda alternatives in envs/ for non-Cell-Ranger rules (Cell Ranger rules are docker-only)",
       "requirements": [
         "reference genome FASTA, optionally gzipped (config.fasta, default refs/refdata.fa.gz)",
@@ -409,7 +409,7 @@ window.OXO_PIPELINES = [
     ],
     "description": "Turn paired-end metagenomic reads into quality-checked, taxonomically classified draft genomes: FastQC and fastp QC with phiX removal, SPAdes and MEGAHIT assembly, QUAST and Prodigal assessment, bowtie2 mapping, binning with six binners (MetaBAT2, MaxBin2, CONCOCT, COMEBin, MetaBinner, SemiBin2), BUSCO bin QC, GTDB-Tk classification with a combined summary, PROKKA annotation, ALE evaluation and a final MultiQC report. The default short-read path of nf-core/mag, faithfully ported with the same tool versions and commands.",
     "installation": {
-      "engine": "oxo-flow >= 0.11.0",
+      "engine": "oxo-flow >= 0.12.0",
       "toolchain": "conda envs \u2014 pinned",
       "requirements": [
         "input: paired-end reads as {sample}_R1.fastq.gz / {sample}_R2.fastq.gz in config.input_dir (default test/fixtures/raw); single-end not ported",
@@ -501,7 +501,7 @@ window.OXO_PIPELINES = [
     ],
     "description": "Amplicon sequencing analysis (16S/ITS) that takes raw paired-end reads through FastQC quality control, cutadapt primer trimming, DADA2 denoising (quality profiles, filterAndTrim, learnErrors, denoise, chimera removal, read tracking), taxonomy assignment against the SBDI-GTDB reference, a QIIME2 taxa barplot over sample metadata, an overall summary table and a MultiQC report.",
     "installation": {
-      "engine": "oxo-flow >= 0.11.0",
+      "engine": "oxo-flow >= 0.12.0",
       "toolchain": "containers (Docker/Singularity) \u2014 pinned images",
       "requirements": [
         "raw paired-end FASTQ reads per sample (raw/<sample>_R1.fastq.gz / _R2.fastq.gz) plus a sample groups file (default test/fixtures/groups.tsv)",
@@ -600,7 +600,7 @@ window.OXO_PIPELINES = [
     ],
     "description": "ChIP-seq peak calling, QC and differential analysis for paired-end reads: FastQC and Trim Galore read QC, BWA-MEM alignment, library merge and Picard mark-duplicates, BAMTools filtering against a blacklist with orphan-read removal, preseq and phantompeakqualtools library complexity QC, bigWig tracks and deepTools QC plots, MACS3 broad-peak calling with input controls, HOMER peak annotation, FRiP scoring, consensus peaks across replicates (MACS3 merge, featureCounts quantification, DESeq2 QC), an IGV session and a MultiQC report.",
     "installation": {
-      "engine": "oxo-flow >= 0.11.0",
+      "engine": "oxo-flow >= 0.12.0",
       "toolchain": "containers (Docker/Singularity) \u2014 pinned images",
       "requirements": [
         "genome FASTA and FASTA index (fasta, fai)",
@@ -691,7 +691,7 @@ window.OXO_PIPELINES = [
     ],
     "description": "ATAC-seq peak calling and QC for a cohort of single-end samples: FastQC raw-read QC, Trim Galore adapter trimming, BWA-MEM alignment, Picard mark-duplicates, BAMTools filtering, MACS2 broad-peak calling, HOMER peak annotation, FRiP scoring, normalised bigWig tracks, deepTools QC plots (profile, heatmap, fingerprint) and a combined MultiQC report.",
     "installation": {
-      "engine": "oxo-flow >= 0.11.0",
+      "engine": "oxo-flow >= 0.12.0",
       "toolchain": "containers (Docker/Singularity) \u2014 pinned images, plus one pinned conda env for picard_markduplicates",
       "requirements": [
         "reference data: genome FASTA with .fai, BWA index prefix (.amb/.ann/.bwt/.pac/.sa), chrom sizes file, GTF annotation, gene BED, TSS BED (optional blacklist BED)",
@@ -769,7 +769,7 @@ window.OXO_PIPELINES = [
     ],
     "description": "Run end-to-end bisulfite methylation analysis (WGBS, and RRBS-compatible) of paired-end reads: FastQC quality control, TrimGalore adapter trimming, alignment to the bisulfite-converted reference genome with Bismark (bowtie2), PCR-deduplication, samtools sort/index, methylation extraction with per-context (CpG/CHG/CHH) calls plus bedGraph and coverage output, per-sample and project-wide Bismark HTML reports, and a final MultiQC report.",
     "installation": {
-      "engine": "oxo-flow >= 0.11.0",
+      "engine": "oxo-flow >= 0.12.0",
       "toolchain": "conda envs \u2014 pinned versions (conda-forge/bioconda)",
       "requirements": [
         "reference genome FASTA (uncompressed) \u2014 the Bismark bowtie2 index is built automatically on first run; no prebuilt index required",
@@ -860,7 +860,7 @@ window.OXO_PIPELINES = [
     ],
     "description": "A nanopore long-read pipeline for the DNA default path: samplesheet check, qcat barcode demultiplexing, NanoPlot + FastQC QC, minimap2 alignment, samtools view/sort/index, samtools stats/flagstat/idxstats, BigWig coverage tracks and a MultiQC report. The protocol config key switches to the cDNA/directRNA transcriptome paths. Every rule runs the upstream module's exact pinned container image.",
     "installation": {
-      "engine": "oxo-flow >= 0.11.0",
+      "engine": "oxo-flow >= 0.12.0",
       "toolchain": "containers (Docker/Singularity) \u2014 pinned images",
       "requirements": [
         "genome FASTA reference (config.reference; defaults to test fixtures \u2014 override for real data)",
@@ -1000,7 +1000,7 @@ window.OXO_PIPELINES = [
     ],
     "description": "Turns paired-end Illumina amplicon reads into a complete viral genomics report: read QC and trimming (FastQC, fastp), host-sequence removal (Kraken2), alignment to a user-provided reference genome (Bowtie2), primer trimming, intrahost variant calling and annotation (iVar, snpEff/SnpSift), consensus building with low-coverage masking (bcftools), lineage assignment and deconvolution (Pangolin, Nextclade, Freyja), de novo assembly with QC (SPAdes, Bandage, BLAST, QUAST, ABACAS), and a single MultiQC report.",
     "installation": {
-      "engine": "oxo-flow >= 0.11.0",
+      "engine": "oxo-flow >= 0.12.0",
       "toolchain": "conda envs \u2014 pinned versions (envs/*.yaml, conda-forge + bioconda channels; no containers)",
       "requirements": [
         "reference genome FASTA and annotation GFF (config.fasta / config.gff) \u2014 uncompressed by default, or set fasta_ends_gz / gff_ends_gz",
@@ -1113,7 +1113,7 @@ window.OXO_PIPELINES = [
     ],
     "description": "Ancient DNA (aDNA) analysis in one run: FastQC raw QC, optional fastp poly-G filtering (2-colour chemistry), AdapterRemoval adapter clipping and paired-end read merging, BWA aln mapping with ancient-DNA parameters, picard MarkDuplicates (or DeDup) deduplication, preseq library-complexity curves, DamageProfiler damage estimation, Qualimap BAM QC, optional pileupCaller genotyping with eigenstrat SNP coverage, and a final MultiQC report \u2014 every rule pinned to the nf-core/eager 2.5.3 tool versions in the upstream container.",
     "installation": {
-      "engine": "oxo-flow >= 0.11.0",
+      "engine": "oxo-flow >= 0.12.0",
       "toolchain": "containers (Docker/Singularity) \u2014 pinned image nfcore/eager:2.5.3 for all rules (bundles the pinned conda env from envs/eager.yaml)",
       "requirements": [
         "reference genome FASTA, plain and uncompressed (.gz references are not supported \u2014 upstream's unzip_reference step is not ported); the workflow builds the .fai / .dict / BWA indices itself",
@@ -1179,7 +1179,7 @@ window.OXO_PIPELINES = [
     ],
     "description": "Fetch metadata and raw FastQ files from public sequence databases (SRA/ENA/DDBJ/GEO). Given a list of database identifiers \u2014 run accessions (SRR/ERR/DRR), experiments, studies, biosamples or GEO series \u2014 the pipeline retrieves the ENA run metadata, downloads the FastQ files over FTP, validates every download against its ENA md5 sum, and auto-creates a samplesheet plus sample id-mappings and a MultiQC mappings config, ready for downstream nf-core pipelines such as rnaseq, atacseq or taxprofiler.",
     "installation": {
-      "engine": "oxo-flow >= 0.11.0",
+      "engine": "oxo-flow >= 0.12.0",
       "toolchain": "containers (Docker) \u2014 pinned images (quay.io/biocontainers, identical to upstream)",
       "requirements": [
         "ids file: one SRA/ENA/DDBJ/GEO accession per line (config.input, default test/fixtures/ids.txt), kept in sync with the [[sample_groups]] sample source",
@@ -1272,7 +1272,7 @@ window.OXO_PIPELINES = [
     ],
     "description": "End-to-end RNA-seq differential-expression analysis with STAR and DESeq2: Ensembl reference download, fastp trimming, STAR alignment with gene counts, RSeQC QC + MultiQC, count matrix with technical-replicate collapse, Ensembl biomaRt gene-symbol annotation, and DESeq2 (normalized counts, PCA plots, per-contrast results with ashr shrinkage and MA plots). Every tool is pinned to an exact conda version for reproducibility.",
     "installation": {
-      "engine": "oxo-flow >= 0.11.0",
+      "engine": "oxo-flow >= 0.12.0",
       "toolchain": "conda envs \u2014 pinned",
       "requirements": [
         "paired-end FASTQ reads per config/units.tsv (raw/<unit-key>_R1.fastq.gz / _R2.fastq.gz) and sample conditions in config/samples.tsv",
@@ -1395,7 +1395,7 @@ window.OXO_PIPELINES = [
     ],
     "description": "Scenario-driven somatic small and structural variant calling with Varlociraptor: paired-end reads are aligned against the 1000 Genomes human pangenome with vg giraffe, QC'd with FastQC/MultiQC, covered with mosdepth, and used for freebayes and delly candidate calling; Varlociraptor then estimates alignment properties and calls variants under a tumor scenario (events present + somatic_tumor_high + somatic_tumor_medium, FDR 0.05), FDR is controlled per variant type (SNV/INS/DEL/MNV/BND/INV/DUP/REP) with merge and phred decoding, and the calls are annotated with VEP (LoFtool/REVEL plugins) and dbSNFP/dbSNP, filtered, turned into a 34-column variant table with oncoprint label-sorting, and rendered as interactive datavzrd variant and gene-coverage reports. All reference data (GRCh38 FASTA and GTF, VEP cache/plugins, REVEL scores, known-variants VCFs, HPRC pangenome graph) is downloaded automatically into resources/.",
     "installation": {
-      "engine": "oxo-flow >= 0.11.0",
+      "engine": "oxo-flow >= 0.12.0",
       "toolchain": "conda envs \u2014 pinned versions (no containers)",
       "requirements": [
         "paired-end FASTQ reads at reads_dir/<sample>_1.fastq.gz / _2.fastq.gz; sample cohort declared in [[sample_groups]] (one group = one tumor sample); fixtures bundled for dry-run",
@@ -1470,7 +1470,7 @@ window.OXO_PIPELINES = [
     ],
     "description": "Variant calling for non-model organisms: paired FASTQ reads are trimmed and filtered with fastp, aligned with BWA-MEM, and called to per-sample gVCFs with GATK HaplotypeCaller (low-coverage defaults: -ploidy 2, --min-pruning 1), alongside a cohort QC metrics report aggregating fastp and samtools stats.",
     "installation": {
-      "engine": "oxo-flow >= 0.11.0",
+      "engine": "oxo-flow >= 0.12.0",
       "toolchain": "conda envs \u2014 pinned versions (fastp 1.3.6, bwa 0.7.19, samtools 1.24, gatk4 4.6.2.0; conda-forge + bioconda)",
       "requirements": [
         "reference genome FASTA (plain or gzip), passed as reference_source at run time \u2014 bgzip-compressed and indexed by the workflow itself (no pre-built indices)",
@@ -1550,7 +1550,7 @@ window.OXO_PIPELINES = [
     ],
     "description": "Run a complete region set and gene set enrichment analysis on your own data: region overlap enrichment (LOLA), genomic region enrichment of annotated terms (rGREAT), region TFBS motif enrichment (pycisTarget), and gene over-representation analysis (ORA) and preranked GSEA (GSEApy). Every tool applies its own multiple-test correction; the workflow produces per-set enrichment plots, per-group summary plots, and reproducibility exports (configs/ and envs/). Official port of epigen/enrichment_analysis v3.0.1 with tool versions and commands pinned to the source.",
     "installation": {
-      "engine": "oxo-flow >= 0.11.0",
+      "engine": "oxo-flow >= 0.12.0",
       "toolchain": "conda envs \u2014 pinned (conda/mamba at runtime; four environments declared in main.oxoflow, exact pins from upstream)",
       "requirements": [
         "annotation.csv declaring each feature set (region set or ranked gene set), its path, background, and group",
@@ -1620,7 +1620,7 @@ window.OXO_PIPELINES = [
     ],
     "description": "Merge BAM files per experimental group with samtools, compute normalized bigWig coverage with deepTools bamCoverage (RPGC by default), plot isoform-aware per-gene and per-region genome tracks with gtracks/pyGenomeTracks, and publish a UCSC genome browser track hub \u2014 end-to-end track generation for RNA-seq, ATAC-seq and other aligned BAM data.",
     "installation": {
-      "engine": "oxo-flow >= 0.11.0",
+      "engine": "oxo-flow >= 0.12.0",
       "toolchain": "conda envs \u2014 pinned",
       "requirements": [
         "BAM files per group at <bam_dir>/<group>/*.bam (aligned/mapped data, e.g. RNA-seq or ATAC-seq; input BAMs need no index \u2014 merge_bams produces merged, indexed BAMs)",
@@ -1692,7 +1692,7 @@ window.OXO_PIPELINES = [
     ],
     "description": "Pooled CRISPR perturbation analysis (scCRISPR-seq / CROP-seq / Perturb-seq) with Seurat Mixscape: per-cell perturbation signatures (CalcPerturbSig), perturbed vs. non-perturbed classification (RunMixscape), LDA + UMAP projection of the perturbed subset, the full visualization suite (classification statistics, perturbation-score density, posterior-probability and optional antibody-expression violin plots), and reproducibility exports (exact conda envs, runtime config, annotation file). Input is one processed Seurat object per sample.",
     "installation": {
-      "engine": "oxo-flow >= 0.11.0",
+      "engine": "oxo-flow >= 0.12.0",
       "toolchain": "conda envs \u2014 pinned (r-seurat 4.4.0, r-seuratobject 4.1.4, r-irlba 2.3.5.1, r-matrix, r-mixtools 2.0.0, r-ggplot2 3.5.2, r-scales 1.3.0, r-patchwork 1.2.0, r-data.table 1.14.10, pyyaml 6.0.1); conda/mamba required at runtime, conda binary on PATH for env export",
       "requirements": [
         "One processed Seurat object per sample, as {data_dir}/{sample}.rds (already normalized/integrated \u2014 QC/normalization run upstream)",
@@ -1789,7 +1789,7 @@ window.OXO_PIPELINES = [
     ],
     "description": "End-to-end biosynthetic gene cluster (BGC) analysis of user-provided bacterial genomes: prokka annotation, antiSMASH 7 secondary-metabolite mining with automated database setup, per-genome BGC counts and overview tables, GTDB taxonomy lookup, MIBiG reference table download, BigSCAPE-compatible comparison preparation (symlinks, taxonomy, dataset registry, visualization mapping), and conversion of all result tables into a parquet data warehouse \u2014 ready for downstream comparison and exploration.",
     "installation": {
-      "engine": "oxo-flow >= 0.11.0",
+      "engine": "oxo-flow >= 0.12.0",
       "toolchain": "conda envs \u2014 pinned versions (declared in main.oxoflow: envs/antismash.yaml, envs/prokka.yaml, envs/bgc_analytics.yaml; a few antiSMASH helper packages use unpinned ranges)",
       "requirements": [
         "genome FASTA per genome at {config.raw_dir}/fasta/<genome_id>.fna (raw_dir defaults to test/fixtures/raw; .fna/.fasta/.fa accepted)",
@@ -1931,7 +1931,7 @@ window.OXO_PIPELINES = [
     ],
     "description": "Unsupervised analysis of omics matrices: PCA, UMAP and densMAP embeddings (2D/3D), distance matrices, hierarchical clustering heatmaps, Leiden clustering across partition types and resolutions, clustree analysis, external and internal cluster validation with TOPSIS ranking, and static and interactive visualizations. A verified port of the default-parameter path of epigen/unsupervised_analysis v4.0.2 (Snakemake); all 52 rules and tool versions are pinned to the upstream release.",
     "installation": {
-      "engine": "oxo-flow >= 0.11.0",
+      "engine": "oxo-flow >= 0.12.0",
       "toolchain": "conda envs \u2014 pinned versions (7 environments under envs/, created by conda/mamba)",
       "requirements": [
         "per-sample omics matrix CSV and optional labels CSV ({config.data_dir}/{sample}_data.csv / _labels.csv), registered in config/annotation.csv; no reference genomes or index files needed (default fixtures: sklearn digits, 1797 samples x 64 features)",
@@ -2146,7 +2146,7 @@ window.OXO_PIPELINES = [
     ],
     "description": "Automated RNA-seq analysis from locally downloaded SRA archives to differential expression results: verify and symlink .sra files, fasterq-dump conversion to FASTQ, read merging across multiple SRR runs per sample, fastp trimming, STAR alignment with gene counts, BAM indexing, BPM-normalized bigWig signal tracks, a merged count matrix, and DESeq2 differential analysis with ashr shrinkage. Every tool is pinned to an exact conda version for reproducibility.",
     "installation": {
-      "engine": "oxo-flow >= 0.11.0",
+      "engine": "oxo-flow >= 0.12.0",
       "toolchain": "conda envs \u2014 pinned",
       "requirements": [
         "Reference data: STAR index dir and GTF (config index / GTF, e.g. GRCh38)",
@@ -2223,7 +2223,7 @@ window.OXO_PIPELINES = [
       "perl"
     ],
     "installation": {
-      "engine": "oxo-flow >= 0.11.0",
+      "engine": "oxo-flow >= 0.12.0",
       "toolchain": "conda envs \u2014 pinned versions (fastp 0.23.4, STAR 2.7.7a, samtools 1.13/1.15, subread 2.0.1, salmon 1.10.3, suppa 2.3, rMATS 4.3.0, MAJIQ 2.5, SplAdder 3.1.1; conda-forge + bioconda)",
       "requirements": [
         "reference data (GRCh38 + GENCODE v34): STAR index (STAR 2.7.7a), annotation GTF + GFF3, Salmon transcript index, SUPPA2 events file, MAJIQ academic license",
