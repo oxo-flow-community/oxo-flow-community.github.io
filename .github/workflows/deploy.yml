@@ -55,3 +55,39 @@ jobs:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Verify live pages serve 200 (post-deploy smoke check)
+        run: |
+          python3 - <<'EOF'
+          import json, pathlib, subprocess, sys, time
+
+          base = "https://oxo-flow-community.github.io"
+          data = json.loads(pathlib.Path("data/pipelines.json").read_text())
+          urls = [base + "/", base + "/pipelines/"]
+          urls += [base + "/pipelines/" + p["name"] + "/" for p in data]
+          # Pages CDN propagation can lag the deployment by a few minutes;
+          # poll until every registry page serves 200, fail loudly otherwise.
+          deadline = time.time() + 240
+          pending = urls
+          while pending and time.time() < deadline:
+              still = []
+              for url in pending:
+                  try:
+                      code = subprocess.run(
+                          ["curl", "-s", "-o", "/dev/null", "-w", "%{http_code}", url],
+                          capture_output=True, text=True, timeout=30,
+                      ).stdout.strip()
+                  except Exception:
+                      code = "000"
+                  if code != "200":
+                      still.append(url)
+              pending = still
+              if pending:
+                  time.sleep(15)
+          if pending:
+              print("::error::live pages not serving 200 after deployment:")
+              for url in pending:
+                  print(f"::error::  {url}")
+              sys.exit(1)
+          print(f"verified live: {len(urls)} URLs return 200")
+          EOF
