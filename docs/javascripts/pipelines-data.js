@@ -1944,5 +1944,57 @@ window.OXO_PIPELINES = [
     "upstream_license": "MIT",
     "quickstart": "oxo-flow run main.oxoflow",
     "fidelity_md": "Upstream rules and how each is ported (52 ported rules; every analysis step\nof the default-parameter path is executed, none are stubbed):\n\n| Upstream rule | Port | Notes |\n|---|---|---|\n| `pca` | `pca` | same script; snakemake object replaced by CLI args |\n| `umap_graph` | `umap_graph` | knn-graph for the default metric/neighbors |\n| `umap_embed` | `umap_embed_2d`, `umap_embed_3d` | parameter-list fan-out (n_components 2/3) becomes explicit rules |\n| `densmap_embed` | `densmap_embed_2d`, `densmap_embed_3d` | same fan-out |\n| `distance_matrix` | `distance_matrix_{observations,features}_{correlation,cosine}` (4) | wildcard fan-out ({type} x {metric}) becomes explicit rules |\n| `prep_feature_plot` | `prep_feature_plot` | runs always (upstream always computes it) |\n| `leiden_cluster` | `leiden_RBConfigurationVertexPartition_{0.5,1,1.5,2,4}`, `leiden_ModularityVertexPartition_NA` (6) | partition_types x resolutions fan-out becomes explicit rules; graph always taken from the precomputed UMAP knn-graph |\n| `aggregate_clustering_results` | `aggregate_clustering_results` | upstream `run:` block ported to `scripts/aggregate_clustering.py` (input[0] metadata unused upstream, mirrored) |\n| `aggregate_all_clustering_results` | `aggregate_all_clustering_results` | `run:` block ported to `scripts/aggregate_all_clustering.py` |\n| `plot_dimred_metadata` | `plot_dimred_metadata_{pca,umap,densmap}` (3) | method fan-out; 2D only (upstream default n_components 2) |\n| `plot_dimred_clustering` | `plot_dimred_clustering_{pca,umap,densmap}` (3) | same |\n| `plot_pca_diagnostics` | `plot_pca_diagnostics` | variance/pairs/loadings/lollipop PNGs, mem 8000M |\n| `plot_umap_diagnostics` | `plot_umap_diagnostics_{umap,densmap}` (2) | mem 32000M (upstream) |\n| `plot_umap_connectivity` | `plot_umap_connectivity_{umap,densmap}` (2) | mem 16000M (upstream) |\n| `plot_dimred_interactive` | `plot_dimred_interactive_{pca,umap,densmap}_{2d,3d}` (6) | n_components fan-out; mem 8000M |\n| `plot_heatmap` | `plot_heatmap_{correlation,cosine}` (2) | metric fan-out; hclust method from default list |\n| `clustree_analysis` | `clustree_analysis_default`, `clustree_analysis_custom` (2) | content fan-out |\n| `clustree_analysis_metadata` | `clustree_analysis_metadata` | directory output of per-metadata PNGs |\n| `validation_external` | `validation_external` | all 6 indices (AMI, ARI, FMI, Homogeneity, Completeness, V) in one rule, 6 outputs |\n| `validation_internal` | `validation_internal_{Silhouette,Calinski_Harabasz,Dunn,C_index,Davies_Bouldin,BIC}` (6) | index fan-out; mem 2x (upstream) |\n| `aggregate_rank_internal` | `aggregate_rank_internal` | TOPSIS ranking of the 6 internal indices |\n| `plot_indices` | `plot_indices_external`, `plot_indices_internal` (2) | type fan-out; external = 6 heatmaps, internal = 1 ranked heatmap |\n| `annot_export` | `annot_export` | `cp {input} {output}` |\n| `env_export` (7) | **not ported** | requires runtime `conda env export`; the pinned envs are committed under `envs/` instead (see README) |\n| `config_export` | **not ported** | dumps the in-memory Snakemake config; `[config]` in `main.oxoflow` documents the same values |\n| `plot_dimred_features` | **not ported** | upstream default `features_to_plot: []` produces no output on the default path |\n| `report/` generation | **not ported** | Snakemake report metadata has no oxo-flow counterpart |\n\n### Porting notes and deviations\n\n1. **Annotation mapping**: the upstream annotation CSV's `data`/`metadata`\n   columns become `{config.data_dir}/{sample}_data.csv` and\n   `{config.data_dir}/{sample}_labels.csv`; `samples_by_features` is a global\n   config key (upstream reads it per sample).\n2. **Parameter-list fan-out**: upstream wildcards over parameter lists\n   (UMAP/densMAP n_components, distance-matrix metric/type, Leiden\n   partition_type/resolution, heatmap metric, clustree content, internal\n   index) have no oxo-flow engine equivalent, so each default combination is\n   an explicit rule whose name and paths embed the combination. Changing a\n   listed parameter (e.g. adding a UMAP metric) requires adding rules.\n3. **Snakemake runtime object**: all scripts read their inputs/outputs/params\n   as CLI arguments instead of the `snakemake` global; the analysis code is\n   unchanged. R scripts share `scripts/args.R` for `--flag value` parsing.\n4. **Aggregation rules**: upstream `run:` blocks were ported to Python\n   scripts with identical logic.\n5. **Memory/threads**: upstream `mem: 32000` / `threads: 2` defaults become\n   `[defaults]`; per-rule overrides match upstream (pca diagnostics and\n   interactive plots 8000M, internal validation 2x).\n6. **Environment**: each rule pins the same conda environment as upstream\n   (7 environments, copied verbatim from `workflow/envs/`)."
+  },
+  {
+    "name": "oxo-flow-circrna",
+    "title": "circRNA detection: four callers with ensemble aggregation",
+    "origin": "original",
+    "rating": "community",
+    "created": "2026-08-15",
+    "domain": "transcriptomics (circRNA)",
+    "tags": [
+      "circrna",
+      "ciriquant",
+      "circexplorer2",
+      "find-circ",
+      "circrna-finder",
+      "ensemble"
+    ],
+    "description": "Circular RNA detection with four independent callers (CIRIquant, CIRCexplorer2, find_circ, circRNA_finder) and ensemble aggregation of calls supported by at least two methods. Indexes and conda environments are built automatically on first run from a single reference_dir; samples are auto-discovered from raw/ with no CSV.",
+    "scope": [
+      "fastp",
+      "ciriquant",
+      "circexplorer2",
+      "find_circ",
+      "circrna_finder",
+      "annotation",
+      "aggregate",
+      "aggregate_dataset",
+      "multiqc"
+    ],
+    "excluded": [],
+    "rule_count": 9,
+    "tools": [
+      "fastp",
+      "ciriquant",
+      "circexplorer2",
+      "find_circ",
+      "circrna_finder",
+      "r-base",
+      "multiqc"
+    ],
+    "installation": {
+      "engine": "oxo-flow >= 0.11.0",
+      "toolchain": "conda envs \u2014 pinned (envs/*.yaml, one per tool)",
+      "requirements": [
+        "reference_dir with genome.fa, genes.gtf, hg38_ref.txt, CIRIquant.yml",
+        "paired FASTQ per sample in raw/ (<sample>_1.fastq.gz / <sample>_2.fastq.gz)",
+        "compute: up to 8 threads / 32 GB per rule",
+        "conda or mamba to create the pinned per-rule environments on first run"
+      ]
+    },
+    "repo_url": "https://github.com/WangLabCSU/oxo-flow-circrna",
+    "license": "Apache-2.0",
+    "quickstart": "oxo-flow run circrna.oxoflow -j 16"
   }
 ];

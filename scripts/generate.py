@@ -32,13 +32,17 @@ def load() -> list[dict]:
     return json.loads(DATA.read_text())
 
 
+def norm(heading: str) -> str:
+    return heading.lower().replace(" ", "").replace("-", "").lstrip("#")
+
+
 def section(text: str, heading: str) -> str:
     """Extract a `## Heading` section (until the next heading)."""
     lines = text.splitlines()
     start = None
     for i, line in enumerate(lines):
         if line.startswith("##") and not line.startswith("###"):
-            if line[2:].strip().lstrip("#").strip().lower().startswith(heading.lower()):
+            if norm(line[2:].strip()).startswith(norm(heading)):
                 start = i
             elif start is not None:
                 return "\n".join(lines[start + 1 : i]).strip()
@@ -49,7 +53,7 @@ def section(text: str, heading: str) -> str:
 
 def quickstart_command(text: str) -> str | None:
     """First `oxo-flow ` command line in the Quickstart/Usage section."""
-    for heading in ("Usage", "Quickstart"):
+    for heading in ("Usage", "Quickstart", "Quick Start"):
         qs = section(text, heading)
         for line in qs.splitlines():
             line = line.strip()
