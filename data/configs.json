@@ -4,6 +4,7 @@
     "config": [
       {
         "default": "star_salmon",
+        "description": "Aligner: only the upstream default 'star_salmon' path is ported.",
         "key": "aligner",
         "used_by": [],
         "value_type": "string"
@@ -23,6 +24,7 @@
       },
       {
         "default": true,
+        "description": "DESeq2 QC transform: variance stabilizing transformation (upstream --deseq2_vst default true).",
         "key": "deseq2_vst",
         "used_by": [
           "quantification::deseq2_qc"
@@ -31,6 +33,7 @@
       },
       {
         "default": "--disable-validator P001",
+        "description": "fq lint extra args (upstream: --extra_fqlint_args).",
         "key": "extra_fqlint_args",
         "used_by": [
           "fastq_qc::fq_lint_raw",
@@ -40,6 +43,7 @@
       },
       {
         "default": "test/fixtures/reference/genome.fa",
+        "description": "Reference artifacts (upstream: --fasta / --gtf / --gene_bed / --chrom_sizes / --transcript_fasta / STAR index). PREPARE_GENOME is not ported: the STAR index is an input. transcript_fasta feeds Salmon alignment-mode quant and StringTie.",
         "key": "fasta",
         "used_by": [
           "alignment::picard_markduplicates",
@@ -60,6 +64,7 @@
       },
       {
         "default": "gene_biotype",
+        "description": "featureCounts settings (upstream params with the same defaults).",
         "key": "featurecounts_group_type",
         "used_by": [
           "bam_qc::featurecounts"
@@ -102,6 +107,7 @@
       },
       {
         "default": 10000,
+        "description": "Thresholds (upstream params with the same defaults).",
         "key": "min_trimmed_reads",
         "used_by": [
           "multiqc_custom_content"
@@ -110,6 +116,7 @@
       },
       {
         "default": "results",
+        "description": "Output directory (upstream: --outdir).",
         "key": "out_dir",
         "used_by": [
           "alignment::picard_markduplicates",
@@ -161,6 +168,7 @@
       },
       {
         "default": "test/fixtures/raw",
+        "description": "Input reads directory: reads_dir/<sample>_R1.fastq.gz + _R2.fastq.gz (paired-end). The repo default ships the tiny committed fixtures; point this at your data.",
         "key": "reads_dir",
         "used_by": [
           "fastq_qc::fastqc_raw",
@@ -172,6 +180,7 @@
       },
       {
         "default": "",
+        "description": "Salmon quantification (upstream default path, alignment mode on the STAR toTranscriptome BAM). --libType is derived from config.strandedness (forward -> ISF, reverse -> ISR, unstranded -> IU); set salmon_quant_libtype to override (e.g. \"A\" for auto-detection).",
         "key": "salmon_quant_libtype",
         "used_by": [
           "quantification::salmon_quant"
@@ -186,6 +195,7 @@
       },
       {
         "default": false,
+        "description": "Publication controls (upstream: --save_trimmed / --save_align_intermeds). The port keeps trimmed FASTQs and intermediate BAMs at results/ paths regardless (they double as checkpoints); these keys are accepted for upstream parity and reserved for future use.",
         "key": "save_trimmed",
         "used_by": [],
         "value_type": "bool"
@@ -208,6 +218,7 @@
       },
       {
         "default": false,
+        "description": "DESeq2 sample-level QC (PCA / sample distances / size factors; upstream default path, runs on salmon.merged.gene_counts_length_scaled.tsv).",
         "key": "skip_deseq2_qc",
         "used_by": [
           "quantification::deseq2_qc"
@@ -216,6 +227,7 @@
       },
       {
         "default": false,
+        "description": "Skip options (upstream: --skip_fastqc / --skip_linting / --skip_trimming / --skip_markduplicates / --skip_qc / --skip_bigwig). Same defaults as upstream. NOTE: skip_trimming=true and skip_markduplicates=true break the downstream chain (trimmed reads / markdup BAM are inputs of later rules); unlike upstream there is no per-branch rewire, see README fidelity table.",
         "key": "skip_fastqc",
         "used_by": [
           "fastq_qc::fastqc_raw"
@@ -265,6 +277,7 @@
       },
       {
         "default": false,
+        "description": "Cross-sample tximport merge + SummarizedExperiment RDS objects.",
         "key": "skip_quantification_merge",
         "used_by": [
           "quantification::deseq2_qc",
@@ -275,6 +288,7 @@
       },
       {
         "default": false,
+        "description": "StringTie reference-guided assembly/quantification (-G gtf, -e, ballgown).",
         "key": "skip_stringtie",
         "used_by": [
           "quantification::stringtie"
@@ -307,6 +321,7 @@
       },
       {
         "default": "unstranded",
+        "description": "Library strandedness. Upstream reads this per-sample from the samplesheet ('auto' supported); the port is pipeline-level and supports the three explicit values only. Used by featureCounts (-s), Qualimap (-p), dupRadar and the forward/reverse bigWig gates.",
         "key": "strandedness",
         "used_by": [
           "bam_qc::dupradar",
@@ -369,6 +384,7 @@
       },
       {
         "default": true,
+        "description": "tools / skip_tools equivalents (upstream comma-list params expressed as booleans)",
         "key": "call_haplotypecaller",
         "used_by": [
           "bcftools_stats",
@@ -417,6 +433,7 @@
       },
       {
         "default": "/data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.fasta",
+        "description": "Reference data (user-provided; GRCh38 GATK bundle layout from upstream conf/igenomes.config, substituted at port time)",
         "key": "fasta",
         "used_by": [
           "bwa_mem",
@@ -537,6 +554,7 @@
       },
       {
         "default": "test",
+        "description": "Sample metadata \u2014 mirrors tests/csv/3.0/fastq_single.csv (single-lane model: nf-core/sarek meta.id = \"{sample}-{lane}\", read-group ID = \"{sample}.{lane}\")",
         "key": "patient",
         "used_by": [
           "bwa_mem"
@@ -545,6 +563,7 @@
       },
       {
         "default": false,
+        "description": "CRAM output mode (upstream default)",
         "key": "save_output_as_bam",
         "used_by": [],
         "value_type": "bool"
@@ -617,6 +636,7 @@
       },
       {
         "default": 50000000,
+        "description": "fastp --split_by_lines = split_fastq * 4",
         "key": "split_fastq",
         "used_by": [
           "fastp"
@@ -674,12 +694,14 @@
     "config": [
       {
         "default": "cellranger",
+        "description": "--aligner / --protocol (port implements the cellranger branch; see README fidelity table)",
         "key": "aligner",
         "used_by": [],
         "value_type": "string"
       },
       {
         "default": true,
+        "description": "cellranger reference: build from fasta/gtf, or point transcriptome at an existing index",
         "key": "build_cellranger_index",
         "used_by": [
           "cellranger_mkgtf",
@@ -689,6 +711,7 @@
       },
       {
         "default": "",
+        "description": "samplesheet `expected_cells` column -> `--expect-cells` when set",
         "key": "expected_cells",
         "used_by": [
           "cellranger_count"
@@ -697,6 +720,7 @@
       },
       {
         "default": "refs/refdata.fa.gz",
+        "description": "reference genome (upstream --fasta / --gtf; may be .gz)",
         "key": "fasta",
         "used_by": [
           "gunzip_fasta"
@@ -713,6 +737,7 @@
       },
       {
         "default": "refs/refdata.fa",
+        "description": "derived reference files (README \"Reference genome\" explains the chain)",
         "key": "fasta_prepared",
         "used_by": [
           "cellranger_mkref",
@@ -757,6 +782,7 @@
       },
       {
         "default": "refs/refdata_genes.gtf",
+        "description": "set to the source-fixed file when gtf_source_fix=true",
         "key": "gtf_mkgtf_input",
         "used_by": [
           "cellranger_mkgtf"
@@ -774,6 +800,7 @@
       },
       {
         "default": false,
+        "description": "iGenomes GTF source-field rewrite (opt-in, upstream gtf_source_has_spaces)",
         "key": "gtf_source_fix",
         "used_by": [
           "gtf_source_fix"
@@ -798,6 +825,7 @@
       },
       {
         "default": "",
+        "description": "-> `--title` when set",
         "key": "multiqc_title",
         "used_by": [
           "multiqc"
@@ -812,6 +840,7 @@
       },
       {
         "default": "auto",
+        "description": "passed verbatim as `--chemistry` (10x auto-detection)",
         "key": "protocol",
         "used_by": [
           "cellranger_count"
@@ -820,6 +849,7 @@
       },
       {
         "default": "samplesheet.csv",
+        "description": "user samplesheet consumed by CONCAT_H5AD (same columns as upstream)",
         "key": "samplesheet",
         "used_by": [
           "concat_h5ad_cellbender_filter",
@@ -830,6 +860,7 @@
       },
       {
         "default": true,
+        "description": "-> `--create-bam true`",
         "key": "save_align_intermeds",
         "used_by": [
           "cellranger_count"
@@ -853,6 +884,7 @@
       },
       {
         "default": false,
+        "description": "QC / reporting knobs",
         "key": "skip_fastqc",
         "used_by": [
           "fastqc"
@@ -883,12 +915,14 @@
     "config": [
       {
         "default": false,
+        "description": "ALE (upstream --ale_per_base_output default false -> --metagenome --nout)",
         "key": "ale_per_base_output",
         "used_by": [],
         "value_type": "bool"
       },
       {
         "default": 10000,
+        "description": "Binning options (upstream params with the same defaults)",
         "key": "bin_concoct_chunksize",
         "used_by": [
           "concoct_cutup_megahit",
@@ -928,12 +962,14 @@
       },
       {
         "default": 0,
+        "description": "Bin size filtering (upstream --bin_min_size / --bin_max_size; defaults 0/null make the seqkit-based filter a no-op)",
         "key": "bin_min_size",
         "used_by": [],
         "value_type": "int"
       },
       {
         "default": "S1 S2",
+        "description": "Space-separated list of sample ids used by the binning-preparation bowtie2 alignment rules (binning_map_mode='group': every assembly is aligned against every sample's reads). Keep in sync with the sample group below.",
         "key": "cohort_samples",
         "used_by": [
           "bowtie2_align_megahit",
@@ -969,6 +1005,7 @@
       },
       {
         "default": "https://data.gtdb.aau.ecogenomic.org/releases/release232/232.0/auxillary_files/gtdbtk_package/full_package/gtdbtk_r232_data.tar.gz",
+        "description": "GTDB-Tk database: URL of the .tar.gz release or a local directory (upstream --gtdb_db default). gtdbtk_db_preparation unpacks .tar.gz.",
         "key": "gtdb_db",
         "used_by": [
           "gtdbtk_db_preparation"
@@ -1015,6 +1052,7 @@
       },
       {
         "default": 50.0,
+        "description": "GTDB-Tk (upstream params with the same defaults)",
         "key": "gtdbtk_min_completeness",
         "used_by": [
           "gtdbtk_megahit_comebin",
@@ -1084,6 +1122,7 @@
       },
       {
         "default": "test/fixtures/raw",
+        "description": "Input directory containing {sample}_R1.fastq.gz / {sample}_R2.fastq.gz paired-end read files (upstream --input samplesheet; single-end and multi-library lanes are not ported). The repo default ships tiny test fixtures; point this at your data.",
         "key": "input_dir",
         "used_by": [
           "fastp",
@@ -1274,6 +1313,7 @@
       },
       {
         "default": "assets/data/GCA_002596845.1_ASM259684v1_genomic.fna.gz",
+        "description": "phiX reference (upstream --phix_reference default = projectDir/assets/data/GCA_002596845.1_ASM259684v1_genomic.fna.gz)",
         "key": "phix_reference",
         "used_by": [
           "phix_build"
@@ -1288,12 +1328,14 @@
       },
       {
         "default": false,
+        "description": "PROKKA (upstream params with the same defaults)",
         "key": "prokka_with_compliance",
         "used_by": [],
         "value_type": "bool"
       },
       {
         "default": 15,
+        "description": "fastp clipping (upstream params with the same defaults)",
         "key": "reads_minlength",
         "used_by": [
           "fastp"
@@ -1331,6 +1373,7 @@
     "config": [
       {
         "default": "",
+        "description": "--- primers (upstream default null renders literal \"null\" adapters; port uses empty strings \u2014 see README fidelity table) ---",
         "key": "FW_primer",
         "used_by": [
           "cutadapt"
@@ -1355,6 +1398,7 @@
       },
       {
         "default": 3,
+        "description": "cutadapt",
         "key": "cutadapt_min_overlap",
         "used_by": [
           "cutadapt"
@@ -1387,6 +1431,7 @@
       },
       {
         "default": 50,
+        "description": "DADA2 taxonomy assignment",
         "key": "dada_min_boot",
         "used_by": [
           "dada2_taxonomy"
@@ -1451,6 +1496,7 @@
       },
       {
         "default": "merge",
+        "description": "\"merge\" | \"consensus\" | \"concatenate\"",
         "key": "mergepairs_strategy",
         "used_by": [
           "dada2_denoising"
@@ -1485,6 +1531,7 @@
       },
       {
         "default": "1",
+        "description": "run / metadata",
         "key": "run_id",
         "used_by": [
           "dada2_denoising",
@@ -1497,6 +1544,7 @@
       },
       {
         "default": "independent",
+        "description": "\"independent\" | \"pooled\" | \"pseudo\"",
         "key": "sample_inference",
         "used_by": [
           "dada2_denoising"
@@ -1535,6 +1583,7 @@
       },
       {
         "default": false,
+        "description": "skip flags (upstream params.skip_*, all default false -> full default path)",
         "key": "skip_fastqc",
         "used_by": [
           "fastqc"
@@ -1574,6 +1623,7 @@
       },
       {
         "default": 25,
+        "description": "DADA2 filtering / denoising",
         "key": "trunc_qmin",
         "used_by": [
           "trunclen_fw",
@@ -1627,6 +1677,7 @@
       },
       {
         "default": 0.1,
+        "description": "Peaks (broad mode only \u2014 the nf-core default)",
         "key": "broad_cutoff",
         "used_by": [
           "peaks::macs3_callpeak"
@@ -1643,6 +1694,7 @@
       },
       {
         "default": 0,
+        "description": "Alignment / filtering",
         "key": "bwa_min_score",
         "used_by": [
           "align::bwa_mem"
@@ -1772,6 +1824,7 @@
       },
       {
         "default": "",
+        "description": "MACS3 genome size. Empty string = derive from read length via khmer (faithful to the upstream default).",
         "key": "macs_gsize",
         "used_by": [
           "peaks::macs3_callpeak",
@@ -1822,6 +1875,7 @@
           "C1_REP1",
           "C1_REP2"
         ],
+        "description": "Sample metadata. pair_ids MUST be kept in sync with [[pairs]] (the oxo-flow analogue of the nf-core samplesheet meta.id column). ip_ids lists the samples that get peak calling \u2014 upstream only runs MACS3 for samples that have a control; the port mirrors this with per-pair rules whose {control} input is empty for control-only samples and skipped via `optional = true`.",
         "key": "pair_ids",
         "used_by": [],
         "value_type": "array"
@@ -1865,6 +1919,7 @@
       },
       {
         "default": "",
+        "description": "Read group / trimming",
         "key": "seq_center",
         "used_by": [
           "align::bwa_mem"
@@ -1893,6 +1948,7 @@
       },
       {
         "default": false,
+        "description": "Step toggles (mirror the nf-core/chipseq params.skip_* / when gates)",
         "key": "skip_fastqc",
         "used_by": [
           "qc::fastqc"
@@ -2026,6 +2082,7 @@
     "config": [
       {
         "default": "",
+        "description": "params.blacklist \u2014 include-regions BED (complement of ENCODE",
         "key": "blacklist",
         "used_by": [
           "bamtools_filter"
@@ -2042,6 +2099,7 @@
       },
       {
         "default": "test/fixtures/genome/genome.fa",
+        "description": "params.bwa \u2014 index prefix (.amb/.ann/.bwt/.pac/.sa beside it)",
         "key": "bwa_index",
         "used_by": [
           "bwa_mem"
@@ -2050,6 +2108,7 @@
       },
       {
         "default": "test/fixtures/genome/genome.fa.sizes",
+        "description": "CUSTOM_GETCHROMSIZES output",
         "key": "chrom_sizes",
         "used_by": [
           "ucsc_bedgraphtobigwig"
@@ -2075,6 +2134,7 @@
       },
       {
         "default": "test/fixtures/genome/gene.bed",
+        "description": "params.gene_bed",
         "key": "gene_bed",
         "used_by": [
           "deeptools_plots"
@@ -2083,6 +2143,7 @@
       },
       {
         "default": "test/fixtures/genome/genes.gtf",
+        "description": "params.gtf",
         "key": "gtf",
         "used_by": [
           "homer_annotatepeaks"
@@ -2103,6 +2164,7 @@
       },
       {
         "default": "2.7e9",
+        "description": "blacklist + chrM when keep_mito=false); empty = no -L filter",
         "key": "macs_gsize",
         "used_by": [
           "macs2_callpeak"
@@ -2117,12 +2179,14 @@
       },
       {
         "default": false,
+        "description": "Upstream default params (kept as config so CLI overrides work)",
         "key": "narrow_peak",
         "used_by": [],
         "value_type": "bool"
       },
       {
         "default": "results",
+        "description": "params.outdir",
         "key": "out_dir",
         "used_by": [
           "bamtools_filter",
@@ -2145,6 +2209,7 @@
       },
       {
         "default": "test/fixtures/raw",
+        "description": "input fastqs (raw/<sample>.fastq.gz for single-end)",
         "key": "raw_dir",
         "used_by": [
           "fastqc",
@@ -2154,6 +2219,7 @@
       },
       {
         "default": "test/fixtures/genome/genome.fa",
+        "description": "Reference inputs. Upstream obtains these from nf-core iGenomes (--genome); this port expects pre-built files (see README \"References\").",
         "key": "reference",
         "used_by": [
           "bamtools_filter",
@@ -2219,6 +2285,7 @@
       },
       {
         "default": "test/fixtures/genome/tss.bed",
+        "description": "params.tss_bed",
         "key": "tss_bed",
         "used_by": [
           "deeptools_plots"
@@ -2240,12 +2307,14 @@
       },
       {
         "default": "bismark",
+        "description": "Only the 'bismark' (bowtie2) aligner is ported. 'bismark_hisat', 'bwameth', 'bwamem' are NOT ported (see README fidelity table).",
         "key": "aligner",
         "used_by": [],
         "value_type": "string"
       },
       {
         "default": 0,
+        "description": "Trimming options (upstream params with the same defaults)",
         "key": "clip_r1",
         "used_by": [
           "trimgalore"
@@ -2270,6 +2339,7 @@
       },
       {
         "default": false,
+        "description": "Bismark options",
         "key": "cytosine_report",
         "used_by": [
           "bismark_coverage2cytosine"
@@ -2287,6 +2357,7 @@
       },
       {
         "default": "test/fixtures/refs/genome.fa",
+        "description": "Reference genome (upstream: --fasta). Uncompressed FASTA; the port always builds the Bismark index from it (upstream default when --bismark_index is not supplied). Point this at your genome; the repo default ships the tiny test fixture.",
         "key": "fasta",
         "used_by": [
           "bismark_genomepreparation"
@@ -2367,6 +2438,7 @@
       },
       {
         "default": "",
+        "description": "MultiQC",
         "key": "multiqc_title",
         "used_by": [
           "multiqc"
@@ -2444,6 +2516,7 @@
       },
       {
         "default": "test/fixtures/raw",
+        "description": "Input reads directory: raw/<sample>_R1.fastq.gz + _R2.fastq.gz (paired-end). The repo default ships the tiny test fixtures; point this at your data.",
         "key": "raw_dir",
         "used_by": [
           "fastqc",
@@ -2461,6 +2534,7 @@
       },
       {
         "default": false,
+        "description": "Library presets (upstream params with the same defaults).",
         "key": "rrbs",
         "used_by": [
           "bismark_deduplicate",
@@ -2487,6 +2561,7 @@
       },
       {
         "default": false,
+        "description": "Skip options (upstream: --skip_fastqc / --skip_trimming / --skip_deduplication / --skip_multiqc). Same defaults as upstream.",
         "key": "skip_fastqc",
         "used_by": [
           "fastqc"
@@ -2563,12 +2638,14 @@
     "config": [
       {
         "default": "minimap2",
+        "description": "-- Alignment",
         "key": "aligner",
         "used_by": [],
         "value_type": "string"
       },
       {
         "default": "Auto",
+        "description": "-- Demultiplexing (upstream defaults)",
         "key": "barcode_kit",
         "used_by": [
           "qcat"
@@ -2577,6 +2654,7 @@
       },
       {
         "default": false,
+        "description": "-- Variant calling (upstream default: off)",
         "key": "call_variants",
         "used_by": [
           "minimap2_align"
@@ -2585,6 +2663,7 @@
       },
       {
         "default": "",
+        "description": "-- GTF annotation (upstream samplesheet gtf column; empty on the default path)",
         "key": "gtf",
         "used_by": [
           "gtf2bed"
@@ -2603,6 +2682,7 @@
       },
       {
         "default": "test/fixtures/samplesheet.csv",
+        "description": "-- Samplesheet and demultiplexing input (upstream: --input / --input_path)",
         "key": "input",
         "used_by": [
           "samplesheet_check"
@@ -2627,6 +2707,7 @@
       },
       {
         "default": "",
+        "description": "-- MultiQC options",
         "key": "multiqc_title",
         "used_by": [
           "multiqc"
@@ -2635,6 +2716,7 @@
       },
       {
         "default": "results",
+        "description": "-- Output directory (upstream: --outdir, default ./results)",
         "key": "out_dir",
         "used_by": [
           "bedtools_genomecov",
@@ -2661,6 +2743,7 @@
       },
       {
         "default": "DNA",
+        "description": "-- Protocol (upstream: --protocol; mandatory upstream, one of DNA/cDNA/directRNA)",
         "key": "protocol",
         "used_by": [
           "minimap2_align",
@@ -2686,6 +2769,7 @@
       },
       {
         "default": "test/fixtures/refs/genome.fa",
+        "description": "-- Reference genome (collapses the samplesheet fasta column; the default path uses a single reference for all samples, as in the upstream test data)",
         "key": "reference",
         "used_by": [
           "get_chrom_sizes",
@@ -2697,6 +2781,7 @@
       },
       {
         "default": "genome.fa",
+        "description": "Basename of the reference; mirrors the upstream staged-file name so that indexes keep the upstream naming (genome.fa.mmi / genome.fa.sizes / genome.fa.fai)",
         "key": "reference_name",
         "used_by": [
           "get_chrom_sizes",
@@ -2709,6 +2794,7 @@
       },
       {
         "default": false,
+        "description": "-- Raw read cleaning (upstream default: off)",
         "key": "run_nanolyse",
         "used_by": [],
         "value_type": "bool"
@@ -2740,6 +2826,7 @@
       },
       {
         "default": false,
+        "description": "-- Visualisation (upstream defaults: bigwig/bigbed ON; bigbed is protocol-gated upstream to cDNA/directRNA and so never runs on the default DNA path)",
         "key": "skip_bigwig",
         "used_by": [
           "bedtools_genomecov",
@@ -2781,6 +2868,7 @@
       },
       {
         "default": false,
+        "description": "-- QC (upstream defaults: all QC on)",
         "key": "skip_qc",
         "used_by": [
           "fastqc",
@@ -2804,6 +2892,7 @@
     "config": [
       {
         "default": "spades",
+        "description": "Assembly (only the upstream default 'spades' assembler is ported)",
         "key": "assemblers",
         "used_by": [],
         "value_type": "string"
@@ -2819,6 +2908,7 @@
       },
       {
         "default": "reference/genome.fa",
+        "description": "The port expects uncompressed files at these paths. Set the *_ends_gz keys to true to run the upstream GUNZIP_* steps first (outputs land at the same fixed reference/ paths).",
         "key": "fasta",
         "used_by": [
           "gunzip_fasta"
@@ -2835,6 +2925,7 @@
       },
       {
         "default": "test/fixtures/refs/freyja_barcodes.csv",
+        "description": "--- Freyja (upstream --freyja_barcodes / --freyja_lineages. FREYJA_UPDATE, the network download, is not ported.) ---",
         "key": "freyja_barcodes",
         "used_by": [
           "freyja_boot",
@@ -2910,6 +3001,7 @@
       },
       {
         "default": "reference/kraken2_db.tar.gz",
+        "description": "Kraken2 host-removal database (upstream --kraken2_db, tar.gz)",
         "key": "kraken2_db",
         "used_by": [
           "untar_kraken2_db"
@@ -2924,6 +3016,7 @@
       },
       {
         "default": 200,
+        "description": "Consensus QC",
         "key": "min_contig_length",
         "used_by": [
           "blast_assembly"
@@ -2946,6 +3039,7 @@
       },
       {
         "default": "",
+        "description": "MultiQC",
         "key": "multiqc_title",
         "used_by": [
           "multiqc"
@@ -2954,6 +3048,7 @@
       },
       {
         "default": "",
+        "description": "Nextclade dataset (upstream genome config for MN908947.3)",
         "key": "nextclade_dataset",
         "used_by": [
           "get_nextclade_dataset"
@@ -2989,6 +3084,7 @@
       },
       {
         "default": "test/fixtures/refs/pangolin_db",
+        "description": "--- Pangolin (upstream --pango_database; a directory. PANGOLIN_UPDATEDATA, the network download of the data directory, is not ported.) ---",
         "key": "pango_database",
         "used_by": [
           "pangolin"
@@ -2997,6 +3093,7 @@
       },
       {
         "default": "illumina",
+        "description": "Platform / protocol",
         "key": "platform",
         "used_by": [
           "multiqc"
@@ -3021,6 +3118,7 @@
       },
       {
         "default": "_LEFT",
+        "description": "Primer trimming for assembly",
         "key": "primer_left_suffix",
         "used_by": [
           "collapse_primers"
@@ -3072,6 +3170,7 @@
       },
       {
         "default": "test/fixtures/raw",
+        "description": "Directory holding raw/<sample>_R1.fastq.gz + raw/<sample>_R2.fastq.gz. The repo default ships the tiny test fixtures; point this at your data.",
         "key": "raw_dir",
         "used_by": [
           "cat_fastq",
@@ -3192,6 +3291,7 @@
       },
       {
         "default": false,
+        "description": "Skip flags (identical defaults to upstream params)",
         "key": "skip_fastqc",
         "used_by": [
           "fastqc_primers",
@@ -3366,6 +3466,7 @@
       },
       {
         "default": "ivar",
+        "description": "--- Variant calling (upstream params.variant_caller defaults to 'ivar' for the amplicon protocol; the bcftools variant-caller branch is not ported) ---",
         "key": "variant_caller",
         "used_by": [
           "call_variants_ivar",
@@ -3413,6 +3514,7 @@
       },
       {
         "default": "AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC",
+        "description": "read clipping / merging",
         "key": "clip_forward_adaptor",
         "used_by": [
           "adapter_removal"
@@ -3453,6 +3555,7 @@
       },
       {
         "default": false,
+        "description": "complexity (poly-G) filter",
         "key": "complexity_filter_poly_g",
         "used_by": [
           "fastp"
@@ -3469,6 +3572,7 @@
       },
       {
         "default": "damageprofiler",
+        "description": "damage estimation",
         "key": "damage_calculation_tool",
         "used_by": [
           "damageprofiler"
@@ -3507,6 +3611,7 @@
       },
       {
         "default": "markduplicates",
+        "description": "deduplication",
         "key": "dedupper",
         "used_by": [
           "dedup",
@@ -3516,6 +3621,7 @@
       },
       {
         "default": "test/fixtures/reference/genome.fa",
+        "description": "input / library metadata (directory-input mode defaults)",
         "key": "fasta",
         "used_by": [
           "make_bwa_index",
@@ -3558,6 +3664,7 @@
       },
       {
         "default": "bwaaln",
+        "description": "mapping",
         "key": "mapper",
         "used_by": [
           "bwa_aln"
@@ -3654,6 +3761,7 @@
       },
       {
         "default": 1000,
+        "description": "preseq",
         "key": "preseq_step_size",
         "used_by": [
           "preseq"
@@ -3682,6 +3790,7 @@
       },
       {
         "default": false,
+        "description": "genotyping (pileupCaller branch)",
         "key": "run_genotyping",
         "used_by": [
           "eigenstrat_snp_coverage",
@@ -3743,6 +3852,7 @@
       },
       {
         "default": false,
+        "description": "skipping (upstream defaults: run everything except optional branches)",
         "key": "skip_fastqc",
         "used_by": [
           "fastqc",
@@ -3793,6 +3903,7 @@
       },
       {
         "default": "",
+        "description": "Comma-separated ENA metadata fields; empty = upstream default field list.",
         "key": "ena_metadata_fields",
         "used_by": [
           "sra_ids_to_runinfo"
@@ -3801,6 +3912,7 @@
       },
       {
         "default": "test/fixtures/ids.txt",
+        "description": "File containing SRA/ENA/GEO/DDBJ identifiers, one per line (upstream --input). Keep in sync with the [[sample_groups]] list below: check_ids validates this file, the sample source drives the per-id expansion. Add extra ids on the CLI with `oxo-flow run main.oxoflow --sample <ID>`.",
         "key": "input",
         "used_by": [
           "check_ids"
@@ -3809,6 +3921,7 @@
       },
       {
         "default": "",
+        "description": "nf-core pipeline to tailor the samplesheet for (rnaseq/atacseq/taxprofiler); empty = none.",
         "key": "nf_core_pipeline",
         "used_by": [
           "sra_to_samplesheet"
@@ -3873,6 +3986,7 @@
       },
       {
         "default": "hsapiens",
+        "description": "biomaRt species dataset suffix (upstream get_bioc_species_name()).",
         "key": "biomart_species",
         "used_by": [
           "gene_2_symbol_counts",
@@ -3899,6 +4013,7 @@
       },
       {
         "default": "treatment_1",
+        "description": "Contrasts (upstream: diffexp.contrasts). One comma-joined entry per contrast: contrast id, its variable_of_interest, its level_of_interest. The base level comes from diffexp_base_levels.",
         "key": "contrasts",
         "used_by": [],
         "value_type": "string"
@@ -3930,6 +4045,7 @@
       },
       {
         "default": "treatment_1,treatment_2",
+        "description": "Differential expression (upstream: diffexp.*). Comma-joined lists mirror the upstream nested tables; positions pair up (treatment_1 -> untreated, treatment_2 -> untreated).",
         "key": "diffexp_variables",
         "used_by": [
           "deseq2",
@@ -3939,6 +4055,7 @@
       },
       {
         "default": "--detect_adapter_for_pe",
+        "description": "fastp adapter args and extra args (upstream: per-unit columns fastp_adapters / fastp_extra; the port uses the upstream defaults).",
         "key": "fastp_adapters",
         "used_by": [
           "fastp_pe"
@@ -3971,6 +4088,7 @@
       },
       {
         "default": true,
+        "description": "PCA (upstream: pca.activate / pca.labels). pca_variables is the derived upstream list (variables_of_interest + batch_effects + labels), kept explicit here \u2014 keep it in sync with the diffexp keys below.",
         "key": "pca_activate",
         "used_by": [
           "pca"
@@ -3991,6 +4109,7 @@
       },
       {
         "default": "test/fixtures/raw",
+        "description": "Directory holding <unit-key>_R1.fastq.gz / _R2.fastq.gz per config/units.tsv. The repo default ships the tiny test fixtures; point this at your data (e.g. \"raw\").",
         "key": "raw_dir",
         "used_by": [
           "fastp_pe"
@@ -4011,6 +4130,7 @@
       },
       {
         "default": "homo_sapiens",
+        "description": "Reference (upstream: ref.species / ref.release / ref.build). The download URLs below are the Ensembl URLs the wrappers resolve for these values.",
         "key": "ref_species",
         "used_by": [],
         "value_type": "string"
@@ -4025,6 +4145,7 @@
       },
       {
         "default": "",
+        "description": "STAR extra params (upstream: params.star.index / params.star.align).",
         "key": "star_index_extra",
         "used_by": [
           "star_index"
@@ -4033,6 +4154,7 @@
       },
       {
         "default": true,
+        "description": "Trimming (upstream: trimming.activate). The fastp rule runs only when activated; deactivating breaks star_align in this port (upstream rewires star_align to the raw reads \u2014 not ported).",
         "key": "trimming_activate",
         "used_by": [
           "fastp_pe"
@@ -4054,6 +4176,7 @@
     "config": [
       {
         "default": "test/fixtures/raw",
+        "description": "Path to the raw paired-end FASTQs of the single sample (upstream config/units.tsv points at absolute /projects/... paths; the port reads from the repository fixtures instead).",
         "key": "reads_dir",
         "used_by": [
           "mapping::merge_trimmed_fastqs_r1",
@@ -4154,6 +4277,7 @@
       },
       {
         "default": 0.05,
+        "description": "significance thresholds (upstream adjp_th)",
         "key": "adjp_th_ORA_GSEApy",
         "used_by": [
           "visualize_ORA_GSEApy_Azimuth_2023_ATAC",
@@ -4190,12 +4314,14 @@
       },
       {
         "default": "config/annotation.csv",
+        "description": "general",
         "key": "annotation",
         "used_by": [],
         "value_type": "string"
       },
       {
         "default": "all_regions",
+        "description": "upstream annotation background_name (all region sets)",
         "key": "background_name",
         "used_by": [
           "gene_ORA_GSEApy_Azimuth_2023",
@@ -4387,6 +4513,7 @@
       },
       {
         "default": 25,
+        "description": "tool-specific column names (upstream column_names)",
         "key": "cn_ORA_GSEApy_top_n",
         "used_by": [
           "plot_enrichment_result_ORA_GSEApy_Azimuth_2023",
@@ -4507,6 +4634,7 @@
       },
       {
         "default": "test/resources/enrichment_analysis/Azimuth_2023.json",
+        "description": "databases (upstream local_databases / lola_databases)",
         "key": "db_Azimuth_2023",
         "used_by": [
           "prepare_databases_Azimuth_2023"
@@ -4573,6 +4701,7 @@
       },
       {
         "default": 0,
+        "description": "GREAT parameters (upstream great_parameters)",
         "key": "great_min_gene_set_size",
         "used_by": [
           "region_enrichment_analysis_GREAT_Azimuth_2023",
@@ -4657,6 +4786,7 @@
       },
       {
         "default": "['Direct_annot', 'Motif_similarity_annot', 'Orthology_annot', 'Motif_similarity_and_Orthology_annot']",
+        "description": "upstream passes the python list literal; kept as a string so the rendered command is byte-identical to upstream's",
         "key": "pycistarget_annotations_to_use",
         "used_by": [
           "region_motif_enrichment_analysis_pycisTarget"
@@ -4681,6 +4811,7 @@
       },
       {
         "default": 0.4,
+        "description": "pycisTarget parameters (upstream pycistarget_parameters)",
         "key": "pycistarget_fraction_overlap_w_cistarget_database",
         "used_by": [
           "region_motif_enrichment_analysis_pycisTarget"
@@ -4721,6 +4852,7 @@
       },
       {
         "default": "Direct_annot",
+        "description": "first entry of annotations_to_use",
         "key": "pycistarget_term_col",
         "used_by": [
           "process_results_pycisTarget"
@@ -4729,6 +4861,7 @@
       },
       {
         "default": "test/data/CorcesATAC",
+        "description": "feature sets (derived from config/annotation.csv at port time)",
         "key": "region_beds",
         "used_by": [
           "region_enrichment_analysis_GREAT_Azimuth_2023",
@@ -4793,6 +4926,7 @@
       },
       {
         "default": "test/data/CorcesRNA",
+        "description": "{gene_set}.csv per entry of rnk_sets",
         "key": "rnk_dir",
         "used_by": [
           "gene_preranked_GSEApy_Azimuth_2023",
@@ -4811,6 +4945,7 @@
       },
       {
         "default": "homo_sapiens",
+        "description": "upstream derives species from genome (hg19/hg38 -> homo_sapiens); ported as config key",
         "key": "species",
         "used_by": [
           "region_motif_enrichment_analysis_pycisTarget"
@@ -4819,6 +4954,7 @@
       },
       {
         "default": 5,
+        "description": "aggregate & summarize (upstream top_terms_n / adjp_cap / or_cap / nes_cap / cluster_summary)",
         "key": "top_terms_n",
         "used_by": [
           "visualize_GREAT_Azimuth_2023_ATAC",
@@ -4906,6 +5042,7 @@
       },
       {
         "default": "myData",
+        "description": "upstream config/config.yaml defaults, adapted paths",
         "key": "project_name",
         "used_by": [
           "annot_export",
@@ -4969,6 +5106,7 @@
     "config": [
       {
         "default": "test/fixtures/annotation.csv",
+        "description": "GENERAL",
         "key": "annotation",
         "used_by": [
           "annot_export",
@@ -4978,6 +5116,7 @@
       },
       {
         "default": "AB",
+        "description": "VISUALIZATION",
         "key": "antibody_capture",
         "used_by": [
           "config_export",
@@ -4987,6 +5126,7 @@
       },
       {
         "default": "SCT",
+        "description": "assay to analyse (\"SCT\" or \"RNA\")",
         "key": "assay",
         "used_by": [
           "config_export",
@@ -5007,6 +5147,7 @@
       },
       {
         "default": "test/fixtures/data",
+        "description": "per-sample Seurat .rds inputs: {data_dir}/{sample}.rds",
         "key": "data_dir",
         "used_by": [
           "mixscape"
@@ -5015,6 +5156,7 @@
       },
       {
         "default": "FALSE",
+        "description": "RunMixscape (flattened)",
         "key": "fine_mode",
         "used_by": [
           "config_export",
@@ -5035,6 +5177,7 @@
       },
       {
         "default": "gRNAcall",
+        "description": "CalcPerturbSig (upstream nested keys flattened; values identical)",
         "key": "grna_col",
         "used_by": [
           "config_export",
@@ -5044,6 +5187,7 @@
       },
       {
         "default": "-",
+        "description": "MIXSCAPE",
         "key": "grna_split_symbol",
         "used_by": [
           "config_export",
@@ -5053,6 +5197,7 @@
       },
       {
         "default": "10",
+        "description": "LDA",
         "key": "lda_npcs",
         "used_by": [
           "config_export",
@@ -5073,6 +5218,7 @@
       },
       {
         "default": "32000",
+        "description": "RESOURCES (upstream config/config.yaml)",
         "key": "mem",
         "used_by": [
           "config_export"
@@ -5158,6 +5304,7 @@
       },
       {
         "default": "results",
+        "description": "upstream result_path; results land under result_path/mixscape_seurat",
         "key": "result_path",
         "used_by": [
           "annot_export",
@@ -5172,6 +5319,7 @@
       },
       {
         "default": "1",
+        "description": "upstream threads; mixscape rule runs 8x",
         "key": "threads",
         "used_by": [
           "config_export"
@@ -5180,6 +5328,7 @@
       },
       {
         "default": "0",
+        "description": "analyse only variable features (1=yes, 0=no)",
         "key": "variable_features_only",
         "used_by": [
           "config_export",
@@ -5194,6 +5343,7 @@
     "config": [
       {
         "default": "resources/antismash_db",
+        "description": "upstream resources_path.antismash_db",
         "key": "antismash_db_path",
         "used_by": [
           "antismash",
@@ -5203,12 +5353,14 @@
       },
       {
         "default": "7",
+        "description": "antiSMASH (upstream rule_parameters.antismash + envs/antismash.yaml)",
         "key": "antismash_major",
         "used_by": [],
         "value_type": "string"
       },
       {
         "default": "bacteria",
+        "description": "upstream env var BGCFLOW_ANTISMASH_MODE",
         "key": "antismash_taxon",
         "used_by": [
           "antismash"
@@ -5217,6 +5369,7 @@
       },
       {
         "default": "7.1.0",
+        "description": "derived from envs/antismash.yaml pip pin git@7-1-0-1",
         "key": "antismash_version",
         "used_by": [
           "antismash",
@@ -5241,6 +5394,7 @@
       },
       {
         "default": "1.1.2",
+        "description": "BGCflow housekeeping",
         "key": "bgcflow_version",
         "used_by": [
           "format_gbk"
@@ -5257,6 +5411,7 @@
       },
       {
         "default": "False",
+        "description": "upstream: use_gtdb_api False -> offline mode",
         "key": "gtdb_offline",
         "used_by": [
           "gtdb_prep"
@@ -5265,6 +5420,7 @@
       },
       {
         "default": "220.0",
+        "description": "GTDB taxonomy (upstream rule_parameters.install_gtdbtk + use_gtdb_api)",
         "key": "gtdb_release",
         "used_by": [
           "gtdb_prep"
@@ -5273,6 +5429,7 @@
       },
       {
         "default": "220",
+        "description": "GTDB release major version (upstream: release.split('.')[0])",
         "key": "gtdb_release_major",
         "used_by": [
           "gtdb_prep"
@@ -5281,12 +5438,14 @@
       },
       {
         "default": "r220",
+        "description": "GTDB release id (e.g. r214, r220)",
         "key": "gtdb_release_version",
         "used_by": [],
         "value_type": "string"
       },
       {
         "default": "[]",
+        "description": "upstream GTDB_PATHS: space-separated user gtdb-tax tsv(s)",
         "key": "gtdb_tax_paths",
         "used_by": [
           "gtdb_prep"
@@ -5295,12 +5454,14 @@
       },
       {
         "default": "fna",
+        "description": "upstream get_input_location(): fna | gbk",
         "key": "input_type",
         "used_by": [],
         "value_type": "string"
       },
       {
         "default": "3.1",
+        "description": "MIBiG JSON release used by get_mibig_table",
         "key": "mibig_version",
         "used_by": [
           "get_mibig_table"
@@ -5309,6 +5470,7 @@
       },
       {
         "default": "genomes",
+        "description": "Project / input genomes (upstream: config.yaml `projects` + data/raw/fasta)",
         "key": "project",
         "used_by": [
           "antismash_overview_gather",
@@ -5323,6 +5485,7 @@
       },
       {
         "default": "test/fixtures/raw",
+        "description": "directory containing fasta/<genome_id>.fna",
         "key": "raw_dir",
         "used_by": [
           "copy_custom_fasta"
@@ -5346,6 +5509,7 @@
       },
       {
         "default": 0,
+        "description": "CLUSTREE",
         "key": "clustree_count_filter",
         "used_by": [
           "clustree_analysis_custom",
@@ -5386,6 +5550,7 @@
       },
       {
         "default": 0,
+        "description": "VISUALIZATION",
         "key": "coord_fixed",
         "used_by": [
           "plot_dimred_clustering_densmap",
@@ -5454,6 +5619,7 @@
       },
       {
         "default": "complete",
+        "description": "HEATMAP (upstream heatmap: metrics [correlation, cosine] -> 2 rules)",
         "key": "heatmap_hclust_method",
         "used_by": [
           "plot_heatmap_correlation",
@@ -5485,6 +5651,7 @@
       },
       {
         "default": "euclidean",
+        "description": "LEIDEN (upstream leiden: metric euclidean / n_neighbors 15 -> 6 rules)",
         "key": "leiden_metric",
         "used_by": [
           "leiden_ModularityVertexPartition_NA",
@@ -5532,6 +5699,7 @@
         "default": [
           "target"
         ],
+        "description": "METADATA",
         "key": "metadata_of_interest",
         "used_by": [
           "clustree_analysis_custom",
@@ -5570,6 +5738,7 @@
       },
       {
         "default": "auto",
+        "description": "PCA (upstream pca: svd_solver, n_components)",
         "key": "pca_svd_solver",
         "used_by": [
           "pca",
@@ -5589,6 +5758,7 @@
       },
       {
         "default": "digits",
+        "description": "GENERAL",
         "key": "project_name",
         "used_by": [
           "annot_export"
@@ -5656,6 +5826,7 @@
       },
       {
         "default": 1,
+        "description": "CLUSTER VALIDATION",
         "key": "sample_proportion",
         "used_by": [
           "validation_internal_BIC",
@@ -5709,6 +5880,7 @@
       },
       {
         "default": 2,
+        "description": "RESOURCES (upstream config: mem/threads)",
         "key": "threads",
         "used_by": [],
         "value_type": "int"
@@ -5733,6 +5905,7 @@
       },
       {
         "default": "euclidean",
+        "description": "UMAP & densMAP (upstream umap: single default metric/neighbors/min_dist)",
         "key": "umap_metric",
         "used_by": [
           "densmap_embed_2d",
@@ -5871,12 +6044,14 @@
       },
       {
         "default": "/data/references/GRCh38",
+        "description": "=== The only path you need to set === All indexes and reference paths are auto-derived from this directory. Expected layout: {reference_dir}/genome.fa {reference_dir}/genes.gtf",
         "key": "reference_dir",
         "used_by": [],
         "value_type": "string"
       },
       {
         "default": "{config.reference_dir}/genome.fa",
+        "description": "=== Auto-derived from reference_dir \u2014 override any of these if your layout differs ===",
         "key": "reference_fasta",
         "used_by": [
           "circexplorer2",
@@ -5905,6 +6080,7 @@
     "config": [
       {
         "default": "",
+        "description": "BED tracks used by mutation_flag \u2014 name/path TSV mirroring upstream softwares_params[genome].annotate_beds dict (empty = header-only, no flags)",
         "key": "annotate_beds_file",
         "used_by": [
           "make_region_bed_list"
@@ -5919,6 +6095,7 @@
       },
       {
         "default": "test/fixtures/refs/annotations/dbsnp_146.hg38_chr21.vcf.gz",
+        "description": "MuSE sump needs a gzipped dbSNP",
         "key": "dbsnp_gz",
         "used_by": [
           "muse_sump"
@@ -6009,6 +6186,7 @@
       },
       {
         "default": "/tmp",
+        "description": "Java temp dir (upstream: config['params']['java']['temp_directory'])",
         "key": "java_temp_dir",
         "used_by": [
           "M2_SNC",
@@ -6035,6 +6213,7 @@
       },
       {
         "default": "test/fixtures/refs/annotations/gnomAD.r2.1.1.GRCh38.PASS.AC.AF.only_chr21.vcf.gz",
+        "description": "Mutect2 GetPileupSummaries sites + germline resource",
         "key": "mutect2_vcf",
         "used_by": [
           "M2_SNC",
@@ -6044,6 +6223,7 @@
       },
       {
         "default": "GRCh38",
+        "description": "vcf2maf / VEP (upstream: config['softwares_params'][genome_version]['vcf2maf'])",
         "key": "ncbi_build",
         "used_by": [
           "vcf2maf_HaplotypeCaller",
@@ -6143,12 +6323,14 @@
         "default": [
           "mini"
         ],
+        "description": "Engine-injected list of pair ids (used by expand_inputs gather rules)",
         "key": "pair_ids",
         "used_by": [],
         "value_type": "array"
       },
       {
         "default": "test/fixtures/refs/sequence/Homo_sapiens_assembly38_chr21.fasta",
+        "description": "Resources (upstream: config['resources'][genome_version])",
         "key": "reference",
         "used_by": [
           "CM_call",
@@ -6196,6 +6378,7 @@
       },
       {
         "default": true,
+        "description": "Report stages (upstream `stages`): case_report + multiqc are ON in the port default; set run_report = false to match the upstream mini-test default.",
         "key": "run_report",
         "used_by": [
           "combined_multiqc",
@@ -6213,6 +6396,7 @@
           "muse",
           "Mutect2"
         ],
+        "description": "Caller lists (upstream run_params)",
         "key": "somatic_caller_list",
         "used_by": [],
         "value_type": "array"
@@ -6239,6 +6423,7 @@
       },
       {
         "default": "test/fixtures/reads/mini-T_R1.fq.gz",
+        "description": "Reads (upstream samplesheet columns Tumor_R1_file_path / Normal_R1_file_path ...)",
         "key": "tumor_fastq_r1",
         "used_by": [
           "fastp_tumor_sample"
@@ -6297,6 +6482,7 @@
       },
       {
         "default": "",
+        "description": "Upstream hg38_chr21 has no panel of normals (WES_PON: null) \u2014 leave empty",
         "key": "wes_pon",
         "used_by": [
           "mutect2"
@@ -6318,6 +6504,7 @@
       },
       {
         "default": "D21122",
+        "description": "DB_ID \u2014 upstream: basename(metadata).replace(\".txt\", \"\").",
         "key": "db_id",
         "used_by": [
           "DGE_analysis",
@@ -6327,6 +6514,7 @@
       },
       {
         "default": "/data/reference/genome/GRCh38/STAR",
+        "description": "STAR index dir and GTF (upstream keys index / GTF).",
         "key": "index",
         "used_by": [
           "align_and_count"
@@ -6335,6 +6523,7 @@
       },
       {
         "default": false,
+        "description": "Email notification (upstream onsuccess). Keep off unless SMTP is configured.",
         "key": "mail",
         "used_by": [],
         "value_type": "bool"
@@ -6347,6 +6536,7 @@
       },
       {
         "default": "test/fixtures/metadata/D21122.txt",
+        "description": "Metadata TSV (upstream key metadata). Columns: Dataset GSE GSM gene method celline group group_name type platform SRR paired The repo default points at the bundled example dataset (upstream doc/D21122.txt).",
         "key": "metadata",
         "used_by": [
           "DGE_analysis",
@@ -6372,6 +6562,7 @@
       },
       {
         "default": "sra",
+        "description": "Directory holding pre-downloaded .sra files, layout <dir>/<SRR>/<SRR>.sra (upstream key sra_data_path).",
         "key": "sra_data_path",
         "used_by": [
           "get_sra"
@@ -6380,6 +6571,7 @@
       },
       {
         "default": ",",
+        "description": "Separator joining multiple SRR runs per sample in the metadata SRR column.",
         "key": "srr_separator",
         "used_by": [
           "data_conversion_pair",
@@ -6396,6 +6588,7 @@
     "config": [
       {
         "default": "/path/to/output/alignment",
+        "description": "01_alignment (upstream config.yml)",
         "key": "align_out_dir",
         "used_by": [
           "alignment::fastp_qc",
@@ -6408,6 +6601,7 @@
       },
       {
         "default": "/path/to/output/alignment/aligned",
+        "description": "upstream: 01 output_dir/aligned == 02 bam_dir",
         "key": "aligned_dir",
         "used_by": [
           "alignment::featurecounts",
@@ -6422,6 +6616,7 @@
       },
       {
         "default": "/path/to/output/as_calling",
+        "description": "02_as_calling (upstream config.yml)",
         "key": "as_out_dir",
         "used_by": [
           "as_calling::format_suppa_fields",
@@ -6441,6 +6636,7 @@
       },
       {
         "default": 36,
+        "description": "fastp (upstream fastp.*)",
         "key": "fastp_min_length",
         "used_by": [
           "alignment::fastp_qc"
@@ -6473,6 +6669,7 @@
       },
       {
         "default": "/path/to/references/gencode.v34.annotation.gff3",
+        "description": "upstream: GFF",
         "key": "gff",
         "used_by": [
           "as_calling::majiq_build"
@@ -6508,6 +6705,7 @@
       },
       {
         "default": "reverse",
+        "description": "fr-firststrand -> reverse | fr-secondstrand -> forward | fr-unstranded -> none",
         "key": "majiq_strandness",
         "used_by": [
           "as_calling::majiq_create_ini"
@@ -6525,6 +6723,7 @@
       },
       {
         "default": "test/fixtures/raw",
+        "description": "point at your own fastq directory for real runs",
         "key": "reads_dir",
         "used_by": [
           "alignment::fastp_qc",
@@ -6534,6 +6733,7 @@
       },
       {
         "default": "/path/to/references/gencode.v34.annotation.gtf",
+        "description": "featureCounts / rMATS / SplAdder annotation",
         "key": "ref",
         "used_by": [
           "alignment::featurecounts",
@@ -6568,6 +6768,7 @@
       },
       {
         "default": "ISR",
+        "description": "Derived from `strandness` by upstream tcasia_config.py; kept explicit here:",
         "key": "salmon_library_type",
         "used_by": [
           "as_calling::salmon_quant"
@@ -6600,6 +6801,7 @@
       },
       {
         "default": "/path/to/references/STAR_index",
+        "description": "GRCh38 STAR index built with STAR 2.7.7a + GENCODE v34",
         "key": "star_index_dir",
         "used_by": [
           "alignment::star_align"
@@ -6616,6 +6818,7 @@
       },
       {
         "default": 15,
+        "description": "STAR (upstream star.*)",
         "key": "star_out_filter_mismatch_nmax",
         "used_by": [
           "alignment::star_align"
@@ -6624,6 +6827,7 @@
       },
       {
         "default": "fr-firststrand",
+        "description": "shared",
         "key": "strandness",
         "used_by": [
           "as_calling::rmats_run"

@@ -467,6 +467,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#workflow-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow graph
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#scope" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -595,6 +606,7 @@
 <tr>
 <th style="text-align: right;">Parameter</th>
 <th>Default</th>
+<th>Description</th>
 <th>Used by</th>
 </tr>
 </thead>
@@ -602,126 +614,155 @@
 <tr>
 <td style="text-align: right;"><code>annotation_url</code></td>
 <td><code>ftp://ftp.ensembl.org/pub/release-115/gtf/homo_sapiens/Homo_sapiens.GRCh38.115.gtf.gz</code></td>
+<td>—</td>
 <td><code>get_annotation</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>biomart_species</code></td>
 <td><code>hsapiens</code></td>
+<td>biomaRt species dataset suffix (upstream get_bioc_species_name()).</td>
 <td><code>gene_2_symbol_counts</code>, <code>gene_2_symbol_diffexp</code>, <code>gene_2_symbol_normcounts</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>contrast_levels</code></td>
 <td><code>treated</code></td>
+<td>—</td>
 <td><code>deseq2</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>contrast_variables</code></td>
 <td><code>treatment_1</code></td>
+<td>—</td>
 <td><code>deseq2</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>contrasts</code></td>
 <td><code>treatment_1</code></td>
+<td>Contrasts (upstream: diffexp.contrasts). One comma-joined entry per contrast: contrast id, its variable_of_interest, its level_of_interest. The base level comes from diffexp_base_levels.</td>
 <td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>diffexp_base_levels</code></td>
 <td><code>untreated,untreated</code></td>
+<td>—</td>
 <td><code>deseq2</code>, <code>deseq2_init</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>diffexp_batch_effects</code></td>
 <td><code>jointly_handled</code></td>
+<td>—</td>
 <td><code>deseq2_init</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>diffexp_model</code></td>
 <td>``</td>
+<td>—</td>
 <td><code>deseq2_init</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>diffexp_variables</code></td>
 <td><code>treatment_1,treatment_2</code></td>
+<td>Differential expression (upstream: diffexp.*). Comma-joined lists mirror the upstream nested tables; positions pair up (treatment_1 -&gt; untreated, treatment_2 -&gt; untreated).</td>
 <td><code>deseq2</code>, <code>deseq2_init</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>fastp_adapters</code></td>
 <td><code>--detect_adapter_for_pe</code></td>
+<td>fastp adapter args and extra args (upstream: per-unit columns fastp_adapters / fastp_extra; the port uses the upstream defaults).</td>
 <td><code>fastp_pe</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>fastp_extra</code></td>
 <td><code>--trim_poly_x --poly_x_min_len 7 --trim_poly_g --poly_g_min_len 7</code></td>
+<td>—</td>
 <td><code>fastp_pe</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>genome_url</code></td>
 <td><code>https://ftp.ensembl.org/pub/release-115/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz</code></td>
+<td>—</td>
 <td><code>get_genome</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>genome_url_toplevel</code></td>
 <td><code>https://ftp.ensembl.org/pub/release-115/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.toplevel.fa.gz</code></td>
+<td>—</td>
 <td><code>get_genome</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>pca_activate</code></td>
 <td><code>true</code></td>
+<td>PCA (upstream: pca.activate / pca.labels). pca_variables is the derived upstream list (variables_of_interest + batch_effects + labels), kept explicit here — keep it in sync with the diffexp keys below.</td>
 <td><code>pca</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>pca_labels</code></td>
 <td>``</td>
 <td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>pca_variables</code></td>
 <td><code>treatment_1,treatment_2,jointly_handled</code></td>
 <td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>raw_dir</code></td>
 <td><code>test/fixtures/raw</code></td>
+<td>Directory holding <unit-key>_R1.fastq.gz / _R2.fastq.gz per config/units.tsv. The repo default ships the tiny test fixtures; point this at your data (e.g. "raw").</td>
 <td><code>fastp_pe</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>ref_build</code></td>
 <td><code>GRCh38</code></td>
 <td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>ref_release</code></td>
 <td><code>115</code></td>
 <td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>ref_species</code></td>
 <td><code>homo_sapiens</code></td>
+<td>Reference (upstream: ref.species / ref.release / ref.build). The download URLs below are the Ensembl URLs the wrappers resolve for these values.</td>
 <td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>star_align_extra</code></td>
 <td>``</td>
+<td>—</td>
 <td><code>star_align</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>star_index_extra</code></td>
 <td>``</td>
+<td>STAR extra params (upstream: params.star.index / params.star.align).</td>
 <td><code>star_index</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>trimming_activate</code></td>
 <td><code>true</code></td>
+<td>Trimming (upstream: trimming.activate). The fastp rule runs only when activated; deactivating breaks star_align in this port (upstream rewires star_align to the raw reads — not ported).</td>
 <td><code>fastp_pe</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>units_file</code></td>
 <td><code>config/units.tsv</code></td>
+<td>—</td>
 <td><code>count_matrix</code></td>
 </tr>
 </tbody>
 </table>
-<p>Derived from the workflow's <code>[config]</code> section — no schema file to maintain.</p>
+<p>Descriptions are the workflow's own <code>#</code> comments from its <code>[config]</code> section, surfaced by <code>oxo-flow info</code> — no schema file to maintain.</p>
+<h2 id="workflow-graph">Workflow graph</h2>
+<div class="ox-dag-card">
+<p><img alt="oxo-flow-rnaseq-star-deseq2 rule-level DAG" src="/assets/dag/oxo-flow-rnaseq-star-deseq2.svg" /></p>
+</div>
+<p>The graph is derived at catalog-build time from <code>oxo-flow graph -f dot</code> and rendered with Graphviz. It shows the workflow at rule level: wildcard <code>{sample}</code> instances expand at run time when sample data is discovered (the runtime view is <code>oxo-flow graph --expanded</code>).</p>
 <h2 id="scope">Scope</h2>
 <p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
 <p><strong>In scope</strong></p>

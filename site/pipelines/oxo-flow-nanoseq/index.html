@@ -467,6 +467,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#workflow-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow graph
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#scope" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -596,6 +607,7 @@
 <tr>
 <th style="text-align: right;">Parameter</th>
 <th>Default</th>
+<th>Description</th>
 <th>Used by</th>
 </tr>
 </thead>
@@ -603,131 +615,161 @@
 <tr>
 <td style="text-align: right;"><code>aligner</code></td>
 <td><code>minimap2</code></td>
+<td>-- Alignment</td>
 <td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>barcode_kit</code></td>
 <td><code>Auto</code></td>
+<td>-- Demultiplexing (upstream defaults)</td>
 <td><code>qcat</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>call_variants</code></td>
 <td><code>false</code></td>
+<td>-- Variant calling (upstream default: off)</td>
 <td><code>minimap2_align</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gtf</code></td>
 <td>``</td>
+<td>-- GTF annotation (upstream samplesheet gtf column; empty on the default path)</td>
 <td><code>gtf2bed</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gtf_base</code></td>
 <td>``</td>
+<td>—</td>
 <td><code>gtf2bed</code>, <code>minimap2_align</code>, <code>minimap2_index</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>input</code></td>
 <td><code>test/fixtures/samplesheet.csv</code></td>
+<td>-- Samplesheet and demultiplexing input (upstream: --input / --input_path)</td>
 <td><code>samplesheet_check</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>input_path</code></td>
 <td><code>test/fixtures/raw/sample.fastq.gz</code></td>
+<td>—</td>
 <td><code>qcat</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>multiqc_config</code></td>
 <td>``</td>
+<td>—</td>
 <td><code>multiqc</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>multiqc_title</code></td>
 <td>``</td>
+<td>-- MultiQC options</td>
 <td><code>multiqc</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>out_dir</code></td>
 <td><code>results</code></td>
+<td>-- Output directory (upstream: --outdir, default ./results)</td>
 <td><code>bedtools_genomecov</code>, <code>dumpsoftwareversions</code>, <code>fastqc</code>, <code>get_chrom_sizes</code>, <code>gtf2bed</code>, <code>minimap2_align</code>, <code>minimap2_index</code>, <code>multiqc</code>, <code>nanoplot</code>, <code>qcat</code>, <code>samplesheet_check</code>, <code>samtools_faidx</code>, <code>samtools_flagstat</code>, <code>samtools_idxstats</code>, <code>samtools_index</code>, <code>samtools_sort</code>, <code>samtools_stats</code>, <code>samtools_view</code>, <code>ucsc_bedgraphtobigwig</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>protocol</code></td>
 <td><code>DNA</code></td>
+<td>-- Protocol (upstream: --protocol; mandatory upstream, one of DNA/cDNA/directRNA)</td>
 <td><code>minimap2_align</code>, <code>minimap2_index</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>qcat_detect_middle</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>qcat</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>qcat_min_score</code></td>
 <td><code>60</code></td>
+<td>—</td>
 <td><code>qcat</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>reference</code></td>
 <td><code>test/fixtures/refs/genome.fa</code></td>
+<td>-- Reference genome (collapses the samplesheet fasta column; the default path uses a single reference for all samples, as in the upstream test data)</td>
 <td><code>get_chrom_sizes</code>, <code>minimap2_index</code>, <code>samtools_faidx</code>, <code>samtools_stats</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>reference_name</code></td>
 <td><code>genome.fa</code></td>
+<td>Basename of the reference; mirrors the upstream staged-file name so that indexes keep the upstream naming (genome.fa.mmi / genome.fa.sizes / genome.fa.fai)</td>
 <td><code>get_chrom_sizes</code>, <code>minimap2_align</code>, <code>minimap2_index</code>, <code>samtools_faidx</code>, <code>ucsc_bedgraphtobigwig</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>run_nanolyse</code></td>
 <td><code>false</code></td>
+<td>-- Raw read cleaning (upstream default: off)</td>
 <td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_alignment</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>bedtools_genomecov</code>, <code>get_chrom_sizes</code>, <code>minimap2_align</code>, <code>minimap2_index</code>, <code>samtools_faidx</code>, <code>samtools_flagstat</code>, <code>samtools_idxstats</code>, <code>samtools_index</code>, <code>samtools_sort</code>, <code>samtools_stats</code>, <code>samtools_view</code>, <code>ucsc_bedgraphtobigwig</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_bigbed</code></td>
 <td><code>false</code></td>
 <td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_bigwig</code></td>
 <td><code>false</code></td>
+<td>-- Visualisation (upstream defaults: bigwig/bigbed ON; bigbed is protocol-gated upstream to cDNA/directRNA and so never runs on the default DNA path)</td>
 <td><code>bedtools_genomecov</code>, <code>ucsc_bedgraphtobigwig</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_demultiplexing</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>qcat</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_fastqc</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>fastqc</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_multiqc</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>multiqc</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_nanoplot</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>nanoplot</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_qc</code></td>
 <td><code>false</code></td>
+<td>-- QC (upstream defaults: all QC on)</td>
 <td><code>fastqc</code>, <code>nanoplot</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>stranded</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>minimap2_align</code>, <code>minimap2_index</code></td>
 </tr>
 </tbody>
 </table>
-<p>Derived from the workflow's <code>[config]</code> section — no schema file to maintain.</p>
+<p>Descriptions are the workflow's own <code>#</code> comments from its <code>[config]</code> section, surfaced by <code>oxo-flow info</code> — no schema file to maintain.</p>
+<h2 id="workflow-graph">Workflow graph</h2>
+<div class="ox-dag-card">
+<p><img alt="oxo-flow-nanoseq rule-level DAG" src="/assets/dag/oxo-flow-nanoseq.svg" /></p>
+</div>
+<p>The graph is derived at catalog-build time from <code>oxo-flow graph -f dot</code> and rendered with Graphviz. It shows the workflow at rule level: wildcard <code>{sample}</code> instances expand at run time when sample data is discovered (the runtime view is <code>oxo-flow graph --expanded</code>).</p>
 <h2 id="scope">Scope</h2>
 <p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
 <p><strong>In scope</strong></p>

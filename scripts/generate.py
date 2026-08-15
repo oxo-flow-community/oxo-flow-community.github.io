@@ -198,16 +198,48 @@ def params_section(p: dict, config: list[dict] | None) -> list[str]:
     for record in config:
         key = record.get("key", "?")
         used_by = ", ".join(f"`{rule}`" for rule in record.get("used_by", [])) or "—"
-        rows.append(f"| `{key}` | {fmt_default(record.get('default'))} | {used_by} |")
+        description = record.get("description") or "—"
+        description = description.replace("|", "\\|").replace("\n", " ")
+        rows.append(
+            f"| `{key}` | {fmt_default(record.get('default'))} | {description} | {used_by} |"
+        )
     return [
         "",
         "## Parameters",
         "",
-        "| Parameter | Default | Used by |",
-        "|---:|---|---|",
+        "| Parameter | Default | Description | Used by |",
+        "|---:|---|---|---|",
         *rows,
         "",
-        "Derived from the workflow's `[config]` section — no schema file to maintain.",
+        "Descriptions are the workflow's own `#` comments from its `[config]` "
+        "section, surfaced by `oxo-flow info` — no schema file to maintain.",
+    ]
+
+
+def dag_section(p: dict) -> list[str]:
+    """`## Workflow graph` — the static rule-level DAG SVG that
+    regen-configs.py renders from `oxo-flow graph -f dot` + Graphviz."""
+    name = p["name"]
+    svg = OUT_PAGES.parent / "assets" / "dag" / f"{name}.svg"
+    if not svg.is_file():
+        raise SystemExit(
+            f"missing {svg.relative_to(ROOT)} for '{name}' — run scripts/regen-configs.py"
+        )
+    return [
+        "",
+        "## Workflow graph",
+        "",
+        '<div class="ox-dag-card" markdown="1">',
+        "",
+        f"![{name} rule-level DAG](/assets/dag/{name}.svg)",
+        "",
+        "</div>",
+        "",
+        "The graph is derived at catalog-build time from "
+        "`oxo-flow graph -f dot` and rendered with Graphviz. It shows the "
+        "workflow at rule level: wildcard `{sample}` instances expand at run "
+        "time when sample data is discovered (the runtime view is "
+        "`oxo-flow graph --expanded`).",
     ]
 
 
@@ -234,6 +266,10 @@ def make_page(p: dict, configs: dict) -> str:
         install_section(p),
         *params_section(p, configs.get(p["name"], {}).get("config")),
     ]
+    # Same signal as the Parameters table: a staged workflow existed at
+    # regen time, so the DAG SVG must exist too (dag_section fails loudly).
+    if p["name"] in configs:
+        parts += dag_section(p)
     if src:
         parts += [
             "",

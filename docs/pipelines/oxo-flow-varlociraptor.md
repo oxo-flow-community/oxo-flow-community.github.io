@@ -48,11 +48,21 @@ git clone https://github.com/oxo-flow-community/oxo-flow-varlociraptor
 
 ## Parameters
 
-| Parameter | Default | Used by |
-|---:|---|---|
-| `reads_dir` | `test/fixtures/raw` | `mapping::merge_trimmed_fastqs_r1`, `mapping::merge_trimmed_fastqs_r2`, `qc::fastqc_r1`, `qc::fastqc_r2` |
+| Parameter | Default | Description | Used by |
+|---:|---|---|---|
+| `reads_dir` | `test/fixtures/raw` | Path to the raw paired-end FASTQs of the single sample (upstream config/units.tsv points at absolute /projects/... paths; the port reads from the repository fixtures instead). | `mapping::merge_trimmed_fastqs_r1`, `mapping::merge_trimmed_fastqs_r2`, `qc::fastqc_r1`, `qc::fastqc_r2` |
 
-Derived from the workflow's `[config]` section — no schema file to maintain.
+Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
+
+## Workflow graph
+
+<div class="ox-dag-card" markdown="1">
+
+![oxo-flow-varlociraptor rule-level DAG](/assets/dag/oxo-flow-varlociraptor.svg)
+
+</div>
+
+The graph is derived at catalog-build time from `oxo-flow graph -f dot` and rendered with Graphviz. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

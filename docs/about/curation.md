@@ -48,24 +48,30 @@ under the same layout and criteria.
 
 ## Machine-derived content
 
-Two parts of every workflow page are not hand-written — they are derived from
-the workflow file itself with `oxo-flow info`, so they cannot drift from the
-code:
+Three parts of every workflow page are not hand-written — they are derived
+from the workflow file itself, so they cannot drift from the code:
 
 - **Parameters table.** Every run-notes page lists the workflow's `[config]`
-  section: parameter, default value, and the rules that use it. A `—` in the
-  *Used by* column means the key is defined but not wired into any rule — a
-  documented knob kept for fidelity with the source pipeline. No schema file
-  to maintain.
+  section: parameter, default value, the rules that use it, and — when the
+  workflow comments the key — its *Description* taken verbatim from the
+  `[config]` section's `#` comments (contiguous comment block above the key,
+  or a trailing comment on the key line). A `—` in the *Used by* column means
+  the key is defined but not wired into any rule — a documented knob kept for
+  fidelity with the source pipeline. No schema file to maintain.
+- **Workflow graph.** Each page embeds the rule-level DAG rendered from
+  `oxo-flow graph -f dot` + Graphviz. Wildcard `{sample}` instances expand at
+  run time when sample data is discovered, so the static graph shows the
+  structural DAG (the runtime view is `oxo-flow graph --expanded`).
 - **Metadata cross-checks.** `rule_count`, tools, resources, and environments
   are derived the same way and diffed against the hand-maintained registry
   entry when a workflow is listed or reviewed.
 
-The derived data is committed as `data/configs.json` in the site repository
-and regenerated locally (never in CI) with:
+The derived data is committed (`data/configs.json` plus
+`docs/assets/dag/<name>.svg`) and regenerated locally (never in CI) with:
 
 ```bash
-scripts/regen-configs.py    # reads the staged clones, writes data/configs.json
+scripts/regen-configs.py    # staged clones → data/configs.json + DAG SVGs
+                            # (needs an oxo-flow binary and Graphviz `dot`)
 scripts/generate.py         # regenerates the run-notes pages (CI checks for drift)
 ```
 

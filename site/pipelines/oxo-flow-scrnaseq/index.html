@@ -467,6 +467,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#workflow-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow graph
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#scope" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -597,6 +608,7 @@
 <tr>
 <th style="text-align: right;">Parameter</th>
 <th>Default</th>
+<th>Description</th>
 <th>Used by</th>
 </tr>
 </thead>
@@ -604,126 +616,155 @@
 <tr>
 <td style="text-align: right;"><code>aligner</code></td>
 <td><code>cellranger</code></td>
+<td>--aligner / --protocol (port implements the cellranger branch; see README fidelity table)</td>
 <td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>build_cellranger_index</code></td>
 <td><code>true</code></td>
+<td>cellranger reference: build from fasta/gtf, or point transcriptome at an existing index</td>
 <td><code>cellranger_mkgtf</code>, <code>cellranger_mkref</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>expected_cells</code></td>
 <td>``</td>
+<td>samplesheet <code>expected_cells</code> column -&gt; <code>--expect-cells</code> when set</td>
 <td><code>cellranger_count</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>fasta</code></td>
 <td><code>refs/refdata.fa.gz</code></td>
+<td>reference genome (upstream --fasta / --gtf; may be .gz)</td>
 <td><code>gunzip_fasta</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>fasta_gz</code></td>
 <td><code>true</code></td>
+<td>—</td>
 <td><code>gunzip_fasta</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>fasta_prepared</code></td>
 <td><code>refs/refdata.fa</code></td>
+<td>derived reference files (README "Reference genome" explains the chain)</td>
 <td><code>cellranger_mkref</code>, <code>gtf_gene_filter</code>, <code>gunzip_fasta</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gtf</code></td>
 <td><code>refs/refdata.gtf.gz</code></td>
+<td>—</td>
 <td><code>gunzip_gtf</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gtf_filtered</code></td>
 <td><code>refs/refdata_genes.gtf</code></td>
+<td>—</td>
 <td><code>gtf_gene_filter</code>, <code>gtf_source_fix</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gtf_gz</code></td>
 <td><code>true</code></td>
+<td>—</td>
 <td><code>gunzip_gtf</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gtf_mkgtf</code></td>
 <td><code>refs/refdata_genes.filtered.gtf</code></td>
+<td>—</td>
 <td><code>cellranger_mkgtf</code>, <code>cellranger_mkref</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gtf_mkgtf_input</code></td>
 <td><code>refs/refdata_genes.gtf</code></td>
+<td>set to the source-fixed file when gtf_source_fix=true</td>
 <td><code>cellranger_mkgtf</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gtf_prepared</code></td>
 <td><code>refs/refdata.gtf</code></td>
+<td>—</td>
 <td><code>gtf_gene_filter</code>, <code>gunzip_gtf</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gtf_source_fix</code></td>
 <td><code>false</code></td>
+<td>iGenomes GTF source-field rewrite (opt-in, upstream gtf_source_has_spaces)</td>
 <td><code>gtf_source_fix</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gtf_source_fixed</code></td>
 <td><code>refs/refdata_genes.source_fixed.gtf</code></td>
+<td>—</td>
 <td><code>gtf_source_fix</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>multiqc_config</code></td>
 <td><code>assets/multiqc_config.yml</code></td>
+<td>—</td>
 <td><code>multiqc</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>multiqc_title</code></td>
 <td>``</td>
+<td>-&gt; <code>--title</code> when set</td>
 <td><code>multiqc</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>out_dir</code></td>
 <td><code>results</code></td>
 <td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>protocol</code></td>
 <td><code>auto</code></td>
+<td>passed verbatim as <code>--chemistry</code> (10x auto-detection)</td>
 <td><code>cellranger_count</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>samplesheet</code></td>
 <td><code>samplesheet.csv</code></td>
+<td>user samplesheet consumed by CONCAT_H5AD (same columns as upstream)</td>
 <td><code>concat_h5ad_cellbender_filter</code>, <code>concat_h5ad_filtered</code>, <code>concat_h5ad_raw</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>save_align_intermeds</code></td>
 <td><code>true</code></td>
+<td>-&gt; <code>--create-bam true</code></td>
 <td><code>cellranger_count</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_cellbender</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>anndata_barcodes</code>, <code>anndatar_convert_cellbender_filter</code>, <code>anndatar_convert_combined_cellbender_filter</code>, <code>anndatar_convert_combined_raw</code>, <code>anndatar_convert_raw</code>, <code>cellbender_removebackground</code>, <code>concat_h5ad_cellbender_filter</code>, <code>concat_h5ad_raw</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_fastqc</code></td>
 <td><code>false</code></td>
+<td>QC / reporting knobs</td>
 <td><code>fastqc</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_multiqc</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>multiqc</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>transcriptome</code></td>
 <td><code>refs/cellranger_reference</code></td>
+<td>—</td>
 <td><code>cellranger_count</code>, <code>cellranger_mkref</code></td>
 </tr>
 </tbody>
 </table>
-<p>Derived from the workflow's <code>[config]</code> section — no schema file to maintain.</p>
+<p>Descriptions are the workflow's own <code>#</code> comments from its <code>[config]</code> section, surfaced by <code>oxo-flow info</code> — no schema file to maintain.</p>
+<h2 id="workflow-graph">Workflow graph</h2>
+<div class="ox-dag-card">
+<p><img alt="oxo-flow-scrnaseq rule-level DAG" src="/assets/dag/oxo-flow-scrnaseq.svg" /></p>
+</div>
+<p>The graph is derived at catalog-build time from <code>oxo-flow graph -f dot</code> and rendered with Graphviz. It shows the workflow at rule level: wildcard <code>{sample}</code> instances expand at run time when sample data is discovered (the runtime view is <code>oxo-flow graph --expanded</code>).</p>
 <h2 id="scope">Scope</h2>
 <p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
 <p><strong>In scope</strong></p>

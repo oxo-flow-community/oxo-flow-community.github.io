@@ -48,35 +48,45 @@ git clone https://github.com/oxo-flow-community/oxo-flow-nanoseq
 
 ## Parameters
 
-| Parameter | Default | Used by |
-|---:|---|---|
-| `aligner` | `minimap2` | — |
-| `barcode_kit` | `Auto` | `qcat` |
-| `call_variants` | `false` | `minimap2_align` |
-| `gtf` | `` | `gtf2bed` |
-| `gtf_base` | `` | `gtf2bed`, `minimap2_align`, `minimap2_index` |
-| `input` | `test/fixtures/samplesheet.csv` | `samplesheet_check` |
-| `input_path` | `test/fixtures/raw/sample.fastq.gz` | `qcat` |
-| `multiqc_config` | `` | `multiqc` |
-| `multiqc_title` | `` | `multiqc` |
-| `out_dir` | `results` | `bedtools_genomecov`, `dumpsoftwareversions`, `fastqc`, `get_chrom_sizes`, `gtf2bed`, `minimap2_align`, `minimap2_index`, `multiqc`, `nanoplot`, `qcat`, `samplesheet_check`, `samtools_faidx`, `samtools_flagstat`, `samtools_idxstats`, `samtools_index`, `samtools_sort`, `samtools_stats`, `samtools_view`, `ucsc_bedgraphtobigwig` |
-| `protocol` | `DNA` | `minimap2_align`, `minimap2_index` |
-| `qcat_detect_middle` | `false` | `qcat` |
-| `qcat_min_score` | `60` | `qcat` |
-| `reference` | `test/fixtures/refs/genome.fa` | `get_chrom_sizes`, `minimap2_index`, `samtools_faidx`, `samtools_stats` |
-| `reference_name` | `genome.fa` | `get_chrom_sizes`, `minimap2_align`, `minimap2_index`, `samtools_faidx`, `ucsc_bedgraphtobigwig` |
-| `run_nanolyse` | `false` | — |
-| `skip_alignment` | `false` | `bedtools_genomecov`, `get_chrom_sizes`, `minimap2_align`, `minimap2_index`, `samtools_faidx`, `samtools_flagstat`, `samtools_idxstats`, `samtools_index`, `samtools_sort`, `samtools_stats`, `samtools_view`, `ucsc_bedgraphtobigwig` |
-| `skip_bigbed` | `false` | — |
-| `skip_bigwig` | `false` | `bedtools_genomecov`, `ucsc_bedgraphtobigwig` |
-| `skip_demultiplexing` | `false` | `qcat` |
-| `skip_fastqc` | `false` | `fastqc` |
-| `skip_multiqc` | `false` | `multiqc` |
-| `skip_nanoplot` | `false` | `nanoplot` |
-| `skip_qc` | `false` | `fastqc`, `nanoplot` |
-| `stranded` | `false` | `minimap2_align`, `minimap2_index` |
+| Parameter | Default | Description | Used by |
+|---:|---|---|---|
+| `aligner` | `minimap2` | -- Alignment | — |
+| `barcode_kit` | `Auto` | -- Demultiplexing (upstream defaults) | `qcat` |
+| `call_variants` | `false` | -- Variant calling (upstream default: off) | `minimap2_align` |
+| `gtf` | `` | -- GTF annotation (upstream samplesheet gtf column; empty on the default path) | `gtf2bed` |
+| `gtf_base` | `` | — | `gtf2bed`, `minimap2_align`, `minimap2_index` |
+| `input` | `test/fixtures/samplesheet.csv` | -- Samplesheet and demultiplexing input (upstream: --input / --input_path) | `samplesheet_check` |
+| `input_path` | `test/fixtures/raw/sample.fastq.gz` | — | `qcat` |
+| `multiqc_config` | `` | — | `multiqc` |
+| `multiqc_title` | `` | -- MultiQC options | `multiqc` |
+| `out_dir` | `results` | -- Output directory (upstream: --outdir, default ./results) | `bedtools_genomecov`, `dumpsoftwareversions`, `fastqc`, `get_chrom_sizes`, `gtf2bed`, `minimap2_align`, `minimap2_index`, `multiqc`, `nanoplot`, `qcat`, `samplesheet_check`, `samtools_faidx`, `samtools_flagstat`, `samtools_idxstats`, `samtools_index`, `samtools_sort`, `samtools_stats`, `samtools_view`, `ucsc_bedgraphtobigwig` |
+| `protocol` | `DNA` | -- Protocol (upstream: --protocol; mandatory upstream, one of DNA/cDNA/directRNA) | `minimap2_align`, `minimap2_index` |
+| `qcat_detect_middle` | `false` | — | `qcat` |
+| `qcat_min_score` | `60` | — | `qcat` |
+| `reference` | `test/fixtures/refs/genome.fa` | -- Reference genome (collapses the samplesheet fasta column; the default path uses a single reference for all samples, as in the upstream test data) | `get_chrom_sizes`, `minimap2_index`, `samtools_faidx`, `samtools_stats` |
+| `reference_name` | `genome.fa` | Basename of the reference; mirrors the upstream staged-file name so that indexes keep the upstream naming (genome.fa.mmi / genome.fa.sizes / genome.fa.fai) | `get_chrom_sizes`, `minimap2_align`, `minimap2_index`, `samtools_faidx`, `ucsc_bedgraphtobigwig` |
+| `run_nanolyse` | `false` | -- Raw read cleaning (upstream default: off) | — |
+| `skip_alignment` | `false` | — | `bedtools_genomecov`, `get_chrom_sizes`, `minimap2_align`, `minimap2_index`, `samtools_faidx`, `samtools_flagstat`, `samtools_idxstats`, `samtools_index`, `samtools_sort`, `samtools_stats`, `samtools_view`, `ucsc_bedgraphtobigwig` |
+| `skip_bigbed` | `false` | — | — |
+| `skip_bigwig` | `false` | -- Visualisation (upstream defaults: bigwig/bigbed ON; bigbed is protocol-gated upstream to cDNA/directRNA and so never runs on the default DNA path) | `bedtools_genomecov`, `ucsc_bedgraphtobigwig` |
+| `skip_demultiplexing` | `false` | — | `qcat` |
+| `skip_fastqc` | `false` | — | `fastqc` |
+| `skip_multiqc` | `false` | — | `multiqc` |
+| `skip_nanoplot` | `false` | — | `nanoplot` |
+| `skip_qc` | `false` | -- QC (upstream defaults: all QC on) | `fastqc`, `nanoplot` |
+| `stranded` | `false` | — | `minimap2_align`, `minimap2_index` |
 
-Derived from the workflow's `[config]` section — no schema file to maintain.
+Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
+
+## Workflow graph
+
+<div class="ox-dag-card" markdown="1">
+
+![oxo-flow-nanoseq rule-level DAG](/assets/dag/oxo-flow-nanoseq.svg)
+
+</div>
+
+The graph is derived at catalog-build time from `oxo-flow graph -f dot` and rendered with Graphviz. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

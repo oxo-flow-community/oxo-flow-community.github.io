@@ -49,42 +49,52 @@ git clone https://github.com/oxo-flow-community/oxo-flow-mag
 
 ## Parameters
 
-| Parameter | Default | Used by |
-|---:|---|---|
-| `ale_per_base_output` | `false` | — |
-| `bin_concoct_chunksize` | `10000` | `concoct_cutup_megahit`, `concoct_cutup_spades` |
-| `bin_concoct_donotconcatlast` | `false` | — |
-| `bin_concoct_overlap` | `0` | `concoct_cutup_megahit`, `concoct_cutup_spades` |
-| `bin_max_size` | `` | — |
-| `bin_metabinner_scale` | `large` | `metabinner_run_megahit`, `metabinner_run_spades` |
-| `bin_min_size` | `0` | — |
-| `cohort_samples` | `S1 S2` | `bowtie2_align_megahit`, `bowtie2_align_spades`, `semibin_megahit`, `semibin_spades` |
-| `fastp_cut_mean_quality` | `15` | `fastp` |
-| `fastp_qualified_quality` | `15` | `fastp` |
-| `fastp_trim_polyg` | `false` | `fastp` |
-| `gtdb_db` | `https://data.gtdb.aau.ecogenomic.org/releases/release232/232.0/auxillary_files/gtdbtk_package/full_package/gtdbtk_r232_data.tar.gz` | `gtdbtk_db_preparation` |
-| `gtdbtk_max_contamination` | `10.0` | `gtdbtk_megahit_comebin`, `gtdbtk_megahit_concoct`, `gtdbtk_megahit_maxbin2`, `gtdbtk_megahit_metabat2`, `gtdbtk_megahit_metabinner`, `gtdbtk_megahit_semibin2`, `gtdbtk_spades_comebin`, `gtdbtk_spades_concoct`, `gtdbtk_spades_maxbin2`, `gtdbtk_spades_metabat2`, `gtdbtk_spades_metabinner`, `gtdbtk_spades_semibin2` |
-| `gtdbtk_min_af` | `0.65` | `gtdbtk_megahit_comebin`, `gtdbtk_megahit_concoct`, `gtdbtk_megahit_maxbin2`, `gtdbtk_megahit_metabat2`, `gtdbtk_megahit_metabinner`, `gtdbtk_megahit_semibin2`, `gtdbtk_spades_comebin`, `gtdbtk_spades_concoct`, `gtdbtk_spades_maxbin2`, `gtdbtk_spades_metabat2`, `gtdbtk_spades_metabinner`, `gtdbtk_spades_semibin2` |
-| `gtdbtk_min_completeness` | `50.0` | `gtdbtk_megahit_comebin`, `gtdbtk_megahit_concoct`, `gtdbtk_megahit_maxbin2`, `gtdbtk_megahit_metabat2`, `gtdbtk_megahit_metabinner`, `gtdbtk_megahit_semibin2`, `gtdbtk_spades_comebin`, `gtdbtk_spades_concoct`, `gtdbtk_spades_maxbin2`, `gtdbtk_spades_metabat2`, `gtdbtk_spades_metabinner`, `gtdbtk_spades_semibin2` |
-| `gtdbtk_min_perc_aa` | `10` | `gtdbtk_megahit_comebin`, `gtdbtk_megahit_concoct`, `gtdbtk_megahit_maxbin2`, `gtdbtk_megahit_metabat2`, `gtdbtk_megahit_metabinner`, `gtdbtk_megahit_semibin2`, `gtdbtk_spades_comebin`, `gtdbtk_spades_concoct`, `gtdbtk_spades_maxbin2`, `gtdbtk_spades_metabat2`, `gtdbtk_spades_metabinner`, `gtdbtk_spades_semibin2` |
-| `gtdbtk_place_species` | `false` | — |
-| `gtdbtk_pplacer_cpus` | `1` | `gtdbtk_megahit_comebin`, `gtdbtk_megahit_concoct`, `gtdbtk_megahit_maxbin2`, `gtdbtk_megahit_metabat2`, `gtdbtk_megahit_metabinner`, `gtdbtk_megahit_semibin2`, `gtdbtk_spades_comebin`, `gtdbtk_spades_concoct`, `gtdbtk_spades_maxbin2`, `gtdbtk_spades_metabat2`, `gtdbtk_spades_metabinner`, `gtdbtk_spades_semibin2` |
-| `gtdbtk_use_full_tree` | `false` | — |
-| `input_dir` | `test/fixtures/raw` | `fastp`, `fastqc_raw` |
-| `max_unbinned_contigs` | `100` | `split_fasta_maxbin2_megahit`, `split_fasta_maxbin2_spades`, `split_fasta_metabat2_megahit`, `split_fasta_metabat2_spades`, `split_fasta_metabinner_megahit`, `split_fasta_metabinner_spades` |
-| `metabat_rng_seed` | `1` | `metabat2_megahit`, `metabat2_spades` |
-| `min_contig_size` | `1500` | `metabat2_megahit`, `metabat2_spades`, `metabinner_bins_megahit`, `metabinner_bins_spades`, `metabinner_kmer_megahit`, `metabinner_kmer_spades`, `metabinner_run_megahit`, `metabinner_run_spades`, `metabinner_tooshort_megahit`, `metabinner_tooshort_spades`, `semibin_megahit`, `semibin_spades`, `split_fasta_maxbin2_megahit`, `split_fasta_maxbin2_spades`, `split_fasta_metabat2_megahit`, `split_fasta_metabat2_spades`, `split_fasta_metabinner_megahit`, `split_fasta_metabinner_spades` |
-| `min_length_unbinned_contigs` | `1000000` | `split_fasta_maxbin2_megahit`, `split_fasta_maxbin2_spades`, `split_fasta_metabat2_megahit`, `split_fasta_metabat2_spades`, `split_fasta_metabinner_megahit`, `split_fasta_metabinner_spades` |
-| `out_dir` | `results` | `ale_megahit`, `ale_spades`, `bin_summary`, `bowtie2_align_megahit`, `bowtie2_align_spades`, `busco_megahit_comebin`, `busco_megahit_concoct`, `busco_megahit_maxbin2`, `busco_megahit_metabat2`, `busco_megahit_metabinner`, `busco_megahit_semibin2`, `busco_spades_comebin`, `busco_spades_concoct`, `busco_spades_maxbin2`, `busco_spades_metabat2`, `busco_spades_metabinner`, `busco_spades_semibin2`, `comebin_megahit`, `comebin_spades`, `concat_busco`, `concat_quast`, `concoct_extract_megahit`, `concoct_extract_spades`, `concoct_merge_megahit`, `concoct_merge_spades`, `depths_megahit`, `depths_spades`, `fastp`, `fastqc_raw`, `fastqc_trimmed`, `gtdbtk_megahit_comebin`, `gtdbtk_megahit_concoct`, `gtdbtk_megahit_maxbin2`, `gtdbtk_megahit_metabat2`, `gtdbtk_megahit_metabinner`, `gtdbtk_megahit_semibin2`, `gtdbtk_spades_comebin`, `gtdbtk_spades_concoct`, `gtdbtk_spades_maxbin2`, `gtdbtk_spades_metabat2`, `gtdbtk_spades_metabinner`, `gtdbtk_spades_semibin2`, `gtdbtk_summary`, `mag_depths_megahit_comebin`, `mag_depths_megahit_concoct`, `mag_depths_megahit_maxbin2`, `mag_depths_megahit_metabat2`, `mag_depths_megahit_metabinner`, `mag_depths_megahit_semibin2`, `mag_depths_spades_comebin`, `mag_depths_spades_concoct`, `mag_depths_spades_maxbin2`, `mag_depths_spades_metabat2`, `mag_depths_spades_metabinner`, `mag_depths_spades_semibin2`, `mag_depths_summary`, `maxbin2_megahit`, `maxbin2_spades`, `megahit`, `metabat2_megahit`, `metabat2_spades`, `metabinner_bins_megahit`, `metabinner_bins_spades`, `multiqc`, `phix_align`, `prodigal_megahit`, `prodigal_spades`, `prokka_megahit_comebin`, `prokka_megahit_concoct`, `prokka_megahit_maxbin2`, `prokka_megahit_metabat2`, `prokka_megahit_metabinner`, `prokka_megahit_semibin2`, `prokka_spades_comebin`, `prokka_spades_concoct`, `prokka_spades_maxbin2`, `prokka_spades_metabat2`, `prokka_spades_metabinner`, `prokka_spades_semibin2`, `quast_bins_megahit_comebin`, `quast_bins_megahit_concoct`, `quast_bins_megahit_maxbin2`, `quast_bins_megahit_metabat2`, `quast_bins_megahit_metabinner`, `quast_bins_megahit_semibin2`, `quast_bins_spades_comebin`, `quast_bins_spades_concoct`, `quast_bins_spades_maxbin2`, `quast_bins_spades_metabat2`, `quast_bins_spades_metabinner`, `quast_bins_spades_semibin2`, `quast_megahit`, `quast_spades`, `semibin_megahit`, `semibin_spades`, `seqkit_megahit_comebin`, `seqkit_megahit_concoct`, `seqkit_megahit_maxbin2`, `seqkit_megahit_metabat2`, `seqkit_megahit_metabinner`, `seqkit_megahit_semibin`, `seqkit_spades_comebin`, `seqkit_spades_concoct`, `seqkit_spades_maxbin2`, `seqkit_spades_metabat2`, `seqkit_spades_metabinner`, `seqkit_spades_semibin`, `spades`, `split_fasta_maxbin2_megahit`, `split_fasta_maxbin2_spades`, `split_fasta_metabat2_megahit`, `split_fasta_metabat2_spades`, `split_fasta_metabinner_megahit`, `split_fasta_metabinner_spades` |
-| `phix_reference` | `assets/data/GCA_002596845.1_ASM259684v1_genomic.fna.gz` | `phix_build` |
-| `prokka_fast_mode` | `false` | — |
-| `prokka_with_compliance` | `false` | — |
-| `reads_minlength` | `15` | `fastp` |
-| `semibin_environment` | `global` | `semibin_megahit`, `semibin_spades` |
-| `semibin_rng_seed` | `1` | `semibin_megahit`, `semibin_spades` |
-| `shortread_percentidentity` | `` | — |
+| Parameter | Default | Description | Used by |
+|---:|---|---|---|
+| `ale_per_base_output` | `false` | ALE (upstream --ale_per_base_output default false -> --metagenome --nout) | — |
+| `bin_concoct_chunksize` | `10000` | Binning options (upstream params with the same defaults) | `concoct_cutup_megahit`, `concoct_cutup_spades` |
+| `bin_concoct_donotconcatlast` | `false` | — | — |
+| `bin_concoct_overlap` | `0` | — | `concoct_cutup_megahit`, `concoct_cutup_spades` |
+| `bin_max_size` | `` | — | — |
+| `bin_metabinner_scale` | `large` | — | `metabinner_run_megahit`, `metabinner_run_spades` |
+| `bin_min_size` | `0` | Bin size filtering (upstream --bin_min_size / --bin_max_size; defaults 0/null make the seqkit-based filter a no-op) | — |
+| `cohort_samples` | `S1 S2` | Space-separated list of sample ids used by the binning-preparation bowtie2 alignment rules (binning_map_mode='group': every assembly is aligned against every sample's reads). Keep in sync with the sample group below. | `bowtie2_align_megahit`, `bowtie2_align_spades`, `semibin_megahit`, `semibin_spades` |
+| `fastp_cut_mean_quality` | `15` | — | `fastp` |
+| `fastp_qualified_quality` | `15` | — | `fastp` |
+| `fastp_trim_polyg` | `false` | — | `fastp` |
+| `gtdb_db` | `https://data.gtdb.aau.ecogenomic.org/releases/release232/232.0/auxillary_files/gtdbtk_package/full_package/gtdbtk_r232_data.tar.gz` | GTDB-Tk database: URL of the .tar.gz release or a local directory (upstream --gtdb_db default). gtdbtk_db_preparation unpacks .tar.gz. | `gtdbtk_db_preparation` |
+| `gtdbtk_max_contamination` | `10.0` | — | `gtdbtk_megahit_comebin`, `gtdbtk_megahit_concoct`, `gtdbtk_megahit_maxbin2`, `gtdbtk_megahit_metabat2`, `gtdbtk_megahit_metabinner`, `gtdbtk_megahit_semibin2`, `gtdbtk_spades_comebin`, `gtdbtk_spades_concoct`, `gtdbtk_spades_maxbin2`, `gtdbtk_spades_metabat2`, `gtdbtk_spades_metabinner`, `gtdbtk_spades_semibin2` |
+| `gtdbtk_min_af` | `0.65` | — | `gtdbtk_megahit_comebin`, `gtdbtk_megahit_concoct`, `gtdbtk_megahit_maxbin2`, `gtdbtk_megahit_metabat2`, `gtdbtk_megahit_metabinner`, `gtdbtk_megahit_semibin2`, `gtdbtk_spades_comebin`, `gtdbtk_spades_concoct`, `gtdbtk_spades_maxbin2`, `gtdbtk_spades_metabat2`, `gtdbtk_spades_metabinner`, `gtdbtk_spades_semibin2` |
+| `gtdbtk_min_completeness` | `50.0` | GTDB-Tk (upstream params with the same defaults) | `gtdbtk_megahit_comebin`, `gtdbtk_megahit_concoct`, `gtdbtk_megahit_maxbin2`, `gtdbtk_megahit_metabat2`, `gtdbtk_megahit_metabinner`, `gtdbtk_megahit_semibin2`, `gtdbtk_spades_comebin`, `gtdbtk_spades_concoct`, `gtdbtk_spades_maxbin2`, `gtdbtk_spades_metabat2`, `gtdbtk_spades_metabinner`, `gtdbtk_spades_semibin2` |
+| `gtdbtk_min_perc_aa` | `10` | — | `gtdbtk_megahit_comebin`, `gtdbtk_megahit_concoct`, `gtdbtk_megahit_maxbin2`, `gtdbtk_megahit_metabat2`, `gtdbtk_megahit_metabinner`, `gtdbtk_megahit_semibin2`, `gtdbtk_spades_comebin`, `gtdbtk_spades_concoct`, `gtdbtk_spades_maxbin2`, `gtdbtk_spades_metabat2`, `gtdbtk_spades_metabinner`, `gtdbtk_spades_semibin2` |
+| `gtdbtk_place_species` | `false` | — | — |
+| `gtdbtk_pplacer_cpus` | `1` | — | `gtdbtk_megahit_comebin`, `gtdbtk_megahit_concoct`, `gtdbtk_megahit_maxbin2`, `gtdbtk_megahit_metabat2`, `gtdbtk_megahit_metabinner`, `gtdbtk_megahit_semibin2`, `gtdbtk_spades_comebin`, `gtdbtk_spades_concoct`, `gtdbtk_spades_maxbin2`, `gtdbtk_spades_metabat2`, `gtdbtk_spades_metabinner`, `gtdbtk_spades_semibin2` |
+| `gtdbtk_use_full_tree` | `false` | — | — |
+| `input_dir` | `test/fixtures/raw` | Input directory containing {sample}_R1.fastq.gz / {sample}_R2.fastq.gz paired-end read files (upstream --input samplesheet; single-end and multi-library lanes are not ported). The repo default ships tiny test fixtures; point this at your data. | `fastp`, `fastqc_raw` |
+| `max_unbinned_contigs` | `100` | — | `split_fasta_maxbin2_megahit`, `split_fasta_maxbin2_spades`, `split_fasta_metabat2_megahit`, `split_fasta_metabat2_spades`, `split_fasta_metabinner_megahit`, `split_fasta_metabinner_spades` |
+| `metabat_rng_seed` | `1` | — | `metabat2_megahit`, `metabat2_spades` |
+| `min_contig_size` | `1500` | — | `metabat2_megahit`, `metabat2_spades`, `metabinner_bins_megahit`, `metabinner_bins_spades`, `metabinner_kmer_megahit`, `metabinner_kmer_spades`, `metabinner_run_megahit`, `metabinner_run_spades`, `metabinner_tooshort_megahit`, `metabinner_tooshort_spades`, `semibin_megahit`, `semibin_spades`, `split_fasta_maxbin2_megahit`, `split_fasta_maxbin2_spades`, `split_fasta_metabat2_megahit`, `split_fasta_metabat2_spades`, `split_fasta_metabinner_megahit`, `split_fasta_metabinner_spades` |
+| `min_length_unbinned_contigs` | `1000000` | — | `split_fasta_maxbin2_megahit`, `split_fasta_maxbin2_spades`, `split_fasta_metabat2_megahit`, `split_fasta_metabat2_spades`, `split_fasta_metabinner_megahit`, `split_fasta_metabinner_spades` |
+| `out_dir` | `results` | — | `ale_megahit`, `ale_spades`, `bin_summary`, `bowtie2_align_megahit`, `bowtie2_align_spades`, `busco_megahit_comebin`, `busco_megahit_concoct`, `busco_megahit_maxbin2`, `busco_megahit_metabat2`, `busco_megahit_metabinner`, `busco_megahit_semibin2`, `busco_spades_comebin`, `busco_spades_concoct`, `busco_spades_maxbin2`, `busco_spades_metabat2`, `busco_spades_metabinner`, `busco_spades_semibin2`, `comebin_megahit`, `comebin_spades`, `concat_busco`, `concat_quast`, `concoct_extract_megahit`, `concoct_extract_spades`, `concoct_merge_megahit`, `concoct_merge_spades`, `depths_megahit`, `depths_spades`, `fastp`, `fastqc_raw`, `fastqc_trimmed`, `gtdbtk_megahit_comebin`, `gtdbtk_megahit_concoct`, `gtdbtk_megahit_maxbin2`, `gtdbtk_megahit_metabat2`, `gtdbtk_megahit_metabinner`, `gtdbtk_megahit_semibin2`, `gtdbtk_spades_comebin`, `gtdbtk_spades_concoct`, `gtdbtk_spades_maxbin2`, `gtdbtk_spades_metabat2`, `gtdbtk_spades_metabinner`, `gtdbtk_spades_semibin2`, `gtdbtk_summary`, `mag_depths_megahit_comebin`, `mag_depths_megahit_concoct`, `mag_depths_megahit_maxbin2`, `mag_depths_megahit_metabat2`, `mag_depths_megahit_metabinner`, `mag_depths_megahit_semibin2`, `mag_depths_spades_comebin`, `mag_depths_spades_concoct`, `mag_depths_spades_maxbin2`, `mag_depths_spades_metabat2`, `mag_depths_spades_metabinner`, `mag_depths_spades_semibin2`, `mag_depths_summary`, `maxbin2_megahit`, `maxbin2_spades`, `megahit`, `metabat2_megahit`, `metabat2_spades`, `metabinner_bins_megahit`, `metabinner_bins_spades`, `multiqc`, `phix_align`, `prodigal_megahit`, `prodigal_spades`, `prokka_megahit_comebin`, `prokka_megahit_concoct`, `prokka_megahit_maxbin2`, `prokka_megahit_metabat2`, `prokka_megahit_metabinner`, `prokka_megahit_semibin2`, `prokka_spades_comebin`, `prokka_spades_concoct`, `prokka_spades_maxbin2`, `prokka_spades_metabat2`, `prokka_spades_metabinner`, `prokka_spades_semibin2`, `quast_bins_megahit_comebin`, `quast_bins_megahit_concoct`, `quast_bins_megahit_maxbin2`, `quast_bins_megahit_metabat2`, `quast_bins_megahit_metabinner`, `quast_bins_megahit_semibin2`, `quast_bins_spades_comebin`, `quast_bins_spades_concoct`, `quast_bins_spades_maxbin2`, `quast_bins_spades_metabat2`, `quast_bins_spades_metabinner`, `quast_bins_spades_semibin2`, `quast_megahit`, `quast_spades`, `semibin_megahit`, `semibin_spades`, `seqkit_megahit_comebin`, `seqkit_megahit_concoct`, `seqkit_megahit_maxbin2`, `seqkit_megahit_metabat2`, `seqkit_megahit_metabinner`, `seqkit_megahit_semibin`, `seqkit_spades_comebin`, `seqkit_spades_concoct`, `seqkit_spades_maxbin2`, `seqkit_spades_metabat2`, `seqkit_spades_metabinner`, `seqkit_spades_semibin`, `spades`, `split_fasta_maxbin2_megahit`, `split_fasta_maxbin2_spades`, `split_fasta_metabat2_megahit`, `split_fasta_metabat2_spades`, `split_fasta_metabinner_megahit`, `split_fasta_metabinner_spades` |
+| `phix_reference` | `assets/data/GCA_002596845.1_ASM259684v1_genomic.fna.gz` | phiX reference (upstream --phix_reference default = projectDir/assets/data/GCA_002596845.1_ASM259684v1_genomic.fna.gz) | `phix_build` |
+| `prokka_fast_mode` | `false` | — | — |
+| `prokka_with_compliance` | `false` | PROKKA (upstream params with the same defaults) | — |
+| `reads_minlength` | `15` | fastp clipping (upstream params with the same defaults) | `fastp` |
+| `semibin_environment` | `global` | — | `semibin_megahit`, `semibin_spades` |
+| `semibin_rng_seed` | `1` | — | `semibin_megahit`, `semibin_spades` |
+| `shortread_percentidentity` | `` | — | — |
 
-Derived from the workflow's `[config]` section — no schema file to maintain.
+Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
+
+## Workflow graph
+
+<div class="ox-dag-card" markdown="1">
+
+![oxo-flow-mag rule-level DAG](/assets/dag/oxo-flow-mag.svg)
+
+</div>
+
+The graph is derived at catalog-build time from `oxo-flow graph -f dot` and rendered with Graphviz. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

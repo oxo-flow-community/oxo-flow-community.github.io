@@ -467,6 +467,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#workflow-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow graph
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#scope" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -599,6 +610,7 @@
 <tr>
 <th style="text-align: right;">Parameter</th>
 <th>Default</th>
+<th>Description</th>
 <th>Used by</th>
 </tr>
 </thead>
@@ -606,361 +618,437 @@
 <tr>
 <td style="text-align: right;"><code>adjp_cap</code></td>
 <td><code>4</code></td>
+<td>—</td>
 <td><code>visualize_GREAT_Azimuth_2023_ATAC</code>, <code>visualize_GREAT_Reactome_ATAC</code>, <code>visualize_LOLA_LOLACore_ATAC</code>, <code>visualize_ORA_GSEApy_Azimuth_2023_ATAC</code>, <code>visualize_ORA_GSEApy_Reactome_ATAC</code>, <code>visualize_preranked_GSEApy_Azimuth_2023_RNA</code>, <code>visualize_preranked_GSEApy_Reactome_RNA</code>, <code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>adjp_th_GREAT</code></td>
 <td><code>0.01</code></td>
+<td>—</td>
 <td><code>region_enrichment_analysis_GREAT_Azimuth_2023</code>, <code>region_enrichment_analysis_GREAT_Reactome</code>, <code>visualize_GREAT_Azimuth_2023_ATAC</code>, <code>visualize_GREAT_Reactome_ATAC</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>adjp_th_LOLA</code></td>
 <td><code>0.01</code></td>
+<td>—</td>
 <td><code>visualize_LOLA_LOLACore_ATAC</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>adjp_th_ORA_GSEApy</code></td>
 <td><code>0.05</code></td>
+<td>significance thresholds (upstream adjp_th)</td>
 <td><code>visualize_ORA_GSEApy_Azimuth_2023_ATAC</code>, <code>visualize_ORA_GSEApy_Reactome_ATAC</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>adjp_th_preranked_GSEApy</code></td>
 <td><code>0.05</code></td>
+<td>—</td>
 <td><code>visualize_preranked_GSEApy_Azimuth_2023_RNA</code>, <code>visualize_preranked_GSEApy_Reactome_RNA</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>adjp_th_pycisTarget</code></td>
 <td><code>5</code></td>
+<td>—</td>
 <td><code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>all_region_sets</code></td>
 <td><code>'Bcell_open_regions', 'Ery_open_regions', 'all_regions'</code></td>
 <td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>annotation</code></td>
 <td><code>config/annotation.csv</code></td>
+<td>general</td>
 <td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>background_name</code></td>
 <td><code>all_regions</code></td>
+<td>upstream annotation background_name (all region sets)</td>
 <td><code>gene_ORA_GSEApy_Azimuth_2023</code>, <code>gene_ORA_GSEApy_Reactome</code>, <code>region_enrichment_analysis_GREAT_Azimuth_2023</code>, <code>region_enrichment_analysis_GREAT_Reactome</code>, <code>region_enrichment_analysis_LOLA</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cluster_summary</code></td>
 <td><code>1</code></td>
+<td>—</td>
 <td><code>visualize_GREAT_Azimuth_2023_ATAC</code>, <code>visualize_GREAT_Reactome_ATAC</code>, <code>visualize_LOLA_LOLACore_ATAC</code>, <code>visualize_ORA_GSEApy_Azimuth_2023_ATAC</code>, <code>visualize_ORA_GSEApy_Reactome_ATAC</code>, <code>visualize_preranked_GSEApy_Azimuth_2023_RNA</code>, <code>visualize_preranked_GSEApy_Reactome_RNA</code>, <code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cn_GREAT_adj_pvalue</code></td>
 <td><code>p_adjust_hyper</code></td>
+<td>—</td>
 <td><code>plot_enrichment_result_GREAT_Azimuth_2023</code>, <code>plot_enrichment_result_GREAT_Reactome</code>, <code>region_enrichment_analysis_GREAT_Azimuth_2023</code>, <code>region_enrichment_analysis_GREAT_Reactome</code>, <code>visualize_GREAT_Azimuth_2023_ATAC</code>, <code>visualize_GREAT_Reactome_ATAC</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cn_GREAT_effect_size</code></td>
 <td><code>fold_enrichment_hyper</code></td>
+<td>—</td>
 <td><code>plot_enrichment_result_GREAT_Azimuth_2023</code>, <code>plot_enrichment_result_GREAT_Reactome</code>, <code>visualize_GREAT_Azimuth_2023_ATAC</code>, <code>visualize_GREAT_Reactome_ATAC</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cn_GREAT_overlap</code></td>
 <td><code>observed_region_hits</code></td>
+<td>—</td>
 <td><code>plot_enrichment_result_GREAT_Azimuth_2023</code>, <code>plot_enrichment_result_GREAT_Reactome</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cn_GREAT_p_value</code></td>
 <td><code>p_value_hyper</code></td>
+<td>—</td>
 <td><code>plot_enrichment_result_GREAT_Azimuth_2023</code>, <code>plot_enrichment_result_GREAT_Reactome</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cn_GREAT_term</code></td>
 <td><code>description</code></td>
+<td>—</td>
 <td><code>plot_enrichment_result_GREAT_Azimuth_2023</code>, <code>plot_enrichment_result_GREAT_Reactome</code>, <code>visualize_GREAT_Azimuth_2023_ATAC</code>, <code>visualize_GREAT_Reactome_ATAC</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cn_GREAT_top_n</code></td>
 <td><code>25</code></td>
+<td>—</td>
 <td><code>plot_enrichment_result_GREAT_Azimuth_2023</code>, <code>plot_enrichment_result_GREAT_Reactome</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cn_LOLA_adj_pvalue</code></td>
 <td><code>qValue</code></td>
+<td>—</td>
 <td><code>plot_enrichment_result_LOLA_LOLACore</code>, <code>visualize_LOLA_LOLACore_ATAC</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cn_LOLA_effect_size</code></td>
 <td><code>oddsRatio</code></td>
+<td>—</td>
 <td><code>plot_enrichment_result_LOLA_LOLACore</code>, <code>visualize_LOLA_LOLACore_ATAC</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cn_LOLA_overlap</code></td>
 <td><code>support</code></td>
+<td>—</td>
 <td><code>plot_enrichment_result_LOLA_LOLACore</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cn_LOLA_p_value</code></td>
 <td><code>pValue</code></td>
+<td>—</td>
 <td><code>plot_enrichment_result_LOLA_LOLACore</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cn_LOLA_term</code></td>
 <td><code>description</code></td>
+<td>—</td>
 <td><code>plot_enrichment_result_LOLA_LOLACore</code>, <code>visualize_LOLA_LOLACore_ATAC</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cn_LOLA_top_n</code></td>
 <td><code>25</code></td>
+<td>—</td>
 <td><code>plot_enrichment_result_LOLA_LOLACore</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cn_ORA_GSEApy_adj_pvalue</code></td>
 <td><code>Adjusted_P_value</code></td>
+<td>—</td>
 <td><code>plot_enrichment_result_ORA_GSEApy_Azimuth_2023</code>, <code>plot_enrichment_result_ORA_GSEApy_Reactome</code>, <code>visualize_ORA_GSEApy_Azimuth_2023_ATAC</code>, <code>visualize_ORA_GSEApy_Reactome_ATAC</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cn_ORA_GSEApy_effect_size</code></td>
 <td><code>Odds_Ratio</code></td>
+<td>—</td>
 <td><code>plot_enrichment_result_ORA_GSEApy_Azimuth_2023</code>, <code>plot_enrichment_result_ORA_GSEApy_Reactome</code>, <code>visualize_ORA_GSEApy_Azimuth_2023_ATAC</code>, <code>visualize_ORA_GSEApy_Reactome_ATAC</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cn_ORA_GSEApy_overlap</code></td>
 <td><code>Overlap</code></td>
+<td>—</td>
 <td><code>plot_enrichment_result_ORA_GSEApy_Azimuth_2023</code>, <code>plot_enrichment_result_ORA_GSEApy_Reactome</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cn_ORA_GSEApy_p_value</code></td>
 <td><code>P_value</code></td>
+<td>—</td>
 <td><code>plot_enrichment_result_ORA_GSEApy_Azimuth_2023</code>, <code>plot_enrichment_result_ORA_GSEApy_Reactome</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cn_ORA_GSEApy_term</code></td>
 <td><code>Term</code></td>
+<td>—</td>
 <td><code>plot_enrichment_result_ORA_GSEApy_Azimuth_2023</code>, <code>plot_enrichment_result_ORA_GSEApy_Reactome</code>, <code>visualize_ORA_GSEApy_Azimuth_2023_ATAC</code>, <code>visualize_ORA_GSEApy_Reactome_ATAC</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cn_ORA_GSEApy_top_n</code></td>
 <td><code>25</code></td>
+<td>tool-specific column names (upstream column_names)</td>
 <td><code>plot_enrichment_result_ORA_GSEApy_Azimuth_2023</code>, <code>plot_enrichment_result_ORA_GSEApy_Reactome</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cn_preranked_GSEApy_adj_pvalue</code></td>
 <td><code>FDR_q_val</code></td>
+<td>—</td>
 <td><code>plot_enrichment_result_preranked_GSEApy_Azimuth_2023</code>, <code>plot_enrichment_result_preranked_GSEApy_Reactome</code>, <code>visualize_preranked_GSEApy_Azimuth_2023_RNA</code>, <code>visualize_preranked_GSEApy_Reactome_RNA</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cn_preranked_GSEApy_effect_size</code></td>
 <td><code>NES</code></td>
+<td>—</td>
 <td><code>plot_enrichment_result_preranked_GSEApy_Azimuth_2023</code>, <code>plot_enrichment_result_preranked_GSEApy_Reactome</code>, <code>visualize_preranked_GSEApy_Azimuth_2023_RNA</code>, <code>visualize_preranked_GSEApy_Reactome_RNA</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cn_preranked_GSEApy_overlap</code></td>
 <td><code>Tag</code></td>
+<td>—</td>
 <td><code>plot_enrichment_result_preranked_GSEApy_Azimuth_2023</code>, <code>plot_enrichment_result_preranked_GSEApy_Reactome</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cn_preranked_GSEApy_p_value</code></td>
 <td><code>NOM_p_val</code></td>
+<td>—</td>
 <td><code>plot_enrichment_result_preranked_GSEApy_Azimuth_2023</code>, <code>plot_enrichment_result_preranked_GSEApy_Reactome</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cn_preranked_GSEApy_term</code></td>
 <td><code>Term</code></td>
+<td>—</td>
 <td><code>plot_enrichment_result_preranked_GSEApy_Azimuth_2023</code>, <code>plot_enrichment_result_preranked_GSEApy_Reactome</code>, <code>visualize_preranked_GSEApy_Azimuth_2023_RNA</code>, <code>visualize_preranked_GSEApy_Reactome_RNA</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cn_preranked_GSEApy_top_n</code></td>
 <td><code>25</code></td>
+<td>—</td>
 <td><code>plot_enrichment_result_preranked_GSEApy_Azimuth_2023</code>, <code>plot_enrichment_result_preranked_GSEApy_Reactome</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cn_pycisTarget_adj_pvalue</code></td>
 <td><code>NES</code></td>
+<td>—</td>
 <td><code>plot_enrichment_result_pycisTarget_hg38_screen_v10clust</code>, <code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cn_pycisTarget_effect_size</code></td>
 <td><code>NES</code></td>
+<td>—</td>
 <td><code>plot_enrichment_result_pycisTarget_hg38_screen_v10clust</code>, <code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cn_pycisTarget_overlap</code></td>
 <td><code>Motif_hits</code></td>
+<td>—</td>
 <td><code>plot_enrichment_result_pycisTarget_hg38_screen_v10clust</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cn_pycisTarget_p_value</code></td>
 <td><code>AUC</code></td>
+<td>—</td>
 <td><code>plot_enrichment_result_pycisTarget_hg38_screen_v10clust</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cn_pycisTarget_term</code></td>
 <td><code>description</code></td>
+<td>—</td>
 <td><code>plot_enrichment_result_pycisTarget_hg38_screen_v10clust</code>, <code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cn_pycisTarget_top_n</code></td>
 <td><code>25</code></td>
+<td>—</td>
 <td><code>plot_enrichment_result_pycisTarget_hg38_screen_v10clust</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>db_Azimuth_2023</code></td>
 <td><code>test/resources/enrichment_analysis/Azimuth_2023.json</code></td>
+<td>databases (upstream local_databases / lola_databases)</td>
 <td><code>prepare_databases_Azimuth_2023</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>db_Reactome</code></td>
 <td><code>test/resources/enrichment_analysis/ReactomePathways.gmt</code></td>
+<td>—</td>
 <td><code>prepare_databases_Reactome</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>genome</code></td>
 <td><code>hg38</code></td>
+<td>—</td>
 <td><code>region_enrichment_analysis_GREAT_Azimuth_2023</code>, <code>region_enrichment_analysis_GREAT_Reactome</code>, <code>region_enrichment_analysis_LOLA</code>, <code>region_gene_association_GREAT</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>great_basal_downstream</code></td>
 <td><code>1000</code></td>
+<td>—</td>
 <td><code>region_enrichment_analysis_GREAT_Azimuth_2023</code>, <code>region_enrichment_analysis_GREAT_Reactome</code>, <code>region_gene_association_GREAT</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>great_basal_upstream</code></td>
 <td><code>5000</code></td>
+<td>—</td>
 <td><code>region_enrichment_analysis_GREAT_Azimuth_2023</code>, <code>region_enrichment_analysis_GREAT_Reactome</code>, <code>region_gene_association_GREAT</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>great_extension</code></td>
 <td><code>1000000</code></td>
+<td>—</td>
 <td><code>region_enrichment_analysis_GREAT_Azimuth_2023</code>, <code>region_enrichment_analysis_GREAT_Reactome</code>, <code>region_gene_association_GREAT</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>great_map_associated_regions</code></td>
 <td><code>1</code></td>
+<td>—</td>
 <td><code>region_enrichment_analysis_GREAT_Azimuth_2023</code>, <code>region_enrichment_analysis_GREAT_Reactome</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>great_min_gene_set_size</code></td>
 <td><code>0</code></td>
+<td>GREAT parameters (upstream great_parameters)</td>
 <td><code>region_enrichment_analysis_GREAT_Azimuth_2023</code>, <code>region_enrichment_analysis_GREAT_Reactome</code>, <code>region_gene_association_GREAT</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>great_mode</code></td>
 <td><code>basalPlusExt</code></td>
+<td>—</td>
 <td><code>region_enrichment_analysis_GREAT_Azimuth_2023</code>, <code>region_enrichment_analysis_GREAT_Reactome</code>, <code>region_gene_association_GREAT</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>lola_db_LOLACore</code></td>
 <td><code>test/resources/LOLACore/hg38</code></td>
+<td>—</td>
 <td><code>region_enrichment_analysis_LOLA</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>nes_cap</code></td>
 <td><code>5</code></td>
+<td>—</td>
 <td><code>visualize_preranked_GSEApy_Azimuth_2023_RNA</code>, <code>visualize_preranked_GSEApy_Reactome_RNA</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>or_cap</code></td>
 <td><code>5</code></td>
+<td>—</td>
 <td><code>visualize_GREAT_Azimuth_2023_ATAC</code>, <code>visualize_GREAT_Reactome_ATAC</code>, <code>visualize_LOLA_LOLACore_ATAC</code>, <code>visualize_ORA_GSEApy_Azimuth_2023_ATAC</code>, <code>visualize_ORA_GSEApy_Reactome_ATAC</code>, <code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>path_to_motif_annotations</code></td>
 <td><code>test/resources/enrichment_analysis/89_motifs_test.tbl</code></td>
+<td>—</td>
 <td><code>region_motif_enrichment_analysis_pycisTarget</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>project_name</code></td>
 <td><code>Corces_CellTypes</code></td>
+<td>—</td>
 <td><code>annot_export</code>, <code>config_export</code>, <code>gene_ORA_GSEApy_Azimuth_2023</code>, <code>gene_ORA_GSEApy_Reactome</code>, <code>gene_preranked_GSEApy_Azimuth_2023</code>, <code>gene_preranked_GSEApy_Reactome</code>, <code>prepare_databases_Azimuth_2023</code>, <code>prepare_databases_Reactome</code>, <code>region_enrichment_analysis_GREAT_Azimuth_2023</code>, <code>region_enrichment_analysis_GREAT_Reactome</code>, <code>region_gene_association_GREAT</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>pycistarget_annotation_version</code></td>
 <td><code>v10nr_clust</code></td>
+<td>—</td>
 <td><code>region_motif_enrichment_analysis_pycisTarget</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>pycistarget_annotations_to_use</code></td>
 <td><code>['Direct_annot', 'Motif_similarity_annot', 'Orthology_annot', 'Motif_similarity_and_Orthology_annot']</code></td>
+<td>upstream passes the python list literal; kept as a string so the rendered command is byte-identical to upstream's</td>
 <td><code>region_motif_enrichment_analysis_pycisTarget</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>pycistarget_auc_threshold</code></td>
 <td><code>0.005</code></td>
+<td>—</td>
 <td><code>region_motif_enrichment_analysis_pycisTarget</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>pycistarget_db_hg38_screen_v10clust</code></td>
 <td><code>test/resources/enrichment_analysis/600regions_test.regions_vs_motifs.rankings.feather</code></td>
+<td>—</td>
 <td><code>region_motif_enrichment_analysis_pycisTarget</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>pycistarget_fraction_overlap_w_cistarget_database</code></td>
 <td><code>0.4</code></td>
+<td>pycisTarget parameters (upstream pycistarget_parameters)</td>
 <td><code>region_motif_enrichment_analysis_pycisTarget</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>pycistarget_motif_similarity_fdr</code></td>
 <td><code>0.001</code></td>
+<td>—</td>
 <td><code>region_motif_enrichment_analysis_pycisTarget</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>pycistarget_nes_threshold</code></td>
 <td><code>3</code></td>
+<td>—</td>
 <td><code>region_motif_enrichment_analysis_pycisTarget</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>pycistarget_orthologous_identity_threshold</code></td>
 <td><code>0</code></td>
+<td>—</td>
 <td><code>region_motif_enrichment_analysis_pycisTarget</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>pycistarget_rank_threshold</code></td>
 <td><code>0.05</code></td>
+<td>—</td>
 <td><code>region_motif_enrichment_analysis_pycisTarget</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>pycistarget_term_col</code></td>
 <td><code>Direct_annot</code></td>
+<td>first entry of annotations_to_use</td>
 <td><code>process_results_pycisTarget</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>region_beds</code></td>
 <td><code>test/data/CorcesATAC</code></td>
+<td>feature sets (derived from config/annotation.csv at port time)</td>
 <td><code>region_enrichment_analysis_GREAT_Azimuth_2023</code>, <code>region_enrichment_analysis_GREAT_Reactome</code>, <code>region_enrichment_analysis_LOLA</code>, <code>region_gene_association_GREAT</code>, <code>region_motif_enrichment_analysis_pycisTarget</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>region_sets</code></td>
 <td><code>'Bcell_open_regions', 'Ery_open_regions'</code></td>
 <td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>result_path</code></td>
 <td><code>test/results/enrichment_analysis</code></td>
+<td>—</td>
 <td><code>aggregate_GREAT_Azimuth_2023_ATAC</code>, <code>aggregate_GREAT_Reactome_ATAC</code>, <code>aggregate_LOLA_LOLACore_ATAC</code>, <code>aggregate_ORA_GSEApy_Azimuth_2023_ATAC</code>, <code>aggregate_ORA_GSEApy_Reactome_ATAC</code>, <code>aggregate_preranked_GSEApy_Azimuth_2023_RNA</code>, <code>aggregate_preranked_GSEApy_Reactome_RNA</code>, <code>aggregate_pycisTarget_hg38_screen_v10clust_ATAC</code>, <code>annot_export</code>, <code>config_export</code>, <code>gene_ORA_GSEApy_Azimuth_2023</code>, <code>gene_ORA_GSEApy_Reactome</code>, <code>gene_preranked_GSEApy_Azimuth_2023</code>, <code>gene_preranked_GSEApy_Reactome</code>, <code>plot_enrichment_result_GREAT_Azimuth_2023</code>, <code>plot_enrichment_result_GREAT_Reactome</code>, <code>plot_enrichment_result_LOLA_LOLACore</code>, <code>plot_enrichment_result_ORA_GSEApy_Azimuth_2023</code>, <code>plot_enrichment_result_ORA_GSEApy_Reactome</code>, <code>plot_enrichment_result_preranked_GSEApy_Azimuth_2023</code>, <code>plot_enrichment_result_preranked_GSEApy_Reactome</code>, <code>plot_enrichment_result_pycisTarget_hg38_screen_v10clust</code>, <code>process_results_pycisTarget</code>, <code>region_enrichment_analysis_GREAT_Azimuth_2023</code>, <code>region_enrichment_analysis_GREAT_Reactome</code>, <code>region_enrichment_analysis_LOLA</code>, <code>region_gene_association_GREAT</code>, <code>region_motif_enrichment_analysis_pycisTarget</code>, <code>visualize_GREAT_Azimuth_2023_ATAC</code>, <code>visualize_GREAT_Reactome_ATAC</code>, <code>visualize_LOLA_LOLACore_ATAC</code>, <code>visualize_ORA_GSEApy_Azimuth_2023_ATAC</code>, <code>visualize_ORA_GSEApy_Reactome_ATAC</code>, <code>visualize_preranked_GSEApy_Azimuth_2023_RNA</code>, <code>visualize_preranked_GSEApy_Reactome_RNA</code>, <code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>rnk_dir</code></td>
 <td><code>test/data/CorcesRNA</code></td>
+<td>{gene_set}.csv per entry of rnk_sets</td>
 <td><code>gene_preranked_GSEApy_Azimuth_2023</code>, <code>gene_preranked_GSEApy_Reactome</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>rnk_sets</code></td>
 <td><code>'Bcell_ranked', 'Ery_ranked'</code></td>
 <td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>species</code></td>
 <td><code>homo_sapiens</code></td>
+<td>upstream derives species from genome (hg19/hg38 -&gt; homo_sapiens); ported as config key</td>
 <td><code>region_motif_enrichment_analysis_pycisTarget</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>top_terms_n</code></td>
 <td><code>5</code></td>
+<td>aggregate &amp; summarize (upstream top_terms_n / adjp_cap / or_cap / nes_cap / cluster_summary)</td>
 <td><code>visualize_GREAT_Azimuth_2023_ATAC</code>, <code>visualize_GREAT_Reactome_ATAC</code>, <code>visualize_LOLA_LOLACore_ATAC</code>, <code>visualize_ORA_GSEApy_Azimuth_2023_ATAC</code>, <code>visualize_ORA_GSEApy_Reactome_ATAC</code>, <code>visualize_preranked_GSEApy_Azimuth_2023_RNA</code>, <code>visualize_preranked_GSEApy_Reactome_RNA</code>, <code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></td>
 </tr>
 </tbody>
 </table>
-<p>Derived from the workflow's <code>[config]</code> section — no schema file to maintain.</p>
+<p>Descriptions are the workflow's own <code>#</code> comments from its <code>[config]</code> section, surfaced by <code>oxo-flow info</code> — no schema file to maintain.</p>
+<h2 id="workflow-graph">Workflow graph</h2>
+<div class="ox-dag-card">
+<p><img alt="oxo-flow-enrichment rule-level DAG" src="/assets/dag/oxo-flow-enrichment.svg" /></p>
+</div>
+<p>The graph is derived at catalog-build time from <code>oxo-flow graph -f dot</code> and rendered with Graphviz. It shows the workflow at rule level: wildcard <code>{sample}</code> instances expand at run time when sample data is discovered (the runtime view is <code>oxo-flow graph --expanded</code>).</p>
 <h2 id="scope">Scope</h2>
 <p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
 <p><strong>In scope</strong></p>

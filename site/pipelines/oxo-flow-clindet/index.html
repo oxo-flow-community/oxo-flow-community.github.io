@@ -467,6 +467,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#workflow-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow graph
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#scope" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -595,6 +606,7 @@
 <tr>
 <th style="text-align: right;">Parameter</th>
 <th>Default</th>
+<th>Description</th>
 <th>Used by</th>
 </tr>
 </thead>
@@ -602,131 +614,161 @@
 <tr>
 <td style="text-align: right;"><code>annotate_beds_file</code></td>
 <td>``</td>
+<td>BED tracks used by mutation_flag — name/path TSV mirroring upstream softwares_params[genome].annotate_beds dict (empty = header-only, no flags)</td>
 <td><code>make_region_bed_list</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>dbsnp</code></td>
 <td><code>test/fixtures/refs/annotations/dbsnp_146.hg38_chr21.vcf.gz</code></td>
 <td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>dbsnp_gz</code></td>
 <td><code>test/fixtures/refs/annotations/dbsnp_146.hg38_chr21.vcf.gz</code></td>
+<td>MuSE sump needs a gzipped dbSNP</td>
 <td><code>muse_sump</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>dbsnp_indel</code></td>
 <td><code>test/fixtures/refs/annotations/Mills_and_1000G_gold_standard.indels.hg38_chr21.vcf.gz</code></td>
 <td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>genome_version</code></td>
 <td><code>hg38_chr21</code></td>
+<td>—</td>
 <td><code>CM_call</code>, <code>CM_cnv</code>, <code>CM_flag</code>, <code>CM_germ_flag</code>, <code>M2_SNC</code>, <code>M2_ST</code>, <code>M2_contam</code>, <code>M2_filter</code>, <code>all</code>, <code>bam_flagstat_normal</code>, <code>bam_flagstat_tumor</code>, <code>bed_to_interval_list</code>, <code>call_config_strelka</code>, <code>call_strelka_manta_germline</code>, <code>call_strelka_somatic_manta</code>, <code>call_variants_HaplotypeCaller</code>, <code>combined_multiqc</code>, <code>combined_multiqc_prep_multiqc_data</code>, <code>fastp_normal_sample</code>, <code>fastp_tumor_sample</code>, <code>flag_mutation_pairead_maf</code>, <code>make_region_bed_list</code>, <code>map_reads_normal</code>, <code>map_reads_tumor</code>, <code>mark_duplicates_normal</code>, <code>mark_duplicates_tumor</code>, <code>merge_paired_germ_maf</code>, <code>merge_paired_maf</code>, <code>merge_strelka_manta</code>, <code>merge_strelka_somatic_manta</code>, <code>muse_call</code>, <code>muse_sump</code>, <code>mutect2</code>, <code>picard_collect_wes_normal</code>, <code>picard_collect_wes_tumor</code>, <code>prep_multiqc_data</code>, <code>recal_link_normal</code>, <code>recal_link_tumor</code>, <code>run_cancer_report</code>, <code>vardict_filter_somatic</code>, <code>vardict_paired_mode</code>, <code>varscan2_call</code>, <code>varscan2_merge_somatic</code>, <code>varscan2_mpileup</code>, <code>varscan2_processSomatic</code>, <code>varscan2_som_filter</code>, <code>vcf2maf_HaplotypeCaller</code>, <code>vcf2maf_Mutect2</code>, <code>vcf2maf_germ_caveman</code>, <code>vcf2maf_germ_strelkamanta</code>, <code>vcf2maf_muse</code>, <code>vcf2maf_vardict</code>, <code>vcf2maf_varscan2</code>, <code>vcf_norm_HaplotypeCaller</code>, <code>vcf_norm_Mutect2</code>, <code>vcf_norm_germline_caveman</code>, <code>vcf_norm_germline_strelkamanta</code>, <code>vcf_norm_muse</code>, <code>vcf_norm_vardict</code>, <code>vcf_norm_varscan2</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>germ_caller_list</code></td>
 <td><code>'strelkamanta', 'caveman'</code></td>
 <td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>java_temp_dir</code></td>
 <td><code>/tmp</code></td>
+<td>Java temp dir (upstream: config['params']['java']['temp_directory'])</td>
 <td><code>M2_SNC</code>, <code>M2_ST</code>, <code>M2_contam</code>, <code>M2_filter</code>, <code>bed_to_interval_list</code>, <code>call_variants_HaplotypeCaller</code>, <code>mark_duplicates_normal</code>, <code>mark_duplicates_tumor</code>, <code>mutect2</code>, <code>picard_collect_wes_normal</code>, <code>picard_collect_wes_tumor</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>mutect2_germline_vcf</code></td>
 <td><code>test/fixtures/refs/annotations/gnomAD.r2.1.1.GRCh38.PASS.AC.AF.only_chr21.vcf.gz</code></td>
+<td>—</td>
 <td><code>mutect2</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>mutect2_vcf</code></td>
 <td><code>test/fixtures/refs/annotations/gnomAD.r2.1.1.GRCh38.PASS.AC.AF.only_chr21.vcf.gz</code></td>
+<td>Mutect2 GetPileupSummaries sites + germline resource</td>
 <td><code>M2_SNC</code>, <code>M2_ST</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>ncbi_build</code></td>
 <td><code>GRCh38</code></td>
+<td>vcf2maf / VEP (upstream: config['softwares_params'][genome_version]['vcf2maf'])</td>
 <td><code>vcf2maf_HaplotypeCaller</code>, <code>vcf2maf_Mutect2</code>, <code>vcf2maf_germ_caveman</code>, <code>vcf2maf_germ_strelkamanta</code>, <code>vcf2maf_muse</code>, <code>vcf2maf_vardict</code>, <code>vcf2maf_varscan2</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>normal_fastq_r1</code></td>
 <td><code>test/fixtures/reads/mini-NC_R1.fq.gz</code></td>
+<td>—</td>
 <td><code>fastp_normal_sample</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>normal_fastq_r2</code></td>
 <td><code>test/fixtures/reads/mini-NC_R2.fq.gz</code></td>
+<td>—</td>
 <td><code>fastp_normal_sample</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>output_dir</code></td>
 <td><code>mini_test</code></td>
+<td>—</td>
 <td><code>CM_call</code>, <code>CM_cnv</code>, <code>CM_flag</code>, <code>CM_germ_flag</code>, <code>M2_SNC</code>, <code>M2_ST</code>, <code>M2_contam</code>, <code>M2_filter</code>, <code>all</code>, <code>bam_flagstat_normal</code>, <code>bam_flagstat_tumor</code>, <code>bed_to_interval_list</code>, <code>call_config_strelka</code>, <code>call_strelka_manta_germline</code>, <code>call_strelka_somatic_manta</code>, <code>call_variants_HaplotypeCaller</code>, <code>combined_multiqc</code>, <code>combined_multiqc_prep_multiqc_data</code>, <code>fastp_normal_sample</code>, <code>fastp_tumor_sample</code>, <code>flag_mutation_pairead_maf</code>, <code>make_region_bed_list</code>, <code>map_reads_normal</code>, <code>map_reads_tumor</code>, <code>mark_duplicates_normal</code>, <code>mark_duplicates_tumor</code>, <code>merge_paired_germ_maf</code>, <code>merge_paired_maf</code>, <code>merge_strelka_manta</code>, <code>merge_strelka_somatic_manta</code>, <code>muse_call</code>, <code>muse_sump</code>, <code>mutect2</code>, <code>picard_collect_wes_normal</code>, <code>picard_collect_wes_tumor</code>, <code>prep_multiqc_data</code>, <code>recal_link_normal</code>, <code>recal_link_tumor</code>, <code>run_cancer_report</code>, <code>vardict_filter_somatic</code>, <code>vardict_paired_mode</code>, <code>varscan2_call</code>, <code>varscan2_merge_somatic</code>, <code>varscan2_mpileup</code>, <code>varscan2_processSomatic</code>, <code>varscan2_som_filter</code>, <code>vcf2maf_HaplotypeCaller</code>, <code>vcf2maf_Mutect2</code>, <code>vcf2maf_germ_caveman</code>, <code>vcf2maf_germ_strelkamanta</code>, <code>vcf2maf_muse</code>, <code>vcf2maf_vardict</code>, <code>vcf2maf_varscan2</code>, <code>vcf_norm_HaplotypeCaller</code>, <code>vcf_norm_Mutect2</code>, <code>vcf_norm_germline_caveman</code>, <code>vcf_norm_germline_strelkamanta</code>, <code>vcf_norm_muse</code>, <code>vcf_norm_vardict</code>, <code>vcf_norm_varscan2</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>pair_ids</code></td>
 <td><code>'mini'</code></td>
+<td>Engine-injected list of pair ids (used by expand_inputs gather rules)</td>
 <td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>reference</code></td>
 <td><code>test/fixtures/refs/sequence/Homo_sapiens_assembly38_chr21.fasta</code></td>
+<td>Resources (upstream: config['resources'][genome_version])</td>
 <td><code>CM_call</code>, <code>CM_flag</code>, <code>M2_SNC</code>, <code>M2_ST</code>, <code>M2_filter</code>, <code>call_config_strelka</code>, <code>call_strelka_manta_germline</code>, <code>call_strelka_somatic_manta</code>, <code>call_variants_HaplotypeCaller</code>, <code>map_reads_normal</code>, <code>map_reads_tumor</code>, <code>muse_call</code>, <code>mutect2</code>, <code>picard_collect_wes_normal</code>, <code>picard_collect_wes_tumor</code>, <code>vardict_paired_mode</code>, <code>varscan2_call</code>, <code>varscan2_mpileup</code>, <code>vcf2maf_HaplotypeCaller</code>, <code>vcf2maf_Mutect2</code>, <code>vcf2maf_germ_caveman</code>, <code>vcf2maf_germ_strelkamanta</code>, <code>vcf2maf_muse</code>, <code>vcf2maf_vardict</code>, <code>vcf2maf_varscan2</code>, <code>vcf_norm_HaplotypeCaller</code>, <code>vcf_norm_Mutect2</code>, <code>vcf_norm_germline_caveman</code>, <code>vcf_norm_germline_strelkamanta</code>, <code>vcf_norm_muse</code>, <code>vcf_norm_vardict</code>, <code>vcf_norm_varscan2</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>reference_dict</code></td>
 <td><code>test/fixtures/refs/sequence/Homo_sapiens_assembly38_chr21.dict</code></td>
+<td>—</td>
 <td><code>bed_to_interval_list</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>run_report</code></td>
 <td><code>true</code></td>
+<td>Report stages (upstream <code>stages</code>): case_report + multiqc are ON in the port default; set run_report = false to match the upstream mini-test default.</td>
 <td><code>combined_multiqc</code>, <code>combined_multiqc_prep_multiqc_data</code>, <code>prep_multiqc_data</code>, <code>run_cancer_report</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>somatic_caller_list</code></td>
 <td><code>'HaplotypeCaller', 'vardict', 'varscan2', 'muse', 'Mutect2'</code></td>
+<td>Caller lists (upstream run_params)</td>
 <td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>target_bed</code></td>
 <td><code>test/fixtures/bed/exome_target_hg38_chr21.bed</code></td>
+<td>—</td>
 <td><code>M2_SNC</code>, <code>M2_ST</code>, <code>M2_filter</code>, <code>bed_to_interval_list</code>, <code>call_config_strelka</code>, <code>call_strelka_manta_germline</code>, <code>call_strelka_somatic_manta</code>, <code>call_variants_HaplotypeCaller</code>, <code>muse_call</code>, <code>mutect2</code>, <code>vardict_paired_mode</code>, <code>varscan2_call</code>, <code>varscan2_mpileup</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>tumor_fastq_r1</code></td>
 <td><code>test/fixtures/reads/mini-T_R1.fq.gz</code></td>
+<td>Reads (upstream samplesheet columns Tumor_R1_file_path / Normal_R1_file_path ...)</td>
 <td><code>fastp_tumor_sample</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>tumor_fastq_r2</code></td>
 <td><code>test/fixtures/reads/mini-T_R2.fq.gz</code></td>
+<td>—</td>
 <td><code>fastp_tumor_sample</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>vep_cache_version</code></td>
 <td><code>110</code></td>
+<td>—</td>
 <td><code>vcf2maf_HaplotypeCaller</code>, <code>vcf2maf_Mutect2</code>, <code>vcf2maf_germ_caveman</code>, <code>vcf2maf_germ_strelkamanta</code>, <code>vcf2maf_muse</code>, <code>vcf2maf_vardict</code>, <code>vcf2maf_varscan2</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>vep_data</code></td>
 <td><code>resources/ref_genome/hg38/vep</code></td>
+<td>—</td>
 <td><code>vcf2maf_HaplotypeCaller</code>, <code>vcf2maf_Mutect2</code>, <code>vcf2maf_germ_caveman</code>, <code>vcf2maf_germ_strelkamanta</code>, <code>vcf2maf_muse</code>, <code>vcf2maf_vardict</code>, <code>vcf2maf_varscan2</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>vep_species</code></td>
 <td><code>homo_sapiens</code></td>
+<td>—</td>
 <td><code>vcf2maf_HaplotypeCaller</code>, <code>vcf2maf_Mutect2</code>, <code>vcf2maf_germ_caveman</code>, <code>vcf2maf_germ_strelkamanta</code>, <code>vcf2maf_muse</code>, <code>vcf2maf_vardict</code>, <code>vcf2maf_varscan2</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>wes_pon</code></td>
 <td>``</td>
+<td>Upstream hg38_chr21 has no panel of normals (WES_PON: null) — leave empty</td>
 <td><code>mutect2</code></td>
 </tr>
 </tbody>
 </table>
-<p>Derived from the workflow's <code>[config]</code> section — no schema file to maintain.</p>
+<p>Descriptions are the workflow's own <code>#</code> comments from its <code>[config]</code> section, surfaced by <code>oxo-flow info</code> — no schema file to maintain.</p>
+<h2 id="workflow-graph">Workflow graph</h2>
+<div class="ox-dag-card">
+<p><img alt="oxo-flow-clindet rule-level DAG" src="/assets/dag/oxo-flow-clindet.svg" /></p>
+</div>
+<p>The graph is derived at catalog-build time from <code>oxo-flow graph -f dot</code> and rendered with Graphviz. It shows the workflow at rule level: wildcard <code>{sample}</code> instances expand at run time when sample data is discovered (the runtime view is <code>oxo-flow graph --expanded</code>).</p>
 <h2 id="scope">Scope</h2>
 <p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
 <p><strong>In scope</strong></p>

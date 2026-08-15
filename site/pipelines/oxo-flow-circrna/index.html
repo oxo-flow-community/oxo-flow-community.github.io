@@ -467,6 +467,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#workflow-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow graph
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#links" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -565,6 +576,7 @@
 <tr>
 <th style="text-align: right;">Parameter</th>
 <th>Default</th>
+<th>Description</th>
 <th>Used by</th>
 </tr>
 </thead>
@@ -572,71 +584,89 @@
 <tr>
 <td style="text-align: right;"><code>bowtie2_index</code></td>
 <td><code>/data/references/GRCh38/bowtie2/genome.fa</code></td>
+<td>—</td>
 <td><code>find_circ</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>bwa_index</code></td>
 <td><code>/data/references/GRCh38/bwa/genome.fa</code></td>
 <td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>bwamem2_index</code></td>
 <td><code>/data/references/GRCh38/bwamem2/genome.fa</code></td>
 <td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>circexplorer2_ref</code></td>
 <td><code>{config.reference_dir}/hg38_ref.txt</code></td>
+<td>—</td>
 <td><code>circexplorer2</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>ciriquant_config</code></td>
 <td><code>{config.reference_dir}/CIRIquant.yml</code></td>
+<td>—</td>
 <td><code>ciriquant</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gatk_dict</code></td>
 <td><code>/data/references/GRCh38/genome.dict</code></td>
 <td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gene_annotation</code></td>
 <td><code>{config.reference_dir}/genes.gtf</code></td>
+<td>—</td>
 <td><code>aggregate</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>hisat2_index</code></td>
 <td><code>/data/references/GRCh38/hisat2/genome.fa</code></td>
 <td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>minimap2_index</code></td>
 <td><code>/data/references/GRCh38/genome.fa.mmi</code></td>
 <td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>reference_dir</code></td>
 <td><code>/data/references/GRCh38</code></td>
+<td>=== The only path you need to set === All indexes and reference paths are auto-derived from this directory. Expected layout: {reference_dir}/genome.fa {reference_dir}/genes.gtf</td>
 <td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>reference_fasta</code></td>
 <td><code>{config.reference_dir}/genome.fa</code></td>
+<td>=== Auto-derived from reference_dir — override any of these if your layout differs ===</td>
 <td><code>circexplorer2</code>, <code>find_circ</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>samtools_faidx</code></td>
 <td><code>/data/references/GRCh38/genome.fa.fai</code></td>
 <td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>star_index</code></td>
 <td><code>/data/references/GRCh38/star</code></td>
+<td>—</td>
 <td><code>circrna_finder</code></td>
 </tr>
 </tbody>
 </table>
-<p>Derived from the workflow's <code>[config]</code> section — no schema file to maintain.</p>
+<p>Descriptions are the workflow's own <code>#</code> comments from its <code>[config]</code> section, surfaced by <code>oxo-flow info</code> — no schema file to maintain.</p>
+<h2 id="workflow-graph">Workflow graph</h2>
+<div class="ox-dag-card">
+<p><img alt="oxo-flow-circrna rule-level DAG" src="/assets/dag/oxo-flow-circrna.svg" /></p>
+</div>
+<p>The graph is derived at catalog-build time from <code>oxo-flow graph -f dot</code> and rendered with Graphviz. It shows the workflow at rule level: wildcard <code>{sample}</code> instances expand at run time when sample data is discovered (the runtime view is <code>oxo-flow graph --expanded</code>).</p>
 <h2 id="links">Links</h2>
 <ul>
 <li>Repository: <a href="https://github.com/WangLabCSU/oxo-flow-circrna">oxo-flow-circrna</a></li>

@@ -467,6 +467,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#workflow-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow graph
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#scope" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -599,6 +610,7 @@
 <tr>
 <th style="text-align: right;">Parameter</th>
 <th>Default</th>
+<th>Description</th>
 <th>Used by</th>
 </tr>
 </thead>
@@ -607,175 +619,214 @@
 <td style="text-align: right;"><code>aligner</code></td>
 <td><code>bwa-mem</code></td>
 <td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>annotate_vep</code></td>
 <td><code>true</code></td>
+<td>—</td>
 <td><code>ensemblvep_vep</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>bwa_index_dir</code></td>
 <td><code>/data/references/GRCh38/Sequence/BWAIndex/</code></td>
+<td>—</td>
 <td><code>bwa_mem</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>call_haplotypecaller</code></td>
 <td><code>true</code></td>
+<td>tools / skip_tools equivalents (upstream comma-list params expressed as booleans)</td>
 <td><code>bcftools_stats</code>, <code>ensemblvep_vep</code>, <code>gatk_cnnscorevariants</code>, <code>gatk_filtervarianttranches</code>, <code>gatk_haplotypecaller</code>, <code>vcftools_filter_summary</code>, <code>vcftools_tstv_count</code>, <code>vcftools_tstv_qual</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>dbsnp</code></td>
 <td><code>/data/references/GRCh38/Annotation/GATKBundle/dbsnp_146.hg38.vcf.gz</code></td>
+<td>—</td>
 <td><code>gatk_baserecalibrator</code>, <code>gatk_filtervarianttranches</code>, <code>gatk_haplotypecaller</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>dbsnp_tbi</code></td>
 <td><code>/data/references/GRCh38/Annotation/GATKBundle/dbsnp_146.hg38.vcf.gz.tbi</code></td>
+<td>—</td>
 <td><code>gatk_baserecalibrator</code>, <code>gatk_filtervarianttranches</code>, <code>gatk_haplotypecaller</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>dict</code></td>
 <td><code>/data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.dict</code></td>
+<td>—</td>
 <td><code>gatk_applybqsr</code>, <code>gatk_baserecalibrator</code>, <code>gatk_cnnscorevariants</code>, <code>gatk_filtervarianttranches</code>, <code>gatk_haplotypecaller</code>, <code>gatk_markduplicates</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>fasta</code></td>
 <td><code>/data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.fasta</code></td>
+<td>Reference data (user-provided; GRCh38 GATK bundle layout from upstream conf/igenomes.config, substituted at port time)</td>
 <td><code>bwa_mem</code>, <code>gatk_applybqsr</code>, <code>gatk_baserecalibrator</code>, <code>gatk_cnnscorevariants</code>, <code>gatk_filtervarianttranches</code>, <code>gatk_haplotypecaller</code>, <code>gatk_markduplicates</code>, <code>mosdepth_md</code>, <code>mosdepth_recal</code>, <code>samtools_stats_md</code>, <code>samtools_stats_recal</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>fasta_fai</code></td>
 <td><code>/data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.fasta.fai</code></td>
+<td>—</td>
 <td><code>gatk_applybqsr</code>, <code>gatk_baserecalibrator</code>, <code>gatk_cnnscorevariants</code>, <code>gatk_filtervarianttranches</code>, <code>gatk_haplotypecaller</code>, <code>gatk_markduplicates</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gatk_pcr_indel_model</code></td>
 <td><code>CONSERVATIVE</code></td>
+<td>—</td>
 <td><code>gatk_haplotypecaller</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>genome</code></td>
 <td><code>GRCh38</code></td>
 <td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>joint_germline</code></td>
 <td><code>false</code></td>
 <td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>known_indels</code></td>
 <td><code>'/data/references/GRCh38/Annotation/GATKBundle/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz', '/data/references/GRCh38/Annotation/GATKBundle/Homo_sapiens_assembly38.known_indels.vcf.gz'</code></td>
+<td>—</td>
 <td><code>gatk_baserecalibrator</code>, <code>gatk_filtervarianttranches</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>known_indels_tbi</code></td>
 <td><code>'/data/references/GRCh38/Annotation/GATKBundle/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz.tbi', '/data/references/GRCh38/Annotation/GATKBundle/Homo_sapiens_assembly38.known_indels.vcf.gz.tbi'</code></td>
+<td>—</td>
 <td><code>gatk_baserecalibrator</code>, <code>gatk_filtervarianttranches</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>lane</code></td>
 <td><code>test_L1</code></td>
+<td>—</td>
 <td><code>bwa_mem</code>, <code>fastp</code>, <code>fastqc</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>length_required</code></td>
 <td><code>15</code></td>
+<td>—</td>
 <td><code>fastp</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>out_dir</code></td>
 <td><code>results</code></td>
+<td>—</td>
 <td><code>bcftools_stats</code>, <code>bwa_mem</code>, <code>ensemblvep_vep</code>, <code>fastp</code>, <code>fastqc</code>, <code>gatk_applybqsr</code>, <code>gatk_baserecalibrator</code>, <code>gatk_cnnscorevariants</code>, <code>gatk_filtervarianttranches</code>, <code>gatk_haplotypecaller</code>, <code>gatk_markduplicates</code>, <code>mosdepth_md</code>, <code>mosdepth_recal</code>, <code>multiqc</code>, <code>samtools_index_recal</code>, <code>samtools_stats_md</code>, <code>samtools_stats_recal</code>, <code>vcftools_filter_summary</code>, <code>vcftools_tstv_count</code>, <code>vcftools_tstv_qual</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>patient</code></td>
 <td><code>test</code></td>
+<td>Sample metadata — mirrors tests/csv/3.0/fastq_single.csv (single-lane model: nf-core/sarek meta.id = "{sample}-{lane}", read-group ID = "{sample}.{lane}")</td>
 <td><code>bwa_mem</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>save_output_as_bam</code></td>
 <td><code>false</code></td>
+<td>CRAM output mode (upstream default)</td>
 <td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>seq_platform</code></td>
 <td><code>ILLUMINA</code></td>
+<td>—</td>
 <td><code>bwa_mem</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>sex</code></td>
 <td><code>XX</code></td>
 <td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_bcftools</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>bcftools_stats</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_fastqc</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>fastqc</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_mosdepth</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>mosdepth_md</code>, <code>mosdepth_recal</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_multiqc</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>multiqc</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_samtools</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>samtools_stats_md</code>, <code>samtools_stats_recal</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_vcftools</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>vcftools_filter_summary</code>, <code>vcftools_tstv_count</code>, <code>vcftools_tstv_qual</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>split_fastq</code></td>
 <td><code>50000000</code></td>
+<td>fastp --split_by_lines = split_fastq * 4</td>
 <td><code>fastp</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>status</code></td>
 <td><code>0</code></td>
 <td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>trim_fastq</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>fastp</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>vep_cache_version</code></td>
 <td><code>116</code></td>
+<td>—</td>
 <td><code>ensemblvep_vep</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>vep_genome</code></td>
 <td><code>GRCh38</code></td>
+<td>—</td>
 <td><code>ensemblvep_vep</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>vep_species</code></td>
 <td><code>homo_sapiens</code></td>
+<td>—</td>
 <td><code>ensemblvep_vep</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>wes</code></td>
 <td><code>false</code></td>
 <td>—</td>
+<td>—</td>
 </tr>
 </tbody>
 </table>
-<p>Derived from the workflow's <code>[config]</code> section — no schema file to maintain.</p>
+<p>Descriptions are the workflow's own <code>#</code> comments from its <code>[config]</code> section, surfaced by <code>oxo-flow info</code> — no schema file to maintain.</p>
+<h2 id="workflow-graph">Workflow graph</h2>
+<div class="ox-dag-card">
+<p><img alt="oxo-flow-sarek rule-level DAG" src="/assets/dag/oxo-flow-sarek.svg" /></p>
+</div>
+<p>The graph is derived at catalog-build time from <code>oxo-flow graph -f dot</code> and rendered with Graphviz. It shows the workflow at rule level: wildcard <code>{sample}</code> instances expand at run time when sample data is discovered (the runtime view is <code>oxo-flow graph --expanded</code>).</p>
 <h2 id="scope">Scope</h2>
 <p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
 <p><strong>In scope</strong></p>

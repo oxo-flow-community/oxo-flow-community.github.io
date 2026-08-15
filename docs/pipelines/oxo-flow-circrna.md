@@ -45,23 +45,33 @@ git clone https://github.com/WangLabCSU/oxo-flow-circrna
 
 ## Parameters
 
-| Parameter | Default | Used by |
-|---:|---|---|
-| `bowtie2_index` | `/data/references/GRCh38/bowtie2/genome.fa` | `find_circ` |
-| `bwa_index` | `/data/references/GRCh38/bwa/genome.fa` | — |
-| `bwamem2_index` | `/data/references/GRCh38/bwamem2/genome.fa` | — |
-| `circexplorer2_ref` | `{config.reference_dir}/hg38_ref.txt` | `circexplorer2` |
-| `ciriquant_config` | `{config.reference_dir}/CIRIquant.yml` | `ciriquant` |
-| `gatk_dict` | `/data/references/GRCh38/genome.dict` | — |
-| `gene_annotation` | `{config.reference_dir}/genes.gtf` | `aggregate` |
-| `hisat2_index` | `/data/references/GRCh38/hisat2/genome.fa` | — |
-| `minimap2_index` | `/data/references/GRCh38/genome.fa.mmi` | — |
-| `reference_dir` | `/data/references/GRCh38` | — |
-| `reference_fasta` | `{config.reference_dir}/genome.fa` | `circexplorer2`, `find_circ` |
-| `samtools_faidx` | `/data/references/GRCh38/genome.fa.fai` | — |
-| `star_index` | `/data/references/GRCh38/star` | `circrna_finder` |
+| Parameter | Default | Description | Used by |
+|---:|---|---|---|
+| `bowtie2_index` | `/data/references/GRCh38/bowtie2/genome.fa` | — | `find_circ` |
+| `bwa_index` | `/data/references/GRCh38/bwa/genome.fa` | — | — |
+| `bwamem2_index` | `/data/references/GRCh38/bwamem2/genome.fa` | — | — |
+| `circexplorer2_ref` | `{config.reference_dir}/hg38_ref.txt` | — | `circexplorer2` |
+| `ciriquant_config` | `{config.reference_dir}/CIRIquant.yml` | — | `ciriquant` |
+| `gatk_dict` | `/data/references/GRCh38/genome.dict` | — | — |
+| `gene_annotation` | `{config.reference_dir}/genes.gtf` | — | `aggregate` |
+| `hisat2_index` | `/data/references/GRCh38/hisat2/genome.fa` | — | — |
+| `minimap2_index` | `/data/references/GRCh38/genome.fa.mmi` | — | — |
+| `reference_dir` | `/data/references/GRCh38` | === The only path you need to set === All indexes and reference paths are auto-derived from this directory. Expected layout: {reference_dir}/genome.fa {reference_dir}/genes.gtf | — |
+| `reference_fasta` | `{config.reference_dir}/genome.fa` | === Auto-derived from reference_dir — override any of these if your layout differs === | `circexplorer2`, `find_circ` |
+| `samtools_faidx` | `/data/references/GRCh38/genome.fa.fai` | — | — |
+| `star_index` | `/data/references/GRCh38/star` | — | `circrna_finder` |
 
-Derived from the workflow's `[config]` section — no schema file to maintain.
+Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
+
+## Workflow graph
+
+<div class="ox-dag-card" markdown="1">
+
+![oxo-flow-circrna rule-level DAG](/assets/dag/oxo-flow-circrna.svg)
+
+</div>
+
+The graph is derived at catalog-build time from `oxo-flow graph -f dot` and rendered with Graphviz. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Links
 

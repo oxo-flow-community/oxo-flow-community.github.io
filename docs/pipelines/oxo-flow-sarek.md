@@ -51,44 +51,54 @@ git clone https://github.com/oxo-flow-community/oxo-flow-sarek
 
 ## Parameters
 
-| Parameter | Default | Used by |
-|---:|---|---|
-| `aligner` | `bwa-mem` | — |
-| `annotate_vep` | `true` | `ensemblvep_vep` |
-| `bwa_index_dir` | `/data/references/GRCh38/Sequence/BWAIndex/` | `bwa_mem` |
-| `call_haplotypecaller` | `true` | `bcftools_stats`, `ensemblvep_vep`, `gatk_cnnscorevariants`, `gatk_filtervarianttranches`, `gatk_haplotypecaller`, `vcftools_filter_summary`, `vcftools_tstv_count`, `vcftools_tstv_qual` |
-| `dbsnp` | `/data/references/GRCh38/Annotation/GATKBundle/dbsnp_146.hg38.vcf.gz` | `gatk_baserecalibrator`, `gatk_filtervarianttranches`, `gatk_haplotypecaller` |
-| `dbsnp_tbi` | `/data/references/GRCh38/Annotation/GATKBundle/dbsnp_146.hg38.vcf.gz.tbi` | `gatk_baserecalibrator`, `gatk_filtervarianttranches`, `gatk_haplotypecaller` |
-| `dict` | `/data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.dict` | `gatk_applybqsr`, `gatk_baserecalibrator`, `gatk_cnnscorevariants`, `gatk_filtervarianttranches`, `gatk_haplotypecaller`, `gatk_markduplicates` |
-| `fasta` | `/data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.fasta` | `bwa_mem`, `gatk_applybqsr`, `gatk_baserecalibrator`, `gatk_cnnscorevariants`, `gatk_filtervarianttranches`, `gatk_haplotypecaller`, `gatk_markduplicates`, `mosdepth_md`, `mosdepth_recal`, `samtools_stats_md`, `samtools_stats_recal` |
-| `fasta_fai` | `/data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.fasta.fai` | `gatk_applybqsr`, `gatk_baserecalibrator`, `gatk_cnnscorevariants`, `gatk_filtervarianttranches`, `gatk_haplotypecaller`, `gatk_markduplicates` |
-| `gatk_pcr_indel_model` | `CONSERVATIVE` | `gatk_haplotypecaller` |
-| `genome` | `GRCh38` | — |
-| `joint_germline` | `false` | — |
-| `known_indels` | `'/data/references/GRCh38/Annotation/GATKBundle/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz', '/data/references/GRCh38/Annotation/GATKBundle/Homo_sapiens_assembly38.known_indels.vcf.gz'` | `gatk_baserecalibrator`, `gatk_filtervarianttranches` |
-| `known_indels_tbi` | `'/data/references/GRCh38/Annotation/GATKBundle/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz.tbi', '/data/references/GRCh38/Annotation/GATKBundle/Homo_sapiens_assembly38.known_indels.vcf.gz.tbi'` | `gatk_baserecalibrator`, `gatk_filtervarianttranches` |
-| `lane` | `test_L1` | `bwa_mem`, `fastp`, `fastqc` |
-| `length_required` | `15` | `fastp` |
-| `out_dir` | `results` | `bcftools_stats`, `bwa_mem`, `ensemblvep_vep`, `fastp`, `fastqc`, `gatk_applybqsr`, `gatk_baserecalibrator`, `gatk_cnnscorevariants`, `gatk_filtervarianttranches`, `gatk_haplotypecaller`, `gatk_markduplicates`, `mosdepth_md`, `mosdepth_recal`, `multiqc`, `samtools_index_recal`, `samtools_stats_md`, `samtools_stats_recal`, `vcftools_filter_summary`, `vcftools_tstv_count`, `vcftools_tstv_qual` |
-| `patient` | `test` | `bwa_mem` |
-| `save_output_as_bam` | `false` | — |
-| `seq_platform` | `ILLUMINA` | `bwa_mem` |
-| `sex` | `XX` | — |
-| `skip_bcftools` | `false` | `bcftools_stats` |
-| `skip_fastqc` | `false` | `fastqc` |
-| `skip_mosdepth` | `false` | `mosdepth_md`, `mosdepth_recal` |
-| `skip_multiqc` | `false` | `multiqc` |
-| `skip_samtools` | `false` | `samtools_stats_md`, `samtools_stats_recal` |
-| `skip_vcftools` | `false` | `vcftools_filter_summary`, `vcftools_tstv_count`, `vcftools_tstv_qual` |
-| `split_fastq` | `50000000` | `fastp` |
-| `status` | `0` | — |
-| `trim_fastq` | `false` | `fastp` |
-| `vep_cache_version` | `116` | `ensemblvep_vep` |
-| `vep_genome` | `GRCh38` | `ensemblvep_vep` |
-| `vep_species` | `homo_sapiens` | `ensemblvep_vep` |
-| `wes` | `false` | — |
+| Parameter | Default | Description | Used by |
+|---:|---|---|---|
+| `aligner` | `bwa-mem` | — | — |
+| `annotate_vep` | `true` | — | `ensemblvep_vep` |
+| `bwa_index_dir` | `/data/references/GRCh38/Sequence/BWAIndex/` | — | `bwa_mem` |
+| `call_haplotypecaller` | `true` | tools / skip_tools equivalents (upstream comma-list params expressed as booleans) | `bcftools_stats`, `ensemblvep_vep`, `gatk_cnnscorevariants`, `gatk_filtervarianttranches`, `gatk_haplotypecaller`, `vcftools_filter_summary`, `vcftools_tstv_count`, `vcftools_tstv_qual` |
+| `dbsnp` | `/data/references/GRCh38/Annotation/GATKBundle/dbsnp_146.hg38.vcf.gz` | — | `gatk_baserecalibrator`, `gatk_filtervarianttranches`, `gatk_haplotypecaller` |
+| `dbsnp_tbi` | `/data/references/GRCh38/Annotation/GATKBundle/dbsnp_146.hg38.vcf.gz.tbi` | — | `gatk_baserecalibrator`, `gatk_filtervarianttranches`, `gatk_haplotypecaller` |
+| `dict` | `/data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.dict` | — | `gatk_applybqsr`, `gatk_baserecalibrator`, `gatk_cnnscorevariants`, `gatk_filtervarianttranches`, `gatk_haplotypecaller`, `gatk_markduplicates` |
+| `fasta` | `/data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.fasta` | Reference data (user-provided; GRCh38 GATK bundle layout from upstream conf/igenomes.config, substituted at port time) | `bwa_mem`, `gatk_applybqsr`, `gatk_baserecalibrator`, `gatk_cnnscorevariants`, `gatk_filtervarianttranches`, `gatk_haplotypecaller`, `gatk_markduplicates`, `mosdepth_md`, `mosdepth_recal`, `samtools_stats_md`, `samtools_stats_recal` |
+| `fasta_fai` | `/data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.fasta.fai` | — | `gatk_applybqsr`, `gatk_baserecalibrator`, `gatk_cnnscorevariants`, `gatk_filtervarianttranches`, `gatk_haplotypecaller`, `gatk_markduplicates` |
+| `gatk_pcr_indel_model` | `CONSERVATIVE` | — | `gatk_haplotypecaller` |
+| `genome` | `GRCh38` | — | — |
+| `joint_germline` | `false` | — | — |
+| `known_indels` | `'/data/references/GRCh38/Annotation/GATKBundle/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz', '/data/references/GRCh38/Annotation/GATKBundle/Homo_sapiens_assembly38.known_indels.vcf.gz'` | — | `gatk_baserecalibrator`, `gatk_filtervarianttranches` |
+| `known_indels_tbi` | `'/data/references/GRCh38/Annotation/GATKBundle/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz.tbi', '/data/references/GRCh38/Annotation/GATKBundle/Homo_sapiens_assembly38.known_indels.vcf.gz.tbi'` | — | `gatk_baserecalibrator`, `gatk_filtervarianttranches` |
+| `lane` | `test_L1` | — | `bwa_mem`, `fastp`, `fastqc` |
+| `length_required` | `15` | — | `fastp` |
+| `out_dir` | `results` | — | `bcftools_stats`, `bwa_mem`, `ensemblvep_vep`, `fastp`, `fastqc`, `gatk_applybqsr`, `gatk_baserecalibrator`, `gatk_cnnscorevariants`, `gatk_filtervarianttranches`, `gatk_haplotypecaller`, `gatk_markduplicates`, `mosdepth_md`, `mosdepth_recal`, `multiqc`, `samtools_index_recal`, `samtools_stats_md`, `samtools_stats_recal`, `vcftools_filter_summary`, `vcftools_tstv_count`, `vcftools_tstv_qual` |
+| `patient` | `test` | Sample metadata — mirrors tests/csv/3.0/fastq_single.csv (single-lane model: nf-core/sarek meta.id = "{sample}-{lane}", read-group ID = "{sample}.{lane}") | `bwa_mem` |
+| `save_output_as_bam` | `false` | CRAM output mode (upstream default) | — |
+| `seq_platform` | `ILLUMINA` | — | `bwa_mem` |
+| `sex` | `XX` | — | — |
+| `skip_bcftools` | `false` | — | `bcftools_stats` |
+| `skip_fastqc` | `false` | — | `fastqc` |
+| `skip_mosdepth` | `false` | — | `mosdepth_md`, `mosdepth_recal` |
+| `skip_multiqc` | `false` | — | `multiqc` |
+| `skip_samtools` | `false` | — | `samtools_stats_md`, `samtools_stats_recal` |
+| `skip_vcftools` | `false` | — | `vcftools_filter_summary`, `vcftools_tstv_count`, `vcftools_tstv_qual` |
+| `split_fastq` | `50000000` | fastp --split_by_lines = split_fastq * 4 | `fastp` |
+| `status` | `0` | — | — |
+| `trim_fastq` | `false` | — | `fastp` |
+| `vep_cache_version` | `116` | — | `ensemblvep_vep` |
+| `vep_genome` | `GRCh38` | — | `ensemblvep_vep` |
+| `vep_species` | `homo_sapiens` | — | `ensemblvep_vep` |
+| `wes` | `false` | — | — |
 
-Derived from the workflow's `[config]` section — no schema file to maintain.
+Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
+
+## Workflow graph
+
+<div class="ox-dag-card" markdown="1">
+
+![oxo-flow-sarek rule-level DAG](/assets/dag/oxo-flow-sarek.svg)
+
+</div>
+
+The graph is derived at catalog-build time from `oxo-flow graph -f dot` and rendered with Graphviz. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

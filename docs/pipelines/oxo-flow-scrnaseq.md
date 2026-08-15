@@ -49,34 +49,44 @@ git clone https://github.com/oxo-flow-community/oxo-flow-scrnaseq
 
 ## Parameters
 
-| Parameter | Default | Used by |
-|---:|---|---|
-| `aligner` | `cellranger` | — |
-| `build_cellranger_index` | `true` | `cellranger_mkgtf`, `cellranger_mkref` |
-| `expected_cells` | `` | `cellranger_count` |
-| `fasta` | `refs/refdata.fa.gz` | `gunzip_fasta` |
-| `fasta_gz` | `true` | `gunzip_fasta` |
-| `fasta_prepared` | `refs/refdata.fa` | `cellranger_mkref`, `gtf_gene_filter`, `gunzip_fasta` |
-| `gtf` | `refs/refdata.gtf.gz` | `gunzip_gtf` |
-| `gtf_filtered` | `refs/refdata_genes.gtf` | `gtf_gene_filter`, `gtf_source_fix` |
-| `gtf_gz` | `true` | `gunzip_gtf` |
-| `gtf_mkgtf` | `refs/refdata_genes.filtered.gtf` | `cellranger_mkgtf`, `cellranger_mkref` |
-| `gtf_mkgtf_input` | `refs/refdata_genes.gtf` | `cellranger_mkgtf` |
-| `gtf_prepared` | `refs/refdata.gtf` | `gtf_gene_filter`, `gunzip_gtf` |
-| `gtf_source_fix` | `false` | `gtf_source_fix` |
-| `gtf_source_fixed` | `refs/refdata_genes.source_fixed.gtf` | `gtf_source_fix` |
-| `multiqc_config` | `assets/multiqc_config.yml` | `multiqc` |
-| `multiqc_title` | `` | `multiqc` |
-| `out_dir` | `results` | — |
-| `protocol` | `auto` | `cellranger_count` |
-| `samplesheet` | `samplesheet.csv` | `concat_h5ad_cellbender_filter`, `concat_h5ad_filtered`, `concat_h5ad_raw` |
-| `save_align_intermeds` | `true` | `cellranger_count` |
-| `skip_cellbender` | `false` | `anndata_barcodes`, `anndatar_convert_cellbender_filter`, `anndatar_convert_combined_cellbender_filter`, `anndatar_convert_combined_raw`, `anndatar_convert_raw`, `cellbender_removebackground`, `concat_h5ad_cellbender_filter`, `concat_h5ad_raw` |
-| `skip_fastqc` | `false` | `fastqc` |
-| `skip_multiqc` | `false` | `multiqc` |
-| `transcriptome` | `refs/cellranger_reference` | `cellranger_count`, `cellranger_mkref` |
+| Parameter | Default | Description | Used by |
+|---:|---|---|---|
+| `aligner` | `cellranger` | --aligner / --protocol (port implements the cellranger branch; see README fidelity table) | — |
+| `build_cellranger_index` | `true` | cellranger reference: build from fasta/gtf, or point transcriptome at an existing index | `cellranger_mkgtf`, `cellranger_mkref` |
+| `expected_cells` | `` | samplesheet `expected_cells` column -> `--expect-cells` when set | `cellranger_count` |
+| `fasta` | `refs/refdata.fa.gz` | reference genome (upstream --fasta / --gtf; may be .gz) | `gunzip_fasta` |
+| `fasta_gz` | `true` | — | `gunzip_fasta` |
+| `fasta_prepared` | `refs/refdata.fa` | derived reference files (README "Reference genome" explains the chain) | `cellranger_mkref`, `gtf_gene_filter`, `gunzip_fasta` |
+| `gtf` | `refs/refdata.gtf.gz` | — | `gunzip_gtf` |
+| `gtf_filtered` | `refs/refdata_genes.gtf` | — | `gtf_gene_filter`, `gtf_source_fix` |
+| `gtf_gz` | `true` | — | `gunzip_gtf` |
+| `gtf_mkgtf` | `refs/refdata_genes.filtered.gtf` | — | `cellranger_mkgtf`, `cellranger_mkref` |
+| `gtf_mkgtf_input` | `refs/refdata_genes.gtf` | set to the source-fixed file when gtf_source_fix=true | `cellranger_mkgtf` |
+| `gtf_prepared` | `refs/refdata.gtf` | — | `gtf_gene_filter`, `gunzip_gtf` |
+| `gtf_source_fix` | `false` | iGenomes GTF source-field rewrite (opt-in, upstream gtf_source_has_spaces) | `gtf_source_fix` |
+| `gtf_source_fixed` | `refs/refdata_genes.source_fixed.gtf` | — | `gtf_source_fix` |
+| `multiqc_config` | `assets/multiqc_config.yml` | — | `multiqc` |
+| `multiqc_title` | `` | -> `--title` when set | `multiqc` |
+| `out_dir` | `results` | — | — |
+| `protocol` | `auto` | passed verbatim as `--chemistry` (10x auto-detection) | `cellranger_count` |
+| `samplesheet` | `samplesheet.csv` | user samplesheet consumed by CONCAT_H5AD (same columns as upstream) | `concat_h5ad_cellbender_filter`, `concat_h5ad_filtered`, `concat_h5ad_raw` |
+| `save_align_intermeds` | `true` | -> `--create-bam true` | `cellranger_count` |
+| `skip_cellbender` | `false` | — | `anndata_barcodes`, `anndatar_convert_cellbender_filter`, `anndatar_convert_combined_cellbender_filter`, `anndatar_convert_combined_raw`, `anndatar_convert_raw`, `cellbender_removebackground`, `concat_h5ad_cellbender_filter`, `concat_h5ad_raw` |
+| `skip_fastqc` | `false` | QC / reporting knobs | `fastqc` |
+| `skip_multiqc` | `false` | — | `multiqc` |
+| `transcriptome` | `refs/cellranger_reference` | — | `cellranger_count`, `cellranger_mkref` |
 
-Derived from the workflow's `[config]` section — no schema file to maintain.
+Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
+
+## Workflow graph
+
+<div class="ox-dag-card" markdown="1">
+
+![oxo-flow-scrnaseq rule-level DAG](/assets/dag/oxo-flow-scrnaseq.svg)
+
+</div>
+
+The graph is derived at catalog-build time from `oxo-flow graph -f dot` and rendered with Graphviz. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 
