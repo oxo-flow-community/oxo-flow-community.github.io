@@ -37,7 +37,7 @@ oxo-flow dry-run main.oxoflow
 
 ```bash
 # 1. install oxo-flow (release binary, recommended)
-curl -fL -o oxo-flow.tar.gz https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz
+curl -fL -o oxo-flow.tar.gz https://github.com/Traitome/oxo-flow/releases/latest/download/oxo-flow-latest-x86_64-unknown-linux-gnu.tar.gz
 tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
 #    or, via conda (may lag behind releases):
 #    conda install -c bioconda oxo-flow-cli

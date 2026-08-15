@@ -23,8 +23,8 @@ OUT_PAGES = ROOT / "docs" / "pipelines"
 STAGING = pathlib.Path.home() / "Documents" / "GitHub" / "oxo-community" / "staging"
 
 ENGINE_URL = (
-    "https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/"
-    "oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz"
+    "https://github.com/Traitome/oxo-flow/releases/latest/download/"
+    "oxo-flow-latest-x86_64-unknown-linux-gnu.tar.gz"
 )
 
 
@@ -148,7 +148,7 @@ def install_section(p: dict) -> str:
     lines = [
         "## Installation",
         "",
-        f"**Engine.** {inst.get('engine', 'oxo-flow >= 0.11.0')}",
+        f"**Engine.** {inst.get('engine', 'oxo-flow >= 0.12.0')}",
         "",
         f"**Toolchain.** {inst.get('toolchain', 'containers or conda envs — pinned')}",
     ]
