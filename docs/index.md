@@ -10,7 +10,8 @@ hide:
 A community catalog for the oxo-flow engine: verified ports of the pipelines
 the field already trusts, original workflows built for oxo-flow, and community
 submissions — classified, rated, and documented, so you can pick the right one
-and run it with confidence. {: .ox-sub }
+and run it with confidence.
+{: .ox-sub }
 
 <div class="ox-rule"></div>
 
