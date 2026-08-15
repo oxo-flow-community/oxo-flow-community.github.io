@@ -48,20 +48,30 @@ git clone https://github.com/oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipelin
 
 ## Parameters
 
-| Parameter | Default | Used by |
-|---:|---|---|
-| `GTF` | `/data/reference/genome/GRCh38/Homo_sapiens.GRCh38.95.sort.gtf` | `align_and_count` |
-| `db_id` | `D21122` | `DGE_analysis`, `combine_count` |
-| `index` | `/data/reference/genome/GRCh38/STAR` | `align_and_count` |
-| `mail` | `false` | — |
-| `mail_to` | `` | — |
-| `metadata` | `test/fixtures/metadata/D21122.txt` | `DGE_analysis`, `combine_count`, `data_conversion_pair`, `get_sra`, `merge_R1_data`, `merge_R2_data` |
-| `sender` | `` | — |
-| `sender_password` | `` | — |
-| `sra_data_path` | `sra` | `get_sra` |
-| `srr_separator` | `,` | `data_conversion_pair`, `get_sra`, `merge_R1_data`, `merge_R2_data` |
+| Parameter | Default | Description | Used by |
+|---:|---|---|---|
+| `GTF` | `/data/reference/genome/GRCh38/Homo_sapiens.GRCh38.95.sort.gtf` | — | `align_and_count` |
+| `db_id` | `D21122` | DB_ID — upstream: basename(metadata).replace(".txt", ""). | `DGE_analysis`, `combine_count` |
+| `index` | `/data/reference/genome/GRCh38/STAR` | STAR index dir and GTF (upstream keys index / GTF). | `align_and_count` |
+| `mail` | `false` | Email notification (upstream onsuccess). Keep off unless SMTP is configured. | — |
+| `mail_to` | `` | — | — |
+| `metadata` | `test/fixtures/metadata/D21122.txt` | Metadata TSV (upstream key metadata). Columns: Dataset GSE GSM gene method celline group group_name type platform SRR paired The repo default points at the bundled example dataset (upstream doc/D21122.txt). | `DGE_analysis`, `combine_count`, `data_conversion_pair`, `get_sra`, `merge_R1_data`, `merge_R2_data` |
+| `sender` | `` | — | — |
+| `sender_password` | `` | — | — |
+| `sra_data_path` | `sra` | Directory holding pre-downloaded .sra files, layout <dir>/<SRR>/<SRR>.sra (upstream key sra_data_path). | `get_sra` |
+| `srr_separator` | `,` | Separator joining multiple SRR runs per sample in the metadata SRR column. | `data_conversion_pair`, `get_sra`, `merge_R1_data`, `merge_R2_data` |
 
-Derived from the workflow's `[config]` section — no schema file to maintain.
+Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
+
+## Workflow graph
+
+<div class="ox-dag-card" markdown="1">
+
+![oxo-flow-auto-sra-rnaseq-pipeline rule-level DAG](/assets/dag/oxo-flow-auto-sra-rnaseq-pipeline.svg)
+
+</div>
+
+The graph is derived at catalog-build time from `oxo-flow graph -f dot` and rendered with Graphviz. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

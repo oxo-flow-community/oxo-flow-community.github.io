@@ -664,23 +664,29 @@ To list a workflow that lives <strong>in your own repository</strong>:</p>
 <a href="https://github.com/oxo-flow-community">oxo-flow-community organization</a>
 under the same layout and criteria.</p>
 <h2 id="machine-derived-content">Machine-derived content</h2>
-<p>Two parts of every workflow page are not hand-written — they are derived from
-the workflow file itself with <code>oxo-flow info</code>, so they cannot drift from the
-code:</p>
+<p>Three parts of every workflow page are not hand-written — they are derived
+from the workflow file itself, so they cannot drift from the code:</p>
 <ul>
 <li><strong>Parameters table.</strong> Every run-notes page lists the workflow's <code>[config]</code>
-  section: parameter, default value, and the rules that use it. A <code>—</code> in the
-  <em>Used by</em> column means the key is defined but not wired into any rule — a
-  documented knob kept for fidelity with the source pipeline. No schema file
-  to maintain.</li>
+  section: parameter, default value, the rules that use it, and — when the
+  workflow comments the key — its <em>Description</em> taken verbatim from the
+  <code>[config]</code> section's <code>#</code> comments (contiguous comment block above the key,
+  or a trailing comment on the key line). A <code>—</code> in the <em>Used by</em> column means
+  the key is defined but not wired into any rule — a documented knob kept for
+  fidelity with the source pipeline. No schema file to maintain.</li>
+<li><strong>Workflow graph.</strong> Each page embeds the rule-level DAG rendered from
+  <code>oxo-flow graph -f dot</code> + Graphviz. Wildcard <code>{sample}</code> instances expand at
+  run time when sample data is discovered, so the static graph shows the
+  structural DAG (the runtime view is <code>oxo-flow graph --expanded</code>).</li>
 <li><strong>Metadata cross-checks.</strong> <code>rule_count</code>, tools, resources, and environments
   are derived the same way and diffed against the hand-maintained registry
   entry when a workflow is listed or reviewed.</li>
 </ul>
-<p>The derived data is committed as <code>data/configs.json</code> in the site repository
-and regenerated locally (never in CI) with:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>scripts/regen-configs.py<span class="w">    </span><span class="c1"># reads the staged clones, writes data/configs.json</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>scripts/generate.py<span class="w">         </span><span class="c1"># regenerates the run-notes pages (CI checks for drift)</span>
+<p>The derived data is committed (<code>data/configs.json</code> plus
+<code>docs/assets/dag/&lt;name&gt;.svg</code>) and regenerated locally (never in CI) with:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>scripts/regen-configs.py<span class="w">    </span><span class="c1"># staged clones → data/configs.json + DAG SVGs</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">                            </span><span class="c1"># (needs an oxo-flow binary and Graphviz `dot`)</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>scripts/generate.py<span class="w">         </span><span class="c1"># regenerates the run-notes pages (CI checks for drift)</span>
 </code></pre></div>
 <p>Run both whenever a staged workflow changes and commit the result — site CI
 only builds MkDocs and never downloads the engine.</p>

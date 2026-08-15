@@ -52,56 +52,66 @@ git clone https://github.com/oxo-flow-community/oxo-flow-chipseq
 
 ## Parameters
 
-| Parameter | Default | Used by |
-|---:|---|---|
-| `antibody` | `H3K4me3` | `consensus::annotate_boolean_peaks`, `consensus::deseq2_qc`, `consensus::homer_annotate_consensus`, `consensus::macs3_consensus`, `consensus::subread_featurecounts`, `report::igv`, `report::multiqc` |
-| `blacklist` | `test/fixtures/references/blacklist.bed` | `filter::bamtools_filter` |
-| `broad_cutoff` | `0.1` | `peaks::macs3_callpeak` |
-| `bwa_index` | `test/fixtures/references/bwa_index` | `align::bwa_mem` |
-| `bwa_min_score` | `0` | `align::bwa_mem` |
-| `chrom_sizes` | `test/fixtures/references/chrom.sizes` | `tracks::ucsc_bedgraphtobigwig` |
-| `clip_r1` | `0` | `qc::trimgalore` |
-| `clip_r2` | `0` | `qc::trimgalore` |
-| `fai` | `test/fixtures/references/genome.fa.fai` | `align::markduplicates`, `filter::picard_collectmultiplemetrics` |
-| `fasta` | `test/fixtures/references/genome.fa` | `align::bwa_mem`, `align::index_align`, `align::index_markdup`, `align::markduplicates`, `align::mergesamfiles`, `align::sort_align`, `align::stats_align`, `align::stats_markdup`, `consensus::homer_annotate_consensus`, `filter::index_filter`, `filter::picard_collectmultiplemetrics`, `filter::sort_filter`, `filter::sort_name`, `filter::stats_filter`, `peaks::homer_annotatepeaks`, `report::igv`, `tracks::khmer` |
-| `fingerprint_bins` | `500000` | `tracks::deeptools_plotfingerprint` |
-| `fragment_size` | `0` | — |
-| `gene_bed` | `test/fixtures/references/gene.bed` | `tracks::deeptools_computematrix` |
-| `gtf` | `test/fixtures/references/genome.gtf` | `consensus::homer_annotate_consensus`, `peaks::homer_annotatepeaks` |
-| `ip_ids` | `'S1_REP1', 'S1_REP2'` | — |
-| `keep_dups` | `false` | `filter::bamtools_filter` |
-| `keep_multi_map` | `false` | `filter::bamtools_filter` |
-| `macs_fdr` | `0` | `peaks::macs3_callpeak` |
-| `macs_gsize` | `` | `peaks::macs3_callpeak`, `tracks::khmer` |
-| `macs_pvalue` | `0` | `peaks::macs3_callpeak` |
-| `min_reps_consensus` | `1` | `consensus::macs3_consensus` |
-| `multiple_groups` | `false` | `consensus::annotate_boolean_peaks`, `consensus::deseq2_qc`, `consensus::homer_annotate_consensus`, `consensus::macs3_consensus`, `consensus::subread_featurecounts` |
-| `multiqc_title` | `` | `report::multiqc` |
-| `pair_ids` | `'S1_REP1', 'S1_REP2', 'C1_REP1', 'C1_REP2'` | — |
-| `raw_dir` | `test/fixtures/raw` | `qc::fastqc`, `qc::trimgalore` |
-| `read_length` | `75` | `tracks::khmer` |
-| `replicates_exist` | `true` | `consensus::annotate_boolean_peaks`, `consensus::deseq2_qc`, `consensus::homer_annotate_consensus`, `consensus::macs3_consensus`, `consensus::subread_featurecounts` |
-| `save_macs_pileup` | `false` | `peaks::macs3_callpeak` |
-| `seq_center` | `` | `align::bwa_mem` |
-| `skip_consensus_peaks` | `false` | `consensus::annotate_boolean_peaks`, `consensus::deseq2_qc`, `consensus::homer_annotate_consensus`, `consensus::macs3_consensus`, `consensus::subread_featurecounts` |
-| `skip_deseq2_qc` | `false` | `consensus::deseq2_qc` |
-| `skip_fastqc` | `false` | `qc::fastqc` |
-| `skip_igv` | `false` | `report::igv` |
-| `skip_multiqc` | `false` | `report::multiqc` |
-| `skip_peak_annotation` | `false` | `consensus::annotate_boolean_peaks`, `consensus::homer_annotate_consensus`, `peaks::homer_annotatepeaks`, `peaks::plot_homer_annotatepeaks`, `peaks::plot_macs3_qc` |
-| `skip_peak_qc` | `false` | `peaks::plot_homer_annotatepeaks`, `peaks::plot_macs3_qc` |
-| `skip_picard_metrics` | `false` | `filter::picard_collectmultiplemetrics` |
-| `skip_plot_fingerprint` | `false` | `tracks::deeptools_plotfingerprint` |
-| `skip_plot_profile` | `false` | `tracks::deeptools_computematrix`, `tracks::deeptools_plotheatmap`, `tracks::deeptools_plotprofile` |
-| `skip_preseq` | `false` | `filter::preseq` |
-| `skip_qc` | `false` | `qc::fastqc` |
-| `skip_spp` | `false` | `filter::multiqc_custom_phantompeakqualtools`, `filter::phantompeakqualtools` |
-| `skip_trimming` | `false` | `qc::trimgalore` |
-| `three_prime_clip_r1` | `0` | `qc::trimgalore` |
-| `three_prime_clip_r2` | `0` | `qc::trimgalore` |
-| `trim_nextseq` | `0` | `qc::trimgalore` |
+| Parameter | Default | Description | Used by |
+|---:|---|---|---|
+| `antibody` | `H3K4me3` | — | `consensus::annotate_boolean_peaks`, `consensus::deseq2_qc`, `consensus::homer_annotate_consensus`, `consensus::macs3_consensus`, `consensus::subread_featurecounts`, `report::igv`, `report::multiqc` |
+| `blacklist` | `test/fixtures/references/blacklist.bed` | — | `filter::bamtools_filter` |
+| `broad_cutoff` | `0.1` | Peaks (broad mode only — the nf-core default) | `peaks::macs3_callpeak` |
+| `bwa_index` | `test/fixtures/references/bwa_index` | — | `align::bwa_mem` |
+| `bwa_min_score` | `0` | Alignment / filtering | `align::bwa_mem` |
+| `chrom_sizes` | `test/fixtures/references/chrom.sizes` | — | `tracks::ucsc_bedgraphtobigwig` |
+| `clip_r1` | `0` | — | `qc::trimgalore` |
+| `clip_r2` | `0` | — | `qc::trimgalore` |
+| `fai` | `test/fixtures/references/genome.fa.fai` | — | `align::markduplicates`, `filter::picard_collectmultiplemetrics` |
+| `fasta` | `test/fixtures/references/genome.fa` | — | `align::bwa_mem`, `align::index_align`, `align::index_markdup`, `align::markduplicates`, `align::mergesamfiles`, `align::sort_align`, `align::stats_align`, `align::stats_markdup`, `consensus::homer_annotate_consensus`, `filter::index_filter`, `filter::picard_collectmultiplemetrics`, `filter::sort_filter`, `filter::sort_name`, `filter::stats_filter`, `peaks::homer_annotatepeaks`, `report::igv`, `tracks::khmer` |
+| `fingerprint_bins` | `500000` | — | `tracks::deeptools_plotfingerprint` |
+| `fragment_size` | `0` | — | — |
+| `gene_bed` | `test/fixtures/references/gene.bed` | — | `tracks::deeptools_computematrix` |
+| `gtf` | `test/fixtures/references/genome.gtf` | — | `consensus::homer_annotate_consensus`, `peaks::homer_annotatepeaks` |
+| `ip_ids` | `'S1_REP1', 'S1_REP2'` | — | — |
+| `keep_dups` | `false` | — | `filter::bamtools_filter` |
+| `keep_multi_map` | `false` | — | `filter::bamtools_filter` |
+| `macs_fdr` | `0` | — | `peaks::macs3_callpeak` |
+| `macs_gsize` | `` | MACS3 genome size. Empty string = derive from read length via khmer (faithful to the upstream default). | `peaks::macs3_callpeak`, `tracks::khmer` |
+| `macs_pvalue` | `0` | — | `peaks::macs3_callpeak` |
+| `min_reps_consensus` | `1` | — | `consensus::macs3_consensus` |
+| `multiple_groups` | `false` | — | `consensus::annotate_boolean_peaks`, `consensus::deseq2_qc`, `consensus::homer_annotate_consensus`, `consensus::macs3_consensus`, `consensus::subread_featurecounts` |
+| `multiqc_title` | `` | — | `report::multiqc` |
+| `pair_ids` | `'S1_REP1', 'S1_REP2', 'C1_REP1', 'C1_REP2'` | Sample metadata. pair_ids MUST be kept in sync with [[pairs]] (the oxo-flow analogue of the nf-core samplesheet meta.id column). ip_ids lists the samples that get peak calling — upstream only runs MACS3 for samples that have a control; the port mirrors this with per-pair rules whose {control} input is empty for control-only samples and skipped via `optional = true`. | — |
+| `raw_dir` | `test/fixtures/raw` | — | `qc::fastqc`, `qc::trimgalore` |
+| `read_length` | `75` | — | `tracks::khmer` |
+| `replicates_exist` | `true` | — | `consensus::annotate_boolean_peaks`, `consensus::deseq2_qc`, `consensus::homer_annotate_consensus`, `consensus::macs3_consensus`, `consensus::subread_featurecounts` |
+| `save_macs_pileup` | `false` | — | `peaks::macs3_callpeak` |
+| `seq_center` | `` | Read group / trimming | `align::bwa_mem` |
+| `skip_consensus_peaks` | `false` | — | `consensus::annotate_boolean_peaks`, `consensus::deseq2_qc`, `consensus::homer_annotate_consensus`, `consensus::macs3_consensus`, `consensus::subread_featurecounts` |
+| `skip_deseq2_qc` | `false` | — | `consensus::deseq2_qc` |
+| `skip_fastqc` | `false` | Step toggles (mirror the nf-core/chipseq params.skip_* / when gates) | `qc::fastqc` |
+| `skip_igv` | `false` | — | `report::igv` |
+| `skip_multiqc` | `false` | — | `report::multiqc` |
+| `skip_peak_annotation` | `false` | — | `consensus::annotate_boolean_peaks`, `consensus::homer_annotate_consensus`, `peaks::homer_annotatepeaks`, `peaks::plot_homer_annotatepeaks`, `peaks::plot_macs3_qc` |
+| `skip_peak_qc` | `false` | — | `peaks::plot_homer_annotatepeaks`, `peaks::plot_macs3_qc` |
+| `skip_picard_metrics` | `false` | — | `filter::picard_collectmultiplemetrics` |
+| `skip_plot_fingerprint` | `false` | — | `tracks::deeptools_plotfingerprint` |
+| `skip_plot_profile` | `false` | — | `tracks::deeptools_computematrix`, `tracks::deeptools_plotheatmap`, `tracks::deeptools_plotprofile` |
+| `skip_preseq` | `false` | — | `filter::preseq` |
+| `skip_qc` | `false` | — | `qc::fastqc` |
+| `skip_spp` | `false` | — | `filter::multiqc_custom_phantompeakqualtools`, `filter::phantompeakqualtools` |
+| `skip_trimming` | `false` | — | `qc::trimgalore` |
+| `three_prime_clip_r1` | `0` | — | `qc::trimgalore` |
+| `three_prime_clip_r2` | `0` | — | `qc::trimgalore` |
+| `trim_nextseq` | `0` | — | `qc::trimgalore` |
 
-Derived from the workflow's `[config]` section — no schema file to maintain.
+Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
+
+## Workflow graph
+
+<div class="ox-dag-card" markdown="1">
+
+![oxo-flow-chipseq rule-level DAG](/assets/dag/oxo-flow-chipseq.svg)
+
+</div>
+
+The graph is derived at catalog-build time from `oxo-flow graph -f dot` and rendered with Graphviz. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

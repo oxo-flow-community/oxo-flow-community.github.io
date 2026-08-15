@@ -47,33 +47,43 @@ git clone https://github.com/oxo-flow-community/oxo-flow-mixscape
 
 ## Parameters
 
-| Parameter | Default | Used by |
-|---:|---|---|
-| `annotation` | `test/fixtures/annotation.csv` | `annot_export`, `config_export` |
-| `antibody_capture` | `AB` | `config_export`, `visualize` |
-| `assay` | `SCT` | `config_export`, `lda`, `mixscape` |
-| `cps_split_by_col` | `` | `config_export`, `mixscape`, `visualize` |
-| `data_dir` | `test/fixtures/data` | `mixscape` |
-| `fine_mode` | `FALSE` | `config_export`, `mixscape` |
-| `gene_col` | `KOcall` | `config_export`, `lda`, `mixscape`, `visualize` |
-| `grna_col` | `gRNAcall` | `config_export`, `mixscape` |
-| `grna_split_symbol` | `-` | `config_export`, `mixscape` |
-| `lda_npcs` | `10` | `config_export`, `lda`, `mixscape` |
-| `lfc_th` | `0.1` | `config_export`, `lda`, `mixscape` |
-| `mem` | `32000` | `config_export` |
-| `min_cells` | `5` | `config_export`, `mixscape` |
-| `min_de_genes` | `5` | `config_export`, `mixscape` |
-| `mixscape_split_by_col` | `` | `config_export`, `mixscape`, `visualize` |
-| `n_neighbors` | `30` | `config_export`, `mixscape` |
-| `ndims` | `40` | `config_export`, `mixscape` |
-| `nt_term` | `NonTargeting` | `config_export`, `lda`, `mixscape`, `visualize` |
-| `project_name` | `myCROPseq` | `annot_export`, `config_export` |
-| `prtb_type` | `KO` | `config_export`, `lda`, `mixscape`, `visualize` |
-| `result_path` | `results` | `annot_export`, `config_export`, `env_export_lda`, `env_export_mixscape`, `lda`, `mixscape`, `visualize` |
-| `threads` | `1` | `config_export` |
-| `variable_features_only` | `0` | `config_export`, `mixscape` |
+| Parameter | Default | Description | Used by |
+|---:|---|---|---|
+| `annotation` | `test/fixtures/annotation.csv` | GENERAL | `annot_export`, `config_export` |
+| `antibody_capture` | `AB` | VISUALIZATION | `config_export`, `visualize` |
+| `assay` | `SCT` | assay to analyse ("SCT" or "RNA") | `config_export`, `lda`, `mixscape` |
+| `cps_split_by_col` | `` | — | `config_export`, `mixscape`, `visualize` |
+| `data_dir` | `test/fixtures/data` | per-sample Seurat .rds inputs: {data_dir}/{sample}.rds | `mixscape` |
+| `fine_mode` | `FALSE` | RunMixscape (flattened) | `config_export`, `mixscape` |
+| `gene_col` | `KOcall` | — | `config_export`, `lda`, `mixscape`, `visualize` |
+| `grna_col` | `gRNAcall` | CalcPerturbSig (upstream nested keys flattened; values identical) | `config_export`, `mixscape` |
+| `grna_split_symbol` | `-` | MIXSCAPE | `config_export`, `mixscape` |
+| `lda_npcs` | `10` | LDA | `config_export`, `lda`, `mixscape` |
+| `lfc_th` | `0.1` | — | `config_export`, `lda`, `mixscape` |
+| `mem` | `32000` | RESOURCES (upstream config/config.yaml) | `config_export` |
+| `min_cells` | `5` | — | `config_export`, `mixscape` |
+| `min_de_genes` | `5` | — | `config_export`, `mixscape` |
+| `mixscape_split_by_col` | `` | — | `config_export`, `mixscape`, `visualize` |
+| `n_neighbors` | `30` | — | `config_export`, `mixscape` |
+| `ndims` | `40` | — | `config_export`, `mixscape` |
+| `nt_term` | `NonTargeting` | — | `config_export`, `lda`, `mixscape`, `visualize` |
+| `project_name` | `myCROPseq` | — | `annot_export`, `config_export` |
+| `prtb_type` | `KO` | — | `config_export`, `lda`, `mixscape`, `visualize` |
+| `result_path` | `results` | upstream result_path; results land under result_path/mixscape_seurat | `annot_export`, `config_export`, `env_export_lda`, `env_export_mixscape`, `lda`, `mixscape`, `visualize` |
+| `threads` | `1` | upstream threads; mixscape rule runs 8x | `config_export` |
+| `variable_features_only` | `0` | analyse only variable features (1=yes, 0=no) | `config_export`, `mixscape` |
 
-Derived from the workflow's `[config]` section — no schema file to maintain.
+Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
+
+## Workflow graph
+
+<div class="ox-dag-card" markdown="1">
+
+![oxo-flow-mixscape rule-level DAG](/assets/dag/oxo-flow-mixscape.svg)
+
+</div>
+
+The graph is derived at catalog-build time from `oxo-flow graph -f dot` and rendered with Graphviz. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

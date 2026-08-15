@@ -467,6 +467,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#workflow-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow graph
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#scope" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -595,6 +606,7 @@
 <tr>
 <th style="text-align: right;">Parameter</th>
 <th>Default</th>
+<th>Description</th>
 <th>Used by</th>
 </tr>
 </thead>
@@ -602,146 +614,179 @@
 <tr>
 <td style="text-align: right;"><code>align_out_dir</code></td>
 <td><code>/path/to/output/alignment</code></td>
+<td>01_alignment (upstream config.yml)</td>
 <td><code>alignment::fastp_qc</code>, <code>alignment::featurecounts</code>, <code>alignment::index_bam</code>, <code>alignment::sort_bam</code>, <code>alignment::star_align</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>aligned_dir</code></td>
 <td><code>/path/to/output/alignment/aligned</code></td>
+<td>upstream: 01 output_dir/aligned == 02 bam_dir</td>
 <td><code>alignment::featurecounts</code>, <code>alignment::index_bam</code>, <code>alignment::sort_bam</code>, <code>alignment::star_align</code>, <code>as_calling::majiq_create_ini</code>, <code>as_calling::rmats_create_input</code>, <code>as_calling::spladder_run</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>as_out_dir</code></td>
 <td><code>/path/to/output/as_calling</code></td>
+<td>02_as_calling (upstream config.yml)</td>
 <td><code>as_calling::format_suppa_fields</code>, <code>as_calling::majiq_build</code>, <code>as_calling::majiq_create_ini</code>, <code>as_calling::majiq_psi</code>, <code>as_calling::rmats_create_input</code>, <code>as_calling::rmats_run</code>, <code>as_calling::salmon_quant</code>, <code>as_calling::select_suppa_fields</code>, <code>as_calling::spladder_run</code>, <code>as_calling::suppa_run</code>, <code>as_calling::voila_modulize</code>, <code>as_calling::voila_tsv</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>fastp_min_length</code></td>
 <td><code>36</code></td>
+<td>fastp (upstream fastp.*)</td>
 <td><code>alignment::fastp_qc</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>fastp_n_base_limit</code></td>
 <td><code>5</code></td>
+<td>—</td>
 <td><code>alignment::fastp_qc</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>fastp_qualified_quality_phred</code></td>
 <td><code>20</code></td>
+<td>—</td>
 <td><code>alignment::fastp_qc</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>fastp_unqualified_percent_limit</code></td>
 <td><code>40</code></td>
+<td>—</td>
 <td><code>alignment::fastp_qc</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gff</code></td>
 <td><code>/path/to/references/gencode.v34.annotation.gff3</code></td>
+<td>upstream: GFF</td>
 <td><code>as_calling::majiq_build</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>majiq_genome</code></td>
 <td><code>hg38</code></td>
+<td>—</td>
 <td><code>as_calling::majiq_create_ini</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>majiq_license</code></td>
 <td><code>/path/to/majiq_license_academic_official.lic</code></td>
+<td>—</td>
 <td><code>as_calling::majiq_build</code>, <code>as_calling::majiq_psi</code>, <code>as_calling::voila_modulize</code>, <code>as_calling::voila_tsv</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>majiq_minreads</code></td>
 <td><code>10</code></td>
+<td>—</td>
 <td><code>as_calling::majiq_build</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>majiq_strandness</code></td>
 <td><code>reverse</code></td>
+<td>fr-firststrand -&gt; reverse | fr-secondstrand -&gt; forward | fr-unstranded -&gt; none</td>
 <td><code>as_calling::majiq_create_ini</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>read_len</code></td>
 <td><code>150</code></td>
+<td>—</td>
 <td><code>as_calling::majiq_create_ini</code>, <code>as_calling::rmats_run</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>reads_dir</code></td>
 <td><code>test/fixtures/raw</code></td>
+<td>point at your own fastq directory for real runs</td>
 <td><code>alignment::fastp_qc</code>, <code>as_calling::salmon_quant</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>ref</code></td>
 <td><code>/path/to/references/gencode.v34.annotation.gtf</code></td>
+<td>featureCounts / rMATS / SplAdder annotation</td>
 <td><code>alignment::featurecounts</code>, <code>as_calling::rmats_run</code>, <code>as_calling::spladder_run</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>rmats_cstat</code></td>
 <td><code>0.0001</code></td>
+<td>—</td>
 <td><code>as_calling::rmats_run</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>rmats_extra</code></td>
 <td>``</td>
+<td>—</td>
 <td><code>as_calling::rmats_run</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>salmon_index</code></td>
 <td><code>/path/to/references/gencode.v34.transcripts.salmon.index</code></td>
+<td>—</td>
 <td><code>as_calling::salmon_quant</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>salmon_library_type</code></td>
 <td><code>ISR</code></td>
+<td>Derived from <code>strandness</code> by upstream tcasia_config.py; kept explicit here:</td>
 <td><code>as_calling::salmon_quant</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>spladder_confidence</code></td>
 <td><code>3</code></td>
+<td>—</td>
 <td><code>as_calling::spladder_run</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>spladder_event_types</code></td>
 <td><code>exon_skip,intron_retention,alt_3prime,alt_5prime,mutex_exons</code></td>
+<td>—</td>
 <td><code>as_calling::spladder_run</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>spladder_merge_strategy</code></td>
 <td><code>single</code></td>
+<td>—</td>
 <td><code>as_calling::spladder_run</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>star_index_dir</code></td>
 <td><code>/path/to/references/STAR_index</code></td>
+<td>GRCh38 STAR index built with STAR 2.7.7a + GENCODE v34</td>
 <td><code>alignment::star_align</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>star_limit_bam_sort_ram</code></td>
 <td><code>39050942993</code></td>
+<td>—</td>
 <td><code>alignment::star_align</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>star_out_filter_mismatch_nmax</code></td>
 <td><code>15</code></td>
+<td>STAR (upstream star.*)</td>
 <td><code>alignment::star_align</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>strandness</code></td>
 <td><code>fr-firststrand</code></td>
+<td>shared</td>
 <td><code>as_calling::rmats_run</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>suppa2_events</code></td>
 <td><code>/path/to/references/gencode.v34.events.ioe</code></td>
+<td>—</td>
 <td><code>as_calling::suppa_run</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>suppa2_min_tpm</code></td>
 <td><code>1</code></td>
+<td>—</td>
 <td><code>as_calling::suppa_run</code></td>
 </tr>
 </tbody>
 </table>
-<p>Derived from the workflow's <code>[config]</code> section — no schema file to maintain.</p>
+<p>Descriptions are the workflow's own <code>#</code> comments from its <code>[config]</code> section, surfaced by <code>oxo-flow info</code> — no schema file to maintain.</p>
+<h2 id="workflow-graph">Workflow graph</h2>
+<div class="ox-dag-card">
+<p><img alt="oxo-flow-tcasia rule-level DAG" src="/assets/dag/oxo-flow-tcasia.svg" /></p>
+</div>
+<p>The graph is derived at catalog-build time from <code>oxo-flow graph -f dot</code> and rendered with Graphviz. It shows the workflow at rule level: wildcard <code>{sample}</code> instances expand at run time when sample data is discovered (the runtime view is <code>oxo-flow graph --expanded</code>).</p>
 <h2 id="scope">Scope</h2>
 <p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
 <p><strong>In scope</strong></p>

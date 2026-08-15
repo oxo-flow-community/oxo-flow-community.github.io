@@ -47,34 +47,44 @@ git clone https://github.com/oxo-flow-community/oxo-flow-rnaseq-star-deseq2
 
 ## Parameters
 
-| Parameter | Default | Used by |
-|---:|---|---|
-| `annotation_url` | `ftp://ftp.ensembl.org/pub/release-115/gtf/homo_sapiens/Homo_sapiens.GRCh38.115.gtf.gz` | `get_annotation` |
-| `biomart_species` | `hsapiens` | `gene_2_symbol_counts`, `gene_2_symbol_diffexp`, `gene_2_symbol_normcounts` |
-| `contrast_levels` | `treated` | `deseq2` |
-| `contrast_variables` | `treatment_1` | `deseq2` |
-| `contrasts` | `treatment_1` | — |
-| `diffexp_base_levels` | `untreated,untreated` | `deseq2`, `deseq2_init` |
-| `diffexp_batch_effects` | `jointly_handled` | `deseq2_init` |
-| `diffexp_model` | `` | `deseq2_init` |
-| `diffexp_variables` | `treatment_1,treatment_2` | `deseq2`, `deseq2_init` |
-| `fastp_adapters` | `--detect_adapter_for_pe` | `fastp_pe` |
-| `fastp_extra` | `--trim_poly_x --poly_x_min_len 7 --trim_poly_g --poly_g_min_len 7` | `fastp_pe` |
-| `genome_url` | `https://ftp.ensembl.org/pub/release-115/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz` | `get_genome` |
-| `genome_url_toplevel` | `https://ftp.ensembl.org/pub/release-115/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.toplevel.fa.gz` | `get_genome` |
-| `pca_activate` | `true` | `pca` |
-| `pca_labels` | `` | — |
-| `pca_variables` | `treatment_1,treatment_2,jointly_handled` | — |
-| `raw_dir` | `test/fixtures/raw` | `fastp_pe` |
-| `ref_build` | `GRCh38` | — |
-| `ref_release` | `115` | — |
-| `ref_species` | `homo_sapiens` | — |
-| `star_align_extra` | `` | `star_align` |
-| `star_index_extra` | `` | `star_index` |
-| `trimming_activate` | `true` | `fastp_pe` |
-| `units_file` | `config/units.tsv` | `count_matrix` |
+| Parameter | Default | Description | Used by |
+|---:|---|---|---|
+| `annotation_url` | `ftp://ftp.ensembl.org/pub/release-115/gtf/homo_sapiens/Homo_sapiens.GRCh38.115.gtf.gz` | — | `get_annotation` |
+| `biomart_species` | `hsapiens` | biomaRt species dataset suffix (upstream get_bioc_species_name()). | `gene_2_symbol_counts`, `gene_2_symbol_diffexp`, `gene_2_symbol_normcounts` |
+| `contrast_levels` | `treated` | — | `deseq2` |
+| `contrast_variables` | `treatment_1` | — | `deseq2` |
+| `contrasts` | `treatment_1` | Contrasts (upstream: diffexp.contrasts). One comma-joined entry per contrast: contrast id, its variable_of_interest, its level_of_interest. The base level comes from diffexp_base_levels. | — |
+| `diffexp_base_levels` | `untreated,untreated` | — | `deseq2`, `deseq2_init` |
+| `diffexp_batch_effects` | `jointly_handled` | — | `deseq2_init` |
+| `diffexp_model` | `` | — | `deseq2_init` |
+| `diffexp_variables` | `treatment_1,treatment_2` | Differential expression (upstream: diffexp.*). Comma-joined lists mirror the upstream nested tables; positions pair up (treatment_1 -> untreated, treatment_2 -> untreated). | `deseq2`, `deseq2_init` |
+| `fastp_adapters` | `--detect_adapter_for_pe` | fastp adapter args and extra args (upstream: per-unit columns fastp_adapters / fastp_extra; the port uses the upstream defaults). | `fastp_pe` |
+| `fastp_extra` | `--trim_poly_x --poly_x_min_len 7 --trim_poly_g --poly_g_min_len 7` | — | `fastp_pe` |
+| `genome_url` | `https://ftp.ensembl.org/pub/release-115/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz` | — | `get_genome` |
+| `genome_url_toplevel` | `https://ftp.ensembl.org/pub/release-115/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.toplevel.fa.gz` | — | `get_genome` |
+| `pca_activate` | `true` | PCA (upstream: pca.activate / pca.labels). pca_variables is the derived upstream list (variables_of_interest + batch_effects + labels), kept explicit here — keep it in sync with the diffexp keys below. | `pca` |
+| `pca_labels` | `` | — | — |
+| `pca_variables` | `treatment_1,treatment_2,jointly_handled` | — | — |
+| `raw_dir` | `test/fixtures/raw` | Directory holding <unit-key>_R1.fastq.gz / _R2.fastq.gz per config/units.tsv. The repo default ships the tiny test fixtures; point this at your data (e.g. "raw"). | `fastp_pe` |
+| `ref_build` | `GRCh38` | — | — |
+| `ref_release` | `115` | — | — |
+| `ref_species` | `homo_sapiens` | Reference (upstream: ref.species / ref.release / ref.build). The download URLs below are the Ensembl URLs the wrappers resolve for these values. | — |
+| `star_align_extra` | `` | — | `star_align` |
+| `star_index_extra` | `` | STAR extra params (upstream: params.star.index / params.star.align). | `star_index` |
+| `trimming_activate` | `true` | Trimming (upstream: trimming.activate). The fastp rule runs only when activated; deactivating breaks star_align in this port (upstream rewires star_align to the raw reads — not ported). | `fastp_pe` |
+| `units_file` | `config/units.tsv` | — | `count_matrix` |
 
-Derived from the workflow's `[config]` section — no schema file to maintain.
+Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
+
+## Workflow graph
+
+<div class="ox-dag-card" markdown="1">
+
+![oxo-flow-rnaseq-star-deseq2 rule-level DAG](/assets/dag/oxo-flow-rnaseq-star-deseq2.svg)
+
+</div>
+
+The graph is derived at catalog-build time from `oxo-flow graph -f dot` and rendered with Graphviz. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

@@ -49,26 +49,36 @@ git clone https://github.com/oxo-flow-community/oxo-flow-bgcflow
 
 ## Parameters
 
-| Parameter | Default | Used by |
-|---:|---|---|
-| `antismash_db_path` | `resources/antismash_db` | `antismash`, `antismash_db_setup` |
-| `antismash_major` | `7` | — |
-| `antismash_taxon` | `bacteria` | `antismash` |
-| `antismash_version` | `7.1.0` | `antismash`, `antismash_overview`, `antismash_overview_gather`, `antismash_summary`, `bgc_count`, `copy_antismash`, `copy_log_changes`, `csv_to_parquet`, `downstream_bgc_prep` |
-| `bgc_dataset` | `data/interim/bgcs/datasets.tsv` | `downstream_bgc_prep` |
-| `bgcflow_version` | `1.1.2` | `format_gbk` |
-| `gtdb_api_base` | `https://gtdb-api.ecogenomic.org` | `gtdb_prep` |
-| `gtdb_offline` | `False` | `gtdb_prep` |
-| `gtdb_release` | `220.0` | `gtdb_prep` |
-| `gtdb_release_major` | `220` | `gtdb_prep` |
-| `gtdb_release_version` | `r220` | — |
-| `gtdb_tax_paths` | `[]` | `gtdb_prep` |
-| `input_type` | `fna` | — |
-| `mibig_version` | `3.1` | `get_mibig_table` |
-| `project` | `genomes` | `antismash_overview_gather`, `antismash_summary`, `copy_log_changes`, `copy_mibig_table`, `csv_to_parquet`, `downstream_bgc_prep`, `fix_gtdb_taxonomy` |
-| `raw_dir` | `test/fixtures/raw` | `copy_custom_fasta` |
+| Parameter | Default | Description | Used by |
+|---:|---|---|---|
+| `antismash_db_path` | `resources/antismash_db` | upstream resources_path.antismash_db | `antismash`, `antismash_db_setup` |
+| `antismash_major` | `7` | antiSMASH (upstream rule_parameters.antismash + envs/antismash.yaml) | — |
+| `antismash_taxon` | `bacteria` | upstream env var BGCFLOW_ANTISMASH_MODE | `antismash` |
+| `antismash_version` | `7.1.0` | derived from envs/antismash.yaml pip pin git@7-1-0-1 | `antismash`, `antismash_overview`, `antismash_overview_gather`, `antismash_summary`, `bgc_count`, `copy_antismash`, `copy_log_changes`, `csv_to_parquet`, `downstream_bgc_prep` |
+| `bgc_dataset` | `data/interim/bgcs/datasets.tsv` | — | `downstream_bgc_prep` |
+| `bgcflow_version` | `1.1.2` | BGCflow housekeeping | `format_gbk` |
+| `gtdb_api_base` | `https://gtdb-api.ecogenomic.org` | — | `gtdb_prep` |
+| `gtdb_offline` | `False` | upstream: use_gtdb_api False -> offline mode | `gtdb_prep` |
+| `gtdb_release` | `220.0` | GTDB taxonomy (upstream rule_parameters.install_gtdbtk + use_gtdb_api) | `gtdb_prep` |
+| `gtdb_release_major` | `220` | GTDB release major version (upstream: release.split('.')[0]) | `gtdb_prep` |
+| `gtdb_release_version` | `r220` | GTDB release id (e.g. r214, r220) | — |
+| `gtdb_tax_paths` | `[]` | upstream GTDB_PATHS: space-separated user gtdb-tax tsv(s) | `gtdb_prep` |
+| `input_type` | `fna` | upstream get_input_location(): fna \| gbk | — |
+| `mibig_version` | `3.1` | MIBiG JSON release used by get_mibig_table | `get_mibig_table` |
+| `project` | `genomes` | Project / input genomes (upstream: config.yaml `projects` + data/raw/fasta) | `antismash_overview_gather`, `antismash_summary`, `copy_log_changes`, `copy_mibig_table`, `csv_to_parquet`, `downstream_bgc_prep`, `fix_gtdb_taxonomy` |
+| `raw_dir` | `test/fixtures/raw` | directory containing fasta/<genome_id>.fna | `copy_custom_fasta` |
 
-Derived from the workflow's `[config]` section — no schema file to maintain.
+Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
+
+## Workflow graph
+
+<div class="ox-dag-card" markdown="1">
+
+![oxo-flow-bgcflow rule-level DAG](/assets/dag/oxo-flow-bgcflow.svg)
+
+</div>
+
+The graph is derived at catalog-build time from `oxo-flow graph -f dot` and rendered with Graphviz. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

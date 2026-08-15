@@ -467,6 +467,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#workflow-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow graph
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#scope" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -595,6 +606,7 @@
 <tr>
 <th style="text-align: right;">Parameter</th>
 <th>Default</th>
+<th>Description</th>
 <th>Used by</th>
 </tr>
 </thead>
@@ -602,121 +614,149 @@
 <tr>
 <td style="text-align: right;"><code>annotation</code></td>
 <td><code>test/fixtures/annotation.csv</code></td>
+<td>GENERAL</td>
 <td><code>annot_export</code>, <code>config_export</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>antibody_capture</code></td>
 <td><code>AB</code></td>
+<td>VISUALIZATION</td>
 <td><code>config_export</code>, <code>visualize</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>assay</code></td>
 <td><code>SCT</code></td>
+<td>assay to analyse ("SCT" or "RNA")</td>
 <td><code>config_export</code>, <code>lda</code>, <code>mixscape</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cps_split_by_col</code></td>
 <td>``</td>
+<td>—</td>
 <td><code>config_export</code>, <code>mixscape</code>, <code>visualize</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>data_dir</code></td>
 <td><code>test/fixtures/data</code></td>
+<td>per-sample Seurat .rds inputs: {data_dir}/{sample}.rds</td>
 <td><code>mixscape</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>fine_mode</code></td>
 <td><code>FALSE</code></td>
+<td>RunMixscape (flattened)</td>
 <td><code>config_export</code>, <code>mixscape</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gene_col</code></td>
 <td><code>KOcall</code></td>
+<td>—</td>
 <td><code>config_export</code>, <code>lda</code>, <code>mixscape</code>, <code>visualize</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>grna_col</code></td>
 <td><code>gRNAcall</code></td>
+<td>CalcPerturbSig (upstream nested keys flattened; values identical)</td>
 <td><code>config_export</code>, <code>mixscape</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>grna_split_symbol</code></td>
 <td><code>-</code></td>
+<td>MIXSCAPE</td>
 <td><code>config_export</code>, <code>mixscape</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>lda_npcs</code></td>
 <td><code>10</code></td>
+<td>LDA</td>
 <td><code>config_export</code>, <code>lda</code>, <code>mixscape</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>lfc_th</code></td>
 <td><code>0.1</code></td>
+<td>—</td>
 <td><code>config_export</code>, <code>lda</code>, <code>mixscape</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>mem</code></td>
 <td><code>32000</code></td>
+<td>RESOURCES (upstream config/config.yaml)</td>
 <td><code>config_export</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>min_cells</code></td>
 <td><code>5</code></td>
+<td>—</td>
 <td><code>config_export</code>, <code>mixscape</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>min_de_genes</code></td>
 <td><code>5</code></td>
+<td>—</td>
 <td><code>config_export</code>, <code>mixscape</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>mixscape_split_by_col</code></td>
 <td>``</td>
+<td>—</td>
 <td><code>config_export</code>, <code>mixscape</code>, <code>visualize</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>n_neighbors</code></td>
 <td><code>30</code></td>
+<td>—</td>
 <td><code>config_export</code>, <code>mixscape</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>ndims</code></td>
 <td><code>40</code></td>
+<td>—</td>
 <td><code>config_export</code>, <code>mixscape</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>nt_term</code></td>
 <td><code>NonTargeting</code></td>
+<td>—</td>
 <td><code>config_export</code>, <code>lda</code>, <code>mixscape</code>, <code>visualize</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>project_name</code></td>
 <td><code>myCROPseq</code></td>
+<td>—</td>
 <td><code>annot_export</code>, <code>config_export</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>prtb_type</code></td>
 <td><code>KO</code></td>
+<td>—</td>
 <td><code>config_export</code>, <code>lda</code>, <code>mixscape</code>, <code>visualize</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>result_path</code></td>
 <td><code>results</code></td>
+<td>upstream result_path; results land under result_path/mixscape_seurat</td>
 <td><code>annot_export</code>, <code>config_export</code>, <code>env_export_lda</code>, <code>env_export_mixscape</code>, <code>lda</code>, <code>mixscape</code>, <code>visualize</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>threads</code></td>
 <td><code>1</code></td>
+<td>upstream threads; mixscape rule runs 8x</td>
 <td><code>config_export</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>variable_features_only</code></td>
 <td><code>0</code></td>
+<td>analyse only variable features (1=yes, 0=no)</td>
 <td><code>config_export</code>, <code>mixscape</code></td>
 </tr>
 </tbody>
 </table>
-<p>Derived from the workflow's <code>[config]</code> section — no schema file to maintain.</p>
+<p>Descriptions are the workflow's own <code>#</code> comments from its <code>[config]</code> section, surfaced by <code>oxo-flow info</code> — no schema file to maintain.</p>
+<h2 id="workflow-graph">Workflow graph</h2>
+<div class="ox-dag-card">
+<p><img alt="oxo-flow-mixscape rule-level DAG" src="/assets/dag/oxo-flow-mixscape.svg" /></p>
+</div>
+<p>The graph is derived at catalog-build time from <code>oxo-flow graph -f dot</code> and rendered with Graphviz. It shows the workflow at rule level: wildcard <code>{sample}</code> instances expand at run time when sample data is discovered (the runtime view is <code>oxo-flow graph --expanded</code>).</p>
 <h2 id="scope">Scope</h2>
 <p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
 <p><strong>In scope</strong></p>

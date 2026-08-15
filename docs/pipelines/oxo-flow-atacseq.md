@@ -47,34 +47,44 @@ git clone https://github.com/oxo-flow-community/oxo-flow-atacseq
 
 ## Parameters
 
-| Parameter | Default | Used by |
-|---:|---|---|
-| `blacklist` | `` | `bamtools_filter` |
-| `broad_cutoff` | `0.1` | `macs2_callpeak` |
-| `bwa_index` | `test/fixtures/genome/genome.fa` | `bwa_mem` |
-| `chrom_sizes` | `test/fixtures/genome/genome.fa.sizes` | `ucsc_bedgraphtobigwig` |
-| `fingerprint_bins` | `500000` | `plotfingerprint` |
-| `fragment_size` | `200` | `bedtools_genomecov`, `plotfingerprint` |
-| `gene_bed` | `test/fixtures/genome/gene.bed` | `deeptools_plots` |
-| `gtf` | `test/fixtures/genome/genes.gtf` | `homer_annotatepeaks` |
-| `keep_dups` | `false` | — |
-| `keep_multi_map` | `false` | — |
-| `macs_gsize` | `2.7e9` | `macs2_callpeak` |
-| `min_trimmed_reads` | `10000` | — |
-| `narrow_peak` | `false` | — |
-| `out_dir` | `results` | `bamtools_filter`, `bedtools_genomecov`, `bwa_mem`, `deeptools_plots`, `fastqc`, `frip_score`, `homer_annotatepeaks`, `macs2_callpeak`, `multiqc`, `picard_markduplicates`, `picard_mergesamfiles`, `plotfingerprint`, `samtools_sort_stats`, `trimgalore`, `ucsc_bedgraphtobigwig` |
-| `raw_dir` | `test/fixtures/raw` | `fastqc`, `trimgalore` |
-| `reference` | `test/fixtures/genome/genome.fa` | `bamtools_filter`, `homer_annotatepeaks`, `picard_markduplicates`, `samtools_sort_stats` |
-| `save_trimmed` | `false` | — |
-| `skip_fastqc` | `false` | `fastqc` |
-| `skip_multiqc` | `false` | `multiqc` |
-| `skip_plot_fingerprint` | `false` | `plotfingerprint` |
-| `skip_plot_profile` | `false` | `deeptools_plots` |
-| `skip_qc` | `false` | `fastqc` |
-| `skip_trimming` | `false` | `trimgalore` |
-| `tss_bed` | `test/fixtures/genome/tss.bed` | `deeptools_plots` |
+| Parameter | Default | Description | Used by |
+|---:|---|---|---|
+| `blacklist` | `` | params.blacklist — include-regions BED (complement of ENCODE | `bamtools_filter` |
+| `broad_cutoff` | `0.1` | — | `macs2_callpeak` |
+| `bwa_index` | `test/fixtures/genome/genome.fa` | params.bwa — index prefix (.amb/.ann/.bwt/.pac/.sa beside it) | `bwa_mem` |
+| `chrom_sizes` | `test/fixtures/genome/genome.fa.sizes` | CUSTOM_GETCHROMSIZES output | `ucsc_bedgraphtobigwig` |
+| `fingerprint_bins` | `500000` | — | `plotfingerprint` |
+| `fragment_size` | `200` | — | `bedtools_genomecov`, `plotfingerprint` |
+| `gene_bed` | `test/fixtures/genome/gene.bed` | params.gene_bed | `deeptools_plots` |
+| `gtf` | `test/fixtures/genome/genes.gtf` | params.gtf | `homer_annotatepeaks` |
+| `keep_dups` | `false` | — | — |
+| `keep_multi_map` | `false` | — | — |
+| `macs_gsize` | `2.7e9` | blacklist + chrM when keep_mito=false); empty = no -L filter | `macs2_callpeak` |
+| `min_trimmed_reads` | `10000` | — | — |
+| `narrow_peak` | `false` | Upstream default params (kept as config so CLI overrides work) | — |
+| `out_dir` | `results` | params.outdir | `bamtools_filter`, `bedtools_genomecov`, `bwa_mem`, `deeptools_plots`, `fastqc`, `frip_score`, `homer_annotatepeaks`, `macs2_callpeak`, `multiqc`, `picard_markduplicates`, `picard_mergesamfiles`, `plotfingerprint`, `samtools_sort_stats`, `trimgalore`, `ucsc_bedgraphtobigwig` |
+| `raw_dir` | `test/fixtures/raw` | input fastqs (raw/<sample>.fastq.gz for single-end) | `fastqc`, `trimgalore` |
+| `reference` | `test/fixtures/genome/genome.fa` | Reference inputs. Upstream obtains these from nf-core iGenomes (--genome); this port expects pre-built files (see README "References"). | `bamtools_filter`, `homer_annotatepeaks`, `picard_markduplicates`, `samtools_sort_stats` |
+| `save_trimmed` | `false` | — | — |
+| `skip_fastqc` | `false` | — | `fastqc` |
+| `skip_multiqc` | `false` | — | `multiqc` |
+| `skip_plot_fingerprint` | `false` | — | `plotfingerprint` |
+| `skip_plot_profile` | `false` | — | `deeptools_plots` |
+| `skip_qc` | `false` | — | `fastqc` |
+| `skip_trimming` | `false` | — | `trimgalore` |
+| `tss_bed` | `test/fixtures/genome/tss.bed` | params.tss_bed | `deeptools_plots` |
 
-Derived from the workflow's `[config]` section — no schema file to maintain.
+Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
+
+## Workflow graph
+
+<div class="ox-dag-card" markdown="1">
+
+![oxo-flow-atacseq rule-level DAG](/assets/dag/oxo-flow-atacseq.svg)
+
+</div>
+
+The graph is derived at catalog-build time from `oxo-flow graph -f dot` and rendered with Graphviz. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

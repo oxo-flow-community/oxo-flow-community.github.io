@@ -47,16 +47,26 @@ git clone https://github.com/oxo-flow-community/oxo-flow-snparcher
 
 ## Parameters
 
-| Parameter | Default | Used by |
-|---:|---|---|
-| `expected_coverage` | `low` | — |
-| `intervals_enabled` | `false` | — |
-| `mark_duplicates` | `false` | — |
-| `ploidy` | `2` | `gatk_haplotypecaller` |
-| `reference_name` | `my_organism` | `bwa_mem`, `gatk_haplotypecaller`, `index_reference`, `prepare_reference` |
-| `reference_source` | `test/fixtures/ref/genome.fa` | `prepare_reference` |
+| Parameter | Default | Description | Used by |
+|---:|---|---|---|
+| `expected_coverage` | `low` | — | — |
+| `intervals_enabled` | `false` | — | — |
+| `mark_duplicates` | `false` | — | — |
+| `ploidy` | `2` | — | `gatk_haplotypecaller` |
+| `reference_name` | `my_organism` | — | `bwa_mem`, `gatk_haplotypecaller`, `index_reference`, `prepare_reference` |
+| `reference_source` | `test/fixtures/ref/genome.fa` | — | `prepare_reference` |
 
-Derived from the workflow's `[config]` section — no schema file to maintain.
+Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
+
+## Workflow graph
+
+<div class="ox-dag-card" markdown="1">
+
+![oxo-flow-snparcher rule-level DAG](/assets/dag/oxo-flow-snparcher.svg)
+
+</div>
+
+The graph is derived at catalog-build time from `oxo-flow graph -f dot` and rendered with Graphviz. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

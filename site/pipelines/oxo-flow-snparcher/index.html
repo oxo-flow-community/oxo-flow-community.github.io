@@ -467,6 +467,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#workflow-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow graph
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#scope" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -595,6 +606,7 @@
 <tr>
 <th style="text-align: right;">Parameter</th>
 <th>Default</th>
+<th>Description</th>
 <th>Used by</th>
 </tr>
 </thead>
@@ -603,35 +615,46 @@
 <td style="text-align: right;"><code>expected_coverage</code></td>
 <td><code>low</code></td>
 <td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>intervals_enabled</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>mark_duplicates</code></td>
 <td><code>false</code></td>
 <td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>ploidy</code></td>
 <td><code>2</code></td>
+<td>—</td>
 <td><code>gatk_haplotypecaller</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>reference_name</code></td>
 <td><code>my_organism</code></td>
+<td>—</td>
 <td><code>bwa_mem</code>, <code>gatk_haplotypecaller</code>, <code>index_reference</code>, <code>prepare_reference</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>reference_source</code></td>
 <td><code>test/fixtures/ref/genome.fa</code></td>
+<td>—</td>
 <td><code>prepare_reference</code></td>
 </tr>
 </tbody>
 </table>
-<p>Derived from the workflow's <code>[config]</code> section — no schema file to maintain.</p>
+<p>Descriptions are the workflow's own <code>#</code> comments from its <code>[config]</code> section, surfaced by <code>oxo-flow info</code> — no schema file to maintain.</p>
+<h2 id="workflow-graph">Workflow graph</h2>
+<div class="ox-dag-card">
+<p><img alt="oxo-flow-snparcher rule-level DAG" src="/assets/dag/oxo-flow-snparcher.svg" /></p>
+</div>
+<p>The graph is derived at catalog-build time from <code>oxo-flow graph -f dot</code> and rendered with Graphviz. It shows the workflow at rule level: wildcard <code>{sample}</code> instances expand at run time when sample data is discovered (the runtime view is <code>oxo-flow graph --expanded</code>).</p>
 <h2 id="scope">Scope</h2>
 <p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
 <p><strong>In scope</strong></p>

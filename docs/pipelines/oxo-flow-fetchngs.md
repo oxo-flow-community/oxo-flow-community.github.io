@@ -48,18 +48,28 @@ git clone https://github.com/oxo-flow-community/oxo-flow-fetchngs
 
 ## Parameters
 
-| Parameter | Default | Used by |
-|---:|---|---|
-| `download_method` | `ftp` | `sra_fastq_ftp` |
-| `ena_metadata_fields` | `` | `sra_ids_to_runinfo` |
-| `input` | `test/fixtures/ids.txt` | `check_ids` |
-| `nf_core_pipeline` | `` | `sra_to_samplesheet` |
-| `nf_core_rnaseq_strandedness` | `auto` | `sra_to_samplesheet` |
-| `out_dir` | `results` | `check_ids`, `combine_mappings`, `combine_samplesheets`, `multiqc_mappings_config`, `sra_fastq_ftp`, `sra_ids_to_runinfo`, `sra_runinfo_to_ftp`, `sra_to_samplesheet` |
-| `sample_mapping_fields` | `experiment_accession,run_accession,sample_accession,experiment_alias,run_alias,sample_alias,experiment_title,sample_title,sample_description` | `multiqc_mappings_config`, `sra_to_samplesheet` |
-| `skip_fastq_download` | `false` | `combine_mappings`, `combine_samplesheets`, `sra_fastq_ftp`, `sra_to_samplesheet` |
+| Parameter | Default | Description | Used by |
+|---:|---|---|---|
+| `download_method` | `ftp` | — | `sra_fastq_ftp` |
+| `ena_metadata_fields` | `` | Comma-separated ENA metadata fields; empty = upstream default field list. | `sra_ids_to_runinfo` |
+| `input` | `test/fixtures/ids.txt` | File containing SRA/ENA/GEO/DDBJ identifiers, one per line (upstream --input). Keep in sync with the [[sample_groups]] list below: check_ids validates this file, the sample source drives the per-id expansion. Add extra ids on the CLI with `oxo-flow run main.oxoflow --sample <ID>`. | `check_ids` |
+| `nf_core_pipeline` | `` | nf-core pipeline to tailor the samplesheet for (rnaseq/atacseq/taxprofiler); empty = none. | `sra_to_samplesheet` |
+| `nf_core_rnaseq_strandedness` | `auto` | — | `sra_to_samplesheet` |
+| `out_dir` | `results` | — | `check_ids`, `combine_mappings`, `combine_samplesheets`, `multiqc_mappings_config`, `sra_fastq_ftp`, `sra_ids_to_runinfo`, `sra_runinfo_to_ftp`, `sra_to_samplesheet` |
+| `sample_mapping_fields` | `experiment_accession,run_accession,sample_accession,experiment_alias,run_alias,sample_alias,experiment_title,sample_title,sample_description` | — | `multiqc_mappings_config`, `sra_to_samplesheet` |
+| `skip_fastq_download` | `false` | — | `combine_mappings`, `combine_samplesheets`, `sra_fastq_ftp`, `sra_to_samplesheet` |
 
-Derived from the workflow's `[config]` section — no schema file to maintain.
+Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
+
+## Workflow graph
+
+<div class="ox-dag-card" markdown="1">
+
+![oxo-flow-fetchngs rule-level DAG](/assets/dag/oxo-flow-fetchngs.svg)
+
+</div>
+
+The graph is derived at catalog-build time from `oxo-flow graph -f dot` and rendered with Graphviz. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

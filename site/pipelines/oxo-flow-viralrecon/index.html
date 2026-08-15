@@ -467,6 +467,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#workflow-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow graph
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#scope" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -627,6 +638,7 @@
 <tr>
 <th style="text-align: right;">Parameter</th>
 <th>Default</th>
+<th>Description</th>
 <th>Used by</th>
 </tr>
 </thead>
@@ -634,316 +646,383 @@
 <tr>
 <td style="text-align: right;"><code>assemblers</code></td>
 <td><code>spades</code></td>
+<td>Assembly (only the upstream default 'spades' assembler is ported)</td>
 <td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>consensus_caller</code></td>
 <td><code>bcftools</code></td>
+<td>—</td>
 <td><code>consensus_call</code>, <code>consensus_filter</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>fasta</code></td>
 <td><code>reference/genome.fa</code></td>
+<td>The port expects uncompressed files at these paths. Set the <em><em>ends_gz keys to true to run the upstream GUNZIP</em></em> steps first (outputs land at the same fixed reference/ paths).</td>
 <td><code>gunzip_fasta</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>fasta_ends_gz</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>gunzip_fasta</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>freyja_barcodes</code></td>
 <td><code>test/fixtures/refs/freyja_barcodes.csv</code></td>
+<td>--- Freyja (upstream --freyja_barcodes / --freyja_lineages. FREYJA_UPDATE, the network download, is not ported.) ---</td>
 <td><code>freyja_boot</code>, <code>freyja_demix</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>freyja_depthcutoff</code></td>
 <td><code>0</code></td>
+<td>—</td>
 <td><code>freyja_boot</code>, <code>freyja_demix</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>freyja_lineages</code></td>
 <td><code>test/fixtures/refs/freyja_lineages.csv</code></td>
+<td>—</td>
 <td><code>freyja_boot</code>, <code>freyja_demix</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>freyja_repeats</code></td>
 <td><code>100</code></td>
+<td>—</td>
 <td><code>freyja_boot</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gff</code></td>
 <td><code>reference/genome.gff</code></td>
+<td>—</td>
 <td><code>gunzip_gff</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gff_ends_gz</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>gunzip_gff</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>ivar_trim_noprimer</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>ivar_trim</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>ivar_trim_offset</code></td>
 <td>``</td>
+<td>—</td>
 <td><code>ivar_trim</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>kraken2_assembly_host_filter</code></td>
 <td><code>true</code></td>
+<td>—</td>
 <td><code>assembly_fastq</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>kraken2_db</code></td>
 <td><code>reference/kraken2_db.tar.gz</code></td>
+<td>Kraken2 host-removal database (upstream --kraken2_db, tar.gz)</td>
 <td><code>untar_kraken2_db</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>kraken2_variants_host_filter</code></td>
 <td><code>false</code></td>
 <td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>min_contig_length</code></td>
 <td><code>200</code></td>
+<td>Consensus QC</td>
 <td><code>blast_assembly</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>min_mapped_reads</code></td>
 <td><code>1000</code></td>
 <td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>min_perc_contig_aligned</code></td>
 <td><code>0.7</code></td>
+<td>—</td>
 <td><code>blast_assembly</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>multiqc_title</code></td>
 <td>``</td>
+<td>MultiQC</td>
 <td><code>multiqc</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>nextclade_dataset</code></td>
 <td>``</td>
+<td>Nextclade dataset (upstream genome config for MN908947.3)</td>
 <td><code>get_nextclade_dataset</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>nextclade_dataset_name</code></td>
 <td><code>sars-cov-2</code></td>
+<td>—</td>
 <td><code>get_nextclade_dataset</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>nextclade_dataset_tag</code></td>
 <td><code>2024-10-17--16-48-48Z</code></td>
+<td>—</td>
 <td><code>get_nextclade_dataset</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>out_dir</code></td>
 <td><code>results</code></td>
+<td>—</td>
 <td><code>fastqc_primers</code>, <code>fastqc_raw</code>, <code>fastqc_trim</code>, <code>multiqc</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>pango_database</code></td>
 <td><code>test/fixtures/refs/pangolin_db</code></td>
+<td>--- Pangolin (upstream --pango_database; a directory. PANGOLIN_UPDATEDATA, the network download of the data directory, is not ported.) ---</td>
 <td><code>pangolin</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>platform</code></td>
 <td><code>illumina</code></td>
+<td>Platform / protocol</td>
 <td><code>multiqc</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>primer_bed</code></td>
 <td><code>reference/primers.bed</code></td>
+<td>—</td>
 <td><code>gunzip_primer_bed</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>primer_bed_ends_gz</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>gunzip_primer_bed</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>primer_left_suffix</code></td>
 <td><code>_LEFT</code></td>
+<td>Primer trimming for assembly</td>
 <td><code>collapse_primers</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>primer_right_suffix</code></td>
 <td><code>_RIGHT</code></td>
+<td>—</td>
 <td><code>collapse_primers</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>protocol</code></td>
 <td><code>amplicon</code></td>
+<td>—</td>
 <td><code>bam_sort_index_trimmed</code>, <code>call_variants_ivar</code>, <code>collapse_primers</code>, <code>consensus_call</code>, <code>consensus_filter</code>, <code>cutadapt</code>, <code>fastqc_primers</code>, <code>freyja_boot</code>, <code>freyja_demix</code>, <code>freyja_variants</code>, <code>get_primer_fasta</code>, <code>ivar_to_vcf</code>, <code>ivar_trim</code>, <code>mosdepth_amplicon</code>, <code>mosdepth_genome</code>, <code>nextclade</code>, <code>nextclade_clade_mqc</code>, <code>pangolin</code>, <code>picard_metrics</code>, <code>plot_base_density</code>, <code>plot_mosdepth_amplicon</code>, <code>plot_mosdepth_genome</code>, <code>prepare_primer_fasta</code>, <code>quast_consensus</code>, <code>snpeff_ann</code>, <code>snpsift_extract</code>, <code>sort_vcf</code>, <code>variants_long_table</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>raw_dir</code></td>
 <td><code>test/fixtures/raw</code></td>
+<td>Directory holding raw/<sample>_R1.fastq.gz + raw/<sample>_R2.fastq.gz. The repo default ships the tiny test fixtures; point this at your data.</td>
 <td><code>cat_fastq</code>, <code>fastqc_raw</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>save_mpileup</code></td>
 <td><code>false</code></td>
 <td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>save_trimmed_fail</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>save_unaligned</code></td>
 <td><code>false</code></td>
 <td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_abacas</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>abacas</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_assembly</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>abacas</code>, <code>assemble_spades</code>, <code>bandage</code>, <code>blast_assembly</code>, <code>cutadapt</code>, <code>fastqc_primers</code>, <code>get_primer_fasta</code>, <code>make_blast_db</code>, <code>prepare_primer_fasta</code>, <code>quast_assembly</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_assembly_quast</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>quast_assembly</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_bandage</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>bandage</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_blast</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>blast_assembly</code>, <code>make_blast_db</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_consensus</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>consensus_call</code>, <code>consensus_filter</code>, <code>get_nextclade_dataset</code>, <code>nextclade</code>, <code>nextclade_clade_mqc</code>, <code>pangolin</code>, <code>plot_base_density</code>, <code>quast_consensus</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_consensus_plots</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>plot_base_density</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_cutadapt</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>cutadapt</code>, <code>fastqc_primers</code>, <code>get_primer_fasta</code>, <code>prepare_primer_fasta</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_fastp</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>fastp</code>, <code>fastqc_trim</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_fastqc</code></td>
 <td><code>false</code></td>
+<td>Skip flags (identical defaults to upstream params)</td>
 <td><code>fastqc_primers</code>, <code>fastqc_raw</code>, <code>fastqc_trim</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_freyja</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>freyja_boot</code>, <code>freyja_demix</code>, <code>freyja_variants</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_freyja_boot</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>freyja_boot</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_ivar_trim</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>bam_sort_index_trimmed</code>, <code>ivar_trim</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_kraken2</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>assembly_fastq</code>, <code>kraken2</code>, <code>untar_kraken2_db</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_markduplicates</code></td>
 <td><code>true</code></td>
 <td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_mosdepth</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>collapse_primers</code>, <code>mosdepth_amplicon</code>, <code>mosdepth_genome</code>, <code>plot_mosdepth_amplicon</code>, <code>plot_mosdepth_genome</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_nextclade</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>get_nextclade_dataset</code>, <code>nextclade</code>, <code>nextclade_clade_mqc</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_noninternal_primers</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>prepare_primer_fasta</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_pangolin</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>pangolin</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_picard_metrics</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>picard_metrics</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_plasmidid</code></td>
 <td><code>true</code></td>
 <td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_snpeff</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>build_snpeff_db</code>, <code>snpeff_ann</code>, <code>snpsift_extract</code>, <code>variants_long_table</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_variants</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>align_bowtie2</code>, <code>bam_sort_index</code>, <code>bam_sort_index_trimmed</code>, <code>build_bowtie2_index</code>, <code>build_snpeff_db</code>, <code>call_variants_ivar</code>, <code>collapse_primers</code>, <code>freyja_boot</code>, <code>freyja_demix</code>, <code>freyja_variants</code>, <code>ivar_to_vcf</code>, <code>ivar_trim</code>, <code>mosdepth_amplicon</code>, <code>mosdepth_genome</code>, <code>picard_metrics</code>, <code>plot_mosdepth_amplicon</code>, <code>plot_mosdepth_genome</code>, <code>snpeff_ann</code>, <code>snpsift_extract</code>, <code>sort_vcf</code>, <code>variants_long_table</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_variants_long_table</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>variants_long_table</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_variants_quast</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>quast_consensus</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>spades_mode</code></td>
 <td><code>rnaviral</code></td>
+<td>—</td>
 <td><code>assemble_spades</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>threeprime_adapters</code></td>
 <td><code>false</code></td>
 <td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>variant_caller</code></td>
 <td><code>ivar</code></td>
+<td>--- Variant calling (upstream params.variant_caller defaults to 'ivar' for the amplicon protocol; the bcftools variant-caller branch is not ported) ---</td>
 <td><code>call_variants_ivar</code>, <code>ivar_to_vcf</code>, <code>sort_vcf</code></td>
 </tr>
 </tbody>
 </table>
-<p>Derived from the workflow's <code>[config]</code> section — no schema file to maintain.</p>
+<p>Descriptions are the workflow's own <code>#</code> comments from its <code>[config]</code> section, surfaced by <code>oxo-flow info</code> — no schema file to maintain.</p>
+<h2 id="workflow-graph">Workflow graph</h2>
+<div class="ox-dag-card">
+<p><img alt="oxo-flow-viralrecon rule-level DAG" src="/assets/dag/oxo-flow-viralrecon.svg" /></p>
+</div>
+<p>The graph is derived at catalog-build time from <code>oxo-flow graph -f dot</code> and rendered with Graphviz. It shows the workflow at rule level: wildcard <code>{sample}</code> instances expand at run time when sample data is discovered (the runtime view is <code>oxo-flow graph --expanded</code>).</p>
 <h2 id="scope">Scope</h2>
 <p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
 <p><strong>In scope</strong></p>

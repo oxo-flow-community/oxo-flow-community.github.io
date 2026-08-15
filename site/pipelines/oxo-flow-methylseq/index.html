@@ -467,6 +467,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#workflow-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow graph
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#scope" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -596,6 +607,7 @@
 <tr>
 <th style="text-align: right;">Parameter</th>
 <th>Default</th>
+<th>Description</th>
 <th>Used by</th>
 </tr>
 </thead>
@@ -603,201 +615,245 @@
 <tr>
 <td style="text-align: right;"><code>accel</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>trimgalore</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>aligner</code></td>
 <td><code>bismark</code></td>
+<td>Only the 'bismark' (bowtie2) aligner is ported. 'bismark_hisat', 'bwameth', 'bwamem' are NOT ported (see README fidelity table).</td>
 <td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>clip_r1</code></td>
 <td><code>0</code></td>
+<td>Trimming options (upstream params with the same defaults)</td>
 <td><code>trimgalore</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>clip_r2</code></td>
 <td><code>0</code></td>
+<td>—</td>
 <td><code>trimgalore</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>comprehensive</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>bismark_methylationextractor</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cytosine_report</code></td>
 <td><code>false</code></td>
+<td>Bismark options</td>
 <td><code>bismark_coverage2cytosine</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>em_seq</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>bismark_align</code>, <code>trimgalore</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>fasta</code></td>
 <td><code>test/fixtures/refs/genome.fa</code></td>
+<td>Reference genome (upstream: --fasta). Uncompressed FASTA; the port always builds the Bismark index from it (upstream default when --bismark_index is not supplied). Point this at your genome; the repo default ships the tiny test fixture.</td>
 <td><code>bismark_genomepreparation</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>ignore_3prime_r1</code></td>
 <td><code>0</code></td>
+<td>—</td>
 <td><code>bismark_methylationextractor</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>ignore_3prime_r2</code></td>
 <td><code>2</code></td>
+<td>—</td>
 <td><code>bismark_methylationextractor</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>ignore_r1</code></td>
 <td><code>0</code></td>
+<td>—</td>
 <td><code>bismark_methylationextractor</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>ignore_r2</code></td>
 <td><code>2</code></td>
+<td>—</td>
 <td><code>bismark_methylationextractor</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>length_trim</code></td>
 <td><code>0</code></td>
+<td>—</td>
 <td><code>trimgalore</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>local_alignment</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>bismark_align</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>maxins</code></td>
 <td>``</td>
+<td>—</td>
 <td><code>bismark_align</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>meth_cutoff</code></td>
 <td>``</td>
+<td>—</td>
 <td><code>bismark_methylationextractor</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>minins</code></td>
 <td>``</td>
+<td>—</td>
 <td><code>bismark_align</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>multiqc_title</code></td>
 <td>``</td>
+<td>MultiQC</td>
 <td><code>multiqc</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>nextseq_trim</code></td>
 <td><code>0</code></td>
+<td>—</td>
 <td><code>trimgalore</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>no_overlap</code></td>
 <td><code>true</code></td>
+<td>—</td>
 <td><code>bismark_methylationextractor</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>nomeseq</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>bismark_coverage2cytosine</code>, <code>bismark_methylationextractor</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>non_directional</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>bismark_align</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>num_mismatches</code></td>
 <td><code>0.6</code></td>
+<td>—</td>
 <td><code>bismark_align</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>out_dir</code></td>
 <td><code>results</code></td>
+<td>—</td>
 <td><code>bismark_align</code>, <code>bismark_coverage2cytosine</code>, <code>bismark_deduplicate</code>, <code>bismark_methylationextractor</code>, <code>bismark_report</code>, <code>bismark_summary</code>, <code>fastqc</code>, <code>multiqc</code>, <code>multiqc_versions</code>, <code>samtools_index</code>, <code>samtools_sort</code>, <code>trimgalore</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>pbat</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>bismark_align</code>, <code>trimgalore</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>raw_dir</code></td>
 <td><code>test/fixtures/raw</code></td>
+<td>Input reads directory: raw/<sample>_R1.fastq.gz + _R2.fastq.gz (paired-end). The repo default ships the tiny test fixtures; point this at your data.</td>
 <td><code>fastqc</code>, <code>trimgalore</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>relax_mismatches</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>bismark_align</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>rrbs</code></td>
 <td><code>false</code></td>
+<td>Library presets (upstream params with the same defaults).</td>
 <td><code>bismark_deduplicate</code>, <code>trimgalore</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>single_cell</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>bismark_align</code>, <code>trimgalore</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_deduplication</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>bismark_deduplicate</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_fastqc</code></td>
 <td><code>false</code></td>
+<td>Skip options (upstream: --skip_fastqc / --skip_trimming / --skip_deduplication / --skip_multiqc). Same defaults as upstream.</td>
 <td><code>fastqc</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_multiqc</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>multiqc</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_trimming</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>trimgalore</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_trimming_presets</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>trimgalore</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>slamseq</code></td>
 <td><code>false</code></td>
 <td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>three_prime_clip_r1</code></td>
 <td><code>0</code></td>
+<td>—</td>
 <td><code>trimgalore</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>three_prime_clip_r2</code></td>
 <td><code>0</code></td>
+<td>—</td>
 <td><code>trimgalore</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>unmapped</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>bismark_align</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>zymo</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>bismark_align</code>, <code>trimgalore</code></td>
 </tr>
 </tbody>
 </table>
-<p>Derived from the workflow's <code>[config]</code> section — no schema file to maintain.</p>
+<p>Descriptions are the workflow's own <code>#</code> comments from its <code>[config]</code> section, surfaced by <code>oxo-flow info</code> — no schema file to maintain.</p>
+<h2 id="workflow-graph">Workflow graph</h2>
+<div class="ox-dag-card">
+<p><img alt="oxo-flow-methylseq rule-level DAG" src="/assets/dag/oxo-flow-methylseq.svg" /></p>
+</div>
+<p>The graph is derived at catalog-build time from <code>oxo-flow graph -f dot</code> and rendered with Graphviz. It shows the workflow at rule level: wildcard <code>{sample}</code> instances expand at run time when sample data is discovered (the runtime view is <code>oxo-flow graph --expanded</code>).</p>
 <h2 id="scope">Scope</h2>
 <p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
 <p><strong>In scope</strong></p>

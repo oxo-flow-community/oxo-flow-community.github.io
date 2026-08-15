@@ -467,6 +467,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#workflow-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow graph
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#scope" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -597,6 +608,7 @@
 <tr>
 <th style="text-align: right;">Parameter</th>
 <th>Default</th>
+<th>Description</th>
 <th>Used by</th>
 </tr>
 </thead>
@@ -604,86 +616,107 @@
 <tr>
 <td style="text-align: right;"><code>antismash_db_path</code></td>
 <td><code>resources/antismash_db</code></td>
+<td>upstream resources_path.antismash_db</td>
 <td><code>antismash</code>, <code>antismash_db_setup</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>antismash_major</code></td>
 <td><code>7</code></td>
+<td>antiSMASH (upstream rule_parameters.antismash + envs/antismash.yaml)</td>
 <td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>antismash_taxon</code></td>
 <td><code>bacteria</code></td>
+<td>upstream env var BGCFLOW_ANTISMASH_MODE</td>
 <td><code>antismash</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>antismash_version</code></td>
 <td><code>7.1.0</code></td>
+<td>derived from envs/antismash.yaml pip pin git@7-1-0-1</td>
 <td><code>antismash</code>, <code>antismash_overview</code>, <code>antismash_overview_gather</code>, <code>antismash_summary</code>, <code>bgc_count</code>, <code>copy_antismash</code>, <code>copy_log_changes</code>, <code>csv_to_parquet</code>, <code>downstream_bgc_prep</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>bgc_dataset</code></td>
 <td><code>data/interim/bgcs/datasets.tsv</code></td>
+<td>—</td>
 <td><code>downstream_bgc_prep</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>bgcflow_version</code></td>
 <td><code>1.1.2</code></td>
+<td>BGCflow housekeeping</td>
 <td><code>format_gbk</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gtdb_api_base</code></td>
 <td><code>https://gtdb-api.ecogenomic.org</code></td>
+<td>—</td>
 <td><code>gtdb_prep</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gtdb_offline</code></td>
 <td><code>False</code></td>
+<td>upstream: use_gtdb_api False -&gt; offline mode</td>
 <td><code>gtdb_prep</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gtdb_release</code></td>
 <td><code>220.0</code></td>
+<td>GTDB taxonomy (upstream rule_parameters.install_gtdbtk + use_gtdb_api)</td>
 <td><code>gtdb_prep</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gtdb_release_major</code></td>
 <td><code>220</code></td>
+<td>GTDB release major version (upstream: release.split('.')[0])</td>
 <td><code>gtdb_prep</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gtdb_release_version</code></td>
 <td><code>r220</code></td>
+<td>GTDB release id (e.g. r214, r220)</td>
 <td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gtdb_tax_paths</code></td>
 <td><code>[]</code></td>
+<td>upstream GTDB_PATHS: space-separated user gtdb-tax tsv(s)</td>
 <td><code>gtdb_prep</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>input_type</code></td>
 <td><code>fna</code></td>
+<td>upstream get_input_location(): fna | gbk</td>
 <td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>mibig_version</code></td>
 <td><code>3.1</code></td>
+<td>MIBiG JSON release used by get_mibig_table</td>
 <td><code>get_mibig_table</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>project</code></td>
 <td><code>genomes</code></td>
+<td>Project / input genomes (upstream: config.yaml <code>projects</code> + data/raw/fasta)</td>
 <td><code>antismash_overview_gather</code>, <code>antismash_summary</code>, <code>copy_log_changes</code>, <code>copy_mibig_table</code>, <code>csv_to_parquet</code>, <code>downstream_bgc_prep</code>, <code>fix_gtdb_taxonomy</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>raw_dir</code></td>
 <td><code>test/fixtures/raw</code></td>
+<td>directory containing fasta/<genome_id>.fna</td>
 <td><code>copy_custom_fasta</code></td>
 </tr>
 </tbody>
 </table>
-<p>Derived from the workflow's <code>[config]</code> section — no schema file to maintain.</p>
+<p>Descriptions are the workflow's own <code>#</code> comments from its <code>[config]</code> section, surfaced by <code>oxo-flow info</code> — no schema file to maintain.</p>
+<h2 id="workflow-graph">Workflow graph</h2>
+<div class="ox-dag-card">
+<p><img alt="oxo-flow-bgcflow rule-level DAG" src="/assets/dag/oxo-flow-bgcflow.svg" /></p>
+</div>
+<p>The graph is derived at catalog-build time from <code>oxo-flow graph -f dot</code> and rendered with Graphviz. It shows the workflow at rule level: wildcard <code>{sample}</code> instances expand at run time when sample data is discovered (the runtime view is <code>oxo-flow graph --expanded</code>).</p>
 <h2 id="scope">Scope</h2>
 <p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
 <p><strong>In scope</strong></p>

@@ -467,6 +467,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#workflow-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow graph
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#scope" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -614,6 +625,7 @@
 <tr>
 <th style="text-align: right;">Parameter</th>
 <th>Default</th>
+<th>Description</th>
 <th>Used by</th>
 </tr>
 </thead>
@@ -621,166 +633,203 @@
 <tr>
 <td style="text-align: right;"><code>ale_per_base_output</code></td>
 <td><code>false</code></td>
+<td>ALE (upstream --ale_per_base_output default false -&gt; --metagenome --nout)</td>
 <td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>bin_concoct_chunksize</code></td>
 <td><code>10000</code></td>
+<td>Binning options (upstream params with the same defaults)</td>
 <td><code>concoct_cutup_megahit</code>, <code>concoct_cutup_spades</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>bin_concoct_donotconcatlast</code></td>
 <td><code>false</code></td>
 <td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>bin_concoct_overlap</code></td>
 <td><code>0</code></td>
+<td>—</td>
 <td><code>concoct_cutup_megahit</code>, <code>concoct_cutup_spades</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>bin_max_size</code></td>
 <td>``</td>
 <td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>bin_metabinner_scale</code></td>
 <td><code>large</code></td>
+<td>—</td>
 <td><code>metabinner_run_megahit</code>, <code>metabinner_run_spades</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>bin_min_size</code></td>
 <td><code>0</code></td>
+<td>Bin size filtering (upstream --bin_min_size / --bin_max_size; defaults 0/null make the seqkit-based filter a no-op)</td>
 <td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cohort_samples</code></td>
 <td><code>S1 S2</code></td>
+<td>Space-separated list of sample ids used by the binning-preparation bowtie2 alignment rules (binning_map_mode='group': every assembly is aligned against every sample's reads). Keep in sync with the sample group below.</td>
 <td><code>bowtie2_align_megahit</code>, <code>bowtie2_align_spades</code>, <code>semibin_megahit</code>, <code>semibin_spades</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>fastp_cut_mean_quality</code></td>
 <td><code>15</code></td>
+<td>—</td>
 <td><code>fastp</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>fastp_qualified_quality</code></td>
 <td><code>15</code></td>
+<td>—</td>
 <td><code>fastp</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>fastp_trim_polyg</code></td>
 <td><code>false</code></td>
+<td>—</td>
 <td><code>fastp</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gtdb_db</code></td>
 <td><code>https://data.gtdb.aau.ecogenomic.org/releases/release232/232.0/auxillary_files/gtdbtk_package/full_package/gtdbtk_r232_data.tar.gz</code></td>
+<td>GTDB-Tk database: URL of the .tar.gz release or a local directory (upstream --gtdb_db default). gtdbtk_db_preparation unpacks .tar.gz.</td>
 <td><code>gtdbtk_db_preparation</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gtdbtk_max_contamination</code></td>
 <td><code>10.0</code></td>
+<td>—</td>
 <td><code>gtdbtk_megahit_comebin</code>, <code>gtdbtk_megahit_concoct</code>, <code>gtdbtk_megahit_maxbin2</code>, <code>gtdbtk_megahit_metabat2</code>, <code>gtdbtk_megahit_metabinner</code>, <code>gtdbtk_megahit_semibin2</code>, <code>gtdbtk_spades_comebin</code>, <code>gtdbtk_spades_concoct</code>, <code>gtdbtk_spades_maxbin2</code>, <code>gtdbtk_spades_metabat2</code>, <code>gtdbtk_spades_metabinner</code>, <code>gtdbtk_spades_semibin2</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gtdbtk_min_af</code></td>
 <td><code>0.65</code></td>
+<td>—</td>
 <td><code>gtdbtk_megahit_comebin</code>, <code>gtdbtk_megahit_concoct</code>, <code>gtdbtk_megahit_maxbin2</code>, <code>gtdbtk_megahit_metabat2</code>, <code>gtdbtk_megahit_metabinner</code>, <code>gtdbtk_megahit_semibin2</code>, <code>gtdbtk_spades_comebin</code>, <code>gtdbtk_spades_concoct</code>, <code>gtdbtk_spades_maxbin2</code>, <code>gtdbtk_spades_metabat2</code>, <code>gtdbtk_spades_metabinner</code>, <code>gtdbtk_spades_semibin2</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gtdbtk_min_completeness</code></td>
 <td><code>50.0</code></td>
+<td>GTDB-Tk (upstream params with the same defaults)</td>
 <td><code>gtdbtk_megahit_comebin</code>, <code>gtdbtk_megahit_concoct</code>, <code>gtdbtk_megahit_maxbin2</code>, <code>gtdbtk_megahit_metabat2</code>, <code>gtdbtk_megahit_metabinner</code>, <code>gtdbtk_megahit_semibin2</code>, <code>gtdbtk_spades_comebin</code>, <code>gtdbtk_spades_concoct</code>, <code>gtdbtk_spades_maxbin2</code>, <code>gtdbtk_spades_metabat2</code>, <code>gtdbtk_spades_metabinner</code>, <code>gtdbtk_spades_semibin2</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gtdbtk_min_perc_aa</code></td>
 <td><code>10</code></td>
+<td>—</td>
 <td><code>gtdbtk_megahit_comebin</code>, <code>gtdbtk_megahit_concoct</code>, <code>gtdbtk_megahit_maxbin2</code>, <code>gtdbtk_megahit_metabat2</code>, <code>gtdbtk_megahit_metabinner</code>, <code>gtdbtk_megahit_semibin2</code>, <code>gtdbtk_spades_comebin</code>, <code>gtdbtk_spades_concoct</code>, <code>gtdbtk_spades_maxbin2</code>, <code>gtdbtk_spades_metabat2</code>, <code>gtdbtk_spades_metabinner</code>, <code>gtdbtk_spades_semibin2</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gtdbtk_place_species</code></td>
 <td><code>false</code></td>
 <td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gtdbtk_pplacer_cpus</code></td>
 <td><code>1</code></td>
+<td>—</td>
 <td><code>gtdbtk_megahit_comebin</code>, <code>gtdbtk_megahit_concoct</code>, <code>gtdbtk_megahit_maxbin2</code>, <code>gtdbtk_megahit_metabat2</code>, <code>gtdbtk_megahit_metabinner</code>, <code>gtdbtk_megahit_semibin2</code>, <code>gtdbtk_spades_comebin</code>, <code>gtdbtk_spades_concoct</code>, <code>gtdbtk_spades_maxbin2</code>, <code>gtdbtk_spades_metabat2</code>, <code>gtdbtk_spades_metabinner</code>, <code>gtdbtk_spades_semibin2</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gtdbtk_use_full_tree</code></td>
 <td><code>false</code></td>
 <td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>input_dir</code></td>
 <td><code>test/fixtures/raw</code></td>
+<td>Input directory containing {sample}_R1.fastq.gz / {sample}_R2.fastq.gz paired-end read files (upstream --input samplesheet; single-end and multi-library lanes are not ported). The repo default ships tiny test fixtures; point this at your data.</td>
 <td><code>fastp</code>, <code>fastqc_raw</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>max_unbinned_contigs</code></td>
 <td><code>100</code></td>
+<td>—</td>
 <td><code>split_fasta_maxbin2_megahit</code>, <code>split_fasta_maxbin2_spades</code>, <code>split_fasta_metabat2_megahit</code>, <code>split_fasta_metabat2_spades</code>, <code>split_fasta_metabinner_megahit</code>, <code>split_fasta_metabinner_spades</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>metabat_rng_seed</code></td>
 <td><code>1</code></td>
+<td>—</td>
 <td><code>metabat2_megahit</code>, <code>metabat2_spades</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>min_contig_size</code></td>
 <td><code>1500</code></td>
+<td>—</td>
 <td><code>metabat2_megahit</code>, <code>metabat2_spades</code>, <code>metabinner_bins_megahit</code>, <code>metabinner_bins_spades</code>, <code>metabinner_kmer_megahit</code>, <code>metabinner_kmer_spades</code>, <code>metabinner_run_megahit</code>, <code>metabinner_run_spades</code>, <code>metabinner_tooshort_megahit</code>, <code>metabinner_tooshort_spades</code>, <code>semibin_megahit</code>, <code>semibin_spades</code>, <code>split_fasta_maxbin2_megahit</code>, <code>split_fasta_maxbin2_spades</code>, <code>split_fasta_metabat2_megahit</code>, <code>split_fasta_metabat2_spades</code>, <code>split_fasta_metabinner_megahit</code>, <code>split_fasta_metabinner_spades</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>min_length_unbinned_contigs</code></td>
 <td><code>1000000</code></td>
+<td>—</td>
 <td><code>split_fasta_maxbin2_megahit</code>, <code>split_fasta_maxbin2_spades</code>, <code>split_fasta_metabat2_megahit</code>, <code>split_fasta_metabat2_spades</code>, <code>split_fasta_metabinner_megahit</code>, <code>split_fasta_metabinner_spades</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>out_dir</code></td>
 <td><code>results</code></td>
+<td>—</td>
 <td><code>ale_megahit</code>, <code>ale_spades</code>, <code>bin_summary</code>, <code>bowtie2_align_megahit</code>, <code>bowtie2_align_spades</code>, <code>busco_megahit_comebin</code>, <code>busco_megahit_concoct</code>, <code>busco_megahit_maxbin2</code>, <code>busco_megahit_metabat2</code>, <code>busco_megahit_metabinner</code>, <code>busco_megahit_semibin2</code>, <code>busco_spades_comebin</code>, <code>busco_spades_concoct</code>, <code>busco_spades_maxbin2</code>, <code>busco_spades_metabat2</code>, <code>busco_spades_metabinner</code>, <code>busco_spades_semibin2</code>, <code>comebin_megahit</code>, <code>comebin_spades</code>, <code>concat_busco</code>, <code>concat_quast</code>, <code>concoct_extract_megahit</code>, <code>concoct_extract_spades</code>, <code>concoct_merge_megahit</code>, <code>concoct_merge_spades</code>, <code>depths_megahit</code>, <code>depths_spades</code>, <code>fastp</code>, <code>fastqc_raw</code>, <code>fastqc_trimmed</code>, <code>gtdbtk_megahit_comebin</code>, <code>gtdbtk_megahit_concoct</code>, <code>gtdbtk_megahit_maxbin2</code>, <code>gtdbtk_megahit_metabat2</code>, <code>gtdbtk_megahit_metabinner</code>, <code>gtdbtk_megahit_semibin2</code>, <code>gtdbtk_spades_comebin</code>, <code>gtdbtk_spades_concoct</code>, <code>gtdbtk_spades_maxbin2</code>, <code>gtdbtk_spades_metabat2</code>, <code>gtdbtk_spades_metabinner</code>, <code>gtdbtk_spades_semibin2</code>, <code>gtdbtk_summary</code>, <code>mag_depths_megahit_comebin</code>, <code>mag_depths_megahit_concoct</code>, <code>mag_depths_megahit_maxbin2</code>, <code>mag_depths_megahit_metabat2</code>, <code>mag_depths_megahit_metabinner</code>, <code>mag_depths_megahit_semibin2</code>, <code>mag_depths_spades_comebin</code>, <code>mag_depths_spades_concoct</code>, <code>mag_depths_spades_maxbin2</code>, <code>mag_depths_spades_metabat2</code>, <code>mag_depths_spades_metabinner</code>, <code>mag_depths_spades_semibin2</code>, <code>mag_depths_summary</code>, <code>maxbin2_megahit</code>, <code>maxbin2_spades</code>, <code>megahit</code>, <code>metabat2_megahit</code>, <code>metabat2_spades</code>, <code>metabinner_bins_megahit</code>, <code>metabinner_bins_spades</code>, <code>multiqc</code>, <code>phix_align</code>, <code>prodigal_megahit</code>, <code>prodigal_spades</code>, <code>prokka_megahit_comebin</code>, <code>prokka_megahit_concoct</code>, <code>prokka_megahit_maxbin2</code>, <code>prokka_megahit_metabat2</code>, <code>prokka_megahit_metabinner</code>, <code>prokka_megahit_semibin2</code>, <code>prokka_spades_comebin</code>, <code>prokka_spades_concoct</code>, <code>prokka_spades_maxbin2</code>, <code>prokka_spades_metabat2</code>, <code>prokka_spades_metabinner</code>, <code>prokka_spades_semibin2</code>, <code>quast_bins_megahit_comebin</code>, <code>quast_bins_megahit_concoct</code>, <code>quast_bins_megahit_maxbin2</code>, <code>quast_bins_megahit_metabat2</code>, <code>quast_bins_megahit_metabinner</code>, <code>quast_bins_megahit_semibin2</code>, <code>quast_bins_spades_comebin</code>, <code>quast_bins_spades_concoct</code>, <code>quast_bins_spades_maxbin2</code>, <code>quast_bins_spades_metabat2</code>, <code>quast_bins_spades_metabinner</code>, <code>quast_bins_spades_semibin2</code>, <code>quast_megahit</code>, <code>quast_spades</code>, <code>semibin_megahit</code>, <code>semibin_spades</code>, <code>seqkit_megahit_comebin</code>, <code>seqkit_megahit_concoct</code>, <code>seqkit_megahit_maxbin2</code>, <code>seqkit_megahit_metabat2</code>, <code>seqkit_megahit_metabinner</code>, <code>seqkit_megahit_semibin</code>, <code>seqkit_spades_comebin</code>, <code>seqkit_spades_concoct</code>, <code>seqkit_spades_maxbin2</code>, <code>seqkit_spades_metabat2</code>, <code>seqkit_spades_metabinner</code>, <code>seqkit_spades_semibin</code>, <code>spades</code>, <code>split_fasta_maxbin2_megahit</code>, <code>split_fasta_maxbin2_spades</code>, <code>split_fasta_metabat2_megahit</code>, <code>split_fasta_metabat2_spades</code>, <code>split_fasta_metabinner_megahit</code>, <code>split_fasta_metabinner_spades</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>phix_reference</code></td>
 <td><code>assets/data/GCA_002596845.1_ASM259684v1_genomic.fna.gz</code></td>
+<td>phiX reference (upstream --phix_reference default = projectDir/assets/data/GCA_002596845.1_ASM259684v1_genomic.fna.gz)</td>
 <td><code>phix_build</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>prokka_fast_mode</code></td>
 <td><code>false</code></td>
 <td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>prokka_with_compliance</code></td>
 <td><code>false</code></td>
+<td>PROKKA (upstream params with the same defaults)</td>
 <td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>reads_minlength</code></td>
 <td><code>15</code></td>
+<td>fastp clipping (upstream params with the same defaults)</td>
 <td><code>fastp</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>semibin_environment</code></td>
 <td><code>global</code></td>
+<td>—</td>
 <td><code>semibin_megahit</code>, <code>semibin_spades</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>semibin_rng_seed</code></td>
 <td><code>1</code></td>
+<td>—</td>
 <td><code>semibin_megahit</code>, <code>semibin_spades</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>shortread_percentidentity</code></td>
 <td>``</td>
 <td>—</td>
+<td>—</td>
 </tr>
 </tbody>
 </table>
-<p>Derived from the workflow's <code>[config]</code> section — no schema file to maintain.</p>
+<p>Descriptions are the workflow's own <code>#</code> comments from its <code>[config]</code> section, surfaced by <code>oxo-flow info</code> — no schema file to maintain.</p>
+<h2 id="workflow-graph">Workflow graph</h2>
+<div class="ox-dag-card">
+<p><img alt="oxo-flow-mag rule-level DAG" src="/assets/dag/oxo-flow-mag.svg" /></p>
+</div>
+<p>The graph is derived at catalog-build time from <code>oxo-flow graph -f dot</code> and rendered with Graphviz. It shows the workflow at rule level: wildcard <code>{sample}</code> instances expand at run time when sample data is discovered (the runtime view is <code>oxo-flow graph --expanded</code>).</p>
 <h2 id="scope">Scope</h2>
 <p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
 <p><strong>In scope</strong></p>

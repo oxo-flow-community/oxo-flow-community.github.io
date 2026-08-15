@@ -48,49 +48,59 @@ git clone https://github.com/oxo-flow-community/oxo-flow-methylseq
 
 ## Parameters
 
-| Parameter | Default | Used by |
-|---:|---|---|
-| `accel` | `false` | `trimgalore` |
-| `aligner` | `bismark` | — |
-| `clip_r1` | `0` | `trimgalore` |
-| `clip_r2` | `0` | `trimgalore` |
-| `comprehensive` | `false` | `bismark_methylationextractor` |
-| `cytosine_report` | `false` | `bismark_coverage2cytosine` |
-| `em_seq` | `false` | `bismark_align`, `trimgalore` |
-| `fasta` | `test/fixtures/refs/genome.fa` | `bismark_genomepreparation` |
-| `ignore_3prime_r1` | `0` | `bismark_methylationextractor` |
-| `ignore_3prime_r2` | `2` | `bismark_methylationextractor` |
-| `ignore_r1` | `0` | `bismark_methylationextractor` |
-| `ignore_r2` | `2` | `bismark_methylationextractor` |
-| `length_trim` | `0` | `trimgalore` |
-| `local_alignment` | `false` | `bismark_align` |
-| `maxins` | `` | `bismark_align` |
-| `meth_cutoff` | `` | `bismark_methylationextractor` |
-| `minins` | `` | `bismark_align` |
-| `multiqc_title` | `` | `multiqc` |
-| `nextseq_trim` | `0` | `trimgalore` |
-| `no_overlap` | `true` | `bismark_methylationextractor` |
-| `nomeseq` | `false` | `bismark_coverage2cytosine`, `bismark_methylationextractor` |
-| `non_directional` | `false` | `bismark_align` |
-| `num_mismatches` | `0.6` | `bismark_align` |
-| `out_dir` | `results` | `bismark_align`, `bismark_coverage2cytosine`, `bismark_deduplicate`, `bismark_methylationextractor`, `bismark_report`, `bismark_summary`, `fastqc`, `multiqc`, `multiqc_versions`, `samtools_index`, `samtools_sort`, `trimgalore` |
-| `pbat` | `false` | `bismark_align`, `trimgalore` |
-| `raw_dir` | `test/fixtures/raw` | `fastqc`, `trimgalore` |
-| `relax_mismatches` | `false` | `bismark_align` |
-| `rrbs` | `false` | `bismark_deduplicate`, `trimgalore` |
-| `single_cell` | `false` | `bismark_align`, `trimgalore` |
-| `skip_deduplication` | `false` | `bismark_deduplicate` |
-| `skip_fastqc` | `false` | `fastqc` |
-| `skip_multiqc` | `false` | `multiqc` |
-| `skip_trimming` | `false` | `trimgalore` |
-| `skip_trimming_presets` | `false` | `trimgalore` |
-| `slamseq` | `false` | — |
-| `three_prime_clip_r1` | `0` | `trimgalore` |
-| `three_prime_clip_r2` | `0` | `trimgalore` |
-| `unmapped` | `false` | `bismark_align` |
-| `zymo` | `false` | `bismark_align`, `trimgalore` |
+| Parameter | Default | Description | Used by |
+|---:|---|---|---|
+| `accel` | `false` | — | `trimgalore` |
+| `aligner` | `bismark` | Only the 'bismark' (bowtie2) aligner is ported. 'bismark_hisat', 'bwameth', 'bwamem' are NOT ported (see README fidelity table). | — |
+| `clip_r1` | `0` | Trimming options (upstream params with the same defaults) | `trimgalore` |
+| `clip_r2` | `0` | — | `trimgalore` |
+| `comprehensive` | `false` | — | `bismark_methylationextractor` |
+| `cytosine_report` | `false` | Bismark options | `bismark_coverage2cytosine` |
+| `em_seq` | `false` | — | `bismark_align`, `trimgalore` |
+| `fasta` | `test/fixtures/refs/genome.fa` | Reference genome (upstream: --fasta). Uncompressed FASTA; the port always builds the Bismark index from it (upstream default when --bismark_index is not supplied). Point this at your genome; the repo default ships the tiny test fixture. | `bismark_genomepreparation` |
+| `ignore_3prime_r1` | `0` | — | `bismark_methylationextractor` |
+| `ignore_3prime_r2` | `2` | — | `bismark_methylationextractor` |
+| `ignore_r1` | `0` | — | `bismark_methylationextractor` |
+| `ignore_r2` | `2` | — | `bismark_methylationextractor` |
+| `length_trim` | `0` | — | `trimgalore` |
+| `local_alignment` | `false` | — | `bismark_align` |
+| `maxins` | `` | — | `bismark_align` |
+| `meth_cutoff` | `` | — | `bismark_methylationextractor` |
+| `minins` | `` | — | `bismark_align` |
+| `multiqc_title` | `` | MultiQC | `multiqc` |
+| `nextseq_trim` | `0` | — | `trimgalore` |
+| `no_overlap` | `true` | — | `bismark_methylationextractor` |
+| `nomeseq` | `false` | — | `bismark_coverage2cytosine`, `bismark_methylationextractor` |
+| `non_directional` | `false` | — | `bismark_align` |
+| `num_mismatches` | `0.6` | — | `bismark_align` |
+| `out_dir` | `results` | — | `bismark_align`, `bismark_coverage2cytosine`, `bismark_deduplicate`, `bismark_methylationextractor`, `bismark_report`, `bismark_summary`, `fastqc`, `multiqc`, `multiqc_versions`, `samtools_index`, `samtools_sort`, `trimgalore` |
+| `pbat` | `false` | — | `bismark_align`, `trimgalore` |
+| `raw_dir` | `test/fixtures/raw` | Input reads directory: raw/<sample>_R1.fastq.gz + _R2.fastq.gz (paired-end). The repo default ships the tiny test fixtures; point this at your data. | `fastqc`, `trimgalore` |
+| `relax_mismatches` | `false` | — | `bismark_align` |
+| `rrbs` | `false` | Library presets (upstream params with the same defaults). | `bismark_deduplicate`, `trimgalore` |
+| `single_cell` | `false` | — | `bismark_align`, `trimgalore` |
+| `skip_deduplication` | `false` | — | `bismark_deduplicate` |
+| `skip_fastqc` | `false` | Skip options (upstream: --skip_fastqc / --skip_trimming / --skip_deduplication / --skip_multiqc). Same defaults as upstream. | `fastqc` |
+| `skip_multiqc` | `false` | — | `multiqc` |
+| `skip_trimming` | `false` | — | `trimgalore` |
+| `skip_trimming_presets` | `false` | — | `trimgalore` |
+| `slamseq` | `false` | — | — |
+| `three_prime_clip_r1` | `0` | — | `trimgalore` |
+| `three_prime_clip_r2` | `0` | — | `trimgalore` |
+| `unmapped` | `false` | — | `bismark_align` |
+| `zymo` | `false` | — | `bismark_align`, `trimgalore` |
 
-Derived from the workflow's `[config]` section — no schema file to maintain.
+Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
+
+## Workflow graph
+
+<div class="ox-dag-card" markdown="1">
+
+![oxo-flow-methylseq rule-level DAG](/assets/dag/oxo-flow-methylseq.svg)
+
+</div>
+
+The graph is derived at catalog-build time from `oxo-flow graph -f dot` and rendered with Graphviz. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 
