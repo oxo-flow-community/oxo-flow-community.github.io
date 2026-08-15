@@ -2,9 +2,23 @@
 
 **Porting Nextflow (nf-core DSL2) and Snakemake workflows to oxo-flow v0.11.0 TOML repositories.**
 
-Version: 1.1 (2026-08-15)
+Version: 1.2 (2026-08-15)
 Engine target: oxo-flow **0.11.0** (pin this; format features below are v0.11.0 surface)
 Audience: ~20 parallel porting agents, each owning one workflow port.
+
+v1.1 (TCASIA port, #24): `{log}` is metadata-only (never a shell
+placeholder), TOML triple-quote escape semantics (§13.29), `validate
+--as-include` E005 on main-file config (§13.30), directory outputs pass
+output verification (§13.31), `-t` prefix targeting across include
+namespaces (§13.32).
+
+v1.2 (SRA port, #23): fan-out trigger fields (§2.3, §13.33), empty
+`output` script rules (§13.34), template-name `depends_on` (§13.35),
+dry-run `input ✗` semantics (§13.36), `pairs_pattern` three-wildcard
+constraint (§2.4, §13.37), literal resource numbers + resource-group
+syntax (§13.38), the per-sample-routing limitation (§13.39), no-license
+upstream handling (§10, §13.40), and the `{sra}`-style custom-wildcard
+pattern (§4.2).
 
 This is an execution spec. Every TOML snippet in this document was either
 (a) taken verbatim from a canonical, CI-validated gallery workflow in the
@@ -113,7 +127,7 @@ against the `oxo-flow schema` dump and the reference docs.
 |---|---|---|
 | `name` | string | Required, unique. Expands with `_<group>_<sample>` / `_<pair_id>` suffixes. |
 | `input` | array of strings | Path patterns; wildcard-bearing patterns trigger per-value fan-out. |
-| `output` | array of strings | Path patterns. **Every declared output is verified to exist after the rule succeeds**; a missing output fails the rule (exit sentinel -1). |
+| `output` | array of strings | Path patterns. **Every declared output is verified to exist after the rule succeeds**; a missing output fails the rule (exit sentinel -1). May be `[]` for script-only rules with dynamic outputs (§13.34). |
 | `shell` | string | Command template; supports `{input}`, `{input[N]}`, `{output}`, `{output[N]}`, `{threads}`, `{memory}`, `{config.x}`, wildcards. Triple-quoted for multi-line. |
 | `script` | string | Script path; interpreter auto-detected (`.py`→python, `.R`→Rscript, `.sh`→bash, `.smk`→snakemake, `.nextflow`→nextflow run…). `shell` runs first, then `script`. |
 | `description` | string | One line on what the rule does. |
@@ -172,6 +186,8 @@ declares **`threads=1`** in dry-run output (the "unset" sentinel, §13.1).
 - Built-in placeholders: `{input}` (space-joined), `{input[N]}` (0-indexed),
   `{input.name}` (named_input), `{output}`, `{output[N]}`, `{output.name}`
   (named_output), `{threads}`, `{memory}`, `{config.*}`.
+- **Fan-out trigger fields:** a rule clones per sample/pair only when a
+  wildcard appears in `input`, `output`, or `shell` (§13.33).
 - **`{log}` is NOT a placeholder.** The `log` field is metadata only — the
   engine never expands `{log}` in `shell` (it would leave a literal `{log}`
   in the command). Inline the log path in the shell command
@@ -189,7 +205,7 @@ declares **`threads=1`** in dry-run output (the "unset" sentinel, §13.1).
 | Inline groups | `[[sample_groups]] name = "cohort"; samples = [...]` | Per (group, sample). |
 | Groups file | `[workflow] sample_groups_file = "metadata/groups.tsv"` (or .csv/.json) | TSV: `name<TAB>samples` (comma-separated ok). |
 | Pairs | `[[pairs]] pair_id/experiment/control[/experiment_type][/metadata]` or `[workflow] pairs_file = "metadata/pairs.tsv"` | Per pair. `control` may be omitted (tumor-only; `{control}` renders empty). |
-| Pairs from disk | `[workflow] pairs_pattern = "aligned/{pair_id}/{experiment}_vs_{control}.bam"` | Scans disk. |
+| Pairs from disk | `[workflow] pairs_pattern = "aligned/{pair_id}/{experiment}_vs_{control}.bam"` | Scans disk. **The pattern MUST contain all three wildcards `{pair_id}`, `{experiment}`, `{control}`** — a single-token pattern (e.g. SRR discovery `sra/{pair_id}/{pair_id}.sra`) is rejected at load (§13.37). |
 | CLI | `oxo-flow run wf.oxoflow --sample EXTRA_01` | Merged with all sources. |
 
 All sample sources merge (deduplicated, sorted, comma-joined) into
@@ -446,7 +462,30 @@ shell = "for s in $(echo {config.samples_list} | tr ',' ' '); do ...; done"
 
 Verified: `config.samples_list` renders comma-joined in shell expansion [V].
 
+### 4.2 Custom per-file wildcards (e.g. `{sra}`) — the script-rule pattern
+
+Snakemake workflows that fan out over a non-sample wildcard whose values
+come from a table at load time (e.g. `{sra}` in
+`auto_sra_rnaseq_pipeline`) have no direct fan-out source in oxo-flow:
+only `{sample}`/`{pair_id}`/`{experiment}`/`{control}` clone rules, and
+`pairs_pattern` cannot help (§13.37). Port them as **single-instance
+script rules** [V, workflow #23]:
+
+- The rule declares `output = []` (§13.34) and
+  `script = "scripts/x.py …"`; the script iterates the table (pandas) and
+  runs the identical per-value command.
+- Downstream per-sample rules consume the dynamic paths inside their own
+  scripts and order via `depends_on = ["<template-name>"]` (§13.35).
+- Preserve upstream concurrency caps: a run.py-style global cap
+  (`--resources limit_dump=2`) becomes an internal worker pool of 2 in the
+  script; a per-job resource with a global cap becomes `[resource_groups]`
+  (§13.38).
+- Record the structural deviation (rule granularity change) in the
+  fidelity table — the commands per value stay byte-identical.
+
 ---
+
+## 5. Version pinning policy
 
 ## 5. Version pinning policy
 
@@ -780,6 +819,10 @@ from the upstream repo at the ported commit and commit it verbatim as
 `LICENSE.upstream` — the porting agent must actually do this, not just
 write the instruction.
 
+**Upstream has no license file** (GitHub reports "no license"): skip
+`LICENSE.upstream` and replace the NOTICE's upstream-license paragraph
+with an explicit statement of the absence (§13.40).
+
 ---
 
 ## 11. LICENSE
@@ -1010,6 +1053,60 @@ or `docs/guide/src/commands/*.md`, `[gallery]` = canonical example file.
     pulls upstream producers (bams) but not sibling consumers of the same
     bams (verified: 17-rule port → `-t alignment` 5 rules, `-t as_calling`
     15). Use this to mirror multi-Snakefile upstreams in one DAG. `[V]`
+33. **Fan-out trigger fields are `input`/`output`/`shell` only.** A
+    placeholder appearing *exclusively* in `script`, `log`, `benchmark`,
+    hooks, `params`, or `when` does NOT clone the rule — it stays a single
+    instance with the literal placeholder in those fields (probe wf9:
+    script-only `{sample}` → no fan-out). `script` strings ARE
+    placeholder-expanded **at runtime** for the executing instance (the
+    same `render_shell_command` renderer as `shell`), so
+    `script = "scripts/x.py --sample {sample}"` works once a wildcard in
+    input/output/shell clones the rule. `debug` output renders shell
+    commands only — script commands are not shown; the script file is the
+    fidelity-check source. `[V]`
+34. **`output = []` is valid for script-only rules.** Rules with an empty
+    output list and a `script` pass `validate`, appear in dry-run, and
+    execute; nothing is verified on disk afterwards — the script exit code
+    is the contract. Use for metadata-driven steps whose outputs are
+    dynamic (e.g. per-SRR FASTQ dumps, §4.2). `[V]`
+35. **`depends_on` on a template name resolves to ALL expanded instances.**
+    `depends_on = ["data_conversion_pair"]` on a per-sample rule creates
+    edges from every `data_conversion_pair_<group>_<sample>` instance (the
+    engine builds an original-name → expanded-names map during
+    `expand_wildcards`); for single-instance rules the name matches
+    directly. `[V]`
+36. **dry-run `input ✗` means "file absent on disk at preview time"** — it
+    is NOT a missing-producer diagnostic. Producer-owned intermediates show
+    `input ✗` too in a no-checkpoint dry-run (all reference ports do);
+    files present on disk (fixtures) show **no marker at all**. The §14 DoD
+    input check is therefore: no `✗` for files the run consumes from disk,
+    and DAG wiring verified via the `Dependencies:` lines in `debug`. `[V]`
+37. **`pairs_pattern` requires `{pair_id}`, `{experiment}`, AND `{control}`.**
+    A pattern missing any of the three is rejected at config load
+    ("pairs_pattern must contain {pair_id}, {experiment}, and {control}") —
+    single-token discovery (e.g. `sra/{pair_id}/{pair_id}.sra` for SRR
+    archives) is impossible; use the §4.2 script-rule pattern instead. `[V]`
+38. **`[rules.resources]` numbers are literals — no `{config.x}`.**
+    `threads` is `u32`; upstream config thread keys (`fastp_threads`,
+    `star_threads`) must be baked into `[rules.resources] threads` with the
+    upstream default and a fidelity-table note. Shared concurrency caps:
+    declare `[resource_groups] limit_merge = { max = 2 }` (optional
+    `wait = "queue"|"fail"`, default queue) and claim per rule
+    `[rules.resources] groups = { limit_merge = 1 }`; undeclared-group or
+    over-capacity claims fail fast (`ResourceGroupExhausted`). `[V]`
+39. **`when` branches are workflow-level, not per-sample.** Snakemake input
+    functions that route *per sample* by a metadata column (`paired` ==
+    "PAIRED"/"SINGLE") cannot be replicated — `when` evaluates config only,
+    and both branches cannot coexist (outputs collide). Port the branch the
+    upstream example uses and record the other as not-ported with the
+    reason (precedent: rnaseq-star-deseq2 `fastp_se`, auto_sra_rnaseq
+    `data_conversion_single`). `[V]`
+40. **Upstream without a license file** (GitHub reports "no license"): there
+    is no `LICENSE.upstream` to copy — NOTICE.md states the absence
+    explicitly (repo, ported commit, "ships no LICENSE file"), metadata.json
+    uses `source.license = "none"` / `upstream_license = "none"`, and the
+    README Source section says so. The port itself stays Apache-2.0.
+    [workflow #23]
 
 ---
 
@@ -1074,7 +1171,9 @@ the runs:
 | wf6 | `{config.x}` inside `sample_pattern`, `cleanup_chunks` silently ignored, `config.samples_list` comma-joined in shell, auto-discovered + group double fan-out |
 | wf7 | Config comma-splitting + single-element-array escape hatch, `lint` warning codes (W004/W007/W008), `lint --strict` exit 1 |
 | wf8 | Checkpoint: run→skip on re-run ("0 succeeded, 2 skipped"), dry-run `[skip: up to date]`, `touch` does not invalidate, content change invalidates (`[run: input changed]`) |
+| wf9 | Fan-out triggered by input/output/shell only (script-only `{sample}` stays single-instance), `output = []` accepted, `depends_on` template→all-instances, `expand_inputs` + `config.samples_list` gather, script placeholder expansion at runtime (`render_shell_command`), `[resource_groups]`/`groups` claim syntax |
 | oxo-flow-tcasia (live port, #24) | `{log}` metadata-only (literal in shell, must inline path), TOML triple-quote escape semantics (§13.29), `--as-include` E005 on main-file config, directory outputs via `path.exists()`, `-t` namespace targeting (§13.32), namespaced two-stage DAG chaining |
+| oxo-flow-auto-sra-rnaseq-pipeline (live port, #23) | `{sra}`-style custom wildcards → single-instance no-output script rules (§4.2, §13.34), template-name `depends_on` (§13.35), `pairs_pattern` three-wildcard constraint (§13.37), resource-group cap port (limit_dump→worker pool, limit_merge→`[resource_groups]`), no-license upstream handling (§13.40) |
 
 ## Appendix B. Doc citations
 
