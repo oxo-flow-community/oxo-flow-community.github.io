@@ -36,7 +36,7 @@ and run it with confidence.
 
 <div id="ox-featured" class="ox-cards"></div>
 
-<p class="ox-more"><a class="md-button md-button--primary" href="pipelines/">Browse the full catalog</a></p>
+<p class="ox-more"><a class="md-button md-button--primary" href="/pipelines/">Browse the full catalog</a></p>
 
 ## Where workflows come from
 

@@ -39,7 +39,7 @@
       `oxo-flow run workflow/${p.name.replace(/^oxo-flow-/, "")}.toml`;
     return `<article class="ox-card">
       <div class="row">
-        <a class="name" href="pipelines/${esc(p.name)}/">${esc(p.name)}</a>
+        <a class="name" href="/pipelines/${esc(p.name)}/">${esc(p.name)}</a>
         ${star}
       </div>
       <p class="title">${esc(p.title)}</p>
@@ -52,7 +52,7 @@
       <div class="tools">${(p.tools || []).map((t) => esc(t)).join('<span class="sep">·</span>')}</div>
       <p class="cmd">$ ${esc(cmd)}</p>
       <div class="links">
-        <a href="pipelines/${esc(p.name)}/">Run notes</a>
+        <a href="/pipelines/${esc(p.name)}/">Run notes</a>
         <a href="${esc(p.repo_url)}" rel="noopener">GitHub ↗</a>
       </div>
     </article>`;
