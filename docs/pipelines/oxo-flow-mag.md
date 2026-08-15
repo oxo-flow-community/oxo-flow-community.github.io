@@ -1,21 +1,50 @@
-# Metagenome assembly and binning
+# Metagenome assembly, binning and taxonomic classification
 
-oxo-flow port of the nf-core/mag pipeline (default short-read path): FastQC/Fastp QC with phiX removal, SPAdes and MEGAHIT metagenomic assembly, QUAST and Prodigal on the assemblies, bowtie2 read mapping back to the assemblies, contig depth profiles, six binners (MetaBAT2, MaxBin2, CONCOCT, COMEBin, MetaBinner, SemiBin2) with unbinned-contig chunk splitting, BUSCO bin QC, per-group QUAST and depth summaries, ALE assembly evaluation, GTDB-Tk classification of QC-passing bins with a combined summary, PROKKA annotation, and a final MultiQC report.
+<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
+
+Turn paired-end metagenomic reads into quality-checked, taxonomically classified draft genomes: FastQC and fastp QC with phiX removal, SPAdes and MEGAHIT assembly, QUAST and Prodigal assessment, bowtie2 mapping, binning with six binners (MetaBAT2, MaxBin2, CONCOCT, COMEBin, MetaBinner, SemiBin2), BUSCO bin QC, GTDB-Tk classification with a combined summary, PROKKA annotation, ALE evaluation and a final MultiQC report. The default short-read path of nf-core/mag, faithfully ported with the same tool versions and commands.
 
 | | |
 |---:|---|
-| **Engine** | nf-core |
-| **Source** | [nf-core/mag](https://github.com/nf-core/mag) |
-| **Pinned version** | `5.5.0` |
-| **Ported** | 2026-08-15 |
+| **Rating** | ★ Verified |
+| **Origin** | port |
+| **Domain** | metagenomics |
 | **Rules** | 134 |
 | **Tools** | fastqc · fastp · bowtie2 · samtools · spades · megahit · quast · prodigal · bioawk · seqkit · metabat2 · maxbin2 · concoct · comebin · metabinner · semibin · busco · qsv · ale · gtdbtk · prokka · multiqc · python · pandas · biopython |
-| **Domain** | metagenomics |
+| **Ported** | 2026-08-15 |
+| **License** | Apache-2.0 |
+| **Source** | [nf-core/mag](https://github.com/nf-core/mag) |
+| **Pinned version** | `5.5.0` |
 
 ## Run it
 
 ```bash
-oxo-flow run workflow/mag.toml
+oxo-flow run main.oxoflow
+```
+
+## Installation
+
+**Engine.** oxo-flow >= 0.11.0
+
+**Toolchain.** conda envs — pinned
+
+**Requirements.**
+- input: paired-end reads as {sample}_R1.fastq.gz / {sample}_R2.fastq.gz in config.input_dir (default test/fixtures/raw); single-end not ported
+- reference: GTDB-Tk database — download gtdbtk_data.tar.gz (~100 GB) or unpacked directory and set config.gtdb_db (oxo-flow cannot download it mid-run)
+- reference: phiX genome FASTA bundled in the repo (assets/data/GCA_002596845.1_ASM259684v1_genomic.fna.gz) — no download needed
+- compute: up to 12 CPUs / 140 GB RAM per rule (SPAdes 10 CPUs/72 GB/24 h; GTDB-Tk classifywf 2 CPUs/140 GB/12 h; defaults 1 thread/6 GB)
+- software: conda or mamba with the pinned envs/*.yaml environments (one per tool, no container layer)
+- optional: disk — hundreds of GB for real datasets (GTDB-Tk database plus per-sample assemblies and bins)
+
+```bash
+# 1. install oxo-flow (release binary, recommended)
+curl -fL -o oxo-flow.tar.gz https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz
+tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
+#    or, via conda (may lag behind releases):
+#    conda install -c bioconda oxo-flow-cli
+
+# 2. get this workflow
+git clone https://github.com/oxo-flow-community/oxo-flow-mag
 ```
 
 ## Scope
@@ -103,15 +132,12 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 ### Not ported (off by default upstream)
 
-Long-read assembly and binning, DAS Tool refinement, kaiju and diamond
-taxonomic profiling, CheckM/CheckM2/GUNC QC, tiara domain classification,
-host removal, ancient DNA, CAT/BAT, pydamage, hybrid assembly, and the
-benchmarking modes.
+Long-read assembly and binning, DAS Tool refinement, kaiju and diamond taxonomic profiling, CheckM/CheckM2/GUNC QC, tiara domain classification, host removal, ancient DNA, CAT/BAT, pydamage, hybrid assembly, and the benchmarking modes.
 
 ## Links
 
 - Repository: [oxo-flow-mag](https://github.com/oxo-flow-community/oxo-flow-mag)
 - Upstream: [nf-core/mag](https://github.com/nf-core/mag) @ `5.5.0`
-- License: Apache-2.0 (port) · MIT (upstream)
+- License: Apache-2.0 (this workflow) · MIT (upstream)
 
-This port was created on 2026-08-15 and may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.

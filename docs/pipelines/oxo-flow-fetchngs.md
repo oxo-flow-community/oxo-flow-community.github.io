@@ -1,21 +1,49 @@
-# Fetch metadata and FASTQ from public databases
+# Fetching public sequencing data: FastQ download, metadata and samplesheets
 
-Fetch metadata and raw FastQ files from public databases (SRA/ENA/DDBJ/GEO) — oxo-flow port of nf-core/fetchngs: input-id check, ENA metadata fetch, FTP FastQ download with wget + md5 verification, auto-created samplesheet + id mappings + MultiQC mappings config.
+<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
+
+Fetch metadata and raw FastQ files from public sequence databases (SRA/ENA/DDBJ/GEO). Given a list of database identifiers — run accessions (SRR/ERR/DRR), experiments, studies, biosamples or GEO series — the pipeline retrieves the ENA run metadata, downloads the FastQ files over FTP, validates every download against its ENA md5 sum, and auto-creates a samplesheet plus sample id-mappings and a MultiQC mappings config, ready for downstream nf-core pipelines such as rnaseq, atacseq or taxprofiler.
 
 | | |
 |---:|---|
-| **Engine** | nf-core |
+| **Rating** | ★ Verified |
+| **Origin** | port |
+| **Domain** | genomics |
+| **Rules** | 8 |
+| **Tools** | python · wget · coreutils |
+| **Ported** | 2026-08-15 |
+| **License** | Apache-2.0 |
 | **Source** | [nf-core/fetchngs](https://github.com/nf-core/fetchngs) |
 | **Pinned version** | `1.12.0` |
-| **Ported** | 2026-08-15 |
-| **Rules** | 8 |
-| **Tools** | python · wget |
-| **Domain** | genomics |
 
 ## Run it
 
 ```bash
 oxo-flow dry-run main.oxoflow
+```
+
+## Installation
+
+**Engine.** oxo-flow >= 0.11.0
+
+**Toolchain.** containers (Docker) — pinned images (quay.io/biocontainers, identical to upstream)
+
+**Requirements.**
+- ids file: one SRA/ENA/DDBJ/GEO accession per line (config.input, default test/fixtures/ids.txt), kept in sync with the [[sample_groups]] sample source
+- reference data: none — the workflow downloads data from public archives; no genome FASTA, annotation or indices required
+- network: outbound access to ENA over FTP (wget -t 5 -c -T 60, 2 retries)
+- compute: up to 2 CPUs / 12 GB per rule (FastQ download 2 threads/12G; metadata fetch 1 thread/6G; 4 h time limits on three rules)
+- disk: results/fastq/ grows with downloaded FastQ files plus md5/ checksums (depends on input size); metadata/ and samplesheet/ stay small
+
+```bash
+# 1. install oxo-flow (release binary, recommended)
+curl -fL -o oxo-flow.tar.gz https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz
+tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
+#    or, via conda (may lag behind releases):
+#    conda install -c bioconda oxo-flow-cli
+
+# 2. get this workflow
+git clone https://github.com/oxo-flow-community/oxo-flow-fetchngs
 ```
 
 ## Scope
@@ -73,6 +101,6 @@ are not ported (see table).
 
 - Repository: [oxo-flow-fetchngs](https://github.com/oxo-flow-community/oxo-flow-fetchngs)
 - Upstream: [nf-core/fetchngs](https://github.com/nf-core/fetchngs) @ `1.12.0`
-- License: Apache-2.0 (port) · MIT (upstream)
+- License: Apache-2.0 (this workflow) · MIT (upstream)
 
-This port was created on 2026-08-15 and may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.

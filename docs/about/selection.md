@@ -1,7 +1,11 @@
-# Selection Report — oxo-flow-community Template Library
+# Selection Report — the founding twenty
 
 **Date:** 2026-08-15 · **Method:** GitHub API data + snakemake catalog, scored by a selection
 committee agent against pre-registered criteria, then reviewed by the maintainer.
+
+> This report documents how the first twenty entries in the catalog were chosen. The
+> catalog has since opened to original workflows and community submissions — see
+> [Curation &amp; ratings](curation.md).
 
 ## Method
 

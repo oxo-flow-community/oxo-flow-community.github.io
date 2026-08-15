@@ -1,21 +1,49 @@
 # Small and structural variant calling with Varlociraptor
 
-oxo-flow port of snakemake-workflows/dna-seq-varlociraptor v6.10.0 (default-parameter path, one tumor sample group): vg giraffe mapping against the 1000 Genomes human pangenome, FastQC/MultiQC QC, mosdepth coverage with region filtering, freebayes + delly candidate calling, Varlociraptor calling under scenario some_id (present + somatic_tumor_high + somatic_tumor_medium, FDR 0.05, local-smart), per-variant-type FDR control (SNV/INS/DEL/MNV/BND/INV/DUP/REP) with merge and phred decoding, VEP annotation with LoFtool + REVEL plugins and dbSNFP annotation, annotation filtering, the 34-column vembrane variant table, oncoprint label-sorting preparation, and datavzrd reports for variant calls and gene coverage. 88 rules, commands byte-identical to upstream wrappers.
+<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
+
+Scenario-driven somatic small and structural variant calling with Varlociraptor: paired-end reads are aligned against the 1000 Genomes human pangenome with vg giraffe, QC'd with FastQC/MultiQC, covered with mosdepth, and used for freebayes and delly candidate calling; Varlociraptor then estimates alignment properties and calls variants under a tumor scenario (events present + somatic_tumor_high + somatic_tumor_medium, FDR 0.05), FDR is controlled per variant type (SNV/INS/DEL/MNV/BND/INV/DUP/REP) with merge and phred decoding, and the calls are annotated with VEP (LoFtool/REVEL plugins) and dbSNFP/dbSNP, filtered, turned into a 34-column variant table with oncoprint label-sorting, and rendered as interactive datavzrd variant and gene-coverage reports. All reference data (GRCh38 FASTA and GTF, VEP cache/plugins, REVEL scores, known-variants VCFs, HPRC pangenome graph) is downloaded automatically into resources/.
 
 | | |
 |---:|---|
-| **Engine** | snakemake |
-| **Source** | [snakemake-workflows/dna-seq-varlociraptor](https://github.com/snakemake-workflows/dna-seq-varlociraptor) |
-| **Pinned version** | `v6.10.0` |
-| **Ported** | 2026-08-15 |
+| **Rating** | ★ Verified |
+| **Origin** | port |
+| **Domain** | genomics |
 | **Rules** | 88 |
 | **Tools** | altair · bcftools · bedtools · biopython · curl · datavzrd · delly · ensembl-vep · fastqc · freebayes · gatk4 · gawk · htslib · mosdepth · multiqc · openpyxl · pandas · parallel · picard · pysam · python · rust-bio-tools · samtools · scikit-learn · sed · snpsift · statsmodels · unzip · varlociraptor · vcflib · vega-lite-cli · vembrane · vg |
-| **Domain** | genomics |
+| **Ported** | 2026-08-15 |
+| **License** | Apache-2.0 |
+| **Source** | [snakemake-workflows/dna-seq-varlociraptor](https://github.com/snakemake-workflows/dna-seq-varlociraptor) |
+| **Pinned version** | `v6.10.0` |
 
 ## Run it
 
 ```bash
 oxo-flow run workflow/varlociraptor.toml
+```
+
+## Installation
+
+**Engine.** oxo-flow >= 0.11.0
+
+**Toolchain.** conda envs — pinned versions (no containers)
+
+**Requirements.**
+- paired-end FASTQ reads at reads_dir/<sample>_1.fastq.gz / _2.fastq.gz; sample cohort declared in [[sample_groups]] (one group = one tumor sample); fixtures bundled for dry-run
+- reference data: downloaded automatically into resources/ — GRCh38 primary assembly FASTA (Ensembl release 111) + .fai/.dict, Ensembl release 111 GTF, VEP cache and plugins (release 111), REVEL scores, Ensembl known-variants VCFs, HPRC v1.1 human pangenome graph
+- compute: up to 96 CPUs / 32 GB per rule (freebayes candidates 96 threads; vg giraffe 64 threads; samtools sort 16 threads/32G; Varlociraptor call 8G)
+- tools: conda envs with pinned versions (envs/*.yaml, one env per tool pin set); conda/mamba required at runtime
+- disk: multi-GB reference downloads under resources/ (pangenome graph, VEP cache, known-variants VCFs) plus results/ for BAMs, BCFs, tables and reports
+
+```bash
+# 1. install oxo-flow (release binary, recommended)
+curl -fL -o oxo-flow.tar.gz https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz
+tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
+#    or, via conda (may lag behind releases):
+#    conda install -c bioconda oxo-flow-cli
+
+# 2. get this workflow
+git clone https://github.com/oxo-flow-community/oxo-flow-varlociraptor
 ```
 
 ## Scope
@@ -53,20 +81,20 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- bwa mapping — non-default aligner branch
-- fastp/trimming — non-default branch
-- fusions (arriba) — off in default config (calling mode variants)
-- MAF conversion — not reachable with default config
-- mutational burden and mutational signature analyses
-- population database (germline AF annotation) — off by default
-- dgidb druggability — off by default
+- bwa mapping — non-default aligner branch, not ported
+- fastp/trimming — non-default trimming branch, not ported
+- fusions (arriba) — fusion calling is off in the default config (calling mode variants)
+- MAF conversion — not reachable with the default config
+- mutational burden and mutational signature analyses — non-default branches
+- population database (germline AF annotation) — population db is off in the default config
+- dgidb druggability annotation — off by default
 - CADD annotation — off by default
 - primer design — off by default
-- benchmarking rules
+- benchmarking — upstream benchmarking rules are not ported
 - consensus reads — non-default branch
-- target regions — not in default path
-- template oncoprint views (gene_oncoprint / variant_oncoprints datasets) — empty with single group; prepare_oncoprint itself runs
-- gather_annotated_calls / filter_odds — not reachable in default path (benchmarking off, filter present only)
+- target regions — not part of the default path
+- template oncoprint views (gene_oncoprint / variant_oncoprints datasets) — empty with the default single group; prepare_oncoprint itself runs
+- gather_annotated_calls / filter_odds — not reachable in the default path (benchmarking off, filter present only)
 - upstream scatter.calling(16) chunks beyond scatteritem=0 — collapsed to a single chunk
 
 ## Fidelity
@@ -92,6 +120,6 @@ deliberate deviations:
 
 - Repository: [oxo-flow-varlociraptor](https://github.com/oxo-flow-community/oxo-flow-varlociraptor)
 - Upstream: [snakemake-workflows/dna-seq-varlociraptor](https://github.com/snakemake-workflows/dna-seq-varlociraptor) @ `v6.10.0`
-- License: Apache-2.0 (port) · MIT (upstream)
+- License: Apache-2.0 (this workflow) · MIT (upstream)
 
-This port was created on 2026-08-15 and may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.

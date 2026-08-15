@@ -651,20 +651,57 @@ file, `oxo-flow`.
 ## 9. README.md template (~80 lines, exact skeleton)
 
 ```markdown
-# <Pipeline Display Name>
+# <repo-name> — <catalog-style title>
 
-[![CI](https://github.com/<org>/<repo>/actions/workflows/ci.yml/badge.svg)](https://github.com/<org>/<repo>/actions/workflows/ci.yml)
-[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
+[![CI](https://github.com/oxo-flow-community/<repo>/actions/workflows/ci.yml/badge.svg)](https://github.com/oxo-flow-community/<repo>/actions/workflows/ci.yml)
 
-<One-paragraph description: what the pipeline analyzes and produces.>
+> ★ Verified · ⇄ Official port of [`<upstream-name>`](<upstream-repo-url>) @ `<tag-or-commit>`
+> — same tools, same versions, same commands. Part of the
+> [oxo-flow-community catalog](https://oxo-flow-community.github.io/).
 
-## Source
+<One-paragraph description: what a user gets — the analysis goal and main
+steps. No "port" framing outside the blockquote.>
 
-Ported from **[<upstream-name>](<upstream-repo-url>)**, version
-`<tag-or-commit>` (<upstream license, e.g. MIT/Apache-2.0>). This port is
-maintained independently and **may lag the upstream** — check the
-`<tag-or-commit>` above and the fidelity table below for the exact ported
-state.
+## Installation
+
+### 1. Install oxo-flow
+
+Requires **oxo-flow ≥ 0.11.0**. Release binary (recommended):
+
+```bash
+curl -fL -o oxo-flow.tar.gz \
+  https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz
+tar xzf oxo-flow.tar.gz
+sudo mv oxo-flow /usr/local/bin/
+```
+
+Alternative: `conda install -c bioconda oxo-flow-cli` (the bioconda package
+may lag behind releases; other platform binaries are on the releases page).
+
+### 2. Get this workflow
+
+```bash
+git clone https://github.com/oxo-flow-community/<repo>.git
+```
+
+### 3. Requirements
+
+- **Reference data**: <genome FASTA, annotation GTF, indices … — list the
+  workflow's actual external inputs>
+- **Compute**: <up to N threads / M GB per rule — from the workflow's own
+  resource settings>
+- **Tools**: <containers with pinned images OR conda envs with pinned
+  versions — state which, matching the TOML environments>
+
+## Usage
+
+```bash
+# 1. prepare data (see test/fixtures for the expected layout)
+# 2. preview the plan
+oxo-flow dry-run main.oxoflow
+# 3. run
+oxo-flow run main.oxoflow -j 8
+```
 
 ## Fidelity
 
@@ -676,40 +713,22 @@ state.
 Rows cover **every** upstream process/rule. "not ported" rows are allowed
 only with a reason.
 
-## Quickstart
+## Source
+
+Ported from **[<upstream-name>](<upstream-repo-url>)**, version
+`<tag-or-commit>` (<upstream license, e.g. MIT>). Created 2026-08-15; this
+workflow **may lag upstream releases**. Attribution in
+`NOTICE.md`.
+
+## Test
 
 ```bash
-# 1. install oxo-flow (see Requirements)
-# 2. prepare data: raw/<sample>_R1.fastq.gz / _R2.fastq.gz (see fixtures/)
-# 3. preview the plan
-oxo-flow dry-run main.oxoflow
-# 4. run
-oxo-flow run main.oxoflow -j 8
-# 5. run a subset
-oxo-flow run main.oxoflow -t <final-rule> --samples first:2
+bash test/run.sh   # validate + lint + dry-run, exits 0
 ```
-
-## Requirements
-
-- **oxo-flow ≥ 0.11.0** — install the prebuilt binary:
-
-```bash
-curl -fL -o oxo-flow.tar.gz \
-  https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz
-tar xzf oxo-flow.tar.gz
-sudo mv oxo-flow /usr/local/bin/
-```
-
-- Conda users may alternatively `conda install -c bioconda oxo-flow-cli`
-  (note: the bioconda package currently lags the release binary at 0.10.2 —
-  some 0.11.0 format features may not validate).
-- Docker/Singularity/conda at runtime, per the environments declared in
-  `main.oxoflow`.
 
 ## License
 
-Apache-2.0. Copyright (c) 2026 oxo-flow-community. Upstream attribution in
-`NOTICE.md`.
+Apache-2.0. Copyright (c) 2026 oxo-flow-community.
 
 ## Community
 
@@ -775,77 +794,60 @@ under the Apache License…"). Conventions to mirror:
 
 ---
 
-## 12. metadata.json — exact schema
+## 12. metadata.json — exact schema (registry v2)
 
-Every port ships `metadata.json` validating against this schema:
-
-```json
-{
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "oxo-flow port metadata",
-  "type": "object",
-  "required": [
-    "name", "title", "engine", "source", "created", "domain",
-    "tags", "description", "scope", "excluded", "rule_count",
-    "tools", "status", "repo_url", "site_page", "upstream_license"
-  ],
-  "properties": {
-    "name": { "type": "string", "description": "kebab-case repo name, e.g. 'nf-core-rnaseq'" },
-    "title": { "type": "string", "description": "Display title" },
-    "engine": { "const": "oxo-flow", "description": "Engine this port targets" },
-    "source": {
-      "type": "object",
-      "required": ["repo", "url", "tag", "sha", "license"],
-      "properties": {
-        "repo":     { "type": "string", "description": "Upstream repo short name" },
-        "url":      { "type": "string", "format": "uri", "description": "Upstream repo URL" },
-        "tag":      { "type": "string", "description": "Upstream release tag or branch" },
-        "sha":      { "type": "string", "description": "Upstream commit SHA at port time (full 40-hex)" },
-        "license":  { "type": "string", "description": "Upstream license SPDX id" }
-      }
-    },
-    "created": { "type": "string", "format": "date", "description": "Port date, ISO 8601 (2026-08-15)" },
-    "domain": { "type": "string", "enum": ["genomics", "transcriptomics", "single-cell", "metagenomics", "proteomics", "multi-omics", "other"] },
-    "tags": { "type": "array", "items": { "type": "string" }, "description": "Search tags, e.g. ['rna-seq', 'differential-expression']" },
-    "description": { "type": "string", "description": "One-paragraph pipeline description" },
-    "scope": { "type": "array", "items": { "type": "string" }, "description": "Upstream steps included in this port (rule names)" },
-    "excluded": { "type": "array", "items": { "type": "string" }, "description": "Upstream steps NOT ported, with reasons" },
-    "rule_count": { "type": "integer", "description": "Number of [[rules]] entries in the port" },
-    "tools": { "type": "array", "items": { "type": "string" }, "description": "Tool@version list, e.g. ['fastp@0.23.4', 'STAR@2.7.11b']" },
-    "status": { "type": "string", "enum": ["draft", "ready", "archived"], "description": "'ready' only when §14 passes" },
-    "repo_url": { "type": "string", "format": "uri", "description": "URL of this port's repository" },
-    "site_page": { "type": "string", "format": "uri", "description": "Community site page, https://oxo-flow-community.github.io/<name>/" },
-    "upstream_license": { "type": "string", "description": "Upstream license SPDX id (mirrors source.license)" }
-  }
-}
-```
-
-Example values for an nf-core rnaseq port:
+Every repo ships `metadata.json` — this is the source record for the catalog
+registry (`data/pipelines.json` in the site repo). Catalog v2 fields:
 
 ```json
 {
-  "name": "nf-core-rnaseq",
-  "title": "nf-core rnaseq (port)",
-  "engine": "oxo-flow",
+  "name": "oxo-flow-rnaseq",
+  "title": "RNA-seq: alignment, quantification and QC",
+  "origin": "port",
+  "rating": "verified",
+  "engine": "nextflow",
   "source": {
     "repo": "nf-core/rnaseq",
     "url": "https://github.com/nf-core/rnaseq",
-    "tag": "3.14.2",
+    "tag": "3.26.0",
     "sha": "<40-hex-sha-of-tag>",
     "license": "MIT"
   },
   "created": "2026-08-15",
-  "domain": "transcriptomics",
-  "tags": ["rna-seq", "differential-expression", "nf-core"],
-  "description": "oxo-flow port of the nf-core/rnaseq pipeline: QC, trimming, STAR alignment, quantification, DE.",
-  "scope": ["fastqc", "trim", "star_align", "featurecounts", "multiqc"],
-  "excluded": ["umicollapse", "upstream branch steps — not in default path"],
-  "rule_count": 12,
-  "tools": ["fastqc@0.12.1", "fastp@0.23.4", "STAR@2.7.11b", "subread@2.0.6", "multiqc@1.21"],
-  "status": "ready",
-  "repo_url": "https://github.com/<org>/nf-core-rnaseq",
-  "site_page": "https://oxo-flow-community.github.io/nf-core-rnaseq/",
+  "domain": "bulk RNA-seq",
+  "tags": ["rna-seq", "star", "quantification"],
+  "description": "One catalog paragraph: what a user gets — goal and main steps.",
+  "scope": ["fastqc", "trim", "star_align", "..."],
+  "excluded": ["optional upstream branches, with reasons"],
+  "rule_count": 44,
+  "tools": ["fastqc", "star", "samtools", "..."],
+  "installation": {
+    "engine": "oxo-flow >= 0.11.0",
+    "toolchain": "containers (Docker/Singularity) — pinned images",
+    "requirements": [
+      "Reference data: genome FASTA, annotation GTF, chrom sizes",
+      "Compute: up to 12 threads / 72 GB per rule"
+    ]
+  },
+  "repo_url": "https://github.com/oxo-flow-community/oxo-flow-rnaseq",
+  "license": "Apache-2.0",
   "upstream_license": "MIT"
+}
+```
+
+Field rules:
+
+- `origin`: `"port"` (migration of a Nextflow/Snakemake pipeline) · `"original"`
+  (built for oxo-flow) · `"curated"` (third-party repo, listed via PR).
+- `rating`: `"verified"` (fidelity-checked, CI green — §14) or `"community"`.
+- `engine`: the SOURCE engine for ports (`"nextflow"` | `"snakemake"`); omitted
+  for original workflows.
+- `title`/`description` are catalog copy — user-facing, no "port" framing.
+- `tools`: deduped tool names WITHOUT versions (versions live in the TOML
+  pins and the README fidelity table).
+- `installation`: engine floor; `toolchain` states truthfully whether the
+  workflow runs tools via containers or conda (matching the TOML
+  environments); `requirements` lists reference data and compute needs.
 }
 ```
 
@@ -1008,16 +1010,19 @@ submission):
       in the fidelity table (§5).
 - [ ] Exactly one sample source on the default path (no §13.8
       double-fan-out).
-- [ ] `README.md` (title, CI badge, description, Source block with
-      tag/commit + upstream license, Created note "2026-08-15" + may-lag
-      sentence, fidelity table, quickstart, requirements incl. bioconda
-      caveat, license summary, community link) — §9 skeleton followed.
+- [ ] `README.md` (catalog v2 skeleton — §9: title without "port" framing,
+      ★ Verified blockquote, Installation with engine + reference-data +
+      compute + toolchain, Usage, fidelity table, Source with tag/commit +
+      upstream license + created-2026-08-15 + may-lag sentence, Test,
+      License, Community link).
 - [ ] `NOTICE.md` present; `LICENSE` = full Apache-2.0 with
       "Copyright (c) 2026 oxo-flow-community"; `LICENSE.upstream` = the
       upstream license fetched from the upstream repo at the ported commit
       (§10, §11).
-- [ ] `metadata.json` validates against the §12 schema; `rule_count` and
-      `tools` match the port; `status = "ready"`.
+- [ ] `metadata.json` follows the registry v2 schema (§12): `origin =
+      "port"`, `rating = "verified"` (only when every other DoD item
+      holds), truthful `installation` block, `tools` without versions,
+      valid JSON.
 - [ ] `.github/workflows/ci.yml` present with the v0.11.0 tarball install
       (§8); CI is green with the badge URL resolving.
 - [ ] No files written into `/Users/wsx/Documents/GitHub/oxo-flow/`; all

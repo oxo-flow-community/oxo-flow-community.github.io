@@ -1,10 +1,10 @@
 [
   {
     "name": "oxo-flow-rnaseq",
-    "title": "RNA-seq with STAR + gene/isoform counts",
+    "title": "RNA-seq: alignment, quantification and QC",
+    "origin": "port",
+    "rating": "verified",
     "engine": "nextflow",
-    "domain": "transcriptomics",
-    "description": "oxo-flow port of the nf-core/rnaseq pipeline (default star_salmon + trimgalore main path): fq lint, FastQC, TrimGalore, STAR alignment, samtools sort/index/stats, Picard MarkDuplicates, featureCounts gene counts with biotype MultiQC tables, RSeQC + dupRadar + Qualimap QC, strand-specific bigWig tracks, and a final MultiQC report with the upstream custom content (fail_trimmed / fail_mapped tables, strandedness checks, sample merge, versions). 38 rules, commands byte-for-byte upstream under default parameters, all tools pinned to the exact upstream conda versions.",
     "source": {
       "repo": "nf-core/rnaseq",
       "url": "https://github.com/nf-core/rnaseq",
@@ -13,12 +13,14 @@
       "license": "MIT"
     },
     "created": "2026-08-15",
+    "domain": "transcriptomics",
     "tags": [
       "rna-seq",
       "star",
-      "featurecounts",
-      "multiqc",
-      "differential-expression"
+      "salmon",
+      "transcriptomics",
+      "nf-core",
+      "gene-expression"
     ],
     "scope": [
       "fastqc",
@@ -45,52 +47,86 @@
       "bedtools_genomecov",
       "ucsc_bedclip",
       "ucsc_bedgraphtobigwig",
+      "salmon_quant",
+      "tx2gene",
+      "tximport",
+      "summarizedexperiment",
+      "stringtie",
+      "deseq2_qc",
       "multiqc_custom_content",
       "multiqc"
     ],
     "excluded": [
-      "salmon / rsem / hisat2 / stringtie / umicollapse quantification and as_quantification — non-default aligner branches",
-      "PREPARE_GENOME — reference artifacts (fasta, gtf, gene_bed, chrom_sizes, star_index) are inputs",
+      "rsem / hisat2 / umicollapse quantification and as_quantification — non-default aligner branches, not ported",
+      "PREPARE_GENOME — reference artifacts (fasta, gtf, transcript_fasta, gene_bed, chrom_sizes, star_index) are inputs",
       "per-sample min_trimmed_reads filtering — data-dependent per-sample state; only the MultiQC fail_trimmed table is produced",
-      "UMI extraction (umitools) — with_umi branch, off by default",
-      "BBSplit — skip_bbsplit default path only",
-      "SortMeRNA / Bowtie2 rRNA removal — off by default",
-      "cat_fastq — only active for multi-fastq samples",
-      "DESeq2 QC — optional post-run branch",
-      "auto strandedness (per-sample inference) — pipeline-level config.strandedness only",
+      "UMI extraction (umitools) — --with_umi branch, off by default",
+      "BBSplit — --skip_bbsplit default path only",
+      "SortMeRNA / Bowtie2 rRNA removal — ribo-removal is off by default",
+      "cat_fastq — only active for samples with more than one fastq pair",
+      "DESeq2 QC sample-name group decomposition (Group columns for PCA-by-group plots) — coldata is the sample IDs only",
+      "auto strandedness (per-sample inference from the samplesheet) — pipeline-level config.strandedness with forward/reverse/unstranded values only",
       "workflow_summary_mqc.yaml / methods_description_mqc.yaml — Nextflow-param-rendered MultiQC sections"
     ],
-    "rule_count": 38,
+    "rule_count": 44,
     "tools": [
-      "fastqc@0.12.1",
-      "trim-galore@2.1.0",
-      "fq@0.12.0",
-      "star@2.7.11b",
-      "samtools@1.23.1",
-      "htslib@1.23.1",
-      "gawk@5.1.0",
-      "picard@3.4.0",
-      "subread@2.0.6",
-      "rseqc@5.0.4",
-      "r-base@4.3",
-      "bioconductor-dupradar@1.38.0",
-      "qualimap@2.3",
-      "bedtools@2.31.1",
-      "ucsc-bedclip@377",
-      "ucsc-bedgraphtobigwig@469",
-      "multiqc@1.33",
-      "python@3.12.12"
+      "fastqc",
+      "trim-galore",
+      "fq",
+      "star",
+      "salmon",
+      "stringtie",
+      "python",
+      "samtools",
+      "htslib",
+      "gawk",
+      "picard",
+      "subread",
+      "rseqc",
+      "r-base",
+      "bioconductor-dupradar",
+      "qualimap",
+      "bedtools",
+      "ucsc-bedclip",
+      "ucsc-bedgraphtobigwig",
+      "bioconductor-tximeta",
+      "bioconductor-summarizedexperiment",
+      "r-optparse",
+      "r-ggplot2",
+      "r-rcolorbrewer",
+      "r-pheatmap",
+      "bioconductor-deseq2",
+      "bioconductor-biocparallel",
+      "bioconductor-tximport",
+      "bioconductor-complexheatmap",
+      "multiqc"
     ],
-    "status": "validated",
+    "description": "End-to-end bulk RNA-seq analysis for paired-end reads: fq lint and FastQC raw-read QC, TrimGalore adapter/quality trimming, STAR alignment, Picard MarkDuplicates, Salmon alignment-mode quantification with tximport-merged gene/transcript count tables and SummarizedExperiment R objects, StringTie reference-guided assembly and quantification, featureCounts gene counts with biotype tables, RSeQC / dupRadar / Qualimap QC, DESeq2 sample-level QC (PCA, sample distances, size factors), strand-specific bigWig tracks, and one final MultiQC report with the nf-core/rnaseq custom content (fail_trimmed / fail_mapped tables, strandedness checks, software versions). A faithful port of the nf-core/rnaseq 3.26.0 default star_salmon path — same tools, same versions, same commands.",
+    "installation": {
+      "engine": "oxo-flow >= 0.11.0",
+      "toolchain": "conda envs — pinned (envs/*.yaml, versions pinned to the upstream nf-core/rnaseq 3.26.0 module environments; requires conda or mamba)",
+      "requirements": [
+        "paired-end FASTQ reads: reads_dir/<sample>_R1.fastq.gz + _R2.fastq.gz, cohort declared in [[sample_groups]]",
+        "reference genome FASTA (uncompressed)",
+        "gene annotation GTF",
+        "transcriptome FASTA (Salmon alignment-mode quant + StringTie)",
+        "12-column gene BED (RSeQC input)",
+        "UCSC chrom.sizes file",
+        "STAR genome index built from the same FASTA/GTF (PREPARE_GENOME is not ported; build once with STAR --runMode genomeGenerate)",
+        "compute: up to 12 CPUs / 72 GB per rule (STAR align); most rules run on 6 CPUs / 36 GB or 1 CPU / 6 GB",
+        "conda or mamba to create the pinned per-rule environments (envs/)"
+      ]
+    },
     "repo_url": "https://github.com/oxo-flow-community/oxo-flow-rnaseq",
+    "license": "Apache-2.0",
     "upstream_license": "MIT"
   },
   {
     "name": "oxo-flow-sarek",
     "title": "WGS/WES germline and somatic variant calling",
+    "origin": "port",
+    "rating": "verified",
     "engine": "nextflow",
-    "domain": "genomics",
-    "description": "oxo-flow port of nf-core/sarek 3.10.0 default main path: FastQC, fastp trim/split, BWA-MEM alignment, MarkDuplicates, BQSR, HaplotypeCaller, VEP annotation, VCF QC and MultiQC aggregation for WGS/WES germline and somatic variant calling.",
     "source": {
       "repo": "nf-core/sarek",
       "url": "https://github.com/nf-core/sarek",
@@ -99,13 +135,17 @@
       "license": "MIT"
     },
     "created": "2026-08-15",
+    "domain": "genomics",
     "tags": [
       "wgs",
       "wes",
+      "germline",
+      "somatic",
+      "variant-calling",
       "gatk",
-      "mutect2",
-      "haplotypecaller",
-      "annotation"
+      "bwa",
+      "vep",
+      "nf-core"
     ],
     "scope": [
       "fastqc",
@@ -120,6 +160,8 @@
       "mosdepth_recal",
       "samtools_stats_recal",
       "gatk_haplotypecaller",
+      "gatk_cnnscorevariants",
+      "gatk_filtervarianttranches",
       "bcftools_stats",
       "vcftools_tstv_count",
       "vcftools_tstv_qual",
@@ -128,44 +170,55 @@
       "multiqc"
     ],
     "excluded": [
-      "deepvariant (--tools alternative, not on default path)",
-      "strelka (--tools alternative, not on default path)",
-      "manta (--tools alternative, not on default path)",
-      "cnvkit (--tools alternative, not on default path)",
-      "ascat (--tools alternative, not on default path)",
-      "mutect2/msisensor/somalier/freebayes/snpeff/vep-somatic etc. (optional --tools callers)",
-      "NGSCheckMate (BAM_NGSCHECKMATE + BCFTOOLS_MPILEUP) — sample-identity QC on default path but outside port scope",
-      "TrimGalore trimming (--trim_fastq_trimgalore alternative; fastp is upstream default)",
+      "NGSCheckMate (BAM_NGSCHECKMATE + BCFTOOLS_MPILEUP) — sample-identity QC, not on the ported default path",
+      "TrimGalore trimming (--trim_fastq_trimgalore alternative; fastp is the upstream default)",
       "bwa-mem2 aligner (upstream default aligner is bwa-mem)",
       "save_output_as_bam=true BAM branch of MarkDuplicates (CRAM-only port)",
-      "prepare_genome/bed-prep/interval-prep — reference prep, not default execution path",
+      "Strelka2, Mutect2, Manta, DeepVariant, CNVkit, ASCAT, MSIsensor, SomaticSniper, VarDict, FreeBayes, etc. — optional --tools callers, not on the default path",
+      "reference preparation (BWA_INDEX, GATK4_CREATESEQUENCEDICTIONARY, SAMTOOLS_FAIDX) — not ported; the port requires a pre-built reference bundle (upstream also accepts these as inputs via params.bwa/dict/fasta_fai)",
+      "interval preparation (gawk BUILD_INTERVALS, CREATE_INTERVALS_BED, TABIX bgzip/tabix interval split) and the per-interval scatter/gather of BQSR/ApplyBQSR/HaplotypeCaller (GATK4_GATHERBQSRREPORTS, CRAM_MERGE_INDEX_SAMTOOLS, GATK4_MERGEVCFS) — not ported; the port runs single whole-genome GATK jobs without --intervals (gathers are exact, so results are equivalent, but the per-contig parallelism of the upstream default path is absent)",
       "joint_germline GVCF joint-genotyping subworkflow (default joint_germline=false)",
-      "UMI workflows (SAREK_UMI_*) — not on default path",
-      "fastp split parts beyond 0001. — only first split part wired fastp->BWA (upstream-compatible naming, documented)"
+      "UMI workflows (SAREK_UMI_*) — not on the default path",
+      "fastp split parts beyond 0001. — supported input size is capped at one split part (~50M read pairs / 200M lines per sample): only part 0001 is wired fastp -> BWA. Multi-part splits (any real WGS dataset above the threshold) are a known unsupported upstream behavior — upstream aligns every part and merges the BAMs before MarkDuplicates (BAM_MERGE_INDEX_SAMTOOLS)"
     ],
-    "rule_count": 18,
+    "rule_count": 20,
     "tools": [
-      "fastqc@0.12.1",
-      "fastp@1.1.0",
-      "bwa@0.7.18",
-      "samtools@1.24",
-      "gatk@4.7.1.0",
-      "mosdepth@0.3.8",
-      "bcftools@1.23.1",
-      "vcftools@0.1.17",
-      "ensembl-vep@116.0",
-      "multiqc@1.35"
+      "fastqc",
+      "fastp",
+      "bwa",
+      "samtools",
+      "gatk",
+      "mosdepth",
+      "bcftools",
+      "vcftools",
+      "ensembl-vep",
+      "multiqc"
     ],
-    "status": "validated",
+    "description": "GATK best-practice variant calling for whole-genome and whole-exome sequencing (WGS/WES), germline by default: FastQC quality control, fastp trimming and splitting, BWA-MEM alignment, MarkDuplicates with CRAM conversion, base quality score recalibration (BQSR), single-sample HaplotypeCaller variant calling, CNN 1D scoring with tranche filtering, VEP annotation, per-sample VCF QC and a final MultiQC report.",
+    "installation": {
+      "engine": "oxo-flow >= 0.11.0",
+      "toolchain": "containers (Docker) — pinned images",
+      "requirements": [
+        "paired-end FASTQ reads at raw/{sample}_R1.fastq.gz / raw/{sample}_R2.fastq.gz",
+        "GRCh38 genome FASTA plus .fai and .dict",
+        "GRCh38 BWA index directory (bwa_index_dir)",
+        "GATK bundle known-sites VCFs with .tbi: dbsnp_146.hg38.vcf.gz, Mills_and_1000G_gold_standard.indels.hg38.vcf.gz, Homo_sapiens_assembly38.known_indels.vcf.gz",
+        "VEP cache (GRCh38, homo_sapiens, cache version 116) mounted at /.vep in the container",
+        "compute: up to 24 CPUs / 36 GB per rule (BWA-MEM 24 threads/30G; VEP 6 threads/36G)",
+        "input cap: ~50M read pairs per sample (fastp split, see fidelity deviations)",
+        "disk: results/ for per-sample CRAMs/VCFs/reports, plus the reference bundle and VEP cache"
+      ]
+    },
     "repo_url": "https://github.com/oxo-flow-community/oxo-flow-sarek",
+    "license": "Apache-2.0",
     "upstream_license": "MIT"
   },
   {
     "name": "oxo-flow-scrnaseq",
-    "title": "Single-cell RNA-seq (10x / DropSeq / SmartSeq)",
+    "title": "Single-cell RNA-seq: alignment, quantification and QC",
+    "origin": "port",
+    "rating": "verified",
     "engine": "nextflow",
-    "domain": "single-cell",
-    "description": "oxo-flow port of the nf-core/scrnaseq pipeline restricted to the aligner=cellranger default execution path: FastQC read QC, genome preparation (gunzip, GTF gene filter), Cell Ranger reference building and per-sample count, 10x mtx-to-h5ad conversion, CellBender background removal, h5ad concatenation, Seurat/SingleCellExperiment conversion, and MultiQC aggregation. 23 rules; validate + dry-run + acceptance test all green.",
     "source": {
       "repo": "nf-core/scrnaseq",
       "url": "https://github.com/nf-core/scrnaseq",
@@ -174,12 +227,13 @@
       "license": "MIT"
     },
     "created": "2026-08-15",
+    "domain": "single-cell",
     "tags": [
+      "single-cell",
       "scrna-seq",
-      "10x",
       "cellranger",
-      "star-solo",
-      "alevin"
+      "10x-genomics",
+      "nf-core"
     ],
     "scope": [
       "PIPELINE_INITIALISATION (samplesheet input check)",
@@ -219,24 +273,37 @@
       "scanpy",
       "anndata",
       "cellbender",
-      "bioconductor-anndatar",
-      "r-seurat",
-      "bioconductor-singlecellexperiment",
-      "bioconductor-rhdf5",
+      "anndataR",
+      "SeuratObject",
+      "SingleCellExperiment",
+      "rhdf5",
       "gzip",
       "gawk",
       "python"
     ],
-    "status": "validated",
+    "description": "Single-cell RNA-seq analysis from raw 10x Genomics FASTQ reads to a final MultiQC report: FastQC read QC, Cell Ranger reference preparation and per-sample cellranger count (alignment and quantification, optional BAM output), conversion of raw and filtered 10x matrices to h5ad, CellBender ambient-RNA background removal, sample-wise h5ad concatenation, and optional export to Seurat and SingleCellExperiment objects. Covers the Cell Ranger execution path of nf-core/scrnaseq; other aligners and assays (ATAC, multiome) are not included.",
+    "installation": {
+      "engine": "oxo-flow >= 0.11.0",
+      "toolchain": "containers (Docker/Singularity) — pinned images; conda alternatives in envs/ for non-Cell-Ranger rules (Cell Ranger rules are docker-only)",
+      "requirements": [
+        "reference genome FASTA, optionally gzipped (config.fasta, default refs/refdata.fa.gz)",
+        "gene-annotation GTF, optionally gzipped (config.gtf, default refs/refdata.gtf.gz)",
+        "raw 10x FASTQ pair per sample: raw/<sample>_R1.fastq.gz and raw/<sample>_R2.fastq.gz (one pair per sample)",
+        "samplesheet.csv with columns sample,fastq_1,fastq_2,protocol,expected_cells (used by the combined-h5ad step)",
+        "compute: up to 12 CPUs / 72 GB per rule (Cell Ranger mkref/count); 6 CPUs / 36 GB for h5ad conversion, CellBender and concat rules; concurrent per-sample rules scale with -j",
+        "optional: pre-built Cell Ranger index (set build_cellranger_index=false and point transcriptome at it) to skip index building"
+      ]
+    },
     "repo_url": "https://github.com/oxo-flow-community/oxo-flow-scrnaseq",
+    "license": "Apache-2.0",
     "upstream_license": "MIT"
   },
   {
     "name": "oxo-flow-mag",
-    "title": "Metagenome assembly and binning",
+    "title": "Metagenome assembly, binning and taxonomic classification",
+    "origin": "port",
+    "rating": "verified",
     "engine": "nextflow",
-    "domain": "metagenomics",
-    "description": "oxo-flow port of the nf-core/mag pipeline (default short-read path): FastQC/Fastp QC with phiX removal, SPAdes and MEGAHIT metagenomic assembly, QUAST and Prodigal on the assemblies, bowtie2 read mapping back to the assemblies, contig depth profiles, six binners (MetaBAT2, MaxBin2, CONCOCT, COMEBin, MetaBinner, SemiBin2) with unbinned-contig chunk splitting, BUSCO bin QC, per-group QUAST and depth summaries, ALE assembly evaluation, GTDB-Tk classification of QC-passing bins with a combined summary, PROKKA annotation, and a final MultiQC report.",
     "source": {
       "repo": "nf-core/mag",
       "url": "https://github.com/nf-core/mag",
@@ -245,13 +312,15 @@
       "license": "MIT"
     },
     "created": "2026-08-15",
+    "domain": "metagenomics",
     "tags": [
       "metagenomics",
       "assembly",
-      "megahit",
       "binning",
-      "gtdb",
-      "checkm"
+      "taxonomy",
+      "nf-core",
+      "gtdbtk",
+      "busco"
     ],
     "scope": [
       "fastqc_raw",
@@ -331,16 +400,29 @@
       "pandas",
       "biopython"
     ],
-    "status": "validated",
+    "description": "Turn paired-end metagenomic reads into quality-checked, taxonomically classified draft genomes: FastQC and fastp QC with phiX removal, SPAdes and MEGAHIT assembly, QUAST and Prodigal assessment, bowtie2 mapping, binning with six binners (MetaBAT2, MaxBin2, CONCOCT, COMEBin, MetaBinner, SemiBin2), BUSCO bin QC, GTDB-Tk classification with a combined summary, PROKKA annotation, ALE evaluation and a final MultiQC report. The default short-read path of nf-core/mag, faithfully ported with the same tool versions and commands.",
+    "installation": {
+      "engine": "oxo-flow >= 0.11.0",
+      "toolchain": "conda envs — pinned",
+      "requirements": [
+        "input: paired-end reads as {sample}_R1.fastq.gz / {sample}_R2.fastq.gz in config.input_dir (default test/fixtures/raw); single-end not ported",
+        "reference: GTDB-Tk database — download gtdbtk_data.tar.gz (~100 GB) or unpacked directory and set config.gtdb_db (oxo-flow cannot download it mid-run)",
+        "reference: phiX genome FASTA bundled in the repo (assets/data/GCA_002596845.1_ASM259684v1_genomic.fna.gz) — no download needed",
+        "compute: up to 12 CPUs / 140 GB RAM per rule (SPAdes 10 CPUs/72 GB/24 h; GTDB-Tk classifywf 2 CPUs/140 GB/12 h; defaults 1 thread/6 GB)",
+        "software: conda or mamba with the pinned envs/*.yaml environments (one per tool, no container layer)",
+        "optional: disk — hundreds of GB for real datasets (GTDB-Tk database plus per-sample assemblies and bins)"
+      ]
+    },
     "repo_url": "https://github.com/oxo-flow-community/oxo-flow-mag",
+    "license": "Apache-2.0",
     "upstream_license": "MIT"
   },
   {
     "name": "oxo-flow-ampliseq",
-    "title": "Amplicon sequencing (16S/ITS) with DADA2 and QIIME2",
+    "title": "Amplicon sequencing (16S/ITS): DADA2 denoising, taxonomy assignment and QC",
+    "origin": "port",
+    "rating": "verified",
     "engine": "nextflow",
-    "domain": "genomics",
-    "description": "oxo-flow port of the nf-core/ampliseq pipeline: amplicon sequencing analysis (16S/ITS) with FastQC, cutadapt primer trimming, DADA2 denoising (quality profiles, trunclen, filterAndTrim, learnErrors, dada, mergePairs, chimera removal, read tracking), DADA2 taxonomy assignment (assignTaxonomy + addSpecies, SBDI-GTDB reference DB), QIIME2 taxa barplots and MultiQC. Default-parameters main path of nf-core/ampliseq 2.18.0; optional branches (ITS, nanopore, syncom, QIIME2 diversity/classifier) not ported.",
     "source": {
       "repo": "nf-core/ampliseq",
       "url": "https://github.com/nf-core/ampliseq",
@@ -349,12 +431,14 @@
       "license": "MIT"
     },
     "created": "2026-08-15",
+    "domain": "amplicon",
     "tags": [
+      "amplicon",
       "16s",
       "its",
       "dada2",
       "qiime2",
-      "microbiome"
+      "nf-core"
     ],
     "scope": [
       "rename_raw_data_files",
@@ -385,12 +469,12 @@
       "multiqc"
     ],
     "excluded": [
-      "qiime2: QIIME2 analyses beyond the default taxa barplot (diversity, ANCOM, classifier training/prediction) — params.qiime2 false by default",
-      "dada2_its: ITS (fungal) analysis branch — params.its false by default",
-      "nanopore: nanopore sequencing branch — params.nanopore false by default",
-      "syncom: synthetic community controls branch — params.syncom false by default",
+      "dada2_its: ITS (fungal) analysis branch — not in the default main path (params.its false by default)",
+      "qiime2: QIIME2 downstream analyses beyond the default taxa barplot (diversity, ANCOM, classifier training/prediction, feature table exports) — off by default (params.qiime2 false)",
+      "nanopore: nanopore sequencing branch (params.nanopore false by default)",
+      "syncom: synthetic community controls branch (params.syncom false by default)",
       "multi-run merge: DADA2_MERGE mergeSequenceTables branch for multiple --run_ids — single-run default path only",
-      "versions.yml per-module tool version files; PICRUSt and other optional reports"
+      "picrust / other optional reports gated by additional params off by default"
     ],
     "rule_count": 26,
     "tools": [
@@ -400,22 +484,34 @@
       "pandas",
       "r-base",
       "dada2",
-      "digest",
+      "bioconductor-digest",
       "curl",
       "biocontainers",
       "qiime2",
       "multiqc"
     ],
-    "status": "validated",
+    "description": "Amplicon sequencing analysis (16S/ITS) that takes raw paired-end reads through FastQC quality control, cutadapt primer trimming, DADA2 denoising (quality profiles, filterAndTrim, learnErrors, denoise, chimera removal, read tracking), taxonomy assignment against the SBDI-GTDB reference, a QIIME2 taxa barplot over sample metadata, an overall summary table and a MultiQC report.",
+    "installation": {
+      "engine": "oxo-flow >= 0.11.0",
+      "toolchain": "containers (Docker/Singularity) — pinned images",
+      "requirements": [
+        "raw paired-end FASTQ reads per sample (raw/<sample>_R1.fastq.gz / _R2.fastq.gz) plus a sample groups file (default test/fixtures/groups.tsv)",
+        "sample metadata TSV for the QIIME2 taxa barplot (config metadata_file, default test/fixtures/metadata.tsv); the SBDI-GTDB taxonomy reference database is downloaded automatically",
+        "compute: up to 10 CPUs / 20 GB per rule (dada2_denoising with 48h limit, dada2_taxonomy with 24h limit); most rules need 1-6 CPUs / 1-6 GB",
+        "host: Docker or Singularity to run the pinned container images, curl for the taxonomy-database download rule, and network access to figshare",
+        "optional: disk for intermediates/ and results/ plus the auto-downloaded SBDI-GTDB reference database"
+      ]
+    },
     "repo_url": "https://github.com/oxo-flow-community/oxo-flow-ampliseq",
+    "license": "Apache-2.0",
     "upstream_license": "MIT"
   },
   {
     "name": "oxo-flow-chipseq",
-    "title": "ChIP-seq peak calling, QC and differential analysis",
+    "title": "ChIP-seq: peak calling, QC and differential analysis",
+    "origin": "port",
+    "rating": "verified",
     "engine": "nextflow",
-    "domain": "genomics",
-    "description": "oxo-flow port of the nf-core/chipseq pipeline (default main path, paired-end, BWA, broad peaks): FastQC, Trim Galore, BWA-MEM alignment, library merge, Picard mark-duplicates, BAMTools filtering with blacklist and orphan removal, preseq + phantompeakqualtools complexity QC, bigWig tracks, deepTools QC plots, MACS3 broad-peak calling with input controls, HOMER annotation, FRiP scoring, consensus peaks with featureCounts + DESeq2 QC, IGV session and MultiQC report.",
     "source": {
       "repo": "nf-core/chipseq",
       "url": "https://github.com/nf-core/chipseq",
@@ -424,20 +520,21 @@
       "license": "MIT"
     },
     "created": "2026-08-15",
+    "domain": "genomics",
     "tags": [
       "chip-seq",
-      "macs2",
-      "bwa-mem",
-      "peak-calling",
-      "idr",
+      "peaks",
+      "epigenomics",
+      "nf-core",
+      "broad-peak",
       "consensus-peaks"
     ],
     "scope": [
       "FASTQ_FASTQC_UMITOOLS_TRIMGALORE (FASTQC + TRIMGALORE)",
       "BWA_MEM",
-      "BAM_SORT_STATS_SAMTOOLS (library)",
+      "BAM_SORT_STATS_SAMTOOLS (library: SAMTOOLS_SORT + SAMTOOLS_INDEX + SAMTOOLS_STATS + SAMTOOLS_FLAGSTAT + SAMTOOLS_IDXSTATS)",
       "PICARD_MERGESAMFILES_LIBRARY",
-      "BAM_MARKDUPLICATES_PICARD (PICARD_MARKDUPLICATES + SAMTOOLS_INDEX + BAM_STATS_SAMTOOLS)",
+      "BAM_MARKDUPLICATES_PICARD (PICARD_MARKDUPLICATES + SAMTOOLS_INDEX + SAMTOOLS_STATS + SAMTOOLS_FLAGSTAT + SAMTOOLS_IDXSTATS)",
       "BAM_FILTER_BAMTOOLS (BAMTOOLS_FILTER + SAMTOOLS_SORT name-sort + BAM_REMOVE_ORPHANS + BAM_SORT_STATS_SAMTOOLS + SAMTOOLS_INDEX + BAM_STATS_SAMTOOLS)",
       "PRESEQ_LCEXTRAP",
       "PICARD_COLLECTMULTIPLEMETRICS",
@@ -445,7 +542,7 @@
       "MULTIQC_CUSTOM_PHANTOM_PEAK_QUALTOOLS",
       "BEDTOOLS_GENOMECOV",
       "UCSC_BEDGRAPHTOBIGWIG",
-      "DEEPTOOLS_COMPUTEMATRIX + PLOTPROFILE + PLOTHEATMAP",
+      "DEEPTOOLS_COMPUTEMATRIX (scale-regions) + DEEPTOOLS_PLOTPROFILE + DEEPTOOLS_PLOTHEATMAP",
       "DEEPTOOLS_PLOTFINGERPRINT",
       "KHMER_UNIQUEKMERS",
       "MACS2_CALLPEAK (MACS3, broad mode)",
@@ -461,13 +558,13 @@
     "excluded": [
       "UMITOOLS_EXTRACT / umi_extract — with_umi defaults to false upstream",
       "narrow-peak mode (narrow_peak=true) — port covers the broad-peak default only",
-      "GTF2BED / GENOME_BLACKLIST_REGIONS / prepare_genome / samplesheet_check — reference derivation and pipeline plumbing; port consumes pre-built references (fasta, gtf, gene_bed, chrom_sizes, blacklist, bwa_index)",
+      "GTF2BED / GENOME_BLACKLIST_REGIONS / prepare_genome / samplesheet_check — reference derivation and pipeline plumbing; the port takes pre-built references (fasta, gtf, gene_bed, chrom_sizes, blacklist, bwa_index)",
       "multi-antibody consensus grouping (consensus_cluster) — port assumes a single antibody (config.antibody)",
       "save_align_intermeds / save_mapped / save_tracks / save_macs_pileup publish branches — all off by default upstream",
       "multiqc_data / multiqc_plots directory publication and pipeline summary / software versions MultiQC sections — Nextflow plumbing",
-      "multi-library MergeSamFiles branch — single-library default path only (upstream symlink branch for single-library samples replicated exactly)",
+      "multi-library MergeSamFiles branch — single-library default path only (upstream symlinks for single-library samples, replicated exactly)",
       "STAR aligner alternative — aligner=bwa is the default",
-      "DUMP_SOFTWARE_VERSIONS — Nextflow plumbing"
+      "DUMP_SOFTWARE_VERSIONS — Nextflow plumbing (oxo-flow has no nf-core pipelines version dump)"
     ],
     "rule_count": 46,
     "tools": [
@@ -490,16 +587,32 @@
       "multiqc",
       "python"
     ],
-    "status": "validated",
+    "description": "ChIP-seq peak calling, QC and differential analysis for paired-end reads: FastQC and Trim Galore read QC, BWA-MEM alignment, library merge and Picard mark-duplicates, BAMTools filtering against a blacklist with orphan-read removal, preseq and phantompeakqualtools library complexity QC, bigWig tracks and deepTools QC plots, MACS3 broad-peak calling with input controls, HOMER peak annotation, FRiP scoring, consensus peaks across replicates (MACS3 merge, featureCounts quantification, DESeq2 QC), an IGV session and a MultiQC report.",
+    "installation": {
+      "engine": "oxo-flow >= 0.11.0",
+      "toolchain": "containers (Docker/Singularity) — pinned images",
+      "requirements": [
+        "genome FASTA and FASTA index (fasta, fai)",
+        "annotation GTF (gtf)",
+        "gene-body regions BED, derived upstream via GTF2BED (gene_bed)",
+        "chromosome sizes file (chrom_sizes)",
+        "blacklist regions BED (blacklist)",
+        "BWA index directory for the reference FASTA (bwa_index: *.amb, *.ann, *.bwt, *.pac, *.sa)",
+        "raw paired-end FASTQ reads named raw/{pair_id}_R{1,2}.fastq.gz with sample metadata in [[pairs]] and ip_ids",
+        "compute: up to 12 CPUs / 72 GB per rule (bwa_mem, trimgalore); most rules request 6 CPUs / 36 GB",
+        "disk: several GB of pinned container images pulled by Docker/Singularity"
+      ]
+    },
     "repo_url": "https://github.com/oxo-flow-community/oxo-flow-chipseq",
+    "license": "Apache-2.0",
     "upstream_license": "MIT"
   },
   {
     "name": "oxo-flow-atacseq",
-    "title": "ATAC-seq peak calling and QC",
+    "title": "ATAC-seq: peak calling and QC",
+    "origin": "port",
+    "rating": "verified",
     "engine": "nextflow",
-    "domain": "genomics",
-    "description": "oxo-flow port of the nf-core/atacseq pipeline (default main path, single-end, BWA aligner, broad peaks): FastQC, Trim Galore trimming, BWA-MEM alignment, Picard mark-duplicates, BAMTools filtering, MACS2 peak calling, HOMER peak annotation, FRiP scoring, normalised bigWig tracks, deepTools QC plots and a MultiQC report.",
     "source": {
       "repo": "nf-core/atacseq",
       "url": "https://github.com/nf-core/atacseq",
@@ -508,42 +621,45 @@
       "license": "MIT"
     },
     "created": "2026-08-15",
+    "domain": "epigenomics",
     "tags": [
       "atac-seq",
-      "macs2",
-      "open-chromatin",
-      "bwa-mem",
-      "peak-calling"
+      "peaks",
+      "epigenomics",
+      "single-end",
+      "qc"
     ],
     "scope": [
-      "fastqc",
-      "trimgalore",
-      "bwa_mem",
-      "samtools_sort_stats",
-      "picard_mergesamfiles",
-      "picard_markduplicates",
-      "bamtools_filter",
-      "macs2_callpeak",
-      "homer_annotatepeaks",
-      "frip_score",
-      "bedtools_genomecov",
-      "ucsc_bedgraphtobigwig",
-      "deeptools_plots",
-      "plotfingerprint",
-      "multiqc"
+      "FASTQC",
+      "TRIMGALORE",
+      "BWA_MEM",
+      "BAM_SORT_STATS_SAMTOOLS (SAMTOOLS_SORT + SAMTOOLS_INDEX + SAMTOOLS_STATS + SAMTOOLS_FLAGSTAT + SAMTOOLS_IDXSTATS)",
+      "PICARD_MERGESAMFILES_LIBRARY",
+      "BAM_MARKDUPLICATES_PICARD (PICARD_MARKDUPLICATES + SAMTOOLS_INDEX + SAMTOOLS_STATS + SAMTOOLS_FLAGSTAT + SAMTOOLS_IDXSTATS)",
+      "BAM_FILTER_BAMTOOLS (BAMTOOLS_FILTER + SAMTOOLS_INDEX + SAMTOOLS_STATS + SAMTOOLS_FLAGSTAT + SAMTOOLS_IDXSTATS)",
+      "MACS2_CALLPEAK",
+      "HOMER_ANNOTATEPEAKS",
+      "FRIP_SCORE",
+      "BEDTOOLS_GENOMECOV",
+      "UCSC_BEDGRAPHTOBIGWIG",
+      "BIGWIG_PLOT_DEEPTOOLS (COMPUTEMATRIX x2 + PLOTPROFILE + PLOTHEATMAP)",
+      "MERGED_LIBRARY_DEEPTOOLS_PLOTFINGERPRINT",
+      "MULTIQC"
     ],
     "excluded": [
-      "paired_end — port covers the single-end default path only (no orphan removal, --paired trim)",
-      "nucleosome_analysis — fragment-size QC plots not in default-path scope",
-      "mitochondrial_filtering — GENOME_BLACKLIST_REGIONS complement step requires prepare_genome; optional -L blacklist honored when config.blacklist set",
-      "genrich — GEnrich peak caller is not on the default main path",
-      "BWA_INDEX / CUSTOM_GETCHROMSIZES / CUSTOM_GENOME_FASTA_INDEX (prepare_genome) — port consumes pre-built references",
-      "SAMTOOLS_MERGE / BAM_MERGED_REPLICATE_PICARD / BAM_FILTER_MERGED_REPLICATE — merged-replicate analysis",
-      "BAM_MERGE_REPLICATES_AND_PEAKS_BEDTOOLS / MACS2_CONSENSUS_PEAKS / DESEQ2_* — consensus peaks and differential expression",
-      "ATAQV / PRESEQ_LCEXTRAP / PICARD_METRICS / IGV / PLOT_MACS2_QC / R QC plots — optional QC branches",
-      "MULTIQC_CUSTOM_PEAKS — custom peak-count/FRiP report sections (FRiP scores still produced)",
-      "INPUT_CHECK (samplesheet_check) / DUMP_SOFTWARE_VERSIONS — pipeline plumbing",
-      "UMI handling (umitools branch) and STAR/Bowtie2 aligners — alternatives to default path"
+      "paired-end path (PE reads, orphan removal, --paired trim) — port covers the single-end default path only",
+      "nucleosome_analysis (pipeline.mkShort --fragment-size 100/200 QC plots) — not in the chosen default-path scope",
+      "mitochondrial_filtering (GENOME_BLACKLIST_REGIONS complement step, needs prepare_genome) — genome preparation is out of scope; the port takes pre-built references",
+      "genrich — GEnrich peak caller is not on the default main path (aligner selection)",
+      "BWA_INDEX / CUSTOM_GETCHROMSIZES / CUSTOM_GENOME_FASTA_INDEX (prepare_genome subworkflow) — reference preparation delegated to the user; port consumes pre-built index files",
+      "SAMTOOLS_MERGE (replicate-level) — replicate merging is not on the default path",
+      "BAM_MERGED_REPLICATE_PICARD and BAM_FILTER_MERGED_REPLICATE — merged-replicate analysis",
+      "BAM_MERGE_REPLICATES_AND_PEAKS_BEDTOOLS, MACS2_CONSENSUS_PEAKS, DESEQ2_* — consensus-peak / differential analysis",
+      "ATAQV, PRESEQ_LCEXTRAP, PICARD_METRICS, IGV, R QC plots (plot_macs2_qc, genome_blacklist_regions) — optional QC branches",
+      "MULTIQC_CUSTOM_PEAKS — custom peak-count/FRiP sections of the MultiQC report (FRiP scores are still produced by FRIP_SCORE)",
+      "INPUT_CHECK (samplesheet_check), DUMP_SOFTWARE_VERSIONS — pipeline plumbing",
+      "UMI handling (umitools branch) — requires --umitools and PE data",
+      "ALTERNATIVE_ALIGNERS (star, star_align, bowtie2) — port covers aligner=bwa"
     ],
     "rule_count": 15,
     "tools": [
@@ -560,16 +676,27 @@
       "deeptools",
       "multiqc"
     ],
-    "status": "validated",
+    "description": "ATAC-seq peak calling and QC for a cohort of single-end samples: FastQC raw-read QC, Trim Galore adapter trimming, BWA-MEM alignment, Picard mark-duplicates, BAMTools filtering, MACS2 broad-peak calling, HOMER peak annotation, FRiP scoring, normalised bigWig tracks, deepTools QC plots (profile, heatmap, fingerprint) and a combined MultiQC report.",
+    "installation": {
+      "engine": "oxo-flow >= 0.11.0",
+      "toolchain": "containers (Docker/Singularity) — pinned images, plus one pinned conda env for picard_markduplicates",
+      "requirements": [
+        "reference data: genome FASTA with .fai, BWA index prefix (.amb/.ann/.bwt/.pac/.sa), chrom sizes file, GTF annotation, gene BED, TSS BED (optional blacklist BED)",
+        "input: single-end <sample>.fastq.gz reads, declared in [[sample_groups]]",
+        "compute: up to 12 CPUs / 72 GB per rule",
+        "runtime: Docker or Singularity for the 14 container rules; conda/mamba for the picard_markduplicates env"
+      ]
+    },
     "repo_url": "https://github.com/oxo-flow-community/oxo-flow-atacseq",
+    "license": "Apache-2.0",
     "upstream_license": "MIT"
   },
   {
     "name": "oxo-flow-methylseq",
-    "title": "Bisulfite methylation analysis with Bismark",
+    "title": "Bisulfite methylation analysis: alignment, methylation calls and QC",
+    "origin": "port",
+    "rating": "verified",
     "engine": "nextflow",
-    "domain": "genomics",
-    "description": "oxo-flow port of nf-core/methylseq 4.2.0 (default paired-end bismark path): FastQC, TrimGalore with library presets, Bismark (bowtie2) alignment, deduplication, samtools sort/index, per-context methylation extraction with bedGraph and coverage output, bismark2report/bismark2summary HTML reports, and a final MultiQC report. 13 rules, all tool versions pinned to the upstream module environments, upstream process labels baked into rule resources.",
     "source": {
       "repo": "nf-core/methylseq",
       "url": "https://github.com/nf-core/methylseq",
@@ -578,12 +705,13 @@
       "license": "MIT"
     },
     "created": "2026-08-15",
+    "domain": "genomics",
     "tags": [
-      "methylation",
-      "bismark",
-      "bisulfite",
+      "bisulfite-seq",
       "wgbs",
-      "bwa-meth"
+      "dna-methylation",
+      "bismark",
+      "nf-core"
     ],
     "scope": [
       "bismark_genomepreparation",
@@ -601,15 +729,17 @@
       "multiqc"
     ],
     "excluded": [
-      "single_end — paired-end only; upstream samplesheet 'single_end' column not ported",
-      "bwameth (bwa-meth) / bwamem / bismark_hisat aligners — non-default branches; aligner config accepts only 'bismark'",
+      "single_end — paired-end only; the upstream samplesheet 'single_end' column is not ported",
+      "bwameth (bwa-meth) aligner — non-default aligner branch, not ported",
+      "bwamem aligner — non-default aligner branch, not ported",
+      "bismark_hisat aligner — non-default aligner branch, not ported",
       "BAM_TAPS_CONVERSION (rastair) — taps/bwamem branch, off by default",
       "BAM_METHYLDACKEL — bwameth branch, off by default",
       "QUALIMAP_BAMQC — --run_qualimap branch, off by default",
       "PRESEQ_LCEXTRAP — --run_preseq branch, off by default",
-      "TARGETED_SEQUENCING (+ PICARD_MARKDUPLICATES / ADDORREPLACEREADGROUPS) — --run_targeted_sequencing branch, off by default",
-      "CAT_FASTQ — only for samples with >1 fastq pair",
-      "GUNZIP / UNTAR — only when a prebuilt --bismark_index is supplied; port always builds the index (upstream default)"
+      "TARGETED_SEQUENCING (+ PICARD_MARKDUPLICATES, PICARD_ADDORREPLACEREADGROUPS) — --run_targeted_sequencing branch, off by default",
+      "CAT_FASTQ — only active for samples with more than one fastq pair; fixture samplesheets have one pair per sample",
+      "GUNZIP / UNTAR — only active when a prebuilt --bismark_index is supplied; the port always builds the index from the reference FASTA (upstream default)"
     ],
     "rule_count": 13,
     "tools": [
@@ -622,16 +752,28 @@
       "htslib",
       "multiqc"
     ],
-    "status": "validated",
+    "description": "Run end-to-end bisulfite methylation analysis (WGBS, and RRBS-compatible) of paired-end reads: FastQC quality control, TrimGalore adapter trimming, alignment to the bisulfite-converted reference genome with Bismark (bowtie2), PCR-deduplication, samtools sort/index, methylation extraction with per-context (CpG/CHG/CHH) calls plus bedGraph and coverage output, per-sample and project-wide Bismark HTML reports, and a final MultiQC report.",
+    "installation": {
+      "engine": "oxo-flow >= 0.11.0",
+      "toolchain": "conda envs — pinned versions (conda-forge/bioconda)",
+      "requirements": [
+        "reference genome FASTA (uncompressed) — the Bismark bowtie2 index is built automatically on first run; no prebuilt index required",
+        "paired-end raw reads: <dir>/<sample>_R1.fastq.gz and <dir>/<sample>_R2.fastq.gz",
+        "compute: up to 12 CPUs / 72 GB RAM per rule (bismark_genomepreparation, trimgalore, bismark_align, bismark_deduplicate, bismark_methylationextractor)",
+        "conda or mamba to create the pinned per-rule environments",
+        "disk: space in config.out_dir (default results/) for aligned BAMs, methylation calls and reports"
+      ]
+    },
     "repo_url": "https://github.com/oxo-flow-community/oxo-flow-methylseq",
+    "license": "Apache-2.0",
     "upstream_license": "MIT"
   },
   {
     "name": "oxo-flow-nanoseq",
-    "title": "Nanopore demultiplexing, QC and alignment",
+    "title": "Nanopore long-read: demultiplexing, QC and alignment",
+    "origin": "port",
+    "rating": "verified",
     "engine": "nextflow",
-    "domain": "genomics",
-    "description": "oxo-flow port of nf-core/nanoseq 3.1.0 (DNA default path): samplesheet check, qcat demultiplexing, NanoPlot + FastQC QC, minimap2 alignment, samtools view/sort/index, samtools stats/flagstat/idxstats, BigWig coverage tracks and MultiQC reporting.",
     "source": {
       "repo": "nf-core/nanoseq",
       "url": "https://github.com/nf-core/nanoseq",
@@ -640,13 +782,16 @@
       "license": "MIT"
     },
     "created": "2026-08-15",
+    "domain": "genomics",
     "tags": [
       "nanopore",
-      "ont",
+      "long-read",
       "demultiplexing",
-      "dorado",
+      "alignment",
+      "qcat",
       "minimap2",
-      "pycoqc"
+      "multiqc",
+      "nf-core"
     ],
     "scope": [
       "samplesheet_check",
@@ -685,27 +830,39 @@
     ],
     "rule_count": 19,
     "tools": [
+      "python",
       "qcat",
       "nanoplot",
       "fastqc",
       "samtools",
-      "python",
       "perl",
       "minimap2",
       "bedtools",
       "ucsc-bedgraphtobigwig",
       "multiqc"
     ],
-    "status": "validated",
+    "description": "A nanopore long-read pipeline for the DNA default path: samplesheet check, qcat barcode demultiplexing, NanoPlot + FastQC QC, minimap2 alignment, samtools view/sort/index, samtools stats/flagstat/idxstats, BigWig coverage tracks and a MultiQC report. The protocol config key switches to the cDNA/directRNA transcriptome paths. Every rule runs the upstream module's exact pinned container image.",
+    "installation": {
+      "engine": "oxo-flow >= 0.11.0",
+      "toolchain": "containers (Docker/Singularity) — pinned images",
+      "requirements": [
+        "genome FASTA reference (config.reference; defaults to test fixtures — override for real data)",
+        "samplesheet CSV (config.input) plus raw nanopore FASTQ for demultiplexing (config.input_path; skip with skip_demultiplexing=true)",
+        "optional GTF annotation (config.gtf + config.gtf_base) — only needed for the cDNA/directRNA junction-bed path",
+        "compute: up to 12 CPUs / 84 GB RAM per rule (minimap2 index; most medium rules request 6 CPUs / 42 GB)",
+        "container runtime (Docker or Singularity) — every rule pins its quay.io/biocontainers image"
+      ]
+    },
     "repo_url": "https://github.com/oxo-flow-community/oxo-flow-nanoseq",
+    "license": "Apache-2.0",
     "upstream_license": "MIT"
   },
   {
     "name": "oxo-flow-viralrecon",
-    "title": "Viral assembly and intrahost variant calling",
+    "title": "Viral assembly and intrahost variant calling for Illumina amplicon data",
+    "origin": "port",
+    "rating": "verified",
     "engine": "nextflow",
-    "domain": "genomics",
-    "description": "oxo-flow port of the nf-core/viralrecon pipeline (default illumina + amplicon path): FastQC, fastp trimming, Kraken2 host removal, Bowtie2 alignment, iVar primer trimming and intrahost variant calling, snpEff/SnpSift annotation, bcftools consensus with low-coverage masking, Pangolin/Nextclade lineage assignment, Freyja lineage deconvolution, Cutadapt primer trimming and SPAdes de novo assembly with Bandage/BLAST/QUAST/ABACAS QC, and a final MultiQC report.",
     "source": {
       "repo": "nf-core/viralrecon",
       "url": "https://github.com/nf-core/viralrecon",
@@ -714,13 +871,15 @@
       "license": "MIT"
     },
     "created": "2026-08-15",
+    "domain": "genomics",
     "tags": [
       "viral",
-      "spades",
-      "ivar",
+      "sars-cov-2",
+      "amplicon",
+      "variant-calling",
       "assembly",
-      "consensus",
-      "intrahost"
+      "nf-core",
+      "illumina"
     ],
     "scope": [
       "gunzip_fasta",
@@ -777,19 +936,19 @@
     ],
     "excluded": [
       "nanopore platform branch (ARTIC_GUPPYPLEX, ARTIC_MINION, NANOPLOT, PYCOQC, VCFLIB_VCFUNIQ, PREPARE_GENOME_NANOPORE) — illumina only",
-      "variant_caller='bcftools' branch (VARIANTS_BCFTOOLS subworkflow: BCFTOOLS_MPILEUP, BCFTOOLS_NORM, BCFTOOLS_MPILEUP_FILTER) — non-default; only the iVar caller (the amplicon default) is ported",
+      "variant_caller='bcftools' branch (VARIANTS_BCFTOOLS subworkflow: BCFTOOLS_MPILEUP, BCFTOOLS_NORM, BCFTOOLS_MPILEUP_FILTER, custom filter scripts) — non-default; only the iVar caller (the amplicon default) is ported",
       "consensus_caller='ivar' branch (CONSENSUS_IVAR subworkflow: IVAR_CONSENSUS) — non-default; only bcftools consensus (the default) is ported",
-      "wgs (shotgun) protocol variant branch — the port runs the amplicon protocol gates; non-amplicon variant calling is not ported",
-      "unicycler and minia assemblers (ASSEMBLY_UNICYCLER / ASSEMBLY_MINIA) — assemblers fixed to the upstream default 'spades'",
+      "wgs (shotgun) protocol variant branch — the port runs the amplicon protocol gates (primer trimming, collapsed-primer mosdepth); non-amplicon variant calling is not ported",
+      "unicycler and minia assemblers (ASSEMBLY_UNICYCLER / ASSEMBLY_MINIA subworkflows) — assemblers is fixed to the upstream default 'spades'",
       "PICARD_MARKDUPLICATES — skip_markduplicates defaults to true upstream and in this port",
       "PLASMIDID — skip_plasmidid defaults to true upstream and in this port",
-      "KRAKEN2_BUILD — upstream downloads the human host database over the network; port takes a local kraken2_db tar.gz (empty-stub fixture provided)",
-      "FREYJA_UPDATE — upstream downloads barcodes/lineages over the network; port takes config.freyja_barcodes / config.freyja_lineages (fixtures provided)",
-      "PANGOLIN_UPDATEDATA — upstream downloads the pangolin data directory over the network; port takes config.pango_database (fixture placeholder provided)",
-      "ADDITIONAL_ANNOTATION — off by default upstream",
-      "channel-level runtime filters — fastp reads-after-filtering empty check, min_mapped_reads flagstat gate, zero-variant-sample filter and optional-file gates have no oxo-flow equivalent (documented deviations)",
-      "save_* extra outputs — save_unaligned, save_trimmed_fail, save_mpileup, save_ivar_trimmed_bam and other save_* flags are off by default and not ported",
-      "MultiQC extras — multiqc_data/versions.yml software table and *_plots directory not emitted; report HTML, data dir and the two metrics CSVs are"
+      "KRAKEN2_BUILD — upstream downloads the human host database over the network; this port takes a local kraken2_db tar.gz (empty-stub fixture provided)",
+      "FREYJA_UPDATE — upstream downloads barcodes/lineages over the network; this port takes config.freyja_barcodes / config.freyja_lineages (fixtures provided)",
+      "PANGOLIN_UPDATEDATA — upstream downloads the pangolin data directory over the network; this port takes config.pango_database (fixture placeholder provided)",
+      "ADDITIONAL_ANNOTATION — off by default upstream (params.additional_annotation is empty)",
+      "channel-level runtime filters — the fastp reads-after-filtering empty check, the min_mapped_reads flagstat gate, the zero-variant-sample filter and optional-file existence gates have no oxo-flow equivalent (documented deviations)",
+      "save_* extra outputs — save_unaligned, save_trimmed_fail, save_mpileup, save_ivar_trimmed_bam and the other save_* flags are off by default upstream and not ported",
+      "MultiQC extras — the multiqc_data/versions.yml software table and *_plots directory are not emitted; the port keeps the report HTML, the data directory and the variants/assembly metrics CSVs"
     ],
     "rule_count": 51,
     "tools": [
@@ -820,16 +979,31 @@
       "snpsift",
       "spades"
     ],
-    "status": "validated",
+    "description": "Turns paired-end Illumina amplicon reads into a complete viral genomics report: read QC and trimming (FastQC, fastp), host-sequence removal (Kraken2), alignment to a user-provided reference genome (Bowtie2), primer trimming, intrahost variant calling and annotation (iVar, snpEff/SnpSift), consensus building with low-coverage masking (bcftools), lineage assignment and deconvolution (Pangolin, Nextclade, Freyja), de novo assembly with QC (SPAdes, Bandage, BLAST, QUAST, ABACAS), and a single MultiQC report.",
+    "installation": {
+      "engine": "oxo-flow >= 0.11.0",
+      "toolchain": "conda envs — pinned versions (envs/*.yaml, conda-forge + bioconda channels; no containers)",
+      "requirements": [
+        "reference genome FASTA and annotation GFF (config.fasta / config.gff) — uncompressed by default, or set fasta_ends_gz / gff_ends_gz",
+        "primer scheme BED for the amplicon protocol (config.primer_bed)",
+        "Kraken2 host-removal database as a tar.gz (config.kraken2_db)",
+        "Pangolin data directory (config.pango_database) and Freyja barcodes/lineages CSVs (config.freyja_barcodes / config.freyja_lineages)",
+        "Nextclade dataset: downloaded automatically by default; set config.nextclade_dataset to a local dataset directory to skip the download",
+        "paired-end Illumina FASTQs at <raw_dir>/<sample>_R1.fastq.gz and _R2.fastq.gz (config.raw_dir)",
+        "compute: up to 12 CPUs / 72 GB per rule (resource pool queues rather than oversubscribes)",
+        "conda or mamba to build the pinned per-rule environments"
+      ]
+    },
     "repo_url": "https://github.com/oxo-flow-community/oxo-flow-viralrecon",
+    "license": "Apache-2.0",
     "upstream_license": "MIT"
   },
   {
     "name": "oxo-flow-eager",
-    "title": "Ancient DNA analysis (aDNA)",
+    "title": "Ancient DNA (aDNA): QC, mapping, damage estimation and genotyping",
+    "origin": "port",
+    "rating": "verified",
     "engine": "nextflow",
-    "domain": "genomics",
-    "description": "oxo-flow port of the nf-core/eager pipeline: ancient DNA (aDNA) analysis with FastQC, fastp (poly-G filter, optional), AdapterRemoval read clipping/merging, BWA aln mapping, MarkDuplicates/DeDup deduplication, DamageProfiler damage estimation, Qualimap, pileupCaller genotyping (optional) and MultiQC reporting.",
     "source": {
       "repo": "nf-core/eager",
       "url": "https://github.com/nf-core/eager",
@@ -838,13 +1012,16 @@
       "license": "MIT"
     },
     "created": "2026-08-15",
+    "domain": "genomics",
     "tags": [
       "ancient-dna",
       "adna",
-      "bwa-aln",
-      "deamination",
-      "damage-profiler",
-      "pmdtools"
+      "bam",
+      "mapping",
+      "deduplication",
+      "damage",
+      "genotyping",
+      "nf-core"
     ],
     "scope": [
       "make_fasta_index",
@@ -866,7 +1043,9 @@
       "multiqc"
     ],
     "excluded": [
+      "unzip_reference: conditional .gz-fasta decompression process (main.nf line 187) — the port requires a plain FASTA (a .gz reference is silently unsupported)",
       "bwamem / bowtie2: non-default mappers (params.mapper) — default path uses bwa aln",
+      "makeBT2Index: bowtie2 mapper's conditional index process (main.nf line 523) — unreachable with the default bwaaln mapper",
       "circulargenerator / circularmapper: circular mapping branch (params.circularfilter, off by default)",
       "convertBam / indexinputbam: BAM-input mode preprocessing (params.bam, off by default)",
       "hostremoval_input_fastq: host removal branch (params.hostremoval_input_fastq, off by default)",
@@ -878,13 +1057,15 @@
       "post_ar_fastq_trimming: post-AdapterRemoval trimming branch (params.run_post_ar_trimming, off by default)",
       "lanemerge / lanemerge_hostremoval_fastq: multi-lane merging — unreachable in the single-lane default path",
       "library_merge / additional_library_merge: multi-library merging — unreachable in the single-library default path",
+      "seqtype_merge: PE/SE mixed-input merge (main.nf line 1597) — unreachable in the pure-PE port",
       "genotyping_ug / genotyping_hc / genotyping_freebayes: non-pileupcaller genotyping tools (genotyping_tool default null; genotyping off by default)",
       "genotyping_angsd: ANGSD genotyping branch (genotyping_tool='angsd')",
       "bcftools_stats: only consumes UG/HC/FB outputs, which are not ported",
-      "malt / maltextract / metagenomic_complexity_filter / kraken / kraken_parse / kraken_merge: metagenomic screening branch (params.run_metagenomic_screening, off by default)",
+      "malt / maltextract / metagenomic_complexity_filter / kraken / kraken_parse / kraken_merge / decomp_kraken: metagenomic screening branch (params.run_metagenomic_screening, off by default; decomp_kraken is the conditional .tar.gz DB unpacker)",
       "sexdeterrmine / sexdeterrmine_prep: sex determination branch (params.run_sexdeterrmine, off by default)",
+      "mtnucratio: mitochondrial-to-nuclear ratio branch (params.run_mtnucratio, off by default)",
       "endorSpy: endogenous-content branch (params.run_endorSpy, off by default)",
-      "print_nuclear_contamination: nuclear contamination branch (params.run_nuclear_contamination, off by default)",
+      "nuclear_contamination / print_nuclear_contamination: nuclear contamination branch (params.run_nuclear_contamination, off by default; nuclear_contamination is the angsd estimation process, print_nuclear_contamination the report-only consumer)",
       "multivcfanalyzer: branch gated by params.run_multivcfanalyzer (off by default)",
       "vcf2genome: consensus-sequence branch (params.run_vcf2genome, off by default)",
       "output_documentation / get_software_versions: nf-core boilerplate processes"
@@ -909,16 +1090,29 @@
       "rename",
       "python"
     ],
-    "status": "validated",
+    "description": "Ancient DNA (aDNA) analysis in one run: FastQC raw QC, optional fastp poly-G filtering (2-colour chemistry), AdapterRemoval adapter clipping and paired-end read merging, BWA aln mapping with ancient-DNA parameters, picard MarkDuplicates (or DeDup) deduplication, preseq library-complexity curves, DamageProfiler damage estimation, Qualimap BAM QC, optional pileupCaller genotyping with eigenstrat SNP coverage, and a final MultiQC report — every rule pinned to the nf-core/eager 2.5.3 tool versions in the upstream container.",
+    "installation": {
+      "engine": "oxo-flow >= 0.11.0",
+      "toolchain": "containers (Docker/Singularity) — pinned image nfcore/eager:2.5.3 for all rules (bundles the pinned conda env from envs/eager.yaml)",
+      "requirements": [
+        "reference genome FASTA, plain and uncompressed (.gz references are not supported — upstream's unzip_reference step is not ported); the workflow builds the .fai / .dict / BWA indices itself",
+        "paired-end FASTQ pairs named <sample>_R1.fastq.gz / <sample>_R2.fastq.gz in a directory (directory input mode; sample = text before the _R1/_R2 suffix); single-end is not supported",
+        "optional — pileupCaller genotyping (run_genotyping=true genotyping_tool='pileupcaller') requires pileupcaller_snpfile and pileupcaller_bedfile; the rule fails fast without them",
+        "compute: up to 4 CPUs / 8 GB RAM per rule (bwa_aln: 4 threads / 8G; reference-index and MultiQC rules up to 8 GB; base default 1 CPU / 7 GB / 24 h)",
+        "Docker or Singularity to run the pinned container nfcore/eager:2.5.3 (not needed for validate / lint / dry-run)",
+        "disk: results/ holds reference indices, mapped BAMs and reports — size grows with the reference genome and number of samples"
+      ]
+    },
     "repo_url": "https://github.com/oxo-flow-community/oxo-flow-eager",
+    "license": "Apache-2.0",
     "upstream_license": "MIT"
   },
   {
     "name": "oxo-flow-fetchngs",
-    "title": "Fetch metadata and FASTQ from public databases",
+    "title": "Fetching public sequencing data: FastQ download, metadata and samplesheets",
+    "origin": "port",
+    "rating": "verified",
     "engine": "nextflow",
-    "domain": "genomics",
-    "description": "Fetch metadata and raw FastQ files from public databases (SRA/ENA/DDBJ/GEO) — oxo-flow port of nf-core/fetchngs: input-id check, ENA metadata fetch, FTP FastQ download with wget + md5 verification, auto-created samplesheet + id mappings + MultiQC mappings config.",
     "source": {
       "repo": "nf-core/fetchngs",
       "url": "https://github.com/nf-core/fetchngs",
@@ -927,13 +1121,16 @@
       "license": "MIT"
     },
     "created": "2026-08-15",
+    "domain": "genomics",
     "tags": [
-      "fetch",
-      "ena",
       "sra",
-      "geodb",
-      "fastq",
-      "metadata"
+      "ena",
+      "ddbj",
+      "geo",
+      "fetch",
+      "fastq-download",
+      "samplesheet",
+      "nf-core"
     ],
     "scope": [
       "check_ids",
@@ -954,18 +1151,31 @@
     "rule_count": 8,
     "tools": [
       "python",
-      "wget"
+      "wget",
+      "coreutils"
     ],
-    "status": "validated",
+    "description": "Fetch metadata and raw FastQ files from public sequence databases (SRA/ENA/DDBJ/GEO). Given a list of database identifiers — run accessions (SRR/ERR/DRR), experiments, studies, biosamples or GEO series — the pipeline retrieves the ENA run metadata, downloads the FastQ files over FTP, validates every download against its ENA md5 sum, and auto-creates a samplesheet plus sample id-mappings and a MultiQC mappings config, ready for downstream nf-core pipelines such as rnaseq, atacseq or taxprofiler.",
+    "installation": {
+      "engine": "oxo-flow >= 0.11.0",
+      "toolchain": "containers (Docker) — pinned images (quay.io/biocontainers, identical to upstream)",
+      "requirements": [
+        "ids file: one SRA/ENA/DDBJ/GEO accession per line (config.input, default test/fixtures/ids.txt), kept in sync with the [[sample_groups]] sample source",
+        "reference data: none — the workflow downloads data from public archives; no genome FASTA, annotation or indices required",
+        "network: outbound access to ENA over FTP (wget -t 5 -c -T 60, 2 retries)",
+        "compute: up to 2 CPUs / 12 GB per rule (FastQ download 2 threads/12G; metadata fetch 1 thread/6G; 4 h time limits on three rules)",
+        "disk: results/fastq/ grows with downloaded FastQ files plus md5/ checksums (depends on input size); metadata/ and samplesheet/ stay small"
+      ]
+    },
     "repo_url": "https://github.com/oxo-flow-community/oxo-flow-fetchngs",
+    "license": "Apache-2.0",
     "upstream_license": "MIT"
   },
   {
     "name": "oxo-flow-rnaseq-star-deseq2",
-    "title": "RNA-seq with STAR and DESeq2 (snakemake catalog flagship)",
+    "title": "RNA-seq: STAR alignment, DESeq2 differential expression and QC",
+    "origin": "port",
+    "rating": "verified",
     "engine": "snakemake",
-    "domain": "transcriptomics",
-    "description": "oxo-flow port of the snakemake-workflows/rna-seq-star-deseq2 v3.1.1 default path: Ensembl reference download, STAR index, fastp trimming, STAR alignment with gene counts, RSeQC QC + MultiQC, count matrix with technical-replicate collapse, Ensembl biomaRt gene-symbol annotation, DESeq2 (normalized counts, PCA, per-contrast results with ashr shrinkage).",
     "source": {
       "repo": "snakemake-workflows/rna-seq-star-deseq2",
       "url": "https://github.com/snakemake-workflows/rna-seq-star-deseq2",
@@ -974,12 +1184,15 @@
       "license": "MIT"
     },
     "created": "2026-08-15",
+    "domain": "transcriptomics",
     "tags": [
       "rna-seq",
-      "star",
+      "differential-expression",
       "deseq2",
-      "featurecounts",
-      "snakemake-catalog"
+      "star",
+      "fastp",
+      "rseqc",
+      "multiqc"
     ],
     "scope": [
       "get_genome",
@@ -1018,30 +1231,41 @@
     ],
     "rule_count": 22,
     "tools": [
-      "STAR",
+      "star",
       "fastp",
-      "RSeQC",
+      "rseqc",
       "gffutils",
       "pandas",
-      "MultiQC",
-      "DESeq2",
-      "biomaRt",
-      "r-tidyverse",
+      "multiqc",
+      "bioconductor-deseq2",
       "r-stringr",
       "r-ashr",
+      "bioconductor-biomart",
+      "r-tidyverse",
       "r-dbplyr",
       "curl"
     ],
-    "status": "validated",
+    "description": "End-to-end RNA-seq differential-expression analysis with STAR and DESeq2: Ensembl reference download, fastp trimming, STAR alignment with gene counts, RSeQC QC + MultiQC, count matrix with technical-replicate collapse, Ensembl biomaRt gene-symbol annotation, and DESeq2 (normalized counts, PCA plots, per-contrast results with ashr shrinkage and MA plots). Every tool is pinned to an exact conda version for reproducibility.",
+    "installation": {
+      "engine": "oxo-flow >= 0.11.0",
+      "toolchain": "conda envs — pinned",
+      "requirements": [
+        "paired-end FASTQ reads per config/units.tsv (raw/<unit-key>_R1.fastq.gz / _R2.fastq.gz) and sample conditions in config/samples.tsv",
+        "reference genome + annotation downloaded automatically from Ensembl release 115 (GRCh38) — network access required (also for biomaRt gene-symbol annotation)",
+        "compute: up to 24 CPUs per rule (star_align); 8 (fastp_pe); 4 (star_index); no per-rule memory limits configured in the workflow",
+        "disk: several tens of GB — ~30 GB GRCh38 STAR index, plus BAMs and trimmed reads"
+      ]
+    },
     "repo_url": "https://github.com/oxo-flow-community/oxo-flow-rnaseq-star-deseq2",
+    "license": "Apache-2.0",
     "upstream_license": "MIT"
   },
   {
     "name": "oxo-flow-varlociraptor",
     "title": "Small and structural variant calling with Varlociraptor",
+    "origin": "port",
+    "rating": "verified",
     "engine": "snakemake",
-    "domain": "genomics",
-    "description": "oxo-flow port of snakemake-workflows/dna-seq-varlociraptor v6.10.0 (default-parameter path, one tumor sample group): vg giraffe mapping against the 1000 Genomes human pangenome, FastQC/MultiQC QC, mosdepth coverage with region filtering, freebayes + delly candidate calling, Varlociraptor calling under scenario some_id (present + somatic_tumor_high + somatic_tumor_medium, FDR 0.05, local-smart), per-variant-type FDR control (SNV/INS/DEL/MNV/BND/INV/DUP/REP) with merge and phred decoding, VEP annotation with LoFtool + REVEL plugins and dbSNFP annotation, annotation filtering, the 34-column vembrane variant table, oncoprint label-sorting preparation, and datavzrd reports for variant calls and gene coverage. 88 rules, commands byte-identical to upstream wrappers.",
     "source": {
       "repo": "snakemake-workflows/dna-seq-varlociraptor",
       "url": "https://github.com/snakemake-workflows/dna-seq-varlociraptor",
@@ -1050,12 +1274,16 @@
       "license": "MIT"
     },
     "created": "2026-08-15",
+    "domain": "genomics",
     "tags": [
-      "variants",
+      "variant-calling",
       "structural-variants",
-      "tumor-normal",
       "varlociraptor",
-      "gatk"
+      "vg",
+      "freebayes",
+      "delly",
+      "pangenome",
+      "snakemake-workflows"
     ],
     "scope": [
       "pangenome_index",
@@ -1086,20 +1314,20 @@
       "coverage_table"
     ],
     "excluded": [
-      "bwa mapping — non-default aligner branch",
-      "fastp/trimming — non-default branch",
-      "fusions (arriba) — off in default config (calling mode variants)",
-      "MAF conversion — not reachable with default config",
-      "mutational burden and mutational signature analyses",
-      "population database (germline AF annotation) — off by default",
-      "dgidb druggability — off by default",
+      "bwa mapping — non-default aligner branch, not ported",
+      "fastp/trimming — non-default trimming branch, not ported",
+      "fusions (arriba) — fusion calling is off in the default config (calling mode variants)",
+      "MAF conversion — not reachable with the default config",
+      "mutational burden and mutational signature analyses — non-default branches",
+      "population database (germline AF annotation) — population db is off in the default config",
+      "dgidb druggability annotation — off by default",
       "CADD annotation — off by default",
       "primer design — off by default",
-      "benchmarking rules",
+      "benchmarking — upstream benchmarking rules are not ported",
       "consensus reads — non-default branch",
-      "target regions — not in default path",
-      "template oncoprint views (gene_oncoprint / variant_oncoprints datasets) — empty with single group; prepare_oncoprint itself runs",
-      "gather_annotated_calls / filter_odds — not reachable in default path (benchmarking off, filter present only)",
+      "target regions — not part of the default path",
+      "template oncoprint views (gene_oncoprint / variant_oncoprints datasets) — empty with the default single group; prepare_oncoprint itself runs",
+      "gather_annotated_calls / filter_odds — not reachable in the default path (benchmarking off, filter present only)",
       "upstream scatter.calling(16) chunks beyond scatteritem=0 — collapsed to a single chunk"
     ],
     "rule_count": 88,
@@ -1138,16 +1366,28 @@
       "vembrane",
       "vg"
     ],
-    "status": "validated",
+    "description": "Scenario-driven somatic small and structural variant calling with Varlociraptor: paired-end reads are aligned against the 1000 Genomes human pangenome with vg giraffe, QC'd with FastQC/MultiQC, covered with mosdepth, and used for freebayes and delly candidate calling; Varlociraptor then estimates alignment properties and calls variants under a tumor scenario (events present + somatic_tumor_high + somatic_tumor_medium, FDR 0.05), FDR is controlled per variant type (SNV/INS/DEL/MNV/BND/INV/DUP/REP) with merge and phred decoding, and the calls are annotated with VEP (LoFtool/REVEL plugins) and dbSNFP/dbSNP, filtered, turned into a 34-column variant table with oncoprint label-sorting, and rendered as interactive datavzrd variant and gene-coverage reports. All reference data (GRCh38 FASTA and GTF, VEP cache/plugins, REVEL scores, known-variants VCFs, HPRC pangenome graph) is downloaded automatically into resources/.",
+    "installation": {
+      "engine": "oxo-flow >= 0.11.0",
+      "toolchain": "conda envs — pinned versions (no containers)",
+      "requirements": [
+        "paired-end FASTQ reads at reads_dir/<sample>_1.fastq.gz / _2.fastq.gz; sample cohort declared in [[sample_groups]] (one group = one tumor sample); fixtures bundled for dry-run",
+        "reference data: downloaded automatically into resources/ — GRCh38 primary assembly FASTA (Ensembl release 111) + .fai/.dict, Ensembl release 111 GTF, VEP cache and plugins (release 111), REVEL scores, Ensembl known-variants VCFs, HPRC v1.1 human pangenome graph",
+        "compute: up to 96 CPUs / 32 GB per rule (freebayes candidates 96 threads; vg giraffe 64 threads; samtools sort 16 threads/32G; Varlociraptor call 8G)",
+        "tools: conda envs with pinned versions (envs/*.yaml, one env per tool pin set); conda/mamba required at runtime",
+        "disk: multi-GB reference downloads under resources/ (pangenome graph, VEP cache, known-variants VCFs) plus results/ for BAMs, BCFs, tables and reports"
+      ]
+    },
     "repo_url": "https://github.com/oxo-flow-community/oxo-flow-varlociraptor",
+    "license": "Apache-2.0",
     "upstream_license": "MIT"
   },
   {
     "name": "oxo-flow-snparcher",
-    "title": "Variant calling for non-model organisms",
+    "title": "Variant calling for non-model organisms: trimming, alignment and per-sample gVCFs",
+    "origin": "port",
+    "rating": "verified",
     "engine": "snakemake",
-    "domain": "genomics",
-    "description": "oxo-flow port of the harvardinformatics/snparcher v2.2 default main path: FASTQ sample sheets -> fastp trimming/filtering -> BWA-MEM alignment -> samtools merge -> GATK HaplotypeCaller per-sample gVCFs, plus a cohort QC metrics report (fastp/BAM stats combined into qc_report.tsv). 12 rules, single main.oxoflow, 4 conda envs, 3 ported python scripts, real tiny fixtures from upstream tests.",
     "source": {
       "repo": "harvardinformatics/snparcher",
       "url": "https://github.com/harvardinformatics/snparcher",
@@ -1156,13 +1396,14 @@
       "license": "MIT"
     },
     "created": "2026-08-15",
+    "domain": "genomics",
     "tags": [
-      "variants",
-      "non-model",
-      "bwa",
+      "variant-calling",
+      "population-genomics",
       "gatk",
-      "haplotypecaller",
-      "de-novo"
+      "bwa",
+      "non-model-organisms",
+      "snakemake"
     ],
     "scope": [
       "prepare_reference",
@@ -1180,7 +1421,7 @@
     ],
     "excluded": [
       "markdup (sambamba markdup + merge_dedup_libraries) — committee exclusion; port default mark_duplicates=false",
-      "joint_genotyping (GenomicsDBImport/GenotypeGVCFs + interval scatter machinery incl. gatk_intervals.smk) — committee exclusion; port default intervals_enabled=false",
+      "joint_genotyping (GenomicsDBImport/GenotypeGVCFs + interval scatter machinery) — committee exclusion",
       "denovo — no such step in upstream v2.2 (v2 redesign)",
       "structural_variants — no such step in upstream v2.2",
       "variant_filtration — requires the excluded joint-genotyping raw VCF",
@@ -1198,16 +1439,27 @@
       "gatk4",
       "python"
     ],
-    "status": "validated",
+    "description": "Variant calling for non-model organisms: paired FASTQ reads are trimmed and filtered with fastp, aligned with BWA-MEM, and called to per-sample gVCFs with GATK HaplotypeCaller (low-coverage defaults: -ploidy 2, --min-pruning 1), alongside a cohort QC metrics report aggregating fastp and samtools stats.",
+    "installation": {
+      "engine": "oxo-flow >= 0.11.0",
+      "toolchain": "conda envs — pinned versions (fastp 1.3.6, bwa 0.7.19, samtools 1.24, gatk4 4.6.2.0; conda-forge + bioconda)",
+      "requirements": [
+        "reference genome FASTA (plain or gzip), passed as reference_source at run time — bgzip-compressed and indexed by the workflow itself (no pre-built indices)",
+        "paired-end reads at raw/<sample>_1.fastq.gz and raw/<sample>_2.fastq.gz for each sample in the [[sample_groups]] list",
+        "compute: up to 8 CPUs / 8 GB per rule (bwa_mem 8 threads, fastp 4, gatk_haplotypecaller 7 GB Java heap)",
+        "conda or mamba at runtime to create the pinned envs/*.yaml environments"
+      ]
+    },
     "repo_url": "https://github.com/oxo-flow-community/oxo-flow-snparcher",
+    "license": "Apache-2.0",
     "upstream_license": "MIT"
   },
   {
     "name": "oxo-flow-enrichment",
-    "title": "Genomic region set and gene set enrichment",
+    "title": "Region set and gene set enrichment: LOLA, GREAT, pycisTarget and GSEA",
+    "origin": "port",
+    "rating": "verified",
     "engine": "snakemake",
-    "domain": "genomics",
-    "description": "oxo-flow port of epigen/enrichment_analysis v3.0.1: region overlap enrichment (LOLA), genomic region enrichment of annotated terms (rGREAT), region TFBS motif enrichment (pycisTarget), gene over-representation analysis and preranked GSEA (GSEApy), with multiple-test correction inside each tool, per-set enrichment plots, per-group summary plots and reproducibility exports.",
     "source": {
       "repo": "epigen/enrichment_analysis",
       "url": "https://github.com/epigen/enrichment_analysis",
@@ -1216,12 +1468,17 @@
       "license": "MIT"
     },
     "created": "2026-08-15",
+    "domain": "genomics",
     "tags": [
-      "enrichment",
-      "rgreat",
-      "clusterprofiler",
-      "region-sets",
-      "gene-sets"
+      "region-enrichment",
+      "gene-set-enrichment",
+      "LOLA",
+      "GREAT",
+      "pycisTarget",
+      "GSEApy",
+      "GSEA",
+      "ORA",
+      "snakemake"
     ],
     "scope": [
       "prepare_databases",
@@ -1242,7 +1499,7 @@
       "gene_motif_enrichment_analysis_RcisTarget — zero instances on the default path: RcisTarget needs .txt gene sets in the annotation; the default annotation has none (region sets + ranked gene sets only)",
       "env_export — conda env export requires the conda CLI inside the runtime environment; exact pins are already declared in envs/*.yaml",
       "report rendering — oxo-flow has no report module; the reproducibility exports (configs/, envs) are kept as upstream rules",
-      "note: the anticipated exclusion names liftover/enrichr/gost/single_region_mode do not exist in v3.0.1 (grep-verified; Enrichr appears only as a database-source reference in config comments)"
+      "note: the anticipated names liftover/enrichr/gost/single_region_mode do not exist in v3.0.1 (Enrichr appears only as a database-source reference in config comments)"
     ],
     "rule_count": 38,
     "tools": [
@@ -1260,16 +1517,31 @@
       "bioconductor-rtracklayer",
       "bioconductor-org.hs.eg.db"
     ],
-    "status": "validated",
+    "description": "Run a complete region set and gene set enrichment analysis on your own data: region overlap enrichment (LOLA), genomic region enrichment of annotated terms (rGREAT), region TFBS motif enrichment (pycisTarget), and gene over-representation analysis (ORA) and preranked GSEA (GSEApy). Every tool applies its own multiple-test correction; the workflow produces per-set enrichment plots, per-group summary plots, and reproducibility exports (configs/ and envs/). Official port of epigen/enrichment_analysis v3.0.1 with tool versions and commands pinned to the source.",
+    "installation": {
+      "engine": "oxo-flow >= 0.11.0",
+      "toolchain": "conda envs — pinned (conda/mamba at runtime; four environments declared in main.oxoflow, exact pins from upstream)",
+      "requirements": [
+        "annotation.csv declaring each feature set (region set or ranked gene set), its path, background, and group",
+        "region BED files, one per region set, plus a background BED (hg38)",
+        "ranked gene list CSVs, one per gene set (gene, score columns)",
+        "gene-set databases for GSEApy ORA: Azimuth_2023.json and ReactomePathways.gmt",
+        "LOLA region database for the genome of interest (e.g. LOLACore hg38)",
+        "pycisTarget cisTarget rankings (.feather) and motif annotation table",
+        "compute: up to 10 CPUs and 32 GB RAM per rule (defaults: 1 thread / 32 GB per rule; pycisTarget uses 10 threads as upstream)",
+        "disk: modest — enrichment tables, per-set plots, and pycisTarget HDF5 outputs (a few GB)"
+      ]
+    },
     "repo_url": "https://github.com/oxo-flow-community/oxo-flow-enrichment",
+    "license": "Apache-2.0",
     "upstream_license": "MIT"
   },
   {
     "name": "oxo-flow-genome-tracks",
-    "title": "Genome browser track generation from BAM files",
+    "title": "Genome browser tracks: coverage, gene plots and UCSC hub",
+    "origin": "port",
+    "rating": "verified",
     "engine": "snakemake",
-    "domain": "genomics",
-    "description": "oxo-flow port of the epigen/genome_tracks Snakemake workflow: merge BAM files per annotation group (samtools merge + index), compute bigWig coverage (deepTools bamCoverage), plot per-gene/region genome tracks (gtracks/pyGenomeTracks) and create a UCSC genome browser track hub — plus reproducibility exports of the annotation, gene list and config.",
     "source": {
       "repo": "epigen/genome_tracks",
       "url": "https://github.com/epigen/genome_tracks",
@@ -1278,12 +1550,17 @@
       "license": "MIT"
     },
     "created": "2026-08-15",
+    "domain": "genomics",
     "tags": [
-      "genome-browser",
+      "epigenomics",
+      "genome-tracks",
       "bigwig",
+      "coverage",
+      "visualization",
+      "ucsc-hub",
       "deeptools",
-      "tracks",
-      "alignment"
+      "pygenometracks",
+      "snakemake"
     ],
     "scope": [
       "merge_bams",
@@ -1299,25 +1576,39 @@
       "split_sc_bam — single-cell sinto branch, not on the default path",
       "igv_report — temporarily deactivated upstream (commented out of rule all)",
       "make_bed — only feeds the deactivated igv_report rule",
-      "env_export — conda-runtime documentation rule for envs of non-ported branches; checked-in envs/ yamls serve the same role"
+      "env_export — conda-runtime documentation rule for envs of non-ported branches; envs/ yamls serve the same role"
     ],
     "rule_count": 8,
     "tools": [
-      "samtools@1.19.2",
-      "deeptools@3.5.5",
-      "pygenometracks@3.8",
-      "gtracks@1.12.6"
+      "samtools",
+      "deeptools",
+      "pygenometracks",
+      "gtracks"
     ],
-    "status": "validated",
+    "description": "Merge BAM files per experimental group with samtools, compute normalized bigWig coverage with deepTools bamCoverage (RPGC by default), plot isoform-aware per-gene and per-region genome tracks with gtracks/pyGenomeTracks, and publish a UCSC genome browser track hub — end-to-end track generation for RNA-seq, ATAC-seq and other aligned BAM data.",
+    "installation": {
+      "engine": "oxo-flow >= 0.11.0",
+      "toolchain": "conda envs — pinned",
+      "requirements": [
+        "BAM files per group at <bam_dir>/<group>/*.bam (aligned/mapped data, e.g. RNA-seq or ATAC-seq; input BAMs need no index — merge_bams produces merged, indexed BAMs)",
+        "sample annotation CSV with a group column (sample_annotation; group values drive merge/coverage/hub fan-out)",
+        "gene list CSV with gene_region,ymax columns (gene_list; gene symbols or chr:start-end regions)",
+        "12-column genome BED for gene annotation (genome_bed, e.g. ref.bed.gz); no genome FASTA or annotation GTF required",
+        "compute: up to 4 CPUs / 4 GB per rule (samtools merge and bamCoverage at threads=4/4000M); helper rules need 1 CPU / 1 GB",
+        "conda/mamba to build the pinned environment (samtools 1.19.2, deepTools 3.5.5, pyGenomeTracks 3.8, python 3.10.13, gtracks 1.12.6); helper rules need only a system python3",
+        "disk: results/ for merged BAMs, bigWigs, track plots and the UCSC hub"
+      ]
+    },
     "repo_url": "https://github.com/oxo-flow-community/oxo-flow-genome-tracks",
+    "license": "Apache-2.0",
     "upstream_license": "MIT"
   },
   {
     "name": "oxo-flow-mixscape",
-    "title": "Pooled CRISPR perturbation analysis (Mixscape)",
+    "title": "Pooled CRISPR perturbation analysis with Seurat Mixscape",
+    "origin": "port",
+    "rating": "verified",
     "engine": "snakemake",
-    "domain": "single-cell",
-    "description": "oxo-flow port of the epigen/mixscape_seurat Snakemake workflow (v2.0.3): pooled CRISPR perturbation analysis (scCRISPR-seq/CROP-seq/Perturb-seq) with Seurat Mixscape — perturbation signatures (CalcPerturbSig), perturbed-cell classification (RunMixscape), LDA+UMAP of the perturbed subset (MixscapeLDA), the visualization suite, and reproducibility exports (conda envs, runtime config, annotation).",
     "source": {
       "repo": "epigen/mixscape_seurat",
       "url": "https://github.com/epigen/mixscape_seurat",
@@ -1326,18 +1617,21 @@
       "license": "MIT"
     },
     "created": "2026-08-15",
+    "domain": "single-cell",
     "tags": [
       "crispr",
-      "perturb-seq",
-      "seurat",
+      "scrna-seq",
       "mixscape",
-      "single-cell"
+      "perturbation",
+      "seurat",
+      "snakemake"
     ],
     "scope": [
       "mixscape",
       "lda",
       "visualize",
-      "env_export",
+      "env_export_mixscape",
+      "env_export_lda",
       "config_export",
       "annot_export"
     ],
@@ -1351,8 +1645,8 @@
     "tools": [
       "Seurat",
       "seuratobject",
-      "matrix",
       "irlba",
+      "matrix",
       "mixtools",
       "ggplot2",
       "scales",
@@ -1361,16 +1655,27 @@
       "pyyaml",
       "conda"
     ],
-    "status": "validated",
+    "description": "Pooled CRISPR perturbation analysis (scCRISPR-seq / CROP-seq / Perturb-seq) with Seurat Mixscape: per-cell perturbation signatures (CalcPerturbSig), perturbed vs. non-perturbed classification (RunMixscape), LDA + UMAP projection of the perturbed subset, the full visualization suite (classification statistics, perturbation-score density, posterior-probability and optional antibody-expression violin plots), and reproducibility exports (exact conda envs, runtime config, annotation file). Input is one processed Seurat object per sample.",
+    "installation": {
+      "engine": "oxo-flow >= 0.11.0",
+      "toolchain": "conda envs — pinned (r-seurat 4.4.0, r-seuratobject 4.1.4, r-irlba 2.3.5.1, r-matrix, r-mixtools 2.0.0, r-ggplot2 3.5.2, r-scales 1.3.0, r-patchwork 1.2.0, r-data.table 1.14.10, pyyaml 6.0.1); conda/mamba required at runtime, conda binary on PATH for env export",
+      "requirements": [
+        "One processed Seurat object per sample, as {data_dir}/{sample}.rds (already normalized/integrated — QC/normalization run upstream)",
+        "Annotation CSV (name, data columns) mapping sample names to object paths",
+        "Optional: 10X Antibody_Capture assay 'AB' for antibody-expression violin plots",
+        "Compute: up to 8 CPUs / 32000 MB (32 GB) per rule (mixscape, lda, visualize); export rules 1 CPU / 1 GB; -j controls parallelism"
+      ]
+    },
     "repo_url": "https://github.com/oxo-flow-community/oxo-flow-mixscape",
+    "license": "Apache-2.0",
     "upstream_license": "MIT"
   },
   {
     "name": "oxo-flow-bgcflow",
-    "title": "Biosynthetic gene cluster analysis across genomes",
+    "title": "Biosynthetic gene cluster (BGC) genome mining: annotation, antiSMASH and data warehouse",
+    "origin": "port",
+    "rating": "verified",
     "engine": "snakemake",
-    "domain": "genomics",
-    "description": "oxo-flow port of the NBChub/bgcflow v1.1.2 default main path (antismash: true, everything else off): prokka annotation of user-provided FASTA genomes, antiSMASH 7 secondary-metabolite mining with automated database setup, BGC count/overview/summary aggregation, GTDB taxonomy lookup (API with offline-table fallback), MIBiG reference table download, BigSCAPE-compatible comparison preparation (region symlinks, taxonomy tsv, dataset registry, visualization mapping), and conversion of all result tables into a parquet data warehouse.",
     "source": {
       "repo": "NBChub/bgcflow",
       "url": "https://github.com/NBChub/bgcflow",
@@ -1379,12 +1684,16 @@
       "license": "MIT"
     },
     "created": "2026-08-15",
+    "domain": "genome-mining",
     "tags": [
-      "biosynthetic-gene-clusters",
+      "bgc",
+      "secondary-metabolites",
       "antismash",
-      "pangenome",
-      "microbial",
-      "natural-products"
+      "genome-mining",
+      "prokka",
+      "gtdb",
+      "mibig",
+      "snakemake"
     ],
     "scope": [
       "copy_custom_fasta",
@@ -1408,49 +1717,62 @@
     ],
     "excluded": [
       "prokka_gbk / copy_custom_genbank / copy_converted_gbk / genbank_to_fna|gff|faa / extract_meta_genbank — genbank input path, off by default (default config ships fna inputs)",
-      "antismash v6 branch — off by default (default is v7)",
-      "write_dependency_versions — bookkeeping, not on the default main path",
+      "antismash v6 branch — off by default (config default is antismash v7)",
+      "write_dependency_versions — dependency bookkeeping, not on the default main path",
       "seqfu_stats/seqfu_combine — run_seqfu: true only",
       "mash/mash_convert — run_mash: true only",
       "fastani/fastani_convert — run_fastani: true only",
       "checkm/checkm_out — run_checkm: true only",
       "gtdbtk/gtdbtk_fna_fail/evaluate_gtdbtk_input/install_gtdbtk — run_gtdbtk: true only",
-      "prokka_db_setup + install_* helpers — install rules for off-by-default pipelines",
-      "bigscape/bigscape_no_mibig/bigscape_to_cytoscape/copy_bigscape* — run_bigscape: true only",
+      "prokka_db_setup, install_* helpers — install rules for off-by-default pipelines",
+      "bigscape/bigscape_no_mibig/bigscape_to_cytoscape/copy_bigscape/copy_bigscape_zip — run_bigscape: true only",
       "bigslice/bigslice_prep/query_bigslice/summarize_bigslice_query/fetch_bigslice_db — run_bigslice: true only",
-      "automlst_wrapper* / prep_automlst_gbk — run_automlst: true only",
-      "arts + 7 arts_* rules — run_arts: true only",
+      "automlst_wrapper/automlst_wrapper_out/prep_automlst_gbk/install_automlst_wrapper — run_automlst: true only",
+      "arts + arts_extract/arts_knownhits_combine/arts_allhits_combine/arts_bgctable_combine/arts_coretable_combine/arts_final — run_arts: true only",
       "roary/roary_reassign_pangene_categories/roary_out — run_roary: true only",
       "eggnog/eggnog_roary/eggnog_roary_result_copy — run_eggnog: true only",
-      "deeptfactor + 5 deeptfactor_* rules — run_deeptfactor: true only",
+      "deeptfactor + deeptfactor_setup/to_json/summary/roary — run_deeptfactor: true only",
       "cblaster_genome_db/cblaster_bgc_db — run_cblaster: true only",
       "gecco/gecco_aggregate/antismash_sideload_gecco — run_gecco: true only",
       "amrfinderplus/amrfinder_gather — run_amrfinderplus: true only",
       "metabase_install/metabase_duckdb_plugin/build_warehouse — run_metabase: true only",
       "ncbi_genome_download/extract_ncbi_information / patric_genome_download/extract_patric_meta/download_patric_tables — non-custom genome sources, off by default",
-      "report rules (copy_readme, copy_template_notebook, mkdocs_py_report, mkdocs_rpy_report, copy_template_rnotebook) — separate 'bgcflow build report' command, not in the main Snakefile"
+      "report rules (copy_readme, copy_template_notebook, mkdocs_py_report, mkdocs_rpy_report, copy_template_rnotebook) — separate 'bgcflow build report' command, not part of the main Snakefile default path"
     ],
     "rule_count": 18,
     "tools": [
-      "prokka@1.14.6",
-      "antismash@7.1.0",
-      "python@3.9.18",
-      "pandas@2.0.3",
-      "pyarrow@14.0.2",
-      "biopython@1.81",
-      "requests@2.31.0",
-      "alive_progress@3.1.5"
+      "prokka",
+      "antismash",
+      "python",
+      "pandas",
+      "pyarrow",
+      "biopython",
+      "requests",
+      "alive_progress"
     ],
-    "status": "validated",
+    "description": "End-to-end biosynthetic gene cluster (BGC) analysis of user-provided bacterial genomes: prokka annotation, antiSMASH 7 secondary-metabolite mining with automated database setup, per-genome BGC counts and overview tables, GTDB taxonomy lookup, MIBiG reference table download, BigSCAPE-compatible comparison preparation (symlinks, taxonomy, dataset registry, visualization mapping), and conversion of all result tables into a parquet data warehouse — ready for downstream comparison and exploration.",
+    "installation": {
+      "engine": "oxo-flow >= 0.11.0",
+      "toolchain": "conda envs — pinned versions (declared in main.oxoflow: envs/antismash.yaml, envs/prokka.yaml, envs/bgc_analytics.yaml; a few antiSMASH helper packages use unpinned ranges)",
+      "requirements": [
+        "genome FASTA per genome at {config.raw_dir}/fasta/<genome_id>.fna (raw_dir defaults to test/fixtures/raw; .fna/.fasta/.fa accepted)",
+        "sample table config/samples.csv — columns genome_id,source,organism,genus,species,strain",
+        "network access on first run: antiSMASH databases (~several GB, into resources/antismash_db), GTDB bac120_metadata_r220.tsv fallback table, MIBiG JSON 3.1",
+        "optional: GTDB offline taxonomy TSVs via config.gtdb_tax_paths",
+        "compute: up to 4 CPUs per rule (prokka, antiSMASH); no explicit memory limits — antiSMASH dominates",
+        "disk: several GB for downloaded resources (antiSMASH DB, MIBiG) plus the data/ output tree"
+      ]
+    },
     "repo_url": "https://github.com/oxo-flow-community/oxo-flow-bgcflow",
+    "license": "Apache-2.0",
     "upstream_license": "MIT"
   },
   {
     "name": "oxo-flow-unsupervised",
-    "title": "Unsupervised analyses of omics matrices",
+    "title": "Unsupervised analysis of omics matrices: PCA, UMAP, clustering and validation",
+    "origin": "port",
+    "rating": "verified",
     "engine": "snakemake",
-    "domain": "other",
-    "description": "oxo-flow port of the epigen/unsupervised_analysis workflow (default-parameter main path): PCA, UMAP and densMAP embeddings (2D/3D), distance matrices, hierarchical clustering heatmaps, Leiden clustering (RBConfiguration and Modularity partitions), clustree analysis, external and internal cluster validation with TOPSIS ranking, and static/interactive visualizations for a single omics matrix sample.",
     "source": {
       "repo": "epigen/unsupervised_analysis",
       "url": "https://github.com/epigen/unsupervised_analysis",
@@ -1459,12 +1781,17 @@
       "license": "MIT"
     },
     "created": "2026-08-15",
+    "domain": "other",
     "tags": [
+      "unsupervised-learning",
       "pca",
       "umap",
+      "densmap",
+      "leiden",
       "clustering",
-      "dimensionality-reduction",
-      "omics"
+      "cluster-validation",
+      "heatmap",
+      "snakemake"
     ],
     "scope": [
       "pca",
@@ -1521,10 +1848,10 @@
       "annot_export"
     ],
     "excluded": [
-      "env_export (7 rules) — runs `conda env export` inside the rule and requires a runtime conda installation; oxo-flow rules execute in one pinned environment. The exact pins are committed under envs/ instead.",
-      "config_export — dumps the in-memory Snakemake config via a run: block; the equivalent oxo-flow [config] is documented in main.oxoflow and README.",
-      "plot_dimred_features — upstream default config `features_to_plot: []` produces no output on the default path (per-feature wildcard fan-out); skipped with the upstream default.",
-      "report/ generation — Snakemake `report(...)` wrapper metadata (captions/categories/labels) has no oxo-flow counterpart; rule outputs are identical, only the report book is not produced."
+      "env_export (7 rules) — runs `conda env export` inside the rule and requires a runtime conda installation; oxo-flow rules execute in one pinned environment, so the exported result would be the host environment, not the analysis environment. The exact pins are committed under envs/ instead.",
+      "config_export — dumps the in-memory Snakemake config object via a run: block; the equivalent oxo-flow [config] is documented in main.oxoflow and this README.",
+      "plot_dimred_features — upstream default config `features_to_plot: []` means the rule has no output on the default path (fan-out over a per-feature wildcard); skipped with the upstream default.",
+      "report/ generation — Snakemake `report(...)` wrapper metadata (captions, categories, labels) has no oxo-flow counterpart; rule outputs are identical, only the report book is not produced."
     ],
     "rule_count": 52,
     "tools": [
@@ -1563,8 +1890,18 @@
       "r-clustercrit",
       "pymcdm"
     ],
-    "status": "validated",
+    "description": "Unsupervised analysis of omics matrices: PCA, UMAP and densMAP embeddings (2D/3D), distance matrices, hierarchical clustering heatmaps, Leiden clustering across partition types and resolutions, clustree analysis, external and internal cluster validation with TOPSIS ranking, and static and interactive visualizations. A verified port of the default-parameter path of epigen/unsupervised_analysis v4.0.2 (Snakemake); all 52 rules and tool versions are pinned to the upstream release.",
+    "installation": {
+      "engine": "oxo-flow >= 0.11.0",
+      "toolchain": "conda envs — pinned versions (7 environments under envs/, created by conda/mamba)",
+      "requirements": [
+        "per-sample omics matrix CSV and optional labels CSV ({config.data_dir}/{sample}_data.csv / _labels.csv), registered in config/annotation.csv; no reference genomes or index files needed (default fixtures: sklearn digits, 1797 samples x 64 features)",
+        "compute: up to 2 CPUs / 32 GB RAM per rule (defaults threads=2, mem_mb=32000; 7 plotting rules use 8 GB)",
+        "conda or mamba installed to build the 7 pinned environments on first run"
+      ]
+    },
     "repo_url": "https://github.com/oxo-flow-community/oxo-flow-unsupervised",
+    "license": "Apache-2.0",
     "upstream_license": "MIT"
   }
 ]

@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="20 battle-tested bioinformatics workflows — faithful ports of the most-used nf-core and Snakemake pipelines for the oxo-flow engine. Search the catalog, read the run instructions, copy the command.">
+        <meta name="description" content="The community catalog of oxo-flow workflows — verified ports of established nf-core and Snakemake pipelines, original designs, and community submissions. Classified, rated, and documented. Search, compare, run.">
       
       
       
@@ -23,7 +23,7 @@
     
     
       
-        <title>Genome browser track generation from BAM files - oxo-flow-community</title>
+        <title>Genome browser tracks: coverage, gene plots and UCSC hub - oxo-flow-community</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#genome-browser-track-generation-from-bam-files" class="md-skip">
+        <a href="#genome-browser-tracks-coverage-gene-plots-and-ucsc-hub" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Genome browser track generation from BAM files
+              Genome browser tracks: coverage, gene plots and UCSC hub
             
           </span>
         </div>
@@ -306,6 +306,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../about/curation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Curation & ratings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../about/selection/" class="md-nav__link">
         
   
@@ -418,6 +445,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#scope" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -470,8 +508,10 @@
   
 
 
-<h1 id="genome-browser-track-generation-from-bam-files">Genome browser track generation from BAM files</h1>
-<p>oxo-flow port of the epigen/genome_tracks Snakemake workflow: merge BAM files per annotation group (samtools merge + index), compute bigWig coverage (deepTools bamCoverage), plot per-gene/region genome tracks (gtracks/pyGenomeTracks) and create a UCSC genome browser track hub — plus reproducibility exports of the annotation, gene list and config.</p>
+<h1 id="genome-browser-tracks-coverage-gene-plots-and-ucsc-hub">Genome browser tracks: coverage, gene plots and UCSC hub</h1>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
+
+<p>Merge BAM files per experimental group with samtools, compute normalized bigWig coverage with deepTools bamCoverage (RPGC by default), plot isoform-aware per-gene and per-region genome tracks with gtracks/pyGenomeTracks, and publish a UCSC genome browser track hub — end-to-end track generation for RNA-seq, ATAC-seq and other aligned BAM data.</p>
 <table>
 <thead>
 <tr>
@@ -481,8 +521,32 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align: right;"><strong>Engine</strong></td>
-<td>snakemake</td>
+<td style="text-align: right;"><strong>Rating</strong></td>
+<td>★ Verified</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>Origin</strong></td>
+<td>port</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>Domain</strong></td>
+<td>genomics</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>Rules</strong></td>
+<td>8</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>Tools</strong></td>
+<td>samtools · deeptools · pygenometracks · gtracks</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>Ported</strong></td>
+<td>2026-08-15</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>License</strong></td>
+<td>Apache-2.0</td>
 </tr>
 <tr>
 <td style="text-align: right;"><strong>Source</strong></td>
@@ -492,26 +556,30 @@
 <td style="text-align: right;"><strong>Pinned version</strong></td>
 <td><code>v2.0.5</code></td>
 </tr>
-<tr>
-<td style="text-align: right;"><strong>Ported</strong></td>
-<td>2026-08-15</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Rules</strong></td>
-<td>8</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Tools</strong></td>
-<td>samtools@1.19.2 · deeptools@3.5.5 · pygenometracks@3.8 · gtracks@1.12.6</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Domain</strong></td>
-<td>genomics</td>
-</tr>
 </tbody>
 </table>
 <h2 id="run-it">Run it</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>oxo-flow<span class="w"> </span>dry-run<span class="w"> </span>main.oxoflow
+</code></pre></div>
+<h2 id="installation">Installation</h2>
+<p><strong>Engine.</strong> oxo-flow &gt;= 0.11.0</p>
+<p><strong>Toolchain.</strong> conda envs — pinned</p>
+<p><strong>Requirements.</strong>
+- BAM files per group at <bam_dir>/<group>/*.bam (aligned/mapped data, e.g. RNA-seq or ATAC-seq; input BAMs need no index — merge_bams produces merged, indexed BAMs)
+- sample annotation CSV with a group column (sample_annotation; group values drive merge/coverage/hub fan-out)
+- gene list CSV with gene_region,ymax columns (gene_list; gene symbols or chr:start-end regions)
+- 12-column genome BED for gene annotation (genome_bed, e.g. ref.bed.gz); no genome FASTA or annotation GTF required
+- compute: up to 4 CPUs / 4 GB per rule (samtools merge and bamCoverage at threads=4/4000M); helper rules need 1 CPU / 1 GB
+- conda/mamba to build the pinned environment (samtools 1.19.2, deepTools 3.5.5, pyGenomeTracks 3.8, python 3.10.13, gtracks 1.12.6); helper rules need only a system python3
+- disk: results/ for merged BAMs, bigWigs, track plots and the UCSC hub</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># 1. install oxo-flow (release binary, recommended)</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>curl<span class="w"> </span>-fL<span class="w"> </span>-o<span class="w"> </span>oxo-flow.tar.gz<span class="w"> </span>https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>tar<span class="w"> </span>xzf<span class="w"> </span>oxo-flow.tar.gz<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>mv<span class="w"> </span>oxo-flow<span class="w"> </span>/usr/local/bin/
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1">#    or, via conda (may lag behind releases):</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1">#    conda install -c bioconda oxo-flow-cli</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># 2. get this workflow</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/oxo-flow-community/oxo-flow-genome-tracks
 </code></pre></div>
 <h2 id="scope">Scope</h2>
 <p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
@@ -531,7 +599,7 @@
 <li>split_sc_bam — single-cell sinto branch, not on the default path</li>
 <li>igv_report — temporarily deactivated upstream (commented out of rule all)</li>
 <li>make_bed — only feeds the deactivated igv_report rule</li>
-<li>env_export — conda-runtime documentation rule for envs of non-ported branches; checked-in envs/ yamls serve the same role</li>
+<li>env_export — conda-runtime documentation rule for envs of non-ported branches; envs/ yamls serve the same role</li>
 </ul>
 <h2 id="fidelity">Fidelity</h2>
 <table>
@@ -638,9 +706,9 @@ documentation record (<code>annot_export</code>).</p>
 <ul>
 <li>Repository: <a href="https://github.com/oxo-flow-community/oxo-flow-genome-tracks">oxo-flow-genome-tracks</a></li>
 <li>Upstream: <a href="https://github.com/epigen/genome_tracks">epigen/genome_tracks</a> @ <code>v2.0.5</code></li>
-<li>License: Apache-2.0 (port) · MIT (upstream)</li>
+<li>License: Apache-2.0 (this workflow) · MIT (upstream)</li>
 </ul>
-<p>This port was created on 2026-08-15 and may lag behind upstream releases. See the repository's NOTICE for full attribution.</p>
+<p>Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.</p>
 
 
 

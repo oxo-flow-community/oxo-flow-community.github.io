@@ -1,21 +1,52 @@
-# Genomic region set and gene set enrichment
+# Region set and gene set enrichment: LOLA, GREAT, pycisTarget and GSEA
 
-oxo-flow port of epigen/enrichment_analysis v3.0.1: region overlap enrichment (LOLA), genomic region enrichment of annotated terms (rGREAT), region TFBS motif enrichment (pycisTarget), gene over-representation analysis and preranked GSEA (GSEApy), with multiple-test correction inside each tool, per-set enrichment plots, per-group summary plots and reproducibility exports.
+<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
+
+Run a complete region set and gene set enrichment analysis on your own data: region overlap enrichment (LOLA), genomic region enrichment of annotated terms (rGREAT), region TFBS motif enrichment (pycisTarget), and gene over-representation analysis (ORA) and preranked GSEA (GSEApy). Every tool applies its own multiple-test correction; the workflow produces per-set enrichment plots, per-group summary plots, and reproducibility exports (configs/ and envs/). Official port of epigen/enrichment_analysis v3.0.1 with tool versions and commands pinned to the source.
 
 | | |
 |---:|---|
-| **Engine** | snakemake |
-| **Source** | [epigen/enrichment_analysis](https://github.com/epigen/enrichment_analysis) |
-| **Pinned version** | `v3.0.1` |
-| **Ported** | 2026-08-15 |
+| **Rating** | ★ Verified |
+| **Origin** | port |
+| **Domain** | genomics |
 | **Rules** | 38 |
 | **Tools** | gseapy · pandas · pycistarget · bioconductor-lola · bioconductor-rgreat · r-base · r-ggplot2 · r-pheatmap · r-svglite · r-reshape2 · r-data.table · bioconductor-rtracklayer · bioconductor-org.hs.eg.db |
-| **Domain** | genomics |
+| **Ported** | 2026-08-15 |
+| **License** | Apache-2.0 |
+| **Source** | [epigen/enrichment_analysis](https://github.com/epigen/enrichment_analysis) |
+| **Pinned version** | `v3.0.1` |
 
 ## Run it
 
 ```bash
 oxo-flow dry-run main.oxoflow
+```
+
+## Installation
+
+**Engine.** oxo-flow >= 0.11.0
+
+**Toolchain.** conda envs — pinned (conda/mamba at runtime; four environments declared in main.oxoflow, exact pins from upstream)
+
+**Requirements.**
+- annotation.csv declaring each feature set (region set or ranked gene set), its path, background, and group
+- region BED files, one per region set, plus a background BED (hg38)
+- ranked gene list CSVs, one per gene set (gene, score columns)
+- gene-set databases for GSEApy ORA: Azimuth_2023.json and ReactomePathways.gmt
+- LOLA region database for the genome of interest (e.g. LOLACore hg38)
+- pycisTarget cisTarget rankings (.feather) and motif annotation table
+- compute: up to 10 CPUs and 32 GB RAM per rule (defaults: 1 thread / 32 GB per rule; pycisTarget uses 10 threads as upstream)
+- disk: modest — enrichment tables, per-set plots, and pycisTarget HDF5 outputs (a few GB)
+
+```bash
+# 1. install oxo-flow (release binary, recommended)
+curl -fL -o oxo-flow.tar.gz https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz
+tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
+#    or, via conda (may lag behind releases):
+#    conda install -c bioconda oxo-flow-cli
+
+# 2. get this workflow
+git clone https://github.com/oxo-flow-community/oxo-flow-enrichment
 ```
 
 ## Scope
@@ -43,7 +74,7 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - gene_motif_enrichment_analysis_RcisTarget — zero instances on the default path: RcisTarget needs .txt gene sets in the annotation; the default annotation has none (region sets + ranked gene sets only)
 - env_export — conda env export requires the conda CLI inside the runtime environment; exact pins are already declared in envs/*.yaml
 - report rendering — oxo-flow has no report module; the reproducibility exports (configs/, envs) are kept as upstream rules
-- note: the anticipated exclusion names liftover/enrichr/gost/single_region_mode do not exist in v3.0.1 (grep-verified; Enrichr appears only as a database-source reference in config comments)
+- note: the anticipated names liftover/enrichr/gost/single_region_mode do not exist in v3.0.1 (Enrichr appears only as a database-source reference in config comments)
 
 ## Fidelity
 
@@ -80,6 +111,6 @@ rendered command is byte-identical to upstream.
 
 - Repository: [oxo-flow-enrichment](https://github.com/oxo-flow-community/oxo-flow-enrichment)
 - Upstream: [epigen/enrichment_analysis](https://github.com/epigen/enrichment_analysis) @ `v3.0.1`
-- License: Apache-2.0 (port) · MIT (upstream)
+- License: Apache-2.0 (this workflow) · MIT (upstream)
 
-This port was created on 2026-08-15 and may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.

@@ -1,21 +1,49 @@
-# Bisulfite methylation analysis with Bismark
+# Bisulfite methylation analysis: alignment, methylation calls and QC
 
-oxo-flow port of nf-core/methylseq 4.2.0 (default paired-end bismark path): FastQC, TrimGalore with library presets, Bismark (bowtie2) alignment, deduplication, samtools sort/index, per-context methylation extraction with bedGraph and coverage output, bismark2report/bismark2summary HTML reports, and a final MultiQC report. 13 rules, all tool versions pinned to the upstream module environments, upstream process labels baked into rule resources.
+<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
+
+Run end-to-end bisulfite methylation analysis (WGBS, and RRBS-compatible) of paired-end reads: FastQC quality control, TrimGalore adapter trimming, alignment to the bisulfite-converted reference genome with Bismark (bowtie2), PCR-deduplication, samtools sort/index, methylation extraction with per-context (CpG/CHG/CHH) calls plus bedGraph and coverage output, per-sample and project-wide Bismark HTML reports, and a final MultiQC report.
 
 | | |
 |---:|---|
-| **Engine** | nf-core |
-| **Source** | [nf-core/methylseq](https://github.com/nf-core/methylseq) |
-| **Pinned version** | `4.2.0` |
-| **Ported** | 2026-08-15 |
+| **Rating** | ★ Verified |
+| **Origin** | port |
+| **Domain** | genomics |
 | **Rules** | 13 |
 | **Tools** | fastqc · trim-galore · cutadapt · pigz · bismark · samtools · htslib · multiqc |
-| **Domain** | genomics |
+| **Ported** | 2026-08-15 |
+| **License** | Apache-2.0 |
+| **Source** | [nf-core/methylseq](https://github.com/nf-core/methylseq) |
+| **Pinned version** | `4.2.0` |
 
 ## Run it
 
 ```bash
 oxo-flow dry-run main.oxoflow
+```
+
+## Installation
+
+**Engine.** oxo-flow >= 0.11.0
+
+**Toolchain.** conda envs — pinned versions (conda-forge/bioconda)
+
+**Requirements.**
+- reference genome FASTA (uncompressed) — the Bismark bowtie2 index is built automatically on first run; no prebuilt index required
+- paired-end raw reads: <dir>/<sample>_R1.fastq.gz and <dir>/<sample>_R2.fastq.gz
+- compute: up to 12 CPUs / 72 GB RAM per rule (bismark_genomepreparation, trimgalore, bismark_align, bismark_deduplicate, bismark_methylationextractor)
+- conda or mamba to create the pinned per-rule environments
+- disk: space in config.out_dir (default results/) for aligned BAMs, methylation calls and reports
+
+```bash
+# 1. install oxo-flow (release binary, recommended)
+curl -fL -o oxo-flow.tar.gz https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz
+tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
+#    or, via conda (may lag behind releases):
+#    conda install -c bioconda oxo-flow-cli
+
+# 2. get this workflow
+git clone https://github.com/oxo-flow-community/oxo-flow-methylseq
 ```
 
 ## Scope
@@ -40,15 +68,17 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- single_end — paired-end only; upstream samplesheet 'single_end' column not ported
-- bwameth (bwa-meth) / bwamem / bismark_hisat aligners — non-default branches; aligner config accepts only 'bismark'
+- single_end — paired-end only; the upstream samplesheet 'single_end' column is not ported
+- bwameth (bwa-meth) aligner — non-default aligner branch, not ported
+- bwamem aligner — non-default aligner branch, not ported
+- bismark_hisat aligner — non-default aligner branch, not ported
 - BAM_TAPS_CONVERSION (rastair) — taps/bwamem branch, off by default
 - BAM_METHYLDACKEL — bwameth branch, off by default
 - QUALIMAP_BAMQC — --run_qualimap branch, off by default
 - PRESEQ_LCEXTRAP — --run_preseq branch, off by default
-- TARGETED_SEQUENCING (+ PICARD_MARKDUPLICATES / ADDORREPLACEREADGROUPS) — --run_targeted_sequencing branch, off by default
-- CAT_FASTQ — only for samples with >1 fastq pair
-- GUNZIP / UNTAR — only when a prebuilt --bismark_index is supplied; port always builds the index (upstream default)
+- TARGETED_SEQUENCING (+ PICARD_MARKDUPLICATES, PICARD_ADDORREPLACEREADGROUPS) — --run_targeted_sequencing branch, off by default
+- CAT_FASTQ — only active for samples with more than one fastq pair; fixture samplesheets have one pair per sample
+- GUNZIP / UNTAR — only active when a prebuilt --bismark_index is supplied; the port always builds the index from the reference FASTA (upstream default)
 
 ## Fidelity
 
@@ -86,6 +116,6 @@ BISMARK_ALIGN 8d / DEDUPLICATE 2d / METHYLATIONEXTRACTOR 1d time limits).
 
 - Repository: [oxo-flow-methylseq](https://github.com/oxo-flow-community/oxo-flow-methylseq)
 - Upstream: [nf-core/methylseq](https://github.com/nf-core/methylseq) @ `4.2.0`
-- License: Apache-2.0 (port) · MIT (upstream)
+- License: Apache-2.0 (this workflow) · MIT (upstream)
 
-This port was created on 2026-08-15 and may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.

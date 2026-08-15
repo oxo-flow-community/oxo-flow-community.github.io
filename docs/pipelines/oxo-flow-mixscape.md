@@ -1,21 +1,48 @@
-# Pooled CRISPR perturbation analysis (Mixscape)
+# Pooled CRISPR perturbation analysis with Seurat Mixscape
 
-oxo-flow port of the epigen/mixscape_seurat Snakemake workflow (v2.0.3): pooled CRISPR perturbation analysis (scCRISPR-seq/CROP-seq/Perturb-seq) with Seurat Mixscape — perturbation signatures (CalcPerturbSig), perturbed-cell classification (RunMixscape), LDA+UMAP of the perturbed subset (MixscapeLDA), the visualization suite, and reproducibility exports (conda envs, runtime config, annotation).
+<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
+
+Pooled CRISPR perturbation analysis (scCRISPR-seq / CROP-seq / Perturb-seq) with Seurat Mixscape: per-cell perturbation signatures (CalcPerturbSig), perturbed vs. non-perturbed classification (RunMixscape), LDA + UMAP projection of the perturbed subset, the full visualization suite (classification statistics, perturbation-score density, posterior-probability and optional antibody-expression violin plots), and reproducibility exports (exact conda envs, runtime config, annotation file). Input is one processed Seurat object per sample.
 
 | | |
 |---:|---|
-| **Engine** | snakemake |
+| **Rating** | ★ Verified |
+| **Origin** | port |
+| **Domain** | single-cell |
+| **Rules** | 7 |
+| **Tools** | Seurat · seuratobject · irlba · matrix · mixtools · ggplot2 · scales · patchwork · data.table · pyyaml · conda |
+| **Ported** | 2026-08-15 |
+| **License** | Apache-2.0 |
 | **Source** | [epigen/mixscape_seurat](https://github.com/epigen/mixscape_seurat) |
 | **Pinned version** | `v2.0.3` |
-| **Ported** | 2026-08-15 |
-| **Rules** | 7 |
-| **Tools** | Seurat · seuratobject · matrix · irlba · mixtools · ggplot2 · scales · patchwork · data.table · pyyaml · conda |
-| **Domain** | single-cell |
 
 ## Run it
 
 ```bash
 oxo-flow dry-run main.oxoflow
+```
+
+## Installation
+
+**Engine.** oxo-flow >= 0.11.0
+
+**Toolchain.** conda envs — pinned (r-seurat 4.4.0, r-seuratobject 4.1.4, r-irlba 2.3.5.1, r-matrix, r-mixtools 2.0.0, r-ggplot2 3.5.2, r-scales 1.3.0, r-patchwork 1.2.0, r-data.table 1.14.10, pyyaml 6.0.1); conda/mamba required at runtime, conda binary on PATH for env export
+
+**Requirements.**
+- One processed Seurat object per sample, as {data_dir}/{sample}.rds (already normalized/integrated — QC/normalization run upstream)
+- Annotation CSV (name, data columns) mapping sample names to object paths
+- Optional: 10X Antibody_Capture assay 'AB' for antibody-expression violin plots
+- Compute: up to 8 CPUs / 32000 MB (32 GB) per rule (mixscape, lda, visualize); export rules 1 CPU / 1 GB; -j controls parallelism
+
+```bash
+# 1. install oxo-flow (release binary, recommended)
+curl -fL -o oxo-flow.tar.gz https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz
+tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
+#    or, via conda (may lag behind releases):
+#    conda install -c bioconda oxo-flow-cli
+
+# 2. get this workflow
+git clone https://github.com/oxo-flow-community/oxo-flow-mixscape
 ```
 
 ## Scope
@@ -27,7 +54,8 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - mixscape
 - lda
 - visualize
-- env_export
+- env_export_mixscape
+- env_export_lda
 - config_export
 - annot_export
 
@@ -76,6 +104,6 @@ was dropped.
 
 - Repository: [oxo-flow-mixscape](https://github.com/oxo-flow-community/oxo-flow-mixscape)
 - Upstream: [epigen/mixscape_seurat](https://github.com/epigen/mixscape_seurat) @ `v2.0.3`
-- License: Apache-2.0 (port) · MIT (upstream)
+- License: Apache-2.0 (this workflow) · MIT (upstream)
 
-This port was created on 2026-08-15 and may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.

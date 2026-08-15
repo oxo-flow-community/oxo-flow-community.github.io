@@ -5,8 +5,10 @@ hide:
 
 # Pipeline catalog
 
-Every workflow in the library. Filter by domain or source engine; search by name,
-tool, or tag. Each card links to the workflow's run notes and its GitHub repository.
+Every workflow in the catalog. **★ Verified** entries are fidelity-checked and
+pass `validate` + `dry-run` in CI; **☆ Community** entries meet the listing
+requirements and are maintained by their authors. Filter by domain, origin, or
+source engine; search by name, tool, or tag.
 
 <div class="ox-filter">
   <input type="search" id="ox-search" placeholder="search: rna, star, variant, bam…" aria-label="Search workflows">

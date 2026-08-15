@@ -1,21 +1,49 @@
-# Amplicon sequencing (16S/ITS) with DADA2 and QIIME2
+# Amplicon sequencing (16S/ITS): DADA2 denoising, taxonomy assignment and QC
 
-oxo-flow port of the nf-core/ampliseq pipeline: amplicon sequencing analysis (16S/ITS) with FastQC, cutadapt primer trimming, DADA2 denoising (quality profiles, trunclen, filterAndTrim, learnErrors, dada, mergePairs, chimera removal, read tracking), DADA2 taxonomy assignment (assignTaxonomy + addSpecies, SBDI-GTDB reference DB), QIIME2 taxa barplots and MultiQC. Default-parameters main path of nf-core/ampliseq 2.18.0; optional branches (ITS, nanopore, syncom, QIIME2 diversity/classifier) not ported.
+<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
+
+Amplicon sequencing analysis (16S/ITS) that takes raw paired-end reads through FastQC quality control, cutadapt primer trimming, DADA2 denoising (quality profiles, filterAndTrim, learnErrors, denoise, chimera removal, read tracking), taxonomy assignment against the SBDI-GTDB reference, a QIIME2 taxa barplot over sample metadata, an overall summary table and a MultiQC report.
 
 | | |
 |---:|---|
-| **Engine** | nf-core |
+| **Rating** | ★ Verified |
+| **Origin** | port |
+| **Domain** | amplicon |
+| **Rules** | 26 |
+| **Tools** | fastqc · cutadapt · python · pandas · r-base · dada2 · bioconductor-digest · curl · biocontainers · qiime2 · multiqc |
+| **Ported** | 2026-08-15 |
+| **License** | Apache-2.0 |
 | **Source** | [nf-core/ampliseq](https://github.com/nf-core/ampliseq) |
 | **Pinned version** | `2.18.0` |
-| **Ported** | 2026-08-15 |
-| **Rules** | 26 |
-| **Tools** | fastqc · cutadapt · python · pandas · r-base · dada2 · digest · curl · biocontainers · qiime2 · multiqc |
-| **Domain** | genomics |
 
 ## Run it
 
 ```bash
 oxo-flow dry-run main.oxoflow
+```
+
+## Installation
+
+**Engine.** oxo-flow >= 0.11.0
+
+**Toolchain.** containers (Docker/Singularity) — pinned images
+
+**Requirements.**
+- raw paired-end FASTQ reads per sample (raw/<sample>_R1.fastq.gz / _R2.fastq.gz) plus a sample groups file (default test/fixtures/groups.tsv)
+- sample metadata TSV for the QIIME2 taxa barplot (config metadata_file, default test/fixtures/metadata.tsv); the SBDI-GTDB taxonomy reference database is downloaded automatically
+- compute: up to 10 CPUs / 20 GB per rule (dada2_denoising with 48h limit, dada2_taxonomy with 24h limit); most rules need 1-6 CPUs / 1-6 GB
+- host: Docker or Singularity to run the pinned container images, curl for the taxonomy-database download rule, and network access to figshare
+- optional: disk for intermediates/ and results/ plus the auto-downloaded SBDI-GTDB reference database
+
+```bash
+# 1. install oxo-flow (release binary, recommended)
+curl -fL -o oxo-flow.tar.gz https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz
+tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
+#    or, via conda (may lag behind releases):
+#    conda install -c bioconda oxo-flow-cli
+
+# 2. get this workflow
+git clone https://github.com/oxo-flow-community/oxo-flow-ampliseq
 ```
 
 ## Scope
@@ -53,12 +81,12 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- qiime2: QIIME2 analyses beyond the default taxa barplot (diversity, ANCOM, classifier training/prediction) — params.qiime2 false by default
-- dada2_its: ITS (fungal) analysis branch — params.its false by default
-- nanopore: nanopore sequencing branch — params.nanopore false by default
-- syncom: synthetic community controls branch — params.syncom false by default
+- dada2_its: ITS (fungal) analysis branch — not in the default main path (params.its false by default)
+- qiime2: QIIME2 downstream analyses beyond the default taxa barplot (diversity, ANCOM, classifier training/prediction, feature table exports) — off by default (params.qiime2 false)
+- nanopore: nanopore sequencing branch (params.nanopore false by default)
+- syncom: synthetic community controls branch (params.syncom false by default)
 - multi-run merge: DADA2_MERGE mergeSequenceTables branch for multiple --run_ids — single-run default path only
-- versions.yml per-module tool version files; PICRUSt and other optional reports
+- picrust / other optional reports gated by additional params off by default
 
 ## Fidelity
 
@@ -106,6 +134,6 @@ Other notes:
 
 - Repository: [oxo-flow-ampliseq](https://github.com/oxo-flow-community/oxo-flow-ampliseq)
 - Upstream: [nf-core/ampliseq](https://github.com/nf-core/ampliseq) @ `2.18.0`
-- License: Apache-2.0 (port) · MIT (upstream)
+- License: Apache-2.0 (this workflow) · MIT (upstream)
 
-This port was created on 2026-08-15 and may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.

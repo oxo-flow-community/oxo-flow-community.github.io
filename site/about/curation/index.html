@@ -10,9 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://oxo-flow-community.github.io/pipelines/oxo-flow-nanoseq/">
+        <link rel="canonical" href="https://oxo-flow-community.github.io/about/curation/">
       
       
+        <link rel="prev" href="../../pipelines/">
+      
+      
+        <link rel="next" href="../selection/">
       
       
         
@@ -23,7 +27,7 @@
     
     
       
-        <title>Nanopore long-read: demultiplexing, QC and alignment - oxo-flow-community</title>
+        <title>Curation & ratings - oxo-flow-community</title>
       
     
     
@@ -70,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#nanopore-long-read-demultiplexing-qc-and-alignment" class="md-skip">
+        <a href="#curation-ratings" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +109,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Nanopore long-read: demultiplexing, QC and alignment
+              Curation & ratings
             
           </span>
         </div>
@@ -279,7 +283,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href="../../pipelines/" class="md-nav__link">
         
   
   
@@ -303,10 +307,37 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../about/curation/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Curation & ratings
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -322,6 +353,59 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#classification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Classification
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ratings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ratings
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-a-workflow-listed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting a workflow listed
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -333,7 +417,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../about/selection/" class="md-nav__link">
+      <a href="../selection/" class="md-nav__link">
         
   
   
@@ -360,7 +444,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../about/porting/" class="md-nav__link">
+      <a href="../porting/" class="md-nav__link">
         
   
   
@@ -387,7 +471,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../about/contributing/" class="md-nav__link">
+      <a href="../contributing/" class="md-nav__link">
         
   
   
@@ -434,10 +518,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#run-it" class="md-nav__link">
+  <a href="#classification" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Run it
+        Classification
       
     </span>
   </a>
@@ -445,10 +529,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
+  <a href="#ratings" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Installation
+        Ratings
       
     </span>
   </a>
@@ -456,32 +540,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#scope" class="md-nav__link">
+  <a href="#getting-a-workflow-listed" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Scope
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#fidelity" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Fidelity
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#links" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Links
+        Getting a workflow listed
       
     </span>
   </a>
@@ -508,323 +570,77 @@
   
 
 
-<h1 id="nanopore-long-read-demultiplexing-qc-and-alignment">Nanopore long-read: demultiplexing, QC and alignment</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
-
-<p>A nanopore long-read pipeline for the DNA default path: samplesheet check, qcat barcode demultiplexing, NanoPlot + FastQC QC, minimap2 alignment, samtools view/sort/index, samtools stats/flagstat/idxstats, BigWig coverage tracks and a MultiQC report. The protocol config key switches to the cDNA/directRNA transcriptome paths. Every rule runs the upstream module's exact pinned container image.</p>
+<h1 id="curation-ratings">Curation &amp; ratings</h1>
+<p>The catalog is more than a list of repositories: every entry is classified,
+rated, and documented against the same criteria, so "listed here" means
+something you can rely on.</p>
+<h2 id="classification">Classification</h2>
+<p><strong>By domain.</strong> Each workflow carries one primary domain (bulk RNA-seq,
+single-cell, variant calling, metagenomics, epigenetics, …) plus free-form
+tags. Domains and tags are searchable on the <a href="../pipelines/">catalog page</a>.</p>
+<p><strong>By origin.</strong> Where a workflow came from, shown on every card:</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: right;"></th>
-<th></th>
+<th>Origin</th>
+<th>Meaning</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: right;"><strong>Rating</strong></td>
-<td>★ Verified</td>
+<td>⇄ Official port</td>
+<td>A migration of an established Nextflow or Snakemake pipeline, produced and maintained by the community team. Tool versions and commands are pinned to the source; a per-rule fidelity table documents the mapping.</td>
 </tr>
 <tr>
-<td style="text-align: right;"><strong>Origin</strong></td>
-<td>port</td>
+<td>✦ Original</td>
+<td>A workflow designed for oxo-flow from the start, by the community team or by its author.</td>
 </tr>
 <tr>
-<td style="text-align: right;"><strong>Domain</strong></td>
-<td>genomics</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Rules</strong></td>
-<td>19</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Tools</strong></td>
-<td>python · qcat · nanoplot · fastqc · samtools · perl · minimap2 · bedtools · ucsc-bedgraphtobigwig · multiqc</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Ported</strong></td>
-<td>2026-08-15</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>License</strong></td>
-<td>Apache-2.0</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Source</strong></td>
-<td><a href="https://github.com/nf-core/nanoseq">nf-core/nanoseq</a></td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Pinned version</strong></td>
-<td><code>3.1.0</code></td>
+<td>♺ Community listing</td>
+<td>A workflow hosted in any public GitHub repository, included in the catalog via pull request. The catalog links to the repository — it never copies or forks it.</td>
 </tr>
 </tbody>
 </table>
-<h2 id="run-it">Run it</h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>oxo-flow<span class="w"> </span>dry-run<span class="w"> </span>main.oxoflow
-</code></pre></div>
-<h2 id="installation">Installation</h2>
-<p><strong>Engine.</strong> oxo-flow &gt;= 0.11.0</p>
-<p><strong>Toolchain.</strong> containers (Docker/Singularity) — pinned images</p>
-<p><strong>Requirements.</strong>
-- genome FASTA reference (config.reference; defaults to test fixtures — override for real data)
-- samplesheet CSV (config.input) plus raw nanopore FASTQ for demultiplexing (config.input_path; skip with skip_demultiplexing=true)
-- optional GTF annotation (config.gtf + config.gtf_base) — only needed for the cDNA/directRNA junction-bed path
-- compute: up to 12 CPUs / 84 GB RAM per rule (minimap2 index; most medium rules request 6 CPUs / 42 GB)
-- container runtime (Docker or Singularity) — every rule pins its quay.io/biocontainers image</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># 1. install oxo-flow (release binary, recommended)</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>curl<span class="w"> </span>-fL<span class="w"> </span>-o<span class="w"> </span>oxo-flow.tar.gz<span class="w"> </span>https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>tar<span class="w"> </span>xzf<span class="w"> </span>oxo-flow.tar.gz<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>mv<span class="w"> </span>oxo-flow<span class="w"> </span>/usr/local/bin/
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1">#    or, via conda (may lag behind releases):</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1">#    conda install -c bioconda oxo-flow-cli</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># 2. get this workflow</span>
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/oxo-flow-community/oxo-flow-nanoseq
-</code></pre></div>
-<h2 id="scope">Scope</h2>
-<p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
-<p><strong>In scope</strong></p>
-<ul>
-<li>samplesheet_check</li>
-<li>qcat</li>
-<li>nanoplot</li>
-<li>fastqc</li>
-<li>get_chrom_sizes</li>
-<li>samtools_faidx</li>
-<li>gtf2bed</li>
-<li>minimap2_index</li>
-<li>minimap2_align</li>
-<li>samtools_view</li>
-<li>samtools_sort</li>
-<li>samtools_index</li>
-<li>samtools_stats</li>
-<li>samtools_idxstats</li>
-<li>samtools_flagstat</li>
-<li>bedtools_genomecov</li>
-<li>ucsc_bedgraphtobigwig</li>
-<li>dumpsoftwareversions</li>
-<li>multiqc</li>
-</ul>
-<p><strong>Excluded</strong></p>
-<ul>
-<li>graphmap2 index/align (aligner off by default; committee exclusion longread_map)</li>
-<li>nanolyse (off by default: run_nanolyse=false)</li>
-<li>medaka/deepvariant/pepper_margin_deepvariant variant calling (off by default: call_variants=false)</li>
-<li>sniffles/cutesv structural variant calling (off by default: call_variants=false)</li>
-<li>bambu/stringtie2/featurecounts/deseq2/dexseq quantification (protocol-gated to cDNA/directRNA; committee exclusion transcriptome)</li>
-<li>bedtools bamtobed + ucsc bed12tobigbed (protocol-gated to cDNA/directRNA; committee exclusion transcriptome)</li>
-<li>nanopolish/xpore/m6anet RNA modification analysis (protocol-gated to directRNA; committee exclusion plotly)</li>
-<li>jaffal RNA fusion analysis (protocol-gated to cDNA/directRNA)</li>
-<li>bam_rename (skip_alignment branch only)</li>
-<li>get_test_data / get_nanolyse_fasta test-profile downloads</li>
-<li>samtools_sort_index combined (call_variants branch only)</li>
-<li>note: committee scope mentions Dorado demultiplex + pycoQC QC; nanoseq 3.1.0 actually uses qcat + NanoPlot/FastQC — port follows the real source</li>
-</ul>
-<h2 id="fidelity">Fidelity</h2>
-<p>Port scope: the <strong>default-parameters main execution path</strong> with
-<code>protocol = DNA</code>, demultiplexing on (<code>barcode_kit = Auto</code>, qcat), minimap2
-aligner, and default skip flags (all QC/bigwig/bigbed/reporting on). Rules
-are listed in execution order; commands mirror the upstream modules
-byte-for-byte under default params (upstream Groovy <code>params.*</code> conditionals
-are reproduced as bash conditionals over the same config keys).</p>
+<h2 id="ratings">Ratings</h2>
 <table>
 <thead>
 <tr>
-<th>Upstream process/rule</th>
-<th>oxo-flow rule</th>
-<th>Tool (version)</th>
-<th>Notes</th>
+<th>Rating</th>
+<th>Badge</th>
+<th>Requirements</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>SAMPLESHEET_CHECK</td>
-<td><code>samplesheet_check</code></td>
-<td>python 3.8.3</td>
-<td>identical command (<code>check_samplesheet.py</code>, <code>not_changed</code> path arg)</td>
+<td><strong>Verified</strong></td>
+<td>★</td>
+<td>Official or community-team maintained; every rule pinned to a tool version; <code>validate</code> and <code>dry-run</code> green in CI; ports additionally carry a complete fidelity table and have passed rule-by-rule review against the source.</td>
 </tr>
 <tr>
-<td>QCAT</td>
-<td><code>qcat</code></td>
-<td>qcat 1.1.0</td>
-<td>identical command (<code>-f</code>, <code>-b</code>, <code>--kit</code>, <code>--min-score</code>, zcat preamble, gzip); runs once on <code>input_path</code>. Declared outputs are the ported barcode set <code>barcode01/02</code> (upstream emits <code>fastq/*.fastq.gz</code> dynamically)</td>
-</tr>
-<tr>
-<td>NANOPLOT</td>
-<td><code>nanoplot</code></td>
-<td>NanoPlot 1.41.0</td>
-<td>identical command (<code>-t N --fastq</code>); upstream publishes all samples' fixed-named <code>NanoPlot-report.html</code> into one dir (silently clobbering) — the port isolates each sample in <code>nanoplot/&lt;barcode&gt;/</code></td>
-</tr>
-<tr>
-<td>FASTQC</td>
-<td><code>fastqc</code></td>
-<td>fastqc 0.11.9</td>
-<td>identical command incl. the symlink-rename preamble; per-sample <code>&lt;barcode&gt;_fastqc.{html,zip}</code></td>
-</tr>
-<tr>
-<td>GET_CHROM_SIZES</td>
-<td><code>get_chrom_sizes</code></td>
-<td>samtools 1.13</td>
-<td>identical (<code>samtools faidx</code> + <code>cut -f 1,2</code>); upstream conda pin says samtools=1.10, container is 1.13 — port pins the container tag</td>
-</tr>
-<tr>
-<td>SAMTOOLS_FAIDX</td>
-<td><code>samtools_faidx</code></td>
-<td>samtools 1.16.1</td>
-<td>identical (<code>samtools faidx</code>); runs on a local copy of the reference like the upstream workdir staging</td>
-</tr>
-<tr>
-<td>GTF2BED</td>
-<td><code>gtf2bed</code></td>
-<td>perl 5.26.2</td>
-<td>identical (<code>gtf2bed &lt;gtf&gt; &gt; &lt;name&gt;.bed</code>); <strong>off on the default path</strong> — upstream only runs it when the samplesheet carries a gtf column (<code>when = config.gtf != ""</code>)</td>
-</tr>
-<tr>
-<td>MINIMAP2_INDEX</td>
-<td><code>minimap2_index</code></td>
-<td>minimap2 2.17</td>
-<td>identical flags for default params (<code>-ax map-ont -t 12 -d &lt;fasta&gt;.mmi</code>); protocol/stranded/junction conditionals preserved</td>
-</tr>
-<tr>
-<td>MINIMAP2_ALIGN</td>
-<td><code>minimap2_align</code></td>
-<td>minimap2 2.17</td>
-<td>identical flags + <code>&gt; &lt;sample&gt;.sam</code>; <code>--MD</code> conditional preserved (off by default)</td>
-</tr>
-<tr>
-<td>SAMTOOLS_VIEW_BAM</td>
-<td><code>samtools_view</code></td>
-<td>samtools 1.15.1</td>
-<td>identical (<code>view -b -h -O BAM -@ N -o</code>)</td>
-</tr>
-<tr>
-<td>SAMTOOLS_SORT</td>
-<td><code>samtools_sort</code></td>
-<td>samtools 1.16.1</td>
-<td>identical (<code>sort -@ N -o &lt;s&gt;.sorted.bam -T &lt;s&gt;.sorted</code>; upstream <code>ext.prefix = &lt;meta.id&gt;.sorted</code>)</td>
-</tr>
-<tr>
-<td>SAMTOOLS_INDEX</td>
-<td><code>samtools_index</code></td>
-<td>samtools 1.16.1</td>
-<td>identical (<code>index -@ N-1</code>)</td>
-</tr>
-<tr>
-<td>SAMTOOLS_STATS</td>
-<td><code>samtools_stats</code></td>
-<td>samtools 1.16.1</td>
-<td>identical (<code>stats --threads N --reference &lt;fasta&gt;</code>)</td>
-</tr>
-<tr>
-<td>SAMTOOLS_IDXSTATS</td>
-<td><code>samtools_idxstats</code></td>
-<td>samtools 1.16.1</td>
-<td>identical (<code>idxstats --threads N-1</code>)</td>
-</tr>
-<tr>
-<td>SAMTOOLS_FLAGSTAT</td>
-<td><code>samtools_flagstat</code></td>
-<td>samtools 1.16.1</td>
-<td>identical (<code>flagstat --threads N</code>)</td>
-</tr>
-<tr>
-<td>BEDTOOLS_GENOMECOV</td>
-<td><code>bedtools_genomecov</code></td>
-<td>bedtools 2.29.2</td>
-<td>identical (<code>genomecov -split -ibam -bg \| bedtools sort</code>; upstream hardcodes <code>-split</code>)</td>
-</tr>
-<tr>
-<td>UCSC_BEDGRAPHTOBIGWIG</td>
-<td><code>ucsc_bedgraphtobigwig</code></td>
-<td>ucsc-bedgraphtobigwig 377</td>
-<td>identical (<code>bedGraphToBigWig &lt;bedgraph&gt; &lt;sizes&gt;</code>)</td>
-</tr>
-<tr>
-<td>CUSTOM_DUMPSOFTWAREVERSIONS</td>
-<td><code>dumpsoftwareversions</code></td>
-<td>python (multiqc 1.13 image)</td>
-<td>upstream merges per-process <code>versions.yml</code> collected at run time; the port pins the same versions statically in <code>assets/versions.yml</code> (values = container tags) and runs the upstream merge script verbatim</td>
-</tr>
-<tr>
-<td>MULTIQC</td>
-<td><code>multiqc</code></td>
-<td>multiqc 1.11</td>
-<td>identical (<code>multiqc -f .</code> on a dir with config + report inputs); <code>--title</code>/<code>--config</code> conditionals preserved; output at <code>results/multiqc/minimap2/</code> matching the upstream publishDir path</td>
+<td><strong>Community</strong></td>
+<td>☆</td>
+<td>Public repository; the workflow validates with the released oxo-flow engine; installation and usage documented; maintained by its author.</td>
 </tr>
 </tbody>
 </table>
-<p>Deviation (identity model, see also <code>main.oxoflow</code> header): upstream
-demultiplexes the raw fastq into <strong>barcode-named</strong> files and then joins them
-onto samplesheet rows by barcode, so downstream artifacts are named
-<code>&lt;group&gt;_R&lt;replicate&gt;.bam</code> etc. oxo-flow has no channel join, so the port
-keys all per-sample rules by the barcode itself — outputs are named
-<code>barcode01.sam</code>, <code>barcode01.bam</code>, <code>barcode01.bigWig</code>, ... while keeping every
-command and intermediate filename upstream-identical. The samplesheet
-fixture maps barcodes <code>01</code>/<code>02</code> exactly like the upstream test data.</p>
-<p>Not ported (all off by default upstream, so absent from the default path):</p>
-<table>
-<thead>
-<tr>
-<th>Upstream step</th>
-<th>Reason</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>GRAPHMAP2_INDEX / GRAPHMAP2_ALIGN (aligner <code>graphmap2</code>)</td>
-<td>off by default (<code>aligner = minimap2</code>); committee exclusion <code>longread_map</code></td>
-</tr>
-<tr>
-<td>NANOLYSE (+ GET_NANOLYSE_FASTA)</td>
-<td>off by default (<code>run_nanolyse = false</code>)</td>
-</tr>
-<tr>
-<td>MEDAKA_VARIANT / DEEPVARIANT / PEPPER_MARGIN_DEEPVARIANT (+ bgzip/tabix)</td>
-<td>off by default (<code>call_variants = false</code>)</td>
-</tr>
-<tr>
-<td>SNIFFLES / CUTESV (+ sort/tabix)</td>
-<td>off by default (<code>call_variants = false</code>)</td>
-</tr>
-<tr>
-<td>BEDTOOLS_BAMBED / UCSC_BED12TOBIGBED</td>
-<td>protocol-gated upstream to <code>cDNA</code>/<code>directRNA</code> (<code>when: protocol == directRNA \|\| cDNA</code>) — never runs on the DNA default path; committee exclusion <code>transcriptome</code></td>
-</tr>
-<tr>
-<td>BAMBU / STRINGTIE2 / SUBREAD_FEATURECOUNTS / DESEQ2 / DEXSEQ</td>
-<td>gated on <code>protocol == cDNA/directRNA</code> + <code>skip_quantification = false</code> — not on the DNA default path; committee exclusion <code>transcriptome</code></td>
-</tr>
-<tr>
-<td>NANOPOLISH_INDEX_EVENTALIGN / XPORE_DATAPREP / XPORE_DIFFMOD / M6ANET_DATAPREP / M6ANET_INFERENCE (RNA modification)</td>
-<td>gated on <code>protocol == directRNA</code> — not on the DNA default path; committee exclusion <code>plotly</code> (m6anet plots)</td>
-</tr>
-<tr>
-<td>JAFFAL / GET_JAFFAL_REF / UNTAR (RNA fusion)</td>
-<td>gated on <code>protocol == cDNA/directRNA</code> — not on the DNA default path</td>
-</tr>
-<tr>
-<td>BAM_RENAME</td>
-<td>only when <code>skip_alignment = true</code></td>
-</tr>
-<tr>
-<td>GET_TEST_DATA / GET_NANOLYSE_FASTA (test-profile downloads)</td>
-<td><code>-profile test</code> only, replaced by checked-in fixtures</td>
-</tr>
-<tr>
-<td>SAMTOOLS_SORT_INDEX (combined sort+index)</td>
-<td><code>call_variants</code> branch only</td>
-</tr>
-<tr>
-<td><code>-profile test*</code> configs, cluster/container profiles, Tower reporting, completion email</td>
-<td>nf-core infrastructure, out of port scope</td>
-</tr>
-</tbody>
-</table>
-<h2 id="links">Links</h2>
-<ul>
-<li>Repository: <a href="https://github.com/oxo-flow-community/oxo-flow-nanoseq">oxo-flow-nanoseq</a></li>
-<li>Upstream: <a href="https://github.com/nf-core/nanoseq">nf-core/nanoseq</a> @ <code>3.1.0</code></li>
-<li>License: Apache-2.0 (this workflow) · MIT (upstream)</li>
-</ul>
-<p>Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.</p>
+<p>Verified status is re-checked when a workflow changes materially — CI runs on
+every push, and the fidelity review is repeated for significant updates.</p>
+<h2 id="getting-a-workflow-listed">Getting a workflow listed</h2>
+<p>The canonical registry is <code>data/pipelines.json</code> in the
+<a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io">website repository</a>.
+To list a workflow that lives <strong>in your own repository</strong>:</p>
+<ol>
+<li>Make sure it validates and dry-runs with the released oxo-flow engine and
+   documents installation and usage in its README.</li>
+<li>Add one registry entry with the workflow's metadata (see an existing entry
+   for the schema — name, title, origin, domain, tags, tools, rule count,
+   installation notes, repository URL, license).</li>
+<li>Open a pull request to this repository. Entries are checked with
+   <code>validate</code> + <code>dry-run</code> before they are merged.</li>
+</ol>
+<p>Workflows the community team maintains directly live in the
+<a href="https://github.com/oxo-flow-community">oxo-flow-community organization</a>
+under the same layout and criteria.</p>
 
 
 

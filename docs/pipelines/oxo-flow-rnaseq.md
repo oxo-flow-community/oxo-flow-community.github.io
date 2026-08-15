@@ -1,21 +1,53 @@
-# RNA-seq with STAR + gene/isoform counts
+# RNA-seq: alignment, quantification and QC
 
-oxo-flow port of the nf-core/rnaseq pipeline (default star_salmon + trimgalore main path): fq lint, FastQC, TrimGalore, STAR alignment, samtools sort/index/stats, Picard MarkDuplicates, featureCounts gene counts with biotype MultiQC tables, RSeQC + dupRadar + Qualimap QC, strand-specific bigWig tracks, and a final MultiQC report with the upstream custom content (fail_trimmed / fail_mapped tables, strandedness checks, sample merge, versions). 38 rules, commands byte-for-byte upstream under default parameters, all tools pinned to the exact upstream conda versions.
+<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
+
+End-to-end bulk RNA-seq analysis for paired-end reads: fq lint and FastQC raw-read QC, TrimGalore adapter/quality trimming, STAR alignment, Picard MarkDuplicates, Salmon alignment-mode quantification with tximport-merged gene/transcript count tables and SummarizedExperiment R objects, StringTie reference-guided assembly and quantification, featureCounts gene counts with biotype tables, RSeQC / dupRadar / Qualimap QC, DESeq2 sample-level QC (PCA, sample distances, size factors), strand-specific bigWig tracks, and one final MultiQC report with the nf-core/rnaseq custom content (fail_trimmed / fail_mapped tables, strandedness checks, software versions). A faithful port of the nf-core/rnaseq 3.26.0 default star_salmon path — same tools, same versions, same commands.
 
 | | |
 |---:|---|
-| **Engine** | nf-core |
+| **Rating** | ★ Verified |
+| **Origin** | port |
+| **Domain** | transcriptomics |
+| **Rules** | 44 |
+| **Tools** | fastqc · trim-galore · fq · star · salmon · stringtie · python · samtools · htslib · gawk · picard · subread · rseqc · r-base · bioconductor-dupradar · qualimap · bedtools · ucsc-bedclip · ucsc-bedgraphtobigwig · bioconductor-tximeta · bioconductor-summarizedexperiment · r-optparse · r-ggplot2 · r-rcolorbrewer · r-pheatmap · bioconductor-deseq2 · bioconductor-biocparallel · bioconductor-tximport · bioconductor-complexheatmap · multiqc |
+| **Ported** | 2026-08-15 |
+| **License** | Apache-2.0 |
 | **Source** | [nf-core/rnaseq](https://github.com/nf-core/rnaseq) |
 | **Pinned version** | `3.26.0` |
-| **Ported** | 2026-08-15 |
-| **Rules** | 38 |
-| **Tools** | fastqc@0.12.1 · trim-galore@2.1.0 · fq@0.12.0 · star@2.7.11b · samtools@1.23.1 · htslib@1.23.1 · gawk@5.1.0 · picard@3.4.0 · subread@2.0.6 · rseqc@5.0.4 · r-base@4.3 · bioconductor-dupradar@1.38.0 · qualimap@2.3 · bedtools@2.31.1 · ucsc-bedclip@377 · ucsc-bedgraphtobigwig@469 · multiqc@1.33 · python@3.12.12 |
-| **Domain** | transcriptomics |
 
 ## Run it
 
 ```bash
 oxo-flow run workflow/rnaseq.toml
+```
+
+## Installation
+
+**Engine.** oxo-flow >= 0.11.0
+
+**Toolchain.** conda envs — pinned (envs/*.yaml, versions pinned to the upstream nf-core/rnaseq 3.26.0 module environments; requires conda or mamba)
+
+**Requirements.**
+- paired-end FASTQ reads: reads_dir/<sample>_R1.fastq.gz + _R2.fastq.gz, cohort declared in [[sample_groups]]
+- reference genome FASTA (uncompressed)
+- gene annotation GTF
+- transcriptome FASTA (Salmon alignment-mode quant + StringTie)
+- 12-column gene BED (RSeQC input)
+- UCSC chrom.sizes file
+- STAR genome index built from the same FASTA/GTF (PREPARE_GENOME is not ported; build once with STAR --runMode genomeGenerate)
+- compute: up to 12 CPUs / 72 GB per rule (STAR align); most rules run on 6 CPUs / 36 GB or 1 CPU / 6 GB
+- conda or mamba to create the pinned per-rule environments (envs/)
+
+```bash
+# 1. install oxo-flow (release binary, recommended)
+curl -fL -o oxo-flow.tar.gz https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz
+tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
+#    or, via conda (may lag behind releases):
+#    conda install -c bioconda oxo-flow-cli
+
+# 2. get this workflow
+git clone https://github.com/oxo-flow-community/oxo-flow-rnaseq
 ```
 
 ## Scope
@@ -48,20 +80,26 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - bedtools_genomecov
 - ucsc_bedclip
 - ucsc_bedgraphtobigwig
+- salmon_quant
+- tx2gene
+- tximport
+- summarizedexperiment
+- stringtie
+- deseq2_qc
 - multiqc_custom_content
 - multiqc
 
 **Excluded**
 
-- salmon / rsem / hisat2 / stringtie / umicollapse quantification and as_quantification — non-default aligner branches
-- PREPARE_GENOME — reference artifacts (fasta, gtf, gene_bed, chrom_sizes, star_index) are inputs
+- rsem / hisat2 / umicollapse quantification and as_quantification — non-default aligner branches, not ported
+- PREPARE_GENOME — reference artifacts (fasta, gtf, transcript_fasta, gene_bed, chrom_sizes, star_index) are inputs
 - per-sample min_trimmed_reads filtering — data-dependent per-sample state; only the MultiQC fail_trimmed table is produced
-- UMI extraction (umitools) — with_umi branch, off by default
-- BBSplit — skip_bbsplit default path only
-- SortMeRNA / Bowtie2 rRNA removal — off by default
-- cat_fastq — only active for multi-fastq samples
-- DESeq2 QC — optional post-run branch
-- auto strandedness (per-sample inference) — pipeline-level config.strandedness only
+- UMI extraction (umitools) — --with_umi branch, off by default
+- BBSplit — --skip_bbsplit default path only
+- SortMeRNA / Bowtie2 rRNA removal — ribo-removal is off by default
+- cat_fastq — only active for samples with more than one fastq pair
+- DESeq2 QC sample-name group decomposition (Group columns for PCA-by-group plots) — coldata is the sample IDs only
+- auto strandedness (per-sample inference from the samplesheet) — pipeline-level config.strandedness with forward/reverse/unstranded values only
 - workflow_summary_mqc.yaml / methods_description_mqc.yaml — Nextflow-param-rendered MultiQC sections
 
 ## Fidelity
@@ -96,6 +134,6 @@ Known, documented deviations:
 
 - Repository: [oxo-flow-rnaseq](https://github.com/oxo-flow-community/oxo-flow-rnaseq)
 - Upstream: [nf-core/rnaseq](https://github.com/nf-core/rnaseq) @ `3.26.0`
-- License: Apache-2.0 (port) · MIT (upstream)
+- License: Apache-2.0 (this workflow) · MIT (upstream)
 
-This port was created on 2026-08-15 and may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.

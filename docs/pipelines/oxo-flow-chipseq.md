@@ -1,21 +1,53 @@
-# ChIP-seq peak calling, QC and differential analysis
+# ChIP-seq: peak calling, QC and differential analysis
 
-oxo-flow port of the nf-core/chipseq pipeline (default main path, paired-end, BWA, broad peaks): FastQC, Trim Galore, BWA-MEM alignment, library merge, Picard mark-duplicates, BAMTools filtering with blacklist and orphan removal, preseq + phantompeakqualtools complexity QC, bigWig tracks, deepTools QC plots, MACS3 broad-peak calling with input controls, HOMER annotation, FRiP scoring, consensus peaks with featureCounts + DESeq2 QC, IGV session and MultiQC report.
+<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
+
+ChIP-seq peak calling, QC and differential analysis for paired-end reads: FastQC and Trim Galore read QC, BWA-MEM alignment, library merge and Picard mark-duplicates, BAMTools filtering against a blacklist with orphan-read removal, preseq and phantompeakqualtools library complexity QC, bigWig tracks and deepTools QC plots, MACS3 broad-peak calling with input controls, HOMER peak annotation, FRiP scoring, consensus peaks across replicates (MACS3 merge, featureCounts quantification, DESeq2 QC), an IGV session and a MultiQC report.
 
 | | |
 |---:|---|
-| **Engine** | nf-core |
-| **Source** | [nf-core/chipseq](https://github.com/nf-core/chipseq) |
-| **Pinned version** | `2.1.0` |
-| **Ported** | 2026-08-15 |
+| **Rating** | ★ Verified |
+| **Origin** | port |
+| **Domain** | genomics |
 | **Rules** | 46 |
 | **Tools** | fastqc · trim-galore · bwa · samtools · picard · bamtools · preseq · r-base · phantompeakqualtools · bedtools · ucsc-bedgraphtobigwig · deeptools · khmer · macs3 · homer · subread · multiqc · python |
-| **Domain** | genomics |
+| **Ported** | 2026-08-15 |
+| **License** | Apache-2.0 |
+| **Source** | [nf-core/chipseq](https://github.com/nf-core/chipseq) |
+| **Pinned version** | `2.1.0` |
 
 ## Run it
 
 ```bash
 oxo-flow dry-run main.oxoflow       # prints the 154-instance plan
+```
+
+## Installation
+
+**Engine.** oxo-flow >= 0.11.0
+
+**Toolchain.** containers (Docker/Singularity) — pinned images
+
+**Requirements.**
+- genome FASTA and FASTA index (fasta, fai)
+- annotation GTF (gtf)
+- gene-body regions BED, derived upstream via GTF2BED (gene_bed)
+- chromosome sizes file (chrom_sizes)
+- blacklist regions BED (blacklist)
+- BWA index directory for the reference FASTA (bwa_index: *.amb, *.ann, *.bwt, *.pac, *.sa)
+- raw paired-end FASTQ reads named raw/{pair_id}_R{1,2}.fastq.gz with sample metadata in [[pairs]] and ip_ids
+- compute: up to 12 CPUs / 72 GB per rule (bwa_mem, trimgalore); most rules request 6 CPUs / 36 GB
+- disk: several GB of pinned container images pulled by Docker/Singularity
+
+```bash
+# 1. install oxo-flow (release binary, recommended)
+curl -fL -o oxo-flow.tar.gz https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz
+tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
+#    or, via conda (may lag behind releases):
+#    conda install -c bioconda oxo-flow-cli
+
+# 2. get this workflow
+git clone https://github.com/oxo-flow-community/oxo-flow-chipseq
 ```
 
 ## Scope
@@ -26,9 +58,9 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 - FASTQ_FASTQC_UMITOOLS_TRIMGALORE (FASTQC + TRIMGALORE)
 - BWA_MEM
-- BAM_SORT_STATS_SAMTOOLS (library)
+- BAM_SORT_STATS_SAMTOOLS (library: SAMTOOLS_SORT + SAMTOOLS_INDEX + SAMTOOLS_STATS + SAMTOOLS_FLAGSTAT + SAMTOOLS_IDXSTATS)
 - PICARD_MERGESAMFILES_LIBRARY
-- BAM_MARKDUPLICATES_PICARD (PICARD_MARKDUPLICATES + SAMTOOLS_INDEX + BAM_STATS_SAMTOOLS)
+- BAM_MARKDUPLICATES_PICARD (PICARD_MARKDUPLICATES + SAMTOOLS_INDEX + SAMTOOLS_STATS + SAMTOOLS_FLAGSTAT + SAMTOOLS_IDXSTATS)
 - BAM_FILTER_BAMTOOLS (BAMTOOLS_FILTER + SAMTOOLS_SORT name-sort + BAM_REMOVE_ORPHANS + BAM_SORT_STATS_SAMTOOLS + SAMTOOLS_INDEX + BAM_STATS_SAMTOOLS)
 - PRESEQ_LCEXTRAP
 - PICARD_COLLECTMULTIPLEMETRICS
@@ -36,7 +68,7 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - MULTIQC_CUSTOM_PHANTOM_PEAK_QUALTOOLS
 - BEDTOOLS_GENOMECOV
 - UCSC_BEDGRAPHTOBIGWIG
-- DEEPTOOLS_COMPUTEMATRIX + PLOTPROFILE + PLOTHEATMAP
+- DEEPTOOLS_COMPUTEMATRIX (scale-regions) + DEEPTOOLS_PLOTPROFILE + DEEPTOOLS_PLOTHEATMAP
 - DEEPTOOLS_PLOTFINGERPRINT
 - KHMER_UNIQUEKMERS
 - MACS2_CALLPEAK (MACS3, broad mode)
@@ -53,13 +85,13 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 - UMITOOLS_EXTRACT / umi_extract — with_umi defaults to false upstream
 - narrow-peak mode (narrow_peak=true) — port covers the broad-peak default only
-- GTF2BED / GENOME_BLACKLIST_REGIONS / prepare_genome / samplesheet_check — reference derivation and pipeline plumbing; port consumes pre-built references (fasta, gtf, gene_bed, chrom_sizes, blacklist, bwa_index)
+- GTF2BED / GENOME_BLACKLIST_REGIONS / prepare_genome / samplesheet_check — reference derivation and pipeline plumbing; the port takes pre-built references (fasta, gtf, gene_bed, chrom_sizes, blacklist, bwa_index)
 - multi-antibody consensus grouping (consensus_cluster) — port assumes a single antibody (config.antibody)
 - save_align_intermeds / save_mapped / save_tracks / save_macs_pileup publish branches — all off by default upstream
 - multiqc_data / multiqc_plots directory publication and pipeline summary / software versions MultiQC sections — Nextflow plumbing
-- multi-library MergeSamFiles branch — single-library default path only (upstream symlink branch for single-library samples replicated exactly)
+- multi-library MergeSamFiles branch — single-library default path only (upstream symlinks for single-library samples, replicated exactly)
 - STAR aligner alternative — aligner=bwa is the default
-- DUMP_SOFTWARE_VERSIONS — Nextflow plumbing
+- DUMP_SOFTWARE_VERSIONS — Nextflow plumbing (oxo-flow has no nf-core pipelines version dump)
 
 ## Fidelity
 
@@ -134,6 +166,6 @@ ported are listed with reasons.
 
 - Repository: [oxo-flow-chipseq](https://github.com/oxo-flow-community/oxo-flow-chipseq)
 - Upstream: [nf-core/chipseq](https://github.com/nf-core/chipseq) @ `2.1.0`
-- License: Apache-2.0 (port) · MIT (upstream)
+- License: Apache-2.0 (this workflow) · MIT (upstream)
 
-This port was created on 2026-08-15 and may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.

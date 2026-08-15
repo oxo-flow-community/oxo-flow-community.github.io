@@ -1,21 +1,48 @@
-# Variant calling for non-model organisms
+# Variant calling for non-model organisms: trimming, alignment and per-sample gVCFs
 
-oxo-flow port of the harvardinformatics/snparcher v2.2 default main path: FASTQ sample sheets -> fastp trimming/filtering -> BWA-MEM alignment -> samtools merge -> GATK HaplotypeCaller per-sample gVCFs, plus a cohort QC metrics report (fastp/BAM stats combined into qc_report.tsv). 12 rules, single main.oxoflow, 4 conda envs, 3 ported python scripts, real tiny fixtures from upstream tests.
+<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
+
+Variant calling for non-model organisms: paired FASTQ reads are trimmed and filtered with fastp, aligned with BWA-MEM, and called to per-sample gVCFs with GATK HaplotypeCaller (low-coverage defaults: -ploidy 2, --min-pruning 1), alongside a cohort QC metrics report aggregating fastp and samtools stats.
 
 | | |
 |---:|---|
-| **Engine** | snakemake |
-| **Source** | [harvardinformatics/snparcher](https://github.com/harvardinformatics/snparcher) |
-| **Pinned version** | `v2.2` |
-| **Ported** | 2026-08-15 |
+| **Rating** | ★ Verified |
+| **Origin** | port |
+| **Domain** | genomics |
 | **Rules** | 12 |
 | **Tools** | fastp · bwa · samtools · gatk4 · python |
-| **Domain** | genomics |
+| **Ported** | 2026-08-15 |
+| **License** | Apache-2.0 |
+| **Source** | [harvardinformatics/snparcher](https://github.com/harvardinformatics/snparcher) |
+| **Pinned version** | `v2.2` |
 
 ## Run it
 
 ```bash
 oxo-flow run main.oxoflow reference_source=/path/to/genome.fa.gz
+```
+
+## Installation
+
+**Engine.** oxo-flow >= 0.11.0
+
+**Toolchain.** conda envs — pinned versions (fastp 1.3.6, bwa 0.7.19, samtools 1.24, gatk4 4.6.2.0; conda-forge + bioconda)
+
+**Requirements.**
+- reference genome FASTA (plain or gzip), passed as reference_source at run time — bgzip-compressed and indexed by the workflow itself (no pre-built indices)
+- paired-end reads at raw/<sample>_1.fastq.gz and raw/<sample>_2.fastq.gz for each sample in the [[sample_groups]] list
+- compute: up to 8 CPUs / 8 GB per rule (bwa_mem 8 threads, fastp 4, gatk_haplotypecaller 7 GB Java heap)
+- conda or mamba at runtime to create the pinned envs/*.yaml environments
+
+```bash
+# 1. install oxo-flow (release binary, recommended)
+curl -fL -o oxo-flow.tar.gz https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz
+tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
+#    or, via conda (may lag behind releases):
+#    conda install -c bioconda oxo-flow-cli
+
+# 2. get this workflow
+git clone https://github.com/oxo-flow-community/oxo-flow-snparcher
 ```
 
 ## Scope
@@ -40,7 +67,7 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 **Excluded**
 
 - markdup (sambamba markdup + merge_dedup_libraries) — committee exclusion; port default mark_duplicates=false
-- joint_genotyping (GenomicsDBImport/GenotypeGVCFs + interval scatter machinery incl. gatk_intervals.smk) — committee exclusion; port default intervals_enabled=false
+- joint_genotyping (GenomicsDBImport/GenotypeGVCFs + interval scatter machinery) — committee exclusion
 - denovo — no such step in upstream v2.2 (v2 redesign)
 - structural_variants — no such step in upstream v2.2
 - variant_filtration — requires the excluded joint-genotyping raw VCF
@@ -96,6 +123,6 @@ exact pins (fastp 1.3.6, samtools 1.24, bwa 0.7.19, gatk4 4.6.2.0, picard
 
 - Repository: [oxo-flow-snparcher](https://github.com/oxo-flow-community/oxo-flow-snparcher)
 - Upstream: [harvardinformatics/snparcher](https://github.com/harvardinformatics/snparcher) @ `v2.2`
-- License: Apache-2.0 (port) · MIT (upstream)
+- License: Apache-2.0 (this workflow) · MIT (upstream)
 
-This port was created on 2026-08-15 and may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.

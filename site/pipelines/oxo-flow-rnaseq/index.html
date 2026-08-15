@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="20 battle-tested bioinformatics workflows — faithful ports of the most-used nf-core and Snakemake pipelines for the oxo-flow engine. Search the catalog, read the run instructions, copy the command.">
+        <meta name="description" content="The community catalog of oxo-flow workflows — verified ports of established nf-core and Snakemake pipelines, original designs, and community submissions. Classified, rated, and documented. Search, compare, run.">
       
       
       
@@ -23,7 +23,7 @@
     
     
       
-        <title>RNA-seq with STAR + gene/isoform counts - oxo-flow-community</title>
+        <title>RNA-seq: alignment, quantification and QC - oxo-flow-community</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#rna-seq-with-star-geneisoform-counts" class="md-skip">
+        <a href="#rna-seq-alignment-quantification-and-qc" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              RNA-seq with STAR + gene/isoform counts
+              RNA-seq: alignment, quantification and QC
             
           </span>
         </div>
@@ -306,6 +306,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../about/curation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Curation & ratings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../about/selection/" class="md-nav__link">
         
   
@@ -418,6 +445,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#scope" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -470,8 +508,10 @@
   
 
 
-<h1 id="rna-seq-with-star-geneisoform-counts">RNA-seq with STAR + gene/isoform counts</h1>
-<p>oxo-flow port of the nf-core/rnaseq pipeline (default star_salmon + trimgalore main path): fq lint, FastQC, TrimGalore, STAR alignment, samtools sort/index/stats, Picard MarkDuplicates, featureCounts gene counts with biotype MultiQC tables, RSeQC + dupRadar + Qualimap QC, strand-specific bigWig tracks, and a final MultiQC report with the upstream custom content (fail_trimmed / fail_mapped tables, strandedness checks, sample merge, versions). 38 rules, commands byte-for-byte upstream under default parameters, all tools pinned to the exact upstream conda versions.</p>
+<h1 id="rna-seq-alignment-quantification-and-qc">RNA-seq: alignment, quantification and QC</h1>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
+
+<p>End-to-end bulk RNA-seq analysis for paired-end reads: fq lint and FastQC raw-read QC, TrimGalore adapter/quality trimming, STAR alignment, Picard MarkDuplicates, Salmon alignment-mode quantification with tximport-merged gene/transcript count tables and SummarizedExperiment R objects, StringTie reference-guided assembly and quantification, featureCounts gene counts with biotype tables, RSeQC / dupRadar / Qualimap QC, DESeq2 sample-level QC (PCA, sample distances, size factors), strand-specific bigWig tracks, and one final MultiQC report with the nf-core/rnaseq custom content (fail_trimmed / fail_mapped tables, strandedness checks, software versions). A faithful port of the nf-core/rnaseq 3.26.0 default star_salmon path — same tools, same versions, same commands.</p>
 <table>
 <thead>
 <tr>
@@ -481,8 +521,32 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align: right;"><strong>Engine</strong></td>
-<td>nf-core</td>
+<td style="text-align: right;"><strong>Rating</strong></td>
+<td>★ Verified</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>Origin</strong></td>
+<td>port</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>Domain</strong></td>
+<td>transcriptomics</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>Rules</strong></td>
+<td>44</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>Tools</strong></td>
+<td>fastqc · trim-galore · fq · star · salmon · stringtie · python · samtools · htslib · gawk · picard · subread · rseqc · r-base · bioconductor-dupradar · qualimap · bedtools · ucsc-bedclip · ucsc-bedgraphtobigwig · bioconductor-tximeta · bioconductor-summarizedexperiment · r-optparse · r-ggplot2 · r-rcolorbrewer · r-pheatmap · bioconductor-deseq2 · bioconductor-biocparallel · bioconductor-tximport · bioconductor-complexheatmap · multiqc</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>Ported</strong></td>
+<td>2026-08-15</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>License</strong></td>
+<td>Apache-2.0</td>
 </tr>
 <tr>
 <td style="text-align: right;"><strong>Source</strong></td>
@@ -492,26 +556,32 @@
 <td style="text-align: right;"><strong>Pinned version</strong></td>
 <td><code>3.26.0</code></td>
 </tr>
-<tr>
-<td style="text-align: right;"><strong>Ported</strong></td>
-<td>2026-08-15</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Rules</strong></td>
-<td>38</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Tools</strong></td>
-<td>fastqc@0.12.1 · trim-galore@2.1.0 · fq@0.12.0 · star@2.7.11b · samtools@1.23.1 · htslib@1.23.1 · gawk@5.1.0 · picard@3.4.0 · subread@2.0.6 · rseqc@5.0.4 · r-base@4.3 · bioconductor-dupradar@1.38.0 · qualimap@2.3 · bedtools@2.31.1 · ucsc-bedclip@377 · ucsc-bedgraphtobigwig@469 · multiqc@1.33 · python@3.12.12</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Domain</strong></td>
-<td>transcriptomics</td>
-</tr>
 </tbody>
 </table>
 <h2 id="run-it">Run it</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>oxo-flow<span class="w"> </span>run<span class="w"> </span>workflow/rnaseq.toml
+</code></pre></div>
+<h2 id="installation">Installation</h2>
+<p><strong>Engine.</strong> oxo-flow &gt;= 0.11.0</p>
+<p><strong>Toolchain.</strong> conda envs — pinned (envs/*.yaml, versions pinned to the upstream nf-core/rnaseq 3.26.0 module environments; requires conda or mamba)</p>
+<p><strong>Requirements.</strong>
+- paired-end FASTQ reads: reads_dir/<sample>_R1.fastq.gz + _R2.fastq.gz, cohort declared in [[sample_groups]]
+- reference genome FASTA (uncompressed)
+- gene annotation GTF
+- transcriptome FASTA (Salmon alignment-mode quant + StringTie)
+- 12-column gene BED (RSeQC input)
+- UCSC chrom.sizes file
+- STAR genome index built from the same FASTA/GTF (PREPARE_GENOME is not ported; build once with STAR --runMode genomeGenerate)
+- compute: up to 12 CPUs / 72 GB per rule (STAR align); most rules run on 6 CPUs / 36 GB or 1 CPU / 6 GB
+- conda or mamba to create the pinned per-rule environments (envs/)</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># 1. install oxo-flow (release binary, recommended)</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>curl<span class="w"> </span>-fL<span class="w"> </span>-o<span class="w"> </span>oxo-flow.tar.gz<span class="w"> </span>https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>tar<span class="w"> </span>xzf<span class="w"> </span>oxo-flow.tar.gz<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>mv<span class="w"> </span>oxo-flow<span class="w"> </span>/usr/local/bin/
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1">#    or, via conda (may lag behind releases):</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1">#    conda install -c bioconda oxo-flow-cli</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># 2. get this workflow</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/oxo-flow-community/oxo-flow-rnaseq
 </code></pre></div>
 <h2 id="scope">Scope</h2>
 <p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
@@ -541,20 +611,26 @@
 <li>bedtools_genomecov</li>
 <li>ucsc_bedclip</li>
 <li>ucsc_bedgraphtobigwig</li>
+<li>salmon_quant</li>
+<li>tx2gene</li>
+<li>tximport</li>
+<li>summarizedexperiment</li>
+<li>stringtie</li>
+<li>deseq2_qc</li>
 <li>multiqc_custom_content</li>
 <li>multiqc</li>
 </ul>
 <p><strong>Excluded</strong></p>
 <ul>
-<li>salmon / rsem / hisat2 / stringtie / umicollapse quantification and as_quantification — non-default aligner branches</li>
-<li>PREPARE_GENOME — reference artifacts (fasta, gtf, gene_bed, chrom_sizes, star_index) are inputs</li>
+<li>rsem / hisat2 / umicollapse quantification and as_quantification — non-default aligner branches, not ported</li>
+<li>PREPARE_GENOME — reference artifacts (fasta, gtf, transcript_fasta, gene_bed, chrom_sizes, star_index) are inputs</li>
 <li>per-sample min_trimmed_reads filtering — data-dependent per-sample state; only the MultiQC fail_trimmed table is produced</li>
-<li>UMI extraction (umitools) — with_umi branch, off by default</li>
-<li>BBSplit — skip_bbsplit default path only</li>
-<li>SortMeRNA / Bowtie2 rRNA removal — off by default</li>
-<li>cat_fastq — only active for multi-fastq samples</li>
-<li>DESeq2 QC — optional post-run branch</li>
-<li>auto strandedness (per-sample inference) — pipeline-level config.strandedness only</li>
+<li>UMI extraction (umitools) — --with_umi branch, off by default</li>
+<li>BBSplit — --skip_bbsplit default path only</li>
+<li>SortMeRNA / Bowtie2 rRNA removal — ribo-removal is off by default</li>
+<li>cat_fastq — only active for samples with more than one fastq pair</li>
+<li>DESeq2 QC sample-name group decomposition (Group columns for PCA-by-group plots) — coldata is the sample IDs only</li>
+<li>auto strandedness (per-sample inference from the samplesheet) — pipeline-level config.strandedness with forward/reverse/unstranded values only</li>
 <li>workflow_summary_mqc.yaml / methods_description_mqc.yaml — Nextflow-param-rendered MultiQC sections</li>
 </ul>
 <h2 id="fidelity">Fidelity</h2>
@@ -670,9 +746,9 @@ the exact upstream conda version (see <code>envs/</code>).</p>
 <ul>
 <li>Repository: <a href="https://github.com/oxo-flow-community/oxo-flow-rnaseq">oxo-flow-rnaseq</a></li>
 <li>Upstream: <a href="https://github.com/nf-core/rnaseq">nf-core/rnaseq</a> @ <code>3.26.0</code></li>
-<li>License: Apache-2.0 (port) · MIT (upstream)</li>
+<li>License: Apache-2.0 (this workflow) · MIT (upstream)</li>
 </ul>
-<p>This port was created on 2026-08-15 and may lag behind upstream releases. See the repository's NOTICE for full attribution.</p>
+<p>Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.</p>
 
 
 

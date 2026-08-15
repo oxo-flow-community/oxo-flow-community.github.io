@@ -1,24 +1,38 @@
 # Contributing
 
-The catalog grows one faithful port at a time. To add workflow #21:
+The catalog grows one workflow at a time — a port, an original design, or a
+listing of a repository you already maintain.
 
-1. **Pick a source pipeline** (Nextflow or Snakemake) that is widely used and
-   actively maintained by its community.
-2. **Follow the [porting guide](porting.md)** — it is the executable spec:
-   engine mapping tables, version-pinning policy, repo layout, CI, README,
-   NOTICE and licensing conventions.
-3. **Create a repo** `oxo-flow-<name>` under
-   [oxo-flow-community](https://github.com/oxo-flow-community) with the standard
-   layout (`workflow/`, `config/`, `test/`, `README.md`, `LICENSE`, `NOTICE.md`,
-   `.github/workflows/ci.yml`, `metadata.json`) and green `validate` + `dry-run`
-   in CI.
-4. **Add its metadata** to `data/pipelines.json` in the
-   [site repository](https://github.com/oxo-flow-community/oxo-flow-community.github.io)
-   and re-run `scripts/generate.py` to refresh the catalog pages.
-5. **Open a pull request** to publish the entry.
+## 1. Build the workflow
 
-## Selection criteria
+- **Porting an existing pipeline** (Nextflow or Snakemake): follow the
+  [porting guide](porting.md) — mapping tables, version-pinning policy, repo
+  layout, README, licensing.
+- **Writing an original workflow**: same repo layout, plus your own design
+  decisions. The layout is:
 
-New entries are evaluated with the same pre-registered criteria as the first
-twenty: usage & adoption (40%), maintenance health (20%), portability (25%),
-domain diversity (15%). See the full [selection report](selection.md).
+  ```
+  workflow/            the .oxoflow file(s)
+  config/              optional configuration profiles
+  test/fixtures/       minimal inputs that make dry-run meaningful
+  test/run.sh          validate + lint + dry-run, exit 0 on success
+  README.md            what it does, Installation, usage, scope
+  LICENSE              Apache-2.0 (or your choice for your own repo)
+  NOTICE.md            required for ports — upstream attribution
+  .github/workflows/   CI: install oxo-flow, run test/run.sh
+  metadata.json        the registry entry (schema in data/pipelines.json)
+  ```
+
+## 2. Get it listed
+
+- **In the org:** if you want the community team to co-maintain it, open a
+  repository under
+  [oxo-flow-community](https://github.com/oxo-flow-community) and ask for a
+  review in the site repository.
+- **Your own repo:** add a registry entry to `data/pipelines.json` in the
+  [site repository](https://github.com/oxo-flow-community/oxo-flow-community.github.io)
+  and open a pull request. The catalog links to your repository — nothing
+  moves.
+
+See [Curation &amp; ratings](curation.md) for the classification scheme and
+what ★ Verified requires.

@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="20 battle-tested bioinformatics workflows — faithful ports of the most-used nf-core and Snakemake pipelines for the oxo-flow engine. Search the catalog, read the run instructions, copy the command.">
+        <meta name="description" content="The community catalog of oxo-flow workflows — verified ports of established nf-core and Snakemake pipelines, original designs, and community submissions. Classified, rated, and documented. Search, compare, run.">
       
       
       
@@ -23,7 +23,7 @@
     
     
       
-        <title>Metagenome assembly and binning - oxo-flow-community</title>
+        <title>Metagenome assembly, binning and taxonomic classification - oxo-flow-community</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#metagenome-assembly-and-binning" class="md-skip">
+        <a href="#metagenome-assembly-binning-and-taxonomic-classification" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Metagenome assembly and binning
+              Metagenome assembly, binning and taxonomic classification
             
           </span>
         </div>
@@ -306,6 +306,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../about/curation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Curation & ratings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../about/selection/" class="md-nav__link">
         
   
@@ -418,6 +445,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#scope" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -487,8 +525,10 @@
   
 
 
-<h1 id="metagenome-assembly-and-binning">Metagenome assembly and binning</h1>
-<p>oxo-flow port of the nf-core/mag pipeline (default short-read path): FastQC/Fastp QC with phiX removal, SPAdes and MEGAHIT metagenomic assembly, QUAST and Prodigal on the assemblies, bowtie2 read mapping back to the assemblies, contig depth profiles, six binners (MetaBAT2, MaxBin2, CONCOCT, COMEBin, MetaBinner, SemiBin2) with unbinned-contig chunk splitting, BUSCO bin QC, per-group QUAST and depth summaries, ALE assembly evaluation, GTDB-Tk classification of QC-passing bins with a combined summary, PROKKA annotation, and a final MultiQC report.</p>
+<h1 id="metagenome-assembly-binning-and-taxonomic-classification">Metagenome assembly, binning and taxonomic classification</h1>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
+
+<p>Turn paired-end metagenomic reads into quality-checked, taxonomically classified draft genomes: FastQC and fastp QC with phiX removal, SPAdes and MEGAHIT assembly, QUAST and Prodigal assessment, bowtie2 mapping, binning with six binners (MetaBAT2, MaxBin2, CONCOCT, COMEBin, MetaBinner, SemiBin2), BUSCO bin QC, GTDB-Tk classification with a combined summary, PROKKA annotation, ALE evaluation and a final MultiQC report. The default short-read path of nf-core/mag, faithfully ported with the same tool versions and commands.</p>
 <table>
 <thead>
 <tr>
@@ -498,20 +538,16 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align: right;"><strong>Engine</strong></td>
-<td>nf-core</td>
+<td style="text-align: right;"><strong>Rating</strong></td>
+<td>★ Verified</td>
 </tr>
 <tr>
-<td style="text-align: right;"><strong>Source</strong></td>
-<td><a href="https://github.com/nf-core/mag">nf-core/mag</a></td>
+<td style="text-align: right;"><strong>Origin</strong></td>
+<td>port</td>
 </tr>
 <tr>
-<td style="text-align: right;"><strong>Pinned version</strong></td>
-<td><code>5.5.0</code></td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Ported</strong></td>
-<td>2026-08-15</td>
+<td style="text-align: right;"><strong>Domain</strong></td>
+<td>metagenomics</td>
 </tr>
 <tr>
 <td style="text-align: right;"><strong>Rules</strong></td>
@@ -522,13 +558,44 @@
 <td>fastqc · fastp · bowtie2 · samtools · spades · megahit · quast · prodigal · bioawk · seqkit · metabat2 · maxbin2 · concoct · comebin · metabinner · semibin · busco · qsv · ale · gtdbtk · prokka · multiqc · python · pandas · biopython</td>
 </tr>
 <tr>
-<td style="text-align: right;"><strong>Domain</strong></td>
-<td>metagenomics</td>
+<td style="text-align: right;"><strong>Ported</strong></td>
+<td>2026-08-15</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>License</strong></td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>Source</strong></td>
+<td><a href="https://github.com/nf-core/mag">nf-core/mag</a></td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>Pinned version</strong></td>
+<td><code>5.5.0</code></td>
 </tr>
 </tbody>
 </table>
 <h2 id="run-it">Run it</h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>oxo-flow<span class="w"> </span>run<span class="w"> </span>workflow/mag.toml
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>oxo-flow<span class="w"> </span>run<span class="w"> </span>main.oxoflow
+</code></pre></div>
+<h2 id="installation">Installation</h2>
+<p><strong>Engine.</strong> oxo-flow &gt;= 0.11.0</p>
+<p><strong>Toolchain.</strong> conda envs — pinned</p>
+<p><strong>Requirements.</strong>
+- input: paired-end reads as {sample}_R1.fastq.gz / {sample}_R2.fastq.gz in config.input_dir (default test/fixtures/raw); single-end not ported
+- reference: GTDB-Tk database — download gtdbtk_data.tar.gz (~100 GB) or unpacked directory and set config.gtdb_db (oxo-flow cannot download it mid-run)
+- reference: phiX genome FASTA bundled in the repo (assets/data/GCA_002596845.1_ASM259684v1_genomic.fna.gz) — no download needed
+- compute: up to 12 CPUs / 140 GB RAM per rule (SPAdes 10 CPUs/72 GB/24 h; GTDB-Tk classifywf 2 CPUs/140 GB/12 h; defaults 1 thread/6 GB)
+- software: conda or mamba with the pinned envs/*.yaml environments (one per tool, no container layer)
+- optional: disk — hundreds of GB for real datasets (GTDB-Tk database plus per-sample assemblies and bins)</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># 1. install oxo-flow (release binary, recommended)</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>curl<span class="w"> </span>-fL<span class="w"> </span>-o<span class="w"> </span>oxo-flow.tar.gz<span class="w"> </span>https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>tar<span class="w"> </span>xzf<span class="w"> </span>oxo-flow.tar.gz<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>mv<span class="w"> </span>oxo-flow<span class="w"> </span>/usr/local/bin/
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1">#    or, via conda (may lag behind releases):</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1">#    conda install -c bioconda oxo-flow-cli</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># 2. get this workflow</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/oxo-flow-community/oxo-flow-mag
 </code></pre></div>
 <h2 id="scope">Scope</h2>
 <p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
@@ -707,17 +774,14 @@
 </tbody>
 </table>
 <h3 id="not-ported-off-by-default-upstream">Not ported (off by default upstream)</h3>
-<p>Long-read assembly and binning, DAS Tool refinement, kaiju and diamond
-taxonomic profiling, CheckM/CheckM2/GUNC QC, tiara domain classification,
-host removal, ancient DNA, CAT/BAT, pydamage, hybrid assembly, and the
-benchmarking modes.</p>
+<p>Long-read assembly and binning, DAS Tool refinement, kaiju and diamond taxonomic profiling, CheckM/CheckM2/GUNC QC, tiara domain classification, host removal, ancient DNA, CAT/BAT, pydamage, hybrid assembly, and the benchmarking modes.</p>
 <h2 id="links">Links</h2>
 <ul>
 <li>Repository: <a href="https://github.com/oxo-flow-community/oxo-flow-mag">oxo-flow-mag</a></li>
 <li>Upstream: <a href="https://github.com/nf-core/mag">nf-core/mag</a> @ <code>5.5.0</code></li>
-<li>License: Apache-2.0 (port) · MIT (upstream)</li>
+<li>License: Apache-2.0 (this workflow) · MIT (upstream)</li>
 </ul>
-<p>This port was created on 2026-08-15 and may lag behind upstream releases. See the repository's NOTICE for full attribution.</p>
+<p>Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.</p>
 
 
 

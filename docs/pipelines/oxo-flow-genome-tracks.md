@@ -1,21 +1,51 @@
-# Genome browser track generation from BAM files
+# Genome browser tracks: coverage, gene plots and UCSC hub
 
-oxo-flow port of the epigen/genome_tracks Snakemake workflow: merge BAM files per annotation group (samtools merge + index), compute bigWig coverage (deepTools bamCoverage), plot per-gene/region genome tracks (gtracks/pyGenomeTracks) and create a UCSC genome browser track hub — plus reproducibility exports of the annotation, gene list and config.
+<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
+
+Merge BAM files per experimental group with samtools, compute normalized bigWig coverage with deepTools bamCoverage (RPGC by default), plot isoform-aware per-gene and per-region genome tracks with gtracks/pyGenomeTracks, and publish a UCSC genome browser track hub — end-to-end track generation for RNA-seq, ATAC-seq and other aligned BAM data.
 
 | | |
 |---:|---|
-| **Engine** | snakemake |
+| **Rating** | ★ Verified |
+| **Origin** | port |
+| **Domain** | genomics |
+| **Rules** | 8 |
+| **Tools** | samtools · deeptools · pygenometracks · gtracks |
+| **Ported** | 2026-08-15 |
+| **License** | Apache-2.0 |
 | **Source** | [epigen/genome_tracks](https://github.com/epigen/genome_tracks) |
 | **Pinned version** | `v2.0.5` |
-| **Ported** | 2026-08-15 |
-| **Rules** | 8 |
-| **Tools** | samtools@1.19.2 · deeptools@3.5.5 · pygenometracks@3.8 · gtracks@1.12.6 |
-| **Domain** | genomics |
 
 ## Run it
 
 ```bash
 oxo-flow dry-run main.oxoflow
+```
+
+## Installation
+
+**Engine.** oxo-flow >= 0.11.0
+
+**Toolchain.** conda envs — pinned
+
+**Requirements.**
+- BAM files per group at <bam_dir>/<group>/*.bam (aligned/mapped data, e.g. RNA-seq or ATAC-seq; input BAMs need no index — merge_bams produces merged, indexed BAMs)
+- sample annotation CSV with a group column (sample_annotation; group values drive merge/coverage/hub fan-out)
+- gene list CSV with gene_region,ymax columns (gene_list; gene symbols or chr:start-end regions)
+- 12-column genome BED for gene annotation (genome_bed, e.g. ref.bed.gz); no genome FASTA or annotation GTF required
+- compute: up to 4 CPUs / 4 GB per rule (samtools merge and bamCoverage at threads=4/4000M); helper rules need 1 CPU / 1 GB
+- conda/mamba to build the pinned environment (samtools 1.19.2, deepTools 3.5.5, pyGenomeTracks 3.8, python 3.10.13, gtracks 1.12.6); helper rules need only a system python3
+- disk: results/ for merged BAMs, bigWigs, track plots and the UCSC hub
+
+```bash
+# 1. install oxo-flow (release binary, recommended)
+curl -fL -o oxo-flow.tar.gz https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz
+tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
+#    or, via conda (may lag behind releases):
+#    conda install -c bioconda oxo-flow-cli
+
+# 2. get this workflow
+git clone https://github.com/oxo-flow-community/oxo-flow-genome-tracks
 ```
 
 ## Scope
@@ -38,7 +68,7 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - split_sc_bam — single-cell sinto branch, not on the default path
 - igv_report — temporarily deactivated upstream (commented out of rule all)
 - make_bed — only feeds the deactivated igv_report rule
-- env_export — conda-runtime documentation rule for envs of non-ported branches; checked-in envs/ yamls serve the same role
+- env_export — conda-runtime documentation rule for envs of non-ported branches; envs/ yamls serve the same role
 
 ## Fidelity
 
@@ -73,6 +103,6 @@ documentation record (`annot_export`).
 
 - Repository: [oxo-flow-genome-tracks](https://github.com/oxo-flow-community/oxo-flow-genome-tracks)
 - Upstream: [epigen/genome_tracks](https://github.com/epigen/genome_tracks) @ `v2.0.5`
-- License: Apache-2.0 (port) · MIT (upstream)
+- License: Apache-2.0 (this workflow) · MIT (upstream)
 
-This port was created on 2026-08-15 and may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.

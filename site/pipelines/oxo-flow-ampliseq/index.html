@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="20 battle-tested bioinformatics workflows — faithful ports of the most-used nf-core and Snakemake pipelines for the oxo-flow engine. Search the catalog, read the run instructions, copy the command.">
+        <meta name="description" content="The community catalog of oxo-flow workflows — verified ports of established nf-core and Snakemake pipelines, original designs, and community submissions. Classified, rated, and documented. Search, compare, run.">
       
       
       
@@ -23,7 +23,7 @@
     
     
       
-        <title>Amplicon sequencing (16S/ITS) with DADA2 and QIIME2 - oxo-flow-community</title>
+        <title>Amplicon sequencing (16S/ITS): DADA2 denoising, taxonomy assignment and QC - oxo-flow-community</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#amplicon-sequencing-16sits-with-dada2-and-qiime2" class="md-skip">
+        <a href="#amplicon-sequencing-16sits-dada2-denoising-taxonomy-assignment-and-qc" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Amplicon sequencing (16S/ITS) with DADA2 and QIIME2
+              Amplicon sequencing (16S/ITS): DADA2 denoising, taxonomy assignment and QC
             
           </span>
         </div>
@@ -306,6 +306,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../about/curation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Curation & ratings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../about/selection/" class="md-nav__link">
         
   
@@ -418,6 +445,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#scope" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -470,8 +508,10 @@
   
 
 
-<h1 id="amplicon-sequencing-16sits-with-dada2-and-qiime2">Amplicon sequencing (16S/ITS) with DADA2 and QIIME2</h1>
-<p>oxo-flow port of the nf-core/ampliseq pipeline: amplicon sequencing analysis (16S/ITS) with FastQC, cutadapt primer trimming, DADA2 denoising (quality profiles, trunclen, filterAndTrim, learnErrors, dada, mergePairs, chimera removal, read tracking), DADA2 taxonomy assignment (assignTaxonomy + addSpecies, SBDI-GTDB reference DB), QIIME2 taxa barplots and MultiQC. Default-parameters main path of nf-core/ampliseq 2.18.0; optional branches (ITS, nanopore, syncom, QIIME2 diversity/classifier) not ported.</p>
+<h1 id="amplicon-sequencing-16sits-dada2-denoising-taxonomy-assignment-and-qc">Amplicon sequencing (16S/ITS): DADA2 denoising, taxonomy assignment and QC</h1>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
+
+<p>Amplicon sequencing analysis (16S/ITS) that takes raw paired-end reads through FastQC quality control, cutadapt primer trimming, DADA2 denoising (quality profiles, filterAndTrim, learnErrors, denoise, chimera removal, read tracking), taxonomy assignment against the SBDI-GTDB reference, a QIIME2 taxa barplot over sample metadata, an overall summary table and a MultiQC report.</p>
 <table>
 <thead>
 <tr>
@@ -481,8 +521,32 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align: right;"><strong>Engine</strong></td>
-<td>nf-core</td>
+<td style="text-align: right;"><strong>Rating</strong></td>
+<td>★ Verified</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>Origin</strong></td>
+<td>port</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>Domain</strong></td>
+<td>amplicon</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>Rules</strong></td>
+<td>26</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>Tools</strong></td>
+<td>fastqc · cutadapt · python · pandas · r-base · dada2 · bioconductor-digest · curl · biocontainers · qiime2 · multiqc</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>Ported</strong></td>
+<td>2026-08-15</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>License</strong></td>
+<td>Apache-2.0</td>
 </tr>
 <tr>
 <td style="text-align: right;"><strong>Source</strong></td>
@@ -492,26 +556,28 @@
 <td style="text-align: right;"><strong>Pinned version</strong></td>
 <td><code>2.18.0</code></td>
 </tr>
-<tr>
-<td style="text-align: right;"><strong>Ported</strong></td>
-<td>2026-08-15</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Rules</strong></td>
-<td>26</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Tools</strong></td>
-<td>fastqc · cutadapt · python · pandas · r-base · dada2 · digest · curl · biocontainers · qiime2 · multiqc</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Domain</strong></td>
-<td>genomics</td>
-</tr>
 </tbody>
 </table>
 <h2 id="run-it">Run it</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>oxo-flow<span class="w"> </span>dry-run<span class="w"> </span>main.oxoflow
+</code></pre></div>
+<h2 id="installation">Installation</h2>
+<p><strong>Engine.</strong> oxo-flow &gt;= 0.11.0</p>
+<p><strong>Toolchain.</strong> containers (Docker/Singularity) — pinned images</p>
+<p><strong>Requirements.</strong>
+- raw paired-end FASTQ reads per sample (raw/<sample>_R1.fastq.gz / _R2.fastq.gz) plus a sample groups file (default test/fixtures/groups.tsv)
+- sample metadata TSV for the QIIME2 taxa barplot (config metadata_file, default test/fixtures/metadata.tsv); the SBDI-GTDB taxonomy reference database is downloaded automatically
+- compute: up to 10 CPUs / 20 GB per rule (dada2_denoising with 48h limit, dada2_taxonomy with 24h limit); most rules need 1-6 CPUs / 1-6 GB
+- host: Docker or Singularity to run the pinned container images, curl for the taxonomy-database download rule, and network access to figshare
+- optional: disk for intermediates/ and results/ plus the auto-downloaded SBDI-GTDB reference database</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># 1. install oxo-flow (release binary, recommended)</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>curl<span class="w"> </span>-fL<span class="w"> </span>-o<span class="w"> </span>oxo-flow.tar.gz<span class="w"> </span>https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>tar<span class="w"> </span>xzf<span class="w"> </span>oxo-flow.tar.gz<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>mv<span class="w"> </span>oxo-flow<span class="w"> </span>/usr/local/bin/
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1">#    or, via conda (may lag behind releases):</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1">#    conda install -c bioconda oxo-flow-cli</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># 2. get this workflow</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/oxo-flow-community/oxo-flow-ampliseq
 </code></pre></div>
 <h2 id="scope">Scope</h2>
 <p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
@@ -546,12 +612,12 @@
 </ul>
 <p><strong>Excluded</strong></p>
 <ul>
-<li>qiime2: QIIME2 analyses beyond the default taxa barplot (diversity, ANCOM, classifier training/prediction) — params.qiime2 false by default</li>
-<li>dada2_its: ITS (fungal) analysis branch — params.its false by default</li>
-<li>nanopore: nanopore sequencing branch — params.nanopore false by default</li>
-<li>syncom: synthetic community controls branch — params.syncom false by default</li>
+<li>dada2_its: ITS (fungal) analysis branch — not in the default main path (params.its false by default)</li>
+<li>qiime2: QIIME2 downstream analyses beyond the default taxa barplot (diversity, ANCOM, classifier training/prediction, feature table exports) — off by default (params.qiime2 false)</li>
+<li>nanopore: nanopore sequencing branch (params.nanopore false by default)</li>
+<li>syncom: synthetic community controls branch (params.syncom false by default)</li>
 <li>multi-run merge: DADA2_MERGE mergeSequenceTables branch for multiple --run_ids — single-run default path only</li>
-<li>versions.yml per-module tool version files; PICRUSt and other optional reports</li>
+<li>picrust / other optional reports gated by additional params off by default</li>
 </ul>
 <h2 id="fidelity">Fidelity</h2>
 <table>
@@ -722,9 +788,9 @@
 <ul>
 <li>Repository: <a href="https://github.com/oxo-flow-community/oxo-flow-ampliseq">oxo-flow-ampliseq</a></li>
 <li>Upstream: <a href="https://github.com/nf-core/ampliseq">nf-core/ampliseq</a> @ <code>2.18.0</code></li>
-<li>License: Apache-2.0 (port) · MIT (upstream)</li>
+<li>License: Apache-2.0 (this workflow) · MIT (upstream)</li>
 </ul>
-<p>This port was created on 2026-08-15 and may lag behind upstream releases. See the repository's NOTICE for full attribution.</p>
+<p>Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.</p>
 
 
 

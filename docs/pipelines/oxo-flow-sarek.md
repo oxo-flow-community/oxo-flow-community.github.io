@@ -1,21 +1,52 @@
 # WGS/WES germline and somatic variant calling
 
-oxo-flow port of nf-core/sarek 3.10.0 default main path: FastQC, fastp trim/split, BWA-MEM alignment, MarkDuplicates, BQSR, HaplotypeCaller, VEP annotation, VCF QC and MultiQC aggregation for WGS/WES germline and somatic variant calling.
+<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
+
+GATK best-practice variant calling for whole-genome and whole-exome sequencing (WGS/WES), germline by default: FastQC quality control, fastp trimming and splitting, BWA-MEM alignment, MarkDuplicates with CRAM conversion, base quality score recalibration (BQSR), single-sample HaplotypeCaller variant calling, CNN 1D scoring with tranche filtering, VEP annotation, per-sample VCF QC and a final MultiQC report.
 
 | | |
 |---:|---|
-| **Engine** | nf-core |
+| **Rating** | ★ Verified |
+| **Origin** | port |
+| **Domain** | genomics |
+| **Rules** | 20 |
+| **Tools** | fastqc · fastp · bwa · samtools · gatk · mosdepth · bcftools · vcftools · ensembl-vep · multiqc |
+| **Ported** | 2026-08-15 |
+| **License** | Apache-2.0 |
 | **Source** | [nf-core/sarek](https://github.com/nf-core/sarek) |
 | **Pinned version** | `3.10.0` |
-| **Ported** | 2026-08-15 |
-| **Rules** | 18 |
-| **Tools** | fastqc@0.12.1 · fastp@1.1.0 · bwa@0.7.18 · samtools@1.24 · gatk@4.7.1.0 · mosdepth@0.3.8 · bcftools@1.23.1 · vcftools@0.1.17 · ensembl-vep@116.0 · multiqc@1.35 |
-| **Domain** | genomics |
 
 ## Run it
 
 ```bash
 oxo-flow dry-run main.oxoflow
+```
+
+## Installation
+
+**Engine.** oxo-flow >= 0.11.0
+
+**Toolchain.** containers (Docker) — pinned images
+
+**Requirements.**
+- paired-end FASTQ reads at raw/{sample}_R1.fastq.gz / raw/{sample}_R2.fastq.gz
+- GRCh38 genome FASTA plus .fai and .dict
+- GRCh38 BWA index directory (bwa_index_dir)
+- GATK bundle known-sites VCFs with .tbi: dbsnp_146.hg38.vcf.gz, Mills_and_1000G_gold_standard.indels.hg38.vcf.gz, Homo_sapiens_assembly38.known_indels.vcf.gz
+- VEP cache (GRCh38, homo_sapiens, cache version 116) mounted at /.vep in the container
+- compute: up to 24 CPUs / 36 GB per rule (BWA-MEM 24 threads/30G; VEP 6 threads/36G)
+- input cap: ~50M read pairs per sample (fastp split, see fidelity deviations)
+- disk: results/ for per-sample CRAMs/VCFs/reports, plus the reference bundle and VEP cache
+
+```bash
+# 1. install oxo-flow (release binary, recommended)
+curl -fL -o oxo-flow.tar.gz https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz
+tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
+#    or, via conda (may lag behind releases):
+#    conda install -c bioconda oxo-flow-cli
+
+# 2. get this workflow
+git clone https://github.com/oxo-flow-community/oxo-flow-sarek
 ```
 
 ## Scope
@@ -36,6 +67,8 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - mosdepth_recal
 - samtools_stats_recal
 - gatk_haplotypecaller
+- gatk_cnnscorevariants
+- gatk_filtervarianttranches
 - bcftools_stats
 - vcftools_tstv_count
 - vcftools_tstv_qual
@@ -45,20 +78,16 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- deepvariant (--tools alternative, not on default path)
-- strelka (--tools alternative, not on default path)
-- manta (--tools alternative, not on default path)
-- cnvkit (--tools alternative, not on default path)
-- ascat (--tools alternative, not on default path)
-- mutect2/msisensor/somalier/freebayes/snpeff/vep-somatic etc. (optional --tools callers)
-- NGSCheckMate (BAM_NGSCHECKMATE + BCFTOOLS_MPILEUP) — sample-identity QC on default path but outside port scope
-- TrimGalore trimming (--trim_fastq_trimgalore alternative; fastp is upstream default)
+- NGSCheckMate (BAM_NGSCHECKMATE + BCFTOOLS_MPILEUP) — sample-identity QC, not on the ported default path
+- TrimGalore trimming (--trim_fastq_trimgalore alternative; fastp is the upstream default)
 - bwa-mem2 aligner (upstream default aligner is bwa-mem)
 - save_output_as_bam=true BAM branch of MarkDuplicates (CRAM-only port)
-- prepare_genome/bed-prep/interval-prep — reference prep, not default execution path
+- Strelka2, Mutect2, Manta, DeepVariant, CNVkit, ASCAT, MSIsensor, SomaticSniper, VarDict, FreeBayes, etc. — optional --tools callers, not on the default path
+- reference preparation (BWA_INDEX, GATK4_CREATESEQUENCEDICTIONARY, SAMTOOLS_FAIDX) — not ported; the port requires a pre-built reference bundle (upstream also accepts these as inputs via params.bwa/dict/fasta_fai)
+- interval preparation (gawk BUILD_INTERVALS, CREATE_INTERVALS_BED, TABIX bgzip/tabix interval split) and the per-interval scatter/gather of BQSR/ApplyBQSR/HaplotypeCaller (GATK4_GATHERBQSRREPORTS, CRAM_MERGE_INDEX_SAMTOOLS, GATK4_MERGEVCFS) — not ported; the port runs single whole-genome GATK jobs without --intervals (gathers are exact, so results are equivalent, but the per-contig parallelism of the upstream default path is absent)
 - joint_germline GVCF joint-genotyping subworkflow (default joint_germline=false)
-- UMI workflows (SAREK_UMI_*) — not on default path
-- fastp split parts beyond 0001. — only first split part wired fastp->BWA (upstream-compatible naming, documented)
+- UMI workflows (SAREK_UMI_*) — not on the default path
+- fastp split parts beyond 0001. — supported input size is capped at one split part (~50M read pairs / 200M lines per sample): only part 0001 is wired fastp -> BWA. Multi-part splits (any real WGS dataset above the threshold) are a known unsupported upstream behavior — upstream aligns every part and merges the BAMs before MarkDuplicates (BAM_MERGE_INDEX_SAMTOOLS)
 
 ## Fidelity
 
@@ -127,6 +156,6 @@ Deviations (all documented, nothing silently dropped):
 
 - Repository: [oxo-flow-sarek](https://github.com/oxo-flow-community/oxo-flow-sarek)
 - Upstream: [nf-core/sarek](https://github.com/nf-core/sarek) @ `3.10.0`
-- License: Apache-2.0 (port) · MIT (upstream)
+- License: Apache-2.0 (this workflow) · MIT (upstream)
 
-This port was created on 2026-08-15 and may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.

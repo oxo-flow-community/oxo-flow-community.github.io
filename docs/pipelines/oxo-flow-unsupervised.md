@@ -1,21 +1,47 @@
-# Unsupervised analyses of omics matrices
+# Unsupervised analysis of omics matrices: PCA, UMAP, clustering and validation
 
-oxo-flow port of the epigen/unsupervised_analysis workflow (default-parameter main path): PCA, UMAP and densMAP embeddings (2D/3D), distance matrices, hierarchical clustering heatmaps, Leiden clustering (RBConfiguration and Modularity partitions), clustree analysis, external and internal cluster validation with TOPSIS ranking, and static/interactive visualizations for a single omics matrix sample.
+<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
+
+Unsupervised analysis of omics matrices: PCA, UMAP and densMAP embeddings (2D/3D), distance matrices, hierarchical clustering heatmaps, Leiden clustering across partition types and resolutions, clustree analysis, external and internal cluster validation with TOPSIS ranking, and static and interactive visualizations. A verified port of the default-parameter path of epigen/unsupervised_analysis v4.0.2 (Snakemake); all 52 rules and tool versions are pinned to the upstream release.
 
 | | |
 |---:|---|
-| **Engine** | snakemake |
-| **Source** | [epigen/unsupervised_analysis](https://github.com/epigen/unsupervised_analysis) |
-| **Pinned version** | `v4.0.2` |
-| **Ported** | 2026-08-15 |
+| **Rating** | ★ Verified |
+| **Origin** | port |
+| **Domain** | other |
 | **Rules** | 52 |
 | **Tools** | igraph · leidenalg · scikit-learn · python · pandas · scipy · numpy · pynndescent · numba · dask · scikit-image · umap-learn · matplotlib-base · bokeh · datashader · holoviews · colorcet · r-ggplot2 · r-patchwork · r-ggally · r-ggrepel · r-reshape2 · r-stringi · r-data.table · plotly · plotly_express · seaborn-base · bioconductor-complexheatmap · r-rcolorbrewer · r-fastcluster · r-magick · r-clustree · r-clustercrit · pymcdm |
-| **Domain** | other |
+| **Ported** | 2026-08-15 |
+| **License** | Apache-2.0 |
+| **Source** | [epigen/unsupervised_analysis](https://github.com/epigen/unsupervised_analysis) |
+| **Pinned version** | `v4.0.2` |
 
 ## Run it
 
 ```bash
-oxo-flow run workflow/unsupervised.toml
+oxo-flow run main.oxoflow
+```
+
+## Installation
+
+**Engine.** oxo-flow >= 0.11.0
+
+**Toolchain.** conda envs — pinned versions (7 environments under envs/, created by conda/mamba)
+
+**Requirements.**
+- per-sample omics matrix CSV and optional labels CSV ({config.data_dir}/{sample}_data.csv / _labels.csv), registered in config/annotation.csv; no reference genomes or index files needed (default fixtures: sklearn digits, 1797 samples x 64 features)
+- compute: up to 2 CPUs / 32 GB RAM per rule (defaults threads=2, mem_mb=32000; 7 plotting rules use 8 GB)
+- conda or mamba installed to build the 7 pinned environments on first run
+
+```bash
+# 1. install oxo-flow (release binary, recommended)
+curl -fL -o oxo-flow.tar.gz https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz
+tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
+#    or, via conda (may lag behind releases):
+#    conda install -c bioconda oxo-flow-cli
+
+# 2. get this workflow
+git clone https://github.com/oxo-flow-community/oxo-flow-unsupervised
 ```
 
 ## Scope
@@ -79,10 +105,10 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- env_export (7 rules) — runs `conda env export` inside the rule and requires a runtime conda installation; oxo-flow rules execute in one pinned environment. The exact pins are committed under envs/ instead.
-- config_export — dumps the in-memory Snakemake config via a run: block; the equivalent oxo-flow [config] is documented in main.oxoflow and README.
-- plot_dimred_features — upstream default config `features_to_plot: []` produces no output on the default path (per-feature wildcard fan-out); skipped with the upstream default.
-- report/ generation — Snakemake `report(...)` wrapper metadata (captions/categories/labels) has no oxo-flow counterpart; rule outputs are identical, only the report book is not produced.
+- env_export (7 rules) — runs `conda env export` inside the rule and requires a runtime conda installation; oxo-flow rules execute in one pinned environment, so the exported result would be the host environment, not the analysis environment. The exact pins are committed under envs/ instead.
+- config_export — dumps the in-memory Snakemake config object via a run: block; the equivalent oxo-flow [config] is documented in main.oxoflow and this README.
+- plot_dimred_features — upstream default config `features_to_plot: []` means the rule has no output on the default path (fan-out over a per-feature wildcard); skipped with the upstream default.
+- report/ generation — Snakemake `report(...)` wrapper metadata (captions, categories, labels) has no oxo-flow counterpart; rule outputs are identical, only the report book is not produced.
 
 ## Fidelity
 
@@ -146,6 +172,6 @@ of the default-parameter path is executed, none are stubbed):
 
 - Repository: [oxo-flow-unsupervised](https://github.com/oxo-flow-community/oxo-flow-unsupervised)
 - Upstream: [epigen/unsupervised_analysis](https://github.com/epigen/unsupervised_analysis) @ `v4.0.2`
-- License: Apache-2.0 (port) · MIT (upstream)
+- License: Apache-2.0 (this workflow) · MIT (upstream)
 
-This port was created on 2026-08-15 and may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.

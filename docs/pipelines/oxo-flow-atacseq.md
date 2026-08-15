@@ -1,21 +1,48 @@
-# ATAC-seq peak calling and QC
+# ATAC-seq: peak calling and QC
 
-oxo-flow port of the nf-core/atacseq pipeline (default main path, single-end, BWA aligner, broad peaks): FastQC, Trim Galore trimming, BWA-MEM alignment, Picard mark-duplicates, BAMTools filtering, MACS2 peak calling, HOMER peak annotation, FRiP scoring, normalised bigWig tracks, deepTools QC plots and a MultiQC report.
+<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
+
+ATAC-seq peak calling and QC for a cohort of single-end samples: FastQC raw-read QC, Trim Galore adapter trimming, BWA-MEM alignment, Picard mark-duplicates, BAMTools filtering, MACS2 broad-peak calling, HOMER peak annotation, FRiP scoring, normalised bigWig tracks, deepTools QC plots (profile, heatmap, fingerprint) and a combined MultiQC report.
 
 | | |
 |---:|---|
-| **Engine** | nf-core |
-| **Source** | [nf-core/atacseq](https://github.com/nf-core/atacseq) |
-| **Pinned version** | `2.1.2` |
-| **Ported** | 2026-08-15 |
+| **Rating** | ★ Verified |
+| **Origin** | port |
+| **Domain** | epigenomics |
 | **Rules** | 15 |
 | **Tools** | fastqc · trim-galore · bwa · samtools · picard · bamtools · macs2 · homer · bedtools · ucsc-bedgraphtobigwig · deeptools · multiqc |
-| **Domain** | genomics |
+| **Ported** | 2026-08-15 |
+| **License** | Apache-2.0 |
+| **Source** | [nf-core/atacseq](https://github.com/nf-core/atacseq) |
+| **Pinned version** | `2.1.2` |
 
 ## Run it
 
 ```bash
 oxo-flow dry-run main.oxoflow
+```
+
+## Installation
+
+**Engine.** oxo-flow >= 0.11.0
+
+**Toolchain.** containers (Docker/Singularity) — pinned images, plus one pinned conda env for picard_markduplicates
+
+**Requirements.**
+- reference data: genome FASTA with .fai, BWA index prefix (.amb/.ann/.bwt/.pac/.sa), chrom sizes file, GTF annotation, gene BED, TSS BED (optional blacklist BED)
+- input: single-end <sample>.fastq.gz reads, declared in [[sample_groups]]
+- compute: up to 12 CPUs / 72 GB per rule
+- runtime: Docker or Singularity for the 14 container rules; conda/mamba for the picard_markduplicates env
+
+```bash
+# 1. install oxo-flow (release binary, recommended)
+curl -fL -o oxo-flow.tar.gz https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz
+tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
+#    or, via conda (may lag behind releases):
+#    conda install -c bioconda oxo-flow-cli
+
+# 2. get this workflow
+git clone https://github.com/oxo-flow-community/oxo-flow-atacseq
 ```
 
 ## Scope
@@ -24,35 +51,37 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **In scope**
 
-- fastqc
-- trimgalore
-- bwa_mem
-- samtools_sort_stats
-- picard_mergesamfiles
-- picard_markduplicates
-- bamtools_filter
-- macs2_callpeak
-- homer_annotatepeaks
-- frip_score
-- bedtools_genomecov
-- ucsc_bedgraphtobigwig
-- deeptools_plots
-- plotfingerprint
-- multiqc
+- FASTQC
+- TRIMGALORE
+- BWA_MEM
+- BAM_SORT_STATS_SAMTOOLS (SAMTOOLS_SORT + SAMTOOLS_INDEX + SAMTOOLS_STATS + SAMTOOLS_FLAGSTAT + SAMTOOLS_IDXSTATS)
+- PICARD_MERGESAMFILES_LIBRARY
+- BAM_MARKDUPLICATES_PICARD (PICARD_MARKDUPLICATES + SAMTOOLS_INDEX + SAMTOOLS_STATS + SAMTOOLS_FLAGSTAT + SAMTOOLS_IDXSTATS)
+- BAM_FILTER_BAMTOOLS (BAMTOOLS_FILTER + SAMTOOLS_INDEX + SAMTOOLS_STATS + SAMTOOLS_FLAGSTAT + SAMTOOLS_IDXSTATS)
+- MACS2_CALLPEAK
+- HOMER_ANNOTATEPEAKS
+- FRIP_SCORE
+- BEDTOOLS_GENOMECOV
+- UCSC_BEDGRAPHTOBIGWIG
+- BIGWIG_PLOT_DEEPTOOLS (COMPUTEMATRIX x2 + PLOTPROFILE + PLOTHEATMAP)
+- MERGED_LIBRARY_DEEPTOOLS_PLOTFINGERPRINT
+- MULTIQC
 
 **Excluded**
 
-- paired_end — port covers the single-end default path only (no orphan removal, --paired trim)
-- nucleosome_analysis — fragment-size QC plots not in default-path scope
-- mitochondrial_filtering — GENOME_BLACKLIST_REGIONS complement step requires prepare_genome; optional -L blacklist honored when config.blacklist set
-- genrich — GEnrich peak caller is not on the default main path
-- BWA_INDEX / CUSTOM_GETCHROMSIZES / CUSTOM_GENOME_FASTA_INDEX (prepare_genome) — port consumes pre-built references
-- SAMTOOLS_MERGE / BAM_MERGED_REPLICATE_PICARD / BAM_FILTER_MERGED_REPLICATE — merged-replicate analysis
-- BAM_MERGE_REPLICATES_AND_PEAKS_BEDTOOLS / MACS2_CONSENSUS_PEAKS / DESEQ2_* — consensus peaks and differential expression
-- ATAQV / PRESEQ_LCEXTRAP / PICARD_METRICS / IGV / PLOT_MACS2_QC / R QC plots — optional QC branches
-- MULTIQC_CUSTOM_PEAKS — custom peak-count/FRiP report sections (FRiP scores still produced)
-- INPUT_CHECK (samplesheet_check) / DUMP_SOFTWARE_VERSIONS — pipeline plumbing
-- UMI handling (umitools branch) and STAR/Bowtie2 aligners — alternatives to default path
+- paired-end path (PE reads, orphan removal, --paired trim) — port covers the single-end default path only
+- nucleosome_analysis (pipeline.mkShort --fragment-size 100/200 QC plots) — not in the chosen default-path scope
+- mitochondrial_filtering (GENOME_BLACKLIST_REGIONS complement step, needs prepare_genome) — genome preparation is out of scope; the port takes pre-built references
+- genrich — GEnrich peak caller is not on the default main path (aligner selection)
+- BWA_INDEX / CUSTOM_GETCHROMSIZES / CUSTOM_GENOME_FASTA_INDEX (prepare_genome subworkflow) — reference preparation delegated to the user; port consumes pre-built index files
+- SAMTOOLS_MERGE (replicate-level) — replicate merging is not on the default path
+- BAM_MERGED_REPLICATE_PICARD and BAM_FILTER_MERGED_REPLICATE — merged-replicate analysis
+- BAM_MERGE_REPLICATES_AND_PEAKS_BEDTOOLS, MACS2_CONSENSUS_PEAKS, DESEQ2_* — consensus-peak / differential analysis
+- ATAQV, PRESEQ_LCEXTRAP, PICARD_METRICS, IGV, R QC plots (plot_macs2_qc, genome_blacklist_regions) — optional QC branches
+- MULTIQC_CUSTOM_PEAKS — custom peak-count/FRiP sections of the MultiQC report (FRiP scores are still produced by FRIP_SCORE)
+- INPUT_CHECK (samplesheet_check), DUMP_SOFTWARE_VERSIONS — pipeline plumbing
+- UMI handling (umitools branch) — requires --umitools and PE data
+- ALTERNATIVE_ALIGNERS (star, star_align, bowtie2) — port covers aligner=bwa
 
 ## Fidelity
 
@@ -105,6 +134,6 @@ listed with reasons.
 
 - Repository: [oxo-flow-atacseq](https://github.com/oxo-flow-community/oxo-flow-atacseq)
 - Upstream: [nf-core/atacseq](https://github.com/nf-core/atacseq) @ `2.1.2`
-- License: Apache-2.0 (port) · MIT (upstream)
+- License: Apache-2.0 (this workflow) · MIT (upstream)
 
-This port was created on 2026-08-15 and may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.

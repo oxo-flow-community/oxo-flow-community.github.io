@@ -1,21 +1,50 @@
-# Biosynthetic gene cluster analysis across genomes
+# Biosynthetic gene cluster (BGC) genome mining: annotation, antiSMASH and data warehouse
 
-oxo-flow port of the NBChub/bgcflow v1.1.2 default main path (antismash: true, everything else off): prokka annotation of user-provided FASTA genomes, antiSMASH 7 secondary-metabolite mining with automated database setup, BGC count/overview/summary aggregation, GTDB taxonomy lookup (API with offline-table fallback), MIBiG reference table download, BigSCAPE-compatible comparison preparation (region symlinks, taxonomy tsv, dataset registry, visualization mapping), and conversion of all result tables into a parquet data warehouse.
+<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
+
+End-to-end biosynthetic gene cluster (BGC) analysis of user-provided bacterial genomes: prokka annotation, antiSMASH 7 secondary-metabolite mining with automated database setup, per-genome BGC counts and overview tables, GTDB taxonomy lookup, MIBiG reference table download, BigSCAPE-compatible comparison preparation (symlinks, taxonomy, dataset registry, visualization mapping), and conversion of all result tables into a parquet data warehouse — ready for downstream comparison and exploration.
 
 | | |
 |---:|---|
-| **Engine** | snakemake |
+| **Rating** | ★ Verified |
+| **Origin** | port |
+| **Domain** | genome-mining |
+| **Rules** | 18 |
+| **Tools** | prokka · antismash · python · pandas · pyarrow · biopython · requests · alive_progress |
+| **Ported** | 2026-08-15 |
+| **License** | Apache-2.0 |
 | **Source** | [NBChub/bgcflow](https://github.com/NBChub/bgcflow) |
 | **Pinned version** | `v1.1.2` |
-| **Ported** | 2026-08-15 |
-| **Rules** | 18 |
-| **Tools** | prokka@1.14.6 · antismash@7.1.0 · python@3.9.18 · pandas@2.0.3 · pyarrow@14.0.2 · biopython@1.81 · requests@2.31.0 · alive_progress@3.1.5 |
-| **Domain** | genomics |
 
 ## Run it
 
 ```bash
 oxo-flow dry-run main.oxoflow
+```
+
+## Installation
+
+**Engine.** oxo-flow >= 0.11.0
+
+**Toolchain.** conda envs — pinned versions (declared in main.oxoflow: envs/antismash.yaml, envs/prokka.yaml, envs/bgc_analytics.yaml; a few antiSMASH helper packages use unpinned ranges)
+
+**Requirements.**
+- genome FASTA per genome at {config.raw_dir}/fasta/<genome_id>.fna (raw_dir defaults to test/fixtures/raw; .fna/.fasta/.fa accepted)
+- sample table config/samples.csv — columns genome_id,source,organism,genus,species,strain
+- network access on first run: antiSMASH databases (~several GB, into resources/antismash_db), GTDB bac120_metadata_r220.tsv fallback table, MIBiG JSON 3.1
+- optional: GTDB offline taxonomy TSVs via config.gtdb_tax_paths
+- compute: up to 4 CPUs per rule (prokka, antiSMASH); no explicit memory limits — antiSMASH dominates
+- disk: several GB for downloaded resources (antiSMASH DB, MIBiG) plus the data/ output tree
+
+```bash
+# 1. install oxo-flow (release binary, recommended)
+curl -fL -o oxo-flow.tar.gz https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz
+tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
+#    or, via conda (may lag behind releases):
+#    conda install -c bioconda oxo-flow-cli
+
+# 2. get this workflow
+git clone https://github.com/oxo-flow-community/oxo-flow-bgcflow
 ```
 
 ## Scope
@@ -46,27 +75,27 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 **Excluded**
 
 - prokka_gbk / copy_custom_genbank / copy_converted_gbk / genbank_to_fna|gff|faa / extract_meta_genbank — genbank input path, off by default (default config ships fna inputs)
-- antismash v6 branch — off by default (default is v7)
-- write_dependency_versions — bookkeeping, not on the default main path
+- antismash v6 branch — off by default (config default is antismash v7)
+- write_dependency_versions — dependency bookkeeping, not on the default main path
 - seqfu_stats/seqfu_combine — run_seqfu: true only
 - mash/mash_convert — run_mash: true only
 - fastani/fastani_convert — run_fastani: true only
 - checkm/checkm_out — run_checkm: true only
 - gtdbtk/gtdbtk_fna_fail/evaluate_gtdbtk_input/install_gtdbtk — run_gtdbtk: true only
-- prokka_db_setup + install_* helpers — install rules for off-by-default pipelines
-- bigscape/bigscape_no_mibig/bigscape_to_cytoscape/copy_bigscape* — run_bigscape: true only
+- prokka_db_setup, install_* helpers — install rules for off-by-default pipelines
+- bigscape/bigscape_no_mibig/bigscape_to_cytoscape/copy_bigscape/copy_bigscape_zip — run_bigscape: true only
 - bigslice/bigslice_prep/query_bigslice/summarize_bigslice_query/fetch_bigslice_db — run_bigslice: true only
-- automlst_wrapper* / prep_automlst_gbk — run_automlst: true only
-- arts + 7 arts_* rules — run_arts: true only
+- automlst_wrapper/automlst_wrapper_out/prep_automlst_gbk/install_automlst_wrapper — run_automlst: true only
+- arts + arts_extract/arts_knownhits_combine/arts_allhits_combine/arts_bgctable_combine/arts_coretable_combine/arts_final — run_arts: true only
 - roary/roary_reassign_pangene_categories/roary_out — run_roary: true only
 - eggnog/eggnog_roary/eggnog_roary_result_copy — run_eggnog: true only
-- deeptfactor + 5 deeptfactor_* rules — run_deeptfactor: true only
+- deeptfactor + deeptfactor_setup/to_json/summary/roary — run_deeptfactor: true only
 - cblaster_genome_db/cblaster_bgc_db — run_cblaster: true only
 - gecco/gecco_aggregate/antismash_sideload_gecco — run_gecco: true only
 - amrfinderplus/amrfinder_gather — run_amrfinderplus: true only
 - metabase_install/metabase_duckdb_plugin/build_warehouse — run_metabase: true only
 - ncbi_genome_download/extract_ncbi_information / patric_genome_download/extract_patric_meta/download_patric_tables — non-custom genome sources, off by default
-- report rules (copy_readme, copy_template_notebook, mkdocs_py_report, mkdocs_rpy_report, copy_template_rnotebook) — separate 'bgcflow build report' command, not in the main Snakefile
+- report rules (copy_readme, copy_template_notebook, mkdocs_py_report, mkdocs_rpy_report, copy_template_rnotebook) — separate 'bgcflow build report' command, not part of the main Snakefile default path
 
 ## Fidelity
 
@@ -118,6 +147,6 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 - Repository: [oxo-flow-bgcflow](https://github.com/oxo-flow-community/oxo-flow-bgcflow)
 - Upstream: [NBChub/bgcflow](https://github.com/NBChub/bgcflow) @ `v1.1.2`
-- License: Apache-2.0 (port) · MIT (upstream)
+- License: Apache-2.0 (this workflow) · MIT (upstream)
 
-This port was created on 2026-08-15 and may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.

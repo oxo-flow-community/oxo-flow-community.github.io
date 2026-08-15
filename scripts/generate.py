@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Regenerate the catalog from data/pipelines.json.
+"""Regenerate the catalog from data/pipelines.json (registry v2).
 
-Reads the metadata of every workflow, enriches it with the Quickstart and
-Fidelity sections of each staged repository's README (when the staging tree is
-available locally), then emits:
+Reads the metadata of every cataloged workflow, enriches it with the
+Quickstart and Fidelity sections of each staged repository's README (when the
+staging tree is available locally), then emits:
 
   docs/javascripts/pipelines-data.js   data consumed by the catalog renderer
   docs/pipelines/<name>.md             one run-notes page per workflow
@@ -14,7 +14,6 @@ from __future__ import annotations
 
 import json
 import pathlib
-import re
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -23,7 +22,10 @@ OUT_JS = ROOT / "docs" / "javascripts" / "pipelines-data.js"
 OUT_PAGES = ROOT / "docs" / "pipelines"
 STAGING = pathlib.Path.home() / "Documents" / "GitHub" / "oxo-community" / "staging"
 
-ESCAPE_TABLE = str.maketrans({"\\": "\\\\", "'": "\\'", "\n": "\\n"})
+ENGINE_URL = (
+    "https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/"
+    "oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz"
+)
 
 
 def load() -> list[dict]:
@@ -46,12 +48,13 @@ def section(text: str, heading: str) -> str:
 
 
 def quickstart_command(text: str) -> str | None:
-    """First `oxo-flow ` command line in the Quickstart section."""
-    qs = section(text, "Quickstart")
-    for line in qs.splitlines():
-        line = line.strip()
-        if line.startswith("oxo-flow ") and "run" in line:
-            return line
+    """First `oxo-flow ` command line in the Quickstart/Usage section."""
+    for heading in ("Usage", "Quickstart"):
+        qs = section(text, heading)
+        for line in qs.splitlines():
+            line = line.strip()
+            if line.startswith("oxo-flow ") and "run" in line:
+                return line
     return None
 
 
@@ -78,27 +81,79 @@ def emit_js(pipelines: list[dict]) -> None:
     )
 
 
+def badges(p: dict) -> str:
+    star = ('<span class="ox-badge ox-badge--star">★ Verified</span>'
+            if p.get("rating") == "verified"
+            else '<span class="ox-badge">☆ Community</span>')
+    origin = {
+        "port": "⇄ Official port",
+        "original": "✦ Original",
+        "curated": "♺ Community listing",
+    }.get(p.get("origin"), "♺ Community listing")
+    eng = ""
+    if p.get("engine") == "nextflow":
+        eng = '<span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span>'
+    elif p.get("engine") == "snakemake":
+        eng = '<span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span>'
+    return f'<div class="ox-page-badges">{star} <span class="ox-badge ox-badge--origin">{origin}</span> {eng}</div>'
+
+
 def meta_table(p: dict) -> str:
     rows = [
-        ("Engine", "nf-core" if p["engine"] == "nextflow" else "snakemake"),
-        ("Source", f"[{p['source']['repo']}]({p['source']['url']})"),
-        ("Pinned version", f"`{p['source'].get('tag') or p['source'].get('sha', '')}`"),
-        ("Ported", p.get("created", "2026-08-15")),
+        ("Rating", "★ Verified" if p.get("rating") == "verified" else "☆ Community"),
+        ("Origin", p.get("origin", "curated")),
+        ("Domain", p.get("domain", "")),
         ("Rules", str(p.get("rule_count", "—"))),
         ("Tools", " · ".join(p.get("tools", []))),
-        ("Domain", p.get("domain", "")),
+        ("Ported", p.get("created", "2026-08-15")),
+        ("License", p.get("license", "Apache-2.0")),
     ]
+    src = p.get("source")
+    if src:
+        rows += [
+            ("Source", f"[{src['repo']}]({src['url']})"),
+            ("Pinned version", f"`{src.get('tag') or src.get('sha', '')}`"),
+        ]
     head = "| | |\n|---:|---|\n"
     return head + "\n".join(f"| **{k}** | {v} |" for k, v in rows)
 
 
+def install_section(p: dict) -> str:
+    inst = p.get("installation") or {}
+    lines = [
+        "## Installation",
+        "",
+        f"**Engine.** {inst.get('engine', 'oxo-flow >= 0.11.0')}",
+        "",
+        f"**Toolchain.** {inst.get('toolchain', 'containers or conda envs — pinned')}",
+    ]
+    if inst.get("requirements"):
+        lines += ["", "**Requirements.**"] + [f"- {r}" for r in inst["requirements"]]
+    lines += [
+        "",
+        "```bash",
+        "# 1. install oxo-flow (release binary, recommended)",
+        f"curl -fL -o oxo-flow.tar.gz {ENGINE_URL}",
+        "tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/",
+        "#    or, via conda (may lag behind releases):",
+        "#    conda install -c bioconda oxo-flow-cli",
+        "",
+        "# 2. get this workflow",
+        f"git clone {p['repo_url']}",
+        "```",
+    ]
+    return "\n".join(lines)
+
+
 def make_page(p: dict) -> str:
-    src = p["source"]
+    src = p.get("source") or {}
     scope = "\n".join(f"- {s}" for s in p.get("scope", []))
     excluded = "\n".join(f"- {s}" for s in p.get("excluded", [])) or "- none"
     fidelity = p.get("fidelity_md")
     parts = [
         f"# {p['title']}",
+        "",
+        badges(p),
         "",
         p.get("description", ""),
         "",
@@ -110,19 +165,24 @@ def make_page(p: dict) -> str:
         p["quickstart"],
         "```",
         "",
-        "## Scope",
-        "",
-        "The default-parameters main path of the source pipeline was ported "
-        "rule-for-rule; alternate paths are documented as excluded.",
-        "",
-        "**In scope**",
-        "",
-        scope,
-        "",
-        "**Excluded**",
-        "",
-        excluded,
+        install_section(p),
     ]
+    if src:
+        parts += [
+            "",
+            "## Scope",
+            "",
+            "The default-parameters main path of the source pipeline was ported "
+            "rule-for-rule; alternate paths are documented as excluded.",
+            "",
+            "**In scope**",
+            "",
+            scope,
+            "",
+            "**Excluded**",
+            "",
+            excluded,
+        ]
     if fidelity:
         parts += ["", "## Fidelity", "", fidelity]
     parts += [
@@ -130,15 +190,18 @@ def make_page(p: dict) -> str:
         "## Links",
         "",
         f"- Repository: [{p['name']}]({p['repo_url']})",
-        f"- Upstream: [{src['repo']}]({src['url']})"
-        + (f" @ `{src['tag']}`" if src.get("tag") else ""),
-        f"- License: Apache-2.0 (port) · {p.get('upstream_license') or src.get('license')} (upstream)",
-        "",
-        "This port was created on "
-        + p.get("created", "2026-08-15")
-        + " and may lag behind upstream releases. See the repository's NOTICE "
-        "for full attribution.",
     ]
+    if src:
+        parts += [
+            f"- Upstream: [{src['repo']}]({src['url']})"
+            + (f" @ `{src['tag']}`" if src.get("tag") else ""),
+            f"- License: {p.get('license', 'Apache-2.0')} (this workflow)"
+            + (f" · {p.get('upstream_license') or src.get('license')} (upstream)" if src else ""),
+            "",
+            "Created on " + p.get("created", "2026-08-15")
+            + " — this port may lag behind upstream releases. See the "
+            "repository's NOTICE for full attribution.",
+        ]
     return "\n".join(parts) + "\n"
 
 

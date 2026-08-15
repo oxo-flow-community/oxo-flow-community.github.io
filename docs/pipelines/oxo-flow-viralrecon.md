@@ -1,21 +1,52 @@
-# Viral assembly and intrahost variant calling
+# Viral assembly and intrahost variant calling for Illumina amplicon data
 
-oxo-flow port of the nf-core/viralrecon pipeline (default illumina + amplicon path): FastQC, fastp trimming, Kraken2 host removal, Bowtie2 alignment, iVar primer trimming and intrahost variant calling, snpEff/SnpSift annotation, bcftools consensus with low-coverage masking, Pangolin/Nextclade lineage assignment, Freyja lineage deconvolution, Cutadapt primer trimming and SPAdes de novo assembly with Bandage/BLAST/QUAST/ABACAS QC, and a final MultiQC report.
+<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
+
+Turns paired-end Illumina amplicon reads into a complete viral genomics report: read QC and trimming (FastQC, fastp), host-sequence removal (Kraken2), alignment to a user-provided reference genome (Bowtie2), primer trimming, intrahost variant calling and annotation (iVar, snpEff/SnpSift), consensus building with low-coverage masking (bcftools), lineage assignment and deconvolution (Pangolin, Nextclade, Freyja), de novo assembly with QC (SPAdes, Bandage, BLAST, QUAST, ABACAS), and a single MultiQC report.
 
 | | |
 |---:|---|
-| **Engine** | nf-core |
-| **Source** | [nf-core/viralrecon](https://github.com/nf-core/viralrecon) |
-| **Pinned version** | `3.0.0` |
-| **Ported** | 2026-08-15 |
+| **Rating** | ★ Verified |
+| **Origin** | port |
+| **Domain** | genomics |
 | **Rules** | 51 |
 | **Tools** | abacas · bandage · bcftools · bedtools · blast · bowtie2 · cutadapt · fastp · fastqc · freyja · htslib · ivar · kraken2 · mosdepth · multiqc · nextclade · pangolin · picard · pigz · python · quast · r · samtools · snpeff · snpsift · spades |
-| **Domain** | genomics |
+| **Ported** | 2026-08-15 |
+| **License** | Apache-2.0 |
+| **Source** | [nf-core/viralrecon](https://github.com/nf-core/viralrecon) |
+| **Pinned version** | `3.0.0` |
 
 ## Run it
 
 ```bash
-oxo-flow run workflow/viralrecon.toml
+oxo-flow dry-run main.oxoflow --samples first:1
+```
+
+## Installation
+
+**Engine.** oxo-flow >= 0.11.0
+
+**Toolchain.** conda envs — pinned versions (envs/*.yaml, conda-forge + bioconda channels; no containers)
+
+**Requirements.**
+- reference genome FASTA and annotation GFF (config.fasta / config.gff) — uncompressed by default, or set fasta_ends_gz / gff_ends_gz
+- primer scheme BED for the amplicon protocol (config.primer_bed)
+- Kraken2 host-removal database as a tar.gz (config.kraken2_db)
+- Pangolin data directory (config.pango_database) and Freyja barcodes/lineages CSVs (config.freyja_barcodes / config.freyja_lineages)
+- Nextclade dataset: downloaded automatically by default; set config.nextclade_dataset to a local dataset directory to skip the download
+- paired-end Illumina FASTQs at <raw_dir>/<sample>_R1.fastq.gz and _R2.fastq.gz (config.raw_dir)
+- compute: up to 12 CPUs / 72 GB per rule (resource pool queues rather than oversubscribes)
+- conda or mamba to build the pinned per-rule environments
+
+```bash
+# 1. install oxo-flow (release binary, recommended)
+curl -fL -o oxo-flow.tar.gz https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz
+tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
+#    or, via conda (may lag behind releases):
+#    conda install -c bioconda oxo-flow-cli
+
+# 2. get this workflow
+git clone https://github.com/oxo-flow-community/oxo-flow-viralrecon
 ```
 
 ## Scope
@@ -79,19 +110,19 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 **Excluded**
 
 - nanopore platform branch (ARTIC_GUPPYPLEX, ARTIC_MINION, NANOPLOT, PYCOQC, VCFLIB_VCFUNIQ, PREPARE_GENOME_NANOPORE) — illumina only
-- variant_caller='bcftools' branch (VARIANTS_BCFTOOLS subworkflow: BCFTOOLS_MPILEUP, BCFTOOLS_NORM, BCFTOOLS_MPILEUP_FILTER) — non-default; only the iVar caller (the amplicon default) is ported
+- variant_caller='bcftools' branch (VARIANTS_BCFTOOLS subworkflow: BCFTOOLS_MPILEUP, BCFTOOLS_NORM, BCFTOOLS_MPILEUP_FILTER, custom filter scripts) — non-default; only the iVar caller (the amplicon default) is ported
 - consensus_caller='ivar' branch (CONSENSUS_IVAR subworkflow: IVAR_CONSENSUS) — non-default; only bcftools consensus (the default) is ported
-- wgs (shotgun) protocol variant branch — the port runs the amplicon protocol gates; non-amplicon variant calling is not ported
-- unicycler and minia assemblers (ASSEMBLY_UNICYCLER / ASSEMBLY_MINIA) — assemblers fixed to the upstream default 'spades'
+- wgs (shotgun) protocol variant branch — the port runs the amplicon protocol gates (primer trimming, collapsed-primer mosdepth); non-amplicon variant calling is not ported
+- unicycler and minia assemblers (ASSEMBLY_UNICYCLER / ASSEMBLY_MINIA subworkflows) — assemblers is fixed to the upstream default 'spades'
 - PICARD_MARKDUPLICATES — skip_markduplicates defaults to true upstream and in this port
 - PLASMIDID — skip_plasmidid defaults to true upstream and in this port
-- KRAKEN2_BUILD — upstream downloads the human host database over the network; port takes a local kraken2_db tar.gz (empty-stub fixture provided)
-- FREYJA_UPDATE — upstream downloads barcodes/lineages over the network; port takes config.freyja_barcodes / config.freyja_lineages (fixtures provided)
-- PANGOLIN_UPDATEDATA — upstream downloads the pangolin data directory over the network; port takes config.pango_database (fixture placeholder provided)
-- ADDITIONAL_ANNOTATION — off by default upstream
-- channel-level runtime filters — fastp reads-after-filtering empty check, min_mapped_reads flagstat gate, zero-variant-sample filter and optional-file gates have no oxo-flow equivalent (documented deviations)
-- save_* extra outputs — save_unaligned, save_trimmed_fail, save_mpileup, save_ivar_trimmed_bam and other save_* flags are off by default and not ported
-- MultiQC extras — multiqc_data/versions.yml software table and *_plots directory not emitted; report HTML, data dir and the two metrics CSVs are
+- KRAKEN2_BUILD — upstream downloads the human host database over the network; this port takes a local kraken2_db tar.gz (empty-stub fixture provided)
+- FREYJA_UPDATE — upstream downloads barcodes/lineages over the network; this port takes config.freyja_barcodes / config.freyja_lineages (fixtures provided)
+- PANGOLIN_UPDATEDATA — upstream downloads the pangolin data directory over the network; this port takes config.pango_database (fixture placeholder provided)
+- ADDITIONAL_ANNOTATION — off by default upstream (params.additional_annotation is empty)
+- channel-level runtime filters — the fastp reads-after-filtering empty check, the min_mapped_reads flagstat gate, the zero-variant-sample filter and optional-file existence gates have no oxo-flow equivalent (documented deviations)
+- save_* extra outputs — save_unaligned, save_trimmed_fail, save_mpileup, save_ivar_trimmed_bam and the other save_* flags are off by default upstream and not ported
+- MultiQC extras — the multiqc_data/versions.yml software table and *_plots directory are not emitted; the port keeps the report HTML, the data directory and the variants/assembly metrics CSVs
 
 ## Fidelity
 
@@ -167,10 +198,54 @@ unicycler/minia assemblers, PICARD_MARKDUPLICATES, PLASMIDID, and the
 network-download processes KRAKEN2_BUILD / FREYJA_UPDATE / PANGOLIN_UPDATEDATA
 / ADDITIONAL_ANNOTATION.
 
+### Documented deviations
+
+Everything below has no oxo-flow equivalent and is the closest faithful
+approximation; none silently change results:
+
+1. **Channel-level runtime filters are not ported.** The upstream
+   `process_trim_fastq` filter (drop samples with 0 reads after fastp), the
+   `min_mapped_reads` flagstat gate before variant calling, the
+   zero-variant-sample filter and optional-file existence gates run in
+   Nextflow channel code, not in a process. `min_mapped_reads` still exists as
+   config for documentation but has no effect. Rule shells run unconditioned
+   on their inputs.
+2. **Kraken2 host-filter routing.** When Kraken2 runs with
+   `kraken2_assembly_host_filter=false`, upstream routes the assembly branch
+   to the fastp reads (channel wiring) while Kraken2 still writes its
+   unclassified FASTQs. The port models this with the `assembly_fastq`
+   passthrough rule, which overwrites the `kraken2/` unclassified paths with
+   copies of the fastp reads (it runs after `kraken2` when both are active, so
+   the content is deterministic).
+3. **`nextclade_clade_mqc.tsv`** is built by inline python instead of Nextflow
+   channel code (same input CSVs, same output columns).
+4. **`min_contig_length` / `min_perc_contig_aligned`** are used directly in the
+   BLAST filter awk expression (upstream interpolates the same params).
+5. **Condensed environments.** Rules that merge several upstream processes
+   consolidate their conda envs. Exact pins are kept; only conflicts are
+   resolved: `sed` 4.8 (cat/fastq, gunzip, untar) vs 4.9 (prepare_primer_fasta,
+   filter_blastn, rename_fasta_header) → 4.8 in `coreutils.yaml`, 4.9 in
+   `blast.yaml`/`consensus.yaml`; make_bed_mask's samtools 1.14 → 1.22.1 in
+   `consensus.yaml`; tabix's htslib 1.21 → 1.22.1 in `bcftools.yaml`;
+   r-base 4.2 → 4.2.0 in `r.yaml`; mosdepth's build string
+   `=0.3.11=h0ec343a_1` → `=0.3.11` for cross-platform resolution.
+6. **MultiQC extras** (`multiqc_data/versions.yml`, `*_plots` directory) are
+   not emitted; the report HTML, data directory and the two metrics CSVs are.
+7. **QUAST/ABACAS/Bandage inputs** gated by upstream `file(...)` existence
+   checks (e.g. empty scaffolds) run unconditionally in the port; on the
+   fixture and real data the files always exist.
+
+### Resources
+
+Resource labels map 1:1 to upstream `withLabel` profiles: `process_single`
+(1c/6 GB/4 h), `process_low` (2c/12 GB/4 h), `process_medium`
+(6c/36 GB/8 h), `process_high` (12c/72 GB/16 h). Fastp/SPAdes memory and
+`-Xmx` JVM sizes are derived from the same values as upstream.
+
 ## Links
 
 - Repository: [oxo-flow-viralrecon](https://github.com/oxo-flow-community/oxo-flow-viralrecon)
 - Upstream: [nf-core/viralrecon](https://github.com/nf-core/viralrecon) @ `3.0.0`
-- License: Apache-2.0 (port) · MIT (upstream)
+- License: Apache-2.0 (this workflow) · MIT (upstream)
 
-This port was created on 2026-08-15 and may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.

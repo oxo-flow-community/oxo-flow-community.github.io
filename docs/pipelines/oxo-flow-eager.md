@@ -1,21 +1,50 @@
-# Ancient DNA analysis (aDNA)
+# Ancient DNA (aDNA): QC, mapping, damage estimation and genotyping
 
-oxo-flow port of the nf-core/eager pipeline: ancient DNA (aDNA) analysis with FastQC, fastp (poly-G filter, optional), AdapterRemoval read clipping/merging, BWA aln mapping, MarkDuplicates/DeDup deduplication, DamageProfiler damage estimation, Qualimap, pileupCaller genotyping (optional) and MultiQC reporting.
+<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
+
+Ancient DNA (aDNA) analysis in one run: FastQC raw QC, optional fastp poly-G filtering (2-colour chemistry), AdapterRemoval adapter clipping and paired-end read merging, BWA aln mapping with ancient-DNA parameters, picard MarkDuplicates (or DeDup) deduplication, preseq library-complexity curves, DamageProfiler damage estimation, Qualimap BAM QC, optional pileupCaller genotyping with eigenstrat SNP coverage, and a final MultiQC report — every rule pinned to the nf-core/eager 2.5.3 tool versions in the upstream container.
 
 | | |
 |---:|---|
-| **Engine** | nf-core |
-| **Source** | [nf-core/eager](https://github.com/nf-core/eager) |
-| **Pinned version** | `2.5.3` |
-| **Ported** | 2026-08-15 |
+| **Rating** | ★ Verified |
+| **Origin** | port |
+| **Domain** | genomics |
 | **Rules** | 17 |
 | **Tools** | fastqc · adapterremoval · adapterremovalfixprefix · bwa · samtools · picard · dedup · preseq · damageprofiler · qualimap · sequencetools · eigenstratdatabasetools · fastp · pigz · multiqc · rename · python |
-| **Domain** | genomics |
+| **Ported** | 2026-08-15 |
+| **License** | Apache-2.0 |
+| **Source** | [nf-core/eager](https://github.com/nf-core/eager) |
+| **Pinned version** | `2.5.3` |
 
 ## Run it
 
 ```bash
 oxo-flow dry-run main.oxoflow
+```
+
+## Installation
+
+**Engine.** oxo-flow >= 0.11.0
+
+**Toolchain.** containers (Docker/Singularity) — pinned image nfcore/eager:2.5.3 for all rules (bundles the pinned conda env from envs/eager.yaml)
+
+**Requirements.**
+- reference genome FASTA, plain and uncompressed (.gz references are not supported — upstream's unzip_reference step is not ported); the workflow builds the .fai / .dict / BWA indices itself
+- paired-end FASTQ pairs named <sample>_R1.fastq.gz / <sample>_R2.fastq.gz in a directory (directory input mode; sample = text before the _R1/_R2 suffix); single-end is not supported
+- optional — pileupCaller genotyping (run_genotyping=true genotyping_tool='pileupcaller') requires pileupcaller_snpfile and pileupcaller_bedfile; the rule fails fast without them
+- compute: up to 4 CPUs / 8 GB RAM per rule (bwa_aln: 4 threads / 8G; reference-index and MultiQC rules up to 8 GB; base default 1 CPU / 7 GB / 24 h)
+- Docker or Singularity to run the pinned container nfcore/eager:2.5.3 (not needed for validate / lint / dry-run)
+- disk: results/ holds reference indices, mapped BAMs and reports — size grows with the reference genome and number of samples
+
+```bash
+# 1. install oxo-flow (release binary, recommended)
+curl -fL -o oxo-flow.tar.gz https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz
+tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
+#    or, via conda (may lag behind releases):
+#    conda install -c bioconda oxo-flow-cli
+
+# 2. get this workflow
+git clone https://github.com/oxo-flow-community/oxo-flow-eager
 ```
 
 ## Scope
@@ -44,7 +73,9 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
+- unzip_reference: conditional .gz-fasta decompression process (main.nf line 187) — the port requires a plain FASTA (a .gz reference is silently unsupported)
 - bwamem / bowtie2: non-default mappers (params.mapper) — default path uses bwa aln
+- makeBT2Index: bowtie2 mapper's conditional index process (main.nf line 523) — unreachable with the default bwaaln mapper
 - circulargenerator / circularmapper: circular mapping branch (params.circularfilter, off by default)
 - convertBam / indexinputbam: BAM-input mode preprocessing (params.bam, off by default)
 - hostremoval_input_fastq: host removal branch (params.hostremoval_input_fastq, off by default)
@@ -56,13 +87,15 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - post_ar_fastq_trimming: post-AdapterRemoval trimming branch (params.run_post_ar_trimming, off by default)
 - lanemerge / lanemerge_hostremoval_fastq: multi-lane merging — unreachable in the single-lane default path
 - library_merge / additional_library_merge: multi-library merging — unreachable in the single-library default path
+- seqtype_merge: PE/SE mixed-input merge (main.nf line 1597) — unreachable in the pure-PE port
 - genotyping_ug / genotyping_hc / genotyping_freebayes: non-pileupcaller genotyping tools (genotyping_tool default null; genotyping off by default)
 - genotyping_angsd: ANGSD genotyping branch (genotyping_tool='angsd')
 - bcftools_stats: only consumes UG/HC/FB outputs, which are not ported
-- malt / maltextract / metagenomic_complexity_filter / kraken / kraken_parse / kraken_merge: metagenomic screening branch (params.run_metagenomic_screening, off by default)
+- malt / maltextract / metagenomic_complexity_filter / kraken / kraken_parse / kraken_merge / decomp_kraken: metagenomic screening branch (params.run_metagenomic_screening, off by default; decomp_kraken is the conditional .tar.gz DB unpacker)
 - sexdeterrmine / sexdeterrmine_prep: sex determination branch (params.run_sexdeterrmine, off by default)
+- mtnucratio: mitochondrial-to-nuclear ratio branch (params.run_mtnucratio, off by default)
 - endorSpy: endogenous-content branch (params.run_endorSpy, off by default)
-- print_nuclear_contamination: nuclear contamination branch (params.run_nuclear_contamination, off by default)
+- nuclear_contamination / print_nuclear_contamination: nuclear contamination branch (params.run_nuclear_contamination, off by default; nuclear_contamination is the angsd estimation process, print_nuclear_contamination the report-only consumer)
 - multivcfanalyzer: branch gated by params.run_multivcfanalyzer (off by default)
 - vcf2genome: consensus-sequence branch (params.run_vcf2genome, off by default)
 - output_documentation / get_software_versions: nf-core boilerplate processes
@@ -185,6 +218,6 @@ Additional deviations from upstream (all on the default path):
 
 - Repository: [oxo-flow-eager](https://github.com/oxo-flow-community/oxo-flow-eager)
 - Upstream: [nf-core/eager](https://github.com/nf-core/eager) @ `2.5.3`
-- License: Apache-2.0 (port) · MIT (upstream)
+- License: Apache-2.0 (this workflow) · MIT (upstream)
 
-This port was created on 2026-08-15 and may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.

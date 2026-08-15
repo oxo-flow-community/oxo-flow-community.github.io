@@ -1,21 +1,48 @@
-# RNA-seq with STAR and DESeq2 (snakemake catalog flagship)
+# RNA-seq: STAR alignment, DESeq2 differential expression and QC
 
-oxo-flow port of the snakemake-workflows/rna-seq-star-deseq2 v3.1.1 default path: Ensembl reference download, STAR index, fastp trimming, STAR alignment with gene counts, RSeQC QC + MultiQC, count matrix with technical-replicate collapse, Ensembl biomaRt gene-symbol annotation, DESeq2 (normalized counts, PCA, per-contrast results with ashr shrinkage).
+<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
+
+End-to-end RNA-seq differential-expression analysis with STAR and DESeq2: Ensembl reference download, fastp trimming, STAR alignment with gene counts, RSeQC QC + MultiQC, count matrix with technical-replicate collapse, Ensembl biomaRt gene-symbol annotation, and DESeq2 (normalized counts, PCA plots, per-contrast results with ashr shrinkage and MA plots). Every tool is pinned to an exact conda version for reproducibility.
 
 | | |
 |---:|---|
-| **Engine** | snakemake |
+| **Rating** | ★ Verified |
+| **Origin** | port |
+| **Domain** | transcriptomics |
+| **Rules** | 22 |
+| **Tools** | star · fastp · rseqc · gffutils · pandas · multiqc · bioconductor-deseq2 · r-stringr · r-ashr · bioconductor-biomart · r-tidyverse · r-dbplyr · curl |
+| **Ported** | 2026-08-15 |
+| **License** | Apache-2.0 |
 | **Source** | [snakemake-workflows/rna-seq-star-deseq2](https://github.com/snakemake-workflows/rna-seq-star-deseq2) |
 | **Pinned version** | `v3.1.1` |
-| **Ported** | 2026-08-15 |
-| **Rules** | 22 |
-| **Tools** | STAR · fastp · RSeQC · gffutils · pandas · MultiQC · DESeq2 · biomaRt · r-tidyverse · r-stringr · r-ashr · r-dbplyr · curl |
-| **Domain** | transcriptomics |
 
 ## Run it
 
 ```bash
 oxo-flow dry-run main.oxoflow
+```
+
+## Installation
+
+**Engine.** oxo-flow >= 0.11.0
+
+**Toolchain.** conda envs — pinned
+
+**Requirements.**
+- paired-end FASTQ reads per config/units.tsv (raw/<unit-key>_R1.fastq.gz / _R2.fastq.gz) and sample conditions in config/samples.tsv
+- reference genome + annotation downloaded automatically from Ensembl release 115 (GRCh38) — network access required (also for biomaRt gene-symbol annotation)
+- compute: up to 24 CPUs per rule (star_align); 8 (fastp_pe); 4 (star_index); no per-rule memory limits configured in the workflow
+- disk: several tens of GB — ~30 GB GRCh38 STAR index, plus BAMs and trimmed reads
+
+```bash
+# 1. install oxo-flow (release binary, recommended)
+curl -fL -o oxo-flow.tar.gz https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz
+tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
+#    or, via conda (may lag behind releases):
+#    conda install -c bioconda oxo-flow-cli
+
+# 2. get this workflow
+git clone https://github.com/oxo-flow-community/oxo-flow-rnaseq-star-deseq2
 ```
 
 ## Scope
@@ -114,6 +141,6 @@ renamed to this convention — data-path substitution only.
 
 - Repository: [oxo-flow-rnaseq-star-deseq2](https://github.com/oxo-flow-community/oxo-flow-rnaseq-star-deseq2)
 - Upstream: [snakemake-workflows/rna-seq-star-deseq2](https://github.com/snakemake-workflows/rna-seq-star-deseq2) @ `v3.1.1`
-- License: Apache-2.0 (port) · MIT (upstream)
+- License: Apache-2.0 (this workflow) · MIT (upstream)
 
-This port was created on 2026-08-15 and may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.

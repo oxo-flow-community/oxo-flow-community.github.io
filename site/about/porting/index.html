@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="20 battle-tested bioinformatics workflows — faithful ports of the most-used nf-core and Snakemake pipelines for the oxo-flow engine. Search the catalog, read the run instructions, copy the command.">
+        <meta name="description" content="The community catalog of oxo-flow workflows — verified ports of established nf-core and Snakemake pipelines, original designs, and community submissions. Classified, rated, and documented. Search, compare, run.">
       
       
       
@@ -291,6 +291,33 @@
     
   
     Pipelines
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../curation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Curation & ratings
   
 
     
@@ -693,13 +720,74 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="9. README.md template (~80 lines, exact skeleton)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2-get-this-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Get this workflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
-  <a href="#requirements" class="md-nav__link">
+  <a href="#usage" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Requirements
+        Usage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fidelity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fidelity
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#source" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Source
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test
       
     </span>
   </a>
@@ -740,10 +828,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#12-metadatajson-exact-schema" class="md-nav__link">
+  <a href="#12-metadatajson-exact-schema-registry-v2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        12. metadata.json — exact schema
+        12. metadata.json — exact schema (registry v2)
       
     </span>
   </a>
@@ -1152,13 +1240,74 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="9. README.md template (~80 lines, exact skeleton)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2-get-this-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Get this workflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
-  <a href="#requirements" class="md-nav__link">
+  <a href="#usage" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Requirements
+        Usage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fidelity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fidelity
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#source" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Source
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test
       
     </span>
   </a>
@@ -1199,10 +1348,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#12-metadatajson-exact-schema" class="md-nav__link">
+  <a href="#12-metadatajson-exact-schema-registry-v2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        12. metadata.json — exact schema
+        12. metadata.json — exact schema (registry v2)
       
     </span>
   </a>
@@ -2343,7 +2492,7 @@ verified: single <code>oxo-flow</code> file at archive root — no directory pre
 <a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a><span class="w">          </span><span class="no">oxo-flow --version</span>
 <a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a>
 <a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Validate, lint, dry-run</span>
-<a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./test/run.sh</span>
+<a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bash ./test/run.sh</span>
 </code></pre></div>
 <p><strong>CI badge</strong> (README §9 header):</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>[<span class="nt">![CI</span>](<span class="na">https://github.com/&lt;org&gt;/&lt;pipeline-name&gt;/actions/workflows/ci.yml/badge.svg</span>)](https://github.com/&lt;org&gt;/&lt;pipeline-name&gt;/actions/workflows/ci.yml)
@@ -2353,97 +2502,122 @@ verified: single <code>oxo-flow</code> file at archive root — no directory pre
 file, <code>oxo-flow</code>.</p>
 <hr />
 <h2 id="9-readmemd-template-80-lines-exact-skeleton">9. README.md template (~80 lines, exact skeleton)</h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="gh"># &lt;Pipeline Display Name&gt;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="gh"># &lt;repo-name&gt; — &lt;catalog-style title&gt;</span>
 <a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
-<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>[<span class="nt">![CI</span>](<span class="na">https://github.com/&lt;org&gt;/&lt;repo&gt;/actions/workflows/ci.yml/badge.svg</span>)](https://github.com/&lt;org&gt;/&lt;repo&gt;/actions/workflows/ci.yml)
-<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>[<span class="nt">![License</span>](<span class="na">https://img.shields.io/badge/license-Apache%202.0-blue.svg</span>)](LICENSE)
-<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>
-<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>&lt;One-paragraph description: what the pipeline analyzes and produces.&gt;
-<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>
-<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="gu">## Source</span>
-<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>
-<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>Ported from <span class="gs">**[&lt;upstream-name&gt;](&lt;upstream-repo-url&gt;)**</span>, version
-<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="sb">`&lt;tag-or-commit&gt;`</span> (&lt;upstream license, e.g. MIT/Apache-2.0&gt;). This port is
-<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>maintained independently and <span class="gs">**may lag the upstream**</span> — check the
-<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="sb">`&lt;tag-or-commit&gt;`</span> above and the fidelity table below for the exact ported
-<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>state.
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>[<span class="nt">![CI</span>](<span class="na">https://github.com/oxo-flow-community/&lt;repo&gt;/actions/workflows/ci.yml/badge.svg</span>)](https://github.com/oxo-flow-community/&lt;repo&gt;/actions/workflows/ci.yml)
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="k">&gt; </span><span class="ge">★ Verified · ⇄ Official port of [`&lt;upstream-name&gt;`](&lt;upstream-repo-url&gt;) @ `&lt;tag-or-commit&gt;`</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="k">&gt; </span><span class="ge">— same tools, same versions, same commands. Part of the</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="k">&gt; </span><span class="ge">[oxo-flow-community catalog](https://oxo-flow-community.github.io/).</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>&lt;One-paragraph description: what a user gets — the analysis goal and main
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>steps. No &quot;port&quot; framing outside the blockquote.&gt;
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="gu">## Installation</span>
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="gu">### 1. Install oxo-flow</span>
 <a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>
-<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="gu">## Fidelity</span>
+<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a>Requires <span class="gs">**oxo-flow ≥ 0.11.0**</span>. Release binary (recommended):
 <a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>
-<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a>| Upstream process/rule | oxo-flow rule | Tool (version) | Notes |
-<a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a>|---|---|---|---|
-<a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a>| FASTQC | <span class="sb">`fastqc`</span> | fastqc 0.12.1 | identical command |
-<a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a>| ... | | | |
-<a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a>
-<a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a>Rows cover <span class="gs">**every**</span> upstream process/rule. &quot;not ported&quot; rows are allowed
-<a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a>only with a reason.
-<a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a>
-<a id="__codelineno-11-26" name="__codelineno-11-26" href="#__codelineno-11-26"></a><span class="gu">## Quickstart</span>
-<a id="__codelineno-11-27" name="__codelineno-11-27" href="#__codelineno-11-27"></a>
-<a id="__codelineno-11-28" name="__codelineno-11-28" href="#__codelineno-11-28"></a>```bash
-<a id="__codelineno-11-29" name="__codelineno-11-29" href="#__codelineno-11-29"></a><span class="gh"># 1. install oxo-flow (see Requirements)</span>
-<a id="__codelineno-11-30" name="__codelineno-11-30" href="#__codelineno-11-30"></a><span class="gh"># 2. prepare data: raw/&lt;sample&gt;_R1.fastq.gz / _R2.fastq.gz (see fixtures/)</span>
-<a id="__codelineno-11-31" name="__codelineno-11-31" href="#__codelineno-11-31"></a><span class="gh"># 3. preview the plan</span>
-<a id="__codelineno-11-32" name="__codelineno-11-32" href="#__codelineno-11-32"></a>oxo-flow dry-run main.oxoflow
-<a id="__codelineno-11-33" name="__codelineno-11-33" href="#__codelineno-11-33"></a><span class="gh"># 4. run</span>
-<a id="__codelineno-11-34" name="__codelineno-11-34" href="#__codelineno-11-34"></a>oxo-flow run main.oxoflow -j 8
-<a id="__codelineno-11-35" name="__codelineno-11-35" href="#__codelineno-11-35"></a><span class="gh"># 5. run a subset</span>
-<a id="__codelineno-11-36" name="__codelineno-11-36" href="#__codelineno-11-36"></a>oxo-flow run main.oxoflow -t &lt;final-rule&gt; --samples first:2
+<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a>```bash
+<a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a>curl -fL -o oxo-flow.tar.gz \
+<a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a>  https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz
+<a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a>tar xzf oxo-flow.tar.gz
+<a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a>sudo mv oxo-flow /usr/local/bin/
 </code></pre></div>
-<h2 id="requirements">Requirements</h2>
-<ul>
-<li><strong>oxo-flow ≥ 0.11.0</strong> — install the prebuilt binary:</li>
-</ul>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>curl<span class="w"> </span>-fL<span class="w"> </span>-o<span class="w"> </span>oxo-flow.tar.gz<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span>https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>tar<span class="w"> </span>xzf<span class="w"> </span>oxo-flow.tar.gz
-<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>sudo<span class="w"> </span>mv<span class="w"> </span>oxo-flow<span class="w"> </span>/usr/local/bin/
+<p>Alternative: <code>conda install -c bioconda oxo-flow-cli</code> (the bioconda package
+may lag behind releases; other platform binaries are on the releases page).</p>
+<h3 id="2-get-this-workflow">2. Get this workflow</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/oxo-flow-community/&lt;repo&gt;.git
 </code></pre></div>
+<h3 id="3-requirements">3. Requirements</h3>
 <ul>
-<li>Conda users may alternatively <code>conda install -c bioconda oxo-flow-cli</code>
-  (note: the bioconda package currently lags the release binary at 0.10.2 —
-  some 0.11.0 format features may not validate).</li>
-<li>Docker/Singularity/conda at runtime, per the environments declared in
-  <code>main.oxoflow</code>.</li>
+<li><strong>Reference data</strong>: <genome FASTA, annotation GTF, indices … — list the
+  workflow's actual external inputs></li>
+<li><strong>Compute</strong>: <up to N threads / M GB per rule — from the workflow's own
+  resource settings></li>
+<li><strong>Tools</strong>: <containers with pinned images OR conda envs with pinned
+  versions — state which, matching the TOML environments></li>
 </ul>
-<h2 id="license">License</h2>
-<p>Apache-2.0. Copyright (c) 2026 oxo-flow-community. Upstream attribution in
+<h2 id="usage">Usage</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1"># 1. prepare data (see test/fixtures for the expected layout)</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="c1"># 2. preview the plan</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>oxo-flow<span class="w"> </span>dry-run<span class="w"> </span>main.oxoflow
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="c1"># 3. run</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>oxo-flow<span class="w"> </span>run<span class="w"> </span>main.oxoflow<span class="w"> </span>-j<span class="w"> </span><span class="m">8</span>
+</code></pre></div>
+<h2 id="fidelity">Fidelity</h2>
+<table>
+<thead>
+<tr>
+<th>Upstream process/rule</th>
+<th>oxo-flow rule</th>
+<th>Tool (version)</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FASTQC</td>
+<td><code>fastqc</code></td>
+<td>fastqc 0.12.1</td>
+<td>identical command</td>
+</tr>
+<tr>
+<td>...</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Rows cover <strong>every</strong> upstream process/rule. "not ported" rows are allowed
+only with a reason.</p>
+<h2 id="source">Source</h2>
+<p>Ported from <strong><a href="upstream-repo-url"><upstream-name></a></strong>, version
+<code>&lt;tag-or-commit&gt;</code> (<upstream license, e.g. MIT>). Created 2026-08-15; this
+workflow <strong>may lag upstream releases</strong>. Attribution in
 <code>NOTICE.md</code>.</p>
+<h2 id="test">Test</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>bash<span class="w"> </span>test/run.sh<span class="w">   </span><span class="c1"># validate + lint + dry-run, exits 0</span>
+</code></pre></div>
+<h2 id="license">License</h2>
+<p>Apache-2.0. Copyright (c) 2026 oxo-flow-community.</p>
 <h2 id="community">Community</h2>
 <p>https://oxo-flow-community.github.io/
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>---
-<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
-<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>## 10. NOTICE.md template
-<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>
-<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>```text
-<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>&lt;pipeline-name&gt;
-<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>Copyright (c) 2026 oxo-flow-community
-<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>
-<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>This pipeline is a port of &lt;upstream-name&gt;
-<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>(&lt;upstream-repo-url&gt;), version &lt;tag-or-commit&gt;, authored by
-<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>&lt;upstream-authors-or-org&gt;.
-<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>
-<a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
-<a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a>you may not use this file except in compliance with the License.
-<a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a>You may obtain a copy of the License at
-<a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a>
-<a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a>    http://www.apache.org/licenses/LICENSE-2.0
-<a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a>
-<a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a>Unless required by applicable law or agreed to in writing, software
-<a id="__codelineno-13-20" name="__codelineno-13-20" href="#__codelineno-13-20"></a>distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
-<a id="__codelineno-13-21" name="__codelineno-13-21" href="#__codelineno-13-21"></a>WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-<a id="__codelineno-13-22" name="__codelineno-13-22" href="#__codelineno-13-22"></a>See the License for the specific language governing permissions and
-<a id="__codelineno-13-23" name="__codelineno-13-23" href="#__codelineno-13-23"></a>limitations under the License.
-<a id="__codelineno-13-24" name="__codelineno-13-24" href="#__codelineno-13-24"></a>
-<a id="__codelineno-13-25" name="__codelineno-13-25" href="#__codelineno-13-25"></a>---------------------------------------------------------------------
-<a id="__codelineno-13-26" name="__codelineno-13-26" href="#__codelineno-13-26"></a>Upstream license
-<a id="__codelineno-13-27" name="__codelineno-13-27" href="#__codelineno-13-27"></a>
-<a id="__codelineno-13-28" name="__codelineno-13-28" href="#__codelineno-13-28"></a>This port is derived from &lt;upstream-name&gt; under the &lt;license-name&gt;
-<a id="__codelineno-13-29" name="__codelineno-13-29" href="#__codelineno-13-29"></a>license. The upstream LICENSE must be included **verbatim** in this
-<a id="__codelineno-13-30" name="__codelineno-13-30" href="#__codelineno-13-30"></a>repository: fetch it from the upstream repository at the ported
-<a id="__codelineno-13-31" name="__codelineno-13-31" href="#__codelineno-13-31"></a>&lt;tag-or-commit&gt; and place it at LICENSE.upstream. (Apache-2.0 §4(d):
-<a id="__codelineno-13-32" name="__codelineno-13-32" href="#__codelineno-13-32"></a>attribution notices from the Source form must be retained.)
-<a id="__codelineno-13-33" name="__codelineno-13-33" href="#__codelineno-13-33"></a>---------------------------------------------------------------------
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>---
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>## 10. NOTICE.md template
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>```text
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>&lt;pipeline-name&gt;
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>Copyright (c) 2026 oxo-flow-community
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>This pipeline is a port of &lt;upstream-name&gt;
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>(&lt;upstream-repo-url&gt;), version &lt;tag-or-commit&gt;, authored by
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>&lt;upstream-authors-or-org&gt;.
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a>Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a>you may not use this file except in compliance with the License.
+<a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a>You may obtain a copy of the License at
+<a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a>
+<a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a>    http://www.apache.org/licenses/LICENSE-2.0
+<a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a>
+<a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a>Unless required by applicable law or agreed to in writing, software
+<a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a>distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+<a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a>WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+<a id="__codelineno-15-22" name="__codelineno-15-22" href="#__codelineno-15-22"></a>See the License for the specific language governing permissions and
+<a id="__codelineno-15-23" name="__codelineno-15-23" href="#__codelineno-15-23"></a>limitations under the License.
+<a id="__codelineno-15-24" name="__codelineno-15-24" href="#__codelineno-15-24"></a>
+<a id="__codelineno-15-25" name="__codelineno-15-25" href="#__codelineno-15-25"></a>---------------------------------------------------------------------
+<a id="__codelineno-15-26" name="__codelineno-15-26" href="#__codelineno-15-26"></a>Upstream license
+<a id="__codelineno-15-27" name="__codelineno-15-27" href="#__codelineno-15-27"></a>
+<a id="__codelineno-15-28" name="__codelineno-15-28" href="#__codelineno-15-28"></a>This port is derived from &lt;upstream-name&gt; under the &lt;license-name&gt;
+<a id="__codelineno-15-29" name="__codelineno-15-29" href="#__codelineno-15-29"></a>license. The upstream LICENSE must be included **verbatim** in this
+<a id="__codelineno-15-30" name="__codelineno-15-30" href="#__codelineno-15-30"></a>repository: fetch it from the upstream repository at the ported
+<a id="__codelineno-15-31" name="__codelineno-15-31" href="#__codelineno-15-31"></a>&lt;tag-or-commit&gt; and place it at LICENSE.upstream. (Apache-2.0 §4(d):
+<a id="__codelineno-15-32" name="__codelineno-15-32" href="#__codelineno-15-32"></a>attribution notices from the Source form must be retained.)
+<a id="__codelineno-15-33" name="__codelineno-15-33" href="#__codelineno-15-33"></a>---------------------------------------------------------------------
 </code></pre></div></p>
 <p>Rule: the NOTICE instructs the port author to fetch the upstream LICENSE
 from the upstream repo at the ported commit and commit it verbatim as
@@ -2465,73 +2639,59 @@ under the Apache License…"). Conventions to mirror:</p>
 <li>Add <code>LICENSE.upstream</code> (the upstream repo's license, verbatim) per §10.</li>
 </ol>
 <hr />
-<h2 id="12-metadatajson-exact-schema">12. metadata.json — exact schema</h2>
-<p>Every port ships <code>metadata.json</code> validating against this schema:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="p">{</span>
-<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span><span class="nt">&quot;$schema&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://json-schema.org/draft-07/schema#&quot;</span><span class="p">,</span>
-<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;oxo-flow port metadata&quot;</span><span class="p">,</span>
-<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span>
-<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">  </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">    </span><span class="s2">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;title&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;engine&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;source&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;created&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;domain&quot;</span><span class="p">,</span>
-<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="w">    </span><span class="s2">&quot;tags&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;description&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;scope&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;excluded&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;rule_count&quot;</span><span class="p">,</span>
-<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="w">    </span><span class="s2">&quot;tools&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;status&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;repo_url&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;site_page&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;upstream_license&quot;</span>
-<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="w">  </span><span class="p">],</span>
-<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="w">  </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a><span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;kebab-case repo name, e.g. &#39;nf-core-rnaseq&#39;&quot;</span><span class="w"> </span><span class="p">},</span>
-<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a><span class="w">    </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Display title&quot;</span><span class="w"> </span><span class="p">},</span>
-<a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a><span class="w">    </span><span class="nt">&quot;engine&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;const&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;oxo-flow&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Engine this port targets&quot;</span><span class="w"> </span><span class="p">},</span>
-<a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a><span class="w">    </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span>
-<a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a><span class="w">      </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;repo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;url&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;tag&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;sha&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;license&quot;</span><span class="p">],</span>
-<a id="__codelineno-14-17" name="__codelineno-14-17" href="#__codelineno-14-17"></a><span class="w">      </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-14-18" name="__codelineno-14-18" href="#__codelineno-14-18"></a><span class="w">        </span><span class="nt">&quot;repo&quot;</span><span class="p">:</span><span class="w">     </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Upstream repo short name&quot;</span><span class="w"> </span><span class="p">},</span>
-<a id="__codelineno-14-19" name="__codelineno-14-19" href="#__codelineno-14-19"></a><span class="w">        </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w">      </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;uri&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Upstream repo URL&quot;</span><span class="w"> </span><span class="p">},</span>
-<a id="__codelineno-14-20" name="__codelineno-14-20" href="#__codelineno-14-20"></a><span class="w">        </span><span class="nt">&quot;tag&quot;</span><span class="p">:</span><span class="w">      </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Upstream release tag or branch&quot;</span><span class="w"> </span><span class="p">},</span>
-<a id="__codelineno-14-21" name="__codelineno-14-21" href="#__codelineno-14-21"></a><span class="w">        </span><span class="nt">&quot;sha&quot;</span><span class="p">:</span><span class="w">      </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Upstream commit SHA at port time (full 40-hex)&quot;</span><span class="w"> </span><span class="p">},</span>
-<a id="__codelineno-14-22" name="__codelineno-14-22" href="#__codelineno-14-22"></a><span class="w">        </span><span class="nt">&quot;license&quot;</span><span class="p">:</span><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Upstream license SPDX id&quot;</span><span class="w"> </span><span class="p">}</span>
-<a id="__codelineno-14-23" name="__codelineno-14-23" href="#__codelineno-14-23"></a><span class="w">      </span><span class="p">}</span>
-<a id="__codelineno-14-24" name="__codelineno-14-24" href="#__codelineno-14-24"></a><span class="w">    </span><span class="p">},</span>
-<a id="__codelineno-14-25" name="__codelineno-14-25" href="#__codelineno-14-25"></a><span class="w">    </span><span class="nt">&quot;created&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;date&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Port date, ISO 8601 (2026-08-15)&quot;</span><span class="w"> </span><span class="p">},</span>
-<a id="__codelineno-14-26" name="__codelineno-14-26" href="#__codelineno-14-26"></a><span class="w">    </span><span class="nt">&quot;domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;genomics&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;transcriptomics&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;single-cell&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;metagenomics&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;proteomics&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;multi-omics&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;other&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">},</span>
-<a id="__codelineno-14-27" name="__codelineno-14-27" href="#__codelineno-14-27"></a><span class="w">    </span><span class="nt">&quot;tags&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;array&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Search tags, e.g. [&#39;rna-seq&#39;, &#39;differential-expression&#39;]&quot;</span><span class="w"> </span><span class="p">},</span>
-<a id="__codelineno-14-28" name="__codelineno-14-28" href="#__codelineno-14-28"></a><span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;One-paragraph pipeline description&quot;</span><span class="w"> </span><span class="p">},</span>
-<a id="__codelineno-14-29" name="__codelineno-14-29" href="#__codelineno-14-29"></a><span class="w">    </span><span class="nt">&quot;scope&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;array&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Upstream steps included in this port (rule names)&quot;</span><span class="w"> </span><span class="p">},</span>
-<a id="__codelineno-14-30" name="__codelineno-14-30" href="#__codelineno-14-30"></a><span class="w">    </span><span class="nt">&quot;excluded&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;array&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Upstream steps NOT ported, with reasons&quot;</span><span class="w"> </span><span class="p">},</span>
-<a id="__codelineno-14-31" name="__codelineno-14-31" href="#__codelineno-14-31"></a><span class="w">    </span><span class="nt">&quot;rule_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;integer&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Number of [[rules]] entries in the port&quot;</span><span class="w"> </span><span class="p">},</span>
-<a id="__codelineno-14-32" name="__codelineno-14-32" href="#__codelineno-14-32"></a><span class="w">    </span><span class="nt">&quot;tools&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;array&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Tool@version list, e.g. [&#39;fastp@0.23.4&#39;, &#39;STAR@2.7.11b&#39;]&quot;</span><span class="w"> </span><span class="p">},</span>
-<a id="__codelineno-14-33" name="__codelineno-14-33" href="#__codelineno-14-33"></a><span class="w">    </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;draft&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ready&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;archived&quot;</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&#39;ready&#39; only when §14 passes&quot;</span><span class="w"> </span><span class="p">},</span>
-<a id="__codelineno-14-34" name="__codelineno-14-34" href="#__codelineno-14-34"></a><span class="w">    </span><span class="nt">&quot;repo_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;uri&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;URL of this port&#39;s repository&quot;</span><span class="w"> </span><span class="p">},</span>
-<a id="__codelineno-14-35" name="__codelineno-14-35" href="#__codelineno-14-35"></a><span class="w">    </span><span class="nt">&quot;site_page&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;uri&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Community site page, https://oxo-flow-community.github.io/&lt;name&gt;/&quot;</span><span class="w"> </span><span class="p">},</span>
-<a id="__codelineno-14-36" name="__codelineno-14-36" href="#__codelineno-14-36"></a><span class="w">    </span><span class="nt">&quot;upstream_license&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Upstream license SPDX id (mirrors source.license)&quot;</span><span class="w"> </span><span class="p">}</span>
-<a id="__codelineno-14-37" name="__codelineno-14-37" href="#__codelineno-14-37"></a><span class="w">  </span><span class="p">}</span>
-<a id="__codelineno-14-38" name="__codelineno-14-38" href="#__codelineno-14-38"></a><span class="p">}</span>
+<h2 id="12-metadatajson-exact-schema-registry-v2">12. metadata.json — exact schema (registry v2)</h2>
+<p>Every repo ships <code>metadata.json</code> — this is the source record for the catalog
+registry (<code>data/pipelines.json</code> in the site repo). Catalog v2 fields:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="p">{</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;oxo-flow-rnaseq&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;RNA-seq: alignment, quantification and QC&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">  </span><span class="nt">&quot;origin&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;port&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="w">  </span><span class="nt">&quot;rating&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;verified&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="w">  </span><span class="nt">&quot;engine&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;nextflow&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="w">  </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="w">    </span><span class="nt">&quot;repo&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;nf-core/rnaseq&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="w">    </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://github.com/nf-core/rnaseq&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="w">    </span><span class="nt">&quot;tag&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;3.26.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="w">    </span><span class="nt">&quot;sha&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;40-hex-sha-of-tag&gt;&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a><span class="w">    </span><span class="nt">&quot;license&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MIT&quot;</span>
+<a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a><span class="w">  </span><span class="nt">&quot;created&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-08-15&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a><span class="w">  </span><span class="nt">&quot;domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;bulk RNA-seq&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a><span class="w">  </span><span class="nt">&quot;tags&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;rna-seq&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;star&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;quantification&quot;</span><span class="p">],</span>
+<a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a><span class="w">  </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;One catalog paragraph: what a user gets — goal and main steps.&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a><span class="w">  </span><span class="nt">&quot;scope&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;fastqc&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;trim&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;star_align&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="p">],</span>
+<a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a><span class="w">  </span><span class="nt">&quot;excluded&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;optional upstream branches, with reasons&quot;</span><span class="p">],</span>
+<a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a><span class="w">  </span><span class="nt">&quot;rule_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">44</span><span class="p">,</span>
+<a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a><span class="w">  </span><span class="nt">&quot;tools&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;fastqc&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;star&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;samtools&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="p">],</span>
+<a id="__codelineno-16-22" name="__codelineno-16-22" href="#__codelineno-16-22"></a><span class="w">  </span><span class="nt">&quot;installation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-16-23" name="__codelineno-16-23" href="#__codelineno-16-23"></a><span class="w">    </span><span class="nt">&quot;engine&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;oxo-flow &gt;= 0.11.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-24" name="__codelineno-16-24" href="#__codelineno-16-24"></a><span class="w">    </span><span class="nt">&quot;toolchain&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;containers (Docker/Singularity) — pinned images&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-25" name="__codelineno-16-25" href="#__codelineno-16-25"></a><span class="w">    </span><span class="nt">&quot;requirements&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-16-26" name="__codelineno-16-26" href="#__codelineno-16-26"></a><span class="w">      </span><span class="s2">&quot;Reference data: genome FASTA, annotation GTF, chrom sizes&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-27" name="__codelineno-16-27" href="#__codelineno-16-27"></a><span class="w">      </span><span class="s2">&quot;Compute: up to 12 threads / 72 GB per rule&quot;</span>
+<a id="__codelineno-16-28" name="__codelineno-16-28" href="#__codelineno-16-28"></a><span class="w">    </span><span class="p">]</span>
+<a id="__codelineno-16-29" name="__codelineno-16-29" href="#__codelineno-16-29"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-16-30" name="__codelineno-16-30" href="#__codelineno-16-30"></a><span class="w">  </span><span class="nt">&quot;repo_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://github.com/oxo-flow-community/oxo-flow-rnaseq&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-31" name="__codelineno-16-31" href="#__codelineno-16-31"></a><span class="w">  </span><span class="nt">&quot;license&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Apache-2.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-32" name="__codelineno-16-32" href="#__codelineno-16-32"></a><span class="w">  </span><span class="nt">&quot;upstream_license&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MIT&quot;</span>
+<a id="__codelineno-16-33" name="__codelineno-16-33" href="#__codelineno-16-33"></a><span class="p">}</span>
 </code></pre></div>
-<p>Example values for an nf-core rnaseq port:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="p">{</span>
-<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;nf-core-rnaseq&quot;</span><span class="p">,</span>
-<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;nf-core rnaseq (port)&quot;</span><span class="p">,</span>
-<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">  </span><span class="nt">&quot;engine&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;oxo-flow&quot;</span><span class="p">,</span>
-<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">  </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">    </span><span class="nt">&quot;repo&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;nf-core/rnaseq&quot;</span><span class="p">,</span>
-<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="w">    </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://github.com/nf-core/rnaseq&quot;</span><span class="p">,</span>
-<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="w">    </span><span class="nt">&quot;tag&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;3.14.2&quot;</span><span class="p">,</span>
-<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="w">    </span><span class="nt">&quot;sha&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;40-hex-sha-of-tag&gt;&quot;</span><span class="p">,</span>
-<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="w">    </span><span class="nt">&quot;license&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MIT&quot;</span>
-<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="w">  </span><span class="p">},</span>
-<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="w">  </span><span class="nt">&quot;created&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-08-15&quot;</span><span class="p">,</span>
-<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a><span class="w">  </span><span class="nt">&quot;domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;transcriptomics&quot;</span><span class="p">,</span>
-<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a><span class="w">  </span><span class="nt">&quot;tags&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;rna-seq&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;differential-expression&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;nf-core&quot;</span><span class="p">],</span>
-<a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a><span class="w">  </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;oxo-flow port of the nf-core/rnaseq pipeline: QC, trimming, STAR alignment, quantification, DE.&quot;</span><span class="p">,</span>
-<a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a><span class="w">  </span><span class="nt">&quot;scope&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;fastqc&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;trim&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;star_align&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;featurecounts&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;multiqc&quot;</span><span class="p">],</span>
-<a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a><span class="w">  </span><span class="nt">&quot;excluded&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;umicollapse&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;upstream branch steps — not in default path&quot;</span><span class="p">],</span>
-<a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a><span class="w">  </span><span class="nt">&quot;rule_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span>
-<a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a><span class="w">  </span><span class="nt">&quot;tools&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;fastqc@0.12.1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;fastp@0.23.4&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;STAR@2.7.11b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;subread@2.0.6&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;multiqc@1.21&quot;</span><span class="p">],</span>
-<a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a><span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ready&quot;</span><span class="p">,</span>
-<a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a><span class="w">  </span><span class="nt">&quot;repo_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://github.com/&lt;org&gt;/nf-core-rnaseq&quot;</span><span class="p">,</span>
-<a id="__codelineno-15-22" name="__codelineno-15-22" href="#__codelineno-15-22"></a><span class="w">  </span><span class="nt">&quot;site_page&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://oxo-flow-community.github.io/nf-core-rnaseq/&quot;</span><span class="p">,</span>
-<a id="__codelineno-15-23" name="__codelineno-15-23" href="#__codelineno-15-23"></a><span class="w">  </span><span class="nt">&quot;upstream_license&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MIT&quot;</span>
-<a id="__codelineno-15-24" name="__codelineno-15-24" href="#__codelineno-15-24"></a><span class="p">}</span>
-</code></pre></div>
+<p>Field rules:</p>
+<ul>
+<li><code>origin</code>: <code>"port"</code> (migration of a Nextflow/Snakemake pipeline) · <code>"original"</code>
+  (built for oxo-flow) · <code>"curated"</code> (third-party repo, listed via PR).</li>
+<li><code>rating</code>: <code>"verified"</code> (fidelity-checked, CI green — §14) or <code>"community"</code>.</li>
+<li><code>engine</code>: the SOURCE engine for ports (<code>"nextflow"</code> | <code>"snakemake"</code>); omitted
+  for original workflows.</li>
+<li><code>title</code>/<code>description</code> are catalog copy — user-facing, no "port" framing.</li>
+<li><code>tools</code>: deduped tool names WITHOUT versions (versions live in the TOML
+  pins and the README fidelity table).</li>
+<li><code>installation</code>: engine floor; <code>toolchain</code> states truthfully whether the
+  workflow runs tools via containers or conda (matching the TOML
+  environments); <code>requirements</code> lists reference data and compute needs.
+}
+```</li>
+</ul>
 <hr />
 <h2 id="13-gotchas-verified-behaviors-ports-must-work-around">13. Gotchas — verified behaviors ports must work around</h2>
 <p>Each item is marked with what it is based on: <code>[V]</code> = observed against the
@@ -2687,16 +2847,19 @@ submission):</p>
       in the fidelity table (§5).</li>
 <li>[ ] Exactly one sample source on the default path (no §13.8
       double-fan-out).</li>
-<li>[ ] <code>README.md</code> (title, CI badge, description, Source block with
-      tag/commit + upstream license, Created note "2026-08-15" + may-lag
-      sentence, fidelity table, quickstart, requirements incl. bioconda
-      caveat, license summary, community link) — §9 skeleton followed.</li>
+<li>[ ] <code>README.md</code> (catalog v2 skeleton — §9: title without "port" framing,
+      ★ Verified blockquote, Installation with engine + reference-data +
+      compute + toolchain, Usage, fidelity table, Source with tag/commit +
+      upstream license + created-2026-08-15 + may-lag sentence, Test,
+      License, Community link).</li>
 <li>[ ] <code>NOTICE.md</code> present; <code>LICENSE</code> = full Apache-2.0 with
       "Copyright (c) 2026 oxo-flow-community"; <code>LICENSE.upstream</code> = the
       upstream license fetched from the upstream repo at the ported commit
       (§10, §11).</li>
-<li>[ ] <code>metadata.json</code> validates against the §12 schema; <code>rule_count</code> and
-      <code>tools</code> match the port; <code>status = "ready"</code>.</li>
+<li>[ ] <code>metadata.json</code> follows the registry v2 schema (§12): <code>origin =
+      "port"</code>, <code>rating = "verified"</code> (only when every other DoD item
+      holds), truthful <code>installation</code> block, <code>tools</code> without versions,
+      valid JSON.</li>
 <li>[ ] <code>.github/workflows/ci.yml</code> present with the v0.11.0 tarball install
       (§8); CI is green with the badge URL resolving.</li>
 <li>[ ] No files written into <code>/Users/wsx/Documents/GitHub/oxo-flow/</code>; all

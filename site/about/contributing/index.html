@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="20 battle-tested bioinformatics workflows — faithful ports of the most-used nf-core and Snakemake pipelines for the oxo-flow engine. Search the catalog, read the run instructions, copy the command.">
+        <meta name="description" content="The community catalog of oxo-flow workflows — verified ports of established nf-core and Snakemake pipelines, original designs, and community submissions. Classified, rated, and documented. Search, compare, run.">
       
       
       
@@ -308,6 +308,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../curation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Curation & ratings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../selection/" class="md-nav__link">
         
   
@@ -422,10 +449,21 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#selection-criteria" class="md-nav__link">
+  <a href="#1-build-the-workflow" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Selection criteria
+        1. Build the workflow
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-get-it-listed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Get it listed
       
     </span>
   </a>
@@ -467,10 +505,21 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#selection-criteria" class="md-nav__link">
+  <a href="#1-build-the-workflow" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Selection criteria
+        1. Build the workflow
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-get-it-listed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Get it listed
       
     </span>
   </a>
@@ -498,27 +547,39 @@
 
 
 <h1 id="contributing">Contributing</h1>
-<p>The catalog grows one faithful port at a time. To add workflow #21:</p>
-<ol>
-<li><strong>Pick a source pipeline</strong> (Nextflow or Snakemake) that is widely used and
-   actively maintained by its community.</li>
-<li><strong>Follow the <a href="../porting/">porting guide</a></strong> — it is the executable spec:
-   engine mapping tables, version-pinning policy, repo layout, CI, README,
-   NOTICE and licensing conventions.</li>
-<li><strong>Create a repo</strong> <code>oxo-flow-&lt;name&gt;</code> under
-   <a href="https://github.com/oxo-flow-community">oxo-flow-community</a> with the standard
-   layout (<code>workflow/</code>, <code>config/</code>, <code>test/</code>, <code>README.md</code>, <code>LICENSE</code>, <code>NOTICE.md</code>,
-   <code>.github/workflows/ci.yml</code>, <code>metadata.json</code>) and green <code>validate</code> + <code>dry-run</code>
-   in CI.</li>
-<li><strong>Add its metadata</strong> to <code>data/pipelines.json</code> in the
-   <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io">site repository</a>
-   and re-run <code>scripts/generate.py</code> to refresh the catalog pages.</li>
-<li><strong>Open a pull request</strong> to publish the entry.</li>
-</ol>
-<h2 id="selection-criteria">Selection criteria</h2>
-<p>New entries are evaluated with the same pre-registered criteria as the first
-twenty: usage &amp; adoption (40%), maintenance health (20%), portability (25%),
-domain diversity (15%). See the full <a href="../selection/">selection report</a>.</p>
+<p>The catalog grows one workflow at a time — a port, an original design, or a
+listing of a repository you already maintain.</p>
+<h2 id="1-build-the-workflow">1. Build the workflow</h2>
+<ul>
+<li><strong>Porting an existing pipeline</strong> (Nextflow or Snakemake): follow the
+  <a href="../porting/">porting guide</a> — mapping tables, version-pinning policy, repo
+  layout, README, licensing.</li>
+<li><strong>Writing an original workflow</strong>: same repo layout, plus your own design
+  decisions. The layout is:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>workflow/            the .oxoflow file(s)
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>config/              optional configuration profiles
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>test/fixtures/       minimal inputs that make dry-run meaningful
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>test/run.sh          validate + lint + dry-run, exit 0 on success
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>README.md            what it does, Installation, usage, scope
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>LICENSE              Apache-2.0 (or your choice for your own repo)
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>NOTICE.md            required for ports — upstream attribution
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>.github/workflows/   CI: install oxo-flow, run test/run.sh
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>metadata.json        the registry entry (schema in data/pipelines.json)
+</code></pre></div>
+<h2 id="2-get-it-listed">2. Get it listed</h2>
+<ul>
+<li><strong>In the org:</strong> if you want the community team to co-maintain it, open a
+  repository under
+  <a href="https://github.com/oxo-flow-community">oxo-flow-community</a> and ask for a
+  review in the site repository.</li>
+<li><strong>Your own repo:</strong> add a registry entry to <code>data/pipelines.json</code> in the
+  <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io">site repository</a>
+  and open a pull request. The catalog links to your repository — nothing
+  moves.</li>
+</ul>
+<p>See <a href="../curation/">Curation &amp; ratings</a> for the classification scheme and
+what ★ Verified requires.</p>
 
 
 

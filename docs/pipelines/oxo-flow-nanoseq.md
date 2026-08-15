@@ -1,21 +1,49 @@
-# Nanopore demultiplexing, QC and alignment
+# Nanopore long-read: demultiplexing, QC and alignment
 
-oxo-flow port of nf-core/nanoseq 3.1.0 (DNA default path): samplesheet check, qcat demultiplexing, NanoPlot + FastQC QC, minimap2 alignment, samtools view/sort/index, samtools stats/flagstat/idxstats, BigWig coverage tracks and MultiQC reporting.
+<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
+
+A nanopore long-read pipeline for the DNA default path: samplesheet check, qcat barcode demultiplexing, NanoPlot + FastQC QC, minimap2 alignment, samtools view/sort/index, samtools stats/flagstat/idxstats, BigWig coverage tracks and a MultiQC report. The protocol config key switches to the cDNA/directRNA transcriptome paths. Every rule runs the upstream module's exact pinned container image.
 
 | | |
 |---:|---|
-| **Engine** | nf-core |
+| **Rating** | ★ Verified |
+| **Origin** | port |
+| **Domain** | genomics |
+| **Rules** | 19 |
+| **Tools** | python · qcat · nanoplot · fastqc · samtools · perl · minimap2 · bedtools · ucsc-bedgraphtobigwig · multiqc |
+| **Ported** | 2026-08-15 |
+| **License** | Apache-2.0 |
 | **Source** | [nf-core/nanoseq](https://github.com/nf-core/nanoseq) |
 | **Pinned version** | `3.1.0` |
-| **Ported** | 2026-08-15 |
-| **Rules** | 19 |
-| **Tools** | qcat · nanoplot · fastqc · samtools · python · perl · minimap2 · bedtools · ucsc-bedgraphtobigwig · multiqc |
-| **Domain** | genomics |
 
 ## Run it
 
 ```bash
 oxo-flow dry-run main.oxoflow
+```
+
+## Installation
+
+**Engine.** oxo-flow >= 0.11.0
+
+**Toolchain.** containers (Docker/Singularity) — pinned images
+
+**Requirements.**
+- genome FASTA reference (config.reference; defaults to test fixtures — override for real data)
+- samplesheet CSV (config.input) plus raw nanopore FASTQ for demultiplexing (config.input_path; skip with skip_demultiplexing=true)
+- optional GTF annotation (config.gtf + config.gtf_base) — only needed for the cDNA/directRNA junction-bed path
+- compute: up to 12 CPUs / 84 GB RAM per rule (minimap2 index; most medium rules request 6 CPUs / 42 GB)
+- container runtime (Docker or Singularity) — every rule pins its quay.io/biocontainers image
+
+```bash
+# 1. install oxo-flow (release binary, recommended)
+curl -fL -o oxo-flow.tar.gz https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz
+tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
+#    or, via conda (may lag behind releases):
+#    conda install -c bioconda oxo-flow-cli
+
+# 2. get this workflow
+git clone https://github.com/oxo-flow-community/oxo-flow-nanoseq
 ```
 
 ## Scope
@@ -120,6 +148,6 @@ Not ported (all off by default upstream, so absent from the default path):
 
 - Repository: [oxo-flow-nanoseq](https://github.com/oxo-flow-community/oxo-flow-nanoseq)
 - Upstream: [nf-core/nanoseq](https://github.com/nf-core/nanoseq) @ `3.1.0`
-- License: Apache-2.0 (port) · MIT (upstream)
+- License: Apache-2.0 (this workflow) · MIT (upstream)
 
-This port was created on 2026-08-15 and may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.

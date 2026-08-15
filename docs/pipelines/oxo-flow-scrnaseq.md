@@ -1,21 +1,50 @@
-# Single-cell RNA-seq (10x / DropSeq / SmartSeq)
+# Single-cell RNA-seq: alignment, quantification and QC
 
-oxo-flow port of the nf-core/scrnaseq pipeline restricted to the aligner=cellranger default execution path: FastQC read QC, genome preparation (gunzip, GTF gene filter), Cell Ranger reference building and per-sample count, 10x mtx-to-h5ad conversion, CellBender background removal, h5ad concatenation, Seurat/SingleCellExperiment conversion, and MultiQC aggregation. 23 rules; validate + dry-run + acceptance test all green.
+<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
+
+Single-cell RNA-seq analysis from raw 10x Genomics FASTQ reads to a final MultiQC report: FastQC read QC, Cell Ranger reference preparation and per-sample cellranger count (alignment and quantification, optional BAM output), conversion of raw and filtered 10x matrices to h5ad, CellBender ambient-RNA background removal, sample-wise h5ad concatenation, and optional export to Seurat and SingleCellExperiment objects. Covers the Cell Ranger execution path of nf-core/scrnaseq; other aligners and assays (ATAC, multiome) are not included.
 
 | | |
 |---:|---|
-| **Engine** | nf-core |
+| **Rating** | ★ Verified |
+| **Origin** | port |
+| **Domain** | single-cell |
+| **Rules** | 23 |
+| **Tools** | cellranger · fastqc · multiqc · scanpy · anndata · cellbender · anndataR · SeuratObject · SingleCellExperiment · rhdf5 · gzip · gawk · python |
+| **Ported** | 2026-08-15 |
+| **License** | Apache-2.0 |
 | **Source** | [nf-core/scrnaseq](https://github.com/nf-core/scrnaseq) |
 | **Pinned version** | `4.2.0` |
-| **Ported** | 2026-08-15 |
-| **Rules** | 23 |
-| **Tools** | cellranger · fastqc · multiqc · scanpy · anndata · cellbender · bioconductor-anndatar · r-seurat · bioconductor-singlecellexperiment · bioconductor-rhdf5 · gzip · gawk · python |
-| **Domain** | single-cell |
 
 ## Run it
 
 ```bash
 oxo-flow dry-run main.oxoflow
+```
+
+## Installation
+
+**Engine.** oxo-flow >= 0.11.0
+
+**Toolchain.** containers (Docker/Singularity) — pinned images; conda alternatives in envs/ for non-Cell-Ranger rules (Cell Ranger rules are docker-only)
+
+**Requirements.**
+- reference genome FASTA, optionally gzipped (config.fasta, default refs/refdata.fa.gz)
+- gene-annotation GTF, optionally gzipped (config.gtf, default refs/refdata.gtf.gz)
+- raw 10x FASTQ pair per sample: raw/<sample>_R1.fastq.gz and raw/<sample>_R2.fastq.gz (one pair per sample)
+- samplesheet.csv with columns sample,fastq_1,fastq_2,protocol,expected_cells (used by the combined-h5ad step)
+- compute: up to 12 CPUs / 72 GB per rule (Cell Ranger mkref/count); 6 CPUs / 36 GB for h5ad conversion, CellBender and concat rules; concurrent per-sample rules scale with -j
+- optional: pre-built Cell Ranger index (set build_cellranger_index=false and point transcriptome at it) to skip index building
+
+```bash
+# 1. install oxo-flow (release binary, recommended)
+curl -fL -o oxo-flow.tar.gz https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz
+tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
+#    or, via conda (may lag behind releases):
+#    conda install -c bioconda oxo-flow-cli
+
+# 2. get this workflow
+git clone https://github.com/oxo-flow-community/oxo-flow-scrnaseq
 ```
 
 ## Scope
@@ -97,6 +126,6 @@ strings and conda pins are copied verbatim from the upstream modules (all pinned
 
 - Repository: [oxo-flow-scrnaseq](https://github.com/oxo-flow-community/oxo-flow-scrnaseq)
 - Upstream: [nf-core/scrnaseq](https://github.com/nf-core/scrnaseq) @ `4.2.0`
-- License: Apache-2.0 (port) · MIT (upstream)
+- License: Apache-2.0 (this workflow) · MIT (upstream)
 
-This port was created on 2026-08-15 and may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.

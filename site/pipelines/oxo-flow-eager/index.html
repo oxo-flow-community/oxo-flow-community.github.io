@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="20 battle-tested bioinformatics workflows — faithful ports of the most-used nf-core and Snakemake pipelines for the oxo-flow engine. Search the catalog, read the run instructions, copy the command.">
+        <meta name="description" content="The community catalog of oxo-flow workflows — verified ports of established nf-core and Snakemake pipelines, original designs, and community submissions. Classified, rated, and documented. Search, compare, run.">
       
       
       
@@ -23,7 +23,7 @@
     
     
       
-        <title>Ancient DNA analysis (aDNA) - oxo-flow-community</title>
+        <title>Ancient DNA (aDNA): QC, mapping, damage estimation and genotyping - oxo-flow-community</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#ancient-dna-analysis-adna" class="md-skip">
+        <a href="#ancient-dna-adna-qc-mapping-damage-estimation-and-genotyping" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Ancient DNA analysis (aDNA)
+              Ancient DNA (aDNA): QC, mapping, damage estimation and genotyping
             
           </span>
         </div>
@@ -306,6 +306,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../about/curation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Curation & ratings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../about/selection/" class="md-nav__link">
         
   
@@ -418,6 +445,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#scope" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -470,8 +508,10 @@
   
 
 
-<h1 id="ancient-dna-analysis-adna">Ancient DNA analysis (aDNA)</h1>
-<p>oxo-flow port of the nf-core/eager pipeline: ancient DNA (aDNA) analysis with FastQC, fastp (poly-G filter, optional), AdapterRemoval read clipping/merging, BWA aln mapping, MarkDuplicates/DeDup deduplication, DamageProfiler damage estimation, Qualimap, pileupCaller genotyping (optional) and MultiQC reporting.</p>
+<h1 id="ancient-dna-adna-qc-mapping-damage-estimation-and-genotyping">Ancient DNA (aDNA): QC, mapping, damage estimation and genotyping</h1>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
+
+<p>Ancient DNA (aDNA) analysis in one run: FastQC raw QC, optional fastp poly-G filtering (2-colour chemistry), AdapterRemoval adapter clipping and paired-end read merging, BWA aln mapping with ancient-DNA parameters, picard MarkDuplicates (or DeDup) deduplication, preseq library-complexity curves, DamageProfiler damage estimation, Qualimap BAM QC, optional pileupCaller genotyping with eigenstrat SNP coverage, and a final MultiQC report — every rule pinned to the nf-core/eager 2.5.3 tool versions in the upstream container.</p>
 <table>
 <thead>
 <tr>
@@ -481,20 +521,16 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align: right;"><strong>Engine</strong></td>
-<td>nf-core</td>
+<td style="text-align: right;"><strong>Rating</strong></td>
+<td>★ Verified</td>
 </tr>
 <tr>
-<td style="text-align: right;"><strong>Source</strong></td>
-<td><a href="https://github.com/nf-core/eager">nf-core/eager</a></td>
+<td style="text-align: right;"><strong>Origin</strong></td>
+<td>port</td>
 </tr>
 <tr>
-<td style="text-align: right;"><strong>Pinned version</strong></td>
-<td><code>2.5.3</code></td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Ported</strong></td>
-<td>2026-08-15</td>
+<td style="text-align: right;"><strong>Domain</strong></td>
+<td>genomics</td>
 </tr>
 <tr>
 <td style="text-align: right;"><strong>Rules</strong></td>
@@ -505,13 +541,44 @@
 <td>fastqc · adapterremoval · adapterremovalfixprefix · bwa · samtools · picard · dedup · preseq · damageprofiler · qualimap · sequencetools · eigenstratdatabasetools · fastp · pigz · multiqc · rename · python</td>
 </tr>
 <tr>
-<td style="text-align: right;"><strong>Domain</strong></td>
-<td>genomics</td>
+<td style="text-align: right;"><strong>Ported</strong></td>
+<td>2026-08-15</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>License</strong></td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>Source</strong></td>
+<td><a href="https://github.com/nf-core/eager">nf-core/eager</a></td>
+</tr>
+<tr>
+<td style="text-align: right;"><strong>Pinned version</strong></td>
+<td><code>2.5.3</code></td>
 </tr>
 </tbody>
 </table>
 <h2 id="run-it">Run it</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>oxo-flow<span class="w"> </span>dry-run<span class="w"> </span>main.oxoflow
+</code></pre></div>
+<h2 id="installation">Installation</h2>
+<p><strong>Engine.</strong> oxo-flow &gt;= 0.11.0</p>
+<p><strong>Toolchain.</strong> containers (Docker/Singularity) — pinned image nfcore/eager:2.5.3 for all rules (bundles the pinned conda env from envs/eager.yaml)</p>
+<p><strong>Requirements.</strong>
+- reference genome FASTA, plain and uncompressed (.gz references are not supported — upstream's unzip_reference step is not ported); the workflow builds the .fai / .dict / BWA indices itself
+- paired-end FASTQ pairs named <sample>_R1.fastq.gz / <sample>_R2.fastq.gz in a directory (directory input mode; sample = text before the _R1/_R2 suffix); single-end is not supported
+- optional — pileupCaller genotyping (run_genotyping=true genotyping_tool='pileupcaller') requires pileupcaller_snpfile and pileupcaller_bedfile; the rule fails fast without them
+- compute: up to 4 CPUs / 8 GB RAM per rule (bwa_aln: 4 threads / 8G; reference-index and MultiQC rules up to 8 GB; base default 1 CPU / 7 GB / 24 h)
+- Docker or Singularity to run the pinned container nfcore/eager:2.5.3 (not needed for validate / lint / dry-run)
+- disk: results/ holds reference indices, mapped BAMs and reports — size grows with the reference genome and number of samples</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># 1. install oxo-flow (release binary, recommended)</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>curl<span class="w"> </span>-fL<span class="w"> </span>-o<span class="w"> </span>oxo-flow.tar.gz<span class="w"> </span>https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>tar<span class="w"> </span>xzf<span class="w"> </span>oxo-flow.tar.gz<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>mv<span class="w"> </span>oxo-flow<span class="w"> </span>/usr/local/bin/
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1">#    or, via conda (may lag behind releases):</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1">#    conda install -c bioconda oxo-flow-cli</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># 2. get this workflow</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/oxo-flow-community/oxo-flow-eager
 </code></pre></div>
 <h2 id="scope">Scope</h2>
 <p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
@@ -537,7 +604,9 @@
 </ul>
 <p><strong>Excluded</strong></p>
 <ul>
+<li>unzip_reference: conditional .gz-fasta decompression process (main.nf line 187) — the port requires a plain FASTA (a .gz reference is silently unsupported)</li>
 <li>bwamem / bowtie2: non-default mappers (params.mapper) — default path uses bwa aln</li>
+<li>makeBT2Index: bowtie2 mapper's conditional index process (main.nf line 523) — unreachable with the default bwaaln mapper</li>
 <li>circulargenerator / circularmapper: circular mapping branch (params.circularfilter, off by default)</li>
 <li>convertBam / indexinputbam: BAM-input mode preprocessing (params.bam, off by default)</li>
 <li>hostremoval_input_fastq: host removal branch (params.hostremoval_input_fastq, off by default)</li>
@@ -549,13 +618,15 @@
 <li>post_ar_fastq_trimming: post-AdapterRemoval trimming branch (params.run_post_ar_trimming, off by default)</li>
 <li>lanemerge / lanemerge_hostremoval_fastq: multi-lane merging — unreachable in the single-lane default path</li>
 <li>library_merge / additional_library_merge: multi-library merging — unreachable in the single-library default path</li>
+<li>seqtype_merge: PE/SE mixed-input merge (main.nf line 1597) — unreachable in the pure-PE port</li>
 <li>genotyping_ug / genotyping_hc / genotyping_freebayes: non-pileupcaller genotyping tools (genotyping_tool default null; genotyping off by default)</li>
 <li>genotyping_angsd: ANGSD genotyping branch (genotyping_tool='angsd')</li>
 <li>bcftools_stats: only consumes UG/HC/FB outputs, which are not ported</li>
-<li>malt / maltextract / metagenomic_complexity_filter / kraken / kraken_parse / kraken_merge: metagenomic screening branch (params.run_metagenomic_screening, off by default)</li>
+<li>malt / maltextract / metagenomic_complexity_filter / kraken / kraken_parse / kraken_merge / decomp_kraken: metagenomic screening branch (params.run_metagenomic_screening, off by default; decomp_kraken is the conditional .tar.gz DB unpacker)</li>
 <li>sexdeterrmine / sexdeterrmine_prep: sex determination branch (params.run_sexdeterrmine, off by default)</li>
+<li>mtnucratio: mitochondrial-to-nuclear ratio branch (params.run_mtnucratio, off by default)</li>
 <li>endorSpy: endogenous-content branch (params.run_endorSpy, off by default)</li>
-<li>print_nuclear_contamination: nuclear contamination branch (params.run_nuclear_contamination, off by default)</li>
+<li>nuclear_contamination / print_nuclear_contamination: nuclear contamination branch (params.run_nuclear_contamination, off by default; nuclear_contamination is the angsd estimation process, print_nuclear_contamination the report-only consumer)</li>
 <li>multivcfanalyzer: branch gated by params.run_multivcfanalyzer (off by default)</li>
 <li>vcf2genome: consensus-sequence branch (params.run_vcf2genome, off by default)</li>
 <li>output_documentation / get_software_versions: nf-core boilerplate processes</li>
@@ -1000,9 +1071,9 @@ byte-faithfully; everything else is <code>not ported</code> with a reason.</p>
 <ul>
 <li>Repository: <a href="https://github.com/oxo-flow-community/oxo-flow-eager">oxo-flow-eager</a></li>
 <li>Upstream: <a href="https://github.com/nf-core/eager">nf-core/eager</a> @ <code>2.5.3</code></li>
-<li>License: Apache-2.0 (port) · MIT (upstream)</li>
+<li>License: Apache-2.0 (this workflow) · MIT (upstream)</li>
 </ul>
-<p>This port was created on 2026-08-15 and may lag behind upstream releases. See the repository's NOTICE for full attribution.</p>
+<p>Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.</p>
 
 
 
