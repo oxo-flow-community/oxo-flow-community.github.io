@@ -20,14 +20,14 @@ commands in §7.4, and if something does not pass, fix the TOML — do not
 
 | Item | Value |
 |---|---|
-| Engine source repo | `/Users/wsx/Documents/GitHub/oxo-flow` — **READ-ONLY**. It carries unrelated uncommitted work; never modify, never commit from it. |
-| Development binary | `/Users/wsx/Documents/GitHub/oxo-community/bin/oxo-flow` — v0.11.0 fresh build. Use **this** for every local run (`alias oxoflow=/Users/wsx/Documents/GitHub/oxo-community/bin/oxo-flow` is recommended). |
+| Engine source repo | [github.com/Traitome/oxo-flow](https://github.com/Traitome/oxo-flow) — treat as a **READ-ONLY** reference; never commit to it from porting work. |
+| Development binary | Any oxo-flow **≥ 0.11.0**. For development against the latest main: `cargo build -p oxo-flow-cli` and use `target/debug/oxo-flow` (referred to as `$OXO` below). |
 | CI install | Release tarball `https://github.com/Traitome/oxo-flow/releases/download/v0.11.0/oxo-flow-v0.11.0-x86_64-unknown-linux-gnu.tar.gz` — **verified layout: the archive contains a single file `oxo-flow` at its root** (no directory prefix). Exact install steps in §8. |
 | bioconda package | `oxo-flow-cli`, latest **0.10.2** — lags local 0.11.0. Mentioned in user-facing README only (`conda install -c bioconda oxo-flow-cli`); **never** used in CI. |
 | License | oxo-flow is Apache-2.0 (`LICENSE` in the source repo: full Apache 2.0 text, `Copyright 2025 Traitome`, appendix notice). Ports are Apache-2.0, "Copyright (c) 2026 oxo-flow-community" (see §10, §11). |
-| Scratch space | `/tmp/pb-check/` — the only writable scratch area for verification runs. Never create files in the oxo-flow repo. |
-| Docs (format authority) | `/Users/wsx/Documents/GitHub/oxo-flow/docs/guide/src/reference/workflow-format.md`, `wildcards.md`, `dag-engine.md`, `environment-system.md`, `execution-backends.md`; commands in `docs/guide/src/commands/{validate,dry-run,run,debug,lint}.md`. |
-| Canonical verified TOML | `/Users/wsx/Documents/GitHub/oxo-flow/examples/gallery/*.oxoflow` (16 files, CI-validated). The CLI embeds a mirrored copy (`crates/oxo-flow-cli/src/commands/project.rs` `EMBEDDED_GALLERY`, mirror in `crates/oxo-flow-cli/templates/`, drift-guarded by a unit test). Snippets below marked `[gallery]` are verbatim from these files. |
+| Scratch space | Any throwaway directory (e.g. `/tmp/pb-check/`) for verification runs. Never create files in the engine repo. |
+| Docs (format authority) | In the engine repo: `docs/guide/src/reference/` (`workflow-format.md`, `wildcards.md`, `dag-engine.md`, `environment-system.md`, `execution-backends.md`) and `docs/guide/src/commands/{validate,dry-run,run,debug,lint}.md`. |
+| Canonical verified TOML | In the engine repo: `examples/gallery/*.oxoflow` (16 files, CI-validated). The CLI embeds a mirrored copy (`crates/oxo-flow-cli/src/commands/project.rs` `EMBEDDED_GALLERY`, mirror in `crates/oxo-flow-cli/templates/`, drift-guarded by a unit test). Snippets below marked `[gallery]` are verbatim from these files. |
 
 ---
 
@@ -512,7 +512,7 @@ The port's contract:
 ### 7.1 Exact tree
 
 Every port lives in its own repository/package directory, e.g.
-`/Users/wsx/Documents/GitHub/oxo-community/pipelines/<pipeline-name>/`:
+`<your-workspace>/<pipeline-name>/`:
 
 ```text
 <pipeline-name>/
@@ -580,7 +580,7 @@ Requirements: `set -euo pipefail`; exit non-zero on any failure; run
 `validate`, `lint`, `dry-run` (default config, `--samples first:1` when the
 workflow is sample-scoped), and a `debug` assertion that no literal
 `{sample}`/`{config.` placeholders survive expansion. Local runs use
-`OXO=/Users/wsx/Documents/GitHub/oxo-community/bin/oxo-flow`.
+`OXO=/path/to/oxo-flow`.
 
 ### 7.4 Iterate-to-green instructions
 
@@ -599,7 +599,7 @@ workflow is sample-scoped), and a `debug` assertion that no literal
    upstream command text (with `{...}` placeholders substituted by the
    dry-run values). This is the fidelity check.
 5. `./test/run.sh` green locally with
-   `OXO=/Users/wsx/Documents/GitHub/oxo-community/bin/oxo-flow`.
+   `OXO=/path/to/oxo-flow`.
 6. Push → CI (§8) green.
 
 ---
@@ -780,7 +780,7 @@ write the instruction.
 ## 11. LICENSE
 
 Port repositories carry the **full Apache-2.0 text** — copy the file from
-`/Users/wsx/Documents/GitHub/oxo-flow/LICENSE` (it is the standard Apache
+the `LICENSE` file in the engine repo (it is the standard Apache
 2.0 text with the appendix, §178–190: "Copyright 2025 Traitome / Licensed
 under the Apache License…"). Conventions to mirror:
 
@@ -991,7 +991,7 @@ A port is DONE only when **all** of the following hold (checked before
 submission):
 
 - [ ] `oxo-flow validate main.oxoflow` exits 0 (CI-green locally with
-      `OXO=/Users/wsx/Documents/GitHub/oxo-community/bin/oxo-flow`).
+      `OXO=/path/to/oxo-flow`).
 - [ ] `./test/run.sh` passes locally and in CI (ubuntu-latest, §8) —
       validate + lint + dry-run with default config + no unexpanded
       wildcards in `debug` output.
@@ -1025,15 +1025,15 @@ submission):
       valid JSON.
 - [ ] `.github/workflows/ci.yml` present with the v0.11.0 tarball install
       (§8); CI is green with the badge URL resolving.
-- [ ] No files written into `/Users/wsx/Documents/GitHub/oxo-flow/`; all
-      scratch work stayed under `/tmp/pb-check/` (or equivalent).
+- [ ] No files written into the engine repo; all scratch work stayed
+      under a throwaway directory.
 
 ---
 
 ## Appendix A. Verification record (2026-08-15, oxo-flow 0.11.0)
 
-Everything marked `[V]` above was reproduced in `/tmp/pb-check/` with the
-binary `/Users/wsx/Documents/GitHub/oxo-community/bin/oxo-flow`. Summary of
+Everything marked `[V]` above was reproduced in a throwaway scratch directory
+with a ≥ 0.11.0 binary. Summary of
 the runs:
 
 | Scratch workflow | Verified |
@@ -1066,5 +1066,5 @@ the runs:
 - CLI embedded gallery: `crates/oxo-flow-cli/src/commands/project.rs`
   (`EMBEDDED_GALLERY`, mirror in `crates/oxo-flow-cli/templates/`,
   drift-guarded).
-- License: `/Users/wsx/Documents/GitHub/oxo-flow/LICENSE` (Apache-2.0,
+- License: the engine repo `LICENSE` (Apache-2.0,
   "Copyright 2025 Traitome"; no NOTICE file exists in the repo).

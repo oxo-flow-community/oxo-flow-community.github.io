@@ -93,15 +93,56 @@
   --md-default-fg-color--lightest: var(--faint);
   --md-typeset-color: var(--ink);
   --md-typeset-a-color: var(--brand);
-  --md-primary-fg-color: var(--bg);
-  --md-primary-fg-color--dark: var(--bg);
-  --md-primary-fg-color--light: var(--panel);
   --md-accent-fg-color: var(--brand);
   --md-code-bg-color: var(--code-bg);
   --md-footer-bg-color: var(--bg);
   --md-footer-fg-color: var(--muted);
   --md-footer-fg-color--light: var(--faint);
   --md-shadow-z1: var(--shadow);
+}
+
+/* Primary = brand; header stays neutral via explicit .md-header rules below */
+:root {
+  --md-primary-fg-color: var(--brand);
+  --md-primary-fg-color--dark: var(--brand-deep);
+  --md-primary-fg-color--light: var(--brand-soft);
+  --md-primary-bg-color: #ffffff;
+  --md-primary-bg-color--light: #ffffff;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: var(--brand);
+  --md-primary-fg-color--dark: var(--brand-deep);
+  --md-primary-fg-color--light: var(--brand-soft);
+  --md-primary-bg-color: #0c1210;
+  --md-primary-bg-color--light: #0c1210;
+}
+
+/* Buttons: default = visible outlined, primary = brand fill */
+.md-typeset .md-button {
+  border: 1.5px solid var(--brand);
+  border-radius: 999px;
+  color: var(--brand);
+  font-weight: 600;
+  padding: 0.45rem 1.1rem;
+}
+
+.md-typeset .md-button:hover {
+  background: var(--brand-soft);
+  border-color: var(--brand-deep);
+  color: var(--brand-deep);
+}
+
+.md-typeset .md-button--primary {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: var(--md-primary-bg-color);
+}
+
+.md-typeset .md-button--primary:hover {
+  background: var(--brand-deep);
+  border-color: var(--brand-deep);
+  color: var(--md-primary-bg-color);
 }
 
 html {
@@ -321,11 +362,16 @@ html {
 
 .ox-card .tools {
   font-family: "JetBrains Mono", monospace;
-  font-size: 0.7rem;
-  color: var(--faint);
+  font-size: 0.72rem;
+  color: var(--muted);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.ox-card .tools .sep {
+  color: var(--edge-strong);
+  padding: 0 0.15rem;
 }
 
 .ox-card .cmd {

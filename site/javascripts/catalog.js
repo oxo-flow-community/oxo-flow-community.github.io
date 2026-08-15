@@ -49,7 +49,7 @@
         <span class="ox-badge">${esc(p.domain)}</span>
         <span class="ox-badge">${Number(p.rule_count) || 0} rules</span>
       </div>
-      <div class="tools">${(p.tools || []).map((t) => "● " + esc(t)).join("  ")}</div>
+      <div class="tools">${(p.tools || []).map((t) => esc(t)).join('<span class="sep">·</span>')}</div>
       <p class="cmd">$ ${esc(cmd)}</p>
       <div class="links">
         <a href="pipelines/${esc(p.name)}/">Run notes</a>

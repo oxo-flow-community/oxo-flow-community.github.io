@@ -1446,11 +1446,11 @@ commands in §7.4, and if something does not pass, fix the TOML — do not
 <tbody>
 <tr>
 <td>Engine source repo</td>
-<td><code>/Users/wsx/Documents/GitHub/oxo-flow</code> — <strong>READ-ONLY</strong>. It carries unrelated uncommitted work; never modify, never commit from it.</td>
+<td><a href="https://github.com/Traitome/oxo-flow">github.com/Traitome/oxo-flow</a> — treat as a <strong>READ-ONLY</strong> reference; never commit to it from porting work.</td>
 </tr>
 <tr>
 <td>Development binary</td>
-<td><code>/Users/wsx/Documents/GitHub/oxo-community/bin/oxo-flow</code> — v0.11.0 fresh build. Use <strong>this</strong> for every local run (<code>alias oxoflow=/Users/wsx/Documents/GitHub/oxo-community/bin/oxo-flow</code> is recommended).</td>
+<td>Any oxo-flow <strong>≥ 0.11.0</strong>. For development against the latest main: <code>cargo build -p oxo-flow-cli</code> and use <code>target/debug/oxo-flow</code> (referred to as <code>$OXO</code> below).</td>
 </tr>
 <tr>
 <td>CI install</td>
@@ -1466,15 +1466,15 @@ commands in §7.4, and if something does not pass, fix the TOML — do not
 </tr>
 <tr>
 <td>Scratch space</td>
-<td><code>/tmp/pb-check/</code> — the only writable scratch area for verification runs. Never create files in the oxo-flow repo.</td>
+<td>Any throwaway directory (e.g. <code>/tmp/pb-check/</code>) for verification runs. Never create files in the engine repo.</td>
 </tr>
 <tr>
 <td>Docs (format authority)</td>
-<td><code>/Users/wsx/Documents/GitHub/oxo-flow/docs/guide/src/reference/workflow-format.md</code>, <code>wildcards.md</code>, <code>dag-engine.md</code>, <code>environment-system.md</code>, <code>execution-backends.md</code>; commands in <code>docs/guide/src/commands/{validate,dry-run,run,debug,lint}.md</code>.</td>
+<td>In the engine repo: <code>docs/guide/src/reference/</code> (<code>workflow-format.md</code>, <code>wildcards.md</code>, <code>dag-engine.md</code>, <code>environment-system.md</code>, <code>execution-backends.md</code>) and <code>docs/guide/src/commands/{validate,dry-run,run,debug,lint}.md</code>.</td>
 </tr>
 <tr>
 <td>Canonical verified TOML</td>
-<td><code>/Users/wsx/Documents/GitHub/oxo-flow/examples/gallery/*.oxoflow</code> (16 files, CI-validated). The CLI embeds a mirrored copy (<code>crates/oxo-flow-cli/src/commands/project.rs</code> <code>EMBEDDED_GALLERY</code>, mirror in <code>crates/oxo-flow-cli/templates/</code>, drift-guarded by a unit test). Snippets below marked <code>[gallery]</code> are verbatim from these files.</td>
+<td>In the engine repo: <code>examples/gallery/*.oxoflow</code> (16 files, CI-validated). The CLI embeds a mirrored copy (<code>crates/oxo-flow-cli/src/commands/project.rs</code> <code>EMBEDDED_GALLERY</code>, mirror in <code>crates/oxo-flow-cli/templates/</code>, drift-guarded by a unit test). Snippets below marked <code>[gallery]</code> are verbatim from these files.</td>
 </tr>
 </tbody>
 </table>
@@ -2383,7 +2383,7 @@ forbidden — in container tags and in conda pins.</strong></p>
 <h2 id="7-repo-layout-test-standard">7. Repo layout + test standard</h2>
 <h3 id="71-exact-tree">7.1 Exact tree</h3>
 <p>Every port lives in its own repository/package directory, e.g.
-<code>/Users/wsx/Documents/GitHub/oxo-community/pipelines/&lt;pipeline-name&gt;/</code>:</p>
+<code>&lt;your-workspace&gt;/&lt;pipeline-name&gt;/</code>:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>&lt;pipeline-name&gt;/
 <a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>├── main.oxoflow              # the workflow (single file unless &gt; ~30 rules;
 <a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>│                             #   then + modules/ fragments via [[include]])
@@ -2444,7 +2444,7 @@ names = upstream process/rule names in snake_case.</p>
 <code>validate</code>, <code>lint</code>, <code>dry-run</code> (default config, <code>--samples first:1</code> when the
 workflow is sample-scoped), and a <code>debug</code> assertion that no literal
 <code>{sample}</code>/<code>{config.</code> placeholders survive expansion. Local runs use
-<code>OXO=/Users/wsx/Documents/GitHub/oxo-community/bin/oxo-flow</code>.</p>
+<code>OXO=/path/to/oxo-flow</code>.</p>
 <h3 id="74-iterate-to-green-instructions">7.4 Iterate-to-green instructions</h3>
 <ol>
 <li>Write <code>main.oxoflow</code> + envs + fixtures.</li>
@@ -2462,7 +2462,7 @@ workflow is sample-scoped), and a <code>debug</code> assertion that no literal
    upstream command text (with <code>{...}</code> placeholders substituted by the
    dry-run values). This is the fidelity check.</li>
 <li><code>./test/run.sh</code> green locally with
-   <code>OXO=/Users/wsx/Documents/GitHub/oxo-community/bin/oxo-flow</code>.</li>
+   <code>OXO=/path/to/oxo-flow</code>.</li>
 <li>Push → CI (§8) green.</li>
 </ol>
 <hr />
@@ -2626,7 +2626,7 @@ write the instruction.</p>
 <hr />
 <h2 id="11-license">11. LICENSE</h2>
 <p>Port repositories carry the <strong>full Apache-2.0 text</strong> — copy the file from
-<code>/Users/wsx/Documents/GitHub/oxo-flow/LICENSE</code> (it is the standard Apache
+the <code>LICENSE</code> file in the engine repo (it is the standard Apache
 2.0 text with the appendix, §178–190: "Copyright 2025 Traitome / Licensed
 under the Apache License…"). Conventions to mirror:</p>
 <ol>
@@ -2828,7 +2828,7 @@ or <code>docs/guide/src/commands/*.md</code>, <code>[gallery]</code> = canonical
 submission):</p>
 <ul>
 <li>[ ] <code>oxo-flow validate main.oxoflow</code> exits 0 (CI-green locally with
-      <code>OXO=/Users/wsx/Documents/GitHub/oxo-community/bin/oxo-flow</code>).</li>
+      <code>OXO=/path/to/oxo-flow</code>).</li>
 <li>[ ] <code>./test/run.sh</code> passes locally and in CI (ubuntu-latest, §8) —
       validate + lint + dry-run with default config + no unexpanded
       wildcards in <code>debug</code> output.</li>
@@ -2862,13 +2862,13 @@ submission):</p>
       valid JSON.</li>
 <li>[ ] <code>.github/workflows/ci.yml</code> present with the v0.11.0 tarball install
       (§8); CI is green with the badge URL resolving.</li>
-<li>[ ] No files written into <code>/Users/wsx/Documents/GitHub/oxo-flow/</code>; all
-      scratch work stayed under <code>/tmp/pb-check/</code> (or equivalent).</li>
+<li>[ ] No files written into the engine repo; all scratch work stayed
+      under a throwaway directory.</li>
 </ul>
 <hr />
 <h2 id="appendix-a-verification-record-2026-08-15-oxo-flow-0110">Appendix A. Verification record (2026-08-15, oxo-flow 0.11.0)</h2>
-<p>Everything marked <code>[V]</code> above was reproduced in <code>/tmp/pb-check/</code> with the
-binary <code>/Users/wsx/Documents/GitHub/oxo-community/bin/oxo-flow</code>. Summary of
+<p>Everything marked <code>[V]</code> above was reproduced in a throwaway scratch directory
+with a ≥ 0.11.0 binary. Summary of
 the runs:</p>
 <table>
 <thead>
@@ -2931,7 +2931,7 @@ the runs:</p>
 <li>CLI embedded gallery: <code>crates/oxo-flow-cli/src/commands/project.rs</code>
   (<code>EMBEDDED_GALLERY</code>, mirror in <code>crates/oxo-flow-cli/templates/</code>,
   drift-guarded).</li>
-<li>License: <code>/Users/wsx/Documents/GitHub/oxo-flow/LICENSE</code> (Apache-2.0,
+<li>License: the engine repo <code>LICENSE</code> (Apache-2.0,
   "Copyright 2025 Traitome"; no NOTICE file exists in the repo).</li>
 </ul>
 
