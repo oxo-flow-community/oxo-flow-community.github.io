@@ -23,6 +23,26 @@ listing of a repository you already maintain.
   metadata.json        the registry entry (schema in data/pipelines.json)
   ```
 
+### Registry entry requirements
+
+The `metadata.json` / `data/pipelines.json` entry must carry (besides the
+fields the schema documents):
+
+- **`quickstart`** — a single, literal `oxo-flow run <file>` command (or
+  `oxo-flow dry-run <file>` for data-gated pipelines) that works against the
+  repository as committed: it must start with `oxo-flow `, reference a
+  `.oxoflow` file that exists at the repository root (`main.oxoflow` for
+  ports), and must not use `--config` (oxo-flow has no such flag — values are
+  set in the workflow's `[config]` section or as positional args). `$OXO`
+  prefixes and trailing `# comments` belong in READMEs, not in the catalog.
+  `scripts/generate.py` validates all of this and fails the build on any
+  violation.
+- **`quickstart_note`** *(optional)* — a short honest note rendered under the
+  command: reference data required, fixtures included, network needed, etc.
+- **`compute`** *(optional)* — peak compute per rule as a short string, e.g.
+  `"up to 12 CPUs / 72 GB per rule (STAR align)"`. Shown on the catalog card
+  and the run-notes page so run costs are visible before you start.
+
 ## 2. Get it listed
 
 - **In the org:** if you want the community team to co-maintain it, open a

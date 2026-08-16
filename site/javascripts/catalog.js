@@ -35,8 +35,10 @@
         ? '<span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span>'
         : "";
     const origin = ORIGIN[p.origin] || ORIGIN.curated;
-    const cmd = p.quickstart ||
-      `oxo-flow run workflow/${p.name.replace(/^oxo-flow-/, "")}.toml`;
+    const cmd = p.quickstart || "oxo-flow run main.oxoflow";
+    const compute = p.compute
+      ? `<span class="ox-badge" title="Peak compute per rule">⚙ ${esc(p.compute)}</span>`
+      : "";
     return `<article class="ox-card">
       <div class="row">
         <a class="name" href="/pipelines/${esc(p.name)}/">${esc(p.name)}</a>
@@ -48,6 +50,7 @@
         ${engBadge}
         <span class="ox-badge">${esc(p.domain)}</span>
         <span class="ox-badge">${Number(p.rule_count) || 0} rules</span>
+        ${compute}
       </div>
       <div class="tools">${(p.tools || []).map((t) => esc(t)).join('<span class="sep">·</span>')}</div>
       <p class="cmd">$ ${esc(cmd)}</p>

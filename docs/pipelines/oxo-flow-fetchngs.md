@@ -10,6 +10,7 @@ Fetch metadata and raw FastQ files from public sequence databases (SRA/ENA/DDBJ/
 | **Origin** | port |
 | **Domain** | genomics |
 | **Rules** | 8 |
+| **Compute** | up to 2 CPUs / 12 GB per rule (download) |
 | **Tools** | python · wget · coreutils |
 | **Ported** | 2026-08-15 |
 | **License** | Apache-2.0 |
@@ -19,8 +20,10 @@ Fetch metadata and raw FastQ files from public sequence databases (SRA/ENA/DDBJ/
 ## Run it
 
 ```bash
-oxo-flow dry-run main.oxoflow
+oxo-flow run main.oxoflow
 ```
+
+Downloads public data by SRA/ENA accessions (network required) — configure your IDs first.
 
 ## Installation
 
@@ -41,9 +44,14 @@ curl -fL -o oxo-flow.tar.gz https://github.com/Traitome/oxo-flow/releases/latest
 tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
 #    or, via conda (may lag behind releases):
 #    conda install -c bioconda oxo-flow-cli
+#    NOTE: bioconda currently ships 0.10.2, older than the >= 0.12.0
+#    minimum of every catalog entry — prefer the release binary.
 
-# 2. get this workflow
-git clone https://github.com/oxo-flow-community/oxo-flow-fetchngs
+# 2. get this workflow (clones the repo, auto-discovers the workflow,
+#    sanity-parses it with the engine)
+oxo-flow pull gh:oxo-flow-community/oxo-flow-fetchngs
+#    (alternative: plain git clone)
+#    git clone https://github.com/oxo-flow-community/oxo-flow-fetchngs
 ```
 
 ## Parameters

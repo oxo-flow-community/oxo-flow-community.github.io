@@ -587,12 +587,12 @@ and run it with confidence.</p>
   <div class="ox-term" aria-label="Example oxo-flow session">
     <div class="ox-term-head">
       <span class="ox-term-dot"></span><span class="ox-term-dot"></span><span class="ox-term-dot"></span>
-      <span class="ox-term-title">oxo-flow — dry-run</span>
+      <span class="ox-term-title">oxo-flow — run</span>
     </div>
     <div class="ox-term-body">
-      <div><span class="p">$</span> oxo-flow run workflow/rnaseq.toml --config config/illumina.toml</div>
+      <div><span class="p">$</span> oxo-flow run main.oxoflow</div>
       <div><span class="ok">✔</span> validated — 44 rules · 3 samples · 132 instances</div>
-      <div><span class="ok">✔</span> dry-run — ready to run · containers pinned</div>
+      <div><span class="ok">✔</span> run — 132 instances submitted · environments pinned</div>
       <div><span class="faint"># classified, rated, and documented in the catalog</span></div>
     </div>
   </div>
@@ -638,7 +638,7 @@ the rating criteria, and how to get a workflow listed.</p>
    scope, and — for ports — a per-rule fidelity table against the source.</li>
 <li>
 <p><strong>Copy the command and run.</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>oxo-flow<span class="w"> </span>run<span class="w"> </span>workflow/rnaseq.toml<span class="w"> </span>--config<span class="w"> </span>config/illumina.toml
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>oxo-flow<span class="w"> </span>run<span class="w"> </span>main.oxoflow
 </code></pre></div>
 </li>
 </ol>

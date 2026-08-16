@@ -10,6 +10,7 @@ Scenario-driven somatic small and structural variant calling with Varlociraptor:
 | **Origin** | port |
 | **Domain** | genomics |
 | **Rules** | 88 |
+| **Compute** | up to 96 CPUs / 32 GB per rule (freebayes) |
 | **Tools** | altair · bcftools · bedtools · biopython · curl · datavzrd · delly · ensembl-vep · fastqc · freebayes · gatk4 · gawk · htslib · mosdepth · multiqc · openpyxl · pandas · parallel · picard · pysam · python · rust-bio-tools · samtools · scikit-learn · sed · snpsift · statsmodels · unzip · varlociraptor · vcflib · vega-lite-cli · vembrane · vg |
 | **Ported** | 2026-08-15 |
 | **License** | Apache-2.0 |
@@ -19,8 +20,10 @@ Scenario-driven somatic small and structural variant calling with Varlociraptor:
 ## Run it
 
 ```bash
-oxo-flow run workflow/varlociraptor.toml
+oxo-flow run main.oxoflow
 ```
+
+Needs reference data — see Requirements; preview with `oxo-flow dry-run main.oxoflow --samples first:1`.
 
 ## Installation
 
@@ -41,9 +44,14 @@ curl -fL -o oxo-flow.tar.gz https://github.com/Traitome/oxo-flow/releases/latest
 tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
 #    or, via conda (may lag behind releases):
 #    conda install -c bioconda oxo-flow-cli
+#    NOTE: bioconda currently ships 0.10.2, older than the >= 0.12.0
+#    minimum of every catalog entry — prefer the release binary.
 
-# 2. get this workflow
-git clone https://github.com/oxo-flow-community/oxo-flow-varlociraptor
+# 2. get this workflow (clones the repo, auto-discovers the workflow,
+#    sanity-parses it with the engine)
+oxo-flow pull gh:oxo-flow-community/oxo-flow-varlociraptor
+#    (alternative: plain git clone)
+#    git clone https://github.com/oxo-flow-community/oxo-flow-varlociraptor
 ```
 
 ## Parameters

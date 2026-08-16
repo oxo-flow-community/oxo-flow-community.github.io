@@ -559,6 +559,10 @@
 <td>26</td>
 </tr>
 <tr>
+<td style="text-align: right;"><strong>Compute</strong></td>
+<td>up to 10 CPUs / 20 GB per rule (dada2)</td>
+</tr>
+<tr>
 <td style="text-align: right;"><strong>Tools</strong></td>
 <td>fastqc · cutadapt · python · pandas · r-base · dada2 · bioconductor-digest · curl · biocontainers · qiime2 · multiqc</td>
 </tr>
@@ -581,8 +585,9 @@
 </tbody>
 </table>
 <h2 id="run-it">Run it</h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>oxo-flow<span class="w"> </span>dry-run<span class="w"> </span>main.oxoflow
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>oxo-flow<span class="w"> </span>run<span class="w"> </span>main.oxoflow
 </code></pre></div>
+<p>Needs primer set and reference databases — see Requirements; preview with <code>oxo-flow dry-run main.oxoflow</code>.</p>
 <h2 id="installation">Installation</h2>
 <p><strong>Engine.</strong> oxo-flow &gt;= 0.12.0</p>
 <p><strong>Toolchain.</strong> containers (Docker/Singularity) — pinned images</p>
@@ -597,9 +602,14 @@
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>tar<span class="w"> </span>xzf<span class="w"> </span>oxo-flow.tar.gz<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>mv<span class="w"> </span>oxo-flow<span class="w"> </span>/usr/local/bin/
 <a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1">#    or, via conda (may lag behind releases):</span>
 <a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1">#    conda install -c bioconda oxo-flow-cli</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># 2. get this workflow</span>
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/oxo-flow-community/oxo-flow-ampliseq
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="c1">#    NOTE: bioconda currently ships 0.10.2, older than the &gt;= 0.12.0</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1">#    minimum of every catalog entry — prefer the release binary.</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="c1"># 2. get this workflow (clones the repo, auto-discovers the workflow,</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="c1">#    sanity-parses it with the engine)</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>oxo-flow<span class="w"> </span>pull<span class="w"> </span>gh:oxo-flow-community/oxo-flow-ampliseq
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="c1">#    (alternative: plain git clone)</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="c1">#    git clone https://github.com/oxo-flow-community/oxo-flow-ampliseq</span>
 </code></pre></div>
 <h2 id="parameters">Parameters</h2>
 <table>

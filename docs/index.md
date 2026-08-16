@@ -19,12 +19,12 @@ and run it with confidence.
   <div class="ox-term" aria-label="Example oxo-flow session">
     <div class="ox-term-head">
       <span class="ox-term-dot"></span><span class="ox-term-dot"></span><span class="ox-term-dot"></span>
-      <span class="ox-term-title">oxo-flow — dry-run</span>
+      <span class="ox-term-title">oxo-flow — run</span>
     </div>
     <div class="ox-term-body">
-      <div><span class="p">$</span> oxo-flow run workflow/rnaseq.toml --config config/illumina.toml</div>
+      <div><span class="p">$</span> oxo-flow run main.oxoflow</div>
       <div><span class="ok">✔</span> validated — 44 rules · 3 samples · 132 instances</div>
-      <div><span class="ok">✔</span> dry-run — ready to run · containers pinned</div>
+      <div><span class="ok">✔</span> run — 132 instances submitted · environments pinned</div>
       <div><span class="faint"># classified, rated, and documented in the catalog</span></div>
     </div>
   </div>
@@ -74,7 +74,7 @@ the rating criteria, and how to get a workflow listed.
 3. **Copy the command and run.**
 
     ```bash
-    oxo-flow run workflow/rnaseq.toml --config config/illumina.toml
+    oxo-flow run main.oxoflow
     ```
 
 New to the engine? Start with the

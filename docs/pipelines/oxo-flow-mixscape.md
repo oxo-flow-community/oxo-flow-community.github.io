@@ -10,6 +10,7 @@ Pooled CRISPR perturbation analysis (scCRISPR-seq / CROP-seq / Perturb-seq) with
 | **Origin** | port |
 | **Domain** | single-cell |
 | **Rules** | 7 |
+| **Compute** | up to 8 CPUs / 32 GB per rule (mixscape) |
 | **Tools** | Seurat · seuratobject · irlba · matrix · mixtools · ggplot2 · scales · patchwork · data.table · pyyaml · conda |
 | **Ported** | 2026-08-15 |
 | **License** | Apache-2.0 |
@@ -19,8 +20,10 @@ Pooled CRISPR perturbation analysis (scCRISPR-seq / CROP-seq / Perturb-seq) with
 ## Run it
 
 ```bash
-oxo-flow dry-run main.oxoflow
+oxo-flow run main.oxoflow
 ```
+
+Point `data_dir=` and `annotation=` at your inputs (see README); the shipped fixtures preview the plan.
 
 ## Installation
 
@@ -40,9 +43,14 @@ curl -fL -o oxo-flow.tar.gz https://github.com/Traitome/oxo-flow/releases/latest
 tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
 #    or, via conda (may lag behind releases):
 #    conda install -c bioconda oxo-flow-cli
+#    NOTE: bioconda currently ships 0.10.2, older than the >= 0.12.0
+#    minimum of every catalog entry — prefer the release binary.
 
-# 2. get this workflow
-git clone https://github.com/oxo-flow-community/oxo-flow-mixscape
+# 2. get this workflow (clones the repo, auto-discovers the workflow,
+#    sanity-parses it with the engine)
+oxo-flow pull gh:oxo-flow-community/oxo-flow-mixscape
+#    (alternative: plain git clone)
+#    git clone https://github.com/oxo-flow-community/oxo-flow-mixscape
 ```
 
 ## Parameters

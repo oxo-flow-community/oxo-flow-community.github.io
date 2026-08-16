@@ -10,6 +10,7 @@ Unsupervised analysis of omics matrices: PCA, UMAP and densMAP embeddings (2D/3D
 | **Origin** | port |
 | **Domain** | other |
 | **Rules** | 52 |
+| **Compute** | up to 2 CPUs / 32 GB per rule |
 | **Tools** | igraph · leidenalg · scikit-learn · python · pandas · scipy · numpy · pynndescent · numba · dask · scikit-image · umap-learn · matplotlib-base · bokeh · datashader · holoviews · colorcet · r-ggplot2 · r-patchwork · r-ggally · r-ggrepel · r-reshape2 · r-stringi · r-data.table · plotly · plotly_express · seaborn-base · bioconductor-complexheatmap · r-rcolorbrewer · r-fastcluster · r-magick · r-clustree · r-clustercrit · pymcdm |
 | **Ported** | 2026-08-15 |
 | **License** | Apache-2.0 |
@@ -21,6 +22,8 @@ Unsupervised analysis of omics matrices: PCA, UMAP and densMAP embeddings (2D/3D
 ```bash
 oxo-flow run main.oxoflow
 ```
+
+Real sklearn `digits` data is committed under `test/fixtures/` — fully runnable out of the box.
 
 ## Installation
 
@@ -39,9 +42,14 @@ curl -fL -o oxo-flow.tar.gz https://github.com/Traitome/oxo-flow/releases/latest
 tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
 #    or, via conda (may lag behind releases):
 #    conda install -c bioconda oxo-flow-cli
+#    NOTE: bioconda currently ships 0.10.2, older than the >= 0.12.0
+#    minimum of every catalog entry — prefer the release binary.
 
-# 2. get this workflow
-git clone https://github.com/oxo-flow-community/oxo-flow-unsupervised
+# 2. get this workflow (clones the repo, auto-discovers the workflow,
+#    sanity-parses it with the engine)
+oxo-flow pull gh:oxo-flow-community/oxo-flow-unsupervised
+#    (alternative: plain git clone)
+#    git clone https://github.com/oxo-flow-community/oxo-flow-unsupervised
 ```
 
 ## Parameters

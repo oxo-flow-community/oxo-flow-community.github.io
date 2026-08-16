@@ -10,6 +10,7 @@ Amplicon sequencing analysis (16S/ITS) that takes raw paired-end reads through F
 | **Origin** | port |
 | **Domain** | amplicon |
 | **Rules** | 26 |
+| **Compute** | up to 10 CPUs / 20 GB per rule (dada2) |
 | **Tools** | fastqc · cutadapt · python · pandas · r-base · dada2 · bioconductor-digest · curl · biocontainers · qiime2 · multiqc |
 | **Ported** | 2026-08-15 |
 | **License** | Apache-2.0 |
@@ -19,8 +20,10 @@ Amplicon sequencing analysis (16S/ITS) that takes raw paired-end reads through F
 ## Run it
 
 ```bash
-oxo-flow dry-run main.oxoflow
+oxo-flow run main.oxoflow
 ```
+
+Needs primer set and reference databases — see Requirements; preview with `oxo-flow dry-run main.oxoflow`.
 
 ## Installation
 
@@ -41,9 +44,14 @@ curl -fL -o oxo-flow.tar.gz https://github.com/Traitome/oxo-flow/releases/latest
 tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
 #    or, via conda (may lag behind releases):
 #    conda install -c bioconda oxo-flow-cli
+#    NOTE: bioconda currently ships 0.10.2, older than the >= 0.12.0
+#    minimum of every catalog entry — prefer the release binary.
 
-# 2. get this workflow
-git clone https://github.com/oxo-flow-community/oxo-flow-ampliseq
+# 2. get this workflow (clones the repo, auto-discovers the workflow,
+#    sanity-parses it with the engine)
+oxo-flow pull gh:oxo-flow-community/oxo-flow-ampliseq
+#    (alternative: plain git clone)
+#    git clone https://github.com/oxo-flow-community/oxo-flow-ampliseq
 ```
 
 ## Parameters
