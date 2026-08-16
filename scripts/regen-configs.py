@@ -17,7 +17,10 @@ network); regenerate locally whenever a staged workflow changes, then run
 generate.py and commit everything.
 
 Requirements: an oxo-flow binary ($OXO_FLOW, `oxo-flow` on PATH, or
-../bin/oxo-flow) and Graphviz `dot` on PATH.
+../bin/oxo-flow) and Graphviz `dot` on PATH. The engine must be >= 0.13.1:
+older binaries silently drop the per-parameter `description` fields (and
+differ in reference-keyed config filtering), which the drift gate cannot
+catch — so the version is enforced here instead.
 Pipelines without a staged workflow file are skipped with a warning (their
 pages simply omit the Parameters and Workflow graph sections).
 """
@@ -27,6 +30,7 @@ from __future__ import annotations
 import json
 import os
 import pathlib
+import re
 import shutil
 import subprocess
 import sys
@@ -37,6 +41,10 @@ DATA = ROOT / "data" / "pipelines.json"
 OUT = ROOT / "data" / "configs.json"
 DAG_DIR = ROOT / "docs" / "assets" / "dag"
 STAGING = pathlib.Path.home() / "Documents" / "GitHub" / "oxo-community" / "staging"
+
+# First engine version whose `info` output carries config descriptions and
+# reference-keyed config filtering (see Traitome/oxo-flow#86, v0.13.1).
+MIN_ENGINE = (0, 13, 1)
 
 
 def engine_binary() -> str:
@@ -50,6 +58,25 @@ def engine_binary() -> str:
     raise SystemExit(
         "oxo-flow binary not found (set $OXO_FLOW, add it to PATH, or build ../bin/oxo-flow)"
     )
+
+
+def engine_version(binary: str) -> tuple[int, int, int] | None:
+    """`oxo-flow --version` → (major, minor, patch), or None when unparsable."""
+    proc = subprocess.run([binary, "--version"], capture_output=True, text=True)
+    m = re.search(r"oxo-flow (\d+)\.(\d+)\.(\d+)", proc.stdout)
+    return tuple(map(int, m.groups())) if m else None
+
+
+def require_engine(binary: str) -> None:
+    """Fail loudly on engines too old to derive descriptions — a silent
+    downgrade of the committed Parameters data is worse than an error."""
+    version = engine_version(binary)
+    if version is None or version < MIN_ENGINE:
+        raise SystemExit(
+            f"oxo-flow {'.'.join(map(str, version)) if version else 'unknown'} "
+            f"is too old — regenerating requires >= {'.'.join(map(str, MIN_ENGINE))} "
+            "(older binaries silently drop config descriptions)"
+        )
 
 
 def require_dot() -> str:
@@ -117,6 +144,7 @@ def render_dag(name: str, workflow: pathlib.Path, binary: str, dot: str) -> None
 def main() -> int:
     pipelines = json.loads(DATA.read_text())
     binary = engine_binary()
+    require_engine(binary)
     dot = require_dot()
     DAG_DIR.mkdir(parents=True, exist_ok=True)
     configs = {}

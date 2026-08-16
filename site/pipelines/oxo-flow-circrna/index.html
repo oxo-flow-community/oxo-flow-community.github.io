@@ -592,82 +592,10 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align: right;"><code>bowtie2_index</code></td>
-<td><code>/data/references/GRCh38/bowtie2/genome.fa</code></td>
-<td>—</td>
-<td><code>find_circ</code></td>
-</tr>
-<tr>
-<td style="text-align: right;"><code>bwa_index</code></td>
-<td><code>/data/references/GRCh38/bwa/genome.fa</code></td>
-<td>—</td>
-<td>—</td>
-</tr>
-<tr>
-<td style="text-align: right;"><code>bwamem2_index</code></td>
-<td><code>/data/references/GRCh38/bwamem2/genome.fa</code></td>
-<td>—</td>
-<td>—</td>
-</tr>
-<tr>
-<td style="text-align: right;"><code>circexplorer2_ref</code></td>
-<td><code>{config.reference_dir}/hg38_ref.txt</code></td>
-<td>—</td>
-<td><code>circexplorer2</code></td>
-</tr>
-<tr>
-<td style="text-align: right;"><code>ciriquant_config</code></td>
-<td><code>{config.reference_dir}/CIRIquant.yml</code></td>
-<td>—</td>
-<td><code>ciriquant</code></td>
-</tr>
-<tr>
-<td style="text-align: right;"><code>gatk_dict</code></td>
-<td><code>/data/references/GRCh38/genome.dict</code></td>
-<td>—</td>
-<td>—</td>
-</tr>
-<tr>
-<td style="text-align: right;"><code>gene_annotation</code></td>
-<td><code>{config.reference_dir}/genes.gtf</code></td>
-<td>—</td>
-<td><code>aggregate</code></td>
-</tr>
-<tr>
-<td style="text-align: right;"><code>hisat2_index</code></td>
-<td><code>/data/references/GRCh38/hisat2/genome.fa</code></td>
-<td>—</td>
-<td>—</td>
-</tr>
-<tr>
-<td style="text-align: right;"><code>minimap2_index</code></td>
-<td><code>/data/references/GRCh38/genome.fa.mmi</code></td>
-<td>—</td>
-<td>—</td>
-</tr>
-<tr>
 <td style="text-align: right;"><code>reference_dir</code></td>
-<td><code>/data/references/GRCh38</code></td>
-<td>=== The only path you need to set === All indexes and reference paths are auto-derived from this directory. Expected layout: {reference_dir}/genome.fa {reference_dir}/genes.gtf</td>
-<td>—</td>
-</tr>
-<tr>
-<td style="text-align: right;"><code>reference_fasta</code></td>
-<td><code>{config.reference_dir}/genome.fa</code></td>
-<td>=== Auto-derived from reference_dir — override any of these if your layout differs ===</td>
-<td><code>circexplorer2</code>, <code>find_circ</code></td>
-</tr>
-<tr>
-<td style="text-align: right;"><code>samtools_faidx</code></td>
-<td><code>/data/references/GRCh38/genome.fa.fai</code></td>
-<td>—</td>
-<td>—</td>
-</tr>
-<tr>
-<td style="text-align: right;"><code>star_index</code></td>
-<td><code>/data/references/GRCh38/star</code></td>
-<td>—</td>
-<td><code>circrna_finder</code></td>
+<td><code>./reference</code></td>
+<td>=== The only path you need to set === reference_dir/ layout: genome.fa, genes.gtf, hg38_ref.txt, bwa/genome.fa.{bwt,pac,ann,amb,sa}, hisat2/genome.fa.{1-8}.ht2, bowtie2/genome.fa.*.bt2, star/</td>
+<td><code>circexplorer2</code></td>
 </tr>
 </tbody>
 </table>

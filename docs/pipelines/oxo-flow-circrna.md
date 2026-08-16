@@ -55,19 +55,7 @@ oxo-flow pull gh:WangLabCSU/oxo-flow-circrna
 
 | Parameter | Default | Description | Used by |
 |---:|---|---|---|
-| `bowtie2_index` | `/data/references/GRCh38/bowtie2/genome.fa` | — | `find_circ` |
-| `bwa_index` | `/data/references/GRCh38/bwa/genome.fa` | — | — |
-| `bwamem2_index` | `/data/references/GRCh38/bwamem2/genome.fa` | — | — |
-| `circexplorer2_ref` | `{config.reference_dir}/hg38_ref.txt` | — | `circexplorer2` |
-| `ciriquant_config` | `{config.reference_dir}/CIRIquant.yml` | — | `ciriquant` |
-| `gatk_dict` | `/data/references/GRCh38/genome.dict` | — | — |
-| `gene_annotation` | `{config.reference_dir}/genes.gtf` | — | `aggregate` |
-| `hisat2_index` | `/data/references/GRCh38/hisat2/genome.fa` | — | — |
-| `minimap2_index` | `/data/references/GRCh38/genome.fa.mmi` | — | — |
-| `reference_dir` | `/data/references/GRCh38` | === The only path you need to set === All indexes and reference paths are auto-derived from this directory. Expected layout: {reference_dir}/genome.fa {reference_dir}/genes.gtf | — |
-| `reference_fasta` | `{config.reference_dir}/genome.fa` | === Auto-derived from reference_dir — override any of these if your layout differs === | `circexplorer2`, `find_circ` |
-| `samtools_faidx` | `/data/references/GRCh38/genome.fa.fai` | — | — |
-| `star_index` | `/data/references/GRCh38/star` | — | `circrna_finder` |
+| `reference_dir` | `./reference` | === The only path you need to set === reference_dir/ layout: genome.fa, genes.gtf, hg38_ref.txt, bwa/genome.fa.{bwt,pac,ann,amb,sa}, hisat2/genome.fa.{1-8}.ht2, bowtie2/genome.fa.*.bt2, star/ | `circexplorer2` |
 
 Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
 

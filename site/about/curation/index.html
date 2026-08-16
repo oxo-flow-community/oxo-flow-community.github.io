@@ -689,7 +689,10 @@ from the workflow file itself, so they cannot drift from the code:</p>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>scripts/generate.py<span class="w">         </span><span class="c1"># regenerates the run-notes pages (CI checks for drift)</span>
 </code></pre></div>
 <p>Run both whenever a staged workflow changes and commit the result — site CI
-only builds MkDocs and never downloads the engine.</p>
+never regenerates these artifacts itself (the catalog stays hermetic): PR
+checks run the drift gate and <code>mkdocs build --strict</code>, and the deploy
+workflow additionally spot-checks three representative repositories against
+the release engine before publishing.</p>
 
 
 

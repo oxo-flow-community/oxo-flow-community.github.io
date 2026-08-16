@@ -5981,95 +5981,11 @@
     "workflow": "circrna.oxoflow",
     "config": [
       {
-        "default": "/data/references/GRCh38/bowtie2/genome.fa",
-        "key": "bowtie2_index",
-        "used_by": [
-          "find_circ"
-        ],
-        "value_type": "string"
-      },
-      {
-        "default": "/data/references/GRCh38/bwa/genome.fa",
-        "key": "bwa_index",
-        "used_by": [],
-        "value_type": "string"
-      },
-      {
-        "default": "/data/references/GRCh38/bwamem2/genome.fa",
-        "key": "bwamem2_index",
-        "used_by": [],
-        "value_type": "string"
-      },
-      {
-        "default": "{config.reference_dir}/hg38_ref.txt",
-        "key": "circexplorer2_ref",
+        "default": "./reference",
+        "description": "=== The only path you need to set === reference_dir/ layout: genome.fa, genes.gtf, hg38_ref.txt, bwa/genome.fa.{bwt,pac,ann,amb,sa}, hisat2/genome.fa.{1-8}.ht2, bowtie2/genome.fa.*.bt2, star/",
+        "key": "reference_dir",
         "used_by": [
           "circexplorer2"
-        ],
-        "value_type": "string"
-      },
-      {
-        "default": "{config.reference_dir}/CIRIquant.yml",
-        "key": "ciriquant_config",
-        "used_by": [
-          "ciriquant"
-        ],
-        "value_type": "string"
-      },
-      {
-        "default": "/data/references/GRCh38/genome.dict",
-        "key": "gatk_dict",
-        "used_by": [],
-        "value_type": "string"
-      },
-      {
-        "default": "{config.reference_dir}/genes.gtf",
-        "key": "gene_annotation",
-        "used_by": [
-          "aggregate"
-        ],
-        "value_type": "string"
-      },
-      {
-        "default": "/data/references/GRCh38/hisat2/genome.fa",
-        "key": "hisat2_index",
-        "used_by": [],
-        "value_type": "string"
-      },
-      {
-        "default": "/data/references/GRCh38/genome.fa.mmi",
-        "key": "minimap2_index",
-        "used_by": [],
-        "value_type": "string"
-      },
-      {
-        "default": "/data/references/GRCh38",
-        "description": "=== The only path you need to set === All indexes and reference paths are auto-derived from this directory. Expected layout: {reference_dir}/genome.fa {reference_dir}/genes.gtf",
-        "key": "reference_dir",
-        "used_by": [],
-        "value_type": "string"
-      },
-      {
-        "default": "{config.reference_dir}/genome.fa",
-        "description": "=== Auto-derived from reference_dir \u2014 override any of these if your layout differs ===",
-        "key": "reference_fasta",
-        "used_by": [
-          "circexplorer2",
-          "find_circ"
-        ],
-        "value_type": "string"
-      },
-      {
-        "default": "/data/references/GRCh38/genome.fa.fai",
-        "key": "samtools_faidx",
-        "used_by": [],
-        "value_type": "string"
-      },
-      {
-        "default": "/data/references/GRCh38/star",
-        "key": "star_index",
-        "used_by": [
-          "circrna_finder"
         ],
         "value_type": "string"
       }
