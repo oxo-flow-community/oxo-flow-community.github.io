@@ -10,6 +10,7 @@ Circular RNA detection with four independent callers (CIRIquant, CIRCexplorer2, 
 | **Origin** | original |
 | **Domain** | transcriptomics (circRNA) |
 | **Rules** | 9 |
+| **Compute** | up to 8 threads / 32 GB per rule |
 | **Tools** | fastp · ciriquant · circexplorer2 · find_circ · circrna_finder · r-base · multiqc |
 | **Ported** | 2026-08-15 |
 | **License** | Apache-2.0 |
@@ -19,6 +20,8 @@ Circular RNA detection with four independent callers (CIRIquant, CIRCexplorer2, 
 ```bash
 oxo-flow run circrna.oxoflow -j 16
 ```
+
+Set `reference_dir` in `circrna.oxoflow` and place FASTQ pairs in `raw/`; indexes and environments build on first run.
 
 ## Installation
 
@@ -38,9 +41,14 @@ curl -fL -o oxo-flow.tar.gz https://github.com/Traitome/oxo-flow/releases/latest
 tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
 #    or, via conda (may lag behind releases):
 #    conda install -c bioconda oxo-flow-cli
+#    NOTE: bioconda currently ships 0.10.2, older than the >= 0.12.0
+#    minimum of every catalog entry — prefer the release binary.
 
-# 2. get this workflow
-git clone https://github.com/WangLabCSU/oxo-flow-circrna
+# 2. get this workflow (clones the repo, auto-discovers the workflow,
+#    sanity-parses it with the engine)
+oxo-flow pull gh:WangLabCSU/oxo-flow-circrna
+#    (alternative: plain git clone)
+#    git clone https://github.com/WangLabCSU/oxo-flow-circrna
 ```
 
 ## Parameters

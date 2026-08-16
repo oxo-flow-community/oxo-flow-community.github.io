@@ -10,6 +10,7 @@ Clinical WES tumor/normal pipeline: fastp QC -> bwa+fixmate+samtools sort -> GAT
 | **Origin** | port |
 | **Domain** | cancer genomics (WES) |
 | **Rules** | 60 |
+| **Compute** | up to 30 threads / 10 GB per rule |
 | **Tools** | fastp · bwa (>=0.7.18) · samtools · gatk4 4.6.2.0 (container) · bcftools >=1.22 · bgzip · tabix · varscan 2.4.6 · vardict-java 1.8.3 (container) · muse 2.1.2 (container) · strelka2 · manta · caveman 1.15.3 (container) · vcf2maf 1.6.22 · ensembl-vep 114.2 · libboost 1.85.0 · multiqc · R >= 4.4 (knitr, data.table, gpgr via post-deploy) |
 | **Ported** | 2026-08-15 |
 | **License** | Apache-2.0 |
@@ -19,8 +20,10 @@ Clinical WES tumor/normal pipeline: fastp QC -> bwa+fixmate+samtools sort -> GAT
 ## Run it
 
 ```bash
-oxo-flow dry-run main.oxoflow
+oxo-flow run main.oxoflow
 ```
+
+Needs clinical sequencing inputs — see Requirements.
 
 ## Installation
 
@@ -40,9 +43,14 @@ curl -fL -o oxo-flow.tar.gz https://github.com/Traitome/oxo-flow/releases/latest
 tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
 #    or, via conda (may lag behind releases):
 #    conda install -c bioconda oxo-flow-cli
+#    NOTE: bioconda currently ships 0.10.2, older than the >= 0.12.0
+#    minimum of every catalog entry — prefer the release binary.
 
-# 2. get this workflow
-git clone https://github.com/WangLabCSU/oxo-flow-clindet
+# 2. get this workflow (clones the repo, auto-discovers the workflow,
+#    sanity-parses it with the engine)
+oxo-flow pull gh:WangLabCSU/oxo-flow-clindet
+#    (alternative: plain git clone)
+#    git clone https://github.com/WangLabCSU/oxo-flow-clindet
 ```
 
 ## Parameters

@@ -10,6 +10,7 @@ Run end-to-end bisulfite methylation analysis (WGBS, and RRBS-compatible) of pai
 | **Origin** | port |
 | **Domain** | genomics |
 | **Rules** | 13 |
+| **Compute** | up to 12 CPUs / 72 GB per rule (bismark) |
 | **Tools** | fastqc · trim-galore · cutadapt · pigz · bismark · samtools · htslib · multiqc |
 | **Ported** | 2026-08-15 |
 | **License** | Apache-2.0 |
@@ -19,8 +20,10 @@ Run end-to-end bisulfite methylation analysis (WGBS, and RRBS-compatible) of pai
 ## Run it
 
 ```bash
-oxo-flow dry-run main.oxoflow
+oxo-flow run main.oxoflow
 ```
+
+Needs reference genome and reads — see Requirements.
 
 ## Installation
 
@@ -41,9 +44,14 @@ curl -fL -o oxo-flow.tar.gz https://github.com/Traitome/oxo-flow/releases/latest
 tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
 #    or, via conda (may lag behind releases):
 #    conda install -c bioconda oxo-flow-cli
+#    NOTE: bioconda currently ships 0.10.2, older than the >= 0.12.0
+#    minimum of every catalog entry — prefer the release binary.
 
-# 2. get this workflow
-git clone https://github.com/oxo-flow-community/oxo-flow-methylseq
+# 2. get this workflow (clones the repo, auto-discovers the workflow,
+#    sanity-parses it with the engine)
+oxo-flow pull gh:oxo-flow-community/oxo-flow-methylseq
+#    (alternative: plain git clone)
+#    git clone https://github.com/oxo-flow-community/oxo-flow-methylseq
 ```
 
 ## Parameters

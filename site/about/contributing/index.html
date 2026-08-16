@@ -457,6 +457,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="1. Build the workflow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#registry-entry-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Registry entry requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -513,6 +530,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="1. Build the workflow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#registry-entry-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Registry entry requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -567,6 +601,25 @@ listing of a repository you already maintain.</p>
 <a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>.github/workflows/   CI: install oxo-flow, run test/run.sh
 <a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>metadata.json        the registry entry (schema in data/pipelines.json)
 </code></pre></div>
+<h3 id="registry-entry-requirements">Registry entry requirements</h3>
+<p>The <code>metadata.json</code> / <code>data/pipelines.json</code> entry must carry (besides the
+fields the schema documents):</p>
+<ul>
+<li><strong><code>quickstart</code></strong> — a single, literal <code>oxo-flow run &lt;file&gt;</code> command (or
+  <code>oxo-flow dry-run &lt;file&gt;</code> for data-gated pipelines) that works against the
+  repository as committed: it must start with <code>oxo-flow</code>, reference a
+  <code>.oxoflow</code> file that exists at the repository root (<code>main.oxoflow</code> for
+  ports), and must not use <code>--config</code> (oxo-flow has no such flag — values are
+  set in the workflow's <code>[config]</code> section or as positional args). <code>$OXO</code>
+  prefixes and trailing <code># comments</code> belong in READMEs, not in the catalog.
+  <code>scripts/generate.py</code> validates all of this and fails the build on any
+  violation.</li>
+<li><strong><code>quickstart_note</code></strong> <em>(optional)</em> — a short honest note rendered under the
+  command: reference data required, fixtures included, network needed, etc.</li>
+<li><strong><code>compute</code></strong> <em>(optional)</em> — peak compute per rule as a short string, e.g.
+  <code>"up to 12 CPUs / 72 GB per rule (STAR align)"</code>. Shown on the catalog card
+  and the run-notes page so run costs are visible before you start.</li>
+</ul>
 <h2 id="2-get-it-listed">2. Get it listed</h2>
 <ul>
 <li><strong>In the org:</strong> if you want the community team to co-maintain it, open a

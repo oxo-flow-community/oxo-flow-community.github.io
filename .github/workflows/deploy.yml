@@ -34,6 +34,22 @@ jobs:
             echo "::error::generated pages drift from data/pipelines.json — run scripts/generate.py and commit"
             exit 1
           }
+      - name: Engine spot-check — oxo-flow validate on representative repos
+        run: |
+          set -euo pipefail
+          # Same release source as scripts/generate.py ENGINE_URL (latest tarball).
+          curl -fL -o oxo-flow.tar.gz \
+            "https://github.com/Traitome/oxo-flow/releases/latest/download/oxo-flow-latest-x86_64-unknown-linux-gnu.tar.gz"
+          tar xzf oxo-flow.tar.gz
+          ./oxo-flow --version
+          # One verified port, one original, one community listing.
+          ./oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq
+          ./oxo-flow validate oxo-flow-rnaseq/main.oxoflow
+          ./oxo-flow pull gh:oxo-flow-community/oxo-flow-unsupervised
+          ./oxo-flow validate oxo-flow-unsupervised/main.oxoflow
+          ./oxo-flow pull gh:WangLabCSU/oxo-flow-circrna
+          ./oxo-flow validate oxo-flow-circrna/circrna.oxoflow
+          echo "spot-check: 3 representative repos validate with the release engine"
       - name: Build site
         run: mkdocs build --strict
       - name: Verify every registry entry has a built page

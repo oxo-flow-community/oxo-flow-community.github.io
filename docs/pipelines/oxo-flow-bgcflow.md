@@ -10,6 +10,7 @@ End-to-end biosynthetic gene cluster (BGC) analysis of user-provided bacterial g
 | **Origin** | port |
 | **Domain** | genome-mining |
 | **Rules** | 18 |
+| **Compute** | up to 4 CPUs per rule (antiSMASH) |
 | **Tools** | prokka · antismash · python · pandas · pyarrow · biopython · requests · alive_progress |
 | **Ported** | 2026-08-15 |
 | **License** | Apache-2.0 |
@@ -19,8 +20,10 @@ End-to-end biosynthetic gene cluster (BGC) analysis of user-provided bacterial g
 ## Run it
 
 ```bash
-oxo-flow dry-run main.oxoflow
+oxo-flow run main.oxoflow
 ```
+
+Needs input genomes and the antiSMASH database — see Requirements.
 
 ## Installation
 
@@ -42,9 +45,14 @@ curl -fL -o oxo-flow.tar.gz https://github.com/Traitome/oxo-flow/releases/latest
 tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
 #    or, via conda (may lag behind releases):
 #    conda install -c bioconda oxo-flow-cli
+#    NOTE: bioconda currently ships 0.10.2, older than the >= 0.12.0
+#    minimum of every catalog entry — prefer the release binary.
 
-# 2. get this workflow
-git clone https://github.com/oxo-flow-community/oxo-flow-bgcflow
+# 2. get this workflow (clones the repo, auto-discovers the workflow,
+#    sanity-parses it with the engine)
+oxo-flow pull gh:oxo-flow-community/oxo-flow-bgcflow
+#    (alternative: plain git clone)
+#    git clone https://github.com/oxo-flow-community/oxo-flow-bgcflow
 ```
 
 ## Parameters

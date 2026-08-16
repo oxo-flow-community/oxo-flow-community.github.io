@@ -1,0 +1,33 @@
+name: pr-checks
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  static:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: pip install "mkdocs-material>=9.5" "pymdown-extensions>=10"
+      - name: Validate registry (schema + quickstart executability)
+        run: python3 scripts/generate.py
+      - name: Generated files must match the registry (drift-free)
+        run: |
+          git diff --exit-code -- docs/ data/ scripts/ || {
+            echo "::error::generated pages drift from data/pipelines.json — run scripts/generate.py and commit the generated docs"
+            exit 1
+          }
+      - name: Build site (strict)
+        run: mkdocs build --strict
+
+# Engine-level validation (oxo-flow pull + validate on representative repos)
+# runs in the deploy workflow, where it gates publication — PRs stay fast
+# with the static checks above, which already catch the registry failure
+# modes that matter (bad quickstart paths, --config, missing fields).
