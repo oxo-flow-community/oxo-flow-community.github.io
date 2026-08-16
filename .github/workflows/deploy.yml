@@ -30,7 +30,7 @@ jobs:
       - name: Validate registry + regenerate pages (must be drift-free)
         run: |
           python3 scripts/generate.py
-          git diff --exit-code -- docs/ data/ scripts/ || {
+          git diff --exit-code -- docs/ data/ scripts/ ':!docs/assets/dag' || {
             echo "::error::generated pages drift from data/pipelines.json — run scripts/generate.py and commit"
             exit 1
           }

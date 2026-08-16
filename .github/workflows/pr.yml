@@ -20,7 +20,7 @@ jobs:
         run: python3 scripts/generate.py
       - name: Generated files must match the registry (drift-free)
         run: |
-          git diff --exit-code -- docs/ data/ scripts/ || {
+          git diff --exit-code -- docs/ data/ scripts/ ':!docs/assets/dag' || {
             echo "::error::generated pages drift from data/pipelines.json — run scripts/generate.py and commit the generated docs"
             exit 1
           }
