@@ -76,4 +76,7 @@ scripts/generate.py         # regenerates the run-notes pages (CI checks for dri
 ```
 
 Run both whenever a staged workflow changes and commit the result — site CI
-only builds MkDocs and never downloads the engine.
+never regenerates these artifacts itself (the catalog stays hermetic): PR
+checks run the drift gate and `mkdocs build --strict`, and the deploy
+workflow additionally spot-checks three representative repositories against
+the release engine before publishing.
