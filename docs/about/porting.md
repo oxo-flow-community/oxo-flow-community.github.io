@@ -194,11 +194,10 @@ declares **`threads=1`** in dry-run output (the "unset" sentinel, §13.1).
   (named_output), `{threads}`, `{memory}`, `{config.*}`.
 - **Fan-out trigger fields:** a rule clones per sample/pair only when a
   wildcard appears in `input`, `output`, or `shell` (§13.33).
-- **`{log}` is NOT a placeholder.** The `log` field is metadata only — the
-  engine never expands `{log}` in `shell` (it would leave a literal `{log}`
-  in the command). Inline the log path in the shell command
-  (`> {config.out_dir}/logs/{sample}.log 2>&1`) and keep the `log` field for
-  metadata [V].
+- **`{log}` IS a placeholder** (engine ≥ 0.13.0): `{log}` in `shell` renders the
+  rule's `log` field with every instance wildcard and `{config.x}` expanded,
+  and the parent directory is created automatically — `echo ok > {log}` works.
+  Keep the `log` field for metadata and the report's log column.
 - `named_input` / `named_output` sub-tables exist for many-file rules:
   `[rules.named_input] reads1 = "raw/{sample}_R1.fastq.gz"` used as
   `{input.reads1}` [gallery, workflow-format.md].
@@ -212,7 +211,9 @@ declares **`threads=1`** in dry-run output (the "unset" sentinel, §13.1).
 | Groups file | `[workflow] sample_groups_file = "metadata/groups.tsv"` (or .csv/.json) | TSV: `name<TAB>samples` (comma-separated ok). |
 | Pairs | `[[pairs]] pair_id/experiment/control[/experiment_type][/metadata]` or `[workflow] pairs_file = "metadata/pairs.tsv"` | Per pair. `control` may be omitted (tumor-only; `{control}` renders empty). |
 | Pairs from disk | `[workflow] pairs_pattern = "aligned/{pair_id}/{experiment}_vs_{control}.bam"` | Scans disk. **The pattern MUST contain all three wildcards `{pair_id}`, `{experiment}`, `{control}`** — a single-token pattern (e.g. SRR discovery `sra/{pair_id}/{pair_id}.sra`) is rejected at load (§13.37). |
-| CLI | `oxo-flow run wf.oxoflow --sample EXTRA_01` | Merged with all sources. |
+| CLI — replace | `oxo-flow run wf.oxoflow --samples @ids.tsv` | **Overrides** every source with the sheet's groups (invocation-side sample swap; pairs with dropped sides are pruned). Fails loudly on empty sheets. |
+| CLI — append | `--samples +@ids.tsv` | **Appends**: same-name groups merge (union, dedup), new groups added; pairs untouched. |
+| CLI — filter | `--samples S1,S2` / `--samples first:3` / `--samples ready` | **Filters** the discovered set (unknown names fail). On workflows that declare NO samples, bare names **declare** the set (template-workflow invocation). |
 
 All sample sources merge (deduplicated, sorted, comma-joined) into
 **`config.samples_list`**; per-group lists exist as
@@ -223,7 +224,12 @@ checkpoint invalidation. **There is no `config.pairs_list`** (§13.7) [V].
 
 A gather rule runs **once** and collects per-sample files via
 `expand_inputs` — the rule itself must NOT contain `{sample}` in its paths
-(that would clone it):
+(that would clone it). `expand_inputs` patterns form DAG edges at BOTH
+levels: the expanded concrete paths order the runtime DAG, and the raw
+patterns order the template-level graph (`graph -f dot`, the catalog's
+source) since they share the producers' wildcard literals — declare every
+collected artifact as a pattern so the graph shows the true fan-in
+(engine ≥ 0.13.2):
 
 ```toml
 [[rules]]
