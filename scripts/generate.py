@@ -129,10 +129,17 @@ def emit_js(pipelines: list[dict]) -> None:
     )
 
 
+def rating_badge(rating: str) -> str:
+    """Issue #3: evidence tiers — live-tested > dry-run verified > community."""
+    if rating == "live-verified":
+        return '<span class="ox-badge ox-badge--live">✔ Live-tested</span>'
+    if rating == "verified":
+        return '<span class="ox-badge ox-badge--star">★ Verified</span>'
+    return '<span class="ox-badge">☆ Community</span>'
+
+
 def badges(p: dict) -> str:
-    star = ('<span class="ox-badge ox-badge--star">★ Verified</span>'
-            if p.get("rating") == "verified"
-            else '<span class="ox-badge">☆ Community</span>')
+    star = rating_badge(p.get("rating", "community"))
     origin = {
         "port": "⇄ Official port",
         "original": "✦ Original",
@@ -147,8 +154,14 @@ def badges(p: dict) -> str:
 
 
 def meta_table(p: dict) -> str:
+    rating = p.get("rating", "community")
+    rating_text = {
+        "live-verified": "✔ Live-tested",
+        "verified": "★ Verified",
+        "community": "☆ Community",
+    }.get(rating, "☆ Community")
     rows = [
-        ("Rating", "★ Verified" if p.get("rating") == "verified" else "☆ Community"),
+        ("Rating", rating_text),
         ("Origin", p.get("origin", "curated")),
         ("Domain", p.get("domain", "")),
         ("Rules", str(p.get("rule_count", "—"))),

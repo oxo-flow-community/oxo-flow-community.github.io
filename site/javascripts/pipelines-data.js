@@ -636,7 +636,7 @@ window.OXO_PIPELINES = [
     "name": "oxo-flow-atacseq",
     "title": "ATAC-seq: peak calling and QC",
     "origin": "port",
-    "rating": "verified",
+    "rating": "live-verified",
     "engine": "nextflow",
     "source": {
       "repo": "nf-core/atacseq",
@@ -1156,7 +1156,7 @@ window.OXO_PIPELINES = [
     "name": "oxo-flow-fetchngs",
     "title": "Fetching public sequencing data: FastQ download, metadata and samplesheets",
     "origin": "port",
-    "rating": "verified",
+    "rating": "live-verified",
     "engine": "nextflow",
     "source": {
       "repo": "nf-core/fetchngs",
@@ -1443,7 +1443,7 @@ window.OXO_PIPELINES = [
     "name": "oxo-flow-snparcher",
     "title": "Variant calling for non-model organisms: trimming, alignment and per-sample gVCFs",
     "origin": "port",
-    "rating": "verified",
+    "rating": "live-verified",
     "engine": "snakemake",
     "source": {
       "repo": "harvardinformatics/snparcher",

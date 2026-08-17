@@ -1772,11 +1772,10 @@ declares <strong><code>threads=1</code></strong> in dry-run output (the "unset" 
   (named_output), <code>{threads}</code>, <code>{memory}</code>, <code>{config.*}</code>.</li>
 <li><strong>Fan-out trigger fields:</strong> a rule clones per sample/pair only when a
   wildcard appears in <code>input</code>, <code>output</code>, or <code>shell</code> (§13.33).</li>
-<li><strong><code>{log}</code> is NOT a placeholder.</strong> The <code>log</code> field is metadata only — the
-  engine never expands <code>{log}</code> in <code>shell</code> (it would leave a literal <code>{log}</code>
-  in the command). Inline the log path in the shell command
-  (<code>&gt; {config.out_dir}/logs/{sample}.log 2&gt;&amp;1</code>) and keep the <code>log</code> field for
-  metadata [V].</li>
+<li><strong><code>{log}</code> IS a placeholder</strong> (engine ≥ 0.13.0): <code>{log}</code> in <code>shell</code> renders the
+  rule's <code>log</code> field with every instance wildcard and <code>{config.x}</code> expanded,
+  and the parent directory is created automatically — <code>echo ok &gt; {log}</code> works.
+  Keep the <code>log</code> field for metadata and the report's log column.</li>
 <li><code>named_input</code> / <code>named_output</code> sub-tables exist for many-file rules:
   <code>[rules.named_input] reads1 = "raw/{sample}_R1.fastq.gz"</code> used as
   <code>{input.reads1}</code> [gallery, workflow-format.md].</li>
@@ -1817,9 +1816,19 @@ declares <strong><code>threads=1</code></strong> in dry-run output (the "unset" 
 <td>Scans disk. <strong>The pattern MUST contain all three wildcards <code>{pair_id}</code>, <code>{experiment}</code>, <code>{control}</code></strong> — a single-token pattern (e.g. SRR discovery <code>sra/{pair_id}/{pair_id}.sra</code>) is rejected at load (§13.37).</td>
 </tr>
 <tr>
-<td>CLI</td>
-<td><code>oxo-flow run wf.oxoflow --sample EXTRA_01</code></td>
-<td>Merged with all sources.</td>
+<td>CLI — replace</td>
+<td><code>oxo-flow run wf.oxoflow --samples @ids.tsv</code></td>
+<td><strong>Overrides</strong> every source with the sheet's groups (invocation-side sample swap; pairs with dropped sides are pruned). Fails loudly on empty sheets.</td>
+</tr>
+<tr>
+<td>CLI — append</td>
+<td><code>--samples +@ids.tsv</code></td>
+<td><strong>Appends</strong>: same-name groups merge (union, dedup), new groups added; pairs untouched.</td>
+</tr>
+<tr>
+<td>CLI — filter</td>
+<td><code>--samples S1,S2</code> / <code>--samples first:3</code> / <code>--samples ready</code></td>
+<td><strong>Filters</strong> the discovered set (unknown names fail). On workflows that declare NO samples, bare names <strong>declare</strong> the set (template-workflow invocation).</td>
 </tr>
 </tbody>
 </table>
@@ -1830,7 +1839,12 @@ checkpoint invalidation. <strong>There is no <code>config.pairs_list</code></str
 <h3 id="25-fan-in-gather-collect">2.5 Fan-in (gather / collect)</h3>
 <p>A gather rule runs <strong>once</strong> and collects per-sample files via
 <code>expand_inputs</code> — the rule itself must NOT contain <code>{sample}</code> in its paths
-(that would clone it):</p>
+(that would clone it). <code>expand_inputs</code> patterns form DAG edges at BOTH
+levels: the expanded concrete paths order the runtime DAG, and the raw
+patterns order the template-level graph (<code>graph -f dot</code>, the catalog's
+source) since they share the producers' wildcard literals — declare every
+collected artifact as a pattern so the graph shows the true fan-in
+(engine ≥ 0.13.2):</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">[[rules]]</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;combine_gvcfs&quot;</span>
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[]</span>
@@ -2772,7 +2786,9 @@ registry (<code>data/pipelines.json</code> in the site repo). Catalog v2 fields:
 <ul>
 <li><code>origin</code>: <code>"port"</code> (migration of a Nextflow/Snakemake pipeline) · <code>"original"</code>
   (built for oxo-flow) · <code>"curated"</code> (third-party repo, listed via PR).</li>
-<li><code>rating</code>: <code>"verified"</code> (fidelity-checked, CI green — §14) or <code>"community"</code>.</li>
+<li><code>rating</code>: <code>"live-verified"</code> (verified + real end-to-end run: exit 0, all
+  rules complete, report snapshot), <code>"verified"</code> (fidelity-checked,
+  CI/dry-run green — §14), or <code>"community"</code>.</li>
 <li><code>engine</code>: the SOURCE engine for ports (<code>"nextflow"</code> | <code>"snakemake"</code>); omitted
   for original workflows.</li>
 <li><code>title</code>/<code>description</code> are catalog copy — user-facing, no "port" framing.</li>

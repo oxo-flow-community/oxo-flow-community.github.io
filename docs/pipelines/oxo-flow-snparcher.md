@@ -1,12 +1,12 @@
 # Variant calling for non-model organisms: trimming, alignment and per-sample gVCFs
 
-<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
 
 Variant calling for non-model organisms: paired FASTQ reads are trimmed and filtered with fastp, aligned with BWA-MEM, and called to per-sample gVCFs with GATK HaplotypeCaller (low-coverage defaults: -ploidy 2, --min-pruning 1), alongside a cohort QC metrics report aggregating fastp and samtools stats.
 
 | | |
 |---:|---|
-| **Rating** | ★ Verified |
+| **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | genomics |
 | **Rules** | 12 |

@@ -36,6 +36,7 @@
 
 /* ---- Tokens ---- */
 :root {
+  --ok: #0F9D6E;
   --bg: #f7faf8;
   --panel: #ffffff;
   --panel-2: #eff4f1;
@@ -423,6 +424,13 @@ html {
   color: var(--star);
   border-color: color-mix(in srgb, var(--star) 35%, var(--edge));
   background: color-mix(in srgb, var(--star) 8%, var(--panel));
+  font-weight: 600;
+}
+
+.ox-badge--live {
+  color: var(--ok);
+  border-color: color-mix(in srgb, var(--ok) 40%, var(--edge));
+  background: color-mix(in srgb, var(--ok) 10%, var(--panel));
   font-weight: 600;
 }
 

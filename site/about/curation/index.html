@@ -634,6 +634,11 @@ tags. Domains and tags are searchable on the <a href="../pipelines/">catalog pag
 </thead>
 <tbody>
 <tr>
+<td><strong>Live-tested</strong></td>
+<td>✔</td>
+<td>Everything <strong>Verified</strong> requires, PLUS a real end-to-end execution on reference data with the released engine: exit 0, every rule completed, report snapshot written. Live evidence is the strongest proof a workflow actually runs.</td>
+</tr>
+<tr>
 <td><strong>Verified</strong></td>
 <td>★</td>
 <td>Official or community-team maintained; every rule pinned to a tool version; <code>validate</code> and <code>dry-run</code> green in CI; ports additionally carry a complete fidelity table and have passed rule-by-rule review against the source.</td>
@@ -645,7 +650,12 @@ tags. Domains and tags are searchable on the <a href="../pipelines/">catalog pag
 </tr>
 </tbody>
 </table>
-<p>Verified status is re-checked when a workflow changes materially — CI runs on
+<p>The badge is an <strong>evidence ladder</strong>, not a quality judgement: <code>dry-run</code> proves
+the graph and commands resolve, a live run proves the tools actually work
+end-to-end. Live-test verdicts are tracked by the community test bench (tx
+cluster); a workflow drops back to <strong>Verified</strong> when a material change
+invalidates its last live evidence, until the next live run re-confirms it.
+Verified status is re-checked when a workflow changes materially — CI runs on
 every push, and the fidelity review is repeated for significant updates.</p>
 <h2 id="getting-a-workflow-listed">Getting a workflow listed</h2>
 <p>The canonical registry is <code>data/pipelines.json</code> in the

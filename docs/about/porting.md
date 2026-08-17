@@ -899,7 +899,9 @@ Field rules:
 
 - `origin`: `"port"` (migration of a Nextflow/Snakemake pipeline) · `"original"`
   (built for oxo-flow) · `"curated"` (third-party repo, listed via PR).
-- `rating`: `"verified"` (fidelity-checked, CI green — §14) or `"community"`.
+- `rating`: `"live-verified"` (verified + real end-to-end run: exit 0, all
+  rules complete, report snapshot), `"verified"` (fidelity-checked,
+  CI/dry-run green — §14), or `"community"`.
 - `engine`: the SOURCE engine for ports (`"nextflow"` | `"snakemake"`); omitted
   for original workflows.
 - `title`/`description` are catalog copy — user-facing, no "port" framing.

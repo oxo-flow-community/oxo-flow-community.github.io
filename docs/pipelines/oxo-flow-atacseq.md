@@ -1,12 +1,12 @@
 # ATAC-seq: peak calling and QC
 
-<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
 
 ATAC-seq peak calling and QC for a cohort of single-end samples: FastQC raw-read QC, Trim Galore adapter trimming, BWA-MEM alignment, Picard mark-duplicates, BAMTools filtering, MACS2 broad-peak calling, HOMER peak annotation, FRiP scoring, normalised bigWig tracks, deepTools QC plots (profile, heatmap, fingerprint) and a combined MultiQC report.
 
 | | |
 |---:|---|
-| **Rating** | ★ Verified |
+| **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | epigenomics |
 | **Rules** | 15 |

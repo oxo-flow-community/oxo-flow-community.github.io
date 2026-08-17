@@ -26,9 +26,11 @@
   };
 
   function cardHTML(p) {
-    const star = p.rating === "verified"
-      ? '<span class="ox-badge ox-badge--star">★ Verified</span>'
-      : '<span class="ox-badge">☆ Community</span>';
+    const star = p.rating === "live-verified"
+      ? '<span class="ox-badge ox-badge--live">✔ Live-tested</span>'
+      : p.rating === "verified"
+        ? '<span class="ox-badge ox-badge--star">★ Verified</span>'
+        : '<span class="ox-badge">☆ Community</span>';
     const engBadge = p.engine === "nextflow"
       ? '<span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span>'
       : p.engine === "snakemake"
@@ -66,9 +68,11 @@
     if (!el || !P.length) return;
     const rules = P.reduce((a, p) => a + (Number(p.rule_count) || 0), 0);
     const tools = new Set(P.flatMap((p) => p.tools || [])).size;
+    const live = P.filter((p) => p.rating === "live-verified").length;
     const verified = P.filter((p) => p.rating === "verified").length;
     el.innerHTML = `
       <div class="ox-stat"><div class="v">${P.length}</div><div class="k">workflows</div></div>
+      <div class="ox-stat"><div class="v">${live}</div><div class="k">live-tested</div></div>
       <div class="ox-stat"><div class="v">${verified}</div><div class="k">verified</div></div>
       <div class="ox-stat"><div class="v">${rules}</div><div class="k">rules</div></div>
       <div class="ox-stat"><div class="v">${tools}</div><div class="k">tools pinned</div></div>`;
