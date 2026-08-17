@@ -100,26 +100,28 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **In scope**
 
-- get_genome
-- get_annotation
-- star_index
+- count_matrix
+- deseq2
+- deseq2_init
 - fastp_pe
-- star_align
+- gene_2_symbol_counts
+- gene_2_symbol_diffexp
+- gene_2_symbol_normcounts
+- get_annotation
+- get_genome
+- multiqc
+- pca
 - rseqc_gtf2bed
-- rseqc_junction_annotation
-- rseqc_junction_saturation
-- rseqc_stat
 - rseqc_infer
 - rseqc_innerdis
+- rseqc_junction_annotation
+- rseqc_junction_saturation
 - rseqc_readdis
 - rseqc_readdup
 - rseqc_readgc
-- multiqc
-- count_matrix
-- gene_2_symbol
-- deseq2_init
-- pca
-- deseq2
+- rseqc_stat
+- star_align
+- star_index
 
 **Excluded**
 

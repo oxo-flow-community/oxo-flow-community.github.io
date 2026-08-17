@@ -151,19 +151,44 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **In scope**
 
-- prepare_databases
+- aggregate_GREAT_Azimuth_2023_ATAC
+- aggregate_GREAT_Reactome_ATAC
+- aggregate_LOLA_LOLACore_ATAC
+- aggregate_ORA_GSEApy_Azimuth_2023_ATAC
+- aggregate_ORA_GSEApy_Reactome_ATAC
+- aggregate_preranked_GSEApy_Azimuth_2023_RNA
+- aggregate_preranked_GSEApy_Reactome_RNA
+- aggregate_pycisTarget_hg38_screen_v10clust_ATAC
+- annot_export
+- config_export
+- gene_ORA_GSEApy_Azimuth_2023
+- gene_ORA_GSEApy_Reactome
+- gene_preranked_GSEApy_Azimuth_2023
+- gene_preranked_GSEApy_Reactome
+- plot_enrichment_result_GREAT_Azimuth_2023
+- plot_enrichment_result_GREAT_Reactome
+- plot_enrichment_result_LOLA_LOLACore
+- plot_enrichment_result_ORA_GSEApy_Azimuth_2023
+- plot_enrichment_result_ORA_GSEApy_Reactome
+- plot_enrichment_result_preranked_GSEApy_Azimuth_2023
+- plot_enrichment_result_preranked_GSEApy_Reactome
+- plot_enrichment_result_pycisTarget_hg38_screen_v10clust
+- prepare_databases_Azimuth_2023
+- prepare_databases_Reactome
+- process_results_pycisTarget
+- region_enrichment_analysis_GREAT_Azimuth_2023
+- region_enrichment_analysis_GREAT_Reactome
 - region_enrichment_analysis_LOLA
-- region_enrichment_analysis_GREAT
 - region_gene_association_GREAT
 - region_motif_enrichment_analysis_pycisTarget
-- process_results_pycisTarget
-- gene_ORA_GSEApy
-- gene_preranked_GSEApy
-- plot_enrichment_result
-- aggregate
-- visualize
-- config_export
-- annot_export
+- visualize_GREAT_Azimuth_2023_ATAC
+- visualize_GREAT_Reactome_ATAC
+- visualize_LOLA_LOLACore_ATAC
+- visualize_ORA_GSEApy_Azimuth_2023_ATAC
+- visualize_ORA_GSEApy_Reactome_ATAC
+- visualize_preranked_GSEApy_Azimuth_2023_RNA
+- visualize_preranked_GSEApy_Reactome_RNA
+- visualize_pycisTarget_hg38_screen_v10clust_ATAC
 
 **Excluded**
 
