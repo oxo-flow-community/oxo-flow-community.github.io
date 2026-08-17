@@ -111,18 +111,26 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **In scope**
 
-- fastqc
-- fq_lint
-- trimgalore
-- star_align
-- samtools_sort
-- samtools_index
-- samtools_stats
-- samtools_flagstat
-- samtools_idxstats
-- picard_markduplicates
-- featurecounts
+- bedclip_combined
+- bedclip_fw
+- bedclip_rev
+- bigwig_combined
+- bigwig_fw
+- bigwig_rev
 - biotype_multiqc
+- deseq2_qc
+- dupradar
+- fastqc_raw
+- featurecounts
+- fq_lint_raw
+- fq_lint_trimmed
+- genomecov_combined
+- genomecov_fw
+- genomecov_rev
+- multiqc
+- multiqc_custom_content
+- picard_markduplicates
+- qualimap_rnaseq
 - rseqc_bam_stat
 - rseqc_infer_experiment
 - rseqc_inner_distance
@@ -130,19 +138,23 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - rseqc_junction_saturation
 - rseqc_read_distribution
 - rseqc_read_duplication
-- dupradar
-- qualimap_rnaseq
-- bedtools_genomecov
-- ucsc_bedclip
-- ucsc_bedgraphtobigwig
 - salmon_quant
+- samtools_flagstat_markdup
+- samtools_flagstat_sorted
+- samtools_idxstats_markdup
+- samtools_idxstats_sorted
+- samtools_index_markdup
+- samtools_index_sorted
+- samtools_sort
+- samtools_sort_qualimap
+- samtools_stats_markdup
+- samtools_stats_sorted
+- star_align
+- stringtie
+- summarizedexperiment
+- trimgalore
 - tx2gene
 - tximport
-- summarizedexperiment
-- stringtie
-- deseq2_qc
-- multiqc_custom_content
-- multiqc
 
 **Excluded**
 
