@@ -905,6 +905,13 @@ Field rules:
 - `engine`: the SOURCE engine for ports (`"nextflow"` | `"snakemake"`); omitted
   for original workflows.
 - `title`/`description` are catalog copy — user-facing, no "port" framing.
+- `scope`: the port's rule names — lowercase, matching the entry workflow's
+  rule names (`::`-namespace stripped) — the catalog's coverage list.
+  Port-added helper rules (e.g. `annot_export`, `config_export`) are
+  included; they are real rules, just not upstream processes. Upstream
+  module-composition detail (e.g. "BAM_SORT_STATS_SAMTOOLS (SAMTOOLS_SORT +
+  ...)") belongs in the README fidelity table, not this field.
+- `excluded`: upstream branches deliberately not ported, with reasons.
 - `tools`: deduped tool names WITHOUT versions (versions live in the TOML
   pins and the README fidelity table).
 - `installation`: engine floor; `toolchain` states truthfully whether the

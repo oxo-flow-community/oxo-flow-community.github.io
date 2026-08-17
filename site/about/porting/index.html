@@ -2792,6 +2792,13 @@ registry (<code>data/pipelines.json</code> in the site repo). Catalog v2 fields:
 <li><code>engine</code>: the SOURCE engine for ports (<code>"nextflow"</code> | <code>"snakemake"</code>); omitted
   for original workflows.</li>
 <li><code>title</code>/<code>description</code> are catalog copy — user-facing, no "port" framing.</li>
+<li><code>scope</code>: the port's rule names — lowercase, matching the entry workflow's
+  rule names (<code>::</code>-namespace stripped) — the catalog's coverage list.
+  Port-added helper rules (e.g. <code>annot_export</code>, <code>config_export</code>) are
+  included; they are real rules, just not upstream processes. Upstream
+  module-composition detail (e.g. "BAM_SORT_STATS_SAMTOOLS (SAMTOOLS_SORT +
+  ...)") belongs in the README fidelity table, not this field.</li>
+<li><code>excluded</code>: upstream branches deliberately not ported, with reasons.</li>
 <li><code>tools</code>: deduped tool names WITHOUT versions (versions live in the TOML
   pins and the README fidelity table).</li>
 <li><code>installation</code>: engine floor; <code>toolchain</code> states truthfully whether the
