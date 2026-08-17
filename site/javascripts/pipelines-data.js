@@ -1605,7 +1605,7 @@ window.OXO_PIPELINES = [
     "name": "oxo-flow-genome-tracks",
     "title": "Genome browser tracks: coverage, gene plots and UCSC hub",
     "origin": "port",
-    "rating": "verified",
+    "rating": "live-verified",
     "engine": "snakemake",
     "source": {
       "repo": "epigen/genome_tracks",
