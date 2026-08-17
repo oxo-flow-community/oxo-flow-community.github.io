@@ -836,7 +836,7 @@ window.OXO_PIPELINES = [
     "name": "oxo-flow-methylseq",
     "title": "Bisulfite methylation analysis: alignment, methylation calls and QC",
     "origin": "port",
-    "rating": "verified",
+    "rating": "live-verified",
     "engine": "nextflow",
     "source": {
       "repo": "nf-core/methylseq",
