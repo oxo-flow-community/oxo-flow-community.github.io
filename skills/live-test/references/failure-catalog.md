@@ -233,6 +233,11 @@ it too — dead dependency for everyone).
 (`git+https://…@vX.Y.Z`) + build toolchain in the yaml.
 *Example*: tcasia `c4c8179` (spladder).
 
+**Symptom**: `PackagesNotFoundError` for a conda-forge-native package (pigz, pandas, python, igraph, ...) pinned with a `bioconda::` qualifier.
+**Root cause**: the qualifier restricts resolution to the bioconda channel ALONE, which does not carry that package (or that version); the error looks like a dead pin but the pin is fine on conda-forge.
+**Fix**: drop the qualifier and let channel priority (conda-forge first) resolve; sweep every yaml in envs/ in one pass.
+*Example*: mag `d936682` (12 envs; earlier coreutils instance `07dfa9e`).
+
 **Symptom**: env setup re-resolves and fails on flaky mirrors even
 though the env is fully installed.
 **Root cause**: cold env cache → setup's `conda env update --prune`
