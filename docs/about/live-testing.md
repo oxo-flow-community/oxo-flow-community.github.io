@@ -4,7 +4,7 @@ This page codifies the practice developed while live-testing all 24
 catalog workflows end-to-end on a real server with the oxo-flow CLI
 (2026-08 campaign, 6 live-verified and counting). It is a **reference
 paradigm**, not a policy: follow the checklist with or without an AI
-assistant — the AI layer (the [`live-test` skill](../../skills/live-test/SKILL.md))
+assistant — the AI layer (the [`live-test` skill](https://github.com/oxo-flow-community/oxo-flow-community.github.io/blob/main/skills/live-test/SKILL.md))
 just executes the same steps faster.
 
 **Why live-test at all** — `dry-run` proves the graph parses and the
@@ -118,7 +118,7 @@ resolution) and rated below live-verified — see the
 ## Execution & monitoring
 
 The `scripts/live-test/` harness (documented in the [skill
-reference](../../skills/live-test/references/harness-scripts.md)) runs
+reference](https://github.com/oxo-flow-community/oxo-flow-community.github.io/blob/main/skills/live-test/references/harness-scripts.md)) runs
 the queue:
 
 - **2 lanes** via `flock` on two lock files — blocked runners form a
@@ -164,7 +164,7 @@ Two traps the campaign hit repeatedly:
   state) — locate the actual artifacts before touching the shell.
 
 Recurring failure classes, each with its live symptom, root cause and
-fix pattern, live in the [failure catalog](../../skills/live-test/references/failure-catalog.md)
+fix pattern, live in the [failure catalog](https://github.com/oxo-flow-community/oxo-flow-community.github.io/blob/main/skills/live-test/references/failure-catalog.md)
 — consult it before debugging from scratch.
 
 ## Fix discipline
@@ -177,7 +177,7 @@ fix pattern, live in the [failure catalog](../../skills/live-test/references/fai
 3. Update the docs the fix affects in the same change.
 4. A second reviewer diffs and merges; live-verified evidence is
    stamped only against the exact tree that passed.
-5. Record every new failure class in the [failure catalog](../../skills/live-test/references/failure-catalog.md)
+5. Record every new failure class in the [failure catalog](https://github.com/oxo-flow-community/oxo-flow-community.github.io/blob/main/skills/live-test/references/failure-catalog.md)
    — that file *is* the accumulating institutional memory this page
    promises. Update it as part of the fix that discovered the class.
 
@@ -187,7 +187,7 @@ fix pattern, live in the [failure catalog](../../skills/live-test/references/fai
   scripts run the queue for you; the failure catalog short-circuits
   most debugging.
 - **With AI (Claude Code)**: install the
-  [`live-test` skill](../../skills/live-test/SKILL.md) (`/live-test`),
+  [`live-test` skill](https://github.com/oxo-flow-community/oxo-flow-community.github.io/blob/main/skills/live-test/SKILL.md) (`/live-test`),
   point it at a server and a batch of repositories; it executes the
   same loop — group, fixture-check, run, diagnose via checkpoint, fix,
   archive the finding — with the campaign scripts and catalog as its

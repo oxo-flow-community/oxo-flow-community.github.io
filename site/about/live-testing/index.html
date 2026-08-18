@@ -732,7 +732,7 @@
 catalog workflows end-to-end on a real server with the oxo-flow CLI
 (2026-08 campaign, 6 live-verified and counting). It is a <strong>reference
 paradigm</strong>, not a policy: follow the checklist with or without an AI
-assistant — the AI layer (the <a href="../../skills/live-test/SKILL.md"><code>live-test</code> skill</a>)
+assistant — the AI layer (the <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/blob/main/skills/live-test/SKILL.md"><code>live-test</code> skill</a>)
 just executes the same steps faster.</p>
 <p><strong>Why live-test at all</strong> — <code>dry-run</code> proves the graph parses and the
 plan is schedulable; it does not prove tools run, environments resolve,
@@ -837,7 +837,7 @@ Instead of failing or faking, the port documents a <strong>gated contract</stron
 resolution) and rated below live-verified — see the
 <a href="../curation/">curation ladder</a>.</p>
 <h2 id="execution-monitoring">Execution &amp; monitoring</h2>
-<p>The <code>scripts/live-test/</code> harness (documented in the <a href="../../skills/live-test/references/harness-scripts.md">skill
+<p>The <code>scripts/live-test/</code> harness (documented in the <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/blob/main/skills/live-test/references/harness-scripts.md">skill
 reference</a>) runs
 the queue:</p>
 <ul>
@@ -879,7 +879,7 @@ after reboots, crontabs vanish and the queue degrades silently.</p>
   state) — locate the actual artifacts before touching the shell.</li>
 </ul>
 <p>Recurring failure classes, each with its live symptom, root cause and
-fix pattern, live in the <a href="../../skills/live-test/references/failure-catalog.md">failure catalog</a>
+fix pattern, live in the <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/blob/main/skills/live-test/references/failure-catalog.md">failure catalog</a>
 — consult it before debugging from scratch.</p>
 <h2 id="fix-discipline">Fix discipline</h2>
 <ol>
@@ -891,7 +891,7 @@ fix pattern, live in the <a href="../../skills/live-test/references/failure-cata
 <li>Update the docs the fix affects in the same change.</li>
 <li>A second reviewer diffs and merges; live-verified evidence is
    stamped only against the exact tree that passed.</li>
-<li>Record every new failure class in the <a href="../../skills/live-test/references/failure-catalog.md">failure catalog</a>
+<li>Record every new failure class in the <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/blob/main/skills/live-test/references/failure-catalog.md">failure catalog</a>
    — that file <em>is</em> the accumulating institutional memory this page
    promises. Update it as part of the fix that discovered the class.</li>
 </ol>
@@ -901,7 +901,7 @@ fix pattern, live in the <a href="../../skills/live-test/references/failure-cata
   scripts run the queue for you; the failure catalog short-circuits
   most debugging.</li>
 <li><strong>With AI (Claude Code)</strong>: install the
-  <a href="../../skills/live-test/SKILL.md"><code>live-test</code> skill</a> (<code>/live-test</code>),
+  <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/blob/main/skills/live-test/SKILL.md"><code>live-test</code> skill</a> (<code>/live-test</code>),
   point it at a server and a batch of repositories; it executes the
   same loop — group, fixture-check, run, diagnose via checkpoint, fix,
   archive the finding — with the campaign scripts and catalog as its
