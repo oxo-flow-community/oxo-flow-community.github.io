@@ -4,7 +4,7 @@ window.OXO_PIPELINES = [
     "name": "oxo-flow-rnaseq",
     "title": "RNA-seq: alignment, quantification and QC",
     "origin": "port",
-    "rating": "verified",
+    "rating": "live-verified",
     "engine": "nextflow",
     "source": {
       "repo": "nf-core/rnaseq",
@@ -1335,7 +1335,7 @@ window.OXO_PIPELINES = [
     "name": "oxo-flow-rnaseq-star-deseq2",
     "title": "RNA-seq: STAR alignment, DESeq2 differential expression and QC",
     "origin": "port",
-    "rating": "verified",
+    "rating": "live-verified",
     "engine": "snakemake",
     "source": {
       "repo": "snakemake-workflows/rna-seq-star-deseq2",
@@ -1817,7 +1817,7 @@ window.OXO_PIPELINES = [
     "name": "oxo-flow-mixscape",
     "title": "Pooled CRISPR perturbation analysis with Seurat Mixscape",
     "origin": "port",
-    "rating": "verified",
+    "rating": "live-verified",
     "engine": "snakemake",
     "source": {
       "repo": "epigen/mixscape_seurat",
@@ -2130,7 +2130,7 @@ window.OXO_PIPELINES = [
     "name": "oxo-flow-circrna",
     "title": "circRNA detection: four callers with ensemble aggregation",
     "origin": "original",
-    "rating": "community",
+    "rating": "live-verified",
     "created": "2026-08-15",
     "domain": "transcriptomics (circRNA)",
     "tags": [

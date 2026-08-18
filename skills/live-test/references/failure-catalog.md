@@ -43,6 +43,21 @@ structure for learnErrors.
 **Fix**: templates × reads-per-template with PCR-style errors.
 *Example*: ampliseq `generate_fixtures.py`.
 
+**Symptom**: DESeq2 chain dies stepwise: `checkForExperimentalReplicates` (needs >=2 replicates per combination), then `estimateDispersionsFit` (locfit needs hundreds of genes), then all-zero size factors.
+**Root cause**: fixtures with one replicate per condition, a handful of genes, or genes with zero counts everywhere.
+**Fix**: >=2 replicates per condition combination, every gene expressed at differential levels in every sample (zero-free), and hundreds of genes for the dispersion fit.
+*Example*: rnaseq-star-deseq2 `cc49939` (replicates), `db95056` (60 genes).
+
+**Symptom**: STAR's stranded column counts nothing for '-' genes; the DESeq2 matrix has zero columns for the reverse-protocol units.
+**Root cause**: for a reverse (TruSeq) protocol R1 is the ANTISENSE of the RNA — the generator emitted R1 as the sense transcript.
+**Fix**: protocol-aware generator: emit R1 = reverse-complement of the transcript for `reverse` units.
+*Example*: rnaseq-star-deseq2 `generate_fixtures.py` PROTOCOL map.
+
+**Symptom**: an assembler writes no output at all (`scaffolds.fasta` never appears) yet the rule shell reports success; or the assembler dies with `Failed to determine offset!`.
+**Root cause**: the fixture is below the tool's viable input (a few dozen reads), or its quality strings are uniform (offset autodetection needs varied low/high chars).
+**Fix**: a few tens of kb of community at >=20x with error-free-ish reads for assembly; Illumina-like declining Q38->Q23 quality strings.
+*Example*: mag `98513fa` (3x30kb community), `0dcdc57` (qualities).
+
 ## Read-name contracts
 
 **Symptom**: bwa mem `paired reads have different names: X/1_d3,
@@ -129,6 +144,51 @@ next tool with `-in`. Give per-instance temp names (`{pair_id}`)
 because fan-out instances share the workdir.
 *Example*: chipseq `6bd7141`.
 
+**Symptom**: a long single-line tool command produces an empty output file after an edit (`--outStd BAM_SortedByCoordinate` became its own command).
+**Root cause**: the command was split across lines so the redirect `> out.bam` attached to a fragment.
+**Fix**: keep the whole invocation + redirect on ONE line; no line continuation inside redirect chains.
+*Example*: rnaseq-star-deseq2 `1f2fb3c`.
+
+**Symptom**: a rule's script field still shows a literal `{variable}`.
+**Root cause**: the engine substitutes scatter placeholders in input/output/shell but NOT in the script field (engine issue #98).
+**Fix**: expand the scatter into explicit per-instance rules.
+*Example*: rnaseq-star-deseq2 `79c1cd0` (three explicit pca rules).
+
+**Symptom**: RSeQC `read_distribution` dies on negative intron spans from a gffutils-built BED12.
+**Root cause**: gffutils emits '-' strand blocks in transcript (descending) order; RSeQC computes introns as (block_i.end, block_{i+1}.start).
+**Fix**: sort block sizes/starts into ascending genomic order before writing the BED12.
+*Example*: rnaseq-star-deseq2 `gtf2bed.py`.
+
+**Symptom**: an R script dies with `replacement has N rows, data has 0` or an unrelated positional-arg error after a config change.
+**Root cause**: empty config values (`""`) vanished in word-splitting, shifting every later positional argument.
+**Fix**: quote every `{config.x}` argument (`"{config.x}"`) so empties stay in place.
+*Example*: mixscape `ad59243`.
+
+**Symptom**: CalcPerturbSig dies with `Cannot find more nearest neighbours than there are points`.
+**Root cause**: n_neighbors exceeds the per-class cell count in the fixture (or the RNG draw collapses a class to a single point).
+**Fix**: every class >= 2x n_neighbors cells; control the RNG draw order so the good draw lands first.
+*Example*: mixscape `8b10d8a`, `778a250`.
+
+**Symptom**: an R script's tolerance path never fires under the engine, yet the identical command succeeds manually.
+**Root cause**: the engine's script field executed a stale copy (the script is re-written per run and the copy raced).
+**Fix**: run R via the shell field (`Rscript scripts/foo.R ...`) so the environment and file are resolved fresh.
+*Example*: mixscape `18fc091`.
+
+**Symptom**: visualize dies with `'X' is not an assay` on the default config.
+**Root cause**: the config default assumes an assay the minimal input does not carry (10x Antibody_Capture).
+**Fix**: default the assay to `""` (the disable sentinel per the script's arg contract).
+*Example*: mixscape `0c0a56d`.
+
+**Symptom**: an LDA (or any conditional subset) rule dies when the subset is empty, e.g. `replacement has N rows, data has 0`.
+**Root cause**: zero perturbed cells after filtering is a legal result; the code assumed the subset is non-empty.
+**Fix**: guard on the cell COUNT (not factor levels); on zero, write the empty filtered artifacts + a placeholder plot and exit 0 — the zero-result channel contract.
+*Example*: mixscape `lda.R`.
+
+**Symptom**: CIRIquant hangs forever (orphaned wait_for_partner processes) on a dataset with no backsplice junctions.
+**Root cause**: its precheck finds nothing and it still waits for partners that never appear.
+**Fix**: pre-run CIRI2 (fast junction call) and skip the quant step when the row count is zero; tolerate the resulting empty beds downstream.
+*Example*: circrna `9b14b4e`.
+
 ## Resource over-allocation
 
 **Symptom**: `samtools sort: couldn't allocate memory for bam_mem`.
@@ -152,6 +212,16 @@ total (same policy as the pool clamp). *Engine*: `Traitome/oxo-flow`
 the gate is real but tunable.
 **Fix**: `--localmem $(({effective_memory_mb} / 1024))`; the "16 GB"
 gate drops to a machine-sized "Need 3 GB".
+
+**Symptom**: a tool gets killed/OOMs or fails mysteriously although its rule's memory request was clamped.
+**Root cause**: the TOOL flag hardcodes the upstream machine's budget (`megahit -m 42949672960` = 40 GB) instead of using the engine placeholder.
+**Fix**: `-m $(( {effective_memory_mb} * 1048576 ))` (or the tool's unit); reservations clamp automatically, tool flags do not.
+*Example*: mag `98513fa`.
+
+**Symptom**: a prep rule dies with `tar: Cannot connect to https` on the DEFAULT config.
+**Root cause**: the config default is the upstream download URL but the rule only unpacks local paths — tar cannot fetch URLs.
+**Fix**: default the path to `""` and fail fast with a clear message when the gate is on and the path is empty; document the local-file contract.
+*Example*: mag `3cdd911`.
 
 ## Environment provisioning
 
@@ -260,3 +330,7 @@ the current directory (qualimap 2.2.2-dev: `-outdir .` →
 (the engine pre-creates it), never `.`; reproduce manually with
 `-outdir freshdir` to see where the tool really writes.
 *Example*: eager `2334495`.
+**Symptom**: a fix that passed before fails again on requeue — the failure is the OLD one, verbatim.
+**Root cause**: `git reset --hard` on the server clobbered uncommitted server-side regens (fixture files) with the repo's stale committed copies.
+**Fix**: commit regenerated fixtures in the SAME change as the generator fix, before resetting the server tree; never rely on server-local regens surviving a reset.
+*Example*: mixscape `778a250` (regens committed) vs the resurrected nn2 failure.
