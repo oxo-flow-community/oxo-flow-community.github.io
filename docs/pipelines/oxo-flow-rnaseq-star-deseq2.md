@@ -110,7 +110,9 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - get_annotation
 - get_genome
 - multiqc
-- pca
+- pca_jointly_handled
+- pca_treatment_1
+- pca_treatment_2
 - rseqc_gtf2bed
 - rseqc_infer
 - rseqc_innerdis
