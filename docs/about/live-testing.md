@@ -93,7 +93,11 @@ embed resource-sized flags use the effective pair:
   hardcodes;
 - container `--memory` is clamped to the machine by the engine itself
   (a `72G` label runs as `--memory 4G` on a 4 GB box — cgroup-aware
-  tools like Cell Ranger see an honest limit).
+  tools like Cell Ranger see an honest limit);
+- **the machine ceiling counts swap** — RAM + swap is the backable
+  budget the kernel will actually use under pressure; pass
+  `--max-memory` to pin it to RAM only when latency matters more than
+  headroom.
 
 These are the semantics-preserving fixes: the workflow still declares
 its upstream labels, only the *tool-facing* numbers adapt.
