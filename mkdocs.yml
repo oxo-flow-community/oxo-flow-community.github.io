@@ -63,6 +63,7 @@ nav:
   - Selection: about/selection.md
   - Porting guide: about/porting.md
   - Contributing: about/contributing.md
+  - Live testing: about/live-testing.md
 
 copyright: >-
   © 2026 oxo-flow-community · Apache-2.0 · Ports are based on their upstream
