@@ -10,8 +10,10 @@
       
       
       
-        <link rel="canonical" href="https://oxo-flow-community.github.io/pipelines/oxo-flow-varlociraptor/">
+        <link rel="canonical" href="https://oxo-flow-community.github.io/about/live-testing/">
       
+      
+        <link rel="prev" href="../contributing/">
       
       
       
@@ -23,7 +25,7 @@
     
     
       
-        <title>Small and structural variant calling with Varlociraptor - oxo-flow-community</title>
+        <title>Live testing - oxo-flow-community</title>
       
     
     
@@ -70,7 +72,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#small-and-structural-variant-calling-with-varlociraptor" class="md-skip">
+        <a href="#live-testing-the-community-practice" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +107,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Small and structural variant calling with Varlociraptor
+              Live testing
             
           </span>
         </div>
@@ -279,7 +281,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href="../../pipelines/" class="md-nav__link">
         
   
   
@@ -306,7 +308,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../about/curation/" class="md-nav__link">
+      <a href="../curation/" class="md-nav__link">
         
   
   
@@ -333,7 +335,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../about/selection/" class="md-nav__link">
+      <a href="../selection/" class="md-nav__link">
         
   
   
@@ -360,7 +362,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../about/porting/" class="md-nav__link">
+      <a href="../porting/" class="md-nav__link">
         
   
   
@@ -387,7 +389,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../about/contributing/" class="md-nav__link">
+      <a href="../contributing/" class="md-nav__link">
         
   
   
@@ -411,10 +413,37 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../about/live-testing/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Live testing
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -430,6 +459,125 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-four-principles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The four principles
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#before-you-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Before you start
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fixture-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixture design
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resource-adaptation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resource adaptation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gated-contracts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gated contracts
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#execution-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Execution &amp; monitoring
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#diagnosis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagnosis
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fix-discipline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fix discipline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#with-or-without-ai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        With or without AI
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -461,10 +609,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#run-it" class="md-nav__link">
+  <a href="#the-four-principles" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Run it
+        The four principles
       
     </span>
   </a>
@@ -472,10 +620,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
+  <a href="#before-you-start" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Installation
+        Before you start
       
     </span>
   </a>
@@ -483,10 +631,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#parameters" class="md-nav__link">
+  <a href="#fixture-design" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Parameters
+        Fixture design
       
     </span>
   </a>
@@ -494,10 +642,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#workflow-graph" class="md-nav__link">
+  <a href="#resource-adaptation" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Workflow graph
+        Resource adaptation
       
     </span>
   </a>
@@ -505,10 +653,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#scope" class="md-nav__link">
+  <a href="#gated-contracts" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Scope
+        Gated contracts
       
     </span>
   </a>
@@ -516,10 +664,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#fidelity" class="md-nav__link">
+  <a href="#execution-monitoring" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Fidelity
+        Execution &amp; monitoring
       
     </span>
   </a>
@@ -527,10 +675,32 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#links" class="md-nav__link">
+  <a href="#diagnosis" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Links
+        Diagnosis
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fix-discipline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fix discipline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#with-or-without-ai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        With or without AI
       
     </span>
   </a>
@@ -557,237 +727,189 @@
   
 
 
-<h1 id="small-and-structural-variant-calling-with-varlociraptor">Small and structural variant calling with Varlociraptor</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
-
-<p>Scenario-driven somatic small and structural variant calling with Varlociraptor: paired-end reads are aligned against the 1000 Genomes human pangenome with vg giraffe, QC'd with FastQC/MultiQC, covered with mosdepth, and used for freebayes and delly candidate calling; Varlociraptor then estimates alignment properties and calls variants under a tumor scenario (events present + somatic_tumor_high + somatic_tumor_medium, FDR 0.05), FDR is controlled per variant type (SNV/INS/DEL/MNV/BND/INV/DUP/REP) with merge and phred decoding, and the calls are annotated with VEP (LoFtool/REVEL plugins) and dbSNFP/dbSNP, filtered, turned into a 34-column variant table with oncoprint label-sorting, and rendered as interactive datavzrd variant and gene-coverage reports. All reference data (GRCh38 FASTA and GTF, VEP cache/plugins, REVEL scores, known-variants VCFs, HPRC pangenome graph) is downloaded automatically into resources/.</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: right;"></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: right;"><strong>Rating</strong></td>
-<td>★ Verified</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Origin</strong></td>
-<td>port</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Domain</strong></td>
-<td>genomics</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Rules</strong></td>
-<td>88</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Compute</strong></td>
-<td>up to 96 CPUs / 32 GB per rule (freebayes)</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Tools</strong></td>
-<td>altair · bcftools · bedtools · biopython · curl · datavzrd · delly · ensembl-vep · fastqc · freebayes · gatk4 · gawk · htslib · mosdepth · multiqc · openpyxl · pandas · parallel · picard · pysam · python · rust-bio-tools · samtools · scikit-learn · sed · snpsift · statsmodels · unzip · varlociraptor · vcflib · vega-lite-cli · vembrane · vg</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Ported</strong></td>
-<td>2026-08-15</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>License</strong></td>
-<td>Apache-2.0</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Source</strong></td>
-<td><a href="https://github.com/snakemake-workflows/dna-seq-varlociraptor">snakemake-workflows/dna-seq-varlociraptor</a></td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Pinned version</strong></td>
-<td><code>v6.10.0</code></td>
-</tr>
-</tbody>
-</table>
-<h2 id="run-it">Run it</h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>oxo-flow<span class="w"> </span>run<span class="w"> </span>main.oxoflow
+<h1 id="live-testing-the-community-practice">Live testing — the community practice</h1>
+<p>This page codifies the practice developed while live-testing all 24
+catalog workflows end-to-end on a real server with the oxo-flow CLI
+(2026-08 campaign, 6 live-verified and counting). It is a <strong>reference
+paradigm</strong>, not a policy: follow the checklist with or without an AI
+assistant — the AI layer (the <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/blob/main/skills/live-test/SKILL.md"><code>live-test</code> skill</a>)
+just executes the same steps faster.</p>
+<p><strong>Why live-test at all</strong> — <code>dry-run</code> proves the graph parses and the
+plan is schedulable; it does not prove tools run, environments resolve,
+or outputs validate. Every workflow in the catalog must therefore pass
+a full <code>oxo-flow run</code> against minimal real data before it earns the
+<em>live-verified</em> rating. The practice below is the cheapest reliable way
+to get there.</p>
+<h2 id="the-four-principles">The four principles</h2>
+<ol>
+<li><strong>Minimal data, maximal coverage</strong> — at least 2 samples/pairs, tiny
+   enough to finish in minutes, structured enough that every tool in
+   the pipeline has real signal to compute (see <a href="#fixture-design">fixture design</a>).</li>
+<li><strong>One generator, three products</strong> — genome, annotation and reads are
+   emitted by a single deterministic script. Mixed-origin fixtures are
+   the single most common live-test failure class.</li>
+<li><strong>Never change semantics</strong> — fixes tune resource labels, naming,
+   isolation and environment pins; they never alter what the pipeline
+   computes. Anything that needs user-scale data becomes a documented
+   <a href="#gated-contracts">gated contract</a>, not a silent change.</li>
+<li><strong>Evidence over guessing</strong> — the checkpoint file is the source of
+   truth for failures (<a href="#diagnosis">diagnosis</a>); every fix commit cites
+   the live error it addresses.</li>
+</ol>
+<h2 id="before-you-start">Before you start</h2>
+<ul>
+<li><strong>Group by difficulty.</strong> Sort workflows: pure-conda before docker,
+   single-sample before cohort, no-reference before reference-gated.
+   Work the list easy → hard; never deadlock on one repository — park
+   it and move on.</li>
+<li><strong>Right-size the machine.</strong> 4 vCPU / 4 GB RAM runs every catalog
+   workflow <em>except</em> the user-data-gated steps; that is deliberate — a
+   small box exposes resource bugs a big one hides. Anything smaller
+   than 2 GB starts failing for the wrong reasons.</li>
+<li><strong>Two lanes, strict.</strong> Run at most 2 repositories concurrently.
+   Beyond that, memory contention (conda solver + R + JVM peaks) kills
+   unrelated runs and wastes the whole queue. The harness scripts
+   enforce this with file locks.</li>
+<li><strong>Mirror neutrality.</strong> A workflow repository must work against both
+   international sources and CN mirrors — pins go in the repo, mirror
+   choice goes in the environment. Test-environment proxy or mirror
+   configuration must <strong>never</strong> be committed to a workflow repository.</li>
+</ul>
+<h2 id="fixture-design">Fixture design</h2>
+<p>The pattern that works (one <code>test/fixtures/generate_fixtures.py</code> per
+workflow, fixed seed, committed alongside the generated files):</p>
+<ul>
+<li><strong>Reads are derived from the shipped genome</strong> — drawn from feature
+  regions so alignment, quantification and annotation steps all see
+  signal; ~0.5 % substitution error; Phred-30+ qualities.</li>
+<li><strong>The annotation is self-consistent</strong> — unique transcript ids, exons
+  inside transcript bounds, <code>gene_id</code> matching the gene feature. Tools
+  like gffutils/RSeQC hard-fail on reused ids across loci
+  (<code>End of last exon (2000) does not match end of feature (500)</code>).</li>
+<li><strong>Tool-shaped signal, added on demand</strong> — preseq needs a duplicate
+  count curve (≥4 multiplicity levels); DamageProfiler needs per-position
+  depth above its <code>-t</code> threshold; DADA2 needs amplicon template
+  structure; circRNA callers need back-splice junctions; DESeq2 needs a
+  two-condition signal. Add each only when a tool demands it, and note
+  why in the generator docstring.</li>
+<li><strong>Read-name contracts</strong> — <code>/1</code> <code>/2</code> mate suffixes (AdapterRemoval v2
+  rejects files without them); duplicate tags <em>before</em> the suffix
+  (<code>@read_dup1/1</code>, never <code>@read/1_dup1</code> — bwa mem pairs by name after
+  stripping the trailing <code>/1</code> or <code>/2</code>).</li>
+<li><strong>Paired-end arithmetic</strong> — inserts sized so mergers (AdapterRemoval)
+  can overlap; spliced reads assemble exon segments along the
+  transcription direction.</li>
+<li><strong>Regeneration is idempotent</strong> — the generator overwrites its
+  outputs; one-shot post-processors (e.g. adding duplicates) must start
+  from the pristine fixtures (<code>git checkout</code> the base first), or they
+  stack tags on tags.</li>
+</ul>
+<h2 id="resource-adaptation">Resource adaptation</h2>
+<p>The engine gives every rule two pairs of placeholders — <code>{threads}</code> /
+<code>{memory}</code> (the declaration, pool semantics) and <code>{effective_threads}</code>
+/ <code>{effective_memory_mb}</code> (the machine-clamped reality). Rules that
+embed resource-sized flags use the effective pair:</p>
+<ul>
+<li><code>bwa -t {effective_threads}</code>, <code>samtools sort --threads {effective_threads} -m 512M</code>
+  (samtools' default 768 MB/thread over-allocates and dies with
+  <code>couldn't allocate memory for bam_mem</code> on small boxes);</li>
+<li><code>-Xmx{effective_memory_mb}m</code> for JVM tools instead of HPC-scale
+  hardcodes;</li>
+<li>container <code>--memory</code> is clamped to the machine by the engine itself
+  (a <code>72G</code> label runs as <code>--memory 4G</code> on a 4 GB box — cgroup-aware
+  tools like Cell Ranger see an honest limit).</li>
+</ul>
+<p>These are the semantics-preserving fixes: the workflow still declares
+its upstream labels, only the <em>tool-facing</em> numbers adapt.</p>
+<h2 id="gated-contracts">Gated contracts</h2>
+<p>Some pipelines legitimately require data no repository can ship.
+Instead of failing or faking, the port documents a <strong>gated contract</strong>:</p>
+<ul>
+<li>the gate is an explicit config switch (e.g. <code>run_gtdbtk = false</code>,
+  <code>annotate_vep = false</code>, <code>skip_ref_downloads = true</code>);</li>
+<li>the README states exactly which rules the gate covers and what the
+  user must provide to lift it (GTDB-Tk's ~100 GB database, a VEP
+  cache, a GRCh38 bundle…);</li>
+<li>the live test runs with the gate closed, and the catalog entry's
+  <code>quickstart_note</code> says so honestly.</li>
+</ul>
+<p>Gated steps are verified separately (command construction, environment
+resolution) and rated below live-verified — see the
+<a href="../curation/">curation ladder</a>.</p>
+<h2 id="execution-monitoring">Execution &amp; monitoring</h2>
+<p>The <code>scripts/live-test/</code> harness (documented in the <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/blob/main/skills/live-test/references/harness-scripts.md">skill
+reference</a>) runs
+the queue:</p>
+<ul>
+<li><strong>2 lanes</strong> via <code>flock</code> on two lock files — blocked runners form a
+  FIFO; only two repositories execute at any moment.</li>
+<li><strong>Resume-aware requeues</strong> — a runner keeps <code>.oxo-flow</code> when the
+  workflow files are unchanged (the engine's input manifests then
+  invalidate exactly the affected rules); a changed workflow wipes and
+  restarts.</li>
+<li><strong>A supervisor</strong> parks repositories that stall (&gt;30 min without rule
+  activity) or fail three times with the same signature — parked repos
+  stay out until a fix lands.</li>
+<li><strong>Verdicts</strong> are the <code>run end: exit=N</code> lines; exit 0 is the only
+  pass. On success the engine also writes
+  <code>.oxo-flow/reports/report-*.json</code> — the reference snapshot for
+  reviewers.</li>
+</ul>
+<p>Run the supervisor and a disk watchdog from cron on the test server —
+after reboots, crontabs vanish and the queue degrades silently.</p>
+<h2 id="diagnosis">Diagnosis</h2>
+<p>When a run fails, read the <strong>checkpoint</strong>, not the log tail:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python3<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;&#39;EOF&#39;</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="s">import json</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="s">d = json.load(open(&quot;.oxo-flow/checkpoint.json&quot;))</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="s">print(&quot;failed:&quot;, d[&quot;failed_rules&quot;])</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="s">for k, v in d[&quot;rule_runs&quot;].items():</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="s">    if v.get(&quot;exit_code&quot;) not in (0, &quot;0&quot;) and v.get(&quot;exit_code&quot;) is not None:</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="s">        print(k, &quot;|&quot;, v.get(&quot;exit_code&quot;), &quot;|&quot;, str(v.get(&quot;stderr_tail&quot;, &quot;&quot;))[-400:])</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="s">EOF</span>
 </code></pre></div>
-<p>Needs reference data — see Requirements; preview with <code>oxo-flow dry-run main.oxoflow --samples first:1</code>.</p>
-<h2 id="installation">Installation</h2>
-<p><strong>Engine.</strong> oxo-flow &gt;= 0.12.0</p>
-<p><strong>Toolchain.</strong> conda envs — pinned versions (no containers)</p>
-<p><strong>Requirements.</strong>
-- paired-end FASTQ reads at reads_dir/<sample>_1.fastq.gz / _2.fastq.gz; sample cohort declared in [[sample_groups]] (one group = one tumor sample); fixtures bundled for dry-run
-- reference data: downloaded automatically into resources/ — GRCh38 primary assembly FASTA (Ensembl release 111) + .fai/.dict, Ensembl release 111 GTF, VEP cache and plugins (release 111), REVEL scores, Ensembl known-variants VCFs, HPRC v1.1 human pangenome graph
-- compute: up to 96 CPUs / 32 GB per rule (freebayes candidates 96 threads; vg giraffe 64 threads; samtools sort 16 threads/32G; Varlociraptor call 8G)
-- tools: conda envs with pinned versions (envs/*.yaml, one env per tool pin set); conda/mamba required at runtime
-- disk: multi-GB reference downloads under resources/ (pangenome graph, VEP cache, known-variants VCFs) plus results/ for BAMs, BCFs, tables and reports</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># 1. install oxo-flow (release binary, recommended)</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>curl<span class="w"> </span>-fL<span class="w"> </span>-o<span class="w"> </span>oxo-flow.tar.gz<span class="w"> </span>https://github.com/Traitome/oxo-flow/releases/latest/download/oxo-flow-latest-x86_64-unknown-linux-gnu.tar.gz
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>tar<span class="w"> </span>xzf<span class="w"> </span>oxo-flow.tar.gz<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>mv<span class="w"> </span>oxo-flow<span class="w"> </span>/usr/local/bin/
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1">#    or, via conda (may lag behind releases):</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1">#    conda install -c bioconda oxo-flow-cli</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="c1">#    NOTE: bioconda currently ships 0.10.2, older than the &gt;= 0.12.0</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1">#    minimum of every catalog entry — prefer the release binary.</span>
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="c1"># 2. get this workflow (clones the repo, auto-discovers the workflow,</span>
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="c1">#    sanity-parses it with the engine)</span>
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>oxo-flow<span class="w"> </span>pull<span class="w"> </span>gh:oxo-flow-community/oxo-flow-varlociraptor
-<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="c1">#    (alternative: plain git clone)</span>
-<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="c1">#    git clone https://github.com/oxo-flow-community/oxo-flow-varlociraptor</span>
-</code></pre></div>
-<h2 id="parameters">Parameters</h2>
-<table>
-<thead>
-<tr>
-<th style="text-align: right;">Parameter</th>
-<th>Default</th>
-<th>Description</th>
-<th>Used by</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: right;"><code>reads_dir</code></td>
-<td><code>test/fixtures/raw</code></td>
-<td>Path to the raw paired-end FASTQs of the single sample (upstream config/units.tsv points at absolute /projects/... paths; the port reads from the repository fixtures instead).</td>
-<td><code>mapping::merge_trimmed_fastqs_r1</code>, <code>mapping::merge_trimmed_fastqs_r2</code>, <code>qc::fastqc_r1</code>, <code>qc::fastqc_r2</code></td>
-</tr>
-</tbody>
-</table>
-<p>Descriptions are the workflow's own <code>#</code> comments from its <code>[config]</code> section, surfaced by <code>oxo-flow info</code> — no schema file to maintain.</p>
-<h2 id="workflow-graph">Workflow graph</h2>
-<div class="ox-dag-card">
-<p><img alt="oxo-flow-varlociraptor rule-level DAG" src="/assets/dag/oxo-flow-varlociraptor.svg" /></p>
-</div>
-<p>The graph is derived at catalog-build time from <code>oxo-flow graph -f dot</code> and rendered with Graphviz. It shows the workflow at rule level: wildcard <code>{sample}</code> instances expand at run time when sample data is discovered (the runtime view is <code>oxo-flow graph --expanded</code>).</p>
-<h2 id="scope">Scope</h2>
-<p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
-<p><strong>In scope</strong></p>
+<p>Two traps the campaign hit repeatedly:</p>
 <ul>
-<li>pangenome_index</li>
-<li>vg_giraffe_map</li>
-<li>samtools_sort_index</li>
-<li>markduplicates</li>
-<li>baserecalibrator</li>
-<li>applybqsr</li>
-<li>fastqc</li>
-<li>multiqc</li>
-<li>mosdepth_coverage</li>
-<li>covered_regions</li>
-<li>expanded_regions</li>
-<li>delly_excluded_regions</li>
-<li>freebayes_candidates</li>
-<li>delly_candidates</li>
-<li>varlociraptor_estimate</li>
-<li>varlociraptor_call</li>
-<li>fdr_control</li>
-<li>merge_calls</li>
-<li>decode_phred</li>
-<li>vep_annotation</li>
-<li>dbnsfp_annotation</li>
-<li>annotation_filtering</li>
-<li>vembrane_table</li>
-<li>oncoprint_prepare</li>
-<li>datavzrd_report</li>
-<li>coverage_table</li>
+<li><strong>The visible ✗ is not the failure.</strong> The engine aborts fast and the
+  last scheduled rule's WARN lines sit right before the generic
+  <code>workflow execution failed</code> — the <em>real</em> failing rule is in
+  <code>failed_rules</code>, its stderr in <code>rule_runs</code>.</li>
+<li><strong><code>Shell exited 0 but declared outputs are missing</code></strong> means the tool
+  wrote somewhere else (cwd quirks, <code>%</code>-placeholder naming, stale
+  state) — locate the actual artifacts before touching the shell.</li>
 </ul>
-<p><strong>Excluded</strong></p>
+<p>Recurring failure classes, each with its live symptom, root cause and
+fix pattern, live in the <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/blob/main/skills/live-test/references/failure-catalog.md">failure catalog</a>
+— consult it before debugging from scratch.</p>
+<h2 id="fix-discipline">Fix discipline</h2>
+<ol>
+<li>One commit per fix, body citing the live evidence
+   (<code>Live: 'sort: invalid option -- F' from the pinned image's samtools…</code>).</li>
+<li>Push, sync the test server, requeue — and verify the <em>fixed</em> tree
+   actually ran (server trees drift: stale checkouts, partial syncs,
+   mirrors lagging on branch refs).</li>
+<li>Update the docs the fix affects in the same change.</li>
+<li>A second reviewer diffs and merges; live-verified evidence is
+   stamped only against the exact tree that passed.</li>
+<li>Record every new failure class in the <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/blob/main/skills/live-test/references/failure-catalog.md">failure catalog</a>
+   — that file <em>is</em> the accumulating institutional memory this page
+   promises. Update it as part of the fix that discovered the class.</li>
+</ol>
+<h2 id="with-or-without-ai">With or without AI</h2>
 <ul>
-<li>bwa mapping — non-default aligner branch, not ported</li>
-<li>fastp/trimming — non-default trimming branch, not ported</li>
-<li>fusions (arriba) — fusion calling is off in the default config (calling mode variants)</li>
-<li>MAF conversion — not reachable with the default config</li>
-<li>mutational burden and mutational signature analyses — non-default branches</li>
-<li>population database (germline AF annotation) — population db is off in the default config</li>
-<li>dgidb druggability annotation — off by default</li>
-<li>CADD annotation — off by default</li>
-<li>primer design — off by default</li>
-<li>benchmarking — upstream benchmarking rules are not ported</li>
-<li>consensus reads — non-default branch</li>
-<li>target regions — not part of the default path</li>
-<li>template oncoprint views (gene_oncoprint / variant_oncoprints datasets) — empty with the default single group; prepare_oncoprint itself runs</li>
-<li>gather_annotated_calls / filter_odds — not reachable in the default path (benchmarking off, filter present only)</li>
-<li>upstream scatter.calling(16) chunks beyond scatteritem=0 — collapsed to a single chunk</li>
+<li><strong>Without AI</strong>: follow the checklists above literally; the harness
+  scripts run the queue for you; the failure catalog short-circuits
+  most debugging.</li>
+<li><strong>With AI (Claude Code)</strong>: install the
+  <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/blob/main/skills/live-test/SKILL.md"><code>live-test</code> skill</a> (<code>/live-test</code>),
+  point it at a server and a batch of repositories; it executes the
+  same loop — group, fixture-check, run, diagnose via checkpoint, fix,
+  archive the finding — with the campaign scripts and catalog as its
+  reference.</li>
 </ul>
-<h2 id="fidelity">Fidelity</h2>
-<p>The port aims for byte-identical commands on the default path. Known,
-deliberate deviations:</p>
-<table>
-<thead>
-<tr>
-<th>upstream</th>
-<th>port</th>
-<th>reason</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>scatter.calling(16)</code> (rules run 16x, once per scatter item)</td>
-<td>single chunk, <code>scatteritem=0</code></td>
-<td>oxo-flow has no scatter construct; with one small sample the 16 chunks are identical work</td>
-</tr>
-<tr>
-<td>rule outputs that are directories (VEP cache/plugins, oncoprint <code>label_sortings/</code>/<code>variant-oncoprints/</code> dirs)</td>
-<td>directory + <code>.completed</code> marker file output</td>
-<td>oxo-flow targets files, not directories</td>
-</tr>
-<tr>
-<td>scenario rendered at run time from <code>config/scenario.yaml</code> (yte template)</td>
-<td>pre-rendered <code>resources/scenarios/SRR702070_group.yaml</code> for the default sample group; the template is kept verbatim at <code>config/scenario.yaml</code></td>
-<td>one scenario (purity 1.0) in the default path</td>
-</tr>
-<tr>
-<td><code>download_vep_plugins.py</code> with a hard-coded Ensembl variation FTP list and fallback</td>
-<td>the <code>--release</code>/<code>--output</code>/<code>--log</code> argv variant of the same wrapper port</td>
-<td>one release (111), one output dir; the FTP fallback list was dropped as dead code in the default path</td>
-</tr>
-<tr>
-<td>wrapper-utils based rules (calls, tables, report)</td>
-<td>plain <code>python scripts/*.py</code> argv ports of the same wrappers</td>
-<td>wrapper-utils is a Snakemake runtime; the ported scripts keep the wrapper logic verbatim</td>
-</tr>
-<tr>
-<td><code>gather_annotated_calls</code> / <code>filter_odds</code></td>
-<td>not ported</td>
-<td>not reachable in the default path (benchmarking off + <code>filter: present</code> only)</td>
-</tr>
-<tr>
-<td>template oncoprint views (<code>gene_oncoprint</code> / <code>variant_oncoprints</code> datasets)</td>
-<td>empty (upstream defaults with a single group)</td>
-<td><code>prepare_oncoprint</code> itself runs and feeds the label-sorting table, exactly like upstream</td>
-</tr>
-<tr>
-<td>vembrane filter/table expressions evaluated from Python at run time</td>
-<td>precomputed literal expression/header (34 columns)</td>
-<td>same semantics, evaluated once</td>
-</tr>
-<tr>
-<td>upstream <code>config/units.tsv</code> absolute <code>/projects/...</code> read paths</td>
-<td><code>config.reads_dir</code> + sample group fixture paths</td>
-<td>portability</td>
-</tr>
-<tr>
-<td>Snakemake <code>temp()</code> outputs</td>
-<td><code>temporary = true</code></td>
-<td>engine equivalent</td>
-</tr>
-<tr>
-<td>per-rule conda environments</td>
-<td>one env per tool pin set (<code>envs/</code>)</td>
-<td>same packages, same pins, consolidated</td>
-</tr>
-</tbody>
-</table>
-<h2 id="links">Links</h2>
-<ul>
-<li>Repository: <a href="https://github.com/oxo-flow-community/oxo-flow-varlociraptor">oxo-flow-varlociraptor</a></li>
-<li>Upstream: <a href="https://github.com/snakemake-workflows/dna-seq-varlociraptor">snakemake-workflows/dna-seq-varlociraptor</a> @ <code>v6.10.0</code></li>
-<li>License: Apache-2.0 (this workflow) · MIT (upstream)</li>
-</ul>
-<p>Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.</p>
+<p>Either way, the acceptance bar is the same: <strong>every catalog workflow
+runs end-to-end via the CLI on real minimal data, or it is honestly
+documented as gated.</strong></p>
 
 
 

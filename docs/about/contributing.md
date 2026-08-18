@@ -56,3 +56,14 @@ fields the schema documents):
 
 See [Curation &amp; ratings](curation.md) for the classification scheme and
 what ★ Verified requires.
+
+## 3. Prove it runs (live testing)
+
+`test/run.sh` (validate + lint + dry-run) is the entry bar. The
+*verified* tiers additionally require a full CLI run against minimal
+real data — the [live-testing practice](live-testing.md) documents the
+whole loop (minimal fixtures, 2-lane queue harness, checkpoint-based
+diagnosis, gated contracts for user-data steps), with a Claude Code
+skill (`skills/live-test/`) and the accumulated failure catalog as the
+AI-optional reference. Submit your run evidence (the `.oxo-flow`
+report JSON) with the PR.

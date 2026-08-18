@@ -16,6 +16,8 @@
         <link rel="prev" href="../porting/">
       
       
+        <link rel="next" href="../live-testing/">
+      
       
         
       
@@ -487,10 +489,48 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#3-prove-it-runs-live-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Prove it runs (live testing)
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
       
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../live-testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Live testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -554,6 +594,17 @@
     <span class="md-ellipsis">
       
         2. Get it listed
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-prove-it-runs-live-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Prove it runs (live testing)
       
     </span>
   </a>
@@ -633,6 +684,15 @@ fields the schema documents):</p>
 </ul>
 <p>See <a href="../curation/">Curation &amp; ratings</a> for the classification scheme and
 what ★ Verified requires.</p>
+<h2 id="3-prove-it-runs-live-testing">3. Prove it runs (live testing)</h2>
+<p><code>test/run.sh</code> (validate + lint + dry-run) is the entry bar. The
+<em>verified</em> tiers additionally require a full CLI run against minimal
+real data — the <a href="../live-testing/">live-testing practice</a> documents the
+whole loop (minimal fixtures, 2-lane queue harness, checkpoint-based
+diagnosis, gated contracts for user-data steps), with a Claude Code
+skill (<code>skills/live-test/</code>) and the accumulated failure catalog as the
+AI-optional reference. Submit your run evidence (the <code>.oxo-flow</code>
+report JSON) with the PR.</p>
 
 
 
