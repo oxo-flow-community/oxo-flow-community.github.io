@@ -643,7 +643,7 @@ window.OXO_PIPELINES = [
     "name": "oxo-flow-chipseq",
     "title": "ChIP-seq: peak calling, QC and differential analysis",
     "origin": "port",
-    "rating": "verified",
+    "rating": "live-verified",
     "engine": "nextflow",
     "source": {
       "repo": "nf-core/chipseq",
