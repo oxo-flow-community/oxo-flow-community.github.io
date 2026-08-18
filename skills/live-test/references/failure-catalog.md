@@ -115,6 +115,20 @@ by default (patched builds).
 commit it with a build script.
 *Example*: viralrecon `3edee4d`.
 
+**Symptom**: ~9800 treatment reads shrink to 19 after a
+`samtools view -L blacklist.bed | bamtools filter` pipeline; macs3
+reports 2 treatment fragments, calls zero peaks, and the whole
+downstream chain fails on empty inputs (`mergeBed` "Requested column
+2, but database file - only has fields 1 - 0").
+**Root cause**: `samtools view -L` is a *target-file selector* — it
+KEEPS only blacklist-overlapping reads, the inverse of the intended
+blacklist removal.
+**Fix**: exclude with the `-L … -U out.bam` pair (stdout gets the
+blacklist reads, `-U` writes the pass reads); feed the file to the
+next tool with `-in`. Give per-instance temp names (`{pair_id}`)
+because fan-out instances share the workdir.
+*Example*: chipseq `6bd7141`.
+
 ## Resource over-allocation
 
 **Symptom**: `samtools sort: couldn't allocate memory for bam_mem`.
@@ -202,3 +216,23 @@ partial scp syncs, bulk tar syncs that cannot delete untracked files.
 **Fix**: verify the tree against the commit before requeueing
 (checksum a sentinel file); sync full trees via archive+scp when git
 transport is blocked.
+
+**Symptom**: `igv_files_to_session.py` (or any consumer of a
+tab-separated helper file) dies with `not enough values to unpack
+(expected 2, got 1)`.
+**Root cause**: the file was written by `echo "a\\tb"` inside a TOML
+shell block — TOML's `\\t` reaches the shell as backslash-t, and
+plain `echo` prints it literally, so the file has one field.
+**Fix**: `printf "%s\\t%s\\n" a b > file` — `printf` interprets the
+escapes and writes a real tab. Always `cat -A` the file to see
+`^I` vs `\t` before debugging consumers.
+*Example*: chipseq `c3c66ce`.
+
+**Symptom**: docker pull fails with `error from registry: denied`
+even on a working mirror.
+**Root cause**: the upstream image repo was retired from Docker Hub
+(nf-core deleted the `nf-core/ubuntu` org image); mirrors cannot
+serve what no longer exists.
+**Fix**: switch to the neutral `docker.io/library/...` base for
+shell-only rules; for tool images, re-pin a live biocontainers tag.
+*Example*: chipseq `5e8b86d`.
