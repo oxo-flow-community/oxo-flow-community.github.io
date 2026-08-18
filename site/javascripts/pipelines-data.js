@@ -1155,7 +1155,7 @@ window.OXO_PIPELINES = [
     "name": "oxo-flow-eager",
     "title": "Ancient DNA (aDNA): QC, mapping, damage estimation and genotyping",
     "origin": "port",
-    "rating": "verified",
+    "rating": "live-verified",
     "engine": "nextflow",
     "source": {
       "repo": "nf-core/eager",

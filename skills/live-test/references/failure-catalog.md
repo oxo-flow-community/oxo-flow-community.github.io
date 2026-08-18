@@ -236,3 +236,27 @@ serve what no longer exists.
 **Fix**: switch to the neutral `docker.io/library/...` base for
 shell-only rules; for tool images, re-pin a live biocontainers tag.
 *Example*: chipseq `5e8b86d`.
+
+**Symptom**: AdapterRemoval (or any strict parser) dies at
+`Error reading FASTQ record at line 1; invalid FASTQ record;
+sequence/quality length does not match` on every record.
+**Root cause**: the generator drew fragments *shorter than the read
+length*, so `frag[:READ_LEN]` returned the whole fragment (75-87bp)
+while the quality string stayed fixed at READ_LEN — every record
+mismatches.
+**Fix**: fragments ≥ READ_LEN so both mates are exactly READ_LEN;
+for a collapse pipeline keep inserts at READ_LEN+20…READ_LEN+60 so
+the mates still overlap. Validate seq==qual length for every record
+after regenerating.
+*Example*: eager `967bcae`.
+
+**Symptom**: a tool prints a success banner and exits 0, but its
+declared outputs are missing (`Shell exited 0 but declared outputs
+are missing`).
+**Root cause**: the tool silently skips writing when its outdir is
+the current directory (qualimap 2.2.2-dev: `-outdir .` →
+"Output folder already exists" → nothing written).
+**Fix**: point the outdir at the declared output's own directory
+(the engine pre-creates it), never `.`; reproduce manually with
+`-outdir freshdir` to see where the tool really writes.
+*Example*: eager `2334495`.
