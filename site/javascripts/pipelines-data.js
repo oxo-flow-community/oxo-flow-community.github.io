@@ -1987,7 +1987,7 @@ window.OXO_PIPELINES = [
     "name": "oxo-flow-unsupervised",
     "title": "Unsupervised analysis of omics matrices: PCA, UMAP, clustering and validation",
     "origin": "port",
-    "rating": "verified",
+    "rating": "live-verified",
     "engine": "snakemake",
     "source": {
       "repo": "epigen/unsupervised_analysis",
