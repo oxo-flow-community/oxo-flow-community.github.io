@@ -115,6 +115,20 @@ by default (patched builds).
 commit it with a build script.
 *Example*: viralrecon `3edee4d`.
 
+**Symptom**: ~9800 treatment reads shrink to 19 after a
+`samtools view -L blacklist.bed | bamtools filter` pipeline; macs3
+reports 2 treatment fragments, calls zero peaks, and the whole
+downstream chain fails on empty inputs (`mergeBed` "Requested column
+2, but database file - only has fields 1 - 0").
+**Root cause**: `samtools view -L` is a *target-file selector* — it
+KEEPS only blacklist-overlapping reads, the inverse of the intended
+blacklist removal.
+**Fix**: exclude with the `-L … -U out.bam` pair (stdout gets the
+blacklist reads, `-U` writes the pass reads); feed the file to the
+next tool with `-in`. Give per-instance temp names (`{pair_id}`)
+because fan-out instances share the workdir.
+*Example*: chipseq `6bd7141`.
+
 ## Resource over-allocation
 
 **Symptom**: `samtools sort: couldn't allocate memory for bam_mem`.
