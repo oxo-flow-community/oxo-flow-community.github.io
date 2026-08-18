@@ -817,7 +817,11 @@ embed resource-sized flags use the effective pair:</p>
   hardcodes;</li>
 <li>container <code>--memory</code> is clamped to the machine by the engine itself
   (a <code>72G</code> label runs as <code>--memory 4G</code> on a 4 GB box — cgroup-aware
-  tools like Cell Ranger see an honest limit).</li>
+  tools like Cell Ranger see an honest limit);</li>
+<li><strong>the machine ceiling counts swap</strong> — RAM + swap is the backable
+  budget the kernel will actually use under pressure; pass
+  <code>--max-memory</code> to pin it to RAM only when latency matters more than
+  headroom.</li>
 </ul>
 <p>These are the semantics-preserving fixes: the workflow still declares
 its upstream labels, only the <em>tool-facing</em> numbers adapt.</p>

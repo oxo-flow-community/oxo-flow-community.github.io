@@ -917,7 +917,7 @@ window.OXO_PIPELINES = [
     "name": "oxo-flow-nanoseq",
     "title": "Nanopore long-read: demultiplexing, QC and alignment",
     "origin": "port",
-    "rating": "verified",
+    "rating": "live-verified",
     "engine": "nextflow",
     "source": {
       "repo": "nf-core/nanoseq",
