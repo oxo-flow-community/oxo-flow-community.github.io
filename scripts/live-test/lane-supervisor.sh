@@ -46,7 +46,7 @@ for repo in $(ls "$RUNS_ROOT/repos/" | sort -u); do
 
   # --- stall: no rule activity in 30 min while the run is live ---
   if [ "$RUNNING" -gt 0 ]; then
-    LAST_ACT=$(grep -E "Running: |✓ rule|✗ rule" "$LOG" | tail -1 | cut -c1-19)
+    LAST_ACT=$(grep -E "Running: |✓ rule|✗ rule" "$LOG" | tail -1 | grep -oE "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9:]+Z?" | head -1 | sed "s/Z$//")
     if [ -n "$LAST_ACT" ]; then
       AGE=$(( $(date +%s) - $(date -d "$LAST_ACT" +%s 2>/dev/null || echo 0) ))
       if [ "$AGE" -gt 1800 ] && [ "$AGE" -lt 86400 ]; then
