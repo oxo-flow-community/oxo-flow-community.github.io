@@ -2,7 +2,7 @@
 
 This page codifies the practice developed while live-testing all 24
 catalog workflows end-to-end on a real server with the oxo-flow CLI
-(2026-08 campaign, 7 live-verified and counting). It is a **reference
+(2026-08 campaign, 6 live-verified and counting). It is a **reference
 paradigm**, not a policy: follow the checklist with or without an AI
 assistant — the AI layer (the [`live-test` skill](../../skills/live-test/SKILL.md))
 just executes the same steps faster.

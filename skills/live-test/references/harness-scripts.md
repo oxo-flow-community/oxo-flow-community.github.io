@@ -1,10 +1,12 @@
 # Harness scripts
 
 `scripts/live-test/` — the queue-and-triage machinery for running a
-batch of workflows on a shared server. All paths derive from two env
-vars: `RUNS_ROOT` (default `~/community-runs`, holds `logs/` and the
-lock files) and `REPOS_ROOT` (default `$RUNS_ROOT/repos`). Nothing is
-server-specific; no mirror or proxy configuration lives here.
+batch of workflows on a shared server. All paths derive from env vars:
+`RUNS_ROOT` (default `~/community-runs`, holds `logs/` and the lock
+files), `REPOS_ROOT` (default `$RUNS_ROOT/repos`), and `OXO_PATH_PREPEND`
+(the dirs `wf-run.sh` prepends to PATH for the CLI and conda; default
+`~/.cargo/bin:~/.miniforge3/bin` — override for other server layouts).
+No mirror or proxy configuration lives here.
 
 | Script | Role | Invocation |
 |---|---|---|
