@@ -189,6 +189,18 @@ because fan-out instances share the workdir.
 **Fix**: pre-run CIRI2 (fast junction call) and skip the quant step when the row count is zero; tolerate the resulting empty beds downstream.
 *Example*: circrna `9b14b4e`.
 
+**Symptom**: SUPPA2 `psiPerEvent` dies with "No expression values have been buffered" after skipping every expression row; or the reference build exits 1 right after a successful `generateEvents`.
+**Root cause**: SUPPA's `ExpressionReader`/`IoeReader` consume line 1 as the header and derive the expected field count from it — stripping the sample-name header makes the first data row the header (2 fields -> min_fields=3), so every real row rejects with "Unexpeced number of fields". `generateEvents` also writes one `events_<TYPE>_strict.ioe` PER event type and skips zero-event types entirely, so a hardcoded concat dies on the missing files (and a bare for-loop exits with its last iteration's status).
+**Fix**: keep the expression header; concatenate event files with `awk "FNR==1 && NR!=1 {next} 1"` so only the first header survives and missing types are tolerated.
+*Example*: tcasia `66d5a15`.
+
+## License-gated user data
+
+**Symptom**: a caller stage fails hard on a fresh clone because it needs an academic license file that no repo can ship; upstream runs the chain unconditionally, so the whole default path dies.
+**Root cause**: upstream treats the license as always-present, but the license IS user data.
+**Fix**: gate the caller's whole rule chain on an explicit config flag (default false) with commands unchanged when enabled; document the deviation in the README fidelity table. Also verify the caller's env installs at all — upstream's own pip pin may resolve on no index (majiq==2.5: PyPI and bioconda both lack it), and the fix chain continues (Cython extensions need numpy<2, gunicorn needs pkg_resources -> setuptools<81).
+*Example*: tcasia `055b6cc` (MAJIQ chain on `run_majiq`), `a91a86e` (install from the org's `majiq_academic@v2.5` fork), `2063b63`/`cb6efd0` (numpy/setuptools pins).
+
 ## Resource over-allocation
 
 **Symptom**: `samtools sort: couldn't allocate memory for bam_mem`.
