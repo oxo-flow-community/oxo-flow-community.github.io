@@ -2,126 +2,126 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://oxo-flow-community.github.io/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-19</lastmod>
     </url>
     <url>
          <loc>https://oxo-flow-community.github.io/about/contributing/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-19</lastmod>
     </url>
     <url>
          <loc>https://oxo-flow-community.github.io/about/curation/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-19</lastmod>
     </url>
     <url>
          <loc>https://oxo-flow-community.github.io/about/live-testing/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-19</lastmod>
     </url>
     <url>
          <loc>https://oxo-flow-community.github.io/about/porting/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-19</lastmod>
     </url>
     <url>
          <loc>https://oxo-flow-community.github.io/about/selection/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-19</lastmod>
     </url>
     <url>
          <loc>https://oxo-flow-community.github.io/pipelines/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-19</lastmod>
     </url>
     <url>
          <loc>https://oxo-flow-community.github.io/pipelines/oxo-flow-ampliseq/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-19</lastmod>
     </url>
     <url>
          <loc>https://oxo-flow-community.github.io/pipelines/oxo-flow-atacseq/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-19</lastmod>
     </url>
     <url>
          <loc>https://oxo-flow-community.github.io/pipelines/oxo-flow-auto-sra-rnaseq-pipeline/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-19</lastmod>
     </url>
     <url>
          <loc>https://oxo-flow-community.github.io/pipelines/oxo-flow-bgcflow/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-19</lastmod>
     </url>
     <url>
          <loc>https://oxo-flow-community.github.io/pipelines/oxo-flow-chipseq/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-19</lastmod>
     </url>
     <url>
          <loc>https://oxo-flow-community.github.io/pipelines/oxo-flow-circrna/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-19</lastmod>
     </url>
     <url>
          <loc>https://oxo-flow-community.github.io/pipelines/oxo-flow-clindet/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-19</lastmod>
     </url>
     <url>
          <loc>https://oxo-flow-community.github.io/pipelines/oxo-flow-eager/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-19</lastmod>
     </url>
     <url>
          <loc>https://oxo-flow-community.github.io/pipelines/oxo-flow-enrichment/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-19</lastmod>
     </url>
     <url>
          <loc>https://oxo-flow-community.github.io/pipelines/oxo-flow-fetchngs/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-19</lastmod>
     </url>
     <url>
          <loc>https://oxo-flow-community.github.io/pipelines/oxo-flow-genome-tracks/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-19</lastmod>
     </url>
     <url>
          <loc>https://oxo-flow-community.github.io/pipelines/oxo-flow-mag/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-19</lastmod>
     </url>
     <url>
          <loc>https://oxo-flow-community.github.io/pipelines/oxo-flow-methylseq/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-19</lastmod>
     </url>
     <url>
          <loc>https://oxo-flow-community.github.io/pipelines/oxo-flow-mixscape/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-19</lastmod>
     </url>
     <url>
          <loc>https://oxo-flow-community.github.io/pipelines/oxo-flow-nanoseq/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-19</lastmod>
     </url>
     <url>
          <loc>https://oxo-flow-community.github.io/pipelines/oxo-flow-rnaseq-star-deseq2/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-19</lastmod>
     </url>
     <url>
          <loc>https://oxo-flow-community.github.io/pipelines/oxo-flow-rnaseq/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-19</lastmod>
     </url>
     <url>
          <loc>https://oxo-flow-community.github.io/pipelines/oxo-flow-sarek/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-19</lastmod>
     </url>
     <url>
          <loc>https://oxo-flow-community.github.io/pipelines/oxo-flow-scrnaseq/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-19</lastmod>
     </url>
     <url>
          <loc>https://oxo-flow-community.github.io/pipelines/oxo-flow-snparcher/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-19</lastmod>
     </url>
     <url>
          <loc>https://oxo-flow-community.github.io/pipelines/oxo-flow-tcasia/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-19</lastmod>
     </url>
     <url>
          <loc>https://oxo-flow-community.github.io/pipelines/oxo-flow-unsupervised/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-19</lastmod>
     </url>
     <url>
          <loc>https://oxo-flow-community.github.io/pipelines/oxo-flow-varlociraptor/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-19</lastmod>
     </url>
     <url>
          <loc>https://oxo-flow-community.github.io/pipelines/oxo-flow-viralrecon/</loc>
-         <lastmod>2026-08-18</lastmod>
+         <lastmod>2026-08-19</lastmod>
     </url>
 </urlset>

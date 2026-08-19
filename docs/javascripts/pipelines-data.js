@@ -327,7 +327,7 @@ window.OXO_PIPELINES = [
     "name": "oxo-flow-mag",
     "title": "Metagenome assembly, binning and taxonomic classification",
     "origin": "port",
-    "rating": "verified",
+    "rating": "live-verified",
     "engine": "nextflow",
     "source": {
       "repo": "nf-core/mag",
