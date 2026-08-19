@@ -150,7 +150,7 @@ because fan-out instances share the workdir.
 *Example*: rnaseq-star-deseq2 `1f2fb3c`.
 
 **Symptom**: a rule's script field still shows a literal `{variable}`.
-**Root cause**: the engine substitutes scatter placeholders in input/output/shell but NOT in the script field (engine issue #98).
+**Root cause**: the engine substitutes scatter placeholders in input/output/shell but NOT in the script field (engine issue #98, FIXED in 0.14: script/pre_exec/on_success/on_failure substitute on all four fan-out paths — `Traitome/oxo-flow` `9544b0b`).
 **Fix**: expand the scatter into explicit per-instance rules.
 *Example*: rnaseq-star-deseq2 `79c1cd0` (three explicit pca rules).
 
@@ -222,6 +222,25 @@ gate drops to a machine-sized "Need 3 GB".
 **Root cause**: the config default is the upstream download URL but the rule only unpacks local paths — tar cannot fetch URLs.
 **Fix**: default the path to `""` and fail fast with a clear message when the gate is on and the path is empty; document the local-file contract.
 *Example*: mag `3cdd911`.
+
+**Symptom**: an assembler's EM spins forever ONLY under the engine (99.9% CPU for hours) while the identical command completes in seconds in a manual shell; flags, threads, data shape and CPU contention are all ruled out.
+**Root cause**: not isolated (metabat2 2.17 internal pathology on tiny inputs under the engine's process management).
+**Fix**: a generous shell-level timeout (20 min) that converts the spin into the empty-artifact emission — when the input legitimately yields zero bins, the zero-result channel contract applies.
+*Example*: mag `c87e507`.
+
+**Symptom**: a binner stops without writing a single file ("Marker gene search reveals that the dataset cannot be binned. Program stop.").
+**Root cause**: gene-less input (random-sequence fixtures) or genuinely low-diversity real data — a valid zero-bin result.
+**Fix**: emit the empty artifacts (noclass/tooshort/log/marker/summary) so the declared-output contract holds; guard the post-processing globs with `[ -e ]` or `|| true`.
+*Example*: mag `53f5cbe` (maxbin2).
+
+**Symptom**: cross-sample depth columns are all zero and composition binners degrade; or a checker dies with "Assembly fasta does not match alignment file".
+**Root cause**: the fixture draws each species' sequence per sample — samples share no genome content, so cross-sample alignments map nothing; separately, a stale bam from a previous assembly generation sits next to a fresh fasta.
+**Fix**: ONE shared community generated once, abundance-only variation between samples; and file-level (not directory-level) rule inputs/outputs so re-runs propagate through exact-string edges and per-file manifests.
+*Example*: mag `2d7115f` (shared community), `af46b5a` + `945cd0b` (file-level wiring).
+
+**Symptom**: helper scripts ship in the repo's scripts/ but rules call them bare (`foo.py: command not found`) — upstream containers had them in bin/.
+**Fix**: `python scripts/foo.py` (or `python "$wd/scripts/foo.py"`) and declare the script as a rule input for invalidation.
+*Example*: mag `c41983f`/`1255ad4` (15 call sites), viralrecon `5cba76b`.
 
 ## Environment provisioning
 
