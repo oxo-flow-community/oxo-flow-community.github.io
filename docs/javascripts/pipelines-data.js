@@ -1010,7 +1010,7 @@ window.OXO_PIPELINES = [
     "name": "oxo-flow-viralrecon",
     "title": "Viral assembly and intrahost variant calling for Illumina amplicon data",
     "origin": "port",
-    "rating": "verified",
+    "rating": "live-verified",
     "engine": "nextflow",
     "source": {
       "repo": "nf-core/viralrecon",
