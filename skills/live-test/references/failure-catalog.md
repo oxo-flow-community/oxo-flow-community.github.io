@@ -400,3 +400,17 @@ the current directory (qualimap 2.2.2-dev: `-outdir .` →
 **Root cause**: `git reset --hard` on the server clobbered uncommitted server-side regens (fixture files) with the repo's stale committed copies.
 **Fix**: commit regenerated fixtures in the SAME change as the generator fix, before resetting the server tree; never rely on server-local regens surviving a reset.
 *Example*: mixscape `778a250` (regens committed) vs the resurrected nn2 failure.
+
+## Version-locked ML stacks
+
+**Symptom**: a tool embeds a neural model, and its scoring python needs a dependency era that no modern solver produces — every "reasonable" version pairing fails at a different point (import, model load, session API).
+**Root cause**: the model file (and the tool's python package) fix the stack: the saved model's keras version, the backend it needs, the h5py attribute semantics (2.x bytes vs 3.x str), the numpy ABI. Newer versions of any piece break a different link.
+**Fix**: read the artifact itself — the hd5's `keras_version`/`backend` attrs, the package's imports (`vqsr_cnn` calls `K.clear_session`/`K.get_session` = TF-only) — and pin the era, not the latest. Beware conda activation scripts overriding `KERAS_BACKEND` per-OS (conda keras hardcodes theano on Linux). Also check where the python package actually comes from: gatktool declares only python; vqsr_cnn ships in the GATK sources, not on any index.
+*Example*: sarek CNN stack (`python 3.6 + keras 2.2.4 + tensorflow 1.15.5 + h5py 2.7.1 + vqsr_cnn from the GATK repo`), gatk4 env pins in envs/gatk4.yaml.
+
+## Container backends
+
+**Symptom**: docker rules fail with daemon-level errors (`failed to lease content: NotFound`, `lease does not exist`, snapshot-store ENOENT) that persist across `docker system prune` and even full store wipes + service restarts.
+**Root cause**: deleting live daemon state during a disk crisis corrupts the lease/snapshot metadata; the docker/containerd pair never recovers without re-provisioning.
+**Fix**: pivot the rules to the singularity backend (`singularity = "docker://<same-image>"` — same registry images, portable SIFs, no daemon); give the pulls a big TMPDIR; and fix the engine setup to be idempotent (pull only when the image/SIF is absent — a leftover `.sif` makes `pull` refuse to overwrite).
+*Examples*: sarek `0b8fd2a` (fastqc/vcftools to singularity), engine Traitome/oxo-flow#105 (docker inspect-first), #107 (singularity SIF-aware setup).

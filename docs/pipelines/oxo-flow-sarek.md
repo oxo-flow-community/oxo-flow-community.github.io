@@ -1,12 +1,12 @@
 # WGS/WES germline and somatic variant calling
 
-<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
 
 GATK best-practice variant calling for whole-genome and whole-exome sequencing (WGS/WES), germline by default: FastQC quality control, fastp trimming and splitting, BWA-MEM alignment, MarkDuplicates with CRAM conversion, base quality score recalibration (BQSR), single-sample HaplotypeCaller variant calling, CNN 1D scoring with tranche filtering, VEP annotation, per-sample VCF QC and a final MultiQC report.
 
 | | |
 |---:|---|
-| **Rating** | ★ Verified |
+| **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | genomics |
 | **Rules** | 20 |
@@ -210,6 +210,12 @@ Deviations (all documented, nothing silently dropped):
   staging of the reference into the task directory.
 - **`known_indels`** is a TOML array (2 GRCh38 files); both it and
   `known_indels_tbi` must be updated together when changing references.
+
+**Live-test fixes (tx-ubuntu clean from-scratch run, verdict #17 — 37/37 rules, exit=0):**
+- every GATK invocation now passes `-Xmx{effective_memory_mb}m` (was missing the `-Xmx` prefix — java treated the bare number as a main class); MarkDuplicates writes CRAM 3.0 (the env's samtools 1.24 defaults to CRAM 3.1, which GATK 4.5's htsjdk cannot read); `mosdepth_recal` takes the `.crai` as an input so it structurally follows the indexer.
+- the gatk4 env carries the CNN scoring python stack on python 3.6: gatktool 0.0.1, keras 2.2.4, tensorflow 1.15.5, h5py 2.7.1, matplotlib, scipy, scikit-learn + the GATK sources' `vqsr_cnn` package (no index hosts it); the CNN rule exports `KERAS_BACKEND=tensorflow` explicitly (the conda keras activation script hardcodes theano on Linux — nf-core's own module says "CNNSCOREVARIANTS does not support Conda").
+- fastqc and the three vcftools rules run via the singularity backend (`docker://` URIs, same quay images).
+- **VEP is gated on `vep_cache_ready`** (default false): upstream fails hard without the cache; the port skips the rule until the user places a VEP 112 cache at `vep_dir_cache` (the shipped `vep_cache_version` 116 was inconsistent with the env's ensembl-vep 112 — caches are version-locked).
 
 ## Links
 
