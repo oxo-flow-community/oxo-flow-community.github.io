@@ -1635,7 +1635,7 @@ window.OXO_PIPELINES = [
     "name": "oxo-flow-enrichment",
     "title": "Region set and gene set enrichment: LOLA, GREAT, pycisTarget and GSEA",
     "origin": "port",
-    "rating": "verified",
+    "rating": "live-verified",
     "engine": "snakemake",
     "source": {
       "repo": "epigen/enrichment_analysis",

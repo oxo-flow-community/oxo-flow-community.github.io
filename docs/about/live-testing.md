@@ -2,7 +2,7 @@
 
 This page codifies the practice developed while live-testing all 24
 catalog workflows end-to-end on a real server with the oxo-flow CLI
-(2026-08 campaign, 20 live-verified and counting). It is a **referenceassistant — the AI layer (the [`live-test` skill](https://github.com/oxo-flow-community/oxo-flow-community.github.io/blob/main/skills/live-test/SKILL.md))
+(2026-08 campaign, 21 live-verified and counting). It is a **referenceassistant — the AI layer (the [`live-test` skill](https://github.com/oxo-flow-community/oxo-flow-community.github.io/blob/main/skills/live-test/SKILL.md))
 just executes the same steps faster.
 
 **Why live-test at all** — `dry-run` proves the graph parses and the

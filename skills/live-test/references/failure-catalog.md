@@ -446,3 +446,23 @@ the current directory (qualimap 2.2.2-dev: `-outdir .` →
 **Root cause**: the fixture shipped plain .vcf.gz without .tbi.
 **Fix**: BGZF-compress + tabix-index every annotation VCF in the kit.
 *Example*: clindet `5d72771`.
+
+**Symptom**: R scripts die with "data.table::dcast currently only has a method for data.tables" / "The melt generic in data.table has been passed a data.frame" despite correct-looking code.
+**Root cause**: the script loads data.table AFTER reshape2; data.table masks dcast/melt and its methods only accept data.tables.
+**Fix**: qualify `reshape2::dcast` / `reshape2::melt` at the call sites.
+*Example*: enrichment `2aa1a73`, `6780702`.
+
+**Symptom**: rGREAT dies with "missing value where TRUE/FALSE needed" in great(); GSEApy prerank reports "No gene sets passed through filtering condition".
+**Root cause**: GMT fixtures with placeholder names (GENE1..GENE10) pass naive tools but fail validating ones — SYMBOL→ENTREZ mapping yields empty sets (rGREAT's 0/0 check), and prerank filters every set against a ranked list that shares no symbols.
+**Fix**: use real gene symbols in both the GMTs and the ranked CSVs.
+*Example*: enrichment `5245b4a`, `5c04bef`.
+
+**Symptom**: plotRegionGeneAssociations errors "need finite 'ylim' values".
+**Root cause**: tiny fixtures make every binomial p-value zero — the barplot's ylim is non-finite.
+**Fix**: guard the plot in tryCatch and draw a note; the table is the product.
+*Example*: enrichment `c12a7c8`.
+
+**Symptom**: runLOLA errors "Negative b entry... universe has a region that overlaps multiple user set regions"; downstream plot dies on log2(NULL) ("non-numeric argument").
+**Root cause**: a single-region universe overlapping several query regions breaks LOLA's 2x2; the analysis never wrote oddsRatio/qValue columns the plot config consumes.
+**Fix**: disjoint-window universe fixtures; write oddsRatio (b/c) + BH-adjusted qValue in the LOLA result.
+*Example*: enrichment `9b8917e`.
