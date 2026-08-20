@@ -224,7 +224,7 @@ gate drops to a machine-sized "Need 3 GB".
 *Example*: mag `3cdd911`.
 
 **Symptom**: an assembler's EM spins forever ONLY under the engine (99.9% CPU for hours) while the identical command completes in seconds in a manual shell; flags, threads, data shape and CPU contention are all ruled out.
-**Root cause**: not isolated (metabat2 2.17 internal pathology on tiny inputs under the engine's process management).
+**Root cause**: metabat2 2.17 flaky EM spin (standalone-reproducible; engine premise refuted — engine #101 closed with a stdin-null contract hardening).
 **Fix**: a generous shell-level timeout (20 min) that converts the spin into the empty-artifact emission — when the input legitimately yields zero bins, the zero-result channel contract applies.
 *Example*: mag `c87e507`.
 
@@ -241,6 +241,36 @@ gate drops to a machine-sized "Need 3 GB".
 **Symptom**: helper scripts ship in the repo's scripts/ but rules call them bare (`foo.py: command not found`) — upstream containers had them in bin/.
 **Fix**: `python scripts/foo.py` (or `python "$wd/scripts/foo.py"`) and declare the script as a rule input for invalidation.
 *Example*: mag `c41983f`/`1255ad4` (15 call sites), viralrecon `5cba76b`.
+
+**Symptom**: the kraken2 filter classifies ~100% of the reads and every downstream channel runs empty.
+**Root cause**: the minimal host-removal DB was indexed over the VIRUS genome — the kraken2 step is the HOST filter, so the DB must cover the host and viral reads must pass through unclassified (the semantics were inverted).
+**Fix**: index the DB over a host sequence (bundled 6kb human slice, taxid 9606); add a few percent host reads to the fixtures so the filter does real work.
+*Example*: viralrecon `d9934b2`.
+
+**Symptom**: fastp collapses thousands of pairs to a handful.
+**Root cause**: the workflow's own QC is stricter than the fixture — viralrecon's fastp runs --qualified_quality_phred 30 --unqualified_percent_limit 10, which discards reads whose tails decline below Q30.
+**Fix**: fixture qualities must satisfy the workflow's QC end to end (Q38->Q32 floor for viralrecon); check the workflow's fastp arguments before choosing quality curves.
+*Example*: viralrecon `4ae6f4f`.
+
+**Symptom**: a pipeline's zero-variant path dies repeatedly downstream (empty tsv kills the converter; the empty VCF loses FORMAT headers; freyja degenerates on the empty mutation set; the long-table script silently writes nothing).
+**Root cause**: upstream drops zero-variant samples via a channel-level runtime filter; the port has no equivalent, so every consumer meets the empty channel unprepared.
+**Fix**: the zero-variant channel family — header-carrying empty VCF (the full tool header block, not bare fileformat), row-count guards (wc -l > 1, not -s), passthrough for zero-record files at sort steps (bcftools sort strips headers no record uses), empty artifact emission with the tool's own header lines.
+*Example*: viralrecon `82455f4`/`0492f5d`/`63a7f00`/`b3e60fb`/`af3bec9`/`0b331f9`.
+
+**Symptom**: a helper script's outputs land with a different prefix than the declared names (summary_variants_metrics_mqc.csv vs variants_metrics_mqc.csv).
+**Root cause**: the bundled script defaults --out_prefix to "summary" and the rule never passed one.
+**Fix**: run the script once manually to see its real output names, then declare those.
+*Example*: viralrecon `d4c7eeb`.
+
+**Symptom**: multiqc's report writer dies with 'module rich has no attribute panel', or a bundled multiqc csv-extraction script finds no yaml files.
+**Root cause**: rich.panel was removed in rich 13+ (the resolver picks it); multiqc 1.31 renamed the aggregate yamls to per-plot files the script does not read.
+**Fix**: pin rich=12.6.0 and multiqc to the version whose yaml layout matches the bundled script (1.21); add pyyaml explicitly.
+*Example*: viralrecon `ca70e91`/`8ba51b0`/`f6abdc7`.
+
+**Symptom**: a multi-tool R env fails sequential solve conflicts after bumping r-base (r-tidyverse 1.3.2 pins r-base <4.3; bioconductor packages pin r42/r43 per build).
+**Root cause**: an r42-generation pin set; one bump forces a generation-wide migration.
+**Fix**: migrate the whole set in one pass (r-base + tidyverse + bioconductor builds), and verify each bioconductor version EXISTS on the channels before pinning.
+*Example*: viralrecon `51051c7`/`0db6c3c`/`446bcc6`/`b660028`.
 
 ## Environment provisioning
 
