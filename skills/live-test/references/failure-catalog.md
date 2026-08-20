@@ -416,3 +416,33 @@ the current directory (qualimap 2.2.2-dev: `-outdir .` →
 **Root cause**: deleting live daemon state during a disk crisis corrupts the lease/snapshot metadata; the docker/containerd pair never recovers without re-provisioning.
 **Fix**: pivot the rules to the singularity backend (`singularity = "docker://<same-image>"` — same registry images, portable SIFs, no daemon); give the pulls a big TMPDIR; and fix the engine setup to be idempotent (pull only when the image/SIF is absent — a leftover `.sif` makes `pull` refuse to overwrite).
 *Examples*: sarek `0b8fd2a` (fastqc/vcftools to singularity), engine Traitome/oxo-flow#105 (docker inspect-first), #107 (singularity SIF-aware setup).
+
+**Symptom**: mantaWorkflow.py dies at runLocusGraph with "Task memory requirement exceeds full available resources" despite a box-sized budget.
+**Root cause**: upstream passes NO `-g`; runWorkflow's node auto-estimate under-reports on small boxes, and mergeMemMb=4096 exceeds the estimated budget.
+**Fix**: pass `-g 4` explicitly (matches the mergeMemMb=4096 need).
+*Example*: clindet `9a33799`.
+
+**Symptom**: Manta GetAlignmentStats errors "Too few high-confidence read pairs (0)... At least 100 required".
+**Root cause**: the fixture kit shipped 2-pair reads — Manta needs >=100 high-confidence pairs to estimate.
+**Fix**: generate 10k-pair wgsim reads (ship `test/generate_reads.sh` alongside the fixtures).
+*Example*: clindet `1be4181`.
+
+**Symptom**: strelka2 segfaults in the dynamic loader (all frames in ld-linux, zero LD_DEBUG output) while starling2 in the same container works.
+**Root cause**: bioconda strelka 2.9.10 (hdfd78af_2) is broken on glibc 2.39 hosts; germline path (starling2) is unaffected, somatic dies.
+**Fix**: pin `strelka=2.9.7`.
+*Example*: clindet `316b867`.
+
+**Symptom**: caveman rejects the upstream default ignore-file: "should be an existing file" then "should be file with non-zero size".
+**Root cause**: upstream passes `-ignore-file ""`; caveman 1.15.3 validates the arg strictly.
+**Fix**: feed a one-region bed on an absent contig (same no-ignore semantics).
+*Example*: clindet `b248def`.
+
+**Symptom**: cgpFlagCaVEMan rejects the upstream defaults (empty -c/-v/-b/-ab, -t genome).
+**Root cause**: 1.15.3 validates every arg; flag-config sections key off the `-s` species value (HG38_CHR21_WGS, not HUMAN_WGS); FLAGLIST is a Config::IniFiles heredoc that must end with an empty line; BEDFILES needs >=1 key.
+**Fix**: ship GRCh38-verbatim flag params; drop bed-based flags when no chr21 flag data ships.
+*Example*: clindet `ca223ad`.
+
+**Symptom**: GATK dies with "An index is required" on annotation VCFs that look complete.
+**Root cause**: the fixture shipped plain .vcf.gz without .tbi.
+**Fix**: BGZF-compress + tabix-index every annotation VCF in the kit.
+*Example*: clindet `5d72771`.

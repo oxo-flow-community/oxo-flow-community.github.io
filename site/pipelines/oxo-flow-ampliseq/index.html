@@ -558,7 +558,7 @@
 
 
 <h1 id="amplicon-sequencing-16sits-dada2-denoising-taxonomy-assignment-and-qc">Amplicon sequencing (16S/ITS): DADA2 denoising, taxonomy assignment and QC</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
 
 <p>Amplicon sequencing analysis (16S/ITS) that takes raw paired-end reads through FastQC quality control, cutadapt primer trimming, DADA2 denoising (quality profiles, filterAndTrim, learnErrors, denoise, chimera removal, read tracking), taxonomy assignment against the SBDI-GTDB reference, a QIIME2 taxa barplot over sample metadata, an overall summary table and a MultiQC report.</p>
 <table>
@@ -571,7 +571,7 @@
 <tbody>
 <tr>
 <td style="text-align: right;"><strong>Rating</strong></td>
-<td>★ Verified</td>
+<td>✔ Live-tested</td>
 </tr>
 <tr>
 <td style="text-align: right;"><strong>Origin</strong></td>
@@ -1054,6 +1054,10 @@
 <li><code>metadata_file</code> is a config key (default <code>test/fixtures/metadata.tsv</code>);
   upstream takes it from the samplesheet.</li>
 </ul>
+<p><strong>Live-test fixes (tx-ubuntu clean run, verdict #18 — 25/25 rules, exit=0, 64 outputs):</strong>
+- container rules run via the singularity backend (<code>docker://</code> URIs, same images); qiime2 points at <code>quay.io/qiime2/amplicon:2026.1</code> (the docker-hub qiime2/qiime2 repo does not exist); format_taxonomy runs in <code>quay.io/nf-core/ubuntu:20.04</code> (pure sh).
+- <strong>the four qiime2 rules gate on <code>run_qiime2</code></strong> (default false): the amplicon container is ~20GB unpacked and no conda qiime2 exists on common mirrors — a fresh clone completes the DADA2 analysis; enable with ~25GB free disk.
+- DADA2 contract: fixtures carry Illumina-like declining qualities + 1% errors (uniform Q40 gives learnErrors a NULL matrix even with template structure); the R scripts unwrap the conda bioconductor-dada2 detailed-list return (err_out/err_in/trans) for the RDS while the raw return feeds plotErrors/checkConvergence; the denoise shell passes the err RDS at argv 5-6 and the filt fastqs via glob.</p>
 <h2 id="links">Links</h2>
 <ul>
 <li>Repository: <a href="https://github.com/oxo-flow-community/oxo-flow-ampliseq">oxo-flow-ampliseq</a></li>

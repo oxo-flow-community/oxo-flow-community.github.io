@@ -558,7 +558,7 @@
 
 
 <h1 id="wgswes-germline-and-somatic-variant-calling">WGS/WES germline and somatic variant calling</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
 
 <p>GATK best-practice variant calling for whole-genome and whole-exome sequencing (WGS/WES), germline by default: FastQC quality control, fastp trimming and splitting, BWA-MEM alignment, MarkDuplicates with CRAM conversion, base quality score recalibration (BQSR), single-sample HaplotypeCaller variant calling, CNN 1D scoring with tranche filtering, VEP annotation, per-sample VCF QC and a final MultiQC report.</p>
 <table>
@@ -571,7 +571,7 @@
 <tbody>
 <tr>
 <td style="text-align: right;"><strong>Rating</strong></td>
-<td>★ Verified</td>
+<td>✔ Live-tested</td>
 </tr>
 <tr>
 <td style="text-align: right;"><strong>Origin</strong></td>
@@ -1092,6 +1092,11 @@
 <li><strong><code>known_indels</code></strong> is a TOML array (2 GRCh38 files); both it and
   <code>known_indels_tbi</code> must be updated together when changing references.</li>
 </ul>
+<p><strong>Live-test fixes (tx-ubuntu clean from-scratch run, verdict #17 — 37/37 rules, exit=0):</strong>
+- every GATK invocation now passes <code>-Xmx{effective_memory_mb}m</code> (was missing the <code>-Xmx</code> prefix — java treated the bare number as a main class); MarkDuplicates writes CRAM 3.0 (the env's samtools 1.24 defaults to CRAM 3.1, which GATK 4.5's htsjdk cannot read); <code>mosdepth_recal</code> takes the <code>.crai</code> as an input so it structurally follows the indexer.
+- the gatk4 env carries the CNN scoring python stack on python 3.6: gatktool 0.0.1, keras 2.2.4, tensorflow 1.15.5, h5py 2.7.1, matplotlib, scipy, scikit-learn + the GATK sources' <code>vqsr_cnn</code> package (no index hosts it); the CNN rule exports <code>KERAS_BACKEND=tensorflow</code> explicitly (the conda keras activation script hardcodes theano on Linux — nf-core's own module says "CNNSCOREVARIANTS does not support Conda").
+- fastqc and the three vcftools rules run via the singularity backend (<code>docker://</code> URIs, same quay images).
+- <strong>VEP is gated on <code>vep_cache_ready</code></strong> (default false): upstream fails hard without the cache; the port skips the rule until the user places a VEP 112 cache at <code>vep_dir_cache</code> (the shipped <code>vep_cache_version</code> 116 was inconsistent with the env's ensembl-vep 112 — caches are version-locked).</p>
 <h2 id="links">Links</h2>
 <ul>
 <li>Repository: <a href="https://github.com/oxo-flow-community/oxo-flow-sarek">oxo-flow-sarek</a></li>

@@ -1,12 +1,12 @@
 # Clinical WES tumor/normal variant calling: SNV + germline, MAF annotation, case report
 
-<div class="ox-page-badges"><span class="ox-badge">☆ Community</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
 
 Clinical WES tumor/normal pipeline: fastp QC -> bwa+fixmate+samtools sort -> GATK markdup -> five SNV callers (Mutect2, VarDict, VarScan2, MuSE, HaplotypeCaller) plus germline Strelka2+Manta and CaVEMan -> bcftools normalization -> vcf2maf with VEP annotation -> merged MAF -> region-based mutation flagging -> cancer case report (Rmd/knitr) and MultiQC. Ported verbatim from zyllifeworld/clindet default paired WES path.
 
 | | |
 |---:|---|
-| **Rating** | ☆ Community |
+| **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | cancer genomics (WES) |
 | **Rules** | 60 |

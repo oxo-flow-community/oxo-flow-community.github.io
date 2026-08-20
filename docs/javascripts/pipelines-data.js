@@ -2184,7 +2184,7 @@ window.OXO_PIPELINES = [
     "name": "oxo-flow-clindet",
     "title": "Clinical WES tumor/normal variant calling: SNV + germline, MAF annotation, case report",
     "origin": "port",
-    "rating": "community",
+    "rating": "live-verified",
     "engine": "snakemake",
     "source": {
       "repo": "zyllifeworld/clindet",

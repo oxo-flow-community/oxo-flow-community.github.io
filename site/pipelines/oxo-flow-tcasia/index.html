@@ -558,7 +558,7 @@
 
 
 <h1 id="paired-end-rna-seq-alignment-and-four-caller-alternative-splicing-analysis">Paired-end RNA-seq alignment and four-caller alternative-splicing analysis</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
 
 <p>Paired-end RNA-seq from FASTQ to per-sample alternative-splicing calls: reads are trimmed with fastp, aligned with two-pass STAR and counted per gene with featureCounts; each sample's splicing is then quantified independently with four callers — rMATS, MAJIQ (with Voila export), SUPPA2 (via Salmon transcript quantification) and SplAdder. The alignment and AS-calling stages are one chained DAG (run one stage with -t alignment / -t as_calling).</p>
 <table>
@@ -571,7 +571,7 @@
 <tbody>
 <tr>
 <td style="text-align: right;"><strong>Rating</strong></td>
-<td>★ Verified</td>
+<td>✔ Live-tested</td>
 </tr>
 <tr>
 <td style="text-align: right;"><strong>Origin</strong></td>
@@ -977,7 +977,9 @@
 - <strong>One workflow file, one DAG</strong>: the two upstream Snakefiles (+ the four <code>rules/snakefile_*</code> fragments) are <code>modules/alignment.oxoflow</code> + <code>modules/as_calling.oxoflow</code>, included from <code>main.oxoflow</code>; the two <code>config.yml</code> files merge into one <code>[config]</code>. Upstream <code>01 output_dir/aligned</code> and <code>02 bam_dir</code> are the single key <code>aligned_dir</code>, making the alignment → AS-calling chain structural. Run one stage only with <code>-t alignment</code> / <code>-t as_calling</code>.
 - <strong>Strandness-derived values are explicit config keys</strong>: upstream computes <code>salmon_library_type</code> (<code>fr-firststrand→ISR</code>, <code>fr-secondstrand→ISF</code>, <code>fr-unstranded→IU</code>) and <code>majiq_strandness</code> (<code>fr-firststrand→reverse</code>, <code>fr-secondstrand→forward</code>, <code>fr-unstranded→none</code>) in <code>tcasia_config.py</code>; rMATS uses the <code>strandness</code> value directly (as upstream). Change <code>strandness</code> <strong>and</strong> the two derived keys together.
 - <strong>Helper scripts not ported</strong>: <code>scripts/validate_config.py</code> and <code>scripts/read_length.sh</code> are user-facing helpers; oxo-flow validates config/inputs natively.
-- <strong>Threads only, no memory</strong>: upstream declares threads per tool and no memory; the port mirrors that exactly.</p>
+- <strong>Threads only, no memory</strong>: upstream declares threads per tool and no memory; the port mirrors that exactly.
+- <strong>MAJIQ is license-gated</strong>: upstream runs the 5-rule MAJIQ chain unconditionally and fails hard without the academic license file. The port gates the chain on <code>run_majiq</code> (default <code>false</code>): a fresh clone completes with rMATS + SUPPA2 + SplAdder; set <code>run_majiq = true</code> after placing the license at <code>majiq_license</code> (commands unchanged when enabled).
+- <strong>MAJIQ env fixes</strong>: upstream's own <code>pip majiq==2.5</code> installs from no index (PyPI/bioconda both lack majiq) — the port installs OncoHarmony-Network/majiq_academic@v2.5 (the TCASIA org's fork), with numpy=1.26 (the fork's Cython extensions break on numpy 2.x ABI) and setuptools=75.8.2 (voila's gunicorn imports pkg_resources, removed in setuptools 81+).</p>
 <h2 id="links">Links</h2>
 <ul>
 <li>Repository: <a href="https://github.com/oxo-flow-community/oxo-flow-tcasia">oxo-flow-tcasia</a></li>
