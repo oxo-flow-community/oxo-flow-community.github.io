@@ -129,17 +129,31 @@ def emit_js(pipelines: list[dict]) -> None:
     )
 
 
-def rating_badge(rating: str) -> str:
-    """Issue #3: evidence tiers — live-tested > dry-run verified > community."""
+def rating_badge(rating: str, coverage: str = "") -> str:
+    """Issue #3: evidence tiers — live-tested > dry-run verified > community.
+
+    `coverage` (§15 completeness audit) is appended inside the badge for
+    ports: full-line / default-path. Originals omit it (no upstream line).
+    """
     if rating == "live-verified":
-        return '<span class="ox-badge ox-badge--live">✔ Live-tested</span>'
-    if rating == "verified":
-        return '<span class="ox-badge ox-badge--star">★ Verified</span>'
-    return '<span class="ox-badge">☆ Community</span>'
+        label = "✔ Live-tested"
+    elif rating == "verified":
+        label = "★ Verified"
+    else:
+        label = "☆ Community"
+    if coverage == "full-line":
+        label += " · full-line"
+    elif coverage == "default-path":
+        label += " · default-path"
+    cls = {
+        "live-verified": "ox-badge--live",
+        "verified": "ox-badge--star",
+    }.get(rating, "")
+    return f'<span class="ox-badge {cls}">{label}</span>'
 
 
 def badges(p: dict) -> str:
-    star = rating_badge(p.get("rating", "community"))
+    star = rating_badge(p.get("rating", "community"), p.get("coverage", ""))
     origin = {
         "port": "⇄ Official port",
         "original": "✦ Original",

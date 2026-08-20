@@ -1,6 +1,6 @@
 # Genome browser tracks: coverage, gene plots and UCSC hub
 
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
 
 Merge BAM files per experimental group with samtools, compute normalized bigWig coverage with deepTools bamCoverage (RPGC by default), plot isoform-aware per-gene and per-region genome tracks with gtracks/pyGenomeTracks, and publish a UCSC genome browser track hub — end-to-end track generation for RNA-seq, ATAC-seq and other aligned BAM data.
 

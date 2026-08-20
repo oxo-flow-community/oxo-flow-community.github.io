@@ -1,6 +1,6 @@
 # Amplicon sequencing (16S/ITS): DADA2 denoising, taxonomy assignment and QC
 
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
 
 Amplicon sequencing analysis (16S/ITS) that takes raw paired-end reads through FastQC quality control, cutadapt primer trimming, DADA2 denoising (quality profiles, filterAndTrim, learnErrors, denoise, chimera removal, read tracking), taxonomy assignment against the SBDI-GTDB reference, a QIIME2 taxa barplot over sample metadata, an overall summary table and a MultiQC report.
 

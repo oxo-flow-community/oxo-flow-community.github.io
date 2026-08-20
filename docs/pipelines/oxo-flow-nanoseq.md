@@ -1,6 +1,6 @@
 # Nanopore long-read: demultiplexing, QC and alignment
 
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
 
 A nanopore long-read pipeline for the DNA default path: samplesheet check, qcat barcode demultiplexing, NanoPlot + FastQC QC, minimap2 alignment, samtools view/sort/index, samtools stats/flagstat/idxstats, BigWig coverage tracks and a MultiQC report. The protocol config key switches to the cDNA/directRNA transcriptome paths. Every rule runs the upstream module's exact pinned container image.
 

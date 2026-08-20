@@ -1,6 +1,6 @@
 # WGS/WES germline and somatic variant calling
 
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
 
 GATK best-practice variant calling for whole-genome and whole-exome sequencing (WGS/WES), germline by default: FastQC quality control, fastp trimming and splitting, BWA-MEM alignment, MarkDuplicates with CRAM conversion, base quality score recalibration (BQSR), single-sample HaplotypeCaller variant calling, CNN 1D scoring with tranche filtering, VEP annotation, per-sample VCF QC and a final MultiQC report.
 

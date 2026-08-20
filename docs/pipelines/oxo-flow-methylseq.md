@@ -1,6 +1,6 @@
 # Bisulfite methylation analysis: alignment, methylation calls and QC
 
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
 
 Run end-to-end bisulfite methylation analysis (WGBS, and RRBS-compatible) of paired-end reads: FastQC quality control, TrimGalore adapter trimming, alignment to the bisulfite-converted reference genome with Bismark (bowtie2), PCR-deduplication, samtools sort/index, methylation extraction with per-context (CpG/CHG/CHH) calls plus bedGraph and coverage output, per-sample and project-wide Bismark HTML reports, and a final MultiQC report.
 

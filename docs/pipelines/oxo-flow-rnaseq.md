@@ -1,6 +1,6 @@
 # RNA-seq: alignment, quantification and QC
 
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
 
 End-to-end bulk RNA-seq analysis for paired-end reads: fq lint and FastQC raw-read QC, TrimGalore adapter/quality trimming, STAR alignment, Picard MarkDuplicates, Salmon alignment-mode quantification with tximport-merged gene/transcript count tables and SummarizedExperiment R objects, StringTie reference-guided assembly and quantification, featureCounts gene counts with biotype tables, RSeQC / dupRadar / Qualimap QC, DESeq2 sample-level QC (PCA, sample distances, size factors), strand-specific bigWig tracks, and one final MultiQC report with the nf-core/rnaseq custom content (fail_trimmed / fail_mapped tables, strandedness checks, software versions). A faithful port of the nf-core/rnaseq 3.26.0 default star_salmon path — same tools, same versions, same commands.
 
