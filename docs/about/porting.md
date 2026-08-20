@@ -279,6 +279,17 @@ backend (`lint` info W008). `[env_groups]` defines named reusable specs
 referenced by `env_group = "qc_env"`. `[defaults] environment` sets a
 default for every rule.
 
+**Container spec portability convention**: prefer
+`singularity = "docker://quay.io/biocontainers/..."` over
+`docker = "..."` for container rules — the singularity form consumes the
+same image but runs on HPC clusters without a docker daemon (live
+campaign: scrna-seq converted all 22 container rules, bare refs fail
+apptainer with "No transport type URI supplied" [V]). Use the `docker`
+form only when the workflow depends on docker-specific behavior. Note
+the fallback is not symmetric: a `docker://` spec is only valid for the
+singularity backend, so a rule cannot declare both and get "docker
+preferred, singularity fallback".
+
 **Container runtime wrapper** (observed in live run logs): docker rules
 execute as
 `docker run --rm --user $(id -u):$(id -g) -v .:. -w . <image> sh -c '<shell>'`

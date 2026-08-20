@@ -1913,6 +1913,16 @@ system) documented in <code>docs/guide/src/reference/execution-backends.md</code
 backend (<code>lint</code> info W008). <code>[env_groups]</code> defines named reusable specs
 referenced by <code>env_group = "qc_env"</code>. <code>[defaults] environment</code> sets a
 default for every rule.</p>
+<p><strong>Container spec portability convention</strong>: prefer
+<code>singularity = "docker://quay.io/biocontainers/..."</code> over
+<code>docker = "..."</code> for container rules — the singularity form consumes the
+same image but runs on HPC clusters without a docker daemon (live
+campaign: scrna-seq converted all 22 container rules, bare refs fail
+apptainer with "No transport type URI supplied" [V]). Use the <code>docker</code>
+form only when the workflow depends on docker-specific behavior. Note
+the fallback is not symmetric: a <code>docker://</code> spec is only valid for the
+singularity backend, so a rule cannot declare both and get "docker
+preferred, singularity fallback".</p>
 <p><strong>Container runtime wrapper</strong> (observed in live run logs): docker rules
 execute as
 <code>docker run --rm --user $(id -u):$(id -g) -v .:. -w . &lt;image&gt; sh -c '&lt;shell&gt;'</code>
