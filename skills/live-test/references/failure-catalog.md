@@ -466,3 +466,39 @@ the current directory (qualimap 2.2.2-dev: `-outdir .` →
 **Root cause**: a single-region universe overlapping several query regions breaks LOLA's 2x2; the analysis never wrote oddsRatio/qValue columns the plot config consumes.
 **Fix**: disjoint-window universe fixtures; write oddsRatio (b/c) + BH-adjusted qValue in the LOLA result.
 *Example*: enrichment `9b8917e`.
+
+**Symptom**: cellranger's martian jobmngr loops forever — "Need 6 GB of memory to start the next job (2.6 GB available). Waiting for jobs to complete."
+**Root cause**: the port auto-sized `--localmem` from the engine's effective memory, which includes swap (RAM+swap on the box: 9.8G) — jobmngr gates on the physically-available MemAvailable, so a swap-backed budget is unreachable and the pipeline deadlocks at 0.4% CPU.
+**Fix**: auto-size from `/proc/meminfo` MemAvailable (×2/3, 1 GB floor), with a config override for forcing; never from effective_memory (the engine's scheduling number, not a tool's physical budget — the same physical-vs-scheduled boundary as the cgroup clamp).
+*Example*: scrna-seq `d28b72e`.
+
+**Symptom**: cellranger count fails for one sample of a multi-sample demultiplexed folder while the other passes (or the pass is a concurrency race).
+**Root cause**: the shared fastq staging dir is a multi-sample demultiplexed folder — count must receive `--sample` to select its own; without it, which sample wins depends on concurrent startup timing.
+**Fix**: pass `--sample {sample}` explicitly.
+*Example*: scrna-seq (v22 fix round).
+
+**Symptom**: cellbender remove-background crashes in a chain on statistically-degenerate fixtures — flat count distributions raise a priors IndexError; 100 cells / 2000 empty droplets trip an encoder minibatch assert.
+**Root cause**: the synthetic fixture's count distribution and cell/droplet ratios don't resemble real 10x output.
+**Fix**: log-normal cell-count distribution (median ~150) + ambient empty droplets + ~800-cell scale; verify the fixture whitelist against the container's own barcode file.
+*Example*: scrna-seq (fixture round).
+
+**Symptom**: cellbender resumes from a stray ckpt.tar.gz left in the workdir (hash match → posterior loaded from checkpoint → no new files written → the rule's mv dies).
+**Root cause**: cellbender persists checkpoints in the CWD and silently resumes.
+**Fix**: `rm -f` the checkpoint before invoking; fresh-dir semantics for multiqc's mv on resume (results/multiqc is non-empty after a resume).
+*Example*: scrna-seq (cellbender/multiqc round).
+
+**Symptom**: an R helper ignores a `--flag value` argument (anndatar's get_arg greps `^--flag=`).
+**Root cause**: the helper's arg contract is `--flag=value`, the shell form passes space-separated.
+**Fix**: match the helper's own contract (`--flag=value`).
+*Example*: scrna-seq (R round).
+
+**Symptom**: wave/OCI images (scanpy/anndata/cellbender) are OCI→SIF-converted at exec time under names derived from the OCI repo — a pre-placed SIF or symlink with the pull-derived name never matches.
+**Root cause**: the engine's SIF name derivation covers `docker://` pulls, not OCI repo conversions whose names differ.
+**Fix**: point APPTAINER_CACHEDIR at the big disk (/data) and let the conversions land there.
+*Example*: scrna-seq (infra round).
+
+**Lesson — fixture whitelists**: a synthetic fixture's self-declared whitelist can be bogus (0% real chemistry match); validate fixture barcodes against the tool's own whitelist file before trusting the fixture.
+*Example*: scrna-seq (whitelist round).
+
+**Lesson — checkpoint command records**: `rule_runs[].command` may be confounded by masking or cross-run checkpoint reuse; it is not a primary bug-triaging artifact — prefer in-run diagnostic echoes.
+*Example*: scrna-seq (samples_list retraction).

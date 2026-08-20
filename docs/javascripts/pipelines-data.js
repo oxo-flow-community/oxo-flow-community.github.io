@@ -238,7 +238,7 @@ window.OXO_PIPELINES = [
     "name": "oxo-flow-scrnaseq",
     "title": "Single-cell RNA-seq: alignment, quantification and QC",
     "origin": "port",
-    "rating": "verified",
+    "rating": "live-verified",
     "engine": "nextflow",
     "source": {
       "repo": "nf-core/scrnaseq",
