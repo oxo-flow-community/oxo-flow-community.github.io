@@ -604,7 +604,7 @@
 </tr>
 <tr>
 <td style="text-align: right;"><strong>Compute</strong></td>
-<td>up to 12 CPUs / 140 GB per rule (SPAdes 10 CPUs / 72 GB / 24 h)</td>
+<td>up to 12 CPUs / 140 GB per rule (defaults 1 thread / 6 GB)</td>
 </tr>
 <tr>
 <td style="text-align: right;"><strong>Tools</strong></td>
@@ -639,7 +639,8 @@
 - input: paired-end reads as {sample}_R1.fastq.gz / {sample}_R2.fastq.gz in config.input_dir (default test/fixtures/raw); single-end not ported
 - reference: GTDB-Tk database — download gtdbtk_data.tar.gz (~100 GB) or unpacked directory and set config.gtdb_db (oxo-flow cannot download it mid-run)
 - reference: phiX genome FASTA bundled in the repo (assets/data/GCA_002596845.1_ASM259684v1_genomic.fna.gz) — no download needed
-- compute: up to 12 CPUs / 140 GB RAM per rule (SPAdes 10 CPUs/72 GB/24 h; GTDB-Tk classifywf 2 CPUs/140 GB/12 h; defaults 1 thread/6 GB)
+- compute: up to 12 CPUs / 140 GB per rule (defaults 1 thread / 6 GB; per-rule maxima below)
+- per-rule maxima: SPAdes 10 CPUs/72 GB/24 h; GTDB-Tk classifywf 2 CPUs/140 GB/12 h
 - software: conda or mamba with the pinned envs/*.yaml environments (one per tool, no container layer)
 - optional: disk — hundreds of GB for real datasets (GTDB-Tk database plus per-sample assemblies and bins)</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># 1. install oxo-flow (release binary, recommended)</span>

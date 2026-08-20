@@ -10,7 +10,7 @@ Turn paired-end metagenomic reads into quality-checked, taxonomically classified
 | **Origin** | port |
 | **Domain** | metagenomics |
 | **Rules** | 134 |
-| **Compute** | up to 12 CPUs / 140 GB per rule (SPAdes 10 CPUs / 72 GB / 24 h) |
+| **Compute** | up to 12 CPUs / 140 GB per rule (defaults 1 thread / 6 GB) |
 | **Tools** | fastqc · fastp · bowtie2 · samtools · spades · megahit · quast · prodigal · bioawk · seqkit · metabat2 · maxbin2 · concoct · comebin · metabinner · semibin · busco · qsv · ale · gtdbtk · prokka · multiqc · python · pandas · biopython |
 | **Ported** | 2026-08-15 |
 | **License** | Apache-2.0 |
@@ -35,7 +35,8 @@ Download the GTDB-Tk database (~100 GB), set `config.gtdb_db`, then run — the 
 - input: paired-end reads as {sample}_R1.fastq.gz / {sample}_R2.fastq.gz in config.input_dir (default test/fixtures/raw); single-end not ported
 - reference: GTDB-Tk database — download gtdbtk_data.tar.gz (~100 GB) or unpacked directory and set config.gtdb_db (oxo-flow cannot download it mid-run)
 - reference: phiX genome FASTA bundled in the repo (assets/data/GCA_002596845.1_ASM259684v1_genomic.fna.gz) — no download needed
-- compute: up to 12 CPUs / 140 GB RAM per rule (SPAdes 10 CPUs/72 GB/24 h; GTDB-Tk classifywf 2 CPUs/140 GB/12 h; defaults 1 thread/6 GB)
+- compute: up to 12 CPUs / 140 GB per rule (defaults 1 thread / 6 GB; per-rule maxima below)
+- per-rule maxima: SPAdes 10 CPUs/72 GB/24 h; GTDB-Tk classifywf 2 CPUs/140 GB/12 h
 - software: conda or mamba with the pinned envs/*.yaml environments (one per tool, no container layer)
 - optional: disk — hundreds of GB for real datasets (GTDB-Tk database plus per-sample assemblies and bins)
 
