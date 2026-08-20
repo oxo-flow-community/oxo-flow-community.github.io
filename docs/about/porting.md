@@ -57,10 +57,12 @@ Each porting agent receives one upstream workflow (nf-core DSL2 Nextflow
 pipeline, or Snakemake pipeline) and produces one self-contained oxo-flow
 repository that:
 
-1. Replicates the upstream **default-parameters main execution path** — same
-   tools, same versions, same command logic (flags, file naming), same
-   outputs — in a single `.oxoflow` TOML file (or one main + `[[include]]`
-   fragments).
+1. Replicates the upstream **full line** — every user-selectable
+   sub-workflow and branch (WGS/WES/RNA modes, fusion callers,
+   single-sample variants, ...), not just the default-parameters main
+   path — same tools, same versions, same command logic (flags, file
+   naming), same outputs — in a single `.oxoflow` TOML file (or one main
+   + `[[include]]` fragments).
 2. Passes `oxo-flow validate`, `oxo-flow dry-run`, and `oxo-flow lint`
    locally and in CI, with a fixture set that makes the dry-run
    deterministic and meaningful.
@@ -68,10 +70,19 @@ repository that:
    `LICENSE` (Apache-2.0), `metadata.json`, `.github/workflows/ci.yml`.
 
 Non-goals: re-implementing upstream cluster profiles, Tower
-reporting/launchpad features, Nextflow DSL1, parameterized multi-profile
-matrices beyond what `[config]` + `profiles/` natively cover, and upstream
-"dev" branches. Port the default path; record everything else in the
-fidelity table (§6).
+reporting/launchpad features, Nextflow DSL1, and upstream "dev" branches.
+Branches are IN scope: every branch is either ported, absorbed as a
+`[config]`-driven variant, or triaged in the fidelity table (§6).
+
+Coverage tiers for branch gaps (recorded per branch in the fidelity table):
+
+- **P0 portable gap** — pure software dependencies; must be ported.
+- **P1 objective blocker** — commercial license, paid database, or
+  unavailable reference data; declare "objectively non-portable" WITH
+  evidence, never silently skip.
+- **P2 config variant** — same rules, parameterized (single-end, depth
+  caps, ...); absorb as `[config]`/profile keys rather than a separate
+  port.
 
 A port that cannot be made faithful (missing tool, missing format feature,
 undocumented upstream behavior) is not a port — it is a draft. Return it
@@ -876,6 +887,7 @@ registry (`data/pipelines.json` in the site repo). Catalog v2 fields:
   "title": "RNA-seq: alignment, quantification and QC",
   "origin": "port",
   "rating": "verified",
+  "coverage": "default-path",
   "engine": "nextflow",
   "source": {
     "repo": "nf-core/rnaseq",
@@ -922,7 +934,13 @@ Field rules:
   included; they are real rules, just not upstream processes. Upstream
   module-composition detail (e.g. "BAM_SORT_STATS_SAMTOOLS (SAMTOOLS_SORT +
   ...)") belongs in the README fidelity table, not this field.
-- `excluded`: upstream branches deliberately not ported, with reasons.
+- `coverage`: the port's branch-line status — `full-line` (every upstream
+  branch ported or P1-triaged with evidence), `default-path` (main path
+  ported, P0 gaps remain), `partial` (draft). Displayed next to the
+  rating badge; honest default for older ports is `default-path` until the
+  §15 completeness audit clears them.
+- `excluded`: upstream branches not ported, each with its coverage tier
+  (P0/P1/P2) and reason — P1 requires the blocker evidence.
 - `tools`: deduped tool names WITHOUT versions (versions live in the TOML
   pins and the README fidelity table).
 - `installation`: engine floor; `toolchain` states truthfully whether the
@@ -1160,8 +1178,9 @@ submission):
 - [ ] `oxo-flow debug main.oxoflow` output matches the upstream command
       logic (tool flags, orderings, file naming) after placeholder
       substitution.
-- [ ] Fidelity table complete — every upstream process/rule has a row;
-      every deviation is explained; nothing silently dropped.
+- [ ] Fidelity table complete — every upstream branch, process and rule
+      has a row; every deviation is explained; gaps carry a coverage tier
+      (P0/P1/P2, §1); nothing silently dropped.
 - [ ] No unpinned tools: no `latest` container tags, no unpinned conda
       deps; any upstream-unpinned tool is pinned at port time and flagged
       in the fidelity table (§5).
@@ -1184,6 +1203,35 @@ submission):
       (§8); CI is green with the badge URL resolving.
 - [ ] No files written into the engine repo; all scratch work stayed
       under a throwaway directory.
+
+---
+
+## 15. Completeness audit (full-line coverage)
+
+The porting mandate (§1) is full-line: every user-selectable upstream
+branch is ported, absorbed as a `[config]` variant, or P1-triaged with
+evidence. The completeness audit enforces it per repository, including
+repos stamped before this section existed (their live-verified rating is
+redefined as "default-path PASS + gap list" until the audit clears them).
+
+Audit steps per repo:
+
+1. Anchor: `metadata.json` `source.tag` pins the upstream commit. Enumerate
+   the upstream's entry points and branches from its config/entry logic,
+   README usage, and profile/test matrices — NOT from the port's README.
+2. Diff: per-branch rule inventory (upstream) × port rules. Reuse the
+   scope verifier (`verify-upstream.py`) for name-level matching.
+3. Tier every gap: P0 portable (must port), P1 objective blocker (license /
+   paid data / unavailable reference — record the evidence), P2 config
+   variant (absorb as config keys).
+4. Update `metadata.json`: `coverage` (`full-line` only when no P0 gaps),
+   `excluded` rows carry tier + reason.
+5. Site registry mirrors the fields; the card shows
+   `✔ Live-tested · full-line` / `· default-path` next to the rating.
+
+Fill order: P0 gaps first (they are porting work — new rules, new envs),
+then P2 absorption, P1 documentation. A repo with P0 gaps stays
+`default-path` even if its main path is live-verified.
 
 ---
 
