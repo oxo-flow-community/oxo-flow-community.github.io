@@ -1,12 +1,12 @@
 # Biosynthetic gene cluster (BGC) genome mining: annotation, antiSMASH and data warehouse
 
-<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
 
 End-to-end biosynthetic gene cluster (BGC) analysis of user-provided bacterial genomes: prokka annotation, antiSMASH 7 secondary-metabolite mining with automated database setup, per-genome BGC counts and overview tables, GTDB taxonomy lookup, MIBiG reference table download, BigSCAPE-compatible comparison preparation (symlinks, taxonomy, dataset registry, visualization mapping), and conversion of all result tables into a parquet data warehouse — ready for downstream comparison and exploration.
 
 | | |
 |---:|---|
-| **Rating** | ★ Verified |
+| **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | genome-mining |
 | **Rules** | 18 |
@@ -183,6 +183,10 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 | ncbi_genome_download / patric_genome_download + patric/ncbi meta rules | not ported | ncbi-genome-download | non-custom genome sources |
 | copy_custom_genbank / copy_converted_gbk / genbank_to_fna/gff/faa / format_genbank_meta extras | not ported | python | genbank input path, off by default |
 | report rules (copy_readme, copy_template_notebook, mkdocs_*_report) | not ported | jupyter/mkdocs | separate `bgcflow build report` command, not in the main Snakefile |
+
+**Live-test fixes (tx-ubuntu clean run, verdict #19 — 17 succeeded / 0 failed / 10 skipped, exit=0):**
+- gtdb_prep API call arg order corrected; the overview gather guards the `similarity` column (antismash omits it when no region matched MIBiG — live KeyError);
+- prokka + antismash envs dropped the proprietary `defaults` channel (conda-forge + bioconda suffice; CN mirrors 404 it).
 
 ## Links
 
