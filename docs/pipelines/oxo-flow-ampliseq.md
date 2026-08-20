@@ -1,12 +1,12 @@
 # Amplicon sequencing (16S/ITS): DADA2 denoising, taxonomy assignment and QC
 
-<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
 
 Amplicon sequencing analysis (16S/ITS) that takes raw paired-end reads through FastQC quality control, cutadapt primer trimming, DADA2 denoising (quality profiles, filterAndTrim, learnErrors, denoise, chimera removal, read tracking), taxonomy assignment against the SBDI-GTDB reference, a QIIME2 taxa barplot over sample metadata, an overall summary table and a MultiQC report.
 
 | | |
 |---:|---|
-| **Rating** | ★ Verified |
+| **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | amplicon |
 | **Rules** | 26 |
@@ -186,6 +186,11 @@ Other notes:
   channel handling.
 - `metadata_file` is a config key (default `test/fixtures/metadata.tsv`);
   upstream takes it from the samplesheet.
+
+**Live-test fixes (tx-ubuntu clean run, verdict #18 — 25/25 rules, exit=0, 64 outputs):**
+- container rules run via the singularity backend (`docker://` URIs, same images); qiime2 points at `quay.io/qiime2/amplicon:2026.1` (the docker-hub qiime2/qiime2 repo does not exist); format_taxonomy runs in `quay.io/nf-core/ubuntu:20.04` (pure sh).
+- **the four qiime2 rules gate on `run_qiime2`** (default false): the amplicon container is ~20GB unpacked and no conda qiime2 exists on common mirrors — a fresh clone completes the DADA2 analysis; enable with ~25GB free disk.
+- DADA2 contract: fixtures carry Illumina-like declining qualities + 1% errors (uniform Q40 gives learnErrors a NULL matrix even with template structure); the R scripts unwrap the conda bioconductor-dada2 detailed-list return (err_out/err_in/trans) for the RDS while the raw return feeds plotErrors/checkConvergence; the denoise shell passes the err RDS at argv 5-6 and the filt fastqs via glob.
 
 ## Links
 

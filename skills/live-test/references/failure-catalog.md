@@ -38,10 +38,12 @@ threshold (e.g. 4-read fixtures).
 *Example*: eager `709111c`.
 
 **Symptom**: DADA2 `Error matrix is NULL`.
-**Root cause**: random-sequence reads — no amplicon template
-structure for learnErrors.
-**Fix**: templates × reads-per-template with PCR-style errors.
-*Example*: ampliseq `generate_fixtures.py`.
+**Root cause**: round 1 — random-sequence reads (no amplicon template
+structure for learnErrors); round 2 — uniform Q40 qualities: the loess
+error-rate fit needs error observations spread across the quality range.
+**Fix**: templates × reads-per-template with PCR-style errors AND
+Illumina-like declining qualities (Q40→Q20) + ~1% errors.
+*Example*: ampliseq `generate_fixtures.py` (`290bce8` templates, `ba337dc` qualities).
 
 **Symptom**: DESeq2 chain dies stepwise: `checkForExperimentalReplicates` (needs >=2 replicates per combination), then `estimateDispersionsFit` (locfit needs hundreds of genes), then all-zero size factors.
 **Root cause**: fixtures with one replicate per condition, a handful of genes, or genes with zero counts everywhere.
