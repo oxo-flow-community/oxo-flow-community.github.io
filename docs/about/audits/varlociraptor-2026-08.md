@@ -51,3 +51,28 @@ output keys superseded.
 The live Tier A run covers the DNA-variants default path fully; the
 full-line gap = fusions (RNA), delly, UMI/primers, scenario matrix,
 and the downstream branch set.
+
+## Live evidence (2026-08-22 — verdict #24, LIVE-PASS)
+
+Full Tier A end-to-end on bioinfo-wsx (64c / 1.4TB, NFS /data): 88-rule
+DAG completed with **exit 0, 0 failed** — `✓ 91 output files verified
+(45.8GB total)` + report snapshot written. Engine v0.13.1 release
+binary; reference data (Ensembl 111 genome/GTF/VEP cache+plugins,
+REVEL, known-variants VCFs, 4.4GB pangenome gbz) relayed to the server
+and pre-placed; every compute rule executed for real including
+pangenome autoindex (45.8GB), freebayes candidate calling, BQSR,
+varlociraptor estimate/call/FDR, VEP + dbNSFP annotation, oncoprint,
+and both datavzrd reports.
+
+Final run: 26 rules executed fresh + 62 checkpoint-verified (rule
+fingerprints and input manifests confirmed unchanged since their last
+successful run), 0 failed. Fix chain of the campaign: 16 commits
+`cd54fcb..71bf729` — fixture window re-selection (repeat-rich →
+uniquely-mapping, MAPQ 60), conda-forge version removals re-pinned
+(vega-lite-cli/datavzrd), vg env + samtools, freebayes 96→48 threads +
+region-list sed repair (delimiters, 3-col BED, empty-region guard),
+oncoprint empty-call guards, yte SimpleNamespace + recursive
+frame-encoded dict rebuild, plus server-side conda cache/zombie
+recovery. New failure classes archived in the live-test failure
+catalog; engine-side notes: none new (resource fast-fail behavior is
+by design — over-capacity requests clamp).
