@@ -502,3 +502,43 @@ the current directory (qualimap 2.2.2-dev: `-outdir .` →
 
 **Lesson — checkpoint command records**: `rule_runs[].command` may be confounded by masking or cross-run checkpoint reuse; it is not a primary bug-triaging artifact — prefer in-run diagnostic echoes.
 *Example*: scrna-seq (samples_list retraction).
+
+## Varlociraptor rounds (2026-08-22, verdict #24 — bioinfo-wsx full Tier A)
+
+**Symptom**: reads map to the genome but at MAPQ 3 (or not at all), so downstream BQSR finds no usable reads (`apply_bqsr` on an empty RecalTable) and callers see garbage.
+**Root cause**: the fixture window was repeat-rich (reads map to a paralog) or N-masked (maps nothing).
+**Fix**: sample a uniquely-mapping window and probe-verify MAPQ 60 on a majority of reads before the campaign (192/200 probe reads at MAPQ 60).
+*Example*: varlociraptor `8afbb85`.
+
+**Symptom**: `PackagesNotFoundError` for a pin that solved fine days earlier.
+**Root cause**: the version was REMOVED from the channel after the pin was written (vega-lite-cli 5.16, datavzrd 2.70.0 both gone).
+**Fix**: re-pin to a version verified to exist on the channel right now, with the channel qualifier (conda-forge::6.4.3 / 2.71.0).
+*Example*: varlociraptor `716054f`, `1b7e0e0`.
+
+**Symptom**: `exit 127: samtools: command not found` in a rule that pipes `vg giraffe | samtools view` under the vg env.
+**Root cause**: upstream assumes a host samtools; the port's env must carry every binary the shell invokes.
+**Fix**: add the piped tool to the env yaml; audit each shell for binary/env mismatches.
+*Example*: varlociraptor `8e3e69d`.
+
+**Symptom**: pool fast-fails `resource budget too small` because upstream hardcodes 96 threads on a 64-core box.
+**Root cause**: over-capacity hardcoded requests.
+**Fix**: `threads = {effective_threads}` with a sensible ceiling (48) — and quote the placeholder in TOML: bare `{effective_threads}` parses as an inline table (parse error).
+*Example*: varlociraptor `e303597`, `b30cb4d`, `fd71598`.
+
+**Symptom**: a sed one-liner dies with `unknown option to s` / `unterminated s` / produces a chrom-prefixed two-column list that freebayes-parallel rejects (no regions → bcftools `Could not read VCF/BCF headers from -`).
+**Root cause**: `:` and `/` delimiters collide with chrom colons and paths; the substitution produced `chrom:start-end` instead of a three-column BED.
+**Fix**: `#` delimiters, map `chrom:start-end` → `chrom start end` (three columns), and guard the empty-region case by emitting a header-only BCF so the pipeline survives fixture-scale inputs.
+*Example*: varlociraptor `246ef51`, `f73c04f`, `f83b046`, `54ec945`.
+
+**Symptom**: oncoprint.py crashes on an empty call set (`ValueError: Must pass non-zero number of levels/codes`).
+**Root cause**: the guard was placed AFTER the labels DataFrame construction, which already crashes set_index on the empty columns.
+**Fix**: check for empty calls immediately after the concat, BEFORE any label construction; emit an empty oncoprint instead.
+*Example*: varlociraptor `7fb9db3`, `ae315bd`, `515c497`.
+
+**Symptom**: yte renders fail with `dict object has no attribute csv` / `SimpleNamespace has no attribute loc`.
+**Root cause**: templates use attribute access (`?input.csv`) and pandas `.loc` on nested dicts — plain JSON dicts don't support either.
+**Fix**: wrap the variables in SimpleNamespace and rebuild frame-encoded dicts recursively at ANY nesting depth.
+*Example*: varlociraptor `9cdb02b`, `71bf729`.
+
+**Lesson — server-side conda corruption**: a corrupted conda env cache + zombie child processes can wedge rules even when the workflow is correct; wipe the env cache and kill zombies (pgid) before re-solving.
+*Example*: varlociraptor (server round).

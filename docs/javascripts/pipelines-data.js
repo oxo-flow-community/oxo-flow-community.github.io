@@ -1447,7 +1447,7 @@ window.OXO_PIPELINES = [
     "name": "oxo-flow-varlociraptor",
     "title": "Small and structural variant calling with Varlociraptor",
     "origin": "port",
-    "rating": "verified",
+    "rating": "live-verified",
     "engine": "snakemake",
     "source": {
       "repo": "snakemake-workflows/dna-seq-varlociraptor",
