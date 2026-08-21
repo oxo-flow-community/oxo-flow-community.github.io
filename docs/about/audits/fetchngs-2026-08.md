@@ -40,3 +40,21 @@ Dead code at tag: untar module (never included), --force_sratools_download
 Compact surface — the ported ENA/fastq-ftp default path leaves the two
 alternate backends + GEO/DDBJ ID expansion as the main P0, all
 free-software.
+
+## Live evidence update (2026-08-22, night campaign)
+
+Full-line fill branch `full-line-fetchngs` (fb1d538, b6):
+- Fixed 3 real bugs on the already-ported M7-M9 paths
+- Added the full sratools chain (NCBI_SETTINGS / prefetch /
+  fasterq-dump) + forced mode + dbGaP passthrough + aspera rule
+- **tx-ubuntu live test PASS**: default FTP path 20/20 rules zero
+  failure (ENA md5 checks green); sratools forced mode 9 succeeded +
+  2 conditionally skipped; skip-mode + rnaseq samplesheet column
+  assertions pass
+- Draft-gated: aspera (port 33001 egress untestable on the box) and
+  dbGaP (needs a real certificate)
+
+Coverage status: pending merge + stamping; the three live-tested paths
+move this repo toward `full-line` once merged (aspera/dbGaP remain
+documented DRAFT constraints).
+
