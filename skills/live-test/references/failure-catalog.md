@@ -542,3 +542,38 @@ the current directory (qualimap 2.2.2-dev: `-outdir .` →
 
 **Lesson — server-side conda corruption**: a corrupted conda env cache + zombie child processes can wedge rules even when the workflow is correct; wipe the env cache and kill zombies (pgid) before re-solving.
 *Example*: varlociraptor (server round).
+
+## Clindet-RNA rounds (2026-08-22, verdict #21-RNA — tx-ubuntu)
+
+**Symptom**: `ln: failed to create symbolic link '...': File exists` on a re-run/resume (link_bam round).
+**Root cause**: the shell uses `ln -s` without `-f`; the checkpointed re-entry re-runs the rule and the link already exists.
+**Fix**: `ln -sf` (idempotent) for every link in re-runnable rules.
+*Example*: clindet-RNA (rna-port fix round).
+
+**Symptom**: lofreq refuses to overwrite an existing output on resume (`Cannot write to ... file exists`-style).
+**Root cause**: lofreq does not overwrite by default.
+**Fix**: `rm -f` the declared output in the shell before invoking.
+*Example*: clindet-RNA (rna-port fix round).
+
+**Symptom**: a rule using `{input[0]}` receives the path in a position that downstream tools misparse.
+**Root cause**: positional array expansion differences between the port's array form and the tool's CLI expectation.
+**Fix**: expand `{input[0]}` explicitly in the intended argument position.
+*Example*: clindet-RNA (rna-port fix round).
+
+**Symptom**: FAI-derived offsets wrong (index tools report corrupt region files).
+**Root cause**: the port computed offsets in characters; FAI offsets are byte offsets.
+**Fix**: derive offsets in bytes from the .fai record semantics.
+*Example*: clindet-RNA (rna-port fix round).
+
+**Symptom**: STAR index reused stale after reference/GTF change — alignment silently uses the old index (or crashes on mismatch).
+**Root cause**: the index path is not an engine-visible input, so checkpoint invalidation cannot see reference changes.
+**Fix**: declare ref/gtf as rule inputs, rebuild the index unconditionally, and serialize pass1-log consumers with an explicit edge.
+*Example*: clindet-RNA (rna-port fix round).
+
+**Symptom**: arriba fusion calling outputs 0 rows on a synthetic fixture despite real chimeric reads flowing through.
+**Root cause**: arriba's biological filters (end-to-end support, mate patterns) reject synthetic fusions — a FIXTURE limit, not a port defect; upstream parameters were kept verbatim.
+**Fix**: document the limit in the fixture generator docstring; assert the chimeric read count upstream of arriba instead of arriba rows.
+*Example*: clindet-RNA (f0fd05c fixture round).
+
+**Lesson — fusion fixtures**: a workable chimeric fixture needs a mini reference DB and a fused region with real breakpoint structure (20kb chrX fusion worked); the tool's own filters decide what survives, so assert on the evidence the tool CONSUMES, not its output rows.
+*Example*: clindet-RNA (arriba round).

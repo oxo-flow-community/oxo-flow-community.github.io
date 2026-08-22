@@ -101,3 +101,33 @@ line but listed in the fidelity table.
   caller selection, seqtype, PoN, setup tier.
 - Fill order: RNA → SV chain → free CNV → WGS absorption → P2 config work
   → setup module → P1 documentation.
+
+## Live evidence — RNA branch (2026-08-22, verdict #21-RNA LIVE-PASS)
+
+26-rule end-to-end exit 0 on tx-ubuntu (4 vCPU/3GB, multi-round resume;
+final run: 26 succeeded, 0 failed). Coverage: fastp_trim, STAR_1_pass/
+arriba_map/mut_map, arriba_fusion (real container uhrigs/arriba:2.4.0
+SIF, STAR produced 97-100 cross-chromosome chimeric reads through the
+full filter chain), link_bam, SplitNCigarReads, mutect2, M2_filter,
+HaplotypeCaller, lofreq, varscan2 (full chain), strela (config+manta+
+filter), freebayes, vardict, all norm_filter.
+
+Fix chain: 12 commits on branch rna-port (6bc051b..f0fd05c) — `ln -sf`
+idempotence, lofreq `rm -f`, `{input[0]}` positional array, FAI offsets
+derived in bytes, STAR index invalidation (ref/gtf declared as inputs +
+unconditional rebuild + pass1-log edge serialization), mini arriba DB,
+20kb chrX fusion fixture set. Known fixture limit (documented in the
+generator docstring, not a port defect): synthetic reads cannot pass
+arriba's biological filters (end-to-end low support etc.) → 0 fusion
+rows; upstream parameters kept verbatim.
+
+Engine notes: `.oxo-failed` move-aside correctly triggered on
+SplitNCigarReads failure (#118); keep-going exit code is 0 even with
+required failures — flagged for an engine fix (undocumented contract).
+
+## Coverage update
+
+RNA branch: **live-verified**. Remaining P0: SV chain (~20), free CNV
+(~15), WGS extras (~8), conpair/SM_check; P1 ASCAT/sentieon; P2
+unpaired/selection/seqtype/PoN/setup tier. Coverage stays
+`default-path` until the SV+CNV+WGS fills land.
