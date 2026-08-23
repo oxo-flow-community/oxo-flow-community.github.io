@@ -661,6 +661,13 @@ the current directory (qualimap 2.2.2-dev: `-outdir .` →
 **Fix**: before re-running an already-live repo, force a real run — `rm -rf .oxo-flow results` (or `--rerun` where semantically honest). ALWAYS check the succeeded/skipped split before calling a round a live test.
 *Example*: scrna-seq first launch (0/32 no-op → forced 22/0/10), tx-ubuntu (2026-08-23). Applies to every re-verification round in this campaign.
 
+## 2026-08-23 9-mini queue (legacy C source vs modern GCC)
+
+**Symptom**: a vendored 2018-era C tool fails to compile in its build script — implicit declarations (strcmp/close/tdestroy/...) and K&R-style pointers are hard errors under GCC≥14.
+**Root cause**: C compilers tightened implicit-declaration rules over the years; code that built in 2018 does not build verbatim on GCC 14.
+**Fix**: `-D_GNU_SOURCE`, force-include the standard headers, and downgrade only the specific warnings that gate the build (-Wno-error=...) — do not blanket-disable -Werror.
+*Example*: mag's ale build (2554bde), bioinfo-wsx (2026-08-23).
+
 ## 2026-08-23 9-mini queue (China-network DB pre-staging)
 
 **Symptom**: tool-run DB downloads crawl (EBI pfam 293MB at 2MB/min) or die behind the campaign proxy (curl 18 / SSL 77), blocking antismash 7 (10 DB components, 1.76GB total), gtdb metadata (193MB), and bioconductor post-link fetches.
