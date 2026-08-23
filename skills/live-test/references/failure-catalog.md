@@ -613,15 +613,15 @@ the current directory (qualimap 2.2.2-dev: `-outdir .` →
 **Lesson — sc-branch fixture budget**: pair-level plots on a sc demo pair were gated behind `plot_enabled` and the demo pair dropped from the mini fixture — mini fixtures must stay runnable under campaign disk budget while the full fixture keeps ≥2 groups for the real run.
 *Example*: genome-tracks full-line-sc (fdfeec6 + b696baa/dede881).
 
-## 2026-08-23 auto-sra mini track (STAR pathology)
+## 2026-08-23 auto-sra mini track (STAR pathology, corrected diagnosis)
 
-**Symptom**: STAR-avx2 (2.7.11b, conda SIMD wrapper family) hangs at startup — threads created ("Created thread # 19") but never reaches "loading genome"; ~15 cores busy-wait for hours with zero file output. Non-deterministic: an identical earlier run on the same box completed alignment at 04:51.
-**Root cause**: host-specific startup race in the avx2 build (wrapper selects by /proc/cpuinfo). Same index + same params with STAR-plain: genome load → GTF → mapping in ~1 second.
-**Fix**: box-local surgery — replace the env's STAR wrapper with `exec STAR-plain` (backup kept). Do NOT change the workflow repo: SIMD auto-selection stays correct for other hosts.
+**Symptom**: STAR hangs mid-alignment — CPU spins for hours with no output; gdb shows an infinite recursion in `stitchWindowAligns`.
+**Root cause (final)**: chr21-only reference subset + real human RNA-seq reads — cross-chromosome mates land unmapped and `quantMode GeneCounts` transcript stitching degenerates into unbounded recursion. Version-independent: 2.7.10a and 2.7.11b (avx2 AND plain builds) hang identically. An earlier "avx2 startup race" hypothesis was disproved by gdb + plain-build reproduction; full-genome runs do not exhibit the pathology (the nf-core ecosystem uses 2.7.11b at scale).
+**Fix**: build the full-genome index (GRCh38.111 fasta) and restrict counting to the chr21 annotation — reference completeness pathology, not a tool or workflow defect. Keep the repo's STAR pin.
 *Example*: auto-sra mini track, bioinfo-wsx (2026-08-23).
 
-**Lesson — hang detection**: a rule that writes nothing for hours while CPUs spin is a tool startup hang, not a slow mapping job. Check the tool's own log phases (STAR: "loading genome" marker) before touching the workflow; validate with the plain build before calling it a port defect.
+**Lesson — hang detection**: a rule that writes nothing for hours while CPUs spin needs a stack sample (gdb) before blaming the build variant; the earlier conclusion was wrong and had to be corrected. Validate "tool bug" hypotheses against a second build AND a second version.
 *Example*: auto-sra mini track (2026-08-23).
 
-**Lesson — reference provenance honesty**: a "GRCh38" reference that is actually a chr21-only subset existed on the box since old-index days — mini verdicts must record the actual reference content, not the label.
+**Lesson — reference provenance honesty**: a "GRCh38" reference that is actually a chr21-only subset existed on the box since old-index days — mini verdicts must record the actual reference content, not the label. Subset references can also create tool pathologies (this STAR hang) that look like port defects.
 *Example*: auto-sra mini track (2026-08-23).
