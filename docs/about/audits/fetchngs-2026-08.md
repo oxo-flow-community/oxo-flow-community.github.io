@@ -58,3 +58,17 @@ Coverage status: pending merge + stamping; the three live-tested paths
 move this repo toward `full-line` once merged (aspera/dbGaP remain
 documented DRAFT constraints).
 
+## Re-verification (2026-08-23, 9-mini queue 5/9)
+
+Engine: latest main (post-v0.14.1) · Box: bioinfo-wsx (docker
+python:3.9 + wget:1.20.1) · Mode: real CLI run, not dry-run.
+
+**7 succeeded, 9 skipped, 0 failed.** Three REAL ids
+(SRR9984183/DRR028935/ERR1160846): ENA runinfo fetch → FTP fastq
+download + md5 verify → 3 samplesheets → combine_mappings →
+multiqc config. Two real repo fixes landed in this round and were
+verified live: the id.txt concurrency race (0a118df) and the
+md5-first idempotence guard (9a9f09f — ERR rule skipped in 0.3s on a
+staged-file md5 hit, avoiding the broken FTP path entirely). Box-side:
+fastq pre-staged via Mac relay (box FTP is proxy-corrupted).
+
