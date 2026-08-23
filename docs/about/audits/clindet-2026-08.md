@@ -131,3 +131,19 @@ RNA branch: **live-verified**. Remaining P0: SV chain (~20), free CNV
 (~15), WGS extras (~8), conpair/SM_check; P1 ASCAT/sentieon; P2
 unpaired/selection/seqtype/PoN/setup tier. Coverage stays
 `default-path` until the SV+CNV+WGS fills land.
+
+## Re-verification (2026-08-23, 9-mini queue 9/9 — campaign closure)
+
+Engine: latest main (post-v0.14.1) · Box: tx-ubuntu (singularity) ·
+Mode: real CLI run, not dry-run (checkpoint cleared, forced real
+execution).
+
+**26 rules really executed / 0 failed, exit 0.** Coverage (real):
+fastp → STAR 1_pass/arriba_map/mut_map → **arriba_fusion (planted
+synthetic BSJ fusion reads detected)** → link_bam → SplitNCigarReads
+→ mutect2 → M2_filter → unpaired (strelka/manta/vardict/freebayes) →
+**lofreq call + norm_filter** → varscan2 → norm_filter. Box-side
+only: apptainer depot.galaxyproject.org TLS timeout + /etc/singularity
+migration residue → sudo cleanup + Mac relay of the freebayes/lofreq
+sifs into the apptainer cache hash paths. Engine bug candidate
+recorded (singularity URI→IMG naming, see failure catalog).

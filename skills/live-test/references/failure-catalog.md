@@ -671,6 +671,9 @@ the current directory (qualimap 2.2.2-dev: `-outdir .` →
 **Fix (repo)**: mirror fallback (ghfast.top first, original as fallback) — same pattern as mag's build_ale.sh (6fda195).
 *Example*: varlociraptor delly exclusion regions, bioinfo-wsx (2026-08-23).
 
+**Engine defect candidate — singularity URI→IMG naming**: %3A-encoded colons in a container URI are not decoded before the `s#:#_#g` IMG-name substitution, so the computed name never matches the cached image and the backend always re-pulls. Bare-colon URIs work. Tracked as engine issue #162; box workaround = pre-place the sif at the expected cache hash path.
+*Example*: clindet lofreq sif, tx-ubuntu (2026-08-23).
+
 **Lesson — live-query evidence**: biomaRt gene2symbol ran against live Ensembl (3 steps, 48-66s each) — prefer recording live-network evidence over mocking when the tool's core value is annotation freshness.
 *Example*: rnaseq-star-deseq2 (2026-08-23).
 
