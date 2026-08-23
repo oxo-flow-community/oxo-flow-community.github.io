@@ -69,3 +69,24 @@ Checkpoint no-op trap (force real runs), honest coverage labeling
 DB pre-staging pattern (sha256-accepted), conda post-link proxy
 pathologies (two endgames), docker storage exhaustion, env-cache family
 (three dimensions).
+
+## Resource evidence (honest: peak RSS not recorded — the engine does
+not emit per-rule peak RSS; wall-clock is run start→end)
+
+tx-ubuntu (4 vCPU / 3.7GB, clamp constant): nanoseq 13:55, circrna
+3:24, chipseq 31:45 (docker --memory 3723M + 1881 clamps), methylseq
+16:00 (bismark 12→4 threads), rnaseq-star-deseq2 3:41 (+biomart env
+~1.5h proxy battle), eager 0:56, scrna-seq 11:14 (cellranger 72GB
+declared → clamped, runs anyway), sarek ~40min, rnaseq ~1.1h,
+ampliseq 2:36 (+dada2 env ~2h). bioinfo-wsx (64c/1.4TB, ZERO clamps):
+bgcflow ~1.4h (DB staging dominated), mag ~2h (26 envs ~50min),
+tcasia ~30min (rmats 3s + spladder 339s parallel), enrichment ~1.8h
+(env battle), varlociraptor ~15min, auto-sra mini21 (STAR ~6min/sample,
+full-index build 48 threads ~32min — the heaviest scheduling point).
+
+Unified observations: (1) tx-ubuntu clamp + "run alone" serialization
+is CORRECT degradation, cost = wall-clock; (2) bioinfo-wsx zero clamps
+but network is the bottleneck — env/DB downloads are 40-60% of total
+wall time; (3) conservative -j (2 / 4-8) was already throughput-
+saturated by env+network constraints. Engine candidate (post-campaign):
+per-rule peak RSS in the run report.
