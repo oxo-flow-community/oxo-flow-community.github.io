@@ -49,3 +49,24 @@ ENSG filter), R 4.3.2 + DESeq2/data.table/ashr.
 Small surface — 2 schema modes + single/paired branches. The ported
 paired-SRA path leaves ENCODE mode + single-end + the batch driver as
 the full-line targets.
+
+## Re-verification (2026-08-23, mini track — campaign closure, 24/24)
+
+Engine: latest main (post-v0.14.1) · Box: bioinfo-wsx · Mode: real CLI
+run, not dry-run · **exit 0, 0 failed** (mini21).
+
+4 real RNA-seq samples 2v2 (treat: GSM4156339+341, control:
+GSM4156351+353, 1M reads each — genuine SRA data, downsampled). Full
+chain: get_sra → sra_dump (`.dumped` marker skips re-download) →
+merge×4 → data_clean×4 → STAR 2.7.10a alignment against the full
+GRCh38 index ×4 → build_bam_index×4 → bamtobw×4 → combine_count →
+DGE_analysis (DESeq2, 14.2s) → D21122.Rds. 23 skipped = checkpoint
+reuse across the fix rounds (engine resume re-verified), 8 succeeded
+= the tail re-run after the kill.
+
+**Honest coverage note**: reference = full-genome GRCh38 alignment
+with counting limited to the chr21 annotation subset (the box's
+"GRCh38" reference was historically a chr21-only subset — see the
+failure catalog entry). No repo changes: the STAR 2.7.11b pin stands
+(the earlier hang was a subset-reference pathology, not a version
+defect; see failure catalog).

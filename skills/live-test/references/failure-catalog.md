@@ -635,3 +635,14 @@ the current directory (qualimap 2.2.2-dev: `-outdir .` →
 
 **Lesson — live-query evidence**: biomaRt gene2symbol ran against live Ensembl (3 steps, 48-66s each) — prefer recording live-network evidence over mocking when the tool's core value is annotation freshness.
 *Example*: rnaseq-star-deseq2 (2026-08-23).
+
+## 2026-08-23 auto-sra mini track closure (7 classes, 24/24 收官)
+
+1. **STAR stitchWindowAligns recursion** — chr21-subset reference + cross-chromosome mates; fixed by full-genome index (see entry above).
+2. **conda star 2.7.10a ships a single binary** — no SIMD wrapper family; `star` resolves directly, unlike 2.7.11b's avx2/plain selection.
+3. **conda hardlink trap** — `cat > env/bin/<tool>` writes through conda's hardlinks and pollutes the SHARED pkgs cache; patch envs via a copy, never a redirect into bin/.
+4. **DESeq2 needs ≥2 replicates per condition** — a 1v1 fixture fails `checkForExperimentalReplicates`; mini fixtures for DGE workflows must be 2v2.
+5. **.sra copy mtime triggers dump fingerprint invalidation** — copying staged .sra files refreshes mtime → the input manifest (issue #72) invalidates the dump rule → full re-dump; keep .dumped markers or copy with `cp -p`.
+6. **fasterq-dump 3.4.1 segfaults** — pin 3.1.1 with an absolute path in the env.
+7. **Reference chromosome naming** — Ensembl `1` vs `chr1` mismatch breaks annotation joins; align fasta and GTF naming before building indexes.
+*Example*: auto-sra mini track rounds 1-21, bioinfo-wsx (2026-08-23).
