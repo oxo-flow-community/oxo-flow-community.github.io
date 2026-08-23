@@ -666,6 +666,11 @@ the current directory (qualimap 2.2.2-dev: `-outdir .` →
 **Lesson — patch the pkgs cache, not the env dir**: post-link dataURLs rewrites made INSIDE an env directory get wiped by the next env rebuild; the durable patch point is the conda pkgs cache (e.g. dataURLs.json rewritten to file://) so re-extraction reads the patched copy.
 *Example*: enrichment region env (7 bioconda data packages), bioinfo-wsx (2026-08-23).
 
+**Symptom**: a rule fails on a raw.githubusercontent.com fetch — the domain is unreachable from the box's network.
+**Root cause**: direct GitHub-raw URLs have no mirror fallback in the rule.
+**Fix (repo)**: mirror fallback (ghfast.top first, original as fallback) — same pattern as mag's build_ale.sh (6fda195).
+*Example*: varlociraptor delly exclusion regions, bioinfo-wsx (2026-08-23).
+
 **Lesson — live-query evidence**: biomaRt gene2symbol ran against live Ensembl (3 steps, 48-66s each) — prefer recording live-network evidence over mocking when the tool's core value is annotation freshness.
 *Example*: rnaseq-star-deseq2 (2026-08-23).
 

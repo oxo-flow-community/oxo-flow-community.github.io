@@ -76,3 +76,16 @@ frame-encoded dict rebuild, plus server-side conda cache/zombie
 recovery. New failure classes archived in the live-test failure
 catalog; engine-side notes: none new (resource fast-fail behavior is
 by design — over-capacity requests clamp).
+
+## Re-verification (2026-08-23, 9-mini queue — campaign closure)
+
+Engine: latest main (post-v0.14.1) · Box: bioinfo-wsx · Mode: real CLI
+run, not dry-run (checkpoint cleared, forced real execution).
+
+**First run 17 succeeded + resume 38 succeeded / 50 skipped / 0
+failed** — full chain green. Coverage (real): preprocessing → vg
+giraffe pangenome alignment → variant calling → region merge/expand →
+multiqc. The single failure was the delly exclusion-region download
+(raw.githubusercontent.com unreachable) — **real repo fix pushed
+(6fda195)**: ghfast.top mirror fallback (same pattern as mag's
+build_ale.sh), plus box-side Mac relay pre-staging.
