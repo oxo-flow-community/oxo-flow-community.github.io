@@ -648,6 +648,11 @@ the current directory (qualimap 2.2.2-dev: `-outdir .` →
 **Fix**: md5-check-first idempotence guard before resuming (9a9f09f).
 *Example*: fetchngs, bioinfo-wsx (2026-08-23).
 
+**Symptom**: a rule fails with an env-version incompatibility (`rich.panel` AttributeError from multiqc 1.29 + rich 15) even though the repo's env yaml is correct.
+**Root cause**: a pre-built shared env predates a repo pin update — the cache has the OLD version and the engine trusts it (see also the env-cache vanished-entry class).
+**Fix**: verify pre-built env versions against the repo pin before re-runs (`conda install <pkg>=<pinned>` on the box); repo change NOT needed.
+*Example*: sarek multiqc env, tx-ubuntu (2026-08-23).
+
 **Lesson — live-query evidence**: biomaRt gene2symbol ran against live Ensembl (3 steps, 48-66s each) — prefer recording live-network evidence over mocking when the tool's core value is annotation freshness.
 *Example*: rnaseq-star-deseq2 (2026-08-23).
 
