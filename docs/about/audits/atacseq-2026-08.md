@@ -42,3 +42,13 @@ External deps: iGenomes S3, raw.githubusercontent test data, Biocontainers.
 
 Light surface — shared backbone with 4 swappable aligners and one
 controls branch as the only structural P0s; everything else is toggles.
+
+## Re-verification (2026-08-23, batch 3)
+
+Engine: latest main (post-v0.14.1) · Box: tx-ubuntu · Mode: real CLI
+run, not dry-run.
+
+**29/29 rules succeeded, exit 0, one round, zero failures** at the
+latest commit. No fixes needed and no new failure classes — the
+default path (bwa aligner arm) runs clean against the reference data
+with no intervention.
