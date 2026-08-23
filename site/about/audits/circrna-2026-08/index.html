@@ -10,7 +10,7 @@
       
       
       
-        <link rel="canonical" href="https://oxo-flow-community.github.io/about/audits/atacseq-2026-08/">
+        <link rel="canonical" href="https://oxo-flow-community.github.io/about/audits/circrna-2026-08/">
       
       
       
@@ -23,7 +23,7 @@
     
     
       
-        <title>atacseq completeness audit (2026-08-21) - oxo-flow-community</title>
+        <title>circrna live audit (2026-08-23) - oxo-flow-community</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#atacseq-completeness-audit-2026-08-21" class="md-skip">
+        <a href="#circrna-live-audit-2026-08-23" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              atacseq completeness audit (2026-08-21)
+              circrna live audit (2026-08-23)
             
           </span>
         </div>
@@ -488,46 +488,41 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#mode-matrix-upstream-param-driven-single-workflow" class="md-nav__link">
+  <a href="#live-re-verification-2026-08-23" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Mode matrix (upstream — param-driven, single workflow)
+        Live re-verification (2026-08-23)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Live re-verification (2026-08-23)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#honest-coverage-note" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Honest coverage note
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#gap-tiers-vs-the-port" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#usability-note" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Gap tiers vs the port
+        Usability note
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#verdict" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Verdict
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#re-verification-2026-08-23-batch-3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Re-verification (2026-08-23, batch 3)
-      
-    </span>
-  </a>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -551,82 +546,43 @@
   
 
 
-<h1 id="atacseq-completeness-audit-2026-08-21">atacseq completeness audit (2026-08-21)</h1>
-<p>Upstream: nf-core/atacseq @ 2.1.2 · Port: <code>oxo-flow-atacseq</code> (live-verified).</p>
-<h2 id="mode-matrix-upstream-param-driven-single-workflow">Mode matrix (upstream — param-driven, single workflow)</h2>
-<table>
-<thead>
-<tr>
-<th>axis</th>
-<th>options</th>
-<th>default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>aligner</td>
-<td>bwa / bowtie2 / chromap / star</td>
-<td>bwa</td>
-</tr>
-<tr>
-<td>layout</td>
-<td>paired / single-end (samplesheet per-sample)</td>
-<td>—</td>
-</tr>
-<tr>
-<td>controls</td>
-<td><code>--with_control</code> + control columns</td>
-<td>off</td>
-</tr>
-<tr>
-<td>replicate merging</td>
-<td>merged-replicate arm (full second chain: markdup/bigwig/peaks/consensus)</td>
-<td>ON</td>
-</tr>
-<tr>
-<td>consensus peaks</td>
-<td><code>--skip_consensus_peaks</code></td>
-<td>ON</td>
-</tr>
-<tr>
-<td>peak mode</td>
-<td>broad (default) / <code>--narrow_peak</code></td>
-<td>broad</td>
-</tr>
-<tr>
-<td>QC toggles</td>
-<td>13 skip flags (picard/preseq/plot_profile/plot_fingerprint/ataqv/igv/peak_qc/peak_annotation/deseq2_qc/multiqc/fastqc/trimming)</td>
-<td>mixed</td>
-</tr>
-</tbody>
-</table>
-<p>Peak caller: MACS2 only (no Genrich at this tag); annotation HOMER;
-QC ataqv/deepTools/Preseq/Picard.</p>
-<h2 id="gap-tiers-vs-the-port">Gap tiers vs the port</h2>
-<p><strong>P0</strong>: 3 non-default aligners (bowtie2, chromap, star — each index +
-align arm only, downstream shared; star pins 2.6.1d index format);
-controls mode (MACS2 control pairing + samplesheet columns); merged-
-replicate arm (full second chain).</p>
-<p><strong>P1</strong>: none — all tools OSS (ataqv MIT, chromap MIT, MACS2 BSD;
-STAR/bowtie2 GPLv3 compliance note only).</p>
-<p><strong>P2</strong>: the whole QC-toggle matrix, narrow/broad + cutoff, macs_fdr/
-pvalue, min_reps_consensus, save_macs_pileup, keep_dups/keep_multi_map/
-keep_mito, fragment_size, seq_center, min_trimmed_reads, deseq2_vst,
-save_* publish gates, blacklist handling, iGenomes genomes.</p>
-<p>Tag-level gotchas (do not port): --skip_qc only gates FastQC (schema
-overclaims); macs_fdr/pvalue ignored on the replicate arm; --read_length
-enum-restricted; samples silently dropped below min_trimmed_reads.</p>
-<p>External deps: iGenomes S3, raw.githubusercontent test data, Biocontainers.</p>
-<h2 id="verdict">Verdict</h2>
-<p>Light surface — shared backbone with 4 swappable aligners and one
-controls branch as the only structural P0s; everything else is toggles.</p>
-<h2 id="re-verification-2026-08-23-batch-3">Re-verification (2026-08-23, batch 3)</h2>
+<h1 id="circrna-live-audit-2026-08-23">circrna live audit (2026-08-23)</h1>
+<p>Original workflow (not an upstream port) · Repo: <code>oxo-flow-circrna</code>
+(Traitome org, entry file <code>circrna.oxoflow</code>) · Rating:
+live-verified (data/pipelines.json).</p>
+<p>Four independent circRNA callers (CIRIquant, CIRCexplorer2, find_circ,
+circRNA_finder) + fastp QC + ensemble aggregation (≥2 callers agree).
+Reference indexes (bowtie2/STAR/bwa/hisat2) and conda envs build
+automatically on first run; samples auto-discovered from <code>raw/</code>.</p>
+<h2 id="live-re-verification-2026-08-23">Live re-verification (2026-08-23)</h2>
 <p>Engine: latest main (post-v0.14.1) · Box: tx-ubuntu · Mode: real CLI
-run, not dry-run.</p>
-<p><strong>29/29 rules succeeded, exit 0, one round, zero failures</strong> at the
-latest commit. No fixes needed and no new failure classes — the
-default path (bwa aligner arm) runs clean against the reference data
-with no intervention.</p>
+run, not dry-run · <code>-j 2 --keep-going</code> · <strong>exit 0, one round, zero
+fixes</strong>.</p>
+<ul>
+<li>4 reference indexes auto-built (1.2kb synthetic genome, seconds)</li>
+<li>9 rules all passed: fastp → 4 callers → multiqc → aggregate →
+  aggregate_dataset → report; 12 output files verified</li>
+<li><strong>Real signal</strong>: find_circ detected the planted BSJ
+  <code>chr1:520-719 + 20 reads circ_000001</code> — exactly matching the
+  fixture's designed e3→e2 back-splice position</li>
+<li>CIRIquant ran for real: 19 candidate splice-signal reads →
+  second-scan PEM 0 → 0 circRNA (below the statistical threshold of
+  the tiny fixture)</li>
+<li>circRNA_finder produced real STAR Chimeric.out.junction /
+  SJ.out.tab outputs; no candidates passed its filters</li>
+</ul>
+<h3 id="honest-coverage-note">Honest coverage note</h3>
+<p>All 4 callers executed for real. 1/4 detected the planted BSJ; 3/4
+reported 0 circRNAs because the mini fixture (200 read pairs, 1kb
+genome) sits below their detection thresholds — a statistical limit
+of the fixture, not a tool or port defect. The report rule's guard
+echo (<code>WARNING not created</code>) is rule-internal logic; exit 0 is
+correct.</p>
+<h3 id="usability-note">Usability note</h3>
+<p>Entry file is <code>circrna.oxoflow</code>, not the <code>main.oxoflow</code> convention —
+auto-discovery still finds it (alphabetically first <code>*.oxoflow</code>), but
+renaming to <code>main.oxoflow</code> would align with the other community
+repos. Pending owner decision.</p>
 
 
 

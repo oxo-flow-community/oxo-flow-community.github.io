@@ -434,6 +434,33 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -487,6 +514,17 @@
     <span class="md-ellipsis">
       
         Verdict
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#re-verification-2026-08-23-9-mini-queue-69" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Re-verification (2026-08-23, 9-mini queue 6/9)
       
     </span>
   </a>
@@ -578,6 +616,13 @@ annotation release.</p>
 <p>The smallest upstream of the batch — two chained workflows, all four
 AS callers always-on. Main audit question is scope completeness against
 the 4-caller matrix + the MAJIQ license handling decision.</p>
+<h2 id="re-verification-2026-08-23-9-mini-queue-69">Re-verification (2026-08-23, 9-mini queue 6/9)</h2>
+<p>Engine: latest main (post-v0.14.1) · Box: bioinfo-wsx · Mode: real CLI
+run, not dry-run · <code>-j 4 --keep-going</code>.</p>
+<p><strong>24 succeeded, 10 skipped, 0 failed</strong> — real execution. Coverage
+chain: fastp → STAR alignment → <strong>rmats_run (3.0s) → spladder_run
+(339.5s) → MAJIQ/voila</strong> → AS result stats. All 10 skips are
+condition gates + voila_tsv gating.</p>
 
 
 

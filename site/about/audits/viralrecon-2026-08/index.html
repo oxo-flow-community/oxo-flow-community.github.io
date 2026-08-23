@@ -434,6 +434,33 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -487,6 +514,17 @@
     <span class="md-ellipsis">
       
         Verdict
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#re-verification-2026-08-23-batch-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Re-verification (2026-08-23, batch 3)
       
     </span>
   </a>
@@ -563,6 +601,13 @@ conf file — errors at startup.</p>
 <h2 id="verdict">Verdict</h2>
 <p>Two-platform surface; the ported illumina-amplicon default leaves the
 nanopore platform and the bcftools caller chains as the main P0.</p>
+<h2 id="re-verification-2026-08-23-batch-3">Re-verification (2026-08-23, batch 3)</h2>
+<p>Engine: latest main (post-v0.14.1) · Box: tx-ubuntu · Mode: real CLI
+run, not dry-run.</p>
+<p><strong>7+76 rules exit 0</strong> (prep + main chain), zero failures at the latest
+commit. The 27-env build (pangolin/nextclade/kraken2 heavy deps) was
+the slow part (~2h); the run itself passed in one round with no fixes
+needed.</p>
 
 
 

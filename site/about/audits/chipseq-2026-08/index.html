@@ -434,6 +434,33 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -487,6 +514,17 @@
     <span class="md-ellipsis">
       
         Verdict
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#re-verification-2026-08-23-light-group" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Re-verification (2026-08-23, light group)
       
     </span>
   </a>
@@ -576,6 +614,16 @@ fetch (warning-only offline), test data HTTPS.</p>
 <p>Likely the lightest audit of the batch — default bwa+broad path ported,
 the gap surface is almost entirely P2 toggles + 3 P0 aligners sharing the
 downstream chain.</p>
+<h2 id="re-verification-2026-08-23-light-group">Re-verification (2026-08-23, light group)</h2>
+<p>Engine: latest main (post-v0.14.1) · Box: tx-ubuntu (docker rules) ·
+Mode: real CLI run, not dry-run · <code>-j 2 --keep-going</code>.</p>
+<p><strong>143 succeeded, 11 skipped, 0 failed, exit 0</strong>, one round, zero
+repo fixes. Coverage chain: bwa → markdup → blacklist filter (correct
+<code>-U</code> semantics — the workflow itself documents the earlier <code>-L</code>
+inversion fix) → deeptools QC → macs3 callpeak (S1 treatment group)
+→ FRiP → homer annotation → multiqc. All 11 skips are intentional
+semantics: C1 control sample has no peaks called (optional inputs
+missing) + deseq2_qc <code>when</code> gate false.</p>
 
 
 

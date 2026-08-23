@@ -434,6 +434,33 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -487,6 +514,17 @@
     <span class="md-ellipsis">
       
         Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#re-verification-2026-08-23-9-mini-queue-39" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Re-verification (2026-08-23, 9-mini queue 3/9)
       
     </span>
   </a>
@@ -627,6 +665,16 @@ not cellrangerarc), MULTIQC.</p>
 <li>External deps: iGenomes AWS S3 refs, Seqera Wave/community containers
   (mtx_to_h5ad/anndatar_convert/qcatch) — registry dependency, not a gate.</li>
 </ul>
+<h2 id="re-verification-2026-08-23-9-mini-queue-39">Re-verification (2026-08-23, 9-mini queue 3/9)</h2>
+<p>Engine: latest main (post-v0.14.1) · Box: tx-ubuntu (singularity) ·
+Mode: real CLI run, not dry-run · <code>-j 2 --keep-going</code>.</p>
+<p><strong>22 succeeded, 10 skipped, 0 failed, exit 0.</strong> Important: the first
+launch was a 0/32 pure checkpoint no-op (Aug-19 checkpoint all fresh)
+— NOT a real test. The run was forced (<code>rm -rf .oxo-flow results</code>) and
+then truly executed 22 rules: fastqc → cellranger mkref (reused) →
+<strong>cellranger_count S1+S2 (real runs)</strong> → h5ad conversion → anndatar
+filter → cellbender → multiqc. All 10 skips are reference-build reuse
++ condition gates.</p>
 
 
 

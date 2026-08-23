@@ -434,6 +434,33 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -487,6 +514,28 @@
     <span class="md-ellipsis">
       
         Verdict
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#live-evidence-update-2026-08-22-night-campaign" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Live evidence update (2026-08-22, night campaign)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#re-verification-2026-08-23-9-mini-queue-59" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Re-verification (2026-08-23, 9-mini queue 5/9)
       
     </span>
   </a>
@@ -570,6 +619,31 @@ wget -t 5), publish modes.</p>
 <p>Compact surface — the ported ENA/fastq-ftp default path leaves the two
 alternate backends + GEO/DDBJ ID expansion as the main P0, all
 free-software.</p>
+<h2 id="live-evidence-update-2026-08-22-night-campaign">Live evidence update (2026-08-22, night campaign)</h2>
+<p>Full-line fill branch <code>full-line-fetchngs</code> (fb1d538, b6):
+- Fixed 3 real bugs on the already-ported M7-M9 paths
+- Added the full sratools chain (NCBI_SETTINGS / prefetch /
+  fasterq-dump) + forced mode + dbGaP passthrough + aspera rule
+- <strong>tx-ubuntu live test PASS</strong>: default FTP path 20/20 rules zero
+  failure (ENA md5 checks green); sratools forced mode 9 succeeded +
+  2 conditionally skipped; skip-mode + rnaseq samplesheet column
+  assertions pass
+- Draft-gated: aspera (port 33001 egress untestable on the box) and
+  dbGaP (needs a real certificate)</p>
+<p>Coverage status: pending merge + stamping; the three live-tested paths
+move this repo toward <code>full-line</code> once merged (aspera/dbGaP remain
+documented DRAFT constraints).</p>
+<h2 id="re-verification-2026-08-23-9-mini-queue-59">Re-verification (2026-08-23, 9-mini queue 5/9)</h2>
+<p>Engine: latest main (post-v0.14.1) · Box: bioinfo-wsx (docker
+python:3.9 + wget:1.20.1) · Mode: real CLI run, not dry-run.</p>
+<p><strong>7 succeeded, 9 skipped, 0 failed.</strong> Three REAL ids
+(SRR9984183/DRR028935/ERR1160846): ENA runinfo fetch → FTP fastq
+download + md5 verify → 3 samplesheets → combine_mappings →
+multiqc config. Two real repo fixes landed in this round and were
+verified live: the id.txt concurrency race (0a118df) and the
+md5-first idempotence guard (9a9f09f — ERR rule skipped in 0.3s on a
+staged-file md5 hit, avoiding the broken FTP path entirely). Box-side:
+fastq pre-staged via Mac relay (box FTP is proxy-corrupted).</p>
 
 
 

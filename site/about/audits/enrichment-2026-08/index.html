@@ -434,6 +434,33 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -487,6 +514,17 @@
     <span class="md-ellipsis">
       
         Verdict
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#re-verification-2026-08-23-9-mini-queue-79" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Re-verification (2026-08-23, 9-mini queue 7/9)
       
     </span>
   </a>
@@ -590,6 +628,21 @@ soft-fails; genome key unvalidated.</p>
 <p>Mid-size: 6 tools × 3 input types. Port scope check = which tool
 branches exist in the port (metadata scope 38 rules after
 normalization suggests partial tool coverage).</p>
+<h2 id="re-verification-2026-08-23-9-mini-queue-79">Re-verification (2026-08-23, 9-mini queue 7/9)</h2>
+<p>Engine: latest main (post-v0.14.1) · Box: bioinfo-wsx · Mode: real CLI
+run, not dry-run · <code>-j 4 --keep-going</code>.</p>
+<p><strong>First run 43/12/2 + resume 6/51/0 — full chain green.</strong> Coverage
+(real): prepare_databases (Azimuth + Reactome real downloads) →
+GSEApy preranked ×2 → <strong>GREAT (region_gene_association + Reactome
+Bcell/Ery + ATAC aggregate)</strong> → <strong>LOLA (Bcell/Ery + plot +
+visualize, Fisher scores computed)</strong> → summary.</p>
+<p><strong>Real repo fix (c7f194c)</strong>: the LOLA fixture index lacked the
+<code>filename</code> header — LOLA ≥1.22's loadRegionDB evaluates that column
+by name and errored with "object 'filename' not found". Adding the
+header row fixed it. Box-side only: the region env's 7 bioconda data
+packages post-link downloads were proxy-truncated; solved by Mac
+relay + rewriting the pkgs-cache dataURLs.json to <code>file://</code> (patch
+the pkgs cache, not the env dir — rebuilds wipe env-dir patches).</p>
 
 
 

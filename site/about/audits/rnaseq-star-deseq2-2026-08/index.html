@@ -434,6 +434,33 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -487,6 +514,17 @@
     <span class="md-ellipsis">
       
         Verdict
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#re-verification-2026-08-23-light-group" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Re-verification (2026-08-23, light group)
       
     </span>
   </a>
@@ -580,6 +618,17 @@ mirrors, snakemake wrappers fetched at runtime, bwa_index mem 369GB
 leaves SRA/SE sources + biomaRt mapping + expression contrasts as the
 main P0. Port scope (24 rules after normalization) matches the upstream
 rule count closely — the gap is in the branch axes, not the rule list.</p>
+<h2 id="re-verification-2026-08-23-light-group">Re-verification (2026-08-23, light group)</h2>
+<p>Engine: latest main (post-v0.14.1) · Box: tx-ubuntu · Mode: real CLI
+run, not dry-run · <code>-j 2 --keep-going</code>.</p>
+<p><strong>56 succeeded, 48 skipped, 0 failed, exit 0</strong>, one round, zero repo
+fixes. Coverage chain (all real execution): local reference override
+path (the repo's <code>genome_fasta</code>/<code>annotation_gtf</code> config keys, skipping
+the Ensembl download) → fastp → STAR align + GeneCounts → RSeQC →
+count matrix → DESeq2 init/contrast → <strong>biomaRt gene2symbol live
+Ensembl queries, all three steps passed (65.7s / 48.1s / 57.3s)</strong> →
+multiqc. All 48 skips are checkpoint reuse from the earlier round plus
+condition gates — no unexpected skips.</p>
 
 
 

@@ -10,7 +10,7 @@
       
       
       
-        <link rel="canonical" href="https://oxo-flow-community.github.io/about/audits/atacseq-2026-08/">
+        <link rel="canonical" href="https://oxo-flow-community.github.io/about/audits/2026-08-campaign-summary/">
       
       
       
@@ -23,7 +23,7 @@
     
     
       
-        <title>atacseq completeness audit (2026-08-21) - oxo-flow-community</title>
+        <title>24h full-campaign summary (2026-08-23) - oxo-flow-community</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#atacseq-completeness-audit-2026-08-21" class="md-skip">
+        <a href="#24h-full-campaign-summary-2026-08-23" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              atacseq completeness audit (2026-08-21)
+              24h full-campaign summary (2026-08-23)
             
           </span>
         </div>
@@ -488,10 +488,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#mode-matrix-upstream-param-driven-single-workflow" class="md-nav__link">
+  <a href="#the-matrix-2424" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Mode matrix (upstream — param-driven, single workflow)
+        The matrix (24/24)
       
     </span>
   </a>
@@ -499,10 +499,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#gap-tiers-vs-the-port" class="md-nav__link">
+  <a href="#repo-fixes-pushed-this-round" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Gap tiers vs the port
+        Repo fixes pushed this round
       
     </span>
   </a>
@@ -510,10 +510,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#verdict" class="md-nav__link">
+  <a href="#engine-side-work" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Verdict
+        Engine-side work
       
     </span>
   </a>
@@ -521,10 +521,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#re-verification-2026-08-23-batch-3" class="md-nav__link">
+  <a href="#web-lane" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Re-verification (2026-08-23, batch 3)
+        Web lane
       
     </span>
   </a>
@@ -551,82 +551,251 @@
   
 
 
-<h1 id="atacseq-completeness-audit-2026-08-21">atacseq completeness audit (2026-08-21)</h1>
-<p>Upstream: nf-core/atacseq @ 2.1.2 · Port: <code>oxo-flow-atacseq</code> (live-verified).</p>
-<h2 id="mode-matrix-upstream-param-driven-single-workflow">Mode matrix (upstream — param-driven, single workflow)</h2>
+<h1 id="24h-full-campaign-summary-2026-08-23">24h full-campaign summary (2026-08-23)</h1>
+<p>One-round live re-verification of <strong>all 24 workflow repos</strong> against the
+latest engine main (post-v0.14.1) on tx-ubuntu + bioinfo-wsx. Every
+verdict below is a REAL CLI run, not a dry-run — checkpoints were
+cleared to force real execution (see the checkpoint no-op lesson in
+the failure catalog).</p>
+<h2 id="the-matrix-2424">The matrix (24/24)</h2>
 <table>
 <thead>
 <tr>
-<th>axis</th>
-<th>options</th>
-<th>default</th>
+<th>repo</th>
+<th>coverage this round</th>
+<th>verdict</th>
+<th>evidence</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>aligner</td>
-<td>bwa / bowtie2 / chromap / star</td>
-<td>bwa</td>
+<td>ampliseq</td>
+<td>DADA2 full chain + SBDI-GTDB taxonomy</td>
+<td>16/0/14 exit 0</td>
+<td>site 1bfad3c</td>
 </tr>
 <tr>
-<td>layout</td>
-<td>paired / single-end (samplesheet per-sample)</td>
-<td>—</td>
+<td>atacseq</td>
+<td>default bwa arm full chain</td>
+<td>29/0 exit 0</td>
+<td>site 85b6d1f</td>
 </tr>
 <tr>
-<td>controls</td>
-<td><code>--with_control</code> + control columns</td>
-<td>off</td>
+<td>auto-sra-rnaseq-pipeline</td>
+<td>4-sample 2v2 real SRA, STAR full-GRCh38 + DESeq2</td>
+<td>exit 0 (mini21)</td>
+<td>site 5f37dbd</td>
 </tr>
 <tr>
-<td>replicate merging</td>
-<td>merged-replicate arm (full second chain: markdup/bigwig/peaks/consensus)</td>
-<td>ON</td>
+<td>bgcflow</td>
+<td>prokka + antismash 7 full DB set + gtdb</td>
+<td>14/0/13 exit 0</td>
+<td>site 5d6d1bf</td>
 </tr>
 <tr>
-<td>consensus peaks</td>
-<td><code>--skip_consensus_peaks</code></td>
-<td>ON</td>
+<td>chipseq</td>
+<td>bwa→macs3→FRiP→homer full chain</td>
+<td>143/0/11 exit 0</td>
+<td>site def8453</td>
 </tr>
 <tr>
-<td>peak mode</td>
-<td>broad (default) / <code>--narrow_peak</code></td>
-<td>broad</td>
+<td>circrna</td>
+<td>4 callers real; find_circ planted-BSJ hit</td>
+<td>9/0 exit 0</td>
+<td>site 39ee9f3</td>
 </tr>
 <tr>
-<td>QC toggles</td>
-<td>13 skip flags (picard/preseq/plot_profile/plot_fingerprint/ataqv/igv/peak_qc/peak_annotation/deseq2_qc/multiqc/fastqc/trimming)</td>
-<td>mixed</td>
+<td>clindet</td>
+<td>RNA port 26 rules (arriba BSJ detected)</td>
+<td>26 real/0 failed</td>
+<td>site f1aae9c</td>
+</tr>
+<tr>
+<td>eager</td>
+<td>nfcore/eager:2.5.3 single-container chain</td>
+<td>22/0/6 exit 0</td>
+<td>site f67f54a</td>
+</tr>
+<tr>
+<td>enrichment</td>
+<td>GSEApy + GREAT + LOLA (Fisher real)</td>
+<td>43/12/2 + 6/51/0</td>
+<td>site 87b5fdb</td>
+</tr>
+<tr>
+<td>fetchngs</td>
+<td>3 real ENA ids, md5-guard verified</td>
+<td>7/0/9 exit 0</td>
+<td>site fe8a5c9</td>
+</tr>
+<tr>
+<td>genome-tracks</td>
+<td>full-line-sc: sc + bulk + ucsc_hub</td>
+<td>exit 0 (5-fix chain)</td>
+<td>site f458708 + PR #2</td>
+</tr>
+<tr>
+<td>mag</td>
+<td>295 rules; 5 binners + QUAST/BUSCO + ALE</td>
+<td>224/32/4 → resume green</td>
+<td>site 4fcde83</td>
+</tr>
+<tr>
+<td>methylseq</td>
+<td>bismark default chain</td>
+<td>19/0/3 exit 0</td>
+<td>site 2fe1170</td>
+</tr>
+<tr>
+<td>mixscape</td>
+<td>full chain</td>
+<td>9/9 exit 0</td>
+<td>site 9d5b90e</td>
+</tr>
+<tr>
+<td>nanoseq</td>
+<td>minimap2+medaka default chain</td>
+<td>29/0 exit 0</td>
+<td>site 0da8165</td>
+</tr>
+<tr>
+<td>rnaseq</td>
+<td>STAR + tximport + DESeq2 (heavy)</td>
+<td>68 real/0 failed</td>
+<td>site 40ec98d</td>
+</tr>
+<tr>
+<td>rnaseq-star-deseq2</td>
+<td>STAR+GeneCounts + live biomaRt 3-step</td>
+<td>56/0/48 exit 0</td>
+<td>site 31212a0</td>
+</tr>
+<tr>
+<td>sarek</td>
+<td>GATK haplotypecaller + vep germline</td>
+<td>165/0 + 1/38/0</td>
+<td>site 97f25b2</td>
+</tr>
+<tr>
+<td>scrnaseq</td>
+<td>cellranger S1+S2 real + cellbender</td>
+<td>22/0/10 exit 0</td>
+<td>site 6466481</td>
+</tr>
+<tr>
+<td>snparcher</td>
+<td>gatk intervals + fastq default</td>
+<td>21/21 exit 0</td>
+<td>site f458708</td>
+</tr>
+<tr>
+<td>tcasia</td>
+<td>rmats + spladder + MAJIQ/voila</td>
+<td>24/0/10 exit 0</td>
+<td>site 31f0d2e</td>
+</tr>
+<tr>
+<td>unsupervised</td>
+<td>full chain</td>
+<td>27/27 exit 0</td>
+<td>site 9d5b90e</td>
+</tr>
+<tr>
+<td>varlociraptor</td>
+<td>vg giraffe pangenome chain</td>
+<td>17 + 38/50/0</td>
+<td>site f9f7045</td>
+</tr>
+<tr>
+<td>viralrecon</td>
+<td>illumina-amplicon chain, 27-env build</td>
+<td>7+76 exit 0</td>
+<td>site 6d3ac37</td>
 </tr>
 </tbody>
 </table>
-<p>Peak caller: MACS2 only (no Genrich at this tag); annotation HOMER;
-QC ataqv/deepTools/Preseq/Picard.</p>
-<h2 id="gap-tiers-vs-the-port">Gap tiers vs the port</h2>
-<p><strong>P0</strong>: 3 non-default aligners (bowtie2, chromap, star — each index +
-align arm only, downstream shared; star pins 2.6.1d index format);
-controls mode (MACS2 control pairing + samplesheet columns); merged-
-replicate arm (full second chain).</p>
-<p><strong>P1</strong>: none — all tools OSS (ataqv MIT, chromap MIT, MACS2 BSD;
-STAR/bowtie2 GPLv3 compliance note only).</p>
-<p><strong>P2</strong>: the whole QC-toggle matrix, narrow/broad + cutoff, macs_fdr/
-pvalue, min_reps_consensus, save_macs_pileup, keep_dups/keep_multi_map/
-keep_mito, fragment_size, seq_center, min_trimmed_reads, deseq2_vst,
-save_* publish gates, blacklist handling, iGenomes genomes.</p>
-<p>Tag-level gotchas (do not port): --skip_qc only gates FastQC (schema
-overclaims); macs_fdr/pvalue ignored on the replicate arm; --read_length
-enum-restricted; samples silently dropped below min_trimmed_reads.</p>
-<p>External deps: iGenomes S3, raw.githubusercontent test data, Biocontainers.</p>
-<h2 id="verdict">Verdict</h2>
-<p>Light surface — shared backbone with 4 swappable aligners and one
-controls branch as the only structural P0s; everything else is toggles.</p>
-<h2 id="re-verification-2026-08-23-batch-3">Re-verification (2026-08-23, batch 3)</h2>
-<p>Engine: latest main (post-v0.14.1) · Box: tx-ubuntu · Mode: real CLI
-run, not dry-run.</p>
-<p><strong>29/29 rules succeeded, exit 0, one round, zero failures</strong> at the
-latest commit. No fixes needed and no new failure classes — the
-default path (bwa aligner arm) runs clean against the reference data
-with no intervention.</p>
+<h2 id="repo-fixes-pushed-this-round">Repo fixes pushed this round</h2>
+<table>
+<thead>
+<tr>
+<th>repo</th>
+<th>commit</th>
+<th>fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>genome-tracks</td>
+<td>2ae877e..fdfeec6</td>
+<td>sc-branch runtime fixes ×5 (index fixtures, setuptools&lt;81, header-only BAM, symlink idempotence, plot gating)</td>
+</tr>
+<tr>
+<td>genome-tracks</td>
+<td>80adcbc</td>
+<td>test instance list follows the mini fixture (PR #2 CI)</td>
+</tr>
+<tr>
+<td>mag</td>
+<td>2554bde</td>
+<td>build_ale.sh GCC≥14 legacy-C compatibility</td>
+</tr>
+<tr>
+<td>fetchngs</td>
+<td>0a118df</td>
+<td>id.txt concurrency race (shared workdir)</td>
+</tr>
+<tr>
+<td>fetchngs</td>
+<td>9a9f09f</td>
+<td>wget -c corruption → md5-first idempotence guard</td>
+</tr>
+<tr>
+<td>enrichment</td>
+<td>c7f194c</td>
+<td>LOLA fixture index <code>filename</code> header</td>
+</tr>
+<tr>
+<td>varlociraptor</td>
+<td>6fda195</td>
+<td>delly download ghfast.top mirror fallback</td>
+</tr>
+</tbody>
+</table>
+<h2 id="engine-side-work">Engine-side work</h2>
+<p>Merged: #152 (CLI↔docs consistency ×6), #154 (macOS .app icon + launcher +
+ad-hoc codesign), #155 (Linux deb/rpm/AppImage menu entry + icon), #156
+(env-cache hit re-verifies on disk; vanished envs invalidate + rebuild).
+Filed: #159 (env identity — same-name cross-workflow collisions), #162
+(singularity URI→IMG %3A naming).</p>
+<h2 id="web-lane">Web lane</h2>
+<h1 id="149-dev-mode-role-derivation-fix-servemd-correction-151">149 (dev-mode role derivation fix + serve.md correction) + #151</h1>
+<p>(deployment + 3-role simulation matrix, 450 lines: RBAC, ownership
+isolation, SQLite restart persistence, base-path). Local gate green,
+both merged.</p>
+<h2 id="methodology-lessons-in-the-failure-catalog">Methodology lessons (in the failure catalog)</h2>
+<p>Checkpoint no-op trap (force real runs), honest coverage labeling
+(chr21-subset reference, gtdbtk=false, DRAFT constraints), China-network
+DB pre-staging pattern (sha256-accepted), conda post-link proxy
+pathologies (two endgames), docker storage exhaustion, env-cache family
+(three dimensions).</p>
+<h2 id="resource-evidence-honest-peak-rss-not-recorded-the-engine-does">Resource evidence (honest: peak RSS not recorded — the engine does</h2>
+<p>not emit per-rule peak RSS; wall-clock is run start→end)</p>
+<p>tx-ubuntu (4 vCPU / 3.7GB, clamp constant): nanoseq 13:55, circrna
+3:24, chipseq 31:45 (docker --memory 3723M + 1881 clamps), methylseq
+16:00 (bismark 12→4 threads), rnaseq-star-deseq2 3:41 (+biomart env
+~1.5h proxy battle), eager 0:56, scrna-seq 11:14 (cellranger 72GB
+declared → clamped, runs anyway), sarek ~40min, rnaseq ~1.1h,
+ampliseq 2:36 (+dada2 env ~2h). bioinfo-wsx (64c/1.4TB, ZERO clamps):
+bgcflow ~1.4h (DB staging dominated), mag ~2h (26 envs ~50min),
+tcasia ~30min (rmats 3s + spladder 339s parallel), enrichment ~1.8h
+(env battle), varlociraptor ~15min, auto-sra mini21 (STAR ~6min/sample,
+full-index build 48 threads ~32min — the heaviest scheduling point).</p>
+<p>Unified observations: (1) tx-ubuntu clamp + "run alone" serialization
+is CORRECT degradation, cost = wall-clock; (2) bioinfo-wsx zero clamps
+but network is the bottleneck — env/DB downloads are 40-60% of total
+wall time; (3) conservative -j (2 / 4-8) was already throughput-
+saturated by env+network constraints. Engine candidate (post-campaign):
+per-rule peak RSS in the run report.</p>
 
 
 

@@ -434,6 +434,33 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -487,6 +514,28 @@
     <span class="md-ellipsis">
       
         Verdict
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#live-evidence-2026-08-22-verdict-24-live-pass" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Live evidence (2026-08-22 — verdict #24, LIVE-PASS)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#re-verification-2026-08-23-9-mini-queue-campaign-closure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Re-verification (2026-08-23, 9-mini queue — campaign closure)
       
     </span>
   </a>
@@ -590,6 +639,38 @@ output keys superseded.</p>
 <p>The live Tier A run covers the DNA-variants default path fully; the
 full-line gap = fusions (RNA), delly, UMI/primers, scenario matrix,
 and the downstream branch set.</p>
+<h2 id="live-evidence-2026-08-22-verdict-24-live-pass">Live evidence (2026-08-22 — verdict #24, LIVE-PASS)</h2>
+<p>Full Tier A end-to-end on bioinfo-wsx (64c / 1.4TB, NFS /data): 88-rule
+DAG completed with <strong>exit 0, 0 failed</strong> — <code>✓ 91 output files verified
+(45.8GB total)</code> + report snapshot written. Engine v0.13.1 release
+binary; reference data (Ensembl 111 genome/GTF/VEP cache+plugins,
+REVEL, known-variants VCFs, 4.4GB pangenome gbz) relayed to the server
+and pre-placed; every compute rule executed for real including
+pangenome autoindex (45.8GB), freebayes candidate calling, BQSR,
+varlociraptor estimate/call/FDR, VEP + dbNSFP annotation, oncoprint,
+and both datavzrd reports.</p>
+<p>Final run: 26 rules executed fresh + 62 checkpoint-verified (rule
+fingerprints and input manifests confirmed unchanged since their last
+successful run), 0 failed. Fix chain of the campaign: 16 commits
+<code>cd54fcb..71bf729</code> — fixture window re-selection (repeat-rich →
+uniquely-mapping, MAPQ 60), conda-forge version removals re-pinned
+(vega-lite-cli/datavzrd), vg env + samtools, freebayes 96→48 threads +
+region-list sed repair (delimiters, 3-col BED, empty-region guard),
+oncoprint empty-call guards, yte SimpleNamespace + recursive
+frame-encoded dict rebuild, plus server-side conda cache/zombie
+recovery. New failure classes archived in the live-test failure
+catalog; engine-side notes: none new (resource fast-fail behavior is
+by design — over-capacity requests clamp).</p>
+<h2 id="re-verification-2026-08-23-9-mini-queue-campaign-closure">Re-verification (2026-08-23, 9-mini queue — campaign closure)</h2>
+<p>Engine: latest main (post-v0.14.1) · Box: bioinfo-wsx · Mode: real CLI
+run, not dry-run (checkpoint cleared, forced real execution).</p>
+<p><strong>First run 17 succeeded + resume 38 succeeded / 50 skipped / 0
+failed</strong> — full chain green. Coverage (real): preprocessing → vg
+giraffe pangenome alignment → variant calling → region merge/expand →
+multiqc. The single failure was the delly exclusion-region download
+(raw.githubusercontent.com unreachable) — <strong>real repo fix pushed
+(6fda195)</strong>: ghfast.top mirror fallback (same pattern as mag's
+build_ale.sh), plus box-side Mac relay pre-staging.</p>
 
 
 

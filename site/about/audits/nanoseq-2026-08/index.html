@@ -434,6 +434,33 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -487,6 +514,17 @@
     <span class="md-ellipsis">
       
         Verdict
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#re-verification-2026-08-23-light-group" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Re-verification (2026-08-23, light group)
       
     </span>
   </a>
@@ -579,6 +617,13 @@ datasets, S3 iGenomes.</p>
 <p>Moderate surface: the ported default (minimap2 + medaka/sniffles + bambu)
 leaves ~5 feature modes as P0, with the container-only VC callers as the
 main porting constraint.</p>
+<h2 id="re-verification-2026-08-23-light-group">Re-verification (2026-08-23, light group)</h2>
+<p>Engine: latest main (post-v0.14.1) · Box: tx-ubuntu · Mode: real CLI
+run, not dry-run.</p>
+<p><strong>29/29 rules succeeded, exit 0, one round, zero failures</strong> at the
+latest commit. No fixes needed and no new failure classes — the
+default path runs clean against the reference data with no
+intervention.</p>
 
 
 

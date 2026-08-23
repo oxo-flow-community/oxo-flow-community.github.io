@@ -434,6 +434,33 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -487,6 +514,17 @@
     <span class="md-ellipsis">
       
         Verdict
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#re-verification-2026-08-23-batch-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Re-verification (2026-08-23, batch 2)
       
     </span>
   </a>
@@ -572,6 +610,45 @@ recommended for the 12-col BED; IGV Desktop to view.</p>
 <h2 id="verdict">Verdict</h2>
 <p>Near-complete port surface — the only structural P0 is the sc branch +
 igv_report; everything else is config knobs.</p>
+<h2 id="re-verification-2026-08-23-batch-2">Re-verification (2026-08-23, batch 2)</h2>
+<p>Engine: latest main (post-v0.14.1) · Box: tx-ubuntu · Mode: real CLI
+run, not dry-run.</p>
+<p>The sc branch (sinto split-by-barcode → per-label merge) — the last
+structural P0 — is ported on branch <code>full-line-sc</code>
+(2ae877e..fdfeec6, feat + 5 fix round). Live run: <strong>exit 0</strong> with the
+full chain — sc mode + bulk + ucsc_hub export; 18 rules skipped =
+verified by the previous round.</p>
+<p>Runtime fixes found by the live run:</p>
+<table>
+<thead>
+<tr>
+<th>commit</th>
+<th>fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>63c42ed</td>
+<td>index fixture BAMs + pin <code>setuptools &lt;81</code> + <code>samtools</code> in the sinto env (sinto needs .bai; setuptools ≥81 dropped pkg_resources)</td>
+</tr>
+<tr>
+<td>ccd2abf</td>
+<td>header-only BAM fallback instead of <code>touch</code>-empty (modern samtools merge refuses zero-byte BAMs)</td>
+</tr>
+<tr>
+<td>fdfeec6</td>
+<td><code>plot_enabled</code> gate (no pair-level plots on mini fixtures) + idempotent ucsc_hub symlinks</td>
+</tr>
+<tr>
+<td>b696baa / dede881</td>
+<td>mini-fixture config: drop Tmem26 demo pair, disable pair-level plots</td>
+</tr>
+</tbody>
+</table>
+<p>Coverage after this round: structural P0 reduced to igv_report only
+(exists upstream but deactivated there — port decision: documented as
+non-default). Branch status: <code>full-line-sc</code> not yet on <code>main</code>
+(main = 480ba56); merge PR pending.</p>
 
 
 

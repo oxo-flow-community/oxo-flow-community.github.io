@@ -434,6 +434,33 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -487,6 +514,17 @@
     <span class="md-ellipsis">
       
         Verdict
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#re-verification-2026-08-23-heavy-group-23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Re-verification (2026-08-23, heavy group 2/3)
       
     </span>
   </a>
@@ -600,6 +638,20 @@ GPL-family (compliance note, no runtime gate).</p>
 <p>The biggest audit surface of the batch — upstream is a 34-tool matrix
 across 3 statuses; the ported default (bwa-mem + strelka/hc subset)
 leaves the majority of callers and all 4 alternative aligners as P0.</p>
+<h2 id="re-verification-2026-08-23-heavy-group-23">Re-verification (2026-08-23, heavy group 2/3)</h2>
+<p>Engine: latest main (post-v0.14.1) · Box: tx-ubuntu · Mode: real CLI
+run, not dry-run (checkpoint cleared, forced real execution) ·
+<code>-j 2 --keep-going</code>.</p>
+<p><strong>165 succeeded / 0 failed first run + 1/38/0 resume</strong> — the single
+resume rule was multiqc after the env fix. Coverage chain (real
+execution): fastp → bwa mem → gatk markduplicates →
+baserecalibrator/applybqsr → <strong>haplotypecaller</strong> → cnnscorevariants
+→ filtervarianttranches → vep → bcftools/vcftools stats → multiqc.
+The only failure was box-side: a stale pre-built multiqc env (1.29 +
+rich 15 incompatible, <code>rich.panel</code> AttributeError); the repo yaml
+already pins multiqc=1.35, so no repo change — <code>conda install
+multiqc=1.35</code> on the box. Lesson recorded in the failure catalog
+(shared-env caches can lag repo pins).</p>
 
 
 

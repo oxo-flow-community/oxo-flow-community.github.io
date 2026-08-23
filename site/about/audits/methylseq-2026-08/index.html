@@ -434,6 +434,33 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -487,6 +514,17 @@
     <span class="md-ellipsis">
       
         Verdict
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#re-verification-2026-08-23-light-group" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Re-verification (2026-08-23, light group)
       
     </span>
   </a>
@@ -573,6 +611,16 @@ arm64/wave profiles.</p>
 <h2 id="verdict">Verdict</h2>
 <p>Compact surface: 4 aligners × 3 caller paths + presets. The ported
 bismark default leaves bwameth + bwamem-TAPS chains as the main P0.</p>
+<h2 id="re-verification-2026-08-23-light-group">Re-verification (2026-08-23, light group)</h2>
+<p>Engine: latest main (post-v0.14.1) · Box: tx-ubuntu (conda envs) ·
+Mode: real CLI run, not dry-run · <code>-j 2 --keep-going</code>.</p>
+<p><strong>19 succeeded, 3 skipped, 0 failed, exit 0</strong>, one round, zero fixes.
+Coverage chain: bismark genome prep → fastqc → trimgalore → bismark
+align → dedup → sort/index → methylation extractor → bismark
+report/summary → multiqc. All 3 skips are by design: coverage2cytosine
+×2 gated off (upstream <code>--cytosine_report</code>/<code>--nomeseq</code> default-off,
+kept verbatim by the port); genomepreparation = fresh checkpoint reuse
+(BismarkIndex from Aug-17).</p>
 
 
 

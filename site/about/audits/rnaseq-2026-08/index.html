@@ -434,6 +434,33 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -487,6 +514,17 @@
     <span class="md-ellipsis">
       
         Verdict
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#re-verification-2026-08-23-heavy-group-33-heavy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Re-verification (2026-08-23, heavy group 3/3 — heavy 收官)
       
     </span>
   </a>
@@ -602,6 +640,19 @@ containers, test data HTTPS.</p>
 <p>Large P0 surface: 2 aligner backends + 2 add-on quantifiers + 4 orthogonal
 feature modes (UMI/rRNA/contaminant/BAM-input) beyond the ported
 star_salmon default.</p>
+<h2 id="re-verification-2026-08-23-heavy-group-33-heavy">Re-verification (2026-08-23, heavy group 3/3 — heavy 收官)</h2>
+<p>Engine: latest main (post-v0.14.1) · Box: tx-ubuntu · Mode: real CLI
+run, not dry-run (checkpoint cleared, forced real execution).</p>
+<p><strong>Cumulative 68 rules really executed, 0 real failures</strong> — first run
+65/15/2 (both failures were env-build: genomeinfodbdata post-link
+proxy truncation + the deseq2 name collision), then a resume chain:
+TLS-local conda CA fix → tximport → deseq2 env rebuild
+(r-optparse added) → deseq2_qc → <strong>final 2/80/0 exit 0</strong>. Coverage
+chain (real): fastp → STAR+quantMode → biotype → qualimap → dupradar
+→ bigwig fw/rev/combined → <strong>tximport → summarizedexperiment →
+deseq2_qc</strong> → multiqc. All box-side lessons cataloged (stale
+env-cache / cross-repo name collision → issue #159 / post-link proxy
+truncation).</p>
 
 
 
