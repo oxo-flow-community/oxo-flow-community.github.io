@@ -46,3 +46,13 @@ removed modules (mk/trackhub) warned.
 Widest config surface after sarek — 5 callers × 4 input types ×
 callable-sites × 2 modules. Ported default (gatk intervals + fastq)
 leaves the caller matrix and both modules as the main P0.
+
+## Re-verification (2026-08-23, batch 2)
+
+Engine: latest main (post-v0.14.1) · Box: tx-ubuntu · Mode: real CLI
+run, not dry-run.
+
+**21/21 rules succeeded, exit 0, one round, zero failures** at HEAD
+(1b4d2f7, raw/-at-root fix merged). No new failure classes — the
+default-path port (gatk intervals + fastq) runs clean against the
+reference data with no intervention.

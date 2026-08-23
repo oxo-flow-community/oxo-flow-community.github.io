@@ -43,3 +43,28 @@ recommended for the 12-col BED; IGV Desktop to view.
 
 Near-complete port surface — the only structural P0 is the sc branch +
 igv_report; everything else is config knobs.
+
+## Re-verification (2026-08-23, batch 2)
+
+Engine: latest main (post-v0.14.1) · Box: tx-ubuntu · Mode: real CLI
+run, not dry-run.
+
+The sc branch (sinto split-by-barcode → per-label merge) — the last
+structural P0 — is ported on branch `full-line-sc`
+(2ae877e..fdfeec6, feat + 5 fix round). Live run: **exit 0** with the
+full chain — sc mode + bulk + ucsc_hub export; 18 rules skipped =
+verified by the previous round.
+
+Runtime fixes found by the live run:
+
+| commit | fix |
+|---|---|
+| 63c42ed | index fixture BAMs + pin `setuptools <81` + `samtools` in the sinto env (sinto needs .bai; setuptools ≥81 dropped pkg_resources) |
+| ccd2abf | header-only BAM fallback instead of `touch`-empty (modern samtools merge refuses zero-byte BAMs) |
+| fdfeec6 | `plot_enabled` gate (no pair-level plots on mini fixtures) + idempotent ucsc_hub symlinks |
+| b696baa / dede881 | mini-fixture config: drop Tmem26 demo pair, disable pair-level plots |
+
+Coverage after this round: structural P0 reduced to igv_report only
+(exists upstream but deactivated there — port decision: documented as
+non-default). Branch status: `full-line-sc` not yet on `main`
+(main = 480ba56); merge PR pending.

@@ -587,3 +587,28 @@ the current directory (qualimap 2.2.2-dev: `-outdir .` →
 
 **Lesson — env disk placement**: conda envs on the box's ROOT disk hit ENOSPC mid-campaign (59G root, conda pkgs + envs); moving envs + pkgs dirs to the data volume freed 25G. Always place conda envs/pkgs and CARGO_TARGET_DIR on the data volume for campaign boxes.
 *Example*: tx-ubuntu (2026-08-23 batch-1 round).
+
+## 2026-08-23 full-campaign re-verification (batch 2: genome-tracks sc + snparcher)
+
+**Symptom**: sinto aborts on unsorted/unindexed BAM input with a cryptic index error mid-run.
+**Root cause**: sinto's split-by-barcode path requires position-sorted BAM + `.bai` present next to the BAM; fixtures were shipped without indexes.
+**Fix**: index fixture BAMs at fixture-generation time (samtools index) so downstream tools find `.bai` without a pre-rule.
+*Example*: genome-tracks full-line-sc (63c42ed).
+
+**Symptom**: `ModuleNotFoundError: No module named 'pkg_resources'` inside a fresh env that resolved fine weeks ago.
+**Root cause**: setuptools ≥81 removed pkg_resources (upstream sinto still imports it); a loose `setuptools` pin re-resolved to the breaking version.
+**Fix**: pin `setuptools <81` in the env yaml and add `samtools` for indexing.
+*Example*: genome-tracks full-line-sc (63c42ed).
+
+**Symptom**: samtools merge refuses header-only (zero-byte) BAM stubs with "no data" — the port used `touch`-empty placeholders for empty barcode groups.
+**Root cause**: modern samtools (≥1.16) validates input BAMs at merge; a 0-byte file is not a valid BAM.
+**Fix**: emit a true header-only BAM (samtools view -b -H) for empty groups instead of `touch`.
+*Example*: genome-tracks full-line-sc (ccd2abf).
+
+**Symptom**: re-running ucsc_hub export fails with "file exists" on symlink creation.
+**Root cause**: hub symlinks were created unconditionally — a resume/rerun re-links the same paths.
+**Fix**: guard with an existence/identity check (idempotent symlink) so re-entry is safe.
+*Example*: genome-tracks full-line-sc (fdfeec6).
+
+**Lesson — sc-branch fixture budget**: pair-level plots on a sc demo pair were gated behind `plot_enabled` and the demo pair dropped from the mini fixture — mini fixtures must stay runnable under campaign disk budget while the full fixture keeps ≥2 groups for the real run.
+*Example*: genome-tracks full-line-sc (fdfeec6 + b696baa/dede881).
