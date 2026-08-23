@@ -653,6 +653,11 @@ the current directory (qualimap 2.2.2-dev: `-outdir .` →
 **Fix**: verify pre-built env versions against the repo pin before re-runs (`conda install <pkg>=<pinned>` on the box); repo change NOT needed.
 *Example*: sarek multiqc env, tx-ubuntu (2026-08-23).
 
+**Symptom**: a rule fails with "no package called X" although its env yaml pins X — a DIFFERENT workflow's env with the same name was reused.
+**Root cause**: the engine identifies conda envs by NAME only; two workflows shipping different `deseq2.yaml` contents both derive the name `deseq2` and share one conda prefix. The first-built env wins.
+**Fix (box)**: `conda env remove -n <name>` + `rm .oxo-flow/env-cache/environment_cache.json`, rebuild. Engine-side: content hash in the env identity / per-workflow prefixes — tracked as issue #159.
+*Example*: rnaseq-star-deseq2 vs rnaseq deseq2 collision, tx-ubuntu (2026-08-23).
+
 **Lesson — live-query evidence**: biomaRt gene2symbol ran against live Ensembl (3 steps, 48-66s each) — prefer recording live-network evidence over mocking when the tool's core value is annotation freshness.
 *Example*: rnaseq-star-deseq2 (2026-08-23).
 
