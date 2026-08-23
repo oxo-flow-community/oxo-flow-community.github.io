@@ -625,3 +625,13 @@ the current directory (qualimap 2.2.2-dev: `-outdir .` →
 
 **Lesson — reference provenance honesty**: a "GRCh38" reference that is actually a chr21-only subset existed on the box since old-index days — mini verdicts must record the actual reference content, not the label. Subset references can also create tool pathologies (this STAR hang) that look like port defects.
 *Example*: auto-sra mini track (2026-08-23).
+
+## 2026-08-23 light group (conda post-link network pathology)
+
+**Symptom**: conda env creation fails 3× on the bioconda `genomeinfodbdata` post-link script with `curl 18` (proxy truncation) — the post-link download never completes behind the campaign proxy.
+**Root cause**: post-link scripts fetch data at install time; a truncating proxy kills the transfer, and conda retries identically.
+**Fix (box-local)**: download the source tarball on a clean host (Mac), place it in a local relay dir, patch the cached post-link script to prefer the local file, and rebuild the pkgs-cache tarball flat. Works because conda trusts already-extracted cache tarballs (no md5 re-verification at that point). Do NOT change the workflow repo — the pathology is network-side.
+*Example*: rnaseq-star-deseq2 biomart env, tx-ubuntu (2026-08-23).
+
+**Lesson — live-query evidence**: biomaRt gene2symbol ran against live Ensembl (3 steps, 48-66s each) — prefer recording live-network evidence over mocking when the tool's core value is annotation freshness.
+*Example*: rnaseq-star-deseq2 (2026-08-23).
