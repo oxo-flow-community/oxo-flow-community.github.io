@@ -99,7 +99,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section, su
 
 <div class="ox-dag-card" markdown="1">
 
-![oxo-flow-rnaseq rule-level DAG](/assets/dag/oxo-flow-rnaseq.svg)
+![oxo-flow-rnaseq rule-level DAG](../assets/dag/oxo-flow-rnaseq.svg)
 
 </div>
 

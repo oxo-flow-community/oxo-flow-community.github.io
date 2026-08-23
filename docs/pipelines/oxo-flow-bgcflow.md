@@ -82,7 +82,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section, su
 
 <div class="ox-dag-card" markdown="1">
 
-![oxo-flow-bgcflow rule-level DAG](/assets/dag/oxo-flow-bgcflow.svg)
+![oxo-flow-bgcflow rule-level DAG](../assets/dag/oxo-flow-bgcflow.svg)
 
 </div>
 

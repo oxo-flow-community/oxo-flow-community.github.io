@@ -119,7 +119,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section, su
 
 <div class="ox-dag-card" markdown="1">
 
-![oxo-flow-eager rule-level DAG](/assets/dag/oxo-flow-eager.svg)
+![oxo-flow-eager rule-level DAG](../assets/dag/oxo-flow-eager.svg)
 
 </div>
 

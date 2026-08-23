@@ -115,7 +115,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section, su
 
 <div class="ox-dag-card" markdown="1">
 
-![oxo-flow-chipseq rule-level DAG](/assets/dag/oxo-flow-chipseq.svg)
+![oxo-flow-chipseq rule-level DAG](../assets/dag/oxo-flow-chipseq.svg)
 
 </div>
 

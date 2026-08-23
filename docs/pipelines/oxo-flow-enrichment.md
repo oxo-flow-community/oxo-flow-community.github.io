@@ -139,7 +139,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section, su
 
 <div class="ox-dag-card" markdown="1">
 
-![oxo-flow-enrichment rule-level DAG](/assets/dag/oxo-flow-enrichment.svg)
+![oxo-flow-enrichment rule-level DAG](../assets/dag/oxo-flow-enrichment.svg)
 
 </div>
 
