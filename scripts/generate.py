@@ -287,7 +287,7 @@ def dag_section(p: dict) -> list[str]:
         "",
         '<div class="ox-dag-card" markdown="1">',
         "",
-        f"![{name} rule-level DAG](/assets/dag/{name}.svg)",
+        f"![{name} rule-level DAG](../assets/dag/{name}.svg)",
         "",
         "</div>",
         "",

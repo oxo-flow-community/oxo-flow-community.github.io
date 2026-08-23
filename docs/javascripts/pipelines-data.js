@@ -2295,7 +2295,7 @@ window.OXO_PIPELINES = [
     "name": "oxo-flow-auto-sra-rnaseq-pipeline",
     "title": "SRA-powered RNA-seq: .sra archives to differential expression",
     "origin": "port",
-    "rating": "verified",
+    "rating": "live-verified",
     "engine": "snakemake",
     "source": {
       "repo": "xuzhougeng/auto_sra_rnaseq_pipeline",

@@ -36,5 +36,6 @@ engine fixes, resource evidence, methodology lessons.
 | viralrecon | [2026-08](viralrecon-2026-08.md) |
 
 The live-test failure catalog (symptom → root cause → fix, with
-examples) lives at
-[`skills/live-test/references/failure-catalog.md`](../../../skills/live-test/references/failure-catalog.md).
+examples) lives in the site repo at
+[`skills/live-test/references/failure-catalog.md`](https://github.com/oxo-flow-community/oxo-flow-community.github.io/blob/main/skills/live-test/references/failure-catalog.md)
+(it is part of the live-testing skill, not a docs page).
