@@ -66,7 +66,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section, su
 
 <div class="ox-dag-card" markdown="1">
 
-![oxo-flow-varlociraptor rule-level DAG](/assets/dag/oxo-flow-varlociraptor.svg)
+![oxo-flow-varlociraptor rule-level DAG](../assets/dag/oxo-flow-varlociraptor.svg)
 
 </div>
 
