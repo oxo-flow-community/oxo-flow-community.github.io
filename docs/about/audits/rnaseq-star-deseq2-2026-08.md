@@ -49,3 +49,17 @@ Compact; the ported default (local PE + trimming + simple contrasts)
 leaves SRA/SE sources + biomaRt mapping + expression contrasts as the
 main P0. Port scope (24 rules after normalization) matches the upstream
 rule count closely — the gap is in the branch axes, not the rule list.
+
+## Re-verification (2026-08-23, light group)
+
+Engine: latest main (post-v0.14.1) · Box: tx-ubuntu · Mode: real CLI
+run, not dry-run · `-j 2 --keep-going`.
+
+**56 succeeded, 48 skipped, 0 failed, exit 0**, one round, zero repo
+fixes. Coverage chain (all real execution): local reference override
+path (the repo's `genome_fasta`/`annotation_gtf` config keys, skipping
+the Ensembl download) → fastp → STAR align + GeneCounts → RSeQC →
+count matrix → DESeq2 init/contrast → **biomaRt gene2symbol live
+Ensembl queries, all three steps passed (65.7s / 48.1s / 57.3s)** →
+multiqc. All 48 skips are checkpoint reuse from the earlier round plus
+condition gates — no unexpected skips.
