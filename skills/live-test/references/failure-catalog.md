@@ -658,6 +658,14 @@ the current directory (qualimap 2.2.2-dev: `-outdir .` →
 **Fix (box)**: `conda env remove -n <name>` + `rm .oxo-flow/env-cache/environment_cache.json`, rebuild. Engine-side: content hash in the env identity / per-workflow prefixes — tracked as issue #159.
 *Example*: rnaseq-star-deseq2 vs rnaseq deseq2 collision, tx-ubuntu (2026-08-23).
 
+**Symptom**: LOLA ≥1.22 errors with "object 'filename' not found" on a fixture index that worked with older LOLA.
+**Root cause**: loadRegionDB evaluates columns by name; the fixture's 2-column index.txt had no header, and 'filename' became a named requirement in ≥1.22.
+**Fix**: add the header row with a real `filename` column (c7f194c).
+*Example*: enrichment LOLA fixture, bioinfo-wsx (2026-08-23).
+
+**Lesson — patch the pkgs cache, not the env dir**: post-link dataURLs rewrites made INSIDE an env directory get wiped by the next env rebuild; the durable patch point is the conda pkgs cache (e.g. dataURLs.json rewritten to file://) so re-extraction reads the patched copy.
+*Example*: enrichment region env (7 bioconda data packages), bioinfo-wsx (2026-08-23).
+
 **Lesson — live-query evidence**: biomaRt gene2symbol ran against live Ensembl (3 steps, 48-66s each) — prefer recording live-network evidence over mocking when the tool's core value is annotation freshness.
 *Example*: rnaseq-star-deseq2 (2026-08-23).
 
