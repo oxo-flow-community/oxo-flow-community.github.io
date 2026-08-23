@@ -647,6 +647,13 @@ the current directory (qualimap 2.2.2-dev: `-outdir .` →
 7. **Reference chromosome naming** — Ensembl `1` vs `chr1` mismatch breaks annotation joins; align fasta and GTF naming before building indexes.
 *Example*: auto-sra mini track rounds 1-21, bioinfo-wsx (2026-08-23).
 
+## 2026-08-23 9-mini queue (docker storage exhaustion)
+
+**Symptom**: docker image pull fails mid-layer with "failed commit on ref" after the root disk filled earlier in the campaign.
+**Root cause**: leftover ENOSPC aftereffects — the docker storage pool cannot commit layers with the root partition near-full (96%).
+**Fix**: `docker system prune -af` to reclaim unused images/volumes (reclaimed 23GB here), then re-pull. Keep docker images on a data volume from the start where possible.
+*Example*: eager (nfcore/eager:2.5.3), tx-ubuntu (2026-08-23).
+
 ## 2026-08-23 9-mini queue (China-network DB pre-staging)
 
 **Symptom**: tool-run DB downloads crawl (EBI pfam 293MB at 2MB/min) or die behind the campaign proxy (curl 18 / SSL 77), blocking antismash 7 (10 DB components, 1.76GB total), gtdb metadata (193MB), and bioconductor post-link fetches.
