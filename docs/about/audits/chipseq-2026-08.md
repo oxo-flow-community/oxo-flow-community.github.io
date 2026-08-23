@@ -43,3 +43,16 @@ fetch (warning-only offline), test data HTTPS.
 Likely the lightest audit of the batch — default bwa+broad path ported,
 the gap surface is almost entirely P2 toggles + 3 P0 aligners sharing the
 downstream chain.
+
+## Re-verification (2026-08-23, light group)
+
+Engine: latest main (post-v0.14.1) · Box: tx-ubuntu (docker rules) ·
+Mode: real CLI run, not dry-run · `-j 2 --keep-going`.
+
+**143 succeeded, 11 skipped, 0 failed, exit 0**, one round, zero
+repo fixes. Coverage chain: bwa → markdup → blacklist filter (correct
+`-U` semantics — the workflow itself documents the earlier `-L`
+inversion fix) → deeptools QC → macs3 callpeak (S1 treatment group)
+→ FRiP → homer annotation → multiqc. All 11 skips are intentional
+semantics: C1 control sample has no peaks called (optional inputs
+missing) + deseq2_qc `when` gate false.
