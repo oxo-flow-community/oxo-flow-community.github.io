@@ -43,3 +43,13 @@ datasets, S3 iGenomes.
 Moderate surface: the ported default (minimap2 + medaka/sniffles + bambu)
 leaves ~5 feature modes as P0, with the container-only VC callers as the
 main porting constraint.
+
+## Re-verification (2026-08-23, light group)
+
+Engine: latest main (post-v0.14.1) · Box: tx-ubuntu · Mode: real CLI
+run, not dry-run.
+
+**29/29 rules succeeded, exit 0, one round, zero failures** at the
+latest commit. No fixes needed and no new failure classes — the
+default path runs clean against the reference data with no
+intervention.
