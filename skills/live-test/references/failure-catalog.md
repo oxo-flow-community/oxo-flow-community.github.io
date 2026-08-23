@@ -633,6 +633,21 @@ the current directory (qualimap 2.2.2-dev: `-outdir .` →
 **Fix (box-local)**: download the source tarball on a clean host (Mac), place it in a local relay dir, patch the cached post-link script to prefer the local file, and rebuild the pkgs-cache tarball flat. Works because conda trusts already-extracted cache tarballs (no md5 re-verification at that point). Do NOT change the workflow repo — the pathology is network-side.
 *Example*: rnaseq-star-deseq2 biomart env, tx-ubuntu (2026-08-23).
 
+**Harder variant (8 attempts, final solution)**: the same post-link pathology on a package whose repodata sha256 forces online re-verification (.conda cache surgery impossible) and whose retries corrupt via mixed connections. Final: sudo-hosts redirect the bioconductor/galaxy domains to 127.0.0.1, serve the Mac-relayed data from a local `openssl s_server -WWW` with a locally-trusted cert, and — the last hurdle — set `SSL_CERT_FILE` to the SYSTEM CA bundle so the env's curl uses it. Roll everything back afterwards (hosts/CA/server cleared) to stay mirror-neutral.
+*Example*: ampliseq dada2 env, tx-ubuntu (2026-08-23).
+
+## 2026-08-23 heavy group (fetchngs repo races)
+
+**Symptom**: three id rules writing the same fixed filename (id.txt) in a shared docker workdir overwrite each other — nondeterministic output depending on rule scheduling.
+**Root cause**: concurrency race on a hardcoded scratch filename; per-rule workdir isolation was not honored by the port.
+**Fix**: unique filenames per rule (0a118df).
+*Example*: fetchngs, bioinfo-wsx (2026-08-23).
+
+**Symptom**: `wget -c` on an already-complete file appends and corrupts it.
+**Root cause**: resume flag on a complete download re-fetches with an offset.
+**Fix**: md5-check-first idempotence guard before resuming (9a9f09f).
+*Example*: fetchngs, bioinfo-wsx (2026-08-23).
+
 **Lesson — live-query evidence**: biomaRt gene2symbol ran against live Ensembl (3 steps, 48-66s each) — prefer recording live-network evidence over mocking when the tool's core value is annotation freshness.
 *Example*: rnaseq-star-deseq2 (2026-08-23).
 

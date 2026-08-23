@@ -46,3 +46,16 @@ mag-gtdbtk hardware-contract precedent — document per-branch).
 Largest param surface of the nf-core batch: 6 classifiers + SIDLE +
 QIIME2 analytics beyond the ported DADA2 default. Big P0, mostly
 free-software; the license story is limited to SILVA/UNITE DB terms.
+
+## Re-verification (2026-08-23, heavy group 1/3)
+
+Engine: latest main (post-v0.14.1) · Box: tx-ubuntu · Mode: real CLI
+run, not dry-run · `-j 2 --keep-going`.
+
+**16 succeeded, 14 skipped, 0 failed, exit 0** — real execution.
+Coverage chain: cutadapt → fastqc → **DADA2 full chain** (quality
+profiles → filtntrim → err → denoising → merge → rmchimera) →
+**dada2_taxonomy (SBDI-GTDB reference assignment)** → stats →
+multiqc. All 14 skips are checkpoint reuse from earlier partial runs
+plus condition gates. The dada2 env needed 8 rounds of network-side
+surgery (see failure catalog) — zero repo changes required.
