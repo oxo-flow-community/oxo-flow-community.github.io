@@ -654,6 +654,13 @@ the current directory (qualimap 2.2.2-dev: `-outdir .` →
 **Fix**: `docker system prune -af` to reclaim unused images/volumes (reclaimed 23GB here), then re-pull. Keep docker images on a data volume from the start where possible.
 *Example*: eager (nfcore/eager:2.5.3), tx-ubuntu (2026-08-23).
 
+## 2026-08-23 9-mini queue (checkpoint no-op trap — methodology)
+
+**Symptom**: a "re-verification" run reports 0 succeeded / N skipped with exit 0 — every rule's checkpoint is fresh from a previous round.
+**Root cause**: the engine's resume semantics (a feature) make a re-run of an already-verified repo a pure no-op — the "verdict" would be fake.
+**Fix**: before re-running an already-live repo, force a real run — `rm -rf .oxo-flow results` (or `--rerun` where semantically honest). ALWAYS check the succeeded/skipped split before calling a round a live test.
+*Example*: scrna-seq first launch (0/32 no-op → forced 22/0/10), tx-ubuntu (2026-08-23). Applies to every re-verification round in this campaign.
+
 ## 2026-08-23 9-mini queue (China-network DB pre-staging)
 
 **Symptom**: tool-run DB downloads crawl (EBI pfam 293MB at 2MB/min) or die behind the campaign proxy (curl 18 / SSL 77), blocking antismash 7 (10 DB components, 1.76GB total), gtdb metadata (193MB), and bioconductor post-link fetches.

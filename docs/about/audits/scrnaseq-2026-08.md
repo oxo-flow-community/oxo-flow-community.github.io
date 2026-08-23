@@ -62,3 +62,16 @@ Dead at this tag: GFFREAD_TRANSCRIPTOME, gffread, unzip modules.
 - Cellbender CPU fallback exists (GPU image only with ext.use_gpu).
 - External deps: iGenomes AWS S3 refs, Seqera Wave/community containers
   (mtx_to_h5ad/anndatar_convert/qcatch) — registry dependency, not a gate.
+
+## Re-verification (2026-08-23, 9-mini queue 3/9)
+
+Engine: latest main (post-v0.14.1) · Box: tx-ubuntu (singularity) ·
+Mode: real CLI run, not dry-run · `-j 2 --keep-going`.
+
+**22 succeeded, 10 skipped, 0 failed, exit 0.** Important: the first
+launch was a 0/32 pure checkpoint no-op (Aug-19 checkpoint all fresh)
+— NOT a real test. The run was forced (`rm -rf .oxo-flow results`) and
+then truly executed 22 rules: fastqc → cellranger mkref (reused) →
+**cellranger_count S1+S2 (real runs)** → h5ad conversion → anndatar
+filter → cellbender → multiqc. All 10 skips are reference-build reuse
++ condition gates.
