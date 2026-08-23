@@ -2199,7 +2199,14 @@
   "quickstart": "oxo-flow run circrna.oxoflow -j 16",
   "compute": "up to 8 threads / 32 GB per rule",
   "quickstart_note": "Set `reference_dir` in `circrna.oxoflow` and place FASTQ pairs in `raw/`; indexes and environments build on first run.",
-  "coverage": "full-line"
+  "coverage": "full-line",
+  "source": {
+   "repo": "WangLabCSU/oxo-flow-circrna",
+   "url": "https://github.com/WangLabCSU/oxo-flow-circrna",
+   "tag": "main",
+   "sha": "c2cb904236d6da1aa7c60ef977b931ffb2f595e0",
+   "license": "MIT"
+  }
  },
  {
   "name": "oxo-flow-clindet",

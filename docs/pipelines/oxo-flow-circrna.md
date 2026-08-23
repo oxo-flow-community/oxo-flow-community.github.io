@@ -14,6 +14,8 @@ Circular RNA detection with four independent callers (CIRIquant, CIRCexplorer2, 
 | **Tools** | fastp · ciriquant · circexplorer2 · find_circ · circrna_finder · r-base · multiqc |
 | **Ported** | 2026-08-15 |
 | **License** | Apache-2.0 |
+| **Source** | [WangLabCSU/oxo-flow-circrna](https://github.com/WangLabCSU/oxo-flow-circrna) |
+| **Pinned version** | `main` |
 
 ## Run it
 
@@ -69,6 +71,30 @@ Descriptions are the workflow's own `#` comments from its `[config]` section, su
 
 The graph is derived at catalog-build time from `oxo-flow graph -f dot` and rendered with Graphviz. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
+## Scope
+
+The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.
+
+**In scope**
+
+- fastp
+- ciriquant
+- circexplorer2
+- find_circ
+- circrna_finder
+- annotation
+- aggregate
+- aggregate_dataset
+- multiqc
+
+**Excluded**
+
+- none
+
 ## Links
 
 - Repository: [oxo-flow-circrna](https://github.com/WangLabCSU/oxo-flow-circrna)
+- Upstream: [WangLabCSU/oxo-flow-circrna](https://github.com/WangLabCSU/oxo-flow-circrna) @ `main`
+- License: Apache-2.0 (this workflow) · MIT (upstream)
+
+Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
