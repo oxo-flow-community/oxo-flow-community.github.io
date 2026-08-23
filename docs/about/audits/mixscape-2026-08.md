@@ -41,3 +41,12 @@ variants (they multiply plot outputs and one changes the output graph).
 
 Trivial audit surface — full-line = the single chain + config exposure.
 The likely port gap is config-key coverage, not rules.
+
+## Re-verification (2026-08-23, 24h full campaign batch 1)
+
+Latest-commit re-run on tx-ubuntu (latest engine main, conda envs
+pre-built on /data): exit 0 — mixscape 9/9 rules, unsupervised 27/27
+rules, real CLI execution with fixtures. Env-side fixes only
+(umap_leiden missing on first box build; stale env-cache entry cleared;
+envs migrated to the data volume after root-disk ENOSPC). No engine
+defects found.

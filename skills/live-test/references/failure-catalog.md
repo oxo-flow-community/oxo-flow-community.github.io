@@ -577,3 +577,13 @@ the current directory (qualimap 2.2.2-dev: `-outdir .` →
 
 **Lesson — fusion fixtures**: a workable chimeric fixture needs a mini reference DB and a fused region with real breakpoint structure (20kb chrX fusion worked); the tool's own filters decide what survives, so assert on the evidence the tool CONSUMES, not its output rows.
 *Example*: clindet-RNA (arriba round).
+
+## 2026-08-23 full-campaign re-verification (batch 1: mixscape + unsupervised)
+
+**Symptom**: a rule fails with `EnvironmentLocationNotFound: Not a conda environment: <prefix>/envs/<name>` even though the env was created earlier.
+**Root cause**: the engine's env-cache held a stale entry — the cache recorded the env as present but its conda metadata was invalidated (or the env was built on a full root disk and later moved/removed). The verify step trusts the cache and skips creation.
+**Fix**: delete the env-cache entry (or `--skip-env-setup` off + clean `.oxo-flow/env-cache`) and re-run; long-term the verify path should re-validate a cached env's conda metadata before trusting it.
+*Example*: unsupervised (2026-08-23 box round).
+
+**Lesson — env disk placement**: conda envs on the box's ROOT disk hit ENOSPC mid-campaign (59G root, conda pkgs + envs); moving envs + pkgs dirs to the data volume freed 25G. Always place conda envs/pkgs and CARGO_TARGET_DIR on the data volume for campaign boxes.
+*Example*: tx-ubuntu (2026-08-23 batch-1 round).

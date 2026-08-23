@@ -46,3 +46,12 @@ clusterCrit Silhouette NA bug (rows removed pre-TOPSIS — known caveat).
 Mid-size config surface: the ported PCA+UMAP default leaves densMAP,
 heatmap, and the entire Leiden-clustering cascade (B/C/D modes) as the
 P0 block — all free software.
+
+## Re-verification (2026-08-23, 24h full campaign batch 1)
+
+Latest-commit re-run on tx-ubuntu (latest engine main, conda envs
+pre-built on /data): exit 0 — mixscape 9/9 rules, unsupervised 27/27
+rules, real CLI execution with fixtures. Env-side fixes only
+(umap_leiden missing on first box build; stale env-cache entry cleared;
+envs migrated to the data volume after root-disk ENOSPC). No engine
+defects found.
