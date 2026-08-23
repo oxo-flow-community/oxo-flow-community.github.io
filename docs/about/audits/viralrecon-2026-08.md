@@ -38,3 +38,13 @@ conf file — errors at startup.
 
 Two-platform surface; the ported illumina-amplicon default leaves the
 nanopore platform and the bcftools caller chains as the main P0.
+
+## Re-verification (2026-08-23, batch 3)
+
+Engine: latest main (post-v0.14.1) · Box: tx-ubuntu · Mode: real CLI
+run, not dry-run.
+
+**7+76 rules exit 0** (prep + main chain), zero failures at the latest
+commit. The 27-env build (pangolin/nextclade/kraken2 heavy deps) was
+the slow part (~2h); the run itself passed in one round with no fixes
+needed.
