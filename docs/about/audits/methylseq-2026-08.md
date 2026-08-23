@@ -40,3 +40,16 @@ arm64/wave profiles.
 
 Compact surface: 4 aligners × 3 caller paths + presets. The ported
 bismark default leaves bwameth + bwamem-TAPS chains as the main P0.
+
+## Re-verification (2026-08-23, light group)
+
+Engine: latest main (post-v0.14.1) · Box: tx-ubuntu (conda envs) ·
+Mode: real CLI run, not dry-run · `-j 2 --keep-going`.
+
+**19 succeeded, 3 skipped, 0 failed, exit 0**, one round, zero fixes.
+Coverage chain: bismark genome prep → fastqc → trimgalore → bismark
+align → dedup → sort/index → methylation extractor → bismark
+report/summary → multiqc. All 3 skips are by design: coverage2cytosine
+×2 gated off (upstream `--cytosine_report`/`--nomeseq` default-off,
+kept verbatim by the port); genomepreparation = fresh checkpoint reuse
+(BismarkIndex from Aug-17).
