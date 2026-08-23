@@ -612,3 +612,16 @@ the current directory (qualimap 2.2.2-dev: `-outdir .` →
 
 **Lesson — sc-branch fixture budget**: pair-level plots on a sc demo pair were gated behind `plot_enabled` and the demo pair dropped from the mini fixture — mini fixtures must stay runnable under campaign disk budget while the full fixture keeps ≥2 groups for the real run.
 *Example*: genome-tracks full-line-sc (fdfeec6 + b696baa/dede881).
+
+## 2026-08-23 auto-sra mini track (STAR pathology)
+
+**Symptom**: STAR-avx2 (2.7.11b, conda SIMD wrapper family) hangs at startup — threads created ("Created thread # 19") but never reaches "loading genome"; ~15 cores busy-wait for hours with zero file output. Non-deterministic: an identical earlier run on the same box completed alignment at 04:51.
+**Root cause**: host-specific startup race in the avx2 build (wrapper selects by /proc/cpuinfo). Same index + same params with STAR-plain: genome load → GTF → mapping in ~1 second.
+**Fix**: box-local surgery — replace the env's STAR wrapper with `exec STAR-plain` (backup kept). Do NOT change the workflow repo: SIMD auto-selection stays correct for other hosts.
+*Example*: auto-sra mini track, bioinfo-wsx (2026-08-23).
+
+**Lesson — hang detection**: a rule that writes nothing for hours while CPUs spin is a tool startup hang, not a slow mapping job. Check the tool's own log phases (STAR: "loading genome" marker) before touching the workflow; validate with the plain build before calling it a port defect.
+*Example*: auto-sra mini track (2026-08-23).
+
+**Lesson — reference provenance honesty**: a "GRCh38" reference that is actually a chr21-only subset existed on the box since old-index days — mini verdicts must record the actual reference content, not the label.
+*Example*: auto-sra mini track (2026-08-23).
