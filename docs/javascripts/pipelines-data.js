@@ -2175,7 +2175,7 @@ window.OXO_PIPELINES = [
   },
   {
     "name": "oxo-flow-clindet",
-    "title": "Clinical WES/WGS tumor/normal variant calling + RNA fusion & mutation + tumor-only sub-workflows",
+    "title": "Cancer genome & transcriptome analysis: WES/WGS/RNA somatic+germline+CNV+SV calling, MAF annotation, case report",
     "origin": "port",
     "rating": "live-verified",
     "engine": "snakemake",
@@ -2191,8 +2191,13 @@ window.OXO_PIPELINES = [
     "tags": [
       "wes",
       "wgs",
+      "rna",
       "somatic",
       "germline",
+      "cnv",
+      "sv",
+      "unpaired",
+      "tumor-only",
       "maf",
       "vep",
       "vcf2maf",
@@ -2202,46 +2207,35 @@ window.OXO_PIPELINES = [
       "muse",
       "strelka2",
       "caveman",
-      "rna",
-      "fusion",
-      "arriba",
-      "star",
-      "lofreq",
-      "freebayes",
-      "unpaired",
-      "cnv",
-      "freec",
+      "delly",
+      "svaba",
+      "manta",
+      "control-freec",
       "sequenza",
       "exomedepth",
       "ascat",
-      "delly",
-      "svaba"
+      "arriba",
+      "trust4",
+      "isofox",
+      "bqsr"
     ],
-    "description": "Clinical WES tumor/normal pipeline: fastp QC -> bwa+fixmate+samtools sort -> GATK markdup -> five SNV callers (Mutect2, VarDict, VarScan2, MuSE, HaplotypeCaller) plus germline Strelka2+Manta and CaVEMan -> bcftools normalization -> vcf2maf with VEP annotation -> merged MAF -> region-based mutation flagging -> cancer case report (Rmd/knitr) and MultiQC. Ported verbatim from zyllifeworld/clindet default paired WES path, with opt-in BQSR. The RNA sub-workflow (main_rna.oxoflow) adds fastp -> STAR 3-pass -> arriba fusion detection -> unpaired SNV callers plus RSEM/kallisto/salmon/TRUST4 quantifiers and isofox (live-verified with synthetic back-splice fusion fixtures). The unpaired workflow (main_unpaired.oxoflow) runs the WES tumor-only branch (7 callers + VCF/MAF merge); the WGS workflow (main_wgs.oxoflow) runs whole-genome callers, delly/svaba/Manta SV and the shared CNV subset (Control-FREEC, sequenza, ExomeDepth, ASCAT).",
+    "description": "Port of zyllifeworld/clindet across all four run types: paired WES (default), tumor-only WES (unpaired), WGS, and RNA \u2014 239 rules. Somatic SNV (Mutect2, VarDict, VarScan2, MuSE, HaplotypeCaller) + germline (Strelka2+Manta, CaVEMan); CNV subset (Control-FREEC, Sequenza, ExomeDepth, ASCAT); WGS SV (delly full chain incl. germ, svaba, Manta somaticSV); opt-in BQSR recalibration; vcf2maf/VEP MAF annotation, region flagging, cancer case report, MultiQC; RNA fusion/expression branch (arriba/TRUST4/isofox). Live-verified end to end on tx-ubuntu.",
     "scope": [
-      "fastp QC/trimming",
-      "bwa mem + samtools fixmate + sort (markdup-ready)",
-      "GATK MarkDuplicates + CollectHsMetrics + BQSR path (opt-in recal_bqsr; symlink by default like upstream mini-test)",
-      "Somatic SNV: Mutect2 (with GetPileupSummaries/CalculateContamination), VarDict (testsomatic/var2vcf_paired), VarScan2 (mpileup/somatic/processSomatic/filter), MuSE (call/sump), HaplotypeCaller",
-      "Germline: Strelka2 + Manta (config + runWorkflow), CaVEMan (call/flag/germline flag)",
-      "bcftools normalization + per-caller FILTER rules",
-      "vcf2maf with VEP (cache 110)",
-      "MAF merge (somatic + germline) + merge_paired_vcf (merge_caller_vcfs.py, the upstream mini-test default stage call_mut_vcf)",
-      "Mutation flagging against BED tracks (flag_mutation_maf.R)",
-      "Cancer case report (Rmd sections) + MultiQC",
-      "RNA sub-workflow (main_rna.oxoflow): fastp -> STAR 3-pass -> arriba fusion -> unpaired SNV callers -> norm_filter, plus RSEM/kallisto/salmon/TRUST4 quantifiers and isofox (non-default stages upstream, run with -t)",
-      "WES unpaired (main_unpaired.oxoflow): mapping -> 7 tumor-only callers (Mutect2/HaplotypeCaller/varscan2/Strelka+Manta/vardict/lofreq/freebayes) -> merge_unpaired_vcf -> VEP-gated MAF tail",
-      "WGS (main_wgs.oxoflow): whole-genome callers (no exome restrictions), CollectWgsMetrics/CollectInsertSizeMetrics, delly + svaba + Manta SV",
-      "CNV subset (cnv_enabled=true, upstream somatic_cnv_list): Control-FREEC, sequenza, ExomeDepth, ASCAT"
+      "paired WES (main.oxoflow, 76 rules): fastp QC, bwa+GATK mapping/markdup, opt-in BQSR, 5 somatic SNV callers + Strelka2/Manta/CaVEMan germline, vcf2maf/VEP MAF, region flagging, cancer report, MultiQC",
+      "tumor-only WES (main_unpaired.oxoflow, 32 rules): 7 tumor-only callers (Mutect2/VarDict/VarScan2/MuSE/HaplotypeCaller/Strelka+Manta/freebayes), merge + MAF",
+      "WGS (main_wgs.oxoflow, 90 rules): WGS metrics, the paired WES callers with WGS config, delly SV chain (call/filter/to_vcf/germ/delly2bnd), svaba, Manta somaticSV",
+      "RNA (main_rna.oxoflow, 41 rules): arriba/TRUST4/isofox fusion + expression (live-verified previously)",
+      "CNV (paired WES, cnv_enabled gate): freec_config/call/plot (Control-FREEC), sequenza bam2seqz/binning/call, ExomeDepth, ASCAT + purity/ploidy extraction",
+      "Non-human reference parity: GRCh37/38 + non-human config keys"
     ],
     "excluded": [
-      "CNV purple/amber/cobalt \u2014 HMF tools run in the upstream's custom hmftools container with the multi-GB hmf_pipeline_resources tree (built locally upstream, pull_zenodo run type); dryclean has no rule file upstream (list-only)",
-      "CNV FACETS/facets-suite \u2014 custom facets-suite-dev.img + snp-pileup PoN chain (requires compiling cnv_facets C++)",
-      "SV gridss/BRASS/linx/igv-caller/jasmine \u2014 custom containers (gridss2/brass634/jasminesv) + Sanger VAGrENT/BRASS and HMF resource trees",
-      "WGS unpaired sage/deepvariant/pindel + WGS Battenberg/ecDNA/VirusScan \u2014 custom containers + HMF/Sanger resource trees",
-      "conpair contamination check \u2014 custom conpair_latest.sif container"
+      "CNV: purple/amber/cobalt/FACETS \u2014 Broad/Illumina licensed pipelines + heavy Sanger reference trees (the conda-portable subset freec/sequenza/exomedepth/ASCAT IS ported and live-verified)",
+      "SV: gridss/BRASS/linx/igcaller/jasmine \u2014 upstream custom containers (dellytools/delly, brass, linx) or hardcoded local software paths (/public/ClinicalExam/...); delly/svaba/Manta ARE ported",
+      "sansa-annotation (SV_sansa_*) + svaba svanno \u2014 gated on an upstream sansa config absent from the mini test",
+      "telomerecat \u2014 marked 'departed' upstream",
+      "ASCATsc (BRASS input chain) + multi-lane/multi-sample cohort merges \u2014 WES-default-path-specific"
     ],
-    "rule_count": 238,
+    "rule_count": 239,
     "tools": [
       "fastp",
       "bwa (>=0.7.18)",
@@ -2260,24 +2254,7 @@ window.OXO_PIPELINES = [
       "ensembl-vep 114.2",
       "libboost 1.85.0",
       "multiqc",
-      "R >= 4.4 (knitr, data.table, gpgr via post-deploy)",
-      "STAR (align env)",
-      "arriba 2.4.0 (container)",
-      "lofreq",
-      "freebayes",
-      "RSEM",
-      "kallisto",
-      "salmon",
-      "TRUST4",
-      "isofox",
-      "Control-FREEC >=11.6",
-      "sequenza-utils",
-      "r-sequenza",
-      "ExomeDepth (Bioc)",
-      "ASCAT >=3.2",
-      "alleleCounter",
-      "delly 1.7.2 (container)",
-      "svaba (container)"
+      "R >= 4.4 (knitr, data.table, gpgr via post-deploy)"
     ],
     "installation": {
       "engine": "oxo-flow >= 0.12.0",
@@ -2293,27 +2270,10 @@ window.OXO_PIPELINES = [
     "license": "Apache-2.0",
     "upstream_license": "MIT",
     "quickstart": "oxo-flow run main.oxoflow",
-    "fidelity_md": "| Upstream process/rule | oxo-flow rule | Tool (version) | Notes |\n|---|---|---|---|\n| fastp (T/N) | `fastp_tumor_sample` / `fastp_normal_sample` | fastp | identical flags (`-w 8 -Q -c -L`) |\n| bam flagstat (T/N) | `bam_flagstat_tumor` / `bam_flagstat_normal` | samtools | identical command |\n| map_reads (T/N) | `map_reads_tumor` / `map_reads_normal` | bwa >=0.7.18, samtools | `bwa mem -MR` + `fixmate` + `sort` |\n| mark_duplicates (T/N) | `mark_duplicates_tumor` / `mark_duplicates_normal` | gatk4 4.6.2.0 (container) | `MarkDuplicates --CREATE_INDEX true`, `VALIDATION_STRINGENCY SILENT` |\n| recal_link (T/N) | `recal_link_tumor` / `recal_link_normal` | ln -s | BQSR off (upstream mini-test default) |\n| bed_to_interval_list | `bed_to_interval_list` | gatk4 (container) | `BedToIntervalList --SORT true` |\n| picard_collect_wes (T/N) | `picard_collect_wes_tumor` / `picard_collect_wes_normal` | gatk4 (container) | `CollectHsMetrics` |\n| call_variants_HaplotypeCaller | `call_variants_HaplotypeCaller` | gatk4 (container) | identical `-A` annotation flags |\n| vardict_paired_mode | `vardict_paired_mode` | vardict-java 1.8.3 (container) | `vardict-java` + `testsomatic.R` + `var2vcf_paired.pl` |\n| vardict_filter_somatic | `vardict_filter_somatic` | bcftools >=1.22 | StrongSomatic/LikelySomatic + `SSF <= 0.05` |\n| varscan2 mpileup/call/processSomatic/filter | `varscan2_mpileup` \u2026 `merge_somatic` | varscan 2.4.6, samtools, bcftools | `--strand-filter 1`, `--output-vcf 1`, concat chain |\n| muse_call / muse_sump | `muse_call` / `muse_sump` | muse 2.1.2 (container) | `sump -E -n {threads} -D {dbsnp_gz}` |\n| mutect2 chain | `M2_ST`/`M2_SNC`/`M2_contam`/`mutect2`/`M2_filter` | gatk4 (container) | `-pon` only when `wes_pon` set (upstream hg38_chr21 has none) |\n| call_config_strelka | `call_config_strelka` | manta | `configManta.py --exome --callRegions` |\n| call_strelka_manta_germline | `call_strelka_manta_germline` | strelka2, manta | `configureStrelkaGermlineWorkflow` + `runWorkflow.py` |\n| merge_strelka_manta | `merge_strelka_manta` | bcftools | upstream `{params.indel}` bug fixed (single concat+sort) |\n| strelka somatic (via manta) | `call_strelka_somatic_manta` + `merge_strelka_somatic_manta` | strelka2, manta, bcftools | same pipeline on somatic config |\n| CM_cnv | `CM_cnv` | touch | empty tumour/normal CNV beds (upstream default) |\n| CM_call / CM_flag | `CM_call` / `CM_flag` | caveman 1.15.3 (container) | `-td 2 -nd 2 -seqType WGS -no-flagging`, flag with `-umv .` |\n| CM_germ_flag | `CM_germ_flag` | bcftools | `-e 'DP<=30' -s LowDP --mode x` |\n| vcf_norm (per caller) | `vcf_norm_{Mutect2,vardict,varscan2,muse,HaplotypeCaller,germline_strelkamanta,germline_caveman}` | bcftools >=1.22 | verbatim per-caller FILTER rules incl. vardict contig-header branch |\n| loop_vcf2maf_paired | `vcf2maf_{Mutect2,vardict,varscan2,muse,HaplotypeCaller}` | vcf2maf 1.6.22, ensembl-vep 114.2 | verbatim tumor/normal IDs per `get_vcf_name` |\n| loop_vcf2maf_germ_paired | `vcf2maf_germ_strelkamanta` / `vcf2maf_germ_caveman` | vcf2maf 1.6.22 | TUMOUR/NORMAL for CaVEMan |\n| merge_loop (somatic) | `merge_paired_maf` | merge_maf.R (verbatim) | driven via scripts/smk.R shim |\n| merge_loop_germline | `merge_paired_germ_maf` | merge_maf.R (verbatim) | |\n| make_region_bed_list + flag_mutation_pairead_maf | `make_region_bed_list` + `flag_mutation_pairead_maf` | flag_mutation_maf.R (verbatim) | empty bed_list = header-only TSV |\n| run_cancer_report | `run_cancer_report` | R >=4.4 (knitr, gpgr via post-deploy) | only MAF/panel/Rmd params; CNV/QC params unset (NULL) as in upstream default path |\n| combined_multiqc | `prep_multiqc_data` + `combined_multiqc_prep_multiqc_data` + `combined_multiqc` | multiqc | conpair/purple inputs out of scope |\n\n**Not ported** (upstream branches with reasons):\n- CNV purple/amber/cobalt: HMF tools run in the upstream's custom hmftools.sif with the multi-GB hmf_pipeline_resources tree (built locally upstream, `pull_zenodo` run type) \u2014 not a portable image; dryclean has no rule file upstream (list-only).\n- CNV FACETS/facets-suite: custom facets-suite-dev.img + snp-pileup PoN chain, requires compiling cnv_facets C++.\n- CNV CNA_ABSOLUTE_GISTIC / ASCAT_GISTIC: ABSOLUTE + GISTIC2 are Broad tools without conda packages; SM_check / CNA_Battenberg are marked \"for future development\" upstream.\n- SV gridss/BRASS/linx/igv-caller/jasmine: custom containers (gridss2/brass634/jasminesv sifs) + Sanger VAGrENT/BRASS and HMF resource trees.\n- WGS unpaired callers (sage/deepvariant/pindel/octopus/UnifiedGeniTyper) and WGS Battenberg/ecDNA/VirusScan: custom containers + resource trees as above.\n- conpair contamination check: custom conpair_latest.sif container.\n- non-human genomes: supported at config level (WBcel235/mm10 parity table in the repo README) \u2014 the upstream rule set is species-agnostic.\n| fastp_trim (RNA) | `fastp_trim` | fastp | upstream RNA fastp stage |\n| STAR 1-pass | `STAR_1_pass` | STAR (align env) | pass1 genome load + splice junctions |\n| STAR arriba map | `STAR_arriba_map` | STAR | `--chimSegmentMin 10` + arriba filter chain |\n| STAR mut map | `STAR_mut_map` | STAR | mutect2-ready alignment |\n| arriba fusion | `arriba_fusion` | arriba 2.4.0 (container) | mini arriba DBs; synthetic GT/AG back-splice fixtures (20kb chrX) |\n| link_bam / SplitNCigarReads | `link_bam` / `SplitNCigarReads` | gatk4 (container) | RNA mutation-call prep |\n| mutect2 (RNA) | `mutect2` / `M2_filter` | gatk4 (container) | same chain as WES |\n| unpaired callers | `unpaired_*` (strelka/manta/vardict/freebayes) | strelka2, manta, vardict, freebayes | single-sample mode |\n| lofreq | `lofreq_call_up` + `lofreq_norm_filter` | lofreq | call-parallel + norm filter |\n| varscan2 (RNA) | `varscan2_*` | varscan 2.4.6 | mpileup/snp/indel/filter chain |\n| norm_filter | `norm_filter_*` | bcftools | per-caller final filters |\n| recalibrate_base_qualities (T/N) | `recalibrate_base_qualities_{tumor,normal}` | gatk4 (container) | BaseRecalibrator with upstream varanno known-sites; when = config.recal_bqsr |\n| apply_base_quality_recalibration (T/N) | `apply_base_quality_recalibration_{tumor,normal}` | gatk4 (container) | ApplyBQSR + index; when = config.recal_bqsr |\n| freec_config / freec_call_paired / plot_freec | `freec_config` / `freec_call_paired` / `plot_freec` | Control-FREEC >=11.6, sambamba | verbatim config_freec.py + config_exome.ini; bioconda control-freec (upstream runs freec in the facets-suite container) |\n| sequenza bam2seqz/binning/call | `sequenza_bam2seqz` / `sequenza_seqz_binning` / `sequenza_call` | sequenza-utils, r-sequenza | upstream's referenced scripts/sequenza.R does not exist in the tree \u2014 port ships the standard extract->fit->results chain |\n| CNA_exomedepth | `CNA_exomedepth` | ExomeDepth (Bioc) | verbatim ExomeDepth.R; documented use_target_bed switch for the mini fixture |\n| CNA_ASCAT / ASCAT_EXTRACT_PURITYPLOIDY | `CNA_ASCAT` / `ASCAT_EXTRACT_PURITYPLOIDY` | ASCAT >=3.2, alleleCounter | verbatim ASCAT.R (chroms/GC/rt from config); ascat_pp.R verbatim |\n| WES unpaired branch | `rules/70_unpaired.oxoflow` | gatk4/varscan/strelka2/manta/vardict/lofreq/freebayes | 7 tumor-only callers + merge_unpaired_vcf + VEP-gated MAF tail |\n| WGS callers | `rules/91_wgs_callers.oxoflow` | gatk4/muse/varscan/vardict/strelka2/manta | no --intervals/--callRegions/--exome; Manta emits somaticSV; germline Strelka takes both bams |\n| SV_delly / SV_svaba | `SV_delly` chain / `SV_svaba` | delly 1.7.2, svaba (containers) | verbatim; delly2bnd.py verbatim (upstream env lacks cyvcf2 \u2014 added, upstream bug) |\n",
+    "fidelity_md": "| Upstream process/rule | oxo-flow rule | Tool (version) | Notes |\n|---|---|---|---|\n| fastp (T/N) | `fastp_tumor_sample` / `fastp_normal_sample` | fastp | identical flags (`-w 8 -Q -c -L`) |\n| bam flagstat (T/N) | `bam_flagstat_tumor` / `bam_flagstat_normal` | samtools | identical command |\n| map_reads (T/N) | `map_reads_tumor` / `map_reads_normal` | bwa >=0.7.18, samtools | `bwa mem -MR` + `fixmate` + `sort` |\n| mark_duplicates (T/N) | `mark_duplicates_tumor` / `mark_duplicates_normal` | gatk4 4.6.2.0 (container) | `MarkDuplicates --CREATE_INDEX true`, `VALIDATION_STRINGENCY SILENT` |\n| recal_link (T/N) | `recal_link_tumor` / `recal_link_normal` | ln -s | BQSR off (upstream mini-test default) |\n| bed_to_interval_list | `bed_to_interval_list` | gatk4 (container) | `BedToIntervalList --SORT true` |\n| picard_collect_wes (T/N) | `picard_collect_wes_tumor` / `picard_collect_wes_normal` | gatk4 (container) | `CollectHsMetrics` |\n| call_variants_HaplotypeCaller | `call_variants_HaplotypeCaller` | gatk4 (container) | identical `-A` annotation flags |\n| vardict_paired_mode | `vardict_paired_mode` | vardict-java 1.8.3 (container) | `vardict-java` + `testsomatic.R` + `var2vcf_paired.pl` |\n| vardict_filter_somatic | `vardict_filter_somatic` | bcftools >=1.22 | StrongSomatic/LikelySomatic + `SSF <= 0.05` |\n| varscan2 mpileup/call/processSomatic/filter | `varscan2_mpileup` \u2026 `merge_somatic` | varscan 2.4.6, samtools, bcftools | `--strand-filter 1`, `--output-vcf 1`, concat chain |\n| muse_call / muse_sump | `muse_call` / `muse_sump` | muse 2.1.2 (container) | `sump -E -n {threads} -D {dbsnp_gz}` |\n| mutect2 chain | `M2_ST`/`M2_SNC`/`M2_contam`/`mutect2`/`M2_filter` | gatk4 (container) | `-pon` only when `wes_pon` set (upstream hg38_chr21 has none) |\n| call_config_strelka | `call_config_strelka` | manta | `configManta.py --exome --callRegions` |\n| call_strelka_manta_germline | `call_strelka_manta_germline` | strelka2, manta | `configureStrelkaGermlineWorkflow` + `runWorkflow.py` |\n| merge_strelka_manta | `merge_strelka_manta` | bcftools | upstream `{params.indel}` bug fixed (single concat+sort) |\n| strelka somatic (via manta) | `call_strelka_somatic_manta` + `merge_strelka_somatic_manta` | strelka2, manta, bcftools | same pipeline on somatic config |\n| CM_cnv | `CM_cnv` | touch | empty tumour/normal CNV beds (upstream default) |\n| CM_call / CM_flag | `CM_call` / `CM_flag` | caveman 1.15.3 (container) | `-td 2 -nd 2 -seqType WGS -no-flagging`, flag with `-umv .` |\n| CM_germ_flag | `CM_germ_flag` | bcftools | `-e 'DP<=30' -s LowDP --mode x` |\n| vcf_norm (per caller) | `vcf_norm_{Mutect2,vardict,varscan2,muse,HaplotypeCaller,germline_strelkamanta,germline_caveman}` | bcftools >=1.22 | verbatim per-caller FILTER rules incl. vardict contig-header branch |\n| loop_vcf2maf_paired | `vcf2maf_{Mutect2,vardict,varscan2,muse,HaplotypeCaller}` | vcf2maf 1.6.22, ensembl-vep 114.2 | verbatim tumor/normal IDs per `get_vcf_name` |\n| loop_vcf2maf_germ_paired | `vcf2maf_germ_strelkamanta` / `vcf2maf_germ_caveman` | vcf2maf 1.6.22 | TUMOUR/NORMAL for CaVEMan |\n| merge_loop (somatic) | `merge_paired_maf` | merge_maf.R (verbatim) | driven via scripts/smk.R shim |\n| merge_loop_germline | `merge_paired_germ_maf` | merge_maf.R (verbatim) | |\n| make_region_bed_list + flag_mutation_pairead_maf | `make_region_bed_list` + `flag_mutation_pairead_maf` | flag_mutation_maf.R (verbatim) | empty bed_list = header-only TSV |\n| run_cancer_report | `run_cancer_report` | R >=4.4 (knitr, gpgr via post-deploy) | only MAF/panel/Rmd params; CNV/QC params unset (NULL) as in upstream default path |\n| combined_multiqc | `prep_multiqc_data` + `combined_multiqc_prep_multiqc_data` + `combined_multiqc` | multiqc | conpair/purple inputs out of scope |\n\n**Not ported** (upstream branches, with reasons): CNV purple/amber/cobalt/FACETS (Broad/Illumina licensed); SV gridss/BRASS/linx/igcaller/jasmine (custom containers or hardcoded local software paths); sansa-annotation + svaba svanno (sansa config absent); telomerecat (departed upstream). Everything else is ported: CNV portable subset (freec/sequenza/exomedepth/ASCAT), WGS SV subset (delly/svaba/Manta), unpaired mode, RNA branch, BQSR stage \u2014 see the main_unpaired/main_wgs/main_rna workflows and rules/{70_unpaired,80_cnv,90_wgs,91_wgs_callers}.",
     "compute": "up to 30 threads / 10 GB per rule",
-    "quickstart_note": "Needs clinical sequencing inputs \u2014 see Requirements. RNA sub-workflow: `oxo-flow run main_rna.oxoflow -t fastp_trim -t STAR_1_pass -t STAR_arriba_map -t STAR_mut_map -t arriba_fusion -t mutect2 -t lofreq -t varscan2 -t norm_filter` (fixture kit ships in test/fixtures). Unpaired: `oxo-flow run main_unpaired.oxoflow`. WGS: `oxo-flow run main_wgs.oxoflow`. CNV: `oxo-flow run main.oxoflow --arg cnv_enabled=true`.",
-    "coverage": "default-path; rna-subworkflow (41 rules); unpaired (32); wgs (89); cnv subset (10, opt-in)",
-    "extra_workflows": [
-      {
-        "workflow": "main_rna.oxoflow",
-        "dag": "oxo-flow-clindet-rna",
-        "label": "RNA sub-workflow (main_rna.oxoflow)"
-      },
-      {
-        "workflow": "main_unpaired.oxoflow",
-        "dag": "oxo-flow-clindet-unpaired",
-        "label": "WES unpaired / tumor-only (main_unpaired.oxoflow)"
-      },
-      {
-        "workflow": "main_wgs.oxoflow",
-        "dag": "oxo-flow-clindet-wgs",
-        "label": "WGS (main_wgs.oxoflow)"
-      }
-    ]
+    "quickstart_note": "Needs clinical sequencing inputs \u2014 see Requirements.",
+    "coverage": "4 workflows (paired WES default + unpaired + WGS + RNA), all live-verified on tx-ubuntu (engine 0.14.1)"
   },
   {
     "name": "oxo-flow-auto-sra-rnaseq-pipeline",

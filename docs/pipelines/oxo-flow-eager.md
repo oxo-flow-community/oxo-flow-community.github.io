@@ -123,7 +123,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-eager
 | `min_allele_freq_hom` | `0.8` | — | `multivcfanalyzer` |
 | `min_base_coverage` | `0` | — | `multivcfanalyzer` |
 | `min_genotype_quality` | `0` | — | `multivcfanalyzer` |
-| `mtnucratio_header` | `` | — | `mtnucratio` |
+| `mtnucratio_header` | `MT` | — | `mtnucratio` |
 | `multivcf_samples` | `'S1', 'S2'` | — | — |
 | `nuclear_contamination_header` | `` | — | `nuclear_contamination` |
 | `out_dir` | `results` | — | — |
@@ -141,9 +141,9 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-eager
 | `pmdtools_threshold` | `3` | — | `pmdtools` |
 | `pmdtools_treatment_arg` | `--UDGminus` | — | `pmdtools` |
 | `post_ar_trim_front` | `0` | — | `post_ar_fastq_trimming` |
-| `post_ar_trim_front2` | `0` | — | `post_ar_fastq_trimming` |
+| `post_ar_trim_front2` | `0` | — | — |
 | `post_ar_trim_tail` | `0` | — | `post_ar_fastq_trimming` |
-| `post_ar_trim_tail2` | `0` | — | `post_ar_fastq_trimming` |
+| `post_ar_trim_tail2` | `0` | — | — |
 | `preseq_bootstrap` | `100` | — | — |
 | `preseq_cval` | `0.95` | — | — |
 | `preseq_maxextrap` | `10000000000` | — | — |

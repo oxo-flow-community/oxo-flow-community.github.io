@@ -4091,7 +4091,7 @@
         "value_type": "int"
       },
       {
-        "default": "",
+        "default": "MT",
         "key": "mtnucratio_header",
         "used_by": [
           "mtnucratio"
@@ -4232,9 +4232,7 @@
       {
         "default": 0,
         "key": "post_ar_trim_front2",
-        "used_by": [
-          "post_ar_fastq_trimming"
-        ],
+        "used_by": [],
         "value_type": "int"
       },
       {
@@ -4248,9 +4246,7 @@
       {
         "default": 0,
         "key": "post_ar_trim_tail2",
-        "used_by": [
-          "post_ar_fastq_trimming"
-        ],
+        "used_by": [],
         "value_type": "int"
       },
       {
@@ -4941,6 +4937,205 @@
     "workflow": "main.oxoflow",
     "config": [
       {
+        "default": false,
+        "description": "upstream config: benchmarking (Snakefile rule benchmark / benchmarking.smk; the CHM1 sample and chm-eval-kit downloads are excluded, see module header).",
+        "key": "benchmarking_activate",
+        "used_by": [
+          "benchmarking::chromosome_map",
+          "benchmarking::gather_benchmark_calls",
+          "benchmarking::rename_chromosomes"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "description": "upstream config: linear-reference (bwa) aligner branch of mapping.smk (map_reads_bwa + ref.smk bwa_index). The default path aligns with vg giraffe to the pangenome (ref/pangenome/activate = true upstream).",
+        "key": "bwa_align_activate",
+        "used_by": [
+          "mapping_bwa::bwa_index",
+          "mapping_bwa::map_reads_bwa"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "GRCh38",
+        "key": "cadd_build",
+        "used_by": [
+          "plugins::download_cadd_scores_for_vep"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "snv",
+        "key": "cadd_variant_type",
+        "used_by": [
+          "plugins::download_cadd_scores_for_vep"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "v1.7",
+        "key": "cadd_version",
+        "used_by": [
+          "plugins::download_cadd_scores_for_vep"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "description": "upstream config: fusion calling branch (fusion_calling.smk star_arriba meta wrapper: star_index / star_align / arriba / annotate_exons / convert_fusions / sort_arriba_calls / bcftools_concat_candidates).",
+        "key": "fusion_activate",
+        "used_by": [
+          "fusion::annotate_exons",
+          "fusion::arriba",
+          "fusion::bcf_index_arriba",
+          "fusion::bcftools_concat_candidates",
+          "fusion::convert_fusions",
+          "fusion::sort_arriba_calls",
+          "fusion::star_align",
+          "fusion::star_index"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "description": "upstream config: maf/activate (group_bcf_to_vcf + group_vcf_to_maf).",
+        "key": "maf_activate",
+        "used_by": [
+          "maf::group_bcf_to_vcf_fusions",
+          "maf::group_bcf_to_vcf_variants",
+          "maf::group_vcf_to_maf_fusions",
+          "maf::group_vcf_to_maf_variants"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "description": "upstream config: mutational_burden/activate + events (calculate_covered_coding_sites + estimate_mutational_burden; events are comma-joined, split to space-separated in the rule shells).",
+        "key": "mutational_burden_activate",
+        "used_by": [
+          "burden_signatures::calculate_covered_coding_sites",
+          "burden_signatures::determine_coding_regions",
+          "burden_signatures::estimate_mutational_burden_curve",
+          "burden_signatures::estimate_mutational_burden_hist",
+          "population::annotated_index",
+          "population::gather_annotated_calls"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "somatic_tumor_low,somatic_tumor_medium,somatic_tumor_high",
+        "key": "mutational_burden_events",
+        "used_by": [
+          "burden_signatures::estimate_mutational_burden_curve",
+          "burden_signatures::estimate_mutational_burden_hist"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "description": "upstream config: mutational_signatures/activate (create_mutational_context_file ... plot_mutational_signatures; upstream default events = [some_id], samples = [tumor], frozen in the module).",
+        "key": "mutational_signatures_activate",
+        "used_by": [
+          "burden_signatures::annotate_descriptions",
+          "burden_signatures::annotate_mutational_signatures",
+          "burden_signatures::bcf_index_final",
+          "burden_signatures::create_mutational_context_file",
+          "burden_signatures::determine_coding_regions",
+          "burden_signatures::download_cosmic_signatures",
+          "burden_signatures::join_mutational_signatures",
+          "burden_signatures::plot_mutational_signatures"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "description": "upstream config: plugins (download_cadd_scores_for_vep; download_revel and process_revel_scores are already ported in ref.oxoflow). cadd_build / cadd_version / cadd_variant_type are the upstream wildcards of the same rule with their upstream defaults.",
+        "key": "plugins_activate",
+        "used_by": [
+          "plugins::download_cadd_scores_for_vep"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "description": "upstream config: population/db/activate + path/alias/fdr/events (rules clean_population_db / population_filter_variants / population_db_update).",
+        "key": "population_db_activate",
+        "used_by": [
+          "population::annotated_index",
+          "population::bcf_index_cleaned_db",
+          "population::bcf_index_population_filtered",
+          "population::clean_population_db",
+          "population::gather_annotated_calls",
+          "population::population_db_update",
+          "population::population_filter_variants"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "tumor",
+        "key": "population_db_alias",
+        "used_by": [
+          "population::population_filter_variants"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "somatic_tumor_high,somatic_tumor_medium",
+        "key": "population_db_events",
+        "used_by": [
+          "population::population_filter_variants"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 0.05,
+        "key": "population_db_fdr",
+        "used_by": [
+          "population::population_filter_variants"
+        ],
+        "value_type": "float"
+      },
+      {
+        "default": "resources/population_db.variants.bcf",
+        "key": "population_db_path",
+        "used_by": [
+          "population::clean_population_db",
+          "population::population_db_update"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "description": "upstream config: primers/trimming (rules assign_primers ... build_primer_regions). primers_fa1/primers_fa2 are the upstream primers/trimming/primers_fa{1,2} fasta files (empty upstream default = primers flow off); fa2 empty means single-end primer fasta.",
+        "key": "primers_activate",
+        "used_by": [
+          "mapping_bwa::bwa_index",
+          "primers::assign_primers",
+          "primers::build_primer_regions",
+          "primers::filter_primerless_reads",
+          "primers::filter_unmapped_primers",
+          "primers::map_primers",
+          "primers::primer_to_bed",
+          "primers::trim_primers"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "",
+        "key": "primers_fa1",
+        "used_by": [
+          "primers::map_primers"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "primers_fa2",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
         "default": "test/fixtures/raw",
         "description": "Path to the raw paired-end FASTQs of the single sample (upstream config/units.tsv points at absolute /projects/... paths; the port reads from the repository fixtures instead).",
         "key": "reads_dir",
@@ -4948,9 +5143,39 @@
           "mapping::merge_trimmed_fastqs_r1",
           "mapping::merge_trimmed_fastqs_r2",
           "qc::fastqc_r1",
-          "qc::fastqc_r2"
+          "qc::fastqc_r2",
+          "trimming::fastp_pe",
+          "trimming::fastp_pipe",
+          "trimming::fastp_se"
         ],
         "value_type": "string"
+      },
+      {
+        "default": false,
+        "description": "Skip the ref:: download rules (genome, annotation, VEP cache/plugins, pangenome, REVEL, known variants \u2014 ~5 GB of public databases). Set to true when you have pre-placed the files at the resource paths the rules declare (see README \"Reference databases\"); the downloads are hardcoded upstream URLs and need unimpeded network access.",
+        "key": "skip_ref_downloads",
+        "used_by": [
+          "ref::download_revel",
+          "ref::get_annotation",
+          "ref::get_genome",
+          "ref::get_known_variants",
+          "ref::get_pangenome",
+          "ref::get_vep_cache",
+          "ref::get_vep_plugins"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "description": "upstream config: trimming (get_sra / fastp rules). The default path has no trimming configured \u2014 reads pass through mapping::merge_trimmed_fastqs.",
+        "key": "trimming_activate",
+        "used_by": [
+          "trimming::fastp_pe",
+          "trimming::fastp_pipe",
+          "trimming::fastp_se",
+          "trimming::get_sra"
+        ],
+        "value_type": "bool"
       }
     ]
   },
@@ -7028,6 +7253,14 @@
         "value_type": "string"
       },
       {
+        "default": "test/fixtures/cnv/exomedepth_regions.bed",
+        "key": "exomedepth_bed",
+        "used_by": [
+          "CNA_exomedepth"
+        ],
+        "value_type": "string"
+      },
+      {
         "default": true,
         "key": "exomedepth_use_target_bed",
         "used_by": [
@@ -7045,7 +7278,7 @@
         "value_type": "string"
       },
       {
-        "default": "test/fixtures/refs/sequence",
+        "default": "test/fixtures/cnv/freec_chr_fasta",
         "key": "freec_chr_files",
         "used_by": [
           "freec_config"
@@ -7061,7 +7294,7 @@
         "value_type": "string"
       },
       {
-        "default": "scripts/config_exome.ini",
+        "default": "scripts/config_exome.mini.ini",
         "key": "freec_ini_template",
         "used_by": [
           "freec_config"
@@ -7192,7 +7425,7 @@
         "value_type": "string"
       },
       {
-        "default": "test/fixtures/refs/annotations/1000G_phase1.snps.high_confidence.hg38_chr21.vcf.gz",
+        "default": "test/fixtures/refs/annotations/known_sites1.mini.vcf.gz",
         "key": "known_sites1",
         "used_by": [
           "recalibrate_base_qualities_normal",
@@ -7201,7 +7434,7 @@
         "value_type": "string"
       },
       {
-        "default": "test/fixtures/refs/annotations/Mills_and_1000G_gold_standard.indels.hg38_chr21.vcf.gz",
+        "default": "test/fixtures/refs/annotations/known_sites2.mini.vcf.gz",
         "key": "known_sites2",
         "used_by": [
           "recalibrate_base_qualities_normal",
@@ -7456,7 +7689,6 @@
         "default": "test/fixtures/bed/exome_target_hg38_chr21.bed",
         "key": "target_bed",
         "used_by": [
-          "CNA_exomedepth",
           "M2_SNC",
           "M2_ST",
           "M2_filter",
@@ -7561,6 +7793,17 @@
           "mutect2"
         ],
         "value_type": "string"
+      },
+      {
+        "default": false,
+        "description": "run-type switch: WES rules (CollectHsMetrics etc.) gate on !wgs_mode; the WGS workflow sets true and runs CollectWgsMetrics instead",
+        "key": "wgs_mode",
+        "used_by": [
+          "bed_to_interval_list",
+          "picard_collect_wes_normal",
+          "picard_collect_wes_tumor"
+        ],
+        "value_type": "bool"
       }
     ]
   },
