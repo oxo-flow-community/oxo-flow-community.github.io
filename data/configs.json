@@ -6103,6 +6103,64 @@
         "value_type": "string"
       },
       {
+        "default": "test/fixtures/cnv/ascat_alleles/",
+        "key": "ascat_alleles_prefix",
+        "used_by": [
+          "CNA_ASCAT"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "21",
+        "key": "ascat_chroms",
+        "used_by": [
+          "CNA_ASCAT"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/cnv/ascat_gc.txt",
+        "key": "ascat_gc_file",
+        "used_by": [
+          "CNA_ASCAT"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/cnv/ascat_loci/",
+        "key": "ascat_loci_prefix",
+        "used_by": [
+          "CNA_ASCAT"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "ascat_rt_file",
+        "used_by": [
+          "CNA_ASCAT"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "description": "CNV branch (upstream somatic_cnv_list; mini-test default = [] -> off). Set true to run the ported subset (freec/sequenza/exomedepth/ASCAT \u2014 purple/amber/cobalt/facets need the upstream's custom containers, see rules/80_cnv.oxoflow).",
+        "key": "cnv_enabled",
+        "used_by": [
+          "ASCAT_EXTRACT_PURITYPLOIDY",
+          "CNA_ASCAT",
+          "CNA_exomedepth",
+          "all_cnv",
+          "freec_call_paired",
+          "freec_config",
+          "plot_freec",
+          "sequenza_bam2seqz",
+          "sequenza_call",
+          "sequenza_seqz_binning"
+        ],
+        "value_type": "bool"
+      },
+      {
         "default": "test/fixtures/refs/annotations/dbsnp_146.hg38_chr21.vcf.gz",
         "key": "dbsnp",
         "used_by": [],
@@ -6124,6 +6182,14 @@
         "value_type": "string"
       },
       {
+        "default": true,
+        "key": "exomedepth_use_target_bed",
+        "used_by": [
+          "CNA_exomedepth"
+        ],
+        "value_type": "bool"
+      },
+      {
         "default": "test/fixtures/flag",
         "description": "cgpFlagCaVEMan configs (bed-based flags dropped: no chr21 flag data)",
         "key": "flag_config_dir",
@@ -6133,18 +6199,57 @@
         "value_type": "string"
       },
       {
+        "default": "test/fixtures/refs/sequence",
+        "key": "freec_chr_files",
+        "used_by": [
+          "freec_config"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/cnv/freec_chrlen.txt",
+        "key": "freec_chr_len_file",
+        "used_by": [
+          "freec_config"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "scripts/config_exome.ini",
+        "key": "freec_ini_template",
+        "used_by": [
+          "freec_config"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "sambamba",
+        "key": "freec_sambamba",
+        "used_by": [
+          "freec_config"
+        ],
+        "value_type": "string"
+      },
+      {
         "default": "hg38_chr21",
         "key": "genome_version",
         "used_by": [
+          "ASCAT_EXTRACT_PURITYPLOIDY",
           "CM_call",
           "CM_cnv",
           "CM_flag",
           "CM_germ_flag",
+          "CNA_ASCAT",
+          "CNA_exomedepth",
           "M2_SNC",
           "M2_ST",
           "M2_contam",
           "M2_filter",
           "all",
+          "all_cnv",
+          "all_vcf",
+          "apply_base_quality_recalibration_normal",
+          "apply_base_quality_recalibration_tumor",
           "bam_flagstat_normal",
           "bam_flagstat_tumor",
           "bed_to_interval_list",
@@ -6157,6 +6262,8 @@
           "fastp_normal_sample",
           "fastp_tumor_sample",
           "flag_mutation_pairead_maf",
+          "freec_call_paired",
+          "freec_config",
           "make_region_bed_list",
           "map_reads_normal",
           "map_reads_tumor",
@@ -6164,6 +6271,7 @@
           "mark_duplicates_tumor",
           "merge_paired_germ_maf",
           "merge_paired_maf",
+          "merge_paired_vcf",
           "merge_strelka_manta",
           "merge_strelka_somatic_manta",
           "muse_call",
@@ -6171,10 +6279,16 @@
           "mutect2",
           "picard_collect_wes_normal",
           "picard_collect_wes_tumor",
+          "plot_freec",
           "prep_multiqc_data",
           "recal_link_normal",
           "recal_link_tumor",
+          "recalibrate_base_qualities_normal",
+          "recalibrate_base_qualities_tumor",
           "run_cancer_report",
+          "sequenza_bam2seqz",
+          "sequenza_call",
+          "sequenza_seqz_binning",
           "vardict_filter_somatic",
           "vardict_paired_mode",
           "varscan2_call",
@@ -6217,13 +6331,35 @@
           "M2_ST",
           "M2_contam",
           "M2_filter",
+          "apply_base_quality_recalibration_normal",
+          "apply_base_quality_recalibration_tumor",
           "bed_to_interval_list",
           "call_variants_HaplotypeCaller",
           "mark_duplicates_normal",
           "mark_duplicates_tumor",
           "mutect2",
           "picard_collect_wes_normal",
-          "picard_collect_wes_tumor"
+          "picard_collect_wes_tumor",
+          "recalibrate_base_qualities_normal",
+          "recalibrate_base_qualities_tumor"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/refs/annotations/1000G_phase1.snps.high_confidence.hg38_chr21.vcf.gz",
+        "key": "known_sites1",
+        "used_by": [
+          "recalibrate_base_qualities_normal",
+          "recalibrate_base_qualities_tumor"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/refs/annotations/Mills_and_1000G_gold_standard.indels.hg38_chr21.vcf.gz",
+        "key": "known_sites2",
+        "used_by": [
+          "recalibrate_base_qualities_normal",
+          "recalibrate_base_qualities_tumor"
         ],
         "value_type": "string"
       },
@@ -6280,15 +6416,22 @@
         "default": "mini_test",
         "key": "output_dir",
         "used_by": [
+          "ASCAT_EXTRACT_PURITYPLOIDY",
           "CM_call",
           "CM_cnv",
           "CM_flag",
           "CM_germ_flag",
+          "CNA_ASCAT",
+          "CNA_exomedepth",
           "M2_SNC",
           "M2_ST",
           "M2_contam",
           "M2_filter",
           "all",
+          "all_cnv",
+          "all_vcf",
+          "apply_base_quality_recalibration_normal",
+          "apply_base_quality_recalibration_tumor",
           "bam_flagstat_normal",
           "bam_flagstat_tumor",
           "bed_to_interval_list",
@@ -6301,6 +6444,8 @@
           "fastp_normal_sample",
           "fastp_tumor_sample",
           "flag_mutation_pairead_maf",
+          "freec_call_paired",
+          "freec_config",
           "make_region_bed_list",
           "map_reads_normal",
           "map_reads_tumor",
@@ -6308,6 +6453,7 @@
           "mark_duplicates_tumor",
           "merge_paired_germ_maf",
           "merge_paired_maf",
+          "merge_paired_vcf",
           "merge_strelka_manta",
           "merge_strelka_somatic_manta",
           "muse_call",
@@ -6315,10 +6461,16 @@
           "mutect2",
           "picard_collect_wes_normal",
           "picard_collect_wes_tumor",
+          "plot_freec",
           "prep_multiqc_data",
           "recal_link_normal",
           "recal_link_tumor",
+          "recalibrate_base_qualities_normal",
+          "recalibrate_base_qualities_tumor",
           "run_cancer_report",
+          "sequenza_bam2seqz",
+          "sequenza_call",
+          "sequenza_seqz_binning",
           "vardict_filter_somatic",
           "vardict_paired_mode",
           "varscan2_call",
@@ -6353,25 +6505,46 @@
         "value_type": "array"
       },
       {
+        "default": false,
+        "description": "BQSR (upstream config['project']['recal_BQSR'] + resources['varanno'][genome]): recal_bqsr = false is the upstream mini-test default (recal_link symlinks the dedup BAM); set true to run BaseRecalibrator + ApplyBQSR instead.",
+        "key": "recal_bqsr",
+        "used_by": [
+          "apply_base_quality_recalibration_normal",
+          "apply_base_quality_recalibration_tumor",
+          "recal_link_normal",
+          "recal_link_tumor",
+          "recalibrate_base_qualities_normal",
+          "recalibrate_base_qualities_tumor"
+        ],
+        "value_type": "bool"
+      },
+      {
         "default": "test/fixtures/refs/sequence/Homo_sapiens_assembly38_chr21.fasta",
         "description": "Resources (upstream: config['resources'][genome_version])",
         "key": "reference",
         "used_by": [
           "CM_call",
           "CM_flag",
+          "CNA_exomedepth",
           "M2_SNC",
           "M2_ST",
           "M2_filter",
+          "apply_base_quality_recalibration_normal",
+          "apply_base_quality_recalibration_tumor",
           "call_config_strelka",
           "call_strelka_manta_germline",
           "call_strelka_somatic_manta",
           "call_variants_HaplotypeCaller",
+          "freec_config",
           "map_reads_normal",
           "map_reads_tumor",
           "muse_call",
           "mutect2",
           "picard_collect_wes_normal",
           "picard_collect_wes_tumor",
+          "recalibrate_base_qualities_normal",
+          "recalibrate_base_qualities_tumor",
+          "sequenza_bam2seqz",
           "vardict_paired_mode",
           "varscan2_call",
           "varscan2_mpileup",
@@ -6413,6 +6586,14 @@
         "value_type": "bool"
       },
       {
+        "default": "test/fixtures/cnv/sequenza_gc.wig",
+        "key": "sequenza_gc_wiggle",
+        "used_by": [
+          "sequenza_bam2seqz"
+        ],
+        "value_type": "string"
+      },
+      {
         "default": [
           "HaplotypeCaller",
           "vardict",
@@ -6429,6 +6610,7 @@
         "default": "test/fixtures/bed/exome_target_hg38_chr21.bed",
         "key": "target_bed",
         "used_by": [
+          "CNA_exomedepth",
           "M2_SNC",
           "M2_ST",
           "M2_filter",
@@ -6437,6 +6619,7 @@
           "call_strelka_manta_germline",
           "call_strelka_somatic_manta",
           "call_variants_HaplotypeCaller",
+          "freec_config",
           "muse_call",
           "mutect2",
           "vardict_paired_mode",
