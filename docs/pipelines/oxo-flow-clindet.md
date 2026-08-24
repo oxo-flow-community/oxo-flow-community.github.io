@@ -1,17 +1,17 @@
-# Clinical WES tumor/normal variant calling: SNV + germline, MAF annotation, case report
+# Clinical WES tumor/normal variant calling + RNA fusion & mutation sub-workflow
 
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
 
-Clinical WES tumor/normal pipeline: fastp QC -> bwa+fixmate+samtools sort -> GATK markdup -> five SNV callers (Mutect2, VarDict, VarScan2, MuSE, HaplotypeCaller) plus germline Strelka2+Manta and CaVEMan -> bcftools normalization -> vcf2maf with VEP annotation -> merged MAF -> region-based mutation flagging -> cancer case report (Rmd/knitr) and MultiQC. Ported verbatim from zyllifeworld/clindet default paired WES path.
+Clinical WES tumor/normal pipeline: fastp QC -> bwa+fixmate+samtools sort -> GATK markdup -> five SNV callers (Mutect2, VarDict, VarScan2, MuSE, HaplotypeCaller) plus germline Strelka2+Manta and CaVEMan -> bcftools normalization -> vcf2maf with VEP annotation -> merged MAF -> region-based mutation flagging -> cancer case report (Rmd/knitr) and MultiQC. Ported verbatim from zyllifeworld/clindet default paired WES path. The RNA sub-workflow (main_rna.oxoflow) adds fastp -> STAR 3-pass -> arriba fusion detection -> Mutect2/lofreq/VarScan2/freebayes mutation calling, live-verified with synthetic back-splice fusion fixtures.
 
 | | |
 |---:|---|
 | **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | cancer genomics (WES) |
-| **Rules** | 60 |
+| **Rules** | 86 |
 | **Compute** | up to 30 threads / 10 GB per rule |
-| **Tools** | fastp · bwa (>=0.7.18) · samtools · gatk4 4.6.2.0 (container) · bcftools >=1.22 · bgzip · tabix · varscan 2.4.6 · vardict-java 1.8.3 (container) · muse 2.1.2 (container) · strelka2 · manta · caveman 1.15.3 (container) · vcf2maf 1.6.22 · ensembl-vep 114.2 · libboost 1.85.0 · multiqc · R >= 4.4 (knitr, data.table, gpgr via post-deploy) |
+| **Tools** | fastp · bwa (>=0.7.18) · samtools · gatk4 4.6.2.0 (container) · bcftools >=1.22 · bgzip · tabix · varscan 2.4.6 · vardict-java 1.8.3 (container) · muse 2.1.2 (container) · strelka2 · manta · caveman 1.15.3 (container) · vcf2maf 1.6.22 · ensembl-vep 114.2 · libboost 1.85.0 · multiqc · R >= 4.4 (knitr, data.table, gpgr via post-deploy) · STAR (align env) · arriba 2.4.0 (container) · lofreq · freebayes |
 | **Ported** | 2026-08-15 |
 | **License** | Apache-2.0 |
 | **Source** | [zyllifeworld/clindet](https://github.com/zyllifeworld/clindet) |
@@ -23,7 +23,7 @@ Clinical WES tumor/normal pipeline: fastp QC -> bwa+fixmate+samtools sort -> GAT
 oxo-flow run main.oxoflow
 ```
 
-Needs clinical sequencing inputs — see Requirements.
+Needs clinical sequencing inputs — see Requirements. RNA sub-workflow: `oxo-flow run main_rna.oxoflow -t fastp_trim -t STAR_1_pass -t STAR_arriba_map -t STAR_mut_map -t arriba_fusion -t mutect2 -t lofreq -t varscan2 -t norm_filter` (fixture kit ships in test/fixtures).
 
 ## Installation
 
@@ -111,12 +111,13 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - MAF merge (somatic + germline)
 - Mutation flagging against BED tracks (flag_mutation_maf.R)
 - Cancer case report (Rmd sections) + MultiQC
+- RNA sub-workflow (main_rna.oxoflow): fastp -> STAR 3-pass (pass1/arriba/mut) -> arriba fusion detection -> Mutect2/lofreq/VarScan2/freebayes mutation calling -> norm_filter (26 rules, live-verified on synthetic fusion fixtures)
 
 **Excluded**
 
 - CNV branch (purple/amber/cobalt/ASCAT/FACETS/sequenza/freec/exomedepth) — Broad-only, unbuildable without commercial licenses and heavy reference data
 - Extended SV branch (delly/gridss/svaba/BRASS/linx/igv-caller/jasmine) — reference-data heavy, out of default mini-test path
-- RNA branch (arriba/TRUST4/isofox/RNA SNV) — separate sample type, not in default WES path
+- RNA quantifiers (RSEM/kallisto/salmon/TRUST4) and isofox — not in the upstream default stages
 - Unpaired (single-sample) mode — upstream default is paired T/N
 - BQSR recalibration stage — upstream mini-test default sets recal_BQSR=false (the recal_link rules symlink the dedup BAM)
 
@@ -159,6 +160,18 @@ exomedepth — Broad-only, unbuildable without commercial licenses and heavy
 reference data), extended SV branch (delly/gridss/svaba/BRASS/linx/
 igv-caller/jasmine — reference-data heavy), RNA branch (arriba/TRUST4/
 isofox/RNA SNV — separate sample type), unpaired (single-sample) mode.
+| fastp_trim (RNA) | `fastp_trim` | fastp | upstream RNA fastp stage |
+| STAR 1-pass | `STAR_1_pass` | STAR (align env) | pass1 genome load + splice junctions |
+| STAR arriba map | `STAR_arriba_map` | STAR | `--chimSegmentMin 10` + arriba filter chain |
+| STAR mut map | `STAR_mut_map` | STAR | mutect2-ready alignment |
+| arriba fusion | `arriba_fusion` | arriba 2.4.0 (container) | mini arriba DBs; synthetic GT/AG back-splice fixtures (20kb chrX) |
+| link_bam / SplitNCigarReads | `link_bam` / `SplitNCigarReads` | gatk4 (container) | RNA mutation-call prep |
+| mutect2 (RNA) | `mutect2` / `M2_filter` | gatk4 (container) | same chain as WES |
+| unpaired callers | `unpaired_*` (strelka/manta/vardict/freebayes) | strelka2, manta, vardict, freebayes | single-sample mode |
+| lofreq | `lofreq_call_up` + `lofreq_norm_filter` | lofreq | call-parallel + norm filter |
+| varscan2 (RNA) | `varscan2_*` | varscan 2.4.6 | mpileup/snp/indel/filter chain |
+| norm_filter | `norm_filter_*` | bcftools | per-caller final filters |
+
 
 ## Links
 
