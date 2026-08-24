@@ -508,7 +508,7 @@
         "value_type": "array"
       },
       {
-        "default": "test_L1",
+        "default": "L1",
         "key": "lane",
         "used_by": [
           "bwa_mem",
@@ -658,12 +658,29 @@
         "value_type": "bool"
       },
       {
-        "default": 116,
+        "default": false,
+        "key": "vep_cache_ready",
+        "used_by": [
+          "ensemblvep_vep"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": 112,
+        "description": "The VEP cache version must match the VEP binary in envs/vep.yaml (upstream's image pins 116; this env ships ensembl-vep 112, whose cache format is version-locked \u2014 a 116 cache is unreadable). The cache itself is user data (upstream bundles it in the container at /.vep; ~30GB for whole-genome GRCh38, or a gtf2vep subset) \u2014 the VEP rule gates on vep_cache_ready. Upstream fails hard without the cache; set the flag after placing it at vep_dir_cache (see README fidelity table).",
         "key": "vep_cache_version",
         "used_by": [
           "ensemblvep_vep"
         ],
         "value_type": "int"
+      },
+      {
+        "default": "/.vep",
+        "key": "vep_dir_cache",
+        "used_by": [
+          "ensemblvep_vep"
+        ],
+        "value_type": "string"
       },
       {
         "default": "GRCh38",
@@ -708,6 +725,16 @@
           "cellranger_mkref"
         ],
         "value_type": "bool"
+      },
+      {
+        "default": 0,
+        "description": "GB passed to cellranger's --localmem (mkref/count). 0 = auto: 2/3 of the actually-free physical memory (/proc/meminfo MemAvailable, 1 GB floor) \u2014 never the engine's effective memory, which counts swap: cellranger's jobmngr waits forever when --localmem exceeds the free RAM (live: 'Need 6 GB ... (2.6 GB available)' looped for hours on a 3.7GB box). Set a positive number to force a value.",
+        "key": "cellranger_localmem",
+        "used_by": [
+          "cellranger_count",
+          "cellranger_mkref"
+        ],
+        "value_type": "int"
       },
       {
         "default": "",
@@ -848,8 +875,8 @@
         "value_type": "string"
       },
       {
-        "default": "samplesheet.csv",
-        "description": "user samplesheet consumed by CONCAT_H5AD (same columns as upstream)",
+        "default": "test/fixtures/samplesheet.csv",
+        "description": "consumed by CONCAT_H5AD (same columns as upstream)",
         "key": "samplesheet",
         "used_by": [
           "concat_h5ad_cellbender_filter",
@@ -1004,8 +1031,8 @@
         "value_type": "bool"
       },
       {
-        "default": "https://data.gtdb.aau.ecogenomic.org/releases/release232/232.0/auxillary_files/gtdbtk_package/full_package/gtdbtk_r232_data.tar.gz",
-        "description": "GTDB-Tk database: URL of the .tar.gz release or a local directory (upstream --gtdb_db default). gtdbtk_db_preparation unpacks .tar.gz.",
+        "default": "",
+        "description": "GTDB-Tk database: local path to the release .tar.gz or an unpacked directory (upstream --gtdb_db, ~100GB). oxo-flow cannot download it mid-run (the prep rule only unpacks), so the default is empty and run_gtdbtk=true fails fast until a local path is set.",
         "key": "gtdb_db",
         "used_by": [
           "gtdbtk_db_preparation"
@@ -1343,6 +1370,28 @@
         "value_type": "int"
       },
       {
+        "default": true,
+        "description": "GTDB-Tk gate: the ~100GB reference database is user-provided (see the README requirements); run_gtdbtk=false runs the full pipeline minus the GTDB-Tk classification (the documented live-test contract).",
+        "key": "run_gtdbtk",
+        "used_by": [
+          "gtdbtk_db_preparation",
+          "gtdbtk_megahit_comebin",
+          "gtdbtk_megahit_concoct",
+          "gtdbtk_megahit_maxbin2",
+          "gtdbtk_megahit_metabat2",
+          "gtdbtk_megahit_metabinner",
+          "gtdbtk_megahit_semibin2",
+          "gtdbtk_spades_comebin",
+          "gtdbtk_spades_concoct",
+          "gtdbtk_spades_maxbin2",
+          "gtdbtk_spades_metabat2",
+          "gtdbtk_spades_metabinner",
+          "gtdbtk_spades_semibin2",
+          "gtdbtk_summary"
+        ],
+        "value_type": "bool"
+      },
+      {
         "default": "global",
         "key": "semibin_environment",
         "used_by": [
@@ -1541,6 +1590,18 @@
           "dada2_stats"
         ],
         "value_type": "string"
+      },
+      {
+        "default": false,
+        "description": "the four qiime2 rules run in the quay.io/qiime2/amplicon container (~20GB unpacked \u2014 needs ~25GB free disk for the pull; there is no conda qiime2 on common mirrors). Upstream runs qiime2 always; the port gates it (default false) so a fresh clone completes the DADA2 analysis without the container. Set true (with the disk) to enable.",
+        "key": "run_qiime2",
+        "used_by": [
+          "qiime2_barplot",
+          "qiime2_inasv",
+          "qiime2_inseq",
+          "qiime2_intax"
+        ],
+        "value_type": "bool"
       },
       {
         "default": "independent",
@@ -2208,6 +2269,15 @@
         "value_type": "string"
       },
       {
+        "default": 8,
+        "description": "GB passed to picard -Xmx. Previously derived from the rule's 36G resource budget (Xmx\u224830G), which thrash-killed the JVM on a 3.7 GB machine (live run); the resource budget still drives scheduling.",
+        "key": "picard_xmx_gb",
+        "used_by": [
+          "picard_markduplicates"
+        ],
+        "value_type": "int"
+      },
+      {
         "default": "test/fixtures/raw",
         "description": "input fastqs (raw/<sample>.fastq.gz for single-end)",
         "key": "raw_dir",
@@ -2330,7 +2400,8 @@
         "value_type": "int"
       },
       {
-        "default": false,
+        "default": true,
+        "description": "The port's DAG consumes the merged (--comprehensive) methylation-call outputs, so the default differs from upstream (false): the per-strand split files would leave the declared outputs unmoved.",
         "key": "comprehensive",
         "used_by": [
           "bismark_methylationextractor"
@@ -2644,8 +2715,8 @@
         "value_type": "string"
       },
       {
-        "default": "Auto",
-        "description": "-- Demultiplexing (upstream defaults)",
+        "default": "RBK001",
+        "description": "-- Demultiplexing (upstream defaults) RBK001 matches the shipped barcoded fixture (qcat Auto-detection needs at least two distinct barcodes to guess the kit; the explicit kit makes the test path deterministic).",
         "key": "barcode_kit",
         "used_by": [
           "qcat"
@@ -2943,7 +3014,8 @@
         "value_type": "int"
       },
       {
-        "default": "test/fixtures/refs/freyja_lineages.csv",
+        "default": "test/fixtures/refs/freyja_lineages.json",
+        "description": "freyja's meta format is the curated_lineages JSON (buildLineageMap json.loads it \u2014 live: the CSV default died in freyja boot with JSONDecodeError); the CSV sibling is kept as the barcodes-side table",
         "key": "freyja_lineages",
         "used_by": [
           "freyja_boot",
@@ -3977,6 +4049,14 @@
     "workflow": "main.oxoflow",
     "config": [
       {
+        "default": "",
+        "key": "annotation_gtf",
+        "used_by": [
+          "get_annotation"
+        ],
+        "value_type": "string"
+      },
+      {
         "default": "ftp://ftp.ensembl.org/pub/release-115/gtf/homo_sapiens/Homo_sapiens.GRCh38.115.gtf.gz",
         "key": "annotation_url",
         "used_by": [
@@ -4038,9 +4118,7 @@
       {
         "default": "",
         "key": "diffexp_model",
-        "used_by": [
-          "deseq2_init"
-        ],
+        "used_by": [],
         "value_type": "string"
       },
       {
@@ -4071,6 +4149,15 @@
         "value_type": "string"
       },
       {
+        "default": "",
+        "description": "Local reference overrides: set to a local FASTA/GTF to skip the Ensembl download entirely (offline machines, tiny test runs). Empty = download (the upstream-faithful default). A tiny synthetic kit ships at test/fixtures/reference/ with matching reads in raw-synthetic/.",
+        "key": "genome_fasta",
+        "used_by": [
+          "get_genome"
+        ],
+        "value_type": "string"
+      },
+      {
         "default": "https://ftp.ensembl.org/pub/release-115/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz",
         "key": "genome_url",
         "used_by": [
@@ -4091,7 +4178,9 @@
         "description": "PCA (upstream: pca.activate / pca.labels). pca_variables is the derived upstream list (variables_of_interest + batch_effects + labels), kept explicit here \u2014 keep it in sync with the diffexp keys below.",
         "key": "pca_activate",
         "used_by": [
-          "pca"
+          "pca_jointly_handled",
+          "pca_treatment_1",
+          "pca_treatment_2"
         ],
         "value_type": "bool"
       },
@@ -4751,10 +4840,15 @@
         "value_type": "int"
       },
       {
-        "default": "test/resources/enrichment_analysis/89_motifs_test.tbl",
+        "default": "",
+        "description": "user-provided motif annotation tbl; \"\" disables motif enrichment",
         "key": "path_to_motif_annotations",
         "used_by": [
-          "region_motif_enrichment_analysis_pycisTarget"
+          "aggregate_pycisTarget_hg38_screen_v10clust_ATAC",
+          "plot_enrichment_result_pycisTarget_hg38_screen_v10clust",
+          "process_results_pycisTarget",
+          "region_motif_enrichment_analysis_pycisTarget",
+          "visualize_pycisTarget_hg38_screen_v10clust_ATAC"
         ],
         "value_type": "string"
       },
@@ -4802,10 +4896,15 @@
         "value_type": "float"
       },
       {
-        "default": "test/resources/enrichment_analysis/600regions_test.regions_vs_motifs.rankings.feather",
+        "default": "",
+        "description": "user-provided pycisTarget rankings DB; \"\" disables motif enrichment",
         "key": "pycistarget_db_hg38_screen_v10clust",
         "used_by": [
-          "region_motif_enrichment_analysis_pycisTarget"
+          "aggregate_pycisTarget_hg38_screen_v10clust_ATAC",
+          "plot_enrichment_result_pycisTarget_hg38_screen_v10clust",
+          "process_results_pycisTarget",
+          "region_motif_enrichment_analysis_pycisTarget",
+          "visualize_pycisTarget_hg38_screen_v10clust_ATAC"
         ],
         "value_type": "string"
       },
@@ -5115,7 +5214,7 @@
         "value_type": "string"
       },
       {
-        "default": "AB",
+        "default": "",
         "description": "VISUALIZATION",
         "key": "antibody_capture",
         "used_by": [
@@ -5126,7 +5225,7 @@
       },
       {
         "default": "SCT",
-        "description": "assay to analyse (\"SCT\" or \"RNA\")",
+        "description": "assay to analyse (\"SCT\" or \"RNA\") \u2014 upstream default \"SCT\"",
         "key": "assay",
         "used_by": [
           "config_export",
@@ -5328,7 +5427,7 @@
       },
       {
         "default": "0",
-        "description": "analyse only variable features (1=yes, 0=no)",
+        "description": "(objects carry SCTransform normalization; the bundled fixtures are generated that way via make_fixtures.R)",
         "key": "variable_features_only",
         "used_by": [
           "config_export",
@@ -6025,6 +6124,15 @@
         "value_type": "string"
       },
       {
+        "default": "test/fixtures/flag",
+        "description": "cgpFlagCaVEMan configs (bed-based flags dropped: no chr21 flag data)",
+        "key": "flag_config_dir",
+        "used_by": [
+          "CM_flag"
+        ],
+        "value_type": "string"
+      },
+      {
         "default": "hg38_chr21",
         "key": "genome_version",
         "used_by": [
@@ -6355,6 +6463,26 @@
         "value_type": "string"
       },
       {
+        "default": false,
+        "description": "VEP needs a local cache at {vep_data}/{vep_species} (~10GB download; the fixture kit does not ship it). The vcf2maf rules and the downstream MAF merge/flag/cancer-report tail gate on this flag \u2014 set true once the cache is in place (upstream fails hard without it).",
+        "key": "vep_cache_ready",
+        "used_by": [
+          "all",
+          "flag_mutation_pairead_maf",
+          "merge_paired_germ_maf",
+          "merge_paired_maf",
+          "run_cancer_report",
+          "vcf2maf_HaplotypeCaller",
+          "vcf2maf_Mutect2",
+          "vcf2maf_germ_caveman",
+          "vcf2maf_germ_strelkamanta",
+          "vcf2maf_muse",
+          "vcf2maf_vardict",
+          "vcf2maf_varscan2"
+        ],
+        "value_type": "bool"
+      },
+      {
         "default": "110",
         "key": "vep_cache_version",
         "used_by": [
@@ -6503,7 +6631,7 @@
     "workflow": "main.oxoflow",
     "config": [
       {
-        "default": "/path/to/output/alignment",
+        "default": "results/alignment",
         "description": "01_alignment (upstream config.yml)",
         "key": "align_out_dir",
         "used_by": [
@@ -6516,7 +6644,7 @@
         "value_type": "string"
       },
       {
-        "default": "/path/to/output/alignment/aligned",
+        "default": "results/alignment/aligned",
         "description": "upstream: 01 output_dir/aligned == 02 bam_dir",
         "key": "aligned_dir",
         "used_by": [
@@ -6531,7 +6659,7 @@
         "value_type": "string"
       },
       {
-        "default": "/path/to/output/as_calling",
+        "default": "results/as_calling",
         "description": "02_as_calling (upstream config.yml)",
         "key": "as_out_dir",
         "used_by": [
@@ -6584,8 +6712,8 @@
         "value_type": "int"
       },
       {
-        "default": "/path/to/references/gencode.v34.annotation.gff3",
-        "description": "upstream: GFF",
+        "default": "test/fixtures/reference/genes.gff3",
+        "description": "upstream: GFF (tiny synthetic)",
         "key": "gff",
         "used_by": [
           "as_calling::majiq_build"
@@ -6601,7 +6729,8 @@
         "value_type": "string"
       },
       {
-        "default": "/path/to/majiq_license_academic_official.lic",
+        "default": "test/fixtures/reference/majiq_license.lic",
+        "description": "MAJIQ requires the upstream academic license file \u2014 place it at test/fixtures/reference/majiq_license.lic (obtain from MAJIQ) and set run_majiq = true. Upstream fails hard without the license; the port gates the whole MAJIQ chain on this flag instead (documented in the README fidelity table).",
         "key": "majiq_license",
         "used_by": [
           "as_calling::majiq_build",
@@ -6648,8 +6777,8 @@
         "value_type": "string"
       },
       {
-        "default": "/path/to/references/gencode.v34.annotation.gtf",
-        "description": "featureCounts / rMATS / SplAdder annotation",
+        "default": "test/fixtures/reference/genes.gtf",
+        "description": "featureCounts / rMATS / SplAdder annotation (tiny synthetic; GRCh38 GTF for real runs)",
         "key": "ref",
         "used_by": [
           "alignment::featurecounts",
@@ -6675,7 +6804,20 @@
         "value_type": "string"
       },
       {
-        "default": "/path/to/references/gencode.v34.transcripts.salmon.index",
+        "default": false,
+        "key": "run_majiq",
+        "used_by": [
+          "as_calling::majiq_build",
+          "as_calling::majiq_create_ini",
+          "as_calling::majiq_psi",
+          "as_calling::voila_modulize",
+          "as_calling::voila_tsv"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "test/fixtures/reference/salmon_index",
+        "description": "salmon_index is auto-built below from the shipped transcripts.fa",
         "key": "salmon_index",
         "used_by": [
           "as_calling::salmon_quant"
@@ -6716,8 +6858,8 @@
         "value_type": "string"
       },
       {
-        "default": "/path/to/references/STAR_index",
-        "description": "GRCh38 STAR index built with STAR 2.7.7a + GENCODE v34",
+        "default": "test/fixtures/reference/STAR_index",
+        "description": "star_index_dir is auto-built below from test/fixtures/reference (tiny synthetic genome) \u2014 point it at a real GRCh38 STAR index for real runs.",
         "key": "star_index_dir",
         "used_by": [
           "alignment::star_align"
@@ -6725,7 +6867,8 @@
         "value_type": "string"
       },
       {
-        "default": 39050942993,
+        "default": 0,
+        "description": "0 = auto: the machine-effective memory (clamped declared value)",
         "key": "star_limit_bam_sort_ram",
         "used_by": [
           "alignment::star_align"
@@ -6751,7 +6894,8 @@
         "value_type": "string"
       },
       {
-        "default": "/path/to/references/gencode.v34.events.ioe",
+        "default": "test/fixtures/reference/events.ioe",
+        "description": "suppa2_events is auto-built below from the shipped GTF (SUPPA2 generateEvents)",
         "key": "suppa2_events",
         "used_by": [
           "as_calling::suppa_run"

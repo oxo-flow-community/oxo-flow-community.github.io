@@ -75,7 +75,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-sarek
 | `joint_germline` | `false` | — | — |
 | `known_indels` | `'/data/references/GRCh38/Annotation/GATKBundle/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz', '/data/references/GRCh38/Annotation/GATKBundle/Homo_sapiens_assembly38.known_indels.vcf.gz'` | — | `gatk_baserecalibrator`, `gatk_filtervarianttranches` |
 | `known_indels_tbi` | `'/data/references/GRCh38/Annotation/GATKBundle/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz.tbi', '/data/references/GRCh38/Annotation/GATKBundle/Homo_sapiens_assembly38.known_indels.vcf.gz.tbi'` | — | `gatk_baserecalibrator`, `gatk_filtervarianttranches` |
-| `lane` | `test_L1` | — | `bwa_mem`, `fastp`, `fastqc` |
+| `lane` | `L1` | — | `bwa_mem`, `fastp`, `fastqc` |
 | `length_required` | `15` | — | `fastp` |
 | `out_dir` | `results` | — | `bcftools_stats`, `bwa_mem`, `ensemblvep_vep`, `fastp`, `fastqc`, `gatk_applybqsr`, `gatk_baserecalibrator`, `gatk_cnnscorevariants`, `gatk_filtervarianttranches`, `gatk_haplotypecaller`, `gatk_markduplicates`, `mosdepth_md`, `mosdepth_recal`, `multiqc`, `samtools_index_recal`, `samtools_stats_md`, `samtools_stats_recal`, `vcftools_filter_summary`, `vcftools_tstv_count`, `vcftools_tstv_qual` |
 | `patient` | `test` | Sample metadata — mirrors tests/csv/3.0/fastq_single.csv (single-lane model: nf-core/sarek meta.id = "{sample}-{lane}", read-group ID = "{sample}.{lane}") | `bwa_mem` |
@@ -91,7 +91,9 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-sarek
 | `split_fastq` | `50000000` | fastp --split_by_lines = split_fastq * 4 | `fastp` |
 | `status` | `0` | — | — |
 | `trim_fastq` | `false` | — | `fastp` |
-| `vep_cache_version` | `116` | — | `ensemblvep_vep` |
+| `vep_cache_ready` | `false` | — | `ensemblvep_vep` |
+| `vep_cache_version` | `112` | The VEP cache version must match the VEP binary in envs/vep.yaml (upstream's image pins 116; this env ships ensembl-vep 112, whose cache format is version-locked — a 116 cache is unreadable). The cache itself is user data (upstream bundles it in the container at /.vep; ~30GB for whole-genome GRCh38, or a gtf2vep subset) — the VEP rule gates on vep_cache_ready. Upstream fails hard without the cache; set the flag after placing it at vep_dir_cache (see README fidelity table). | `ensemblvep_vep` |
+| `vep_dir_cache` | `/.vep` | — | `ensemblvep_vep` |
 | `vep_genome` | `GRCh38` | — | `ensemblvep_vep` |
 | `vep_species` | `homo_sapiens` | — | `ensemblvep_vep` |
 | `wes` | `false` | — | — |

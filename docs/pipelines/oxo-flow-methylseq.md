@@ -62,7 +62,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-methylseq
 | `aligner` | `bismark` | Only the 'bismark' (bowtie2) aligner is ported. 'bismark_hisat', 'bwameth', 'bwamem' are NOT ported (see README fidelity table). | — |
 | `clip_r1` | `0` | Trimming options (upstream params with the same defaults) | `trimgalore` |
 | `clip_r2` | `0` | — | `trimgalore` |
-| `comprehensive` | `false` | — | `bismark_methylationextractor` |
+| `comprehensive` | `true` | The port's DAG consumes the merged (--comprehensive) methylation-call outputs, so the default differs from upstream (false): the per-strand split files would leave the declared outputs unmoved. | `bismark_methylationextractor` |
 | `cytosine_report` | `false` | Bismark options | `bismark_coverage2cytosine` |
 | `em_seq` | `false` | — | `bismark_align`, `trimgalore` |
 | `fasta` | `test/fixtures/refs/genome.fa` | Reference genome (upstream: --fasta). Uncompressed FASTA; the port always builds the Bismark index from it (upstream default when --bismark_index is not supplied). Point this at your genome; the repo default ships the tiny test fixture. | `bismark_genomepreparation` |

@@ -113,12 +113,12 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-enrichment
 | `lola_db_LOLACore` | `test/resources/LOLACore/hg38` | — | `region_enrichment_analysis_LOLA` |
 | `nes_cap` | `5` | — | `visualize_preranked_GSEApy_Azimuth_2023_RNA`, `visualize_preranked_GSEApy_Reactome_RNA` |
 | `or_cap` | `5` | — | `visualize_GREAT_Azimuth_2023_ATAC`, `visualize_GREAT_Reactome_ATAC`, `visualize_LOLA_LOLACore_ATAC`, `visualize_ORA_GSEApy_Azimuth_2023_ATAC`, `visualize_ORA_GSEApy_Reactome_ATAC`, `visualize_pycisTarget_hg38_screen_v10clust_ATAC` |
-| `path_to_motif_annotations` | `test/resources/enrichment_analysis/89_motifs_test.tbl` | — | `region_motif_enrichment_analysis_pycisTarget` |
+| `path_to_motif_annotations` | `` | user-provided motif annotation tbl; "" disables motif enrichment | `aggregate_pycisTarget_hg38_screen_v10clust_ATAC`, `plot_enrichment_result_pycisTarget_hg38_screen_v10clust`, `process_results_pycisTarget`, `region_motif_enrichment_analysis_pycisTarget`, `visualize_pycisTarget_hg38_screen_v10clust_ATAC` |
 | `project_name` | `Corces_CellTypes` | — | `annot_export`, `config_export`, `gene_ORA_GSEApy_Azimuth_2023`, `gene_ORA_GSEApy_Reactome`, `gene_preranked_GSEApy_Azimuth_2023`, `gene_preranked_GSEApy_Reactome`, `prepare_databases_Azimuth_2023`, `prepare_databases_Reactome`, `region_enrichment_analysis_GREAT_Azimuth_2023`, `region_enrichment_analysis_GREAT_Reactome`, `region_gene_association_GREAT` |
 | `pycistarget_annotation_version` | `v10nr_clust` | — | `region_motif_enrichment_analysis_pycisTarget` |
 | `pycistarget_annotations_to_use` | `['Direct_annot', 'Motif_similarity_annot', 'Orthology_annot', 'Motif_similarity_and_Orthology_annot']` | upstream passes the python list literal; kept as a string so the rendered command is byte-identical to upstream's | `region_motif_enrichment_analysis_pycisTarget` |
 | `pycistarget_auc_threshold` | `0.005` | — | `region_motif_enrichment_analysis_pycisTarget` |
-| `pycistarget_db_hg38_screen_v10clust` | `test/resources/enrichment_analysis/600regions_test.regions_vs_motifs.rankings.feather` | — | `region_motif_enrichment_analysis_pycisTarget` |
+| `pycistarget_db_hg38_screen_v10clust` | `` | user-provided pycisTarget rankings DB; "" disables motif enrichment | `aggregate_pycisTarget_hg38_screen_v10clust_ATAC`, `plot_enrichment_result_pycisTarget_hg38_screen_v10clust`, `process_results_pycisTarget`, `region_motif_enrichment_analysis_pycisTarget`, `visualize_pycisTarget_hg38_screen_v10clust_ATAC` |
 | `pycistarget_fraction_overlap_w_cistarget_database` | `0.4` | pycisTarget parameters (upstream pycistarget_parameters) | `region_motif_enrichment_analysis_pycisTarget` |
 | `pycistarget_motif_similarity_fdr` | `0.001` | — | `region_motif_enrichment_analysis_pycisTarget` |
 | `pycistarget_nes_threshold` | `3` | — | `region_motif_enrichment_analysis_pycisTarget` |

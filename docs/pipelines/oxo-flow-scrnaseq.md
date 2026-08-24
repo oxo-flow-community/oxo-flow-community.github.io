@@ -61,6 +61,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-scrnaseq
 |---:|---|---|---|
 | `aligner` | `cellranger` | --aligner / --protocol (port implements the cellranger branch; see README fidelity table) | — |
 | `build_cellranger_index` | `true` | cellranger reference: build from fasta/gtf, or point transcriptome at an existing index | `cellranger_mkgtf`, `cellranger_mkref` |
+| `cellranger_localmem` | `0` | GB passed to cellranger's --localmem (mkref/count). 0 = auto: 2/3 of the actually-free physical memory (/proc/meminfo MemAvailable, 1 GB floor) — never the engine's effective memory, which counts swap: cellranger's jobmngr waits forever when --localmem exceeds the free RAM (live: 'Need 6 GB ... (2.6 GB available)' looped for hours on a 3.7GB box). Set a positive number to force a value. | `cellranger_count`, `cellranger_mkref` |
 | `expected_cells` | `` | samplesheet `expected_cells` column -> `--expect-cells` when set | `cellranger_count` |
 | `fasta` | `refs/refdata.fa.gz` | reference genome (upstream --fasta / --gtf; may be .gz) | `gunzip_fasta` |
 | `fasta_gz` | `true` | — | `gunzip_fasta` |
@@ -77,7 +78,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-scrnaseq
 | `multiqc_title` | `` | -> `--title` when set | `multiqc` |
 | `out_dir` | `results` | — | — |
 | `protocol` | `auto` | passed verbatim as `--chemistry` (10x auto-detection) | `cellranger_count` |
-| `samplesheet` | `samplesheet.csv` | user samplesheet consumed by CONCAT_H5AD (same columns as upstream) | `concat_h5ad_cellbender_filter`, `concat_h5ad_filtered`, `concat_h5ad_raw` |
+| `samplesheet` | `test/fixtures/samplesheet.csv` | consumed by CONCAT_H5AD (same columns as upstream) | `concat_h5ad_cellbender_filter`, `concat_h5ad_filtered`, `concat_h5ad_raw` |
 | `save_align_intermeds` | `true` | -> `--create-bam true` | `cellranger_count` |
 | `skip_cellbender` | `false` | — | `anndata_barcodes`, `anndatar_convert_cellbender_filter`, `anndatar_convert_combined_cellbender_filter`, `anndatar_convert_combined_raw`, `anndatar_convert_raw`, `cellbender_removebackground`, `concat_h5ad_cellbender_filter`, `concat_h5ad_raw` |
 | `skip_fastqc` | `false` | QC / reporting knobs | `fastqc` |

@@ -57,6 +57,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq-star-deseq2
 
 | Parameter | Default | Description | Used by |
 |---:|---|---|---|
+| `annotation_gtf` | `` | — | `get_annotation` |
 | `annotation_url` | `ftp://ftp.ensembl.org/pub/release-115/gtf/homo_sapiens/Homo_sapiens.GRCh38.115.gtf.gz` | — | `get_annotation` |
 | `biomart_species` | `hsapiens` | biomaRt species dataset suffix (upstream get_bioc_species_name()). | `gene_2_symbol_counts`, `gene_2_symbol_diffexp`, `gene_2_symbol_normcounts` |
 | `contrast_levels` | `treated` | — | `deseq2` |
@@ -64,13 +65,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq-star-deseq2
 | `contrasts` | `treatment_1` | Contrasts (upstream: diffexp.contrasts). One comma-joined entry per contrast: contrast id, its variable_of_interest, its level_of_interest. The base level comes from diffexp_base_levels. | — |
 | `diffexp_base_levels` | `untreated,untreated` | — | `deseq2`, `deseq2_init` |
 | `diffexp_batch_effects` | `jointly_handled` | — | `deseq2_init` |
-| `diffexp_model` | `` | — | `deseq2_init` |
+| `diffexp_model` | `` | — | — |
 | `diffexp_variables` | `treatment_1,treatment_2` | Differential expression (upstream: diffexp.*). Comma-joined lists mirror the upstream nested tables; positions pair up (treatment_1 -> untreated, treatment_2 -> untreated). | `deseq2`, `deseq2_init` |
 | `fastp_adapters` | `--detect_adapter_for_pe` | fastp adapter args and extra args (upstream: per-unit columns fastp_adapters / fastp_extra; the port uses the upstream defaults). | `fastp_pe` |
 | `fastp_extra` | `--trim_poly_x --poly_x_min_len 7 --trim_poly_g --poly_g_min_len 7` | — | `fastp_pe` |
+| `genome_fasta` | `` | Local reference overrides: set to a local FASTA/GTF to skip the Ensembl download entirely (offline machines, tiny test runs). Empty = download (the upstream-faithful default). A tiny synthetic kit ships at test/fixtures/reference/ with matching reads in raw-synthetic/. | `get_genome` |
 | `genome_url` | `https://ftp.ensembl.org/pub/release-115/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz` | — | `get_genome` |
 | `genome_url_toplevel` | `https://ftp.ensembl.org/pub/release-115/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.toplevel.fa.gz` | — | `get_genome` |
-| `pca_activate` | `true` | PCA (upstream: pca.activate / pca.labels). pca_variables is the derived upstream list (variables_of_interest + batch_effects + labels), kept explicit here — keep it in sync with the diffexp keys below. | `pca` |
+| `pca_activate` | `true` | PCA (upstream: pca.activate / pca.labels). pca_variables is the derived upstream list (variables_of_interest + batch_effects + labels), kept explicit here — keep it in sync with the diffexp keys below. | `pca_jointly_handled`, `pca_treatment_1`, `pca_treatment_2` |
 | `pca_labels` | `` | — | — |
 | `pca_variables` | `treatment_1,treatment_2,jointly_handled` | — | — |
 | `raw_dir` | `test/fixtures/raw` | Directory holding <unit-key>_R1.fastq.gz / _R2.fastq.gz per config/units.tsv. The repo default ships the tiny test fixtures; point this at your data (e.g. "raw"). | `fastp_pe` |

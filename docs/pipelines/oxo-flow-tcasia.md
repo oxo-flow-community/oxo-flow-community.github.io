@@ -57,33 +57,34 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-tcasia
 
 | Parameter | Default | Description | Used by |
 |---:|---|---|---|
-| `align_out_dir` | `/path/to/output/alignment` | 01_alignment (upstream config.yml) | `alignment::fastp_qc`, `alignment::featurecounts`, `alignment::index_bam`, `alignment::sort_bam`, `alignment::star_align` |
-| `aligned_dir` | `/path/to/output/alignment/aligned` | upstream: 01 output_dir/aligned == 02 bam_dir | `alignment::featurecounts`, `alignment::index_bam`, `alignment::sort_bam`, `alignment::star_align`, `as_calling::majiq_create_ini`, `as_calling::rmats_create_input`, `as_calling::spladder_run` |
-| `as_out_dir` | `/path/to/output/as_calling` | 02_as_calling (upstream config.yml) | `as_calling::format_suppa_fields`, `as_calling::majiq_build`, `as_calling::majiq_create_ini`, `as_calling::majiq_psi`, `as_calling::rmats_create_input`, `as_calling::rmats_run`, `as_calling::salmon_quant`, `as_calling::select_suppa_fields`, `as_calling::spladder_run`, `as_calling::suppa_run`, `as_calling::voila_modulize`, `as_calling::voila_tsv` |
+| `align_out_dir` | `results/alignment` | 01_alignment (upstream config.yml) | `alignment::fastp_qc`, `alignment::featurecounts`, `alignment::index_bam`, `alignment::sort_bam`, `alignment::star_align` |
+| `aligned_dir` | `results/alignment/aligned` | upstream: 01 output_dir/aligned == 02 bam_dir | `alignment::featurecounts`, `alignment::index_bam`, `alignment::sort_bam`, `alignment::star_align`, `as_calling::majiq_create_ini`, `as_calling::rmats_create_input`, `as_calling::spladder_run` |
+| `as_out_dir` | `results/as_calling` | 02_as_calling (upstream config.yml) | `as_calling::format_suppa_fields`, `as_calling::majiq_build`, `as_calling::majiq_create_ini`, `as_calling::majiq_psi`, `as_calling::rmats_create_input`, `as_calling::rmats_run`, `as_calling::salmon_quant`, `as_calling::select_suppa_fields`, `as_calling::spladder_run`, `as_calling::suppa_run`, `as_calling::voila_modulize`, `as_calling::voila_tsv` |
 | `fastp_min_length` | `36` | fastp (upstream fastp.*) | `alignment::fastp_qc` |
 | `fastp_n_base_limit` | `5` | — | `alignment::fastp_qc` |
 | `fastp_qualified_quality_phred` | `20` | — | `alignment::fastp_qc` |
 | `fastp_unqualified_percent_limit` | `40` | — | `alignment::fastp_qc` |
-| `gff` | `/path/to/references/gencode.v34.annotation.gff3` | upstream: GFF | `as_calling::majiq_build` |
+| `gff` | `test/fixtures/reference/genes.gff3` | upstream: GFF (tiny synthetic) | `as_calling::majiq_build` |
 | `majiq_genome` | `hg38` | — | `as_calling::majiq_create_ini` |
-| `majiq_license` | `/path/to/majiq_license_academic_official.lic` | — | `as_calling::majiq_build`, `as_calling::majiq_psi`, `as_calling::voila_modulize`, `as_calling::voila_tsv` |
+| `majiq_license` | `test/fixtures/reference/majiq_license.lic` | MAJIQ requires the upstream academic license file — place it at test/fixtures/reference/majiq_license.lic (obtain from MAJIQ) and set run_majiq = true. Upstream fails hard without the license; the port gates the whole MAJIQ chain on this flag instead (documented in the README fidelity table). | `as_calling::majiq_build`, `as_calling::majiq_psi`, `as_calling::voila_modulize`, `as_calling::voila_tsv` |
 | `majiq_minreads` | `10` | — | `as_calling::majiq_build` |
 | `majiq_strandness` | `reverse` | fr-firststrand -> reverse \| fr-secondstrand -> forward \| fr-unstranded -> none | `as_calling::majiq_create_ini` |
 | `read_len` | `150` | — | `as_calling::majiq_create_ini`, `as_calling::rmats_run` |
 | `reads_dir` | `test/fixtures/raw` | point at your own fastq directory for real runs | `alignment::fastp_qc`, `as_calling::salmon_quant` |
-| `ref` | `/path/to/references/gencode.v34.annotation.gtf` | featureCounts / rMATS / SplAdder annotation | `alignment::featurecounts`, `as_calling::rmats_run`, `as_calling::spladder_run` |
+| `ref` | `test/fixtures/reference/genes.gtf` | featureCounts / rMATS / SplAdder annotation (tiny synthetic; GRCh38 GTF for real runs) | `alignment::featurecounts`, `as_calling::rmats_run`, `as_calling::spladder_run` |
 | `rmats_cstat` | `0.0001` | — | `as_calling::rmats_run` |
 | `rmats_extra` | `` | — | `as_calling::rmats_run` |
-| `salmon_index` | `/path/to/references/gencode.v34.transcripts.salmon.index` | — | `as_calling::salmon_quant` |
+| `run_majiq` | `false` | — | `as_calling::majiq_build`, `as_calling::majiq_create_ini`, `as_calling::majiq_psi`, `as_calling::voila_modulize`, `as_calling::voila_tsv` |
+| `salmon_index` | `test/fixtures/reference/salmon_index` | salmon_index is auto-built below from the shipped transcripts.fa | `as_calling::salmon_quant` |
 | `salmon_library_type` | `ISR` | Derived from `strandness` by upstream tcasia_config.py; kept explicit here: | `as_calling::salmon_quant` |
 | `spladder_confidence` | `3` | — | `as_calling::spladder_run` |
 | `spladder_event_types` | `exon_skip,intron_retention,alt_3prime,alt_5prime,mutex_exons` | — | `as_calling::spladder_run` |
 | `spladder_merge_strategy` | `single` | — | `as_calling::spladder_run` |
-| `star_index_dir` | `/path/to/references/STAR_index` | GRCh38 STAR index built with STAR 2.7.7a + GENCODE v34 | `alignment::star_align` |
-| `star_limit_bam_sort_ram` | `39050942993` | — | `alignment::star_align` |
+| `star_index_dir` | `test/fixtures/reference/STAR_index` | star_index_dir is auto-built below from test/fixtures/reference (tiny synthetic genome) — point it at a real GRCh38 STAR index for real runs. | `alignment::star_align` |
+| `star_limit_bam_sort_ram` | `0` | 0 = auto: the machine-effective memory (clamped declared value) | `alignment::star_align` |
 | `star_out_filter_mismatch_nmax` | `15` | STAR (upstream star.*) | `alignment::star_align` |
 | `strandness` | `fr-firststrand` | shared | `as_calling::rmats_run` |
-| `suppa2_events` | `/path/to/references/gencode.v34.events.ioe` | — | `as_calling::suppa_run` |
+| `suppa2_events` | `test/fixtures/reference/events.ioe` | suppa2_events is auto-built below from the shipped GTF (SUPPA2 generateEvents) | `as_calling::suppa_run` |
 | `suppa2_min_tpm` | `1` | — | `as_calling::suppa_run` |
 
 Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.

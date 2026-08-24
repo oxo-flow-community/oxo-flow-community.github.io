@@ -281,15 +281,32 @@ def dag_section(p: dict) -> list[str]:
         raise SystemExit(
             f"missing {svg.relative_to(ROOT)} for '{name}' — run scripts/regen-configs.py"
         )
-    return [
-        "",
-        "## Workflow graph",
-        "",
+    cards = [
         '<div class="ox-dag-card" markdown="1">',
         "",
         f"![{name} rule-level DAG](../assets/dag/{name}.svg)",
         "",
         "</div>",
+    ]
+    for ew in p.get("extra_workflows") or []:
+        svg_extra = OUT_PAGES.parent / "assets" / "dag" / f"{ew['dag']}.svg"
+        if not svg_extra.is_file():
+            raise SystemExit(
+                f"missing {svg_extra.relative_to(ROOT)} for '{name}' — "
+                "run scripts/regen-configs.py"
+            )
+        cards += [
+            '<div class="ox-dag-card" markdown="1">',
+            "",
+            f"![{name} — {ew['label']}](../assets/dag/{ew['dag']}.svg)",
+            "",
+            "</div>",
+        ]
+    return [
+        "",
+        "## Workflow graph",
+        "",
+        *cards,
         "",
         "The graph is derived at catalog-build time from "
         "`oxo-flow graph -f dot` and rendered with Graphviz. It shows the "

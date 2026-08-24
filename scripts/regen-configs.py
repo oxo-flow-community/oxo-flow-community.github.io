@@ -165,6 +165,14 @@ def main() -> int:
         }
         render_dag(name, workflow, binary, dot)
         rendered += 1
+        for ew in p.get("extra_workflows") or []:
+            wf_path = STAGING / name / ew["workflow"]
+            if not wf_path.is_file():
+                raise SystemExit(
+                    f"{name}: extra workflow '{ew['workflow']}' missing in staging"
+                )
+            render_dag(ew["dag"], wf_path, binary, dot)
+            rendered += 1
     OUT.write_text(json.dumps(configs, indent=2) + "\n")
     print(
         f"generated: {OUT.name} ({len(configs)}/{len(pipelines)} pipelines) "

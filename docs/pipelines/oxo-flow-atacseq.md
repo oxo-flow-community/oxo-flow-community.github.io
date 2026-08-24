@@ -71,6 +71,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-atacseq
 | `min_trimmed_reads` | `10000` | — | — |
 | `narrow_peak` | `false` | Upstream default params (kept as config so CLI overrides work) | — |
 | `out_dir` | `results` | params.outdir | `bamtools_filter`, `bedtools_genomecov`, `bwa_mem`, `deeptools_plots`, `fastqc`, `frip_score`, `homer_annotatepeaks`, `macs2_callpeak`, `multiqc`, `picard_markduplicates`, `picard_mergesamfiles`, `plotfingerprint`, `samtools_sort_stats`, `trimgalore`, `ucsc_bedgraphtobigwig` |
+| `picard_xmx_gb` | `8` | GB passed to picard -Xmx. Previously derived from the rule's 36G resource budget (Xmx≈30G), which thrash-killed the JVM on a 3.7 GB machine (live run); the resource budget still drives scheduling. | `picard_markduplicates` |
 | `raw_dir` | `test/fixtures/raw` | input fastqs (raw/<sample>.fastq.gz for single-end) | `fastqc`, `trimgalore` |
 | `reference` | `test/fixtures/genome/genome.fa` | Reference inputs. Upstream obtains these from nf-core iGenomes (--genome); this port expects pre-built files (see README "References"). | `bamtools_filter`, `homer_annotatepeaks`, `picard_markduplicates`, `samtools_sort_stats` |
 | `save_trimmed` | `false` | — | — |

@@ -58,8 +58,8 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-mixscape
 | Parameter | Default | Description | Used by |
 |---:|---|---|---|
 | `annotation` | `test/fixtures/annotation.csv` | GENERAL | `annot_export`, `config_export` |
-| `antibody_capture` | `AB` | VISUALIZATION | `config_export`, `visualize` |
-| `assay` | `SCT` | assay to analyse ("SCT" or "RNA") | `config_export`, `lda`, `mixscape` |
+| `antibody_capture` | `` | VISUALIZATION | `config_export`, `visualize` |
+| `assay` | `SCT` | assay to analyse ("SCT" or "RNA") — upstream default "SCT" | `config_export`, `lda`, `mixscape` |
 | `cps_split_by_col` | `` | — | `config_export`, `mixscape`, `visualize` |
 | `data_dir` | `test/fixtures/data` | per-sample Seurat .rds inputs: {data_dir}/{sample}.rds | `mixscape` |
 | `fine_mode` | `FALSE` | RunMixscape (flattened) | `config_export`, `mixscape` |
@@ -79,7 +79,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-mixscape
 | `prtb_type` | `KO` | — | `config_export`, `lda`, `mixscape`, `visualize` |
 | `result_path` | `results` | upstream result_path; results land under result_path/mixscape_seurat | `annot_export`, `config_export`, `env_export_lda`, `env_export_mixscape`, `lda`, `mixscape`, `visualize` |
 | `threads` | `1` | upstream threads; mixscape rule runs 8x | `config_export` |
-| `variable_features_only` | `0` | analyse only variable features (1=yes, 0=no) | `config_export`, `mixscape` |
+| `variable_features_only` | `0` | (objects carry SCTransform normalization; the bundled fixtures are generated that way via make_fixtures.R) | `config_export`, `mixscape` |
 
 Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
 

@@ -61,6 +61,7 @@ oxo-flow pull gh:WangLabCSU/oxo-flow-clindet
 | `dbsnp` | `test/fixtures/refs/annotations/dbsnp_146.hg38_chr21.vcf.gz` | — | — |
 | `dbsnp_gz` | `test/fixtures/refs/annotations/dbsnp_146.hg38_chr21.vcf.gz` | MuSE sump needs a gzipped dbSNP | `muse_sump` |
 | `dbsnp_indel` | `test/fixtures/refs/annotations/Mills_and_1000G_gold_standard.indels.hg38_chr21.vcf.gz` | — | — |
+| `flag_config_dir` | `test/fixtures/flag` | cgpFlagCaVEMan configs (bed-based flags dropped: no chr21 flag data) | `CM_flag` |
 | `genome_version` | `hg38_chr21` | — | `CM_call`, `CM_cnv`, `CM_flag`, `CM_germ_flag`, `M2_SNC`, `M2_ST`, `M2_contam`, `M2_filter`, `all`, `bam_flagstat_normal`, `bam_flagstat_tumor`, `bed_to_interval_list`, `call_config_strelka`, `call_strelka_manta_germline`, `call_strelka_somatic_manta`, `call_variants_HaplotypeCaller`, `combined_multiqc`, `combined_multiqc_prep_multiqc_data`, `fastp_normal_sample`, `fastp_tumor_sample`, `flag_mutation_pairead_maf`, `make_region_bed_list`, `map_reads_normal`, `map_reads_tumor`, `mark_duplicates_normal`, `mark_duplicates_tumor`, `merge_paired_germ_maf`, `merge_paired_maf`, `merge_strelka_manta`, `merge_strelka_somatic_manta`, `muse_call`, `muse_sump`, `mutect2`, `picard_collect_wes_normal`, `picard_collect_wes_tumor`, `prep_multiqc_data`, `recal_link_normal`, `recal_link_tumor`, `run_cancer_report`, `vardict_filter_somatic`, `vardict_paired_mode`, `varscan2_call`, `varscan2_merge_somatic`, `varscan2_mpileup`, `varscan2_processSomatic`, `varscan2_som_filter`, `vcf2maf_HaplotypeCaller`, `vcf2maf_Mutect2`, `vcf2maf_germ_caveman`, `vcf2maf_germ_strelkamanta`, `vcf2maf_muse`, `vcf2maf_vardict`, `vcf2maf_varscan2`, `vcf_norm_HaplotypeCaller`, `vcf_norm_Mutect2`, `vcf_norm_germline_caveman`, `vcf_norm_germline_strelkamanta`, `vcf_norm_muse`, `vcf_norm_vardict`, `vcf_norm_varscan2` |
 | `germ_caller_list` | `'strelkamanta', 'caveman'` | — | — |
 | `java_temp_dir` | `/tmp` | Java temp dir (upstream: config['params']['java']['temp_directory']) | `M2_SNC`, `M2_ST`, `M2_contam`, `M2_filter`, `bed_to_interval_list`, `call_variants_HaplotypeCaller`, `mark_duplicates_normal`, `mark_duplicates_tumor`, `mutect2`, `picard_collect_wes_normal`, `picard_collect_wes_tumor` |
@@ -78,6 +79,7 @@ oxo-flow pull gh:WangLabCSU/oxo-flow-clindet
 | `target_bed` | `test/fixtures/bed/exome_target_hg38_chr21.bed` | — | `M2_SNC`, `M2_ST`, `M2_filter`, `bed_to_interval_list`, `call_config_strelka`, `call_strelka_manta_germline`, `call_strelka_somatic_manta`, `call_variants_HaplotypeCaller`, `muse_call`, `mutect2`, `vardict_paired_mode`, `varscan2_call`, `varscan2_mpileup` |
 | `tumor_fastq_r1` | `test/fixtures/reads/mini-T_R1.fq.gz` | Reads (upstream samplesheet columns Tumor_R1_file_path / Normal_R1_file_path ...) | `fastp_tumor_sample` |
 | `tumor_fastq_r2` | `test/fixtures/reads/mini-T_R2.fq.gz` | — | `fastp_tumor_sample` |
+| `vep_cache_ready` | `false` | VEP needs a local cache at {vep_data}/{vep_species} (~10GB download; the fixture kit does not ship it). The vcf2maf rules and the downstream MAF merge/flag/cancer-report tail gate on this flag — set true once the cache is in place (upstream fails hard without it). | `all`, `flag_mutation_pairead_maf`, `merge_paired_germ_maf`, `merge_paired_maf`, `run_cancer_report`, `vcf2maf_HaplotypeCaller`, `vcf2maf_Mutect2`, `vcf2maf_germ_caveman`, `vcf2maf_germ_strelkamanta`, `vcf2maf_muse`, `vcf2maf_vardict`, `vcf2maf_varscan2` |
 | `vep_cache_version` | `110` | — | `vcf2maf_HaplotypeCaller`, `vcf2maf_Mutect2`, `vcf2maf_germ_caveman`, `vcf2maf_germ_strelkamanta`, `vcf2maf_muse`, `vcf2maf_vardict`, `vcf2maf_varscan2` |
 | `vep_data` | `resources/ref_genome/hg38/vep` | — | `vcf2maf_HaplotypeCaller`, `vcf2maf_Mutect2`, `vcf2maf_germ_caveman`, `vcf2maf_germ_strelkamanta`, `vcf2maf_muse`, `vcf2maf_vardict`, `vcf2maf_varscan2` |
 | `vep_species` | `homo_sapiens` | — | `vcf2maf_HaplotypeCaller`, `vcf2maf_Mutect2`, `vcf2maf_germ_caveman`, `vcf2maf_germ_strelkamanta`, `vcf2maf_muse`, `vcf2maf_vardict`, `vcf2maf_varscan2` |
@@ -90,6 +92,11 @@ Descriptions are the workflow's own `#` comments from its `[config]` section, su
 <div class="ox-dag-card" markdown="1">
 
 ![oxo-flow-clindet rule-level DAG](../assets/dag/oxo-flow-clindet.svg)
+
+</div>
+<div class="ox-dag-card" markdown="1">
+
+![oxo-flow-clindet — RNA sub-workflow (main_rna.oxoflow)](../assets/dag/oxo-flow-clindet-rna.svg)
 
 </div>
 

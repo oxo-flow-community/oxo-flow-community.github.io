@@ -59,7 +59,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-nanoseq
 | Parameter | Default | Description | Used by |
 |---:|---|---|---|
 | `aligner` | `minimap2` | -- Alignment | — |
-| `barcode_kit` | `Auto` | -- Demultiplexing (upstream defaults) | `qcat` |
+| `barcode_kit` | `RBK001` | -- Demultiplexing (upstream defaults) RBK001 matches the shipped barcoded fixture (qcat Auto-detection needs at least two distinct barcodes to guess the kit; the explicit kit makes the test path deterministic). | `qcat` |
 | `call_variants` | `false` | -- Variant calling (upstream default: off) | `minimap2_align` |
 | `gtf` | `` | -- GTF annotation (upstream samplesheet gtf column; empty on the default path) | `gtf2bed` |
 | `gtf_base` | `` | — | `gtf2bed`, `minimap2_align`, `minimap2_index` |

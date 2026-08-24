@@ -71,7 +71,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-mag
 | `fastp_cut_mean_quality` | `15` | — | `fastp` |
 | `fastp_qualified_quality` | `15` | — | `fastp` |
 | `fastp_trim_polyg` | `false` | — | `fastp` |
-| `gtdb_db` | `https://data.gtdb.aau.ecogenomic.org/releases/release232/232.0/auxillary_files/gtdbtk_package/full_package/gtdbtk_r232_data.tar.gz` | GTDB-Tk database: URL of the .tar.gz release or a local directory (upstream --gtdb_db default). gtdbtk_db_preparation unpacks .tar.gz. | `gtdbtk_db_preparation` |
+| `gtdb_db` | `` | GTDB-Tk database: local path to the release .tar.gz or an unpacked directory (upstream --gtdb_db, ~100GB). oxo-flow cannot download it mid-run (the prep rule only unpacks), so the default is empty and run_gtdbtk=true fails fast until a local path is set. | `gtdbtk_db_preparation` |
 | `gtdbtk_max_contamination` | `10.0` | — | `gtdbtk_megahit_comebin`, `gtdbtk_megahit_concoct`, `gtdbtk_megahit_maxbin2`, `gtdbtk_megahit_metabat2`, `gtdbtk_megahit_metabinner`, `gtdbtk_megahit_semibin2`, `gtdbtk_spades_comebin`, `gtdbtk_spades_concoct`, `gtdbtk_spades_maxbin2`, `gtdbtk_spades_metabat2`, `gtdbtk_spades_metabinner`, `gtdbtk_spades_semibin2` |
 | `gtdbtk_min_af` | `0.65` | — | `gtdbtk_megahit_comebin`, `gtdbtk_megahit_concoct`, `gtdbtk_megahit_maxbin2`, `gtdbtk_megahit_metabat2`, `gtdbtk_megahit_metabinner`, `gtdbtk_megahit_semibin2`, `gtdbtk_spades_comebin`, `gtdbtk_spades_concoct`, `gtdbtk_spades_maxbin2`, `gtdbtk_spades_metabat2`, `gtdbtk_spades_metabinner`, `gtdbtk_spades_semibin2` |
 | `gtdbtk_min_completeness` | `50.0` | GTDB-Tk (upstream params with the same defaults) | `gtdbtk_megahit_comebin`, `gtdbtk_megahit_concoct`, `gtdbtk_megahit_maxbin2`, `gtdbtk_megahit_metabat2`, `gtdbtk_megahit_metabinner`, `gtdbtk_megahit_semibin2`, `gtdbtk_spades_comebin`, `gtdbtk_spades_concoct`, `gtdbtk_spades_maxbin2`, `gtdbtk_spades_metabat2`, `gtdbtk_spades_metabinner`, `gtdbtk_spades_semibin2` |
@@ -89,6 +89,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-mag
 | `prokka_fast_mode` | `false` | — | — |
 | `prokka_with_compliance` | `false` | PROKKA (upstream params with the same defaults) | — |
 | `reads_minlength` | `15` | fastp clipping (upstream params with the same defaults) | `fastp` |
+| `run_gtdbtk` | `true` | GTDB-Tk gate: the ~100GB reference database is user-provided (see the README requirements); run_gtdbtk=false runs the full pipeline minus the GTDB-Tk classification (the documented live-test contract). | `gtdbtk_db_preparation`, `gtdbtk_megahit_comebin`, `gtdbtk_megahit_concoct`, `gtdbtk_megahit_maxbin2`, `gtdbtk_megahit_metabat2`, `gtdbtk_megahit_metabinner`, `gtdbtk_megahit_semibin2`, `gtdbtk_spades_comebin`, `gtdbtk_spades_concoct`, `gtdbtk_spades_maxbin2`, `gtdbtk_spades_metabat2`, `gtdbtk_spades_metabinner`, `gtdbtk_spades_semibin2`, `gtdbtk_summary` |
 | `semibin_environment` | `global` | — | `semibin_megahit`, `semibin_spades` |
 | `semibin_rng_seed` | `1` | — | `semibin_megahit`, `semibin_spades` |
 | `shortread_percentidentity` | `` | — | — |

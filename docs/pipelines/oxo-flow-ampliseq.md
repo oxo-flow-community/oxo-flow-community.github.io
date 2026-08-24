@@ -79,6 +79,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-ampliseq
 | `min_len` | `50` | — | `dada2_filtntrim` |
 | `quality_type` | `Auto` | — | `dada2_denoising`, `dada2_err`, `dada2_filtntrim` |
 | `run_id` | `1` | run / metadata | `dada2_denoising`, `dada2_err`, `dada2_merge`, `dada2_rmchimera`, `dada2_stats` |
+| `run_qiime2` | `false` | the four qiime2 rules run in the quay.io/qiime2/amplicon container (~20GB unpacked — needs ~25GB free disk for the pull; there is no conda qiime2 on common mirrors). Upstream runs qiime2 always; the port gates it (default false) so a fresh clone completes the DADA2 analysis without the container. Set true (with the disk) to enable. | `qiime2_barplot`, `qiime2_inasv`, `qiime2_inseq`, `qiime2_intax` |
 | `sample_inference` | `independent` | "independent" \| "pooled" \| "pseudo" | `dada2_denoising` |
 | `seed` | `100` | — | `dada2_denoising`, `dada2_err`, `dada2_taxonomy` |
 | `skip_barplot` | `false` | — | `qiime2_barplot` |

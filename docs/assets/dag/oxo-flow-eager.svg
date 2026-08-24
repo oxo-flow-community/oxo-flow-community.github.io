@@ -20,7 +20,7 @@
 <text xml:space="preserve" text-anchor="middle" x="790.41" y="-273.94" font-family="Times,serif" font-size="14.00">damageprofiler</text>
 </g>
 <!-- 0&#45;&gt;12 -->
-<g id="edge10" class="edge">
+<g id="edge11" class="edge">
 <title>0&#45;&gt;12</title>
 <path fill="none" stroke="black" d="M647.07,-263.62C669.13,-266 693.52,-268.63 715.79,-271.04"/>
 <polygon fill="black" stroke="black" points="715.39,-274.52 725.71,-272.11 716.14,-267.56 715.39,-274.52"/>
@@ -200,7 +200,7 @@
 <polygon fill="black" stroke="black" points="1195.13,-303.55 1201.09,-312.31 1201.9,-301.74 1195.13,-303.55"/>
 </g>
 <!-- 9&#45;&gt;12 -->
-<g id="edge11" class="edge">
+<g id="edge9" class="edge">
 <title>9&#45;&gt;12</title>
 <path fill="none" stroke="black" d="M619.88,-361.02C631.09,-357.1 643.05,-352.63 653.93,-347.99 686.94,-333.91 723.1,-315.32 749.75,-300.99"/>
 <polygon fill="black" stroke="black" points="751.38,-304.09 758.5,-296.25 748.04,-297.93 751.38,-304.09"/>
@@ -212,7 +212,7 @@
 <text xml:space="preserve" text-anchor="middle" x="790.41" y="-419.94" font-family="Times,serif" font-size="14.00">qualimap</text>
 </g>
 <!-- 9&#45;&gt;13 -->
-<g id="edge13" class="edge">
+<g id="edge12" class="edge">
 <title>9&#45;&gt;13</title>
 <path fill="none" stroke="black" d="M627.19,-386.9C661.12,-394.87 705.58,-405.31 739.36,-413.24"/>
 <polygon fill="black" stroke="black" points="738.38,-416.6 748.91,-415.48 739.98,-409.79 738.38,-416.6"/>
@@ -224,7 +224,7 @@
 <text xml:space="preserve" text-anchor="middle" x="790.41" y="-365.94" font-family="Times,serif" font-size="14.00">genotyping_pileupcaller</text>
 </g>
 <!-- 9&#45;&gt;14 -->
-<g id="edge15" class="edge">
+<g id="edge14" class="edge">
 <title>9&#45;&gt;14</title>
 <path fill="none" stroke="black" d="M643.25,-373.74C654.64,-373.52 666.74,-373.29 678.92,-373.07"/>
 <polygon fill="black" stroke="black" points="678.65,-376.57 688.58,-372.88 678.52,-369.57 678.65,-376.57"/>
@@ -236,19 +236,19 @@
 <polygon fill="black" stroke="black" points="1196.99,-361.64 1197.96,-351.09 1190.62,-358.73 1196.99,-361.64"/>
 </g>
 <!-- 10&#45;&gt;12 -->
-<g id="edge9" class="edge">
+<g id="edge10" class="edge">
 <title>10&#45;&gt;12</title>
 <path fill="none" stroke="black" d="M607.42,-314.88C637.87,-308.88 685.29,-299.53 724.09,-291.87"/>
 <polygon fill="black" stroke="black" points="724.69,-295.32 733.82,-289.95 723.33,-288.45 724.69,-295.32"/>
 </g>
 <!-- 10&#45;&gt;13 -->
-<g id="edge12" class="edge">
+<g id="edge13" class="edge">
 <title>10&#45;&gt;13</title>
 <path fill="none" stroke="black" d="M607.22,-327.1C622.35,-331.2 640.23,-337.77 653.93,-347.99 675.88,-364.37 667.42,-382.4 689.93,-397.99 703.31,-407.26 719.73,-413.35 735.35,-417.35"/>
 <polygon fill="black" stroke="black" points="734.52,-420.75 745.05,-419.57 736.09,-413.93 734.52,-420.75"/>
 </g>
 <!-- 10&#45;&gt;14 -->
-<g id="edge14" class="edge">
+<g id="edge15" class="edge">
 <title>10&#45;&gt;14</title>
 <path fill="none" stroke="black" d="M606.51,-328.05C635.1,-334.76 679.24,-345.12 716.99,-353.98"/>
 <polygon fill="black" stroke="black" points="715.95,-357.34 726.48,-356.21 717.55,-350.52 715.95,-357.34"/>

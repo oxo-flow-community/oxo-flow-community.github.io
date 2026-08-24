@@ -67,7 +67,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-viralrecon
 | `fasta_ends_gz` | `false` | — | `gunzip_fasta` |
 | `freyja_barcodes` | `test/fixtures/refs/freyja_barcodes.csv` | --- Freyja (upstream --freyja_barcodes / --freyja_lineages. FREYJA_UPDATE, the network download, is not ported.) --- | `freyja_boot`, `freyja_demix` |
 | `freyja_depthcutoff` | `0` | — | `freyja_boot`, `freyja_demix` |
-| `freyja_lineages` | `test/fixtures/refs/freyja_lineages.csv` | — | `freyja_boot`, `freyja_demix` |
+| `freyja_lineages` | `test/fixtures/refs/freyja_lineages.json` | freyja's meta format is the curated_lineages JSON (buildLineageMap json.loads it — live: the CSV default died in freyja boot with JSONDecodeError); the CSV sibling is kept as the barcodes-side table | `freyja_boot`, `freyja_demix` |
 | `freyja_repeats` | `100` | — | `freyja_boot` |
 | `gff` | `reference/genome.gff` | — | `gunzip_gff` |
 | `gff_ends_gz` | `false` | — | `gunzip_gff` |
