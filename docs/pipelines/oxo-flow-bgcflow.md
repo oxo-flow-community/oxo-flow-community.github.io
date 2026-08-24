@@ -1,6 +1,6 @@
 # Biosynthetic gene cluster (BGC) genome mining: annotation, antiSMASH and data warehouse
 
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
 
 End-to-end biosynthetic gene cluster (BGC) analysis of user-provided bacterial genomes: prokka annotation, antiSMASH 7 secondary-metabolite mining with automated database setup, per-genome BGC counts and overview tables, GTDB taxonomy lookup, MIBiG reference table download, BigSCAPE-compatible comparison preparation (symlinks, taxonomy, dataset registry, visualization mapping), and conversion of all result tables into a parquet data warehouse — ready for downstream comparison and exploration.
 
@@ -9,7 +9,7 @@ End-to-end biosynthetic gene cluster (BGC) analysis of user-provided bacterial g
 | **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | genome-mining |
-| **Rules** | 18 |
+| **Rules** | 44 |
 | **Compute** | up to 4 CPUs per rule (antiSMASH) |
 | **Tools** | prokka · antismash · python · pandas · pyarrow · biopython · requests · alive_progress |
 | **Ported** | 2026-08-15 |
@@ -60,21 +60,37 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-bgcflow
 | Parameter | Default | Description | Used by |
 |---:|---|---|---|
 | `antismash_db_path` | `resources/antismash_db` | upstream resources_path.antismash_db | `antismash`, `antismash_db_setup` |
-| `antismash_major` | `7` | antiSMASH (upstream rule_parameters.antismash + envs/antismash.yaml) | — |
-| `antismash_taxon` | `bacteria` | upstream env var BGCFLOW_ANTISMASH_MODE | `antismash` |
-| `antismash_version` | `7.1.0` | derived from envs/antismash.yaml pip pin git@7-1-0-1 | `antismash`, `antismash_overview`, `antismash_overview_gather`, `antismash_summary`, `bgc_count`, `copy_antismash`, `copy_log_changes`, `csv_to_parquet`, `downstream_bgc_prep` |
+| `antismash_major` | `7` | antiSMASH (upstream rule_parameters.antismash + envs/antismash.yaml) | `antismash_v6` |
+| `antismash_taxon` | `bacteria` | upstream env var BGCFLOW_ANTISMASH_MODE | `antismash`, `antismash_v6` |
+| `antismash_version` | `7.1.0` | derived from envs/antismash.yaml pip pin git@7-1-0-1 | `antismash`, `antismash_overview`, `antismash_overview_gather`, `antismash_summary`, `antismash_v6`, `arts`, `bgc_count`, `bigscape`, `copy_antismash`, `copy_log_changes`, `csv_to_parquet`, `downstream_bgc_prep` |
 | `bgc_dataset` | `data/interim/bgcs/datasets.tsv` | — | `downstream_bgc_prep` |
 | `bgcflow_version` | `1.1.2` | BGCflow housekeeping | `format_gbk` |
+| `gecco_version` | `0.9.10` | — | `gecco` |
 | `gtdb_api_base` | `https://gtdb-api.ecogenomic.org` | — | `gtdb_prep` |
 | `gtdb_offline` | `False` | upstream: use_gtdb_api False -> offline mode | `gtdb_prep` |
-| `gtdb_release` | `220.0` | GTDB taxonomy (upstream rule_parameters.install_gtdbtk + use_gtdb_api) | `gtdb_prep` |
-| `gtdb_release_major` | `220` | GTDB release major version (upstream: release.split('.')[0]) | `gtdb_prep` |
-| `gtdb_release_version` | `r220` | GTDB release id (e.g. r214, r220) | — |
+| `gtdb_release` | `220.0` | GTDB taxonomy (upstream rule_parameters.install_gtdbtk + use_gtdb_api) | `gtdb_prep`, `install_gtdbtk` |
+| `gtdb_release_major` | `220` | GTDB release major version (upstream: release.split('.')[0]) | `gtdb_prep`, `install_gtdbtk` |
+| `gtdb_release_version` | `r220` | GTDB release id (e.g. r214, r220) | `install_gtdbtk` |
 | `gtdb_tax_paths` | `[]` | upstream GTDB_PATHS: space-separated user gtdb-tax tsv(s) | `gtdb_prep` |
-| `input_type` | `fna` | upstream get_input_location(): fna \| gbk | — |
+| `input_type` | `fna` | upstream get_input_location(): fna \| gbk | `copy_custom_fasta`, `copy_custom_genbank`, `format_gbk`, `genbank_to_fna`, `prokka`, `prokka_gbk` |
 | `mibig_version` | `3.1` | MIBiG JSON release used by get_mibig_table | `get_mibig_table` |
-| `project` | `genomes` | Project / input genomes (upstream: config.yaml `projects` + data/raw/fasta) | `antismash_overview_gather`, `antismash_summary`, `copy_log_changes`, `copy_mibig_table`, `csv_to_parquet`, `downstream_bgc_prep`, `fix_gtdb_taxonomy` |
-| `raw_dir` | `test/fixtures/raw` | directory containing fasta/<genome_id>.fna | `copy_custom_fasta` |
+| `ncbi_genera` | `` | — | `ncbi_genome_download` |
+| `project` | `genomes` | Project / input genomes (upstream: config.yaml `projects` + data/raw/fasta) | `amrfinder_gather`, `antismash_overview_gather`, `antismash_summary`, `bigscape`, `cblaster_genome_db`, `checkm`, `copy_log_changes`, `copy_mibig_table`, `csv_to_parquet`, `downstream_bgc_prep`, `fastani`, `fastani_convert`, `fix_gtdb_taxonomy`, `gtdbtk`, `mash`, `mash_convert`, `roary`, `roary_out`, `seqfu_combine`, `write_dependency_versions` |
+| `project_source` | `custom` | — | `ncbi_genome_download` |
+| `raw_dir` | `test/fixtures/raw` | directory containing fasta/<genome_id>.fna | `copy_custom_fasta`, `copy_custom_genbank`, `genbank_to_fna`, `prokka_gbk` |
+| `run_amrfinderplus` | `false` | — | `amrfinder_gather`, `amrfinderplus` |
+| `run_arts` | `false` | — | `arts` |
+| `run_bigscape` | `false` | — | `bigscape` |
+| `run_cblaster` | `false` | — | `cblaster_genome_db` |
+| `run_checkm` | `false` | — | `checkm`, `install_checkm` |
+| `run_eggnog` | `false` | — | `eggnog`, `install_eggnog` |
+| `run_fastani` | `false` | — | `fastani`, `fastani_convert` |
+| `run_gecco` | `false` | — | `gecco` |
+| `run_gtdbtk` | `false` | — | `gtdbtk`, `install_gtdbtk` |
+| `run_mash` | `false` | — | `mash`, `mash_convert` |
+| `run_roary` | `false` | — | `roary`, `roary_out` |
+| `run_seqfu` | `false` | — | `seqfu_combine`, `seqfu_stats` |
+| `write_dependency_versions` | `false` | — | `write_dependency_versions` |
 
 Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
 
@@ -115,28 +131,12 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- prokka_gbk / copy_custom_genbank / copy_converted_gbk / genbank_to_fna|gff|faa / extract_meta_genbank — genbank input path, off by default (default config ships fna inputs)
-- antismash v6 branch — off by default (config default is antismash v7)
-- write_dependency_versions — dependency bookkeeping, not on the default main path
-- seqfu_stats/seqfu_combine — run_seqfu: true only
-- mash/mash_convert — run_mash: true only
-- fastani/fastani_convert — run_fastani: true only
-- checkm/checkm_out — run_checkm: true only
-- gtdbtk/gtdbtk_fna_fail/evaluate_gtdbtk_input/install_gtdbtk — run_gtdbtk: true only
-- prokka_db_setup, install_* helpers — install rules for off-by-default pipelines
-- bigscape/bigscape_no_mibig/bigscape_to_cytoscape/copy_bigscape/copy_bigscape_zip — run_bigscape: true only
-- bigslice/bigslice_prep/query_bigslice/summarize_bigslice_query/fetch_bigslice_db — run_bigslice: true only
-- automlst_wrapper/automlst_wrapper_out/prep_automlst_gbk/install_automlst_wrapper — run_automlst: true only
-- arts + arts_extract/arts_knownhits_combine/arts_allhits_combine/arts_bgctable_combine/arts_coretable_combine/arts_final — run_arts: true only
-- roary/roary_reassign_pangene_categories/roary_out — run_roary: true only
-- eggnog/eggnog_roary/eggnog_roary_result_copy — run_eggnog: true only
-- deeptfactor + deeptfactor_setup/to_json/summary/roary — run_deeptfactor: true only
-- cblaster_genome_db/cblaster_bgc_db — run_cblaster: true only
-- gecco/gecco_aggregate/antismash_sideload_gecco — run_gecco: true only
-- amrfinderplus/amrfinder_gather — run_amrfinderplus: true only
-- metabase_install/metabase_duckdb_plugin/build_warehouse — run_metabase: true only
-- ncbi_genome_download/extract_ncbi_information / patric_genome_download/extract_patric_meta/download_patric_tables — non-custom genome sources, off by default
-- report rules (copy_readme, copy_template_notebook, mkdocs_py_report, mkdocs_rpy_report, copy_template_rnotebook) — separate 'bgcflow build report' command, not part of the main Snakefile default path
+- bigslice / bigslice_prep / query_bigslice / fetch_bigslice_db — needs the upstream bigslice HMM DB bundle (custom download, GBs) and a specific python env
+- automlst_wrapper / automlst_wrapper_out / prep_automlst_gbk / install_automlst_wrapper — upstream git-clones + patches the AutoMLST tool at install time
+- deeptfactor + deeptfactor_* rules — TF-prediction service with its own model bundle
+- metabase_install / metabase_duckdb_plugin / build_warehouse — upstream downloads the metabase jar + duckdb plugin at install time
+- patric_genome_download + patric meta rules — PATRIC CLI credentials + API access (ncbi_genome_download is ported)
+- report rules (copy_readme, copy_template_notebook, mkdocs_*_report) — separate 'bgcflow build report' entrypoint, not in the main Snakefile
 
 ## Fidelity
 

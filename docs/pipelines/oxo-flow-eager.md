@@ -1,6 +1,6 @@
 # Ancient DNA (aDNA): QC, mapping, damage estimation and genotyping
 
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
 
 Ancient DNA (aDNA) analysis in one run: FastQC raw QC, optional fastp poly-G filtering (2-colour chemistry), AdapterRemoval adapter clipping and paired-end read merging, BWA aln mapping with ancient-DNA parameters, picard MarkDuplicates (or DeDup) deduplication, preseq library-complexity curves, DamageProfiler damage estimation, Qualimap BAM QC, optional pileupCaller genotyping with eigenstrat SNP coverage, and a final MultiQC report — every rule pinned to the nf-core/eager 2.5.3 tool versions in the upstream container.
 
@@ -9,7 +9,7 @@ Ancient DNA (aDNA) analysis in one run: FastQC raw QC, optional fastp poly-G fil
 | **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | genomics |
-| **Rules** | 17 |
+| **Rules** | 51 |
 | **Compute** | up to 4 CPUs / 8 GB per rule (bwa_aln) |
 | **Tools** | fastqc · adapterremoval · adapterremovalfixprefix · bwa · samtools · picard · dedup · preseq · damageprofiler · qualimap · sequencetools · eigenstratdatabasetools · fastp · pigz · multiqc · rename · python |
 | **Ported** | 2026-08-15 |
@@ -59,10 +59,26 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-eager
 
 | Parameter | Default | Description | Used by |
 |---:|---|---|---|
-| `bwaalnk` | `2` | — | `bwa_aln` |
-| `bwaalnl` | `1024` | — | `bwa_aln` |
-| `bwaalnn` | `0.01` | — | `bwa_aln` |
+| `angsd_fasta_arg` | `` | — | `genotyping_angsd` |
+| `angsd_glformat` | `4` | — | `genotyping_angsd` |
+| `angsd_glmodel` | `1` | — | `genotyping_angsd` |
+| `angsd_majorminor_arg` | `` | — | `genotyping_angsd` |
+| `anno_file` | `` | — | `bedtools_coverage` |
+| `anno_file_is_unsorted_neg` | `-sorted` | — | `bedtools_coverage` |
+| `bam_input` | `false` | — | `convert_bam` |
+| `bam_mapping_quality_threshold` | `0` | — | `samtools_filter` |
+| `bamutils_clip_double_stranded_none_udg_left` | `1` | — | `bam_trim` |
+| `bamutils_clip_double_stranded_none_udg_right` | `1` | — | `bam_trim` |
+| `bamutils_softclip_arg` | `` | — | `bam_trim` |
+| `bcftools_stats_source` | `haplotypecaller` | — | `bcftools_stats` |
+| `bt2_preset` | `` | — | `bowtie2` |
+| `bwaalnk` | `2` | — | `bwa_aln`, `circularmapper` |
+| `bwaalnl` | `1024` | — | `bwa_aln`, `circularmapper` |
+| `bwaalnn` | `0.01` | — | `bwa_aln`, `circularmapper` |
 | `bwaalno` | `2` | — | `bwa_aln` |
+| `circularextension` | `100` | — | `circulargenerator`, `circularmapper` |
+| `circularfilter_arg` | `` | — | `circularmapper` |
+| `circulartarget` | `chrMT` | — | `circulargenerator` |
 | `clip_forward_adaptor` | `AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC` | read clipping / merging | `adapter_removal` |
 | `clip_min_read_quality` | `20` | — | `adapter_removal` |
 | `clip_readlength` | `30` | — | `adapter_removal` |
@@ -70,20 +86,46 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-eager
 | `colour_chemistry` | `4` | — | `fastp` |
 | `complexity_filter_poly_g` | `false` | complexity (poly-G) filter | `fastp` |
 | `complexity_filter_poly_g_min` | `10` | — | `fastp` |
-| `damage_calculation_tool` | `damageprofiler` | damage estimation | `damageprofiler` |
+| `damage_calculation_tool` | `damageprofiler` | damage estimation | `damageprofiler`, `mapdamage_calculation` |
 | `damageprofiler_length` | `100` | — | `damageprofiler` |
 | `damageprofiler_threshold` | `15` | — | `damageprofiler` |
 | `damageprofiler_yaxis` | `0.30` | — | `damageprofiler` |
 | `dedup_all_merged` | `false` | — | — |
 | `dedupper` | `markduplicates` | deduplication | `dedup`, `markduplicates` |
-| `fasta` | `test/fixtures/reference/genome.fa` | input / library metadata (directory-input mode defaults) | `make_bwa_index`, `make_fasta_index`, `make_seq_dict` |
+| `fasta` | `test/fixtures/reference/genome.fa` | input / library metadata (directory-input mode defaults) | `make_bwa_index`, `make_fasta_index`, `make_seq_dict`, `unzip_reference` |
+| `freebayes_C` | `2` | — | `genotyping_freebayes` |
+| `freebayes_g_arg` | `` | — | `genotyping_freebayes` |
+| `freebayes_p` | `1` | — | `genotyping_freebayes` |
+| `gatk_call_conf` | `30` | — | `genotyping_hc`, `genotyping_ug` |
+| `gatk_downsample` | `250` | — | `genotyping_ug` |
+| `gatk_hc_emitrefconf` | `NONE` | — | `genotyping_hc` |
+| `gatk_hc_out_mode` | `EMIT_VARIANTS_ONLY` | — | `genotyping_hc` |
+| `gatk_ploidy` | `2` | — | `genotyping_hc`, `genotyping_ug` |
+| `gatk_ug_defaultbasequalities_arg` | `` | — | `genotyping_ug` |
+| `gatk_ug_genotype_model` | `SNP` | — | `genotyping_ug` |
+| `gatk_ug_out_mode` | `EMIT_VARIANTS_ONLY` | — | `genotyping_ug` |
 | `genotyping_source` | `raw` | — | — |
-| `genotyping_tool` | `` | — | `eigenstrat_snp_coverage`, `genotyping_pileupcaller` |
-| `lane` | `0` | — | `adapter_removal`, `bwa_aln`, `fastp`, `fastqc_after_clipping` |
+| `genotyping_tool` | `` | — | `eigenstrat_snp_coverage`, `genotyping_angsd`, `genotyping_freebayes`, `genotyping_hc`, `genotyping_pileupcaller`, `genotyping_ug`, `multivcfanalyzer`, `picard_addorreplacereadgroups` |
+| `hostremoval_input_fastq` | `false` | — | `hostremoval_input_fastq` |
+| `hostremoval_mode` | `mapped` | — | `hostremoval_input_fastq` |
+| `input_bam` | `` | — | `convert_bam` |
+| `kraken2_db` | `` | — | `kraken` |
+| `lane` | `0` | — | `adapter_removal`, `bwa_aln`, `fastp`, `fastqc_after_clipping`, `post_ar_fastq_trimming` |
 | `large_ref` | `false` | — | — |
-| `mapper` | `bwaaln` | mapping | `bwa_aln` |
+| `mapdamage_downsample_arg` | `` | — | `mapdamage_calculation` |
+| `mapdamage_singlestranded_arg` | `` | — | `mapdamage_calculation`, `mapdamage_rescaling` |
+| `mapdamage_yaxis` | `0.25` | — | `mapdamage_calculation` |
+| `mapper` | `bwaaln` | mapping | `bowtie2`, `bwa_aln`, `bwamem`, `circulargenerator`, `circularmapper`, `make_bt2_index` |
 | `mergedonly` | `false` | — | — |
+| `metagenomic_min_complexity` | `0.5` | — | `metagenomic_complexity_filter` |
 | `min_adap_overlap` | `1` | — | `adapter_removal` |
+| `min_allele_freq_het` | `0.2` | — | `multivcfanalyzer` |
+| `min_allele_freq_hom` | `0.8` | — | `multivcfanalyzer` |
+| `min_base_coverage` | `0` | — | `multivcfanalyzer` |
+| `min_genotype_quality` | `0` | — | `multivcfanalyzer` |
+| `mtnucratio_header` | `` | — | `mtnucratio` |
+| `multivcf_samples` | `'S1', 'S2'` | — | — |
+| `nuclear_contamination_header` | `` | — | `nuclear_contamination` |
 | `out_dir` | `results` | — | — |
 | `pileupcaller_bedfile` | `` | — | `genotyping_pileupcaller` |
 | `pileupcaller_method` | `randomHaploid` | — | — |
@@ -91,6 +133,17 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-eager
 | `pileupcaller_min_map_quality` | `30` | — | `genotyping_pileupcaller` |
 | `pileupcaller_snpfile` | `` | — | `genotyping_pileupcaller` |
 | `pileupcaller_transitions_mode` | `AllSites` | — | — |
+| `pmdtools_mask_bed` | `` | — | `mask_reference_for_pmdtools` |
+| `pmdtools_max_reads` | `1000000` | — | `pmdtools` |
+| `pmdtools_platypus_arg` | `` | — | `pmdtools` |
+| `pmdtools_range` | `10` | — | `pmdtools` |
+| `pmdtools_reference_mask` | `false` | — | `mask_reference_for_pmdtools` |
+| `pmdtools_threshold` | `3` | — | `pmdtools` |
+| `pmdtools_treatment_arg` | `--UDGminus` | — | `pmdtools` |
+| `post_ar_trim_front` | `0` | — | `post_ar_fastq_trimming` |
+| `post_ar_trim_front2` | `0` | — | `post_ar_fastq_trimming` |
+| `post_ar_trim_tail` | `0` | — | `post_ar_fastq_trimming` |
+| `post_ar_trim_tail2` | `0` | — | `post_ar_fastq_trimming` |
 | `preseq_bootstrap` | `100` | — | — |
 | `preseq_cval` | `0.95` | — | — |
 | `preseq_maxextrap` | `10000000000` | — | — |
@@ -99,19 +152,46 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-eager
 | `preseq_terms` | `100` | — | — |
 | `preserve5p` | `false` | — | — |
 | `qualitymax` | `41` | — | `adapter_removal` |
-| `run_genotyping` | `false` | genotyping (pileupCaller branch) | `eigenstrat_snp_coverage`, `genotyping_pileupcaller` |
+| `reference_gff_annotations` | `` | — | `multivcfanalyzer` |
+| `reference_gff_exclude` | `` | — | `multivcfanalyzer` |
+| `rescale_length_3p_arg` | `` | — | `mapdamage_rescaling` |
+| `rescale_length_5p_arg` | `` | — | `mapdamage_rescaling` |
+| `rescale_seqlength` | `12` | — | `mapdamage_rescaling` |
+| `run_bam_filtering` | `false` | — | `samtools_filter`, `samtools_flagstat_after_filter` |
+| `run_bcftools_stats` | `false` | — | `bcftools_stats` |
+| `run_bedtools_coverage` | `false` | — | `bedtools_coverage` |
+| `run_endor_spy` | `false` | — | `endor_spy` |
+| `run_genotyping` | `false` | genotyping (pileupCaller branch) | `eigenstrat_snp_coverage`, `genotyping_angsd`, `genotyping_freebayes`, `genotyping_hc`, `genotyping_pileupcaller`, `genotyping_ug`, `multivcfanalyzer`, `picard_addorreplacereadgroups` |
+| `run_mapdamage_rescaling` | `false` | — | `mapdamage_rescaling` |
+| `run_metagenomic_screening` | `false` | — | `kraken`, `kraken_parse`, `metagenomic_complexity_filter` |
+| `run_mtnucratio` | `false` | — | `mtnucratio` |
+| `run_multivcfanalyzer` | `false` | — | `multivcfanalyzer`, `picard_addorreplacereadgroups` |
+| `run_nuclear_contamination` | `false` | — | `nuclear_contamination`, `print_nuclear_contamination` |
+| `run_pmdtools` | `false` | — | `mask_reference_for_pmdtools`, `pmdtools` |
+| `run_post_ar_trimming` | `false` | — | `post_ar_fastq_trimming` |
+| `run_sexdeterrmine` | `false` | — | `sexdeterrmine`, `sexdeterrmine_prep` |
+| `run_trim_bam` | `false` | — | `bam_trim` |
+| `run_vcf2genome` | `false` | — | `vcf2genome` |
 | `save_reference` | `false` | — | — |
 | `seqtype` | `PE` | — | `bwa_aln` |
+| `sexdeterrmine_prep_s` | `1000000` | — | `sexdeterrmine_prep` |
+| `sexdeterrmine_s` | `1000000` | — | `sexdeterrmine` |
 | `single_end` | `false` | — | — |
 | `skip_adapterremoval` | `false` | — | `adapter_removal`, `fastqc_after_clipping` |
 | `skip_collapse` | `false` | — | — |
-| `skip_damage_calculation` | `false` | — | `damageprofiler` |
+| `skip_damage_calculation` | `false` | — | `damageprofiler`, `mapdamage_calculation` |
 | `skip_deduplication` | `false` | — | `dedup`, `markduplicates` |
 | `skip_fastqc` | `false` | skipping (upstream defaults: run everything except optional branches) | `fastqc`, `fastqc_after_clipping` |
 | `skip_preseq` | `false` | — | `preseq` |
 | `skip_qualimap` | `false` | — | `qualimap` |
 | `skip_trim` | `false` | — | — |
+| `snp_eff_results` | `` | — | `multivcfanalyzer` |
 | `udg_type` | `none` | — | — |
+| `unzip_reference` | `false` | see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate). | `unzip_reference` |
+| `vcf2genome_minc` | `5` | — | `vcf2genome` |
+| `vcf2genome_minfreq` | `0.5` | — | `vcf2genome` |
+| `vcf2genome_minq` | `30` | — | `vcf2genome` |
+| `write_allele_frequencies_arg` | `F` | — | `multivcfanalyzer` |
 
 Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
 
@@ -151,32 +231,12 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- unzip_reference: conditional .gz-fasta decompression process (main.nf line 187) — the port requires a plain FASTA (a .gz reference is silently unsupported)
-- bwamem / bowtie2: non-default mappers (params.mapper) — default path uses bwa aln
-- makeBT2Index: bowtie2 mapper's conditional index process (main.nf line 523) — unreachable with the default bwaaln mapper
-- circulargenerator / circularmapper: circular mapping branch (params.circularfilter, off by default)
-- convertBam / indexinputbam: BAM-input mode preprocessing (params.bam, off by default)
-- hostremoval_input_fastq: host removal branch (params.hostremoval_input_fastq, off by default)
-- samtools_filter / samtools_flagstat_after_filter: BAM filtering branch (params.run_bam_filtering, off by default)
-- picard_addorreplacereadgroups: read-group replacement branch (off by default)
-- bedtools: coverage branch (params.run_bedtools_coverage, off by default)
-- mapdamage_calculation / mapdamage_rescaling / mask_reference_for_pmdtools / pmdtools: mapDamage and pmdtools branches (damage_calculation_tool='damageprofiler' default; run_mapdamage_rescaling / run_pmdtools off by default)
-- bam_trim: trimbam branch (params.run_trim_bam, off by default)
-- post_ar_fastq_trimming: post-AdapterRemoval trimming branch (params.run_post_ar_trimming, off by default)
-- lanemerge / lanemerge_hostremoval_fastq: multi-lane merging — unreachable in the single-lane default path
-- library_merge / additional_library_merge: multi-library merging — unreachable in the single-library default path
-- seqtype_merge: PE/SE mixed-input merge (main.nf line 1597) — unreachable in the pure-PE port
-- genotyping_ug / genotyping_hc / genotyping_freebayes: non-pileupcaller genotyping tools (genotyping_tool default null; genotyping off by default)
-- genotyping_angsd: ANGSD genotyping branch (genotyping_tool='angsd')
-- bcftools_stats: only consumes UG/HC/FB outputs, which are not ported
-- malt / maltextract / metagenomic_complexity_filter / kraken / kraken_parse / kraken_merge / decomp_kraken: metagenomic screening branch (params.run_metagenomic_screening, off by default; decomp_kraken is the conditional .tar.gz DB unpacker)
-- sexdeterrmine / sexdeterrmine_prep: sex determination branch (params.run_sexdeterrmine, off by default)
-- mtnucratio: mitochondrial-to-nuclear ratio branch (params.run_mtnucratio, off by default)
-- endorSpy: endogenous-content branch (params.run_endorSpy, off by default)
-- nuclear_contamination / print_nuclear_contamination: nuclear contamination branch (params.run_nuclear_contamination, off by default; nuclear_contamination is the angsd estimation process, print_nuclear_contamination the report-only consumer)
-- multivcfanalyzer: branch gated by params.run_multivcfanalyzer (off by default)
-- vcf2genome: consensus-sequence branch (params.run_vcf2genome, off by default)
-- output_documentation / get_software_versions: nf-core boilerplate processes
+- lanemerge / lanemerge_hostremoval_fastq — multi-lane merging (Nextflow multi-file channels; oxo-flow sample wiring is declarative, one fastq pair per sample row)
+- library_merge / additional_library_merge — multi-library merging (same structural constraint)
+- seqtype_merge — PE/SE mixed-input merge (same structural constraint)
+- malt / maltextract — need the upstream's bundled MALT install (no conda package)
+- kraken_merge / decomp_kraken — multi-report merging + the conditional .tar.gz DB unpacker (kraken2 itself is ported)
+- output_documentation / get_software_versions — nf-core boilerplate
 
 ## Fidelity
 

@@ -3553,10 +3553,115 @@
     "workflow": "main.oxoflow",
     "config": [
       {
+        "default": "",
+        "key": "angsd_fasta_arg",
+        "used_by": [
+          "genotyping_angsd"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "4",
+        "key": "angsd_glformat",
+        "used_by": [
+          "genotyping_angsd"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "1",
+        "key": "angsd_glmodel",
+        "used_by": [
+          "genotyping_angsd"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "angsd_majorminor_arg",
+        "used_by": [
+          "genotyping_angsd"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "anno_file",
+        "used_by": [
+          "bedtools_coverage"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "-sorted",
+        "key": "anno_file_is_unsorted_neg",
+        "used_by": [
+          "bedtools_coverage"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "bam_input",
+        "used_by": [
+          "convert_bam"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": 0,
+        "key": "bam_mapping_quality_threshold",
+        "used_by": [
+          "samtools_filter"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 1,
+        "key": "bamutils_clip_double_stranded_none_udg_left",
+        "used_by": [
+          "bam_trim"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 1,
+        "key": "bamutils_clip_double_stranded_none_udg_right",
+        "used_by": [
+          "bam_trim"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "",
+        "key": "bamutils_softclip_arg",
+        "used_by": [
+          "bam_trim"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "haplotypecaller",
+        "key": "bcftools_stats_source",
+        "used_by": [
+          "bcftools_stats"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "bt2_preset",
+        "used_by": [
+          "bowtie2"
+        ],
+        "value_type": "string"
+      },
+      {
         "default": 2,
         "key": "bwaalnk",
         "used_by": [
-          "bwa_aln"
+          "bwa_aln",
+          "circularmapper"
         ],
         "value_type": "int"
       },
@@ -3564,7 +3669,8 @@
         "default": 1024,
         "key": "bwaalnl",
         "used_by": [
-          "bwa_aln"
+          "bwa_aln",
+          "circularmapper"
         ],
         "value_type": "int"
       },
@@ -3572,7 +3678,8 @@
         "default": 0.01,
         "key": "bwaalnn",
         "used_by": [
-          "bwa_aln"
+          "bwa_aln",
+          "circularmapper"
         ],
         "value_type": "float"
       },
@@ -3583,6 +3690,31 @@
           "bwa_aln"
         ],
         "value_type": "int"
+      },
+      {
+        "default": 100,
+        "key": "circularextension",
+        "used_by": [
+          "circulargenerator",
+          "circularmapper"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "",
+        "key": "circularfilter_arg",
+        "used_by": [
+          "circularmapper"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "chrMT",
+        "key": "circulartarget",
+        "used_by": [
+          "circulargenerator"
+        ],
+        "value_type": "string"
       },
       {
         "default": "AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC",
@@ -3647,7 +3779,8 @@
         "description": "damage estimation",
         "key": "damage_calculation_tool",
         "used_by": [
-          "damageprofiler"
+          "damageprofiler",
+          "mapdamage_calculation"
         ],
         "value_type": "string"
       },
@@ -3698,7 +3831,98 @@
         "used_by": [
           "make_bwa_index",
           "make_fasta_index",
-          "make_seq_dict"
+          "make_seq_dict",
+          "unzip_reference"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 2,
+        "key": "freebayes_C",
+        "used_by": [
+          "genotyping_freebayes"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "",
+        "key": "freebayes_g_arg",
+        "used_by": [
+          "genotyping_freebayes"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 1,
+        "key": "freebayes_p",
+        "used_by": [
+          "genotyping_freebayes"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 30,
+        "key": "gatk_call_conf",
+        "used_by": [
+          "genotyping_hc",
+          "genotyping_ug"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 250,
+        "key": "gatk_downsample",
+        "used_by": [
+          "genotyping_ug"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "NONE",
+        "key": "gatk_hc_emitrefconf",
+        "used_by": [
+          "genotyping_hc"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "EMIT_VARIANTS_ONLY",
+        "key": "gatk_hc_out_mode",
+        "used_by": [
+          "genotyping_hc"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 2,
+        "key": "gatk_ploidy",
+        "used_by": [
+          "genotyping_hc",
+          "genotyping_ug"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "",
+        "key": "gatk_ug_defaultbasequalities_arg",
+        "used_by": [
+          "genotyping_ug"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "SNP",
+        "key": "gatk_ug_genotype_model",
+        "used_by": [
+          "genotyping_ug"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "EMIT_VARIANTS_ONLY",
+        "key": "gatk_ug_out_mode",
+        "used_by": [
+          "genotyping_ug"
         ],
         "value_type": "string"
       },
@@ -3713,7 +3937,45 @@
         "key": "genotyping_tool",
         "used_by": [
           "eigenstrat_snp_coverage",
-          "genotyping_pileupcaller"
+          "genotyping_angsd",
+          "genotyping_freebayes",
+          "genotyping_hc",
+          "genotyping_pileupcaller",
+          "genotyping_ug",
+          "multivcfanalyzer",
+          "picard_addorreplacereadgroups"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "hostremoval_input_fastq",
+        "used_by": [
+          "hostremoval_input_fastq"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "mapped",
+        "key": "hostremoval_mode",
+        "used_by": [
+          "hostremoval_input_fastq"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "input_bam",
+        "used_by": [
+          "convert_bam"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "kraken2_db",
+        "used_by": [
+          "kraken"
         ],
         "value_type": "string"
       },
@@ -3724,7 +3986,8 @@
           "adapter_removal",
           "bwa_aln",
           "fastp",
-          "fastqc_after_clipping"
+          "fastqc_after_clipping",
+          "post_ar_fastq_trimming"
         ],
         "value_type": "int"
       },
@@ -3735,11 +3998,41 @@
         "value_type": "bool"
       },
       {
+        "default": "",
+        "key": "mapdamage_downsample_arg",
+        "used_by": [
+          "mapdamage_calculation"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "mapdamage_singlestranded_arg",
+        "used_by": [
+          "mapdamage_calculation",
+          "mapdamage_rescaling"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 0.25,
+        "key": "mapdamage_yaxis",
+        "used_by": [
+          "mapdamage_calculation"
+        ],
+        "value_type": "float"
+      },
+      {
         "default": "bwaaln",
         "description": "mapping",
         "key": "mapper",
         "used_by": [
-          "bwa_aln"
+          "bowtie2",
+          "bwa_aln",
+          "bwamem",
+          "circulargenerator",
+          "circularmapper",
+          "make_bt2_index"
         ],
         "value_type": "string"
       },
@@ -3750,12 +4043,77 @@
         "value_type": "bool"
       },
       {
+        "default": 0.5,
+        "key": "metagenomic_min_complexity",
+        "used_by": [
+          "metagenomic_complexity_filter"
+        ],
+        "value_type": "float"
+      },
+      {
         "default": 1,
         "key": "min_adap_overlap",
         "used_by": [
           "adapter_removal"
         ],
         "value_type": "int"
+      },
+      {
+        "default": 0.2,
+        "key": "min_allele_freq_het",
+        "used_by": [
+          "multivcfanalyzer"
+        ],
+        "value_type": "float"
+      },
+      {
+        "default": 0.8,
+        "key": "min_allele_freq_hom",
+        "used_by": [
+          "multivcfanalyzer"
+        ],
+        "value_type": "float"
+      },
+      {
+        "default": 0,
+        "key": "min_base_coverage",
+        "used_by": [
+          "multivcfanalyzer"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 0,
+        "key": "min_genotype_quality",
+        "used_by": [
+          "multivcfanalyzer"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "",
+        "key": "mtnucratio_header",
+        "used_by": [
+          "mtnucratio"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": [
+          "S1",
+          "S2"
+        ],
+        "key": "multivcf_samples",
+        "used_by": [],
+        "value_type": "array"
+      },
+      {
+        "default": "",
+        "key": "nuclear_contamination_header",
+        "used_by": [
+          "nuclear_contamination"
+        ],
+        "value_type": "string"
       },
       {
         "default": "results",
@@ -3806,6 +4164,94 @@
         "key": "pileupcaller_transitions_mode",
         "used_by": [],
         "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "pmdtools_mask_bed",
+        "used_by": [
+          "mask_reference_for_pmdtools"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 1000000,
+        "key": "pmdtools_max_reads",
+        "used_by": [
+          "pmdtools"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "",
+        "key": "pmdtools_platypus_arg",
+        "used_by": [
+          "pmdtools"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 10,
+        "key": "pmdtools_range",
+        "used_by": [
+          "pmdtools"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": false,
+        "key": "pmdtools_reference_mask",
+        "used_by": [
+          "mask_reference_for_pmdtools"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": 3,
+        "key": "pmdtools_threshold",
+        "used_by": [
+          "pmdtools"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "--UDGminus",
+        "key": "pmdtools_treatment_arg",
+        "used_by": [
+          "pmdtools"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 0,
+        "key": "post_ar_trim_front",
+        "used_by": [
+          "post_ar_fastq_trimming"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 0,
+        "key": "post_ar_trim_front2",
+        "used_by": [
+          "post_ar_fastq_trimming"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 0,
+        "key": "post_ar_trim_tail",
+        "used_by": [
+          "post_ar_fastq_trimming"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 0,
+        "key": "post_ar_trim_tail2",
+        "used_by": [
+          "post_ar_fastq_trimming"
+        ],
+        "value_type": "int"
       },
       {
         "default": 100,
@@ -3861,12 +4307,177 @@
         "value_type": "int"
       },
       {
+        "default": "",
+        "key": "reference_gff_annotations",
+        "used_by": [
+          "multivcfanalyzer"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "reference_gff_exclude",
+        "used_by": [
+          "multivcfanalyzer"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "rescale_length_3p_arg",
+        "used_by": [
+          "mapdamage_rescaling"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "rescale_length_5p_arg",
+        "used_by": [
+          "mapdamage_rescaling"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 12,
+        "key": "rescale_seqlength",
+        "used_by": [
+          "mapdamage_rescaling"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": false,
+        "key": "run_bam_filtering",
+        "used_by": [
+          "samtools_filter",
+          "samtools_flagstat_after_filter"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "run_bcftools_stats",
+        "used_by": [
+          "bcftools_stats"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "run_bedtools_coverage",
+        "used_by": [
+          "bedtools_coverage"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "run_endor_spy",
+        "used_by": [
+          "endor_spy"
+        ],
+        "value_type": "bool"
+      },
+      {
         "default": false,
         "description": "genotyping (pileupCaller branch)",
         "key": "run_genotyping",
         "used_by": [
           "eigenstrat_snp_coverage",
-          "genotyping_pileupcaller"
+          "genotyping_angsd",
+          "genotyping_freebayes",
+          "genotyping_hc",
+          "genotyping_pileupcaller",
+          "genotyping_ug",
+          "multivcfanalyzer",
+          "picard_addorreplacereadgroups"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "run_mapdamage_rescaling",
+        "used_by": [
+          "mapdamage_rescaling"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "run_metagenomic_screening",
+        "used_by": [
+          "kraken",
+          "kraken_parse",
+          "metagenomic_complexity_filter"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "run_mtnucratio",
+        "used_by": [
+          "mtnucratio"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "run_multivcfanalyzer",
+        "used_by": [
+          "multivcfanalyzer",
+          "picard_addorreplacereadgroups"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "run_nuclear_contamination",
+        "used_by": [
+          "nuclear_contamination",
+          "print_nuclear_contamination"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "run_pmdtools",
+        "used_by": [
+          "mask_reference_for_pmdtools",
+          "pmdtools"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "run_post_ar_trimming",
+        "used_by": [
+          "post_ar_fastq_trimming"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "run_sexdeterrmine",
+        "used_by": [
+          "sexdeterrmine",
+          "sexdeterrmine_prep"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "run_trim_bam",
+        "used_by": [
+          "bam_trim"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "run_vcf2genome",
+        "used_by": [
+          "vcf2genome"
         ],
         "value_type": "bool"
       },
@@ -3883,6 +4494,22 @@
           "bwa_aln"
         ],
         "value_type": "string"
+      },
+      {
+        "default": 1000000,
+        "key": "sexdeterrmine_prep_s",
+        "used_by": [
+          "sexdeterrmine_prep"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 1000000,
+        "key": "sexdeterrmine_s",
+        "used_by": [
+          "sexdeterrmine"
+        ],
+        "value_type": "int"
       },
       {
         "default": false,
@@ -3909,7 +4536,8 @@
         "default": false,
         "key": "skip_damage_calculation",
         "used_by": [
-          "damageprofiler"
+          "damageprofiler",
+          "mapdamage_calculation"
         ],
         "value_type": "bool"
       },
@@ -3955,9 +4583,58 @@
         "value_type": "bool"
       },
       {
+        "default": "",
+        "key": "snp_eff_results",
+        "used_by": [
+          "multivcfanalyzer"
+        ],
+        "value_type": "string"
+      },
+      {
         "default": "none",
         "key": "udg_type",
         "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "description": "see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).",
+        "key": "unzip_reference",
+        "used_by": [
+          "unzip_reference"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": 5,
+        "key": "vcf2genome_minc",
+        "used_by": [
+          "vcf2genome"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 0.5,
+        "key": "vcf2genome_minfreq",
+        "used_by": [
+          "vcf2genome"
+        ],
+        "value_type": "float"
+      },
+      {
+        "default": 30,
+        "key": "vcf2genome_minq",
+        "used_by": [
+          "vcf2genome"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "F",
+        "key": "write_allele_frequencies_arg",
+        "used_by": [
+          "multivcfanalyzer"
+        ],
         "value_type": "string"
       }
     ]
@@ -5454,7 +6131,9 @@
         "default": "7",
         "description": "antiSMASH (upstream rule_parameters.antismash + envs/antismash.yaml)",
         "key": "antismash_major",
-        "used_by": [],
+        "used_by": [
+          "antismash_v6"
+        ],
         "value_type": "string"
       },
       {
@@ -5462,7 +6141,8 @@
         "description": "upstream env var BGCFLOW_ANTISMASH_MODE",
         "key": "antismash_taxon",
         "used_by": [
-          "antismash"
+          "antismash",
+          "antismash_v6"
         ],
         "value_type": "string"
       },
@@ -5475,7 +6155,10 @@
           "antismash_overview",
           "antismash_overview_gather",
           "antismash_summary",
+          "antismash_v6",
+          "arts",
           "bgc_count",
+          "bigscape",
           "copy_antismash",
           "copy_log_changes",
           "csv_to_parquet",
@@ -5501,6 +6184,14 @@
         "value_type": "string"
       },
       {
+        "default": "0.9.10",
+        "key": "gecco_version",
+        "used_by": [
+          "gecco"
+        ],
+        "value_type": "string"
+      },
+      {
         "default": "https://gtdb-api.ecogenomic.org",
         "key": "gtdb_api_base",
         "used_by": [
@@ -5522,7 +6213,8 @@
         "description": "GTDB taxonomy (upstream rule_parameters.install_gtdbtk + use_gtdb_api)",
         "key": "gtdb_release",
         "used_by": [
-          "gtdb_prep"
+          "gtdb_prep",
+          "install_gtdbtk"
         ],
         "value_type": "string"
       },
@@ -5531,7 +6223,8 @@
         "description": "GTDB release major version (upstream: release.split('.')[0])",
         "key": "gtdb_release_major",
         "used_by": [
-          "gtdb_prep"
+          "gtdb_prep",
+          "install_gtdbtk"
         ],
         "value_type": "string"
       },
@@ -5539,7 +6232,9 @@
         "default": "r220",
         "description": "GTDB release id (e.g. r214, r220)",
         "key": "gtdb_release_version",
-        "used_by": [],
+        "used_by": [
+          "install_gtdbtk"
+        ],
         "value_type": "string"
       },
       {
@@ -5555,7 +6250,14 @@
         "default": "fna",
         "description": "upstream get_input_location(): fna | gbk",
         "key": "input_type",
-        "used_by": [],
+        "used_by": [
+          "copy_custom_fasta",
+          "copy_custom_genbank",
+          "format_gbk",
+          "genbank_to_fna",
+          "prokka",
+          "prokka_gbk"
+        ],
         "value_type": "string"
       },
       {
@@ -5568,17 +6270,46 @@
         "value_type": "string"
       },
       {
+        "default": "",
+        "key": "ncbi_genera",
+        "used_by": [
+          "ncbi_genome_download"
+        ],
+        "value_type": "string"
+      },
+      {
         "default": "genomes",
         "description": "Project / input genomes (upstream: config.yaml `projects` + data/raw/fasta)",
         "key": "project",
         "used_by": [
+          "amrfinder_gather",
           "antismash_overview_gather",
           "antismash_summary",
+          "bigscape",
+          "cblaster_genome_db",
+          "checkm",
           "copy_log_changes",
           "copy_mibig_table",
           "csv_to_parquet",
           "downstream_bgc_prep",
-          "fix_gtdb_taxonomy"
+          "fastani",
+          "fastani_convert",
+          "fix_gtdb_taxonomy",
+          "gtdbtk",
+          "mash",
+          "mash_convert",
+          "roary",
+          "roary_out",
+          "seqfu_combine",
+          "write_dependency_versions"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "custom",
+        "key": "project_source",
+        "used_by": [
+          "ncbi_genome_download"
         ],
         "value_type": "string"
       },
@@ -5587,9 +6318,124 @@
         "description": "directory containing fasta/<genome_id>.fna",
         "key": "raw_dir",
         "used_by": [
-          "copy_custom_fasta"
+          "copy_custom_fasta",
+          "copy_custom_genbank",
+          "genbank_to_fna",
+          "prokka_gbk"
         ],
         "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "run_amrfinderplus",
+        "used_by": [
+          "amrfinder_gather",
+          "amrfinderplus"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "run_arts",
+        "used_by": [
+          "arts"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "run_bigscape",
+        "used_by": [
+          "bigscape"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "run_cblaster",
+        "used_by": [
+          "cblaster_genome_db"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "run_checkm",
+        "used_by": [
+          "checkm",
+          "install_checkm"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "run_eggnog",
+        "used_by": [
+          "eggnog",
+          "install_eggnog"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "run_fastani",
+        "used_by": [
+          "fastani",
+          "fastani_convert"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "run_gecco",
+        "used_by": [
+          "gecco"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "run_gtdbtk",
+        "used_by": [
+          "gtdbtk",
+          "install_gtdbtk"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "run_mash",
+        "used_by": [
+          "mash",
+          "mash_convert"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "run_roary",
+        "used_by": [
+          "roary",
+          "roary_out"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "run_seqfu",
+        "used_by": [
+          "seqfu_combine",
+          "seqfu_stats"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "write_dependency_versions",
+        "used_by": [
+          "write_dependency_versions"
+        ],
+        "value_type": "bool"
       }
     ]
   },
