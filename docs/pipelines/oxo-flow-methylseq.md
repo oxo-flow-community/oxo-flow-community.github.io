@@ -9,7 +9,7 @@ Run end-to-end bisulfite methylation analysis (WGBS, and RRBS-compatible) of pai
 | **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | genomics |
-| **Rules** | 13 |
+| **Rules** | 53 |
 | **Compute** | up to 12 CPUs / 72 GB per rule (bismark) |
 | **Tools** | fastqc · trim-galore · cutadapt · pigz · bismark · samtools · htslib · multiqc |
 | **Ported** | 2026-08-15 |
@@ -133,16 +133,7 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 **Excluded**
 
 - single_end — paired-end only; the upstream samplesheet 'single_end' column is not ported
-- bwameth (bwa-meth) aligner — non-default aligner branch, not ported
-- bwamem aligner — non-default aligner branch, not ported
-- bismark_hisat aligner — non-default aligner branch, not ported
-- BAM_TAPS_CONVERSION (rastair) — taps/bwamem branch, off by default
-- BAM_METHYLDACKEL — bwameth branch, off by default
-- QUALIMAP_BAMQC — --run_qualimap branch, off by default
-- PRESEQ_LCEXTRAP — --run_preseq branch, off by default
-- TARGETED_SEQUENCING (+ PICARD_MARKDUPLICATES, PICARD_ADDORREPLACEREADGROUPS) — --run_targeted_sequencing branch, off by default
-- CAT_FASTQ — only active for samples with more than one fastq pair; fixture samplesheets have one pair per sample
-- GUNZIP / UNTAR — only active when a prebuilt --bismark_index is supplied; the port always builds the index from the reference FASTA (upstream default)
+- CAT_FASTQ — only active for samples with more than one fastq pair; one pair per sample in the port
 
 ## Fidelity
 

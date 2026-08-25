@@ -928,18 +928,9 @@ window.OXO_PIPELINES = [
     ],
     "excluded": [
       "single_end \u2014 paired-end only; the upstream samplesheet 'single_end' column is not ported",
-      "bwameth (bwa-meth) aligner \u2014 non-default aligner branch, not ported",
-      "bwamem aligner \u2014 non-default aligner branch, not ported",
-      "bismark_hisat aligner \u2014 non-default aligner branch, not ported",
-      "BAM_TAPS_CONVERSION (rastair) \u2014 taps/bwamem branch, off by default",
-      "BAM_METHYLDACKEL \u2014 bwameth branch, off by default",
-      "QUALIMAP_BAMQC \u2014 --run_qualimap branch, off by default",
-      "PRESEQ_LCEXTRAP \u2014 --run_preseq branch, off by default",
-      "TARGETED_SEQUENCING (+ PICARD_MARKDUPLICATES, PICARD_ADDORREPLACEREADGROUPS) \u2014 --run_targeted_sequencing branch, off by default",
-      "CAT_FASTQ \u2014 only active for samples with more than one fastq pair; fixture samplesheets have one pair per sample",
-      "GUNZIP / UNTAR \u2014 only active when a prebuilt --bismark_index is supplied; the port always builds the index from the reference FASTA (upstream default)"
+      "CAT_FASTQ \u2014 only active for samples with more than one fastq pair; one pair per sample in the port"
     ],
-    "rule_count": 13,
+    "rule_count": 53,
     "tools": [
       "fastqc",
       "trim-galore",
