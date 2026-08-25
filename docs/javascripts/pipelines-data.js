@@ -1591,18 +1591,15 @@ window.OXO_PIPELINES = [
       "combine_qc_metrics"
     ],
     "excluded": [
-      "markdup (sambamba markdup + merge_dedup_libraries) \u2014 committee exclusion; port default mark_duplicates=false",
-      "joint_genotyping (GenomicsDBImport/GenotypeGVCFs + interval scatter machinery) \u2014 committee exclusion",
-      "denovo \u2014 no such step in upstream v2.2 (v2 redesign)",
-      "structural_variants \u2014 no such step in upstream v2.2",
-      "variant_filtration \u2014 requires the excluded joint-genotyping raw VCF",
-      "download_sra \u2014 srr input type out of scope",
-      "stage_external_bam \u2014 bam input type out of scope",
-      "callable_sites (mosdepth/clam/genmap/bedtools chain) \u2014 out of scope",
-      "non-gatk callers (bcftools/deepvariant/glnexus/parabricks/sentieon rules) \u2014 config-selected only",
-      "modules qc and postprocess \u2014 disabled by default upstream"
+      "interval scatter / bcftools caller \u2014 snakemake checkpoints extend the DAG at runtime (intervals.smk:59,89; bcftools.smk:13); oxo-flow DAG is static",
+      "parabricks \u2014 every rule is --nv GPU passthrough; oxo-flow docker backend has no --nv",
+      "sentieon \u2014 proprietary SENTIEON_LICENSE server gating",
+      "denovo / structural_variants \u2014 do not exist in upstream v2.2",
+      "gvcf input type \u2014 external paths can't feed expand_inputs (gatk.smk:57)",
+      "generate_coords_file \u2014 lat/long sample-sheet metadata not in the group model",
+      "multi-library rows / per-sample markdup override \u2014 one unit per sample"
     ],
-    "rule_count": 12,
+    "rule_count": 58,
     "tools": [
       "fastp",
       "bwa",

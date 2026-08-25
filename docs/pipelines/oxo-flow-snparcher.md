@@ -9,7 +9,7 @@ Variant calling for non-model organisms: paired FASTQ reads are trimmed and filt
 | **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | genomics |
-| **Rules** | 12 |
+| **Rules** | 58 |
 | **Compute** | up to 8 CPUs / 8 GB per rule (bwa_mem) |
 | **Tools** | fastp · bwa · samtools · gatk4 · python |
 | **Ported** | 2026-08-15 |
@@ -97,16 +97,13 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- markdup (sambamba markdup + merge_dedup_libraries) — committee exclusion; port default mark_duplicates=false
-- joint_genotyping (GenomicsDBImport/GenotypeGVCFs + interval scatter machinery) — committee exclusion
-- denovo — no such step in upstream v2.2 (v2 redesign)
-- structural_variants — no such step in upstream v2.2
-- variant_filtration — requires the excluded joint-genotyping raw VCF
-- download_sra — srr input type out of scope
-- stage_external_bam — bam input type out of scope
-- callable_sites (mosdepth/clam/genmap/bedtools chain) — out of scope
-- non-gatk callers (bcftools/deepvariant/glnexus/parabricks/sentieon rules) — config-selected only
-- modules qc and postprocess — disabled by default upstream
+- interval scatter / bcftools caller — snakemake checkpoints extend the DAG at runtime (intervals.smk:59,89; bcftools.smk:13); oxo-flow DAG is static
+- parabricks — every rule is --nv GPU passthrough; oxo-flow docker backend has no --nv
+- sentieon — proprietary SENTIEON_LICENSE server gating
+- denovo / structural_variants — do not exist in upstream v2.2
+- gvcf input type — external paths can't feed expand_inputs (gatk.smk:57)
+- generate_coords_file — lat/long sample-sheet metadata not in the group model
+- multi-library rows / per-sample markdup override — one unit per sample
 
 ## Fidelity
 
