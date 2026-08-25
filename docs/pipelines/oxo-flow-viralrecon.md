@@ -151,6 +151,7 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - gunzip_primer_bed
 - prepare_genome
 - untar_kraken2_db
+- kraken2_build
 - collapse_primers
 - get_primer_fasta
 - build_bowtie2_index
@@ -166,27 +167,47 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - bam_sort_index
 - ivar_trim
 - bam_sort_index_trimmed
+- markduplicates
+- markduplicates_wgs
 - picard_metrics
+- picard_metrics_wgs
 - mosdepth_genome
+- mosdepth_genome_wgs
 - plot_mosdepth_genome
 - mosdepth_amplicon
 - plot_mosdepth_amplicon
 - freyja_variants
+- freyja_variants_wgs
 - freyja_demix
 - freyja_boot
+- freyja_update
+- freyja_demix_updated
+- freyja_boot_updated
 - call_variants_ivar
 - ivar_to_vcf
 - sort_vcf
+- call_variants_bcftools
+- call_variants_bcftools_wgs
+- norm_vcf_bcftools
 - snpeff_ann
 - snpsift_extract
 - consensus_filter
+- consensus_filter_bcftools
 - consensus_call
+- consensus_call_wgs
+- consensus_ivar
+- consensus_ivar_wgs
 - quast_consensus
 - pangolin
+- pangolin_updatedata
+- pangolin_run_updated
 - nextclade
 - plot_base_density
 - nextclade_clade_mqc
 - variants_long_table
+- variants_long_table_bcftools
+- build_snpeff_db_additional
+- additional_annotation
 - assembly_fastq
 - prepare_primer_fasta
 - cutadapt
@@ -196,16 +217,23 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - blast_assembly
 - quast_assembly
 - abacas
+- assemble_unicycler
+- bandage_unicycler
+- blast_assembly_unicycler
+- quast_assembly_unicycler
+- abacas_unicycler
+- assemble_minia
+- blast_assembly_minia
+- quast_assembly_minia
+- abacas_minia
+- plasmidid
 - multiqc
 
 **Excluded**
 
-- nanopore platform branch (ARTIC_GUPPYPLEX/ARTIC_MINION/NANOPLOT/PYCOQC/VCFLIB_VCFUNIQ/PREPARE_GENOME_NANOPORE) — guppy basecaller is commercial software and the repo has no nanopore fixture
-- channel-level runtime filters — Nextflow channel filters (fastp empty-reads check, min_mapped_reads gate, zero-variant-sample filter, optional-file existence gates) have no oxo-flow equivalent; the new branches emit empty placeholder artifacts instead
-- MultiQC versions.yml / plots extras
-- multiple assemblers in one run — the when-language has no `in` operator, single-assembler equality gates only
-- iVar variant calling under metagenomic — upstream derives bcftools for non-amplicon; the port requires --arg variant_caller=bcftools
-- save_* extra outputs
+- nanopore platform branch — per-barcode read channels (fastq_dir + sequencing_summary), artic guppyplex/minion, pycoqc, nanoplot (paired-end Illumina port)
+- runtime-filter DROPS — per-sample mid-DAG drops not expressible; the reporting half (fail_mapped_*_mqc.tsv) IS ported
+- multiple assemblers — when-language has no `in`/contains operator
 
 ## Fidelity
 

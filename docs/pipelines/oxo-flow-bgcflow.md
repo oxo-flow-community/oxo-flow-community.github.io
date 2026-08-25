@@ -9,7 +9,7 @@ End-to-end biosynthetic gene cluster (BGC) analysis of user-provided bacterial g
 | **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | genome-mining |
-| **Rules** | 44 |
+| **Rules** | 60 |
 | **Compute** | up to 4 CPUs per rule (antiSMASH) |
 | **Tools** | prokka · antismash · python · pandas · pyarrow · biopython · requests · alive_progress |
 | **Ported** | 2026-08-15 |
@@ -131,12 +131,9 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- bigslice / bigslice_prep / query_bigslice / fetch_bigslice_db — needs the upstream bigslice HMM DB bundle (custom download, GBs) and a specific python env
-- automlst_wrapper / automlst_wrapper_out / prep_automlst_gbk / install_automlst_wrapper — upstream git-clones + patches the AutoMLST tool at install time
-- deeptfactor + deeptfactor_* rules — TF-prediction service with its own model bundle
-- metabase_install / metabase_duckdb_plugin / build_warehouse — upstream downloads the metabase jar + duckdb plugin at install time
-- patric_genome_download + patric meta rules — PATRIC CLI credentials + API access (ncbi_genome_download is ported)
-- report rules (copy_readme, copy_template_notebook, mkdocs_*_report) — separate 'bgcflow build report' entrypoint, not in the main Snakefile
+- metabase / build_warehouse — separate wrapper-CLI entrypoints (bgcflow build warehouse), not in the main Snakefile; needs a live Metabase server
+- patric — ftp://ftp.patricbrc.org is dead (PATRIC decommissioned 2023, merged into BV-BRC); the rules cannot run
+- report — separate `bgcflow build report` entrypoint, not in the main Snakefile
 
 ## Fidelity
 

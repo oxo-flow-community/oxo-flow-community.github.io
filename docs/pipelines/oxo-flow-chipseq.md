@@ -9,7 +9,7 @@ ChIP-seq peak calling, QC and differential analysis for paired-end reads: FastQC
 | **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | genomics |
-| **Rules** | 46 |
+| **Rules** | 63 |
 | **Compute** | up to 12 CPUs / 72 GB per rule |
 | **Tools** | fastqc · trim-galore · bwa · samtools · picard · bamtools · preseq · r-base · phantompeakqualtools · bedtools · ucsc-bedgraphtobigwig · deeptools · khmer · macs3 · homer · subread · multiqc · python |
 | **Ported** | 2026-08-15 |
@@ -154,15 +154,14 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- UMITOOLS_EXTRACT / umi_extract — with_umi defaults to false upstream
-- narrow-peak mode (narrow_peak=true) — port covers the broad-peak default only
-- GTF2BED / GENOME_BLACKLIST_REGIONS / prepare_genome / samplesheet_check — reference derivation and pipeline plumbing; the port takes pre-built references (fasta, gtf, gene_bed, chrom_sizes, blacklist, bwa_index)
-- multi-antibody consensus grouping (consensus_cluster) — port assumes a single antibody (config.antibody)
-- save_align_intermeds / save_mapped / save_tracks / save_macs_pileup publish branches — all off by default upstream
-- multiqc_data / multiqc_plots directory publication and pipeline summary / software versions MultiQC sections — Nextflow plumbing
-- multi-library MergeSamFiles branch — single-library default path only (upstream symlinks for single-library samples, replicated exactly)
-- STAR aligner alternative — aligner=bwa is the default
-- DUMP_SOFTWARE_VERSIONS — Nextflow plumbing (oxo-flow has no nf-core pipelines version dump)
+- UMI — with_umi hardcoded false at 2.1.0 (dead branch)
+- prepare_genome / samplesheet_check — Nextflow plumbing; port takes pre-built refs
+- Multi-antibody consensus — upstream groupTuple(by: antibody); the pairs model lacks per-sample antibody
+- save_align_intermeds / save_mapped / save_tracks — off-by-default publish branches (save_macs_pileup ported)
+- MultiQC pipeline-summary / software-versions — nf-core template metadata
+- Multi-library MergeSamFiles — variable-size per-library file sets not expressible
+- Bowtie2 / Chromap aligners (STAR ported)
+- DUMP_SOFTWARE_VERSIONS — Nextflow plumbing
 
 ## Fidelity
 
