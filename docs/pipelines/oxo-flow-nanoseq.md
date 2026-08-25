@@ -1,6 +1,6 @@
 # Nanopore long-read: demultiplexing, QC and alignment
 
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
 
 A nanopore long-read pipeline for the DNA default path: samplesheet check, qcat barcode demultiplexing, NanoPlot + FastQC QC, minimap2 alignment, samtools view/sort/index, samtools stats/flagstat/idxstats, BigWig coverage tracks and a MultiQC report. The protocol config key switches to the cDNA/directRNA transcriptome paths. Every rule runs the upstream module's exact pinned container image.
 
@@ -9,7 +9,7 @@ A nanopore long-read pipeline for the DNA default path: samplesheet check, qcat 
 | **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | genomics |
-| **Rules** | 19 |
+| **Rules** | 52 |
 | **Compute** | up to 12 CPUs / 84 GB per rule (minimap2 index) |
 | **Tools** | python · qcat · nanoplot · fastqc · samtools · perl · minimap2 · bedtools · ucsc-bedgraphtobigwig · multiqc |
 | **Ported** | 2026-08-15 |
@@ -124,18 +124,8 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- graphmap2 index/align (aligner off by default; committee exclusion longread_map)
-- nanolyse (off by default: run_nanolyse=false)
-- medaka/deepvariant/pepper_margin_deepvariant variant calling (off by default: call_variants=false)
-- sniffles/cutesv structural variant calling (off by default: call_variants=false)
-- bambu/stringtie2/featurecounts/deseq2/dexseq quantification (protocol-gated to cDNA/directRNA; committee exclusion transcriptome)
-- bedtools bamtobed + ucsc bed12tobigbed (protocol-gated to cDNA/directRNA; committee exclusion transcriptome)
-- nanopolish/xpore/m6anet RNA modification analysis (protocol-gated to directRNA; committee exclusion plotly)
-- jaffal RNA fusion analysis (protocol-gated to cDNA/directRNA)
-- bam_rename (skip_alignment branch only)
-- get_test_data / get_nanolyse_fasta test-profile downloads
-- samtools_sort_index combined (call_variants branch only)
-- note: committee scope mentions Dorado demultiplex + pycoQC QC; nanoseq 3.1.0 actually uses qcat + NanoPlot/FastQC — port follows the real source
+- JAFFAL + GET_JAFFAL_REF (RNA fusion) — figshare reference bundle returns HTTP 403 for direct download, multi-GB, embeds JAFFA_stages.groovy; JAFFA 1.09 has no conda package
+- GET_TEST_DATA / GET_NANOLYSE_FASTA — nf-core -profile test download infrastructure, replaced by checked-in fixtures (lambda.fasta.gz, mini.gtf)
 
 ## Fidelity
 
