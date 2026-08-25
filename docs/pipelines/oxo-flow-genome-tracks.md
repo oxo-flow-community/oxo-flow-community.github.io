@@ -9,7 +9,7 @@ Merge BAM files per experimental group with samtools, compute normalized bigWig 
 | **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | genomics |
-| **Rules** | 8 |
+| **Rules** | 16 |
 | **Compute** | up to 4 CPUs / 4 GB per rule |
 | **Tools** | samtools · deeptools · pygenometracks · gtracks |
 | **Ported** | 2026-08-15 |
@@ -104,10 +104,7 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- split_sc_bam — single-cell sinto branch, not on the default path
-- igv_report — temporarily deactivated upstream (commented out of rule all)
-- make_bed — only feeds the deactivated igv_report rule
-- env_export — conda-runtime documentation rule for envs of non-ported branches; envs/ yamls serve the same role
+- none
 
 ## Fidelity
 

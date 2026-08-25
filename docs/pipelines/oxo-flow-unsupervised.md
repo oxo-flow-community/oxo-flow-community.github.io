@@ -9,7 +9,7 @@ Unsupervised analysis of omics matrices: PCA, UMAP and densMAP embeddings (2D/3D
 | **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | other |
-| **Rules** | 52 |
+| **Rules** | 61 |
 | **Compute** | up to 2 CPUs / 32 GB per rule |
 | **Tools** | igraph · leidenalg · scikit-learn · python · pandas · scipy · numpy · pynndescent · numba · dask · scikit-image · umap-learn · matplotlib-base · bokeh · datashader · holoviews · colorcet · r-ggplot2 · r-patchwork · r-ggally · r-ggrepel · r-reshape2 · r-stringi · r-data.table · plotly · plotly_express · seaborn-base · bioconductor-complexheatmap · r-rcolorbrewer · r-fastcluster · r-magick · r-clustree · r-clustercrit · pymcdm |
 | **Ported** | 2026-08-15 |
@@ -160,10 +160,8 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- env_export (7 rules) — runs `conda env export` inside the rule and requires a runtime conda installation; oxo-flow rules execute in one pinned environment, so the exported result would be the host environment, not the analysis environment. The exact pins are committed under envs/ instead.
-- config_export — dumps the in-memory Snakemake config object via a run: block; the equivalent oxo-flow [config] is documented in main.oxoflow and this README.
-- plot_dimred_features — upstream default config `features_to_plot: []` means the rule has no output on the default path (fan-out over a per-feature wildcard); skipped with the upstream default.
-- report/ generation — Snakemake `report(...)` wrapper metadata (captions, categories, labels) has no oxo-flow counterpart; rule outputs are identical, only the report book is not produced.
+- config_export — the committed [config] table IS the config; a dump rule would duplicate it and drift
+- report/ generation — snakemake report book needs wrapper-metadata channels the engine lacks; all underlying artifacts are produced
 
 ## Fidelity
 

@@ -9,7 +9,7 @@ Run a complete region set and gene set enrichment analysis on your own data: reg
 | **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | genomics |
-| **Rules** | 38 |
+| **Rules** | 42 |
 | **Compute** | up to 10 CPUs / 32 GB per rule |
 | **Tools** | gseapy · pandas · pycistarget · bioconductor-lola · bioconductor-rgreat · r-base · r-ggplot2 · r-pheatmap · r-svglite · r-reshape2 · r-data.table · bioconductor-rtracklayer · bioconductor-org.hs.eg.db |
 | **Ported** | 2026-08-15 |
@@ -192,10 +192,9 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- gene_motif_enrichment_analysis_RcisTarget — zero instances on the default path: RcisTarget needs .txt gene sets in the annotation; the default annotation has none (region sets + ranked gene sets only)
-- env_export — conda env export requires the conda CLI inside the runtime environment; exact pins are already declared in envs/*.yaml
-- report rendering — oxo-flow has no report module; the reproducibility exports (configs/, envs) are kept as upstream rules
-- note: the anticipated names liftover/enrichr/gost/single_region_mode do not exist in v3.0.1 (Enrichr appears only as a database-source reference in config comments)
+- RcisTarget .txt gene-set fan-out — zero members on the default annotation (port parity with gene_ORA_GSEApy)
+- env_export — runs `conda env export` inside the runtime env; the committed envs/*.yaml pins already cover reproducibility
+- report rendering — snakemake report() book; oxo-flow has no report module (reproducibility exports config_export/annot_export are ported)
 
 ## Fidelity
 

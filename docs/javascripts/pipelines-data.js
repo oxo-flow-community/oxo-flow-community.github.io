@@ -1684,12 +1684,11 @@ window.OXO_PIPELINES = [
       "visualize_pycisTarget_hg38_screen_v10clust_ATAC"
     ],
     "excluded": [
-      "gene_motif_enrichment_analysis_RcisTarget \u2014 zero instances on the default path: RcisTarget needs .txt gene sets in the annotation; the default annotation has none (region sets + ranked gene sets only)",
-      "env_export \u2014 conda env export requires the conda CLI inside the runtime environment; exact pins are already declared in envs/*.yaml",
-      "report rendering \u2014 oxo-flow has no report module; the reproducibility exports (configs/, envs) are kept as upstream rules",
-      "note: the anticipated names liftover/enrichr/gost/single_region_mode do not exist in v3.0.1 (Enrichr appears only as a database-source reference in config comments)"
+      "RcisTarget .txt gene-set fan-out \u2014 zero members on the default annotation (port parity with gene_ORA_GSEApy)",
+      "env_export \u2014 runs `conda env export` inside the runtime env; the committed envs/*.yaml pins already cover reproducibility",
+      "report rendering \u2014 snakemake report() book; oxo-flow has no report module (reproducibility exports config_export/annot_export are ported)"
     ],
-    "rule_count": 38,
+    "rule_count": 42,
     "tools": [
       "gseapy",
       "pandas",
@@ -1765,13 +1764,8 @@ window.OXO_PIPELINES = [
       "gene_list_export",
       "config_export"
     ],
-    "excluded": [
-      "split_sc_bam \u2014 single-cell sinto branch, not on the default path",
-      "igv_report \u2014 temporarily deactivated upstream (commented out of rule all)",
-      "make_bed \u2014 only feeds the deactivated igv_report rule",
-      "env_export \u2014 conda-runtime documentation rule for envs of non-ported branches; envs/ yamls serve the same role"
-    ],
-    "rule_count": 8,
+    "excluded": [],
+    "rule_count": 16,
     "tools": [
       "samtools",
       "deeptools",
@@ -2040,12 +2034,10 @@ window.OXO_PIPELINES = [
       "annot_export"
     ],
     "excluded": [
-      "env_export (7 rules) \u2014 runs `conda env export` inside the rule and requires a runtime conda installation; oxo-flow rules execute in one pinned environment, so the exported result would be the host environment, not the analysis environment. The exact pins are committed under envs/ instead.",
-      "config_export \u2014 dumps the in-memory Snakemake config object via a run: block; the equivalent oxo-flow [config] is documented in main.oxoflow and this README.",
-      "plot_dimred_features \u2014 upstream default config `features_to_plot: []` means the rule has no output on the default path (fan-out over a per-feature wildcard); skipped with the upstream default.",
-      "report/ generation \u2014 Snakemake `report(...)` wrapper metadata (captions, categories, labels) has no oxo-flow counterpart; rule outputs are identical, only the report book is not produced."
+      "config_export \u2014 the committed [config] table IS the config; a dump rule would duplicate it and drift",
+      "report/ generation \u2014 snakemake report book needs wrapper-metadata channels the engine lacks; all underlying artifacts are produced"
     ],
-    "rule_count": 52,
+    "rule_count": 61,
     "tools": [
       "igraph",
       "leidenalg",
