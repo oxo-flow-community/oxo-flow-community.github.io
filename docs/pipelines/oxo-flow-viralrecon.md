@@ -1,6 +1,6 @@
 # Viral assembly and intrahost variant calling for Illumina amplicon data
 
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
 
 Turns paired-end Illumina amplicon reads into a complete viral genomics report: read QC and trimming (FastQC, fastp), host-sequence removal (Kraken2), alignment to a user-provided reference genome (Bowtie2), primer trimming, intrahost variant calling and annotation (iVar, snpEff/SnpSift), consensus building with low-coverage masking (bcftools), lineage assignment and deconvolution (Pangolin, Nextclade, Freyja), de novo assembly with QC (SPAdes, Bandage, BLAST, QUAST, ABACAS), and a single MultiQC report.
 
@@ -9,7 +9,7 @@ Turns paired-end Illumina amplicon reads into a complete viral genomics report: 
 | **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | genomics |
-| **Rules** | 51 |
+| **Rules** | 82 |
 | **Compute** | up to 12 CPUs / 72 GB per rule |
 | **Tools** | abacas · bandage · bcftools · bedtools · blast · bowtie2 · cutadapt · fastp · fastqc · freyja · htslib · ivar · kraken2 · mosdepth · multiqc · nextclade · pangolin · picard · pigz · python · quast · r · samtools · snpeff · snpsift · spades |
 | **Ported** | 2026-08-15 |
@@ -61,68 +61,72 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-viralrecon
 
 | Parameter | Default | Description | Used by |
 |---:|---|---|---|
-| `assemblers` | `spades` | Assembly (only the upstream default 'spades' assembler is ported) | — |
-| `consensus_caller` | `bcftools` | — | `consensus_call`, `consensus_filter` |
+| `additional_annotation` | `` | --- Additional annotation (upstream params.additional_annotation; empty = off. A GFF/GTF to annotate the variants with in addition to the main reference annotation, run through snpEff + SnpSift + the variants long table. .gz files are gunzipped by build_snpeff_db_additional.) --- | `additional_annotation`, `build_snpeff_db_additional` |
+| `assemblers` | `spades` | --- Assembly (upstream params.assemblers may list several assemblers; the port's when-language has no 'in' operator, so assemblers takes ONE name and the unicycler/minia branches are gated on equality: assemblers='spades' \| 'unicycler' \| 'minia'. Comma-separated lists are a documented deviation.) --- | `abacas`, `abacas_minia`, `abacas_unicycler`, `assemble_minia`, `assemble_spades`, `assemble_unicycler`, `bandage`, `bandage_unicycler`, `blast_assembly`, `blast_assembly_minia`, `blast_assembly_unicycler`, `plasmidid`, `quast_assembly`, `quast_assembly_minia`, `quast_assembly_unicycler` |
+| `consensus_caller` | `bcftools` | --- Consensus caller (upstream params.consensus_caller; both the bcftools and ivar branches are ported as when-gated rules) --- | `consensus_call`, `consensus_call_wgs`, `consensus_filter`, `consensus_filter_bcftools`, `consensus_ivar`, `consensus_ivar_wgs` |
 | `fasta` | `reference/genome.fa` | The port expects uncompressed files at these paths. Set the *_ends_gz keys to true to run the upstream GUNZIP_* steps first (outputs land at the same fixed reference/ paths). | `gunzip_fasta` |
 | `fasta_ends_gz` | `false` | — | `gunzip_fasta` |
-| `freyja_barcodes` | `test/fixtures/refs/freyja_barcodes.csv` | --- Freyja (upstream --freyja_barcodes / --freyja_lineages. FREYJA_UPDATE, the network download, is not ported.) --- | `freyja_boot`, `freyja_demix` |
-| `freyja_depthcutoff` | `0` | — | `freyja_boot`, `freyja_demix` |
-| `freyja_lineages` | `test/fixtures/refs/freyja_lineages.json` | freyja's meta format is the curated_lineages JSON (buildLineageMap json.loads it — live: the CSV default died in freyja boot with JSONDecodeError); the CSV sibling is kept as the barcodes-side table | `freyja_boot`, `freyja_demix` |
-| `freyja_repeats` | `100` | — | `freyja_boot` |
+| `filter_duplicates` | `false` | upstream params.filter_duplicates (default false) — passed to PICARD_MARKDUPLICATES as REMOVE_DUPLICATES=true when set | `markduplicates`, `markduplicates_wgs` |
+| `freyja_barcodes` | `test/fixtures/refs/freyja_barcodes.csv` | --- Freyja (upstream --freyja_barcodes / --freyja_lineages. When either is left empty the gated rules freyja_update + freyja_demix_updated / freyja_boot_updated download and use the upstream DB instead.) --- | `freyja_boot`, `freyja_boot_updated`, `freyja_demix`, `freyja_demix_updated`, `freyja_update` |
+| `freyja_db_name` | `reference/freyja_db` | upstream params.freyja_db_name — where FREYJA_UPDATE writes its download (upstream default 'freyja_db'; the port points into reference/) | `freyja_boot_updated`, `freyja_demix_updated`, `freyja_update` |
+| `freyja_depthcutoff` | `0` | — | `freyja_boot`, `freyja_boot_updated`, `freyja_demix`, `freyja_demix_updated` |
+| `freyja_lineages` | `test/fixtures/refs/freyja_lineages.json` | freyja's meta format is the curated_lineages JSON (buildLineageMap json.loads it — live: the CSV default died in freyja boot with JSONDecodeError); the CSV sibling is kept as the barcodes-side table | `freyja_boot`, `freyja_boot_updated`, `freyja_demix`, `freyja_demix_updated`, `freyja_update` |
+| `freyja_repeats` | `100` | — | `freyja_boot`, `freyja_boot_updated` |
 | `gff` | `reference/genome.gff` | — | `gunzip_gff` |
 | `gff_ends_gz` | `false` | — | `gunzip_gff` |
 | `ivar_trim_noprimer` | `false` | — | `ivar_trim` |
 | `ivar_trim_offset` | `` | — | `ivar_trim` |
 | `kraken2_assembly_host_filter` | `true` | — | `assembly_fastq` |
-| `kraken2_db` | `reference/kraken2_db.tar.gz` | Kraken2 host-removal database (upstream --kraken2_db, tar.gz) | `untar_kraken2_db` |
+| `kraken2_db` | `reference/kraken2_db.tar.gz` | Kraken2 host-removal database (upstream --kraken2_db, tar.gz) | `kraken2_build`, `untar_kraken2_db` |
+| `kraken2_db_name` | `human` | upstream params.kraken2_db_name — the library KRAKEN2_BUILD downloads when kraken2_db is left empty (gated rule kraken2_build) | `kraken2_build` |
 | `kraken2_variants_host_filter` | `false` | — | — |
-| `min_contig_length` | `200` | Consensus QC | `blast_assembly` |
+| `min_contig_length` | `200` | Consensus QC | `blast_assembly`, `blast_assembly_minia`, `blast_assembly_unicycler` |
 | `min_mapped_reads` | `1000` | — | — |
-| `min_perc_contig_aligned` | `0.7` | — | `blast_assembly` |
+| `min_perc_contig_aligned` | `0.7` | — | `blast_assembly`, `blast_assembly_minia`, `blast_assembly_unicycler` |
 | `multiqc_title` | `` | MultiQC | `multiqc` |
 | `nextclade_dataset` | `` | Nextclade dataset (upstream genome config for MN908947.3) | `get_nextclade_dataset` |
 | `nextclade_dataset_name` | `sars-cov-2` | — | `get_nextclade_dataset` |
 | `nextclade_dataset_tag` | `2024-10-17--16-48-48Z` | — | `get_nextclade_dataset` |
 | `out_dir` | `results` | — | `fastqc_primers`, `fastqc_raw`, `fastqc_trim`, `multiqc` |
-| `pango_database` | `test/fixtures/refs/pangolin_db` | --- Pangolin (upstream --pango_database; a directory. PANGOLIN_UPDATEDATA, the network download of the data directory, is not ported.) --- | `pangolin` |
+| `pango_database` | `test/fixtures/refs/pangolin_db` | --- Pangolin (upstream --pango_database; a directory. When left empty the gated rules pangolin_updatedata + pangolin_run_updated download the data directory instead, mirroring upstream PANGOLIN_UPDATEDATA.) --- | `pangolin`, `pangolin_run_updated`, `pangolin_updatedata` |
 | `platform` | `illumina` | Platform / protocol | `multiqc` |
 | `primer_bed` | `reference/primers.bed` | — | `gunzip_primer_bed` |
 | `primer_bed_ends_gz` | `false` | — | `gunzip_primer_bed` |
 | `primer_left_suffix` | `_LEFT` | Primer trimming for assembly | `collapse_primers` |
 | `primer_right_suffix` | `_RIGHT` | — | `collapse_primers` |
-| `protocol` | `amplicon` | — | `bam_sort_index_trimmed`, `call_variants_ivar`, `collapse_primers`, `consensus_call`, `consensus_filter`, `cutadapt`, `fastqc_primers`, `freyja_boot`, `freyja_demix`, `freyja_variants`, `get_primer_fasta`, `ivar_to_vcf`, `ivar_trim`, `mosdepth_amplicon`, `mosdepth_genome`, `nextclade`, `nextclade_clade_mqc`, `pangolin`, `picard_metrics`, `plot_base_density`, `plot_mosdepth_amplicon`, `plot_mosdepth_genome`, `prepare_primer_fasta`, `quast_consensus`, `snpeff_ann`, `snpsift_extract`, `sort_vcf`, `variants_long_table` |
+| `protocol` | `amplicon` | — | `bam_sort_index_trimmed`, `call_variants_bcftools`, `call_variants_bcftools_wgs`, `call_variants_ivar`, `collapse_primers`, `consensus_call`, `consensus_call_wgs`, `consensus_ivar`, `consensus_ivar_wgs`, `cutadapt`, `fastqc_primers`, `freyja_variants`, `freyja_variants_wgs`, `get_primer_fasta`, `ivar_to_vcf`, `ivar_trim`, `markduplicates`, `markduplicates_wgs`, `mosdepth_amplicon`, `mosdepth_genome`, `mosdepth_genome_wgs`, `picard_metrics`, `picard_metrics_wgs`, `plot_mosdepth_amplicon`, `prepare_primer_fasta`, `sort_vcf` |
 | `raw_dir` | `test/fixtures/raw` | Directory holding raw/<sample>_R1.fastq.gz + raw/<sample>_R2.fastq.gz. The repo default ships the tiny test fixtures; point this at your data. | `cat_fastq`, `fastqc_raw` |
 | `save_mpileup` | `false` | — | — |
 | `save_trimmed_fail` | `false` | — | — |
 | `save_unaligned` | `false` | — | — |
-| `skip_abacas` | `false` | — | `abacas` |
-| `skip_assembly` | `false` | — | `abacas`, `assemble_spades`, `bandage`, `blast_assembly`, `cutadapt`, `fastqc_primers`, `get_primer_fasta`, `make_blast_db`, `prepare_primer_fasta`, `quast_assembly` |
-| `skip_assembly_quast` | `false` | — | `quast_assembly` |
-| `skip_bandage` | `false` | — | `bandage` |
-| `skip_blast` | `false` | — | `blast_assembly`, `make_blast_db` |
-| `skip_consensus` | `false` | — | `consensus_call`, `consensus_filter`, `get_nextclade_dataset`, `nextclade`, `nextclade_clade_mqc`, `pangolin`, `plot_base_density`, `quast_consensus` |
+| `skip_abacas` | `false` | — | `abacas`, `abacas_minia`, `abacas_unicycler` |
+| `skip_assembly` | `false` | — | `abacas`, `abacas_minia`, `abacas_unicycler`, `assemble_minia`, `assemble_spades`, `assemble_unicycler`, `bandage`, `bandage_unicycler`, `blast_assembly`, `blast_assembly_minia`, `blast_assembly_unicycler`, `cutadapt`, `fastqc_primers`, `get_primer_fasta`, `make_blast_db`, `plasmidid`, `prepare_primer_fasta`, `quast_assembly`, `quast_assembly_minia`, `quast_assembly_unicycler` |
+| `skip_assembly_quast` | `false` | — | `quast_assembly`, `quast_assembly_minia`, `quast_assembly_unicycler` |
+| `skip_bandage` | `false` | — | `bandage`, `bandage_unicycler` |
+| `skip_blast` | `false` | — | `blast_assembly`, `blast_assembly_minia`, `blast_assembly_unicycler`, `make_blast_db` |
+| `skip_consensus` | `false` | — | `consensus_call`, `consensus_call_wgs`, `consensus_filter`, `consensus_filter_bcftools`, `consensus_ivar`, `consensus_ivar_wgs`, `get_nextclade_dataset`, `nextclade`, `nextclade_clade_mqc`, `pangolin`, `pangolin_run_updated`, `pangolin_updatedata`, `plot_base_density`, `quast_consensus` |
 | `skip_consensus_plots` | `false` | — | `plot_base_density` |
 | `skip_cutadapt` | `false` | — | `cutadapt`, `fastqc_primers`, `get_primer_fasta`, `prepare_primer_fasta` |
 | `skip_fastp` | `false` | — | `fastp`, `fastqc_trim` |
 | `skip_fastqc` | `false` | Skip flags (identical defaults to upstream params) | `fastqc_primers`, `fastqc_raw`, `fastqc_trim` |
-| `skip_freyja` | `false` | — | `freyja_boot`, `freyja_demix`, `freyja_variants` |
-| `skip_freyja_boot` | `false` | — | `freyja_boot` |
+| `skip_freyja` | `false` | — | `freyja_boot`, `freyja_boot_updated`, `freyja_demix`, `freyja_demix_updated`, `freyja_update`, `freyja_variants`, `freyja_variants_wgs` |
+| `skip_freyja_boot` | `false` | — | `freyja_boot`, `freyja_boot_updated` |
 | `skip_ivar_trim` | `false` | — | `bam_sort_index_trimmed`, `ivar_trim` |
-| `skip_kraken2` | `false` | — | `assembly_fastq`, `kraken2`, `untar_kraken2_db` |
-| `skip_markduplicates` | `true` | — | — |
-| `skip_mosdepth` | `false` | — | `collapse_primers`, `mosdepth_amplicon`, `mosdepth_genome`, `plot_mosdepth_amplicon`, `plot_mosdepth_genome` |
+| `skip_kraken2` | `false` | — | `assembly_fastq`, `kraken2`, `kraken2_build`, `untar_kraken2_db` |
+| `skip_markduplicates` | `true` | — | `markduplicates`, `markduplicates_wgs` |
+| `skip_mosdepth` | `false` | — | `collapse_primers`, `mosdepth_amplicon`, `mosdepth_genome`, `mosdepth_genome_wgs`, `plot_mosdepth_amplicon`, `plot_mosdepth_genome` |
 | `skip_nextclade` | `false` | — | `get_nextclade_dataset`, `nextclade`, `nextclade_clade_mqc` |
 | `skip_noninternal_primers` | `false` | — | `prepare_primer_fasta` |
-| `skip_pangolin` | `false` | — | `pangolin` |
-| `skip_picard_metrics` | `false` | — | `picard_metrics` |
-| `skip_plasmidid` | `true` | — | — |
-| `skip_snpeff` | `false` | — | `build_snpeff_db`, `snpeff_ann`, `snpsift_extract`, `variants_long_table` |
-| `skip_variants` | `false` | — | `align_bowtie2`, `bam_sort_index`, `bam_sort_index_trimmed`, `build_bowtie2_index`, `build_snpeff_db`, `call_variants_ivar`, `collapse_primers`, `freyja_boot`, `freyja_demix`, `freyja_variants`, `ivar_to_vcf`, `ivar_trim`, `mosdepth_amplicon`, `mosdepth_genome`, `picard_metrics`, `plot_mosdepth_amplicon`, `plot_mosdepth_genome`, `snpeff_ann`, `snpsift_extract`, `sort_vcf`, `variants_long_table` |
-| `skip_variants_long_table` | `false` | — | `variants_long_table` |
+| `skip_pangolin` | `false` | — | `pangolin`, `pangolin_run_updated`, `pangolin_updatedata` |
+| `skip_picard_metrics` | `false` | — | `picard_metrics`, `picard_metrics_wgs` |
+| `skip_plasmidid` | `true` | — | `plasmidid` |
+| `skip_snpeff` | `false` | — | `build_snpeff_db`, `snpeff_ann`, `snpsift_extract`, `variants_long_table`, `variants_long_table_bcftools` |
+| `skip_variants` | `false` | — | `align_bowtie2`, `bam_sort_index`, `bam_sort_index_trimmed`, `build_bowtie2_index`, `build_snpeff_db`, `call_variants_bcftools`, `call_variants_bcftools_wgs`, `call_variants_ivar`, `collapse_primers`, `freyja_boot`, `freyja_boot_updated`, `freyja_demix`, `freyja_demix_updated`, `freyja_update`, `freyja_variants`, `freyja_variants_wgs`, `ivar_to_vcf`, `ivar_trim`, `markduplicates`, `markduplicates_wgs`, `mosdepth_amplicon`, `mosdepth_genome`, `mosdepth_genome_wgs`, `norm_vcf_bcftools`, `picard_metrics`, `picard_metrics_wgs`, `plot_mosdepth_amplicon`, `plot_mosdepth_genome`, `snpeff_ann`, `snpsift_extract`, `sort_vcf`, `variants_long_table`, `variants_long_table_bcftools` |
+| `skip_variants_long_table` | `false` | — | `variants_long_table`, `variants_long_table_bcftools` |
 | `skip_variants_quast` | `false` | — | `quast_consensus` |
 | `spades_mode` | `rnaviral` | — | `assemble_spades` |
 | `threeprime_adapters` | `false` | — | — |
-| `variant_caller` | `ivar` | --- Variant calling (upstream params.variant_caller defaults to 'ivar' for the amplicon protocol; the bcftools variant-caller branch is not ported) --- | `call_variants_ivar`, `ivar_to_vcf`, `sort_vcf` |
+| `variant_caller` | `ivar` | --- Variant calling (upstream params.variant_caller defaults to 'ivar' for the amplicon protocol and 'bcftools' otherwise; both branches are ported as when-gated rules) --- | `additional_annotation`, `call_variants_bcftools`, `call_variants_bcftools_wgs`, `call_variants_ivar`, `consensus_filter`, `consensus_filter_bcftools`, `ivar_to_vcf`, `norm_vcf_bcftools`, `sort_vcf`, `variants_long_table`, `variants_long_table_bcftools` |
 
 Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
 
@@ -196,20 +200,12 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- nanopore platform branch (ARTIC_GUPPYPLEX, ARTIC_MINION, NANOPLOT, PYCOQC, VCFLIB_VCFUNIQ, PREPARE_GENOME_NANOPORE) — illumina only
-- variant_caller='bcftools' branch (VARIANTS_BCFTOOLS subworkflow: BCFTOOLS_MPILEUP, BCFTOOLS_NORM, BCFTOOLS_MPILEUP_FILTER, custom filter scripts) — non-default; only the iVar caller (the amplicon default) is ported
-- consensus_caller='ivar' branch (CONSENSUS_IVAR subworkflow: IVAR_CONSENSUS) — non-default; only bcftools consensus (the default) is ported
-- wgs (shotgun) protocol variant branch — the port runs the amplicon protocol gates (primer trimming, collapsed-primer mosdepth); non-amplicon variant calling is not ported
-- unicycler and minia assemblers (ASSEMBLY_UNICYCLER / ASSEMBLY_MINIA subworkflows) — assemblers is fixed to the upstream default 'spades'
-- PICARD_MARKDUPLICATES — skip_markduplicates defaults to true upstream and in this port
-- PLASMIDID — skip_plasmidid defaults to true upstream and in this port
-- KRAKEN2_BUILD — upstream downloads the human host database over the network; this port takes a local kraken2_db tar.gz (empty-stub fixture provided)
-- FREYJA_UPDATE — upstream downloads barcodes/lineages over the network; this port takes config.freyja_barcodes / config.freyja_lineages (fixtures provided)
-- PANGOLIN_UPDATEDATA — upstream downloads the pangolin data directory over the network; this port takes config.pango_database (fixture placeholder provided)
-- ADDITIONAL_ANNOTATION — off by default upstream (params.additional_annotation is empty)
-- channel-level runtime filters — the fastp reads-after-filtering empty check, the min_mapped_reads flagstat gate, the zero-variant-sample filter and optional-file existence gates have no oxo-flow equivalent (documented deviations)
-- save_* extra outputs — save_unaligned, save_trimmed_fail, save_mpileup, save_ivar_trimmed_bam and the other save_* flags are off by default upstream and not ported
-- MultiQC extras — the multiqc_data/versions.yml software table and *_plots directory are not emitted; the port keeps the report HTML, the data directory and the variants/assembly metrics CSVs
+- nanopore platform branch (ARTIC_GUPPYPLEX/ARTIC_MINION/NANOPLOT/PYCOQC/VCFLIB_VCFUNIQ/PREPARE_GENOME_NANOPORE) — guppy basecaller is commercial software and the repo has no nanopore fixture
+- channel-level runtime filters — Nextflow channel filters (fastp empty-reads check, min_mapped_reads gate, zero-variant-sample filter, optional-file existence gates) have no oxo-flow equivalent; the new branches emit empty placeholder artifacts instead
+- MultiQC versions.yml / plots extras
+- multiple assemblers in one run — the when-language has no `in` operator, single-assembler equality gates only
+- iVar variant calling under metagenomic — upstream derives bcftools for non-amplicon; the port requires --arg variant_caller=bcftools
+- save_* extra outputs
 
 ## Fidelity
 

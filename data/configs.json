@@ -2962,18 +2962,49 @@
     "workflow": "main.oxoflow",
     "config": [
       {
+        "default": "",
+        "description": "--- Additional annotation (upstream params.additional_annotation; empty = off. A GFF/GTF to annotate the variants with in addition to the main reference annotation, run through snpEff + SnpSift + the variants long table. .gz files are gunzipped by build_snpeff_db_additional.) ---",
+        "key": "additional_annotation",
+        "used_by": [
+          "additional_annotation",
+          "build_snpeff_db_additional"
+        ],
+        "value_type": "string"
+      },
+      {
         "default": "spades",
-        "description": "Assembly (only the upstream default 'spades' assembler is ported)",
+        "description": "--- Assembly (upstream params.assemblers may list several assemblers; the port's when-language has no 'in' operator, so assemblers takes ONE name and the unicycler/minia branches are gated on equality: assemblers='spades' | 'unicycler' | 'minia'. Comma-separated lists are a documented deviation.) ---",
         "key": "assemblers",
-        "used_by": [],
+        "used_by": [
+          "abacas",
+          "abacas_minia",
+          "abacas_unicycler",
+          "assemble_minia",
+          "assemble_spades",
+          "assemble_unicycler",
+          "bandage",
+          "bandage_unicycler",
+          "blast_assembly",
+          "blast_assembly_minia",
+          "blast_assembly_unicycler",
+          "plasmidid",
+          "quast_assembly",
+          "quast_assembly_minia",
+          "quast_assembly_unicycler"
+        ],
         "value_type": "string"
       },
       {
         "default": "bcftools",
+        "description": "--- Consensus caller (upstream params.consensus_caller; both the bcftools and ivar branches are ported as when-gated rules) ---",
         "key": "consensus_caller",
         "used_by": [
           "consensus_call",
-          "consensus_filter"
+          "consensus_call_wgs",
+          "consensus_filter",
+          "consensus_filter_bcftools",
+          "consensus_ivar",
+          "consensus_ivar_wgs"
         ],
         "value_type": "string"
       },
@@ -2995,12 +3026,36 @@
         "value_type": "bool"
       },
       {
+        "default": false,
+        "description": "upstream params.filter_duplicates (default false) \u2014 passed to PICARD_MARKDUPLICATES as REMOVE_DUPLICATES=true when set",
+        "key": "filter_duplicates",
+        "used_by": [
+          "markduplicates",
+          "markduplicates_wgs"
+        ],
+        "value_type": "bool"
+      },
+      {
         "default": "test/fixtures/refs/freyja_barcodes.csv",
-        "description": "--- Freyja (upstream --freyja_barcodes / --freyja_lineages. FREYJA_UPDATE, the network download, is not ported.) ---",
+        "description": "--- Freyja (upstream --freyja_barcodes / --freyja_lineages. When either is left empty the gated rules freyja_update + freyja_demix_updated / freyja_boot_updated download and use the upstream DB instead.) ---",
         "key": "freyja_barcodes",
         "used_by": [
           "freyja_boot",
-          "freyja_demix"
+          "freyja_boot_updated",
+          "freyja_demix",
+          "freyja_demix_updated",
+          "freyja_update"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "reference/freyja_db",
+        "description": "upstream params.freyja_db_name \u2014 where FREYJA_UPDATE writes its download (upstream default 'freyja_db'; the port points into reference/)",
+        "key": "freyja_db_name",
+        "used_by": [
+          "freyja_boot_updated",
+          "freyja_demix_updated",
+          "freyja_update"
         ],
         "value_type": "string"
       },
@@ -3009,7 +3064,9 @@
         "key": "freyja_depthcutoff",
         "used_by": [
           "freyja_boot",
-          "freyja_demix"
+          "freyja_boot_updated",
+          "freyja_demix",
+          "freyja_demix_updated"
         ],
         "value_type": "int"
       },
@@ -3019,7 +3076,10 @@
         "key": "freyja_lineages",
         "used_by": [
           "freyja_boot",
-          "freyja_demix"
+          "freyja_boot_updated",
+          "freyja_demix",
+          "freyja_demix_updated",
+          "freyja_update"
         ],
         "value_type": "string"
       },
@@ -3027,7 +3087,8 @@
         "default": 100,
         "key": "freyja_repeats",
         "used_by": [
-          "freyja_boot"
+          "freyja_boot",
+          "freyja_boot_updated"
         ],
         "value_type": "int"
       },
@@ -3076,7 +3137,17 @@
         "description": "Kraken2 host-removal database (upstream --kraken2_db, tar.gz)",
         "key": "kraken2_db",
         "used_by": [
+          "kraken2_build",
           "untar_kraken2_db"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "human",
+        "description": "upstream params.kraken2_db_name \u2014 the library KRAKEN2_BUILD downloads when kraken2_db is left empty (gated rule kraken2_build)",
+        "key": "kraken2_db_name",
+        "used_by": [
+          "kraken2_build"
         ],
         "value_type": "string"
       },
@@ -3091,7 +3162,9 @@
         "description": "Consensus QC",
         "key": "min_contig_length",
         "used_by": [
-          "blast_assembly"
+          "blast_assembly",
+          "blast_assembly_minia",
+          "blast_assembly_unicycler"
         ],
         "value_type": "int"
       },
@@ -3105,7 +3178,9 @@
         "default": 0.7,
         "key": "min_perc_contig_aligned",
         "used_by": [
-          "blast_assembly"
+          "blast_assembly",
+          "blast_assembly_minia",
+          "blast_assembly_unicycler"
         ],
         "value_type": "float"
       },
@@ -3156,10 +3231,12 @@
       },
       {
         "default": "test/fixtures/refs/pangolin_db",
-        "description": "--- Pangolin (upstream --pango_database; a directory. PANGOLIN_UPDATEDATA, the network download of the data directory, is not ported.) ---",
+        "description": "--- Pangolin (upstream --pango_database; a directory. When left empty the gated rules pangolin_updatedata + pangolin_run_updated download the data directory instead, mirroring upstream PANGOLIN_UPDATEDATA.) ---",
         "key": "pango_database",
         "used_by": [
-          "pangolin"
+          "pangolin",
+          "pangolin_run_updated",
+          "pangolin_updatedata"
         ],
         "value_type": "string"
       },
@@ -3210,33 +3287,31 @@
         "key": "protocol",
         "used_by": [
           "bam_sort_index_trimmed",
+          "call_variants_bcftools",
+          "call_variants_bcftools_wgs",
           "call_variants_ivar",
           "collapse_primers",
           "consensus_call",
-          "consensus_filter",
+          "consensus_call_wgs",
+          "consensus_ivar",
+          "consensus_ivar_wgs",
           "cutadapt",
           "fastqc_primers",
-          "freyja_boot",
-          "freyja_demix",
           "freyja_variants",
+          "freyja_variants_wgs",
           "get_primer_fasta",
           "ivar_to_vcf",
           "ivar_trim",
+          "markduplicates",
+          "markduplicates_wgs",
           "mosdepth_amplicon",
           "mosdepth_genome",
-          "nextclade",
-          "nextclade_clade_mqc",
-          "pangolin",
+          "mosdepth_genome_wgs",
           "picard_metrics",
-          "plot_base_density",
+          "picard_metrics_wgs",
           "plot_mosdepth_amplicon",
-          "plot_mosdepth_genome",
           "prepare_primer_fasta",
-          "quast_consensus",
-          "snpeff_ann",
-          "snpsift_extract",
-          "sort_vcf",
-          "variants_long_table"
+          "sort_vcf"
         ],
         "value_type": "string"
       },
@@ -3272,7 +3347,9 @@
         "default": false,
         "key": "skip_abacas",
         "used_by": [
-          "abacas"
+          "abacas",
+          "abacas_minia",
+          "abacas_unicycler"
         ],
         "value_type": "bool"
       },
@@ -3281,15 +3358,25 @@
         "key": "skip_assembly",
         "used_by": [
           "abacas",
+          "abacas_minia",
+          "abacas_unicycler",
+          "assemble_minia",
           "assemble_spades",
+          "assemble_unicycler",
           "bandage",
+          "bandage_unicycler",
           "blast_assembly",
+          "blast_assembly_minia",
+          "blast_assembly_unicycler",
           "cutadapt",
           "fastqc_primers",
           "get_primer_fasta",
           "make_blast_db",
+          "plasmidid",
           "prepare_primer_fasta",
-          "quast_assembly"
+          "quast_assembly",
+          "quast_assembly_minia",
+          "quast_assembly_unicycler"
         ],
         "value_type": "bool"
       },
@@ -3297,7 +3384,9 @@
         "default": false,
         "key": "skip_assembly_quast",
         "used_by": [
-          "quast_assembly"
+          "quast_assembly",
+          "quast_assembly_minia",
+          "quast_assembly_unicycler"
         ],
         "value_type": "bool"
       },
@@ -3305,7 +3394,8 @@
         "default": false,
         "key": "skip_bandage",
         "used_by": [
-          "bandage"
+          "bandage",
+          "bandage_unicycler"
         ],
         "value_type": "bool"
       },
@@ -3314,6 +3404,8 @@
         "key": "skip_blast",
         "used_by": [
           "blast_assembly",
+          "blast_assembly_minia",
+          "blast_assembly_unicycler",
           "make_blast_db"
         ],
         "value_type": "bool"
@@ -3323,11 +3415,17 @@
         "key": "skip_consensus",
         "used_by": [
           "consensus_call",
+          "consensus_call_wgs",
           "consensus_filter",
+          "consensus_filter_bcftools",
+          "consensus_ivar",
+          "consensus_ivar_wgs",
           "get_nextclade_dataset",
           "nextclade",
           "nextclade_clade_mqc",
           "pangolin",
+          "pangolin_run_updated",
+          "pangolin_updatedata",
           "plot_base_density",
           "quast_consensus"
         ],
@@ -3377,8 +3475,12 @@
         "key": "skip_freyja",
         "used_by": [
           "freyja_boot",
+          "freyja_boot_updated",
           "freyja_demix",
-          "freyja_variants"
+          "freyja_demix_updated",
+          "freyja_update",
+          "freyja_variants",
+          "freyja_variants_wgs"
         ],
         "value_type": "bool"
       },
@@ -3386,7 +3488,8 @@
         "default": false,
         "key": "skip_freyja_boot",
         "used_by": [
-          "freyja_boot"
+          "freyja_boot",
+          "freyja_boot_updated"
         ],
         "value_type": "bool"
       },
@@ -3405,6 +3508,7 @@
         "used_by": [
           "assembly_fastq",
           "kraken2",
+          "kraken2_build",
           "untar_kraken2_db"
         ],
         "value_type": "bool"
@@ -3412,7 +3516,10 @@
       {
         "default": true,
         "key": "skip_markduplicates",
-        "used_by": [],
+        "used_by": [
+          "markduplicates",
+          "markduplicates_wgs"
+        ],
         "value_type": "bool"
       },
       {
@@ -3422,6 +3529,7 @@
           "collapse_primers",
           "mosdepth_amplicon",
           "mosdepth_genome",
+          "mosdepth_genome_wgs",
           "plot_mosdepth_amplicon",
           "plot_mosdepth_genome"
         ],
@@ -3449,7 +3557,9 @@
         "default": false,
         "key": "skip_pangolin",
         "used_by": [
-          "pangolin"
+          "pangolin",
+          "pangolin_run_updated",
+          "pangolin_updatedata"
         ],
         "value_type": "bool"
       },
@@ -3457,14 +3567,17 @@
         "default": false,
         "key": "skip_picard_metrics",
         "used_by": [
-          "picard_metrics"
+          "picard_metrics",
+          "picard_metrics_wgs"
         ],
         "value_type": "bool"
       },
       {
         "default": true,
         "key": "skip_plasmidid",
-        "used_by": [],
+        "used_by": [
+          "plasmidid"
+        ],
         "value_type": "bool"
       },
       {
@@ -3474,7 +3587,8 @@
           "build_snpeff_db",
           "snpeff_ann",
           "snpsift_extract",
-          "variants_long_table"
+          "variants_long_table",
+          "variants_long_table_bcftools"
         ],
         "value_type": "bool"
       },
@@ -3487,22 +3601,34 @@
           "bam_sort_index_trimmed",
           "build_bowtie2_index",
           "build_snpeff_db",
+          "call_variants_bcftools",
+          "call_variants_bcftools_wgs",
           "call_variants_ivar",
           "collapse_primers",
           "freyja_boot",
+          "freyja_boot_updated",
           "freyja_demix",
+          "freyja_demix_updated",
+          "freyja_update",
           "freyja_variants",
+          "freyja_variants_wgs",
           "ivar_to_vcf",
           "ivar_trim",
+          "markduplicates",
+          "markduplicates_wgs",
           "mosdepth_amplicon",
           "mosdepth_genome",
+          "mosdepth_genome_wgs",
+          "norm_vcf_bcftools",
           "picard_metrics",
+          "picard_metrics_wgs",
           "plot_mosdepth_amplicon",
           "plot_mosdepth_genome",
           "snpeff_ann",
           "snpsift_extract",
           "sort_vcf",
-          "variants_long_table"
+          "variants_long_table",
+          "variants_long_table_bcftools"
         ],
         "value_type": "bool"
       },
@@ -3510,7 +3636,8 @@
         "default": false,
         "key": "skip_variants_long_table",
         "used_by": [
-          "variants_long_table"
+          "variants_long_table",
+          "variants_long_table_bcftools"
         ],
         "value_type": "bool"
       },
@@ -3538,12 +3665,20 @@
       },
       {
         "default": "ivar",
-        "description": "--- Variant calling (upstream params.variant_caller defaults to 'ivar' for the amplicon protocol; the bcftools variant-caller branch is not ported) ---",
+        "description": "--- Variant calling (upstream params.variant_caller defaults to 'ivar' for the amplicon protocol and 'bcftools' otherwise; both branches are ported as when-gated rules) ---",
         "key": "variant_caller",
         "used_by": [
+          "additional_annotation",
+          "call_variants_bcftools",
+          "call_variants_bcftools_wgs",
           "call_variants_ivar",
+          "consensus_filter",
+          "consensus_filter_bcftools",
           "ivar_to_vcf",
-          "sort_vcf"
+          "norm_vcf_bcftools",
+          "sort_vcf",
+          "variants_long_table",
+          "variants_long_table_bcftools"
         ],
         "value_type": "string"
       }
