@@ -9,7 +9,7 @@ Ancient DNA (aDNA) analysis in one run: FastQC raw QC, optional fastp poly-G fil
 | **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | genomics |
-| **Rules** | 51 |
+| **Rules** | 54 |
 | **Compute** | up to 4 CPUs / 8 GB per rule (bwa_aln) |
 | **Tools** | fastqc · adapterremoval · adapterremovalfixprefix · bwa · samtools · picard · dedup · preseq · damageprofiler · qualimap · sequencetools · eigenstratdatabasetools · fastp · pigz · multiqc · rename · python |
 | **Ported** | 2026-08-15 |
@@ -231,12 +231,8 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- lanemerge / lanemerge_hostremoval_fastq — multi-lane merging (Nextflow multi-file channels; oxo-flow sample wiring is declarative, one fastq pair per sample row)
-- library_merge / additional_library_merge — multi-library merging (same structural constraint)
-- seqtype_merge — PE/SE mixed-input merge (same structural constraint)
-- malt / maltextract — need the upstream's bundled MALT install (no conda package)
-- kraken_merge / decomp_kraken — multi-report merging + the conditional .tar.gz DB unpacker (kraken2 itself is ported)
-- output_documentation / get_software_versions — nf-core boilerplate
+- lanemerge / lanemerge_hostremoval_fastq, library_merge / additional_library_merge, seqtype_merge — structural: oxo-flow instances are driven by wildcard combinations (one fastq pair per sample row); expand_inputs only fans files INTO one cohort instance, there is no per-sample multi-file grouping primitive (remediation: pre-concatenate or separate sample rows)
+- output_documentation, get_software_versions — nf-core boilerplate (unconditional upstream would change the default plan; versions.yml has no oxo-flow equivalent)
 
 ## Fidelity
 

@@ -9,7 +9,7 @@ Amplicon sequencing analysis (16S/ITS) that takes raw paired-end reads through F
 | **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | amplicon |
-| **Rules** | 26 |
+| **Rules** | 49 |
 | **Compute** | up to 10 CPUs / 20 GB per rule (dada2) |
 | **Tools** | fastqc · cutadapt · python · pandas · r-base · dada2 · bioconductor-digest · curl · biocontainers · qiime2 · multiqc |
 | **Ported** | 2026-08-15 |
@@ -139,12 +139,10 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- dada2_its: ITS (fungal) analysis branch — not in the default main path (params.its false by default)
-- qiime2: QIIME2 downstream analyses beyond the default taxa barplot (diversity, ANCOM, classifier training/prediction, feature table exports) — off by default (params.qiime2 false)
-- nanopore: nanopore sequencing branch (params.nanopore false by default)
-- syncom: synthetic community controls branch (params.syncom false by default)
-- multi-run merge: DADA2_MERGE mergeSequenceTables branch for multiple --run_ids — single-run default path only
-- picrust / other optional reports gated by additional params off by default
+- nanopore — absent from the upstream 2.18.0 codebase (grep-verified; docs mention Nanopore only re ITSxRust long reads)
+- syncom — absent from the upstream 2.18.0 codebase (grep-verified)
+- versions.yml — port pins versions in envs/container tags instead
+- report generators gated by params off by default (SBDI export, phyloseq/TSE objects, summary report)
 
 ## Fidelity
 

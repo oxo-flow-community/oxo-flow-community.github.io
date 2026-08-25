@@ -603,14 +603,12 @@ window.OXO_PIPELINES = [
       "multiqc"
     ],
     "excluded": [
-      "dada2_its: ITS (fungal) analysis branch \u2014 not in the default main path (params.its false by default)",
-      "qiime2: QIIME2 downstream analyses beyond the default taxa barplot (diversity, ANCOM, classifier training/prediction, feature table exports) \u2014 off by default (params.qiime2 false)",
-      "nanopore: nanopore sequencing branch (params.nanopore false by default)",
-      "syncom: synthetic community controls branch (params.syncom false by default)",
-      "multi-run merge: DADA2_MERGE mergeSequenceTables branch for multiple --run_ids \u2014 single-run default path only",
-      "picrust / other optional reports gated by additional params off by default"
+      "nanopore \u2014 absent from the upstream 2.18.0 codebase (grep-verified; docs mention Nanopore only re ITSxRust long reads)",
+      "syncom \u2014 absent from the upstream 2.18.0 codebase (grep-verified)",
+      "versions.yml \u2014 port pins versions in envs/container tags instead",
+      "report generators gated by params off by default (SBDI export, phyloseq/TSE objects, summary report)"
     ],
-    "rule_count": 26,
+    "rule_count": 49,
     "tools": [
       "fastqc",
       "cutadapt",
@@ -1228,14 +1226,10 @@ window.OXO_PIPELINES = [
       "multiqc"
     ],
     "excluded": [
-      "lanemerge / lanemerge_hostremoval_fastq \u2014 multi-lane merging (Nextflow multi-file channels; oxo-flow sample wiring is declarative, one fastq pair per sample row)",
-      "library_merge / additional_library_merge \u2014 multi-library merging (same structural constraint)",
-      "seqtype_merge \u2014 PE/SE mixed-input merge (same structural constraint)",
-      "malt / maltextract \u2014 need the upstream's bundled MALT install (no conda package)",
-      "kraken_merge / decomp_kraken \u2014 multi-report merging + the conditional .tar.gz DB unpacker (kraken2 itself is ported)",
-      "output_documentation / get_software_versions \u2014 nf-core boilerplate"
+      "lanemerge / lanemerge_hostremoval_fastq, library_merge / additional_library_merge, seqtype_merge \u2014 structural: oxo-flow instances are driven by wildcard combinations (one fastq pair per sample row); expand_inputs only fans files INTO one cohort instance, there is no per-sample multi-file grouping primitive (remediation: pre-concatenate or separate sample rows)",
+      "output_documentation, get_software_versions \u2014 nf-core boilerplate (unconditional upstream would change the default plan; versions.yml has no oxo-flow equivalent)"
     ],
-    "rule_count": 51,
+    "rule_count": 54,
     "tools": [
       "fastqc",
       "adapterremoval",
