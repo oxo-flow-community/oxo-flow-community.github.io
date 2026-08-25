@@ -9,7 +9,7 @@ Automated RNA-seq analysis from locally downloaded SRA archives to differential 
 | **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | transcriptomics |
-| **Rules** | 10 |
+| **Rules** | 21 |
 | **Compute** | up to 20 threads / 10 GB per rule (align_and_count) |
 | **Tools** | sra-tools · fastp · star · samtools · deeptools · pandas · bioconductor-deseq2 · r-ashr · r-data.table |
 | **Ported** | 2026-08-15 |
@@ -100,16 +100,8 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- data_conversion_single — single-end branch; upstream routes per sample by the metadata 'paired' column, oxo-flow cannot branch per sample (upstream example dataset D21122 is all-PAIRED)
-- merge_data — single-end branch, not ported
-- data_clean_single — single-end branch, not ported
-- Snakefile_ENCODE — alternate entry point (ENCODE metadata format, DESeq2_diff_encode.R)
-- run.py — batch runner over multiple metadata files (validation, bark/feishu notifications, --restart-times 3)
-- bark/feishu notification flags — consumed only by run.py
-- snakemake onerror email — oxo-flow has per-rule on_failure hooks, no workflow-level error hook
-- slurm/config.yaml — cluster profile (use oxo-flow [cluster] instead)
-- scripts/update_json.py — file_dict.json tracker used by external orchestration
-- pigz_threads config key — merge rules use plain cat (pigz pipe commented out upstream)
+- onerror email — structural: oxo-flow has per-rule on_failure only, no workflow-level error hook; [webhook] workflow_failed is a dead surface in the engine (remediation: engine-side workflow-level hook; upstream send_mail.py exists)
+- pigz_threads — upstream pigz pipe is commented out (paired_end_process.smk); plain cat loses nothing
 
 ## Fidelity
 

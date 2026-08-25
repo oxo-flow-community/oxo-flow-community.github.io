@@ -2304,18 +2304,10 @@ window.OXO_PIPELINES = [
       "DGE_analysis"
     ],
     "excluded": [
-      "data_conversion_single \u2014 single-end branch; upstream routes per sample by the metadata 'paired' column, oxo-flow cannot branch per sample (upstream example dataset D21122 is all-PAIRED)",
-      "merge_data \u2014 single-end branch, not ported",
-      "data_clean_single \u2014 single-end branch, not ported",
-      "Snakefile_ENCODE \u2014 alternate entry point (ENCODE metadata format, DESeq2_diff_encode.R)",
-      "run.py \u2014 batch runner over multiple metadata files (validation, bark/feishu notifications, --restart-times 3)",
-      "bark/feishu notification flags \u2014 consumed only by run.py",
-      "snakemake onerror email \u2014 oxo-flow has per-rule on_failure hooks, no workflow-level error hook",
-      "slurm/config.yaml \u2014 cluster profile (use oxo-flow [cluster] instead)",
-      "scripts/update_json.py \u2014 file_dict.json tracker used by external orchestration",
-      "pigz_threads config key \u2014 merge rules use plain cat (pigz pipe commented out upstream)"
+      "onerror email \u2014 structural: oxo-flow has per-rule on_failure only, no workflow-level error hook; [webhook] workflow_failed is a dead surface in the engine (remediation: engine-side workflow-level hook; upstream send_mail.py exists)",
+      "pigz_threads \u2014 upstream pigz pipe is commented out (paired_end_process.smk); plain cat loses nothing"
     ],
-    "rule_count": 10,
+    "rule_count": 21,
     "tools": [
       "sra-tools",
       "fastp",
