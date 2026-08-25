@@ -1,6 +1,6 @@
 # Small and structural variant calling with Varlociraptor
 
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
 
 Scenario-driven somatic small and structural variant calling with Varlociraptor: paired-end reads are aligned against the 1000 Genomes human pangenome with vg giraffe, QC'd with FastQC/MultiQC, covered with mosdepth, and used for freebayes and delly candidate calling; Varlociraptor then estimates alignment properties and calls variants under a tumor scenario (events present + somatic_tumor_high + somatic_tumor_medium, FDR 0.05), FDR is controlled per variant type (SNV/INS/DEL/MNV/BND/INV/DUP/REP) with merge and phred decoding, and the calls are annotated with VEP (LoFtool/REVEL plugins) and dbSNFP/dbSNP, filtered, turned into a 34-column variant table with oncoprint label-sorting, and rendered as interactive datavzrd variant and gene-coverage reports. All reference data (GRCh38 FASTA and GTF, VEP cache/plugins, REVEL scores, known-variants VCFs, HPRC pangenome graph) is downloaded automatically into resources/.
 
@@ -9,7 +9,7 @@ Scenario-driven somatic small and structural variant calling with Varlociraptor:
 | **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | genomics |
-| **Rules** | 88 |
+| **Rules** | 135 |
 | **Compute** | up to 96 CPUs / 32 GB per rule (freebayes) |
 | **Tools** | altair · bcftools · bedtools · biopython · curl · datavzrd · delly · ensembl-vep · fastqc · freebayes · gatk4 · gawk · htslib · mosdepth · multiqc · openpyxl · pandas · parallel · picard · pysam · python · rust-bio-tools · samtools · scikit-learn · sed · snpsift · statsmodels · unzip · varlociraptor · vcflib · vega-lite-cli · vembrane · vg |
 | **Ported** | 2026-08-15 |
@@ -125,24 +125,15 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - oncoprint_prepare
 - datavzrd_report
 - coverage_table
+- branch modules (when-gated, default off): trimming (fastp v6.2.0 + SRA), primers (fgbio AssignPrimers/filter_primers.rs/TrimPrimers/bwa map/bamToBed), MAF export (group_bcf_to_vcf + vcf2maf), population DB (clean/filter/update), VEP plugins (REVEL/CADD downloads), bwa mapping (bwa_index + map_reads_bwa), mutational burden + signatures (context/siglasso/plots), STAR+arriba fusion calling (star_index/star_align/arriba/annotate_exons/convert/sort/concat)
 
 **Excluded**
 
-- bwa mapping — non-default aligner branch, not ported
-- fastp/trimming — non-default trimming branch, not ported
-- fusions (arriba) — fusion calling is off in the default config (calling mode variants)
-- MAF conversion — not reachable with the default config
-- mutational burden and mutational signature analyses — non-default branches
-- population database (germline AF annotation) — population db is off in the default config
-- dgidb druggability annotation — off by default
-- CADD annotation — off by default
-- primer design — off by default
-- benchmarking — upstream benchmarking rules are not ported
-- consensus reads — non-default branch
-- target regions — not part of the default path
-- template oncoprint views (gene_oncoprint / variant_oncoprints datasets) — empty with the default single group; prepare_oncoprint itself runs
-- gather_annotated_calls / filter_odds — not reachable in the default path (benchmarking off, filter present only)
+- benchmarking CHM-eval flow (chm_eval_sample 13GB download, chm_namesort/chm_to_fastq, chm_eval_kit, chm_eval) — third-party CHM-eval kit + resource-heavy; chromosome_map + rename_chromosomes ARE ported
+- revel/CADD plugin downloads — ref::get_revel/process_revel_scores already ported in the default path (REVEL); CADD download rule ported but multi-GB — documented resource gate
 - upstream scatter.calling(16) chunks beyond scatteritem=0 — collapsed to a single chunk
+- arriba candidate re-wiring into the Varlociraptor calling flow (get_candidate_calls for fusions) — the fusion branch ends at the candidate-calls BCF
+- consensus reads (calc_consensus_reads) — not in the upstream default path
 
 ## Fidelity
 

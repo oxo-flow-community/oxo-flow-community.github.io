@@ -1474,26 +1474,17 @@ window.OXO_PIPELINES = [
       "vembrane_table",
       "oncoprint_prepare",
       "datavzrd_report",
-      "coverage_table"
+      "coverage_table",
+      "branch modules (when-gated, default off): trimming (fastp v6.2.0 + SRA), primers (fgbio AssignPrimers/filter_primers.rs/TrimPrimers/bwa map/bamToBed), MAF export (group_bcf_to_vcf + vcf2maf), population DB (clean/filter/update), VEP plugins (REVEL/CADD downloads), bwa mapping (bwa_index + map_reads_bwa), mutational burden + signatures (context/siglasso/plots), STAR+arriba fusion calling (star_index/star_align/arriba/annotate_exons/convert/sort/concat)"
     ],
     "excluded": [
-      "bwa mapping \u2014 non-default aligner branch, not ported",
-      "fastp/trimming \u2014 non-default trimming branch, not ported",
-      "fusions (arriba) \u2014 fusion calling is off in the default config (calling mode variants)",
-      "MAF conversion \u2014 not reachable with the default config",
-      "mutational burden and mutational signature analyses \u2014 non-default branches",
-      "population database (germline AF annotation) \u2014 population db is off in the default config",
-      "dgidb druggability annotation \u2014 off by default",
-      "CADD annotation \u2014 off by default",
-      "primer design \u2014 off by default",
-      "benchmarking \u2014 upstream benchmarking rules are not ported",
-      "consensus reads \u2014 non-default branch",
-      "target regions \u2014 not part of the default path",
-      "template oncoprint views (gene_oncoprint / variant_oncoprints datasets) \u2014 empty with the default single group; prepare_oncoprint itself runs",
-      "gather_annotated_calls / filter_odds \u2014 not reachable in the default path (benchmarking off, filter present only)",
-      "upstream scatter.calling(16) chunks beyond scatteritem=0 \u2014 collapsed to a single chunk"
+      "benchmarking CHM-eval flow (chm_eval_sample 13GB download, chm_namesort/chm_to_fastq, chm_eval_kit, chm_eval) \u2014 third-party CHM-eval kit + resource-heavy; chromosome_map + rename_chromosomes ARE ported",
+      "revel/CADD plugin downloads \u2014 ref::get_revel/process_revel_scores already ported in the default path (REVEL); CADD download rule ported but multi-GB \u2014 documented resource gate",
+      "upstream scatter.calling(16) chunks beyond scatteritem=0 \u2014 collapsed to a single chunk",
+      "arriba candidate re-wiring into the Varlociraptor calling flow (get_candidate_calls for fusions) \u2014 the fusion branch ends at the candidate-calls BCF",
+      "consensus reads (calc_consensus_reads) \u2014 not in the upstream default path"
     ],
-    "rule_count": 88,
+    "rule_count": 135,
     "tools": [
       "altair",
       "bcftools",
@@ -1548,7 +1539,7 @@ window.OXO_PIPELINES = [
     "quickstart": "oxo-flow run main.oxoflow",
     "compute": "up to 96 CPUs / 32 GB per rule (freebayes)",
     "quickstart_note": "Needs reference data \u2014 see Requirements; preview with `oxo-flow dry-run main.oxoflow --samples first:1`.",
-    "coverage": "default-path"
+    "coverage": "default path (pangenome mapping, freebayes+delly candidates, Varlociraptor calling, VEP, report) + 9 gated branch modules (47 rules): trimming (fastp/SRA), primers (fgbio/rs), MAF export, population DB, VEP plugins, bwa mapping, mutational burden+signatures, STAR/arriba fusions. Branch smoke live-verified on bioinfo-wsx (trimming/bwa/star_index); branches needing the full default-path outputs (maf/burden/population/signatures) are ported and dry-run-verified."
   },
   {
     "name": "oxo-flow-snparcher",
