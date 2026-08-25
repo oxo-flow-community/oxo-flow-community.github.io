@@ -80,7 +80,7 @@
 <text xml:space="preserve" text-anchor="middle" x="1109.78" y="-228.95" font-family="Times,serif" font-size="14.00">apply_base_quality_recalibration_tumor</text>
 </g>
 <!-- 4&#45;&gt;7 -->
-<g id="edge9" class="edge">
+<g id="edge10" class="edge">
 <title>4&#45;&gt;7</title>
 <path fill="none" stroke="black" d="M608.66,-247.38C698.67,-244.98 834.11,-241.35 941.35,-238.48"/>
 <polygon fill="black" stroke="black" points="941.21,-241.99 951.11,-238.22 941.02,-234.99 941.21,-241.99"/>
@@ -134,7 +134,7 @@
 <text xml:space="preserve" text-anchor="middle" x="1807.89" y="-174.95" font-family="Times,serif" font-size="14.00">unpaired_call_strelka_manta</text>
 </g>
 <!-- 5&#45;&gt;12 -->
-<g id="edge19" class="edge">
+<g id="edge18" class="edge">
 <title>5&#45;&gt;12</title>
 <path fill="none" stroke="black" d="M1135.39,-305.34C1168.48,-329.38 1228.08,-375.3 1270.66,-423 1289.87,-444.52 1281.23,-463.39 1306.66,-477 1432.34,-544.26 1520.14,-570.9 1627.39,-477 1718.48,-397.25 1580.11,-294.86 1663.39,-207 1669.84,-200.2 1677.42,-194.8 1685.67,-190.54"/>
 <polygon fill="black" stroke="black" points="1686.96,-193.79 1694.65,-186.51 1684.09,-187.41 1686.96,-193.79"/>
@@ -188,7 +188,7 @@
 <polygon fill="black" stroke="black" points="1372.19,-291.5 1382.19,-288 1372.19,-284.5 1372.19,-291.5"/>
 </g>
 <!-- 6&#45;&gt;7 -->
-<g id="edge10" class="edge">
+<g id="edge9" class="edge">
 <title>6&#45;&gt;7</title>
 <path fill="none" stroke="black" d="M890.95,-214.11C916.88,-216.48 944.8,-219.03 971.71,-221.49"/>
 <polygon fill="black" stroke="black" points="971.39,-224.97 981.67,-222.4 972.03,-218 971.39,-224.97"/>
@@ -218,7 +218,7 @@
 <polygon fill="black" stroke="black" points="1370.68,-198.03 1380.04,-193.07 1369.63,-191.11 1370.68,-198.03"/>
 </g>
 <!-- 7&#45;&gt;12 -->
-<g id="edge20" class="edge">
+<g id="edge19" class="edge">
 <title>7&#45;&gt;12</title>
 <path fill="none" stroke="black" d="M1143.15,-215.96C1181,-195.98 1246.2,-165.01 1306.66,-153 1452.05,-124.12 1625.57,-145.66 1725.32,-163.29"/>
 <polygon fill="black" stroke="black" points="1724.57,-166.71 1735.03,-165.04 1725.81,-159.82 1724.57,-166.71"/>
@@ -284,7 +284,7 @@
 <polygon fill="black" stroke="black" points="1651.52,-237.5 1661.52,-234 1651.52,-230.5 1651.52,-237.5"/>
 </g>
 <!-- 11&#45;&gt;12 -->
-<g id="edge18" class="edge">
+<g id="edge20" class="edge">
 <title>11&#45;&gt;12</title>
 <path fill="none" stroke="black" d="M1585.6,-180C1615.56,-180 1647.92,-180 1678.4,-180"/>
 <polygon fill="black" stroke="black" points="1678.02,-183.5 1688.02,-180 1678.02,-176.5 1678.02,-183.5"/>

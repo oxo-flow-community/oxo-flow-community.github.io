@@ -111,6 +111,21 @@ Descriptions are the workflow's own `#` comments from its `[config]` section, su
 ![oxo-flow-clindet rule-level DAG](../assets/dag/oxo-flow-clindet.svg)
 
 </div>
+<div class="ox-dag-card" markdown="1">
+
+![oxo-flow-clindet — RNA sub-workflow (main_rna.oxoflow)](../assets/dag/oxo-flow-clindet-rna.svg)
+
+</div>
+<div class="ox-dag-card" markdown="1">
+
+![oxo-flow-clindet — WES unpaired / tumor-only (main_unpaired.oxoflow)](../assets/dag/oxo-flow-clindet-unpaired.svg)
+
+</div>
+<div class="ox-dag-card" markdown="1">
+
+![oxo-flow-clindet — WGS (main_wgs.oxoflow)](../assets/dag/oxo-flow-clindet-wgs.svg)
+
+</div>
 
 The graph is derived at catalog-build time from `oxo-flow graph -f dot` and rendered with Graphviz. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
