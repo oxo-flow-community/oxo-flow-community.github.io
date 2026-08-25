@@ -1395,19 +1395,11 @@ window.OXO_PIPELINES = [
       "star_index"
     ],
     "excluded": [
-      "get_sra \u2014 SRA-accession branch (fasterq-dump), not in the default path",
-      "fastp_se \u2014 single-end branch, not in the default path",
-      "bwa_index \u2014 no consumer in the upstream default path",
-      "genome_faidx \u2014 no consumer in the upstream default path",
-      "edger \u2014 not present in upstream v3.1.1",
-      "kallisto \u2014 not present in upstream v3.1.1",
-      "trimgalore \u2014 not present in upstream v3.1.1 (fastp is the trimmer)",
-      "trimming.activate=false rewiring (star_align from raw reads) \u2014 default path only",
-      "complex string-form DESeq2 contrasts \u2014 list-form (default) only",
-      "Snakemake report artifacts (report/*.rst) \u2014 no oxo-flow equivalent",
-      "per-unit fastp_adapters/fastp_extra lookup \u2014 pipeline-level config instead"
+      "per-unit fastp_adapters/fastp_extra lookup \u2014 upstream lookup() reads units.tsv columns per wildcard; engine has no per-wildcard data lookup (port keeps global config, = upstream defaults)",
+      "SRA auto-feed into trimming/alignment \u2014 upstream binds per-unit inputs (fq1/fq2 vs sra); get_sra itself is ported, downloaded reads follow the raw_dir naming convention",
+      "snakemake report artifacts \u2014 sphinx/jinja `snakemake --report` machinery, no oxo-flow equivalent"
     ],
-    "rule_count": 22,
+    "rule_count": 31,
     "tools": [
       "star",
       "fastp",

@@ -9,7 +9,7 @@ End-to-end RNA-seq differential-expression analysis with STAR and DESeq2: Ensemb
 | **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | transcriptomics |
-| **Rules** | 22 |
+| **Rules** | 31 |
 | **Compute** | up to 24 CPUs per rule (star_align) |
 | **Tools** | star · fastp · rseqc · gffutils · pandas · multiqc · bioconductor-deseq2 · r-stringr · r-ashr · bioconductor-biomart · r-tidyverse · r-dbplyr · curl |
 | **Ported** | 2026-08-15 |
@@ -129,17 +129,9 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- get_sra — SRA-accession branch (fasterq-dump), not in the default path
-- fastp_se — single-end branch, not in the default path
-- bwa_index — no consumer in the upstream default path
-- genome_faidx — no consumer in the upstream default path
-- edger — not present in upstream v3.1.1
-- kallisto — not present in upstream v3.1.1
-- trimgalore — not present in upstream v3.1.1 (fastp is the trimmer)
-- trimming.activate=false rewiring (star_align from raw reads) — default path only
-- complex string-form DESeq2 contrasts — list-form (default) only
-- Snakemake report artifacts (report/*.rst) — no oxo-flow equivalent
-- per-unit fastp_adapters/fastp_extra lookup — pipeline-level config instead
+- per-unit fastp_adapters/fastp_extra lookup — upstream lookup() reads units.tsv columns per wildcard; engine has no per-wildcard data lookup (port keeps global config, = upstream defaults)
+- SRA auto-feed into trimming/alignment — upstream binds per-unit inputs (fq1/fq2 vs sra); get_sra itself is ported, downloaded reads follow the raw_dir naming convention
+- snakemake report artifacts — sphinx/jinja `snakemake --report` machinery, no oxo-flow equivalent
 
 ## Fidelity
 
