@@ -9,7 +9,7 @@ Single-cell RNA-seq analysis from raw 10x Genomics FASTQ reads to a final MultiQ
 | **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | single-cell |
-| **Rules** | 23 |
+| **Rules** | 42 |
 | **Compute** | up to 12 CPUs / 72 GB per rule (Cell Ranger) |
 | **Tools** | cellranger · fastqc · multiqc · scanpy · anndata · cellbender · anndataR · SeuratObject · SingleCellExperiment · rhdf5 · gzip · gawk · python |
 | **Ported** | 2026-08-15 |
@@ -122,16 +122,8 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- simpleaf: aligner=simpleaf branch (upstream default aligner) — not on the ported cellranger path
-- kallisto: aligner=kallisto branch (kallisto/bustools)
-- star: aligner=star branch (STARsolo, incl. smartseq/dropseq protocols)
-- smartseq: STARsolo/kallisto smartseq protocol — off the ported cellranger path
-- dropseq: STARsolo/kallisto/simpleaf dropseq protocol — off the ported cellranger path
-- scdna: not a scrnaseq 4.2.0 feature; excluded upstream feature list
-- cellranger_atac: aligner=cellrangerarc branch (ATAC + barcode fastqs)
-- cellrangermulti: aligner=cellrangermulti branch (multiome VDJ/Ab-seq, barcodes samplesheet)
-- PIPELINE_COMPLETION: email/notification completion subworkflow (nf-core boilerplate)
-- paramsSummaryMultiqc + methods_description_template.yml: workflow summary/methods MultiQC inputs (nf-core reporting boilerplate)
+- cellrangermulti — structural: upstream groupTuple + EMPTY-file modality injection + 3 index channels can't be a fixed rule input signature
+- PIPELINE_COMPLETION — structural: no onComplete/onError hooks in the engine
 
 ## Fidelity
 

@@ -2,16 +2,16 @@
 
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
 
-GATK best-practice variant calling for whole-genome and whole-exome sequencing (WGS/WES), germline by default: FastQC quality control, fastp trimming and splitting, BWA-MEM alignment, MarkDuplicates with CRAM conversion, base quality score recalibration (BQSR), single-sample HaplotypeCaller variant calling, CNN 1D scoring with tranche filtering, VEP annotation, per-sample VCF QC and a final MultiQC report.
+GATK best-practice variant calling for whole-genome and whole-exome sequencing (WGS/WES), germline by default: FastQC quality control, fastp trimming and splitting, BWA-MEM (or BWA-MEM2) alignment, MarkDuplicates with CRAM or BAM output, base quality score recalibration (BQSR), single-sample HaplotypeCaller variant calling with CNN 1D scoring and tranche filtering, VEP annotation, per-sample VCF QC and a final MultiQC report. Optional ported branches (all gated off by default): reference preparation (BWA/BWAmem2 index, .dict, .fai), UMI-aware consensus calling (fgbio chain + fastp), FreeBayes, Strelka2 germline, Manta germline, bcftools mpileup, TIDDIT SV, goleft indexcov, DeepVariant, NGSCheckMate sample-identity QC, and the joint-germline path (GVCF mode + GenomicsDBImport + GenotypeGVCFs + VQSR).
 
 | | |
 |---:|---|
 | **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | genomics |
-| **Rules** | 20 |
+| **Rules** | 62 |
 | **Compute** | up to 24 CPUs / 36 GB per rule (BWA-MEM) |
-| **Tools** | fastqc · fastp · bwa · samtools · gatk · mosdepth · bcftools · vcftools · ensembl-vep · multiqc |
+| **Tools** | fastqc · fastp · bwa · bwa-mem2 · samtools · gatk · mosdepth · fgbio · freebayes · strelka · manta · tiddit · goleft · deepvariant · ngscheckmate · bcftools · vcftools · vcflib · ensembl-vep · multiqc |
 | **Ported** | 2026-08-15 |
 | **License** | Apache-2.0 |
 | **Source** | [nf-core/sarek](https://github.com/nf-core/sarek) |
@@ -34,9 +34,10 @@ Point the `[config]` fasta / bwa_index / dbsnp / known_indels paths at your GRCh
 **Requirements.**
 - paired-end FASTQ reads at raw/{sample}_R1.fastq.gz / raw/{sample}_R2.fastq.gz
 - GRCh38 genome FASTA plus .fai and .dict
-- GRCh38 BWA index directory (bwa_index_dir)
-- GATK bundle known-sites VCFs with .tbi: dbsnp_146.hg38.vcf.gz, Mills_and_1000G_gold_standard.indels.hg38.vcf.gz, Homo_sapiens_assembly38.known_indels.vcf.gz
-- VEP cache (GRCh38, homo_sapiens, cache version 116) mounted at /.vep in the container
+- GRCh38 BWA index directory (bwa_index_dir); bwa_mem2_index_dir when aligner = "bwa-mem2"
+- GATK bundle known-sites VCFs with .tbi: dbsnp_146.hg38.vcf.gz, Mills_and_1000G_gold_standard.indels.hg38.vcf.gz, Homo_sapiens_assembly38.known_indels.vcf.gz; known_snps + known_snps_tbi for joint VQSR
+- VEP cache (GRCh38, homo_sapiens, cache version 112) mounted at /.vep in the container
+- NGSCheckMate SNP bed (ngscheckmate_bed) when tools_ngscheckmate = true
 - compute: up to 24 CPUs / 36 GB per rule (BWA-MEM 24 threads/30G; VEP 6 threads/36G)
 - input cap: ~50M read pairs per sample (fastp split, see fidelity deviations)
 - disk: results/ for per-sample CRAMs/VCFs/reports, plus the reference bundle and VEP cache
@@ -116,10 +117,23 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **In scope**
 
+- bwa_index
+- bwamem2_index
+- gatk_createsequencedictionary
+- samtools_faidx
 - fastqc
 - fastp
+- fgbio_fastqtobam
+- samtools_bam2fq_umi
+- bwa_mem_umi
+- fgbio_groupreadsbyumi
+- fgbio_callmolecularconsensusreads
+- samtools_bam2fq_consensus
+- fastp_umi
 - bwa_mem
+- bwa_mem2
 - gatk_markduplicates
+- gatk_markduplicates_bam
 - mosdepth_md
 - samtools_stats_md
 - gatk_baserecalibrator
@@ -130,57 +144,100 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - gatk_haplotypecaller
 - gatk_cnnscorevariants
 - gatk_filtervarianttranches
+- freebayes
+- bcftools_sort_freebayes
+- tabix_freebayes
+- vcffilter_freebayes
+- tabix_freebayes_filt
+- strelka_germline
+- manta_germline
+- bcftools_mpileup_call
+- tiddit_sv
+- tabix_tiddit
+- samtools_reindex_bam
+- goleft_indexcov
+- deepvariant
+- bcftools_mpileup_ngscheckmate
+- ngscheckmate_ncm
 - bcftools_stats
 - vcftools_tstv_count
 - vcftools_tstv_qual
 - vcftools_filter_summary
 - ensemblvep_vep
+- gatk_haplotypecaller_gvcf
+- gatk_genomicsdbimport
+- gatk_genotypegvcfs
+- bcftools_sort_joint
+- gatk_mergevcfs_joint
+- gatk_variantrecalibrator_snp
+- gatk_variantrecalibrator_indel
+- gatk_applyvqsr_snp
+- gatk_applyvqsr_indel
+- bcftools_stats_joint
+- vcftools_tstv_count_joint
+- vcftools_tstv_qual_joint
+- vcftools_filter_summary_joint
+- ensemblvep_vep_joint
 - multiqc
 
 **Excluded**
 
-- NGSCheckMate (BAM_NGSCHECKMATE + BCFTOOLS_MPILEUP) — sample-identity QC, not on the ported default path
-- TrimGalore trimming (--trim_fastq_trimgalore alternative; fastp is the upstream default)
-- bwa-mem2 aligner (upstream default aligner is bwa-mem)
-- save_output_as_bam=true BAM branch of MarkDuplicates (CRAM-only port)
-- Strelka2, Mutect2, Manta, DeepVariant, CNVkit, ASCAT, MSIsensor, SomaticSniper, VarDict, FreeBayes, etc. — optional --tools callers, not on the default path
-- reference preparation (BWA_INDEX, GATK4_CREATESEQUENCEDICTIONARY, SAMTOOLS_FAIDX) — not ported; the port requires a pre-built reference bundle (upstream also accepts these as inputs via params.bwa/dict/fasta_fai)
-- interval preparation (gawk BUILD_INTERVALS, CREATE_INTERVALS_BED, TABIX bgzip/tabix interval split) and the per-interval scatter/gather of BQSR/ApplyBQSR/HaplotypeCaller (GATK4_GATHERBQSRREPORTS, CRAM_MERGE_INDEX_SAMTOOLS, GATK4_MERGEVCFS) — not ported; the port runs single whole-genome GATK jobs without --intervals (gathers are exact, so results are equivalent, but the per-contig parallelism of the upstream default path is absent)
-- joint_germline GVCF joint-genotyping subworkflow (default joint_germline=false)
-- UMI workflows (SAREK_UMI_*) — not on the default path
-- fastp split parts beyond 0001. — supported input size is capped at one split part (~50M read pairs / 200M lines per sample): only part 0001 is wired fastp -> BWA. Multi-part splits (any real WGS dataset above the threshold) are a known unsupported upstream behavior — upstream aligns every part and merges the BAMs before MarkDuplicates (BAM_MERGE_INDEX_SAMTOOLS)
+- interval prep + per-interval scatter/gather — structural: engine has no per-contig interval fan-out; single whole-genome jobs are mathematically equivalent
+- fastp split parts beyond 0001. — structural: no channel fan-out over parts; input capped at ~50M read pairs
+- somatic callers (Mutect2, somatic Strelka2/Manta, CNVkit, ASCAT, MSIsensor, SomaticSniper, VarDict, Control-FREEC, LoFreq, Varlociraptor) — tumor/normal pairs required; engine [[pairs]] noted as follow-up
+- Sentieon/Parabricks/DRAGMAP — commercial accelerators
+- per-caller VCF_QC + VEP fan-out — QC/VEP rules haplotypecaller-scoped (incl. joint)
 
 ## Fidelity
 
-Rows cover every upstream process/rule on the default main execution path.
-"not ported" rows carry a reason.
+Rows cover every upstream process/rule on the default main execution path plus
+every ported optional branch (gated by config flags — all default-off).
+"not ported" rows carry a reason + evidence.
 
 | Upstream process/rule | oxo-flow rule | Tool (version) | Notes |
 |---|---|---|---|
 | FASTQC | `fastqc` | fastqc 0.12.1 | identical command |
-| FASTP | `fastp` | fastp 1.1.0 | upstream default trimming/fastp module; TrimGalore is the `--trim_fastq_trimgalore` alternative and is not ported |
+| FASTP | `fastp` | fastp 1.1.0 | upstream default trimming/splitting module (TrimGalore does not exist in 3.10.0 — `grep -ri trimgalore` over the upstream tree is empty; the `--trim_fastq_trimgalore` param was dropped in 3.10.0) |
 | BWA_MEM | `bwa_mem` | bwa 0.7.19 | upstream default aligner is `bwa-mem`, not `bwa-mem2`; read-group flags from sarek.nf; prefix `{meta.id}.{reads[0] token}` = `test.0001` under split_fastq; the same image also carries samtools 1.22.1 (used for `samtools sort`) |
-| GATK4_MARKDUPLICATES | `gatk_markduplicates` | gatk4 4.6.2.0 | CRAM-only port (`save_output_as_bam=false`); upstream's `if [[ ${prefix} == *.cram ]]` BAM branch not ported — conversion is unconditional |
+| BWA_MEM2 | `bwa_mem2` | bwa-mem2 2.2.1 | `aligner = "bwa-mem2"` (upstream `params.aligner`); same `-K 100000000 -Y -R` args as BWA_MEM; shares bwa_mem's output path — the two rules are mutually exclusive via `when`, all downstream rules are unchanged; index from `bwa_mem2_index_dir` |
+| GATK4_MARKDUPLICATES | `gatk_markduplicates` | gatk4 4.6.2.0 | default CRAM branch (`save_output_as_bam=false`) |
+| GATK4_MARKDUPLICATES (BAM branch) | `gatk_markduplicates_bam` | gatk4 4.6.2.0 | `save_output_as_bam = true`; `--CREATE_INDEX true`, no CRAM conversion; `.md.bai` renamed to `.md.bam.bai` (upstream BAM_MERGE_INDEX_SAMTOOLS); downstream rules read `{config.alignment_ext}` / `{config.recal_index_ext}` (set `"bam"` / `"bam.bai"` together) |
 | MOSDEPTH (post-MD) | `mosdepth_md` | mosdepth 0.3.14 | ext.prefix `{meta.id}.md`; WGS `--by 500` mode |
-| SAMTOOLS_STATS (post-MD) | `samtools_stats_md` | samtools 1.24 | ext.prefix `{meta.id}.md.cram`; 1.24 is the version in the `htslib_samtools` stats/index images (the BWA image carries 1.22.1) |
+| SAMTOOLS_STATS (post-MD) | `samtools_stats_md` | samtools 1.24 | ext.prefix `{meta.id}.md.{alignment_ext}`; 1.24 is the version in the `htslib_samtools` stats/index images (the BWA image carries 1.22.1) |
 | GATK4_BASERECALIBRATOR | `gatk_baserecalibrator` | gatk4 4.6.2.0 | known-sites = dbsnp + Mills gold standard + known indels (GRCh38); single whole-genome job, no per-interval scatter (see deviations) |
-| GATK4_APPLYBQSR | `gatk_applybqsr` | gatk4 4.6.2.0 | output CRAM (not BAM) per default; single whole-genome job, no per-interval scatter (see deviations) |
-| SAMTOOLS_INDEX (recal) | `samtools_index_recal` | samtools 1.24 | indexes the recalibrated CRAM |
+| GATK4_APPLYBQSR | `gatk_applybqsr` | gatk4 4.6.2.0 | output CRAM per default (BAM in the `save_output_as_bam` branch); single whole-genome job, no per-interval scatter (see deviations) |
+| SAMTOOLS_INDEX (recal) | `samtools_index_recal` | samtools 1.24 | indexes the recalibrated alignment (`.crai` or `.bam.bai`) |
 | MOSDEPTH (recal) | `mosdepth_recal` | mosdepth 0.3.14 | ext.prefix `{meta.id}.recal` |
-| SAMTOOLS_STATS (recal) | `samtools_stats_recal` | samtools 1.24 | ext.prefix `{meta.id}.recal.cram` |
-| GATK4_HAPLOTYPECALLER | `gatk_haplotypecaller` | gatk4 4.6.2.0 | default `tools=haplotypecaller,vep` → `call_haplotypecaller=true`; single-sample mode (no `-ERC GVCF`), `--pcr-indel-model CONSERVATIVE`; single whole-genome job, no per-interval scatter (see deviations) |
-| GATK4_CNNSCOREVARIANTS | `gatk_cnnscorevariants` | gatk4 4.6.2.0 | VCF_VARIANT_FILTERING_GATK part 1; CNN 1D scoring (module default `--tensor-type 1D`); upstream keeps the `{sample}.cnn.vcf.gz` intermediate unpublished — the port stores it under `results/variant_calling/cnnscorevariants/` for DAG handoff |
+| SAMTOOLS_STATS (recal) | `samtools_stats_recal` | samtools 1.24 | ext.prefix `{meta.id}.recal.{alignment_ext}` |
+| GATK4_HAPLOTYPECALLER | `gatk_haplotypecaller` | gatk4 4.6.2.0 | default `tools=haplotypecaller,vep` → `call_haplotypecaller=true`; single-sample mode (no `-ERC GVCF`), `--pcr-indel-model CONSERVATIVE`; gated off when `joint_germline = true` (upstream picks the GVCF branch); single whole-genome job, no per-interval scatter (see deviations) |
+| GATK4_CNNSCOREVARIANTS | `gatk_cnnscorevariants` | gatk4 4.6.2.0 | VCF_VARIANT_FILTERING_GATK part 1; CNN 1D scoring (module default `--tensor-type 1D`); upstream keeps the `{sample}.cnn.vcf.gz` intermediate unpublished — the port stores it under `results/variant_calling/cnnscorevariants/` for DAG handoff; skipped in joint mode (upstream: no filtering of the joint VCF) |
 | GATK4_FILTERVARIANTTRANCHES | `gatk_filtervarianttranches` | gatk4 4.6.2.0 | VCF_VARIANT_FILTERING_GATK part 2; ext.args `--info-key CNN_1D`, ext.prefix `{meta.id}.haplotypecaller`, known sites (dbsnp + 2 GRCh38 indel sets) passed as `--resource`; produces `{sample}.haplotypecaller.filtered.vcf.gz` |
 | BCFTOOLS_STATS | `bcftools_stats` | bcftools 1.23.1 | VCF_QC_BCFTOOLS_VCFTOOLS part 1; runs on the filtered VCF (prefix `{meta.id}.haplotypecaller.filtered`) |
 | VCFTOOLS_TSTV_COUNT | `vcftools_tstv_count` | vcftools 0.1.17 | VCF_QC_BCFTOOLS_VCFTOOLS part 2; runs on the filtered VCF |
 | VCFTOOLS_TSTV_QUAL | `vcftools_tstv_qual` | vcftools 0.1.17 | VCF_QC_BCFTOOLS_VCFTOOLS part 3; runs on the filtered VCF |
 | VCFTOOLS_SUMMARY | `vcftools_filter_summary` | vcftools 0.1.17 | VCF_QC_BCFTOOLS_VCFTOOLS part 4; runs on the filtered VCF |
-| ENSEMBLVEP_VEP | `ensemblvep_vep` | ensembl-vep 116.0 | annotates the filtered VCF (`{sample}.haplotypecaller.filtered_VEP.ann.vcf.gz`); requires a VEP cache mounted at `/.vep` in the container (upstream bundles it via `--vep_cache`); `--cache_version 116`, GRCh38 |
-| MULTIQC | `multiqc` | multiqc 1.35 | fan-in over all report producers; scans the results dir with the upstream `assets/multiqc_config.yml` |
-| NGSCheckMate (BAM_NGSCHECKMATE + BCFTOOLS_MPILEUP) | — not ported | — | sample-identity QC on the CRAM; outside this port's scope (QC fan-in, needs a cohort reference) |
-| PREPARE_GENOME (BWA_INDEX, GATK4_CREATESEQUENCEDICTIONARY, SAMTOOLS_FAIDX) | — not ported | — | reference preparation; the port requires a pre-built reference bundle (upstream also accepts pre-built index/dict/fai via `params.bwa`/`dict`/`fasta_fai`, so this is an upstream-compatible shortcut, not a behavior change) |
-| BED_PREPARE_INTERVALS (BUILD_INTERVALS, CREATE_INTERVALS_BED, TABIX bgzip/tabix interval split) + per-interval scatter/gather (GATK4_GATHERBQSRREPORTS, CRAM_MERGE_INDEX_SAMTOOLS, GATK4_MERGEVCFS) | — not ported | — | interval preparation and the per-interval scatter/gather of BQSR/ApplyBQSR/HaplotypeCaller; the port runs single whole-genome GATK jobs without `--intervals` (gathers are exact, so results are equivalent, but the per-contig parallelism of the upstream default path is absent) |
-| SAREK_UMI_* / Strelka2 / Mutect2 / Manta / DeepVariant / CNVkit / ASCAT / MSIsensor / ... | — not ported | — | UMI workflows, `--tools` alternatives and optional callers; out of scope (default `haplotypecaller,vep` only) |
+| ENSEMBLVEP_VEP | `ensemblvep_vep` | ensembl-vep 112.0 | annotates the filtered VCF (`{sample}.haplotypecaller.filtered_VEP.ann.vcf.gz`); **gated on `vep_cache_ready`** — upstream fails hard without the cache (bundled at `/.vep` via `--vep_cache`); set the flag after placing a cache at `vep_dir_cache`; `--cache_version 112` (matches the env binary — VEP caches are version-locked), GRCh38 |
+| PREPARE_GENOME (BWA_INDEX) | `bwa_index` | bwa 0.7.19 | `prepare_reference = true`; builds `results/reference/bwa/index.{amb,ann,bwt,pac,sa}` — fixed `index` prefix (upstream: fasta basename; irrelevant downstream, the BWA rules find the index by extension). Deviation: upstream does not publish the index unless `save_reference`; the port publishes it because oxo-flow outputs must be tracked |
+| PREPARE_GENOME (BWAMEM2_INDEX) | `bwamem2_index` | bwa-mem2 2.2.1 | same gating/prefix note; `results/reference/bwamem2/index.{0123,amb,ann,bwt.2bit.64,pac}` |
+| PREPARE_GENOME (GATK4_CREATESEQUENCEDICTIONARY) | `gatk_createsequencedictionary` | gatk4 4.6.2.0 | `--URI` is the fasta basename as upstream; GATK writes `<fasta-basename>.dict`, the port renames it to `reference.dict` for a fixed output path |
+| PREPARE_GENOME (SAMTOOLS_FAIDX) | `samtools_faidx` | samtools 1.24 | indexes a workdir copy of the fasta (the `{config.fasta}` path is treated as read-only); output `results/reference/fai/reference.fasta.fai` |
+| SAREK_UMI (FGBIO_FASTQTOBAM → SAMTOOLS_BAM2FQ → BWA_MEM → FGBIO_GROUPREADSBYUMI → FGBIO_CALLMOLECULARCONSENSUSREADS → BAM_CONVERT_SAMTOOLS → FASTP) | `fgbio_fastqtobam`, `samtools_bam2fq_umi`, `bwa_mem_umi`, `fgbio_groupreadsbyumi`, `fgbio_callmolecularconsensusreads`, `samtools_bam2fq_consensus`, `fastp_umi` | fgbio 3.1.2, bwa 0.7.19, samtools 1.24, fastp 1.1.0 | `umi_read_structure` set (e.g. `"3M2S+T"`); `fastp_umi` shares the fastp output paths so BWA-MEM downstream is untouched; GroupReadsByUmi histogram/metrics go to `reports/umi/`; see deviations for the BAM_CONVERT_SAMTOOLS collapse |
+| BAM_VARIANT_CALLING_FREEBAYES (FREEBAYES_GERMLINE, BCFTOOLS_SORT, TABIX_VC, VCFLIB_VCF_FILTER, TABIX_FILT) | `freebayes`, `bcftools_sort_freebayes`, `tabix_freebayes`, `vcffilter_freebayes`, `tabix_freebayes_filt` | freebayes 1.3.10, bcftools 1.23.1, vcflib 1.0.14 | `call_freebayes = true`; `--min-alternate-fraction 0.1 --min-mapping-quality 1`; QUAL filter threshold from `freebayes_filter` (30, upstream `params.freebayes_filter`); all four VCFs/TBI published to `variant_calling/freebayes/{sample}/` as upstream |
+| STRELKA_GERMLINE | `strelka_germline` | strelka 2.9.10 | `call_strelka = true`; ext.prefix `{meta.id}.strelka`; email-check disabled via the upstream `sed`; all six outputs (SNP/INDEL/variants × vcf+tbi) published as upstream |
+| MANTA_GERMLINE | `manta_germline` | manta 1.6.0 | `call_manta = true`; ext.prefix `{meta.id}.manta`; only the `diploid_sv` pair is published — candidateSmallIndels/candidateSV stay in the workdir exactly as upstream |
+| BCFTOOLS_MPILEUP (germline) | `bcftools_mpileup_call` | bcftools 1.23.1 | `call_mpileup = true`; args `--output-type v --multiallelic-caller`, filter `count(GT=="RR")==0`; the module's own bcftools_stats file stays unpublished (as upstream) |
+| TIDDIT_SV + TABIX_BGZIP_TIDDIT_SV | `tiddit_sv`, `tabix_tiddit` | tiddit 3.9.5 | `call_tiddit = true`; `--skip_assembly` (upstream passes an empty bwa index channel for germline); `.ploidies.tab` published as upstream |
+| BAM_VARIANT_CALLING_INDEXCOV (SAMTOOLS_REINDEX_BAM + GOLEFT_INDEXCOV) | `samtools_reindex_bam`, `goleft_indexcov` | samtools 1.24, goleft 0.2.4 | WGS only (`!wes && call_indexcov`); per-sample header-only reindex with `-F 3844 -q 30` + `--write-index` over `/dev/null##idx##`; cohort run `--fai --directory indexcov` (no `--extranormalize` — inputs are BAMs, matching upstream's reindex path); bed.gz+tbi published to `variant_calling/indexcov/` |
+| RUNDEEPVARIANT | `deepvariant` | deepvariant 1.10.0 | `call_deepvariant = true`; `--model_type=WGS --sample_name {sample}`; vcf + g.vcf pairs published to `variant_calling/deepvariant/{sample}/` |
+| BAM_NGSCHECKMATE (BCFTOOLS_MPILEUP + NGSCHECKMATE_NCM) | `bcftools_mpileup_ngscheckmate`, `ngscheckmate_ncm` | bcftools 1.23.1, ngscheckmate 1.0.1 | `tools_ngscheckmate = true`; per-sample mpileup `--no-version --ploidy 1 -c` with `-T` SNP bed, reheader to `{sample}-{lane}`; cohort `NCM_REF=./reference.fasta ncm.py -d . -bed <bed> -O . -N ngscheckmate -V`; outputs published to `reports/ngscheckmate/` (live-verify: ncm.py's exact output filenames, see Test) |
+| Joint germline (GATK4_HAPLOTYPECALLER GVCF, GATK4_GENOMICSDBIMPORT, GATK4_GENOTYPEGVCFS, BCFTOOLS_SORT, GATK4_MERGEVCFS, GATK4_VARIANTRECALIBRATOR SNP+INDEL, GATK4_APPLYVQSR SNP+INDEL) | `gatk_haplotypecaller_gvcf`, `gatk_genomicsdbimport`, `gatk_genotypegvcfs`, `bcftools_sort_joint`, `gatk_mergevcfs_joint`, `gatk_variantrecalibrator_snp`, `gatk_variantrecalibrator_indel`, `gatk_applyvqsr_snp`, `gatk_applyvqsr_indel` | gatk4 4.6.2.0, bcftools 1.23.1 | `joint_germline = true`; VQSR resource labels from `conf/igenomes.config` GRCh38 (1000G omni2.5 SNP → `known_snps`, dbsnp; gatk+mills indels); upstream prefixes `joint_variant_calling_SNP/INDEL` (VQSR intermediates unpublished upstream — the port keeps them under `results/` for DAG handoff); final `joint_germline_recalibrated.vcf.gz`; one whole-genome interval from the fasta `.fai` instead of per-contig scatter (see deviations) |
+| Joint VCF QC + VEP | `bcftools_stats_joint`, `vcftools_tstv_count_joint`, `vcftools_tstv_qual_joint`, `vcftools_filter_summary_joint`, `ensemblvep_vep_joint` | bcftools 1.23.1, vcftools 0.1.17, ensembl-vep 112.0 | upstream runs VCF_QC + VEP on the joint VCF (`vcf_all`); the per-sample QC/VEP rules are gated off in joint mode and these cohort rules take over (prefix `joint_germline_recalibrated`) |
+| MULTIQC | `multiqc` | multiqc 1.35 | fan-in over all report producers (depends_on covers the gated branches — skipped rules auto-satisfy); scans the results dir with the upstream `assets/multiqc_config.yml` |
+| BED_PREPARE_INTERVALS + per-interval scatter/gather (GATK4_GATHERBQSRREPORTS, CRAM_MERGE_INDEX_SAMTOOLS, GATK4_MERGEVCFS, joint per-interval GenotypeGVCFs) | — not ported | — | **structural**: the engine has no per-contig interval fan-out (a rule's outputs are fixed paths, not per-interval channel files). The port runs single whole-genome GATK jobs without `--intervals` (gathers are exact — results are equivalent, but the upstream per-contig parallelism is absent) |
+| fastp split parts beyond `0001.` (multi-part BWA_MEM + BAM_MERGE_INDEX_SAMTOOLS) | — not ported | — | **structural**: upstream's channel fan-out over split parts cannot be expressed as fixed output paths; the port caps input at one split part (~50M read pairs / 200M lines per sample). **Do not run WGS data above the cap** with this port |
+| Somatic callers (Mutect2, somatic Strelka2/Manta, CNVkit, ASCAT, MSIsensor2/pro, SomaticSniper, VarDict, Control-FREEC, LoFreq, Varlociraptor) | — not ported | — | tumor/normal **pairs required**; the port's samplesheet is single-sample germline (`[[sample_groups]]`; the engine's `[[pairs]]` mechanism is a possible follow-up) |
+| Sentieon / Parabricks / DRAGMAP | — not ported | — | commercial accelerators (licensed binaries); out of scope |
+| VCF_QC + ENSEMBLVEP_VEP fan-out over non-Haplotypecaller callers | — not ported | — | when an optional caller (FreeBayes, Strelka2, ...) is enabled, its VCF is produced but not QC'd/annotated — upstream runs VCF_QC and VEP on every caller VCF (`vcf_all`); the port's QC/VEP rules are haplotypecaller-scoped (incl. the joint VCF) |
 
 Deviations (all documented, nothing silently dropped):
 
@@ -194,18 +251,31 @@ Deviations (all documented, nothing silently dropped):
   merges the part BAMs before MarkDuplicates (`BAM_MERGE_INDEX_SAMTOOLS`),
   which this port does not reproduce — **do not run WGS data above ~50M read
   pairs per sample** with this port until the multi-part path is wired.
-- **no per-interval scatter/gather**: BQSR, ApplyBQSR and HaplotypeCaller run
-  as single whole-genome jobs (no `--intervals`, no
+- **no per-interval scatter/gather**: BQSR, ApplyBQSR, HaplotypeCaller (and
+  joint GenotypeGVCFs) run as single whole-genome jobs (one interval built
+  from the fasta `.fai` for the joint path; no `--intervals` otherwise; no
   GATK4_GATHERBQSRREPORTS / CRAM_MERGE_INDEX_SAMTOOLS / GATK4_MERGEVCFS).
   Gathers are exact, so the results are mathematically equivalent to
   upstream's, but wall-time and per-contig parallelism differ substantially.
+- **BAM_CONVERT_SAMTOOLS collapse (UMI path)**: at this upstream commit the
+  four `samtools view` calls in `bam_convert_samtools` have no distinguishing
+  `-f/-F` flags anywhere in `conf/` (grep-verified), so the view → merge →
+  collate → cat machinery emits four identical BAMs and **doubles the reads**
+  in the merged output. The port reproduces the functional intent with a
+  single `samtools collate -O | samtools fastq` instead.
 - **CNN-scored intermediate location**: upstream disables the
   CNNSCOREVARIANTS publishDir (the `{sample}.cnn.vcf.gz` stays in the task
   workdir); oxo-flow hands files between rules through `results/`, so the
-  port keeps it under `results/variant_calling/cnnscorevariants/`.
-- **markduplicates CRAM branch**: unconditional `samtools view -Ch` +
-  `samtools index` replaces upstream's bash conditional; BAM output mode
-  (`save_output_as_bam=true`) is not ported.
+  port keeps it under `results/variant_calling/cnnscorevariants/` (same for
+  the joint VQSR intermediates, unpublished upstream).
+- **reference-prep outputs are published**: upstream leaves built
+  BWA/BWAmem2 indexes, `.dict` and `.fai` in the task workdir unless
+  `save_reference`; oxo-flow requires tracked outputs, so the port publishes
+  them under `results/reference/` — point `bwa_index_dir` /
+  `bwa_mem2_index_dir` / `fasta_fai` / `dict` at those paths to use them.
+- **single-lane model**: `meta.id` = `{sample}` from BWA-MEM onward
+  (upstream: `{sample}-{lane}`); preprocessing stage files keep the upstream
+  `{sample}-{lane}` prefix. Read-group IDs are `{sample}.{lane}` as upstream.
 - **Docker staging**: only the rule workdir is mounted, so reference files are
   copied into the workdir under fixed local names (`reference.fasta`,
   `reference.fasta.fai`, `reference.dict`) — same effect as Nextflow's
@@ -213,11 +283,6 @@ Deviations (all documented, nothing silently dropped):
 - **`known_indels`** is a TOML array (2 GRCh38 files); both it and
   `known_indels_tbi` must be updated together when changing references.
 
-**Live-test fixes (tx-ubuntu clean from-scratch run, verdict #17 — 37/37 rules, exit=0):**
-- every GATK invocation now passes `-Xmx{effective_memory_mb}m` (was missing the `-Xmx` prefix — java treated the bare number as a main class); MarkDuplicates writes CRAM 3.0 (the env's samtools 1.24 defaults to CRAM 3.1, which GATK 4.5's htsjdk cannot read); `mosdepth_recal` takes the `.crai` as an input so it structurally follows the indexer.
-- the gatk4 env carries the CNN scoring python stack on python 3.6: gatktool 0.0.1, keras 2.2.4, tensorflow 1.15.5, h5py 2.7.1, matplotlib, scipy, scikit-learn + the GATK sources' `vqsr_cnn` package (no index hosts it); the CNN rule exports `KERAS_BACKEND=tensorflow` explicitly (the conda keras activation script hardcodes theano on Linux — nf-core's own module says "CNNSCOREVARIANTS does not support Conda").
-- fastqc and the three vcftools rules run via the singularity backend (`docker://` URIs, same quay images).
-- **VEP is gated on `vep_cache_ready`** (default false): upstream fails hard without the cache; the port skips the rule until the user places a VEP 112 cache at `vep_dir_cache` (the shipped `vep_cache_version` 116 was inconsistent with the env's ensembl-vep 112 — caches are version-locked).
 
 ## Links
 
