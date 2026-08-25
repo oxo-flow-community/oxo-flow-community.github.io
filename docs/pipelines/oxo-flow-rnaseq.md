@@ -9,7 +9,7 @@ End-to-end bulk RNA-seq analysis for paired-end reads: fq lint and FastQC raw-re
 | **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | transcriptomics |
-| **Rules** | 44 |
+| **Rules** | 119 |
 | **Compute** | up to 12 CPUs / 72 GB per rule (STAR align) |
 | **Tools** | fastqc · trim-galore · fq · star · salmon · stringtie · python · samtools · htslib · gawk · picard · subread · rseqc · r-base · bioconductor-dupradar · qualimap · bedtools · ucsc-bedclip · ucsc-bedgraphtobigwig · bioconductor-tximeta · bioconductor-summarizedexperiment · r-optparse · r-ggplot2 · r-rcolorbrewer · r-pheatmap · bioconductor-deseq2 · bioconductor-biocparallel · bioconductor-tximport · bioconductor-complexheatmap · multiqc |
 | **Ported** | 2026-08-15 |
@@ -158,16 +158,14 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- rsem / hisat2 / umicollapse quantification and as_quantification — non-default aligner branches, not ported
-- PREPARE_GENOME — reference artifacts (fasta, gtf, transcript_fasta, gene_bed, chrom_sizes, star_index) are inputs
+- bowtie2_salmon / kallisto pseudo-aligners — upstream --aligner/--pseudo_aligner alternatives not selected by default
+- RSEM as_quantification mode — port runs the upstream default --alignments mode
+- PREPARE_GENOME reference-artifact prep — fasta/gtf/transcript_fasta/gene_bed/chrom_sizes are pipeline inputs; the branch index builders (STAR/HISAT2/RSEM/Salmon) ARE ported as when-gated rules
 - per-sample min_trimmed_reads filtering — data-dependent per-sample state; only the MultiQC fail_trimmed table is produced
-- UMI extraction (umitools) — --with_umi branch, off by default
-- BBSplit — --skip_bbsplit default path only
-- SortMeRNA / Bowtie2 rRNA removal — ribo-removal is off by default
-- cat_fastq — only active for samples with more than one fastq pair
-- DESeq2 QC sample-name group decomposition (Group columns for PCA-by-group plots) — coldata is the sample IDs only
-- auto strandedness (per-sample inference from the samplesheet) — pipeline-level config.strandedness with forward/reverse/unstranded values only
-- workflow_summary_mqc.yaml / methods_description_mqc.yaml — Nextflow-param-rendered MultiQC sections
+- cat_fastq — only active for multi-pair samples
+- auto strandedness inference — config-level strandedness only
+- DESeq2 QC group decomposition — Nextflow-rendered
+- workflow_summary_mqc.yaml / methods_description_mqc.yaml — Nextflow-rendered; port ships the static version manifest instead
 
 ## Fidelity
 

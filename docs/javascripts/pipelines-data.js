@@ -70,18 +70,16 @@ window.OXO_PIPELINES = [
       "tximport"
     ],
     "excluded": [
-      "rsem / hisat2 / umicollapse quantification and as_quantification \u2014 non-default aligner branches, not ported",
-      "PREPARE_GENOME \u2014 reference artifacts (fasta, gtf, transcript_fasta, gene_bed, chrom_sizes, star_index) are inputs",
+      "bowtie2_salmon / kallisto pseudo-aligners \u2014 upstream --aligner/--pseudo_aligner alternatives not selected by default",
+      "RSEM as_quantification mode \u2014 port runs the upstream default --alignments mode",
+      "PREPARE_GENOME reference-artifact prep \u2014 fasta/gtf/transcript_fasta/gene_bed/chrom_sizes are pipeline inputs; the branch index builders (STAR/HISAT2/RSEM/Salmon) ARE ported as when-gated rules",
       "per-sample min_trimmed_reads filtering \u2014 data-dependent per-sample state; only the MultiQC fail_trimmed table is produced",
-      "UMI extraction (umitools) \u2014 --with_umi branch, off by default",
-      "BBSplit \u2014 --skip_bbsplit default path only",
-      "SortMeRNA / Bowtie2 rRNA removal \u2014 ribo-removal is off by default",
-      "cat_fastq \u2014 only active for samples with more than one fastq pair",
-      "DESeq2 QC sample-name group decomposition (Group columns for PCA-by-group plots) \u2014 coldata is the sample IDs only",
-      "auto strandedness (per-sample inference from the samplesheet) \u2014 pipeline-level config.strandedness with forward/reverse/unstranded values only",
-      "workflow_summary_mqc.yaml / methods_description_mqc.yaml \u2014 Nextflow-param-rendered MultiQC sections"
+      "cat_fastq \u2014 only active for multi-pair samples",
+      "auto strandedness inference \u2014 config-level strandedness only",
+      "DESeq2 QC group decomposition \u2014 Nextflow-rendered",
+      "workflow_summary_mqc.yaml / methods_description_mqc.yaml \u2014 Nextflow-rendered; port ships the static version manifest instead"
     ],
-    "rule_count": 44,
+    "rule_count": 119,
     "tools": [
       "fastqc",
       "trim-galore",
