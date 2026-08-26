@@ -103,8 +103,9 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- softwareVersionsToYAML + versions.yml, PIPELINE_COMPLETION (emails/summary/hooks) — nf-core boilerplate: a faithful versions.yml port needs every rule to emit a per-process versions.yml (would change every rule command; the default plan is byte-identical) and the collected file has no consumer in fetchngs itself; PIPELINE_COMPLETION is workflow-level completion hooks (sendmail/webhook) that oxo-flow has no mechanism for
-- per-run row triage that requires different containers per row: with download_method=aspera, runs that have an FTP link but no fasp link go to the FTP branch upstream (no per-row container switch in oxo-flow); the equivalent sratools triage IS ported as a when-gated branch (sra_tools_fallback) and dbGaP certificate pass-through IS ported (dbgap_key)
+- softwareVersionsToYAML + versions.yml — faithful port requires per-process versions emission in every rule (default-plan contract); no consumer in fetchngs itself
+- PIPELINE_COMPLETION — workflow-level onComplete hooks (sendmail/webhook/log); no oxo-flow equivalent
+- aspera per-row FTP-without-fasp fallback — no per-row container switch expressible
 
 ## Fidelity
 
