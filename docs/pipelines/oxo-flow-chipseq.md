@@ -9,7 +9,7 @@ ChIP-seq peak calling, QC and differential analysis for paired-end reads: FastQC
 | **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | genomics |
-| **Rules** | 63 |
+| **Rules** | 65 |
 | **Compute** | up to 12 CPUs / 72 GB per rule |
 | **Tools** | fastqc · trim-galore · bwa · samtools · picard · bamtools · preseq · r-base · phantompeakqualtools · bedtools · ucsc-bedgraphtobigwig · deeptools · khmer · macs3 · homer · subread · multiqc · python |
 | **Ported** | 2026-08-15 |
@@ -160,7 +160,6 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - save_align_intermeds / save_mapped / save_tracks — off-by-default publish branches (save_macs_pileup ported)
 - MultiQC pipeline-summary / software-versions — nf-core template metadata
 - Multi-library MergeSamFiles — variable-size per-library file sets not expressible
-- Bowtie2 / Chromap aligners (STAR ported)
 - DUMP_SOFTWARE_VERSIONS — Nextflow plumbing
 
 ## Fidelity
