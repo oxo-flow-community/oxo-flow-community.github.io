@@ -775,3 +775,35 @@ oxo-flow-community/oxo-flow-atacseq#2.
 **Root cause**: the queue's `git fetch origin -q` failed silently (China network) and the script continued on the cached ref — the first queue generation had a `ghfast.top` mirror fallback, later ones dropped it.
 **Fix**: keep the mirror fallback in every queue/launcher (`git fetch origin || git fetch https://ghfast.top/...`); print the checked-out SHA in the queue output.
 *Example*: atacseq rounds 9→11.
+
+## auto-sra rounds (2026-08-26, bioinfo-wsx — 4/4 gates, engine 0.15.0+#199)
+
+**Symptom**: with a metadata file renamed for a test cohort, `combine_count`
+dies with "db_id mismatch — metadata 'X.txt' implies db_id 'X' but the
+declared output is '03_merged_counts/D21122.tsv'".
+**Root cause**: config.db_id defaults to the upstream example name and the
+script fail-fasts when the metadata basename disagrees; a live cohort with
+its own metadata file must override `db_id` on the run command line.
+**Fix**: pass `db_id=<basename>` alongside `metadata=...` (run_batch.py does
+this automatically per file).
+*Example*: auto-sra live queue round 5.
+
+**Symptom**: the whole single-end chain runs clean but DGE fails with
+"same number of samples and coefficients to fit ... Treating samples as
+replicates was deprecated".
+**Root cause**: 1 sample per condition — the DESeq2 class above (needs
+>=2 replicates per condition combination).
+**Fix**: 4-sample 2v2 design with real single-end SRRs (the pipeline
+mechanically supports any cohort; the fixture must respect DESeq2's
+replicate requirement).
+*Example*: auto-sra live queue round 6.
+
+**Symptom**: a ported workflow's when-gates appear to do nothing — both
+branch rule sets instantiate.
+**Root cause**: ENGINE bug (fixed in #199): unbound `wildcard.<key>`
+comparisons returned true and when-evaluation never injected the
+sample-group metadata. The port itself was correct; the engine gate
+preceded the wildcard-when support the port documents (README: >= 0.15.0).
+**Fix**: engine #199 (unbound -> false + per-instance metadata injection);
+ports must state the engine floor.
+*Example*: auto-sra single_live round 1-3 (0.13.1/0.14.1) vs round 4+ (0.15.0).
