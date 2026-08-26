@@ -9,7 +9,7 @@ End-to-end bulk RNA-seq analysis for paired-end reads: fq lint and FastQC raw-re
 | **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | transcriptomics |
-| **Rules** | 119 |
+| **Rules** | 132 |
 | **Compute** | up to 12 CPUs / 72 GB per rule (STAR align) |
 | **Tools** | fastqc · trim-galore · fq · star · salmon · stringtie · python · samtools · htslib · gawk · picard · subread · rseqc · r-base · bioconductor-dupradar · qualimap · bedtools · ucsc-bedclip · ucsc-bedgraphtobigwig · bioconductor-tximeta · bioconductor-summarizedexperiment · r-optparse · r-ggplot2 · r-rcolorbrewer · r-pheatmap · bioconductor-deseq2 · bioconductor-biocparallel · bioconductor-tximport · bioconductor-complexheatmap · multiqc |
 | **Ported** | 2026-08-15 |
@@ -158,14 +158,13 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- bowtie2_salmon / kallisto pseudo-aligners — upstream --aligner/--pseudo_aligner alternatives not selected by default
 - RSEM as_quantification mode — port runs the upstream default --alignments mode
-- PREPARE_GENOME reference-artifact prep — fasta/gtf/transcript_fasta/gene_bed/chrom_sizes are pipeline inputs; the branch index builders (STAR/HISAT2/RSEM/Salmon) ARE ported as when-gated rules
+- PREPARE_GENOME reference-artifact prep — fasta/gtf/transcript_fasta/gene_bed/chrom_sizes are pipeline inputs; the branch index builders ARE ported
 - per-sample min_trimmed_reads filtering — data-dependent per-sample state; only the MultiQC fail_trimmed table is produced
-- cat_fastq — only active for multi-pair samples
-- auto strandedness inference — config-level strandedness only
+- cat_fastq — one-pair-per-sample model
+- auto strandedness inference — inferred strandedness has no static-DAG consumer
 - DESeq2 QC group decomposition — Nextflow-rendered
-- workflow_summary_mqc.yaml / methods_description_mqc.yaml — Nextflow-rendered; port ships the static version manifest instead
+- workflow_summary_mqc.yaml / methods_description_mqc.yaml — Nextflow-rendered; static version manifest shipped instead
 
 ## Fidelity
 

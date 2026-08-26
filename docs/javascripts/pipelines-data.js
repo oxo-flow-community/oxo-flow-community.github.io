@@ -70,16 +70,15 @@ window.OXO_PIPELINES = [
       "tximport"
     ],
     "excluded": [
-      "bowtie2_salmon / kallisto pseudo-aligners \u2014 upstream --aligner/--pseudo_aligner alternatives not selected by default",
       "RSEM as_quantification mode \u2014 port runs the upstream default --alignments mode",
-      "PREPARE_GENOME reference-artifact prep \u2014 fasta/gtf/transcript_fasta/gene_bed/chrom_sizes are pipeline inputs; the branch index builders (STAR/HISAT2/RSEM/Salmon) ARE ported as when-gated rules",
+      "PREPARE_GENOME reference-artifact prep \u2014 fasta/gtf/transcript_fasta/gene_bed/chrom_sizes are pipeline inputs; the branch index builders ARE ported",
       "per-sample min_trimmed_reads filtering \u2014 data-dependent per-sample state; only the MultiQC fail_trimmed table is produced",
-      "cat_fastq \u2014 only active for multi-pair samples",
-      "auto strandedness inference \u2014 config-level strandedness only",
+      "cat_fastq \u2014 one-pair-per-sample model",
+      "auto strandedness inference \u2014 inferred strandedness has no static-DAG consumer",
       "DESeq2 QC group decomposition \u2014 Nextflow-rendered",
-      "workflow_summary_mqc.yaml / methods_description_mqc.yaml \u2014 Nextflow-rendered; port ships the static version manifest instead"
+      "workflow_summary_mqc.yaml / methods_description_mqc.yaml \u2014 Nextflow-rendered; static version manifest shipped instead"
     ],
-    "rule_count": 119,
+    "rule_count": 132,
     "tools": [
       "fastqc",
       "trim-galore",
