@@ -9,7 +9,7 @@ Turn paired-end metagenomic reads into quality-checked, taxonomically classified
 | **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | metagenomics |
-| **Rules** | 134 |
+| **Rules** | 231 |
 | **Compute** | up to 12 CPUs / 140 GB per rule (defaults 1 thread / 6 GB) |
 | **Tools** | fastqc · fastp · bowtie2 · samtools · spades · megahit · quast · prodigal · bioawk · seqkit · metabat2 · maxbin2 · concoct · comebin · metabinner · semibin · busco · qsv · ale · gtdbtk · prokka · multiqc · python · pandas · biopython |
 | **Ported** | 2026-08-15 |
@@ -249,17 +249,16 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- longreads — long-read assemblies (Flye/MetaMDBG) and long-read binning, off by default
-- refinement — DAS Tool binning refinement, off by default
-- kaiju — taxonomic profiling with kaiju, off by default
-- diamond — taxonomic profiling with diamond, off by default
-- run_checkm / run_checkm2 / run_gunc — additional bin QC tools, off by default (the GTDB-Tk filter therefore uses BUSCO metrics only, which is the default configuration)
-- bin_domain_classification (tiara) — off by default; all bins keep domain='unclassified' exactly like the upstream default
-- hostremoval — off by default
-- assembly_input / bbnorm / adapters trimming variants (adapterremoval, trimmomatic) — non-default preprocessing branches
-- ancient_dna / catpack / virus_identification — dedicated subworkflows, off by default
-- pydamage, checkm2 and gunc report pages — off by default
-- BUSCO `*-busco.batch_summary.failed.txt` artifact — only produced by upstream when a BUSCO run fails
+- longreads — long-read assemblies (Flye/MetaMDBG) and long-read binning; not portable: the upstream longreads subworkflow
+- kaiju / diamond — taxonomic profiling; absent from upstream nf-core/mag 5.5.0 entirely (no module script to translate)
+- run_checkm2 — additional bin QC; CheckM2 database (~8 GB) is a remote download the engine cannot fetch mid-run
+- run_gunc — additional bin QC; GUNC database (~21 GB) is a remote download the engine cannot fetch mid-run
+- assembly_input — upstream also accepts single-end and interleaved input modes; the port's input model is paired-end
+- ancient_dna — dedicated upstream subworkflow (off by default); rewires the inputs of 40+ rules
+- catpack — dedicated upstream subworkflow (off by default); needs the CAT-nr database (~35 GB)
+- virus_identification — dedicated upstream subworkflow (off by default); needs the genomad database (~10 GB)
+- pydamage/checkm2/gunc report pages — report-only artifacts of QC tools that are themselves excluded
+- BUSCO *-busco.batch_summary.failed.txt artifact — only produced by upstream when a BUSCO run fails; error-only artifact
 - nf-core boilerplate files (pipeline_summary/methods_description, versions.yml) — not part of the analysis
 
 ## Fidelity
