@@ -1,6 +1,6 @@
 # Single-cell RNA-seq: alignment, quantification and QC
 
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
 
 Single-cell RNA-seq analysis from raw 10x Genomics FASTQ reads to a final MultiQC report: FastQC read QC, Cell Ranger reference preparation and per-sample cellranger count (alignment and quantification, optional BAM output), conversion of raw and filtered 10x matrices to h5ad, CellBender ambient-RNA background removal, sample-wise h5ad concatenation, and optional export to Seurat and SingleCellExperiment objects. Covers the Cell Ranger execution path of nf-core/scrnaseq; other aligners and assays (ATAC, multiome) are not included.
 
