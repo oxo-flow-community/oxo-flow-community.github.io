@@ -714,3 +714,64 @@ the current directory (qualimap 2.2.2-dev: `-outdir .` →
 **Symptom**: tool-run DB downloads crawl (EBI pfam 293MB at 2MB/min) or die behind the campaign proxy (curl 18 / SSL 77), blocking antismash 7 (10 DB components, 1.76GB total), gtdb metadata (193MB), and bioconductor post-link fetches.
 **Fix (repeatable pattern)**: download the full DB set on the Mac (clean network), transfer to the box, and pre-stage into the exact paths the tool's `download_if_not_present` checks — the sha256 verification then accepts the staged files and skips the download. Same idea as the conda pkgs-cache patch. Do NOT change the workflow repo — the pathology is network-side.
 *Example*: bgcflow antismash DBs + gtdb metadata, bioinfo-wsx (2026-08-23); 3 independent hits this campaign (also ampliseq/rnaseq-star-deseq2 bioconductor post-links).
+
+## atacseq excluded-branch port rounds (2026-08-25/26, bioinfo-wsx — 14/14 gates)
+
+Nine queue rounds over the when-gated branches (14 gates, engine 0.14.1).
+Every class below was hit live, root-caused and fixed in
+oxo-flow-community/oxo-flow-atacseq#2.
+
+**Symptom**: `ln: failed to create symbolic link '...mLb.sorted.bam': File exists` — the merged-library symlink rule fails on every gated re-run.
+**Root cause**: the engine re-runs rules IN PLACE when a config change invalidates them (each gate = one config override in the same workdir); plain `ln -s` refuses to replace the previous run's symlink. Upstream only ever runs on a fresh workdir.
+**Fix**: `ln -sf` for re-created symlinks; `rm -rf` before `mv` of directories (same class bit `mv multiqc_data`).
+*Example*: atacseq `2167877`, `0242bb0`.
+
+**Symptom**: `[bns_restore_core] Parse error reading genome.fa.amb` in bwa_mem after the prepare_reference gate rebuilt the index.
+**Root cause**: the index rule ran in a different biocontainer build than the aligner; the two bwa 0.7.17 builds' `.amb` formats are incompatible.
+**Fix**: index-building rules use the SAME container image as the rule that consumes the index.
+*Example*: atacseq `0242bb0` (ref::bwa_index → the bwa_mem mulled image).
+
+**Symptom**: align rules race/ignore index rules — no DAG edge.
+**Root cause**: align rules declared only reads as inputs; `{config.bwa_index}`-style config paths form no edge and no invalidation (exact-string edge matching).
+**Fix**: declare the index files (`.amb/.ann/.bwt/.pac/.sa`, `.1.bt2..rev.2.bt2`, `Genome/SA/SAindex`) as rule inputs.
+*Example*: atacseq `0242bb0`.
+
+**Symptom**: chromap mapping segfaults AND the reference FASTA on disk turns into binary junk.
+**Root cause**: `chromap_index` was set to the reference path itself — `chromap -i -o <ref>` OVERWRITES the reference with the index, then mapping against the self-clobbered file crashes. Silent data-loss hazard in the inline index-build pattern.
+**Fix**: index path must differ from the reference (`<fasta>.index`, like upstream); hard-error guard `chromap_index != reference` in the rule.
+*Example*: atacseq `0242bb0`.
+
+**Symptom**: PE branch produces zero-mapped-read BAMs; plotFingerprint: "does not have any mapped reads ... No reads were found in N regions sampled".
+**Root cause**: fixture synthesized R2 as the REVERSE of R1 (not reverse-complement) — every pair is same-strand, fails the `-f 0x001` proper-pair filter, filtered BAM is empty.
+**Fix**: R2 = reverse_complement(R1) in the generator.
+*Example*: atacseq `100b398` (generate_fixtures.py).
+
+**Symptom**: preseq `ERROR: too many defects in the approximation, consider running in defect mode`.
+**Root cause**: fixtures with incidental duplicates only — no geometric duplicate structure for the extrapolation.
+**Fix**: ~30 % of reads duplicated at 2×/4×/8×/16× multiplicity (see the preseq class above).
+*Example*: atacseq `100b398`.
+
+**Symptom**: DESeq2 dies with `newsplit: out of vertex space` in `localDispersionFit -> locfit -> lfproc` (via VST or rlog — both estimate dispersions).
+**Root cause**: a tiny fixture genome yields a handful of consensus peaks; locfit needs hundreds of differential features. `deseq2_vst=false` does NOT dodge it (rlog hits the same fit).
+**Fix**: hundreds of differential features — the generator emits ~150 peak zones per autosome with sample-differential read weights.
+*Example*: atacseq `100b398`.
+
+**Symptom**: deseq2_qc.r writes `size_factors/results/bwa/.../S1.size_factors.txt` — "No such file or directory".
+**Root cause**: featureCounts names its count columns after the paths it is GIVEN; full relative paths survive the script's `--sample_suffix` strip, and the stripped name is prepended to size_factors/.
+**Fix**: cd into the bam dir and pass BARE names (with `$PWD`-absolute `-a`/`-o` so the cd cannot break them).
+*Example*: atacseq `d020d62`.
+
+**Symptom**: engine output validation fails a Picard metrics rule: declared `insert_size_metrics` / `insert_size_histogram.pdf` never appear.
+**Root cause**: CollectInsertSizeMetrics emits nothing on single-end bams; the rule (SE-only) declared the PE-only outputs. An earlier PASS was bogus — it silently consumed stale flT files left by the previous paired gate in the shared workdir.
+**Fix**: declare only what the SE run can produce; document the PE variant as unported. Also: never trust a gate PASS when an earlier gate may have left same-named files behind — re-verify on a clean workdir.
+*Example*: atacseq `d020d62`.
+
+**Symptom**: `ref::bwa_index` fails with `fail to open file 'genome.fa.pac' : Permission denied` right after a manual docker index build.
+**Root cause**: the engine runs containers with `--user $(id -u):$(id -g)`; a manual `docker run` (root) left root-owned index files that the engine user cannot overwrite.
+**Fix**: build fixture artifacts AS the engine user, or delete them so the rule rebuilds as the engine user.
+*Example*: atacseq round 10.
+
+**Symptom**: re-runs of fixed code keep failing with the OLD error; the box checkout shows a stale commit.
+**Root cause**: the queue's `git fetch origin -q` failed silently (China network) and the script continued on the cached ref — the first queue generation had a `ghfast.top` mirror fallback, later ones dropped it.
+**Fix**: keep the mirror fallback in every queue/launcher (`git fetch origin || git fetch https://ghfast.top/...`); print the checked-out SHA in the queue output.
+*Example*: atacseq rounds 9→11.
