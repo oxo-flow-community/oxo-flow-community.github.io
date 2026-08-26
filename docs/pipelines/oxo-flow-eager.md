@@ -11,7 +11,7 @@ Ancient DNA (aDNA) analysis in one run: FastQC raw QC, optional fastp poly-G fil
 | **Domain** | genomics |
 | **Rules** | 54 |
 | **Compute** | up to 4 CPUs / 8 GB per rule (bwa_aln) |
-| **Tools** | fastqc · adapterremoval · adapterremovalfixprefix · bwa · samtools · picard · dedup · preseq · damageprofiler · qualimap · sequencetools · eigenstratdatabasetools · fastp · pigz · multiqc · rename · python |
+| **Tools** | fastqc · adapterremoval · adapterremovalfixprefix · bwa · samtools · picard · dedup · preseq · damageprofiler · qualimap · sequencetools · eigenstratdatabasetools · fastp · pigz · multiqc · rename · python · kraken2 · malt |
 | **Ported** | 2026-08-15 |
 | **License** | Apache-2.0 |
 | **Source** | [nf-core/eager](https://github.com/nf-core/eager) |
@@ -228,6 +228,15 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - genotyping_pileupcaller
 - eigenstrat_snp_coverage
 - multiqc
+- samtools_filter
+- samtools_flagstat_after_filter
+- metagenomic_complexity_filter
+- kraken
+- kraken_parse
+- kraken_merge
+- malt
+- maltextract
+- endor_spy
 
 **Excluded**
 
@@ -242,11 +251,20 @@ processes plus 7 conditional/indented ones — `makeBWAIndex`,
 `nuclear_contamination`, `decomp_kraken`) is listed below.
 The 17 processes on the default-parameters main path (directory input,
 paired-end, `mapper=bwaaln`, `dedupper=markduplicates`) are ported
-byte-faithfully; everything else is `not ported` with a reason.
+byte-faithfully. The non-default branches are ported as `rules/branches.oxoflow`
+(each gated on its upstream param, off by default) — including the full
+metagenomic screening chain (bbduk complexity filter, kraken, kraken_parse,
+kraken_merge, malt, maltextract; note the old "needs the upstream's bundled
+MALT install (no conda package)" exclusion reason was wrong — the upstream
+`environment.yml` pins `bioconda::malt=0.61` and `bioconda::hops=0.35`, so
+MALT and MaltExtract ship inside the pinned `nfcore/eager:2.5.3` container).
+The remaining `not ported` rows are structural (multi-lane/library channel
+merges — oxo-flow has no per-sample multi-file grouping primitive) or
+nf-core boilerplate (`output_documentation`, `get_software_versions`).
 
 | Upstream process | oxo-flow rule | Tool (version) | Notes |
 |---|---|---|---|
-| unzip_reference | — | pigz 2.6 | not ported — upstream's conditional process (main.nf line 187) decompresses a `.gz` reference FASTA with `pigz -d` before indexing. **A `.gz`-compressed FASTA is therefore NOT supported: pass a plain FASTA** (the port's index rules would run samtools/bwa on the gzipped file and fail) |
+| unzip_reference | `unzip_reference` | pigz 2.6 | `gunzip -c` into the canonical reference path; `when = config.unzip_reference` (default false — pass a plain FASTA as before) |
 | makeFastaIndex | `make_fasta_index` | samtools 1.12 | `samtools faidx` verbatim. Port copies the input to `results/reference_genome/fasta_index/reference.fa` (canonical name; upstream publishes `<fasta-base>.fai` only when `--save_reference`) |
 | makeSeqDict | `make_seq_dict` | picard 2.26.0 | `picard -Xmx8192M CreateSequenceDictionary` verbatim; output named `reference.dict` (upstream `<fasta-base>.dict`) |
 | makeBWAIndex | `make_bwa_index` | bwa 0.7.17 | `cp` into `BWAIndex/` + `bwa index` verbatim; canonical file name `reference.fa` |
@@ -255,60 +273,60 @@ byte-faithfully; everything else is `not ported` with a reason.
 | adapter_removal | `adapter_removal` | adapterremoval 2.3.2, adapterremovalfixprefix 0.0.5, pigz 2.6 | Default PE collapse branch verbatim: `--collapse --trimns --trimqualities`, cat of the 5 gz parts (`<base>.pe.collapsed.gz` etc. — the `.pe` basename AR writes, as upstream), `AdapterRemovalFixPrefix \| pigz -p <cpus-1>`. The `cat` operands are explicit per-sample names (shared results dir; upstream globs the workdir). When fastp is enabled the input switches to the fastp outputs (upstream channel mix); the AR basename stays the default-path one (`{r1.baseName}_L0` with the `_R1` suffix as upstream derives it) |
 | fastqc_after_clipping | `fastqc_after_clipping` | fastqc 0.11.9 | Verbatim; zips to `zips/` |
 | bwa | `bwa_aln` | bwa 0.7.17, samtools 1.12 | Verbatim PE branch: `bwa aln -n/-l/-k/-o` (Oliva 2021 defaults), `bwa samse` with the eager `@RG` string, `samtools sort -@ <cpus-1>`, `samtools index`. `.sai` written into the mapping dir (upstream workdir-local) |
-| bwamem | — | bwa 0.7.17 | not ported — non-default mapper (`--mapper bwamem`) |
-| bowtie2 | — | bowtie2 2.4.4 | not ported — non-default mapper (`--mapper bowtie2`) |
-| makeBT2Index | — | bowtie2 2.4.4 | not ported — bowtie2 mapper's conditional index process (main.nf line 523), only reachable with `--mapper bowtie2` |
-| circulargenerator | — | circularmapper 1.93.5 | not ported — circular-mapping branch (gated by `params.circularfilter`) |
-| circularmapper | — | circularmapper 1.93.5 | not ported — circular-mapping branch (gated by `params.circularfilter`) |
-| convertBam | — | samtools 1.12 | not ported — BAM-input mode (`--bam`) preprocessing |
-| indexinputbam | — | samtools 1.12 | not ported — BAM-input mode |
-| hostremoval_input_fastq | — | — | not ported — host-removal branch (gated by `params.hostremoval_input_fastq`) |
+| bwamem | `bwamem` | bwa 0.7.17, samtools 1.12 | `bwa mem -t N` + sort + index with the eager @RG string; `when = config.mapper == 'bwamem'` |
+| bowtie2 | `bowtie2` | bowtie2 2.4.4, samtools 1.12 | `bowtie2 -x reference -1/-2` + sort + index; `when = config.mapper == 'bowtie2'` |
+| makeBT2Index | `make_bt2_index` | bowtie2 2.4.4 | `bowtie2-build` into `results/reference_genome/bt2_index/`; `when = config.mapper == 'bowtie2'` |
+| circulargenerator | `circulargenerator` | circularmapper 1.93.5, bwa | `circulargenerator -e -i -s` + `bwa index` on the elongated fasta; `when = config.mapper == 'circularmapper'` |
+| circularmapper | `circularmapper` | bwa + circularmapper 1.93.5 | `bwa aln` on the elongated reference + `realignsamfile` + sort/index; `when = config.mapper == 'circularmapper'` |
+| convertBam | `convert_bam` | samtools 1.12, pigz | `samtools bam2fq | pigz`; `when = config.bam_input` (default false — the fixture is FASTQ) |
+| indexinputbam | `indexinputbam` | samtools 1.12 | `samtools index` of the BAM input; `when = config.bam_input` |
+| hostremoval_input_fastq | `hostremoval_input_fastq` | extract_map_reads.py (bundled) | PE branch verbatim (`-m`, `-of`/`-or`, `-t`); `when = config.hostremoval_input_fastq` |
 | samtools_flagstat | `samtools_flagstat` | samtools 1.12 | Verbatim: `samtools flagstat > {libraryid}_flagstat.stats` |
-| samtools_filter | — | samtools 1.12 | not ported — BAM filtering branch (gated by `params.run_bam_filtering`) |
-| samtools_flagstat_after_filter | — | samtools 1.12 | not ported — downstream of samtools_filter |
-| picard_addorreplacereadgroups | — | picard 2.26.0 | not ported — read-group replacement branch (off by default) |
+| samtools_filter | `samtools_filter` | samtools 1.12, pigz 2.6 | minreadlength-0 branches, selected by `bam_unmapped_type` in one rule: `discard` (`-F4 -q <thr>`, default) and `fastq` (upstream `-f4` / `-F4 -q` + `samtools fastq -tN \| pigz -p <cpus-1>` + `rm`, the metagenomic-chain producer), both verbatim. The discard branch additionally writes an EMPTY `{sample}.unmapped.fastq.gz` placeholder — the engine requires every declared output to exist, and it is never consumed (the metagenomic rules are gated on `bam_unmapped_type == 'fastq'`). The `keep`/`bam`/`both` branches fail fast with a clear error; `when = config.run_bam_filtering` **Engine accuracy point (merged repo, 2026-08-26):** the bamfilter branch uses `optional = true` semantics today — `bwa_aln` writes `{sample}_PE.mapped.bam` while the other mappers write `{sample}.mapped.bam`, and the rule resolves the mapper-specific name via optional inputs + a shell resolution loop (fails fast when no mapped BAM exists). Running without skipping requires engine PR Traitome/oxo-flow#200 (`optional = "any"`, merged to engine main 2026-08-26, ships in the NEXT engine release); live verification used a locally built engine with that feature. Draft PR oxo-flow-community/oxo-flow-eager#5 tracks the flip to `optional = "any"` and merges at the next engine release. |
+| samtools_flagstat_after_filter | `samtools_flagstat_after_filter` | samtools 1.12 | `samtools flagstat` on the filtered BAM; `when = config.run_bam_filtering` |
+| picard_addorreplacereadgroups | `picard_addorreplacereadgroups` | picard 2.26.0, samtools | verbatim RG replacement for MultiVCFAnalyzer; `when = run_genotyping && genotyping_tool == 'ug' && run_multivcfanalyzer` |
 | markduplicates | `markduplicates` | picard 2.26.0, samtools 1.12 | Default dedupper. picard MarkDuplicates verbatim (`-Xmx4096M`, `REMOVE_DUPLICATES=TRUE AS=TRUE`, `VALIDATION_STRINGENCY=SILENT`) + `samtools index`. INPUT points at the mapped BAM directly instead of upstream's workdir-local `mv {bam} {libraryid}.bam` rename (the shared results dir must keep the mapped BAM for preseq/flagstat) |
 | dedup | `dedup` | dedup 0.12.8, samtools 1.12 | Alternative dedupper (off by default, `dedupper='dedup'`). Verbatim: `dedup -Xmx4g -i ... -o . -u`, `mv *.log dedup.log`, in-place `samtools sort`, index. Upstream's `mv {bam} {libraryid}.bam` becomes a `cp` (shared-results-dir equivalent, same effect) |
 | preseq | `preseq` | preseq 3.1.2 | Verbatim default branch: `preseq c_curve -s 1000 -o <base>.preseq -B <mapped bam>`. The `-H` (dedup mode) and `lc_extrap` branches are the alternate `preseq_mode`/`dedupper` combinations |
-| bedtools | — | bedtools 2.30.0 | not ported — coverage branch (gated by `params.run_bedtools_coverage`) |
+| bedtools | `bedtools_coverage` | bedtools 2.30.0, pigz | verbatim genome.txt + `bedtools coverage` breadth/depth; `when = config.run_bedtools_coverage` |
 | damageprofiler | `damageprofiler` | damageprofiler 0.4.9 | Verbatim: `-Xmx4g -i <rmdup bam> -r <fasta> -l 100 -t 15 -o . -yaxis_damageplot 0.30`; output lands in `results/damageprofiler/<bam-basename>/` as upstream |
-| mapdamage_calculation | — | mapdamage2 2.2.1 | not ported — `damage_calculation_tool='mapdamage'` alternative |
-| mapdamage_rescaling | — | mapdamage2 2.2.1 | not ported — rescaling branch (gated by `params.run_mapdamage_rescaling`) |
-| mask_reference_for_pmdtools | — | bedtools 2.30.0 | not ported — pmdtools branch (gated by `params.run_pmdtools`) |
-| pmdtools | — | pmdtools 0.60 | not ported — pmdtools branch (gated by `params.run_pmdtools`) |
-| bam_trim | — | bamutil 1.0.15 | not ported — trimbam branch (gated by `params.run_trim_bam`) |
-| post_ar_fastq_trimming | — | fastp 0.20.1 | not ported — post-AR trimming branch (gated by `params.run_post_ar_trimming`) |
-| lanemerge | — | — | not ported — multi-lane merging; unreachable in the single-lane default path |
-| lanemerge_hostremoval_fastq | — | — | not ported — multi-lane + host removal combination |
-| library_merge | — | — | not ported — multi-library merging; unreachable in the single-library default path |
-| additional_library_merge | — | — | not ported — multi-library merging |
-| seqtype_merge | — | samtools 1.12 | not ported — PE/SE mixed-input merge (main.nf line 1597); unreachable in the pure-PE port |
+| mapdamage_calculation | `mapdamage_calculation` | mapdamage2 2.2.1 | verbatim `mapDamage -i -r --ymax --no-stats`; `when = !skip_damage_calculation && damage_calculation_tool == 'mapdamage'` |
+| mapdamage_rescaling | `mapdamage_rescaling` | mapdamage2 2.2.1, samtools | verbatim `--rescale --rescale-out --seq-length` + index; `when = config.run_mapdamage_rescaling` |
+| mask_reference_for_pmdtools | `mask_reference_for_pmdtools` | bedtools 2.30.0 | `bedtools maskfasta`; `when = pmdtools_reference_mask && run_pmdtools` |
+| pmdtools | `pmdtools` | pmdtools 0.60, samtools | verbatim calmd|pmdtools filter + range chain incl. the 141 trap; `when = config.run_pmdtools` |
+| bam_trim | `bam_trim` | bamutil 1.0.15, samtools | `bam trimBam -L -R` (double-stranded none-UDG clip values) + sort/index; `when = config.run_trim_bam` |
+| post_ar_fastq_trimming | `post_ar_fastq_trimming` | fastp 0.20.1 | PE branch verbatim (`--trim_front1/2 --trim_tail1/2`); `when = config.run_post_ar_trimming` |
+| lanemerge | — | — | not ported — structural: multi-lane merging groups N per-lane fastq pairs into one sample; oxo-flow rule instances are driven by wildcard combinations (one fastq pair per sample row), and `expand_inputs` only fans several files INTO one cohort instance — there is no primitive that groups several files of one sample into a single per-sample instance. Pre-concatenate the lanes (or declare the merged pair) before running |
+| lanemerge_hostremoval_fastq | — | — | not ported — structural: multi-lane + host removal combination (same constraint as lanemerge) |
+| library_merge | — | — | not ported — structural: multi-library merging (same constraint as lanemerge — one fastq pair per sample row); merge libraries before the run or declare each library as its own sample |
+| additional_library_merge | — | — | not ported — structural: multi-library merging (same constraint) |
+| seqtype_merge | — | samtools 1.12 | not ported — structural: PE/SE mixed-input merge (main.nf line 1597) needs per-sample multi-file grouping; the port is pure-PE. Convert SE samples to PE or run SE-only samples separately |
 | qualimap | `qualimap` | qualimap 2.2.2d | Default path, ported: `qualimap bamqc -bam <rmdup bam> -nt 2 -outdir . -outformat "HTML" --java-mem-size=4G` verbatim; output lands in `results/qualimap/<bam-base>_bamqc/` as upstream |
 | genotyping_pileupcaller | `genotyping_pileupcaller` | samtools 1.12, sequencetools 1.5.2 | Off by default, same as upstream (`run_genotyping=false`). Verbatim: `samtools mpileup -B --ignore-RG -q 30 -Q 30 [-l <bed>] -f <fasta> <bams> \| pileupCaller --randomHaploid --sampleNames <csv> [-f <snp>] -e pileupcaller.double` (single-instance fan-in; `-e` prefix `pileupcaller.double` = PE strandedness). `-l`/`-f` render only when `pileupcaller_bedfile`/`pileupcaller_snpfile` are set, exactly as upstream's dummy-file check (main.nf lines 2608-2609); without them the rule fails fast with upstream's error message — upstream exits 1 at workflow start (main.nf lines 74-78), the port's guard lives in the rule shell because oxo-flow has no params-validation stage |
-| genotyping_ug | — | gatk 3.5 | not ported — UnifiedGenotyper branch (`genotyping_tool='unifiedgenotyper'`) |
-| genotyping_hc | — | gatk4 4.2.0.0 | not ported — HaplotypeCaller branch (`genotyping_tool='haplotypecaller'`) |
-| genotyping_freebayes | — | freebayes 1.3.5 | not ported — FreeBayes branch (`genotyping_tool='freebayes'`) |
-| genotyping_angsd | — | angsd 0.935 | not ported — ANGSD branch (`genotyping_tool='angsd'`) |
-| bcftools_stats | — | bcftools 1.12 | not ported — only consumes UG/HC/FB outputs, which are not ported |
+| genotyping_ug | `genotyping_ug` | gatk3 3.5, bgzip | verbatim RealignerTargetCreator → IndelRealigner → UnifiedGenotyper → bgzip; `when = run_genotyping && genotyping_tool == 'ug'` |
+| genotyping_hc | `genotyping_hc` | gatk4 4.2.0.0, bgzip | verbatim HaplotypeCaller flags + bgzip; `when = run_genotyping && genotyping_tool == 'hc'` |
+| genotyping_freebayes | `genotyping_freebayes` | freebayes 1.3.5, bgzip | verbatim `freebayes -f -p -C [-g]` + bgzip; `when = run_genotyping && genotyping_tool == 'freebayes'` |
+| genotyping_angsd | `genotyping_angsd` | angsd 0.935 | verbatim bam.filelist + `angsd -GL -doGlF`; `when = run_genotyping && genotyping_tool == 'angsd'` |
+| bcftools_stats | `bcftools_stats` | bcftools 1.12 | `bcftools stats <vcf.gz> -F <fasta>`; `when = config.run_bcftools_stats` (source VCF via `bcftools_stats_source`) |
 | eigenstrat_snp_coverage | `eigenstrat_snp_coverage` | eigenstratdatabasetools 1.0.2, python 3.9.4 | Off by default, same as upstream. Verbatim: `eigenstrat_snp_coverage -i pileupcaller.double >double_eigenstrat_coverage.txt` + `parse_snp_cov.py` (bundled upstream script, called via `python3 scripts/parse_snp_cov.py` — oxo-flow does not auto-add `bin/` to PATH) |
-| malt | — | malt 0.61 | not ported — metagenomic screening branch (gated by `params.run_metagenomic_screening`) |
-| maltextract | — | malt 0.61 | not ported — metagenomic screening branch |
-| metagenomic_complexity_filter | — | fastp 0.20.1 | not ported — metagenomic screening branch |
-| kraken | — | kraken2 2.1.2 | not ported — metagenomic screening branch |
-| kraken_parse | — | kraken2 2.1.2 | not ported — metagenomic screening branch |
-| kraken_merge | — | kraken2 2.1.2 | not ported — metagenomic screening branch |
-| decomp_kraken | — | kraken2 2.1.2 | not ported — conditional process (main.nf line 3080) that unpacks a `.tar.gz` kraken DB; only reachable with `--run_metagenomic_screening --metagenomic_tool kraken` on a `.tar.gz` database |
-| sexdeterrmine | — | sexdeterrmine 1.1.2 | not ported — sex determination branch (gated by `params.run_sexdeterrmine`) |
-| sexdeterrmine_prep | — | — | not ported — sex determination branch |
-| mtnucratio | — | samtools 1.12, sequencetools 1.5.2 | not ported — mitochondrial-to-nuclear ratio branch (gated by `params.run_mtnucratio`, main.nf line 2812) |
-| nuclear_contamination | — | angsd 0.935 | not ported — nuclear contamination estimation branch (gated by `params.run_nuclear_contamination`, main.nf line 2881; consumes a BAM, unlike the report-only `print_nuclear_contamination` below) |
-| endorSpy | — | endorSpy | not ported — endogenous-content branch (gated by `params.run_endorSpy`) |
-| print_nuclear_contamination | — | python 3.9.4 | not ported — nuclear contamination report branch (gated by `params.run_nuclear_contamination`) |
-| multivcfanalyzer | — | multivcfanalyzer 0.85.2 | not ported — branch (gated by `params.run_multivcfanalyzer`) |
-| vcf2genome | — | vcf2genome 0.91 | not ported — consensus-sequence branch (gated by `params.run_vcf2genome`) |
+| metagenomic_complexity_filter | `metagenomic_complexity_filter` | bbduk 38.92 | verbatim `bbduk.sh -Xmx<g>g in=... threads=N entropymask=f entropy=<entropy> out=<in>_lowcomplexityremoved.fq.gz 2> <in>_bbduk.stats` — the output keeps upstream's `${input}_lowcomplexityremoved.fq.gz` naming; `when = metagenomic_complexity_filter && run_bam_filtering && bam_unmapped_type == 'fastq'` (upstream validates the same combination at workflow start, main.nf 115-122) |
+| malt | `malt` | malt 0.61 | verbatim `malt-run -J-Xmx<g>g -t N -v -o . -d <db> [-a . -f SAM] -id -m -at -top <min-supp> -mq --memoryMode -i <all fastqs>` — one instance over ALL samples' unmapped reads (upstream `collect()`); reads the entropy-filtered fastqs when the complexity filter is on (upstream channel switch); `--database` is split into `malt_db` + `kraken2_db`; the percent/reads min-support exclusivity check (main.nf 129-134) is a shell guard; the per-input `.rma6` outputs are undeclared (no fixed template) — only `malt.log` is declared; live-verified on tx-ubuntu 2026-08-26 (engine 0.15.0, eager docker 2.5.3); `when = run_metagenomic_screening && run_bam_filtering && bam_unmapped_type == 'fastq' && metagenomic_tool == 'malt'` |
+| maltextract | `maltextract` | hops 0.35 | verbatim `MaltExtract -Xmx<g>g -t <taxon_list> -i <rma6s> -o results/ -r <ncbifiles> -p N -f -a --minPI <flags>` + `postprocessing.AMPS.r -r results/ -m -t N -n <taxon_list> -j`; requires `maltextract_taxon_list` + `maltextract_ncbifiles` (fail-fast guard); consumes the rma6s via glob with a DAG edge through `malt.log`; live-verified on tx-ubuntu 2026-08-26 (engine 0.15.0, eager docker 2.5.3); `when = run_maltextract && metagenomic_tool == 'malt'` (upstream verbatim) |
+| kraken | `kraken` | kraken2 2.1.2 | verbatim `kraken2 --db <db> --threads N --output <prefix>.kraken.out --report-minimizer-data --report <prefix>.kraken2_report <fastq>` + `cut -f1-3,6-8 > <prefix>.kreport`; reads the entropy-filtered fastq when the complexity filter is on (upstream channel switch); the output prefix is normalized to `{sample}.unmapped.fastq` in both branches (upstream prefixes by the input basename — see deviations); live-verified on tx-ubuntu 2026-08-26 (engine 0.15.0, eager docker 2.5.3); `when = run_metagenomic_screening && run_bam_filtering && bam_unmapped_type == 'fastq' && metagenomic_tool == 'kraken'` |
+| kraken_parse | `kraken_parse` | python 3.9.4 | verbatim `kraken_parse.py -c <min_support_reads> -or <read csv> -ok <kmer csv> <kreport>` (upstream script bundled in `scripts/`, called via `python3 scripts/kraken_parse.py` — oxo-flow does not auto-add `bin/` to PATH); gated on the same `when` as kraken (upstream no-ops the process via an empty channel); live-verified on tx-ubuntu 2026-08-26 (engine 0.15.0, eager docker 2.5.3) |
+| kraken_merge | `kraken_merge` | python 3.9.4 | verbatim `merge_kraken_res.py -or kraken_read_count.csv -ok kraken_kmer_duplication.csv` (upstream script bundled in `scripts/`; it scans the working dir for the per-sample CSVs, which the fan-in gathers into one instance); gated on the same `when` as kraken; live-verified on tx-ubuntu 2026-08-26 (engine 0.15.0, eager docker 2.5.3) |
+| decomp_kraken | `kraken` (folded in) | kraken2 2.1.2 | folded into the kraken shell: a `.tar.gz` `kraken2_db` is unpacked in place (`tar xzf`, `mkdir -p <db>`, `mv *.k2d <db>/`) — no when-expression can test a filename suffix (deviation, documented below) |
+| sexdeterrmine | `sexdeterrmine` | sexdeterrmine 1.1.2 | verbatim sexdeterrmine.py run; `when = config.run_sexdeterrmine` |
+| sexdeterrmine_prep | `sexdeterrmine_prep` | sexdeterrmine 1.1.2 | verbatim sexdeterrmine_prep.py; `when = config.run_sexdeterrmine` |
+| mtnucratio | `mtnucratio` | sequencetools 1.5.2 | verbatim `mtnucratio -Xmx`; `when = config.run_mtnucratio` |
+| nuclear_contamination | `nuclear_contamination` | angsd 0.935 (contaminationX) | verbatim contaminationX invocation; `when = config.run_nuclear_contamination` |
+| endorSpy | `endor_spy` | endorSpy | `endorS.py -o json -n <sample> <flagstat>`; `when = config.run_endor_spy` (upstream runs it unconditionally; the port gates it to keep the default path unchanged) |
+| print_nuclear_contamination | `print_nuclear_contamination` | grep | report row extraction; `when = config.run_nuclear_contamination` |
+| multivcfanalyzer | `multivcfanalyzer` | multivcfanalyzer 0.85.2, pigz | verbatim cohort run over all UG VCFs (expand_inputs over `multivcf_samples`); `when = run_genotyping && genotyping_tool == 'ug' && run_multivcfanalyzer` |
+| vcf2genome | `vcf2genome` | vcf2genome 0.91, pigz | verbatim consensus call incl. refMod/uncertainty fastas; `when = config.run_vcf2genome` |
 | multiqc | `multiqc` | multiqc 1.16 | `multiqc -f --config assets/multiqc_config.yaml .` (the upstream `--title/--filename` run-name flags are nf-core boilerplate and are dropped). Module files are staged into per-module subdirs mirroring the upstream multiqc process inputs; staging is guarded so skipped modules are simply absent. Report at `results/multiqc/multiqc_report.html` |
-| output_documentation | — | — | not ported — nf-core boilerplate docs process |
-| get_software_versions | — | — | not ported — nf-core boilerplate versions process |
+| output_documentation | — | — | not ported — nf-core boilerplate docs process (markdown_to_html.py of static run docs); upstream runs it unconditionally, so porting it would change the default plan for zero analytical value |
+| get_software_versions | — | — | not ported — nf-core boilerplate versions process (scrapes `$workflow`/`$nextflow` native variables into a versions.yml; a versions.yml has no oxo-flow equivalent, and `scrape_software_versions.py` targets Nextflow env vars) |
 
 Additional deviations from upstream (all on the default path):
 
@@ -325,6 +343,29 @@ Additional deviations from upstream (all on the default path):
   used by the undefined `mc_tiny` label (eigenstrat_snp_coverage).
   JVM heaps are byte-identical (`-Xmx8192M`, `-Xmx4096M`, `-Xmx4g`,
   `--java-mem-size=4G`).
+- Metagenomic-chain deviations (`rules/branches.oxoflow` B32-B37, all off by
+  default):
+  - upstream's run-level validation (main.nf 115-137) becomes rule gates +
+    fail-fast shell guards (oxo-flow has no params-validation stage).
+  - `kraken_parse`/`kraken_merge` carry the same `when` as `kraken`
+    (upstream no-ops them via empty channels).
+  - `decomp_kraken` (`.tar.gz` kraken2 DB unpack) is folded into the
+    `kraken` shell — no when-expression can test a filename suffix.
+  - the kraken output prefix is normalized to `{sample}.unmapped.fastq`
+    in both filter branches (upstream prefixes by the input basename,
+    which differs when the complexity filter is on).
+  - MALT `.rma6` outputs are undeclared (per-input names, no fixed
+    template; `.sai` precedent); only `malt.log` is declared and
+    `maltextract` consumes the rma6s via glob with a DAG edge through
+    `malt.log`.
+  - upstream's single `--database` param is split into `malt_db` and
+    `kraken2_db`.
+  - `samtools_filter` writes an empty `{sample}.unmapped.fastq.gz`
+    placeholder in discard mode (engine output-existence contract; never
+    consumed — the metagenomic rules are gated on `bam_unmapped_type == 'fastq'`).
+  - the metagenomic chain is live-verified on tx-ubuntu as of 2026-08-26
+    (engine 0.15.0, eager docker 2.5.3): `metagenomic_complexity_filter` and
+    `bam_unmapped_type=fastq` toggles PASS (kraken and malt paths).
 - A `.gz`-compressed reference FASTA is not supported (upstream's
   `unzip_reference` pigz pre-step is not ported): pass a plain FASTA.
 - Upstream's startup parameter validation (e.g. the pileupCaller
@@ -339,14 +380,15 @@ Additional deviations from upstream (all on the default path):
 - The conditional `preserve5p`/`mergedonly` AR branches (both off by
   default) are not ported; their config keys are kept with upstream
   defaults.
-- `run_pmdtools`, `run_bam_filtering`, `run_trim_bam`,
-  `run_post_ar_trimming`, `run_mapdamage_rescaling`, `run_bedtools_coverage`,
-  `run_vcf2genome`, `run_multivcfanalyzer`, `run_sexdeterrmine`,
-  `run_mtnucratio`, `run_nuclear_contamination`, `run_endorSpy`,
-  `run_metagenomic_screening`, `run_convertinputbam`, `run_hostremoval` and
-  the non-default mapper/dedupper/damage-tool/genotyping-tool choices are
-  all listed above as `not ported` branches; default values are kept in
-  `[config]` where a config key exists.
+- `run_pmdtools`, `run_trim_bam`, `run_post_ar_trimming`,
+  `run_mapdamage_rescaling`, `run_bedtools_coverage`, `run_vcf2genome`,
+  `run_multivcfanalyzer`, `run_sexdeterrmine`, `run_mtnucratio`,
+  `run_nuclear_contamination`, `run_endorSpy`, `run_convertinputbam`,
+  `run_hostremoval` and the non-default mapper/dedupper/damage-tool/
+  genotyping-tool choices are all ported as gated branch rules above;
+  `run_bam_filtering` (incl. the metagenomic screening chain under
+  `run_metagenomic_screening` with `metagenomic_tool` = `kraken`/`malt`) IS
+  ported. Default values are kept in `[config]` where a config key exists.
 
 ## Links
 

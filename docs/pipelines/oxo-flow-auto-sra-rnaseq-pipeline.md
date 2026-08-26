@@ -1,15 +1,15 @@
 # SRA-powered RNA-seq: .sra archives to differential expression
 
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
 
-Automated RNA-seq analysis from locally downloaded SRA archives to differential expression results: verify and symlink .sra files, fasterq-dump conversion to FASTQ, read merging across multiple SRR runs per sample, fastp trimming, STAR alignment with gene counts, BAM indexing, BPM-normalized bigWig signal tracks, a merged count matrix, and DESeq2 differential analysis with ashr shrinkage. Every tool is pinned to an exact conda version for reproducibility.
+Automated RNA-seq analysis from locally downloaded SRA archives to differential expression results: verify and symlink .sra files, fasterq-dump conversion to FASTQ, read merging across multiple SRR runs per sample, fastp trimming, STAR alignment with gene counts, BAM indexing, BPM-normalized bigWig signal tracks, a merged count matrix, and DESeq2 differential analysis with ashr shrinkage. Single-end and paired-end samples are routed by the metadata `paired` column through wildcard-scoped when-gates; a separate ENCODE entry point (main_encode.oxoflow) consumes pre-downloaded FASTQs. Every tool is pinned to an exact conda version for reproducibility.
 
 | | |
 |---:|---|
 | **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | transcriptomics |
-| **Rules** | 21 |
+| **Rules** | 13 |
 | **Compute** | up to 20 threads / 10 GB per rule (align_and_count) |
 | **Tools** | sra-tools · fastp · star · samtools · deeptools · pandas · bioconductor-deseq2 · r-ashr · r-data.table |
 | **Ported** | 2026-08-15 |
@@ -27,7 +27,7 @@ Downloads public data by accessions (network required); `--resume-failed` retrie
 
 ## Installation
 
-**Engine.** oxo-flow >= 0.12.0
+**Engine.** oxo-flow >= 0.15.0 (wildcard-scoped `when` predicates)
 
 **Toolchain.** conda envs — pinned
 
@@ -88,15 +88,19 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 **In scope**
 
 - get_sra
-- data_conversion_pair
+- sra_dump (shared pair/single conversion)
 - merge_R1_data
 - merge_R2_data
+- merge_data (single-end)
 - data_clean_pair
+- data_clean_single
 - align_and_count
+- align_and_count_single
 - build_bam_index
 - bamtobw
 - combine_count
 - DGE_analysis
+- main_encode.oxoflow — ENCODE entry point (8 rules, pre-downloaded FASTQ inputs)
 
 **Excluded**
 
