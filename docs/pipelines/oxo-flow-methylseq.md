@@ -9,9 +9,9 @@ Run end-to-end bisulfite methylation analysis (WGBS, and RRBS-compatible) of pai
 | **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | genomics |
-| **Rules** | 53 |
+| **Rules** | 55 |
 | **Compute** | up to 12 CPUs / 72 GB per rule (genome preparation, index builds, trimgalore, aligners, deduplicate, extractor) |
-| **Tools** | fastqc · trim-galore · cutadapt · pigz · bismark · samtools · htslib · bwa · bwameth · picard · methyldackel · rastair · qualimap · preseq · bedtools · multiqc · gzip · tar · r-base |
+| **Tools** | fastqc · trim-galore · cutadapt · pigz · bismark · samtools · htslib · bwa · bwameth · picard · methyldackel · rastair · qualimap · preseq · bedtools · multiqc · gzip · tar · coreutils · r-base |
 | **Ported** | 2026-08-15 |
 | **License** | Apache-2.0 |
 | **Source** | [nf-core/methylseq](https://github.com/nf-core/methylseq) |
@@ -27,13 +27,13 @@ Needs reference genome and reads — see Requirements.
 
 ## Installation
 
-**Engine.** oxo-flow >= 0.14.0
+**Engine.** oxo-flow >= 0.17.0
 
 **Toolchain.** conda envs — pinned versions (conda-forge/bioconda)
 
 **Requirements.**
 - reference genome FASTA (a .gz FASTA is decompressed automatically before indexing) — the Bismark bowtie2 index is built automatically on first run; a prebuilt index archive (--bismark_index) is also supported
-- paired-end raw reads: <dir>/<sample>_R1.fastq.gz and <dir>/<sample>_R2.fastq.gz
+- paired-end raw reads: <dir>/<sample>_R1.fastq.gz and <dir>/<sample>_R2.fastq.gz (samples with >1 pair: <dir>/<sample>_<unit>_R{1,2}.fastq.gz per unit — concatenated by cat_fastq)
 - compute: up to 12 CPUs / 72 GB RAM per rule (bismark_genomepreparation, trimgalore, bismark_align, bismark_deduplicate, bismark_methylationextractor, bwameth_index, bwameth_align, bwa_mem)
 - conda or mamba to create the pinned per-rule environments
 - disk: space in config.out_dir (default results/) for aligned BAMs, methylation calls and reports
@@ -121,6 +121,8 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - bwameth_index
 - bwa_index
 - samtools_faidx
+- cat_fastq_r1
+- cat_fastq_r2
 - fastqc
 - trimgalore
 - bismark_align
@@ -173,12 +175,13 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 **Excluded**
 
 - single_end — paired-end only; the upstream samplesheet 'single_end' column is not ported
-- CAT_FASTQ — only active for samples with more than one fastq pair; fixture samplesheets have one pair per sample (portable in principle — the engine has no channel-merge equivalent yet)
 
 ## Fidelity
 
 | Upstream process/rule | oxo-flow rule | Tool (version) | Notes |
-|---|---|---|---|
+|---|---|---|
+| CAT_FASTQ | `cat_fastq_r1` / `cat_fastq_r2` | coreutils 9.5 | ported via the engine's `input_groups` primitive (issue #227, oxo-flow >= 0.17.0): one instance per sample with >1 fastq pair, R1s and R2s concatenated into `results/fastq/<sample>_R{1,2}.fastq.gz`; single-pair samples pass through unchanged (downstream falls back to the raw pair). Upstream's single process is split into two rules (one per read); see deviations |
+--|
 | FASTQC | `fastqc` | fastqc 0.12.1 | identical command; `--memory` derived from task resources |
 | TRIMGALORE | `trimgalore` | trim-galore 0.6.10, cutadapt 4.9, pigz 2.8 | identical command incl. library-preset clipping and `--cores` clamp |
 | BISMARK_GENOMEPREPARATION | `bismark_genomepreparation` | bismark 0.25.1, gzip 1.13 | `--bowtie2` (or `--hisat2` for bismark_hisat, `--slam` for slamseq); runs when no prebuilt index is supplied (upstream default) |
@@ -218,7 +221,6 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 | SAMTOOLS_FAIDX | `samtools_faidx` | samtools 1.22.1, htslib 1.22.1, gzip 1.13 | stages the reference at `refs/FastaRef/reference.fa`; upstream gate (bwameth/bwamem/collecthsmetrics) reproduced |
 | MULTIQC | `multiqc` / `multiqc_bwameth` / `multiqc_bwamem` | multiqc 1.32 | one rule per aligner branch; same search space as upstream (fastqc zips, trimgalore logs, samtools stats/flagstat/idxstats, picard metrics + qualimap/preseq/HS extras); the methyldackel/rastair outputs are not fed to MultiQC, exactly like upstream |
 | softwareVersionsToYAML + collectFile | `multiqc_versions` | — | upstream extracts versions at runtime; port pins the module versions statically |
-| CAT_FASTQ | not ported | — | only active when a sample has >1 fastq pair; single-pair samplesheets cover the default path |
 
 Additional notes: paired-end only (`single_end` samplesheet column is not
 ported); `--save_*` / `publish_dir_mode` params are N/A (oxo-flow publishes
