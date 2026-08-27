@@ -10,7 +10,7 @@ Pooled CRISPR perturbation analysis (scCRISPR-seq / CROP-seq / Perturb-seq) with
 | **Origin** | port |
 | **Domain** | single-cell |
 | **Rules** | 7 |
-| **Compute** | up to 8 CPUs / 32 GB per rule (mixscape) |
+| **Compute** | mixscape 8 CPUs / 32 GB; lda, visualize 1 CPU / 32 GB each; export rules 1 CPU / 1 GB |
 | **Tools** | Seurat · seuratobject · irlba · matrix · mixtools · ggplot2 · scales · patchwork · data.table · pyyaml · conda |
 | **Ported** | 2026-08-15 |
 | **License** | Apache-2.0 |
@@ -35,7 +35,7 @@ Point `data_dir=` and `annotation=` at your inputs (see README); the shipped fix
 - One processed Seurat object per sample, as {data_dir}/{sample}.rds (already normalized/integrated — QC/normalization run upstream)
 - Annotation CSV (name, data columns) mapping sample names to object paths
 - Optional: 10X Antibody_Capture assay 'AB' for antibody-expression violin plots
-- Compute: up to 8 CPUs / 32000 MB (32 GB) per rule (mixscape, lda, visualize); export rules 1 CPU / 1 GB; -j controls parallelism
+- Compute: mixscape up to 8 CPUs / 32000 MB (32 GB); lda, visualize 1 CPU / 32 GB each; export rules 1 CPU / 1 GB; -j controls parallelism
 
 ```bash
 # 1. install oxo-flow (release binary, recommended)
@@ -109,12 +109,13 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- demultiplexing — upstream module (scrnaseq_processing_seurat), not part of mixscape_seurat v2.0.3
-- scdna — upstream module, not part of mixscape_seurat v2.0.3
-- normalization — QC/normalization/integration are upstream MrBiomics recipe modules; the input is a processed Seurat object
-- differential_test — perturbation DE runs inside Seurat RunMixscape (min.de.genes/logfc.threshold), no separate rule
+- demultiplexing — verified at v2.0.3 (sha bcf72d5): no demultiplexing rule in the repo — the Snakefile includes only common/mixscape/visualize/envs_export (DAG rulegraph: 7 rules); upstream README §Resources delegates pre-processing to the separate epigen/scrnaseq_processing_seurat module
+- scdna — verified at v2.0.3 (sha bcf72d5): zero references anywhere in the repo; single-cell DNA is a different MrBiomics recipe domain, not a mixscape_seurat module
+- normalization — verified at v2.0.3 (sha bcf72d5): no QC/normalization/integration rule; the input contract is a processed Seurat object (upstream delegates processing to epigen/scrnaseq_processing_seurat). The in-script NormalizeData fallbacks inside mixscape.R/visualize.R ARE ported
+- differential_test — verified at v2.0.3 (sha bcf72d5): no DE rule; per-gene DE runs inside Seurat::RunMixscape (config min_de_genes/lfc_th, both ported); separate downstream DE module is epigen/dea_seurat
 
 ## Fidelity
+
 
 Default-parameters main execution path only. The upstream annotation CSV maps
 each sample name to the path of its processed Seurat object; the port reads
@@ -131,17 +132,19 @@ upstream file names.
 | `config_export` | `config_export` | pyyaml 6.0.1 | upstream `run:` block (`yaml.dump(config)`) ported to `scripts/export_config.py`; runtime config values passed as CLI args. pyyaml pinned at port time (2026-08-15) — upstream relied on the unpinned Snakemake runtime env. |
 | `annot_export` | `annot_export` | — | `cp {input} {output}` verbatim. |
 | `all` (target) | — | — | not ported: oxo-flow's target is implicit (all rules are targets). |
-| demultiplexing | — | — | not ported: upstream module (scrnaseq_processing_seurat), outside this repo. |
-| scdna | — | — | not ported: upstream module, outside this repo. |
-| normalization (QC/normalization/integration) | — | — | not ported: performed upstream of this workflow by the MrBiomics recipe modules; the input is a processed Seurat object. |
-| differential_test (perturbation DE) | — | — | not ported: the per-gene DE runs inside `Seurat::RunMixscape` (min.de.genes / logfc.threshold), not as a separate rule. |
+| demultiplexing | — | — | not ported: not present at v2.0.3 — the Snakefile includes only `common`/`mixscape`/`visualize`/`envs_export` (DAG: 7 rules); pre-processing lives in the separate [epigen/scrnaseq_processing_seurat](https://github.com/epigen/scrnaseq_processing_seurat) module (upstream README §Resources). |
+| scdna | — | — | not ported: not present at v2.0.3 (zero references in the repo); single-cell DNA is a separate MrBiomics recipe domain, not a mixscape_seurat module. |
+| normalization (QC/normalization/integration) | — | — | not ported: no QC/normalization/integration rule at v2.0.3; the input is a processed Seurat object (upstream delegates processing to `scrnaseq_processing_seurat`). The in-script `NormalizeData` fallbacks (`mixscape.R`, `visualize.R`) are ported. |
+| differential_test (perturbation DE) | — | — | not ported: no DE rule at v2.0.3; the per-gene DE runs inside `Seurat::RunMixscape` (`min_de_genes` / `lfc_th` config, both ported); the separate downstream DE module is [epigen/dea_seurat](https://github.com/epigen/dea_seurat). |
 
 Other deviations: (1) sample input paths come from the `{config.data_dir}`
 convention instead of per-row CSV paths — the annotation CSV is retained as
 the reproducibility artifact (copied by `annot_export`); (2) the upstream
 nested config keys (`CalcPerturbSig.*`, `RunMixscape.*`, `MixscapeLDA.npcs`,
-`Antibody_Capture`) are flattened in `[config]` — values and defaults are
-identical; (3) `test/fixtures/*.rds` are tiny genuine Seurat objects generated
+`Antibody_Capture`) are flattened in `[config]` — values identical; defaults
+identical except `antibody_capture` (port default `""` = disabled, because the
+bundled fixtures carry no CITE-seq assay; upstream default `"AB"` — set
+`antibody_capture = "AB"` for the upstream behavior); (3) `test/fixtures/*.rds` are tiny genuine Seurat objects generated
 with Seurat 5.4.0 (local toolchain) for dry-run validation only — upstream
 pins r-seurat 4.4.0; (4) the `snakemake@` object access in the R scripts is
 replaced with positional CLI args (the ported scripts document the arg
