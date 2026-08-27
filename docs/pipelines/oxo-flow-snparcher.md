@@ -266,8 +266,8 @@ bash test/run.sh
 ## License
 
 Apache-2.0. Copyright (c) 2026 oxo-flow-community. Upstream attribution in
-[NOTICE.md](NOTICE.md). The upstream snpArcher project is MIT-licensed; its
-license text is included verbatim at [LICENSE.upstream](LICENSE.upstream).
+`NOTICE.md`. The upstream snpArcher project is MIT-licensed; its
+license text is included verbatim at `LICENSE.upstream`.
 
 
 ## Links
