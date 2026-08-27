@@ -994,12 +994,12 @@ window.OXO_PIPELINES = [
     ],
     "description": "Run end-to-end bisulfite methylation analysis (WGBS, and RRBS-compatible) of paired-end reads: FastQC quality control, TrimGalore adapter trimming, alignment to the bisulfite-converted reference genome with any of the four upstream aligners \u2014 Bismark bowtie2 (default), Bismark hisat2, bwameth (bwa-meth) or BWA-MEM \u2014 PCR-deduplication, samtools sort/index, methylation calls (bismark_methylation_extractor, MethylDackel on bwameth, rastair for TAPS), per-sample and project-wide Bismark HTML reports, optional QualiMap BamQC, preseq complexity estimates and targeted-sequencing (bedtools intersect + Picard HS metrics), and a final MultiQC report. All optional branches are gated on the same config keys as the upstream params and off by default.",
     "installation": {
-      "engine": "oxo-flow >= 0.12.0",
+      "engine": "oxo-flow >= 0.14.0",
       "toolchain": "conda envs \u2014 pinned versions (conda-forge/bioconda)",
       "requirements": [
         "reference genome FASTA (a .gz FASTA is decompressed automatically before indexing) \u2014 the Bismark bowtie2 index is built automatically on first run; a prebuilt index archive (--bismark_index) is also supported",
         "paired-end raw reads: <dir>/<sample>_R1.fastq.gz and <dir>/<sample>_R2.fastq.gz",
-        "compute: up to 12 CPUs / 72 GB RAM per rule (bismark_genomepreparation, trimgalore, bismark_align, bismark_deduplicate, bismark_methylationextractor)",
+        "compute: up to 12 CPUs / 72 GB RAM per rule (bismark_genomepreparation, trimgalore, bismark_align, bismark_deduplicate, bismark_methylationextractor, bwameth_index, bwameth_align, bwa_mem)",
         "conda or mamba to create the pinned per-rule environments",
         "disk: space in config.out_dir (default results/) for aligned BAMs, methylation calls and reports"
       ]

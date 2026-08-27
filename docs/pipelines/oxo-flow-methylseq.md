@@ -27,14 +27,14 @@ Needs reference genome and reads — see Requirements.
 
 ## Installation
 
-**Engine.** oxo-flow >= 0.12.0
+**Engine.** oxo-flow >= 0.14.0
 
 **Toolchain.** conda envs — pinned versions (conda-forge/bioconda)
 
 **Requirements.**
 - reference genome FASTA (a .gz FASTA is decompressed automatically before indexing) — the Bismark bowtie2 index is built automatically on first run; a prebuilt index archive (--bismark_index) is also supported
 - paired-end raw reads: <dir>/<sample>_R1.fastq.gz and <dir>/<sample>_R2.fastq.gz
-- compute: up to 12 CPUs / 72 GB RAM per rule (bismark_genomepreparation, trimgalore, bismark_align, bismark_deduplicate, bismark_methylationextractor)
+- compute: up to 12 CPUs / 72 GB RAM per rule (bismark_genomepreparation, trimgalore, bismark_align, bismark_deduplicate, bismark_methylationextractor, bwameth_index, bwameth_align, bwa_mem)
 - conda or mamba to create the pinned per-rule environments
 - disk: space in config.out_dir (default results/) for aligned BAMs, methylation calls and reports
 
