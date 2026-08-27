@@ -6003,6 +6003,7 @@
           "visualize_LOLA_LOLACore_ATAC",
           "visualize_ORA_GSEApy_Azimuth_2023_ATAC",
           "visualize_ORA_GSEApy_Reactome_ATAC",
+          "visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC",
           "visualize_preranked_GSEApy_Azimuth_2023_RNA",
           "visualize_preranked_GSEApy_Reactome_RNA",
           "visualize_pycisTarget_hg38_screen_v10clust_ATAC"
@@ -6037,6 +6038,14 @@
           "visualize_ORA_GSEApy_Reactome_ATAC"
         ],
         "value_type": "float"
+      },
+      {
+        "default": 5,
+        "key": "adjp_th_RcisTarget",
+        "used_by": [
+          "visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC"
+        ],
+        "value_type": "int"
       },
       {
         "default": 0.05,
@@ -6079,6 +6088,7 @@
         "used_by": [
           "gene_ORA_GSEApy_Azimuth_2023",
           "gene_ORA_GSEApy_Reactome",
+          "gene_motif_enrichment_analysis_RcisTarget",
           "region_enrichment_analysis_GREAT_Azimuth_2023",
           "region_enrichment_analysis_GREAT_Reactome",
           "region_enrichment_analysis_LOLA"
@@ -6094,6 +6104,7 @@
           "visualize_LOLA_LOLACore_ATAC",
           "visualize_ORA_GSEApy_Azimuth_2023_ATAC",
           "visualize_ORA_GSEApy_Reactome_ATAC",
+          "visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC",
           "visualize_preranked_GSEApy_Azimuth_2023_RNA",
           "visualize_preranked_GSEApy_Reactome_RNA",
           "visualize_pycisTarget_hg38_screen_v10clust_ATAC"
@@ -6271,6 +6282,59 @@
         "used_by": [
           "plot_enrichment_result_ORA_GSEApy_Azimuth_2023",
           "plot_enrichment_result_ORA_GSEApy_Reactome"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "NES",
+        "key": "cn_RcisTarget_adj_pvalue",
+        "used_by": [
+          "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust",
+          "visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "NES",
+        "description": "NES combines significance and effect size",
+        "key": "cn_RcisTarget_effect_size",
+        "used_by": [
+          "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust",
+          "visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "nEnrGenes",
+        "key": "cn_RcisTarget_overlap",
+        "used_by": [
+          "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "AUC",
+        "key": "cn_RcisTarget_p_value",
+        "used_by": [
+          "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "description",
+        "description": "motif name + highConfCat TFs",
+        "key": "cn_RcisTarget_term",
+        "used_by": [
+          "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust",
+          "visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 25,
+        "key": "cn_RcisTarget_top_n",
+        "used_by": [
+          "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust"
         ],
         "value_type": "int"
       },
@@ -6499,6 +6563,7 @@
           "visualize_LOLA_LOLACore_ATAC",
           "visualize_ORA_GSEApy_Azimuth_2023_ATAC",
           "visualize_ORA_GSEApy_Reactome_ATAC",
+          "visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC",
           "visualize_pycisTarget_hg38_screen_v10clust_ATAC"
         ],
         "value_type": "int"
@@ -6623,6 +6688,81 @@
         "value_type": "string"
       },
       {
+        "default": 0.05,
+        "description": "aucMaxRank = factor * ncol(motifRankings)",
+        "key": "rcistarget_aucMaxRank_factor",
+        "used_by": [
+          "gene_motif_enrichment_analysis_RcisTarget"
+        ],
+        "value_type": "float"
+      },
+      {
+        "default": "",
+        "description": "gene-based TFBS motif enrichment (RcisTarget); \"\" disables both rules, matching upstream's \"to skip you have to leave one database entry with an empty path\" convention",
+        "key": "rcistarget_db_hg38_500bp_up_100bp_down_v10clust",
+        "used_by": [
+          "aggregate_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC",
+          "gene_motif_enrichment_analysis_RcisTarget",
+          "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust",
+          "visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 5000,
+        "key": "rcistarget_geneErnMaxRank",
+        "used_by": [
+          "gene_motif_enrichment_analysis_RcisTarget"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "aprox",
+        "description": "alternatively exact but more intense: \"icistarget\"",
+        "key": "rcistarget_geneErnMethod",
+        "used_by": [
+          "gene_motif_enrichment_analysis_RcisTarget"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "directAnnotation,inferredBy_Orthology",
+        "description": "upstream python lists; comma-joined so the rendered command stays a single token (values contain no commas)",
+        "key": "rcistarget_motifAnnot_highConfCat",
+        "used_by": [
+          "gene_motif_enrichment_analysis_RcisTarget"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "inferredBy_MotifSimilarity,inferredBy_MotifSimilarity_n_Orthology",
+        "key": "rcistarget_motifAnnot_lowConfCat",
+        "used_by": [
+          "gene_motif_enrichment_analysis_RcisTarget"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "description": "user-provided motif-to-TF annotation tbl; \"\" disables",
+        "key": "rcistarget_motif_annot",
+        "used_by": [
+          "aggregate_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC",
+          "gene_motif_enrichment_analysis_RcisTarget",
+          "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust",
+          "visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 3,
+        "key": "rcistarget_nesThreshold",
+        "used_by": [
+          "gene_motif_enrichment_analysis_RcisTarget"
+        ],
+        "value_type": "int"
+      },
+      {
         "default": "test/data/CorcesATAC",
         "description": "feature sets (derived from config/annotation.csv at port time)",
         "key": "region_beds",
@@ -6653,6 +6793,7 @@
           "aggregate_LOLA_LOLACore_ATAC",
           "aggregate_ORA_GSEApy_Azimuth_2023_ATAC",
           "aggregate_ORA_GSEApy_Reactome_ATAC",
+          "aggregate_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC",
           "aggregate_preranked_GSEApy_Azimuth_2023_RNA",
           "aggregate_preranked_GSEApy_Reactome_RNA",
           "aggregate_pycisTarget_hg38_screen_v10clust_ATAC",
@@ -6660,6 +6801,7 @@
           "config_export",
           "gene_ORA_GSEApy_Azimuth_2023",
           "gene_ORA_GSEApy_Reactome",
+          "gene_motif_enrichment_analysis_RcisTarget",
           "gene_preranked_GSEApy_Azimuth_2023",
           "gene_preranked_GSEApy_Reactome",
           "plot_enrichment_result_GREAT_Azimuth_2023",
@@ -6667,6 +6809,7 @@
           "plot_enrichment_result_LOLA_LOLACore",
           "plot_enrichment_result_ORA_GSEApy_Azimuth_2023",
           "plot_enrichment_result_ORA_GSEApy_Reactome",
+          "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust",
           "plot_enrichment_result_preranked_GSEApy_Azimuth_2023",
           "plot_enrichment_result_preranked_GSEApy_Reactome",
           "plot_enrichment_result_pycisTarget_hg38_screen_v10clust",
@@ -6681,6 +6824,7 @@
           "visualize_LOLA_LOLACore_ATAC",
           "visualize_ORA_GSEApy_Azimuth_2023_ATAC",
           "visualize_ORA_GSEApy_Reactome_ATAC",
+          "visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC",
           "visualize_preranked_GSEApy_Azimuth_2023_RNA",
           "visualize_preranked_GSEApy_Reactome_RNA",
           "visualize_pycisTarget_hg38_screen_v10clust_ATAC"
@@ -6725,6 +6869,7 @@
           "visualize_LOLA_LOLACore_ATAC",
           "visualize_ORA_GSEApy_Azimuth_2023_ATAC",
           "visualize_ORA_GSEApy_Reactome_ATAC",
+          "visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC",
           "visualize_preranked_GSEApy_Azimuth_2023_RNA",
           "visualize_preranked_GSEApy_Reactome_RNA",
           "visualize_pycisTarget_hg38_screen_v10clust_ATAC"
