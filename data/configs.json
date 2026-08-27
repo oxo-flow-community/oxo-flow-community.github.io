@@ -2711,7 +2711,22 @@
         "default": "minimap2",
         "description": "-- Alignment",
         "key": "aligner",
-        "used_by": [],
+        "used_by": [
+          "graphmap2_align",
+          "graphmap2_index",
+          "minimap2_align",
+          "minimap2_index"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": ".sorted.bam",
+        "description": "-- Suffix appended to per-sample bam names wherever rules consume reads: \".sorted.bam\" (alignment branch) or \".bam\" (skip_alignment branch, user bams linked by bam_rename). Mirrors the upstream channel swap between BAM_SORT_INDEX_SAMTOOLS.out.sortbam and BAM_RENAME.out.bam.",
+        "key": "bam_suffix",
+        "used_by": [
+          "nanopolish_index_eventalign",
+          "stringtie2"
+        ],
         "value_type": "string"
       },
       {
@@ -2725,10 +2740,34 @@
       },
       {
         "default": false,
-        "description": "-- Variant calling (upstream default: off)",
+        "description": "-- Variant calling (upstream default: off; also gated upstream on protocol == DNA). The three short-variant callers are mutually exclusive on variant_caller; structural callers on structural_variant_caller (upstream defaults: medaka / sniffles).",
         "key": "call_variants",
         "used_by": [
-          "minimap2_align"
+          "cutesv",
+          "cutesv_sort_vcf",
+          "cutesv_tabix_vcf",
+          "deepvariant",
+          "deepvariant_tabix_gvcf",
+          "deepvariant_tabix_vcf",
+          "medaka_bgzip_vcf",
+          "medaka_tabix_vcf",
+          "medaka_variant",
+          "minimap2_align",
+          "pepper_margin_deepvariant",
+          "samtools_index",
+          "samtools_sort",
+          "samtools_sort_index",
+          "sniffles",
+          "sniffles_sort_vcf",
+          "sniffles_tabix_vcf"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "deepvariant_gpu",
+        "used_by": [
+          "pepper_margin_deepvariant"
         ],
         "value_type": "bool"
       },
@@ -2737,7 +2776,13 @@
         "description": "-- GTF annotation (upstream samplesheet gtf column; empty on the default path)",
         "key": "gtf",
         "used_by": [
-          "gtf2bed"
+          "bambu",
+          "graphmap2_align",
+          "graphmap2_index",
+          "gtf2bed",
+          "stringtie2",
+          "stringtie_merge",
+          "xpore_dataprep"
         ],
         "value_type": "string"
       },
@@ -2786,19 +2831,62 @@
         "value_type": "string"
       },
       {
+        "default": "test/fixtures/refs/lambda.fasta.gz",
+        "key": "nanolyse_fasta",
+        "used_by": [
+          "nanolyse"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "nanopolish_fast5",
+        "used_by": [
+          "m6anet_dataprep",
+          "m6anet_inference",
+          "nanopolish_index_eventalign",
+          "xpore_dataprep",
+          "xpore_diffmod"
+        ],
+        "value_type": "string"
+      },
+      {
         "default": "results",
         "description": "-- Output directory (upstream: --outdir, default ./results)",
         "key": "out_dir",
         "used_by": [
+          "bam_rename",
+          "bambu",
+          "bedtools_bamtobed",
           "bedtools_genomecov",
+          "cutesv",
+          "cutesv_sort_vcf",
+          "cutesv_tabix_vcf",
+          "deepvariant",
+          "deepvariant_tabix_gvcf",
+          "deepvariant_tabix_vcf",
+          "deseq2",
+          "deseq2_featurecounts",
+          "dexseq",
+          "dexseq_featurecounts",
           "dumpsoftwareversions",
           "fastqc",
           "get_chrom_sizes",
+          "graphmap2_align",
+          "graphmap2_index",
           "gtf2bed",
+          "m6anet_dataprep",
+          "m6anet_inference",
+          "medaka_bgzip_vcf",
+          "medaka_tabix_vcf",
+          "medaka_variant",
           "minimap2_align",
           "minimap2_index",
           "multiqc",
+          "nanolyse",
           "nanoplot",
+          "nanopolish_index_eventalign",
+          "pepper_margin_deepvariant",
           "qcat",
           "samplesheet_check",
           "samtools_faidx",
@@ -2806,19 +2894,67 @@
           "samtools_idxstats",
           "samtools_index",
           "samtools_sort",
+          "samtools_sort_index",
           "samtools_stats",
           "samtools_view",
-          "ucsc_bedgraphtobigwig"
+          "sniffles",
+          "sniffles_sort_vcf",
+          "sniffles_tabix_vcf",
+          "stringtie2",
+          "stringtie_merge",
+          "subread_featurecounts",
+          "ucsc_bed12tobigbed",
+          "ucsc_bedgraphtobigwig",
+          "xpore_dataprep",
+          "xpore_diffmod"
         ],
         "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "phase_vcf",
+        "used_by": [
+          "medaka_variant"
+        ],
+        "value_type": "bool"
       },
       {
         "default": "DNA",
         "description": "-- Protocol (upstream: --protocol; mandatory upstream, one of DNA/cDNA/directRNA)",
         "key": "protocol",
         "used_by": [
+          "bambu",
+          "bedtools_bamtobed",
+          "cutesv",
+          "cutesv_sort_vcf",
+          "cutesv_tabix_vcf",
+          "deepvariant",
+          "deepvariant_tabix_gvcf",
+          "deepvariant_tabix_vcf",
+          "deseq2",
+          "deseq2_featurecounts",
+          "dexseq",
+          "dexseq_featurecounts",
+          "graphmap2_align",
+          "graphmap2_index",
+          "m6anet_dataprep",
+          "m6anet_inference",
+          "medaka_bgzip_vcf",
+          "medaka_tabix_vcf",
+          "medaka_variant",
           "minimap2_align",
-          "minimap2_index"
+          "minimap2_index",
+          "nanopolish_index_eventalign",
+          "pepper_margin_deepvariant",
+          "sniffles",
+          "sniffles_sort_vcf",
+          "sniffles_tabix_vcf",
+          "stringtie2",
+          "stringtie_merge",
+          "subread_featurecounts",
+          "ucsc_bed12tobigbed",
+          "xpore_dataprep",
+          "xpore_diffmod"
         ],
         "value_type": "string"
       },
@@ -2839,14 +2975,40 @@
         "value_type": "int"
       },
       {
+        "default": "bambu",
+        "description": "-- Quantification and differential analysis (upstream defaults: on, but gated upstream to protocol cDNA/directRNA \u2014 never on the DNA path)",
+        "key": "quantification_method",
+        "used_by": [
+          "bambu",
+          "deseq2",
+          "deseq2_featurecounts",
+          "dexseq",
+          "dexseq_featurecounts",
+          "stringtie2",
+          "stringtie_merge",
+          "subread_featurecounts"
+        ],
+        "value_type": "string"
+      },
+      {
         "default": "test/fixtures/refs/genome.fa",
         "description": "-- Reference genome (collapses the samplesheet fasta column; the default path uses a single reference for all samples, as in the upstream test data)",
         "key": "reference",
         "used_by": [
+          "bambu",
+          "cutesv",
+          "deepvariant",
           "get_chrom_sizes",
+          "graphmap2_align",
+          "graphmap2_index",
+          "medaka_variant",
           "minimap2_index",
+          "nanopolish_index_eventalign",
+          "pepper_margin_deepvariant",
           "samtools_faidx",
-          "samtools_stats"
+          "samtools_stats",
+          "stringtie2",
+          "xpore_dataprep"
         ],
         "value_type": "string"
       },
@@ -2855,27 +3017,47 @@
         "description": "Basename of the reference; mirrors the upstream staged-file name so that indexes keep the upstream naming (genome.fa.mmi / genome.fa.sizes / genome.fa.fai)",
         "key": "reference_name",
         "used_by": [
+          "deepvariant",
           "get_chrom_sizes",
+          "graphmap2_align",
+          "graphmap2_index",
           "minimap2_align",
           "minimap2_index",
+          "pepper_margin_deepvariant",
           "samtools_faidx",
+          "ucsc_bed12tobigbed",
           "ucsc_bedgraphtobigwig"
         ],
         "value_type": "string"
       },
       {
         "default": false,
-        "description": "-- Raw read cleaning (upstream default: off)",
+        "description": "-- Raw read cleaning (upstream default: off). Upstream downloads the lambda genome when --nanolyse_fasta is unset (GET_NANOLYSE_FASTA); the port ships it as a checked-in fixture.",
         "key": "run_nanolyse",
-        "used_by": [],
+        "used_by": [
+          "nanolyse"
+        ],
         "value_type": "bool"
+      },
+      {
+        "default": "",
+        "description": "-- Pre-aligned BAM input (upstream: the samplesheet input_file column carrying .bam files, used only when --skip_alignment; the port takes a comma-separated list of bam paths, one per barcode in samples_list order, linked by the bam_rename rule)",
+        "key": "sample_bams",
+        "used_by": [
+          "bam_rename"
+        ],
+        "value_type": "string"
       },
       {
         "default": false,
         "key": "skip_alignment",
         "used_by": [
+          "bam_rename",
+          "bedtools_bamtobed",
           "bedtools_genomecov",
           "get_chrom_sizes",
+          "graphmap2_align",
+          "graphmap2_index",
           "minimap2_align",
           "minimap2_index",
           "samtools_faidx",
@@ -2883,8 +3065,10 @@
           "samtools_idxstats",
           "samtools_index",
           "samtools_sort",
+          "samtools_sort_index",
           "samtools_stats",
           "samtools_view",
+          "ucsc_bed12tobigbed",
           "ucsc_bedgraphtobigwig"
         ],
         "value_type": "bool"
@@ -2892,7 +3076,10 @@
       {
         "default": false,
         "key": "skip_bigbed",
-        "used_by": [],
+        "used_by": [
+          "bedtools_bamtobed",
+          "ucsc_bed12tobigbed"
+        ],
         "value_type": "bool"
       },
       {
@@ -2915,9 +3102,42 @@
       },
       {
         "default": false,
+        "key": "skip_differential_analysis",
+        "used_by": [
+          "deseq2",
+          "deseq2_featurecounts",
+          "dexseq",
+          "dexseq_featurecounts"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
         "key": "skip_fastqc",
         "used_by": [
           "fastqc"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_m6anet",
+        "used_by": [
+          "m6anet_dataprep",
+          "m6anet_inference"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "description": "-- RNA modification analysis (upstream default: on, gated to protocol directRNA; the fast5 dir comes from the upstream samplesheet nanopolish_fast5 column \u2014 the port takes one dir for all samples)",
+        "key": "skip_modification_analysis",
+        "used_by": [
+          "m6anet_dataprep",
+          "m6anet_inference",
+          "nanopolish_index_eventalign",
+          "xpore_dataprep",
+          "xpore_diffmod"
         ],
         "value_type": "bool"
       },
@@ -2949,12 +3169,98 @@
       },
       {
         "default": false,
+        "key": "skip_quantification",
+        "used_by": [
+          "bambu",
+          "deseq2",
+          "deseq2_featurecounts",
+          "dexseq",
+          "dexseq_featurecounts",
+          "stringtie2",
+          "stringtie_merge",
+          "subread_featurecounts"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_sv",
+        "used_by": [
+          "cutesv",
+          "cutesv_sort_vcf",
+          "cutesv_tabix_vcf",
+          "sniffles",
+          "sniffles_sort_vcf",
+          "sniffles_tabix_vcf"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_vc",
+        "used_by": [
+          "deepvariant",
+          "deepvariant_tabix_gvcf",
+          "deepvariant_tabix_vcf",
+          "medaka_bgzip_vcf",
+          "medaka_tabix_vcf",
+          "medaka_variant",
+          "pepper_margin_deepvariant"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_xpore",
+        "used_by": [
+          "xpore_dataprep",
+          "xpore_diffmod"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "split_mnps",
+        "used_by": [
+          "medaka_variant"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
         "key": "stranded",
         "used_by": [
           "minimap2_align",
           "minimap2_index"
         ],
         "value_type": "bool"
+      },
+      {
+        "default": "sniffles",
+        "key": "structural_variant_caller",
+        "used_by": [
+          "cutesv",
+          "cutesv_sort_vcf",
+          "cutesv_tabix_vcf",
+          "sniffles",
+          "sniffles_sort_vcf",
+          "sniffles_tabix_vcf"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "medaka",
+        "key": "variant_caller",
+        "used_by": [
+          "deepvariant",
+          "deepvariant_tabix_gvcf",
+          "deepvariant_tabix_vcf",
+          "medaka_bgzip_vcf",
+          "medaka_tabix_vcf",
+          "medaka_variant",
+          "pepper_margin_deepvariant"
+        ],
+        "value_type": "string"
       }
     ]
   },
