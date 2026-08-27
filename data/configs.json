@@ -7141,10 +7141,110 @@
     "workflow": "main.oxoflow",
     "config": [
       {
+        "default": false,
+        "key": "callable_sites_enabled",
+        "used_by": [
+          "callable_coverage_thresholds",
+          "callable_sites_bed",
+          "clam_collect",
+          "clam_loci",
+          "coverage_bed",
+          "genmap_index",
+          "genmap_mappability",
+          "mappability_bed",
+          "mosdepth",
+          "mosdepth_external",
+          "mosdepth_markdup",
+          "postprocess_basic_filter",
+          "postprocess_drop_indel_snps",
+          "postprocess_filter_individuals",
+          "postprocess_strict_filter",
+          "postprocess_subset_indels",
+          "postprocess_subset_snps",
+          "postprocess_update_bed"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": 1.0,
+        "key": "callable_sites_fraction",
+        "used_by": [
+          "coverage_bed"
+        ],
+        "value_type": "float"
+      },
+      {
+        "default": 150,
+        "key": "callable_sites_kmer",
+        "used_by": [
+          "genmap_mappability"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "auto",
+        "key": "callable_sites_max_coverage",
+        "used_by": [
+          "callable_coverage_thresholds"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 100,
+        "key": "callable_sites_merge_distance",
+        "used_by": [
+          "coverage_bed",
+          "mappability_bed"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "auto",
+        "key": "callable_sites_min_coverage",
+        "used_by": [
+          "callable_coverage_thresholds"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 1,
+        "key": "callable_sites_min_score",
+        "used_by": [
+          "mappability_bed"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "WGS",
+        "key": "deepvariant_model_type",
+        "used_by": [
+          "deepvariant_call",
+          "deepvariant_call_external",
+          "deepvariant_call_markdup"
+        ],
+        "value_type": "string"
+      },
+      {
         "default": "low",
         "key": "expected_coverage",
         "used_by": [],
         "value_type": "string"
+      },
+      {
+        "default": 0.005,
+        "key": "gatk_het_prior",
+        "used_by": [
+          "joint_genotype_gvcfs"
+        ],
+        "value_type": "float"
+      },
+      {
+        "default": false,
+        "key": "generate_filtered_vcf",
+        "used_by": [
+          "variant_filtration"
+        ],
+        "value_type": "bool"
       },
       {
         "default": false,
@@ -7154,15 +7254,154 @@
       },
       {
         "default": false,
+        "key": "joint_genotyping_enabled",
+        "used_by": [
+          "create_db_mapfile",
+          "glnexus_joint",
+          "joint_genomics_db_import",
+          "joint_genotype_gvcfs",
+          "variant_filtration"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
         "key": "mark_duplicates",
-        "used_by": [],
+        "used_by": [
+          "bam_stats",
+          "bam_stats_markdup",
+          "deepvariant_call",
+          "deepvariant_call_markdup",
+          "gatk_haplotypecaller",
+          "gatk_haplotypecaller_markdup",
+          "index_bam_csi",
+          "index_bam_csi_markdup",
+          "markdup_library",
+          "merge_dedup_libraries",
+          "merge_library_level_bams",
+          "mosdepth",
+          "mosdepth_markdup"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "modules_postprocess_enabled",
+        "used_by": [
+          "postprocess_basic_filter",
+          "postprocess_drop_indel_snps",
+          "postprocess_filter_individuals",
+          "postprocess_strict_filter",
+          "postprocess_subset_indels",
+          "postprocess_subset_snps",
+          "postprocess_update_bed"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "modules_qc_enabled",
+        "used_by": [
+          "generate_coords_file",
+          "qc_admixture",
+          "qc_contig_map",
+          "qc_copy_qc_report",
+          "qc_dashboard",
+          "qc_plink",
+          "qc_prepare_plink_inputs",
+          "qc_setup_admixture",
+          "qc_subsample_snps",
+          "qc_vcftools_individuals"
+        ],
         "value_type": "bool"
       },
       {
         "default": 2,
         "key": "ploidy",
         "used_by": [
-          "gatk_haplotypecaller"
+          "gatk_haplotypecaller",
+          "gatk_haplotypecaller_external",
+          "gatk_haplotypecaller_markdup"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 10000,
+        "key": "postprocess_contig_size",
+        "used_by": [
+          "postprocess_update_bed"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "mtDNA,Y",
+        "key": "postprocess_exclude_scaffolds",
+        "used_by": [
+          "postprocess_strict_filter"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 0.01,
+        "key": "postprocess_maf",
+        "used_by": [
+          "postprocess_strict_filter"
+        ],
+        "value_type": "float"
+      },
+      {
+        "default": 0.75,
+        "key": "postprocess_missingness",
+        "used_by": [
+          "postprocess_strict_filter"
+        ],
+        "value_type": "float"
+      },
+      {
+        "default": 3,
+        "key": "qc_clusters",
+        "used_by": [
+          "qc_dashboard"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "",
+        "key": "qc_exclude_scaffolds",
+        "used_by": [
+          "qc_subsample_snps"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "qc_google_api_key",
+        "used_by": [
+          "qc_dashboard"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 0.49,
+        "key": "qc_max_sample_missingness",
+        "used_by": [
+          "qc_plink"
+        ],
+        "value_type": "float"
+      },
+      {
+        "default": 2,
+        "key": "qc_min_depth",
+        "used_by": [
+          "qc_vcftools_individuals"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 10,
+        "key": "qc_pca_dims",
+        "used_by": [
+          "qc_plink"
         ],
         "value_type": "int"
       },
@@ -7171,9 +7410,22 @@
         "key": "reference_name",
         "used_by": [
           "bwa_mem",
+          "deepvariant_call",
+          "deepvariant_call_external",
+          "deepvariant_call_markdup",
           "gatk_haplotypecaller",
+          "gatk_haplotypecaller_external",
+          "gatk_haplotypecaller_markdup",
+          "genmap_index",
           "index_reference",
-          "prepare_reference"
+          "joint_genomics_db_import",
+          "joint_genotype_gvcfs",
+          "postprocess_update_bed",
+          "prepare_reference",
+          "qc_contig_map",
+          "qc_prepare_plink_inputs",
+          "qc_subsample_snps",
+          "variant_filtration"
         ],
         "value_type": "string"
       },
@@ -7182,6 +7434,32 @@
         "key": "reference_source",
         "used_by": [
           "prepare_reference"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "sample_metadata",
+        "used_by": [
+          "generate_coords_file"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "gatk",
+        "key": "variant_tool",
+        "used_by": [
+          "create_db_mapfile",
+          "deepvariant_call",
+          "deepvariant_call_external",
+          "deepvariant_call_markdup",
+          "gatk_haplotypecaller",
+          "gatk_haplotypecaller_external",
+          "gatk_haplotypecaller_markdup",
+          "glnexus_joint",
+          "joint_genomics_db_import",
+          "joint_genotype_gvcfs",
+          "variant_filtration"
         ],
         "value_type": "string"
       }
