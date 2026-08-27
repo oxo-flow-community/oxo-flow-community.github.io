@@ -2,7 +2,7 @@
 
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
 
-Single-cell RNA-seq analysis from raw 10x Genomics FASTQ reads to a final MultiQC report: FastQC read QC, Cell Ranger reference preparation and per-sample cellranger count (alignment and quantification, optional BAM output), conversion of raw and filtered 10x matrices to h5ad, CellBender ambient-RNA background removal, sample-wise h5ad concatenation, and optional export to Seurat and SingleCellExperiment objects. Covers the Cell Ranger execution path of nf-core/scrnaseq; other aligners and assays (ATAC, multiome) are not included.
+Single-cell RNA-seq analysis from raw FASTQ reads to a final MultiQC report, on all five upstream aligner branches of nf-core/scrnaseq 4.2.0: cellranger (default), simpleaf (upstream default; index + quant + optional QCatch), kallisto/bustools (standard/lamanno/nac), STARsolo (incl. legacy iGenomes index upgrade), and cellrangerarc multiome ATAC+GEX. Shared downstream path: FastQC, mtx→h5ad conversion per aligner, CellBender ambient-RNA background removal (skipped for cellrangerarc, like upstream), sample-wise h5ad concatenation, optional Seurat/SingleCellExperiment export, workflow summary + methods description, MultiQC.
 
 | | |
 |---:|---|
@@ -11,7 +11,7 @@ Single-cell RNA-seq analysis from raw 10x Genomics FASTQ reads to a final MultiQ
 | **Domain** | single-cell |
 | **Rules** | 42 |
 | **Compute** | up to 12 CPUs / 72 GB per rule (Cell Ranger) |
-| **Tools** | cellranger · fastqc · multiqc · scanpy · anndata · cellbender · anndataR · SeuratObject · SingleCellExperiment · rhdf5 · gzip · gawk · python |
+| **Tools** | cellranger · cellranger-arc · simpleaf · alevin-fry · piscem · salmon · qcatch · kallisto-bustools · star · samtools · fastqc · multiqc · scanpy · anndata · cellbender · anndataR · SeuratObject · SingleCellExperiment · rhdf5 · gzip · gawk · python |
 | **Ported** | 2026-08-15 |
 | **License** | Apache-2.0 |
 | **Source** | [nf-core/scrnaseq](https://github.com/nf-core/scrnaseq) |
@@ -34,10 +34,11 @@ Needs Cell Ranger reference data and reads — see Requirements; preview with `o
 **Requirements.**
 - reference genome FASTA, optionally gzipped (config.fasta, default refs/refdata.fa.gz)
 - gene-annotation GTF, optionally gzipped (config.gtf, default refs/refdata.gtf.gz)
-- raw 10x FASTQ pair per sample: raw/<sample>_R1.fastq.gz and raw/<sample>_R2.fastq.gz (one pair per sample)
+- raw FASTQ pair per sample: raw/<sample>_R1.fastq.gz and raw/<sample>_R2.fastq.gz (one pair per sample); for aligner=cellrangerarc five pre-named files per sample: raw/<sample>_{gex,atac}_S1_L001_R{1,2,3}_001.fastq.gz
+- barcode whitelist per protocol for simpleaf/star (config.whitelist; the four upstream whitelists ship under assets/whitelist/)
 - samplesheet.csv with columns sample,fastq_1,fastq_2,protocol,expected_cells (used by the combined-h5ad step)
-- compute: up to 12 CPUs / 72 GB per rule (Cell Ranger mkref/count); 6 CPUs / 36 GB for h5ad conversion, CellBender and concat rules; concurrent per-sample rules scale with -j
-- optional: pre-built Cell Ranger index (set build_cellranger_index=false and point transcriptome at it) to skip index building
+- compute: up to 12 CPUs / 72 GB per rule (index builds and alignments); 6 CPUs / 36 GB for h5ad conversion, CellBender and concat rules; concurrent per-sample rules scale with -j
+- optional pre-built indexes to skip building: cellranger (build_cellranger_index=false + transcriptome), simpleaf_index, kallisto_index (+ txp2gene), star_index, cellrangerarc_reference
 
 ```bash
 # 1. install oxo-flow (release binary, recommended)
@@ -103,35 +104,67 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **In scope**
 
-- PIPELINE_INITIALISATION (samplesheet input check)
-- FASTQC
-- GUNZIP_FASTA
-- GUNZIP_GTF
-- GTF_GENE_FILTER
-- GTF_SOURCE_FIX (opt-in, off by default)
-- CELLRANGER_MKGTF
-- CELLRANGER_MKREF
-- CELLRANGER_COUNT
-- MTX_TO_H5AD
-- CELLBENDER_REMOVEBACKGROUND
-- ANNDATA_BARCODES
-- CONCAT_H5AD
-- ANNDATAR_CONVERT
-- softwareVersionsToYAML + collectFile (collated versions)
-- MULTIQC
+- anndata_barcodes
+- anndatar_convert_cellbender_filter
+- anndatar_convert_combined_cellbender_filter
+- anndatar_convert_combined_filtered
+- anndatar_convert_combined_raw
+- anndatar_convert_filtered
+- anndatar_convert_raw
+- cellbender_removebackground
+- cellranger_count
+- cellranger_mkgtf
+- cellranger_mkref
+- cellrangerarc_count
+- cellrangerarc_mkgtf
+- cellrangerarc_mkref
+- collect_versions
+- concat_h5ad_cellbender_filter
+- concat_h5ad_filtered
+- concat_h5ad_raw
+- fastqc
+- gtf_gene_filter
+- gtf_source_fix
+- gunzip_fasta
+- gunzip_gtf
+- kallistobustools_count
+- kallistobustools_ref_standard
+- kallistobustools_ref_velocity
+- methods_description
+- mtx_to_h5ad_filtered
+- mtx_to_h5ad_kallisto_filtered
+- mtx_to_h5ad_kallisto_raw
+- mtx_to_h5ad_raw
+- mtx_to_h5ad_simpleaf
+- mtx_to_h5ad_star_filtered
+- mtx_to_h5ad_star_raw
+- multiqc
+- qcatch
+- simpleaf_index
+- simpleaf_quant
+- star_align
+- star_genomegenerate
+- star_genomeparams_upgrade
+- workflow_summary
 
 **Excluded**
 
-- cellrangermulti — structural: upstream groupTuple + EMPTY-file modality injection + 3 index channels can't be a fixed rule input signature
-- PIPELINE_COMPLETION — structural: no onComplete/onError hooks in the engine
+- cellrangermulti: aligner=cellrangermulti branch (multiome VDJ/Ab-seq/CRO) — structural: upstream feeds per-sample per-modality fastq groups into cellranger multi via channel branching (groupTuple + EMPTY-file injection for missing modalities) and three index channels (GEX/VDJ/cellranger_multi_barcodes); a fixed rule input signature cannot express variable modality input sets per sample — no oxo-flow analogue
+- PIPELINE_COMPLETION: email/notification completion subworkflow — structural: workflow.onComplete/onError hooks do not exist in the oxo-flow engine; failure email must be sent by an external wrapper
 
 ## Fidelity
 
 Rows cover every upstream process/subworkflow of nf-core/scrnaseq 4.2.0, on all
 five aligner branches. Container image strings and conda pins are copied
 verbatim from the upstream modules (all pinned, no `latest`). Deviations from
-upstream mechanics are called out per row; two structural exclusions remain and
-are listed at the bottom with evidence.
+upstream mechanics are called out per row; two structural exclusions and one
+multi-lane data limitation remain and are listed at the bottom with evidence.
+
+**Live verification** (2026-08-26/27, tx-ubuntu, engine 0.15.0 + apptainer):
+five configurations passed end-to-end — `aligner = cellranger`, `simpleaf`,
+`kallisto`, `star` (10X) and `star` with `protocol = dropseq`. The
+`cellrangerarc` branch is ported and validate/lint-clean but was not live-run
+in this wave.
 
 | Upstream process/rule | oxo-flow rule | Tool (version) | Notes |
 |---|---|---|---|
@@ -151,7 +184,7 @@ are listed at the bottom with evidence.
 | `KALLISTOBUSTOOLS_COUNT` | `kallistobustools_count` | kb-python 0.28.2 | Same command (`kb count -t … -i … -g … [-c1 …] [-c2 …] -x <technology> --workflow <kb_workflow> --filter -o <sample>.count -m <memory.toGiga()-1>G reads`); technology mapping for 10XV1-4/DROPSEQ/SMARTSEQ mirrors upstream. Ext.args `--workflow … --filter` applied. Output `results/<aligner>/<sample>.count/`. |
 | `STAR_GENOMEGENERATE` | `star_genomegenerate` | star 2.7.11b, samtools 1.21, gawk 5.1.0 | Same command: `samtools faidx` + gawk SAindexNbases heuristic from the `.fai` (14 cap), `--runMode genomeGenerate --genomeDir … --genomeFastaFiles … --sjdbGTFfile … --runThreadN … --genomeSAindexNbases … --limitGenomeGenerateRAM <memory-100000000>`. Output under `refs/star_index/`. |
 | `STAR_GENOMEPARAMS_UPGRADE` | `star_genomeparams_upgrade` | gawk 5.3.1 | Same script: symlink the legacy index files, awk-rewrite `genomeParameters.txt` (versionGenome 20201 → 2.7.4a, append genomeType/Full + genomeTransformType/None + genomeTransformVCF/-), move to `refs/star_index_upgraded/`. Fires only when `star_index` is set and `star_index_legacy=true` (upstream `isStarIndexLegacy`). |
-| `STAR_ALIGN` | `star_align` | star 2.7.10b | Same command: reads passed REVERSE first, `--readFilesCommand zcat --runDirPerm All_RWX --outWigType bedGraph --twopassMode Basic --outSAMtype BAM SortedByCoordinate --limitBAMsortRAM <memory bytes>`, `--soloCBwhitelist` with the same `.gz`→uncompress handling (dropseq passes none, like upstream), `--soloType`/`--soloUMIlen` per protocol (10XV1/2→10, 10XV3/4→12, dropseq/smartseq→none), `--soloCellFilter CellRanger2.2 <expected_cells> 0.99 10` when set, `--soloFeatures <star_feature>` (+Velocyto publish rename). Solo.out tsv/mtx files gzipped in-place before publish, exactly like upstream. Index selection: upgraded legacy > user `star_index` > built. |
+| `STAR_ALIGN` | `star_align` | star 2.7.10b | Same command: reads passed REVERSE first, `--readFilesCommand zcat --runDirPerm All_RWX --outWigType bedGraph --twopassMode Basic --outSAMtype BAM SortedByCoordinate --limitBAMsortRAM <memory bytes>`, `--soloCBwhitelist` with the same `.gz`→uncompress handling (protocols without an upstream whitelist — dropseq/smartseq — get the literal `--soloCBwhitelist None`, STAR's required spelling for no whitelist; live-found: omitting the flag aborts with "--soloCBwhitelist is not defined"), `--soloType`/`--soloUMIlen` per protocol (10XV1/2→10, 10XV3/4→12, dropseq/smartseq→none), `--soloCellFilter CellRanger2.2 <expected_cells> 0.99 10` when set, `--soloFeatures <star_feature>` (+Velocyto publish rename). Solo.out tsv/mtx files gzipped in-place before publish, exactly like upstream. Index selection: upgraded legacy > user `star_index` > built. |
 | `CELLRANGERARC_MKGTF` | `cellrangerarc_mkgtf` | cellranger-arc 2.0.2 | Same command as upstream (`cellranger-arc mkgtf` with the three biotype filters). Runs only when `build_cellranger_index=true`. |
 | `CELLRANGERARC_MKREF` | `cellrangerarc_mkref` | cellranger-arc 2.0.2 | Same flow: auto-generated mkref config json (`organism: "refdata"`, `genome: ["<prefix>_reference"]`, `input_fasta`, `input_gtf`) or user `cellrangerarc_config`, then `cellranger-arc mkref --config=config --nthreads …`. Output at `refs/cellrangerarc_reference/` (the config's `genome` name; `cellrangerarc_reference` can point at an existing reference to skip building). |
 | `CELLRANGERARC_COUNT` | `cellrangerarc_count` | cellranger-arc 2.0.2 | Same flow: fastqs staged under `fastqs/`, 2-row `lib.csv` (Gene Expression / Chromatin Accessibility), `cellranger-arc count --id=<sample> --libraries=… --reference=… --localcores … --localmem … [--expect-cells]`, outs tree relocated to `results/<aligner>/count/<sample>/outs/`. Deviation: the upstream samplesheet's `sample_type`/`fastq_barcode` columns are replaced by a fixed file-naming contract — see the sample-data requirements. |
@@ -161,7 +194,7 @@ are listed at the bottom with evidence.
 | `CONCAT_H5AD` | `concat_h5ad_filtered`, `concat_h5ad_cellbender_filter`, `concat_h5ad_raw` | scanpy 1.10.2 | Same template script (`ad.concat(label="sample", merge="unique", index_unique="_")` + samplesheet join on `sample`). Upstream runs one process per input_type; the port has one rule per input_type. Gating mirrors the upstream channels: `filtered` skips for simpleaf (no filtered h5ads), star+dropseq and kallisto+dropseq (no filtered dirs), and smartseq (no whitelist); `raw` runs only when `skip_cellbender=true` or aligner=cellrangerarc (raw superseded by the CellBender-filtered h5ad otherwise). |
 | `ANNDATAR_CONVERT` | `anndatar_convert_{filtered,cellbender_filter,raw}` + `anndatar_convert_combined_{…}` | anndataR 1.0.2, SeuratObject 5.5.0, SingleCellExperiment 1.32.0 | Same R template (read_h5ad → `as_Seurat()`/`as_SingleCellExperiment()` → saveRDS). Six rules: per sample and per combined h5ad, per input_type; type gating mirrors the concat rules. Upstream `dir.create(<sample>)` calls and versions.yml writing dropped (output dirs are pre-created by the engine; versions are recorded in `collect_versions`). |
 | `softwareVersionsToYAML` + `collectFile` | `collect_versions` | — | Writes the same file `results/pipeline_info/nf_core_scrnaseq_software_mqc_versions.yml` consumed by MultiQC. Content is the port's pinned versions (upstream collates live tool versions from a channel topic, which has no oxo-flow equivalent); since containers are pinned, the recorded versions equal the executed ones. Only the active aligner's block is emitted, like the upstream channel topic. |
-| `paramsSummaryMultiqc` + methods description | `workflow_summary`, `methods_description` | — | New default-ON rules producing the summary/methods MultiQC YAMLs from the copied-verbatim `assets/methods_description_template.yml` (the `${…}` placeholders are filled at render time; upstream fills them from the Nextflow workflow object, which has no oxo-flow equivalent). They run in the default config, so the default dry-run plan shows 21 rules executing (19 baseline + these 2) — documented new default behavior. |
+| `paramsSummaryMultiqc` + methods description | `workflow_summary`, `methods_description` | — | New default-ON rules producing the summary/methods MultiQC YAMLs from the copied-verbatim `assets/methods_description_template.yml` (the `${…}` placeholders are filled at render time; upstream fills them from the Nextflow workflow object, which has no oxo-flow equivalent). They run in the default config, so a single-sample default dry-run plan (`oxo-flow dry-run main.oxoflow --samples first:1`, as exercised by test/run.sh) shows 21 rules executing (19 baseline + these 2); with the two bundled samples the plan shows 29 running instances — documented new default behavior. |
 | `MULTIQC` | `multiqc` | multiqc 1.34 | Same command (`multiqc --force [--title] --config <assets/multiqc_config.yml> .`) with inputs staged flat like the module's `stageAs '?/*'`; the input union covers the active aligner's web summaries/logs (FastQC + cellranger web_summary + simpleaf quants.h5ad + STAR Log.final.out). Default `assets/multiqc_config.yml` copied verbatim from upstream. |
 
 **Not ported (with reasons):**
@@ -173,8 +206,8 @@ are listed at the bottom with evidence.
 | `skip_cellranger_renaming` (multi-lane samples) | One fastq pair per sample is supported; the staging rename hard-codes lane `L001`. |
 
 **Other deliberate deviations** (documented per row above): FastQC is skipped
-for `cellrangerarc` (five reads per sample cannot fit one static input pattern;
-upstream runs it on all of them); the arc samplesheet columns are a
+for `cellrangerarc` (five reads per sample cannot fit one static input
+pattern; upstream runs it on all of them); the arc samplesheet columns are a
 file-naming contract; `workflow_summary`/`methods_description` are new
 default-ON rules; simpleaf/star/kallisto accept one explicit `whitelist` path
 instead of upstream's automatic per-protocol mapping.
@@ -191,6 +224,7 @@ fixture GTF gives every gene two exons with an intron (single-exon
 transcripts crash simpleaf's grangers intron pass: polars "invalid series
 dtype: expected List, got null"); the fixture genome is padded to ~52kb (STAR
 double-frees on the original 1.9 kb genome).
+
 
 ## Links
 
