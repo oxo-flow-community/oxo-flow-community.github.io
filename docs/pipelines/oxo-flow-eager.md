@@ -9,7 +9,7 @@ Ancient DNA (aDNA) analysis in one run: FastQC raw QC, optional fastp poly-G fil
 | **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | genomics |
-| **Rules** | 54 |
+| **Rules** | 57 |
 | **Compute** | up to 4 CPUs / 8 GB per rule (bwa_aln) |
 | **Tools** | fastqc · adapterremoval · adapterremovalfixprefix · bwa · samtools · picard · dedup · preseq · damageprofiler · qualimap · sequencetools · eigenstratdatabasetools · fastp · bbduk · kraken2 · malt · hops · pigz · multiqc · rename · python |
 | **Ported** | 2026-08-15 |
@@ -27,13 +27,14 @@ Needs reference genome and reads — see Requirements.
 
 ## Installation
 
-**Engine.** oxo-flow >= 0.12.0
+**Engine.** oxo-flow >= 0.12.0 (the gated multi-lane mode — run_lanemerge=true — additionally requires oxo-flow >= 0.16.0 with input_groups support, Traitome/oxo-flow#231; on older engines the gate is inert and the default single-pair path is unchanged)
 
 **Toolchain.** containers (Docker/Singularity) — pinned image nfcore/eager:2.5.3 for all rules (bundles the pinned conda env from envs/eager.yaml)
 
 **Requirements.**
 - reference genome FASTA, plain and uncompressed (.gz references are not supported — upstream's unzip_reference step is not ported); the workflow builds the .fai / .dict / BWA indices itself
 - paired-end FASTQ pairs named <sample>_R1.fastq.gz / <sample>_R2.fastq.gz in a directory (directory input mode; sample = text before the _R1/_R2 suffix); single-end is not supported
+- optional — multi-lane input: name the pairs <sample>_L<lane>_R1.fastq.gz / _R2.fastq.gz (lane-tagged, as in upstream's TSV mode) and set run_lanemerge=true: the lanemerge rules concatenate the per-lane pairs of each sample into one merged pair (results/lanemerging/) that feeds AdapterRemoval and hostremoval_input_fastq; samples without lane-tagged files keep using the default-named pair. Requires oxo-flow >= 0.16.0 (input_groups, Traitome/oxo-flow#231)
 - optional — pileupCaller genotyping (run_genotyping=true genotyping_tool='pileupcaller') requires pileupcaller_snpfile and pileupcaller_bedfile; the rule fails fast without them
 - optional — metagenomic screening (run_metagenomic_screening=true, bam_unmapped_type='fastq') requires metagenomic_tool='kraken' with a kraken2_db (kraken2 database directory or .tar.gz bundle, unpacked by the kraken rule) or metagenomic_tool='malt' with a malt_db (MALT database directory); maltextract additionally requires maltextract_taxon_list and maltextract_ncbifiles. The chain is validate/dry-run-tested but not yet live-verified
 - compute: up to 4 CPUs / 8 GB RAM per rule (bwa_aln: 4 threads / 8G; kraken: 4 threads / 8G — upstream's mc_huge label is 32 cpus / 256 GB, tune via CLI overrides; reference-index and MultiQC rules up to 8 GB; base default 1 CPU / 7 GB / 24 h)
@@ -243,7 +244,10 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - make_seq_dict
 - make_bwa_index
 - fastqc
+- fastqc_lanemerged
 - fastp
+- lanemerge
+- lanemerge_r2
 - adapter_removal
 - fastqc_after_clipping
 - bwa_aln
@@ -296,8 +300,10 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- lanemerge / lanemerge_hostremoval_fastq, library_merge / additional_library_merge, seqtype_merge — structural: oxo-flow instances are driven by wildcard combinations (one fastq pair per sample row); expand_inputs only fans files INTO one cohort instance, there is no per-sample multi-file grouping primitive (remediation: pre-concatenate or separate sample rows)
-- output_documentation, get_software_versions — nf-core boilerplate (unconditional upstream would change the default plan; versions.yml has no oxo-flow equivalent)
+- library_merge / additional_library_merge: structural — upstream merges the per-LIBRARY BAMs of a sample (samtools merge of the per-library dedup / bam_trim BAMs, main.nf 1967 / 2320). The port's directory-input model has ONE library per sample (library = sample, lane = 0) and one BAM per sample at every stage, so there are no multi-library BAMs to merge; declaring each library as its own sample (or pre-merging) remains the workaround. lanemerge-style input_groups cannot express this either: it groups FILES of a pattern, and the port has no per-library file dimension
+- seqtype_merge: structural — upstream merges the per-seqtype mapped BAMs of mixed PE/SE libraries into one BAM per library (samtools merge, main.nf 1597); the port is pure-PE (directory input, sample = text before _R1/_R2) with one mapped BAM per sample, so there are no mixed-PE/SE BAMs to merge. Convert SE samples to PE or run SE-only samples separately
+- output_documentation: nf-core boilerplate docs process (markdown_to_html.py of static run docs); upstream runs it unconditionally, so porting it would change the default plan for zero analytical value
+- get_software_versions: nf-core boilerplate versions process (scrapes $workflow/$nextflow native variables into a versions.yml, which has no oxo-flow equivalent)
 
 ## Fidelity
 
@@ -314,9 +320,12 @@ kraken_merge, malt, maltextract; note the old "needs the upstream's bundled
 MALT install (no conda package)" exclusion reason was wrong — the upstream
 `environment.yml` pins `bioconda::malt=0.61` and `bioconda::hops=0.35`, so
 MALT and MaltExtract ship inside the pinned `nfcore/eager:2.5.3` container).
-The remaining `not ported` rows are structural (multi-lane/library channel
-merges — oxo-flow has no per-sample multi-file grouping primitive), the
-unported BAM pass-through mode (`indexinputbam`), or nf-core boilerplate
+The multi-lane raw-level merges (`lanemerge`, `lanemerge_hostremoval_fastq`)
+are ported as a gated mode (`run_lanemerge`, off by default) built on the
+`input_groups` engine primitive (Traitome/oxo-flow#231, oxo-flow >= 0.16.0) —
+see the rows below. The remaining `not ported` rows are the BAM-level
+library/seqtype channel merges (the port's model has one library per sample),
+the unported BAM pass-through mode (`indexinputbam`), or nf-core boilerplate
 (`output_documentation`, `get_software_versions`).
 
 | Upstream process | oxo-flow rule | Tool (version) | Notes |
@@ -353,11 +362,11 @@ unported BAM pass-through mode (`indexinputbam`), or nf-core boilerplate
 | pmdtools | `pmdtools` | pmdtools 0.60, samtools | verbatim calmd|pmdtools filter + range chain incl. the 141 trap; `when = config.run_pmdtools` |
 | bam_trim | `bam_trim` | bamutil 1.0.15, samtools | `bam trimBam -L -R` (double-stranded none-UDG clip values) + sort/index; `when = config.run_trim_bam` |
 | post_ar_fastq_trimming | `post_ar_fastq_trimming` | fastp 0.20.1 | PE branch verbatim (`--trim_front1/2 --trim_tail1/2`); `when = config.run_post_ar_trimming` |
-| lanemerge | — | — | not ported — structural: multi-lane merging groups N per-lane fastq pairs into one sample; oxo-flow rule instances are driven by wildcard combinations (one fastq pair per sample row), and `expand_inputs` only fans several files INTO one cohort instance — there is no primitive that groups several files of one sample into a single per-sample instance. Pre-concatenate the lanes (or declare the merged pair) before running |
-| lanemerge_hostremoval_fastq | — | — | not ported — structural: multi-lane + host removal combination (same constraint as lanemerge) |
-| library_merge | — | — | not ported — structural: multi-library merging (same constraint as lanemerge — one fastq pair per sample row); merge libraries before the run or declare each library as its own sample |
-| additional_library_merge | — | — | not ported — structural: multi-library merging (same constraint) |
-| seqtype_merge | — | samtools 1.12 | not ported — structural: PE/SE mixed-input merge (main.nf line 1597) needs per-sample multi-file grouping; the port is pure-PE. Convert SE samples to PE or run SE-only samples separately |
+| lanemerge | `lanemerge` + `lanemerge_r2` | cat (pigz 2.6) | ported as a gated mode (`run_lanemerge=true`, off by default): the two rules group each sample's lane-tagged pairs (`{sample}_L{lane}_R{1,2}.fastq.gz`) via `input_groups` (group_by = sample, keep = lane; Traitome/oxo-flow#231, oxo-flow >= 0.16.0) and `cat` the pair into one merged fastq (`results/lanemerging/{sample}_R{1,2}_lanemerged.fq.gz`) consumed by fastp / adapter_removal / hostremoval_input_fastq. Deviations: upstream merges the per-library collapsed fastqs AFTER AdapterRemoval (main.nf 1125) and only merges R2 when `single_end=false`; the port merges the raw per-lane pairs pre-clipping (the raw-level `lanemerge_hostremoval_fastq` semantics) and always merges R2 (the port is pure-PE). Samples without lane-tagged files are untouched; with the gate off (or on a released engine without `input_groups`) the default single-pair path is byte-identical, and a fail-fast `{input}` guard prevents silently empty merges. Merged-content E2E passed locally 2026-08-27 (byte-identical to the single-pair inputs); full container run queued for tx-ubuntu |
+| lanemerge_hostremoval_fastq | `hostremoval_input_fastq` (shell switch) | extract_map_reads.py (bundled) | ported as part of the gated mode: when `run_lanemerge=true` the rule feeds the merged pair from `results/lanemerging/` instead of the raw one — upstream's raw-level merge-into-hostremoval semantics (main.nf 1197). Without lane-tagged files the raw pair is used, exactly as before |
+| library_merge | — | samtools 1.12 | not ported — structural: upstream merges the per-LIBRARY dedup BAMs of a sample (`samtools merge`, main.nf 1967); the port's directory-input model has ONE library per sample (library = sample, lane = 0) and one BAM per sample at every stage, so there are no multi-library BAMs to merge. `input_groups` cannot express it either — it groups FILES of a pattern, and the port has no per-library file dimension. Declare each library as its own sample (or pre-merge) before running |
+| additional_library_merge | — | samtools 1.12 | not ported — structural: same constraint as `library_merge` (merges the per-library bam_trim BAMs, main.nf 2320); the port has one BAM per sample per stage |
+| seqtype_merge | — | samtools 1.12 | not ported — structural: upstream merges the per-seqtype mapped BAMs of mixed PE/SE libraries into one BAM per library (`samtools merge`, main.nf 1597); the port is pure-PE (sample = text before `_R1`/`_R2`) with one mapped BAM per sample, so there are no mixed-PE/SE BAMs to merge. Convert SE samples to PE or run SE-only samples separately |
 | qualimap | `qualimap` | qualimap 2.2.2d | Default path, ported: `qualimap bamqc -bam <rmdup bam> -nt 2 -outdir . -outformat "HTML" --java-mem-size=4G` verbatim; output lands in `results/qualimap/<bam-base>_bamqc/` as upstream |
 | genotyping_pileupcaller | `genotyping_pileupcaller` | samtools 1.12, sequencetools 1.5.2 | Off by default, same as upstream (`run_genotyping=false`). Verbatim: `samtools mpileup -B --ignore-RG -q 30 -Q 30 [-l <bed>] -f <fasta> <bams> \| pileupCaller --randomHaploid --sampleNames <csv> [-f <snp>] -e pileupcaller.double` (single-instance fan-in; `-e` prefix `pileupcaller.double` = PE strandedness). `-l`/`-f` render only when `pileupcaller_bedfile`/`pileupcaller_snpfile` are set, exactly as upstream's dummy-file check (main.nf lines 2608-2609); without them the rule fails fast with upstream's error message — upstream exits 1 at workflow start (main.nf lines 74-78), the port's guard lives in the rule shell because oxo-flow has no params-validation stage |
 | genotyping_ug | `genotyping_ug` | gatk3 3.5, bgzip | verbatim RealignerTargetCreator → IndelRealigner → UnifiedGenotyper → bgzip; `when = run_genotyping && genotyping_tool == 'ug'` |
@@ -369,7 +378,7 @@ unported BAM pass-through mode (`indexinputbam`), or nf-core boilerplate
 | metagenomic_complexity_filter | `metagenomic_complexity_filter` | bbduk 38.92 | verbatim `bbduk.sh -Xmx<g>g in=... threads=N entropymask=f entropy=<entropy> out=<in>_lowcomplexityremoved.fq.gz 2> <in>_bbduk.stats` — the output keeps upstream's `${input}_lowcomplexityremoved.fq.gz` naming; `when = metagenomic_complexity_filter && run_bam_filtering && bam_unmapped_type == 'fastq'` (upstream validates the same combination at workflow start, main.nf 115-122) |
 | malt | `malt` | malt 0.61 | verbatim `malt-run -J-Xmx<g>g -t N -v -o . -d <db> [-a . -f SAM] -id -m -at -top <min-supp> -mq --memoryMode -i <all fastqs>` — one instance over ALL samples' unmapped reads (upstream `collect()`); reads the entropy-filtered fastqs when the complexity filter is on (upstream channel switch); `--database` is split into `malt_db` + `kraken2_db`; the percent/reads min-support exclusivity check (main.nf 129-134) is a shell guard; the per-input `.rma6` outputs are undeclared (no fixed template) — only `malt.log` is declared; NOT yet live-verified; `when = run_metagenomic_screening && run_bam_filtering && bam_unmapped_type == 'fastq' && metagenomic_tool == 'malt'` |
 | maltextract | `maltextract` | hops 0.35 | verbatim `MaltExtract -Xmx<g>g -t <taxon_list> -i <rma6s> -o results/ -r <ncbifiles> -p N -f -a --minPI <flags>` + `postprocessing.AMPS.r -r results/ -m -t N -n <taxon_list> -j`; requires `maltextract_taxon_list` + `maltextract_ncbifiles` (fail-fast guard); consumes the rma6s via glob with a DAG edge through `malt.log`; NOT yet live-verified; `when = run_maltextract && metagenomic_tool == 'malt'` (upstream verbatim) |
-| kraken | `kraken` | kraken2 2.1.2 | verbatim `kraken2 --db <db> --threads N --output <prefix>.kraken.out --report-minimizer-data --report <prefix>.kraken2_report <fastq>` + `cut -f1-3,6-8 > <prefix>.kreport`; reads the entropy-filtered fastq when the complexity filter is on (upstream channel switch); the output prefix is normalized to `{sample}.unmapped.fastq` in both branches (upstream prefixes by the input basename — see deviations); live-verified on tx-ubuntu 2026-08-27 (synthetic 2-taxon kraken2 DB; 14/14 injected alien reads classified, 18 succeeded / 0 failed); `when = run_metagenomic_screening && run_bam_filtering && bam_unmapped_type == 'fastq' && metagenomic_tool == 'kraken'` |
+| kraken | `kraken` | kraken2 2.1.2 | verbatim `kraken2 --db <db> --threads N --output <prefix>.kraken.out --report-minimizer-data --report <prefix>.kraken2_report <fastq>` + `cut -f1-3,6-8 > <prefix>.kreport`; reads the entropy-filtered fastq when the complexity filter is on (upstream channel switch); the output prefix is normalized to `{sample}.unmapped.fastq` in both branches (upstream prefixes by the input basename — see deviations); live-verified on tx-ubuntu 2026-08-27 (synthetic 2-taxon kraken2 DB built in-container via `kraken2-build --add-to-library` with `kraken:taxid|` headers; 14/14 injected alien reads classified as *Alienus syntheticus*, 18 succeeded / 0 failed); `when = run_metagenomic_screening && run_bam_filtering && bam_unmapped_type == 'fastq' && metagenomic_tool == 'kraken'` |
 | kraken_parse | `kraken_parse` | python 3.9.4 | verbatim `kraken_parse.py -c <min_support_reads> -or <read csv> -ok <kmer csv> <kreport>` (upstream script bundled in `scripts/`, called via `python3 scripts/kraken_parse.py` — oxo-flow does not auto-add `bin/` to PATH); gated on the same `when` as kraken (upstream no-ops the process via an empty channel); live-verified on tx-ubuntu 2026-08-27 (same run as kraken) |
 | kraken_merge | `kraken_merge` | python 3.9.4 | verbatim `merge_kraken_res.py -or kraken_read_count.csv -ok kraken_kmer_duplication.csv` (upstream script bundled in `scripts/`; it scans the working dir for the per-sample CSVs, which the fan-in gathers into one instance); gated on the same `when` as kraken; live-verified on tx-ubuntu 2026-08-27 (same run as kraken) |
 | decomp_kraken | `kraken` (folded in) | kraken2 2.1.2 | folded into the kraken shell: a `.tar.gz` `kraken2_db` is unpacked in place (`tar xzf`, `mkdir -p <db>`, `mv *.k2d <db>/`) — no when-expression can test a filename suffix (deviation, documented below) |
@@ -400,6 +409,29 @@ Additional deviations from upstream (all on the default path):
   used by the undefined `mc_tiny` label (eigenstrat_snp_coverage).
   JVM heaps are byte-identical (`-Xmx8192M`, `-Xmx4096M`, `-Xmx4g`,
   `--java-mem-size=4G`).
+- Gated-mode deviations (`run_lanemerge=true`, off by default):
+  - upstream runs `lanemerge` on the per-library collapsed fastqs AFTER
+    AdapterRemoval (main.nf 1125, a small post-collapse cat of the `.pe`
+    pair); the port merges the raw per-lane pairs BEFORE clipping (the
+    `lanemerge_hostremoval_fastq` raw-level semantics, main.nf 1197) so
+    that clipping, mapping, dedup, damage and QC all run on the merged
+    pair exactly once. The lane-tagged naming (`{sample}_L{lane}_R{1,2}`)
+    is upstream's TSV input-mode style; upstream detects multi-lane from
+    the sample sheet, the port gates on `run_lanemerge` (auto-detection
+    from filenames is impossible for a when-expression). Only R1 was
+    upstream's documented lanemerge concern; the port merges R2 as well
+    (pure-PE, both ends must exist).
+  - `fastqc` runs on the merged pair in gated mode (twin rule
+    `fastqc_lanemerged` with an exclusive when-gate); upstream runs
+    FastQC on the per-lane input fastqs.
+  - samples with lane-tagged files mixed with default-named files in one
+    directory: lane-tagged samples flow through the merged path, the
+    others through the default path (shell existence-check switch in
+    fastp / adapter_removal / hostremoval_input_fastq).
+  - local E2E 2026-08-27 (dev engine, no container): merged pairs
+    byte-identical to the single-pair inputs (S1: 3635 reads, S2: 3602
+    reads, R1/R2 counts equal). Full container run queued for tx-ubuntu
+    (docker daemon unavailable on the authoring machine).
 - Metagenomic-chain deviations (`rules/branches.oxoflow` B32-B37, all off by
   default):
   - upstream's run-level validation (main.nf 115-137) becomes rule gates +
@@ -424,9 +456,12 @@ Additional deviations from upstream (all on the default path):
     live-verified on tx-ubuntu 2026-08-27 with a synthetic 2-taxon
     kraken2 DB (build recipe: `kraken2-build --add-to-library` with
     `kraken:taxid|N|` sequence headers — a manual `seqid2taxid.map`
-    alone builds an EMPTY table, and the map must be sorted). The MALT
-    half (malt/maltextract) remains NOT live-verified (needs a MALT
-    index DB, not yet available on the test server).
+    alone builds an EMPTY table, and the map must be sorted);
+    `bam_unmapped_type=fastq` + `run_bam_filtering` + 
+    `run_metagenomic_screening` + `metagenomic_tool=kraken`, 18
+    succeeded / 0 failed. The MALT half (malt/maltextract) remains NOT
+    live-verified (needs a MALT index DB, not yet available on the test
+    server).
 - A `.gz`-compressed reference FASTA is not supported (upstream's
   `unzip_reference` pigz pre-step is not ported): pass a plain FASTA.
 - Upstream's startup parameter validation (e.g. the pileupCaller
