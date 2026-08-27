@@ -9,8 +9,8 @@ Scenario-driven somatic small and structural variant calling with Varlociraptor:
 | **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | genomics |
-| **Rules** | 135 |
-| **Compute** | up to 96 CPUs / 32 GB per rule (freebayes) |
+| **Rules** | 149 |
+| **Compute** | up to 64 CPUs / 32 GB per rule (freebayes candidates 48 threads; vg giraffe 64 threads) |
 | **Tools** | altair · bcftools · bedtools · biopython · curl · datavzrd · delly · ensembl-vep · fastqc · freebayes · gatk4 · gawk · htslib · mosdepth · multiqc · openpyxl · pandas · parallel · picard · pysam · python · rust-bio-tools · samtools · scikit-learn · sed · snpsift · statsmodels · unzip · varlociraptor · vcflib · vega-lite-cli · vembrane · vg |
 | **Ported** | 2026-08-15 |
 | **License** | Apache-2.0 |
@@ -34,7 +34,7 @@ Needs reference data — see Requirements; preview with `oxo-flow dry-run main.o
 **Requirements.**
 - paired-end FASTQ reads at reads_dir/<sample>_1.fastq.gz / _2.fastq.gz; sample cohort declared in [[sample_groups]] (one group = one tumor sample); fixtures bundled for dry-run
 - reference data: downloaded automatically into resources/ — GRCh38 primary assembly FASTA (Ensembl release 111) + .fai/.dict, Ensembl release 111 GTF, VEP cache and plugins (release 111), REVEL scores, Ensembl known-variants VCFs, HPRC v1.1 human pangenome graph
-- compute: up to 96 CPUs / 32 GB per rule (freebayes candidates 96 threads; vg giraffe 64 threads; samtools sort 16 threads/32G; Varlociraptor call 8G)
+- compute: up to 64 CPUs / 32 GB per rule (freebayes candidates 48 threads — upstream 96, scaled; vg giraffe 64 threads; samtools sort 16 threads/32G; Varlociraptor call 8G; consensus/bam-name sorting 16 threads/64G when the gated branches are on)
 - tools: conda envs with pinned versions (envs/*.yaml, one env per tool pin set); conda/mamba required at runtime
 - disk: multi-GB reference downloads under resources/ (pangenome graph, VEP cache, known-variants VCFs) plus results/ for BAMs, BCFs, tables and reports
 
@@ -125,15 +125,13 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - oncoprint_prepare
 - datavzrd_report
 - coverage_table
-- branch modules (when-gated, default off): trimming (fastp v6.2.0 + SRA), primers (fgbio AssignPrimers/filter_primers.rs/TrimPrimers/bwa map/bamToBed), MAF export (group_bcf_to_vcf + vcf2maf), population DB (clean/filter/update), VEP plugins (REVEL/CADD downloads), bwa mapping (bwa_index + map_reads_bwa), mutational burden + signatures (context/siglasso/plots), STAR+arriba fusion calling (star_index/star_align/arriba/annotate_exons/convert/sort/concat)
+- branch modules (when-gated, default off): trimming (fastp v6.2.0 + SRA), primers (fgbio AssignPrimers/filter_primers.rs/TrimPrimers/bwa map/bamToBed), MAF export (group_bcf_to_vcf + vcf2maf), population DB (clean/filter/update), VEP plugins (REVEL/CADD downloads), bwa mapping (bwa_index + map_reads_bwa), mutational burden + signatures (context/siglasso/plots), consensus reads (calc_consensus_reads + bwa re-map + BQSR on the consensus BAM), STAR+arriba fusion calling (star_index/star_align/arriba/annotate_exons/convert/sort/concat), DGIdb annotation (annotate_dgidb + annotation_selection switch)
 
 **Excluded**
 
-- benchmarking CHM-eval flow (chm_eval_sample 13GB download, chm_namesort/chm_to_fastq, chm_eval_kit, chm_eval) — third-party CHM-eval kit + resource-heavy; chromosome_map + rename_chromosomes ARE ported
-- revel/CADD plugin downloads — ref::get_revel/process_revel_scores already ported in the default path (REVEL); CADD download rule ported but multi-GB — documented resource gate
-- upstream scatter.calling(16) chunks beyond scatteritem=0 — collapsed to a single chunk
-- arriba candidate re-wiring into the Varlociraptor calling flow (get_candidate_calls for fusions) — the fusion branch ends at the candidate-calls BCF
-- consensus reads (calc_consensus_reads) — not in the upstream default path
+- upstream scatter.calling(16) chunks beyond scatteritem=0 — collapsed to a single chunk: rbt vcf-split with one output chunk writes the whole callset, so the chunk content is identical to upstream's 16 chunks gathered with bcftools concat -a before control_fdr (oxo-flow does have a scatter construct; the single-sample port does not exercise it)
+- arriba candidate re-wiring into the Varlociraptor calling flow (get_candidate_calls vartype=BND) — the fusion branch ends at the candidate-calls BCF; upstream only continues fusions when samples.tsv declares calling=fusions (the default declares calling=variants)
+- target regions (get_target_regions + filter_offtarget_variants) — upstream default config has target_regions commented out; the branch is driven by user-supplied BED files and would need a candidate-filter re-wiring in scatter_candidates, so it stays unported until a concrete use case
 
 ## Fidelity
 
@@ -142,17 +140,20 @@ deliberate deviations:
 
 | upstream | port | reason |
 |---|---|---|
-| `scatter.calling(16)` (rules run 16x, once per scatter item) | single chunk, `scatteritem=0` | oxo-flow has no scatter construct; with one small sample the 16 chunks are identical work |
+| `scatter.calling(16)` (rules run 16x, once per scatter item) | single chunk, `scatteritem=0` | the port freezes `scatteritem=0`; `rbt vcf-split` with one output chunk writes the whole callset, so the chunk content is identical to upstream's 16 chunks gathered with `bcftools concat -a` before `control_fdr` (oxo-flow does have a scatter construct; it is not exercised because the port's single sample makes the split work-identical) |
 | rule outputs that are directories (VEP cache/plugins, oncoprint `label_sortings/`/`variant-oncoprints/` dirs) | directory + `.completed` marker file output | oxo-flow targets files, not directories |
 | scenario rendered at run time from `config/scenario.yaml` (yte template) | pre-rendered `resources/scenarios/SRR702070_group.yaml` for the default sample group; the template is kept verbatim at `config/scenario.yaml` | one scenario (purity 1.0) in the default path |
 | `download_vep_plugins.py` with a hard-coded Ensembl variation FTP list and fallback | the `--release`/`--output`/`--log` argv variant of the same wrapper port | one release (111), one output dir; the FTP fallback list was dropped as dead code in the default path |
 | wrapper-utils based rules (calls, tables, report) | plain `python scripts/*.py` argv ports of the same wrappers | wrapper-utils is a Snakemake runtime; the ported scripts keep the wrapper logic verbatim |
-| `gather_annotated_calls` / `filter_odds` | not ported | not reachable in the default path (benchmarking off + `filter: present` only) |
+| `filter_odds` | not ported | not reachable in the default path (`filter: present` only); the population/burden branches consume `gather_annotated_calls` instead (ported in `population.oxoflow`) |
 | template oncoprint views (`gene_oncoprint` / `variant_oncoprints` datasets) | empty (upstream defaults with a single group) | `prepare_oncoprint` itself runs and feeds the label-sorting table, exactly like upstream |
 | vembrane filter/table expressions evaluated from Python at run time | precomputed literal expression/header (34 columns) | same semantics, evaluated once |
 | upstream `config/units.tsv` absolute `/projects/...` read paths | `config.reads_dir` + sample group fixture paths | portability |
 | Snakemake `temp()` outputs | `temporary = true` | engine equivalent |
 | per-rule conda environments | one env per tool pin set (`envs/`) | same packages, same pins, consolidated |
+| chm sample group vertical slice (benchmarking) | not ported | the ported CHM-eval flow (`chm_eval_sample` ... `chm_eval`) re-derives the CHM1 FASTQs, but the chm sample is not in the port's `config/samples.tsv`, so the chm reads do not flow through mapping -> calling -> `control_fdr`; `rename_chromosomes`/`chm_eval` keep orphan inputs (validate warns, like upstream without the chm sample) |
+| consensus-read calling (`calc_consensus_reads` flow) | `consensus.oxoflow`, gated on `consensus_activate` | upstream switches the `recalibrate_base_qualities`/`apply_bqsr` input via `get_recalibrate_quality_input`; the port models this as gated duplicate rules with the same outputs and exclusive `when` gates (`!consensus_activate` vs `consensus_activate`) |
+| `annotate_dgidb` | `annotation::annotate_dgidb`, gated on `dgidb_activate` + `annotation_selection` | upstream `get_final_selected_annotation` switches the annotated callset consumed by filtering and the final-calls chain; the port exposes the same selection as `config.annotation_selection` |
 
 ## Links
 
