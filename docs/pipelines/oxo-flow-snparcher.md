@@ -189,7 +189,6 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - denovo — no such step in upstream v2.2
 - structural_variants — no such step in upstream v2.2
 - multi-library/multi-unit sample-sheet rows — the sample-group model is one unit per sample; per-library fan-out (library_id/input_unit) has no model dimension and consumers are hard-coded to the u1 unit
-- per-sample mark_duplicates override — upstream reads the value per sample-sheet row (default true); the port maps it to the global mark_duplicates config key (default false)
 - interval-mode compress_interval_raw_vcf and long-contig (CSI) paths — the port's concat_interval_vcfs consumes GATK -Oz outputs directly and always uses TBI (short-contig) indexing
 
 ## Fidelity
@@ -264,7 +263,6 @@ plan unchanged.
 | parabricks (all `parabricks_*` rules) | requires `--nv` GPU passthrough (upstream `parabricks.smk` runs `--nv` images with `nvidia-docker`); the oxo-flow docker backend has no `--nv` support and no GPU device declaration; additionally NVIDIA EULA/license enforcement cannot be guaranteed in CI | `variant_calling/parabricks.smk` (every rule is `--nv`) |
 | sentieon (all `sentieon_*` rules) | proprietary tool gated on a `SENTIEON_LICENSE` server and a pre-installed license; cannot be distributed or verified in a community port | `config/config.yaml` `sentieon` section; `workflow/rules/sentieon.smk` |
 | `denovo` and `structural_variants` pipeline sections | do not exist as rules in upstream v2.2 | grep of `workflow/` at e0e7a94 finds neither rule set |
-| per-sample `mark_duplicates` override | upstream reads the value from the sample sheet per row (default `true`); the port maps it to the global `mark_duplicates` config key (default `false`), which every markdup/no-markdup branch gate reads. A per-group override would require restructuring all branch gates and still cannot match upstream's per-row semantics | `config/config.yaml` `mark_duplicates` vs `workflow/snakefiles` per-sample handling |
 | multi-library / multi-unit rows (library_id, input_unit) | the sample-group model has one unit per sample; consumers of `results/bams/raw/{sample}/{sample}/u1.bam` are hard-coded to the `u1` unit | sample sheet semantics in upstream `README` |
 
 ### Documented deviations from upstream
