@@ -2,7 +2,7 @@
 
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
 
-Ancient DNA (aDNA) analysis in one run: FastQC raw QC, optional fastp poly-G filtering (2-colour chemistry), AdapterRemoval adapter clipping and paired-end read merging, BWA aln mapping with ancient-DNA parameters, picard MarkDuplicates (or DeDup) deduplication, preseq library-complexity curves, DamageProfiler damage estimation, Qualimap BAM QC, optional pileupCaller genotyping with eigenstrat SNP coverage, and a final MultiQC report — every rule pinned to the nf-core/eager 2.5.3 tool versions in the upstream container.
+Ancient DNA (aDNA) analysis in one run: FastQC raw QC, optional fastp poly-G filtering (2-colour chemistry), AdapterRemoval adapter clipping and paired-end read merging, BWA aln mapping with ancient-DNA parameters, picard MarkDuplicates (or DeDup) deduplication, preseq library-complexity curves, DamageProfiler damage estimation, Qualimap BAM QC, optional pileupCaller genotyping with eigenstrat SNP coverage, optional metagenomic screening of the unmapped reads (bbduk entropy complexity filter, MALT or kraken2 classification with kraken_parse/kraken_merge tables, MaltExtract aDNA evaluation), and a final MultiQC report — every rule pinned to the nf-core/eager 2.5.3 tool versions in the upstream container (MALT 0.61 and HOPs 0.35 ship in the pinned nfcore/eager:2.5.3 image).
 
 | | |
 |---:|---|
@@ -11,7 +11,7 @@ Ancient DNA (aDNA) analysis in one run: FastQC raw QC, optional fastp poly-G fil
 | **Domain** | genomics |
 | **Rules** | 54 |
 | **Compute** | up to 4 CPUs / 8 GB per rule (bwa_aln) |
-| **Tools** | fastqc · adapterremoval · adapterremovalfixprefix · bwa · samtools · picard · dedup · preseq · damageprofiler · qualimap · sequencetools · eigenstratdatabasetools · fastp · pigz · multiqc · rename · python · kraken2 · malt |
+| **Tools** | fastqc · adapterremoval · adapterremovalfixprefix · bwa · samtools · picard · dedup · preseq · damageprofiler · qualimap · sequencetools · eigenstratdatabasetools · fastp · bbduk · kraken2 · malt · hops · pigz · multiqc · rename · python |
 | **Ported** | 2026-08-15 |
 | **License** | Apache-2.0 |
 | **Source** | [nf-core/eager](https://github.com/nf-core/eager) |
@@ -35,7 +35,8 @@ Needs reference genome and reads — see Requirements.
 - reference genome FASTA, plain and uncompressed (.gz references are not supported — upstream's unzip_reference step is not ported); the workflow builds the .fai / .dict / BWA indices itself
 - paired-end FASTQ pairs named <sample>_R1.fastq.gz / <sample>_R2.fastq.gz in a directory (directory input mode; sample = text before the _R1/_R2 suffix); single-end is not supported
 - optional — pileupCaller genotyping (run_genotyping=true genotyping_tool='pileupcaller') requires pileupcaller_snpfile and pileupcaller_bedfile; the rule fails fast without them
-- compute: up to 4 CPUs / 8 GB RAM per rule (bwa_aln: 4 threads / 8G; reference-index and MultiQC rules up to 8 GB; base default 1 CPU / 7 GB / 24 h)
+- optional — metagenomic screening (run_metagenomic_screening=true, bam_unmapped_type='fastq') requires metagenomic_tool='kraken' with a kraken2_db (kraken2 database directory or .tar.gz bundle, unpacked by the kraken rule) or metagenomic_tool='malt' with a malt_db (MALT database directory); maltextract additionally requires maltextract_taxon_list and maltextract_ncbifiles. The chain is validate/dry-run-tested but not yet live-verified
+- compute: up to 4 CPUs / 8 GB RAM per rule (bwa_aln: 4 threads / 8G; kraken: 4 threads / 8G — upstream's mc_huge label is 32 cpus / 256 GB, tune via CLI overrides; reference-index and MultiQC rules up to 8 GB; base default 1 CPU / 7 GB / 24 h)
 - Docker or Singularity to run the pinned container nfcore/eager:2.5.3 (not needed for validate / lint / dry-run)
 - disk: results/ holds reference indices, mapped BAMs and reports — size grows with the reference genome and number of samples
 
@@ -66,7 +67,8 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-eager
 | `anno_file` | `` | — | `bedtools_coverage` |
 | `anno_file_is_unsorted_neg` | `-sorted` | — | `bedtools_coverage` |
 | `bam_input` | `false` | — | `convert_bam` |
-| `bam_mapping_quality_threshold` | `0` | — | `samtools_filter` |
+| `bam_mapping_quality_threshold` | `0` | — | `samtools_filter_bowtie2`, `samtools_filter_bwaaln`, `samtools_filter_bwamem`, `samtools_filter_circularmapper` |
+| `bam_unmapped_type` | `discard` | — | `kraken`, `kraken_merge`, `kraken_parse`, `malt`, `metagenomic_complexity_filter`, `samtools_filter_bowtie2`, `samtools_filter_bwaaln`, `samtools_filter_bwamem`, `samtools_filter_circularmapper` |
 | `bamutils_clip_double_stranded_none_udg_left` | `1` | — | `bam_trim` |
 | `bamutils_clip_double_stranded_none_udg_right` | `1` | — | `bam_trim` |
 | `bamutils_softclip_arg` | `` | — | `bam_trim` |
@@ -112,12 +114,35 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-eager
 | `kraken2_db` | `` | — | `kraken` |
 | `lane` | `0` | — | `adapter_removal`, `bwa_aln`, `fastp`, `fastqc_after_clipping`, `post_ar_fastq_trimming` |
 | `large_ref` | `false` | — | — |
+| `malt_alignment_mode` | `SemiGlobal` | — | `malt` |
+| `malt_db` | `` | — | `malt` |
+| `malt_max_queries` | `100` | — | `malt` |
+| `malt_memory_mode` | `load` | — | `malt` |
+| `malt_min_support_mode` | `percent` | — | `malt` |
+| `malt_min_support_percent` | `0.01` | — | `malt` |
+| `malt_mode` | `BlastN` | — | `malt` |
+| `malt_sam_output` | `false` | — | `malt` |
+| `malt_top_percent` | `1` | — | `malt` |
+| `maltextract_destackingoff` | `false` | — | `maltextract` |
+| `maltextract_downsamplingoff` | `false` | — | `maltextract` |
+| `maltextract_duplicateremovaloff` | `false` | — | `maltextract` |
+| `maltextract_filter` | `def_anc` | — | `maltextract` |
+| `maltextract_matches` | `false` | — | `maltextract` |
+| `maltextract_megansummary` | `false` | — | `maltextract` |
+| `maltextract_ncbifiles` | `` | — | `maltextract` |
+| `maltextract_percentidentity` | `85.0` | — | `maltextract` |
+| `maltextract_taxon_list` | `` | — | `maltextract` |
+| `maltextract_topalignment` | `false` | — | `maltextract` |
+| `maltextract_toppercent` | `0.01` | — | `maltextract` |
 | `mapdamage_downsample_arg` | `` | — | `mapdamage_calculation` |
 | `mapdamage_singlestranded_arg` | `` | — | `mapdamage_calculation`, `mapdamage_rescaling` |
 | `mapdamage_yaxis` | `0.25` | — | `mapdamage_calculation` |
-| `mapper` | `bwaaln` | mapping | `bowtie2`, `bwa_aln`, `bwamem`, `circulargenerator`, `circularmapper`, `make_bt2_index` |
+| `mapper` | `bwaaln` | mapping | `bowtie2`, `bwa_aln`, `bwamem`, `circulargenerator`, `circularmapper`, `make_bt2_index`, `samtools_filter_bowtie2`, `samtools_filter_bwaaln`, `samtools_filter_bwamem`, `samtools_filter_circularmapper` |
 | `mergedonly` | `false` | — | — |
-| `metagenomic_min_complexity` | `0.5` | — | `metagenomic_complexity_filter` |
+| `metagenomic_complexity_entropy` | `0.3` | — | `metagenomic_complexity_filter` |
+| `metagenomic_complexity_filter` | `false` | — | `kraken`, `malt`, `metagenomic_complexity_filter` |
+| `metagenomic_min_support_reads` | `1` | — | `kraken_parse`, `malt` |
+| `metagenomic_tool` | `` | — | `kraken`, `kraken_merge`, `kraken_parse`, `malt`, `maltextract` |
 | `min_adap_overlap` | `1` | — | `adapter_removal` |
 | `min_allele_freq_het` | `0.2` | — | `multivcfanalyzer` |
 | `min_allele_freq_hom` | `0.8` | — | `multivcfanalyzer` |
@@ -127,6 +152,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-eager
 | `multivcf_samples` | `'S1', 'S2'` | — | — |
 | `nuclear_contamination_header` | `` | — | `nuclear_contamination` |
 | `out_dir` | `results` | — | — |
+| `percent_identity` | `85` | — | `malt` |
 | `pileupcaller_bedfile` | `` | — | `genotyping_pileupcaller` |
 | `pileupcaller_method` | `randomHaploid` | — | — |
 | `pileupcaller_min_base_quality` | `30` | — | `genotyping_pileupcaller` |
@@ -157,13 +183,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-eager
 | `rescale_length_3p_arg` | `` | — | `mapdamage_rescaling` |
 | `rescale_length_5p_arg` | `` | — | `mapdamage_rescaling` |
 | `rescale_seqlength` | `12` | — | `mapdamage_rescaling` |
-| `run_bam_filtering` | `false` | — | `samtools_filter`, `samtools_flagstat_after_filter` |
+| `run_bam_filtering` | `false` | — | `kraken`, `kraken_merge`, `kraken_parse`, `malt`, `metagenomic_complexity_filter`, `samtools_filter_bowtie2`, `samtools_filter_bwaaln`, `samtools_filter_bwamem`, `samtools_filter_circularmapper`, `samtools_flagstat_after_filter` |
 | `run_bcftools_stats` | `false` | — | `bcftools_stats` |
 | `run_bedtools_coverage` | `false` | — | `bedtools_coverage` |
 | `run_endor_spy` | `false` | — | `endor_spy` |
 | `run_genotyping` | `false` | genotyping (pileupCaller branch) | `eigenstrat_snp_coverage`, `genotyping_angsd`, `genotyping_freebayes`, `genotyping_hc`, `genotyping_pileupcaller`, `genotyping_ug`, `multivcfanalyzer`, `picard_addorreplacereadgroups` |
+| `run_maltextract` | `false` | — | `maltextract` |
 | `run_mapdamage_rescaling` | `false` | — | `mapdamage_rescaling` |
-| `run_metagenomic_screening` | `false` | — | `kraken`, `kraken_parse`, `metagenomic_complexity_filter` |
+| `run_metagenomic_screening` | `false` | — | `kraken`, `kraken_merge`, `kraken_parse`, `malt` |
 | `run_mtnucratio` | `false` | — | `mtnucratio` |
 | `run_multivcfanalyzer` | `false` | — | `multivcfanalyzer`, `picard_addorreplacereadgroups` |
 | `run_nuclear_contamination` | `false` | — | `nuclear_contamination`, `print_nuclear_contamination` |
@@ -177,6 +204,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-eager
 | `sexdeterrmine_prep_s` | `1000000` | — | `sexdeterrmine_prep` |
 | `sexdeterrmine_s` | `1000000` | — | `sexdeterrmine` |
 | `single_end` | `false` | — | — |
+| `single_stranded` | `false` | — | `maltextract` |
 | `skip_adapterremoval` | `false` | — | `adapter_removal`, `fastqc_after_clipping` |
 | `skip_collapse` | `false` | — | — |
 | `skip_damage_calculation` | `false` | — | `damageprofiler`, `mapdamage_calculation` |
@@ -228,15 +256,43 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - genotyping_pileupcaller
 - eigenstrat_snp_coverage
 - multiqc
+- unzip_reference
+- bwamem
+- make_bt2_index
+- bowtie2
+- circulargenerator
+- circularmapper
+- convert_bam
+- hostremoval_input_fastq
 - samtools_filter
 - samtools_flagstat_after_filter
+- endor_spy
+- bedtools_coverage
+- post_ar_fastq_trimming
+- bam_trim
+- picard_addorreplacereadgroups
+- genotyping_ug
+- genotyping_hc
+- genotyping_freebayes
+- genotyping_angsd
+- bcftools_stats
+- vcf2genome
+- multivcfanalyzer
+- sexdeterrmine_prep
+- sexdeterrmine
+- mtnucratio
+- nuclear_contamination
+- print_nuclear_contamination
+- mapdamage_calculation
+- mapdamage_rescaling
+- mask_reference_for_pmdtools
+- pmdtools
 - metagenomic_complexity_filter
 - kraken
 - kraken_parse
 - kraken_merge
 - malt
 - maltextract
-- endor_spy
 
 **Excluded**
 
@@ -259,8 +315,9 @@ MALT install (no conda package)" exclusion reason was wrong — the upstream
 `environment.yml` pins `bioconda::malt=0.61` and `bioconda::hops=0.35`, so
 MALT and MaltExtract ship inside the pinned `nfcore/eager:2.5.3` container).
 The remaining `not ported` rows are structural (multi-lane/library channel
-merges — oxo-flow has no per-sample multi-file grouping primitive) or
-nf-core boilerplate (`output_documentation`, `get_software_versions`).
+merges — oxo-flow has no per-sample multi-file grouping primitive), the
+unported BAM pass-through mode (`indexinputbam`), or nf-core boilerplate
+(`output_documentation`, `get_software_versions`).
 
 | Upstream process | oxo-flow rule | Tool (version) | Notes |
 |---|---|---|---|
@@ -279,10 +336,10 @@ nf-core boilerplate (`output_documentation`, `get_software_versions`).
 | circulargenerator | `circulargenerator` | circularmapper 1.93.5, bwa | `circulargenerator -e -i -s` + `bwa index` on the elongated fasta; `when = config.mapper == 'circularmapper'` |
 | circularmapper | `circularmapper` | bwa + circularmapper 1.93.5 | `bwa aln` on the elongated reference + `realignsamfile` + sort/index; `when = config.mapper == 'circularmapper'` |
 | convertBam | `convert_bam` | samtools 1.12, pigz | `samtools bam2fq | pigz`; `when = config.bam_input` (default false — the fixture is FASTQ) |
-| indexinputbam | `indexinputbam` | samtools 1.12 | `samtools index` of the BAM input; `when = config.bam_input` |
+| indexinputbam | — | samtools 1.12 | not ported — indexes the input BAM for upstream's BAM pass-through mode (`bam != 'NA' && !run_convertinputbam`, main.nf 657); the port's BAM-input mode routes through `convert_bam` (bam2fq) instead and nothing downstream consumes the input BAM directly, so no index is needed |
 | hostremoval_input_fastq | `hostremoval_input_fastq` | extract_map_reads.py (bundled) | PE branch verbatim (`-m`, `-of`/`-or`, `-t`); `when = config.hostremoval_input_fastq` |
 | samtools_flagstat | `samtools_flagstat` | samtools 1.12 | Verbatim: `samtools flagstat > {libraryid}_flagstat.stats` |
-| samtools_filter | `samtools_filter_{bwaaln,bwamem,bowtie2,circularmapper}` | samtools 1.12, pigz 2.6 | Four per-mapper rules sharing ONE output set; each is gated `when = config.run_bam_filtering && config.mapper == '<mapper>'` (mutually exclusive, so the released engine needs no any-mode semantics) and takes its mapper’s mapped BAM as `BAM="{input[0]}"` (`results/mapping/bwa/{sample}_PE.mapped.bam` / `results/mapping/bwa/{sample}.mapped.bam` / `results/mapping/bt2/{sample}.mapped.bam` / `results/mapping/circularmapper/{sample}.mapped.bam`). The shared body carries the minreadlength-0 branches, selected by `bam_unmapped_type`: `discard` (`-F4 -q <thr>`, default) and `fastq` (upstream `-f4` / `-F4 -q` + `samtools fastq -tN \| pigz -p <cpus-1>` + `rm`, the metagenomic-chain producer), both verbatim. The discard branch additionally writes an EMPTY `{sample}.unmapped.fastq.gz` placeholder — the engine requires every declared output to exist, and it is never consumed (the metagenomic rules are gated on `bam_unmapped_type == 'fastq'`). The `keep`/`bam`/`both` branches fail fast with a clear error; `when = config.run_bam_filtering` (each variant adds `&& config.mapper == '<mapper>'`). The `keep`/`bam`/`both` branches fail fast with a clear error; bwaaln variant live-verified on tx-ubuntu 2026-08-27 (`run_bam_filtering=true`, 15 succeeded / 0 failed). **Engine note (2026-08-27):** the variants replace the previous single-rule + `optional = "any"` approach (superseded PR #5), so the branch no longer depends on unreleased engine features. |
+| samtools_filter | `samtools_filter_{bwaaln,bwamem,bowtie2,circularmapper}` | samtools 1.12, pigz 2.6 | Four per-mapper rules sharing ONE output set; each is gated `when = config.run_bam_filtering && config.mapper == '<mapper>'` (mutually exclusive, so the released engine needs no any-mode semantics) and takes its mapper's mapped BAM as `BAM="{input[0]}"` (`results/mapping/bwa/{sample}_PE.mapped.bam` / `results/mapping/bwa/{sample}.mapped.bam` / `results/mapping/bt2/{sample}.mapped.bam` / `results/mapping/circularmapper/{sample}.mapped.bam`). The shared body carries the minreadlength-0 branches selected by `bam_unmapped_type`: `discard` (`-F4 -q <thr>`, default) and `fastq` (upstream `-f4` / `-F4 -q` + `samtools fastq -tN \| pigz -p <cpus-1>` + `rm`, the metagenomic-chain producer), both verbatim. The discard branch additionally writes an EMPTY `{sample}.unmapped.fastq.gz` placeholder — the engine requires every declared output to exist, and it is never consumed (the metagenomic rules are gated on `bam_unmapped_type == 'fastq'`). The `keep`/`bam`/`both` branches fail fast with a clear error; bwaaln variant live-verified on tx-ubuntu 2026-08-27 (run_bam_filtering=true, 15 succeeded / 0 failed) |
 | samtools_flagstat_after_filter | `samtools_flagstat_after_filter` | samtools 1.12 | `samtools flagstat` on the filtered BAM; `when = config.run_bam_filtering` |
 | picard_addorreplacereadgroups | `picard_addorreplacereadgroups` | picard 2.26.0, samtools | verbatim RG replacement for MultiVCFAnalyzer; `when = run_genotyping && genotyping_tool == 'ug' && run_multivcfanalyzer` |
 | markduplicates | `markduplicates` | picard 2.26.0, samtools 1.12 | Default dedupper. picard MarkDuplicates verbatim (`-Xmx4096M`, `REMOVE_DUPLICATES=TRUE AS=TRUE`, `VALIDATION_STRINGENCY=SILENT`) + `samtools index`. INPUT points at the mapped BAM directly instead of upstream's workdir-local `mv {bam} {libraryid}.bam` rename (the shared results dir must keep the mapped BAM for preseq/flagstat) |
@@ -310,11 +367,11 @@ nf-core boilerplate (`output_documentation`, `get_software_versions`).
 | bcftools_stats | `bcftools_stats` | bcftools 1.12 | `bcftools stats <vcf.gz> -F <fasta>`; `when = config.run_bcftools_stats` (source VCF via `bcftools_stats_source`) |
 | eigenstrat_snp_coverage | `eigenstrat_snp_coverage` | eigenstratdatabasetools 1.0.2, python 3.9.4 | Off by default, same as upstream. Verbatim: `eigenstrat_snp_coverage -i pileupcaller.double >double_eigenstrat_coverage.txt` + `parse_snp_cov.py` (bundled upstream script, called via `python3 scripts/parse_snp_cov.py` — oxo-flow does not auto-add `bin/` to PATH) |
 | metagenomic_complexity_filter | `metagenomic_complexity_filter` | bbduk 38.92 | verbatim `bbduk.sh -Xmx<g>g in=... threads=N entropymask=f entropy=<entropy> out=<in>_lowcomplexityremoved.fq.gz 2> <in>_bbduk.stats` — the output keeps upstream's `${input}_lowcomplexityremoved.fq.gz` naming; `when = metagenomic_complexity_filter && run_bam_filtering && bam_unmapped_type == 'fastq'` (upstream validates the same combination at workflow start, main.nf 115-122) |
-| malt | `malt` | malt 0.61 | verbatim `malt-run -J-Xmx<g>g -t N -v -o . -d <db> [-a . -f SAM] -id -m -at -top <min-supp> -mq --memoryMode -i <all fastqs>` — one instance over ALL samples' unmapped reads (upstream `collect()`); reads the entropy-filtered fastqs when the complexity filter is on (upstream channel switch); `--database` is split into `malt_db` + `kraken2_db`; the percent/reads min-support exclusivity check (main.nf 129-134) is a shell guard; the per-input `.rma6` outputs are undeclared (no fixed template) — only `malt.log` is declared; live-verified on tx-ubuntu 2026-08-26 (engine 0.15.0, eager docker 2.5.3); `when = run_metagenomic_screening && run_bam_filtering && bam_unmapped_type == 'fastq' && metagenomic_tool == 'malt'` |
-| maltextract | `maltextract` | hops 0.35 | verbatim `MaltExtract -Xmx<g>g -t <taxon_list> -i <rma6s> -o results/ -r <ncbifiles> -p N -f -a --minPI <flags>` + `postprocessing.AMPS.r -r results/ -m -t N -n <taxon_list> -j`; requires `maltextract_taxon_list` + `maltextract_ncbifiles` (fail-fast guard); consumes the rma6s via glob with a DAG edge through `malt.log`; live-verified on tx-ubuntu 2026-08-26 (engine 0.15.0, eager docker 2.5.3); `when = run_maltextract && metagenomic_tool == 'malt'` (upstream verbatim) |
-| kraken | `kraken` | kraken2 2.1.2 | verbatim `kraken2 --db <db> --threads N --output <prefix>.kraken.out --report-minimizer-data --report <prefix>.kraken2_report <fastq>` + `cut -f1-3,6-8 > <prefix>.kreport`; reads the entropy-filtered fastq when the complexity filter is on (upstream channel switch); the output prefix is normalized to `{sample}.unmapped.fastq` in both branches (upstream prefixes by the input basename — see deviations); live-verified on tx-ubuntu 2026-08-26 (engine 0.15.0, eager docker 2.5.3); `when = run_metagenomic_screening && run_bam_filtering && bam_unmapped_type == 'fastq' && metagenomic_tool == 'kraken'` |
-| kraken_parse | `kraken_parse` | python 3.9.4 | verbatim `kraken_parse.py -c <min_support_reads> -or <read csv> -ok <kmer csv> <kreport>` (upstream script bundled in `scripts/`, called via `python3 scripts/kraken_parse.py` — oxo-flow does not auto-add `bin/` to PATH); gated on the same `when` as kraken (upstream no-ops the process via an empty channel); live-verified on tx-ubuntu 2026-08-26 (engine 0.15.0, eager docker 2.5.3) |
-| kraken_merge | `kraken_merge` | python 3.9.4 | verbatim `merge_kraken_res.py -or kraken_read_count.csv -ok kraken_kmer_duplication.csv` (upstream script bundled in `scripts/`; it scans the working dir for the per-sample CSVs, which the fan-in gathers into one instance); gated on the same `when` as kraken; live-verified on tx-ubuntu 2026-08-26 (engine 0.15.0, eager docker 2.5.3) |
+| malt | `malt` | malt 0.61 | verbatim `malt-run -J-Xmx<g>g -t N -v -o . -d <db> [-a . -f SAM] -id -m -at -top <min-supp> -mq --memoryMode -i <all fastqs>` — one instance over ALL samples' unmapped reads (upstream `collect()`); reads the entropy-filtered fastqs when the complexity filter is on (upstream channel switch); `--database` is split into `malt_db` + `kraken2_db`; the percent/reads min-support exclusivity check (main.nf 129-134) is a shell guard; the per-input `.rma6` outputs are undeclared (no fixed template) — only `malt.log` is declared; NOT yet live-verified; `when = run_metagenomic_screening && run_bam_filtering && bam_unmapped_type == 'fastq' && metagenomic_tool == 'malt'` |
+| maltextract | `maltextract` | hops 0.35 | verbatim `MaltExtract -Xmx<g>g -t <taxon_list> -i <rma6s> -o results/ -r <ncbifiles> -p N -f -a --minPI <flags>` + `postprocessing.AMPS.r -r results/ -m -t N -n <taxon_list> -j`; requires `maltextract_taxon_list` + `maltextract_ncbifiles` (fail-fast guard); consumes the rma6s via glob with a DAG edge through `malt.log`; NOT yet live-verified; `when = run_maltextract && metagenomic_tool == 'malt'` (upstream verbatim) |
+| kraken | `kraken` | kraken2 2.1.2 | verbatim `kraken2 --db <db> --threads N --output <prefix>.kraken.out --report-minimizer-data --report <prefix>.kraken2_report <fastq>` + `cut -f1-3,6-8 > <prefix>.kreport`; reads the entropy-filtered fastq when the complexity filter is on (upstream channel switch); the output prefix is normalized to `{sample}.unmapped.fastq` in both branches (upstream prefixes by the input basename — see deviations); NOT yet live-verified; `when = run_metagenomic_screening && run_bam_filtering && bam_unmapped_type == 'fastq' && metagenomic_tool == 'kraken'` |
+| kraken_parse | `kraken_parse` | python 3.9.4 | verbatim `kraken_parse.py -c <min_support_reads> -or <read csv> -ok <kmer csv> <kreport>` (upstream script bundled in `scripts/`, called via `python3 scripts/kraken_parse.py` — oxo-flow does not auto-add `bin/` to PATH); gated on the same `when` as kraken (upstream no-ops the process via an empty channel); NOT yet live-verified |
+| kraken_merge | `kraken_merge` | python 3.9.4 | verbatim `merge_kraken_res.py -or kraken_read_count.csv -ok kraken_kmer_duplication.csv` (upstream script bundled in `scripts/`; it scans the working dir for the per-sample CSVs, which the fan-in gathers into one instance); gated on the same `when` as kraken; NOT yet live-verified |
 | decomp_kraken | `kraken` (folded in) | kraken2 2.1.2 | folded into the kraken shell: a `.tar.gz` `kraken2_db` is unpacked in place (`tar xzf`, `mkdir -p <db>`, `mv *.k2d <db>/`) — no when-expression can test a filename suffix (deviation, documented below) |
 | sexdeterrmine | `sexdeterrmine` | sexdeterrmine 1.1.2 | verbatim sexdeterrmine.py run; `when = config.run_sexdeterrmine` |
 | sexdeterrmine_prep | `sexdeterrmine_prep` | sexdeterrmine 1.1.2 | verbatim sexdeterrmine_prep.py; `when = config.run_sexdeterrmine` |
@@ -363,9 +420,9 @@ Additional deviations from upstream (all on the default path):
   - each `samtools_filter_<mapper>` variant writes an empty `{sample}.unmapped.fastq.gz`
     placeholder in discard mode (engine output-existence contract; never
     consumed — the metagenomic rules are gated on `bam_unmapped_type == 'fastq'`).
-  - the metagenomic chain is live-verified on tx-ubuntu as of 2026-08-26
-    (engine 0.15.0, eager docker 2.5.3): `metagenomic_complexity_filter` and
-    `bam_unmapped_type=fastq` toggles PASS (kraken and malt paths).
+  - the metagenomic chain passes `validate`/`dry-run` but is NOT yet
+    live-verified on tx-ubuntu (no MALT/kraken databases on the test
+    server at port time; E15+ steps pending).
 - A `.gz`-compressed reference FASTA is not supported (upstream's
   `unzip_reference` pigz pre-step is not ported): pass a plain FASTA.
 - Upstream's startup parameter validation (e.g. the pileupCaller
@@ -385,7 +442,10 @@ Additional deviations from upstream (all on the default path):
   `run_multivcfanalyzer`, `run_sexdeterrmine`, `run_mtnucratio`,
   `run_nuclear_contamination`, `run_endorSpy`, `run_convertinputbam`,
   `run_hostremoval` and the non-default mapper/dedupper/damage-tool/
-  genotyping-tool choices are all ported as gated branch rules above;
+  genotyping-tool choices are all ported as the gated branch rules above
+  (the port's keys are `run_endor_spy`, `bam_input` and
+  `hostremoval_input_fastq` where the upstream names `run_endorSpy`,
+  `run_convertinputbam` and `hostremoval_input_fastq` differ);
   `run_bam_filtering` (incl. the metagenomic screening chain under
   `run_metagenomic_screening` with `metagenomic_tool` = `kraken`/`malt`) IS
   ported. Default values are kept in `[config]` where a config key exists.
