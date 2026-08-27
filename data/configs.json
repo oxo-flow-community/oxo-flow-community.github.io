@@ -554,7 +554,7 @@
       },
       {
         "default": "test",
-        "description": "Sample metadata \u2014 mirrors tests/csv/3.0/fastq_single.csv (single-lane model: nf-core/sarek meta.id = \"{sample}-{lane}\", read-group ID = \"{sample}.{lane}\")",
+        "description": "Sample metadata — mirrors tests/csv/3.0/fastq_single.csv (single-lane model: nf-core/sarek meta.id = \"{sample}-{lane}\", read-group ID = \"{sample}.{lane}\")",
         "key": "patient",
         "used_by": [
           "bwa_mem"
@@ -667,7 +667,7 @@
       },
       {
         "default": 112,
-        "description": "The VEP cache version must match the VEP binary in envs/vep.yaml (upstream's image pins 116; this env ships ensembl-vep 112, whose cache format is version-locked \u2014 a 116 cache is unreadable). The cache itself is user data (upstream bundles it in the container at /.vep; ~30GB for whole-genome GRCh38, or a gtf2vep subset) \u2014 the VEP rule gates on vep_cache_ready. Upstream fails hard without the cache; set the flag after placing it at vep_dir_cache (see README fidelity table).",
+        "description": "The VEP cache version must match the VEP binary in envs/vep.yaml (upstream's image pins 116; this env ships ensembl-vep 112, whose cache format is version-locked — a 116 cache is unreadable). The cache itself is user data (upstream bundles it in the container at /.vep; ~30GB for whole-genome GRCh38, or a gtf2vep subset) — the VEP rule gates on vep_cache_ready. Upstream fails hard without the cache; set the flag after placing it at vep_dir_cache (see README fidelity table).",
         "key": "vep_cache_version",
         "used_by": [
           "ensemblvep_vep"
@@ -728,7 +728,7 @@
       },
       {
         "default": 0,
-        "description": "GB passed to cellranger's --localmem (mkref/count). 0 = auto: 2/3 of the actually-free physical memory (/proc/meminfo MemAvailable, 1 GB floor) \u2014 never the engine's effective memory, which counts swap: cellranger's jobmngr waits forever when --localmem exceeds the free RAM (live: 'Need 6 GB ... (2.6 GB available)' looped for hours on a 3.7GB box). Set a positive number to force a value.",
+        "description": "GB passed to cellranger's --localmem (mkref/count). 0 = auto: 2/3 of the actually-free physical memory (/proc/meminfo MemAvailable, 1 GB floor) — never the engine's effective memory, which counts swap: cellranger's jobmngr waits forever when --localmem exceeds the free RAM (live: 'Need 6 GB ... (2.6 GB available)' looped for hours on a 3.7GB box). Set a positive number to force a value.",
         "key": "cellranger_localmem",
         "used_by": [
           "cellranger_count",
@@ -1422,7 +1422,7 @@
     "config": [
       {
         "default": "",
-        "description": "--- primers (upstream default null renders literal \"null\" adapters; port uses empty strings \u2014 see README fidelity table) ---",
+        "description": "--- primers (upstream default null renders literal \"null\" adapters; port uses empty strings — see README fidelity table) ---",
         "key": "FW_primer",
         "used_by": [
           "cutadapt"
@@ -1593,7 +1593,7 @@
       },
       {
         "default": false,
-        "description": "the four qiime2 rules run in the quay.io/qiime2/amplicon container (~20GB unpacked \u2014 needs ~25GB free disk for the pull; there is no conda qiime2 on common mirrors). Upstream runs qiime2 always; the port gates it (default false) so a fresh clone completes the DADA2 analysis without the container. Set true (with the disk) to enable.",
+        "description": "the four qiime2 rules run in the quay.io/qiime2/amplicon container (~20GB unpacked — needs ~25GB free disk for the pull; there is no conda qiime2 on common mirrors). Upstream runs qiime2 always; the port gates it (default false) so a fresh clone completes the DADA2 analysis without the container. Set true (with the disk) to enable.",
         "key": "run_qiime2",
         "used_by": [
           "qiime2_barplot",
@@ -1738,7 +1738,7 @@
       },
       {
         "default": 0.1,
-        "description": "Peaks (broad mode only \u2014 the nf-core default)",
+        "description": "Peaks (broad mode only — the nf-core default)",
         "key": "broad_cutoff",
         "used_by": [
           "peaks::macs3_callpeak"
@@ -1936,7 +1936,7 @@
           "C1_REP1",
           "C1_REP2"
         ],
-        "description": "Sample metadata. pair_ids MUST be kept in sync with [[pairs]] (the oxo-flow analogue of the nf-core samplesheet meta.id column). ip_ids lists the samples that get peak calling \u2014 upstream only runs MACS3 for samples that have a control; the port mirrors this with per-pair rules whose {control} input is empty for control-only samples and skipped via `optional = true`.",
+        "description": "Sample metadata. pair_ids MUST be kept in sync with [[pairs]] (the oxo-flow analogue of the nf-core samplesheet meta.id column). ip_ids lists the samples that get peak calling — upstream only runs MACS3 for samples that have a control; the port mirrors this with per-pair rules whose {control} input is empty for control-only samples and skipped via `optional = true`.",
         "key": "pair_ids",
         "used_by": [],
         "value_type": "array"
@@ -2143,7 +2143,7 @@
     "config": [
       {
         "default": "",
-        "description": "params.blacklist \u2014 include-regions BED (complement of ENCODE",
+        "description": "params.blacklist — include-regions BED (complement of ENCODE",
         "key": "blacklist",
         "used_by": [
           "bamtools_filter"
@@ -2160,7 +2160,7 @@
       },
       {
         "default": "test/fixtures/genome/genome.fa",
-        "description": "params.bwa \u2014 index prefix (.amb/.ann/.bwt/.pac/.sa beside it)",
+        "description": "params.bwa — index prefix (.amb/.ann/.bwt/.pac/.sa beside it)",
         "key": "bwa_index",
         "used_by": [
           "bwa_mem"
@@ -2270,7 +2270,7 @@
       },
       {
         "default": 8,
-        "description": "GB passed to picard -Xmx. Previously derived from the rule's 36G resource budget (Xmx\u224830G), which thrash-killed the JVM on a 3.7 GB machine (live run); the resource budget still drives scheduling.",
+        "description": "GB passed to picard -Xmx. Previously derived from the rule's 36G resource budget (Xmx≈30G), which thrash-killed the JVM on a 3.7 GB machine (live run); the resource budget still drives scheduling.",
         "key": "picard_xmx_gb",
         "used_by": [
           "picard_markduplicates"
@@ -2976,7 +2976,7 @@
       },
       {
         "default": "bambu",
-        "description": "-- Quantification and differential analysis (upstream defaults: on, but gated upstream to protocol cDNA/directRNA \u2014 never on the DNA path)",
+        "description": "-- Quantification and differential analysis (upstream defaults: on, but gated upstream to protocol cDNA/directRNA — never on the DNA path)",
         "key": "quantification_method",
         "used_by": [
           "bambu",
@@ -3130,7 +3130,7 @@
       },
       {
         "default": false,
-        "description": "-- RNA modification analysis (upstream default: on, gated to protocol directRNA; the fast5 dir comes from the upstream samplesheet nanopolish_fast5 column \u2014 the port takes one dir for all samples)",
+        "description": "-- RNA modification analysis (upstream default: on, gated to protocol directRNA; the fast5 dir comes from the upstream samplesheet nanopolish_fast5 column — the port takes one dir for all samples)",
         "key": "skip_modification_analysis",
         "used_by": [
           "m6anet_dataprep",
@@ -3333,7 +3333,7 @@
       },
       {
         "default": false,
-        "description": "upstream params.filter_duplicates (default false) \u2014 passed to PICARD_MARKDUPLICATES as REMOVE_DUPLICATES=true when set",
+        "description": "upstream params.filter_duplicates (default false) — passed to PICARD_MARKDUPLICATES as REMOVE_DUPLICATES=true when set",
         "key": "filter_duplicates",
         "used_by": [
           "markduplicates",
@@ -3356,7 +3356,7 @@
       },
       {
         "default": "reference/freyja_db",
-        "description": "upstream params.freyja_db_name \u2014 where FREYJA_UPDATE writes its download (upstream default 'freyja_db'; the port points into reference/)",
+        "description": "upstream params.freyja_db_name — where FREYJA_UPDATE writes its download (upstream default 'freyja_db'; the port points into reference/)",
         "key": "freyja_db_name",
         "used_by": [
           "freyja_boot_updated",
@@ -3378,7 +3378,7 @@
       },
       {
         "default": "test/fixtures/refs/freyja_lineages.json",
-        "description": "freyja's meta format is the curated_lineages JSON (buildLineageMap json.loads it \u2014 live: the CSV default died in freyja boot with JSONDecodeError); the CSV sibling is kept as the barcodes-side table",
+        "description": "freyja's meta format is the curated_lineages JSON (buildLineageMap json.loads it — live: the CSV default died in freyja boot with JSONDecodeError); the CSV sibling is kept as the barcodes-side table",
         "key": "freyja_lineages",
         "used_by": [
           "freyja_boot",
@@ -3450,7 +3450,7 @@
       },
       {
         "default": "human",
-        "description": "upstream params.kraken2_db_name \u2014 the library KRAKEN2_BUILD downloads when kraken2_db is left empty (gated rule kraken2_build)",
+        "description": "upstream params.kraken2_db_name — the library KRAKEN2_BUILD downloads when kraken2_db is left empty (gated rule kraken2_build)",
         "key": "kraken2_db_name",
         "used_by": [
           "kraken2_build"
@@ -5289,7 +5289,7 @@
       },
       {
         "default": true,
-        "description": "PCA (upstream: pca.activate / pca.labels). pca_variables is the derived upstream list (variables_of_interest + batch_effects + labels), kept explicit here \u2014 keep it in sync with the diffexp keys below.",
+        "description": "PCA (upstream: pca.activate / pca.labels). pca_variables is the derived upstream list (variables_of_interest + batch_effects + labels), kept explicit here — keep it in sync with the diffexp keys below.",
         "key": "pca_activate",
         "used_by": [
           "pca_jointly_handled",
@@ -5357,7 +5357,7 @@
       },
       {
         "default": true,
-        "description": "Trimming (upstream: trimming.activate). The fastp rule runs only when activated; deactivating breaks star_align in this port (upstream rewires star_align to the raw reads \u2014 not ported).",
+        "description": "Trimming (upstream: trimming.activate). The fastp rule runs only when activated; deactivating breaks star_align in this port (upstream rewires star_align to the raw reads — not ported).",
         "key": "trimming_activate",
         "used_by": [
           "fastp_pe"
@@ -5593,7 +5593,7 @@
       },
       {
         "default": false,
-        "description": "Skip the ref:: download rules (genome, annotation, VEP cache/plugins, pangenome, REVEL, known variants \u2014 ~5 GB of public databases). Set to true when you have pre-placed the files at the resource paths the rules declare (see README \"Reference databases\"); the downloads are hardcoded upstream URLs and need unimpeded network access.",
+        "description": "Skip the ref:: download rules (genome, annotation, VEP cache/plugins, pangenome, REVEL, known variants — ~5 GB of public databases). Set to true when you have pre-placed the files at the resource paths the rules declare (see README \"Reference databases\"); the downloads are hardcoded upstream URLs and need unimpeded network access.",
         "key": "skip_ref_downloads",
         "used_by": [
           "ref::download_revel",
@@ -5608,7 +5608,7 @@
       },
       {
         "default": false,
-        "description": "upstream config: trimming (get_sra / fastp rules). The default path has no trimming configured \u2014 reads pass through mapping::merge_trimmed_fastqs.",
+        "description": "upstream config: trimming (get_sra / fastp rules). The default path has no trimming configured — reads pass through mapping::merge_trimmed_fastqs.",
         "key": "trimming_activate",
         "used_by": [
           "trimming::fastp_pe",
@@ -5682,6 +5682,7 @@
           "visualize_LOLA_LOLACore_ATAC",
           "visualize_ORA_GSEApy_Azimuth_2023_ATAC",
           "visualize_ORA_GSEApy_Reactome_ATAC",
+          "visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC",
           "visualize_preranked_GSEApy_Azimuth_2023_RNA",
           "visualize_preranked_GSEApy_Reactome_RNA",
           "visualize_pycisTarget_hg38_screen_v10clust_ATAC"
@@ -5716,6 +5717,14 @@
           "visualize_ORA_GSEApy_Reactome_ATAC"
         ],
         "value_type": "float"
+      },
+      {
+        "default": 5,
+        "key": "adjp_th_RcisTarget",
+        "used_by": [
+          "visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC"
+        ],
+        "value_type": "int"
       },
       {
         "default": 0.05,
@@ -5758,6 +5767,7 @@
         "used_by": [
           "gene_ORA_GSEApy_Azimuth_2023",
           "gene_ORA_GSEApy_Reactome",
+          "gene_motif_enrichment_analysis_RcisTarget",
           "region_enrichment_analysis_GREAT_Azimuth_2023",
           "region_enrichment_analysis_GREAT_Reactome",
           "region_enrichment_analysis_LOLA"
@@ -5773,6 +5783,7 @@
           "visualize_LOLA_LOLACore_ATAC",
           "visualize_ORA_GSEApy_Azimuth_2023_ATAC",
           "visualize_ORA_GSEApy_Reactome_ATAC",
+          "visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC",
           "visualize_preranked_GSEApy_Azimuth_2023_RNA",
           "visualize_preranked_GSEApy_Reactome_RNA",
           "visualize_pycisTarget_hg38_screen_v10clust_ATAC"
@@ -5950,6 +5961,59 @@
         "used_by": [
           "plot_enrichment_result_ORA_GSEApy_Azimuth_2023",
           "plot_enrichment_result_ORA_GSEApy_Reactome"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "NES",
+        "key": "cn_RcisTarget_adj_pvalue",
+        "used_by": [
+          "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust",
+          "visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "NES",
+        "description": "NES combines significance and effect size",
+        "key": "cn_RcisTarget_effect_size",
+        "used_by": [
+          "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust",
+          "visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "nEnrGenes",
+        "key": "cn_RcisTarget_overlap",
+        "used_by": [
+          "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "AUC",
+        "key": "cn_RcisTarget_p_value",
+        "used_by": [
+          "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "description",
+        "description": "motif name + highConfCat TFs",
+        "key": "cn_RcisTarget_term",
+        "used_by": [
+          "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust",
+          "visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 25,
+        "key": "cn_RcisTarget_top_n",
+        "used_by": [
+          "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust"
         ],
         "value_type": "int"
       },
@@ -6178,6 +6242,7 @@
           "visualize_LOLA_LOLACore_ATAC",
           "visualize_ORA_GSEApy_Azimuth_2023_ATAC",
           "visualize_ORA_GSEApy_Reactome_ATAC",
+          "visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC",
           "visualize_pycisTarget_hg38_screen_v10clust_ATAC"
         ],
         "value_type": "int"
@@ -6302,6 +6367,81 @@
         "value_type": "string"
       },
       {
+        "default": 0.05,
+        "description": "aucMaxRank = factor * ncol(motifRankings)",
+        "key": "rcistarget_aucMaxRank_factor",
+        "used_by": [
+          "gene_motif_enrichment_analysis_RcisTarget"
+        ],
+        "value_type": "float"
+      },
+      {
+        "default": "",
+        "description": "gene-based TFBS motif enrichment (RcisTarget); \"\" disables both rules, matching upstream's \"to skip you have to leave one database entry with an empty path\" convention",
+        "key": "rcistarget_db_hg38_500bp_up_100bp_down_v10clust",
+        "used_by": [
+          "aggregate_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC",
+          "gene_motif_enrichment_analysis_RcisTarget",
+          "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust",
+          "visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 5000,
+        "key": "rcistarget_geneErnMaxRank",
+        "used_by": [
+          "gene_motif_enrichment_analysis_RcisTarget"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "aprox",
+        "description": "alternatively exact but more intense: \"icistarget\"",
+        "key": "rcistarget_geneErnMethod",
+        "used_by": [
+          "gene_motif_enrichment_analysis_RcisTarget"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "directAnnotation,inferredBy_Orthology",
+        "description": "upstream python lists; comma-joined so the rendered command stays a single token (values contain no commas)",
+        "key": "rcistarget_motifAnnot_highConfCat",
+        "used_by": [
+          "gene_motif_enrichment_analysis_RcisTarget"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "inferredBy_MotifSimilarity,inferredBy_MotifSimilarity_n_Orthology",
+        "key": "rcistarget_motifAnnot_lowConfCat",
+        "used_by": [
+          "gene_motif_enrichment_analysis_RcisTarget"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "description": "user-provided motif-to-TF annotation tbl; \"\" disables",
+        "key": "rcistarget_motif_annot",
+        "used_by": [
+          "aggregate_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC",
+          "gene_motif_enrichment_analysis_RcisTarget",
+          "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust",
+          "visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 3,
+        "key": "rcistarget_nesThreshold",
+        "used_by": [
+          "gene_motif_enrichment_analysis_RcisTarget"
+        ],
+        "value_type": "int"
+      },
+      {
         "default": "test/data/CorcesATAC",
         "description": "feature sets (derived from config/annotation.csv at port time)",
         "key": "region_beds",
@@ -6332,6 +6472,7 @@
           "aggregate_LOLA_LOLACore_ATAC",
           "aggregate_ORA_GSEApy_Azimuth_2023_ATAC",
           "aggregate_ORA_GSEApy_Reactome_ATAC",
+          "aggregate_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC",
           "aggregate_preranked_GSEApy_Azimuth_2023_RNA",
           "aggregate_preranked_GSEApy_Reactome_RNA",
           "aggregate_pycisTarget_hg38_screen_v10clust_ATAC",
@@ -6339,6 +6480,7 @@
           "config_export",
           "gene_ORA_GSEApy_Azimuth_2023",
           "gene_ORA_GSEApy_Reactome",
+          "gene_motif_enrichment_analysis_RcisTarget",
           "gene_preranked_GSEApy_Azimuth_2023",
           "gene_preranked_GSEApy_Reactome",
           "plot_enrichment_result_GREAT_Azimuth_2023",
@@ -6346,6 +6488,7 @@
           "plot_enrichment_result_LOLA_LOLACore",
           "plot_enrichment_result_ORA_GSEApy_Azimuth_2023",
           "plot_enrichment_result_ORA_GSEApy_Reactome",
+          "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust",
           "plot_enrichment_result_preranked_GSEApy_Azimuth_2023",
           "plot_enrichment_result_preranked_GSEApy_Reactome",
           "plot_enrichment_result_pycisTarget_hg38_screen_v10clust",
@@ -6360,6 +6503,7 @@
           "visualize_LOLA_LOLACore_ATAC",
           "visualize_ORA_GSEApy_Azimuth_2023_ATAC",
           "visualize_ORA_GSEApy_Reactome_ATAC",
+          "visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC",
           "visualize_preranked_GSEApy_Azimuth_2023_RNA",
           "visualize_preranked_GSEApy_Reactome_RNA",
           "visualize_pycisTarget_hg38_screen_v10clust_ATAC"
@@ -6404,6 +6548,7 @@
           "visualize_LOLA_LOLACore_ATAC",
           "visualize_ORA_GSEApy_Azimuth_2023_ATAC",
           "visualize_ORA_GSEApy_Reactome_ATAC",
+          "visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC",
           "visualize_preranked_GSEApy_Azimuth_2023_RNA",
           "visualize_preranked_GSEApy_Reactome_RNA",
           "visualize_pycisTarget_hg38_screen_v10clust_ATAC"
@@ -6568,7 +6713,7 @@
       },
       {
         "default": "SCT",
-        "description": "assay to analyse (\"SCT\" or \"RNA\") \u2014 upstream default \"SCT\"",
+        "description": "assay to analyse (\"SCT\" or \"RNA\") — upstream default \"SCT\"",
         "key": "assay",
         "used_by": [
           "config_export",
@@ -7607,7 +7752,7 @@
     "config": [
       {
         "default": "",
-        "description": "BED tracks used by mutation_flag \u2014 name/path TSV mirroring upstream softwares_params[genome].annotate_beds dict (empty = header-only, no flags)",
+        "description": "BED tracks used by mutation_flag — name/path TSV mirroring upstream softwares_params[genome].annotate_beds dict (empty = header-only, no flags)",
         "key": "annotate_beds_file",
         "used_by": [
           "make_region_bed_list"
@@ -7690,7 +7835,7 @@
       },
       {
         "default": false,
-        "description": "CNV branch (upstream somatic_cnv_list; mini-test default = [] -> off). Set true to run the ported subset (freec/sequenza/exomedepth/ASCAT \u2014 purple/amber/cobalt/facets need the upstream's custom containers, see rules/80_cnv.oxoflow).",
+        "description": "CNV branch (upstream somatic_cnv_list; mini-test default = [] -> off). Set true to run the ported subset (freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the upstream's custom containers, see rules/80_cnv.oxoflow).",
         "key": "cnv_enabled",
         "used_by": [
           "ASCAT_EXTRACT_PURITYPLOIDY",
@@ -7988,7 +8133,7 @@
       },
       {
         "default": "",
-        "description": "HMF tools (isofox; excluded for hg38_chr21 upstream \u2014 needs the multi-GB hmf_pipeline_resources tree, not shipped in the mini-test)",
+        "description": "HMF tools (isofox; excluded for hg38_chr21 upstream — needs the multi-GB hmf_pipeline_resources tree, not shipped in the mini-test)",
         "key": "hmftools_ensembl_data_dir",
         "used_by": [
           "isofox_call"
@@ -8513,7 +8658,7 @@
       },
       {
         "default": "",
-        "description": "Quant indexes are empty in the upstream hg38_chr21 test config \u2014 the RSEM/kallisto/salmon rules only run when explicitly targeted",
+        "description": "Quant indexes are empty in the upstream hg38_chr21 test config — the RSEM/kallisto/salmon rules only run when explicitly targeted",
         "key": "rsem_index",
         "used_by": [
           "cal_exp_RSEM"
@@ -8814,7 +8959,7 @@
       },
       {
         "default": "resources/softwares/TRUST4",
-        "description": "TRUST4 (upstream softwares_params[genome].trust4; git-cloned at rule runtime into trust4_dir when trust4_f is missing \u2014 not in default stages)",
+        "description": "TRUST4 (upstream softwares_params[genome].trust4; git-cloned at rule runtime into trust4_dir when trust4_f is missing — not in default stages)",
         "key": "trust4_dir",
         "used_by": [
           "TRUST4_TBCR"
@@ -8866,14 +9011,14 @@
           "lofreq",
           "freebayes"
         ],
-        "description": "Tumor-only callers (upstream run_params.tumor_only_caller; upstream default is [sage] \u2014 needs the custom hmftools container, so the port defaults to the seven portable callers, see rules/70_unpaired.oxoflow)",
+        "description": "Tumor-only callers (upstream run_params.tumor_only_caller; upstream default is [sage] — needs the custom hmftools container, so the port defaults to the seven portable callers, see rules/70_unpaired.oxoflow)",
         "key": "unpaired_caller_list",
         "used_by": [],
         "value_type": "array"
       },
       {
         "default": false,
-        "description": "VEP needs a local cache at {vep_data}/{vep_species} (~10GB download; the fixture kit does not ship it). The vcf2maf rules and the downstream MAF merge/flag/cancer-report tail gate on this flag \u2014 set true once the cache is in place (upstream fails hard without it).",
+        "description": "VEP needs a local cache at {vep_data}/{vep_species} (~10GB download; the fixture kit does not ship it). The vcf2maf rules and the downstream MAF merge/flag/cancer-report tail gate on this flag — set true once the cache is in place (upstream fails hard without it).",
         "key": "vep_cache_ready",
         "used_by": [
           "all",
@@ -8990,7 +9135,7 @@
       },
       {
         "default": "",
-        "description": "Upstream hg38_chr21 has no panel of normals (WES_PON: null) \u2014 leave empty",
+        "description": "Upstream hg38_chr21 has no panel of normals (WES_PON: null) — leave empty",
         "key": "wes_pon",
         "used_by": [
           "mutect2",
@@ -9022,7 +9167,7 @@
       },
       {
         "default": "D21122",
-        "description": "DB_ID \u2014 upstream: basename(metadata).replace(\".txt\", \"\").",
+        "description": "DB_ID — upstream: basename(metadata).replace(\".txt\", \"\").",
         "key": "db_id",
         "used_by": [
           "DGE_analysis",
@@ -9204,7 +9349,7 @@
       },
       {
         "default": "test/fixtures/reference/majiq_license.lic",
-        "description": "MAJIQ requires the upstream academic license file \u2014 place it at test/fixtures/reference/majiq_license.lic (obtain from MAJIQ) and set run_majiq = true. Upstream fails hard without the license; the port gates the whole MAJIQ chain on this flag instead (documented in the README fidelity table).",
+        "description": "MAJIQ requires the upstream academic license file — place it at test/fixtures/reference/majiq_license.lic (obtain from MAJIQ) and set run_majiq = true. Upstream fails hard without the license; the port gates the whole MAJIQ chain on this flag instead (documented in the README fidelity table).",
         "key": "majiq_license",
         "used_by": [
           "as_calling::majiq_build",
@@ -9333,7 +9478,7 @@
       },
       {
         "default": "test/fixtures/reference/STAR_index",
-        "description": "star_index_dir is auto-built below from test/fixtures/reference (tiny synthetic genome) \u2014 point it at a real GRCh38 STAR index for real runs.",
+        "description": "star_index_dir is auto-built below from test/fixtures/reference (tiny synthetic genome) — point it at a real GRCh38 STAR index for real runs.",
         "key": "star_index_dir",
         "used_by": [
           "alignment::star_align"
