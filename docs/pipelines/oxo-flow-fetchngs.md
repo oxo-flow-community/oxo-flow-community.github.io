@@ -9,7 +9,7 @@ Fetch metadata and raw FastQ files from public sequence databases (SRA/ENA/DDBJ/
 | **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | genomics |
-| **Rules** | 15 |
+| **Rules** | 16 |
 | **Compute** | up to 2 CPUs / 12 GB per rule (download) |
 | **Tools** | python · wget · coreutils · sra-tools · pigz · aspera-cli |
 | **Ported** | 2026-08-15 |
@@ -35,7 +35,7 @@ Downloads public data by SRA/ENA accessions (network required) — configure you
 - ids file: one SRA/ENA/DDBJ/GEO accession per line (config.input, default test/fixtures/ids.txt), kept in sync with the [[sample_groups]] sample source
 - reference data: none — the workflow downloads data from public archives; no genome FASTA, annotation or indices required
 - network: outbound access to ENA over FTP (wget -t 5 -c -T 60, 2 retries); the sratools branch needs NCBI SRA outbound access (prefetch/fasterq-dump), the aspera branch ENA fasp on port 33001
-- compute: up to 2 CPUs / 12 GB per rule (FastQ download 2 threads/12G; metadata fetch 1 thread/6G; 4 h time limits on five rules)
+- compute: up to 2 CPUs / 12 GB per rule (FastQ download 2 threads/12G; metadata fetch 1 thread/6G; 4 h time limits on twelve rules)
 - disk: results/fastq/ grows with downloaded FastQ files plus md5/ checksums (depends on input size); metadata/ and samplesheet/ stay small
 
 ```bash
@@ -92,6 +92,7 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - sra_prefetch
 - sra_fastq_sratools
 - sra_fastq_aspera
+- sra_fastq_ftp_aspera_fallback
 - sra_prefetch_fallback
 - sra_fastq_sratools_fallback
 - sra_prefetch_dbgap
@@ -103,9 +104,7 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- softwareVersionsToYAML + versions.yml — faithful port requires per-process versions emission in every rule (default-plan contract); no consumer in fetchngs itself
-- PIPELINE_COMPLETION — workflow-level onComplete hooks (sendmail/webhook/log); no oxo-flow equivalent
-- aspera per-row FTP-without-fasp fallback — no per-row container switch expressible
+- softwareVersionsToYAML + versions.yml, PIPELINE_COMPLETION (emails/summary/hooks) — nf-core boilerplate: a faithful versions.yml port needs every rule to emit a per-process versions.yml (would change every rule command; the default plan is byte-identical) and the collected file has no consumer in fetchngs itself; PIPELINE_COMPLETION is workflow-level completion hooks (sendmail/webhook) that oxo-flow has no mechanism for
 
 ## Fidelity
 
@@ -127,9 +126,10 @@ that the default path touches.
 | PIPELINE_COMPLETION (emails, summary, hooks) | not ported | — | nf-core boilerplate: `workflow.onComplete` → `completionEmail` (sendmail), `completionSummary` (stdout), `imNotification` (`hook_url` webhook), `sraCurateSamplesheetWarn` (log warning). Workflow-level completion hooks; oxo-flow has no email/webhook completion mechanism. Structural exclusion. |
 | CUSTOM_SRATOOLSNCBISETTINGS + SRATOOLS_PREFETCH | `sra_prefetch` | sra-tools 3.0.8 (`quay.io/biocontainers/sra-tools:3.0.8--h9f5acd7_0`) | When-gated branch, off by default (`download_method = "sratools"` + `dbgap_key` empty): per-run `prefetch` under the upstream `retry_with_backoff` policy (5 attempts / 1 s base / 100 s max, `scripts/retry_with_backoff.sh` verbatim) + `vdb-validate` incl. the `.sralite` variant; fresh NCBI settings file per id (upstream CUSTOM_SRATOOLSNCBISETTINGS GUID config). SRA records land in `results/sra/<id>/` (upstream publishDir `results/sra`, `enabled: false` — intermediates). Applies to **all** runs, matching upstream's explicit `--download_method sratools` mode; with `dbgap_key` set, the dbGaP variant below takes over. |
 | SRATOOLS_FASTERQDUMP | `sra_fastq_sratools` | sra-tools 2.11.0 + pigz 2.6 (`quay.io/biocontainers/mulled-v2-5f89fe0cd045cb1d615630b9261a1d17943a9b6a:6a9ff0e76ec016c3d0d27e0c0d362339f2d787e6-0`, fetchngs' patched image) | When-gated on `download_method = "sratools"` (+ `dbgap_key` empty); depends on `sra_prefetch`. `fasterq-dump --split-files --include-technical --threads` + `pigz --no-name --processes` translated from the fetchngs module (env pinned to upstream environment.yml: sra-tools 2.11.0 + pigz 2.6); files land in `results/fastq/` with the same names as the FTP branch so the samplesheet is method-agnostic. |
-| Per-run sratools fallback (upstream SRA workflow `branch`, runs without FTP/fasp links when `download_method = "ftp"`) | `sra_prefetch_fallback` + `sra_fastq_sratools_fallback` | sra-tools 3.0.8 / 2.11.0 + pigz 2.6 (same images as above) | When-gated on `download_method = "ftp"` + `sra_tools_fallback = true` (off by default — the default plan is unchanged). Mirrors the sratools-method rules but processes only the runs upstream's `branch` sends to sra-tools: rows whose metadata has neither `fastq_1` nor `fastq_aspera` (branch condition `!meta.fastq_aspera && !meta.fastq_1`, re-derived from the runinfo tsv by `scripts/sra_prefetch_runs.sh` / `scripts/sra_fastq_sratools_runs.sh`). Prefetch + `vdb-validate` incl. the `.sralite` variant, then fasterq-dump + pigz into `results/fastq/` with the FTP-branch naming so the samplesheet is method-agnostic; the FTP rule keeps downloading the runs that do have links. |
+| Per-run sratools fallback (upstream SRA workflow `branch`, runs without FTP/fasp links with `download_method = "ftp"` or `"aspera"`) | `sra_prefetch_fallback` + `sra_fastq_sratools_fallback` | sra-tools 3.0.8 / 2.11.0 + pigz 2.6 (same images as above) | When-gated on `sra_tools_fallback = true` + `download_method = "ftp"` or `"aspera"` (off by default — the default plan is unchanged). Mirrors the sratools-method rules but processes only the runs upstream's `branch` sends to sra-tools: rows whose metadata has neither `fastq_1` nor `fastq_aspera` (branch condition `!meta.fastq_aspera && !meta.fastq_1`, re-derived from the runinfo tsv by `scripts/sra_prefetch_runs.sh` / `scripts/sra_fastq_sratools_runs.sh`). Prefetch + `vdb-validate` incl. the `.sralite` variant, then fasterq-dump + pigz into `results/fastq/` with the FTP-branch naming so the samplesheet is method-agnostic; the FTP rule keeps downloading the runs that do have links. |
 | dbGaP (`--dbgap_key`) | `sra_prefetch_dbgap` + `sra_fastq_sratools_dbgap` | sra-tools 3.0.8 / 2.11.0 (same images) | When-gated on `download_method = "sratools"` + `dbgap_key` set (off by default: `dbgap_key = ""`; the plain sratools rules are gated off in that case). The certificate is passed through verbatim like upstream: `.ngc` → `prefetch --ngc` / `fasterq-dump --ngc`, `.jwt` → `--perm` (SRATOOLS_PREFETCH shell and SRATOOLS_FASTERQDUMP script logic, same rules for both tools). Still requires the user's own NIH authorized-access credentials at runtime — the port itself needs nothing, and the public path (empty `dbgap_key`) is unchanged. |
-| ASPERA_CLI (Aspera CLI 4.14.0, `fasp` links) | `sra_fastq_aspera` | aspera-cli 4.14.0 (`quay.io/biocontainers/aspera-cli:4.14.0--hdfd78af_1`, the upstream image — verified to ship `/usr/local/bin/ascp` + the anonymous ENA bypass key `/usr/local/etc/aspera/aspera_bypass_dsa.pem`) | When-gated on `download_method = "aspera"`: `ascp -QT -l 300m -P33001` (upstream ext.args) against the `fastq_aspera` fasp links with user `era-fasp`, md5-verified like the FTP branch. No credentials needed — the anonymous ENA fasp endpoint is what upstream uses. Deviation: upstream also sends runs without fasp links to the ftp/sra-tools branches per run; oxo-flow cannot branch per-row, so such runs are skipped with a warning. |
+| ASPERA_CLI (Aspera CLI 4.14.0, `fasp` links) | `sra_fastq_aspera` | aspera-cli 4.14.0 (`quay.io/biocontainers/aspera-cli:4.14.0--hdfd78af_1`, the upstream image — verified to ship `/usr/local/bin/ascp` + the anonymous ENA bypass key `/usr/local/etc/aspera/aspera_bypass_dsa.pem`) | When-gated on `download_method = "aspera"`: `ascp -QT -l 300m -P33001` (upstream ext.args) against the `fastq_aspera` fasp links with user `era-fasp`, md5-verified like the FTP branch. No credentials needed — the anonymous ENA fasp endpoint is what upstream uses. Deviation: upstream also sends runs without fasp links to the ftp/sra-tools branches per run; that triage is ported as when-gated branches (`sra_fastq_ftp_aspera_fallback` + `sra_prefetch_fallback` / `sra_fastq_sratools_fallback`, all on `sra_tools_fallback = true`), so with the fallback off such runs are skipped with a warning. |
+| Per-run FTP fallback for the aspera method (upstream SRA workflow `branch`: with `download_method = "aspera"`, runs with an FTP link but no fasp link go to the FTP process) | `sra_fastq_ftp_aspera_fallback` | wget 1.20.1 (same image as `sra_fastq_ftp`) | When-gated on `download_method = "aspera"` + `sra_tools_fallback = true` (off by default — the default plan is unchanged). `scripts/sra_fastq_ftp_aspera_runs.sh` carries the same wget `-t 5 -nv -c -T 60` download + md5 verification loop as the frozen `sra_fastq_ftp` command, applied to exactly the rows upstream's `branch` sends to the FTP arm: `fastq_1` set, `fastq_aspera` empty (branch condition `meta.fastq_1 && !meta.fastq_aspera`, re-derived from the runinfo tsv). Together with `sra_prefetch_fallback` / `sra_fastq_sratools_fallback` (same toggle) the runinfo tsv is fully partitioned — every run is downloaded exactly once by whichever branch upstream's `branch` would pick, with the FTP-branch naming so the samplesheet is method-agnostic. |
 | `params.nf_core_pipeline` (rnaseq/atacseq/taxprofiler columns) | `sra_to_samplesheet` | — | Off by default (empty), same as upstream; the column logic is ported and activates when `nf_core_pipeline` is set. |
 | publishDir / `--publish_dir_mode` | n/a | — | oxo-flow has no publishDir; outputs are declared directly at their `results/…` paths. |
 
@@ -139,16 +139,16 @@ sample source (`[[sample_groups]]`, or `--sample` on the CLI) and should match
 methods are ported as when-gated branches (`download_method = "sratools"` /
 `"aspera"`); the upstream **per-run** triage is ported as when-gated branches
 too, off by default so the default plan is byte-identical: `sra_tools_fallback
-= true` restores upstream's default `ftp`-method routing of runs without
-FTP/fasp links to prefetch/fasterq-dump, and `dbgap_key` enables the dbGaP
-certificate path of the sratools branch (the certificate is passed through
-verbatim; the port itself needs no credentials). Remaining deviations: with
-`ftp` or `aspera` and the fallback off, runs whose metadata lacks the matching
-download links are skipped with a warning (the fallback branch covers the
-`ftp` method only — with `aspera`, link-less runs are skipped regardless);
-with the `aspera` method, runs that have an FTP link but no fasp link are
-skipped too (upstream would route them to the FTP branch per run — still not
-expressible); and the nf-core boilerplate
+= true` restores upstream's per-run routing — with `ftp`, runs without
+FTP/fasp links go to prefetch/fasterq-dump; with `aspera`, runs without a
+fasp link go to the FTP branch when they have an FTP link
+(`sra_fastq_ftp_aspera_fallback`) and to prefetch/fasterq-dump otherwise —
+and `dbgap_key` enables the dbGaP certificate path of the sratools branch
+(the certificate is passed through verbatim; the port itself needs no
+credentials). Remaining deviation: with `ftp` or `aspera` and the fallback
+off, runs whose metadata lacks the matching download links are skipped with
+a warning (upstream would route them per run; enable `sra_tools_fallback` to
+restore the triage). The nf-core boilerplate
 (`versions.yml` collection, PIPELINE_COMPLETION emails/summary/hooks) is not
 ported (see table).
 
