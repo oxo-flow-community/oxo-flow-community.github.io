@@ -6586,7 +6586,8 @@
         "value_type": "string"
       }
     ]
-  },  "oxo-flow-enrichment": {
+  },
+  "oxo-flow-enrichment": {
     "workflow": "main.oxoflow",
     "config": [
       {
