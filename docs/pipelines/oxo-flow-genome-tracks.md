@@ -2,7 +2,7 @@
 
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
 
-Merge BAM files per experimental group with samtools, compute normalized bigWig coverage with deepTools bamCoverage (RPGC by default), plot isoform-aware per-gene and per-region genome tracks with gtracks/pyGenomeTracks, and publish a UCSC genome browser track hub — end-to-end track generation for RNA-seq, ATAC-seq and other aligned BAM data.
+Merge BAM files per experimental group with samtools, compute normalized bigWig coverage with deepTools bamCoverage (RPGC by default), plot isoform-aware per-gene and per-region genome tracks with gtracks/pyGenomeTracks, and publish a UCSC genome browser track hub — end-to-end track generation for RNA-seq, ATAC-seq and other aligned BAM data, plus the single-cell branch (sinto per-cell-barcode splitting of sc BAMs into per-group BAMs), an opt-in IGV report of all merged BAMs over the annotated gene regions, and opt-in conda environment export rules (env_export_*, conda env export).
 
 | | |
 |---:|---|
@@ -10,8 +10,8 @@ Merge BAM files per experimental group with samtools, compute normalized bigWig 
 | **Origin** | port |
 | **Domain** | genomics |
 | **Rules** | 16 |
-| **Compute** | up to 4 CPUs / 4 GB per rule |
-| **Tools** | samtools · deeptools · pygenometracks · gtracks |
+| **Compute** | up to 4 CPUs / 4 GB per rule (opt-in igv_report: 8 GB) |
+| **Tools** | samtools · deeptools · pygenometracks · gtracks · sinto · igv-reports |
 | **Ported** | 2026-08-15 |
 | **License** | Apache-2.0 |
 | **Source** | [epigen/genome_tracks](https://github.com/epigen/genome_tracks) |
@@ -36,9 +36,10 @@ Lightweight; `--samples first:1` keeps the first run small.
 - sample annotation CSV with a group column (sample_annotation; group values drive merge/coverage/hub fan-out)
 - gene list CSV with gene_region,ymax columns (gene_list; gene symbols or chr:start-end regions)
 - 12-column genome BED for gene annotation (genome_bed, e.g. ref.bed.gz); no genome FASTA or annotation GTF required
-- compute: up to 4 CPUs / 4 GB per rule (samtools merge and bamCoverage at threads=4/4000M); helper rules need 1 CPU / 1 GB
-- conda/mamba to build the pinned environment (samtools 1.19.2, deepTools 3.5.5, pyGenomeTracks 3.8, python 3.10.13, gtracks 1.12.6); helper rules need only a system python3
-- disk: results/ for merged BAMs, bigWigs, track plots and the UCSC hub
+- single-cell samples (optional): one CB-tagged BAM per sc sample at <sc_bam_dir>/<sc_id>.bam + a 2-column barcode TSV (barcode<TAB>group, no header) at <sc_metadata>/<sc_id>.tsv; group values of TSV col 2 must be declared in config.sc_groups and [[values]] sc_group
+- compute: up to 4 CPUs / 4 GB per rule (samtools merge, bamCoverage and sinto filterbarcodes at threads=4/4000M); helper rules need 1 CPU / 1 GB; igv_report is fixed at the upstream 8000 MB minimum
+- conda/mamba to build the pinned environments (samtools 1.19.2, deepTools 3.5.5, pyGenomeTracks 3.8, python 3.10.13, gtracks 1.12.6, sinto 0.10.0; igv-reports 1.14.1 / python 3.8 / pysam 0.22.0 for the opt-in IGV report); helper rules need only a system python3
+- disk: results/ for merged BAMs, bigWigs, track plots, the UCSC hub and the IGV report
 
 ```bash
 # 1. install oxo-flow (release binary, recommended)
@@ -98,9 +99,17 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - annotate_genes
 - plot_tracks
 - ucsc_hub
+- split_sc_bam
+- merge_sc_bams
+- coverage_sc
+- make_bed
+- igv_report
 - annot_export
 - gene_list_export
 - config_export
+- env_export_pygenometracks
+- env_export_sinto
+- env_export_igv_reports
 
 **Excluded**
 
@@ -115,13 +124,15 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 | Snakefile load-time gene annotation (`parse_gene`/`parse_region`, `gene_annot_df`) | `annotate_genes` | python3 (stdlib) | new single-instance rule; same algorithm (BED scan, min start / max end across isoforms, `base_buffer` extension for genes, no buffer for `chr:start-end` regions, `genes_not_found.csv`, `:`→`-` name replacement); upstream computes it in the Snakemake base env (numpy/pandas) — the port script uses only stdlib, so the upstream `global.yaml` env is not needed |
 | `plot_tracks` | `plot_tracks` | gtracks 1.12.6, pyGenomeTracks 3.8 | identical `gtracks` invocation (coordinates, `--genes`, optional `--max ymax`, `--gene-rows`/`--genes-height` = isoform count, `--x-axis`, `--width`, `--color-palette` with `#000000` default); per-gene fan-out uses `[[pairs]]` `pair_id` (oxo-flow has no gene wildcard source); `depends_on = ["coverage"]` added because `expand_inputs` input lists do not form DAG edges in oxo-flow 0.12.0 |
 | `ucsc_hub` | `ucsc_hub` | python3 (stdlib) | identical hub content (hub.txt, genomes.txt, trackDb.txt with hex→RGB colors, `../{group}.bw` relative symlinks) ported from the Python run block to `scripts/ucsc_hub.py`; the per-group symlinks are side effects (outputs declared only for the three text files) |
-| `env_export` | not ported | — | upstream requests `conda env export` for the pygenometracks/igv_reports/sinto envs; needs a conda runtime and documents envs of branches not ported — the checked-in `envs/pygenometracks.yaml` serves the same reproducibility role |
+| `env_export` | `env_export_pygenometracks` / `env_export_sinto` / `env_export_igv_reports` | conda | upstream fans `{env}` over the three envs; oxo-flow cannot wildcard `[rules.environment]`, so one rule per env — identical `conda env export` shell, each rule exports its own activated env (the engine's `conda run -n <env>` wrapper + `conda env export` = the upstream semantics, verified live with conda 26.1.1). Upstream runs it in `rule all`; the port gates it on `env_export_enabled` (default off) so the default graph is unchanged — the checked-in `envs/*.yaml` serve the same reproducibility role. DRAFT (mechanics live-verified; the three real env builds not yet run) |
 | `config_export` | `config_export` | python3 (stdlib) | `json.dump(config)` equivalent: `scripts/export_config.py` dumps the workflow's `[config]` table |
 | `annot_export` | `annot_export` | cp | identical (`cp` of the annotation CSV) |
 | `gene_list_export` | `gene_list_export` | cp | identical (`cp` of the gene list CSV) |
-| `make_bed` | not ported | — | only feeds the deactivated `igv_report` rule (not in the default target) |
-| `split_sc_bam` | not ported | — | single-cell branch (sinto 0.10.0); not on the default path (no `.tsv` `group` entries in the default annotation) |
-| `igv_report` | not ported | — | **temporarily deactivated upstream** (commented out of `rule all` at v2.0.5) |
+| `split_sc_bam` | `split_sc_bam` | sinto 0.10.0 | live-verified 2026-08-23 (tx-ubuntu, exit 0 — see the site audit): same `sinto filterbarcodes -b -c --outdir -p` command + upstream's touch-empty-bam fallback for groups absent in a sample (replaced by a header-only-BAM fallback for modern samtools); fan-out via `[[values]]` `sc_sample` × `sc_group` (upstream derives them from the metadata TSVs at load time; oxo-flow declares them — keep `[[values]] sc_sample`/`sc_group` in sync with `sc_bam_dir`/`sc_metadata`/`sc_groups`); upstream's `{sample}` = BAM-path md5 is replaced by readable sc ids |
+| `merge_bams` (sc variant) | `merge_sc_bams` | samtools 1.19.2 | live-verified 2026-08-23: upstream switches `merge_bams` inputs per wildcard (sc groups read `sc_bams/`, bulk groups the annotation BAM column); oxo-flow cannot switch inputs per wildcard, so the sc variant is a separate rule writing the same `merged_bams/` namespace, gated on `sc_enabled` |
+| `coverage` (sc variant) | `coverage_sc` | deepTools 3.5.5 | live-verified 2026-08-23: same `bamCoverage` command as bulk `coverage`; sc groups' bigWigs join `plot_tracks`/`ucsc_hub` via `config.samples_list` |
+| `make_bed` | `make_bed` | awk | DRAFT: upstream projects `gene_annot_df` to `chr,start,end,name` in Python; the port uses an awk projection of `genes_annotated.tsv` (name,chr,start,end → BED4); gated on `igv_report_enabled` like the rule it feeds |
+| `igv_report` | `igv_report` | igv-reports 1.14.1 | DRAFT: **temporarily deactivated upstream** (commented out of `rule all` at v2.0.5), ported as opt-in (`igv_report_enabled = true` + `-t igv_report`); same `create_report --genome --tracks --output` + the upstream `Variants`→`Genes and genomic regions` sed; track list = `config.samples_list` BAMs; memory fixed at the upstream 8000 MB minimum (oxo-flow resources are static) |
 | Snakemake `report()` wrappers | — | — | no equivalent in oxo-flow; the report artifacts are written as plain files |
 
 Configuration mapping: upstream `config/config.yaml` keys became `[config]`
@@ -129,10 +140,18 @@ keys with upstream defaults, except `result_path` (placeholder path →
 `results`), `mem`/`threads` (→ per-rule `[rules.resources]`; upstream's
 `4 × threads` for merge/coverage baked in as `threads = 4`), and
 `track_colors` (YAML dict → comma-joined `group=#hex` string with the same
-`#000000` default). Group fan-out uses `[[sample_groups]]` (one `{sample}`
-per annotation group), gene fan-out uses `[[pairs]]`. Sample annotation,
-gene list, genome BED and BAM files must be kept in sync with `[[sample_groups]]`/
-`[[pairs]]` and `config.bam_dir`; the annotation CSV itself remains the
+`#000000` default). New keys for the ported sc/IGV branches: `sc_enabled`,
+`sc_bam_dir`, `sc_metadata` (directory keys — oxo-flow rule inputs cannot
+index comma-joined config lists), `sc_groups` (merged + sorted into
+`samples_list`), `igv_report_enabled`, `igv_report_memory` (documented mirror;
+the rule's `memory` is the fixed upstream minimum), `env_export_enabled`
+(opt-in, default off — upstream runs `env_export` in `rule all`; the checked-in
+`envs/*.yaml` serve the same reproducibility role, so the port keeps the
+default graph unchanged). Group fan-out uses
+`[[sample_groups]]` (one `{sample}` per annotation group) + `[[values]]`
+`sc_sample` × `sc_group`, gene fan-out uses `[[pairs]]`. Sample annotation,
+gene list, genome BED, metadata TSVs and BAM files must be kept in sync with
+those tables and `config.bam_dir`; the annotation CSV itself remains the
 documentation record (`annot_export`).
 
 ## Links

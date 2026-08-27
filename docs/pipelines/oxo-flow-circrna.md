@@ -29,10 +29,10 @@ Set `reference_dir` in `circrna.oxoflow` and place FASTQ pairs in `raw/`; indexe
 
 **Engine.** oxo-flow >= 0.12.0
 
-**Toolchain.** conda envs — pinned (envs/*.yaml, one per tool)
+**Toolchain.** conda envs — one per tool (envs/*.yaml, most tools version-pinned)
 
 **Requirements.**
-- reference_dir with genome.fa, genes.gtf, hg38_ref.txt, CIRIquant.yml
+- reference_dir with genome.fa, genes.gtf, hg38_ref.txt
 - paired FASTQ per sample in raw/ (<sample>_1.fastq.gz / <sample>_2.fastq.gz)
 - compute: up to 8 threads / 32 GB per rule
 - conda or mamba to create the pinned per-rule environments on first run
@@ -77,15 +77,15 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **In scope**
 
-- fastp
-- ciriquant
-- circexplorer2
-- find_circ
-- circrna_finder
-- annotation
 - aggregate
 - aggregate_dataset
+- circexplorer2
+- circrna_finder
+- ciriquant
+- fastp
+- find_circ
 - multiqc
+- report
 
 **Excluded**
 
@@ -95,6 +95,6 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 - Repository: [oxo-flow-circrna](https://github.com/WangLabCSU/oxo-flow-circrna)
 - Upstream: [WangLabCSU/oxo-flow-circrna](https://github.com/WangLabCSU/oxo-flow-circrna) @ `main`
-- License: Apache-2.0 (this workflow) · MIT (upstream)
+- License: Apache-2.0 (this workflow) · Apache-2.0 (upstream)
 
 Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
