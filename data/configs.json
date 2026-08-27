@@ -5758,6 +5758,24 @@
         "value_type": "string"
       },
       {
+        "default": false,
+        "description": "Activate the BWA index / samtools faidx rules. Upstream declares both but its default path never requests them (snakemake lazy evaluation); oxo-flow runs every rule in the file, so both are gated off unless activated.",
+        "key": "bwa_index_activate",
+        "used_by": [
+          "bwa_index"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "",
+        "description": "String-form DESeq2 contrasts (upstream diffexp.contrasts string entries, e.g. 'list(c(\"treatment_1_treated_vs_untreated\", ...))'). Semicolon-joined list parallel to `contrasts`; an empty entry = list-form for that contrast. Entries are R expressions evaluated by DESeq2: use single quotes for R strings (the value is double-quoted on the shell command line) and no semicolons inside an entry.",
+        "key": "contrast_exprs",
+        "used_by": [
+          "deseq2"
+        ],
+        "value_type": "string"
+      },
+      {
         "default": "treated",
         "key": "contrast_levels",
         "used_by": [
@@ -5777,7 +5795,9 @@
         "default": "treatment_1",
         "description": "Contrasts (upstream: diffexp.contrasts). One comma-joined entry per contrast: contrast id, its variable_of_interest, its level_of_interest. The base level comes from diffexp_base_levels.",
         "key": "contrasts",
-        "used_by": [],
+        "used_by": [
+          "deseq2"
+        ],
         "value_type": "string"
       },
       {
@@ -5815,7 +5835,7 @@
       },
       {
         "default": "--detect_adapter_for_pe",
-        "description": "fastp adapter args and extra args (upstream: per-unit columns fastp_adapters / fastp_extra; the port uses the upstream defaults).",
+        "description": "fastp adapter args and extra args (upstream: per-unit columns fastp_adapters / fastp_extra; the port uses the upstream defaults). fastp_adapters_se matches the upstream single-end default (\"\").",
         "key": "fastp_adapters",
         "used_by": [
           "fastp_pe"
@@ -5823,12 +5843,29 @@
         "value_type": "string"
       },
       {
+        "default": "",
+        "key": "fastp_adapters_se",
+        "used_by": [
+          "fastp_se"
+        ],
+        "value_type": "string"
+      },
+      {
         "default": "--trim_poly_x --poly_x_min_len 7 --trim_poly_g --poly_g_min_len 7",
         "key": "fastp_extra",
         "used_by": [
-          "fastp_pe"
+          "fastp_pe",
+          "fastp_se"
         ],
         "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "genome_faidx_activate",
+        "used_by": [
+          "genome_faidx"
+        ],
+        "value_type": "bool"
       },
       {
         "default": "",
@@ -5857,7 +5894,7 @@
       },
       {
         "default": true,
-        "description": "PCA (upstream: pca.activate / pca.labels). pca_variables is the derived upstream list (variables_of_interest + batch_effects + labels), kept explicit here — keep it in sync with the diffexp keys below.",
+        "description": "PCA (upstream: pca.activate / pca.labels). pca_variables is the derived upstream list (variables_of_interest + batch_effects + labels), kept explicit here \u2014 keep it in sync with the diffexp keys below.",
         "key": "pca_activate",
         "used_by": [
           "pca_jointly_handled",
@@ -5883,7 +5920,10 @@
         "description": "Directory holding <unit-key>_R1.fastq.gz / _R2.fastq.gz per config/units.tsv. The repo default ships the tiny test fixtures; point this at your data (e.g. \"raw\").",
         "key": "raw_dir",
         "used_by": [
-          "fastp_pe"
+          "fastp_pe",
+          "fastp_se",
+          "star_align_raw",
+          "star_align_se_raw"
         ],
         "value_type": "string"
       },
@@ -5907,10 +5947,36 @@
         "value_type": "string"
       },
       {
+        "default": false,
+        "description": "Single-end mode (upstream decides per sample from the units.tsv fq2/sra columns; the port applies it globally \u2014 engine rules have fixed input arities). Single-end units provide only <unit-key>_R1.fastq.gz. Default false = the paired-end path.",
+        "key": "single_end",
+        "used_by": [
+          "fastp_pe",
+          "fastp_se",
+          "star_align",
+          "star_align_raw",
+          "star_align_se",
+          "star_align_se_raw"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "",
+        "description": "SRA accessions to download with fasterq-dump (upstream get_sra branch: units whose fq1/fq2 are empty carry an sra accession). Comma-joined list of accessions; reads land in sra/{accession}_1.fastq / _2.fastq (upstream naming). Default empty = no SRA download. Downloaded reads are NOT auto-fed into trimming/alignment (the engine cannot bind per-unit inputs) \u2014 place them per the raw_dir naming convention to use them.",
+        "key": "sra_accessions",
+        "used_by": [
+          "get_sra"
+        ],
+        "value_type": "string"
+      },
+      {
         "default": "",
         "key": "star_align_extra",
         "used_by": [
-          "star_align"
+          "star_align",
+          "star_align_raw",
+          "star_align_se",
+          "star_align_se_raw"
         ],
         "value_type": "string"
       },
@@ -5925,10 +5991,15 @@
       },
       {
         "default": true,
-        "description": "Trimming (upstream: trimming.activate). The fastp rule runs only when activated; deactivating breaks star_align in this port (upstream rewires star_align to the raw reads — not ported).",
+        "description": "Trimming (upstream: trimming.activate). With trimming off, the port's star_align_raw / star_align_se_raw variants feed the raw reads to STAR, mirroring the upstream rewiring (get_fq with trimming.activate = False).",
         "key": "trimming_activate",
         "used_by": [
-          "fastp_pe"
+          "fastp_pe",
+          "fastp_se",
+          "star_align",
+          "star_align_raw",
+          "star_align_se",
+          "star_align_se_raw"
         ],
         "value_type": "bool"
       },
