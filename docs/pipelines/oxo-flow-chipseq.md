@@ -2,14 +2,14 @@
 
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
 
-ChIP-seq peak calling, QC and differential analysis for paired-end reads: FastQC and Trim Galore read QC, BWA-MEM (default), Bowtie2, Chromap or STAR alignment, library merge and Picard mark-duplicates, BAMTools filtering against a blacklist with orphan-read removal, preseq and phantompeakqualtools library complexity QC, bigWig tracks and deepTools QC plots, MACS3 peak calling with input controls in broad (default) or narrow mode, HOMER peak annotation, FRiP scoring, consensus peaks across replicates (MACS3 merge, featureCounts quantification, DESeq2 QC), an IGV session and a MultiQC report. Optional gated rules derive the gene-body BED from the GTF (GTF2BED), the blacklist-complement regions file, the chromosome sizes and FASTA index (CUSTOM_GETCHROMSIZES), and BWA / Bowtie2 / Chromap / STAR indexes from the reference FASTA.
+ChIP-seq peak calling, QC and differential analysis for paired-end reads: FastQC and Trim Galore read QC, BWA-MEM (default), Bowtie2, Chromap or STAR alignment, library merge and Picard mark-duplicates, BAMTools filtering against a blacklist with orphan-read removal, preseq and phantompeakqualtools library complexity QC, bigWig tracks and deepTools QC plots, MACS3 peak calling with input controls in broad (default) or narrow mode, HOMER peak annotation, FRiP scoring, consensus peaks across replicates (MACS3 merge, featureCounts quantification, DESeq2 QC), an IGV session and a MultiQC report. Optional multi-antibody mode (metadata_file + input_groups group_by meta.antibody) runs the consensus chain once per distinct antibody. Optional gated rules derive the gene-body BED from the GTF (GTF2BED), the blacklist-complement regions file, the chromosome sizes and FASTA index (CUSTOM_GETCHROMSIZES), and BWA / Bowtie2 / Chromap / STAR indexes from the reference FASTA.
 
 | | |
 |---:|---|
 | **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | genomics |
-| **Rules** | 69 |
+| **Rules** | 83 |
 | **Compute** | up to 12 CPUs / 72 GB per rule (bwa_mem, bowtie2_align, star_align, trimgalore, star_genomegenerate); bowtie2_index_build 12 CPUs / 36 GB; most rules request 6 CPUs / 36 GB (chromap_align, chromap_index_build included) |
 | **Tools** | fastqc · trim-galore · bwa · bowtie2 · chromap · star · samtools · picard · bamtools · preseq · r-base · phantompeakqualtools · bedtools · ucsc-bedgraphtobigwig · deeptools · khmer · macs3 · homer · subread · multiqc · perl · python |
 | **Ported** | 2026-08-15 |
@@ -23,7 +23,7 @@ ChIP-seq peak calling, QC and differential analysis for paired-end reads: FastQC
 oxo-flow run main.oxoflow
 ```
 
-Runs the default path on the shipped fixtures — about 153 instances (198-rule DAG; 45 rules gated off). Preview with `oxo-flow dry-run main.oxoflow`.
+Runs the default path on the shipped fixtures — about 153 instances (212-rule DAG; 59 rules gated off). Multi-antibody runs: `oxo-flow run main.oxoflow --profile multi_antibody` (consensus chain once per antibody). Preview with `oxo-flow dry-run main.oxoflow`.
 
 ## Installation
 
@@ -38,7 +38,7 @@ Runs the default path on the shipped fixtures — about 153 instances (198-rule 
 - chromosome sizes file (chrom_sizes, or derive with make_chrom_sizes=true)
 - blacklist regions BED (blacklist)
 - aligner index — BWA index directory (bwa_index: *.amb, *.ann, *.bwt, *.pac, *.sa); for aligner='bowtie2' a Bowtie2 index directory (bowtie2_index), for aligner='chromap' a Chromap index file (chromap_index), and for aligner='star' a STAR index directory (star_index). Each can be built from the FASTA with the matching make_bwa_index / make_bowtie2_index / make_chromap_index / make_star_index gated rule
-- raw paired-end FASTQ reads named raw/{pair_id}_R{1,2}.fastq.gz with sample metadata in [[pairs]] and ip_ids
+- raw paired-end FASTQ reads named raw/{pair_id}_R{1,2}.fastq.gz with sample metadata in [[pairs]] and ip_ids (multi-antibody runs add a metadata_file TSV with an antibody column; see README)
 - compute: up to 12 CPUs / 72 GB per rule (bwa_mem, bowtie2_align, star_align, trimgalore, star_genomegenerate); most rules request 6 CPUs / 36 GB
 - disk: several GB of pinned container images pulled by Docker/Singularity
 
@@ -140,7 +140,9 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 **In scope**
 
 - annotate_boolean_peaks
+- annotate_boolean_peaks_multi
 - annotate_boolean_peaks_narrow
+- annotate_boolean_peaks_narrow_multi
 - bam_remove_orphans
 - bamtools_filter
 - bedtools_genomecov
@@ -156,24 +158,30 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - deeptools_plotheatmap
 - deeptools_plotprofile
 - deseq2_qc
+- deseq2_qc_multi
 - deseq2_qc_narrow
+- deseq2_qc_narrow_multi
 - fastqc
 - flagstat_align
 - flagstat_filter
 - flagstat_markdup
-- getchromsizes
 - frip_score
 - frip_score_narrow
+- getchromsizes
 - gtf2bed
 - homer_annotate_consensus
+- homer_annotate_consensus_multi
 - homer_annotate_consensus_narrow
+- homer_annotate_consensus_narrow_multi
 - homer_annotatepeaks
 - homer_annotatepeaks_narrow
 - idxstats_align
 - idxstats_filter
 - idxstats_markdup
 - igv
+- igv_multi
 - igv_narrow
+- igv_narrow_multi
 - index_align
 - index_filter
 - index_markdup
@@ -181,14 +189,18 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - macs3_callpeak
 - macs3_callpeak_narrow
 - macs3_consensus
+- macs3_consensus_multi
 - macs3_consensus_narrow
+- macs3_consensus_narrow_multi
 - markduplicates
 - mergesamfiles
 - multiqc
 - multiqc_custom_peaks
 - multiqc_custom_peaks_narrow
 - multiqc_custom_phantompeakqualtools
+- multiqc_multi
 - multiqc_narrow
+- multiqc_narrow_multi
 - phantompeakqualtools
 - picard_collectmultiplemetrics
 - plot_homer_annotatepeaks
@@ -205,7 +217,9 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - stats_filter
 - stats_markdup
 - subread_featurecounts
+- subread_featurecounts_multi
 - subread_featurecounts_narrow
+- subread_featurecounts_narrow_multi
 - trimgalore
 - ucsc_bedgraphtobigwig
 
@@ -213,14 +227,12 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 - UMITOOLS_EXTRACT / umi_extract — with_umi is hardcoded to false in chipseq.nf (dead branch at 2.1.0; the parameter does not exist in nextflow.config)
 - prepare_genome / samplesheet_check — compressed-reference gunzip/untar convenience, GFFREAD (GFF3 -> GTF) and samplesheet validation/staging (Nextflow plumbing; the port consumes pre-built plain reference files). The index/chrom-sizes generation steps are ported as gated rules: GTF2BED (make_gene_bed), GENOME_BLACKLIST_REGIONS (make_blacklist_regions), CUSTOM_GETCHROMSIZES (make_chrom_sizes), BWA_INDEX (make_bwa_index), BOWTIE2_BUILD (make_bowtie2_index), CHROMAP_INDEX (make_chromap_index) and STAR_GENOMEGENERATE (make_star_index)
-- multi-antibody consensus grouping (consensus_cluster) — upstream groupTuple(by: antibody) needs a per-sample antibody attribute; the port assumes a single antibody (config.antibody)
 - save_reference / save_trimmed / save_unaligned publish branches — the port always keeps intermediates (behaves as save_align_intermeds=true); upstream 2.1.0 has no save_mapped / save_tracks params. save_macs_pileup is ported (conditional pileup .bdg publication in both macs3 rules)
 - multiqc pipeline summary / software versions sections — nf-core template paramsSummaryMap/softwareVersionsToYAML from Nextflow metadata; multiqc_data / multiqc_plots directory publication is ported
 - multi-library MergeSamFiles branch — the merge itself is expressible (expand_inputs glob over the libraries), but the whole downstream chain (markduplicates, filtering, peak calling) keys on pair_id; a second per-sample grouping dimension would restructure the pipeline; single-library default path only (upstream symlink shortcut for single-library samples, replicated exactly)
 - DUMP_SOFTWARE_VERSIONS — Nextflow plumbing (oxo-flow has no nf-core pipelines version dump)
 
 ## Fidelity
-
 
 Ported with upstream defaults: `aligner=bwa`, paired-end, `narrow_peak=false`
 (broad peaks), `with_umi=false`. One row per upstream process; steps not
@@ -276,7 +288,7 @@ ported are listed with reasons.
 | UMI handling (UMITOOLS_EXTRACT, umi_extract) | — | — | **not ported** — `with_umi=false` is hardcoded in chipseq.nf at 2.1.0 (dead branch; the parameter does not exist) |
 | save_reference / save_trimmed / save_unaligned outputs | — | — | publish branches that are `false` by default upstream; the port always behaves as `save_align_intermeds=true` (intermediates are kept). Upstream 2.1.0 has no `save_mapped` / `save_tracks` params. `save_macs_pileup` IS ported (conditional pileup publication in both macs3 rules) |
 | DUMP_SOFTWARE_VERSIONS / pipeline summary + software versions sections of MultiQC | — | — | **not ported** — Nextflow metadata plumbing (paramsSummaryMap/softwareVersionsToYAML); `multiqc_data/` and `multiqc_plots/` ARE published |
-| Multi-antibody consensus (`consensus_cluster` grouping) | — | — | single antibody (`config.antibody`) per run; upstream multi-antibody grouping is out of scope |
+| Multi-antibody consensus (`consensus_cluster` grouping) | `macs3_consensus_multi` / `homer_annotate_consensus_multi` / `annotate_boolean_peaks_multi` / `subread_featurecounts_multi` / `deseq2_qc_multi` / `igv_multi` / `multiqc_multi` (+ `*_narrow_multi` variants) | same tools | upstream groups the consensus chain by `meta.antibody` (groupTuple `by: antibody`); the port does the same with the engine's metadata binding — `[workflow] metadata_file` (TSV: sample + antibody columns) + `input_groups` `group_by = "meta.antibody"` runs the consensus chain once per distinct antibody with per-antibody inputs, and the IGV/MultiQC rules collect every antibody. Gated on `config.multi_antibody` (default `false` — the single-antibody `config.antibody` path is byte-identical); see [Multi-antibody runs](#multi-antibody-runs) |
 
 ### Known divergences
 
@@ -310,8 +322,10 @@ ported are listed with reasons.
   whole pipeline, so only the single-library default path (the upstream
   symlink shortcut, replicated exactly) is ported.
 - **MultiQC config**: `path_filters` and `report_section_order` were adapted
-  to the port's `results/` layout and the single-antibody assumption;
-  module order and custom-content sections are otherwise identical.
+  to the port's `results/` layout and the `antibody.txt` convention; the
+  `multiqc_multi` variant scans the per-antibody `consensus/{antibody}/`
+  trees instead of relying on antibody-specific inputs. Module order and
+  custom-content sections are otherwise identical.
 - **Aligner output tree**: every aligner's results stay under `results/bwa/`
   (bwa_mem/star_align/bowtie2_align/chromap_align all produce
   `results/bwa/library/{pair_id}.Lb.bam`, so the whole downstream chain is
