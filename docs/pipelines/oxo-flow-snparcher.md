@@ -254,6 +254,17 @@ from bioconda/conda-forge at port time (2026-08-15). Upstream default-profile
 thread overrides (fastp 6, bwa_mem 16) are runtime knobs; the port keeps the
 rules' own declarations (4 and 8).
 
+## Live verification
+
+- `normalize_external_gvcf_for_gatk` + `joint_genomics_db_import` +
+  `joint_genotype_gvcfs` + `generate_coords_file`: live-verified on
+  bioinfo-wsx 2026-08-28 (external gVCF cohort, 0 failed; the run also
+  fixed two gvcf-cohort bugs — `parse_bam_stats` and
+  `combine_qc_metrics.py` now skip gvcf samples, PR #13).
+- The qc module's plink steps need **≥ 2 samples** (a 1-sample cohort
+  prunes to an empty VCF and `qc_plink` fails with "No samples in .vcf
+  file" — upstream behaves the same on a single-sample cohort).
+
 ## Test
 
 Run the acceptance suite (validate + lint + dry-run) against the committed
