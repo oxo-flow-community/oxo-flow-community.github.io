@@ -554,7 +554,7 @@
       },
       {
         "default": "test",
-        "description": "Sample metadata — mirrors tests/csv/3.0/fastq_single.csv (single-lane model: nf-core/sarek meta.id = \"{sample}-{lane}\", read-group ID = \"{sample}.{lane}\")",
+        "description": "Sample metadata \u2014 mirrors tests/csv/3.0/fastq_single.csv (single-lane model: nf-core/sarek meta.id = \"{sample}-{lane}\", read-group ID = \"{sample}.{lane}\")",
         "key": "patient",
         "used_by": [
           "bwa_mem"
@@ -667,7 +667,7 @@
       },
       {
         "default": 112,
-        "description": "The VEP cache version must match the VEP binary in envs/vep.yaml (upstream's image pins 116; this env ships ensembl-vep 112, whose cache format is version-locked — a 116 cache is unreadable). The cache itself is user data (upstream bundles it in the container at /.vep; ~30GB for whole-genome GRCh38, or a gtf2vep subset) — the VEP rule gates on vep_cache_ready. Upstream fails hard without the cache; set the flag after placing it at vep_dir_cache (see README fidelity table).",
+        "description": "The VEP cache version must match the VEP binary in envs/vep.yaml (upstream's image pins 116; this env ships ensembl-vep 112, whose cache format is version-locked \u2014 a 116 cache is unreadable). The cache itself is user data (upstream bundles it in the container at /.vep; ~30GB for whole-genome GRCh38, or a gtf2vep subset) \u2014 the VEP rule gates on vep_cache_ready. Upstream fails hard without the cache; set the flag after placing it at vep_dir_cache (see README fidelity table).",
         "key": "vep_cache_version",
         "used_by": [
           "ensemblvep_vep"
@@ -728,7 +728,7 @@
       },
       {
         "default": 0,
-        "description": "GB passed to cellranger's --localmem (mkref/count). 0 = auto: 2/3 of the actually-free physical memory (/proc/meminfo MemAvailable, 1 GB floor) — never the engine's effective memory, which counts swap: cellranger's jobmngr waits forever when --localmem exceeds the free RAM (live: 'Need 6 GB ... (2.6 GB available)' looped for hours on a 3.7GB box). Set a positive number to force a value.",
+        "description": "GB passed to cellranger's --localmem (mkref/count). 0 = auto: 2/3 of the actually-free physical memory (/proc/meminfo MemAvailable, 1 GB floor) \u2014 never the engine's effective memory, which counts swap: cellranger's jobmngr waits forever when --localmem exceeds the free RAM (live: 'Need 6 GB ... (2.6 GB available)' looped for hours on a 3.7GB box). Set a positive number to force a value.",
         "key": "cellranger_localmem",
         "used_by": [
           "cellranger_count",
@@ -1422,7 +1422,7 @@
     "config": [
       {
         "default": "",
-        "description": "--- primers (upstream default null renders literal \"null\" adapters; port uses empty strings — see README fidelity table) ---",
+        "description": "--- primers (upstream default null renders literal \"null\" adapters; port uses empty strings \u2014 see README fidelity table) ---",
         "key": "FW_primer",
         "used_by": [
           "cutadapt",
@@ -1783,7 +1783,7 @@
       },
       {
         "default": false,
-        "description": "the four qiime2 rules run in the quay.io/qiime2/amplicon container (~20GB unpacked — needs ~25GB free disk for the pull; there is no conda qiime2 on common mirrors). Upstream runs qiime2 always; the port gates it (default false) so a fresh clone completes the DADA2 analysis without the container. Set true (with the disk) to enable.",
+        "description": "the four qiime2 rules run in the quay.io/qiime2/amplicon container (~20GB unpacked \u2014 needs ~25GB free disk for the pull; there is no conda qiime2 on common mirrors). Upstream runs qiime2 always; the port gates it (default false) so a fresh clone completes the DADA2 analysis without the container. Set true (with the disk) to enable.",
         "key": "run_qiime2",
         "used_by": [
           "qiime2_alphararefaction",
@@ -2039,7 +2039,7 @@
       },
       {
         "default": 0.1,
-        "description": "Peaks (broad mode only — the nf-core default)",
+        "description": "Peaks (broad mode only \u2014 the nf-core default)",
         "key": "broad_cutoff",
         "used_by": [
           "peaks::macs3_callpeak"
@@ -2237,7 +2237,7 @@
           "C1_REP1",
           "C1_REP2"
         ],
-        "description": "Sample metadata. pair_ids MUST be kept in sync with [[pairs]] (the oxo-flow analogue of the nf-core samplesheet meta.id column). ip_ids lists the samples that get peak calling — upstream only runs MACS3 for samples that have a control; the port mirrors this with per-pair rules whose {control} input is empty for control-only samples and skipped via `optional = true`.",
+        "description": "Sample metadata. pair_ids MUST be kept in sync with [[pairs]] (the oxo-flow analogue of the nf-core samplesheet meta.id column). ip_ids lists the samples that get peak calling \u2014 upstream only runs MACS3 for samples that have a control; the port mirrors this with per-pair rules whose {control} input is empty for control-only samples and skipped via `optional = true`.",
         "key": "pair_ids",
         "used_by": [],
         "value_type": "array"
@@ -2443,11 +2443,35 @@
     "workflow": "main.oxoflow",
     "config": [
       {
+        "default": "bwa",
+        "description": "params.aligner: \"bwa\" (default) | \"bowtie2\" | \"chromap\" | \"star\" (SE only)",
+        "key": "aligner",
+        "used_by": [
+          "alt::bowtie2_align",
+          "alt::chromap_align",
+          "alt::star_align",
+          "bwa_mem",
+          "pe::bwa_mem_pe",
+          "ref::bwa_index"
+        ],
+        "value_type": "string"
+      },
+      {
         "default": "",
-        "description": "params.blacklist — include-regions BED (complement of ENCODE",
+        "description": "params.blacklist \u2014 include-regions BED (complement of ENCODE",
         "key": "blacklist",
         "used_by": [
-          "bamtools_filter"
+          "bamtools_filter",
+          "pe::bamtools_filter_pe"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "description": "params.bowtie2 \u2014 index prefix (.rev.1.bt2 etc. beside it) for aligner=\"bowtie2\"",
+        "key": "bowtie2_index",
+        "used_by": [
+          "alt::bowtie2_align"
         ],
         "value_type": "string"
       },
@@ -2461,10 +2485,12 @@
       },
       {
         "default": "test/fixtures/genome/genome.fa",
-        "description": "params.bwa — index prefix (.amb/.ann/.bwt/.pac/.sa beside it)",
+        "description": "params.bwa \u2014 index prefix (.amb/.ann/.bwt/.pac/.sa beside it)",
         "key": "bwa_index",
         "used_by": [
-          "bwa_mem"
+          "bwa_mem",
+          "pe::bwa_mem_pe",
+          "ref::bwa_index"
         ],
         "value_type": "string"
       },
@@ -2473,14 +2499,35 @@
         "description": "CUSTOM_GETCHROMSIZES output",
         "key": "chrom_sizes",
         "used_by": [
+          "mito::genome_blacklist_regions",
+          "ref::custom_getchromsizes",
           "ucsc_bedgraphtobigwig"
         ],
         "value_type": "string"
       },
       {
+        "default": "",
+        "description": "params.chromap \u2014 index file for aligner=\"chromap\"",
+        "key": "chromap_index",
+        "used_by": [
+          "alt::chromap_align"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": true,
+        "description": "params.deseq2_vst",
+        "key": "deseq2_vst",
+        "used_by": [
+          "cons::deseq2_qc"
+        ],
+        "value_type": "bool"
+      },
+      {
         "default": 500000,
         "key": "fingerprint_bins",
         "used_by": [
+          "pe::plotfingerprint_pe",
           "plotfingerprint"
         ],
         "value_type": "int"
@@ -2508,6 +2555,7 @@
         "description": "params.gtf",
         "key": "gtf",
         "used_by": [
+          "cons::homer_annotatepeaks_consensus",
           "homer_annotatepeaks"
         ],
         "value_type": "string"
@@ -2516,6 +2564,15 @@
         "default": false,
         "key": "keep_dups",
         "used_by": [],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "description": "params.keep_mito \u2014 keep mitochondrial reads when mito_name set",
+        "key": "keep_mito",
+        "used_by": [
+          "mito::genome_blacklist_regions"
+        ],
         "value_type": "bool"
       },
       {
@@ -2534,10 +2591,40 @@
         "value_type": "string"
       },
       {
+        "default": 1,
+        "description": "params.min_reps_consensus",
+        "key": "min_reps_consensus",
+        "used_by": [
+          "cons::macs2_consensus"
+        ],
+        "value_type": "int"
+      },
+      {
         "default": 10000,
         "key": "min_trimmed_reads",
         "used_by": [],
         "value_type": "int"
+      },
+      {
+        "default": "",
+        "description": "params.mito_name, e.g. \"chrM\" \u2014 enables mitochondrial filtering (needs config.chrom_sizes)",
+        "key": "mito_name",
+        "used_by": [
+          "bamtools_filter",
+          "mito::genome_blacklist_regions",
+          "pe::bamtools_filter_pe",
+          "qce::ataqv"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "description": "port-only switch: emit MULTIQC_CUSTOM_PEAKS peak-count/FRiP TSVs",
+        "key": "multiqc_custom_peaks",
+        "used_by": [
+          "qce::multiqc_custom_peaks"
+        ],
+        "value_type": "bool"
       },
       {
         "default": false,
@@ -2551,18 +2638,43 @@
         "description": "params.outdir",
         "key": "out_dir",
         "used_by": [
+          "alt::bowtie2_align",
+          "alt::chromap_align",
+          "alt::star_align",
           "bamtools_filter",
           "bedtools_genomecov",
           "bwa_mem",
+          "cons::deseq2_qc",
+          "cons::homer_annotatepeaks_consensus",
+          "cons::macs2_consensus",
+          "cons::subread_featurecounts",
           "deeptools_plots",
           "fastqc",
           "frip_score",
           "homer_annotatepeaks",
           "macs2_callpeak",
+          "mito::genome_blacklist_regions",
           "multiqc",
+          "pe::bamtools_filter_pe",
+          "pe::bedtools_genomecov_pe",
+          "pe::bwa_mem_pe",
+          "pe::fastqc_pe",
+          "pe::multiqc_pe",
+          "pe::pe_name_sort_remove_orphans",
+          "pe::plotfingerprint_pe",
+          "pe::trimgalore_pe",
           "picard_markduplicates",
           "picard_mergesamfiles",
           "plotfingerprint",
+          "qce::ataqv",
+          "qce::get_autosomes",
+          "qce::igv",
+          "qce::mkarv",
+          "qce::multiqc_custom_peaks",
+          "qce::picard_collectmultiplemetrics",
+          "qce::plot_homer_annotatepeaks",
+          "qce::plot_macs2_qc",
+          "qce::preseq_lcextrap",
           "samtools_sort_stats",
           "trimgalore",
           "ucsc_bedgraphtobigwig"
@@ -2570,13 +2682,67 @@
         "value_type": "string"
       },
       {
+        "default": false,
+        "description": "Gated branches (defaults keep the default plan identical to the upstream default main path; toggle one key at a time to activate its branch only)",
+        "key": "paired",
+        "used_by": [
+          "alt::bowtie2_align",
+          "alt::chromap_align",
+          "alt::star_align",
+          "bamtools_filter",
+          "bedtools_genomecov",
+          "bwa_mem",
+          "cons::subread_featurecounts",
+          "fastqc",
+          "multiqc",
+          "pe::bamtools_filter_pe",
+          "pe::bedtools_genomecov_pe",
+          "pe::bwa_mem_pe",
+          "pe::fastqc_pe",
+          "pe::multiqc_pe",
+          "pe::pe_name_sort_remove_orphans",
+          "pe::plotfingerprint_pe",
+          "pe::trimgalore_pe",
+          "plotfingerprint",
+          "qce::ataqv",
+          "qce::get_autosomes",
+          "qce::mkarv",
+          "qce::picard_collectmultiplemetrics",
+          "qce::preseq_lcextrap",
+          "trimgalore"
+        ],
+        "value_type": "bool"
+      },
+      {
         "default": 8,
-        "description": "GB passed to picard -Xmx. Previously derived from the rule's 36G resource budget (Xmx≈30G), which thrash-killed the JVM on a 3.7 GB machine (live run); the resource budget still drives scheduling.",
+        "description": "GB passed to picard -Xmx. Previously derived from the rule's 36G resource budget (Xmx\u224830G), which thrash-killed the JVM on a 3.7 GB machine (live run); the resource budget still drives scheduling.",
         "key": "picard_xmx_gb",
         "used_by": [
-          "picard_markduplicates"
+          "picard_markduplicates",
+          "qce::picard_collectmultiplemetrics"
         ],
         "value_type": "int"
+      },
+      {
+        "default": false,
+        "description": "port switch: build BWA index + chrom sizes from config.reference",
+        "key": "prepare_reference",
+        "used_by": [
+          "ref::bwa_index",
+          "ref::custom_getchromsizes"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "",
+        "description": "params.blacklist \u2014 raw ENCODE blacklist BED (complemented into include-regions)",
+        "key": "raw_blacklist",
+        "used_by": [
+          "bamtools_filter",
+          "mito::genome_blacklist_regions",
+          "pe::bamtools_filter_pe"
+        ],
+        "value_type": "string"
       },
       {
         "default": "test/fixtures/raw",
@@ -2584,6 +2750,8 @@
         "key": "raw_dir",
         "used_by": [
           "fastqc",
+          "pe::fastqc_pe",
+          "pe::trimgalore_pe",
           "trimgalore"
         ],
         "value_type": "string"
@@ -2593,9 +2761,17 @@
         "description": "Reference inputs. Upstream obtains these from nf-core iGenomes (--genome); this port expects pre-built files (see README \"References\").",
         "key": "reference",
         "used_by": [
+          "alt::chromap_align",
           "bamtools_filter",
+          "cons::homer_annotatepeaks_consensus",
           "homer_annotatepeaks",
+          "pe::pe_name_sort_remove_orphans",
           "picard_markduplicates",
+          "qce::get_autosomes",
+          "qce::igv",
+          "qce::picard_collectmultiplemetrics",
+          "ref::bwa_index",
+          "ref::custom_getchromsizes",
           "samtools_sort_stats"
         ],
         "value_type": "string"
@@ -2607,10 +2783,52 @@
         "value_type": "bool"
       },
       {
+        "default": true,
+        "description": "upstream default false; port ships this branch OFF (set false to enable)",
+        "key": "skip_ataqv",
+        "used_by": [
+          "qce::ataqv",
+          "qce::get_autosomes",
+          "qce::mkarv"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": true,
+        "description": "upstream default false; port ships this branch OFF (set false to enable)",
+        "key": "skip_consensus_peaks",
+        "used_by": [
+          "cons::deseq2_qc",
+          "cons::homer_annotatepeaks_consensus",
+          "cons::macs2_consensus",
+          "cons::subread_featurecounts"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": true,
+        "description": "upstream default false; port ships DESeq2 QC OFF (set false to enable)",
+        "key": "skip_deseq2_qc",
+        "used_by": [
+          "cons::deseq2_qc"
+        ],
+        "value_type": "bool"
+      },
+      {
         "default": false,
         "key": "skip_fastqc",
         "used_by": [
-          "fastqc"
+          "fastqc",
+          "pe::fastqc_pe"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": true,
+        "description": "upstream default false; port ships this branch OFF (set false to enable)",
+        "key": "skip_igv",
+        "used_by": [
+          "qce::igv"
         ],
         "value_type": "bool"
       },
@@ -2618,7 +2836,39 @@
         "default": false,
         "key": "skip_multiqc",
         "used_by": [
-          "multiqc"
+          "multiqc",
+          "pe::multiqc_pe"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "description": "params.skip_peak_annotation (default false \u2014 HOMER annotation on by default, as upstream)",
+        "key": "skip_peak_annotation",
+        "used_by": [
+          "cons::homer_annotatepeaks_consensus",
+          "homer_annotatepeaks",
+          "qce::plot_homer_annotatepeaks",
+          "qce::plot_macs2_qc"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": true,
+        "description": "upstream default false; port ships the R QC plots OFF (set false to enable)",
+        "key": "skip_peak_qc",
+        "used_by": [
+          "qce::plot_homer_annotatepeaks",
+          "qce::plot_macs2_qc"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": true,
+        "description": "upstream default false; port ships this branch OFF (set false to enable)",
+        "key": "skip_picard_metrics",
+        "used_by": [
+          "qce::picard_collectmultiplemetrics"
         ],
         "value_type": "bool"
       },
@@ -2626,6 +2876,7 @@
         "default": false,
         "key": "skip_plot_fingerprint",
         "used_by": [
+          "pe::plotfingerprint_pe",
           "plotfingerprint"
         ],
         "value_type": "bool"
@@ -2639,10 +2890,20 @@
         "value_type": "bool"
       },
       {
+        "default": true,
+        "description": "params.skip_preseq (upstream default true \u2014 preseq off by default)",
+        "key": "skip_preseq",
+        "used_by": [
+          "qce::preseq_lcextrap"
+        ],
+        "value_type": "bool"
+      },
+      {
         "default": false,
         "key": "skip_qc",
         "used_by": [
-          "fastqc"
+          "fastqc",
+          "pe::fastqc_pe"
         ],
         "value_type": "bool"
       },
@@ -2650,16 +2911,27 @@
         "default": false,
         "key": "skip_trimming",
         "used_by": [
+          "pe::trimgalore_pe",
           "trimgalore"
         ],
         "value_type": "bool"
+      },
+      {
+        "default": "",
+        "description": "params.star \u2014 STAR genome dir (built by STAR_GENOMEGENERATE upstream) for aligner=\"star\"",
+        "key": "star_index",
+        "used_by": [
+          "alt::star_align"
+        ],
+        "value_type": "string"
       },
       {
         "default": "test/fixtures/genome/tss.bed",
         "description": "params.tss_bed",
         "key": "tss_bed",
         "used_by": [
-          "deeptools_plots"
+          "deeptools_plots",
+          "qce::ataqv"
         ],
         "value_type": "string"
       }
@@ -3277,7 +3549,7 @@
       },
       {
         "default": "bambu",
-        "description": "-- Quantification and differential analysis (upstream defaults: on, but gated upstream to protocol cDNA/directRNA — never on the DNA path)",
+        "description": "-- Quantification and differential analysis (upstream defaults: on, but gated upstream to protocol cDNA/directRNA \u2014 never on the DNA path)",
         "key": "quantification_method",
         "used_by": [
           "bambu",
@@ -3431,7 +3703,7 @@
       },
       {
         "default": false,
-        "description": "-- RNA modification analysis (upstream default: on, gated to protocol directRNA; the fast5 dir comes from the upstream samplesheet nanopolish_fast5 column — the port takes one dir for all samples)",
+        "description": "-- RNA modification analysis (upstream default: on, gated to protocol directRNA; the fast5 dir comes from the upstream samplesheet nanopolish_fast5 column \u2014 the port takes one dir for all samples)",
         "key": "skip_modification_analysis",
         "used_by": [
           "m6anet_dataprep",
@@ -3636,7 +3908,7 @@
       },
       {
         "default": false,
-        "description": "upstream params.filter_duplicates (default false) — passed to PICARD_MARKDUPLICATES as REMOVE_DUPLICATES=true when set",
+        "description": "upstream params.filter_duplicates (default false) \u2014 passed to PICARD_MARKDUPLICATES as REMOVE_DUPLICATES=true when set",
         "key": "filter_duplicates",
         "used_by": [
           "markduplicates",
@@ -3659,7 +3931,7 @@
       },
       {
         "default": "reference/freyja_db",
-        "description": "upstream params.freyja_db_name — where FREYJA_UPDATE writes its download (upstream default 'freyja_db'; the port points into reference/)",
+        "description": "upstream params.freyja_db_name \u2014 where FREYJA_UPDATE writes its download (upstream default 'freyja_db'; the port points into reference/)",
         "key": "freyja_db_name",
         "used_by": [
           "freyja_boot_updated",
@@ -3681,7 +3953,7 @@
       },
       {
         "default": "test/fixtures/refs/freyja_lineages.json",
-        "description": "freyja's meta format is the curated_lineages JSON (buildLineageMap json.loads it — live: the CSV default died in freyja boot with JSONDecodeError); the CSV sibling is kept as the barcodes-side table",
+        "description": "freyja's meta format is the curated_lineages JSON (buildLineageMap json.loads it \u2014 live: the CSV default died in freyja boot with JSONDecodeError); the CSV sibling is kept as the barcodes-side table",
         "key": "freyja_lineages",
         "used_by": [
           "freyja_boot",
@@ -3753,7 +4025,7 @@
       },
       {
         "default": "human",
-        "description": "upstream params.kraken2_db_name — the library KRAKEN2_BUILD downloads when kraken2_db is left empty (gated rule kraken2_build)",
+        "description": "upstream params.kraken2_db_name \u2014 the library KRAKEN2_BUILD downloads when kraken2_db is left empty (gated rule kraken2_build)",
         "key": "kraken2_db_name",
         "used_by": [
           "kraken2_build"
@@ -3779,7 +4051,7 @@
       },
       {
         "default": 1000,
-        "description": "upstream params.min_mapped_reads — the per-sample channel DROP is a documented runtime-filter deviation (no dynamic DAG); the reporting half (fail_mapped_samples_mqc.tsv in the MultiQC data) is ported inside the multiqc rule",
+        "description": "upstream params.min_mapped_reads \u2014 the per-sample channel DROP is a documented runtime-filter deviation (no dynamic DAG); the reporting half (fail_mapped_samples_mqc.tsv in the MultiQC data) is ported inside the multiqc rule",
         "key": "min_mapped_reads",
         "used_by": [
           "multiqc"
@@ -3944,7 +4216,7 @@
       },
       {
         "default": false,
-        "description": "upstream params.save_mpileup — when true, call_variants_ivar tees the samtools mpileup stream to variants/ivar/{sample}.mpileup (off by default, exactly like upstream; the port emits an empty placeholder when false so the declared output stays present)",
+        "description": "upstream params.save_mpileup \u2014 when true, call_variants_ivar tees the samtools mpileup stream to variants/ivar/{sample}.mpileup (off by default, exactly like upstream; the port emits an empty placeholder when false so the declared output stays present)",
         "key": "save_mpileup",
         "used_by": [
           "call_variants_ivar"
@@ -3953,7 +4225,7 @@
       },
       {
         "default": false,
-        "description": "upstream params.save_trimmed_fail — when true, fastp keeps the reads that failed filtering (--failed_out + --unpaired1/2); off by default, exactly like upstream (empty placeholders when false)",
+        "description": "upstream params.save_trimmed_fail \u2014 when true, fastp keeps the reads that failed filtering (--failed_out + --unpaired1/2); off by default, exactly like upstream (empty placeholders when false)",
         "key": "save_trimmed_fail",
         "used_by": [
           "fastp"
@@ -3962,7 +4234,7 @@
       },
       {
         "default": false,
-        "description": "upstream params.save_unaligned — NOT ported as a gate: the Kraken2 unclassified reads feed the assembly branch (upstream channel wiring), so they always land in results/kraken2/ — the flag is effectively always on in the port (benign over-emission vs upstream's default publish)",
+        "description": "upstream params.save_unaligned \u2014 NOT ported as a gate: the Kraken2 unclassified reads feed the assembly branch (upstream channel wiring), so they always land in results/kraken2/ \u2014 the flag is effectively always on in the port (benign over-emission vs upstream's default publish)",
         "key": "save_unaligned",
         "used_by": [],
         "value_type": "bool"
@@ -4293,7 +4565,7 @@
       },
       {
         "default": "ivar",
-        "description": "--- Variant calling (upstream params.variant_caller defaults to 'ivar' for the amplicon protocol and 'bcftools' otherwise; both branches are ported as when-gated rules). The metagenomic branch auto-runs the bcftools caller regardless of this key — upstream derives variant_caller in nextflow.config (params.variant_caller = protocol == 'metagenomic' ? 'bcftools' : 'ivar'), and the port mirrors that derivation in the wgs rules' when conditions, so a metagenomic run needs no extra --arg ---",
+        "description": "--- Variant calling (upstream params.variant_caller defaults to 'ivar' for the amplicon protocol and 'bcftools' otherwise; both branches are ported as when-gated rules). The metagenomic branch auto-runs the bcftools caller regardless of this key \u2014 upstream derives variant_caller in nextflow.config (params.variant_caller = protocol == 'metagenomic' ? 'bcftools' : 'ivar'), and the port mirrors that derivation in the wgs rules' when conditions, so a metagenomic run needs no extra --arg ---",
         "key": "variant_caller",
         "used_by": [
           "additional_annotation",
@@ -6232,7 +6504,7 @@
       },
       {
         "default": false,
-        "description": "Skip the ref:: download rules (genome, annotation, VEP cache/plugins, pangenome, REVEL, known variants — ~5 GB of public databases). Set to true when you have pre-placed the files at the resource paths the rules declare (see README \"Reference databases\"); the downloads are hardcoded upstream URLs and need unimpeded network access.",
+        "description": "Skip the ref:: download rules (genome, annotation, VEP cache/plugins, pangenome, REVEL, known variants \u2014 ~5 GB of public databases). Set to true when you have pre-placed the files at the resource paths the rules declare (see README \"Reference databases\"); the downloads are hardcoded upstream URLs and need unimpeded network access.",
         "key": "skip_ref_downloads",
         "used_by": [
           "ref::download_revel",
@@ -6247,7 +6519,7 @@
       },
       {
         "default": false,
-        "description": "upstream config: trimming (get_sra / fastp rules). The default path has no trimming configured — reads pass through mapping::merge_trimmed_fastqs.",
+        "description": "upstream config: trimming (get_sra / fastp rules). The default path has no trimming configured \u2014 reads pass through mapping::merge_trimmed_fastqs.",
         "key": "trimming_activate",
         "used_by": [
           "trimming::fastp_pe",
@@ -7352,7 +7624,7 @@
       },
       {
         "default": "SCT",
-        "description": "assay to analyse (\"SCT\" or \"RNA\") — upstream default \"SCT\"",
+        "description": "assay to analyse (\"SCT\" or \"RNA\") \u2014 upstream default \"SCT\"",
         "key": "assay",
         "used_by": [
           "config_export",
@@ -8391,7 +8663,7 @@
     "config": [
       {
         "default": "",
-        "description": "BED tracks used by mutation_flag — name/path TSV mirroring upstream softwares_params[genome].annotate_beds dict (empty = header-only, no flags)",
+        "description": "BED tracks used by mutation_flag \u2014 name/path TSV mirroring upstream softwares_params[genome].annotate_beds dict (empty = header-only, no flags)",
         "key": "annotate_beds_file",
         "used_by": [
           "make_region_bed_list"
@@ -8474,7 +8746,7 @@
       },
       {
         "default": false,
-        "description": "CNV branch (upstream somatic_cnv_list; mini-test default = [] -> off). Set true to run the ported subset (freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the upstream's custom containers, see rules/80_cnv.oxoflow).",
+        "description": "CNV branch (upstream somatic_cnv_list; mini-test default = [] -> off). Set true to run the ported subset (freec/sequenza/exomedepth/ASCAT \u2014 purple/amber/cobalt/facets need the upstream's custom containers, see rules/80_cnv.oxoflow).",
         "key": "cnv_enabled",
         "used_by": [
           "ASCAT_EXTRACT_PURITYPLOIDY",
@@ -8772,7 +9044,7 @@
       },
       {
         "default": "",
-        "description": "HMF tools (isofox; excluded for hg38_chr21 upstream — needs the multi-GB hmf_pipeline_resources tree, not shipped in the mini-test)",
+        "description": "HMF tools (isofox; excluded for hg38_chr21 upstream \u2014 needs the multi-GB hmf_pipeline_resources tree, not shipped in the mini-test)",
         "key": "hmftools_ensembl_data_dir",
         "used_by": [
           "isofox_call"
@@ -9297,7 +9569,7 @@
       },
       {
         "default": "",
-        "description": "Quant indexes are empty in the upstream hg38_chr21 test config — the RSEM/kallisto/salmon rules only run when explicitly targeted",
+        "description": "Quant indexes are empty in the upstream hg38_chr21 test config \u2014 the RSEM/kallisto/salmon rules only run when explicitly targeted",
         "key": "rsem_index",
         "used_by": [
           "cal_exp_RSEM"
@@ -9598,7 +9870,7 @@
       },
       {
         "default": "resources/softwares/TRUST4",
-        "description": "TRUST4 (upstream softwares_params[genome].trust4; git-cloned at rule runtime into trust4_dir when trust4_f is missing — not in default stages)",
+        "description": "TRUST4 (upstream softwares_params[genome].trust4; git-cloned at rule runtime into trust4_dir when trust4_f is missing \u2014 not in default stages)",
         "key": "trust4_dir",
         "used_by": [
           "TRUST4_TBCR"
@@ -9650,14 +9922,14 @@
           "lofreq",
           "freebayes"
         ],
-        "description": "Tumor-only callers (upstream run_params.tumor_only_caller; upstream default is [sage] — needs the custom hmftools container, so the port defaults to the seven portable callers, see rules/70_unpaired.oxoflow)",
+        "description": "Tumor-only callers (upstream run_params.tumor_only_caller; upstream default is [sage] \u2014 needs the custom hmftools container, so the port defaults to the seven portable callers, see rules/70_unpaired.oxoflow)",
         "key": "unpaired_caller_list",
         "used_by": [],
         "value_type": "array"
       },
       {
         "default": false,
-        "description": "VEP needs a local cache at {vep_data}/{vep_species} (~10GB download; the fixture kit does not ship it). The vcf2maf rules and the downstream MAF merge/flag/cancer-report tail gate on this flag — set true once the cache is in place (upstream fails hard without it).",
+        "description": "VEP needs a local cache at {vep_data}/{vep_species} (~10GB download; the fixture kit does not ship it). The vcf2maf rules and the downstream MAF merge/flag/cancer-report tail gate on this flag \u2014 set true once the cache is in place (upstream fails hard without it).",
         "key": "vep_cache_ready",
         "used_by": [
           "all",
@@ -9774,7 +10046,7 @@
       },
       {
         "default": "",
-        "description": "Upstream hg38_chr21 has no panel of normals (WES_PON: null) — leave empty",
+        "description": "Upstream hg38_chr21 has no panel of normals (WES_PON: null) \u2014 leave empty",
         "key": "wes_pon",
         "used_by": [
           "mutect2",
@@ -9806,7 +10078,7 @@
       },
       {
         "default": "D21122",
-        "description": "DB_ID — upstream: basename(metadata).replace(\".txt\", \"\").",
+        "description": "DB_ID \u2014 upstream: basename(metadata).replace(\".txt\", \"\").",
         "key": "db_id",
         "used_by": [
           "DGE_analysis",
@@ -9988,7 +10260,7 @@
       },
       {
         "default": "test/fixtures/reference/majiq_license.lic",
-        "description": "MAJIQ requires the upstream academic license file — place it at test/fixtures/reference/majiq_license.lic (obtain from MAJIQ) and set run_majiq = true. Upstream fails hard without the license; the port gates the whole MAJIQ chain on this flag instead (documented in the README fidelity table).",
+        "description": "MAJIQ requires the upstream academic license file \u2014 place it at test/fixtures/reference/majiq_license.lic (obtain from MAJIQ) and set run_majiq = true. Upstream fails hard without the license; the port gates the whole MAJIQ chain on this flag instead (documented in the README fidelity table).",
         "key": "majiq_license",
         "used_by": [
           "as_calling::majiq_build",
@@ -10117,7 +10389,7 @@
       },
       {
         "default": "test/fixtures/reference/STAR_index",
-        "description": "star_index_dir is auto-built below from test/fixtures/reference (tiny synthetic genome) — point it at a real GRCh38 STAR index for real runs.",
+        "description": "star_index_dir is auto-built below from test/fixtures/reference (tiny synthetic genome) \u2014 point it at a real GRCh38 STAR index for real runs.",
         "key": "star_index_dir",
         "used_by": [
           "alignment::star_align"
