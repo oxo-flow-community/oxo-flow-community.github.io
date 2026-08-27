@@ -3355,16 +3355,39 @@
     "workflow": "main.oxoflow",
     "config": [
       {
+        "default": "bwa",
+        "description": "Alignment / filtering. aligner selects the read aligner: 'bwa' (the nf-core default), 'bowtie2', 'chromap' or 'star'. Each mode takes a pre-built index (bwa_index directory / bowtie2_index directory / chromap_index file / star_index directory, e.g. from the upstream iGenomes bundle) — or derives it from the reference FASTA with the gated builders below, mirroring the upstream PREPARE_GENOME index branches (make_bwa_index / make_bowtie2_index / make_chromap_index / make_star_index; point the corresponding index config at the generated results/... path in that case).",
+        "key": "aligner",
+        "used_by": [
+          "align::bowtie2_align",
+          "align::bwa_mem",
+          "align::chromap_align",
+          "align::star_align",
+          "reference::bowtie2_index_build",
+          "reference::bwa_index_build",
+          "reference::chromap_index_build",
+          "reference::star_genomegenerate"
+        ],
+        "value_type": "string"
+      },
+      {
         "default": "H3K4me3",
         "key": "antibody",
         "used_by": [
           "consensus::annotate_boolean_peaks",
+          "consensus::annotate_boolean_peaks_narrow",
           "consensus::deseq2_qc",
+          "consensus::deseq2_qc_narrow",
           "consensus::homer_annotate_consensus",
+          "consensus::homer_annotate_consensus_narrow",
           "consensus::macs3_consensus",
+          "consensus::macs3_consensus_narrow",
           "consensus::subread_featurecounts",
+          "consensus::subread_featurecounts_narrow",
           "report::igv",
-          "report::multiqc"
+          "report::igv_narrow",
+          "report::multiqc",
+          "report::multiqc_narrow"
         ],
         "value_type": "string"
       },
@@ -3372,13 +3395,21 @@
         "default": "test/fixtures/references/blacklist.bed",
         "key": "blacklist",
         "used_by": [
-          "filter::bamtools_filter"
+          "filter::bamtools_filter",
+          "reference::blacklist_regions"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "bowtie2_index",
+        "used_by": [
+          "align::bowtie2_align"
         ],
         "value_type": "string"
       },
       {
         "default": 0.1,
-        "description": "Peaks (broad mode only — the nf-core default)",
         "key": "broad_cutoff",
         "used_by": [
           "peaks::macs3_callpeak"
@@ -3395,7 +3426,6 @@
       },
       {
         "default": 0,
-        "description": "Alignment / filtering",
         "key": "bwa_min_score",
         "used_by": [
           "align::bwa_mem"
@@ -3406,7 +3436,16 @@
         "default": "test/fixtures/references/chrom.sizes",
         "key": "chrom_sizes",
         "used_by": [
+          "reference::blacklist_regions",
           "tracks::ucsc_bedgraphtobigwig"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "chromap_index",
+        "used_by": [
+          "align::chromap_align"
         ],
         "value_type": "string"
       },
@@ -3431,7 +3470,8 @@
         "key": "fai",
         "used_by": [
           "align::markduplicates",
-          "filter::picard_collectmultiplemetrics"
+          "filter::picard_collectmultiplemetrics",
+          "reference::star_genomegenerate"
         ],
         "value_type": "string"
       },
@@ -3439,7 +3479,9 @@
         "default": "test/fixtures/references/genome.fa",
         "key": "fasta",
         "used_by": [
+          "align::bowtie2_align",
           "align::bwa_mem",
+          "align::chromap_align",
           "align::index_align",
           "align::index_markdup",
           "align::markduplicates",
@@ -3448,13 +3490,21 @@
           "align::stats_align",
           "align::stats_markdup",
           "consensus::homer_annotate_consensus",
+          "consensus::homer_annotate_consensus_narrow",
           "filter::index_filter",
           "filter::picard_collectmultiplemetrics",
           "filter::sort_filter",
           "filter::sort_name",
           "filter::stats_filter",
           "peaks::homer_annotatepeaks",
+          "peaks::homer_annotatepeaks_narrow",
+          "reference::bowtie2_index_build",
+          "reference::bwa_index_build",
+          "reference::chromap_index_build",
+          "reference::getchromsizes",
+          "reference::star_genomegenerate",
           "report::igv",
+          "report::igv_narrow",
           "tracks::khmer"
         ],
         "value_type": "string"
@@ -3486,7 +3536,11 @@
         "key": "gtf",
         "used_by": [
           "consensus::homer_annotate_consensus",
-          "peaks::homer_annotatepeaks"
+          "consensus::homer_annotate_consensus_narrow",
+          "peaks::homer_annotatepeaks",
+          "peaks::homer_annotatepeaks_narrow",
+          "reference::gtf2bed",
+          "reference::star_genomegenerate"
         ],
         "value_type": "string"
       },
@@ -3519,7 +3573,8 @@
         "default": 0,
         "key": "macs_fdr",
         "used_by": [
-          "peaks::macs3_callpeak"
+          "peaks::macs3_callpeak",
+          "peaks::macs3_callpeak_narrow"
         ],
         "value_type": "int"
       },
@@ -3529,6 +3584,7 @@
         "key": "macs_gsize",
         "used_by": [
           "peaks::macs3_callpeak",
+          "peaks::macs3_callpeak_narrow",
           "tracks::khmer"
         ],
         "value_type": "string"
@@ -3537,15 +3593,74 @@
         "default": 0,
         "key": "macs_pvalue",
         "used_by": [
-          "peaks::macs3_callpeak"
+          "peaks::macs3_callpeak",
+          "peaks::macs3_callpeak_narrow"
         ],
         "value_type": "int"
+      },
+      {
+        "default": false,
+        "key": "make_blacklist_regions",
+        "used_by": [
+          "reference::blacklist_regions"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "make_bowtie2_index",
+        "used_by": [
+          "reference::bowtie2_index_build"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "make_bwa_index",
+        "used_by": [
+          "reference::bwa_index_build"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "make_chrom_sizes",
+        "used_by": [
+          "reference::getchromsizes"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "make_chromap_index",
+        "used_by": [
+          "reference::chromap_index_build"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "description": "Reference preparation — ports of the upstream PREPARE_GENOME steps that can run on the port's plain reference files (all off by default). When enabled, point the corresponding input above at the generated file, e.g. gene_bed = \"results/genome/gene.bed\" with make_gene_bed = true; chrom_sizes = \"results/genome/chrom.sizes\" and fai = \"results/genome/genome.fa.fai\" with make_chrom_sizes = true; bwa_index = \"results/bwa/index\" with make_bwa_index = true; bowtie2_index = \"results/bowtie2/index\" with make_bowtie2_index = true; chromap_index = \"results/chromap/index/genome.index\" with make_chromap_index = true.",
+        "key": "make_gene_bed",
+        "used_by": [
+          "reference::gtf2bed"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "make_star_index",
+        "used_by": [
+          "reference::star_genomegenerate"
+        ],
+        "value_type": "bool"
       },
       {
         "default": 1,
         "key": "min_reps_consensus",
         "used_by": [
-          "consensus::macs3_consensus"
+          "consensus::macs3_consensus",
+          "consensus::macs3_consensus_narrow"
         ],
         "value_type": "int"
       },
@@ -3554,10 +3669,15 @@
         "key": "multiple_groups",
         "used_by": [
           "consensus::annotate_boolean_peaks",
+          "consensus::annotate_boolean_peaks_narrow",
           "consensus::deseq2_qc",
+          "consensus::deseq2_qc_narrow",
           "consensus::homer_annotate_consensus",
+          "consensus::homer_annotate_consensus_narrow",
           "consensus::macs3_consensus",
-          "consensus::subread_featurecounts"
+          "consensus::macs3_consensus_narrow",
+          "consensus::subread_featurecounts",
+          "consensus::subread_featurecounts_narrow"
         ],
         "value_type": "bool"
       },
@@ -3565,9 +3685,44 @@
         "default": "",
         "key": "multiqc_title",
         "used_by": [
-          "report::multiqc"
+          "report::multiqc",
+          "report::multiqc_narrow"
         ],
         "value_type": "string"
+      },
+      {
+        "default": false,
+        "description": "Peaks — broad mode is the nf-core default (narrow_peak = false); setting narrow_peak = true switches the whole peak chain (MACS3 narrowPeak calling, FRiP/annotation/QC, consensus, IGV and MultiQC) to the upstream narrow_peak layout.",
+        "key": "narrow_peak",
+        "used_by": [
+          "consensus::annotate_boolean_peaks",
+          "consensus::annotate_boolean_peaks_narrow",
+          "consensus::deseq2_qc",
+          "consensus::deseq2_qc_narrow",
+          "consensus::homer_annotate_consensus",
+          "consensus::homer_annotate_consensus_narrow",
+          "consensus::macs3_consensus",
+          "consensus::macs3_consensus_narrow",
+          "consensus::subread_featurecounts",
+          "consensus::subread_featurecounts_narrow",
+          "peaks::frip_score",
+          "peaks::frip_score_narrow",
+          "peaks::homer_annotatepeaks",
+          "peaks::homer_annotatepeaks_narrow",
+          "peaks::macs3_callpeak",
+          "peaks::macs3_callpeak_narrow",
+          "peaks::multiqc_custom_peaks",
+          "peaks::multiqc_custom_peaks_narrow",
+          "peaks::plot_homer_annotatepeaks",
+          "peaks::plot_homer_annotatepeaks_narrow",
+          "peaks::plot_macs3_qc",
+          "peaks::plot_macs3_qc_narrow",
+          "report::igv",
+          "report::igv_narrow",
+          "report::multiqc",
+          "report::multiqc_narrow"
+        ],
+        "value_type": "bool"
       },
       {
         "default": [
@@ -3603,10 +3758,15 @@
         "key": "replicates_exist",
         "used_by": [
           "consensus::annotate_boolean_peaks",
+          "consensus::annotate_boolean_peaks_narrow",
           "consensus::deseq2_qc",
+          "consensus::deseq2_qc_narrow",
           "consensus::homer_annotate_consensus",
+          "consensus::homer_annotate_consensus_narrow",
           "consensus::macs3_consensus",
-          "consensus::subread_featurecounts"
+          "consensus::macs3_consensus_narrow",
+          "consensus::subread_featurecounts",
+          "consensus::subread_featurecounts_narrow"
         ],
         "value_type": "bool"
       },
@@ -3614,7 +3774,8 @@
         "default": false,
         "key": "save_macs_pileup",
         "used_by": [
-          "peaks::macs3_callpeak"
+          "peaks::macs3_callpeak",
+          "peaks::macs3_callpeak_narrow"
         ],
         "value_type": "bool"
       },
@@ -3623,7 +3784,10 @@
         "description": "Read group / trimming",
         "key": "seq_center",
         "used_by": [
-          "align::bwa_mem"
+          "align::bowtie2_align",
+          "align::bwa_mem",
+          "align::chromap_align",
+          "align::star_align"
         ],
         "value_type": "string"
       },
@@ -3632,10 +3796,15 @@
         "key": "skip_consensus_peaks",
         "used_by": [
           "consensus::annotate_boolean_peaks",
+          "consensus::annotate_boolean_peaks_narrow",
           "consensus::deseq2_qc",
+          "consensus::deseq2_qc_narrow",
           "consensus::homer_annotate_consensus",
+          "consensus::homer_annotate_consensus_narrow",
           "consensus::macs3_consensus",
-          "consensus::subread_featurecounts"
+          "consensus::macs3_consensus_narrow",
+          "consensus::subread_featurecounts",
+          "consensus::subread_featurecounts_narrow"
         ],
         "value_type": "bool"
       },
@@ -3643,7 +3812,8 @@
         "default": false,
         "key": "skip_deseq2_qc",
         "used_by": [
-          "consensus::deseq2_qc"
+          "consensus::deseq2_qc",
+          "consensus::deseq2_qc_narrow"
         ],
         "value_type": "bool"
       },
@@ -3660,7 +3830,8 @@
         "default": false,
         "key": "skip_igv",
         "used_by": [
-          "report::igv"
+          "report::igv",
+          "report::igv_narrow"
         ],
         "value_type": "bool"
       },
@@ -3668,7 +3839,8 @@
         "default": false,
         "key": "skip_multiqc",
         "used_by": [
-          "report::multiqc"
+          "report::multiqc",
+          "report::multiqc_narrow"
         ],
         "value_type": "bool"
       },
@@ -3677,10 +3849,15 @@
         "key": "skip_peak_annotation",
         "used_by": [
           "consensus::annotate_boolean_peaks",
+          "consensus::annotate_boolean_peaks_narrow",
           "consensus::homer_annotate_consensus",
+          "consensus::homer_annotate_consensus_narrow",
           "peaks::homer_annotatepeaks",
+          "peaks::homer_annotatepeaks_narrow",
           "peaks::plot_homer_annotatepeaks",
-          "peaks::plot_macs3_qc"
+          "peaks::plot_homer_annotatepeaks_narrow",
+          "peaks::plot_macs3_qc",
+          "peaks::plot_macs3_qc_narrow"
         ],
         "value_type": "bool"
       },
@@ -3689,7 +3866,9 @@
         "key": "skip_peak_qc",
         "used_by": [
           "peaks::plot_homer_annotatepeaks",
-          "peaks::plot_macs3_qc"
+          "peaks::plot_homer_annotatepeaks_narrow",
+          "peaks::plot_macs3_qc",
+          "peaks::plot_macs3_qc_narrow"
         ],
         "value_type": "bool"
       },
@@ -3751,6 +3930,14 @@
           "qc::trimgalore"
         ],
         "value_type": "bool"
+      },
+      {
+        "default": "",
+        "key": "star_index",
+        "used_by": [
+          "align::star_align"
+        ],
+        "value_type": "string"
       },
       {
         "default": 0,
