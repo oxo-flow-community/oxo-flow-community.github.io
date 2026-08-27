@@ -258,4 +258,3 @@ commands are byte-identical to upstream.
 - License: Apache-2.0 (this workflow) · MIT (upstream)
 
 Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
-
