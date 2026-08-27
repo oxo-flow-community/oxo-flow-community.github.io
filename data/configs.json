@@ -1741,7 +1741,7 @@
       },
       {
         "default": "test",
-        "description": "Sample metadata — mirrors tests/csv/3.0/fastq_single.csv (single-lane model: nf-core/sarek meta.id = \"{sample}-{lane}\", read-group ID = \"{sample}.{lane}\")",
+        "description": "Sample metadata \u2014 mirrors tests/csv/3.0/fastq_single.csv (single-lane model: nf-core/sarek meta.id = \"{sample}-{lane}\", read-group ID = \"{sample}.{lane}\")",
         "key": "patient",
         "used_by": [
           "bwa_mem",
@@ -1752,7 +1752,7 @@
       },
       {
         "default": false,
-        "description": "Optional branches (all default-off; upstream equivalents in parentheses) Reference preparation — upstream PREPARE_GENOME builds the BWA/BWAmem2 indexes + .dict + .fai when the reference lacks them; the port gates this on prepare_reference and writes into results/reference/. Point bwa_index_dir / bwa_mem2_index_dir / fasta_fai / dict at the built files to use them.",
+        "description": "Optional branches (all default-off; upstream equivalents in parentheses) Reference preparation \u2014 upstream PREPARE_GENOME builds the BWA/BWAmem2 indexes + .dict + .fai when the reference lacks them; the port gates this on prepare_reference and writes into results/reference/. Point bwa_index_dir / bwa_mem2_index_dir / fasta_fai / dict at the built files to use them.",
         "key": "prepare_reference",
         "used_by": [
           "bwa_index",
@@ -1784,7 +1784,7 @@
       },
       {
         "default": false,
-        "description": "Optional per-chromosome scatter/gather branch (default off). When scatter_gatk = true, BQSR / ApplyBQSR / HaplotypeCaller (and the joint GenotypeGVCFs) run one job per chromosome and the per-chromosome outputs are gathered (GatherBQSRReports / samtools merge+index / MergeVcfs) — results identical to the single whole-genome job (gathers are exact), with per-chromosome parallelism. Upstream scatters over dynamic duration-binned interval files; the engine's scatter takes a static value list, so the port uses one interval per chromosome. Keep `chromosomes` in sync with the contigs of your fasta .fai (each entry must exist in the .fai).",
+        "description": "Optional per-chromosome scatter/gather branch (default off). When scatter_gatk = true, BQSR / ApplyBQSR / HaplotypeCaller (and the joint GenotypeGVCFs) run one job per chromosome and the per-chromosome outputs are gathered (GatherBQSRReports / samtools merge+index / MergeVcfs) \u2014 results identical to the single whole-genome job (gathers are exact), with per-chromosome parallelism. Upstream scatters over dynamic duration-binned interval files; the engine's scatter takes a static value list, so the port uses one interval per chromosome. Keep `chromosomes` in sync with the contigs of your fasta .fai (each entry must exist in the .fai).",
         "key": "scatter_gatk",
         "used_by": [
           "bcftools_sort_joint",
@@ -1975,7 +1975,7 @@
       },
       {
         "default": 112,
-        "description": "The VEP cache version must match the VEP binary in envs/vep.yaml (upstream's image pins 116; this env ships ensembl-vep 112, whose cache format is version-locked — a 116 cache is unreadable). The cache itself is user data (upstream bundles it in the container at /.vep; ~30GB for whole-genome GRCh38, or a gtf2vep subset) — the VEP rule gates on vep_cache_ready. Upstream fails hard without the cache; set the flag after placing it at vep_dir_cache (see README fidelity table).",
+        "description": "The VEP cache version must match the VEP binary in envs/vep.yaml (upstream's image pins 116; this env ships ensembl-vep 112, whose cache format is version-locked \u2014 a 116 cache is unreadable). The cache itself is user data (upstream bundles it in the container at /.vep; ~30GB for whole-genome GRCh38, or a gtf2vep subset) \u2014 the VEP rule gates on vep_cache_ready. Upstream fails hard without the cache; set the flag after placing it at vep_dir_cache (see README fidelity table).",
         "key": "vep_cache_version",
         "used_by": [
           "ensemblvep_vep",
@@ -2067,7 +2067,7 @@
       },
       {
         "default": 0,
-        "description": "GB passed to cellranger's --localmem (mkref/count). 0 = auto: 2/3 of the actually-free physical memory (/proc/meminfo MemAvailable, 1 GB floor) — never the engine's effective memory, which counts swap: cellranger's jobmngr waits forever when --localmem exceeds the free RAM (live: 'Need 6 GB ... (2.6 GB available)' looped for hours on a 3.7GB box). Set a positive number to force a value.",
+        "description": "GB passed to cellranger's --localmem (mkref/count). 0 = auto: 2/3 of the actually-free physical memory (/proc/meminfo MemAvailable, 1 GB floor) \u2014 never the engine's effective memory, which counts swap: cellranger's jobmngr waits forever when --localmem exceeds the free RAM (live: 'Need 6 GB ... (2.6 GB available)' looped for hours on a 3.7GB box). Set a positive number to force a value.",
         "key": "cellranger_localmem",
         "used_by": [
           "cellranger_count",
@@ -2470,7 +2470,7 @@
       },
       {
         "default": "",
-        "description": "CAT/BAT bin classification (upstream --cat_db; the CAT_prepare database is user-provided — CAT_pack download + prepare, or the archive/directory itself; db/ and tax/ directories are discovered inside it)",
+        "description": "CAT/BAT bin classification (upstream --cat_db; the CAT_prepare database is user-provided \u2014 CAT_pack download + prepare, or the archive/directory itself; db/ and tax/ directories are discovered inside it)",
         "key": "cat_db",
         "used_by": [
           "cat_db_preparation",
@@ -3217,7 +3217,7 @@
       },
       {
         "default": false,
-        "description": "CheckM bin QC (upstream --run_checkm; the 1.1GB lineage database is downloaded at env creation and unpacked at run time — see README)",
+        "description": "CheckM bin QC (upstream --run_checkm; the 1.1GB lineage database is downloaded at env creation and unpacked at run time \u2014 see README)",
         "key": "run_checkm",
         "used_by": [
           "checkm_lineagewf_megahit_comebin",
@@ -3263,7 +3263,7 @@
       },
       {
         "default": false,
-        "description": "CheckM2 bin QC (upstream --run_checkm2; the ~10GB .dmnd database is user-provided — checkm2 database --download; fails fast when empty)",
+        "description": "CheckM2 bin QC (upstream --run_checkm2; the ~10GB .dmnd database is user-provided \u2014 checkm2 database --download; fails fast when empty)",
         "key": "run_checkm2",
         "used_by": [
           "checkm2_megahit_comebin",
@@ -3306,7 +3306,7 @@
       },
       {
         "default": false,
-        "description": "GUNC contamination QC (upstream --run_gunc; the reference database is user-provided — gunc download_db; fails fast when empty)",
+        "description": "GUNC contamination QC (upstream --run_gunc; the reference database is user-provided \u2014 gunc download_db; fails fast when empty)",
         "key": "run_gunc",
         "used_by": [
           "concat_gunc_checkm_tsv",
@@ -3340,7 +3340,7 @@
       },
       {
         "default": false,
-        "description": "Virus identification (upstream --run_virus_identification; the geNomad database is user-provided — genomad download-database; fails fast when empty)",
+        "description": "Virus identification (upstream --run_virus_identification; the geNomad database is user-provided \u2014 genomad download-database; fails fast when empty)",
         "key": "run_virus_identification",
         "used_by": [
           "genomad_db_preparation",
@@ -3389,7 +3389,7 @@
     "config": [
       {
         "default": "",
-        "description": "--- primers (upstream default null renders literal \"null\" adapters; port uses empty strings — see README fidelity table) ---",
+        "description": "--- primers (upstream default null renders literal \"null\" adapters; port uses empty strings \u2014 see README fidelity table) ---",
         "key": "FW_primer",
         "used_by": [
           "cutadapt",
@@ -3598,7 +3598,7 @@
       },
       {
         "default": false,
-        "description": "--- ITS branch (upstream params.illumina_pe_its / cut_its / its_partial / its_extractor — all default off -> 16S path) ---",
+        "description": "--- ITS branch (upstream params.illumina_pe_its / cut_its / its_partial / its_extractor \u2014 all default off -> 16S path) ---",
         "key": "illumina_pe_its",
         "used_by": [
           "cutadapt",
@@ -3708,7 +3708,7 @@
       },
       {
         "default": "",
-        "description": "--- QIIME2 taxonomy classifier (upstream params.qiime_ref_taxonomy / params.classifier — off by default; DADA2 taxonomy is the default path). qiime_ref_taxonomy trains a Naive-Bayes classifier on the primer-extracted reference below; classifier is a path to a pre-trained .qza (skips training). ---",
+        "description": "--- QIIME2 taxonomy classifier (upstream params.qiime_ref_taxonomy / params.classifier \u2014 off by default; DADA2 taxonomy is the default path). qiime_ref_taxonomy trains a Naive-Bayes classifier on the primer-extracted reference below; classifier is a path to a pre-trained .qza (skips training). ---",
         "key": "qiime_ref_taxonomy",
         "used_by": [
           "qiime2_classify",
@@ -3750,7 +3750,7 @@
       },
       {
         "default": false,
-        "description": "the four qiime2 rules run in the quay.io/qiime2/amplicon container (~20GB unpacked — needs ~25GB free disk for the pull; there is no conda qiime2 on common mirrors). Upstream runs qiime2 always; the port gates it (default false) so a fresh clone completes the DADA2 analysis without the container. Set true (with the disk) to enable.",
+        "description": "the four qiime2 rules run in the quay.io/qiime2/amplicon container (~20GB unpacked \u2014 needs ~25GB free disk for the pull; there is no conda qiime2 on common mirrors). Upstream runs qiime2 always; the port gates it (default false) so a fresh clone completes the DADA2 analysis without the container. Set true (with the disk) to enable.",
         "key": "run_qiime2",
         "used_by": [
           "qiime2_alphararefaction",
@@ -3984,7 +3984,7 @@
     "config": [
       {
         "default": "bwa",
-        "description": "Alignment / filtering. aligner selects the read aligner: 'bwa' (the nf-core default), 'bowtie2', 'chromap' or 'star'. Each mode takes a pre-built index (bwa_index directory / bowtie2_index directory / chromap_index file / star_index directory, e.g. from the upstream iGenomes bundle) — or derives it from the reference FASTA with the gated builders below, mirroring the upstream PREPARE_GENOME index branches (make_bwa_index / make_bowtie2_index / make_chromap_index / make_star_index; point the corresponding index config at the generated results/... path in that case).",
+        "description": "Alignment / filtering. aligner selects the read aligner: 'bwa' (the nf-core default), 'bowtie2', 'chromap' or 'star'. Each mode takes a pre-built index (bwa_index directory / bowtie2_index directory / chromap_index file / star_index directory, e.g. from the upstream iGenomes bundle) \u2014 or derives it from the reference FASTA with the gated builders below, mirroring the upstream PREPARE_GENOME index branches (make_bwa_index / make_bowtie2_index / make_chromap_index / make_star_index; point the corresponding index config at the generated results/... path in that case).",
         "key": "aligner",
         "used_by": [
           "align::bowtie2_align",
@@ -4268,7 +4268,7 @@
       },
       {
         "default": false,
-        "description": "Reference preparation — ports of the upstream PREPARE_GENOME steps that can run on the port's plain reference files (all off by default). When enabled, point the corresponding input above at the generated file, e.g. gene_bed = \"results/genome/gene.bed\" with make_gene_bed = true; chrom_sizes = \"results/genome/chrom.sizes\" and fai = \"results/genome/genome.fa.fai\" with make_chrom_sizes = true; bwa_index = \"results/bwa/index\" with make_bwa_index = true; bowtie2_index = \"results/bowtie2/index\" with make_bowtie2_index = true; chromap_index = \"results/chromap/index/genome.index\" with make_chromap_index = true.",
+        "description": "Reference preparation \u2014 ports of the upstream PREPARE_GENOME steps that can run on the port's plain reference files (all off by default). When enabled, point the corresponding input above at the generated file, e.g. gene_bed = \"results/genome/gene.bed\" with make_gene_bed = true; chrom_sizes = \"results/genome/chrom.sizes\" and fai = \"results/genome/genome.fa.fai\" with make_chrom_sizes = true; bwa_index = \"results/bwa/index\" with make_bwa_index = true; bowtie2_index = \"results/bowtie2/index\" with make_bowtie2_index = true; chromap_index = \"results/chromap/index/genome.index\" with make_chromap_index = true.",
         "key": "make_gene_bed",
         "used_by": [
           "reference::gtf2bed"
@@ -4320,7 +4320,7 @@
       },
       {
         "default": false,
-        "description": "Peaks — broad mode is the nf-core default (narrow_peak = false); setting narrow_peak = true switches the whole peak chain (MACS3 narrowPeak calling, FRiP/annotation/QC, consensus, IGV and MultiQC) to the upstream narrow_peak layout.",
+        "description": "Peaks \u2014 broad mode is the nf-core default (narrow_peak = false); setting narrow_peak = true switches the whole peak chain (MACS3 narrowPeak calling, FRiP/annotation/QC, consensus, IGV and MultiQC) to the upstream narrow_peak layout.",
         "key": "narrow_peak",
         "used_by": [
           "consensus::annotate_boolean_peaks",
@@ -4359,7 +4359,7 @@
           "C1_REP1",
           "C1_REP2"
         ],
-        "description": "Sample metadata. pair_ids MUST be kept in sync with [[pairs]] (the oxo-flow analogue of the nf-core samplesheet meta.id column). ip_ids lists the samples that get peak calling — upstream only runs MACS3 for samples that have a control; the port mirrors this with per-pair rules whose {control} input is empty for control-only samples and skipped via `optional = true`.",
+        "description": "Sample metadata. pair_ids MUST be kept in sync with [[pairs]] (the oxo-flow analogue of the nf-core samplesheet meta.id column). ip_ids lists the samples that get peak calling \u2014 upstream only runs MACS3 for samples that have a control; the port mirrors this with per-pair rules whose {control} input is empty for control-only samples and skipped via `optional = true`.",
         "key": "pair_ids",
         "used_by": [],
         "value_type": "array"
@@ -4612,7 +4612,7 @@
       },
       {
         "default": "",
-        "description": "params.blacklist — include-regions BED (complement of ENCODE",
+        "description": "params.blacklist \u2014 include-regions BED (complement of ENCODE",
         "key": "blacklist",
         "used_by": [
           "bamtools_filter",
@@ -4622,7 +4622,7 @@
       },
       {
         "default": "",
-        "description": "params.bowtie2 — index prefix (.rev.1.bt2 etc. beside it) for aligner=\"bowtie2\"",
+        "description": "params.bowtie2 \u2014 index prefix (.rev.1.bt2 etc. beside it) for aligner=\"bowtie2\"",
         "key": "bowtie2_index",
         "used_by": [
           "alt::bowtie2_align"
@@ -4639,7 +4639,7 @@
       },
       {
         "default": "test/fixtures/genome/genome.fa",
-        "description": "params.bwa — index prefix (.amb/.ann/.bwt/.pac/.sa beside it)",
+        "description": "params.bwa \u2014 index prefix (.amb/.ann/.bwt/.pac/.sa beside it)",
         "key": "bwa_index",
         "used_by": [
           "bwa_mem",
@@ -4661,7 +4661,7 @@
       },
       {
         "default": "",
-        "description": "params.chromap — index file for aligner=\"chromap\"",
+        "description": "params.chromap \u2014 index file for aligner=\"chromap\"",
         "key": "chromap_index",
         "used_by": [
           "alt::chromap_align"
@@ -4722,7 +4722,7 @@
       },
       {
         "default": false,
-        "description": "params.keep_mito — keep mitochondrial reads when mito_name set",
+        "description": "params.keep_mito \u2014 keep mitochondrial reads when mito_name set",
         "key": "keep_mito",
         "used_by": [
           "mito::genome_blacklist_regions"
@@ -4761,7 +4761,7 @@
       },
       {
         "default": "",
-        "description": "params.mito_name, e.g. \"chrM\" — enables mitochondrial filtering (needs config.chrom_sizes)",
+        "description": "params.mito_name, e.g. \"chrM\" \u2014 enables mitochondrial filtering (needs config.chrom_sizes)",
         "key": "mito_name",
         "used_by": [
           "bamtools_filter",
@@ -4869,7 +4869,7 @@
       },
       {
         "default": 8,
-        "description": "GB passed to picard -Xmx. Previously derived from the rule's 36G resource budget (Xmx≈30G), which thrash-killed the JVM on a 3.7 GB machine (live run); the resource budget still drives scheduling.",
+        "description": "GB passed to picard -Xmx. Previously derived from the rule's 36G resource budget (Xmx\u224830G), which thrash-killed the JVM on a 3.7 GB machine (live run); the resource budget still drives scheduling.",
         "key": "picard_xmx_gb",
         "used_by": [
           "picard_markduplicates",
@@ -4889,7 +4889,7 @@
       },
       {
         "default": "",
-        "description": "params.blacklist — raw ENCODE blacklist BED (complemented into include-regions)",
+        "description": "params.blacklist \u2014 raw ENCODE blacklist BED (complemented into include-regions)",
         "key": "raw_blacklist",
         "used_by": [
           "bamtools_filter",
@@ -4997,7 +4997,7 @@
       },
       {
         "default": false,
-        "description": "params.skip_peak_annotation (default false — HOMER annotation on by default, as upstream)",
+        "description": "params.skip_peak_annotation (default false \u2014 HOMER annotation on by default, as upstream)",
         "key": "skip_peak_annotation",
         "used_by": [
           "cons::homer_annotatepeaks_consensus",
@@ -5045,7 +5045,7 @@
       },
       {
         "default": true,
-        "description": "params.skip_preseq (upstream default true — preseq off by default)",
+        "description": "params.skip_preseq (upstream default true \u2014 preseq off by default)",
         "key": "skip_preseq",
         "used_by": [
           "qce::preseq_lcextrap"
@@ -5072,7 +5072,7 @@
       },
       {
         "default": "",
-        "description": "params.star — STAR genome dir (built by STAR_GENOMEGENERATE upstream) for aligner=\"star\"",
+        "description": "params.star \u2014 STAR genome dir (built by STAR_GENOMEGENERATE upstream) for aligner=\"star\"",
         "key": "star_index",
         "used_by": [
           "alt::star_align"
@@ -5098,23 +5098,121 @@
         "default": false,
         "key": "accel",
         "used_by": [
-          "trimgalore"
+          "trimgalore",
+          "trimgalore_se"
         ],
         "value_type": "bool"
       },
       {
         "default": "bismark",
-        "description": "Only the 'bismark' (bowtie2) aligner is ported. 'bismark_hisat', 'bwameth', 'bwamem' are NOT ported (see README fidelity table).",
+        "description": "Aligner (upstream: --aligner, default 'bismark'). One of: 'bismark'       - bowtie2, the default main path 'bismark_hisat' - hisat2 (needs a --known_splices GTF for splice sites) 'bwameth'       - bwa-meth (needs a --use_mem2 flag to use the mem2 index) 'bwamem'        - BWA-MEM (TAPS-optimized)",
         "key": "aligner",
-        "used_by": [],
+        "used_by": [
+          "bedtools_intersect",
+          "bedtools_intersect_bwameth",
+          "bedtools_intersect_bwameth_chg",
+          "bedtools_intersect_bwameth_chh",
+          "bismark_align",
+          "bismark_align_se",
+          "bismark_coverage2cytosine",
+          "bismark_deduplicate",
+          "bismark_deduplicate_se",
+          "bismark_genomepreparation",
+          "bismark_methylationextractor",
+          "bismark_methylationextractor_se",
+          "bismark_report",
+          "bismark_report_se",
+          "bismark_summary",
+          "bismark_untar",
+          "bwa_index",
+          "bwa_mem",
+          "bwameth_align",
+          "bwameth_index",
+          "methyldackel_extract",
+          "methyldackel_extract_allcontexts",
+          "methyldackel_extract_methylkit",
+          "methyldackel_mbias",
+          "multiqc",
+          "multiqc_bwamem",
+          "multiqc_bwameth",
+          "picard_addorreplacereadgroups",
+          "picard_collecthsmetrics",
+          "picard_collecthsmetrics_alt",
+          "picard_markduplicates",
+          "picard_markduplicates_bwamem",
+          "preseq_lcextrap",
+          "preseq_lcextrap_alt",
+          "qualimap_bamqc",
+          "qualimap_bamqc_alt",
+          "rastair_call_bwamem",
+          "rastair_call_bwameth",
+          "rastair_mbias_bwamem",
+          "rastair_mbias_bwameth",
+          "rastair_mbiasparser",
+          "rastair_methylkit",
+          "samtools_faidx",
+          "samtools_flagstat",
+          "samtools_idxstats",
+          "samtools_index",
+          "samtools_index_alignment",
+          "samtools_index_deduplicated",
+          "samtools_index_deduplicated_bwamem",
+          "samtools_sort",
+          "samtools_sort_alignment",
+          "samtools_stats"
+        ],
         "value_type": "string"
+      },
+      {
+        "default": false,
+        "description": "Methyldackel options (upstream params with the same defaults, active on the bwameth branch when TAPS is off)",
+        "key": "all_contexts",
+        "used_by": [
+          "bedtools_intersect_bwameth_chg",
+          "bedtools_intersect_bwameth_chh",
+          "methyldackel_extract",
+          "methyldackel_extract_allcontexts",
+          "methyldackel_extract_methylkit",
+          "methyldackel_mbias"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "",
+        "key": "bamqc_regions_file",
+        "used_by": [
+          "qualimap_bamqc",
+          "qualimap_bamqc_alt"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "description": "Prebuilt Bismark index archive (.tar.gz/.tar.bz2, as produced by bismark_genome_preparation). Empty string (default) = build the index from config.fasta (upstream default). When set, the archive is untarred into refs/BismarkIndex and the build is skipped, like the upstream UNTAR module.",
+        "key": "bismark_index",
+        "used_by": [
+          "bismark_genomepreparation",
+          "bismark_untar"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": true,
+        "description": "Concatenate multi-pair fastqs (upstream: CAT_FASTQ \u2014 always active for samples with >1 fastq pair; upstream has no param for it). Set to false only when every sample has a single pair: multi-pair samples would then lack the merged reads the downstream rules consume.",
+        "key": "cat_fastq",
+        "used_by": [
+          "cat_fastq_r1",
+          "cat_fastq_r2"
+        ],
+        "value_type": "bool"
       },
       {
         "default": 0,
         "description": "Trimming options (upstream params with the same defaults)",
         "key": "clip_r1",
         "used_by": [
-          "trimgalore"
+          "trimgalore",
+          "trimgalore_se"
         ],
         "value_type": "int"
       },
@@ -5127,11 +5225,27 @@
         "value_type": "int"
       },
       {
+        "default": false,
+        "description": "Collect Picard HS metrics within the targeted-sequencing branch (upstream: --collecthsmetrics, default false)",
+        "key": "collecthsmetrics",
+        "used_by": [
+          "multiqc",
+          "multiqc_bwameth",
+          "picard_bedtointervallist",
+          "picard_collecthsmetrics",
+          "picard_collecthsmetrics_alt",
+          "picard_createsequencedictionary",
+          "samtools_faidx"
+        ],
+        "value_type": "bool"
+      },
+      {
         "default": true,
         "description": "The port's DAG consumes the merged (--comprehensive) methylation-call outputs, so the default differs from upstream (false): the per-strand split files would leave the declared outputs unmoved.",
         "key": "comprehensive",
         "used_by": [
-          "bismark_methylationextractor"
+          "bismark_methylationextractor",
+          "bismark_methylationextractor_se"
         ],
         "value_type": "bool"
       },
@@ -5149,16 +5263,21 @@
         "key": "em_seq",
         "used_by": [
           "bismark_align",
-          "trimgalore"
+          "trimgalore",
+          "trimgalore_se"
         ],
         "value_type": "bool"
       },
       {
         "default": "test/fixtures/refs/genome.fa",
-        "description": "Reference genome (upstream: --fasta). Uncompressed FASTA; the port always builds the Bismark index from it (upstream default when --bismark_index is not supplied). Point this at your genome; the repo default ships the tiny test fixture.",
+        "description": "Reference genome (upstream: --fasta). Uncompressed FASTA (a .gz FASTA is decompressed automatically before indexing, like the upstream GUNZIP module). The Bismark index is built from it automatically (upstream default when --bismark_index is not supplied). Point this at your genome; the repo default ships the tiny test fixture.",
         "key": "fasta",
         "used_by": [
-          "bismark_genomepreparation"
+          "bismark_genomepreparation",
+          "bwa_index",
+          "bwameth_align",
+          "bwameth_index",
+          "samtools_faidx"
         ],
         "value_type": "string"
       },
@@ -5166,7 +5285,8 @@
         "default": 0,
         "key": "ignore_3prime_r1",
         "used_by": [
-          "bismark_methylationextractor"
+          "bismark_methylationextractor",
+          "bismark_methylationextractor_se"
         ],
         "value_type": "int"
       },
@@ -5179,10 +5299,22 @@
         "value_type": "int"
       },
       {
+        "default": false,
+        "key": "ignore_flags",
+        "used_by": [
+          "methyldackel_extract",
+          "methyldackel_extract_allcontexts",
+          "methyldackel_extract_methylkit",
+          "methyldackel_mbias"
+        ],
+        "value_type": "bool"
+      },
+      {
         "default": 0,
         "key": "ignore_r1",
         "used_by": [
-          "bismark_methylationextractor"
+          "bismark_methylationextractor",
+          "bismark_methylationextractor_se"
         ],
         "value_type": "int"
       },
@@ -5195,10 +5327,21 @@
         "value_type": "int"
       },
       {
+        "default": "",
+        "description": "bismark_hisat splice-site GTF (upstream: --known_splices, default empty). When set and aligner = 'bismark_hisat', bismark is given the splice sites extracted from this file (upstream uses process substitution for the same data).",
+        "key": "known_splices",
+        "used_by": [
+          "bismark_align",
+          "bismark_align_se"
+        ],
+        "value_type": "string"
+      },
+      {
         "default": 0,
         "key": "length_trim",
         "used_by": [
-          "trimgalore"
+          "trimgalore",
+          "trimgalore_se"
         ],
         "value_type": "int"
       },
@@ -5206,7 +5349,8 @@
         "default": false,
         "key": "local_alignment",
         "used_by": [
-          "bismark_align"
+          "bismark_align",
+          "bismark_align_se"
         ],
         "value_type": "bool"
       },
@@ -5219,12 +5363,41 @@
         "value_type": "string"
       },
       {
+        "default": false,
+        "key": "merge_context",
+        "used_by": [
+          "methyldackel_extract",
+          "methyldackel_extract_allcontexts",
+          "methyldackel_extract_methylkit"
+        ],
+        "value_type": "bool"
+      },
+      {
         "default": "",
         "key": "meth_cutoff",
         "used_by": [
-          "bismark_methylationextractor"
+          "bismark_methylationextractor",
+          "bismark_methylationextractor_se"
         ],
         "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "methyl_kit",
+        "used_by": [
+          "methyldackel_extract_methylkit"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": 0,
+        "key": "min_depth",
+        "used_by": [
+          "methyldackel_extract",
+          "methyldackel_extract_allcontexts",
+          "methyldackel_extract_methylkit"
+        ],
+        "value_type": "int"
       },
       {
         "default": "",
@@ -5239,7 +5412,9 @@
         "description": "MultiQC",
         "key": "multiqc_title",
         "used_by": [
-          "multiqc"
+          "multiqc",
+          "multiqc_bwamem",
+          "multiqc_bwameth"
         ],
         "value_type": "string"
       },
@@ -5247,7 +5422,8 @@
         "default": 0,
         "key": "nextseq_trim",
         "used_by": [
-          "trimgalore"
+          "trimgalore",
+          "trimgalore_se"
         ],
         "value_type": "int"
       },
@@ -5264,7 +5440,8 @@
         "key": "nomeseq",
         "used_by": [
           "bismark_coverage2cytosine",
-          "bismark_methylationextractor"
+          "bismark_methylationextractor",
+          "bismark_methylationextractor_se"
         ],
         "value_type": "bool"
       },
@@ -5272,7 +5449,8 @@
         "default": false,
         "key": "non_directional",
         "used_by": [
-          "bismark_align"
+          "bismark_align",
+          "bismark_align_se"
         ],
         "value_type": "bool"
       },
@@ -5280,7 +5458,8 @@
         "default": 0.6,
         "key": "num_mismatches",
         "used_by": [
-          "bismark_align"
+          "bismark_align",
+          "bismark_align_se"
         ],
         "value_type": "float"
       },
@@ -5288,18 +5467,61 @@
         "default": "results",
         "key": "out_dir",
         "used_by": [
+          "bedtools_intersect",
+          "bedtools_intersect_bwameth",
+          "bedtools_intersect_bwameth_chg",
+          "bedtools_intersect_bwameth_chh",
           "bismark_align",
+          "bismark_align_se",
           "bismark_coverage2cytosine",
           "bismark_deduplicate",
+          "bismark_deduplicate_se",
           "bismark_methylationextractor",
+          "bismark_methylationextractor_se",
           "bismark_report",
+          "bismark_report_se",
           "bismark_summary",
+          "bwa_mem",
+          "bwameth_align",
+          "cat_fastq_r1",
+          "cat_fastq_r2",
           "fastqc",
+          "fastqc_se",
+          "methyldackel_extract",
+          "methyldackel_extract_allcontexts",
+          "methyldackel_extract_methylkit",
+          "methyldackel_mbias",
           "multiqc",
+          "multiqc_bwamem",
+          "multiqc_bwameth",
           "multiqc_versions",
+          "picard_addorreplacereadgroups",
+          "picard_bedtointervallist",
+          "picard_collecthsmetrics",
+          "picard_collecthsmetrics_alt",
+          "picard_markduplicates",
+          "picard_markduplicates_bwamem",
+          "preseq_lcextrap",
+          "preseq_lcextrap_alt",
+          "qualimap_bamqc",
+          "qualimap_bamqc_alt",
+          "rastair_call_bwamem",
+          "rastair_call_bwameth",
+          "rastair_mbias_bwamem",
+          "rastair_mbias_bwameth",
+          "rastair_mbiasparser",
+          "rastair_methylkit",
+          "samtools_flagstat",
+          "samtools_idxstats",
           "samtools_index",
+          "samtools_index_alignment",
+          "samtools_index_deduplicated",
+          "samtools_index_deduplicated_bwamem",
           "samtools_sort",
-          "trimgalore"
+          "samtools_sort_alignment",
+          "samtools_stats",
+          "trimgalore",
+          "trimgalore_se"
         ],
         "value_type": "string"
       },
@@ -5308,7 +5530,9 @@
         "key": "pbat",
         "used_by": [
           "bismark_align",
-          "trimgalore"
+          "bismark_align_se",
+          "trimgalore",
+          "trimgalore_se"
         ],
         "value_type": "bool"
       },
@@ -5318,7 +5542,9 @@
         "key": "raw_dir",
         "used_by": [
           "fastqc",
-          "trimgalore"
+          "fastqc_se",
+          "trimgalore",
+          "trimgalore_se"
         ],
         "value_type": "string"
       },
@@ -5326,7 +5552,8 @@
         "default": false,
         "key": "relax_mismatches",
         "used_by": [
-          "bismark_align"
+          "bismark_align",
+          "bismark_align_se"
         ],
         "value_type": "bool"
       },
@@ -5336,7 +5563,54 @@
         "key": "rrbs",
         "used_by": [
           "bismark_deduplicate",
-          "trimgalore"
+          "bismark_deduplicate_se",
+          "multiqc_bwameth",
+          "picard_markduplicates",
+          "samtools_index_deduplicated",
+          "trimgalore",
+          "trimgalore_se"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "run_preseq",
+        "used_by": [
+          "multiqc",
+          "multiqc_bwamem",
+          "multiqc_bwameth",
+          "preseq_lcextrap",
+          "preseq_lcextrap_alt"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "description": "Optional QC branches (upstream params, all off by default)",
+        "key": "run_qualimap",
+        "used_by": [
+          "multiqc",
+          "multiqc_bwamem",
+          "multiqc_bwameth",
+          "qualimap_bamqc",
+          "qualimap_bamqc_alt"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "run_targeted_sequencing",
+        "used_by": [
+          "bedtools_intersect",
+          "bedtools_intersect_bwameth",
+          "bedtools_intersect_bwameth_chg",
+          "bedtools_intersect_bwameth_chh",
+          "multiqc",
+          "multiqc_bwameth",
+          "picard_bedtointervallist",
+          "picard_collecthsmetrics",
+          "picard_collecthsmetrics_alt",
+          "picard_createsequencedictionary"
         ],
         "value_type": "bool"
       },
@@ -5345,7 +5619,23 @@
         "key": "single_cell",
         "used_by": [
           "bismark_align",
-          "trimgalore"
+          "bismark_align_se",
+          "trimgalore",
+          "trimgalore_se"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "description": "Single-end reads (upstream: the samplesheet `single_end` column, absent fastq_2 -> single_end). Off by default (all samples paired-end, the byte-identical default). Set to true AND uncomment [workflow] metadata_file to route samples per-row: metadata/samples.tsv lists each sample's `endedness` (SE or PE); a sample without a row \u2014 or with no metadata_file at all \u2014 stays paired-end. The SE branches are separate gated rules mirroring the upstream per-sample routing (bismark chain: fastqc_se -> trimgalore_se -> bismark_align_se -> bismark_deduplicate_se -> bismark_methylationextractor_se -> bismark_report_se; the bwameth/ bwamem aligners take the trimmed single read directly). Requires oxo-flow >= 0.17.0: on older engines `{meta.*}` is inert, so the SE rules stay closed while this key is false.",
+        "key": "single_end_mode",
+        "used_by": [
+          "bismark_align_se",
+          "bismark_deduplicate_se",
+          "bismark_methylationextractor_se",
+          "bismark_report_se",
+          "fastqc_se",
+          "trimgalore_se"
         ],
         "value_type": "bool"
       },
@@ -5353,7 +5643,15 @@
         "default": false,
         "key": "skip_deduplication",
         "used_by": [
-          "bismark_deduplicate"
+          "bismark_deduplicate",
+          "bismark_deduplicate_se",
+          "multiqc_bwamem",
+          "multiqc_bwameth",
+          "picard_addorreplacereadgroups",
+          "picard_markduplicates",
+          "picard_markduplicates_bwamem",
+          "samtools_index_deduplicated",
+          "samtools_index_deduplicated_bwamem"
         ],
         "value_type": "bool"
       },
@@ -5362,7 +5660,8 @@
         "description": "Skip options (upstream: --skip_fastqc / --skip_trimming / --skip_deduplication / --skip_multiqc). Same defaults as upstream.",
         "key": "skip_fastqc",
         "used_by": [
-          "fastqc"
+          "fastqc",
+          "fastqc_se"
         ],
         "value_type": "bool"
       },
@@ -5370,7 +5669,9 @@
         "default": false,
         "key": "skip_multiqc",
         "used_by": [
-          "multiqc"
+          "multiqc",
+          "multiqc_bwamem",
+          "multiqc_bwameth"
         ],
         "value_type": "bool"
       },
@@ -5378,7 +5679,8 @@
         "default": false,
         "key": "skip_trimming",
         "used_by": [
-          "trimgalore"
+          "trimgalore",
+          "trimgalore_se"
         ],
         "value_type": "bool"
       },
@@ -5386,21 +5688,60 @@
         "default": false,
         "key": "skip_trimming_presets",
         "used_by": [
-          "trimgalore"
+          "trimgalore",
+          "trimgalore_se"
         ],
         "value_type": "bool"
       },
       {
         "default": false,
         "key": "slamseq",
-        "used_by": [],
+        "used_by": [
+          "bismark_genomepreparation"
+        ],
         "value_type": "bool"
+      },
+      {
+        "default": false,
+        "description": "TAPS protocol (upstream: --taps, default false). Runs rastair conversion on the alignments. Only meaningful with the bwameth or bwamem aligners (upstream builds no fasta index for TAPS on the bismark aligners, so rastair silently produces nothing there \u2014 replicated).",
+        "key": "taps",
+        "used_by": [
+          "bedtools_intersect",
+          "bedtools_intersect_bwameth",
+          "bedtools_intersect_bwameth_chg",
+          "bedtools_intersect_bwameth_chh",
+          "methyldackel_extract",
+          "methyldackel_extract_allcontexts",
+          "methyldackel_extract_methylkit",
+          "methyldackel_mbias",
+          "picard_collecthsmetrics",
+          "picard_collecthsmetrics_alt",
+          "rastair_call_bwameth",
+          "rastair_mbias_bwameth",
+          "rastair_mbiasparser",
+          "rastair_methylkit"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "",
+        "description": "Targeted-sequencing inputs (upstream: --target_regions_file / --bamqc_regions_file, default empty)",
+        "key": "target_regions_file",
+        "used_by": [
+          "bedtools_intersect",
+          "bedtools_intersect_bwameth",
+          "bedtools_intersect_bwameth_chg",
+          "bedtools_intersect_bwameth_chh",
+          "picard_bedtointervallist"
+        ],
+        "value_type": "string"
       },
       {
         "default": 0,
         "key": "three_prime_clip_r1",
         "used_by": [
-          "trimgalore"
+          "trimgalore",
+          "trimgalore_se"
         ],
         "value_type": "int"
       },
@@ -5416,7 +5757,17 @@
         "default": false,
         "key": "unmapped",
         "used_by": [
-          "bismark_align"
+          "bismark_align",
+          "bismark_align_se"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "description": "bwameth index variant (upstream: --use_mem2, default false).",
+        "key": "use_mem2",
+        "used_by": [
+          "bwameth_index"
         ],
         "value_type": "bool"
       },
@@ -5425,7 +5776,9 @@
         "key": "zymo",
         "used_by": [
           "bismark_align",
-          "trimgalore"
+          "bismark_align_se",
+          "trimgalore",
+          "trimgalore_se"
         ],
         "value_type": "bool"
       }
@@ -5703,7 +6056,7 @@
       },
       {
         "default": "bambu",
-        "description": "-- Quantification and differential analysis (upstream defaults: on, but gated upstream to protocol cDNA/directRNA — never on the DNA path)",
+        "description": "-- Quantification and differential analysis (upstream defaults: on, but gated upstream to protocol cDNA/directRNA \u2014 never on the DNA path)",
         "key": "quantification_method",
         "used_by": [
           "bambu",
@@ -5857,7 +6210,7 @@
       },
       {
         "default": false,
-        "description": "-- RNA modification analysis (upstream default: on, gated to protocol directRNA; the fast5 dir comes from the upstream samplesheet nanopolish_fast5 column — the port takes one dir for all samples)",
+        "description": "-- RNA modification analysis (upstream default: on, gated to protocol directRNA; the fast5 dir comes from the upstream samplesheet nanopolish_fast5 column \u2014 the port takes one dir for all samples)",
         "key": "skip_modification_analysis",
         "used_by": [
           "m6anet_dataprep",
@@ -6062,7 +6415,7 @@
       },
       {
         "default": false,
-        "description": "upstream params.filter_duplicates (default false) — passed to PICARD_MARKDUPLICATES as REMOVE_DUPLICATES=true when set",
+        "description": "upstream params.filter_duplicates (default false) \u2014 passed to PICARD_MARKDUPLICATES as REMOVE_DUPLICATES=true when set",
         "key": "filter_duplicates",
         "used_by": [
           "markduplicates",
@@ -6085,7 +6438,7 @@
       },
       {
         "default": "reference/freyja_db",
-        "description": "upstream params.freyja_db_name — where FREYJA_UPDATE writes its download (upstream default 'freyja_db'; the port points into reference/)",
+        "description": "upstream params.freyja_db_name \u2014 where FREYJA_UPDATE writes its download (upstream default 'freyja_db'; the port points into reference/)",
         "key": "freyja_db_name",
         "used_by": [
           "freyja_boot_updated",
@@ -6107,7 +6460,7 @@
       },
       {
         "default": "test/fixtures/refs/freyja_lineages.json",
-        "description": "freyja's meta format is the curated_lineages JSON (buildLineageMap json.loads it — live: the CSV default died in freyja boot with JSONDecodeError); the CSV sibling is kept as the barcodes-side table",
+        "description": "freyja's meta format is the curated_lineages JSON (buildLineageMap json.loads it \u2014 live: the CSV default died in freyja boot with JSONDecodeError); the CSV sibling is kept as the barcodes-side table",
         "key": "freyja_lineages",
         "used_by": [
           "freyja_boot",
@@ -6179,7 +6532,7 @@
       },
       {
         "default": "human",
-        "description": "upstream params.kraken2_db_name — the library KRAKEN2_BUILD downloads when kraken2_db is left empty (gated rule kraken2_build)",
+        "description": "upstream params.kraken2_db_name \u2014 the library KRAKEN2_BUILD downloads when kraken2_db is left empty (gated rule kraken2_build)",
         "key": "kraken2_db_name",
         "used_by": [
           "kraken2_build"
@@ -6205,7 +6558,7 @@
       },
       {
         "default": 1000,
-        "description": "upstream params.min_mapped_reads — the per-sample channel DROP is a documented runtime-filter deviation (no dynamic DAG); the reporting half (fail_mapped_samples_mqc.tsv in the MultiQC data) is ported inside the multiqc rule",
+        "description": "upstream params.min_mapped_reads \u2014 the per-sample channel DROP is a documented runtime-filter deviation (no dynamic DAG); the reporting half (fail_mapped_samples_mqc.tsv in the MultiQC data) is ported inside the multiqc rule",
         "key": "min_mapped_reads",
         "used_by": [
           "multiqc"
@@ -6370,7 +6723,7 @@
       },
       {
         "default": false,
-        "description": "upstream params.save_mpileup — when true, call_variants_ivar tees the samtools mpileup stream to variants/ivar/{sample}.mpileup (off by default, exactly like upstream; the port emits an empty placeholder when false so the declared output stays present)",
+        "description": "upstream params.save_mpileup \u2014 when true, call_variants_ivar tees the samtools mpileup stream to variants/ivar/{sample}.mpileup (off by default, exactly like upstream; the port emits an empty placeholder when false so the declared output stays present)",
         "key": "save_mpileup",
         "used_by": [
           "call_variants_ivar"
@@ -6379,7 +6732,7 @@
       },
       {
         "default": false,
-        "description": "upstream params.save_trimmed_fail — when true, fastp keeps the reads that failed filtering (--failed_out + --unpaired1/2); off by default, exactly like upstream (empty placeholders when false)",
+        "description": "upstream params.save_trimmed_fail \u2014 when true, fastp keeps the reads that failed filtering (--failed_out + --unpaired1/2); off by default, exactly like upstream (empty placeholders when false)",
         "key": "save_trimmed_fail",
         "used_by": [
           "fastp"
@@ -6388,7 +6741,7 @@
       },
       {
         "default": false,
-        "description": "upstream params.save_unaligned — NOT ported as a gate: the Kraken2 unclassified reads feed the assembly branch (upstream channel wiring), so they always land in results/kraken2/ — the flag is effectively always on in the port (benign over-emission vs upstream's default publish)",
+        "description": "upstream params.save_unaligned \u2014 NOT ported as a gate: the Kraken2 unclassified reads feed the assembly branch (upstream channel wiring), so they always land in results/kraken2/ \u2014 the flag is effectively always on in the port (benign over-emission vs upstream's default publish)",
         "key": "save_unaligned",
         "used_by": [],
         "value_type": "bool"
@@ -6719,7 +7072,7 @@
       },
       {
         "default": "ivar",
-        "description": "--- Variant calling (upstream params.variant_caller defaults to 'ivar' for the amplicon protocol and 'bcftools' otherwise; both branches are ported as when-gated rules). The metagenomic branch auto-runs the bcftools caller regardless of this key — upstream derives variant_caller in nextflow.config (params.variant_caller = protocol == 'metagenomic' ? 'bcftools' : 'ivar'), and the port mirrors that derivation in the wgs rules' when conditions, so a metagenomic run needs no extra --arg ---",
+        "description": "--- Variant calling (upstream params.variant_caller defaults to 'ivar' for the amplicon protocol and 'bcftools' otherwise; both branches are ported as when-gated rules). The metagenomic branch auto-runs the bcftools caller regardless of this key \u2014 upstream derives variant_caller in nextflow.config (params.variant_caller = protocol == 'metagenomic' ? 'bcftools' : 'ivar'), and the port mirrors that derivation in the wgs rules' when conditions, so a metagenomic run needs no extra --arg ---",
         "key": "variant_caller",
         "used_by": [
           "additional_annotation",
@@ -8320,7 +8673,7 @@
       },
       {
         "default": true,
-        "description": "PCA (upstream: pca.activate / pca.labels). pca_variables is the derived upstream list (variables_of_interest + batch_effects + labels), kept explicit here — keep it in sync with the diffexp keys below.",
+        "description": "PCA (upstream: pca.activate / pca.labels). pca_variables is the derived upstream list (variables_of_interest + batch_effects + labels), kept explicit here \u2014 keep it in sync with the diffexp keys below.",
         "key": "pca_activate",
         "used_by": [
           "pca_jointly_handled",
@@ -8374,7 +8727,7 @@
       },
       {
         "default": false,
-        "description": "Single-end mode (upstream decides per sample from the units.tsv fq2/sra columns; the port applies it globally — engine rules have fixed input arities). Single-end units provide only <unit-key>_R1.fastq.gz. Default false = the paired-end path.",
+        "description": "Single-end mode (upstream decides per sample from the units.tsv fq2/sra columns; the port applies it globally \u2014 engine rules have fixed input arities). Single-end units provide only <unit-key>_R1.fastq.gz. Default false = the paired-end path.",
         "key": "single_end",
         "used_by": [
           "fastp_pe",
@@ -8388,7 +8741,7 @@
       },
       {
         "default": "",
-        "description": "SRA accessions to download with fasterq-dump (upstream get_sra branch: units whose fq1/fq2 are empty carry an sra accession). Comma-joined list of accessions; reads land in sra/{accession}_1.fastq / _2.fastq (upstream naming). Default empty = no SRA download. Downloaded reads are NOT auto-fed into trimming/alignment (the engine cannot bind per-unit inputs) — place them per the raw_dir naming convention to use them.",
+        "description": "SRA accessions to download with fasterq-dump (upstream get_sra branch: units whose fq1/fq2 are empty carry an sra accession). Comma-joined list of accessions; reads land in sra/{accession}_1.fastq / _2.fastq (upstream naming). Default empty = no SRA download. Downloaded reads are NOT auto-fed into trimming/alignment (the engine cannot bind per-unit inputs) \u2014 place them per the raw_dir naming convention to use them.",
         "key": "sra_accessions",
         "used_by": [
           "get_sra"
@@ -8658,7 +9011,7 @@
       },
       {
         "default": false,
-        "description": "Skip the ref:: download rules (genome, annotation, VEP cache/plugins, pangenome, REVEL, known variants — ~5 GB of public databases). Set to true when you have pre-placed the files at the resource paths the rules declare (see README \"Reference databases\"); the downloads are hardcoded upstream URLs and need unimpeded network access.",
+        "description": "Skip the ref:: download rules (genome, annotation, VEP cache/plugins, pangenome, REVEL, known variants \u2014 ~5 GB of public databases). Set to true when you have pre-placed the files at the resource paths the rules declare (see README \"Reference databases\"); the downloads are hardcoded upstream URLs and need unimpeded network access.",
         "key": "skip_ref_downloads",
         "used_by": [
           "ref::download_revel",
@@ -8673,7 +9026,7 @@
       },
       {
         "default": false,
-        "description": "upstream config: trimming (get_sra / fastp rules). The default path has no trimming configured — reads pass through mapping::merge_trimmed_fastqs.",
+        "description": "upstream config: trimming (get_sra / fastp rules). The default path has no trimming configured \u2014 reads pass through mapping::merge_trimmed_fastqs.",
         "key": "trimming_activate",
         "used_by": [
           "trimming::fastp_pe",
@@ -10056,7 +10409,7 @@
       },
       {
         "default": "SCT",
-        "description": "assay to analyse (\"SCT\" or \"RNA\") — upstream default \"SCT\"",
+        "description": "assay to analyse (\"SCT\" or \"RNA\") \u2014 upstream default \"SCT\"",
         "key": "assay",
         "used_by": [
           "config_export",
@@ -11095,7 +11448,7 @@
     "config": [
       {
         "default": "",
-        "description": "BED tracks used by mutation_flag — name/path TSV mirroring upstream softwares_params[genome].annotate_beds dict (empty = header-only, no flags)",
+        "description": "BED tracks used by mutation_flag \u2014 name/path TSV mirroring upstream softwares_params[genome].annotate_beds dict (empty = header-only, no flags)",
         "key": "annotate_beds_file",
         "used_by": [
           "make_region_bed_list"
@@ -11178,7 +11531,7 @@
       },
       {
         "default": false,
-        "description": "CNV branch (upstream somatic_cnv_list; mini-test default = [] -> off). Set true to run the ported subset (freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the upstream's custom containers, see rules/80_cnv.oxoflow).",
+        "description": "CNV branch (upstream somatic_cnv_list; mini-test default = [] -> off). Set true to run the ported subset (freec/sequenza/exomedepth/ASCAT \u2014 purple/amber/cobalt/facets need the upstream's custom containers, see rules/80_cnv.oxoflow).",
         "key": "cnv_enabled",
         "used_by": [
           "ASCAT_EXTRACT_PURITYPLOIDY",
@@ -11476,7 +11829,7 @@
       },
       {
         "default": "",
-        "description": "HMF tools (isofox; excluded for hg38_chr21 upstream — needs the multi-GB hmf_pipeline_resources tree, not shipped in the mini-test)",
+        "description": "HMF tools (isofox; excluded for hg38_chr21 upstream \u2014 needs the multi-GB hmf_pipeline_resources tree, not shipped in the mini-test)",
         "key": "hmftools_ensembl_data_dir",
         "used_by": [
           "isofox_call"
@@ -12001,7 +12354,7 @@
       },
       {
         "default": "",
-        "description": "Quant indexes are empty in the upstream hg38_chr21 test config — the RSEM/kallisto/salmon rules only run when explicitly targeted",
+        "description": "Quant indexes are empty in the upstream hg38_chr21 test config \u2014 the RSEM/kallisto/salmon rules only run when explicitly targeted",
         "key": "rsem_index",
         "used_by": [
           "cal_exp_RSEM"
@@ -12302,7 +12655,7 @@
       },
       {
         "default": "resources/softwares/TRUST4",
-        "description": "TRUST4 (upstream softwares_params[genome].trust4; git-cloned at rule runtime into trust4_dir when trust4_f is missing — not in default stages)",
+        "description": "TRUST4 (upstream softwares_params[genome].trust4; git-cloned at rule runtime into trust4_dir when trust4_f is missing \u2014 not in default stages)",
         "key": "trust4_dir",
         "used_by": [
           "TRUST4_TBCR"
@@ -12354,14 +12707,14 @@
           "lofreq",
           "freebayes"
         ],
-        "description": "Tumor-only callers (upstream run_params.tumor_only_caller; upstream default is [sage] — needs the custom hmftools container, so the port defaults to the seven portable callers, see rules/70_unpaired.oxoflow)",
+        "description": "Tumor-only callers (upstream run_params.tumor_only_caller; upstream default is [sage] \u2014 needs the custom hmftools container, so the port defaults to the seven portable callers, see rules/70_unpaired.oxoflow)",
         "key": "unpaired_caller_list",
         "used_by": [],
         "value_type": "array"
       },
       {
         "default": false,
-        "description": "VEP needs a local cache at {vep_data}/{vep_species} (~10GB download; the fixture kit does not ship it). The vcf2maf rules and the downstream MAF merge/flag/cancer-report tail gate on this flag — set true once the cache is in place (upstream fails hard without it).",
+        "description": "VEP needs a local cache at {vep_data}/{vep_species} (~10GB download; the fixture kit does not ship it). The vcf2maf rules and the downstream MAF merge/flag/cancer-report tail gate on this flag \u2014 set true once the cache is in place (upstream fails hard without it).",
         "key": "vep_cache_ready",
         "used_by": [
           "all",
@@ -12478,7 +12831,7 @@
       },
       {
         "default": "",
-        "description": "Upstream hg38_chr21 has no panel of normals (WES_PON: null) — leave empty",
+        "description": "Upstream hg38_chr21 has no panel of normals (WES_PON: null) \u2014 leave empty",
         "key": "wes_pon",
         "used_by": [
           "mutect2",
@@ -12510,7 +12863,7 @@
       },
       {
         "default": "D21122",
-        "description": "DB_ID — upstream: basename(metadata).replace(\".txt\", \"\").",
+        "description": "DB_ID \u2014 upstream: basename(metadata).replace(\".txt\", \"\").",
         "key": "db_id",
         "used_by": [
           "DGE_analysis",
@@ -12529,7 +12882,7 @@
       },
       {
         "default": false,
-        "description": "Email notification (upstream onsuccess + onerror). Keep off unless SMTP is configured — the [workflow] on_error hook reuses these same keys.",
+        "description": "Email notification (upstream onsuccess + onerror). Keep off unless SMTP is configured \u2014 the [workflow] on_error hook reuses these same keys.",
         "key": "mail",
         "used_by": [],
         "value_type": "bool"
@@ -12692,7 +13045,7 @@
       },
       {
         "default": "test/fixtures/reference/majiq_license.lic",
-        "description": "MAJIQ requires the upstream academic license file — place it at test/fixtures/reference/majiq_license.lic (obtain from MAJIQ) and set run_majiq = true. Upstream fails hard without the license; the port gates the whole MAJIQ chain on this flag instead (documented in the README fidelity table).",
+        "description": "MAJIQ requires the upstream academic license file \u2014 place it at test/fixtures/reference/majiq_license.lic (obtain from MAJIQ) and set run_majiq = true. Upstream fails hard without the license; the port gates the whole MAJIQ chain on this flag instead (documented in the README fidelity table).",
         "key": "majiq_license",
         "used_by": [
           "as_calling::majiq_build",
@@ -12821,7 +13174,7 @@
       },
       {
         "default": "test/fixtures/reference/STAR_index",
-        "description": "star_index_dir is auto-built below from test/fixtures/reference (tiny synthetic genome) — point it at a real GRCh38 STAR index for real runs.",
+        "description": "star_index_dir is auto-built below from test/fixtures/reference (tiny synthetic genome) \u2014 point it at a real GRCh38 STAR index for real runs.",
         "key": "star_index_dir",
         "used_by": [
           "alignment::star_align"
