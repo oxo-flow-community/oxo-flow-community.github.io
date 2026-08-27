@@ -12529,7 +12529,7 @@
       },
       {
         "default": false,
-        "description": "Email notification (upstream onsuccess). Keep off unless SMTP is configured.",
+        "description": "Email notification (upstream onsuccess + onerror). Keep off unless SMTP is configured — the [workflow] on_error hook reuses these same keys.",
         "key": "mail",
         "used_by": [],
         "value_type": "bool"
