@@ -2,7 +2,7 @@
 
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
 
-Unsupervised analysis of omics matrices: PCA, UMAP and densMAP embeddings (2D/3D), distance matrices, hierarchical clustering heatmaps, Leiden clustering across partition types and resolutions, clustree analysis, external and internal cluster validation with TOPSIS ranking, and static and interactive visualizations. A verified port of the default-parameter path of epigen/unsupervised_analysis v4.0.2 (Snakemake); all 52 rules and tool versions are pinned to the upstream release.
+Unsupervised analysis of omics matrices: PCA, UMAP and densMAP embeddings (2D/3D), distance matrices, hierarchical clustering heatmaps, Leiden clustering across partition types and resolutions, clustree analysis, external and internal cluster validation with TOPSIS ranking, static and interactive visualizations, per-feature dimred scatter plots (when-gated), and resolved-environment snapshots. A verified port of the default-parameter path of epigen/unsupervised_analysis v4.0.2 (Snakemake); all 61 rules and tool versions are pinned to the upstream release.
 
 | | |
 |---:|---|
@@ -116,6 +116,8 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - distance_matrix_features_correlation
 - distance_matrix_features_cosine
 - prep_feature_plot
+- plot_dimred_features_pca
+- plot_dimred_features_umap
 - leiden_RBConfigurationVertexPartition_0p5
 - leiden_RBConfigurationVertexPartition_1
 - leiden_RBConfigurationVertexPartition_1p5
@@ -157,6 +159,13 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - plot_indices_external
 - plot_indices_internal
 - annot_export
+- env_export_umap_leiden
+- env_export_clusterCrit
+- env_export_clustree
+- env_export_ComplexHeatmap
+- env_export_ggplot
+- env_export_plotly
+- env_export_pymcdm
 
 **Excluded**
 
@@ -165,7 +174,7 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 ## Fidelity
 
-Upstream rules and how each is ported (52 ported rules; every analysis step
+Upstream rules and how each is ported (61 ported rules; every analysis step
 of the default-parameter path is executed, none are stubbed):
 
 | Upstream rule | Port | Notes |
@@ -179,6 +188,7 @@ of the default-parameter path is executed, none are stubbed):
 | `leiden_cluster` | `leiden_RBConfigurationVertexPartition_{0.5,1,1.5,2,4}`, `leiden_ModularityVertexPartition_NA` (6) | partition_types x resolutions fan-out becomes explicit rules; graph always taken from the precomputed UMAP knn-graph |
 | `aggregate_clustering_results` | `aggregate_clustering_results` | upstream `run:` block ported to `scripts/aggregate_clustering.py` (input[0] metadata unused upstream, mirrored) |
 | `aggregate_all_clustering_results` | `aggregate_all_clustering_results` | `run:` block ported to `scripts/aggregate_all_clustering.py` |
+| `plot_dimred_features` | `plot_dimred_features_{pca,umap}` (2) | method fan-out (upstream appends "features" content only for PCA and UMAP); gated on `config.plot_dimred_features` — see porting note 7 |
 | `plot_dimred_metadata` | `plot_dimred_metadata_{pca,umap,densmap}` (3) | method fan-out; 2D only (upstream default n_components 2) |
 | `plot_dimred_clustering` | `plot_dimred_clustering_{pca,umap,densmap}` (3) | same |
 | `plot_pca_diagnostics` | `plot_pca_diagnostics` | variance/pairs/loadings/lollipop PNGs, mem 8000M |
@@ -193,10 +203,9 @@ of the default-parameter path is executed, none are stubbed):
 | `aggregate_rank_internal` | `aggregate_rank_internal` | TOPSIS ranking of the 6 internal indices |
 | `plot_indices` | `plot_indices_external`, `plot_indices_internal` (2) | type fan-out; external = 6 heatmaps, internal = 1 ranked heatmap |
 | `annot_export` | `annot_export` | `cp {input} {output}` |
-| `env_export` (7) | **not ported** | requires runtime `conda env export`; the pinned envs are committed under `envs/` instead (see README) |
-| `config_export` | **not ported** | dumps the in-memory Snakemake config; `[config]` in `main.oxoflow` documents the same values |
-| `plot_dimred_features` | **not ported** | upstream default `features_to_plot: []` produces no output on the default path |
-| `report/` generation | **not ported** | Snakemake report metadata has no oxo-flow counterpart |
+| `env_export` (7) | `env_export_{umap_leiden,clusterCrit,clustree,ComplexHeatmap,ggplot,plotly,pymcdm}` (7) | resolved-env snapshot: oxo-flow runs each rule inside its pinned env via `conda run`, so `conda env export -p "$CONDA_PREFIX"` exports the ANALYSIS env (mamba fallback; mem 1000M like upstream) |
+| `config_export` | **not ported** | excluded — see the Excluded list above |
+| `report/` generation | **not ported** | excluded — see the Excluded list above |
 
 ### Porting notes and deviations
 
@@ -220,6 +229,15 @@ of the default-parameter path is executed, none are stubbed):
    interactive plots 8000M, internal validation 2x).
 6. **Environment**: each rule pins the same conda environment as upstream
    (7 environments, copied verbatim from `workflow/envs/`).
+7. **Boolean gate instead of list gate**: upstream runs `plot_dimred_features`
+   only when `len(features_to_plot) > 0`; the oxo-flow `when` evaluator
+   compares scalar config values (booleans, numbers, strings), not arrays, so
+   the port carries the gate on `config.plot_dimred_features` (default
+   `false`, matching the upstream default of an empty `features_to_plot`).
+   Enable it together with a non-empty `features_to_plot` — the plotting
+   script then uses the requested features, or falls back to the first 10
+   columns when the requested features are absent.
+
 
 ## Links
 
