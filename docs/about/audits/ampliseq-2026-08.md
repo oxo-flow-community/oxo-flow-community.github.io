@@ -59,3 +59,29 @@ profiles → filtntrim → err → denoising → merge → rmchimera) →
 multiqc. All 14 skips are checkpoint reuse from earlier partial runs
 plus condition gates. The dada2 env needed 8 rounds of network-side
 surgery (see failure catalog) — zero repo changes required.
+
+## Status update (2026-08-27, catalog audit)
+
+The port advanced since the verdict above — PR
+[oxo-flow-ampliseq#2](https://github.com/oxo-flow-community/oxo-flow-ampliseq/pull/2)
+(2026-08-26) ported **ITS** (`cut_its`/`its_extractor` itsx+itsxrust,
+read-through cutadapt, `filter_len_itsx`, ITS taxonomy), the **QIIME2
+downstream suite** (diversity tree/rarefaction/core metrics/alpha/beta/
+betaord/adonis, absolute/relative abundance exports, ANCOM/ANCOM-BC/ANCOM-BC2,
+classifier prep+classify), **multi-run merge** and **PICRUSt2** — 26→49
+rules, excluded 6→4.
+
+Remaining P0 gaps (unchanged): the 5 non-default taxonomy classifiers
+(SINTAX, Kraken2, QIIME2, VSEARCH LCA, phylogenetic placement incl.
+multi-tree phyloplace), SIDLE multiregion, pacbio/iontorrent/input_fasta
+input modes, decontam/SSU/length/codon filters, SBDI export,
+phyloseq/TSE R objects and the Rmd report.
+
+2026-08-27 audit of the 4 documented Excluded items, verified against the
+2.18.0 tree: `params.nanopore` and `params.syncom` are absent from the
+codebase (grep-verified — claims exact); `versions.yml` is a mechanism
+difference (envs/container tags pin versions); the report-generator entry
+was **truthified** — only `sbdiexport` (default false) is off by default,
+while `skip_phyloseq`/`skip_tse`/`skip_report` all default false, i.e.
+phyloseq/TSE/Rmd-report run by default upstream and are simply not ported.
+No live tests this wave.

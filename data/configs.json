@@ -1425,7 +1425,8 @@
         "description": "--- primers (upstream default null renders literal \"null\" adapters; port uses empty strings \u2014 see README fidelity table) ---",
         "key": "FW_primer",
         "used_by": [
-          "cutadapt"
+          "cutadapt",
+          "qiime2_preptax"
         ],
         "value_type": "string"
       },
@@ -1433,7 +1434,94 @@
         "default": "",
         "key": "RV_primer",
         "used_by": [
-          "cutadapt"
+          "cutadapt",
+          "qiime2_preptax"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "ancom",
+        "used_by": [
+          "qiime2_ancom",
+          "qiime2_metadata_categories"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "ancombc",
+        "used_by": [
+          "qiime2_ancombc",
+          "qiime2_metadata_categories"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "ancombc2",
+        "used_by": [
+          "qiime2_ancombc2",
+          "qiime2_metadata_categories"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "",
+        "key": "ancombc2_formula",
+        "used_by": [
+          "qiime2_ancombc2"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 1,
+        "key": "ancombc_effect_size",
+        "used_by": [
+          "qiime2_ancombc"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "",
+        "description": "comma-separated formulas",
+        "key": "ancombc_formula",
+        "used_by": [
+          "qiime2_ancombc"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 0.05,
+        "key": "ancombc_significance",
+        "used_by": [
+          "qiime2_ancombc"
+        ],
+        "value_type": "float"
+      },
+      {
+        "default": "",
+        "key": "classifier",
+        "used_by": [
+          "qiime2_classify",
+          "qiime2_intax"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "none",
+        "description": "truncation (truncLen=0) + a second cutadapt read-through pass removing revcomp primers",
+        "key": "cut_its",
+        "used_by": [
+          "dada2_taxonomy",
+          "dada2_taxonomy_its",
+          "filter_len_itsx",
+          "itsx_cutasv",
+          "itsxrust_cutasv",
+          "qiime2_inasv",
+          "qiime2_inasv_its",
+          "qiime2_inseq",
+          "qiime2_inseq_its"
         ],
         "value_type": "string"
       },
@@ -1458,7 +1546,8 @@
         "default": false,
         "key": "dada_addspecies_allowmultiple",
         "used_by": [
-          "dada2_taxonomy"
+          "dada2_taxonomy",
+          "dada2_taxonomy_its"
         ],
         "value_type": "bool"
       },
@@ -1466,7 +1555,8 @@
         "default": 10000,
         "key": "dada_assign_chunksize",
         "used_by": [
-          "dada2_taxonomy"
+          "dada2_taxonomy",
+          "dada2_taxonomy_its"
         ],
         "value_type": "int"
       },
@@ -1474,7 +1564,8 @@
         "default": "Domain,Kingdom,Phylum,Class,Order,Family,Genus,Species",
         "key": "dada_assign_taxlevels",
         "used_by": [
-          "dada2_taxonomy"
+          "dada2_taxonomy",
+          "dada2_taxonomy_its"
         ],
         "value_type": "string"
       },
@@ -1483,7 +1574,8 @@
         "description": "DADA2 taxonomy assignment",
         "key": "dada_min_boot",
         "used_by": [
-          "dada2_taxonomy"
+          "dada2_taxonomy",
+          "dada2_taxonomy_its"
         ],
         "value_type": "int"
       },
@@ -1523,9 +1615,51 @@
         "default": false,
         "key": "dada_taxonomy_rc",
         "used_by": [
-          "dada2_taxonomy"
+          "dada2_taxonomy",
+          "dada2_taxonomy_its"
         ],
         "value_type": "bool"
+      },
+      {
+        "default": 500,
+        "description": "floor for core-metrics depth",
+        "key": "diversity_rarefaction_depth",
+        "used_by": [
+          "qiime2_diversity_core"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": false,
+        "description": "--- ITS branch (upstream params.illumina_pe_its / cut_its / its_partial / its_extractor \u2014 all default off -> 16S path) ---",
+        "key": "illumina_pe_its",
+        "used_by": [
+          "cutadapt",
+          "dada2_filtntrim",
+          "trunclen_fw",
+          "trunclen_rv"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "itsx",
+        "description": "\"itsx\" | \"itsxrust\"",
+        "key": "its_extractor",
+        "used_by": [
+          "itsx_cutasv",
+          "itsxrust_cutasv"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 0,
+        "description": "keep partial ITS hits (ITSx --partial N)",
+        "key": "its_partial",
+        "used_by": [
+          "itsx_cutasv",
+          "itsxrust_cutasv"
+        ],
+        "value_type": "int"
       },
       {
         "default": 2,
@@ -1544,6 +1678,15 @@
         "value_type": "string"
       },
       {
+        "default": false,
+        "description": "--- multi-run merge (upstream DADA2_MERGE globs *.stats.tsv / *.ASVtable.rds when several --run_ids are given) ---",
+        "key": "merge_runs",
+        "used_by": [
+          "dada2_merge"
+        ],
+        "value_type": "bool"
+      },
+      {
         "default": "merge",
         "description": "\"merge\" | \"consensus\" | \"concatenate\"",
         "key": "mergepairs_strategy",
@@ -1556,7 +1699,17 @@
         "default": "test/fixtures/metadata.tsv",
         "key": "metadata_file",
         "used_by": [
-          "qiime2_barplot"
+          "qiime2_alphararefaction",
+          "qiime2_ancom",
+          "qiime2_ancombc",
+          "qiime2_ancombc2",
+          "qiime2_barplot",
+          "qiime2_diversity_adonis",
+          "qiime2_diversity_alpha",
+          "qiime2_diversity_beta",
+          "qiime2_diversity_betaord",
+          "qiime2_diversity_core",
+          "qiime2_metadata_categories"
         ],
         "value_type": "string"
       },
@@ -1567,6 +1720,43 @@
           "dada2_filtntrim"
         ],
         "value_type": "int"
+      },
+      {
+        "default": false,
+        "description": "picrust (upstream params.picrust, default false)",
+        "key": "picrust",
+        "used_by": [
+          "picrust"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "",
+        "description": "comma-separated, e.g. \"group\"",
+        "key": "qiime_adonis_formula",
+        "used_by": [
+          "qiime2_diversity_adonis"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "description": "--- QIIME2 taxonomy classifier (upstream params.qiime_ref_taxonomy / params.classifier \u2014 off by default; DADA2 taxonomy is the default path). qiime_ref_taxonomy trains a Naive-Bayes classifier on the primer-extracted reference below; classifier is a path to a pre-trained .qza (skips training). ---",
+        "key": "qiime_ref_taxonomy",
+        "used_by": [
+          "qiime2_classify",
+          "qiime2_intax",
+          "qiime2_preptax"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "https://data.qiime2.org/2023.7/common/silva-138-99-seqs.qza,https://data.qiime2.org/2023.7/common/silva-138-99-tax.qza",
+        "key": "qiime_ref_taxonomy_urls",
+        "used_by": [
+          "qiime2_preptax"
+        ],
+        "value_type": "string"
       },
       {
         "default": "Auto",
@@ -1596,10 +1786,28 @@
         "description": "the four qiime2 rules run in the quay.io/qiime2/amplicon container (~20GB unpacked \u2014 needs ~25GB free disk for the pull; there is no conda qiime2 on common mirrors). Upstream runs qiime2 always; the port gates it (default false) so a fresh clone completes the DADA2 analysis without the container. Set true (with the disk) to enable.",
         "key": "run_qiime2",
         "used_by": [
+          "qiime2_alphararefaction",
+          "qiime2_ancom",
+          "qiime2_ancombc",
+          "qiime2_ancombc2",
           "qiime2_barplot",
+          "qiime2_classify",
+          "qiime2_diversity_adonis",
+          "qiime2_diversity_alpha",
+          "qiime2_diversity_beta",
+          "qiime2_diversity_betaord",
+          "qiime2_diversity_core",
+          "qiime2_diversity_tree",
+          "qiime2_export_absolute",
+          "qiime2_export_relasv",
+          "qiime2_export_reltax",
           "qiime2_inasv",
+          "qiime2_inasv_its",
           "qiime2_inseq",
-          "qiime2_intax"
+          "qiime2_inseq_its",
+          "qiime2_intax",
+          "qiime2_metadata_categories",
+          "qiime2_preptax"
         ],
         "value_type": "bool"
       },
@@ -1618,9 +1826,30 @@
         "used_by": [
           "dada2_denoising",
           "dada2_err",
-          "dada2_taxonomy"
+          "dada2_taxonomy",
+          "dada2_taxonomy_its"
         ],
         "value_type": "int"
+      },
+      {
+        "default": false,
+        "description": "feature-table exports (abs/rel)",
+        "key": "skip_abundance_tables",
+        "used_by": [
+          "qiime2_export_absolute",
+          "qiime2_export_relasv",
+          "qiime2_export_reltax"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_alpha_rarefaction",
+        "used_by": [
+          "qiime2_alphararefaction",
+          "qiime2_diversity_tree"
+        ],
+        "value_type": "bool"
       },
       {
         "default": false,
@@ -1635,10 +1864,25 @@
         "key": "skip_dada_taxonomy",
         "used_by": [
           "dada2_taxonomy",
+          "dada2_taxonomy_its",
           "download_taxonomy_db",
           "format_taxonomy",
           "qiime2_barplot",
           "qiime2_intax"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_diversity_indices",
+        "used_by": [
+          "qiime2_diversity_adonis",
+          "qiime2_diversity_alpha",
+          "qiime2_diversity_beta",
+          "qiime2_diversity_betaord",
+          "qiime2_diversity_core",
+          "qiime2_diversity_tree",
+          "qiime2_metadata_categories"
         ],
         "value_type": "bool"
       },
@@ -1665,8 +1909,32 @@
         "used_by": [
           "qiime2_barplot",
           "qiime2_inasv",
+          "qiime2_inasv_its",
           "qiime2_inseq",
+          "qiime2_inseq_its",
           "qiime2_intax"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "description": "--- QIIME2 downstream analyses beyond the taxa barplot (upstream params.skip_qiime_downstream default false; the port gates all of these on run_qiime2 as well) ---",
+        "key": "skip_qiime_downstream",
+        "used_by": [
+          "qiime2_alphararefaction",
+          "qiime2_ancom",
+          "qiime2_ancombc",
+          "qiime2_ancombc2",
+          "qiime2_diversity_adonis",
+          "qiime2_diversity_alpha",
+          "qiime2_diversity_beta",
+          "qiime2_diversity_betaord",
+          "qiime2_diversity_core",
+          "qiime2_diversity_tree",
+          "qiime2_export_absolute",
+          "qiime2_export_relasv",
+          "qiime2_export_reltax",
+          "qiime2_metadata_categories"
         ],
         "value_type": "bool"
       },
@@ -1675,12 +1943,45 @@
         "key": "skip_taxonomy",
         "used_by": [
           "dada2_taxonomy",
+          "dada2_taxonomy_its",
           "download_taxonomy_db",
           "format_taxonomy",
+          "qiime2_ancom",
+          "qiime2_ancombc",
+          "qiime2_ancombc2",
           "qiime2_barplot",
-          "qiime2_intax"
+          "qiime2_classify",
+          "qiime2_export_absolute",
+          "qiime2_export_relasv",
+          "qiime2_export_reltax",
+          "qiime2_intax",
+          "qiime2_preptax"
         ],
         "value_type": "bool"
+      },
+      {
+        "default": 6,
+        "key": "tax_agglom_max",
+        "used_by": [
+          "qiime2_ancom",
+          "qiime2_ancombc",
+          "qiime2_ancombc2",
+          "qiime2_export_absolute",
+          "qiime2_export_reltax"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 2,
+        "key": "tax_agglom_min",
+        "used_by": [
+          "qiime2_ancom",
+          "qiime2_ancombc",
+          "qiime2_ancombc2",
+          "qiime2_export_absolute",
+          "qiime2_export_reltax"
+        ],
+        "value_type": "int"
       },
       {
         "default": 25,
