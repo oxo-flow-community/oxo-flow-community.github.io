@@ -29,13 +29,13 @@ Needs reference genome and peak-calling inputs — see Requirements.
 
 **Engine.** oxo-flow >= 0.12.0
 
-**Toolchain.** containers (Docker/Singularity) — 41/42 rules in pinned biocontainer images, plus one pinned conda env for picard_markduplicates
+**Toolchain.** containers (Docker/Singularity) — 40/42 rules in pinned biocontainer images, plus one pinned conda env (envs/picard-samtools.yaml) shared by the two picard rules (picard_mergesamfiles, picard_markduplicates)
 
 **Requirements.**
-- reference data: genome FASTA with .fai, BWA index prefix (.amb/.ann/.bwt/.pac/.sa), chrom sizes file, GTF annotation, gene BED, TSS BED (optional blacklist BED)
-- input: single-end <sample>.fastq.gz reads, declared in [[sample_groups]]
+- reference data: genome FASTA with .fai, BWA index prefix (.amb/.ann/.bwt/.pac/.sa), chrom sizes file, GTF annotation, gene BED, TSS BED (optional blacklist BED); alt-aligner indexes for aligner=bowtie2/chromap/star
+- input: single-end <sample>.fastq.gz reads (default) or <sample>_1/2.fastq.gz (paired=true), declared in [[sample_groups]]
 - compute: up to 12 CPUs / 72 GB per rule
-- runtime: Docker or Singularity for the 14 container rules; conda/mamba for the picard_markduplicates env
+- runtime: Docker or Singularity for the 13 container rules on the default path (40 across all branches); conda/mamba for the two picard rules (picard_mergesamfiles, picard_markduplicates)
 
 ```bash
 # 1. install oxo-flow (release binary, recommended)
@@ -57,31 +57,51 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-atacseq
 
 | Parameter | Default | Description | Used by |
 |---:|---|---|---|
-| `blacklist` | `` | params.blacklist — include-regions BED (complement of ENCODE | `bamtools_filter` |
+| `aligner` | `bwa` | params.aligner: "bwa" (default) \| "bowtie2" \| "chromap" \| "star" (SE only) | `alt::bowtie2_align`, `alt::chromap_align`, `alt::star_align`, `bwa_mem`, `pe::bwa_mem_pe`, `ref::bwa_index` |
+| `blacklist` | `` | params.blacklist — include-regions BED (complement of ENCODE | `bamtools_filter`, `pe::bamtools_filter_pe` |
+| `bowtie2_index` | `` | params.bowtie2 — index prefix (.rev.1.bt2 etc. beside it) for aligner="bowtie2" | `alt::bowtie2_align` |
 | `broad_cutoff` | `0.1` | — | `macs2_callpeak` |
-| `bwa_index` | `test/fixtures/genome/genome.fa` | params.bwa — index prefix (.amb/.ann/.bwt/.pac/.sa beside it) | `bwa_mem` |
-| `chrom_sizes` | `test/fixtures/genome/genome.fa.sizes` | CUSTOM_GETCHROMSIZES output | `ucsc_bedgraphtobigwig` |
-| `fingerprint_bins` | `500000` | — | `plotfingerprint` |
+| `bwa_index` | `test/fixtures/genome/genome.fa` | params.bwa — index prefix (.amb/.ann/.bwt/.pac/.sa beside it) | `bwa_mem`, `pe::bwa_mem_pe`, `ref::bwa_index` |
+| `chrom_sizes` | `test/fixtures/genome/genome.fa.sizes` | CUSTOM_GETCHROMSIZES output | `mito::genome_blacklist_regions`, `ref::custom_getchromsizes`, `ucsc_bedgraphtobigwig` |
+| `chromap_index` | `` | params.chromap — index file for aligner="chromap" | `alt::chromap_align` |
+| `deseq2_vst` | `true` | params.deseq2_vst | `cons::deseq2_qc` |
+| `fingerprint_bins` | `500000` | — | `pe::plotfingerprint_pe`, `plotfingerprint` |
 | `fragment_size` | `200` | — | `bedtools_genomecov`, `plotfingerprint` |
 | `gene_bed` | `test/fixtures/genome/gene.bed` | params.gene_bed | `deeptools_plots` |
-| `gtf` | `test/fixtures/genome/genes.gtf` | params.gtf | `homer_annotatepeaks` |
+| `gtf` | `test/fixtures/genome/genes.gtf` | params.gtf | `cons::homer_annotatepeaks_consensus`, `homer_annotatepeaks` |
 | `keep_dups` | `false` | — | — |
+| `keep_mito` | `false` | params.keep_mito — keep mitochondrial reads when mito_name set | `mito::genome_blacklist_regions` |
 | `keep_multi_map` | `false` | — | — |
 | `macs_gsize` | `2.7e9` | blacklist + chrM when keep_mito=false); empty = no -L filter | `macs2_callpeak` |
+| `min_reps_consensus` | `1` | params.min_reps_consensus | `cons::macs2_consensus` |
 | `min_trimmed_reads` | `10000` | — | — |
+| `mito_name` | `` | params.mito_name, e.g. "chrM" — enables mitochondrial filtering (needs config.chrom_sizes) | `bamtools_filter`, `mito::genome_blacklist_regions`, `pe::bamtools_filter_pe`, `qce::ataqv` |
+| `multiqc_custom_peaks` | `false` | port-only switch: emit MULTIQC_CUSTOM_PEAKS peak-count/FRiP TSVs | `qce::multiqc_custom_peaks` |
 | `narrow_peak` | `false` | Upstream default params (kept as config so CLI overrides work) | — |
-| `out_dir` | `results` | params.outdir | `bamtools_filter`, `bedtools_genomecov`, `bwa_mem`, `deeptools_plots`, `fastqc`, `frip_score`, `homer_annotatepeaks`, `macs2_callpeak`, `multiqc`, `picard_markduplicates`, `picard_mergesamfiles`, `plotfingerprint`, `samtools_sort_stats`, `trimgalore`, `ucsc_bedgraphtobigwig` |
-| `picard_xmx_gb` | `8` | GB passed to picard -Xmx. Previously derived from the rule's 36G resource budget (Xmx≈30G), which thrash-killed the JVM on a 3.7 GB machine (live run); the resource budget still drives scheduling. | `picard_markduplicates` |
-| `raw_dir` | `test/fixtures/raw` | input fastqs (raw/<sample>.fastq.gz for single-end) | `fastqc`, `trimgalore` |
-| `reference` | `test/fixtures/genome/genome.fa` | Reference inputs. Upstream obtains these from nf-core iGenomes (--genome); this port expects pre-built files (see README "References"). | `bamtools_filter`, `homer_annotatepeaks`, `picard_markduplicates`, `samtools_sort_stats` |
+| `out_dir` | `results` | params.outdir | `alt::bowtie2_align`, `alt::chromap_align`, `alt::star_align`, `bamtools_filter`, `bedtools_genomecov`, `bwa_mem`, `cons::deseq2_qc`, `cons::homer_annotatepeaks_consensus`, `cons::macs2_consensus`, `cons::subread_featurecounts`, `deeptools_plots`, `fastqc`, `frip_score`, `homer_annotatepeaks`, `macs2_callpeak`, `mito::genome_blacklist_regions`, `multiqc`, `pe::bamtools_filter_pe`, `pe::bedtools_genomecov_pe`, `pe::bwa_mem_pe`, `pe::fastqc_pe`, `pe::multiqc_pe`, `pe::pe_name_sort_remove_orphans`, `pe::plotfingerprint_pe`, `pe::trimgalore_pe`, `picard_markduplicates`, `picard_mergesamfiles`, `plotfingerprint`, `qce::ataqv`, `qce::get_autosomes`, `qce::igv`, `qce::mkarv`, `qce::multiqc_custom_peaks`, `qce::picard_collectmultiplemetrics`, `qce::plot_homer_annotatepeaks`, `qce::plot_macs2_qc`, `qce::preseq_lcextrap`, `samtools_sort_stats`, `trimgalore`, `ucsc_bedgraphtobigwig` |
+| `paired` | `false` | Gated branches (defaults keep the default plan identical to the upstream default main path; toggle one key at a time to activate its branch only) | `alt::bowtie2_align`, `alt::chromap_align`, `alt::star_align`, `bamtools_filter`, `bedtools_genomecov`, `bwa_mem`, `cons::subread_featurecounts`, `fastqc`, `multiqc`, `pe::bamtools_filter_pe`, `pe::bedtools_genomecov_pe`, `pe::bwa_mem_pe`, `pe::fastqc_pe`, `pe::multiqc_pe`, `pe::pe_name_sort_remove_orphans`, `pe::plotfingerprint_pe`, `pe::trimgalore_pe`, `plotfingerprint`, `qce::ataqv`, `qce::get_autosomes`, `qce::mkarv`, `qce::picard_collectmultiplemetrics`, `qce::preseq_lcextrap`, `trimgalore` |
+| `picard_xmx_gb` | `8` | GB passed to picard -Xmx. Previously derived from the rule's 36G resource budget (Xmx≈30G), which thrash-killed the JVM on a 3.7 GB machine (live run); the resource budget still drives scheduling. | `picard_markduplicates`, `qce::picard_collectmultiplemetrics` |
+| `prepare_reference` | `false` | port switch: build BWA index + chrom sizes from config.reference | `ref::bwa_index`, `ref::custom_getchromsizes` |
+| `raw_blacklist` | `` | params.blacklist — raw ENCODE blacklist BED (complemented into include-regions) | `bamtools_filter`, `mito::genome_blacklist_regions`, `pe::bamtools_filter_pe` |
+| `raw_dir` | `test/fixtures/raw` | input fastqs (raw/<sample>.fastq.gz for single-end) | `fastqc`, `pe::fastqc_pe`, `pe::trimgalore_pe`, `trimgalore` |
+| `reference` | `test/fixtures/genome/genome.fa` | Reference inputs. Upstream obtains these from nf-core iGenomes (--genome); this port expects pre-built files (see README "References"). | `alt::chromap_align`, `bamtools_filter`, `cons::homer_annotatepeaks_consensus`, `homer_annotatepeaks`, `pe::pe_name_sort_remove_orphans`, `picard_markduplicates`, `qce::get_autosomes`, `qce::igv`, `qce::picard_collectmultiplemetrics`, `ref::bwa_index`, `ref::custom_getchromsizes`, `samtools_sort_stats` |
 | `save_trimmed` | `false` | — | — |
-| `skip_fastqc` | `false` | — | `fastqc` |
-| `skip_multiqc` | `false` | — | `multiqc` |
-| `skip_plot_fingerprint` | `false` | — | `plotfingerprint` |
+| `skip_ataqv` | `true` | upstream default false; port ships this branch OFF (set false to enable) | `qce::ataqv`, `qce::get_autosomes`, `qce::mkarv` |
+| `skip_consensus_peaks` | `true` | upstream default false; port ships this branch OFF (set false to enable) | `cons::deseq2_qc`, `cons::homer_annotatepeaks_consensus`, `cons::macs2_consensus`, `cons::subread_featurecounts` |
+| `skip_deseq2_qc` | `true` | upstream default false; port ships DESeq2 QC OFF (set false to enable) | `cons::deseq2_qc` |
+| `skip_fastqc` | `false` | — | `fastqc`, `pe::fastqc_pe` |
+| `skip_igv` | `true` | upstream default false; port ships this branch OFF (set false to enable) | `qce::igv` |
+| `skip_multiqc` | `false` | — | `multiqc`, `pe::multiqc_pe` |
+| `skip_peak_annotation` | `false` | params.skip_peak_annotation (default false — HOMER annotation on by default, as upstream) | `cons::homer_annotatepeaks_consensus`, `homer_annotatepeaks`, `qce::plot_homer_annotatepeaks`, `qce::plot_macs2_qc` |
+| `skip_peak_qc` | `true` | upstream default false; port ships the R QC plots OFF (set false to enable) | `qce::plot_homer_annotatepeaks`, `qce::plot_macs2_qc` |
+| `skip_picard_metrics` | `true` | upstream default false; port ships this branch OFF (set false to enable) | `qce::picard_collectmultiplemetrics` |
+| `skip_plot_fingerprint` | `false` | — | `pe::plotfingerprint_pe`, `plotfingerprint` |
 | `skip_plot_profile` | `false` | — | `deeptools_plots` |
-| `skip_qc` | `false` | — | `fastqc` |
-| `skip_trimming` | `false` | — | `trimgalore` |
-| `tss_bed` | `test/fixtures/genome/tss.bed` | params.tss_bed | `deeptools_plots` |
+| `skip_preseq` | `true` | params.skip_preseq (upstream default true — preseq off by default) | `qce::preseq_lcextrap` |
+| `skip_qc` | `false` | — | `fastqc`, `pe::fastqc_pe` |
+| `skip_trimming` | `false` | — | `pe::trimgalore_pe`, `trimgalore` |
+| `star_index` | `` | params.star — STAR genome dir (built by STAR_GENOMEGENERATE upstream) for aligner="star" | `alt::star_align` |
+| `tss_bed` | `test/fixtures/genome/tss.bed` | params.tss_bed | `deeptools_plots`, `qce::ataqv` |
 
 Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
 
@@ -130,7 +150,7 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- merged-replicate analysis (SAMTOOLS_MERGE, BAM_MERGED_REPLICATE_PICARD, BAM_FILTER_MERGED_REPLICATE, BAM_MERGE_REPLICATES_AND_PEAKS_BEDTOOLS) — structural Nextflow pattern: groupTuple(by: [0]) folds per-replicate BAMs keyed _REP\d+ into sets; oxo-flow has no replicate-grouping primitive, so the _REP merge and replicate-level tracks cannot be expressed
+- merged-replicate analysis (PICARD_MERGESAMFILES, BAM_MARKDUPLICATES_PICARD, BAM_BEDGRAPH_BIGWIG_BEDTOOLS_UCSC, BAM_PEAKS_CALL_QC_ANNOTATE_MACS2_HOMER, BED_CONSENSUS_QUANTIFY_QC_BEDTOOLS_FEATURECOUNTS_DESEQ2 — aliased MERGED_REPLICATE_*; gated by skip_merge_replicates, default false) — structural Nextflow pattern: groupTuple() folds per-replicate BAMs keyed _REP\d+ by base id, keeping only groups with >= 2 replicates; oxo-flow has no replicate-grouping primitive (rule inputs are static per wildcard combo; glob inputs form no DAG edges), so the _REP merge and replicate-level tracks/peaks/consensus cannot be expressed faithfully
 - INPUT_CHECK (samplesheet_check) — pipeline plumbing; oxo-flow provides native [[sample_groups]] declaration + validate
 - DUMP_SOFTWARE_VERSIONS — pipeline plumbing; oxo-flow has native version/audit mechanisms
 - UMITOOLS_EXTRACT (umi branch) — dead code at 2.1.2: the workflow hardcodes with_umi=false so the branch can never fire
@@ -177,7 +197,7 @@ listed with reasons. `when`-gated rules carry the gate in the Notes column.
 | MACS2_CONSENSUS_PEAKS | `cons::macs2_consensus` | mulled (macs2 + bedtools + R) | `sort + mergeBed -c 2,3,4,5,6,7,8,9 -o collapse...` → `macs2_merged_expand.py --min_replicates` → BED/SAF/UpSet plot (bin scripts verbatim); when `skip_consensus_peaks = false`, needs ≥ 2 samples |
 | SUBREAD_FEATURECOUNTS | `cons::subread_featurecounts` | subread 2.0.1 | identical (`-F SAF -O --fracOverlap 0.2 -s 0`, `-p` when paired); when `skip_consensus_peaks = false` |
 | DESEQ2_QC | `cons::deseq2_qc` | mulled (R + DESeq2) | `deseq2_qc.r` verbatim (`--id_col 1 --count_col 7`, `--vst TRUE` when `deseq2_vst`); when `skip_consensus_peaks = false` and `skip_deseq2_qc = false` |
-| SAMTOOLS_MERGE / BAM_MERGED_REPLICATE_PICARD / BAM_FILTER_MERGED_REPLICATE / BAM_MERGE_REPLICATES_AND_PEAKS_BEDTOOLS | — | — | **not ported** — merged-replicate analysis is a structural Nextflow pattern: `groupTuple(by: [0])` folds per-replicate BAMs keyed `_REP\d+` into sets, then the merged set drives replicate-level filtering/peaks/QC. oxo-flow has no replicate-grouping primitive over globbed inputs, so the `_REP` merge (and the replicate tracks in IGV/FRiP) cannot be expressed |
+| PICARD_MERGESAMFILES / BAM_MARKDUPLICATES_PICARD / BAM_BEDGRAPH_BIGWIG_BEDTOOLS_UCSC / BAM_PEAKS_CALL_QC_ANNOTATE_MACS2_HOMER / BED_CONSENSUS_QUANTIFY_QC_BEDTOOLS_FEATURECOUNTS_DESEQ2 (aliased `MERGED_REPLICATE_*`) | — | — | **not ported** — merged-replicate analysis (`skip_merge_replicates`, default false) is a structural Nextflow pattern: `groupTuple()` folds per-replicate BAMs by base id (`meta.id - ~/_REP\d+$/`), keeping only groups with ≥ 2 replicates, then the merged BAM drives replicate-level markdup, bigWig, MACS2/HOMER and consensus/DESeq2. oxo-flow has no replicate-grouping primitive (rule inputs are static per wildcard combo; glob inputs form no DAG edges), so the `_REP` merge and replicate-level tracks cannot be expressed faithfully |
 | INPUT_CHECK (samplesheet_check) | — | — | **not ported** — pipeline plumbing; oxo-flow provides native `[[sample_groups]]` declaration + `validate` |
 | DUMP_SOFTWARE_VERSIONS | — | — | **not ported** — pipeline plumbing; oxo-flow has native version/audit mechanisms |
 
