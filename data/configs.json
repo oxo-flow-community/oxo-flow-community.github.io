@@ -8661,7 +8661,7 @@
       },
       {
         "default": "--detect_adapter_for_pe",
-        "description": "fastp adapter args and extra args (upstream: per-unit columns fastp_adapters / fastp_extra; the port uses the upstream defaults). fastp_adapters_se matches the upstream single-end default (\"\").",
+        "description": "fastp adapter args and extra args (upstream: per-unit columns fastp_adapters / fastp_extra in config/units.tsv, looked up per unit via the metadata binding \u2014 {meta.fastp_adapters} / {meta.fastp_extra} render per unit and these global keys are the per-unit defaults when a unit's column is empty; equal the upstream defaults). fastp_adapters_se matches the upstream single-end default (\"\").",
         "key": "fastp_adapters",
         "used_by": [
           "fastp_pe"
@@ -8788,7 +8788,7 @@
       },
       {
         "default": "",
-        "description": "SRA accessions to download with fasterq-dump (upstream get_sra branch: units whose fq1/fq2 are empty carry an sra accession). Comma-joined list of accessions; reads land in sra/{accession}_1.fastq / _2.fastq (upstream naming). Default empty = no SRA download. Downloaded reads are NOT auto-fed into trimming/alignment (the engine cannot bind per-unit inputs) \u2014 place them per the raw_dir naming convention to use them.",
+        "description": "SRA auto-feed master switch (upstream get_sra branch: units whose fq1/fq2 are empty carry an sra accession in config/units.tsv). Any non-empty value enables the per-unit download; each unit's accession comes from its units sheet sra column (the {meta.sra} lookup), and reads land at <raw_dir>/<unit-key>_R{1,2}.fastq.gz (the raw_dir convention) so the trimming/alignment rules consume them automatically (upstream get_units_fastqs). Default empty = no SRA download. Requires oxo-flow >= 0.17.0 \u2014 on older engines keep this empty (the per-unit sra column is not read, and the gate then stays closed).",
         "key": "sra_accessions",
         "used_by": [
           "get_sra"
