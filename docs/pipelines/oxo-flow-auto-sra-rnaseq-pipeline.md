@@ -27,7 +27,7 @@ Downloads public data by accessions (network required); `--resume-failed` retrie
 
 ## Installation
 
-**Engine.** oxo-flow >= 0.15.0 (wildcard-scoped `when` predicates)
+**Engine.** oxo-flow >= 0.15.0 (wildcard-scoped `when` predicates; the failure-email hook [workflow] on_error fires on >= 0.17.0 — older engines ignore the unknown key)
 
 **Toolchain.** conda envs — pinned
 
@@ -62,7 +62,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipeline
 | `GTF` | `/data/reference/genome/GRCh38/Homo_sapiens.GRCh38.95.sort.gtf` | — | `align_and_count` |
 | `db_id` | `D21122` | DB_ID — upstream: basename(metadata).replace(".txt", ""). | `DGE_analysis`, `combine_count` |
 | `index` | `/data/reference/genome/GRCh38/STAR` | STAR index dir and GTF (upstream keys index / GTF). | `align_and_count` |
-| `mail` | `false` | Email notification (upstream onsuccess). Keep off unless SMTP is configured. | — |
+| `mail` | `false` | Email notification (upstream onsuccess + onerror). Keep off unless SMTP is configured — the [workflow] on_error hook reuses these same keys. | — |
 | `mail_to` | `` | — | — |
 | `metadata` | `test/fixtures/metadata/D21122.txt` | Metadata TSV (upstream key metadata). Columns: Dataset GSE GSM gene method celline group group_name type platform SRR paired The repo default points at the bundled example dataset (upstream doc/D21122.txt). | `DGE_analysis`, `combine_count`, `data_conversion_pair`, `get_sra`, `merge_R1_data`, `merge_R2_data` |
 | `sender` | `` | — | — |
@@ -105,7 +105,6 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- onerror email — structural: oxo-flow has per-rule on_failure only, no workflow-level error hook; [webhook] workflow_failed is a dead surface in the engine (remediation: engine-side workflow-level hook; upstream send_mail.py exists)
 - pigz_threads — upstream pigz pipe is commented out (paired_end_process.smk); plain cat loses nothing
 
 ## Fidelity
@@ -128,7 +127,7 @@ Scope: the **default-parameters main execution path** (upstream `rule all`) plus
 | combine_count | `combine_count` | python 3.11 + pandas 3.0.5 | run: block ported verbatim to `scripts/combine_count.py` (same merge order and column renaming); per-sample counts gathered via `expand_inputs` over the sample list. Adds a fail-fast check that `[config] db_id` matches the metadata file name (upstream derives DB_ID at load time). Upstream runs in the snakemake base env (`snakemake==8.16 pandas`); snakemake itself is not needed — oxo-flow is the orchestrator. |
 | DGE_analysis | `DGE_analysis` | R 4.3.2, DESeq2 1.42.0, ashr 2.2.63, data.table 1.17.8 | `scripts/DESeq2_diff.R` ported verbatim (design `~group`, contrast `treat`/`control`, `lfcShrink(type="ashr")`, saves exprSet + metadata + diffResults to the .Rds path). Env pins from the upstream Dockerfile (r432 env); r-data.table 1.17.8 pinned (1.18.4 requires r-base >= 4.4 and cannot solve with the pinned r-base 4.3.2); python added for the on_success mail hook. |
 | onsuccess | `on_success` (DGE_analysis) | shell + smtplib | Upstream workflow-level `onsuccess` becomes the final rule's hook: `rm -rf 02_read_align` + conditional email via `scripts/send_mail.py` (port of `send_mail()`; the upstream `client.quit()` NameError on SMTP connection failure is fixed and notification failures exit 0 so they never fail a finished workflow). `mail` defaults to false, as upstream. |
-| onerror | not ported | — | Structural: oxo-flow has per-rule `on_failure` hooks only, no workflow-level error hook — a failure in an earlier rule never reaches the final rule's hook. The engine's `[webhook]` section declares a `workflow_failed` event, but nothing in the engine calls it in this build (dead surface). Remediation: engine-side workflow-level failure hook; the mail itself already exists (`send_mail.py`). |
+| onerror | `[workflow] on_error` | shell + smtplib | Ported: the upstream workflow-level `onerror` email becomes the engine's workflow-level failure hook — shell run once in the workflow root when the run reaches a terminal state with at least one failed rule, guarded by `mail` (default false = no-op, behavior unchanged). It sends subject "snakemake run failed" via the same `scripts/send_mail.py` as on_success, with the run counters (`{succeeded}`/`{failed}`/`{skipped}`), `{config.db_id}` and `{workdir}` in the body (the upstream body is the snakemake log; the engine log lives under `.oxo-flow/logs/`). Best-effort: a failed hook is a warning, never a run-status change, and notification failures exit 0. Fires on engine >= 0.17.0; older engines ignore the unknown `[workflow]` key. |
 | Snakefile_ENCODE | `main_encode.oxoflow` (8 rules) | fastp 1.3.6, star 2.7.11b, samtools 1.22, deeptools 3.5.6, R 4.3.2 | Ported entry point: ENCODE metadata columns (`R1_file_accession`/`R2_file_accession`/`runtype`), `scripts/DESeq2_diff_encode.R` copied verbatim, pre-downloaded FASTQ inputs. `get_raw_data` input function → `scripts/clean_encode.py` (byte-identical fastp command; pandas added to envs/preprocess.yaml for it). Two upstream latent bugs fixed (documented deviations): `data_clean_pair` IndexErrors on single-ended samples, and `align_and_count` declares fixed r1/r2 inputs — both split into paired/single rules gated by `runtype`. Upstream `use_download`/`download_path` is dead code (computed, never read) — dropped. |
 | run.py | `scripts/run_batch.py` | python 3.11 + pandas 3.0.5 | Batch runner ported: metadata validation and SRA checks verbatim; drives `oxo-flow run … metadata=… db_id=… -j N -r 3` per metadata file (upstream `--restart-times 3`); moves files to `finished/`/`failed/`; bark/feishu via notify.py; summary stats. `--cores` default 79 like upstream; `--profile` maps to upstream `--executor_profile_path`; `--unlock`/`--rerun-incomplete`/`--latency-wait` are native oxo-flow checkpoint semantics — nothing to do. |
 | slurm/config.yaml | `profiles/slurm.toml` ([cluster]) | — | Ported: `executor: slurm` → `backend = "slurm"`, `jobs: 100` → `max_submitted = 100`, `runtime=120` → `walltime = "2h"`. Upstream set-threads/set-resources live in the workflow's per-rule resources; the cluster-only align mem bump (64000) is not expressible in a profile, so the pinned 10G applies on the cluster too. Opt-in: `oxo-flow run main.oxoflow --profile slurm`. |
