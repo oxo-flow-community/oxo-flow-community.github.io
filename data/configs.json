@@ -363,14 +363,54 @@
       {
         "default": "bwa-mem",
         "key": "aligner",
-        "used_by": [],
+        "used_by": [
+          "bwa_mem",
+          "bwa_mem2"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "cram",
+        "description": "Alignment-file mode: 'cram' (default) or 'bam' (when save_output_as_bam=true). recal_index_ext must match the mode ('cram.crai' vs 'bam.bai').",
+        "key": "alignment_ext",
+        "used_by": [
+          "bcftools_mpileup_call",
+          "bcftools_mpileup_ngscheckmate",
+          "deepvariant",
+          "freebayes",
+          "gatk_applybqsr",
+          "gatk_applybqsr_scatter",
+          "gatk_baserecalibrator",
+          "gatk_baserecalibrator_scatter",
+          "gatk_haplotypecaller",
+          "gatk_haplotypecaller_gvcf",
+          "gatk_haplotypecaller_gvcf_scatter",
+          "gatk_haplotypecaller_scatter",
+          "manta_germline",
+          "merge_index_samtools",
+          "mosdepth_md",
+          "mosdepth_recal",
+          "samtools_index_recal",
+          "samtools_reindex_bam",
+          "samtools_stats_md",
+          "samtools_stats_recal",
+          "strelka_germline",
+          "tiddit_sv"
+        ],
         "value_type": "string"
       },
       {
         "default": true,
         "key": "annotate_vep",
         "used_by": [
-          "ensemblvep_vep"
+          "ensemblvep_vep",
+          "ensemblvep_vep_deepvariant",
+          "ensemblvep_vep_freebayes",
+          "ensemblvep_vep_joint",
+          "ensemblvep_vep_manta",
+          "ensemblvep_vep_mpileup",
+          "ensemblvep_vep_strelka",
+          "ensemblvep_vep_tiddit"
         ],
         "value_type": "bool"
       },
@@ -378,33 +418,190 @@
         "default": "/data/references/GRCh38/Sequence/BWAIndex/",
         "key": "bwa_index_dir",
         "used_by": [
-          "bwa_mem"
+          "bwa_mem",
+          "bwa_mem_umi"
         ],
         "value_type": "string"
+      },
+      {
+        "default": "/data/references/GRCh38/Sequence/BWAmem2Index/",
+        "key": "bwa_mem2_index_dir",
+        "used_by": [
+          "bwa_mem2"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "call_deepvariant",
+        "used_by": [
+          "bcftools_stats_deepvariant",
+          "deepvariant",
+          "ensemblvep_vep_deepvariant",
+          "vcftools_filter_summary_deepvariant",
+          "vcftools_tstv_count_deepvariant",
+          "vcftools_tstv_qual_deepvariant"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "description": "Optional callers (upstream --tools list, one boolean per tool)",
+        "key": "call_freebayes",
+        "used_by": [
+          "bcftools_sort_freebayes",
+          "bcftools_stats_freebayes",
+          "ensemblvep_vep_freebayes",
+          "freebayes",
+          "tabix_freebayes",
+          "tabix_freebayes_filt",
+          "vcffilter_freebayes",
+          "vcftools_filter_summary_freebayes",
+          "vcftools_tstv_count_freebayes",
+          "vcftools_tstv_qual_freebayes"
+        ],
+        "value_type": "bool"
       },
       {
         "default": true,
         "description": "tools / skip_tools equivalents (upstream comma-list params expressed as booleans)",
         "key": "call_haplotypecaller",
         "used_by": [
+          "bcftools_sort_joint",
           "bcftools_stats",
+          "bcftools_stats_joint",
           "ensemblvep_vep",
+          "ensemblvep_vep_joint",
+          "gatk_applyvqsr_indel",
+          "gatk_applyvqsr_snp",
           "gatk_cnnscorevariants",
           "gatk_filtervarianttranches",
+          "gatk_genomicsdbimport",
+          "gatk_genotypegvcfs",
           "gatk_haplotypecaller",
+          "gatk_haplotypecaller_gvcf",
+          "gatk_mergevcfs_joint",
+          "gatk_variantrecalibrator_indel",
+          "gatk_variantrecalibrator_snp",
           "vcftools_filter_summary",
+          "vcftools_filter_summary_joint",
           "vcftools_tstv_count",
-          "vcftools_tstv_qual"
+          "vcftools_tstv_count_joint",
+          "vcftools_tstv_qual",
+          "vcftools_tstv_qual_joint"
         ],
         "value_type": "bool"
+      },
+      {
+        "default": false,
+        "description": "upstream runs indexcov on WGS only (germline)",
+        "key": "call_indexcov",
+        "used_by": [
+          "goleft_indexcov",
+          "samtools_reindex_bam"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "call_manta",
+        "used_by": [
+          "bcftools_stats_manta",
+          "ensemblvep_vep_manta",
+          "manta_germline",
+          "vcftools_filter_summary_manta",
+          "vcftools_tstv_count_manta",
+          "vcftools_tstv_qual_manta"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "call_mpileup",
+        "used_by": [
+          "bcftools_mpileup_call",
+          "bcftools_stats_mpileup",
+          "ensemblvep_vep_mpileup",
+          "vcftools_filter_summary_mpileup",
+          "vcftools_tstv_count_mpileup",
+          "vcftools_tstv_qual_mpileup"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "call_strelka",
+        "used_by": [
+          "bcftools_stats_strelka",
+          "ensemblvep_vep_strelka",
+          "strelka_germline",
+          "vcftools_filter_summary_strelka",
+          "vcftools_tstv_count_strelka",
+          "vcftools_tstv_qual_strelka"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "call_tiddit",
+        "used_by": [
+          "bcftools_stats_tiddit",
+          "ensemblvep_vep_tiddit",
+          "tabix_tiddit",
+          "tiddit_sv",
+          "vcftools_filter_summary_tiddit",
+          "vcftools_tstv_count_tiddit",
+          "vcftools_tstv_qual_tiddit"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": [
+          "chr1",
+          "chr2",
+          "chr3",
+          "chr4",
+          "chr5",
+          "chr6",
+          "chr7",
+          "chr8",
+          "chr9",
+          "chr10",
+          "chr11",
+          "chr12",
+          "chr13",
+          "chr14",
+          "chr15",
+          "chr16",
+          "chr17",
+          "chr18",
+          "chr19",
+          "chr20",
+          "chr21",
+          "chr22",
+          "chrX",
+          "chrY",
+          "chrM"
+        ],
+        "key": "chromosomes",
+        "used_by": [],
+        "value_type": "array"
       },
       {
         "default": "/data/references/GRCh38/Annotation/GATKBundle/dbsnp_146.hg38.vcf.gz",
         "key": "dbsnp",
         "used_by": [
           "gatk_baserecalibrator",
+          "gatk_baserecalibrator_scatter",
           "gatk_filtervarianttranches",
-          "gatk_haplotypecaller"
+          "gatk_genotypegvcfs",
+          "gatk_genotypegvcfs_scatter",
+          "gatk_haplotypecaller",
+          "gatk_haplotypecaller_gvcf",
+          "gatk_haplotypecaller_gvcf_scatter",
+          "gatk_haplotypecaller_scatter",
+          "gatk_variantrecalibrator_indel",
+          "gatk_variantrecalibrator_snp"
         ],
         "value_type": "string"
       },
@@ -413,8 +610,16 @@
         "key": "dbsnp_tbi",
         "used_by": [
           "gatk_baserecalibrator",
+          "gatk_baserecalibrator_scatter",
           "gatk_filtervarianttranches",
-          "gatk_haplotypecaller"
+          "gatk_genotypegvcfs",
+          "gatk_genotypegvcfs_scatter",
+          "gatk_haplotypecaller",
+          "gatk_haplotypecaller_gvcf",
+          "gatk_haplotypecaller_gvcf_scatter",
+          "gatk_haplotypecaller_scatter",
+          "gatk_variantrecalibrator_indel",
+          "gatk_variantrecalibrator_snp"
         ],
         "value_type": "string"
       },
@@ -423,11 +628,24 @@
         "key": "dict",
         "used_by": [
           "gatk_applybqsr",
+          "gatk_applybqsr_scatter",
+          "gatk_applyvqsr_indel",
+          "gatk_applyvqsr_snp",
           "gatk_baserecalibrator",
+          "gatk_baserecalibrator_scatter",
           "gatk_cnnscorevariants",
           "gatk_filtervarianttranches",
+          "gatk_genotypegvcfs",
+          "gatk_genotypegvcfs_scatter",
           "gatk_haplotypecaller",
-          "gatk_markduplicates"
+          "gatk_haplotypecaller_gvcf",
+          "gatk_haplotypecaller_gvcf_scatter",
+          "gatk_haplotypecaller_scatter",
+          "gatk_markduplicates",
+          "gatk_markduplicates_bam",
+          "gatk_variantrecalibrator_indel",
+          "gatk_variantrecalibrator_snp",
+          "manta_germline"
         ],
         "value_type": "string"
       },
@@ -436,17 +654,45 @@
         "description": "Reference data (user-provided; GRCh38 GATK bundle layout from upstream conf/igenomes.config, substituted at port time)",
         "key": "fasta",
         "used_by": [
+          "bcftools_mpileup_call",
+          "bcftools_mpileup_ngscheckmate",
+          "bwa_index",
           "bwa_mem",
+          "bwa_mem2",
+          "bwa_mem_umi",
+          "bwamem2_index",
+          "deepvariant",
+          "freebayes",
           "gatk_applybqsr",
+          "gatk_applybqsr_scatter",
+          "gatk_applyvqsr_indel",
+          "gatk_applyvqsr_snp",
           "gatk_baserecalibrator",
+          "gatk_baserecalibrator_scatter",
           "gatk_cnnscorevariants",
+          "gatk_createsequencedictionary",
           "gatk_filtervarianttranches",
+          "gatk_genotypegvcfs",
+          "gatk_genotypegvcfs_scatter",
           "gatk_haplotypecaller",
+          "gatk_haplotypecaller_gvcf",
+          "gatk_haplotypecaller_gvcf_scatter",
+          "gatk_haplotypecaller_scatter",
           "gatk_markduplicates",
+          "gatk_markduplicates_bam",
+          "gatk_variantrecalibrator_indel",
+          "gatk_variantrecalibrator_snp",
+          "manta_germline",
+          "merge_index_samtools",
           "mosdepth_md",
           "mosdepth_recal",
+          "ngscheckmate_ncm",
+          "samtools_faidx",
+          "samtools_reindex_bam",
           "samtools_stats_md",
-          "samtools_stats_recal"
+          "samtools_stats_recal",
+          "strelka_germline",
+          "tiddit_sv"
         ],
         "value_type": "string"
       },
@@ -454,20 +700,52 @@
         "default": "/data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.fasta.fai",
         "key": "fasta_fai",
         "used_by": [
+          "create_intervals_bed",
+          "deepvariant",
+          "freebayes",
           "gatk_applybqsr",
+          "gatk_applybqsr_scatter",
+          "gatk_applyvqsr_indel",
+          "gatk_applyvqsr_snp",
           "gatk_baserecalibrator",
+          "gatk_baserecalibrator_scatter",
           "gatk_cnnscorevariants",
           "gatk_filtervarianttranches",
+          "gatk_genomicsdbimport",
+          "gatk_genotypegvcfs",
+          "gatk_genotypegvcfs_scatter",
           "gatk_haplotypecaller",
-          "gatk_markduplicates"
+          "gatk_haplotypecaller_gvcf",
+          "gatk_haplotypecaller_gvcf_scatter",
+          "gatk_haplotypecaller_scatter",
+          "gatk_markduplicates",
+          "gatk_markduplicates_bam",
+          "gatk_variantrecalibrator_indel",
+          "gatk_variantrecalibrator_snp",
+          "goleft_indexcov",
+          "manta_germline",
+          "strelka_germline",
+          "tiddit_sv"
         ],
         "value_type": "string"
+      },
+      {
+        "default": 30,
+        "description": "upstream params.freebayes_filter",
+        "key": "freebayes_filter",
+        "used_by": [
+          "vcffilter_freebayes"
+        ],
+        "value_type": "int"
       },
       {
         "default": "CONSERVATIVE",
         "key": "gatk_pcr_indel_model",
         "used_by": [
-          "gatk_haplotypecaller"
+          "gatk_haplotypecaller",
+          "gatk_haplotypecaller_gvcf",
+          "gatk_haplotypecaller_gvcf_scatter",
+          "gatk_haplotypecaller_scatter"
         ],
         "value_type": "string"
       },
@@ -478,10 +756,61 @@
         "value_type": "string"
       },
       {
+        "default": "Adjacency",
+        "description": "upstream params.group_by_umi_strategy",
+        "key": "group_by_umi_strategy",
+        "used_by": [
+          "fgbio_groupreadsbyumi"
+        ],
+        "value_type": "string"
+      },
+      {
         "default": false,
         "key": "joint_germline",
-        "used_by": [],
+        "used_by": [
+          "bcftools_sort_joint",
+          "bcftools_sort_joint_scatter",
+          "bcftools_stats",
+          "bcftools_stats_joint",
+          "ensemblvep_vep",
+          "ensemblvep_vep_joint",
+          "gatk_applyvqsr_indel",
+          "gatk_applyvqsr_snp",
+          "gatk_cnnscorevariants",
+          "gatk_filtervarianttranches",
+          "gatk_genomicsdbimport",
+          "gatk_genomicsdbimport_scatter",
+          "gatk_genotypegvcfs",
+          "gatk_genotypegvcfs_scatter",
+          "gatk_haplotypecaller",
+          "gatk_haplotypecaller_gvcf",
+          "gatk_haplotypecaller_gvcf_scatter",
+          "gatk_haplotypecaller_scatter",
+          "gatk_mergevcfs_joint",
+          "gatk_mergevcfs_joint_scatter",
+          "gatk_mergevcfs_scatter",
+          "gatk_variantrecalibrator_indel",
+          "gatk_variantrecalibrator_snp",
+          "vcftools_filter_summary",
+          "vcftools_filter_summary_joint",
+          "vcftools_tstv_count",
+          "vcftools_tstv_count_joint",
+          "vcftools_tstv_qual",
+          "vcftools_tstv_qual_joint"
+        ],
         "value_type": "bool"
+      },
+      {
+        "default": "whole_genome",
+        "description": "Joint germline: the port runs without interval scatter; a single whole-genome interval is built from the fasta .fai (upstream: per-contig BED_PREPARE_INTERVALS)",
+        "key": "joint_interval_name",
+        "used_by": [
+          "bcftools_sort_joint",
+          "gatk_genomicsdbimport",
+          "gatk_genotypegvcfs",
+          "gatk_mergevcfs_joint"
+        ],
+        "value_type": "string"
       },
       {
         "default": [
@@ -491,7 +820,9 @@
         "key": "known_indels",
         "used_by": [
           "gatk_baserecalibrator",
-          "gatk_filtervarianttranches"
+          "gatk_baserecalibrator_scatter",
+          "gatk_filtervarianttranches",
+          "gatk_variantrecalibrator_indel"
         ],
         "value_type": "array"
       },
@@ -503,17 +834,45 @@
         "key": "known_indels_tbi",
         "used_by": [
           "gatk_baserecalibrator",
-          "gatk_filtervarianttranches"
+          "gatk_baserecalibrator_scatter",
+          "gatk_filtervarianttranches",
+          "gatk_variantrecalibrator_indel"
         ],
         "value_type": "array"
+      },
+      {
+        "default": "/data/references/GRCh38/Annotation/GATKBundle/1000G_omni2.5.hg38.vcf.gz",
+        "description": "VQSR resources for joint germline (upstream conf/igenomes.config known_snps)",
+        "key": "known_snps",
+        "used_by": [
+          "gatk_variantrecalibrator_snp"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "/data/references/GRCh38/Annotation/GATKBundle/1000G_omni2.5.hg38.vcf.gz.tbi",
+        "key": "known_snps_tbi",
+        "used_by": [
+          "gatk_variantrecalibrator_snp"
+        ],
+        "value_type": "string"
       },
       {
         "default": "L1",
         "key": "lane",
         "used_by": [
+          "bcftools_mpileup_ngscheckmate",
           "bwa_mem",
+          "bwa_mem2",
+          "bwa_mem_umi",
           "fastp",
-          "fastqc"
+          "fastp_umi",
+          "fastqc",
+          "fgbio_callmolecularconsensusreads",
+          "fgbio_fastqtobam",
+          "fgbio_groupreadsbyumi",
+          "samtools_bam2fq_consensus",
+          "samtools_bam2fq_umi"
         ],
         "value_type": "string"
       },
@@ -521,34 +880,129 @@
         "default": 15,
         "key": "length_required",
         "used_by": [
-          "fastp"
+          "fastp",
+          "fastp_umi"
         ],
         "value_type": "int"
+      },
+      {
+        "default": "/data/references/GRCh38/Annotation/NGSCheckMate/SNP_GRCh38_hg38_wChr.bed",
+        "key": "ngscheckmate_bed",
+        "used_by": [
+          "bcftools_mpileup_ngscheckmate",
+          "ngscheckmate_ncm"
+        ],
+        "value_type": "string"
       },
       {
         "default": "results",
         "key": "out_dir",
         "used_by": [
+          "bcftools_mpileup_call",
+          "bcftools_mpileup_ngscheckmate",
+          "bcftools_sort_freebayes",
+          "bcftools_sort_joint",
+          "bcftools_sort_joint_scatter",
           "bcftools_stats",
+          "bcftools_stats_deepvariant",
+          "bcftools_stats_freebayes",
+          "bcftools_stats_joint",
+          "bcftools_stats_manta",
+          "bcftools_stats_mpileup",
+          "bcftools_stats_strelka",
+          "bcftools_stats_tiddit",
+          "bwa_index",
           "bwa_mem",
+          "bwa_mem2",
+          "bwa_mem_umi",
+          "bwamem2_index",
+          "create_intervals_bed",
+          "deepvariant",
           "ensemblvep_vep",
+          "ensemblvep_vep_deepvariant",
+          "ensemblvep_vep_freebayes",
+          "ensemblvep_vep_joint",
+          "ensemblvep_vep_manta",
+          "ensemblvep_vep_mpileup",
+          "ensemblvep_vep_strelka",
+          "ensemblvep_vep_tiddit",
           "fastp",
+          "fastp_umi",
           "fastqc",
+          "fgbio_callmolecularconsensusreads",
+          "fgbio_fastqtobam",
+          "fgbio_groupreadsbyumi",
+          "freebayes",
           "gatk_applybqsr",
+          "gatk_applybqsr_scatter",
+          "gatk_applyvqsr_indel",
+          "gatk_applyvqsr_snp",
           "gatk_baserecalibrator",
+          "gatk_baserecalibrator_scatter",
           "gatk_cnnscorevariants",
+          "gatk_createsequencedictionary",
           "gatk_filtervarianttranches",
+          "gatk_gatherbqsrreports",
+          "gatk_genomicsdbimport",
+          "gatk_genomicsdbimport_scatter",
+          "gatk_genotypegvcfs",
+          "gatk_genotypegvcfs_scatter",
           "gatk_haplotypecaller",
+          "gatk_haplotypecaller_gvcf",
+          "gatk_haplotypecaller_gvcf_scatter",
+          "gatk_haplotypecaller_scatter",
           "gatk_markduplicates",
+          "gatk_markduplicates_bam",
+          "gatk_mergevcfs_joint",
+          "gatk_mergevcfs_joint_scatter",
+          "gatk_mergevcfs_scatter",
+          "gatk_variantrecalibrator_indel",
+          "gatk_variantrecalibrator_snp",
+          "goleft_indexcov",
+          "manta_germline",
+          "merge_index_samtools",
           "mosdepth_md",
           "mosdepth_recal",
           "multiqc",
+          "ngscheckmate_ncm",
+          "samtools_bam2fq_consensus",
+          "samtools_bam2fq_umi",
+          "samtools_faidx",
           "samtools_index_recal",
+          "samtools_reindex_bam",
           "samtools_stats_md",
           "samtools_stats_recal",
+          "strelka_germline",
+          "tabix_freebayes",
+          "tabix_freebayes_filt",
+          "tabix_interval",
+          "tabix_tiddit",
+          "tiddit_sv",
+          "vcffilter_freebayes",
           "vcftools_filter_summary",
+          "vcftools_filter_summary_deepvariant",
+          "vcftools_filter_summary_freebayes",
+          "vcftools_filter_summary_joint",
+          "vcftools_filter_summary_manta",
+          "vcftools_filter_summary_mpileup",
+          "vcftools_filter_summary_strelka",
+          "vcftools_filter_summary_tiddit",
           "vcftools_tstv_count",
-          "vcftools_tstv_qual"
+          "vcftools_tstv_count_deepvariant",
+          "vcftools_tstv_count_freebayes",
+          "vcftools_tstv_count_joint",
+          "vcftools_tstv_count_manta",
+          "vcftools_tstv_count_mpileup",
+          "vcftools_tstv_count_strelka",
+          "vcftools_tstv_count_tiddit",
+          "vcftools_tstv_qual",
+          "vcftools_tstv_qual_deepvariant",
+          "vcftools_tstv_qual_freebayes",
+          "vcftools_tstv_qual_joint",
+          "vcftools_tstv_qual_manta",
+          "vcftools_tstv_qual_mpileup",
+          "vcftools_tstv_qual_strelka",
+          "vcftools_tstv_qual_tiddit"
         ],
         "value_type": "string"
       },
@@ -557,7 +1011,31 @@
         "description": "Sample metadata \u2014 mirrors tests/csv/3.0/fastq_single.csv (single-lane model: nf-core/sarek meta.id = \"{sample}-{lane}\", read-group ID = \"{sample}.{lane}\")",
         "key": "patient",
         "used_by": [
-          "bwa_mem"
+          "bwa_mem",
+          "bwa_mem2",
+          "bwa_mem_umi"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "description": "Optional branches (all default-off; upstream equivalents in parentheses) Reference preparation — upstream PREPARE_GENOME builds the BWA/BWAmem2 indexes + .dict + .fai when the reference lacks them; the port gates this on prepare_reference and writes into results/reference/. Point bwa_index_dir / bwa_mem2_index_dir / fasta_fai / dict at the built files to use them.",
+        "key": "prepare_reference",
+        "used_by": [
+          "bwa_index",
+          "bwamem2_index",
+          "gatk_createsequencedictionary",
+          "samtools_faidx"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "cram.crai",
+        "key": "recal_index_ext",
+        "used_by": [
+          "merge_index_samtools",
+          "mosdepth_recal",
+          "samtools_index_recal"
         ],
         "value_type": "string"
       },
@@ -565,14 +1043,49 @@
         "default": false,
         "description": "CRAM output mode (upstream default)",
         "key": "save_output_as_bam",
-        "used_by": [],
+        "used_by": [
+          "gatk_markduplicates",
+          "gatk_markduplicates_bam"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "description": "Optional per-chromosome scatter/gather branch (default off). When scatter_gatk = true, BQSR / ApplyBQSR / HaplotypeCaller (and the joint GenotypeGVCFs) run one job per chromosome and the per-chromosome outputs are gathered (GatherBQSRReports / samtools merge+index / MergeVcfs) — results identical to the single whole-genome job (gathers are exact), with per-chromosome parallelism. Upstream scatters over dynamic duration-binned interval files; the engine's scatter takes a static value list, so the port uses one interval per chromosome. Keep `chromosomes` in sync with the contigs of your fasta .fai (each entry must exist in the .fai).",
+        "key": "scatter_gatk",
+        "used_by": [
+          "bcftools_sort_joint",
+          "bcftools_sort_joint_scatter",
+          "create_intervals_bed",
+          "gatk_applybqsr",
+          "gatk_applybqsr_scatter",
+          "gatk_baserecalibrator",
+          "gatk_baserecalibrator_scatter",
+          "gatk_gatherbqsrreports",
+          "gatk_genomicsdbimport",
+          "gatk_genomicsdbimport_scatter",
+          "gatk_genotypegvcfs",
+          "gatk_genotypegvcfs_scatter",
+          "gatk_haplotypecaller",
+          "gatk_haplotypecaller_gvcf",
+          "gatk_haplotypecaller_gvcf_scatter",
+          "gatk_haplotypecaller_scatter",
+          "gatk_mergevcfs_joint",
+          "gatk_mergevcfs_joint_scatter",
+          "gatk_mergevcfs_scatter",
+          "merge_index_samtools",
+          "samtools_index_recal",
+          "tabix_interval"
+        ],
         "value_type": "bool"
       },
       {
         "default": "ILLUMINA",
         "key": "seq_platform",
         "used_by": [
-          "bwa_mem"
+          "bwa_mem",
+          "bwa_mem2",
+          "bwa_mem_umi"
         ],
         "value_type": "string"
       },
@@ -586,7 +1099,14 @@
         "default": false,
         "key": "skip_bcftools",
         "used_by": [
-          "bcftools_stats"
+          "bcftools_stats",
+          "bcftools_stats_deepvariant",
+          "bcftools_stats_freebayes",
+          "bcftools_stats_joint",
+          "bcftools_stats_manta",
+          "bcftools_stats_mpileup",
+          "bcftools_stats_strelka",
+          "bcftools_stats_tiddit"
         ],
         "value_type": "bool"
       },
@@ -629,8 +1149,29 @@
         "key": "skip_vcftools",
         "used_by": [
           "vcftools_filter_summary",
+          "vcftools_filter_summary_deepvariant",
+          "vcftools_filter_summary_freebayes",
+          "vcftools_filter_summary_joint",
+          "vcftools_filter_summary_manta",
+          "vcftools_filter_summary_mpileup",
+          "vcftools_filter_summary_strelka",
+          "vcftools_filter_summary_tiddit",
           "vcftools_tstv_count",
-          "vcftools_tstv_qual"
+          "vcftools_tstv_count_deepvariant",
+          "vcftools_tstv_count_freebayes",
+          "vcftools_tstv_count_joint",
+          "vcftools_tstv_count_manta",
+          "vcftools_tstv_count_mpileup",
+          "vcftools_tstv_count_strelka",
+          "vcftools_tstv_count_tiddit",
+          "vcftools_tstv_qual",
+          "vcftools_tstv_qual_deepvariant",
+          "vcftools_tstv_qual_freebayes",
+          "vcftools_tstv_qual_joint",
+          "vcftools_tstv_qual_manta",
+          "vcftools_tstv_qual_mpileup",
+          "vcftools_tstv_qual_strelka",
+          "vcftools_tstv_qual_tiddit"
         ],
         "value_type": "bool"
       },
@@ -639,7 +1180,8 @@
         "description": "fastp --split_by_lines = split_fastq * 4",
         "key": "split_fastq",
         "used_by": [
-          "fastp"
+          "fastp",
+          "fastp_umi"
         ],
         "value_type": "int"
       },
@@ -651,17 +1193,50 @@
       },
       {
         "default": false,
-        "key": "trim_fastq",
+        "key": "tools_ngscheckmate",
         "used_by": [
-          "fastp"
+          "bcftools_mpileup_ngscheckmate",
+          "ngscheckmate_ncm"
         ],
         "value_type": "bool"
       },
       {
         "default": false,
+        "key": "trim_fastq",
+        "used_by": [
+          "fastp",
+          "fastp_umi"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "",
+        "description": "UMI consensus preprocessing (upstream params.umi_read_structure, e.g. '3M2S+T' or '5M2S+T'; empty string disables the whole UMI chain)",
+        "key": "umi_read_structure",
+        "used_by": [
+          "bwa_mem_umi",
+          "fastp",
+          "fastp_umi",
+          "fgbio_callmolecularconsensusreads",
+          "fgbio_fastqtobam",
+          "fgbio_groupreadsbyumi",
+          "samtools_bam2fq_consensus",
+          "samtools_bam2fq_umi"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
         "key": "vep_cache_ready",
         "used_by": [
-          "ensemblvep_vep"
+          "ensemblvep_vep",
+          "ensemblvep_vep_deepvariant",
+          "ensemblvep_vep_freebayes",
+          "ensemblvep_vep_joint",
+          "ensemblvep_vep_manta",
+          "ensemblvep_vep_mpileup",
+          "ensemblvep_vep_strelka",
+          "ensemblvep_vep_tiddit"
         ],
         "value_type": "bool"
       },
@@ -670,7 +1245,14 @@
         "description": "The VEP cache version must match the VEP binary in envs/vep.yaml (upstream's image pins 116; this env ships ensembl-vep 112, whose cache format is version-locked \u2014 a 116 cache is unreadable). The cache itself is user data (upstream bundles it in the container at /.vep; ~30GB for whole-genome GRCh38, or a gtf2vep subset) \u2014 the VEP rule gates on vep_cache_ready. Upstream fails hard without the cache; set the flag after placing it at vep_dir_cache (see README fidelity table).",
         "key": "vep_cache_version",
         "used_by": [
-          "ensemblvep_vep"
+          "ensemblvep_vep",
+          "ensemblvep_vep_deepvariant",
+          "ensemblvep_vep_freebayes",
+          "ensemblvep_vep_joint",
+          "ensemblvep_vep_manta",
+          "ensemblvep_vep_mpileup",
+          "ensemblvep_vep_strelka",
+          "ensemblvep_vep_tiddit"
         ],
         "value_type": "int"
       },
@@ -678,7 +1260,14 @@
         "default": "/.vep",
         "key": "vep_dir_cache",
         "used_by": [
-          "ensemblvep_vep"
+          "ensemblvep_vep",
+          "ensemblvep_vep_deepvariant",
+          "ensemblvep_vep_freebayes",
+          "ensemblvep_vep_joint",
+          "ensemblvep_vep_manta",
+          "ensemblvep_vep_mpileup",
+          "ensemblvep_vep_strelka",
+          "ensemblvep_vep_tiddit"
         ],
         "value_type": "string"
       },
@@ -686,7 +1275,14 @@
         "default": "GRCh38",
         "key": "vep_genome",
         "used_by": [
-          "ensemblvep_vep"
+          "ensemblvep_vep",
+          "ensemblvep_vep_deepvariant",
+          "ensemblvep_vep_freebayes",
+          "ensemblvep_vep_joint",
+          "ensemblvep_vep_manta",
+          "ensemblvep_vep_mpileup",
+          "ensemblvep_vep_strelka",
+          "ensemblvep_vep_tiddit"
         ],
         "value_type": "string"
       },
@@ -694,14 +1290,24 @@
         "default": "homo_sapiens",
         "key": "vep_species",
         "used_by": [
-          "ensemblvep_vep"
+          "ensemblvep_vep",
+          "ensemblvep_vep_deepvariant",
+          "ensemblvep_vep_freebayes",
+          "ensemblvep_vep_joint",
+          "ensemblvep_vep_manta",
+          "ensemblvep_vep_mpileup",
+          "ensemblvep_vep_strelka",
+          "ensemblvep_vep_tiddit"
         ],
         "value_type": "string"
       },
       {
         "default": false,
         "key": "wes",
-        "used_by": [],
+        "used_by": [
+          "goleft_indexcov",
+          "samtools_reindex_bam"
+        ],
         "value_type": "bool"
       }
     ]
@@ -1631,7 +2237,7 @@
       },
       {
         "default": false,
-        "description": "--- ITS branch (upstream params.illumina_pe_its / cut_its / its_partial / its_extractor \u2014 all default off -> 16S path) ---",
+        "description": "--- ITS branch (upstream params.illumina_pe_its / cut_its / its_partial / its_extractor — all default off -> 16S path) ---",
         "key": "illumina_pe_its",
         "used_by": [
           "cutadapt",
@@ -1741,7 +2347,7 @@
       },
       {
         "default": "",
-        "description": "--- QIIME2 taxonomy classifier (upstream params.qiime_ref_taxonomy / params.classifier \u2014 off by default; DADA2 taxonomy is the default path). qiime_ref_taxonomy trains a Naive-Bayes classifier on the primer-extracted reference below; classifier is a path to a pre-trained .qza (skips training). ---",
+        "description": "--- QIIME2 taxonomy classifier (upstream params.qiime_ref_taxonomy / params.classifier — off by default; DADA2 taxonomy is the default path). qiime_ref_taxonomy trains a Naive-Bayes classifier on the primer-extracted reference below; classifier is a path to a pre-trained .qza (skips training). ---",
         "key": "qiime_ref_taxonomy",
         "used_by": [
           "qiime2_classify",
@@ -6166,7 +6772,7 @@
       },
       {
         "default": true,
-        "description": "PCA (upstream: pca.activate / pca.labels). pca_variables is the derived upstream list (variables_of_interest + batch_effects + labels), kept explicit here \u2014 keep it in sync with the diffexp keys below.",
+        "description": "PCA (upstream: pca.activate / pca.labels). pca_variables is the derived upstream list (variables_of_interest + batch_effects + labels), kept explicit here — keep it in sync with the diffexp keys below.",
         "key": "pca_activate",
         "used_by": [
           "pca_jointly_handled",
@@ -6220,7 +6826,7 @@
       },
       {
         "default": false,
-        "description": "Single-end mode (upstream decides per sample from the units.tsv fq2/sra columns; the port applies it globally \u2014 engine rules have fixed input arities). Single-end units provide only <unit-key>_R1.fastq.gz. Default false = the paired-end path.",
+        "description": "Single-end mode (upstream decides per sample from the units.tsv fq2/sra columns; the port applies it globally — engine rules have fixed input arities). Single-end units provide only <unit-key>_R1.fastq.gz. Default false = the paired-end path.",
         "key": "single_end",
         "used_by": [
           "fastp_pe",
@@ -6234,7 +6840,7 @@
       },
       {
         "default": "",
-        "description": "SRA accessions to download with fasterq-dump (upstream get_sra branch: units whose fq1/fq2 are empty carry an sra accession). Comma-joined list of accessions; reads land in sra/{accession}_1.fastq / _2.fastq (upstream naming). Default empty = no SRA download. Downloaded reads are NOT auto-fed into trimming/alignment (the engine cannot bind per-unit inputs) \u2014 place them per the raw_dir naming convention to use them.",
+        "description": "SRA accessions to download with fasterq-dump (upstream get_sra branch: units whose fq1/fq2 are empty carry an sra accession). Comma-joined list of accessions; reads land in sra/{accession}_1.fastq / _2.fastq (upstream naming). Default empty = no SRA download. Downloaded reads are NOT auto-fed into trimming/alignment (the engine cannot bind per-unit inputs) — place them per the raw_dir naming convention to use them.",
         "key": "sra_accessions",
         "used_by": [
           "get_sra"
