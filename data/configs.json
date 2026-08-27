@@ -1098,7 +1098,9 @@
         "key": "aligner",
         "used_by": [
           "bwa_mem",
-          "bwa_mem2"
+          "bwa_mem2",
+          "bwa_mem2_split",
+          "bwa_mem_split"
         ],
         "value_type": "string"
       },
@@ -1152,6 +1154,7 @@
         "key": "bwa_index_dir",
         "used_by": [
           "bwa_mem",
+          "bwa_mem_split",
           "bwa_mem_umi"
         ],
         "value_type": "string"
@@ -1160,7 +1163,8 @@
         "default": "/data/references/GRCh38/Sequence/BWAmem2Index/",
         "key": "bwa_mem2_index_dir",
         "used_by": [
-          "bwa_mem2"
+          "bwa_mem2",
+          "bwa_mem2_split"
         ],
         "value_type": "string"
       },
@@ -1392,6 +1396,8 @@
           "bwa_index",
           "bwa_mem",
           "bwa_mem2",
+          "bwa_mem2_split",
+          "bwa_mem_split",
           "bwa_mem_umi",
           "bwamem2_index",
           "deepvariant",
@@ -1597,8 +1603,11 @@
           "bcftools_mpileup_ngscheckmate",
           "bwa_mem",
           "bwa_mem2",
+          "bwa_mem2_split",
+          "bwa_mem_split",
           "bwa_mem_umi",
           "fastp",
+          "fastp_split",
           "fastp_umi",
           "fastqc",
           "fgbio_callmolecularconsensusreads",
@@ -1614,9 +1623,20 @@
         "key": "length_required",
         "used_by": [
           "fastp",
+          "fastp_split",
           "fastp_umi"
         ],
         "value_type": "int"
+      },
+      {
+        "default": "0001",
+        "description": "mapped bam stem fed to markduplicates: {sample}.{mapped_bam}.bam (\"sorted\" with split_parts = true)",
+        "key": "mapped_bam",
+        "used_by": [
+          "gatk_markduplicates",
+          "gatk_markduplicates_bam"
+        ],
+        "value_type": "string"
       },
       {
         "default": "/data/references/GRCh38/Annotation/NGSCheckMate/SNP_GRCh38_hg38_wChr.bed",
@@ -1631,6 +1651,7 @@
         "default": "results",
         "key": "out_dir",
         "used_by": [
+          "bam_merge_index_samtools",
           "bcftools_mpileup_call",
           "bcftools_mpileup_ngscheckmate",
           "bcftools_sort_freebayes",
@@ -1647,6 +1668,8 @@
           "bwa_index",
           "bwa_mem",
           "bwa_mem2",
+          "bwa_mem2_split",
+          "bwa_mem_split",
           "bwa_mem_umi",
           "bwamem2_index",
           "create_intervals_bed",
@@ -1660,6 +1683,7 @@
           "ensemblvep_vep_strelka",
           "ensemblvep_vep_tiddit",
           "fastp",
+          "fastp_split",
           "fastp_umi",
           "fastqc",
           "fgbio_callmolecularconsensusreads",
@@ -1746,6 +1770,8 @@
         "used_by": [
           "bwa_mem",
           "bwa_mem2",
+          "bwa_mem2_split",
+          "bwa_mem_split",
           "bwa_mem_umi"
         ],
         "value_type": "string"
@@ -1818,6 +1844,8 @@
         "used_by": [
           "bwa_mem",
           "bwa_mem2",
+          "bwa_mem2_split",
+          "bwa_mem_split",
           "bwa_mem_umi"
         ],
         "value_type": "string"
@@ -1914,9 +1942,26 @@
         "key": "split_fastq",
         "used_by": [
           "fastp",
+          "fastp_split",
           "fastp_umi"
         ],
         "value_type": "int"
+      },
+      {
+        "default": false,
+        "description": "Runtime-discovered split parts: when true, fastp's --split_by_lines parts are discovered by filesystem scan (engine output_pattern primitive) and the BWA_MEM + BAM_MERGE_INDEX_SAMTOOLS stages fan out per part — no 0001-only cap. Requires mapped_bam = \"sorted\" (the merge output name). Not supported with umi_read_structure. Off by default (upstream single-part behavior).",
+        "key": "split_parts",
+        "used_by": [
+          "bam_merge_index_samtools",
+          "bwa_mem",
+          "bwa_mem2",
+          "bwa_mem2_split",
+          "bwa_mem_split",
+          "fastp",
+          "fastp_split",
+          "fastp_umi"
+        ],
+        "value_type": "bool"
       },
       {
         "default": 0,
@@ -1938,6 +1983,7 @@
         "key": "trim_fastq",
         "used_by": [
           "fastp",
+          "fastp_split",
           "fastp_umi"
         ],
         "value_type": "bool"
@@ -1949,6 +1995,7 @@
         "used_by": [
           "bwa_mem_umi",
           "fastp",
+          "fastp_split",
           "fastp_umi",
           "fgbio_callmolecularconsensusreads",
           "fgbio_fastqtobam",
