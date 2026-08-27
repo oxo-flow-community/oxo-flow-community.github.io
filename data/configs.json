@@ -4374,9 +4374,28 @@
         "default": 0,
         "key": "bam_mapping_quality_threshold",
         "used_by": [
-          "samtools_filter"
+          "samtools_filter_bowtie2",
+          "samtools_filter_bwaaln",
+          "samtools_filter_bwamem",
+          "samtools_filter_circularmapper"
         ],
         "value_type": "int"
+      },
+      {
+        "default": "discard",
+        "key": "bam_unmapped_type",
+        "used_by": [
+          "kraken",
+          "kraken_merge",
+          "kraken_parse",
+          "malt",
+          "metagenomic_complexity_filter",
+          "samtools_filter_bowtie2",
+          "samtools_filter_bwaaln",
+          "samtools_filter_bwamem",
+          "samtools_filter_circularmapper"
+        ],
+        "value_type": "string"
       },
       {
         "default": 1,
@@ -4760,6 +4779,166 @@
         "value_type": "bool"
       },
       {
+        "default": "SemiGlobal",
+        "key": "malt_alignment_mode",
+        "used_by": [
+          "malt"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "malt_db",
+        "used_by": [
+          "malt"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 100,
+        "key": "malt_max_queries",
+        "used_by": [
+          "malt"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "load",
+        "key": "malt_memory_mode",
+        "used_by": [
+          "malt"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "percent",
+        "key": "malt_min_support_mode",
+        "used_by": [
+          "malt"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 0.01,
+        "key": "malt_min_support_percent",
+        "used_by": [
+          "malt"
+        ],
+        "value_type": "float"
+      },
+      {
+        "default": "BlastN",
+        "key": "malt_mode",
+        "used_by": [
+          "malt"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "malt_sam_output",
+        "used_by": [
+          "malt"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": 1,
+        "key": "malt_top_percent",
+        "used_by": [
+          "malt"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": false,
+        "key": "maltextract_destackingoff",
+        "used_by": [
+          "maltextract"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "maltextract_downsamplingoff",
+        "used_by": [
+          "maltextract"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "maltextract_duplicateremovaloff",
+        "used_by": [
+          "maltextract"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "def_anc",
+        "key": "maltextract_filter",
+        "used_by": [
+          "maltextract"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "maltextract_matches",
+        "used_by": [
+          "maltextract"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "maltextract_megansummary",
+        "used_by": [
+          "maltextract"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "",
+        "key": "maltextract_ncbifiles",
+        "used_by": [
+          "maltextract"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": 85.0,
+        "key": "maltextract_percentidentity",
+        "used_by": [
+          "maltextract"
+        ],
+        "value_type": "float"
+      },
+      {
+        "default": "",
+        "key": "maltextract_taxon_list",
+        "used_by": [
+          "maltextract"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "maltextract_topalignment",
+        "used_by": [
+          "maltextract"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": 0.01,
+        "key": "maltextract_toppercent",
+        "used_by": [
+          "maltextract"
+        ],
+        "value_type": "float"
+      },
+      {
         "default": "",
         "key": "mapdamage_downsample_arg",
         "used_by": [
@@ -4794,7 +4973,11 @@
           "bwamem",
           "circulargenerator",
           "circularmapper",
-          "make_bt2_index"
+          "make_bt2_index",
+          "samtools_filter_bowtie2",
+          "samtools_filter_bwaaln",
+          "samtools_filter_bwamem",
+          "samtools_filter_circularmapper"
         ],
         "value_type": "string"
       },
@@ -4805,12 +4988,43 @@
         "value_type": "bool"
       },
       {
-        "default": 0.5,
-        "key": "metagenomic_min_complexity",
+        "default": 0.3,
+        "key": "metagenomic_complexity_entropy",
         "used_by": [
           "metagenomic_complexity_filter"
         ],
         "value_type": "float"
+      },
+      {
+        "default": false,
+        "key": "metagenomic_complexity_filter",
+        "used_by": [
+          "kraken",
+          "malt",
+          "metagenomic_complexity_filter"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": 1,
+        "key": "metagenomic_min_support_reads",
+        "used_by": [
+          "kraken_parse",
+          "malt"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": "",
+        "key": "metagenomic_tool",
+        "used_by": [
+          "kraken",
+          "kraken_merge",
+          "kraken_parse",
+          "malt",
+          "maltextract"
+        ],
+        "value_type": "string"
       },
       {
         "default": 1,
@@ -4882,6 +5096,14 @@
         "key": "out_dir",
         "used_by": [],
         "value_type": "string"
+      },
+      {
+        "default": 85,
+        "key": "percent_identity",
+        "used_by": [
+          "malt"
+        ],
+        "value_type": "int"
       },
       {
         "default": "",
@@ -5108,7 +5330,15 @@
         "default": false,
         "key": "run_bam_filtering",
         "used_by": [
-          "samtools_filter",
+          "kraken",
+          "kraken_merge",
+          "kraken_parse",
+          "malt",
+          "metagenomic_complexity_filter",
+          "samtools_filter_bowtie2",
+          "samtools_filter_bwaaln",
+          "samtools_filter_bwamem",
+          "samtools_filter_circularmapper",
           "samtools_flagstat_after_filter"
         ],
         "value_type": "bool"
@@ -5155,6 +5385,14 @@
       },
       {
         "default": false,
+        "key": "run_maltextract",
+        "used_by": [
+          "maltextract"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
         "key": "run_mapdamage_rescaling",
         "used_by": [
           "mapdamage_rescaling"
@@ -5166,8 +5404,9 @@
         "key": "run_metagenomic_screening",
         "used_by": [
           "kraken",
+          "kraken_merge",
           "kraken_parse",
-          "metagenomic_complexity_filter"
+          "malt"
         ],
         "value_type": "bool"
       },
@@ -5273,6 +5512,14 @@
         "default": false,
         "key": "single_end",
         "used_by": [],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "single_stranded",
+        "used_by": [
+          "maltextract"
+        ],
         "value_type": "bool"
       },
       {
