@@ -62,42 +62,53 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-chipseq
 
 | Parameter | Default | Description | Used by |
 |---:|---|---|---|
-| `antibody` | `H3K4me3` | — | `consensus::annotate_boolean_peaks`, `consensus::deseq2_qc`, `consensus::homer_annotate_consensus`, `consensus::macs3_consensus`, `consensus::subread_featurecounts`, `report::igv`, `report::multiqc` |
-| `blacklist` | `test/fixtures/references/blacklist.bed` | — | `filter::bamtools_filter` |
-| `broad_cutoff` | `0.1` | Peaks (broad mode only — the nf-core default) | `peaks::macs3_callpeak` |
+| `aligner` | `bwa` | Alignment / filtering. aligner selects the read aligner: 'bwa' (the nf-core default), 'bowtie2', 'chromap' or 'star'. Each mode takes a pre-built index (bwa_index directory / bowtie2_index directory / chromap_index file / star_index directory, e.g. from the upstream iGenomes bundle) — or derives it from the reference FASTA with the gated builders below, mirroring the upstream PREPARE_GENOME index branches (make_bwa_index / make_bowtie2_index / make_chromap_index / make_star_index; point the corresponding index config at the generated results/... path in that case). | `align::bowtie2_align`, `align::bwa_mem`, `align::chromap_align`, `align::star_align`, `reference::bowtie2_index_build`, `reference::bwa_index_build`, `reference::chromap_index_build`, `reference::star_genomegenerate` |
+| `antibody` | `H3K4me3` | — | `consensus::annotate_boolean_peaks`, `consensus::annotate_boolean_peaks_narrow`, `consensus::deseq2_qc`, `consensus::deseq2_qc_narrow`, `consensus::homer_annotate_consensus`, `consensus::homer_annotate_consensus_narrow`, `consensus::macs3_consensus`, `consensus::macs3_consensus_narrow`, `consensus::subread_featurecounts`, `consensus::subread_featurecounts_narrow`, `report::igv`, `report::igv_narrow`, `report::multiqc`, `report::multiqc_narrow` |
+| `blacklist` | `test/fixtures/references/blacklist.bed` | — | `filter::bamtools_filter`, `reference::blacklist_regions` |
+| `bowtie2_index` | `` | — | `align::bowtie2_align` |
+| `broad_cutoff` | `0.1` | — | `peaks::macs3_callpeak` |
 | `bwa_index` | `test/fixtures/references/bwa_index` | — | `align::bwa_mem` |
-| `bwa_min_score` | `0` | Alignment / filtering | `align::bwa_mem` |
-| `chrom_sizes` | `test/fixtures/references/chrom.sizes` | — | `tracks::ucsc_bedgraphtobigwig` |
+| `bwa_min_score` | `0` | — | `align::bwa_mem` |
+| `chrom_sizes` | `test/fixtures/references/chrom.sizes` | — | `reference::blacklist_regions`, `tracks::ucsc_bedgraphtobigwig` |
+| `chromap_index` | `` | — | `align::chromap_align` |
 | `clip_r1` | `0` | — | `qc::trimgalore` |
 | `clip_r2` | `0` | — | `qc::trimgalore` |
-| `fai` | `test/fixtures/references/genome.fa.fai` | — | `align::markduplicates`, `filter::picard_collectmultiplemetrics` |
-| `fasta` | `test/fixtures/references/genome.fa` | — | `align::bwa_mem`, `align::index_align`, `align::index_markdup`, `align::markduplicates`, `align::mergesamfiles`, `align::sort_align`, `align::stats_align`, `align::stats_markdup`, `consensus::homer_annotate_consensus`, `filter::index_filter`, `filter::picard_collectmultiplemetrics`, `filter::sort_filter`, `filter::sort_name`, `filter::stats_filter`, `peaks::homer_annotatepeaks`, `report::igv`, `tracks::khmer` |
+| `fai` | `test/fixtures/references/genome.fa.fai` | — | `align::markduplicates`, `filter::picard_collectmultiplemetrics`, `reference::star_genomegenerate` |
+| `fasta` | `test/fixtures/references/genome.fa` | — | `align::bowtie2_align`, `align::bwa_mem`, `align::chromap_align`, `align::index_align`, `align::index_markdup`, `align::markduplicates`, `align::mergesamfiles`, `align::sort_align`, `align::stats_align`, `align::stats_markdup`, `consensus::homer_annotate_consensus`, `consensus::homer_annotate_consensus_narrow`, `filter::index_filter`, `filter::picard_collectmultiplemetrics`, `filter::sort_filter`, `filter::sort_name`, `filter::stats_filter`, `peaks::homer_annotatepeaks`, `peaks::homer_annotatepeaks_narrow`, `reference::bowtie2_index_build`, `reference::bwa_index_build`, `reference::chromap_index_build`, `reference::getchromsizes`, `reference::star_genomegenerate`, `report::igv`, `report::igv_narrow`, `tracks::khmer` |
 | `fingerprint_bins` | `500000` | — | `tracks::deeptools_plotfingerprint` |
 | `fragment_size` | `0` | — | — |
 | `gene_bed` | `test/fixtures/references/gene.bed` | — | `tracks::deeptools_computematrix` |
-| `gtf` | `test/fixtures/references/genome.gtf` | — | `consensus::homer_annotate_consensus`, `peaks::homer_annotatepeaks` |
+| `gtf` | `test/fixtures/references/genome.gtf` | — | `consensus::homer_annotate_consensus`, `consensus::homer_annotate_consensus_narrow`, `peaks::homer_annotatepeaks`, `peaks::homer_annotatepeaks_narrow`, `reference::gtf2bed`, `reference::star_genomegenerate` |
 | `ip_ids` | `'S1_REP1', 'S1_REP2'` | — | — |
 | `keep_dups` | `false` | — | `filter::bamtools_filter` |
 | `keep_multi_map` | `false` | — | `filter::bamtools_filter` |
-| `macs_fdr` | `0` | — | `peaks::macs3_callpeak` |
-| `macs_gsize` | `` | MACS3 genome size. Empty string = derive from read length via khmer (faithful to the upstream default). | `peaks::macs3_callpeak`, `tracks::khmer` |
-| `macs_pvalue` | `0` | — | `peaks::macs3_callpeak` |
-| `min_reps_consensus` | `1` | — | `consensus::macs3_consensus` |
-| `multiple_groups` | `false` | — | `consensus::annotate_boolean_peaks`, `consensus::deseq2_qc`, `consensus::homer_annotate_consensus`, `consensus::macs3_consensus`, `consensus::subread_featurecounts` |
-| `multiqc_title` | `` | — | `report::multiqc` |
+| `macs_fdr` | `0` | — | `peaks::macs3_callpeak`, `peaks::macs3_callpeak_narrow` |
+| `macs_gsize` | `` | MACS3 genome size. Empty string = derive from read length via khmer (faithful to the upstream default). | `peaks::macs3_callpeak`, `peaks::macs3_callpeak_narrow`, `tracks::khmer` |
+| `macs_pvalue` | `0` | — | `peaks::macs3_callpeak`, `peaks::macs3_callpeak_narrow` |
+| `make_blacklist_regions` | `false` | — | `reference::blacklist_regions` |
+| `make_bowtie2_index` | `false` | — | `reference::bowtie2_index_build` |
+| `make_bwa_index` | `false` | — | `reference::bwa_index_build` |
+| `make_chrom_sizes` | `false` | — | `reference::getchromsizes` |
+| `make_chromap_index` | `false` | — | `reference::chromap_index_build` |
+| `make_gene_bed` | `false` | Reference preparation — ports of the upstream PREPARE_GENOME steps that can run on the port's plain reference files (all off by default). When enabled, point the corresponding input above at the generated file, e.g. gene_bed = "results/genome/gene.bed" with make_gene_bed = true; chrom_sizes = "results/genome/chrom.sizes" and fai = "results/genome/genome.fa.fai" with make_chrom_sizes = true; bwa_index = "results/bwa/index" with make_bwa_index = true; bowtie2_index = "results/bowtie2/index" with make_bowtie2_index = true; chromap_index = "results/chromap/index/genome.index" with make_chromap_index = true. | `reference::gtf2bed` |
+| `make_star_index` | `false` | — | `reference::star_genomegenerate` |
+| `min_reps_consensus` | `1` | — | `consensus::macs3_consensus`, `consensus::macs3_consensus_narrow` |
+| `multiple_groups` | `false` | — | `consensus::annotate_boolean_peaks`, `consensus::annotate_boolean_peaks_narrow`, `consensus::deseq2_qc`, `consensus::deseq2_qc_narrow`, `consensus::homer_annotate_consensus`, `consensus::homer_annotate_consensus_narrow`, `consensus::macs3_consensus`, `consensus::macs3_consensus_narrow`, `consensus::subread_featurecounts`, `consensus::subread_featurecounts_narrow` |
+| `multiqc_title` | `` | — | `report::multiqc`, `report::multiqc_narrow` |
+| `narrow_peak` | `false` | Peaks — broad mode is the nf-core default (narrow_peak = false); setting narrow_peak = true switches the whole peak chain (MACS3 narrowPeak calling, FRiP/annotation/QC, consensus, IGV and MultiQC) to the upstream narrow_peak layout. | `consensus::annotate_boolean_peaks`, `consensus::annotate_boolean_peaks_narrow`, `consensus::deseq2_qc`, `consensus::deseq2_qc_narrow`, `consensus::homer_annotate_consensus`, `consensus::homer_annotate_consensus_narrow`, `consensus::macs3_consensus`, `consensus::macs3_consensus_narrow`, `consensus::subread_featurecounts`, `consensus::subread_featurecounts_narrow`, `peaks::frip_score`, `peaks::frip_score_narrow`, `peaks::homer_annotatepeaks`, `peaks::homer_annotatepeaks_narrow`, `peaks::macs3_callpeak`, `peaks::macs3_callpeak_narrow`, `peaks::multiqc_custom_peaks`, `peaks::multiqc_custom_peaks_narrow`, `peaks::plot_homer_annotatepeaks`, `peaks::plot_homer_annotatepeaks_narrow`, `peaks::plot_macs3_qc`, `peaks::plot_macs3_qc_narrow`, `report::igv`, `report::igv_narrow`, `report::multiqc`, `report::multiqc_narrow` |
 | `pair_ids` | `'S1_REP1', 'S1_REP2', 'C1_REP1', 'C1_REP2'` | Sample metadata. pair_ids MUST be kept in sync with [[pairs]] (the oxo-flow analogue of the nf-core samplesheet meta.id column). ip_ids lists the samples that get peak calling — upstream only runs MACS3 for samples that have a control; the port mirrors this with per-pair rules whose {control} input is empty for control-only samples and skipped via `optional = true`. | — |
 | `raw_dir` | `test/fixtures/raw` | — | `qc::fastqc`, `qc::trimgalore` |
 | `read_length` | `75` | — | `tracks::khmer` |
-| `replicates_exist` | `true` | — | `consensus::annotate_boolean_peaks`, `consensus::deseq2_qc`, `consensus::homer_annotate_consensus`, `consensus::macs3_consensus`, `consensus::subread_featurecounts` |
-| `save_macs_pileup` | `false` | — | `peaks::macs3_callpeak` |
-| `seq_center` | `` | Read group / trimming | `align::bwa_mem` |
-| `skip_consensus_peaks` | `false` | — | `consensus::annotate_boolean_peaks`, `consensus::deseq2_qc`, `consensus::homer_annotate_consensus`, `consensus::macs3_consensus`, `consensus::subread_featurecounts` |
-| `skip_deseq2_qc` | `false` | — | `consensus::deseq2_qc` |
+| `replicates_exist` | `true` | — | `consensus::annotate_boolean_peaks`, `consensus::annotate_boolean_peaks_narrow`, `consensus::deseq2_qc`, `consensus::deseq2_qc_narrow`, `consensus::homer_annotate_consensus`, `consensus::homer_annotate_consensus_narrow`, `consensus::macs3_consensus`, `consensus::macs3_consensus_narrow`, `consensus::subread_featurecounts`, `consensus::subread_featurecounts_narrow` |
+| `save_macs_pileup` | `false` | — | `peaks::macs3_callpeak`, `peaks::macs3_callpeak_narrow` |
+| `seq_center` | `` | Read group / trimming | `align::bowtie2_align`, `align::bwa_mem`, `align::chromap_align`, `align::star_align` |
+| `skip_consensus_peaks` | `false` | — | `consensus::annotate_boolean_peaks`, `consensus::annotate_boolean_peaks_narrow`, `consensus::deseq2_qc`, `consensus::deseq2_qc_narrow`, `consensus::homer_annotate_consensus`, `consensus::homer_annotate_consensus_narrow`, `consensus::macs3_consensus`, `consensus::macs3_consensus_narrow`, `consensus::subread_featurecounts`, `consensus::subread_featurecounts_narrow` |
+| `skip_deseq2_qc` | `false` | — | `consensus::deseq2_qc`, `consensus::deseq2_qc_narrow` |
 | `skip_fastqc` | `false` | Step toggles (mirror the nf-core/chipseq params.skip_* / when gates) | `qc::fastqc` |
-| `skip_igv` | `false` | — | `report::igv` |
-| `skip_multiqc` | `false` | — | `report::multiqc` |
-| `skip_peak_annotation` | `false` | — | `consensus::annotate_boolean_peaks`, `consensus::homer_annotate_consensus`, `peaks::homer_annotatepeaks`, `peaks::plot_homer_annotatepeaks`, `peaks::plot_macs3_qc` |
-| `skip_peak_qc` | `false` | — | `peaks::plot_homer_annotatepeaks`, `peaks::plot_macs3_qc` |
+| `skip_igv` | `false` | — | `report::igv`, `report::igv_narrow` |
+| `skip_multiqc` | `false` | — | `report::multiqc`, `report::multiqc_narrow` |
+| `skip_peak_annotation` | `false` | — | `consensus::annotate_boolean_peaks`, `consensus::annotate_boolean_peaks_narrow`, `consensus::homer_annotate_consensus`, `consensus::homer_annotate_consensus_narrow`, `peaks::homer_annotatepeaks`, `peaks::homer_annotatepeaks_narrow`, `peaks::plot_homer_annotatepeaks`, `peaks::plot_homer_annotatepeaks_narrow`, `peaks::plot_macs3_qc`, `peaks::plot_macs3_qc_narrow` |
+| `skip_peak_qc` | `false` | — | `peaks::plot_homer_annotatepeaks`, `peaks::plot_homer_annotatepeaks_narrow`, `peaks::plot_macs3_qc`, `peaks::plot_macs3_qc_narrow` |
 | `skip_picard_metrics` | `false` | — | `filter::picard_collectmultiplemetrics` |
 | `skip_plot_fingerprint` | `false` | — | `tracks::deeptools_plotfingerprint` |
 | `skip_plot_profile` | `false` | — | `tracks::deeptools_computematrix`, `tracks::deeptools_plotheatmap`, `tracks::deeptools_plotprofile` |
@@ -105,6 +116,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-chipseq
 | `skip_qc` | `false` | — | `qc::fastqc` |
 | `skip_spp` | `false` | — | `filter::multiqc_custom_phantompeakqualtools`, `filter::phantompeakqualtools` |
 | `skip_trimming` | `false` | — | `qc::trimgalore` |
+| `star_index` | `` | — | `align::star_align` |
 | `three_prime_clip_r1` | `0` | — | `qc::trimgalore` |
 | `three_prime_clip_r2` | `0` | — | `qc::trimgalore` |
 | `trim_nextseq` | `0` | — | `qc::trimgalore` |
