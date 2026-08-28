@@ -9,7 +9,7 @@ Scenario-driven somatic small and structural variant calling with Varlociraptor:
 | **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | genomics |
-| **Rules** | 149 |
+| **Rules** | 159 |
 | **Compute** | up to 64 CPUs / 32 GB per rule (freebayes candidates 48 threads; vg giraffe 64 threads) |
 | **Tools** | altair · bcftools · bedtools · biopython · curl · datavzrd · delly · ensembl-vep · fastqc · freebayes · gatk4 · gawk · htslib · mosdepth · multiqc · openpyxl · pandas · parallel · picard · pysam · python · rust-bio-tools · samtools · scikit-learn · sed · snpsift · statsmodels · unzip · varlociraptor · vcflib · vega-lite-cli · vembrane · vg |
 | **Ported** | 2026-08-15 |
@@ -99,38 +99,109 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **In scope**
 
-- pangenome_index
-- vg_giraffe_map
-- samtools_sort_index
-- markduplicates
-- baserecalibrator
-- applybqsr
-- fastqc
-- multiqc
-- mosdepth_coverage
-- covered_regions
-- expanded_regions
-- delly_excluded_regions
-- freebayes_candidates
-- delly_candidates
-- varlociraptor_estimate
-- varlociraptor_call
-- fdr_control
-- merge_calls
-- decode_phred
-- vep_annotation
-- dbnsfp_annotation
-- annotation_filtering
-- vembrane_table
-- oncoprint_prepare
-- datavzrd_report
+- annotate_candidate_variants_delly
+- annotate_candidate_variants_freebayes
+- annotate_variants
+- annotate_vcfs
+- apply_bqsr
+- bam_index_dedup
+- bcf_index_arriba
+- bcf_index_candidate_delly
+- bcf_index_candidate_freebayes
+- bcf_index_delly
+- bcf_index_fdr_BND
+- bcf_index_fdr_DEL
+- bcf_index_fdr_DUP
+- bcf_index_fdr_INS
+- bcf_index_fdr_INV
+- bcf_index_fdr_MNV
+- bcf_index_fdr_REP
+- bcf_index_fdr_SNV
+- bcf_index_filtered
+- bcf_index_freebayes
+- bcf_index_vep_annotated
+- bcftools_concat
+- bcftools_concat_fusions
+- bedtools_merge
+- build_sample_regions
+- control_fdr_BND
+- control_fdr_DEL
+- control_fdr_DUP
+- control_fdr_INS
+- control_fdr_INV
+- control_fdr_MNV
+- control_fdr_REP
+- control_fdr_SNV
+- convert_phred_scores
 - coverage_table
-- branch modules (when-gated, default off): trimming (fastp v6.2.0 + SRA), primers (fgbio AssignPrimers/filter_primers.rs/TrimPrimers/bwa map/bamToBed), MAF export (group_bcf_to_vcf + vcf2maf), population DB (clean/filter/update), VEP plugins (REVEL/CADD downloads), bwa mapping (bwa_index + map_reads_bwa), mutational burden + signatures (context/siglasso/plots), consensus reads (calc_consensus_reads + bwa re-map + BQSR on the consensus BAM), STAR+arriba fusion calling (star_index/star_align/arriba/annotate_exons/convert/sort/concat), DGIdb annotation (annotate_dgidb + annotation_selection switch)
+- datavzrd_coverage
+- datavzrd_variants_calls
+- delly
+- download_delly_excluded_regions
+- download_revel
+- fastqc_r1
+- fastqc_r2
+- filter_by_annotation
+- filter_candidates_by_annotation_delly
+- filter_candidates_by_annotation_freebayes
+- filter_group_regions_covered
+- filter_group_regions_expanded
+- filter_offtarget_variants_delly
+- filter_offtarget_variants_freebayes
+- fix_delly_calls
+- freebayes
+- gather_calls
+- genome_dict
+- genome_faidx
+- get_annotation
+- get_genome
+- get_known_variants
+- get_pangenome
+- get_reference_paths
+- get_target_regions
+- get_vep_cache
+- get_vep_plugins
+- map_reads_vg
+- mark_duplicates
+- merge_calls
+- merge_covered_group_regions
+- merge_expanded_group_regions
+- merge_trimmed_fastqs_r1
+- merge_trimmed_fastqs_r2
+- multiqc
+- pangenome_autoindex
+- postprocess_vg_alignments
+- prepare_oncoprint
+- process_call_tables
+- process_revel_scores
+- recalibrate_base_qualities
+- remove_iupac_codes
+- render_scenario
+- samtools_idxstats
+- samtools_stats
+- scatter_candidates_delly
+- scatter_candidates_freebayes
+- sort_alignments
+- sort_calls_arriba
+- sort_calls_delly
+- sort_calls_freebayes
+- tabix_noiupac
+- tabix_revel
+- tabix_variation
+- transform_gene_annotations
+- varlociraptor_alignment_properties
+- varlociraptor_call_arriba
+- varlociraptor_call_delly
+- varlociraptor_call_freebayes
+- varlociraptor_preprocess_arriba
+- varlociraptor_preprocess_delly
+- varlociraptor_preprocess_freebayes
+- vembrane_table
 
 **Excluded**
 
-- arriba candidate re-wiring into the Varlociraptor calling flow (get_candidate_calls vartype=BND) — the fusion branch ends at the candidate-calls BCF; upstream only continues fusions when samples.tsv declares calling=fusions (the default declares calling=variants)
-- target regions (get_target_regions + filter_offtarget_variants) — upstream default config has target_regions commented out; the branch is driven by user-supplied BED files and would need a candidate-filter re-wiring in scatter_candidates, so it stays unported until a concrete use case
+- fusions FDR-control chain (filtering.smk) — the ported fusions branch ends at the fusions callset (calls/varlociraptor/{group}/{group}.fusions.0.bcf); the subsequent vartype FDR-control and fusions report steps stay out of scope (requires calling mode fusions + fusion_activate = true)
+- multi-file target_regions lists — the port freezes a single BED path (config target_regions); the merge step handles one file
 
 ## Fidelity
 
@@ -150,9 +221,19 @@ deliberate deviations:
 | upstream `config/units.tsv` absolute `/projects/...` read paths | `config.reads_dir` + sample group fixture paths | portability |
 | Snakemake `temp()` outputs | `temporary = true` | engine equivalent |
 | per-rule conda environments | one env per tool pin set (`envs/`) | same packages, same pins, consolidated |
+| snakemake `before_update`/`update` flags (population db) | no input edge; the db path is read/written as-is | oxo-flow has no such flags; a declared input would create a DAG cycle (`validate` rejects it) |
+| snakemake `temp()` outputs of the gated branch modules | plain outputs (`temporary = true` where the default path used it) | see the module headers; `join_mutational_signatures` writes with `>` instead of the upstream `>>` because the engine does not pre-delete outputs |
+| snakemake script API (`snakemake.input/output/params`) in the 6 branch scripts | argv ports (`--output`/`--log` flags, comma-joined lists) | same logic verbatim, cf. the default-path script ports |
 | chm sample group vertical slice (benchmarking) | not ported | the ported CHM-eval flow (`chm_eval_sample` ... `chm_eval`) re-derives the CHM1 FASTQs, but the chm sample is not in the port's `config/samples.tsv`, so the chm reads do not flow through mapping -> calling -> `control_fdr`; `rename_chromosomes`/`chm_eval` keep orphan inputs (validate warns, like upstream without the chm sample) |
 | consensus-read calling (`calc_consensus_reads` flow) | `consensus.oxoflow`, gated on `consensus_activate` | upstream switches the `recalibrate_base_qualities`/`apply_bqsr` input via `get_recalibrate_quality_input`; the port models this as gated duplicate rules with the same outputs and exclusive `when` gates (`!consensus_activate` vs `consensus_activate`) |
 | `annotate_dgidb` | `annotation::annotate_dgidb`, gated on `dgidb_activate` + `annotation_selection` | upstream `get_final_selected_annotation` switches the annotated callset consumed by filtering and the final-calls chain; the port exposes the same selection as `config.annotation_selection` |
+| `filter_offtarget_variants` (wrapper v2.3.2/bio/bcftools/filter, `params.extra=""`) | pass-through `bcftools filter -o/-O b` on the fixed calls; the `regions`/index inputs are declared (as upstream) so `get_target_regions` and the candidate indexes exist pre-scatter | the pinned wrapper consumes only `input[0]` (verified against its source); the actual target-region restriction is the `filter_group_regions` bedtools intersect below |
+| `target_regions` list config | single BED path (`config.target_regions`) | upstream merges one or more files; the port freezes one path |
+| `filter_group_regions` `get_filter_targets` (bedtools intersect) | same command inline in the two `filter_group_regions_*` rules | byte-identical output; intersect branch only when `target_regions` is set |
+| per-group `calling` column of `config/samples.tsv` | `[sample_groups.metadata] calling` on each group | fusions continuation rules gate on `wildcard.calling == "fusions" || "variants,fusions"` |
+| `get_candidate_calls` for caller=arriba (UNFILTERED group concat) + `get_varlociraptor_params` (propagate-info-fields extra) | `calling::varlociraptor_preprocess_arriba`/`varlociraptor_call_arriba` consuming `results/candidate-calls/arriba/{group}/{group}.bcf` | command text identical; the arriba path has no scatter fan-out (no scatteritem) |
+| `scatter_candidates`/`filter_group_regions` conditional inputs (Python `if config.get("target_regions", None)`) | `optional = "any"` input pairs + `if [ -n "{config.target_regions}" ]` shell switch | engine equivalent of the upstream input selection |
+| upstream `get_target_regions` chr-strip (`awk '{sub("^chr","",$0); print}'`) | verbatim | target BEDs must be chr-less (Ensembl GRCh38 primary assembly); chr-prefixed files fail closed, exactly as upstream |
 
 ## Links
 
