@@ -203,7 +203,6 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - sentieon — proprietary SENTIEON_LICENSE server gating (config/config.yaml sentieon section); cannot be distributed or verified
 - denovo — no such step in upstream v2.2
 - structural_variants — no such step in upstream v2.2
-- multi-library/multi-unit sample-sheet rows — the sample-group model is one unit per sample; per-library fan-out (library_id/input_unit) has no model dimension and consumers are hard-coded to the u1 unit
 
 ## Fidelity
 
