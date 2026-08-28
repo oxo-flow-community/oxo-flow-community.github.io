@@ -129,7 +129,6 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- upstream scatter.calling(16) chunks beyond scatteritem=0 — collapsed to a single chunk: rbt vcf-split with one output chunk writes the whole callset, so the chunk content is identical to upstream's 16 chunks gathered with bcftools concat -a before control_fdr (oxo-flow does have a scatter construct; the single-sample port does not exercise it)
 - arriba candidate re-wiring into the Varlociraptor calling flow (get_candidate_calls vartype=BND) — the fusion branch ends at the candidate-calls BCF; upstream only continues fusions when samples.tsv declares calling=fusions (the default declares calling=variants)
 - target regions (get_target_regions + filter_offtarget_variants) — upstream default config has target_regions commented out; the branch is driven by user-supplied BED files and would need a candidate-filter re-wiring in scatter_candidates, so it stays unported until a concrete use case
 

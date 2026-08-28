@@ -105,7 +105,7 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- pigz_threads — upstream pigz pipe is commented out (paired_end_process.smk); plain cat loses nothing
+- none
 
 ## Fidelity
 
