@@ -9,7 +9,7 @@ Variant calling for non-model organisms: paired FASTQ reads (or SRA accessions, 
 | **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | genomics |
-| **Rules** | 84 |
+| **Rules** | 89 |
 | **Compute** | up to 8 CPUs / 8 GB per rule (bwa_mem) |
 | **Tools** | fastp · bwa · samtools · gatk4 · picard · sambamba · sra-tools · deepvariant · mosdepth · clam · genmap · glnexus · bcftools · vcftools · plink2 · admixture · bedtools · r · python |
 | **Ported** | 2026-08-15 |
@@ -152,11 +152,16 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - callable_sites_bed
 - postprocess_filter_individuals
 - postprocess_basic_filter
+- postprocess_basic_filter_long
 - postprocess_update_bed
 - postprocess_strict_filter
+- postprocess_strict_filter_long
 - postprocess_subset_indels
+- postprocess_subset_indels_long
 - postprocess_subset_snps
+- postprocess_subset_snps_long
 - postprocess_drop_indel_snps
+- postprocess_drop_indel_snps_long
 - qc_contig_map
 - qc_vcftools_individuals
 - qc_subsample_snps
@@ -178,6 +183,16 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - gatk_genomics_db_import_interval
 - gatk_genotype_gvcfs_interval
 - concat_interval_vcfs
+- resolve_long_contig_mode
+- gatk_haplotypecaller_interval_long
+- gatk_haplotypecaller_interval_markdup_long
+- gatk_haplotypecaller_interval_external_long
+- concat_interval_gvcfs_long
+- create_db_mapfile_long
+- gatk_genomics_db_import_interval_long
+- gatk_genotype_gvcfs_interval_long
+- concat_interval_vcfs_long
+- variant_filtration_long
 - bcftools_regions
 - bcftools_call
 - bcftools_concat_regions
@@ -189,7 +204,6 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - denovo — no such step in upstream v2.2
 - structural_variants — no such step in upstream v2.2
 - multi-library/multi-unit sample-sheet rows — the sample-group model is one unit per sample; per-library fan-out (library_id/input_unit) has no model dimension and consumers are hard-coded to the u1 unit
-- long-contig (CSI) indexing in the postprocess module — postprocess rules always use TBI (short-contig) indexing; variant calling supports long-contig mode via the long_contig_mode config
 
 ## Fidelity
 
@@ -239,7 +253,7 @@ plan unchanged.
 | `joint_genotype_gvcfs` | `joint_genotype_gvcfs` | gatk4 | identical (tar-extract → `gendb://` GenotypeGVCFs → `results/vcfs/raw.vcf.gz`); temp raw VCF like upstream |
 | `glnexus_joint` | `glnexus_joint` | glnexus, bcftools 1.23 | identical DeepVariant-config GLnexus join; `mem_gbytes` = `mem_mb_reduced/1024` rounded to 8, computed from the default profile (see deviations) |
 | `variant_filtration` | `variant_filtration` | gatk4, bcftools | identical RPRS/FS_SOR/MQ/QUAL hard filters, `--invalidate-previous-filters true`, then `bcftools index -f -t` |
-| long-contig (CSI) indexing — `_resolve_long_contig_mode` (common.smk) + `compress_interval_raw_vcf` (interval mode) | `resolve_long_contig_mode` + `*_long` twins (`gatk_haplotypecaller_interval_long`/`_markdup_long`/`_external_long`, `concat_interval_gvcfs_long`, `create_db_mapfile_long`, `gatk_genomics_db_import_interval_long`, `gatk_genotype_gvcfs_interval_long`, `concat_interval_vcfs_long`, `variant_filtration_long`) | bcftools 1.24, gatk4 4.6.2.0 | config `long_contig_mode` ("auto"/true/false) mirrors upstream `TBI_MAX_CONTIG_LENGTH = 2**29 - 1` auto-detection from the `.fai`; long mode emits `.csi` (`bcftools index -c`) and keeps GATK consumers on plain `.vcf` + `.idx`; short mode is byte-identical to a run without the key (see deviations 3, 10, 13, 14) |
+| long-contig (CSI) indexing — `_resolve_long_contig_mode` (common.smk) + `compress_interval_raw_vcf` (interval mode) + postprocess module `regions_to_index` | `resolve_long_contig_mode` + `*_long` twins (`gatk_haplotypecaller_interval_long`/`_markdup_long`/`_external_long`, `concat_interval_gvcfs_long`, `create_db_mapfile_long`, `gatk_genomics_db_import_interval_long`, `gatk_genotype_gvcfs_interval_long`, `concat_interval_vcfs_long`, `variant_filtration_long`, `postprocess_basic_filter_long`, `postprocess_strict_filter_long`, `postprocess_subset_indels_long`, `postprocess_subset_snps_long`, `postprocess_drop_indel_snps_long`) | bcftools 1.24, gatk4 4.6.2.0 | config `long_contig_mode` ("auto"/true/false) mirrors upstream `TBI_MAX_CONTIG_LENGTH = 2**29 - 1` auto-detection from the `.fai`; long mode emits `.csi` (`bcftools index -c`) and keeps GATK consumers on plain `.vcf` + `.idx`; the postprocess module follows the same twin pattern (`.csi` produced and consumed end-to-end); short mode is byte-identical to a run without the key (see deviations 3, 10, 13, 14) |
 | `collect_fastp_stats` | `collect_fastp_stats` | python (script) | identical logic, ported as `scripts/collect_fastp_stats.py` |
 | `bam_stats` | `bam_stats` / `_markdup` / `_external` | samtools 1.24 | identical (coverage + flagstat -O tsv); outputs temp like upstream |
 | `parse_bam_stats` | `parse_bam_stats` | python (script) | identical logic, ported as `scripts/parse_bam_stats.py` |
@@ -270,7 +284,7 @@ plan unchanged.
 
 1. **Default config differs from upstream**: upstream defaults `mark_duplicates: true`, `joint_genotyping: true`, `generate_filtered_vcf: true`, `callable_sites.enabled: true`; the port defaults all of these to `false` so its default plan is byte-identical to the previous 12-rule port. Flip the keys to get upstream's full pipeline.
 2. **postprocess/qc modules consume `results/vcfs/raw.vcf.gz`**, not upstream's `FINAL_VCF` (which is the hard-filtered VCF when `generate_filtered_vcf: true` and GATK is used). The modules were run on the raw joint VCF. The difference only matters when combining GATK + `generate_filtered_vcf` + a module, and reproduces upstream behavior for the DeepVariant path.
-3. **Long-contig CSI mode not ported for the postprocess module**: upstream conditionally uses CSI indexes when contigs exceed 512 Mb (`regions_to_index`); the postprocess rules always use the default TBI short mode (variant calling DOES support long-contig mode via the `long_contig_mode` config — see the fidelity row below). Applicable only to genomes with >512 Mb contigs.
+3. **Postprocess module long-contig CSI mode**: upstream conditionally uses CSI indexes when contigs exceed 512 Mb (`regions_to_index`); the port's postprocess rules follow the calling side's `*_long` twin pattern — `postprocess_basic_filter_long`/`postprocess_strict_filter_long`/`postprocess_subset_indels_long`/`postprocess_subset_snps_long`/`postprocess_drop_indel_snps_long` emit `.csi` (`bcftools index -c`; `tabix -C` for the SNP-positions file) and consume the `.csi`-indexed upstream VCFs of the chain when `long_contig_mode` selects long mode. Short mode is unchanged (`.tbi` everywhere, byte-identical plans).
 4. **`glnexus_joint` memory**: upstream computes `mem_gbytes` from the default profile's `mem_mb_reduced`; the port inlines the resulting value 8 (with the same `if < 1 then 1` clamp).
 5. **QC-metrics and callable-sites branches with non-fastq input types**: `combine_qc_metrics` and the callable-sites `expand_inputs` reference `results/fastp/{sample}/{sample}/u1.json` / `results/callable_sites/depths/{sample}.*` for every sample, which only exist for fastq/srr (fastp stats) or BAM-bearing samples (depths). For bam/gvcf cohorts the expands fail at plan time. Use fastq/srr groups when combining QC metrics or computing callable sites.
 6. **`fasterq-dump --tmpdir` dropped** (no per-rule tmpdir in oxo-flow); SRA downloads use the current directory.
@@ -281,7 +295,7 @@ plan unchanged.
 11. **`bcftools_call` resolves the per-sample final BAM in the shell** (upstream's `get_final_bam` markdup → merged → external priority) from `{config.samples_list}`, instead of a static input per branch; the declared `results/bams/{merged,markdup,input}/*.bam` glob inputs still order the calls behind every BAM-producing branch via DAG edges. A sample with no final BAM (e.g. gvcf-only cohorts) contributes nothing and the call proceeds with the remaining samples; an empty BAM list exits 0 with a log note (upstream's shell has the same degenerate-cohort behavior).
 12. **The interval and bcftools branches need an engine with `output_pattern`** (oxo-flow ≥ 0.17). On older engines the key is ignored and the fresh wildcards (`{interval}`, `{db_interval}`, `{region}`) stay unbound, so `validate`/`lint`/`dry-run` still pass (when-gates keep both branches off by default) but those branches must not be enabled there.
 13. **Long-contig mode gates on a side-effect flag file**: `resolve_long_contig_mode` writes a fixed-path flag (`results/reference/.long_contig.flag`) and every `*_long` rule is gated on it (`depends_on = ["resolve_long_contig_mode"]`); the short rules carry the negated gate. Engine gotcha: a `when` containing `wildcard.` is evaluated at PLAN time for DAG morphing, when the flag does not exist yet — a plan-level long rule would be dropped from the plan entirely. Plan-level long rules therefore avoid `wildcard.` in `when`: `concat_interval_gvcfs_long` gates on `{meta.input_type} != 'gvcf'` (baked per instance at expansion time, no `wildcard.` reference), so its `file_exists(...)` gate is evaluated at execution time. Rules instantiated at run time via `output_pattern` (per-interval HC long, db import long, genotype long) are unaffected. The `when` evaluator does not expand `{config.x}` inside `file_exists()`, hence the fixed flag path. Changing the reference or `long_contig_mode` between runs requires a fresh run directory (standard checkpoint semantics).
-14. **GATK cannot read `.csi`-indexed VCFs** (verified with GATK 4.6.2.0: VariantFiltration and GenomicsDBImport reject `.csi`, accepting `.tbi`/`.idx`; GATK also silently writes no index for `-O x.vcf.gz` on long contigs). Upstream's long-mode `variant_filtration` feeds `raw.vcf.gz` + `.csi` to GATK and fails; the port's `variant_filtration_long` converts to plain `.vcf` in-shell (`bcftools view -O v`), filters, and re-indexes with `bcftools index -f -c`. GenomicsDBImport reads the plain work gVCFs via GATK `.idx` (created by `gatk IndexFeatureFile` in `concat_interval_gvcfs_long`); GATK reads plain `.vcf` without any index for streaming tools, but db import strictly requires `.idx`. Memory: the port mirrors upstream's default GATK heap (`-Xmx7000m` = upstream profile `mem_mb_reduced: attempt * 7000`). A fully homozygous-reference interval over a contig at the CSI limit can exhaust this heap at gVCF finalization (GATK materializes the whole hom-ref block's depth array for `getMedianDP`; a 600 Mb hom-ref block peaks around 7.2 GB and dies with `OutOfMemoryError` at the default heap — verified live, upstream-inherited since upstream assigns whole contigs to intervals too, `BALANCING_WITHOUT_INTERVAL_SUBDIVISION`). Raise `-Xmx` in the two interval HaplotypeCaller rules (short and long) for such references.
+14. **GATK cannot read `.csi`-indexed VCFs** (verified with GATK 4.6.2.0: VariantFiltration and GenomicsDBImport reject `.csi`, accepting `.tbi`/`.idx`; GATK also silently writes no index for `-O x.vcf.gz` on long contigs). Upstream's long-mode `variant_filtration` feeds `raw.vcf.gz` + `.csi` to GATK and fails; the port's `variant_filtration_long` converts to plain `.vcf` in-shell (`bcftools view -O v`), filters, and re-indexes with `bcftools index -f -c`. GenomicsDBImport reads the plain work gVCFs via GATK `.idx` (created by `gatk IndexFeatureFile` in `concat_interval_gvcfs_long`); GATK reads plain `.vcf` without any index for streaming tools, but db import strictly requires `.idx`. Memory: the port mirrors upstream's default GATK heap (`-Xmx7000m` = upstream profile `mem_mb_reduced: attempt * 7000`). A fully homozygous-reference interval over a contig at the CSI limit can exhaust this heap at gVCF finalization (GATK materializes the whole hom-ref block's depth array for `getMedianDP`; a 600 Mb hom-ref block peaks around 7.2 GB and dies with `OutOfMemoryError` at the default heap — verified live, upstream-inherited since upstream assigns whole contigs to intervals too, `BALANCING_WITHOUT_INTERVAL_SUBDIVISION`). Raise `-Xmx` in the two interval HaplotypeCaller rules (short and long) for such references. The postprocess module is bcftools-only, so its long mode needs no GATK workaround: the `*_long` twins produce and consume `.csi` directly. Two long-chain fixes on top of PR #17: `concat_interval_gvcfs_long` and `concat_interval_vcfs_long` stage bgzip-compressed, indexed copies of the plain per-interval gVCFs / per-shard VCFs in `results/{gvcfs,vcfs}/work/` before concatenating — `bcftools concat` cannot read the plain `.g.vcf`/`.vcf` files the long HaplotypeCaller and GenotypeGVCFs emit (GATK `.idx` convention). One long-chain fix on top of PR #17: `concat_interval_gvcfs_long` stages bgzip-compressed, indexed copies of the plain per-interval gVCFs in `results/gvcfs/work/` before concatenating — `bcftools concat` cannot read the plain `.g.vcf` files the long HaplotypeCaller emits.
 
 Version pinning: upstream envs declare only `>=` ranges with no lockfile;
 exact pins (fastp 1.3.6, samtools 1.24, bwa 0.7.19, gatk4 4.6.2.0, bcftools
@@ -298,16 +312,22 @@ rules' own declarations (4 and 8).
   fixed two gvcf-cohort bugs — `parse_bam_stats` and
   `combine_qc_metrics.py` now skip gvcf samples, PR #13).
 - bcftools caller branch (`bcftools_regions` → `bcftools_call` →
-  `bcftools_concat_regions`): live-verified 2026-08-28 on macOS
-  (engine 0.16.0 + output_pattern from engine-235, conda); the
-  runtime `.fai` scan instantiated one deferred `bcftools_call` per
-  contig (1-contig fixture → exactly one region) and produced real
-  variants in `results/vcfs/regions/L000000.vcf.gz` (GT:PL:AD for all
-  samples, AC/AN=6); 30 succeeded / 0 failed / 34 skipped.
-- interval-scatter branch (`picard_intervals` →
-  `create_gvcf_intervals`/`create_db_intervals` → per-interval
-  HaplotypeCallers / per-shard GenomicsDB import+genotype →
-  `concat_interval_gvcfs` / `concat_interval_vcfs`): live-verified 2026-08-28 on macOS (engine 0.16.0 + output_pattern from engine-235, conda): the SplitIntervals scans instantiated per-interval HaplotypeCallers per sample (1-contig fixture → 1 interval) and 22 db shards (DB_SCATTER = 0.15 × 3 samples × 50), each shard run through GenomicsDBImport + GenotypeGVCFs and concatenated to results/vcfs/raw.vcf.gz (30 real variants, all 3 samples); 85 succeeded / 0 failed / 37 skipped, 117 outputs verified
+  `bcftools_concat_regions`): live-verified 2026-08-28 on macOS (engine
+  0.16.0 + output_pattern from engine-235, conda). The runtime `.fai`
+  scan instantiated one deferred `bcftools_call` per contig (1-contig
+  fixture → exactly one region) and produced real variants in
+  `results/vcfs/regions/L000000.vcf.gz` (GT:PL:AD for all samples,
+  AC/AN=6); 30 succeeded / 0 failed / 34 skipped.
+- interval-scatter branch (`picard_intervals` → `create_gvcf_intervals` /
+  `create_db_intervals` → per-interval HaplotypeCallers / per-shard
+  GenomicsDBImport + GenotypeGVCFs → `concat_interval_gvcfs` /
+  `concat_interval_vcfs`): live-verified 2026-08-28 on macOS (same
+  engine). The SplitIntervals scans instantiated per-interval
+  HaplotypeCallers per sample (1-contig fixture → 1 interval) and 22 db
+  shards (DB_SCATTER = 0.15 × 3 samples × 50), each shard run through
+  GenomicsDBImport + GenotypeGVCFs and concatenated to
+  `results/vcfs/raw.vcf.gz` (30 real variants, all 3 samples); 85
+  succeeded / 0 failed / 37 skipped, 117 outputs verified.
 - The qc module's plink steps need **≥ 2 samples** (a 1-sample cohort
   prunes to an empty VCF and `qc_plink` fails with "No samples in .vcf
   file" — upstream behaves the same on a single-sample cohort).
