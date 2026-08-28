@@ -9,7 +9,7 @@ GATK best-practice variant calling for whole-genome and whole-exome sequencing (
 | **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | genomics |
-| **Rules** | 109 |
+| **Rules** | 117 |
 | **Compute** | up to 24 CPUs / 36 GB per rule (BWA-MEM) |
 | **Tools** | fastqc · fastp · bwa · bwa-mem2 · samtools · gatk · mosdepth · fgbio · freebayes · strelka · manta · tiddit · goleft · deepvariant · ngscheckmate · bcftools · vcftools · vcflib · ensembl-vep · multiqc |
 | **Ported** | 2026-08-15 |
@@ -209,8 +209,8 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- somatic callers (Mutect2, somatic Strelka2/Manta, CNVkit, ASCAT, MSIsensor2/pro, SomaticSniper, VarDict, Control-FREEC, LoFreq, Varlociraptor) — tumor/normal pairs required; the port samplesheet is single-sample germline (engine [[pairs]] is a possible follow-up)
 - Sentieon / Parabricks / DRAGMAP — commercial accelerators (licensed binaries), out of scope
+- CNVkit / ASCAT / MSIsensor2 / SomaticSniper / VarDict / Control-FREEC / LoFreq / Varlociraptor — remaining somatic callers; Mutect2/Strelka2-somatic/Manta-somatic are ported (call_mutect2 / call_strelka_somatic / call_manta_somatic, pair-fanned via config/somatic_pairs.tsv); the rest need their own envs/fixtures
 
 ## Fidelity
 

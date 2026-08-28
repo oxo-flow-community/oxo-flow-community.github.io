@@ -9,7 +9,7 @@ Run a complete region set and gene set enrichment analysis on your own data: reg
 | **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | genomics |
-| **Rules** | 44 |
+| **Rules** | 48 |
 | **Compute** | up to 10 CPUs / 32 GB per rule |
 | **Tools** | gseapy · pandas · pycistarget · bioconductor-rcistarget · bioconductor-lola · bioconductor-rgreat · r-base · r-ggplot2 · r-pheatmap · r-svglite · r-reshape2 · r-data.table · bioconductor-rtracklayer · bioconductor-org.hs.eg.db |
 | **Ported** | 2026-08-15 |
@@ -214,7 +214,7 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- RcisTarget .txt gene-set aggregate/visualize — upstream also folds the per-.txt-set RcisTarget results into the annotation group's aggregate summary; the port's static per-group aggregate blocks cannot enumerate user-defined .txt gene sets (engine scatter on config lists cannot feed a static group label), so txt-set results are produced per set (analysis + plot) and the aggregate/visualize rows cover the region-set path only
+- RcisTarget/ORA .txt gene-set aggregate/visualize — upstream also folds the per-.txt-set RcisTarget and ORA_GSEApy results into the annotation group's aggregate summary; the port's static per-group aggregate blocks cannot enumerate user-defined .txt gene sets (engine scatter on config lists cannot feed a static group label), so txt-set results are produced per set (analysis + plot) and the aggregate/visualize rows cover the region-set path only
 - env_export — conda env export requires the conda CLI inside the runtime environment and dumps the runtime env state, not the declared pins; exact pins are already declared in envs/*.yaml
 - report rendering — upstream wraps outputs in snakemake's report() (HTML report with .rst captions); oxo-flow has no report module, so config_export and annot_export are ported as plain rules (env_export is excluded separately above)
 - note: the anticipated names liftover/enrichr/gost/single_region_mode do not exist in v3.0.1 (Enrichr appears only as a commented-out reference in gene_ORA_GSEApy.py and a database-source comment in config.yaml)

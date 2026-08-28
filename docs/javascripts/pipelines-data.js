@@ -321,10 +321,10 @@ window.OXO_PIPELINES = [
       "multiqc"
     ],
     "excluded": [
-      "somatic callers (Mutect2, somatic Strelka2/Manta, CNVkit, ASCAT, MSIsensor2/pro, SomaticSniper, VarDict, Control-FREEC, LoFreq, Varlociraptor) \u2014 tumor/normal pairs required; the port samplesheet is single-sample germline (engine [[pairs]] is a possible follow-up)",
-      "Sentieon / Parabricks / DRAGMAP \u2014 commercial accelerators (licensed binaries), out of scope"
+      "Sentieon / Parabricks / DRAGMAP \u2014 commercial accelerators (licensed binaries), out of scope",
+      "CNVkit / ASCAT / MSIsensor2 / SomaticSniper / VarDict / Control-FREEC / LoFreq / Varlociraptor \u2014 remaining somatic callers; Mutect2/Strelka2-somatic/Manta-somatic are ported (call_mutect2 / call_strelka_somatic / call_manta_somatic, pair-fanned via config/somatic_pairs.tsv); the rest need their own envs/fixtures"
     ],
-    "rule_count": 109,
+    "rule_count": 117,
     "tools": [
       "fastqc",
       "fastp",
@@ -1144,7 +1144,6 @@ window.OXO_PIPELINES = [
       "prepare_genome / samplesheet_check \u2014 compressed-reference gunzip/untar convenience, GFFREAD (GFF3 -> GTF) and samplesheet validation/staging (Nextflow plumbing; the port consumes pre-built plain reference files). The index/chrom-sizes generation steps are ported as gated rules: GTF2BED (make_gene_bed), GENOME_BLACKLIST_REGIONS (make_blacklist_regions), CUSTOM_GETCHROMSIZES (make_chrom_sizes), BWA_INDEX (make_bwa_index), BOWTIE2_BUILD (make_bowtie2_index), CHROMAP_INDEX (make_chromap_index) and STAR_GENOMEGENERATE (make_star_index)",
       "save_reference / save_trimmed / save_unaligned publish branches \u2014 the port always keeps intermediates (behaves as save_align_intermeds=true); upstream 2.1.0 has no save_mapped / save_tracks params. save_macs_pileup is ported (conditional pileup .bdg publication in both macs3 rules)",
       "multiqc pipeline summary / software versions sections \u2014 nf-core template paramsSummaryMap/softwareVersionsToYAML from Nextflow metadata; multiqc_data / multiqc_plots directory publication is ported",
-      "multi-library MergeSamFiles branch \u2014 the merge itself is expressible (expand_inputs glob over the libraries), but the whole downstream chain (markduplicates, filtering, peak calling) keys on pair_id; a second per-sample grouping dimension would restructure the pipeline; single-library default path only (upstream symlink shortcut for single-library samples, replicated exactly)",
       "DUMP_SOFTWARE_VERSIONS \u2014 Nextflow plumbing (oxo-flow has no nf-core pipelines version dump)"
     ],
     "rule_count": 83,
@@ -2357,8 +2356,7 @@ window.OXO_PIPELINES = [
       "parabricks \u2014 every rule runs with --nv GPU passthrough (workflow/rules/parabricks.smk); the oxo-flow docker backend has no --nv support, plus NVIDIA EULA/license cannot be enforced",
       "sentieon \u2014 proprietary SENTIEON_LICENSE server gating (config/config.yaml sentieon section); cannot be distributed or verified",
       "denovo \u2014 no such step in upstream v2.2",
-      "structural_variants \u2014 no such step in upstream v2.2",
-      "multi-library/multi-unit sample-sheet rows \u2014 the sample-group model is one unit per sample; per-library fan-out (library_id/input_unit) has no model dimension and consumers are hard-coded to the u1 unit"
+      "structural_variants \u2014 no such step in upstream v2.2"
     ],
     "rule_count": 89,
     "tools": [
@@ -2476,12 +2474,12 @@ window.OXO_PIPELINES = [
       "visualize_pycisTarget_hg38_screen_v10clust_ATAC"
     ],
     "excluded": [
-      "RcisTarget .txt gene-set aggregate/visualize \u2014 upstream also folds the per-.txt-set RcisTarget results into the annotation group's aggregate summary; the port's static per-group aggregate blocks cannot enumerate user-defined .txt gene sets (engine scatter on config lists cannot feed a static group label), so txt-set results are produced per set (analysis + plot) and the aggregate/visualize rows cover the region-set path only",
+      "RcisTarget/ORA .txt gene-set aggregate/visualize \u2014 upstream also folds the per-.txt-set RcisTarget and ORA_GSEApy results into the annotation group's aggregate summary; the port's static per-group aggregate blocks cannot enumerate user-defined .txt gene sets (engine scatter on config lists cannot feed a static group label), so txt-set results are produced per set (analysis + plot) and the aggregate/visualize rows cover the region-set path only",
       "env_export \u2014 conda env export requires the conda CLI inside the runtime environment and dumps the runtime env state, not the declared pins; exact pins are already declared in envs/*.yaml",
       "report rendering \u2014 upstream wraps outputs in snakemake's report() (HTML report with .rst captions); oxo-flow has no report module, so config_export and annot_export are ported as plain rules (env_export is excluded separately above)",
       "note: the anticipated names liftover/enrichr/gost/single_region_mode do not exist in v3.0.1 (Enrichr appears only as a commented-out reference in gene_ORA_GSEApy.py and a database-source comment in config.yaml)"
     ],
-    "rule_count": 44,
+    "rule_count": 48,
     "tools": [
       "gseapy",
       "pandas",
@@ -3033,7 +3031,7 @@ window.OXO_PIPELINES = [
       "conpair contamination check \u2014 custom conpair_latest.sif container",
       "ASCATsc (feeds the BRASS input chain; HMF ASCATsc.R) + multi-lane entry variant (mapping_muliti.smk) \u2014 non-default-path variants"
     ],
-    "rule_count": 183,
+    "rule_count": 186,
     "tools": [
       "fastp",
       "bwa (>=0.7.18)",

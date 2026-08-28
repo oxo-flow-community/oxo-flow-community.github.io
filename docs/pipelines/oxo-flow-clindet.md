@@ -9,7 +9,7 @@ Port of zyllifeworld/clindet in its upstream single-Snakefile form: one entry fi
 | **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | cancer genomics (WES/WGS/RNA) |
-| **Rules** | 183 |
+| **Rules** | 186 |
 | **Compute** | up to 30 threads / 10 GB per rule |
 | **Tools** | fastp · bwa (>=0.7.18) · samtools · gatk4 4.6.2.0 (container) · bcftools >=1.22 · bgzip · tabix · varscan 2.4.6 · vardict-java 1.8.3 (container) · muse 2.1.2 (container) · strelka2 · manta · caveman 1.15.3 (container) · vcf2maf 1.6.22 · ensembl-vep 114.2 · libboost 1.85.0 · multiqc · R >= 4.4 (knitr, data.table, gpgr via post-deploy) |
 | **Ported** | 2026-08-15 |
