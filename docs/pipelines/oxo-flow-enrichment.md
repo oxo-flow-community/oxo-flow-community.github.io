@@ -9,7 +9,7 @@ Run a complete region set and gene set enrichment analysis on your own data: reg
 | **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | genomics |
-| **Rules** | 42 |
+| **Rules** | 44 |
 | **Compute** | up to 10 CPUs / 32 GB per rule |
 | **Tools** | gseapy · pandas · pycistarget · bioconductor-rcistarget · bioconductor-lola · bioconductor-rgreat · r-base · r-ggplot2 · r-pheatmap · r-svglite · r-reshape2 · r-data.table · bioconductor-rtracklayer · bioconductor-org.hs.eg.db |
 | **Ported** | 2026-08-15 |
@@ -172,15 +172,16 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - aggregate_LOLA_LOLACore_ATAC
 - aggregate_ORA_GSEApy_Azimuth_2023_ATAC
 - aggregate_ORA_GSEApy_Reactome_ATAC
+- aggregate_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC
 - aggregate_preranked_GSEApy_Azimuth_2023_RNA
 - aggregate_preranked_GSEApy_Reactome_RNA
 - aggregate_pycisTarget_hg38_screen_v10clust_ATAC
-- aggregate_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC
 - annot_export
 - config_export
-- gene_motif_enrichment_analysis_RcisTarget
 - gene_ORA_GSEApy_Azimuth_2023
 - gene_ORA_GSEApy_Reactome
+- gene_motif_enrichment_analysis_RcisTarget
+- gene_motif_enrichment_analysis_RcisTarget_txt
 - gene_preranked_GSEApy_Azimuth_2023
 - gene_preranked_GSEApy_Reactome
 - plot_enrichment_result_GREAT_Azimuth_2023
@@ -188,10 +189,11 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - plot_enrichment_result_LOLA_LOLACore
 - plot_enrichment_result_ORA_GSEApy_Azimuth_2023
 - plot_enrichment_result_ORA_GSEApy_Reactome
+- plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust
+- plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust_txt
 - plot_enrichment_result_preranked_GSEApy_Azimuth_2023
 - plot_enrichment_result_preranked_GSEApy_Reactome
 - plot_enrichment_result_pycisTarget_hg38_screen_v10clust
-- plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust
 - prepare_databases_Azimuth_2023
 - prepare_databases_Reactome
 - process_results_pycisTarget
@@ -205,14 +207,14 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - visualize_LOLA_LOLACore_ATAC
 - visualize_ORA_GSEApy_Azimuth_2023_ATAC
 - visualize_ORA_GSEApy_Reactome_ATAC
+- visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC
 - visualize_preranked_GSEApy_Azimuth_2023_RNA
 - visualize_preranked_GSEApy_Reactome_RNA
 - visualize_pycisTarget_hg38_screen_v10clust_ATAC
-- visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC
 
 **Excluded**
 
-- RcisTarget .txt gene-set fan-out — upstream also runs gene_motif_enrichment_analysis_RcisTarget over annotation rows ending in .txt (raw gene lists); the default annotation has none, so the port fans over region sets only (same convention as gene_ORA_GSEApy); the region-set path is ported, when-gated on the user-provided RcisTarget databases
+- RcisTarget .txt gene-set aggregate/visualize — upstream also folds the per-.txt-set RcisTarget results into the annotation group's aggregate summary; the port's static per-group aggregate blocks cannot enumerate user-defined .txt gene sets (engine scatter on config lists cannot feed a static group label), so txt-set results are produced per set (analysis + plot) and the aggregate/visualize rows cover the region-set path only
 - env_export — conda env export requires the conda CLI inside the runtime environment and dumps the runtime env state, not the declared pins; exact pins are already declared in envs/*.yaml
 - report rendering — upstream wraps outputs in snakemake's report() (HTML report with .rst captions); oxo-flow has no report module, so config_export and annot_export are ported as plain rules (env_export is excluded separately above)
 - note: the anticipated names liftover/enrichr/gost/single_region_mode do not exist in v3.0.1 (Enrichr appears only as a commented-out reference in gene_ORA_GSEApy.py and a database-source comment in config.yaml)
@@ -227,7 +229,7 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 | region_gene_association_GREAT | `region_gene_association_GREAT` | bioconductor-rgreat 2.4.0 | identical command; uses the first database (Azimuth_2023) as upstream |
 | region_motif_enrichment_analysis_pycisTarget | `region_motif_enrichment_analysis_pycisTarget` | pycistarget 1.1 | command text verbatim (incl. upstream error-tolerance wrapper); threads=10 as upstream |
 | process_results_pycisTarget | `process_results_pycisTarget` | pycistarget 1.1 | identical command |
-| gene_motif_enrichment_analysis_RcisTarget | `gene_motif_enrichment_analysis_RcisTarget` + plot/aggregate/visualize `*_RcisTarget_*` blocks | bioconductor-rcistarget 1.20.0 | identical command/logic; when-gated on the user-provided rankings feather + motif annotation (both `""` by default); upstream fans over region sets (via GREAT `genes.txt`) and `.txt` gene sets — the default annotation has no `.txt` gene sets, so the port fans over region sets only, same convention as `gene_ORA_GSEApy` |
+| gene_motif_enrichment_analysis_RcisTarget | `gene_motif_enrichment_analysis_RcisTarget` (+ `_txt`) + plot/aggregate/visualize `*_RcisTarget_*` blocks | bioconductor-rcistarget 1.20.0 | identical command/logic; when-gated on the user-provided rankings feather + motif annotation (both `""` by default); fans over region sets (via GREAT `genes.txt`) and `.txt` gene sets (`config.txt_gene_sets`; zero instances when the default-empty list is unset, so the default plan is unchanged); upstream also folds the `.txt`-set results into the group aggregate/visualize — the port's static per-group blocks cannot enumerate user-defined gene sets, so txt-set results stop at per-set plots |
 | gene_ORA_GSEApy | `gene_ORA_GSEApy_Azimuth_2023`, `gene_ORA_GSEApy_Reactome` | gseapy 1.1.3 | identical command; upstream genes_dict fan-out has zero default-path members, region-set fan-out kept |
 | gene_preranked_GSEApy | `gene_preranked_GSEApy_Azimuth_2023`, `gene_preranked_GSEApy_Reactome` | gseapy 1.1.3 | identical command |
 | plot_enrichment_result | `plot_enrichment_result_*` (9 blocks) | r-ggplot2 3.5.0, r-svglite 2.1.0 | identical command; upstream wildcard fan-out (tool × db × feature_set) baked as per-(tool,db) scatter blocks |
