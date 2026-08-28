@@ -1424,7 +1424,7 @@
     ],
     "excluded": [
       "jaffal RNA fusion analysis (GET_JAFFAL_REF/UNTAR; protocol-gated to cDNA/directRNA) — not portable: the figshare reference bundle (https://ndownloader.figshare.com/files/28168755) redirects to a signed S3 URL returning HTTP 403, is multi-GB, and embeds the JAFFA_stages.groovy script the module executes via bpipe run",
-      "get_test_data / get_nanolyse_fasta (upstream download processes: nf-core test-datasets clone for -profile test; lambda.fasta.gz fetch when run_nanolyse=true without --nanolyse_fasta) — replaced by checked-in fixtures incl. refs/lambda.fasta.gz"
+      "note: committee scope mentions Dorado demultiplex + pycoQC QC; nanoseq 3.1.0 actually uses qcat + NanoPlot/FastQC — port follows the real source"
     ],
     "rule_count": 52,
     "tools": [
@@ -2018,7 +2018,6 @@
       "branch modules (when-gated, default off): trimming (fastp v6.2.0 + SRA), primers (fgbio AssignPrimers/filter_primers.rs/TrimPrimers/bwa map/bamToBed), MAF export (group_bcf_to_vcf + vcf2maf), population DB (clean/filter/update), VEP plugins (REVEL/CADD downloads), bwa mapping (bwa_index + map_reads_bwa), mutational burden + signatures (context/siglasso/plots), consensus reads (calc_consensus_reads + bwa re-map + BQSR on the consensus BAM), STAR+arriba fusion calling (star_index/star_align/arriba/annotate_exons/convert/sort/concat), DGIdb annotation (annotate_dgidb + annotation_selection switch)"
     ],
     "excluded": [
-      "upstream scatter.calling(16) chunks beyond scatteritem=0 — collapsed to a single chunk: rbt vcf-split with one output chunk writes the whole callset, so the chunk content is identical to upstream's 16 chunks gathered with bcftools concat -a before control_fdr (oxo-flow does have a scatter construct; the single-sample port does not exercise it)",
       "arriba candidate re-wiring into the Varlociraptor calling flow (get_candidate_calls vartype=BND) — the fusion branch ends at the candidate-calls BCF; upstream only continues fusions when samples.tsv declares calling=fusions (the default declares calling=variants)",
       "target regions (get_target_regions + filter_offtarget_variants) — upstream default config has target_regions commented out; the branch is driven by user-supplied BED files and would need a candidate-filter re-wiring in scatter_candidates, so it stays unported until a concrete use case"
     ],
@@ -2305,7 +2304,8 @@
     "excluded": [
       "RcisTarget .txt gene-set fan-out — upstream also runs gene_motif_enrichment_analysis_RcisTarget over annotation rows ending in .txt (raw gene lists); the default annotation has none, so the port fans over region sets only (same convention as gene_ORA_GSEApy); the region-set path is ported, when-gated on the user-provided RcisTarget databases",
       "env_export — conda env export requires the conda CLI inside the runtime environment and dumps the runtime env state, not the declared pins; exact pins are already declared in envs/*.yaml",
-      "report rendering — upstream wraps outputs in snakemake's report() (HTML report with .rst captions); oxo-flow has no report module, so config_export and annot_export are ported as plain rules (env_export is excluded separately above)"
+      "report rendering — upstream wraps outputs in snakemake's report() (HTML report with .rst captions); oxo-flow has no report module, so config_export and annot_export are ported as plain rules (env_export is excluded separately above)",
+      "note: the anticipated names liftover/enrichr/gost/single_region_mode do not exist in v3.0.1 (Enrichr appears only as a commented-out reference in gene_ORA_GSEApy.py and a database-source comment in config.yaml)"
     ],
     "rule_count": 42,
     "tools": [
@@ -2675,8 +2675,7 @@
       "env_export_pymcdm"
     ],
     "excluded": [
-      "config_export — the committed [config] table IS the config; a dump rule would duplicate it and drift",
-      "report/ generation — snakemake report book needs wrapper-metadata channels the engine lacks; all underlying artifacts are produced"
+      "report/ generation — Snakemake `report(...)` wrapper metadata (captions, categories, labels) has no oxo-flow counterpart; all underlying rule outputs are produced, and `oxo-flow report` generates an execution report from the checkpoint (rule status/timings), not the Snakemake artifact-catalog book."
     ],
     "rule_count": 61,
     "tools": [
@@ -2941,9 +2940,7 @@
       "DGE_analysis",
       "main_encode.oxoflow — ENCODE entry point (8 rules, pre-downloaded FASTQ inputs)"
     ],
-    "excluded": [
-      "pigz_threads — upstream pigz pipe is commented out (paired_end_process.smk); plain cat loses nothing"
-    ],
+    "excluded": [],
     "rule_count": 13,
     "tools": [
       "sra-tools",

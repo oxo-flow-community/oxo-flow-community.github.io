@@ -175,7 +175,7 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 **Excluded**
 
 - jaffal RNA fusion analysis (GET_JAFFAL_REF/UNTAR; protocol-gated to cDNA/directRNA) — not portable: the figshare reference bundle (https://ndownloader.figshare.com/files/28168755) redirects to a signed S3 URL returning HTTP 403, is multi-GB, and embeds the JAFFA_stages.groovy script the module executes via bpipe run
-- get_test_data / get_nanolyse_fasta (upstream download processes: nf-core test-datasets clone for -profile test; lambda.fasta.gz fetch when run_nanolyse=true without --nanolyse_fasta) — replaced by checked-in fixtures incl. refs/lambda.fasta.gz
+- note: committee scope mentions Dorado demultiplex + pycoQC QC; nanoseq 3.1.0 actually uses qcat + NanoPlot/FastQC — port follows the real source
 
 ## Fidelity
 

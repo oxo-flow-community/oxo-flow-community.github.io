@@ -169,8 +169,7 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- config_export — the committed [config] table IS the config; a dump rule would duplicate it and drift
-- report/ generation — snakemake report book needs wrapper-metadata channels the engine lacks; all underlying artifacts are produced
+- report/ generation — Snakemake `report(...)` wrapper metadata (captions, categories, labels) has no oxo-flow counterpart; all underlying rule outputs are produced, and `oxo-flow report` generates an execution report from the checkpoint (rule status/timings), not the Snakemake artifact-catalog book.
 
 ## Fidelity
 
