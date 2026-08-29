@@ -449,17 +449,27 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - tiara_tiara_megahit
 - tiara_tiara_spades
 - trimmomatic
+- fastp_sheet
+- fastp_single_sheet
+- fastqc_raw_sheet
+- fastqc_trimmed_sheet
+- megahit_interleaved_sheet
+- megahit_single_sheet
+- spades_interleaved_sheet
+- phix_align_sheet
+- bowtie2_align_megahit_sheet
+- bowtie2_align_spades_sheet
+- depths_megahit_sheet
+- depths_spades_sheet
+- catpack_unbinned_spades_metabat2
 
 **Excluded**
 
 - longreads — long-read assemblies (Flye/MetaMDBG) and long-read binning; not portable: the upstream longreads subworkflow would double the whole binning graph (every assembler x binner x sample) and needs long-read input files the paired-end {sample}_R1/_R2 input model does not provide
 - kaiju — taxonomic profiling with kaiju; not portable: the process is absent from upstream nf-core/mag 5.5.0 entirely (removed upstream), so there is no module script to translate
 - diamond — taxonomic profiling with diamond; same as kaiju: absent from upstream 5.5.0, no module script to translate
-- assembly_input — upstream also accepts single-end and interleaved input modes; the port's default input model is paired-end {sample}_R1.fastq.gz / {sample}_R2.fastq.gz, and uniform single-end libraries are runnable by overriding config.sample_pattern (e.g. {sample}.fastq.gz); interleaved and mixed-library samplesheets are not ported
 - ancient_dna — dedicated upstream subworkflow (off by default); not portable without rewiring: it rewires the workflow at 8 points (skips host removal, phiX removal and assembly; adds pydamage damage correction and freebayes/bcftools SNP calling into the GTDB-Tk filter and bin summary), which would double the port's rule graph for a niche parameter
-- cat_classify_unbinned — the CAT/BAT unbinned-contigs classification column (upstream --cat_classify_unbinned, default false): the ported CAT branch classifies binned contigs only; the unbinned column would add a second full CAT_pack pass over the chunked contigs, which are already classified by Tiara in the bin_domain_classification branch
 - pydamage report page — part of the ancient DNA branch (not ported, see above); the CheckM2 and GUNC report pages are ported with their tools
-- BUSCO `*-busco.batch_summary.failed.txt` artifact — only produced by upstream when a BUSCO run fails; an error-only artifact, not an analysis output
 - nf-core boilerplate files (pipeline_summary/methods_description, versions.yml) — not part of the analysis
 
 ## Fidelity
