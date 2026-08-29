@@ -462,14 +462,23 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - depths_megahit_sheet
 - depths_spades_sheet
 - catpack_unbinned_spades_metabat2
+- pydamage_analyze_spades
+- pydamage_analyze_megahit
+- ancient_consensus_spades
+- ancient_consensus_megahit
+- pydamage_bins_summary
+- flye_lr
+- metamdbg_lr
+- minimap2_align_lr_flye
+- minimap2_align_lr_metamdbg
+- metabat2_lr_flye
+- maxbin2_lr_flye
+- concoct_lr_flye
 
 **Excluded**
 
-- longreads — long-read assemblies (Flye/MetaMDBG) and long-read binning; not portable: the upstream longreads subworkflow would double the whole binning graph (every assembler x binner x sample) and needs long-read input files the paired-end {sample}_R1/_R2 input model does not provide
 - kaiju — taxonomic profiling with kaiju; not portable: the process is absent from upstream nf-core/mag 5.5.0 entirely (removed upstream), so there is no module script to translate
 - diamond — taxonomic profiling with diamond; same as kaiju: absent from upstream 5.5.0, no module script to translate
-- ancient_dna — dedicated upstream subworkflow (off by default); not portable without rewiring: it rewires the workflow at 8 points (skips host removal, phiX removal and assembly; adds pydamage damage correction and freebayes/bcftools SNP calling into the GTDB-Tk filter and bin summary), which would double the port's rule graph for a niche parameter
-- pydamage report page — part of the ancient DNA branch (not ported, see above); the CheckM2 and GUNC report pages are ported with their tools
 - nf-core boilerplate files (pipeline_summary/methods_description, versions.yml) — not part of the analysis
 
 ## Fidelity
