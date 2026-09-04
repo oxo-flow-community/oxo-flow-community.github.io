@@ -27,7 +27,7 @@ Default config runs the DADA2 path (denoising, taxonomy against the auto-downloa
 
 ## Installation
 
-**Engine.** oxo-flow >= 0.12.0
+**Engine.** oxo-flow >= 0.17.0
 
 **Toolchain.** containers (Docker/Singularity) — pinned images
 
@@ -188,7 +188,6 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 - nanopore: nanopore sequencing branch (params.nanopore) — absent from the 2.18.0 codebase (grep-verified; only docs/usage.md mentions Nanopore re ITSxRust long reads)
 - syncom: synthetic community controls branch (params.syncom) — absent from the 2.18.0 codebase (grep-verified)
-- versions.yml: per-module tool version files — the port pins versions in the env files / container tags instead
 
 ## Fidelity
 
@@ -222,7 +221,8 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 | QIIME2_PREPTAX (incl. EXTRACT + TRAIN) | `qiime2_preptax` | qiime2 2026.4 | identical: downloads the `qiime_ref_taxonomy_urls` qza pair, `bin/taxref_reformat_qiime_silva138.sh`, imports, `extract-reads` with `FW_primer`/`RV_primer`, `fit-classifier-naive-bayes` → `intermediates/qiime2/classifier.qza` |
 | QIIME2_TAXONOMY (classify) | `qiime2_classify` | qiime2 2026.4 | identical `classify-sklearn --p-n-jobs` + tabulate + export to `results/qiime2/taxonomy/`; a user-supplied `classifier` is copied in-shell (skips training); in classifier mode the DADA2-taxonomy import (`qiime2_intax`) is gated off and the classifier taxonomy takes over the same `intermediates/qiime2/taxonomy.qza` path |
 | PICRUST | `picrust` | picrust2 2.6.3 | identical `picrust2_pipeline.py -t epa-ng --remove_intermediate --in_traits EC,KO` + `add_descriptions.py` ×3 (EC/KO/METACYC); the upstream source-message file (filename == message text) is written as `picrust_message.txt`; resource hint process_high + process_medium_memory = 10 cpus / 50G |
-| — (not ported) | — | — | nanopore branch (`params.nanopore` — absent from the 2.18.0 codebase, docs only), syncom controls (`params.syncom` — absent from the 2.18.0 codebase), `versions.yml` per-module tool version files (the port pins versions in the env files / container tags instead), report generators not ported — SBDI export (`params.sbdiexport` default false, off by default upstream), default-on phyloseq/TSE R objects and the Rmd summary report (`params.skip_phyloseq`/`skip_tse`/`skip_report` all default false) |
+| — (not ported) | — | — | nanopore branch (`params.nanopore` — absent from the 2.18.0 codebase, docs only), syncom controls (`params.syncom` — absent from the 2.18.0 codebase) |
+| softwareVersionsToYAML + `versions.yml` collection (`pipeline_info/nf_core_ampliseq_software_mqc_versions.yml`, mixed into MultiQC inputs) | engine-native export: `oxo-flow report --versions-yml <file> main.oxoflow` | — | oxo-flow ≥ 0.17.0 exports an nf-core-style `versions.yml` derived statically from the workflow declarations: one entry per rule with the pinned container tag or conda env file + its sha256, plus a `references:` section fed by the workflow's `[[reference_db]]` blocks (SBDI-GTDB R11-RS232-1 here). Deviation: it is a standalone CI-diff artifact, not a per-process runtime capture — upstream records each tool's runtime version at execution time and mixes the collected file into MultiQC, while the export reflects the pinned versions in the definition (resolved runtime package versions depend on the execution environment). Per-rule `versions.yml` emission inside every command is deliberately not replicated (it would change every rule's command while the default plan stays byte-identical). |
 | MERGE_STATS_STD | `merge_stats` | r-base 4.0.3 | identical merge by `sample` |
 | DB download (launcher) | `download_taxonomy_db` | curl | upstream downloads the reference DB in the Nextflow launcher (`file(url)`); the port makes it an explicit system-backend rule |
 | FORMAT_TAXONOMY | `format_taxonomy` | biocontainers 1.2.0 | verbatim `bin/taxref_reformat_sbdi-gtdb.sh`; runs in a scratch dir (the script globs `*`) |
@@ -232,33 +232,13 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 | QIIME2_INTAX | `qiime2_intax` | qiime2 2026.4 | verbatim `bin/parse_dada2_taxonomy.r` (porting change: output path is argv[2]) + `HeaderlessTSVTaxonomyFormat` import |
 | QIIME2_BARPLOT | `qiime2_barplot` | qiime2 2026.4 | identical `taxa barplot` + `tools export` |
 | MULTIQC | `multiqc` | multiqc 1.34 | identical command in a scratch dir (`multiqc` scans cwd `.`); verbatim `assets/multiqc_config.yml` |
+| SBDIEXPORT | `sbdiexport` | r-base + SBDI export scripts (sbdiexport 1.2.1) | identical `sbdiexport()` call (paired mode, `FW_primer`/`RV_primer`, dada2 taxmethod); writes `results/SBDI/{event,dna,emof,asv-table}.tsv` |
+| SBDIEXPORTREANNOTATE | `sbdiexportreannotate` | r-base + SBDI export scripts | identical re-annotation table (`annotation.tsv`); the barrnap-prediction arg is omitted (no barrnap branch in the port — the R script treats it as `NA`, same as upstream when no predictions exist) |
+| PHYLOSEQ | `phyloseq` | phyloseq 1.52.1 | identical inline R (`make_phyloseq` path); prefix literal `dada2`, tree arg = nonexistent `none.tree` (no phylogeny branch in the port — `file.exists` guard skips it, as upstream when no tree is staged) |
+| TREESUMMARIZEDEXPERIMENT | `treesummarizedexperiment` | TreeSummarizedExperiment 2.10.1 | identical inline R; referenceSeq slot filled from the taxonomy `sequence` column; same `none.tree` convention |
+| SUMMARY_REPORT | `summary_report` | r-base 4.2 + rmarkdown | identical `rmarkdown::render` of `assets/report_template.Rmd` with the upstream params-list contract (params_list_named, all string values single-quoted); SBDI/phyloseq/TSE/ITS sections are `[ -f ]`-conditional in-shell (their artifacts are not declared inputs — see deviations); `mqc_plot`/picrust sections omitted (see deviations) |
 
-Other notes:
 
-- `params.FW_primer`/`RV_primer` default to `null` upstream, which renders
-  a literal `null` adapter into the cutadapt command; the port defaults
-  them to empty strings (`-g ""`/`-G ""` = no 5'/3' adapter trimming), the
-  behavior the upstream docs describe.
-- All skip flags map 1:1 to `params.skip_*` (default false = full path).
-  `skip_fastqc` requires `skip_multiqc` too — the MultiQC rule consumes the
-  FastQC zips. `skip_taxonomy`/`skip_dada_taxonomy` additionally gate the
-  QIIME2 taxonomy import and barplot, mirroring upstream's empty-taxonomy
-  channel handling.
-- `metadata_file` is a config key (default `test/fixtures/metadata.tsv`);
-  upstream takes it from the samplesheet.
-- Deviations: the QIIME2 rules pin the container at
-  `quay.io/qiime2/amplicon:2026.1` (upstream modules use `2026.4` — the
-  version the port was built and live-tested against); `skip_qiime_downstream`
-  scopes to the newly ported downstream rules (diversity, exports, ANCOM,
-  classifier) and does not turn off the taxonomy import/barplot;
-  data-dependent outputs (metadata categories, `tax_agglom_min`/`max`,
-  adonis formulas, `<2`-taxa WARNING branches) declare the file set for the
-  default fixture/parameters; PICRUSt always uses the DADA2 source
-  (upstream switches to the QIIME2-filtered table when `run_qiime2` +
-  abundance tables + a taxonomy are available — the port documents the
-  DADA2 basis in `results/picrust/picrust_message.txt`); the rarefaction
-  WARNING txt files (upstream `error_ignore` emits) are not declared as
-  rule outputs.
 
 ## Links
 
