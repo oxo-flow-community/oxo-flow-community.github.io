@@ -522,8 +522,9 @@ Replace the whole `function cardHTML(p) { … }` body (from `const star = …` t
         ? '<span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake</span>'
         : "";
     const cmd = p.quickstart || "oxo-flow run main.oxoflow";
+    // ox-badge--compute: long compute strings wrap instead of overflowing the card
     const compute = p.compute
-      ? `<span class="ox-badge" title="Peak compute per rule">⚙ ${esc(p.compute)}</span>`
+      ? `<span class="ox-badge ox-badge--compute" title="Peak compute per rule">⚙ ${esc(p.compute)}</span>`
       : "";
     const tools = (p.tools || []).slice(0, 3)
       .map((t) => `<span class="tchip">${esc(t)}</span>`).join("");
@@ -554,7 +555,20 @@ Replace the whole `function cardHTML(p) { … }` body (from `const star = …` t
 
 Notes: the origin badge and the old `.tools` separator line are dropped from cards (origin lives on detail pages; tools become 3 tchips). Rating text is plain (no coverage suffix — detail pages keep it, Task 4).
 
-- [ ] **Step 2: Remove the now-dead ORIGIN map**
+- [ ] **Step 2: Add the compute-badge wrap rule to extra.css**
+
+After the `.ox-badge--origin { border-style: dashed; }` rule, insert:
+
+```css
+/* Long compute strings ("up to 12 CPUs / 72 GB per rule (bwa_mem, …)") wrap
+   inside the card instead of overflowing it */
+.ox-badge--compute {
+  white-space: normal;
+  line-height: 1.35;
+}
+```
+
+- [ ] **Step 3: Remove the now-dead ORIGIN map**
 
 Delete the block:
 
@@ -568,15 +582,15 @@ Delete the block:
 
 (renderCatalog's `ORIGIN_LABEL` is separate and stays.)
 
-- [ ] **Step 3: Verify**
+- [ ] **Step 4: Verify**
 
-Run: `mkdocs build` then `grep -c "ox-card live-card" site/javascripts/catalog.js` (expect `1` — the class is composed in JS so grep the source), `grep -c "tchip" site/javascripts/catalog.js` (expect `2`), `grep -c "ORIGIN = {" site/javascripts/catalog.js` (expect `0`). Also confirm the built `site/index.html` still carries the stats containers.
+Run: `mkdocs build` then `grep -c "ox-card live-card" site/javascripts/catalog.js` (expect `1` — the class is composed in JS so grep the source), `grep -c "tchip" site/javascripts/catalog.js` (expect `2`), `grep -c "ORIGIN = {" site/javascripts/catalog.js` (expect `0`), `grep -c "ox-badge--compute" site/javascripts/catalog.js` (expect `1`) and `grep -c "ox-badge--compute" site/stylesheets/extra.css` (expect `1`). Also confirm the built `site/index.html` still carries the stats containers.
 
-- [ ] **Step 4: Commit**
+- [ ] **Step 5: Commit**
 
 ```bash
-git add docs/javascripts/catalog.js
-git commit -m "feat: W2 evidence-first cards — green top line, tool chips, foot badges"
+git add docs/javascripts/catalog.js docs/stylesheets/extra.css
+git commit -m "feat: W2 evidence-first cards — green top line, tool chips, foot badges, wrapping compute badge"
 ```
 
 ---
@@ -671,7 +685,11 @@ In `def make_page(p: dict, configs: dict) -> str:`, replace the parts-list head 
 ```python
     parts = [
         f'<div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>{_esc(p["name"])}</span></div>',
-        '<div class="ox-detail-cols">',
+        # NOTE (Task 2 live-finding): md_in_html only processes markdown="1"
+        # blocks at the markdown root level — a nested attributed div inside
+        # an unattributed raw-HTML block is ignored. The OUTER grid div must
+        # carry the attribute too, or the h1/badges/description stay raw text.
+        '<div class="ox-detail-cols" markdown="1">',
         '<div markdown="1">',
         "",
         f"# {p['title']}",

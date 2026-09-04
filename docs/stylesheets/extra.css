@@ -539,6 +539,13 @@ html {
   border-style: dashed;
 }
 
+/* Long compute strings ("up to 12 CPUs / 72 GB per rule (bwa_mem, …)") wrap
+   inside the card instead of overflowing it */
+.ox-badge--compute {
+  white-space: normal;
+  line-height: 1.35;
+}
+
 /* ---- Filter bar ---- */
 .ox-filter {
   display: flex;
