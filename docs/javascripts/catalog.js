@@ -19,12 +19,6 @@
       "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
     }[c]));
 
-  const ORIGIN = {
-    port: "⇄ Official port",
-    original: "✦ Original",
-    curated: "♺ Community listing",
-  };
-
   function cardHTML(p) {
     const star = p.rating === "live-verified"
       ? '<span class="ox-badge ox-badge--live">✔ Live-tested</span>'
@@ -32,29 +26,33 @@
         ? '<span class="ox-badge ox-badge--star">★ Verified</span>'
         : '<span class="ox-badge">☆ Community</span>';
     const engBadge = p.engine === "nextflow"
-      ? '<span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span>'
+      ? '<span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core</span>'
       : p.engine === "snakemake"
-        ? '<span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span>'
+        ? '<span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake</span>'
         : "";
-    const origin = ORIGIN[p.origin] || ORIGIN.curated;
     const cmd = p.quickstart || "oxo-flow run main.oxoflow";
+    // ox-badge--compute: long compute strings wrap instead of overflowing the card
     const compute = p.compute
-      ? `<span class="ox-badge" title="Peak compute per rule">⚙ ${esc(p.compute)}</span>`
+      ? `<span class="ox-badge ox-badge--compute" title="Peak compute per rule">⚙ ${esc(p.compute)}</span>`
       : "";
-    return `<article class="ox-card">
+    const tools = (p.tools || []).slice(0, 3)
+      .map((t) => `<span class="tchip">${esc(t)}</span>`).join("");
+    const cls = p.rating === "live-verified" ? "ox-card live-card" : "ox-card";
+    return `<article class="${cls}">
       <div class="row">
         <a class="name" href="/pipelines/${esc(p.name)}/">${esc(p.name)}</a>
-        ${star}
+        <span class="ox-badge">${esc(p.domain)}</span>
       </div>
       <p class="title">${esc(p.title)}</p>
       <div class="meta">
-        <span class="ox-badge ox-badge--origin">${origin}</span>
-        ${engBadge}
-        <span class="ox-badge">${esc(p.domain)}</span>
         <span class="ox-badge">${Number(p.rule_count) || 0} rules</span>
         ${compute}
+        ${tools}
       </div>
-      <div class="tools">${(p.tools || []).map((t) => esc(t)).join('<span class="sep">·</span>')}</div>
+      <div class="foot">
+        ${star}
+        ${engBadge}
+      </div>
       <p class="cmd">$ ${esc(cmd)}</p>
       <div class="links">
         <a href="/pipelines/${esc(p.name)}/">Run notes</a>

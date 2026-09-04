@@ -23,7 +23,7 @@
     
     
       
-        <title>Fetching public sequencing data: FastQ download, metadata and samplesheets - oxo-flow-community</title>
+        <title>Oxo flow fetchngs - oxo-flow-community</title>
       
     
     
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Fetching public sequencing data: FastQ download, metadata and samplesheets
+              Oxo flow fetchngs
             
           </span>
         </div>
@@ -584,72 +584,42 @@
   
 
 
+<div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-fetchngs</span></div>
+<div class="ox-detail-cols">
+<div>
 <h1 id="fetching-public-sequencing-data-fastq-download-metadata-and-samplesheets">Fetching public sequencing data: FastQ download, metadata and samplesheets</h1>
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
-
 <p>Fetch metadata and raw FastQ files from public sequence databases (SRA/ENA/DDBJ/GEO). Given a list of database identifiers — run accessions (SRR/ERR/DRR), experiments, studies, biosamples or GEO series — the pipeline retrieves the ENA run metadata, downloads the FastQ files over FTP, validates every download against its ENA md5 sum, and auto-creates a samplesheet plus sample id-mappings and a MultiQC mappings config, ready for downstream nf-core pipelines such as rnaseq, atacseq or taxprofiler.</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: right;"></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: right;"><strong>Rating</strong></td>
-<td>✔ Live-tested</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Origin</strong></td>
-<td>port</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Domain</strong></td>
-<td>genomics</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Rules</strong></td>
-<td>8</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Compute</strong></td>
-<td>up to 2 CPUs / 12 GB per rule (download)</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Tools</strong></td>
-<td>python · wget · coreutils</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Ported</strong></td>
-<td>2026-08-15</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>License</strong></td>
-<td>Apache-2.0</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Source</strong></td>
-<td><a href="https://github.com/nf-core/fetchngs">nf-core/fetchngs</a></td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Pinned version</strong></td>
-<td><code>1.12.0</code></td>
-</tr>
-</tbody>
-</table>
+</div>
+<div>
+<div class="ox-glance">
+<div class="ox-glance-title">At a glance</div>
+<div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested · default-path</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">16</span></div>
+<div class="ox-kv"><span class="k">Compute</span><span class="v">up to 2 CPUs / 12 GB per rule (download)</span></div>
+<div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Domain</span><span class="v">genomics</span></div>
+<div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/nf-core/fetchngs">nf-core/fetchngs</a></span></div>
+<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>1.12.0</code></span></div>
+<div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
+<div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
+<p class="cmd">$ oxo-flow run main.oxoflow</p>
+</div>
+</div>
+</div>
 <h2 id="run-it">Run it</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>oxo-flow<span class="w"> </span>run<span class="w"> </span>main.oxoflow
 </code></pre></div>
 <p>Downloads public data by SRA/ENA accessions (network required) — configure your IDs first.</p>
 <h2 id="installation">Installation</h2>
-<p><strong>Engine.</strong> oxo-flow &gt;= 0.12.0</p>
+<p><strong>Engine.</strong> oxo-flow &gt;= 0.17.0</p>
 <p><strong>Toolchain.</strong> containers (Docker) — pinned images (quay.io/biocontainers, identical to upstream)</p>
 <p><strong>Requirements.</strong>
 - ids file: one SRA/ENA/DDBJ/GEO accession per line (config.input, default test/fixtures/ids.txt), kept in sync with the [[sample_groups]] sample source
 - reference data: none — the workflow downloads data from public archives; no genome FASTA, annotation or indices required
-- network: outbound access to ENA over FTP (wget -t 5 -c -T 60, 2 retries)
-- compute: up to 2 CPUs / 12 GB per rule (FastQ download 2 threads/12G; metadata fetch 1 thread/6G; 4 h time limits on three rules)
+- network: outbound access to ENA over FTP (wget -t 5 -c -T 60, 2 retries); the sratools branch needs NCBI SRA outbound access (prefetch/fasterq-dump), the aspera branch ENA fasp on port 33001
+- compute: up to 2 CPUs / 12 GB per rule (FastQ download 2 threads/12G; metadata fetch 1 thread/6G; 4 h time limits on twelve rules)
 - disk: results/fastq/ grows with downloaded FastQ files plus md5/ checksums (depends on input size); metadata/ and samplesheet/ stay small</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># 1. install oxo-flow (release binary, recommended)</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>curl<span class="w"> </span>-fL<span class="w"> </span>-o<span class="w"> </span>oxo-flow.tar.gz<span class="w"> </span>https://github.com/Traitome/oxo-flow/releases/latest/download/oxo-flow-latest-x86_64-unknown-linux-gnu.tar.gz
@@ -740,6 +710,14 @@
 <li>sra_ids_to_runinfo</li>
 <li>sra_runinfo_to_ftp</li>
 <li>sra_fastq_ftp</li>
+<li>sra_prefetch</li>
+<li>sra_fastq_sratools</li>
+<li>sra_fastq_aspera</li>
+<li>sra_fastq_ftp_aspera_fallback</li>
+<li>sra_prefetch_fallback</li>
+<li>sra_fastq_sratools_fallback</li>
+<li>sra_prefetch_dbgap</li>
+<li>sra_fastq_sratools_dbgap</li>
 <li>sra_to_samplesheet</li>
 <li>combine_samplesheets</li>
 <li>combine_mappings</li>
@@ -747,15 +725,9 @@
 </ul>
 <p><strong>Excluded</strong></p>
 <ul>
-<li>sratools download path (prefetch/fasterq-dump incl. sralite variant) — data-dependent per-run fallback for runs without FTP links, not on the default ftp path</li>
-<li>aspera download path (ASPERA_CLI / fasp links) — download_method=aspera only</li>
-<li>dbGaP (--dbgap_key) — sratools-path only</li>
-<li>softwareVersionsToYAML + versions.yml, PIPELINE_COMPLETION — nf-core boilerplate</li>
+<li>none</li>
 </ul>
 <h2 id="fidelity">Fidelity</h2>
-<p>Default-parameters main execution path (<code>--download_method ftp</code>,
-<code>--skip_fastq_download false</code>). Rows cover every upstream process/subworkflow
-that the default path touches.</p>
 <table>
 <thead>
 <tr>
@@ -788,7 +760,7 @@ that the default path touches.</p>
 <td>SRA_FASTQ_FTP</td>
 <td><code>sra_fastq_ftp</code></td>
 <td>wget 1.20.1 (<code>quay.io/biocontainers/wget:1.20.1</code>), md5sum (coreutils, in the same image)</td>
-<td>wget flags <code>-t 5 -nv -c -T 60</code>, <code>-O &lt;exp&gt;_&lt;run&gt;[_1|_2].fastq.gz</code> naming and <code>echo md5 … | md5sum -c</code> verification byte-identical; fastq → <code>results/fastq/</code>, md5 → <code>results/fastq/md5/</code> (upstream publishDir patterns). Per-run row parsing replaces the Groovy channel <code>branch</code>; <strong>no outputs declared</strong> because the produced file set (single- vs paired-end, per-run names) is data-dependent — md5 verification in the command is the correctness gate (same as upstream). Runs without FTP links are skipped with a warning (upstream routes them to the sra-tools fallback, not ported).</td>
+<td>wget flags <code>-t 5 -nv -c -T 60</code>, <code>-O &lt;exp&gt;_&lt;run&gt;[_1|_2].fastq.gz</code> naming and <code>echo md5 … | md5sum -c</code> verification byte-identical; fastq → <code>results/fastq/</code>, md5 → <code>results/fastq/md5/</code> (upstream publishDir patterns). Per-run row parsing replaces the Groovy channel <code>branch</code>; <strong>no outputs declared</strong> because the produced file set (single- vs paired-end, per-run names) is data-dependent — md5 verification in the command is the correctness gate (same as upstream). Runs without FTP links are skipped with a warning in the default config; with <code>sra_tools_fallback = true</code> they are handled by the per-run sratools fallback rules below (the upstream <code>branch</code> triage, ported as a when-gated branch — off by default so the default plan is unchanged).</td>
 </tr>
 <tr>
 <td>SRA_TO_SAMPLESHEET</td>
@@ -816,33 +788,51 @@ that the default path touches.</p>
 </tr>
 <tr>
 <td>softwareVersionsToYAML + <code>versions.yml</code></td>
-<td>not ported</td>
+<td>engine-native export: <code>oxo-flow report --versions-yml &lt;file&gt; main.oxoflow</code></td>
 <td>—</td>
-<td>nf-core boilerplate (software-version collection for the MultiQC report); no engine equivalent, no downstream consumer in the port.</td>
+<td>oxo-flow ≥ 0.17.0 exports an nf-core-style <code>versions.yml</code> derived statically from the workflow declarations: one entry per rule (16 rules) with the pinned container image (registry + tag), or a <code>system</code> entry with an explicit "no software versions declared" note for the host-tool gather rules. Deviation: it is a standalone CI-diff artifact, not a per-process runtime capture — upstream records each tool's runtime version at execution time and collects the per-process files into <code>pipeline_info/nf_core_fetchngs_software_mqc_versions.yml</code>; the export reflects the pinned versions in the definition (resolved runtime package versions depend on the execution environment). Per-rule <code>versions.yml</code> emission inside every command is deliberately not replicated (it would change every rule's command while the default plan stays byte-identical). The collected file has no consumer in fetchngs itself (no MultiQC process; the mappings config targets downstream pipelines) — upstream ships it as boilerplate, here the export serves the same CI-diff purpose.</td>
 </tr>
 <tr>
-<td>PIPELINE_COMPLETION (emails, summary, hooks)</td>
-<td>not ported</td>
-<td>—</td>
-<td>nf-core boilerplate; oxo-flow has no workflow-level hooks.</td>
+<td>PIPELINE_COMPLETION (<code>workflow.onComplete</code>: completionEmail / completionSummary / imNotification / sraCurateSamplesheetWarn)</td>
+<td><code>[workflow] on_complete</code> + <code>on_error</code> hooks (<code>scripts/pipeline_completion.sh</code>)</td>
+<td>sendmail / mail / curl (host tools)</td>
+<td>Ported onto the engine's workflow-level terminal hooks (engine &gt;= 0.17.0): <code>email</code> mails the run-summary on completion, <code>email_on_fail</code> after a failed run (falling back to <code>email</code>, like upstream), <code>hook_url</code> POSTs a JSON notification with the run counters on both (upstream <code>imNotification</code> posts an Adaptive-Card/Slack JSON; here the payload is a <code>{"text": ...}</code> summary). All three default empty (upstream's null params), so the hooks no-op; older engines ignore the <code>[workflow]</code> keys entirely, keeping the default plan unchanged. <code>completionSummary</code>'s stdout line is covered by the engine's own "Done: N succeeded..." line, and <code>sraCurateSamplesheetWarn</code> is a static log note (see Known limitations). Hooks are best-effort: a missing mail tool or failing webhook only warns and never changes the run status.</td>
 </tr>
 <tr>
-<td>CUSTOM_SRATOOLSNCBISETTINGS, SRATOOLS_PREFETCH, SRATOOLS_FASTERQDUMP (sra-tools 3.0.8 / 2.11.0 + pigz 2.6, incl. the <code>.sralite</code> variant)</td>
-<td>not ported</td>
-<td>—</td>
-<td>Data-dependent fallback branch: only runs with <strong>no</strong> FTP links go here, decided per-run from fetched metadata at runtime. oxo-flow cannot branch per-row on data; the default path is FTP. Runs without FTP links are skipped with a warning (see <code>sra_fastq_ftp</code>).</td>
+<td>CUSTOM_SRATOOLSNCBISETTINGS + SRATOOLS_PREFETCH</td>
+<td><code>sra_prefetch</code></td>
+<td>sra-tools 3.0.8 (<code>quay.io/biocontainers/sra-tools:3.0.8--h9f5acd7_0</code>)</td>
+<td>When-gated branch, off by default (<code>download_method = "sratools"</code> + <code>dbgap_key</code> empty): per-run <code>prefetch</code> under the upstream <code>retry_with_backoff</code> policy (5 attempts / 1 s base / 100 s max, <code>scripts/retry_with_backoff.sh</code> verbatim) + <code>vdb-validate</code> incl. the <code>.sralite</code> variant; fresh NCBI settings file per id (upstream CUSTOM_SRATOOLSNCBISETTINGS GUID config). SRA records land in <code>results/sra/&lt;id&gt;/</code> (upstream publishDir <code>results/sra</code>, <code>enabled: false</code> — intermediates). Applies to <strong>all</strong> runs, matching upstream's explicit <code>--download_method sratools</code> mode; with <code>dbgap_key</code> set, the dbGaP variant below takes over.</td>
 </tr>
 <tr>
-<td>ASPERA_CLI (Aspera CLI 4.14.0, <code>fasp</code> links)</td>
-<td>not ported</td>
-<td>—</td>
-<td>Only with <code>--download_method aspera</code>, not the default.</td>
+<td>SRATOOLS_FASTERQDUMP</td>
+<td><code>sra_fastq_sratools</code></td>
+<td>sra-tools 2.11.0 + pigz 2.6 (<code>quay.io/biocontainers/mulled-v2-5f89fe0cd045cb1d615630b9261a1d17943a9b6a:6a9ff0e76ec016c3d0d27e0c0d362339f2d787e6-0</code>, fetchngs' patched image)</td>
+<td>When-gated on <code>download_method = "sratools"</code> (+ <code>dbgap_key</code> empty); depends on <code>sra_prefetch</code>. <code>fasterq-dump --split-files --include-technical --threads</code> + <code>pigz --no-name --processes</code> translated from the fetchngs module (env pinned to upstream environment.yml: sra-tools 2.11.0 + pigz 2.6); files land in <code>results/fastq/</code> with the same names as the FTP branch so the samplesheet is method-agnostic.</td>
+</tr>
+<tr>
+<td>Per-run sratools fallback (upstream SRA workflow <code>branch</code>, runs without FTP/fasp links with <code>download_method = "ftp"</code> or <code>"aspera"</code>)</td>
+<td><code>sra_prefetch_fallback</code> + <code>sra_fastq_sratools_fallback</code></td>
+<td>sra-tools 3.0.8 / 2.11.0 + pigz 2.6 (same images as above)</td>
+<td>When-gated on <code>sra_tools_fallback = true</code> + <code>download_method = "ftp"</code> or <code>"aspera"</code> (off by default — the default plan is unchanged). Mirrors the sratools-method rules but processes only the runs upstream's <code>branch</code> sends to sra-tools: rows whose metadata has neither <code>fastq_1</code> nor <code>fastq_aspera</code> (branch condition <code>!meta.fastq_aspera &amp;&amp; !meta.fastq_1</code>, re-derived from the runinfo tsv by <code>scripts/sra_prefetch_runs.sh</code> / <code>scripts/sra_fastq_sratools_runs.sh</code>). Prefetch + <code>vdb-validate</code> incl. the <code>.sralite</code> variant, then fasterq-dump + pigz into <code>results/fastq/</code> with the FTP-branch naming so the samplesheet is method-agnostic; the FTP rule keeps downloading the runs that do have links.</td>
 </tr>
 <tr>
 <td>dbGaP (<code>--dbgap_key</code>)</td>
-<td>not ported</td>
-<td>—</td>
-<td>Only relevant to the sra-tools path (controlled-access data).</td>
+<td><code>sra_prefetch_dbgap</code> + <code>sra_fastq_sratools_dbgap</code></td>
+<td>sra-tools 3.0.8 / 2.11.0 (same images)</td>
+<td>When-gated on <code>download_method = "sratools"</code> + <code>dbgap_key</code> set (off by default: <code>dbgap_key = ""</code>; the plain sratools rules are gated off in that case). The certificate is passed through verbatim like upstream: <code>.ngc</code> → <code>prefetch --ngc</code> / <code>fasterq-dump --ngc</code>, <code>.jwt</code> → <code>--perm</code> (SRATOOLS_PREFETCH shell and SRATOOLS_FASTERQDUMP script logic, same rules for both tools). Still requires the user's own NIH authorized-access credentials at runtime — the port itself needs nothing, and the public path (empty <code>dbgap_key</code>) is unchanged.</td>
+</tr>
+<tr>
+<td>ASPERA_CLI (Aspera CLI 4.14.0, <code>fasp</code> links)</td>
+<td><code>sra_fastq_aspera</code></td>
+<td>aspera-cli 4.14.0 (<code>quay.io/biocontainers/aspera-cli:4.14.0--hdfd78af_1</code>, the upstream image — verified to ship <code>/usr/local/bin/ascp</code> + the anonymous ENA bypass key <code>/usr/local/etc/aspera/aspera_bypass_dsa.pem</code>)</td>
+<td>When-gated on <code>download_method = "aspera"</code>: <code>ascp -QT -l 300m -P33001</code> (upstream ext.args) against the <code>fastq_aspera</code> fasp links with user <code>era-fasp</code>, md5-verified like the FTP branch. No credentials needed — the anonymous ENA fasp endpoint is what upstream uses. Deviation: upstream also sends runs without fasp links to the ftp/sra-tools branches per run; that triage is ported as when-gated branches (<code>sra_fastq_ftp_aspera_fallback</code> + <code>sra_prefetch_fallback</code> / <code>sra_fastq_sratools_fallback</code>, all on <code>sra_tools_fallback = true</code>), so with the fallback off such runs are skipped with a warning.</td>
+</tr>
+<tr>
+<td>Per-run FTP fallback for the aspera method (upstream SRA workflow <code>branch</code>: with <code>download_method = "aspera"</code>, runs with an FTP link but no fasp link go to the FTP process)</td>
+<td><code>sra_fastq_ftp_aspera_fallback</code></td>
+<td>wget 1.20.1 (same image as <code>sra_fastq_ftp</code>)</td>
+<td>When-gated on <code>download_method = "aspera"</code> + <code>sra_tools_fallback = true</code> (off by default — the default plan is unchanged). <code>scripts/sra_fastq_ftp_aspera_runs.sh</code> carries the same wget <code>-t 5 -nv -c -T 60</code> download + md5 verification loop as the frozen <code>sra_fastq_ftp</code> command, applied to exactly the rows upstream's <code>branch</code> sends to the FTP arm: <code>fastq_1</code> set, <code>fastq_aspera</code> empty (branch condition <code>meta.fastq_1 &amp;&amp; !meta.fastq_aspera</code>, re-derived from the runinfo tsv). Together with <code>sra_prefetch_fallback</code> / <code>sra_fastq_sratools_fallback</code> (same toggle) the runinfo tsv is fully partitioned — every run is downloaded exactly once by whichever branch upstream's <code>branch</code> would pick, with the FTP-branch naming so the samplesheet is method-agnostic.</td>
 </tr>
 <tr>
 <td><code>params.nf_core_pipeline</code> (rnaseq/atacseq/taxprofiler columns)</td>
@@ -860,8 +850,26 @@ that the default path touches.</p>
 </table>
 <p>Known limitations: the ids used for per-id expansion must be declared in the
 sample source (<code>[[sample_groups]]</code>, or <code>--sample</code> on the CLI) and should match
-<code>[config] input</code> validated by <code>check_ids</code>; sra-tools / Aspera download methods
-are not ported (see table).</p>
+<code>[config] input</code> validated by <code>check_ids</code>. The sra-tools and Aspera download
+methods are ported as when-gated branches (<code>download_method = "sratools"</code> /
+<code>"aspera"</code>); the upstream <strong>per-run</strong> triage is ported as when-gated branches
+too, off by default so the default plan is byte-identical: <code>sra_tools_fallback
+= true</code> restores upstream's per-run routing — with <code>ftp</code>, runs without
+FTP/fasp links go to prefetch/fasterq-dump; with <code>aspera</code>, runs without a
+fasp link go to the FTP branch when they have an FTP link
+(<code>sra_fastq_ftp_aspera_fallback</code>) and to prefetch/fasterq-dump otherwise —
+and <code>dbgap_key</code> enables the dbGaP certificate path of the sratools branch
+(the certificate is passed through verbatim; the port itself needs no
+credentials). Remaining deviation: with <code>ftp</code> or <code>aspera</code> and the fallback
+off, runs whose metadata lacks the matching download links are skipped with
+a warning (upstream would route them per run; enable <code>sra_tools_fallback</code> to
+restore the triage). The auto-created samplesheet should be double-checked
+before downstream use (the upstream <code>sraCurateSamplesheetWarn</code> end-of-run
+note): public databases don't reliably hold information such as strandedness
+or controls, and all sample metadata from the ENA is appended as additional
+columns to help manual curation. The nf-core boilerplate (<code>versions.yml</code>
+collection) is covered by the engine-native export
+(<code>oxo-flow report --versions-yml &lt;file&gt; main.oxoflow</code>, see table).</p>
 <h2 id="links">Links</h2>
 <ul>
 <li>Repository: <a href="https://github.com/oxo-flow-community/oxo-flow-fetchngs">oxo-flow-fetchngs</a></li>
@@ -904,7 +912,7 @@ are not ported (see table).</p>
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      © 2026 oxo-flow-community · Apache-2.0 · Ports are based on their upstream workflows — see each repository's NOTICE.
+      © 2026 <a href="https://github.com/oxo-flow-community">oxo-flow-community</a> · Apache-2.0 · engine <a href="https://github.com/Traitome/oxo-flow">oxo-flow</a> · <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues">issues</a> · evidence: ✔ live-tested ⊃ ★ verified ⊃ ☆ community · ports are based on their upstream workflows — see each repository's NOTICE
     </div>
   
   

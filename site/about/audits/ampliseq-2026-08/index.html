@@ -531,6 +531,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#status-update-2026-08-27-catalog-audit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Status update (2026-08-27, catalog audit)
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -633,6 +644,28 @@ profiles → filtntrim → err → denoising → merge → rmchimera) →
 multiqc. All 14 skips are checkpoint reuse from earlier partial runs
 plus condition gates. The dada2 env needed 8 rounds of network-side
 surgery (see failure catalog) — zero repo changes required.</p>
+<h2 id="status-update-2026-08-27-catalog-audit">Status update (2026-08-27, catalog audit)</h2>
+<p>The port advanced since the verdict above — PR
+<a href="https://github.com/oxo-flow-community/oxo-flow-ampliseq/pull/2">oxo-flow-ampliseq#2</a>
+(2026-08-26) ported <strong>ITS</strong> (<code>cut_its</code>/<code>its_extractor</code> itsx+itsxrust,
+read-through cutadapt, <code>filter_len_itsx</code>, ITS taxonomy), the <strong>QIIME2
+downstream suite</strong> (diversity tree/rarefaction/core metrics/alpha/beta/
+betaord/adonis, absolute/relative abundance exports, ANCOM/ANCOM-BC/ANCOM-BC2,
+classifier prep+classify), <strong>multi-run merge</strong> and <strong>PICRUSt2</strong> — 26→49
+rules, excluded 6→4.</p>
+<p>Remaining P0 gaps (unchanged): the 5 non-default taxonomy classifiers
+(SINTAX, Kraken2, QIIME2, VSEARCH LCA, phylogenetic placement incl.
+multi-tree phyloplace), SIDLE multiregion, pacbio/iontorrent/input_fasta
+input modes, decontam/SSU/length/codon filters, SBDI export,
+phyloseq/TSE R objects and the Rmd report.</p>
+<p>2026-08-27 audit of the 4 documented Excluded items, verified against the
+2.18.0 tree: <code>params.nanopore</code> and <code>params.syncom</code> are absent from the
+codebase (grep-verified — claims exact); <code>versions.yml</code> is a mechanism
+difference (envs/container tags pin versions); the report-generator entry
+was <strong>truthified</strong> — only <code>sbdiexport</code> (default false) is off by default,
+while <code>skip_phyloseq</code>/<code>skip_tse</code>/<code>skip_report</code> all default false, i.e.
+phyloseq/TSE/Rmd-report run by default upstream and are simply not ported.
+No live tests this wave.</p>
 
 
 
@@ -668,7 +701,7 @@ surgery (see failure catalog) — zero repo changes required.</p>
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      © 2026 oxo-flow-community · Apache-2.0 · Ports are based on their upstream workflows — see each repository's NOTICE.
+      © 2026 <a href="https://github.com/oxo-flow-community">oxo-flow-community</a> · Apache-2.0 · engine <a href="https://github.com/Traitome/oxo-flow">oxo-flow</a> · <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues">issues</a> · evidence: ✔ live-tested ⊃ ★ verified ⊃ ☆ community · ports are based on their upstream workflows — see each repository's NOTICE
     </div>
   
   

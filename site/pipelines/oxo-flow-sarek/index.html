@@ -23,7 +23,7 @@
     
     
       
-        <title>WGS/WES germline and somatic variant calling - oxo-flow-community</title>
+        <title>Oxo flow sarek - oxo-flow-community</title>
       
     
     
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              WGS/WES germline and somatic variant calling
+              Oxo flow sarek
             
           </span>
         </div>
@@ -584,60 +584,30 @@
   
 
 
+<div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-sarek</span></div>
+<div class="ox-detail-cols">
+<div>
 <h1 id="wgswes-germline-and-somatic-variant-calling">WGS/WES germline and somatic variant calling</h1>
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
-
-<p>GATK best-practice variant calling for whole-genome and whole-exome sequencing (WGS/WES), germline by default: FastQC quality control, fastp trimming and splitting, BWA-MEM alignment, MarkDuplicates with CRAM conversion, base quality score recalibration (BQSR), single-sample HaplotypeCaller variant calling, CNN 1D scoring with tranche filtering, VEP annotation, per-sample VCF QC and a final MultiQC report.</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: right;"></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: right;"><strong>Rating</strong></td>
-<td>✔ Live-tested</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Origin</strong></td>
-<td>port</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Domain</strong></td>
-<td>genomics</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Rules</strong></td>
-<td>20</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Compute</strong></td>
-<td>up to 24 CPUs / 36 GB per rule (BWA-MEM)</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Tools</strong></td>
-<td>fastqc · fastp · bwa · samtools · gatk · mosdepth · bcftools · vcftools · ensembl-vep · multiqc</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Ported</strong></td>
-<td>2026-08-15</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>License</strong></td>
-<td>Apache-2.0</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Source</strong></td>
-<td><a href="https://github.com/nf-core/sarek">nf-core/sarek</a></td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Pinned version</strong></td>
-<td><code>3.10.0</code></td>
-</tr>
-</tbody>
-</table>
+<p>GATK best-practice variant calling for whole-genome and whole-exome sequencing (WGS/WES), germline by default: FastQC quality control, fastp trimming and splitting, BWA-MEM (or BWA-MEM2) alignment, MarkDuplicates with CRAM or BAM output, base quality score recalibration (BQSR), single-sample HaplotypeCaller variant calling with CNN 1D scoring and tranche filtering, VEP annotation, per-sample VCF QC and a final MultiQC report. Optional ported branches (all gated off by default): reference preparation (BWA/BWAmem2 index, .dict, .fai), UMI-aware consensus calling (fgbio chain + fastp), fastp split-parts fan-out (split_parts=true: runtime-discovered per-part BWA-MEM/BWA-MEM2 alignment + BAM merge + index, no input cap), FreeBayes, Strelka2 germline, Manta germline, bcftools mpileup, TIDDIT SV, goleft indexcov, DeepVariant, NGSCheckMate sample-identity QC, and the joint-germline path (GVCF mode + GenomicsDBImport + GenotypeGVCFs + VQSR).</p>
+</div>
+<div>
+<div class="ox-glance">
+<div class="ox-glance-title">At a glance</div>
+<div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested · default-path</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">117</span></div>
+<div class="ox-kv"><span class="k">Compute</span><span class="v">up to 24 CPUs / 36 GB per rule (BWA-MEM)</span></div>
+<div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Domain</span><span class="v">genomics</span></div>
+<div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/nf-core/sarek">nf-core/sarek</a></span></div>
+<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>3.10.0</code></span></div>
+<div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
+<div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
+<p class="cmd">$ oxo-flow run main.oxoflow</p>
+</div>
+</div>
+</div>
 <h2 id="run-it">Run it</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>oxo-flow<span class="w"> </span>run<span class="w"> </span>main.oxoflow
 </code></pre></div>
@@ -648,11 +618,12 @@
 <p><strong>Requirements.</strong>
 - paired-end FASTQ reads at raw/{sample}_R1.fastq.gz / raw/{sample}_R2.fastq.gz
 - GRCh38 genome FASTA plus .fai and .dict
-- GRCh38 BWA index directory (bwa_index_dir)
-- GATK bundle known-sites VCFs with .tbi: dbsnp_146.hg38.vcf.gz, Mills_and_1000G_gold_standard.indels.hg38.vcf.gz, Homo_sapiens_assembly38.known_indels.vcf.gz
-- VEP cache (GRCh38, homo_sapiens, cache version 116) mounted at /.vep in the container
+- GRCh38 BWA index directory (bwa_index_dir); bwa_mem2_index_dir when aligner = "bwa-mem2"
+- GATK bundle known-sites VCFs with .tbi: dbsnp_146.hg38.vcf.gz, Mills_and_1000G_gold_standard.indels.hg38.vcf.gz, Homo_sapiens_assembly38.known_indels.vcf.gz; known_snps + known_snps_tbi for joint VQSR
+- VEP cache (GRCh38, homo_sapiens, cache version 112) mounted at /.vep in the container
+- NGSCheckMate SNP bed (ngscheckmate_bed) when tools_ngscheckmate = true
 - compute: up to 24 CPUs / 36 GB per rule (BWA-MEM 24 threads/30G; VEP 6 threads/36G)
-- input cap: ~50M read pairs per sample (fastp split, see fidelity deviations)
+- input cap: ~50M read pairs per sample when split_parts = false (fastp single-part mode); no cap with split_parts = true (runtime-discovered fan-out, requires mapped_bam = "sorted")
 - disk: results/ for per-sample CRAMs/VCFs/reports, plus the reference bundle and VEP cache</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># 1. install oxo-flow (release binary, recommended)</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>curl<span class="w"> </span>-fL<span class="w"> </span>-o<span class="w"> </span>oxo-flow.tar.gz<span class="w"> </span>https://github.com/Traitome/oxo-flow/releases/latest/download/oxo-flow-latest-x86_64-unknown-linux-gnu.tar.gz
@@ -683,61 +654,127 @@
 <td style="text-align: right;"><code>aligner</code></td>
 <td><code>bwa-mem</code></td>
 <td>—</td>
-<td>—</td>
+<td><code>bwa_mem</code>, <code>bwa_mem2</code>, <code>bwa_mem2_split</code>, <code>bwa_mem_split</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>alignment_ext</code></td>
+<td><code>cram</code></td>
+<td>Alignment-file mode: 'cram' (default) or 'bam' (when save_output_as_bam=true). recal_index_ext must match the mode ('cram.crai' vs 'bam.bai').</td>
+<td><code>bcftools_mpileup_call</code>, <code>bcftools_mpileup_ngscheckmate</code>, <code>deepvariant</code>, <code>freebayes</code>, <code>gatk_applybqsr</code>, <code>gatk_applybqsr_scatter</code>, <code>gatk_baserecalibrator</code>, <code>gatk_baserecalibrator_scatter</code>, <code>gatk_haplotypecaller</code>, <code>gatk_haplotypecaller_gvcf</code>, <code>gatk_haplotypecaller_gvcf_scatter</code>, <code>gatk_haplotypecaller_scatter</code>, <code>manta_germline</code>, <code>merge_index_samtools</code>, <code>mosdepth_md</code>, <code>mosdepth_recal</code>, <code>samtools_index_recal</code>, <code>samtools_reindex_bam</code>, <code>samtools_stats_md</code>, <code>samtools_stats_recal</code>, <code>strelka_germline</code>, <code>tiddit_sv</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>annotate_vep</code></td>
 <td><code>true</code></td>
 <td>—</td>
-<td><code>ensemblvep_vep</code></td>
+<td><code>ensemblvep_vep</code>, <code>ensemblvep_vep_deepvariant</code>, <code>ensemblvep_vep_freebayes</code>, <code>ensemblvep_vep_joint</code>, <code>ensemblvep_vep_manta</code>, <code>ensemblvep_vep_mpileup</code>, <code>ensemblvep_vep_strelka</code>, <code>ensemblvep_vep_tiddit</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>bwa_index_dir</code></td>
 <td><code>/data/references/GRCh38/Sequence/BWAIndex/</code></td>
 <td>—</td>
-<td><code>bwa_mem</code></td>
+<td><code>bwa_mem</code>, <code>bwa_mem_split</code>, <code>bwa_mem_umi</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>bwa_mem2_index_dir</code></td>
+<td><code>/data/references/GRCh38/Sequence/BWAmem2Index/</code></td>
+<td>—</td>
+<td><code>bwa_mem2</code>, <code>bwa_mem2_split</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>call_deepvariant</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>bcftools_stats_deepvariant</code>, <code>deepvariant</code>, <code>ensemblvep_vep_deepvariant</code>, <code>vcftools_filter_summary_deepvariant</code>, <code>vcftools_tstv_count_deepvariant</code>, <code>vcftools_tstv_qual_deepvariant</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>call_freebayes</code></td>
+<td><code>false</code></td>
+<td>Optional callers (upstream --tools list, one boolean per tool)</td>
+<td><code>bcftools_sort_freebayes</code>, <code>bcftools_stats_freebayes</code>, <code>ensemblvep_vep_freebayes</code>, <code>freebayes</code>, <code>tabix_freebayes</code>, <code>tabix_freebayes_filt</code>, <code>vcffilter_freebayes</code>, <code>vcftools_filter_summary_freebayes</code>, <code>vcftools_tstv_count_freebayes</code>, <code>vcftools_tstv_qual_freebayes</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>call_haplotypecaller</code></td>
 <td><code>true</code></td>
 <td>tools / skip_tools equivalents (upstream comma-list params expressed as booleans)</td>
-<td><code>bcftools_stats</code>, <code>ensemblvep_vep</code>, <code>gatk_cnnscorevariants</code>, <code>gatk_filtervarianttranches</code>, <code>gatk_haplotypecaller</code>, <code>vcftools_filter_summary</code>, <code>vcftools_tstv_count</code>, <code>vcftools_tstv_qual</code></td>
+<td><code>bcftools_sort_joint</code>, <code>bcftools_stats</code>, <code>bcftools_stats_joint</code>, <code>ensemblvep_vep</code>, <code>ensemblvep_vep_joint</code>, <code>gatk_applyvqsr_indel</code>, <code>gatk_applyvqsr_snp</code>, <code>gatk_cnnscorevariants</code>, <code>gatk_filtervarianttranches</code>, <code>gatk_genomicsdbimport</code>, <code>gatk_genotypegvcfs</code>, <code>gatk_haplotypecaller</code>, <code>gatk_haplotypecaller_gvcf</code>, <code>gatk_mergevcfs_joint</code>, <code>gatk_variantrecalibrator_indel</code>, <code>gatk_variantrecalibrator_snp</code>, <code>vcftools_filter_summary</code>, <code>vcftools_filter_summary_joint</code>, <code>vcftools_tstv_count</code>, <code>vcftools_tstv_count_joint</code>, <code>vcftools_tstv_qual</code>, <code>vcftools_tstv_qual_joint</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>call_indexcov</code></td>
+<td><code>false</code></td>
+<td>upstream runs indexcov on WGS only (germline)</td>
+<td><code>goleft_indexcov</code>, <code>samtools_reindex_bam</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>call_manta</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>bcftools_stats_manta</code>, <code>ensemblvep_vep_manta</code>, <code>manta_germline</code>, <code>vcftools_filter_summary_manta</code>, <code>vcftools_tstv_count_manta</code>, <code>vcftools_tstv_qual_manta</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>call_mpileup</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>bcftools_mpileup_call</code>, <code>bcftools_stats_mpileup</code>, <code>ensemblvep_vep_mpileup</code>, <code>vcftools_filter_summary_mpileup</code>, <code>vcftools_tstv_count_mpileup</code>, <code>vcftools_tstv_qual_mpileup</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>call_strelka</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>bcftools_stats_strelka</code>, <code>ensemblvep_vep_strelka</code>, <code>strelka_germline</code>, <code>vcftools_filter_summary_strelka</code>, <code>vcftools_tstv_count_strelka</code>, <code>vcftools_tstv_qual_strelka</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>call_tiddit</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>bcftools_stats_tiddit</code>, <code>ensemblvep_vep_tiddit</code>, <code>tabix_tiddit</code>, <code>tiddit_sv</code>, <code>vcftools_filter_summary_tiddit</code>, <code>vcftools_tstv_count_tiddit</code>, <code>vcftools_tstv_qual_tiddit</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>chromosomes</code></td>
+<td><code>'chr1', 'chr2', 'chr3', 'chr4', 'chr5', 'chr6', 'chr7', 'chr8', 'chr9', 'chr10', 'chr11', 'chr12', 'chr13', 'chr14', 'chr15', 'chr16', 'chr17', 'chr18', 'chr19', 'chr20', 'chr21', 'chr22', 'chrX', 'chrY', 'chrM'</code></td>
+<td>—</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>dbsnp</code></td>
 <td><code>/data/references/GRCh38/Annotation/GATKBundle/dbsnp_146.hg38.vcf.gz</code></td>
 <td>—</td>
-<td><code>gatk_baserecalibrator</code>, <code>gatk_filtervarianttranches</code>, <code>gatk_haplotypecaller</code></td>
+<td><code>gatk_baserecalibrator</code>, <code>gatk_baserecalibrator_scatter</code>, <code>gatk_filtervarianttranches</code>, <code>gatk_genotypegvcfs</code>, <code>gatk_genotypegvcfs_scatter</code>, <code>gatk_haplotypecaller</code>, <code>gatk_haplotypecaller_gvcf</code>, <code>gatk_haplotypecaller_gvcf_scatter</code>, <code>gatk_haplotypecaller_scatter</code>, <code>gatk_variantrecalibrator_indel</code>, <code>gatk_variantrecalibrator_snp</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>dbsnp_tbi</code></td>
 <td><code>/data/references/GRCh38/Annotation/GATKBundle/dbsnp_146.hg38.vcf.gz.tbi</code></td>
 <td>—</td>
-<td><code>gatk_baserecalibrator</code>, <code>gatk_filtervarianttranches</code>, <code>gatk_haplotypecaller</code></td>
+<td><code>gatk_baserecalibrator</code>, <code>gatk_baserecalibrator_scatter</code>, <code>gatk_filtervarianttranches</code>, <code>gatk_genotypegvcfs</code>, <code>gatk_genotypegvcfs_scatter</code>, <code>gatk_haplotypecaller</code>, <code>gatk_haplotypecaller_gvcf</code>, <code>gatk_haplotypecaller_gvcf_scatter</code>, <code>gatk_haplotypecaller_scatter</code>, <code>gatk_variantrecalibrator_indel</code>, <code>gatk_variantrecalibrator_snp</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>dict</code></td>
 <td><code>/data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.dict</code></td>
 <td>—</td>
-<td><code>gatk_applybqsr</code>, <code>gatk_baserecalibrator</code>, <code>gatk_cnnscorevariants</code>, <code>gatk_filtervarianttranches</code>, <code>gatk_haplotypecaller</code>, <code>gatk_markduplicates</code></td>
+<td><code>gatk_applybqsr</code>, <code>gatk_applybqsr_scatter</code>, <code>gatk_applyvqsr_indel</code>, <code>gatk_applyvqsr_snp</code>, <code>gatk_baserecalibrator</code>, <code>gatk_baserecalibrator_scatter</code>, <code>gatk_cnnscorevariants</code>, <code>gatk_filtervarianttranches</code>, <code>gatk_genotypegvcfs</code>, <code>gatk_genotypegvcfs_scatter</code>, <code>gatk_haplotypecaller</code>, <code>gatk_haplotypecaller_gvcf</code>, <code>gatk_haplotypecaller_gvcf_scatter</code>, <code>gatk_haplotypecaller_scatter</code>, <code>gatk_markduplicates</code>, <code>gatk_markduplicates_bam</code>, <code>gatk_variantrecalibrator_indel</code>, <code>gatk_variantrecalibrator_snp</code>, <code>manta_germline</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>fasta</code></td>
 <td><code>/data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.fasta</code></td>
 <td>Reference data (user-provided; GRCh38 GATK bundle layout from upstream conf/igenomes.config, substituted at port time)</td>
-<td><code>bwa_mem</code>, <code>gatk_applybqsr</code>, <code>gatk_baserecalibrator</code>, <code>gatk_cnnscorevariants</code>, <code>gatk_filtervarianttranches</code>, <code>gatk_haplotypecaller</code>, <code>gatk_markduplicates</code>, <code>mosdepth_md</code>, <code>mosdepth_recal</code>, <code>samtools_stats_md</code>, <code>samtools_stats_recal</code></td>
+<td><code>bcftools_mpileup_call</code>, <code>bcftools_mpileup_ngscheckmate</code>, <code>bwa_index</code>, <code>bwa_mem</code>, <code>bwa_mem2</code>, <code>bwa_mem2_split</code>, <code>bwa_mem_split</code>, <code>bwa_mem_umi</code>, <code>bwamem2_index</code>, <code>deepvariant</code>, <code>freebayes</code>, <code>gatk_applybqsr</code>, <code>gatk_applybqsr_scatter</code>, <code>gatk_applyvqsr_indel</code>, <code>gatk_applyvqsr_snp</code>, <code>gatk_baserecalibrator</code>, <code>gatk_baserecalibrator_scatter</code>, <code>gatk_cnnscorevariants</code>, <code>gatk_createsequencedictionary</code>, <code>gatk_filtervarianttranches</code>, <code>gatk_genotypegvcfs</code>, <code>gatk_genotypegvcfs_scatter</code>, <code>gatk_haplotypecaller</code>, <code>gatk_haplotypecaller_gvcf</code>, <code>gatk_haplotypecaller_gvcf_scatter</code>, <code>gatk_haplotypecaller_scatter</code>, <code>gatk_markduplicates</code>, <code>gatk_markduplicates_bam</code>, <code>gatk_variantrecalibrator_indel</code>, <code>gatk_variantrecalibrator_snp</code>, <code>manta_germline</code>, <code>merge_index_samtools</code>, <code>mosdepth_md</code>, <code>mosdepth_recal</code>, <code>ngscheckmate_ncm</code>, <code>samtools_faidx</code>, <code>samtools_reindex_bam</code>, <code>samtools_stats_md</code>, <code>samtools_stats_recal</code>, <code>strelka_germline</code>, <code>tiddit_sv</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>fasta_fai</code></td>
 <td><code>/data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.fasta.fai</code></td>
 <td>—</td>
-<td><code>gatk_applybqsr</code>, <code>gatk_baserecalibrator</code>, <code>gatk_cnnscorevariants</code>, <code>gatk_filtervarianttranches</code>, <code>gatk_haplotypecaller</code>, <code>gatk_markduplicates</code></td>
+<td><code>create_intervals_bed</code>, <code>deepvariant</code>, <code>freebayes</code>, <code>gatk_applybqsr</code>, <code>gatk_applybqsr_scatter</code>, <code>gatk_applyvqsr_indel</code>, <code>gatk_applyvqsr_snp</code>, <code>gatk_baserecalibrator</code>, <code>gatk_baserecalibrator_scatter</code>, <code>gatk_cnnscorevariants</code>, <code>gatk_filtervarianttranches</code>, <code>gatk_genomicsdbimport</code>, <code>gatk_genotypegvcfs</code>, <code>gatk_genotypegvcfs_scatter</code>, <code>gatk_haplotypecaller</code>, <code>gatk_haplotypecaller_gvcf</code>, <code>gatk_haplotypecaller_gvcf_scatter</code>, <code>gatk_haplotypecaller_scatter</code>, <code>gatk_markduplicates</code>, <code>gatk_markduplicates_bam</code>, <code>gatk_variantrecalibrator_indel</code>, <code>gatk_variantrecalibrator_snp</code>, <code>goleft_indexcov</code>, <code>manta_germline</code>, <code>strelka_germline</code>, <code>tiddit_sv</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>freebayes_filter</code></td>
+<td><code>30</code></td>
+<td>upstream params.freebayes_filter</td>
+<td><code>vcffilter_freebayes</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gatk_pcr_indel_model</code></td>
 <td><code>CONSERVATIVE</code></td>
 <td>—</td>
-<td><code>gatk_haplotypecaller</code></td>
+<td><code>gatk_haplotypecaller</code>, <code>gatk_haplotypecaller_gvcf</code>, <code>gatk_haplotypecaller_gvcf_scatter</code>, <code>gatk_haplotypecaller_scatter</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>genome</code></td>
@@ -746,58 +783,112 @@
 <td>—</td>
 </tr>
 <tr>
+<td style="text-align: right;"><code>group_by_umi_strategy</code></td>
+<td><code>Adjacency</code></td>
+<td>upstream params.group_by_umi_strategy</td>
+<td><code>fgbio_groupreadsbyumi</code></td>
+</tr>
+<tr>
 <td style="text-align: right;"><code>joint_germline</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td>—</td>
+<td><code>bcftools_sort_joint</code>, <code>bcftools_sort_joint_scatter</code>, <code>bcftools_stats</code>, <code>bcftools_stats_joint</code>, <code>ensemblvep_vep</code>, <code>ensemblvep_vep_joint</code>, <code>gatk_applyvqsr_indel</code>, <code>gatk_applyvqsr_snp</code>, <code>gatk_cnnscorevariants</code>, <code>gatk_filtervarianttranches</code>, <code>gatk_genomicsdbimport</code>, <code>gatk_genomicsdbimport_scatter</code>, <code>gatk_genotypegvcfs</code>, <code>gatk_genotypegvcfs_scatter</code>, <code>gatk_haplotypecaller</code>, <code>gatk_haplotypecaller_gvcf</code>, <code>gatk_haplotypecaller_gvcf_scatter</code>, <code>gatk_haplotypecaller_scatter</code>, <code>gatk_mergevcfs_joint</code>, <code>gatk_mergevcfs_joint_scatter</code>, <code>gatk_mergevcfs_scatter</code>, <code>gatk_variantrecalibrator_indel</code>, <code>gatk_variantrecalibrator_snp</code>, <code>vcftools_filter_summary</code>, <code>vcftools_filter_summary_joint</code>, <code>vcftools_tstv_count</code>, <code>vcftools_tstv_count_joint</code>, <code>vcftools_tstv_qual</code>, <code>vcftools_tstv_qual_joint</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>joint_interval_name</code></td>
+<td><code>whole_genome</code></td>
+<td>Joint germline: the port runs without interval scatter; a single whole-genome interval is built from the fasta .fai (upstream: per-contig BED_PREPARE_INTERVALS)</td>
+<td><code>bcftools_sort_joint</code>, <code>gatk_genomicsdbimport</code>, <code>gatk_genotypegvcfs</code>, <code>gatk_mergevcfs_joint</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>known_indels</code></td>
 <td><code>'/data/references/GRCh38/Annotation/GATKBundle/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz', '/data/references/GRCh38/Annotation/GATKBundle/Homo_sapiens_assembly38.known_indels.vcf.gz'</code></td>
 <td>—</td>
-<td><code>gatk_baserecalibrator</code>, <code>gatk_filtervarianttranches</code></td>
+<td><code>gatk_baserecalibrator</code>, <code>gatk_baserecalibrator_scatter</code>, <code>gatk_filtervarianttranches</code>, <code>gatk_variantrecalibrator_indel</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>known_indels_tbi</code></td>
 <td><code>'/data/references/GRCh38/Annotation/GATKBundle/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz.tbi', '/data/references/GRCh38/Annotation/GATKBundle/Homo_sapiens_assembly38.known_indels.vcf.gz.tbi'</code></td>
 <td>—</td>
-<td><code>gatk_baserecalibrator</code>, <code>gatk_filtervarianttranches</code></td>
+<td><code>gatk_baserecalibrator</code>, <code>gatk_baserecalibrator_scatter</code>, <code>gatk_filtervarianttranches</code>, <code>gatk_variantrecalibrator_indel</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>known_snps</code></td>
+<td><code>/data/references/GRCh38/Annotation/GATKBundle/1000G_omni2.5.hg38.vcf.gz</code></td>
+<td>VQSR resources for joint germline (upstream conf/igenomes.config known_snps)</td>
+<td><code>gatk_variantrecalibrator_snp</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>known_snps_tbi</code></td>
+<td><code>/data/references/GRCh38/Annotation/GATKBundle/1000G_omni2.5.hg38.vcf.gz.tbi</code></td>
+<td>—</td>
+<td><code>gatk_variantrecalibrator_snp</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>lane</code></td>
-<td><code>test_L1</code></td>
+<td><code>L1</code></td>
 <td>—</td>
-<td><code>bwa_mem</code>, <code>fastp</code>, <code>fastqc</code></td>
+<td><code>bcftools_mpileup_ngscheckmate</code>, <code>bwa_mem</code>, <code>bwa_mem2</code>, <code>bwa_mem2_split</code>, <code>bwa_mem_split</code>, <code>bwa_mem_umi</code>, <code>fastp</code>, <code>fastp_split</code>, <code>fastp_umi</code>, <code>fastqc</code>, <code>fgbio_callmolecularconsensusreads</code>, <code>fgbio_fastqtobam</code>, <code>fgbio_groupreadsbyumi</code>, <code>samtools_bam2fq_consensus</code>, <code>samtools_bam2fq_umi</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>length_required</code></td>
 <td><code>15</code></td>
 <td>—</td>
-<td><code>fastp</code></td>
+<td><code>fastp</code>, <code>fastp_split</code>, <code>fastp_umi</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>mapped_bam</code></td>
+<td><code>0001</code></td>
+<td>mapped bam stem fed to markduplicates: {sample}.{mapped_bam}.bam ("sorted" with split_parts = true)</td>
+<td><code>gatk_markduplicates</code>, <code>gatk_markduplicates_bam</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>ngscheckmate_bed</code></td>
+<td><code>/data/references/GRCh38/Annotation/NGSCheckMate/SNP_GRCh38_hg38_wChr.bed</code></td>
+<td>—</td>
+<td><code>bcftools_mpileup_ngscheckmate</code>, <code>ngscheckmate_ncm</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>out_dir</code></td>
 <td><code>results</code></td>
 <td>—</td>
-<td><code>bcftools_stats</code>, <code>bwa_mem</code>, <code>ensemblvep_vep</code>, <code>fastp</code>, <code>fastqc</code>, <code>gatk_applybqsr</code>, <code>gatk_baserecalibrator</code>, <code>gatk_cnnscorevariants</code>, <code>gatk_filtervarianttranches</code>, <code>gatk_haplotypecaller</code>, <code>gatk_markduplicates</code>, <code>mosdepth_md</code>, <code>mosdepth_recal</code>, <code>multiqc</code>, <code>samtools_index_recal</code>, <code>samtools_stats_md</code>, <code>samtools_stats_recal</code>, <code>vcftools_filter_summary</code>, <code>vcftools_tstv_count</code>, <code>vcftools_tstv_qual</code></td>
+<td><code>bam_merge_index_samtools</code>, <code>bcftools_mpileup_call</code>, <code>bcftools_mpileup_ngscheckmate</code>, <code>bcftools_sort_freebayes</code>, <code>bcftools_sort_joint</code>, <code>bcftools_sort_joint_scatter</code>, <code>bcftools_stats</code>, <code>bcftools_stats_deepvariant</code>, <code>bcftools_stats_freebayes</code>, <code>bcftools_stats_joint</code>, <code>bcftools_stats_manta</code>, <code>bcftools_stats_mpileup</code>, <code>bcftools_stats_strelka</code>, <code>bcftools_stats_tiddit</code>, <code>bwa_index</code>, <code>bwa_mem</code>, <code>bwa_mem2</code>, <code>bwa_mem2_split</code>, <code>bwa_mem_split</code>, <code>bwa_mem_umi</code>, <code>bwamem2_index</code>, <code>create_intervals_bed</code>, <code>deepvariant</code>, <code>ensemblvep_vep</code>, <code>ensemblvep_vep_deepvariant</code>, <code>ensemblvep_vep_freebayes</code>, <code>ensemblvep_vep_joint</code>, <code>ensemblvep_vep_manta</code>, <code>ensemblvep_vep_mpileup</code>, <code>ensemblvep_vep_strelka</code>, <code>ensemblvep_vep_tiddit</code>, <code>fastp</code>, <code>fastp_split</code>, <code>fastp_umi</code>, <code>fastqc</code>, <code>fgbio_callmolecularconsensusreads</code>, <code>fgbio_fastqtobam</code>, <code>fgbio_groupreadsbyumi</code>, <code>freebayes</code>, <code>gatk_applybqsr</code>, <code>gatk_applybqsr_scatter</code>, <code>gatk_applyvqsr_indel</code>, <code>gatk_applyvqsr_snp</code>, <code>gatk_baserecalibrator</code>, <code>gatk_baserecalibrator_scatter</code>, <code>gatk_cnnscorevariants</code>, <code>gatk_createsequencedictionary</code>, <code>gatk_filtervarianttranches</code>, <code>gatk_gatherbqsrreports</code>, <code>gatk_genomicsdbimport</code>, <code>gatk_genomicsdbimport_scatter</code>, <code>gatk_genotypegvcfs</code>, <code>gatk_genotypegvcfs_scatter</code>, <code>gatk_haplotypecaller</code>, <code>gatk_haplotypecaller_gvcf</code>, <code>gatk_haplotypecaller_gvcf_scatter</code>, <code>gatk_haplotypecaller_scatter</code>, <code>gatk_markduplicates</code>, <code>gatk_markduplicates_bam</code>, <code>gatk_mergevcfs_joint</code>, <code>gatk_mergevcfs_joint_scatter</code>, <code>gatk_mergevcfs_scatter</code>, <code>gatk_variantrecalibrator_indel</code>, <code>gatk_variantrecalibrator_snp</code>, <code>goleft_indexcov</code>, <code>manta_germline</code>, <code>merge_index_samtools</code>, <code>mosdepth_md</code>, <code>mosdepth_recal</code>, <code>multiqc</code>, <code>ngscheckmate_ncm</code>, <code>samtools_bam2fq_consensus</code>, <code>samtools_bam2fq_umi</code>, <code>samtools_faidx</code>, <code>samtools_index_recal</code>, <code>samtools_reindex_bam</code>, <code>samtools_stats_md</code>, <code>samtools_stats_recal</code>, <code>strelka_germline</code>, <code>tabix_freebayes</code>, <code>tabix_freebayes_filt</code>, <code>tabix_interval</code>, <code>tabix_tiddit</code>, <code>tiddit_sv</code>, <code>vcffilter_freebayes</code>, <code>vcftools_filter_summary</code>, <code>vcftools_filter_summary_deepvariant</code>, <code>vcftools_filter_summary_freebayes</code>, <code>vcftools_filter_summary_joint</code>, <code>vcftools_filter_summary_manta</code>, <code>vcftools_filter_summary_mpileup</code>, <code>vcftools_filter_summary_strelka</code>, <code>vcftools_filter_summary_tiddit</code>, <code>vcftools_tstv_count</code>, <code>vcftools_tstv_count_deepvariant</code>, <code>vcftools_tstv_count_freebayes</code>, <code>vcftools_tstv_count_joint</code>, <code>vcftools_tstv_count_manta</code>, <code>vcftools_tstv_count_mpileup</code>, <code>vcftools_tstv_count_strelka</code>, <code>vcftools_tstv_count_tiddit</code>, <code>vcftools_tstv_qual</code>, <code>vcftools_tstv_qual_deepvariant</code>, <code>vcftools_tstv_qual_freebayes</code>, <code>vcftools_tstv_qual_joint</code>, <code>vcftools_tstv_qual_manta</code>, <code>vcftools_tstv_qual_mpileup</code>, <code>vcftools_tstv_qual_strelka</code>, <code>vcftools_tstv_qual_tiddit</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>patient</code></td>
 <td><code>test</code></td>
 <td>Sample metadata — mirrors tests/csv/3.0/fastq_single.csv (single-lane model: nf-core/sarek meta.id = "{sample}-{lane}", read-group ID = "{sample}.{lane}")</td>
-<td><code>bwa_mem</code></td>
+<td><code>bwa_mem</code>, <code>bwa_mem2</code>, <code>bwa_mem2_split</code>, <code>bwa_mem_split</code>, <code>bwa_mem_umi</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>prepare_reference</code></td>
+<td><code>false</code></td>
+<td>Optional branches (all default-off; upstream equivalents in parentheses) Reference preparation — upstream PREPARE_GENOME builds the BWA/BWAmem2 indexes + .dict + .fai when the reference lacks them; the port gates this on prepare_reference and writes into results/reference/. Point bwa_index_dir / bwa_mem2_index_dir / fasta_fai / dict at the built files to use them.</td>
+<td><code>bwa_index</code>, <code>bwamem2_index</code>, <code>gatk_createsequencedictionary</code>, <code>samtools_faidx</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>recal_index_ext</code></td>
+<td><code>cram.crai</code></td>
+<td>—</td>
+<td><code>merge_index_samtools</code>, <code>mosdepth_recal</code>, <code>samtools_index_recal</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>save_output_as_bam</code></td>
 <td><code>false</code></td>
 <td>CRAM output mode (upstream default)</td>
-<td>—</td>
+<td><code>gatk_markduplicates</code>, <code>gatk_markduplicates_bam</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>scatter_gatk</code></td>
+<td><code>false</code></td>
+<td>Optional per-chromosome scatter/gather branch (default off). When scatter_gatk = true, BQSR / ApplyBQSR / HaplotypeCaller (and the joint GenotypeGVCFs) run one job per chromosome and the per-chromosome outputs are gathered (GatherBQSRReports / samtools merge+index / MergeVcfs) — results identical to the single whole-genome job (gathers are exact), with per-chromosome parallelism. Upstream scatters over dynamic duration-binned interval files; the engine's scatter takes a static value list, so the port uses one interval per chromosome. Keep <code>chromosomes</code> in sync with the contigs of your fasta .fai (each entry must exist in the .fai).</td>
+<td><code>bcftools_sort_joint</code>, <code>bcftools_sort_joint_scatter</code>, <code>create_intervals_bed</code>, <code>gatk_applybqsr</code>, <code>gatk_applybqsr_scatter</code>, <code>gatk_baserecalibrator</code>, <code>gatk_baserecalibrator_scatter</code>, <code>gatk_gatherbqsrreports</code>, <code>gatk_genomicsdbimport</code>, <code>gatk_genomicsdbimport_scatter</code>, <code>gatk_genotypegvcfs</code>, <code>gatk_genotypegvcfs_scatter</code>, <code>gatk_haplotypecaller</code>, <code>gatk_haplotypecaller_gvcf</code>, <code>gatk_haplotypecaller_gvcf_scatter</code>, <code>gatk_haplotypecaller_scatter</code>, <code>gatk_mergevcfs_joint</code>, <code>gatk_mergevcfs_joint_scatter</code>, <code>gatk_mergevcfs_scatter</code>, <code>merge_index_samtools</code>, <code>samtools_index_recal</code>, <code>tabix_interval</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>seq_platform</code></td>
 <td><code>ILLUMINA</code></td>
 <td>—</td>
-<td><code>bwa_mem</code></td>
+<td><code>bwa_mem</code>, <code>bwa_mem2</code>, <code>bwa_mem2_split</code>, <code>bwa_mem_split</code>, <code>bwa_mem_umi</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>sex</code></td>
@@ -809,7 +900,7 @@
 <td style="text-align: right;"><code>skip_bcftools</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>bcftools_stats</code></td>
+<td><code>bcftools_stats</code>, <code>bcftools_stats_deepvariant</code>, <code>bcftools_stats_freebayes</code>, <code>bcftools_stats_joint</code>, <code>bcftools_stats_manta</code>, <code>bcftools_stats_mpileup</code>, <code>bcftools_stats_strelka</code>, <code>bcftools_stats_tiddit</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_fastqc</code></td>
@@ -839,13 +930,19 @@
 <td style="text-align: right;"><code>skip_vcftools</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>vcftools_filter_summary</code>, <code>vcftools_tstv_count</code>, <code>vcftools_tstv_qual</code></td>
+<td><code>vcftools_filter_summary</code>, <code>vcftools_filter_summary_deepvariant</code>, <code>vcftools_filter_summary_freebayes</code>, <code>vcftools_filter_summary_joint</code>, <code>vcftools_filter_summary_manta</code>, <code>vcftools_filter_summary_mpileup</code>, <code>vcftools_filter_summary_strelka</code>, <code>vcftools_filter_summary_tiddit</code>, <code>vcftools_tstv_count</code>, <code>vcftools_tstv_count_deepvariant</code>, <code>vcftools_tstv_count_freebayes</code>, <code>vcftools_tstv_count_joint</code>, <code>vcftools_tstv_count_manta</code>, <code>vcftools_tstv_count_mpileup</code>, <code>vcftools_tstv_count_strelka</code>, <code>vcftools_tstv_count_tiddit</code>, <code>vcftools_tstv_qual</code>, <code>vcftools_tstv_qual_deepvariant</code>, <code>vcftools_tstv_qual_freebayes</code>, <code>vcftools_tstv_qual_joint</code>, <code>vcftools_tstv_qual_manta</code>, <code>vcftools_tstv_qual_mpileup</code>, <code>vcftools_tstv_qual_strelka</code>, <code>vcftools_tstv_qual_tiddit</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>split_fastq</code></td>
 <td><code>50000000</code></td>
 <td>fastp --split_by_lines = split_fastq * 4</td>
-<td><code>fastp</code></td>
+<td><code>fastp</code>, <code>fastp_split</code>, <code>fastp_umi</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>split_parts</code></td>
+<td><code>false</code></td>
+<td>Runtime-discovered split parts: when true, fastp's --split_by_lines parts are discovered by filesystem scan (engine output_pattern primitive) and the BWA_MEM + BAM_MERGE_INDEX_SAMTOOLS stages fan out per part — no 0001-only cap. Requires mapped_bam = "sorted" (the merge output name). Not supported with umi_read_structure. Off by default (upstream single-part behavior).</td>
+<td><code>bam_merge_index_samtools</code>, <code>bwa_mem</code>, <code>bwa_mem2</code>, <code>bwa_mem2_split</code>, <code>bwa_mem_split</code>, <code>fastp</code>, <code>fastp_split</code>, <code>fastp_umi</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>status</code></td>
@@ -854,34 +951,58 @@
 <td>—</td>
 </tr>
 <tr>
+<td style="text-align: right;"><code>tools_ngscheckmate</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>bcftools_mpileup_ngscheckmate</code>, <code>ngscheckmate_ncm</code></td>
+</tr>
+<tr>
 <td style="text-align: right;"><code>trim_fastq</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>fastp</code></td>
+<td><code>fastp</code>, <code>fastp_split</code>, <code>fastp_umi</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>umi_read_structure</code></td>
+<td>``</td>
+<td>UMI consensus preprocessing (upstream params.umi_read_structure, e.g. '3M2S+T' or '5M2S+T'; empty string disables the whole UMI chain)</td>
+<td><code>bwa_mem_umi</code>, <code>fastp</code>, <code>fastp_split</code>, <code>fastp_umi</code>, <code>fgbio_callmolecularconsensusreads</code>, <code>fgbio_fastqtobam</code>, <code>fgbio_groupreadsbyumi</code>, <code>samtools_bam2fq_consensus</code>, <code>samtools_bam2fq_umi</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>vep_cache_ready</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>ensemblvep_vep</code>, <code>ensemblvep_vep_deepvariant</code>, <code>ensemblvep_vep_freebayes</code>, <code>ensemblvep_vep_joint</code>, <code>ensemblvep_vep_manta</code>, <code>ensemblvep_vep_mpileup</code>, <code>ensemblvep_vep_strelka</code>, <code>ensemblvep_vep_tiddit</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>vep_cache_version</code></td>
-<td><code>116</code></td>
+<td><code>112</code></td>
+<td>The VEP cache version must match the VEP binary in envs/vep.yaml (upstream's image pins 116; this env ships ensembl-vep 112, whose cache format is version-locked — a 116 cache is unreadable). The cache itself is user data (upstream bundles it in the container at /.vep; ~30GB for whole-genome GRCh38, or a gtf2vep subset) — the VEP rule gates on vep_cache_ready. Upstream fails hard without the cache; set the flag after placing it at vep_dir_cache (see README fidelity table).</td>
+<td><code>ensemblvep_vep</code>, <code>ensemblvep_vep_deepvariant</code>, <code>ensemblvep_vep_freebayes</code>, <code>ensemblvep_vep_joint</code>, <code>ensemblvep_vep_manta</code>, <code>ensemblvep_vep_mpileup</code>, <code>ensemblvep_vep_strelka</code>, <code>ensemblvep_vep_tiddit</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>vep_dir_cache</code></td>
+<td><code>/.vep</code></td>
 <td>—</td>
-<td><code>ensemblvep_vep</code></td>
+<td><code>ensemblvep_vep</code>, <code>ensemblvep_vep_deepvariant</code>, <code>ensemblvep_vep_freebayes</code>, <code>ensemblvep_vep_joint</code>, <code>ensemblvep_vep_manta</code>, <code>ensemblvep_vep_mpileup</code>, <code>ensemblvep_vep_strelka</code>, <code>ensemblvep_vep_tiddit</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>vep_genome</code></td>
 <td><code>GRCh38</code></td>
 <td>—</td>
-<td><code>ensemblvep_vep</code></td>
+<td><code>ensemblvep_vep</code>, <code>ensemblvep_vep_deepvariant</code>, <code>ensemblvep_vep_freebayes</code>, <code>ensemblvep_vep_joint</code>, <code>ensemblvep_vep_manta</code>, <code>ensemblvep_vep_mpileup</code>, <code>ensemblvep_vep_strelka</code>, <code>ensemblvep_vep_tiddit</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>vep_species</code></td>
 <td><code>homo_sapiens</code></td>
 <td>—</td>
-<td><code>ensemblvep_vep</code></td>
+<td><code>ensemblvep_vep</code>, <code>ensemblvep_vep_deepvariant</code>, <code>ensemblvep_vep_freebayes</code>, <code>ensemblvep_vep_joint</code>, <code>ensemblvep_vep_manta</code>, <code>ensemblvep_vep_mpileup</code>, <code>ensemblvep_vep_strelka</code>, <code>ensemblvep_vep_tiddit</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>wes</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td>—</td>
+<td><code>goleft_indexcov</code>, <code>samtools_reindex_bam</code></td>
 </tr>
 </tbody>
 </table>
@@ -895,10 +1016,27 @@
 <p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
 <p><strong>In scope</strong></p>
 <ul>
+<li>bwa_index</li>
+<li>bwamem2_index</li>
+<li>gatk_createsequencedictionary</li>
+<li>samtools_faidx</li>
 <li>fastqc</li>
 <li>fastp</li>
+<li>fastp_split</li>
+<li>fgbio_fastqtobam</li>
+<li>samtools_bam2fq_umi</li>
+<li>bwa_mem_umi</li>
+<li>fgbio_groupreadsbyumi</li>
+<li>fgbio_callmolecularconsensusreads</li>
+<li>samtools_bam2fq_consensus</li>
+<li>fastp_umi</li>
 <li>bwa_mem</li>
+<li>bwa_mem2</li>
+<li>bwa_mem_split</li>
+<li>bwa_mem2_split</li>
+<li>bam_merge_index_samtools</li>
 <li>gatk_markduplicates</li>
+<li>gatk_markduplicates_bam</li>
 <li>mosdepth_md</li>
 <li>samtools_stats_md</li>
 <li>gatk_baserecalibrator</li>
@@ -909,29 +1047,51 @@
 <li>gatk_haplotypecaller</li>
 <li>gatk_cnnscorevariants</li>
 <li>gatk_filtervarianttranches</li>
+<li>freebayes</li>
+<li>bcftools_sort_freebayes</li>
+<li>tabix_freebayes</li>
+<li>vcffilter_freebayes</li>
+<li>tabix_freebayes_filt</li>
+<li>strelka_germline</li>
+<li>manta_germline</li>
+<li>bcftools_mpileup_call</li>
+<li>tiddit_sv</li>
+<li>tabix_tiddit</li>
+<li>samtools_reindex_bam</li>
+<li>goleft_indexcov</li>
+<li>deepvariant</li>
+<li>bcftools_mpileup_ngscheckmate</li>
+<li>ngscheckmate_ncm</li>
 <li>bcftools_stats</li>
 <li>vcftools_tstv_count</li>
 <li>vcftools_tstv_qual</li>
 <li>vcftools_filter_summary</li>
 <li>ensemblvep_vep</li>
+<li>gatk_haplotypecaller_gvcf</li>
+<li>gatk_genomicsdbimport</li>
+<li>gatk_genotypegvcfs</li>
+<li>bcftools_sort_joint</li>
+<li>gatk_mergevcfs_joint</li>
+<li>gatk_variantrecalibrator_snp</li>
+<li>gatk_variantrecalibrator_indel</li>
+<li>gatk_applyvqsr_snp</li>
+<li>gatk_applyvqsr_indel</li>
+<li>bcftools_stats_joint</li>
+<li>vcftools_tstv_count_joint</li>
+<li>vcftools_tstv_qual_joint</li>
+<li>vcftools_filter_summary_joint</li>
+<li>ensemblvep_vep_joint</li>
 <li>multiqc</li>
 </ul>
 <p><strong>Excluded</strong></p>
 <ul>
-<li>NGSCheckMate (BAM_NGSCHECKMATE + BCFTOOLS_MPILEUP) — sample-identity QC, not on the ported default path</li>
-<li>TrimGalore trimming (--trim_fastq_trimgalore alternative; fastp is the upstream default)</li>
-<li>bwa-mem2 aligner (upstream default aligner is bwa-mem)</li>
-<li>save_output_as_bam=true BAM branch of MarkDuplicates (CRAM-only port)</li>
-<li>Strelka2, Mutect2, Manta, DeepVariant, CNVkit, ASCAT, MSIsensor, SomaticSniper, VarDict, FreeBayes, etc. — optional --tools callers, not on the default path</li>
-<li>reference preparation (BWA_INDEX, GATK4_CREATESEQUENCEDICTIONARY, SAMTOOLS_FAIDX) — not ported; the port requires a pre-built reference bundle (upstream also accepts these as inputs via params.bwa/dict/fasta_fai)</li>
-<li>interval preparation (gawk BUILD_INTERVALS, CREATE_INTERVALS_BED, TABIX bgzip/tabix interval split) and the per-interval scatter/gather of BQSR/ApplyBQSR/HaplotypeCaller (GATK4_GATHERBQSRREPORTS, CRAM_MERGE_INDEX_SAMTOOLS, GATK4_MERGEVCFS) — not ported; the port runs single whole-genome GATK jobs without --intervals (gathers are exact, so results are equivalent, but the per-contig parallelism of the upstream default path is absent)</li>
-<li>joint_germline GVCF joint-genotyping subworkflow (default joint_germline=false)</li>
-<li>UMI workflows (SAREK_UMI_*) — not on the default path</li>
-<li>fastp split parts beyond 0001. — supported input size is capped at one split part (~50M read pairs / 200M lines per sample): only part 0001 is wired fastp -&gt; BWA. Multi-part splits (any real WGS dataset above the threshold) are a known unsupported upstream behavior — upstream aligns every part and merges the BAMs before MarkDuplicates (BAM_MERGE_INDEX_SAMTOOLS)</li>
+<li>Sentieon / Parabricks / DRAGMAP — commercial accelerators (licensed binaries), out of scope</li>
+<li>CNVkit / ASCAT / MSIsensor2 / SomaticSniper / VarDict / Control-FREEC / LoFreq / Varlociraptor — remaining somatic callers; Mutect2/Strelka2-somatic/Manta-somatic are ported (call_mutect2 / call_strelka_somatic / call_manta_somatic, pair-fanned via config/somatic_pairs.tsv); the rest need their own envs/fixtures</li>
 </ul>
 <h2 id="fidelity">Fidelity</h2>
-<p>Rows cover every upstream process/rule on the default main execution path.
-"not ported" rows carry a reason.</p>
+<p>Rows cover every upstream process/rule on the default main execution path plus
+every ported optional branch (gated by config flags — all default-off).
+"not ported" rows carry a reason + evidence.</p>
 <table>
 <thead>
 <tr>
@@ -952,7 +1112,7 @@
 <td>FASTP</td>
 <td><code>fastp</code></td>
 <td>fastp 1.1.0</td>
-<td>upstream default trimming/fastp module; TrimGalore is the <code>--trim_fastq_trimgalore</code> alternative and is not ported</td>
+<td>upstream default trimming/splitting module (TrimGalore does not exist in 3.10.0 — <code>grep -ri trimgalore</code> over the upstream tree is empty; the <code>--trim_fastq_trimgalore</code> param was dropped in 3.10.0)</td>
 </tr>
 <tr>
 <td>BWA_MEM</td>
@@ -961,10 +1121,22 @@
 <td>upstream default aligner is <code>bwa-mem</code>, not <code>bwa-mem2</code>; read-group flags from sarek.nf; prefix <code>{meta.id}.{reads[0] token}</code> = <code>test.0001</code> under split_fastq; the same image also carries samtools 1.22.1 (used for <code>samtools sort</code>)</td>
 </tr>
 <tr>
+<td>BWA_MEM2</td>
+<td><code>bwa_mem2</code></td>
+<td>bwa-mem2 2.2.1</td>
+<td><code>aligner = "bwa-mem2"</code> (upstream <code>params.aligner</code>); same <code>-K 100000000 -Y -R</code> args as BWA_MEM; shares bwa_mem's output path — the two rules are mutually exclusive via <code>when</code>, all downstream rules are unchanged; index from <code>bwa_mem2_index_dir</code></td>
+</tr>
+<tr>
 <td>GATK4_MARKDUPLICATES</td>
 <td><code>gatk_markduplicates</code></td>
-<td>gatk4 4.6.2.0</td>
-<td>CRAM-only port (<code>save_output_as_bam=false</code>); upstream's <code>if [[ ${prefix} == *.cram ]]</code> BAM branch not ported — conversion is unconditional</td>
+<td>gatk4 4.5.0.0</td>
+<td>default CRAM branch (<code>save_output_as_bam=false</code>)</td>
+</tr>
+<tr>
+<td>GATK4_MARKDUPLICATES (BAM branch)</td>
+<td><code>gatk_markduplicates_bam</code></td>
+<td>gatk4 4.5.0.0</td>
+<td><code>save_output_as_bam = true</code>; <code>--CREATE_INDEX true</code>, no CRAM conversion; <code>.md.bai</code> renamed to <code>.md.bam.bai</code> (upstream BAM_MERGE_INDEX_SAMTOOLS); downstream rules read <code>{config.alignment_ext}</code> / <code>{config.recal_index_ext}</code> (set <code>"bam"</code> / <code>"bam.bai"</code> together)</td>
 </tr>
 <tr>
 <td>MOSDEPTH (post-MD)</td>
@@ -976,25 +1148,25 @@
 <td>SAMTOOLS_STATS (post-MD)</td>
 <td><code>samtools_stats_md</code></td>
 <td>samtools 1.24</td>
-<td>ext.prefix <code>{meta.id}.md.cram</code>; 1.24 is the version in the <code>htslib_samtools</code> stats/index images (the BWA image carries 1.22.1)</td>
+<td>ext.prefix <code>{meta.id}.md.{alignment_ext}</code>; 1.24 is the version in the <code>htslib_samtools</code> stats/index images (the BWA image carries 1.22.1)</td>
 </tr>
 <tr>
 <td>GATK4_BASERECALIBRATOR</td>
 <td><code>gatk_baserecalibrator</code></td>
-<td>gatk4 4.6.2.0</td>
-<td>known-sites = dbsnp + Mills gold standard + known indels (GRCh38); single whole-genome job, no per-interval scatter (see deviations)</td>
+<td>gatk4 4.5.0.0</td>
+<td>known-sites = dbsnp + Mills gold standard + known indels (GRCh38); single whole-genome job by default; per-chromosome jobs under <code>scatter_gatk = true</code> (see the scatter/gather row)</td>
 </tr>
 <tr>
 <td>GATK4_APPLYBQSR</td>
 <td><code>gatk_applybqsr</code></td>
-<td>gatk4 4.6.2.0</td>
-<td>output CRAM (not BAM) per default; single whole-genome job, no per-interval scatter (see deviations)</td>
+<td>gatk4 4.5.0.0</td>
+<td>output CRAM per default (BAM in the <code>save_output_as_bam</code> branch); single whole-genome job by default; per-chromosome jobs under <code>scatter_gatk = true</code> (see the scatter/gather row)</td>
 </tr>
 <tr>
 <td>SAMTOOLS_INDEX (recal)</td>
 <td><code>samtools_index_recal</code></td>
 <td>samtools 1.24</td>
-<td>indexes the recalibrated CRAM</td>
+<td>indexes the recalibrated alignment (<code>.crai</code> or <code>.bam.bai</code>)</td>
 </tr>
 <tr>
 <td>MOSDEPTH (recal)</td>
@@ -1006,24 +1178,24 @@
 <td>SAMTOOLS_STATS (recal)</td>
 <td><code>samtools_stats_recal</code></td>
 <td>samtools 1.24</td>
-<td>ext.prefix <code>{meta.id}.recal.cram</code></td>
+<td>ext.prefix <code>{meta.id}.recal.{alignment_ext}</code></td>
 </tr>
 <tr>
 <td>GATK4_HAPLOTYPECALLER</td>
 <td><code>gatk_haplotypecaller</code></td>
-<td>gatk4 4.6.2.0</td>
-<td>default <code>tools=haplotypecaller,vep</code> → <code>call_haplotypecaller=true</code>; single-sample mode (no <code>-ERC GVCF</code>), <code>--pcr-indel-model CONSERVATIVE</code>; single whole-genome job, no per-interval scatter (see deviations)</td>
+<td>gatk4 4.5.0.0</td>
+<td>default <code>tools=haplotypecaller,vep</code> → <code>call_haplotypecaller=true</code>; single-sample mode (no <code>-ERC GVCF</code>), <code>--pcr-indel-model CONSERVATIVE</code>; gated off when <code>joint_germline = true</code> (upstream picks the GVCF branch); single whole-genome job by default; per-chromosome jobs under <code>scatter_gatk = true</code> (see the scatter/gather row)</td>
 </tr>
 <tr>
 <td>GATK4_CNNSCOREVARIANTS</td>
 <td><code>gatk_cnnscorevariants</code></td>
-<td>gatk4 4.6.2.0</td>
-<td>VCF_VARIANT_FILTERING_GATK part 1; CNN 1D scoring (module default <code>--tensor-type 1D</code>); upstream keeps the <code>{sample}.cnn.vcf.gz</code> intermediate unpublished — the port stores it under <code>results/variant_calling/cnnscorevariants/</code> for DAG handoff</td>
+<td>gatk4 4.5.0.0</td>
+<td>VCF_VARIANT_FILTERING_GATK part 1; CNN 1D scoring (module default <code>--tensor-type 1D</code>); upstream keeps the <code>{sample}.cnn.vcf.gz</code> intermediate unpublished — the port stores it under <code>results/variant_calling/cnnscorevariants/</code> for DAG handoff; skipped in joint mode (upstream: no filtering of the joint VCF)</td>
 </tr>
 <tr>
 <td>GATK4_FILTERVARIANTTRANCHES</td>
 <td><code>gatk_filtervarianttranches</code></td>
-<td>gatk4 4.6.2.0</td>
+<td>gatk4 4.5.0.0</td>
 <td>VCF_VARIANT_FILTERING_GATK part 2; ext.args <code>--info-key CNN_1D</code>, ext.prefix <code>{meta.id}.haplotypecaller</code>, known sites (dbsnp + 2 GRCh38 indel sets) passed as <code>--resource</code>; produces <code>{sample}.haplotypecaller.filtered.vcf.gz</code></td>
 </tr>
 <tr>
@@ -1053,65 +1225,182 @@
 <tr>
 <td>ENSEMBLVEP_VEP</td>
 <td><code>ensemblvep_vep</code></td>
-<td>ensembl-vep 116.0</td>
-<td>annotates the filtered VCF (<code>{sample}.haplotypecaller.filtered_VEP.ann.vcf.gz</code>); requires a VEP cache mounted at <code>/.vep</code> in the container (upstream bundles it via <code>--vep_cache</code>); <code>--cache_version 116</code>, GRCh38</td>
+<td>ensembl-vep 112.0</td>
+<td>annotates the filtered VCF (<code>{sample}.haplotypecaller.filtered_VEP.ann.vcf.gz</code>); <strong>gated on <code>vep_cache_ready</code></strong> — upstream fails hard without the cache (bundled at <code>/.vep</code> via <code>--vep_cache</code>); set the flag after placing a cache at <code>vep_dir_cache</code>; <code>--cache_version 112</code> (matches the env binary — VEP caches are version-locked), GRCh38</td>
+</tr>
+<tr>
+<td>PREPARE_GENOME (BWA_INDEX)</td>
+<td><code>bwa_index</code></td>
+<td>bwa 0.7.19</td>
+<td><code>prepare_reference = true</code>; builds <code>results/reference/bwa/index.{amb,ann,bwt,pac,sa}</code> — fixed <code>index</code> prefix (upstream: fasta basename; irrelevant downstream, the BWA rules find the index by extension). Deviation: upstream does not publish the index unless <code>save_reference</code>; the port publishes it because oxo-flow outputs must be tracked</td>
+</tr>
+<tr>
+<td>PREPARE_GENOME (BWAMEM2_INDEX)</td>
+<td><code>bwamem2_index</code></td>
+<td>bwa-mem2 2.2.1</td>
+<td>same gating/prefix note; <code>results/reference/bwamem2/index.{0123,amb,ann,bwt.2bit.64,pac}</code></td>
+</tr>
+<tr>
+<td>PREPARE_GENOME (GATK4_CREATESEQUENCEDICTIONARY)</td>
+<td><code>gatk_createsequencedictionary</code></td>
+<td>gatk4 4.5.0.0</td>
+<td><code>--URI</code> is the fasta basename as upstream; GATK writes <code>&lt;fasta-basename&gt;.dict</code>, the port renames it to <code>reference.dict</code> for a fixed output path</td>
+</tr>
+<tr>
+<td>PREPARE_GENOME (SAMTOOLS_FAIDX)</td>
+<td><code>samtools_faidx</code></td>
+<td>samtools 1.24</td>
+<td>indexes a workdir copy of the fasta (the <code>{config.fasta}</code> path is treated as read-only); output <code>results/reference/fai/reference.fasta.fai</code></td>
+</tr>
+<tr>
+<td>SAREK_UMI (FGBIO_FASTQTOBAM → SAMTOOLS_BAM2FQ → BWA_MEM → FGBIO_GROUPREADSBYUMI → FGBIO_CALLMOLECULARCONSENSUSREADS → BAM_CONVERT_SAMTOOLS → FASTP)</td>
+<td><code>fgbio_fastqtobam</code>, <code>samtools_bam2fq_umi</code>, <code>bwa_mem_umi</code>, <code>fgbio_groupreadsbyumi</code>, <code>fgbio_callmolecularconsensusreads</code>, <code>samtools_bam2fq_consensus</code>, <code>fastp_umi</code></td>
+<td>fgbio 3.1.2, bwa 0.7.19, samtools 1.24, fastp 1.1.0</td>
+<td><code>umi_read_structure</code> set (e.g. <code>"3M2S+T"</code>); <code>fastp_umi</code> shares the fastp output paths so BWA-MEM downstream is untouched; GroupReadsByUmi histogram/metrics go to <code>reports/umi/</code>; see deviations for the BAM_CONVERT_SAMTOOLS collapse</td>
+</tr>
+<tr>
+<td>BAM_VARIANT_CALLING_FREEBAYES (FREEBAYES_GERMLINE, BCFTOOLS_SORT, TABIX_VC, VCFLIB_VCF_FILTER, TABIX_FILT)</td>
+<td><code>freebayes</code>, <code>bcftools_sort_freebayes</code>, <code>tabix_freebayes</code>, <code>vcffilter_freebayes</code>, <code>tabix_freebayes_filt</code></td>
+<td>freebayes 1.3.10, bcftools 1.23.1, vcflib 1.0.14</td>
+<td><code>call_freebayes = true</code>; <code>--min-alternate-fraction 0.1 --min-mapping-quality 1</code>; QUAL filter threshold from <code>freebayes_filter</code> (30, upstream <code>params.freebayes_filter</code>); all four VCFs/TBI published to <code>variant_calling/freebayes/{sample}/</code> as upstream</td>
+</tr>
+<tr>
+<td>STRELKA_GERMLINE</td>
+<td><code>strelka_germline</code></td>
+<td>strelka 2.9.10</td>
+<td><code>call_strelka = true</code>; ext.prefix <code>{meta.id}.strelka</code>; email-check disabled via the upstream <code>sed</code>; all six outputs (SNP/INDEL/variants × vcf+tbi) published as upstream</td>
+</tr>
+<tr>
+<td>MANTA_GERMLINE</td>
+<td><code>manta_germline</code></td>
+<td>manta 1.6.0</td>
+<td><code>call_manta = true</code>; ext.prefix <code>{meta.id}.manta</code>; only the <code>diploid_sv</code> pair is published — candidateSmallIndels/candidateSV stay in the workdir exactly as upstream</td>
+</tr>
+<tr>
+<td>BCFTOOLS_MPILEUP (germline)</td>
+<td><code>bcftools_mpileup_call</code></td>
+<td>bcftools 1.23.1</td>
+<td><code>call_mpileup = true</code>; args <code>--output-type v --multiallelic-caller</code>, filter <code>count(GT=="RR")==0</code>; the module's own bcftools_stats file stays unpublished (as upstream)</td>
+</tr>
+<tr>
+<td>TIDDIT_SV + TABIX_BGZIP_TIDDIT_SV</td>
+<td><code>tiddit_sv</code>, <code>tabix_tiddit</code></td>
+<td>tiddit 3.9.5</td>
+<td><code>call_tiddit = true</code>; <code>--skip_assembly</code> (upstream passes an empty bwa index channel for germline); <code>.ploidies.tab</code> published as upstream</td>
+</tr>
+<tr>
+<td>BAM_VARIANT_CALLING_INDEXCOV (SAMTOOLS_REINDEX_BAM + GOLEFT_INDEXCOV)</td>
+<td><code>samtools_reindex_bam</code>, <code>goleft_indexcov</code></td>
+<td>samtools 1.24, goleft 0.2.4</td>
+<td>WGS only (<code>!wes &amp;&amp; call_indexcov</code>); per-sample header-only reindex with <code>-F 3844 -q 30</code> + <code>--write-index</code> over <code>/dev/null##idx##</code>; cohort run <code>--fai --directory indexcov</code> (no <code>--extranormalize</code> — inputs are BAMs, matching upstream's reindex path); bed.gz+tbi published to <code>variant_calling/indexcov/</code></td>
+</tr>
+<tr>
+<td>RUNDEEPVARIANT</td>
+<td><code>deepvariant</code></td>
+<td>deepvariant 1.10.0</td>
+<td><code>call_deepvariant = true</code>; <code>--model_type=WGS --sample_name {sample}</code>; vcf + g.vcf pairs published to <code>variant_calling/deepvariant/{sample}/</code></td>
+</tr>
+<tr>
+<td>BAM_NGSCHECKMATE (BCFTOOLS_MPILEUP + NGSCHECKMATE_NCM)</td>
+<td><code>bcftools_mpileup_ngscheckmate</code>, <code>ngscheckmate_ncm</code></td>
+<td>bcftools 1.23.1, ngscheckmate 1.0.1</td>
+<td><code>tools_ngscheckmate = true</code>; per-sample mpileup <code>--no-version --ploidy 1 -c</code> with <code>-T</code> SNP bed, reheader to <code>{sample}-{lane}</code>; cohort <code>NCM_REF=./reference.fasta ncm.py -d . -bed &lt;bed&gt; -O . -N ngscheckmate -V</code>; outputs published to <code>reports/ngscheckmate/</code> (live-verify: ncm.py's exact output filenames, see Test)</td>
+</tr>
+<tr>
+<td>Joint germline (GATK4_HAPLOTYPECALLER GVCF, GATK4_GENOMICSDBIMPORT, GATK4_GENOTYPEGVCFS, BCFTOOLS_SORT, GATK4_MERGEVCFS, GATK4_VARIANTRECALIBRATOR SNP+INDEL, GATK4_APPLYVQSR SNP+INDEL)</td>
+<td><code>gatk_haplotypecaller_gvcf</code>, <code>gatk_genomicsdbimport</code>, <code>gatk_genotypegvcfs</code>, <code>bcftools_sort_joint</code>, <code>gatk_mergevcfs_joint</code>, <code>gatk_variantrecalibrator_snp</code>, <code>gatk_variantrecalibrator_indel</code>, <code>gatk_applyvqsr_snp</code>, <code>gatk_applyvqsr_indel</code></td>
+<td>gatk4 4.5.0.0, bcftools 1.23.1</td>
+<td><code>joint_germline = true</code>; VQSR resource labels from <code>conf/igenomes.config</code> GRCh38 (1000G omni2.5 SNP → <code>known_snps</code>, dbsnp; gatk+mills indels); upstream prefixes <code>joint_variant_calling_SNP/INDEL</code> (VQSR intermediates unpublished upstream — the port keeps them under <code>results/</code> for DAG handoff); final <code>joint_germline_recalibrated.vcf.gz</code>; one whole-genome interval from the fasta <code>.fai</code> by default, per-chromosome under <code>scatter_gatk = true</code> (see the scatter/gather row)</td>
+</tr>
+<tr>
+<td>Joint VCF QC + VEP</td>
+<td><code>bcftools_stats_joint</code>, <code>vcftools_tstv_count_joint</code>, <code>vcftools_tstv_qual_joint</code>, <code>vcftools_filter_summary_joint</code>, <code>ensemblvep_vep_joint</code></td>
+<td>bcftools 1.23.1, vcftools 0.1.17, ensembl-vep 112.0</td>
+<td>upstream runs VCF_QC + VEP on the joint VCF (<code>vcf_all</code>); the per-sample QC/VEP rules are gated off in joint mode and these cohort rules take over (prefix <code>joint_germline_recalibrated</code>)</td>
 </tr>
 <tr>
 <td>MULTIQC</td>
 <td><code>multiqc</code></td>
 <td>multiqc 1.35</td>
-<td>fan-in over all report producers; scans the results dir with the upstream <code>assets/multiqc_config.yml</code></td>
+<td>fan-in over all report producers (depends_on covers the gated branches — skipped rules auto-satisfy); scans the results dir with the upstream <code>assets/multiqc_config.yml</code></td>
 </tr>
 <tr>
-<td>NGSCheckMate (BAM_NGSCHECKMATE + BCFTOOLS_MPILEUP)</td>
-<td>— not ported</td>
-<td>—</td>
-<td>sample-identity QC on the CRAM; outside this port's scope (QC fan-in, needs a cohort reference)</td>
+<td>PREPARE_INTERVALS (BUILD_INTERVALS, CREATE_INTERVALS_BED, TABIX_BGZIPTABIX) + per-interval scatter/gather of BQSR / ApplyBQSR / HaplotypeCaller / joint GenotypeGVCFs (GATK4_GATHERBQSRREPORTS, CRAM/BAM_MERGE_INDEX_SAMTOOLS, GATK4_MERGEVCFS)</td>
+<td><code>create_intervals_bed</code>, <code>tabix_interval</code>, <code>gatk_baserecalibrator_scatter</code>, <code>gatk_gatherbqsrreports</code>, <code>gatk_applybqsr_scatter</code>, <code>merge_index_samtools</code>, <code>gatk_haplotypecaller_scatter</code>, <code>gatk_mergevcfs_scatter</code>, <code>gatk_haplotypecaller_gvcf_scatter</code>, <code>gatk_genomicsdbimport_scatter</code>, <code>gatk_genotypegvcfs_scatter</code>, <code>bcftools_sort_joint_scatter</code>, <code>gatk_mergevcfs_joint_scatter</code></td>
+<td>gawk 5.3.0, samtools 1.24, gatk4 4.5.0.0</td>
+<td><code>scatter_gatk = true</code> (default off). Deviation: the engine's scatter fan-out takes a <strong>static</strong> value list, so intervals are one per chromosome (<code>config.chromosomes</code> — keep it in sync with the fasta <code>.fai</code>) instead of upstream's duration-binned windows (<code>nucleotides_per_second</code>); every downstream gather is exact and writes the same paths as the single-job branch, so results are identical — the branch adds per-contig parallelism, it does not change outputs. Needs live verification (see Test)</td>
 </tr>
 <tr>
-<td>PREPARE_GENOME (BWA_INDEX, GATK4_CREATESEQUENCEDICTIONARY, SAMTOOLS_FAIDX)</td>
-<td>— not ported</td>
-<td>—</td>
-<td>reference preparation; the port requires a pre-built reference bundle (upstream also accepts pre-built index/dict/fai via <code>params.bwa</code>/<code>dict</code>/<code>fasta_fai</code>, so this is an upstream-compatible shortcut, not a behavior change)</td>
+<td>fastp split parts (multi-part BWA_MEM + BAM_MERGE_INDEX_SAMTOOLS)</td>
+<td><code>fastp_split</code>, <code>bwa_mem_split</code>, <code>bwa_mem2_split</code>, <code>bam_merge_index_samtools</code></td>
+<td>fastp 1.1.0, bwa 0.7.19 / bwa-mem2, samtools 1.24</td>
+<td><code>split_parts = true</code> (default off) — fastp's <code>--split_by_lines</code> parts are enumerated at runtime via the engine's <code>output_pattern</code> primitive (data-dependent part count, exactly like upstream's channel scan) and the per-part BWA_MEM/BWA_MEM2 + BAM_MERGE_INDEX_SAMTOOLS fan-out is reproduced: every part is aligned (<code>{sample}.NNNN.bam</code>, upstream prefix <code>{meta.id}.{token}</code>) and merged + indexed into <code>{sample}.sorted.bam</code> (upstream MERGE_BAM prefix <code>{meta.id}.sorted</code>) before MarkDuplicates — no input cap. Requires <code>mapped_bam = "sorted"</code>; not supported with <code>umi_read_structure</code>. See the deviation note below for the merge gating design. Requires the engine's <code>output_pattern</code> primitive (Traitome/oxo-flow#235) — unreleased as of v0.16.0, ships in the next engine release</td>
 </tr>
 <tr>
-<td>BED_PREPARE_INTERVALS (BUILD_INTERVALS, CREATE_INTERVALS_BED, TABIX bgzip/tabix interval split) + per-interval scatter/gather (GATK4_GATHERBQSRREPORTS, CRAM_MERGE_INDEX_SAMTOOLS, GATK4_MERGEVCFS)</td>
+<td>Somatic callers (Mutect2, somatic Strelka2/Manta, CNVkit, ASCAT, MSIsensor2/pro, SomaticSniper, VarDict, Control-FREEC, LoFreq, Varlociraptor)</td>
 <td>— not ported</td>
 <td>—</td>
-<td>interval preparation and the per-interval scatter/gather of BQSR/ApplyBQSR/HaplotypeCaller; the port runs single whole-genome GATK jobs without <code>--intervals</code> (gathers are exact, so results are equivalent, but the per-contig parallelism of the upstream default path is absent)</td>
+<td>tumor/normal <strong>pairs required</strong>; the port's samplesheet is single-sample germline (<code>[[sample_groups]]</code>; the engine's <code>[[pairs]]</code> mechanism is a possible follow-up)</td>
 </tr>
 <tr>
-<td>SAREK_UMI_* / Strelka2 / Mutect2 / Manta / DeepVariant / CNVkit / ASCAT / MSIsensor / ...</td>
+<td>Sentieon / Parabricks / DRAGMAP</td>
 <td>— not ported</td>
 <td>—</td>
-<td>UMI workflows, <code>--tools</code> alternatives and optional callers; out of scope (default <code>haplotypecaller,vep</code> only)</td>
+<td>commercial accelerators (licensed binaries); out of scope</td>
+</tr>
+<tr>
+<td>VCF_QC + ENSEMBLVEP_VEP fan-out over the optional callers</td>
+<td><code>bcftools_stats_{freebayes,strelka,mpileup,deepvariant,manta,tiddit}</code>, <code>vcftools_tstv_count_{...}</code>, <code>vcftools_tstv_qual_{...}</code>, <code>vcftools_filter_summary_{...}</code>, <code>ensemblvep_vep_{...}</code></td>
+<td>bcftools 1.23.1, vcftools 0.1.17, ensembl-vep 112.0</td>
+<td>upstream runs VCF_QC + VEP on every caller VCF (<code>vcf_all</code>); the port now mirrors that: when <code>call_freebayes</code>/<code>call_strelka</code>/<code>call_mpileup</code>/<code>call_deepvariant</code>/<code>call_manta</code>/<code>call_tiddit</code> enables a caller, its VCF is QC'd (<code>reports/bcftools/&lt;caller&gt;/</code>, <code>reports/vcftools/&lt;caller&gt;/</code>) and annotated (<code>annotation/&lt;caller&gt;/</code>) with the same prefix conventions as the haplotypecaller rules; tiddit's uncompressed <code>.vcf</code> uses <code>--vcf</code> instead of <code>--gzvcf</code> (as upstream). All 30 rules are gated on their caller's flag (+ <code>skip_bcftools</code>/<code>skip_vcftools</code>/<code>annotate_vep</code>/<code>vep_cache_ready</code>) and feed the multiqc <code>depends_on</code>. Needs live verification (see Test)</td>
 </tr>
 </tbody>
 </table>
 <p>Deviations (all documented, nothing silently dropped):</p>
 <ul>
-<li><strong>fastp split parts — supported input cap</strong>: upstream <code>--split_by_lines</code>
-  produces <code>0001.</code>-prefixed outputs; only the first split part (<code>0001.</code>) is
-  wired to BWA-MEM (the nf-core bwa/mem prefix logic <code>tokenize('.')[0]</code> gives
-  <code>{sample}.0001.bam</code>). The supported input size is therefore capped at one
-  split part — ~50M read pairs / 200M lines per sample (the upstream default
-  <code>split_fastq=50,000,000</code> threshold). Datasets above the threshold are a
-  <strong>known unsupported upstream behavior</strong>: upstream aligns every part and
-  merges the part BAMs before MarkDuplicates (<code>BAM_MERGE_INDEX_SAMTOOLS</code>),
-  which this port does not reproduce — <strong>do not run WGS data above ~50M read
-  pairs per sample</strong> with this port until the multi-part path is wired.</li>
-<li><strong>no per-interval scatter/gather</strong>: BQSR, ApplyBQSR and HaplotypeCaller run
-  as single whole-genome jobs (no <code>--intervals</code>, no
-  GATK4_GATHERBQSRREPORTS / CRAM_MERGE_INDEX_SAMTOOLS / GATK4_MERGEVCFS).
-  Gathers are exact, so the results are mathematically equivalent to
-  upstream's, but wall-time and per-contig parallelism differ substantially.</li>
+<li><strong>fastp split parts — runtime-discovered fan-out (<code>split_parts = true</code>)</strong>: the
+  engine has no fan-in/collection over runtime-discovered values (output_pattern
+  v1), so the per-sample merge is a plan-time rule whose shell waits for the
+  deterministic part count — fastp's parts are 1:1 with the part BAMs and
+  <code>fastp_split</code>'s final <code>mv</code> lands all parts at once — then runs
+  BAM_MERGE_INDEX_SAMTOOLS exactly once. A failed per-part alignment fails the
+  run (fail-fast cancels the waiting merge), so the wait cannot hang on a
+  healthy pipeline. <code>split_parts</code> is off by default and the default path is
+  unchanged: single part <code>0001.</code> -&gt; <code>{sample}.0001.bam</code> (the upstream
+  <code>tokenize('.')[0]</code> behavior), so small/medium inputs never see the new
+  machinery. UMI consensus mode (<code>umi_read_structure</code>) is not supported with
+  <code>split_parts</code> — the two gates are mutually exclusive.</li>
+<li><strong>scatter/gather is opt-in and uses per-chromosome intervals</strong>: the
+  upstream per-interval fan-out (duration-binned windows) becomes
+  <code>scatter_gatk = true</code> in the port — one interval per chromosome (the
+  engine's scatter needs a static value list, so <code>config.chromosomes</code>
+  replaces upstream's <code>nucleotides_per_second</code> binning; both split a
+  whole-genome interval set, but per-chromosome granularity is coarser).
+  Off by default: BQSR, ApplyBQSR, HaplotypeCaller (and joint
+  GenotypeGVCFs) run as single whole-genome jobs (one interval from the
+  fasta <code>.fai</code> for the joint path). Every gather (GatherBQSRReports,
+  samtools merge+index, MergeVcfs) writes the same output paths in both
+  branches, so the branches are exchangeable without touching downstream
+  rules.</li>
+<li><strong>BAM_CONVERT_SAMTOOLS collapse (UMI path)</strong>: at this upstream commit the
+  four <code>samtools view</code> calls in <code>bam_convert_samtools</code> have no distinguishing
+  <code>-f/-F</code> flags anywhere in <code>conf/</code> (grep-verified), so the view → merge →
+  collate → cat machinery emits four identical BAMs and <strong>doubles the reads</strong>
+  in the merged output. The port reproduces the functional intent with a
+  single <code>samtools collate -O | samtools fastq</code> instead.</li>
 <li><strong>CNN-scored intermediate location</strong>: upstream disables the
   CNNSCOREVARIANTS publishDir (the <code>{sample}.cnn.vcf.gz</code> stays in the task
   workdir); oxo-flow hands files between rules through <code>results/</code>, so the
-  port keeps it under <code>results/variant_calling/cnnscorevariants/</code>.</li>
-<li><strong>markduplicates CRAM branch</strong>: unconditional <code>samtools view -Ch</code> +
-  <code>samtools index</code> replaces upstream's bash conditional; BAM output mode
-  (<code>save_output_as_bam=true</code>) is not ported.</li>
+  port keeps it under <code>results/variant_calling/cnnscorevariants/</code> (same for
+  the joint VQSR intermediates, unpublished upstream).</li>
+<li><strong>reference-prep outputs are published</strong>: upstream leaves built
+  BWA/BWAmem2 indexes, <code>.dict</code> and <code>.fai</code> in the task workdir unless
+  <code>save_reference</code>; oxo-flow requires tracked outputs, so the port publishes
+  them under <code>results/reference/</code> — point <code>bwa_index_dir</code> /
+  <code>bwa_mem2_index_dir</code> / <code>fasta_fai</code> / <code>dict</code> at those paths to use them.</li>
+<li><strong>single-lane model</strong>: <code>meta.id</code> = <code>{sample}</code> from BWA-MEM onward
+  (upstream: <code>{sample}-{lane}</code>); preprocessing stage files keep the upstream
+  <code>{sample}-{lane}</code> prefix. Read-group IDs are <code>{sample}.{lane}</code> as upstream.</li>
 <li><strong>Docker staging</strong>: only the rule workdir is mounted, so reference files are
   copied into the workdir under fixed local names (<code>reference.fasta</code>,
   <code>reference.fasta.fai</code>, <code>reference.dict</code>) — same effect as Nextflow's
@@ -1119,11 +1408,6 @@
 <li><strong><code>known_indels</code></strong> is a TOML array (2 GRCh38 files); both it and
   <code>known_indels_tbi</code> must be updated together when changing references.</li>
 </ul>
-<p><strong>Live-test fixes (tx-ubuntu clean from-scratch run, verdict #17 — 37/37 rules, exit=0):</strong>
-- every GATK invocation now passes <code>-Xmx{effective_memory_mb}m</code> (was missing the <code>-Xmx</code> prefix — java treated the bare number as a main class); MarkDuplicates writes CRAM 3.0 (the env's samtools 1.24 defaults to CRAM 3.1, which GATK 4.5's htsjdk cannot read); <code>mosdepth_recal</code> takes the <code>.crai</code> as an input so it structurally follows the indexer.
-- the gatk4 env carries the CNN scoring python stack on python 3.6: gatktool 0.0.1, keras 2.2.4, tensorflow 1.15.5, h5py 2.7.1, matplotlib, scipy, scikit-learn + the GATK sources' <code>vqsr_cnn</code> package (no index hosts it); the CNN rule exports <code>KERAS_BACKEND=tensorflow</code> explicitly (the conda keras activation script hardcodes theano on Linux — nf-core's own module says "CNNSCOREVARIANTS does not support Conda").
-- fastqc and the three vcftools rules run via the singularity backend (<code>docker://</code> URIs, same quay images).
-- <strong>VEP is gated on <code>vep_cache_ready</code></strong> (default false): upstream fails hard without the cache; the port skips the rule until the user places a VEP 112 cache at <code>vep_dir_cache</code> (the shipped <code>vep_cache_version</code> 116 was inconsistent with the env's ensembl-vep 112 — caches are version-locked).</p>
 <h2 id="links">Links</h2>
 <ul>
 <li>Repository: <a href="https://github.com/oxo-flow-community/oxo-flow-sarek">oxo-flow-sarek</a></li>
@@ -1166,7 +1450,7 @@
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      © 2026 oxo-flow-community · Apache-2.0 · Ports are based on their upstream workflows — see each repository's NOTICE.
+      © 2026 <a href="https://github.com/oxo-flow-community">oxo-flow-community</a> · Apache-2.0 · engine <a href="https://github.com/Traitome/oxo-flow">oxo-flow</a> · <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues">issues</a> · evidence: ✔ live-tested ⊃ ★ verified ⊃ ☆ community · ports are based on their upstream workflows — see each repository's NOTICE
     </div>
   
   

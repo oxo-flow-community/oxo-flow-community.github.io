@@ -3,9 +3,12 @@ hide:
   - toc
 ---
 
-<p class="ox-eyebrow">oxo-flow · community catalog</p>
+<div class="ox-hero-split" markdown="1">
+  <div markdown="1">
 
-# Curated workflows. Ready to run. {: .ox-hero-title }
+<p class="ox-eyebrow"><span class="ox-eyebrow-light">oxo-flow · community catalog</span><span class="ox-eyebrow-dark">$ catalog --list</span></p>
+
+# Curated workflows.<br>Ready to run. {: .ox-hero-title }
 
 A community catalog for the oxo-flow engine: verified ports of the pipelines
 the field already trusts, original workflows built for oxo-flow, and community
@@ -15,22 +18,25 @@ and run it with confidence.
 
 <div class="ox-rule"></div>
 
-<div class="ox-hero">
-  <div class="ox-term" aria-label="Example oxo-flow session">
-    <div class="ox-term-head">
-      <span class="ox-term-dot"></span><span class="ox-term-dot"></span><span class="ox-term-dot"></span>
-      <span class="ox-term-title">oxo-flow — run</span>
+<a class="ox-cta" href="/pipelines/">Browse the catalog →</a>
+
+  </div>
+  <div>
+    <div class="ox-term" aria-label="Example oxo-flow session">
+      <div class="ox-term-head">
+        <span class="ox-term-dot"></span><span class="ox-term-dot"></span><span class="ox-term-dot"></span>
+        <span class="ox-term-title">oxo-flow — run</span>
+      </div>
+      <div class="ox-term-body">
+        <div><span class="p">$</span> oxo-flow run main.oxoflow</div>
+        <div><span class="ok">✔</span> validated — 44 rules · 3 samples · 132 instances</div>
+        <div><span class="ok">✔</span> run — 132 instances submitted · environments pinned</div>
+        <div><span class="faint"># classified, rated, and documented in the catalog</span></div>
+      </div>
     </div>
-    <div class="ox-term-body">
-      <div><span class="p">$</span> oxo-flow run main.oxoflow</div>
-      <div><span class="ok">✔</span> validated — 44 rules · 3 samples · 132 instances</div>
-      <div><span class="ok">✔</span> run — 132 instances submitted · environments pinned</div>
-      <div><span class="faint"># classified, rated, and documented in the catalog</span></div>
-    </div>
+    <div class="ox-stats" id="ox-stats" aria-label="Catalog statistics"></div>
   </div>
 </div>
-
-<div class="ox-stats" id="ox-stats" aria-label="Catalog statistics"></div>
 
 ## Start here {: .ox-display }
 

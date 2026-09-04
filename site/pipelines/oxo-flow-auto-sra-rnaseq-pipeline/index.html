@@ -23,7 +23,7 @@
     
     
       
-        <title>SRA-powered RNA-seq: .sra archives to differential expression - oxo-flow-community</title>
+        <title>Oxo flow auto sra rnaseq pipeline - oxo-flow-community</title>
       
     
     
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              SRA-powered RNA-seq: .sra archives to differential expression
+              Oxo flow auto sra rnaseq pipeline
             
           </span>
         </div>
@@ -584,71 +584,42 @@
   
 
 
+<div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-auto-sra-rnaseq-pipeline</span></div>
+<div class="ox-detail-cols">
+<div>
 <h1 id="sra-powered-rna-seq-sra-archives-to-differential-expression">SRA-powered RNA-seq: .sra archives to differential expression</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
-
-<p>Automated RNA-seq analysis from locally downloaded SRA archives to differential expression results: verify and symlink .sra files, fasterq-dump conversion to FASTQ, read merging across multiple SRR runs per sample, fastp trimming, STAR alignment with gene counts, BAM indexing, BPM-normalized bigWig signal tracks, a merged count matrix, and DESeq2 differential analysis with ashr shrinkage. Every tool is pinned to an exact conda version for reproducibility.</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: right;"></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: right;"><strong>Rating</strong></td>
-<td>✔ Live-tested</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Origin</strong></td>
-<td>port</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Domain</strong></td>
-<td>transcriptomics</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Rules</strong></td>
-<td>10</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Compute</strong></td>
-<td>up to 20 threads / 10 GB per rule (align_and_count)</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Tools</strong></td>
-<td>sra-tools · fastp · star · samtools · deeptools · pandas · bioconductor-deseq2 · r-ashr · r-data.table</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Ported</strong></td>
-<td>2026-08-15</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>License</strong></td>
-<td>Apache-2.0</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Source</strong></td>
-<td><a href="https://github.com/xuzhougeng/auto_sra_rnaseq_pipeline">xuzhougeng/auto_sra_rnaseq_pipeline</a></td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Pinned version</strong></td>
-<td><code>main</code></td>
-</tr>
-</tbody>
-</table>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
+<p>Automated RNA-seq analysis from locally downloaded SRA archives to differential expression results: verify and symlink .sra files, fasterq-dump conversion to FASTQ, read merging across multiple SRR runs per sample, fastp trimming, STAR alignment with gene counts, BAM indexing, BPM-normalized bigWig signal tracks, a merged count matrix, and DESeq2 differential analysis with ashr shrinkage. Single-end and paired-end samples are routed by the metadata <code>paired</code> column through wildcard-scoped when-gates; a separate ENCODE entry point (main_encode.oxoflow) consumes pre-downloaded FASTQs. Every tool is pinned to an exact conda version for reproducibility.</p>
+</div>
+<div>
+<div class="ox-glance">
+<div class="ox-glance-title">At a glance</div>
+<div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">13</span></div>
+<div class="ox-kv"><span class="k">Compute</span><span class="v">up to 20 threads / 10 GB per rule (align_and_count)</span></div>
+<div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Domain</span><span class="v">transcriptomics</span></div>
+<div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/xuzhougeng/auto_sra_rnaseq_pipeline">xuzhougeng/auto_sra_rnaseq_pipeline</a></span></div>
+<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>main</code></span></div>
+<div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
+<div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
+<p class="cmd">$ oxo-flow run main.oxoflow</p>
+</div>
+</div>
+</div>
 <h2 id="run-it">Run it</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>oxo-flow<span class="w"> </span>run<span class="w"> </span>main.oxoflow
 </code></pre></div>
 <p>Downloads public data by accessions (network required); <code>--resume-failed</code> retries rules after transient download errors.</p>
 <h2 id="installation">Installation</h2>
-<p><strong>Engine.</strong> oxo-flow &gt;= 0.12.0</p>
+<p><strong>Engine.</strong> oxo-flow &gt;= 0.15.0 (wildcard-scoped <code>when</code> predicates; the failure-email hook [workflow] on_error fires on &gt;= 0.17.0 — older engines ignore the unknown key)</p>
 <p><strong>Toolchain.</strong> conda envs — pinned</p>
 <p><strong>Requirements.</strong>
 - Reference data: STAR index dir and GTF (config index / GTF, e.g. GRCh38)
 - Pre-downloaded .sra files at <sra_data_path>/<SRR>/<SRR>.sra, one metadata TSV row per sample (GSM) with columns: Dataset GSE GSM gene method celline group group_name type platform SRR paired
 - Sample list in [[sample_groups]] and config db_id must match the metadata file (see repo README Usage)
+- ENCODE path (main_encode.oxoflow): pre-downloaded FASTQs in 00_raw_data/ and metadata with sample / R1_file_accession / R2_file_accession / runtype columns
 - Compute: up to 20 threads / 10 GB per rule (align_and_count); 8 (data_clean_pair); 10 (bamtobw); 4 (build_bam_index)
 - Disk: FASTQ, BAM and bigWig intermediates — several tens of GB for a typical cohort</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># 1. install oxo-flow (release binary, recommended)</span>
@@ -697,7 +668,7 @@
 <tr>
 <td style="text-align: right;"><code>mail</code></td>
 <td><code>false</code></td>
-<td>Email notification (upstream onsuccess). Keep off unless SMTP is configured.</td>
+<td>Email notification (upstream onsuccess + onerror). Keep off unless SMTP is configured — the [workflow] on_error hook reuses these same keys.</td>
 <td>—</td>
 </tr>
 <tr>
@@ -749,32 +720,26 @@
 <p><strong>In scope</strong></p>
 <ul>
 <li>get_sra</li>
-<li>data_conversion_pair</li>
+<li>sra_dump (shared pair/single conversion)</li>
 <li>merge_R1_data</li>
 <li>merge_R2_data</li>
+<li>merge_data (single-end)</li>
 <li>data_clean_pair</li>
+<li>data_clean_single</li>
 <li>align_and_count</li>
+<li>align_and_count_single</li>
 <li>build_bam_index</li>
 <li>bamtobw</li>
 <li>combine_count</li>
 <li>DGE_analysis</li>
+<li>main_encode.oxoflow — ENCODE entry point (8 rules, pre-downloaded FASTQ inputs)</li>
 </ul>
 <p><strong>Excluded</strong></p>
 <ul>
-<li>data_conversion_single — single-end branch; upstream routes per sample by the metadata 'paired' column, oxo-flow cannot branch per sample (upstream example dataset D21122 is all-PAIRED)</li>
-<li>merge_data — single-end branch, not ported</li>
-<li>data_clean_single — single-end branch, not ported</li>
-<li>Snakefile_ENCODE — alternate entry point (ENCODE metadata format, DESeq2_diff_encode.R)</li>
-<li>run.py — batch runner over multiple metadata files (validation, bark/feishu notifications, --restart-times 3)</li>
-<li>bark/feishu notification flags — consumed only by run.py</li>
-<li>snakemake onerror email — oxo-flow has per-rule on_failure hooks, no workflow-level error hook</li>
-<li>slurm/config.yaml — cluster profile (use oxo-flow [cluster] instead)</li>
-<li>scripts/update_json.py — file_dict.json tracker used by external orchestration</li>
-<li>pigz_threads config key — merge rules use plain cat (pigz pipe commented out upstream)</li>
+<li>none</li>
 </ul>
 <h2 id="fidelity">Fidelity</h2>
-<p>Scope: the <strong>default-parameters main execution path</strong> (upstream <code>rule all</code>).
-Rows cover every upstream rule; "not ported" rows carry a reason.</p>
+<p>Scope: the <strong>default-parameters main execution path</strong> (upstream <code>rule all</code>) plus the ENCODE entry point and the batch/slurm tooling. Rows cover every upstream rule; "not ported" rows carry a reason.</p>
 <table>
 <thead>
 <tr>
@@ -789,134 +754,140 @@ Rows cover every upstream rule; "not ported" rows carry a reason.</p>
 <td>get_sra</td>
 <td><code>get_sra</code></td>
 <td>python 3.11 + pandas 3.0.5</td>
-<td>run: block ported to <code>scripts/get_sra.py</code> (identical symlink logic); single-instance script rule (oxo-flow fans out over <code>{sample}</code>/<code>{pair_id}</code> only, upstream <code>{sra}</code> values come from the metadata TSV). Splits multi-SRR values on <code>srr_separator</code> like the upstream merge input functions and run.py <code>check_sra_files</code> (upstream get_sra itself does not split — latent bug for multi-SRR rows). No declared outputs (per-SRR paths are dynamic)</td>
+<td>run: block ported to <code>scripts/get_sra.py</code> (identical symlink logic). Single-instance script rule (oxo-flow fans out over <code>{sample}</code>/<code>{pair_id}</code> only); iterates the same metadata SRR values. Splits multi-SRR values on <code>srr_separator</code> like the upstream merge input functions and run.py <code>check_sra_files</code> (upstream get_sra itself does not split — latent bug for multi-SRR rows). No declared outputs (per-SRR paths are dynamic).</td>
 </tr>
 <tr>
 <td>data_conversion_pair</td>
-<td><code>data_conversion_pair</code></td>
+<td><code>sra_dump</code></td>
 <td>sra-tools 3.1.1</td>
-<td><code>fasterq-dump sra/&lt;SRR&gt; -O sra</code> identical per SRR; upstream per-SRR jobs capped at 2 concurrent dumps (run.py <code>--resources limit_dump=2</code>) → script with an internal worker pool of 2. Script deps (python/pandas) join the download env — oxo-flow runs one environment per rule (upstream split input function + command across base/download envs)</td>
+<td><code>fasterq-dump sra/&lt;SRR&gt; -O sra</code> identical per SRR, one rule instance per sample; <code>limit_dump</code> cap preserved: <code>[resource_groups] limit_dump = { max = 2 }</code> (upstream run.py <code>--resources limit_dump=2</code>). The <code>when = "wildcard.paired == 'PAIRED'"</code> gate routes it to paired samples. Script deps (python/pandas) join the download env — oxo-flow runs one environment per rule, upstream split input function (base env) and command (download env).</td>
 </tr>
 <tr>
 <td>data_conversion_single</td>
-<td>not ported</td>
-<td>—</td>
-<td>single-end branch; upstream routes per sample by the metadata <code>paired</code> column, oxo-flow cannot branch per sample (upstream example dataset D21122 is all-PAIRED)</td>
+<td><code>sra_dump</code> (same rule)</td>
+<td>sra-tools 3.1.1</td>
+<td>Ported: fasterq-dump derives the output naming from the archive itself, so the two upstream rules collapse into one script rule (single-end archives produce <code>sra/{SRR}.fastq</code>; <code>scripts/dump_sra.py</code> verifies either output shape). Upstream needed two rules only because its DAG declared the output names statically. Per-sample routing via sample-group metadata (<code>paired = "PAIRED"/"SINGLE"</code>) + <code>when</code> gates.</td>
 </tr>
 <tr>
 <td>merge_R1_data</td>
 <td><code>merge_R1_data</code></td>
 <td>coreutils <code>cat</code> (via python script)</td>
-<td>input function <code>get_merged_input_data_R1</code> ported to <code>scripts/merge_reads.py --read 1</code>; identical <code>cat ... &gt; 00_raw_data/{sample}_R1.fq</code>. <code>limit_merge</code> cap preserved: 1 unit per rule + <code>[resource_groups] limit_merge = { max = 2 }</code> (upstream run.py <code>--resources limit_merge=2</code>)</td>
+<td>Input function <code>get_merged_input_data_R1</code> ported to <code>scripts/merge_reads.py --read 1</code>; identical <code>cat … &gt; 00_raw_data/{sample}_R1.fq</code>. Gated to PAIRED samples. <code>limit_merge</code> cap preserved: 1 unit per rule + <code>[resource_groups] limit_merge = { max = 2 }</code> (upstream run.py <code>--resources limit_merge=2</code>).</td>
 </tr>
 <tr>
 <td>merge_R2_data</td>
 <td><code>merge_R2_data</code></td>
 <td>coreutils <code>cat</code> (via python script)</td>
-<td>same, <code>--read 2</code></td>
+<td>Same as above, <code>--read 2</code>.</td>
 </tr>
 <tr>
 <td>merge_data</td>
-<td>not ported</td>
-<td>—</td>
-<td>single-end branch</td>
+<td><code>merge_data</code></td>
+<td>coreutils <code>cat</code> (via python script)</td>
+<td>Ported single-end branch: <code>scripts/merge_reads.py --read 0</code> consumes <code>sra/{SRR}.fastq</code> and <code>cat</code>s to <code>00_raw_data/{sample}.fq</code>; gated to SINGLE samples; same <code>limit_merge</code> cap. <code>--read 0</code> fails fast on a PAIRED sample (metadata <code>paired</code> column), matching upstream run.py's validation.</td>
 </tr>
 <tr>
 <td>data_clean_pair</td>
 <td><code>data_clean_pair</code></td>
 <td>fastp 1.3.6</td>
-<td>command byte-identical (<code>-w</code>, <code>-i/-I</code>, <code>-o/-O</code>, <code>-j log/{sample}.json</code>, <code>-h log/{sample}.html</code>, <code>&amp;&gt; log/{sample}_fastp.log</code>). Upstream does not pin fastp; resolved from bioconda on 2026-08-15. Threads 8 (upstream <code>fastp_threads</code> baked into <code>[rules.resources]</code>)</td>
+<td>Command byte-identical (<code>-w</code>, <code>-i/-I</code>, <code>-o/-O</code>, <code>-j log/{sample}.json</code>, <code>-h log/{sample}.html</code>, <code>&amp;&gt; log/{sample}_fastp.log</code>). Gated to PAIRED samples. Upstream does not pin fastp; resolved from bioconda on 2026-08-15. Threads 8 (upstream <code>fastp_threads</code> baked into <code>[rules.resources]</code>).</td>
 </tr>
 <tr>
 <td>data_clean_single</td>
-<td>not ported</td>
-<td>—</td>
-<td>single-end branch</td>
+<td><code>data_clean_single</code></td>
+<td>fastp 1.3.6</td>
+<td>Ported single-end branch: same fastp flags minus <code>-I/-O</code> (<code>-i 00_raw_data/{sample}.fq -o 01_clean_data/{sample}.fq</code>), threads 8; gated to SINGLE samples.</td>
 </tr>
 <tr>
 <td>align_and_count</td>
 <td><code>align_and_count</code></td>
-<td>star 2.7.1a</td>
-<td>command byte-identical (flags, <code>--outFileNamePrefix</code>, <code>--limitBAMsortRAM $((10000 * 1000000))</code>, <code>--quantMode GeneCounts</code>, <code>--outTmpKeep None</code>, <code>mv ..._Log.final.out</code> to log). Threads 20 (upstream <code>star_threads</code> baked in). Attempt-based memory escalation lambda (<code>10000</code> → <code>60000*(attempt-1)</code>) not expressible — first-attempt value pinned (<code>resources.memory = "10G"</code>)</td>
+<td>star 2.7.11b</td>
+<td>Command byte-identical (flags, <code>--outFileNamePrefix</code>, <code>--limitBAMsortRAM $((10000 * 1000000))</code>, <code>--quantMode GeneCounts</code>, <code>--outTmpKeep None</code>, <code>mv …_Log.final.out</code> to log). Threads 20 (upstream <code>star_threads</code> baked in); gated to PAIRED samples. The attempt-based memory escalation lambda (<code>10000</code> first attempt, <code>60000*(attempt-1)</code> after) is not expressible — the port pins the first-attempt value (<code>resources.memory = "10G"</code>). star bumped 2.7.1a → 2.7.11b: the 2019-era binary stalls on modern hosts (live: 20h spin, zero progress). Single-end STAR is the separate <code>align_and_count_single</code> rule (same command, one <code>--readFilesIn</code> file, gated to SINGLE).</td>
 </tr>
 <tr>
 <td>build_bam_index</td>
 <td><code>build_bam_index</code></td>
-<td>samtools 1.24</td>
-<td><code>samtools index -@ 4 {input}</code> identical; upstream unpinned, resolved from bioconda 2026-08-15</td>
+<td>samtools 1.22</td>
+<td><code>samtools index -@ 4 {input}</code> identical. samtools 1.22 pinned (1.24's htslib conflicts with star 2.7.11b; combo live-verified).</td>
 </tr>
 <tr>
 <td>bamtobw</td>
 <td><code>bamtobw</code></td>
 <td>deeptools 3.5.6</td>
-<td>command byte-identical (<code>-p 10 --binSize 50 --effectiveGenomeSize 2913022398 --normalizeUsing BPM -b ... -o 04_bigwig/{sample}.bw</code>); upstream unpinned, resolved from bioconda 2026-08-15</td>
+<td>Command byte-identical (<code>-p 10 --binSize 50 --effectiveGenomeSize 2913022398 --normalizeUsing BPM -b … -o 04_bigwig/{sample}.bw</code>). Upstream does not pin deeptools; resolved from bioconda on 2026-08-15.</td>
 </tr>
 <tr>
 <td>combine_count</td>
 <td><code>combine_count</code></td>
 <td>python 3.11 + pandas 3.0.5</td>
-<td>run: block ported verbatim to <code>scripts/combine_count.py</code> (same merge order and column renaming); per-sample counts gathered via <code>expand_inputs</code>. Adds a fail-fast check that <code>[config] db_id</code> matches the metadata file name. Upstream runs in the snakemake base env (<code>snakemake==8.16 pandas</code>); snakemake itself not needed — oxo-flow is the orchestrator</td>
+<td>run: block ported verbatim to <code>scripts/combine_count.py</code> (same merge order and column renaming); per-sample counts gathered via <code>expand_inputs</code> over the sample list. Adds a fail-fast check that <code>[config] db_id</code> matches the metadata file name (upstream derives DB_ID at load time). Upstream runs in the snakemake base env (<code>snakemake==8.16 pandas</code>); snakemake itself is not needed — oxo-flow is the orchestrator.</td>
 </tr>
 <tr>
 <td>DGE_analysis</td>
 <td><code>DGE_analysis</code></td>
-<td>R 4.3.2, DESeq2 1.42.0, ashr 2.2.63, data.table 1.18.4</td>
-<td><code>scripts/DESeq2_diff.R</code> ported verbatim (design <code>~group</code>, contrast <code>treat</code>/<code>control</code>, <code>lfcShrink(type="ashr")</code>, saves exprSet + metadata + diffResults). Env pins from the upstream Dockerfile (r432 env); r-data.table resolved from conda-forge 2026-08-15; python added for the on_success mail hook</td>
+<td>R 4.3.2, DESeq2 1.42.0, ashr 2.2.63, data.table 1.17.8</td>
+<td><code>scripts/DESeq2_diff.R</code> ported verbatim (design <code>~group</code>, contrast <code>treat</code>/<code>control</code>, <code>lfcShrink(type="ashr")</code>, saves exprSet + metadata + diffResults to the .Rds path). Env pins from the upstream Dockerfile (r432 env); r-data.table 1.17.8 pinned (1.18.4 requires r-base &gt;= 4.4 and cannot solve with the pinned r-base 4.3.2); python added for the on_success mail hook.</td>
 </tr>
 <tr>
 <td>onsuccess</td>
 <td><code>on_success</code> (DGE_analysis)</td>
 <td>shell + smtplib</td>
-<td>workflow-level <code>onsuccess</code> → final rule's hook: <code>rm -rf 02_read_align</code> + conditional email via <code>scripts/send_mail.py</code> (port of <code>send_mail()</code>; upstream <code>client.quit()</code> NameError on SMTP failure fixed; notification failures exit 0 so they never fail a finished workflow). <code>mail</code> defaults to false, as upstream</td>
+<td>Upstream workflow-level <code>onsuccess</code> becomes the final rule's hook: <code>rm -rf 02_read_align</code> + conditional email via <code>scripts/send_mail.py</code> (port of <code>send_mail()</code>; the upstream <code>client.quit()</code> NameError on SMTP connection failure is fixed and notification failures exit 0 so they never fail a finished workflow). <code>mail</code> defaults to false, as upstream.</td>
 </tr>
 <tr>
 <td>onerror</td>
-<td>not ported</td>
-<td>—</td>
-<td>oxo-flow has per-rule <code>on_failure</code> hooks, no workflow-level error hook</td>
+<td><code>[workflow] on_error</code></td>
+<td>shell + smtplib</td>
+<td>Ported: the upstream workflow-level <code>onerror</code> email becomes the engine's workflow-level failure hook — shell run once in the workflow root when the run reaches a terminal state with at least one failed rule, guarded by <code>mail</code> (default false = no-op, behavior unchanged). It sends subject "snakemake run failed" via the same <code>scripts/send_mail.py</code> as on_success, with the run counters (<code>{succeeded}</code>/<code>{failed}</code>/<code>{skipped}</code>), <code>{config.db_id}</code> and <code>{workdir}</code> in the body (the upstream body is the snakemake log; the engine log lives under <code>.oxo-flow/logs/</code>). Best-effort: a failed hook is a warning, never a run-status change, and notification failures exit 0. Fires on engine &gt;= 0.17.0; older engines ignore the unknown <code>[workflow]</code> key.</td>
 </tr>
 <tr>
 <td>Snakefile_ENCODE</td>
-<td>not ported</td>
-<td>—</td>
-<td>alternate entry point (ENCODE metadata columns, <code>DESeq2_diff_encode.R</code>)</td>
+<td><code>main_encode.oxoflow</code> (8 rules)</td>
+<td>fastp 1.3.6, star 2.7.11b, samtools 1.22, deeptools 3.5.6, R 4.3.2</td>
+<td>Ported entry point: ENCODE metadata columns (<code>R1_file_accession</code>/<code>R2_file_accession</code>/<code>runtype</code>), <code>scripts/DESeq2_diff_encode.R</code> copied verbatim, pre-downloaded FASTQ inputs. <code>get_raw_data</code> input function → <code>scripts/clean_encode.py</code> (byte-identical fastp command; pandas added to envs/preprocess.yaml for it). Two upstream latent bugs fixed (documented deviations): <code>data_clean_pair</code> IndexErrors on single-ended samples, and <code>align_and_count</code> declares fixed r1/r2 inputs — both split into paired/single rules gated by <code>runtype</code>. Upstream <code>use_download</code>/<code>download_path</code> is dead code (computed, never read) — dropped.</td>
 </tr>
 <tr>
 <td>run.py</td>
-<td>not ported</td>
-<td>—</td>
-<td>batch runner over multiple metadata files (validation, bark/feishu, <code>--restart-times 3</code>); its <code>limit_dump</code>/<code>limit_merge</code> caps are ported as described above; for re-runs use <code>oxo-flow run --resume-failed</code></td>
+<td><code>scripts/run_batch.py</code></td>
+<td>python 3.11 + pandas 3.0.5</td>
+<td>Batch runner ported: metadata validation and SRA checks verbatim; drives <code>oxo-flow run … metadata=… db_id=… -j N -r 3</code> per metadata file (upstream <code>--restart-times 3</code>); moves files to <code>finished/</code>/<code>failed/</code>; bark/feishu via notify.py; summary stats. <code>--cores</code> default 79 like upstream; <code>--profile</code> maps to upstream <code>--executor_profile_path</code>; <code>--unlock</code>/<code>--rerun-incomplete</code>/<code>--latency-wait</code> are native oxo-flow checkpoint semantics — nothing to do.</td>
 </tr>
 <tr>
 <td>slurm/config.yaml</td>
-<td>not ported</td>
+<td><code>profiles/slurm.toml</code> ([cluster])</td>
 <td>—</td>
-<td>cluster profile; oxo-flow's <code>[cluster]</code> section covers this</td>
+<td>Ported: <code>executor: slurm</code> → <code>backend = "slurm"</code>, <code>jobs: 100</code> → <code>max_submitted = 100</code>, <code>runtime=120</code> → <code>walltime = "2h"</code>. Upstream set-threads/set-resources live in the workflow's per-rule resources; the cluster-only align mem bump (64000) is not expressible in a profile, so the pinned 10G applies on the cluster too. Opt-in: <code>oxo-flow run main.oxoflow --profile slurm</code>.</td>
+</tr>
+<tr>
+<td>config.yaml bark/feishu</td>
+<td><code>scripts/notify.py</code></td>
+<td>python 3.11</td>
+<td>Notification helpers ported: <code>feishu_notification</code> verbatim from upstream <code>scripts/utilize.py</code>; <code>bark_notification</code> fixed — the upstream function is a silent no-op (assigns <code>base_url</code>, never sends), the port implements the intended GET <code>{api}/oxo-flow/{contents}</code>. Notification failures exit 1 but never change a run's outcome (run_batch.py).</td>
 </tr>
 <tr>
 <td>scripts/update_json.py</td>
-<td>not ported</td>
-<td>—</td>
-<td><code>file_dict.json</code> tracker used by external orchestration</td>
+<td><code>scripts/update_json.py</code> (verbatim)</td>
+<td>python 3.11</td>
+<td>Copied byte-identical — external-orchestration <code>file_dict.json</code> tracker; no caller in either workflow, same as upstream.</td>
 </tr>
 <tr>
 <td>pigz_threads config key</td>
 <td>dropped</td>
 <td>—</td>
-<td>merge rules use plain <code>cat</code>; the pigz pipe is commented out upstream</td>
+<td>The upstream pigz pipe is commented out (merge rules use plain <code>cat</code>) — no behavior lost.</td>
 </tr>
 </tbody>
 </table>
 <p><strong>Port-level conventions</strong> (config-shape deviations, commands unchanged):
 upstream derives the sample list (GSM column), the per-sample SRR lists and
 DB_ID from the metadata TSV at load time; the port declares the samples in
-<code>[[sample_groups]]</code>, reads SRR lists in the ported scripts, and takes DB_ID
-from <code>[config] db_id</code> — all three must match the metadata file (see the
-repo README Usage). Upstream <code>fastp_threads</code>/<code>star_threads</code> config keys are
-baked into <code>[rules.resources] threads</code> (oxo-flow resource numbers are
-literals). Upstream example metadata <code>doc/D21122.txt</code> (16 GSM samples,
-all PAIRED) ships as the default fixture at
-test/fixtures/metadata/D21122.txt.</p>
+<code>[[sample_groups]]</code> (cohort = PAIRED, single = SINGLE), reads SRR lists in
+the ported scripts, and takes DB_ID from <code>[config] db_id</code> — all three must
+match the metadata file (see the repo README Usage). Upstream
+<code>fastp_threads</code>/<code>star_threads</code> config keys are baked into
+<code>[rules.resources] threads</code> (oxo-flow resource numbers are literals).
+Upstream example metadata <code>doc/D21122.txt</code> (16 GSM samples, all PAIRED)
+ships as the default fixture at test/fixtures/metadata/D21122.txt.</p>
 <h2 id="links">Links</h2>
 <ul>
 <li>Repository: <a href="https://github.com/oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipeline">oxo-flow-auto-sra-rnaseq-pipeline</a></li>
@@ -959,7 +930,7 @@ test/fixtures/metadata/D21122.txt.</p>
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      © 2026 oxo-flow-community · Apache-2.0 · Ports are based on their upstream workflows — see each repository's NOTICE.
+      © 2026 <a href="https://github.com/oxo-flow-community">oxo-flow-community</a> · Apache-2.0 · engine <a href="https://github.com/Traitome/oxo-flow">oxo-flow</a> · <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues">issues</a> · evidence: ✔ live-tested ⊃ ★ verified ⊃ ☆ community · ports are based on their upstream workflows — see each repository's NOTICE
     </div>
   
   

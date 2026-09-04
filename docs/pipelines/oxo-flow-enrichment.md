@@ -1,21 +1,33 @@
+<div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-enrichment</span></div>
+<div class="ox-detail-cols" markdown="1">
+<div markdown="1">
+
 # Region set and gene set enrichment: LOLA, GREAT, pycisTarget and GSEA
 
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
 
 Run a complete region set and gene set enrichment analysis on your own data: region overlap enrichment (LOLA), genomic region enrichment of annotated terms (rGREAT), region TFBS motif enrichment (pycisTarget), gene TFBS motif enrichment (RcisTarget), and gene over-representation analysis (ORA) and preranked GSEA (GSEApy). Every tool applies its own multiple-test correction; the workflow produces per-set enrichment plots, per-group summary plots, and reproducibility exports (configs/ and envs/). Official port of epigen/enrichment_analysis v3.0.1 with tool versions and commands pinned to the source.
 
-| | |
-|---:|---|
-| **Rating** | ✔ Live-tested |
-| **Origin** | port |
-| **Domain** | genomics |
-| **Rules** | 48 |
-| **Compute** | up to 10 CPUs / 32 GB per rule |
-| **Tools** | gseapy · pandas · pycistarget · bioconductor-rcistarget · bioconductor-lola · bioconductor-rgreat · r-base · r-ggplot2 · r-pheatmap · r-svglite · r-reshape2 · r-data.table · bioconductor-rtracklayer · bioconductor-org.hs.eg.db |
-| **Ported** | 2026-08-15 |
-| **License** | Apache-2.0 |
-| **Source** | [epigen/enrichment_analysis](https://github.com/epigen/enrichment_analysis) |
-| **Pinned version** | `v3.0.1` |
+</div>
+<div>
+
+<div class="ox-glance">
+<div class="ox-glance-title">At a glance</div>
+<div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested · default-path</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">48</span></div>
+<div class="ox-kv"><span class="k">Compute</span><span class="v">up to 10 CPUs / 32 GB per rule</span></div>
+<div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Domain</span><span class="v">genomics</span></div>
+<div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/epigen/enrichment_analysis">epigen/enrichment_analysis</a></span></div>
+<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>v3.0.1</code></span></div>
+<div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
+<div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
+<p class="cmd">$ oxo-flow run main.oxoflow</p>
+</div>
+
+</div>
+</div>
 
 ## Run it
 

@@ -1,0 +1,128 @@
+<h2>Hero=V2，卡片=W2 ✅ — 下一步：pipeline 详情页的头部</h2>
+<p class="subtitle">24 个详情页共用这个模板。用 rnaseq 真实数据做头部区（H1 到 DAG 图之前）。三个变体只动头部信息的组织方式，正文/DAG 部分不动。</p>
+
+<style>
+  .pg { padding: 16px 18px; background: #f7faf8; font-size: 12px; box-sizing: border-box; }
+  .pg * { box-sizing: border-box; margin: 0; }
+  .pg .crumb { font-family: ui-monospace, monospace; font-size: 8px; color: #97a69e; margin-bottom: 10px; }
+  .pg .crumb b { color: #0e7a5f; }
+  .pg h1 { font-family: -apple-system, sans-serif; font-size: 20px; font-weight: 700; letter-spacing: -0.02em; color: #17211c; }
+  .pg .mono { font-family: ui-monospace, monospace; }
+  .pg .desc { font-size: 10.5px; color: #3f5047; line-height: 1.55; }
+  .bdg { font-family: ui-monospace, monospace; font-size: 8px; padding: 2px 7px; border-radius: 99px; border: 1px solid #dfe8e3; color: #6b7d73; background: #eff4f1; white-space: nowrap; display: inline-block; }
+  .bdg.live { color: #0F9D6E; border-color: #9fd8c3; background: #ecf9f3; font-weight: 600; }
+  .bdg .dot { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: #0c8a5d; margin-right: 4px; vertical-align: 1px; }
+  .kv { font-family: ui-monospace, monospace; font-size: 8.5px; }
+  .kv .k { color: #97a69e; }
+  .kv .v { color: #17211c; font-weight: 600; }
+  .pg .cmd { font-family: ui-monospace, monospace; font-size: 9px; color: #3f5047; background: #fff; border: 1px solid #dfe8e3; border-radius: 6px; padding: 6px 9px; }
+
+  /* P1 · 现状精修：H1 徽章在标题下 */
+  .p1 .badges { display: flex; flex-wrap: wrap; gap: 5px; margin: 8px 0; }
+  .p1 .desc { margin-bottom: 8px; }
+  .p1 .facts { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 9px; }
+  .p1 .cmd { display: inline-block; }
+
+  /* P2 · 侧栏数据面板 */
+  .p2 .cols { display: grid; grid-template-columns: 1.6fr 1fr; gap: 16px; align-items: start; }
+  .p2 .panel { background: #fff; border: 1px solid #dfe8e3; border-radius: 10px; padding: 10px 12px; box-shadow: 0 1px 2px rgba(23,33,28,.05); }
+  .p2 .panel .t { font-family: ui-monospace, monospace; font-size: 7.5px; letter-spacing: .14em; text-transform: uppercase; color: #97a69e; margin-bottom: 7px; }
+  .p2 .kv-line { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #eff4f1; }
+  .p2 .kv-line:last-child { border-bottom: none; }
+  .p2 .kv-line .k { color: #97a69e; font-size: 8.5px; }
+  .p2 .kv-line .v { font-weight: 600; font-size: 8.5px; }
+  .p2 .kv-line .v.live { color: #0F9D6E; }
+  .p2 .badges { display: flex; flex-wrap: wrap; gap: 5px; margin: 8px 0; }
+  .p2 .cmd { display: block; margin-top: 8px; }
+
+  /* P3 · 编辑部抬头 */
+  .p3 .head-rule { border-top: 2px solid #17211c; padding-top: 9px; }
+  .p3 .meta-line { font-family: ui-monospace, monospace; font-size: 8.5px; color: #6b7d73; margin: 5px 0 8px; }
+  .p3 .meta-line b { color: #0F9D6E; font-weight: 600; }
+  .p3 .meta-line .eng { color: #0c8a5d; font-weight: 600; }
+  .p3 .facts { display: flex; gap: 14px; margin: 9px 0; padding: 7px 0; border-top: 1px solid #dfe8e3; border-bottom: 1px solid #dfe8e3; }
+  .p3 .facts .kv { text-align: left; }
+  .p3 .cmd { display: inline-block; margin-top: 2px; }
+</style>
+
+<div class="cards">
+  <div class="card" data-choice="p1" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:0">
+      <div class="pg p1">
+        <div class="crumb"><b>Pipelines</b> / oxo-flow-rnaseq</div>
+        <h1>RNA-seq: align, quantify, differential expression</h1>
+        <div class="badges">
+          <span class="bdg live">✔ Live-tested</span>
+          <span class="bdg">⇄ Official port</span>
+          <span class="bdg"><span class="dot"></span>nf-core port</span>
+        </div>
+        <div class="desc">Industry-standard RNA-seq analysis: align reads with STAR, quantify with featureCounts, and call differential expression with DESeq2, ending in a MultiQC report.</div>
+        <div class="facts">
+          <span class="kv"><span class="k">rules </span><span class="v">44</span></span>
+          <span class="kv"><span class="k">domain </span><span class="v">genomics</span></span>
+          <span class="kv"><span class="k">source </span><span class="v">nf-core/rnaseq</span></span>
+        </div>
+        <div class="cmd">$ oxo-flow run main.oxoflow --samples 3</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>P1 · 现状精修</h3>
+      <p>标题→徽章行→描述→数据行→命令条，纵向顺读。就是把现状排版间距做精。与 V2 首页的左右骨架气质略断开，但改动最小。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="p2" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:0">
+      <div class="pg p2">
+        <div class="crumb"><b>Pipelines</b> / oxo-flow-rnaseq</div>
+        <div class="cols">
+          <div>
+            <h1>RNA-seq: align, quantify, differential expression</h1>
+            <div class="badges">
+              <span class="bdg live">✔ Live-tested</span>
+              <span class="bdg">⇄ Official port</span>
+              <span class="bdg"><span class="dot"></span>nf-core port</span>
+            </div>
+            <div class="desc">Industry-standard RNA-seq analysis: align reads with STAR, quantify with featureCounts, and call differential expression with DESeq2, ending in a MultiQC report.</div>
+          </div>
+          <div class="panel">
+            <div class="t">At a glance</div>
+            <div class="kv-line"><span class="k">Rating</span><span class="v live">✔ Live-tested</span></div>
+            <div class="kv-line"><span class="k">Rules</span><span class="v">44</span></div>
+            <div class="kv-line"><span class="k">Engine</span><span class="v">● nf-core port</span></div>
+            <div class="kv-line"><span class="k">Domain</span><span class="v">genomics</span></div>
+            <div class="kv-line"><span class="k">Source</span><span class="v">nf-core/rnaseq</span></div>
+            <div class="cmd">$ oxo-flow run main.oxoflow --samples 3</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>P2 · 侧栏数据面板 ★ 推荐</h3>
+      <p>描述文字在左，"At a glance" 数据面板在右——与首页 V2 的左右骨架呼应，全站语言统一。结构化数据一眼可查，长描述也不挤压。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="p3" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:0">
+      <div class="pg p3">
+        <div class="crumb"><b>Pipelines</b> / oxo-flow-rnaseq</div>
+        <div class="head-rule">
+          <h1>RNA-seq: align, quantify, differential expression</h1>
+        </div>
+        <div class="meta-line"><b>✔ live-tested</b> · <span class="eng">nf-core port</span> · genomics · 44 rules · source nf-core/rnaseq</div>
+        <div class="desc">Industry-standard RNA-seq analysis: align reads with STAR, quantify with featureCounts, and call differential expression with DESeq2, ending in a MultiQC report.</div>
+        <div class="facts">
+          <span class="kv"><span class="k">RULES </span><span class="v">44</span></span>
+          <span class="kv"><span class="k">DOMAIN </span><span class="v">genomics</span></span>
+          <span class="kv"><span class="k">SOURCE </span><span class="v">nf-core/rnaseq</span></span>
+        </div>
+        <div class="cmd">$ oxo-flow run main.oxoflow --samples 3</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>P3 · 编辑部抬头</h3>
+      <p>粗黑规则线压住标题，全部徽章压成一行 mono 元数据行，facts 用发丝线夹住。最像期刊卷首，但与 V2/W2 的卡片语言差异较大。</p>
+    </div>
+  </div>
+</div>

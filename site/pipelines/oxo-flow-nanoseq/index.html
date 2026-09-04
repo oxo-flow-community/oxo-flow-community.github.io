@@ -23,7 +23,7 @@
     
     
       
-        <title>Nanopore long-read: demultiplexing, QC and alignment - oxo-flow-community</title>
+        <title>Oxo flow nanoseq - oxo-flow-community</title>
       
     
     
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Nanopore long-read: demultiplexing, QC and alignment
+              Oxo flow nanoseq
             
           </span>
         </div>
@@ -551,6 +551,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Fidelity">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#default-path-dna-minimap2-demultiplexing-on" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Default path (DNA, minimap2, demultiplexing on)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gated-branches-all-off-by-default-matching-upstream-defaults" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gated branches (all off by default, matching upstream defaults)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -584,64 +612,34 @@
   
 
 
+<div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-nanoseq</span></div>
+<div class="ox-detail-cols">
+<div>
 <h1 id="nanopore-long-read-demultiplexing-qc-and-alignment">Nanopore long-read: demultiplexing, QC and alignment</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
-
-<p>A nanopore long-read pipeline for the DNA default path: samplesheet check, qcat barcode demultiplexing, NanoPlot + FastQC QC, minimap2 alignment, samtools view/sort/index, samtools stats/flagstat/idxstats, BigWig coverage tracks and a MultiQC report. The protocol config key switches to the cDNA/directRNA transcriptome paths. Every rule runs the upstream module's exact pinned container image.</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: right;"></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: right;"><strong>Rating</strong></td>
-<td>✔ Live-tested</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Origin</strong></td>
-<td>port</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Domain</strong></td>
-<td>genomics</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Rules</strong></td>
-<td>19</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Compute</strong></td>
-<td>up to 12 CPUs / 84 GB per rule (minimap2 index)</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Tools</strong></td>
-<td>python · qcat · nanoplot · fastqc · samtools · perl · minimap2 · bedtools · ucsc-bedgraphtobigwig · multiqc</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Ported</strong></td>
-<td>2026-08-15</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>License</strong></td>
-<td>Apache-2.0</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Source</strong></td>
-<td><a href="https://github.com/nf-core/nanoseq">nf-core/nanoseq</a></td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Pinned version</strong></td>
-<td><code>3.1.0</code></td>
-</tr>
-</tbody>
-</table>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
+<p>A nanopore long-read pipeline: samplesheet check, qcat barcode demultiplexing, NanoPlot + FastQC QC, minimap2 (or graphmap2) alignment, samtools view/sort/index, samtools stats/flagstat/idxstats, BigWig/BigBed tracks, NanoLyse contamination filtering, medaka/DeepVariant/PEPPER-Margin-DeepVariant short variant calling, Sniffles/cuteSV structural variant calling, bambu/StringTie2+featureCounts quantification with DESeq2/DEXSeq differential analysis, Nanopolish+xPore/m6anet RNA modification analysis, pre-aligned-BAM input, and a MultiQC report. The default path is the DNA protocol with all gated branches off by default (matching upstream). Every rule runs the upstream module's exact pinned container image.</p>
+</div>
+<div>
+<div class="ox-glance">
+<div class="ox-glance-title">At a glance</div>
+<div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">52</span></div>
+<div class="ox-kv"><span class="k">Compute</span><span class="v">up to 12 CPUs / 84 GB per rule (minimap2 index)</span></div>
+<div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Domain</span><span class="v">genomics</span></div>
+<div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/nf-core/nanoseq">nf-core/nanoseq</a></span></div>
+<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>3.1.0</code></span></div>
+<div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
+<div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
+<p class="cmd">$ oxo-flow run main.oxoflow</p>
+</div>
+</div>
+</div>
 <h2 id="run-it">Run it</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>oxo-flow<span class="w"> </span>run<span class="w"> </span>main.oxoflow
 </code></pre></div>
-<p>Defaults to cDNA mode on the shipped fixtures; options like <code>protocol=cDNA skip_bigwig=true</code> adjust the path (see README).</p>
+<p>Default path is the DNA protocol with all gated branches off (matching upstream); <code>protocol=cDNA skip_bigwig=true</code> switches to the transcriptome path (see README).</p>
 <h2 id="installation">Installation</h2>
 <p><strong>Engine.</strong> oxo-flow &gt;= 0.12.0</p>
 <p><strong>Toolchain.</strong> containers (Docker/Singularity) — pinned images</p>
@@ -680,25 +678,37 @@
 <td style="text-align: right;"><code>aligner</code></td>
 <td><code>minimap2</code></td>
 <td>-- Alignment</td>
-<td>—</td>
+<td><code>graphmap2_align</code>, <code>graphmap2_index</code>, <code>minimap2_align</code>, <code>minimap2_index</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>bam_suffix</code></td>
+<td><code>.sorted.bam</code></td>
+<td>-- Suffix appended to per-sample bam names wherever rules consume reads: ".sorted.bam" (alignment branch) or ".bam" (skip_alignment branch, user bams linked by bam_rename). Mirrors the upstream channel swap between BAM_SORT_INDEX_SAMTOOLS.out.sortbam and BAM_RENAME.out.bam.</td>
+<td><code>nanopolish_index_eventalign</code>, <code>stringtie2</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>barcode_kit</code></td>
-<td><code>Auto</code></td>
-<td>-- Demultiplexing (upstream defaults)</td>
+<td><code>RBK001</code></td>
+<td>-- Demultiplexing (upstream defaults) RBK001 matches the shipped barcoded fixture (qcat Auto-detection needs at least two distinct barcodes to guess the kit; the explicit kit makes the test path deterministic).</td>
 <td><code>qcat</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>call_variants</code></td>
 <td><code>false</code></td>
-<td>-- Variant calling (upstream default: off)</td>
-<td><code>minimap2_align</code></td>
+<td>-- Variant calling (upstream default: off; also gated upstream on protocol == DNA). The three short-variant callers are mutually exclusive on variant_caller; structural callers on structural_variant_caller (upstream defaults: medaka / sniffles).</td>
+<td><code>cutesv</code>, <code>cutesv_sort_vcf</code>, <code>cutesv_tabix_vcf</code>, <code>deepvariant</code>, <code>deepvariant_tabix_gvcf</code>, <code>deepvariant_tabix_vcf</code>, <code>medaka_bgzip_vcf</code>, <code>medaka_tabix_vcf</code>, <code>medaka_variant</code>, <code>minimap2_align</code>, <code>pepper_margin_deepvariant</code>, <code>samtools_index</code>, <code>samtools_sort</code>, <code>samtools_sort_index</code>, <code>sniffles</code>, <code>sniffles_sort_vcf</code>, <code>sniffles_tabix_vcf</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>deepvariant_gpu</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>pepper_margin_deepvariant</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gtf</code></td>
 <td>``</td>
 <td>-- GTF annotation (upstream samplesheet gtf column; empty on the default path)</td>
-<td><code>gtf2bed</code></td>
+<td><code>bambu</code>, <code>graphmap2_align</code>, <code>graphmap2_index</code>, <code>gtf2bed</code>, <code>stringtie2</code>, <code>stringtie_merge</code>, <code>xpore_dataprep</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gtf_base</code></td>
@@ -731,16 +741,34 @@
 <td><code>multiqc</code></td>
 </tr>
 <tr>
+<td style="text-align: right;"><code>nanolyse_fasta</code></td>
+<td><code>test/fixtures/refs/lambda.fasta.gz</code></td>
+<td>—</td>
+<td><code>nanolyse</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>nanopolish_fast5</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>m6anet_dataprep</code>, <code>m6anet_inference</code>, <code>nanopolish_index_eventalign</code>, <code>xpore_dataprep</code>, <code>xpore_diffmod</code></td>
+</tr>
+<tr>
 <td style="text-align: right;"><code>out_dir</code></td>
 <td><code>results</code></td>
 <td>-- Output directory (upstream: --outdir, default ./results)</td>
-<td><code>bedtools_genomecov</code>, <code>dumpsoftwareversions</code>, <code>fastqc</code>, <code>get_chrom_sizes</code>, <code>gtf2bed</code>, <code>minimap2_align</code>, <code>minimap2_index</code>, <code>multiqc</code>, <code>nanoplot</code>, <code>qcat</code>, <code>samplesheet_check</code>, <code>samtools_faidx</code>, <code>samtools_flagstat</code>, <code>samtools_idxstats</code>, <code>samtools_index</code>, <code>samtools_sort</code>, <code>samtools_stats</code>, <code>samtools_view</code>, <code>ucsc_bedgraphtobigwig</code></td>
+<td><code>bam_rename</code>, <code>bambu</code>, <code>bedtools_bamtobed</code>, <code>bedtools_genomecov</code>, <code>cutesv</code>, <code>cutesv_sort_vcf</code>, <code>cutesv_tabix_vcf</code>, <code>deepvariant</code>, <code>deepvariant_tabix_gvcf</code>, <code>deepvariant_tabix_vcf</code>, <code>deseq2</code>, <code>deseq2_featurecounts</code>, <code>dexseq</code>, <code>dexseq_featurecounts</code>, <code>dumpsoftwareversions</code>, <code>fastqc</code>, <code>get_chrom_sizes</code>, <code>graphmap2_align</code>, <code>graphmap2_index</code>, <code>gtf2bed</code>, <code>m6anet_dataprep</code>, <code>m6anet_inference</code>, <code>medaka_bgzip_vcf</code>, <code>medaka_tabix_vcf</code>, <code>medaka_variant</code>, <code>minimap2_align</code>, <code>minimap2_index</code>, <code>multiqc</code>, <code>nanolyse</code>, <code>nanoplot</code>, <code>nanopolish_index_eventalign</code>, <code>pepper_margin_deepvariant</code>, <code>qcat</code>, <code>samplesheet_check</code>, <code>samtools_faidx</code>, <code>samtools_flagstat</code>, <code>samtools_idxstats</code>, <code>samtools_index</code>, <code>samtools_sort</code>, <code>samtools_sort_index</code>, <code>samtools_stats</code>, <code>samtools_view</code>, <code>sniffles</code>, <code>sniffles_sort_vcf</code>, <code>sniffles_tabix_vcf</code>, <code>stringtie2</code>, <code>stringtie_merge</code>, <code>subread_featurecounts</code>, <code>ucsc_bed12tobigbed</code>, <code>ucsc_bedgraphtobigwig</code>, <code>xpore_dataprep</code>, <code>xpore_diffmod</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>phase_vcf</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>medaka_variant</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>protocol</code></td>
 <td><code>DNA</code></td>
 <td>-- Protocol (upstream: --protocol; mandatory upstream, one of DNA/cDNA/directRNA)</td>
-<td><code>minimap2_align</code>, <code>minimap2_index</code></td>
+<td><code>bambu</code>, <code>bedtools_bamtobed</code>, <code>cutesv</code>, <code>cutesv_sort_vcf</code>, <code>cutesv_tabix_vcf</code>, <code>deepvariant</code>, <code>deepvariant_tabix_gvcf</code>, <code>deepvariant_tabix_vcf</code>, <code>deseq2</code>, <code>deseq2_featurecounts</code>, <code>dexseq</code>, <code>dexseq_featurecounts</code>, <code>graphmap2_align</code>, <code>graphmap2_index</code>, <code>m6anet_dataprep</code>, <code>m6anet_inference</code>, <code>medaka_bgzip_vcf</code>, <code>medaka_tabix_vcf</code>, <code>medaka_variant</code>, <code>minimap2_align</code>, <code>minimap2_index</code>, <code>nanopolish_index_eventalign</code>, <code>pepper_margin_deepvariant</code>, <code>sniffles</code>, <code>sniffles_sort_vcf</code>, <code>sniffles_tabix_vcf</code>, <code>stringtie2</code>, <code>stringtie_merge</code>, <code>subread_featurecounts</code>, <code>ucsc_bed12tobigbed</code>, <code>xpore_dataprep</code>, <code>xpore_diffmod</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>qcat_detect_middle</code></td>
@@ -755,34 +783,46 @@
 <td><code>qcat</code></td>
 </tr>
 <tr>
+<td style="text-align: right;"><code>quantification_method</code></td>
+<td><code>bambu</code></td>
+<td>-- Quantification and differential analysis (upstream defaults: on, but gated upstream to protocol cDNA/directRNA — never on the DNA path)</td>
+<td><code>bambu</code>, <code>deseq2</code>, <code>deseq2_featurecounts</code>, <code>dexseq</code>, <code>dexseq_featurecounts</code>, <code>stringtie2</code>, <code>stringtie_merge</code>, <code>subread_featurecounts</code></td>
+</tr>
+<tr>
 <td style="text-align: right;"><code>reference</code></td>
 <td><code>test/fixtures/refs/genome.fa</code></td>
 <td>-- Reference genome (collapses the samplesheet fasta column; the default path uses a single reference for all samples, as in the upstream test data)</td>
-<td><code>get_chrom_sizes</code>, <code>minimap2_index</code>, <code>samtools_faidx</code>, <code>samtools_stats</code></td>
+<td><code>bambu</code>, <code>cutesv</code>, <code>deepvariant</code>, <code>get_chrom_sizes</code>, <code>graphmap2_align</code>, <code>graphmap2_index</code>, <code>medaka_variant</code>, <code>minimap2_index</code>, <code>nanopolish_index_eventalign</code>, <code>pepper_margin_deepvariant</code>, <code>samtools_faidx</code>, <code>samtools_stats</code>, <code>stringtie2</code>, <code>xpore_dataprep</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>reference_name</code></td>
 <td><code>genome.fa</code></td>
 <td>Basename of the reference; mirrors the upstream staged-file name so that indexes keep the upstream naming (genome.fa.mmi / genome.fa.sizes / genome.fa.fai)</td>
-<td><code>get_chrom_sizes</code>, <code>minimap2_align</code>, <code>minimap2_index</code>, <code>samtools_faidx</code>, <code>ucsc_bedgraphtobigwig</code></td>
+<td><code>deepvariant</code>, <code>get_chrom_sizes</code>, <code>graphmap2_align</code>, <code>graphmap2_index</code>, <code>minimap2_align</code>, <code>minimap2_index</code>, <code>pepper_margin_deepvariant</code>, <code>samtools_faidx</code>, <code>ucsc_bed12tobigbed</code>, <code>ucsc_bedgraphtobigwig</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>run_nanolyse</code></td>
 <td><code>false</code></td>
-<td>-- Raw read cleaning (upstream default: off)</td>
-<td>—</td>
+<td>-- Raw read cleaning (upstream default: off). Upstream downloads the lambda genome when --nanolyse_fasta is unset (GET_NANOLYSE_FASTA); the port ships it as a checked-in fixture.</td>
+<td><code>nanolyse</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>sample_bams</code></td>
+<td>``</td>
+<td>-- Pre-aligned BAM input (upstream: the samplesheet input_file column carrying .bam files, used only when --skip_alignment; the port takes a comma-separated list of bam paths, one per barcode in samples_list order, linked by the bam_rename rule)</td>
+<td><code>bam_rename</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_alignment</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>bedtools_genomecov</code>, <code>get_chrom_sizes</code>, <code>minimap2_align</code>, <code>minimap2_index</code>, <code>samtools_faidx</code>, <code>samtools_flagstat</code>, <code>samtools_idxstats</code>, <code>samtools_index</code>, <code>samtools_sort</code>, <code>samtools_stats</code>, <code>samtools_view</code>, <code>ucsc_bedgraphtobigwig</code></td>
+<td><code>bam_rename</code>, <code>bedtools_bamtobed</code>, <code>bedtools_genomecov</code>, <code>get_chrom_sizes</code>, <code>graphmap2_align</code>, <code>graphmap2_index</code>, <code>minimap2_align</code>, <code>minimap2_index</code>, <code>samtools_faidx</code>, <code>samtools_flagstat</code>, <code>samtools_idxstats</code>, <code>samtools_index</code>, <code>samtools_sort</code>, <code>samtools_sort_index</code>, <code>samtools_stats</code>, <code>samtools_view</code>, <code>ucsc_bed12tobigbed</code>, <code>ucsc_bedgraphtobigwig</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_bigbed</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td>—</td>
+<td><code>bedtools_bamtobed</code>, <code>ucsc_bed12tobigbed</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_bigwig</code></td>
@@ -797,10 +837,28 @@
 <td><code>qcat</code></td>
 </tr>
 <tr>
+<td style="text-align: right;"><code>skip_differential_analysis</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>deseq2</code>, <code>deseq2_featurecounts</code>, <code>dexseq</code>, <code>dexseq_featurecounts</code></td>
+</tr>
+<tr>
 <td style="text-align: right;"><code>skip_fastqc</code></td>
 <td><code>false</code></td>
 <td>—</td>
 <td><code>fastqc</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_m6anet</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>m6anet_dataprep</code>, <code>m6anet_inference</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_modification_analysis</code></td>
+<td><code>false</code></td>
+<td>-- RNA modification analysis (upstream default: on, gated to protocol directRNA; the fast5 dir comes from the upstream samplesheet nanopolish_fast5 column — the port takes one dir for all samples)</td>
+<td><code>m6anet_dataprep</code>, <code>m6anet_inference</code>, <code>nanopolish_index_eventalign</code>, <code>xpore_dataprep</code>, <code>xpore_diffmod</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_multiqc</code></td>
@@ -821,10 +879,52 @@
 <td><code>fastqc</code>, <code>nanoplot</code></td>
 </tr>
 <tr>
+<td style="text-align: right;"><code>skip_quantification</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>bambu</code>, <code>deseq2</code>, <code>deseq2_featurecounts</code>, <code>dexseq</code>, <code>dexseq_featurecounts</code>, <code>stringtie2</code>, <code>stringtie_merge</code>, <code>subread_featurecounts</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_sv</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>cutesv</code>, <code>cutesv_sort_vcf</code>, <code>cutesv_tabix_vcf</code>, <code>sniffles</code>, <code>sniffles_sort_vcf</code>, <code>sniffles_tabix_vcf</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_vc</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>deepvariant</code>, <code>deepvariant_tabix_gvcf</code>, <code>deepvariant_tabix_vcf</code>, <code>medaka_bgzip_vcf</code>, <code>medaka_tabix_vcf</code>, <code>medaka_variant</code>, <code>pepper_margin_deepvariant</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_xpore</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>xpore_dataprep</code>, <code>xpore_diffmod</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>split_mnps</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>medaka_variant</code></td>
+</tr>
+<tr>
 <td style="text-align: right;"><code>stranded</code></td>
 <td><code>false</code></td>
 <td>—</td>
 <td><code>minimap2_align</code>, <code>minimap2_index</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>structural_variant_caller</code></td>
+<td><code>sniffles</code></td>
+<td>—</td>
+<td><code>cutesv</code>, <code>cutesv_sort_vcf</code>, <code>cutesv_tabix_vcf</code>, <code>sniffles</code>, <code>sniffles_sort_vcf</code>, <code>sniffles_tabix_vcf</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>variant_caller</code></td>
+<td><code>medaka</code></td>
+<td>—</td>
+<td><code>deepvariant</code>, <code>deepvariant_tabix_gvcf</code>, <code>deepvariant_tabix_vcf</code>, <code>medaka_bgzip_vcf</code>, <code>medaka_tabix_vcf</code>, <code>medaka_variant</code>, <code>pepper_margin_deepvariant</code></td>
 </tr>
 </tbody>
 </table>
@@ -857,29 +957,49 @@
 <li>ucsc_bedgraphtobigwig</li>
 <li>dumpsoftwareversions</li>
 <li>multiqc</li>
+<li>nanolyse</li>
+<li>graphmap2_index</li>
+<li>graphmap2_align</li>
+<li>samtools_sort_index</li>
+<li>bam_rename</li>
+<li>bedtools_bamtobed</li>
+<li>ucsc_bed12tobigbed</li>
+<li>medaka_variant</li>
+<li>medaka_bgzip_vcf</li>
+<li>medaka_tabix_vcf</li>
+<li>deepvariant</li>
+<li>deepvariant_tabix_vcf</li>
+<li>deepvariant_tabix_gvcf</li>
+<li>pepper_margin_deepvariant</li>
+<li>sniffles</li>
+<li>sniffles_sort_vcf</li>
+<li>sniffles_tabix_vcf</li>
+<li>cutesv</li>
+<li>cutesv_sort_vcf</li>
+<li>cutesv_tabix_vcf</li>
+<li>bambu</li>
+<li>stringtie2</li>
+<li>stringtie_merge</li>
+<li>subread_featurecounts</li>
+<li>deseq2</li>
+<li>deseq2_featurecounts</li>
+<li>dexseq</li>
+<li>dexseq_featurecounts</li>
+<li>nanopolish_index_eventalign</li>
+<li>xpore_dataprep</li>
+<li>xpore_diffmod</li>
+<li>m6anet_dataprep</li>
+<li>m6anet_inference</li>
+<li>get_jaffal_ref</li>
+<li>jaffal_ref</li>
 </ul>
 <p><strong>Excluded</strong></p>
 <ul>
-<li>graphmap2 index/align (aligner off by default; committee exclusion longread_map)</li>
-<li>nanolyse (off by default: run_nanolyse=false)</li>
-<li>medaka/deepvariant/pepper_margin_deepvariant variant calling (off by default: call_variants=false)</li>
-<li>sniffles/cutesv structural variant calling (off by default: call_variants=false)</li>
-<li>bambu/stringtie2/featurecounts/deseq2/dexseq quantification (protocol-gated to cDNA/directRNA; committee exclusion transcriptome)</li>
-<li>bedtools bamtobed + ucsc bed12tobigbed (protocol-gated to cDNA/directRNA; committee exclusion transcriptome)</li>
-<li>nanopolish/xpore/m6anet RNA modification analysis (protocol-gated to directRNA; committee exclusion plotly)</li>
-<li>jaffal RNA fusion analysis (protocol-gated to cDNA/directRNA)</li>
-<li>bam_rename (skip_alignment branch only)</li>
-<li>get_test_data / get_nanolyse_fasta test-profile downloads</li>
-<li>samtools_sort_index combined (call_variants branch only)</li>
 <li>note: committee scope mentions Dorado demultiplex + pycoQC QC; nanoseq 3.1.0 actually uses qcat + NanoPlot/FastQC — port follows the real source</li>
 </ul>
 <h2 id="fidelity">Fidelity</h2>
-<p>Port scope: the <strong>default-parameters main execution path</strong> with
-<code>protocol = DNA</code>, demultiplexing on (<code>barcode_kit = Auto</code>, qcat), minimap2
-aligner, and default skip flags (all QC/bigwig/bigbed/reporting on). Rules
-are listed in execution order; commands mirror the upstream modules
-byte-for-byte under default params (upstream Groovy <code>params.*</code> conditionals
-are reproduced as bash conditionals over the same config keys).</p>
+<p>Port scope: the <strong>default-parameters main execution path</strong> (<code>protocol = DNA</code>, demultiplexing on, minimap2 aligner, all QC/bigwig/reporting on) plus <strong>every gated branch</strong> of the upstream workflow, ported as <code>when</code>-gated rules and all off by default (matching upstream). Commands mirror the upstream modules byte-for-byte under each branch's parameters; upstream Groovy <code>params.*</code> conditionals are reproduced as bash conditionals over the same config keys.</p>
+<h3 id="default-path-dna-minimap2-demultiplexing-on">Default path (DNA, minimap2, demultiplexing on)</h3>
 <table>
 <thead>
 <tr>
@@ -954,7 +1074,7 @@ are reproduced as bash conditionals over the same config keys).</p>
 <td>SAMTOOLS_SORT</td>
 <td><code>samtools_sort</code></td>
 <td>samtools 1.16.1</td>
-<td>identical (<code>sort -@ N -o &lt;s&gt;.sorted.bam -T &lt;s&gt;.sorted</code>; upstream <code>ext.prefix = &lt;meta.id&gt;.sorted</code>)</td>
+<td>identical minus <code>-m 512M</code> capped per-thread sort buffer (added to prevent OOM on large BAMs)</td>
 </tr>
 <tr>
 <td>SAMTOOLS_INDEX</td>
@@ -1014,7 +1134,182 @@ keys all per-sample rules by the barcode itself — outputs are named
 <code>barcode01.sam</code>, <code>barcode01.bam</code>, <code>barcode01.bigWig</code>, ... while keeping every
 command and intermediate filename upstream-identical. The samplesheet
 fixture maps barcodes <code>01</code>/<code>02</code> exactly like the upstream test data.</p>
-<p>Not ported (all off by default upstream, so absent from the default path):</p>
+<h3 id="gated-branches-all-off-by-default-matching-upstream-defaults">Gated branches (all off by default, matching upstream defaults)</h3>
+<table>
+<thead>
+<tr>
+<th>Upstream process/rule</th>
+<th>oxo-flow rule</th>
+<th>Tool (version)</th>
+<th>Gate / notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NANOLYSE</td>
+<td><code>nanolyse</code></td>
+<td>NanoLyse 1.2.0</td>
+<td><code>run_nanolyse</code>; reference = checked-in <code>test/fixtures/refs/lambda.fasta.gz</code> (upstream downloads it via GET_NANOLYSE_FASTA)</td>
+</tr>
+<tr>
+<td>GRAPHMAP2_INDEX</td>
+<td><code>graphmap2_index</code></td>
+<td>graphmap 0.6.3</td>
+<td><code>aligner == "graphmap2"</code>; <code>-x rnaseq</code>/<code>--gtf</code> conditionals preserved (non-DNA protocols)</td>
+</tr>
+<tr>
+<td>GRAPHMAP2_ALIGN</td>
+<td><code>graphmap2_align</code></td>
+<td>graphmap 0.6.3</td>
+<td>same gate; <code>--extcigar</code></td>
+</tr>
+<tr>
+<td>SAMTOOLS_SORT_INDEX</td>
+<td><code>samtools_sort_index</code></td>
+<td>samtools 1.16.1</td>
+<td><code>call_variants</code> — combined sort+index instead of the separate rules in the VC branch</td>
+</tr>
+<tr>
+<td>MEDAKA_VARIANT</td>
+<td><code>medaka_variant</code></td>
+<td>medaka 1.4.4</td>
+<td><code>call_variants &amp;&amp; protocol == DNA &amp;&amp; !skip_vc &amp;&amp; variant_caller == "medaka"</code>; <code>-d -f -i -o -t</code> + <code>split_mnps</code>/<code>phase_vcf</code> flags</td>
+</tr>
+<tr>
+<td>TABIX_BGZIP / TABIX_TABIX (as MEDAKA_BGZIP_VCF / MEDAKA_TABIX_VCF)</td>
+<td><code>medaka_bgzip_vcf</code> / <code>medaka_tabix_vcf</code></td>
+<td>tabix 1.11</td>
+<td>same gate</td>
+</tr>
+<tr>
+<td>DEEPVARIANT</td>
+<td><code>deepvariant</code></td>
+<td>google/deepvariant 1.4.0</td>
+<td><code>variant_caller == "deepvariant"</code>; docker-only upstream; <code>--model_type WGS --num_shards=N</code></td>
+</tr>
+<tr>
+<td>DEEPVARIANT_TABIX_VCF / DEEPVARIANT_TABIX_GVCF</td>
+<td><code>deepvariant_tabix_vcf</code> / <code>deepvariant_tabix_gvcf</code></td>
+<td>tabix 1.11</td>
+<td>same gate</td>
+</tr>
+<tr>
+<td>PEPPER_MARGIN_DEEPVARIANT</td>
+<td><code>pepper_margin_deepvariant</code></td>
+<td>kishwars/pepper_deepvariant r0.8</td>
+<td><code>variant_caller == "pepper_margin_deepvariant"</code>; <code>-g</code> honored via <code>deepvariant_gpu</code> (CPU image pinned, see Deviations)</td>
+</tr>
+<tr>
+<td>SNIFFLES</td>
+<td><code>sniffles</code></td>
+<td>sniffles 1.0.12</td>
+<td><code>call_variants &amp;&amp; protocol == DNA &amp;&amp; !skip_sv &amp;&amp; structural_variant_caller == "sniffles"</code>; <code>-m -v -t</code></td>
+</tr>
+<tr>
+<td>BCFTOOLS_SORT / TABIX_TABIX (as SNIFFLES_SORT_VCF / SNIFFLES_TABIX_VCF)</td>
+<td><code>sniffles_sort_vcf</code> / <code>sniffles_tabix_vcf</code></td>
+<td>bcftools 1.16 / tabix 1.11</td>
+<td>same gate</td>
+</tr>
+<tr>
+<td>CUTESV</td>
+<td><code>cutesv</code></td>
+<td>cutesv 1.0.12</td>
+<td><code>structural_variant_caller == "cutesv"</code>; <code>cuteSV bam fasta vcf . --threads --sample --genotype</code></td>
+</tr>
+<tr>
+<td>BCFTOOLS_SORT / TABIX_TABIX (as CUTESV_SORT_VCF / CUTESV_TABIX_VCF)</td>
+<td><code>cutesv_sort_vcf</code> / <code>cutesv_tabix_vcf</code></td>
+<td>bcftools 1.16 / tabix 1.11</td>
+<td>same gate</td>
+</tr>
+<tr>
+<td>BEDTOOLS_BAMBED</td>
+<td><code>bedtools_bamtobed</code></td>
+<td>bedtools 2.29.2</td>
+<td><code>!skip_bigbed &amp;&amp; protocol cDNA/directRNA</code> (upstream module <code>when</code> — never on the DNA path)</td>
+</tr>
+<tr>
+<td>UCSC_BED12TOBIGBED</td>
+<td><code>ucsc_bed12tobigbed</code></td>
+<td>ucsc-bedtobigbed 377</td>
+<td>same gate</td>
+</tr>
+<tr>
+<td>BAMBU</td>
+<td><code>bambu</code></td>
+<td>bioconductor-bambu 3.0.8</td>
+<td><code>protocol != DNA &amp;&amp; !skip_quantification &amp;&amp; quantification_method == "bambu"</code>; gathers all sample BAMs via expand_inputs; upstream <code>bin/run_bambu.r</code> verbatim</td>
+</tr>
+<tr>
+<td>STRINGTIE2</td>
+<td><code>stringtie2</code></td>
+<td>stringtie 2.1.4</td>
+<td><code>quantification_method == "stringtie2"</code>; <code>-L -G &lt;gtf&gt; -o &lt;s&gt;.stringtie.gtf</code></td>
+</tr>
+<tr>
+<td>STRINGTIE_MERGE</td>
+<td><code>stringtie_merge</code></td>
+<td>stringtie 2.2.1</td>
+<td>same gate; gathers per-sample assemblies, <code>-G</code> reference GTF conditional preserved</td>
+</tr>
+<tr>
+<td>SUBREAD_FEATURECOUNTS</td>
+<td><code>subread_featurecounts</code></td>
+<td>subread 2.0.1</td>
+<td>same gate; gene counts + transcript counts, <code>-L -O --primary --fraction</code></td>
+</tr>
+<tr>
+<td>DESEQ2</td>
+<td><code>deseq2</code> (bambu counts) / <code>deseq2_featurecounts</code> (featureCounts counts)</td>
+<td>mulled-v2-8849acf3… (bioconductor-deseq2)</td>
+<td><code>!skip_differential_analysis</code>; mutually exclusive on <code>quantification_method</code>; upstream <code>bin/run_deseq2.r</code> verbatim; results under <code>results/bambu/deseq2/</code> (upstream publishDir quirk kept)</td>
+</tr>
+<tr>
+<td>DEXSEQ</td>
+<td><code>dexseq</code> (bambu counts) / <code>dexseq_featurecounts</code> (featureCounts counts)</td>
+<td>docker.io/yuukiiwa/nanoseq:dexseq</td>
+<td>same gates; upstream <code>bin/run_dexseq.r</code> verbatim</td>
+</tr>
+<tr>
+<td>NANOPOLISH_INDEX_EVENTALIGN</td>
+<td><code>nanopolish_index_eventalign</code></td>
+<td>nanopolish 0.13.2</td>
+<td><code>protocol == directRNA &amp;&amp; !skip_modification_analysis &amp;&amp; nanopolish_fast5 != ""</code>; <code>nanopolish index -d &lt;fast5&gt;</code> + <code>eventalign --scale-events --signal-index</code></td>
+</tr>
+<tr>
+<td>XPORE_DATAPREP</td>
+<td><code>xpore_dataprep</code></td>
+<td>xpore 2.1</td>
+<td><code>!skip_xpore</code> (same branch gate); <code>--genome --gtf_or_gff --transcript_fasta</code></td>
+</tr>
+<tr>
+<td>XPORE_DIFFMOD</td>
+<td><code>xpore_diffmod</code></td>
+<td>xpore 2.1</td>
+<td>same gate; upstream <code>bin/create_yml.py</code> verbatim</td>
+</tr>
+<tr>
+<td>M6ANET_DATAPREP</td>
+<td><code>m6anet_dataprep</code></td>
+<td>docker.io/yuukiiwa/m6anet:1.0</td>
+<td><code>!skip_m6anet</code> (same branch gate)</td>
+</tr>
+<tr>
+<td>M6ANET_INFERENCE</td>
+<td><code>m6anet_inference</code></td>
+<td>docker.io/yuukiiwa/m6anet:1.0</td>
+<td>same gate; <code>--batch_size 512 --num_iterations 5 --device cpu</code></td>
+</tr>
+<tr>
+<td>BAM_RENAME</td>
+<td><code>bam_rename</code></td>
+<td>sed 4.7.0 (shell-only container)</td>
+<td><code>skip_alignment &amp;&amp; sample_bams != ""</code>; comma-separated <code>sample_bams</code> split via expand_inputs and linked to the barcode names, <code>[ ! -f ] &amp;&amp; ln -s</code> like upstream</td>
+</tr>
+</tbody>
+</table>
+<p>Not ported (remainder):</p>
 <table>
 <thead>
 <tr>
@@ -1024,48 +1319,12 @@ fixture maps barcodes <code>01</code>/<code>02</code> exactly like the upstream 
 </thead>
 <tbody>
 <tr>
-<td>GRAPHMAP2_INDEX / GRAPHMAP2_ALIGN (aligner <code>graphmap2</code>)</td>
-<td>off by default (<code>aligner = minimap2</code>); committee exclusion <code>longread_map</code></td>
+<td>JAFFAL / GET_JAFFAL_REF / UNTAR (RNA fusion, <code>protocol</code> cDNA/directRNA)</td>
+<td>not portable: the JAFFA reference bundle (<code>https://ndownloader.figshare.com/files/28168755</code>) redirects to a signed S3 URL that returns <strong>HTTP 403</strong> (verified 2026-08), is multi-GB, and embeds the <code>JAFFA_stages.groovy</code> script the module executes via <code>bpipe run</code> — the process cannot run without the bundle</td>
 </tr>
 <tr>
-<td>NANOLYSE (+ GET_NANOLYSE_FASTA)</td>
-<td>off by default (<code>run_nanolyse = false</code>)</td>
-</tr>
-<tr>
-<td>MEDAKA_VARIANT / DEEPVARIANT / PEPPER_MARGIN_DEEPVARIANT (+ bgzip/tabix)</td>
-<td>off by default (<code>call_variants = false</code>)</td>
-</tr>
-<tr>
-<td>SNIFFLES / CUTESV (+ sort/tabix)</td>
-<td>off by default (<code>call_variants = false</code>)</td>
-</tr>
-<tr>
-<td>BEDTOOLS_BAMBED / UCSC_BED12TOBIGBED</td>
-<td>protocol-gated upstream to <code>cDNA</code>/<code>directRNA</code> (<code>when: protocol == directRNA \|\| cDNA</code>) — never runs on the DNA default path; committee exclusion <code>transcriptome</code></td>
-</tr>
-<tr>
-<td>BAMBU / STRINGTIE2 / SUBREAD_FEATURECOUNTS / DESEQ2 / DEXSEQ</td>
-<td>gated on <code>protocol == cDNA/directRNA</code> + <code>skip_quantification = false</code> — not on the DNA default path; committee exclusion <code>transcriptome</code></td>
-</tr>
-<tr>
-<td>NANOPOLISH_INDEX_EVENTALIGN / XPORE_DATAPREP / XPORE_DIFFMOD / M6ANET_DATAPREP / M6ANET_INFERENCE (RNA modification)</td>
-<td>gated on <code>protocol == directRNA</code> — not on the DNA default path; committee exclusion <code>plotly</code> (m6anet plots)</td>
-</tr>
-<tr>
-<td>JAFFAL / GET_JAFFAL_REF / UNTAR (RNA fusion)</td>
-<td>gated on <code>protocol == cDNA/directRNA</code> — not on the DNA default path</td>
-</tr>
-<tr>
-<td>BAM_RENAME</td>
-<td>only when <code>skip_alignment = true</code></td>
-</tr>
-<tr>
-<td>GET_TEST_DATA / GET_NANOLYSE_FASTA (test-profile downloads)</td>
-<td><code>-profile test</code> only, replaced by checked-in fixtures</td>
-</tr>
-<tr>
-<td>SAMTOOLS_SORT_INDEX (combined sort+index)</td>
-<td><code>call_variants</code> branch only</td>
+<td>GET_TEST_DATA / GET_NANOLYSE_FASTA (upstream download processes)</td>
+<td>GET_TEST_DATA is nf-core <code>-profile test</code> infrastructure (clones <code>nf-core/test-datasets</code>); GET_NANOLYSE_FASTA fetches the lambda genome whenever <code>run_nanolyse=true</code> without <code>--nanolyse_fasta</code> (any profile). Both are replaced by checked-in fixtures — the nanolyse reference ships as <code>test/fixtures/refs/lambda.fasta.gz</code></td>
 </tr>
 <tr>
 <td><code>-profile test*</code> configs, cluster/container profiles, Tower reporting, completion email</td>
@@ -1073,6 +1332,8 @@ fixture maps barcodes <code>01</code>/<code>02</code> exactly like the upstream 
 </tr>
 </tbody>
 </table>
+<p>Deviations (see README): (1) NanoLyse cannot reassign the reads channel — filtered reads land in <code>results/nanolyse/</code>, the downstream chain keeps the demultiplexed reads; (2) graphmap2 outputs publish under <code>results/minimap2/</code> so the shared downstream chain needs no duplicate rules; (3) <code>bam_suffix</code> lets the quantification/modification rules target either naming scheme (alignment vs <code>skip_alignment</code>); (4) DESEQ2/DEXSEQ come as two rules per tool with the same output path, mutually exclusive on <code>quantification_method</code>; (5) <code>nanopolish_fast5</code> takes one directory, guarded by a <code>!= ""</code> gate; (6) pepper pins the CPU image (swap + <code>deepvariant_gpu = true</code> for GPU); (7) <code>-m 512M</code> caps the samtools sort buffer; (8) <code>assets/versions.yml</code> pins the default-path tool versions statically; (9) MultiQC cannot aggregate featureCounts <code>.summary</code> files (excluded from the report); (10) the samplesheet <code>is_transcripts</code> column is not ported (barcode-identity model; non-DNA default applies).</p>
+<p>Live verification (tx-ubuntu, oxo-flow 0.15.0): default path, call_variants (medaka), structural_variant_caller (sniffles/cutesv) and the nanolyse branch PASS; cDNA/directRNA quantification tool-execution verified (mini-fixture reads lie off the annotated region — documented).</p>
 <h2 id="links">Links</h2>
 <ul>
 <li>Repository: <a href="https://github.com/oxo-flow-community/oxo-flow-nanoseq">oxo-flow-nanoseq</a></li>
@@ -1115,7 +1376,7 @@ fixture maps barcodes <code>01</code>/<code>02</code> exactly like the upstream 
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      © 2026 oxo-flow-community · Apache-2.0 · Ports are based on their upstream workflows — see each repository's NOTICE.
+      © 2026 <a href="https://github.com/oxo-flow-community">oxo-flow-community</a> · Apache-2.0 · engine <a href="https://github.com/Traitome/oxo-flow">oxo-flow</a> · <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues">issues</a> · evidence: ✔ live-tested ⊃ ★ verified ⊃ ☆ community · ports are based on their upstream workflows — see each repository's NOTICE
     </div>
   
   

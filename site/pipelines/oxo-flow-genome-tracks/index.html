@@ -23,7 +23,7 @@
     
     
       
-        <title>Genome browser tracks: coverage, gene plots and UCSC hub - oxo-flow-community</title>
+        <title>Oxo flow genome tracks - oxo-flow-community</title>
       
     
     
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Genome browser tracks: coverage, gene plots and UCSC hub
+              Oxo flow genome tracks
             
           </span>
         </div>
@@ -584,60 +584,30 @@
   
 
 
+<div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-genome-tracks</span></div>
+<div class="ox-detail-cols">
+<div>
 <h1 id="genome-browser-tracks-coverage-gene-plots-and-ucsc-hub">Genome browser tracks: coverage, gene plots and UCSC hub</h1>
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
-
-<p>Merge BAM files per experimental group with samtools, compute normalized bigWig coverage with deepTools bamCoverage (RPGC by default), plot isoform-aware per-gene and per-region genome tracks with gtracks/pyGenomeTracks, and publish a UCSC genome browser track hub — end-to-end track generation for RNA-seq, ATAC-seq and other aligned BAM data.</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: right;"></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: right;"><strong>Rating</strong></td>
-<td>✔ Live-tested</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Origin</strong></td>
-<td>port</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Domain</strong></td>
-<td>genomics</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Rules</strong></td>
-<td>8</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Compute</strong></td>
-<td>up to 4 CPUs / 4 GB per rule</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Tools</strong></td>
-<td>samtools · deeptools · pygenometracks · gtracks</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Ported</strong></td>
-<td>2026-08-15</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>License</strong></td>
-<td>Apache-2.0</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Source</strong></td>
-<td><a href="https://github.com/epigen/genome_tracks">epigen/genome_tracks</a></td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Pinned version</strong></td>
-<td><code>v2.0.5</code></td>
-</tr>
-</tbody>
-</table>
+<p>Merge BAM files per experimental group with samtools, compute normalized bigWig coverage with deepTools bamCoverage (RPGC by default), plot isoform-aware per-gene and per-region genome tracks with gtracks/pyGenomeTracks, and publish a UCSC genome browser track hub — end-to-end track generation for RNA-seq, ATAC-seq and other aligned BAM data, plus the single-cell branch (sinto per-cell-barcode splitting of sc BAMs into per-group BAMs), an opt-in IGV report of all merged BAMs over the annotated gene regions, and opt-in conda environment export rules (env_export_*, conda env export).</p>
+</div>
+<div>
+<div class="ox-glance">
+<div class="ox-glance-title">At a glance</div>
+<div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested · default-path</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">16</span></div>
+<div class="ox-kv"><span class="k">Compute</span><span class="v">up to 4 CPUs / 4 GB per rule (opt-in igv_report: 8 GB)</span></div>
+<div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Domain</span><span class="v">genomics</span></div>
+<div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/epigen/genome_tracks">epigen/genome_tracks</a></span></div>
+<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>v2.0.5</code></span></div>
+<div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
+<div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
+<p class="cmd">$ oxo-flow run main.oxoflow --samples first:1</p>
+</div>
+</div>
+</div>
 <h2 id="run-it">Run it</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>oxo-flow<span class="w"> </span>run<span class="w"> </span>main.oxoflow<span class="w"> </span>--samples<span class="w"> </span>first:1
 </code></pre></div>
@@ -650,9 +620,10 @@
 - sample annotation CSV with a group column (sample_annotation; group values drive merge/coverage/hub fan-out)
 - gene list CSV with gene_region,ymax columns (gene_list; gene symbols or chr:start-end regions)
 - 12-column genome BED for gene annotation (genome_bed, e.g. ref.bed.gz); no genome FASTA or annotation GTF required
-- compute: up to 4 CPUs / 4 GB per rule (samtools merge and bamCoverage at threads=4/4000M); helper rules need 1 CPU / 1 GB
-- conda/mamba to build the pinned environment (samtools 1.19.2, deepTools 3.5.5, pyGenomeTracks 3.8, python 3.10.13, gtracks 1.12.6); helper rules need only a system python3
-- disk: results/ for merged BAMs, bigWigs, track plots and the UCSC hub</p>
+- single-cell samples (optional): one CB-tagged BAM per sc sample at <sc_bam_dir>/<sc_id>.bam + a 2-column barcode TSV (barcode<TAB>group, no header) at <sc_metadata>/<sc_id>.tsv; group values of TSV col 2 must be declared in config.sc_groups and [[values]] sc_group
+- compute: up to 4 CPUs / 4 GB per rule (samtools merge, bamCoverage and sinto filterbarcodes at threads=4/4000M); helper rules need 1 CPU / 1 GB; igv_report is fixed at the upstream 8000 MB minimum
+- conda/mamba to build the pinned environments (samtools 1.19.2, deepTools 3.5.5, pyGenomeTracks 3.8, python 3.10.13, gtracks 1.12.6, sinto 0.10.0; igv-reports 1.14.1 / python 3.8 / pysam 0.22.0 for the opt-in IGV report); helper rules need only a system python3
+- disk: results/ for merged BAMs, bigWigs, track plots, the UCSC hub and the IGV report</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># 1. install oxo-flow (release binary, recommended)</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>curl<span class="w"> </span>-fL<span class="w"> </span>-o<span class="w"> </span>oxo-flow.tar.gz<span class="w"> </span>https://github.com/Traitome/oxo-flow/releases/latest/download/oxo-flow-latest-x86_64-unknown-linux-gnu.tar.gz
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>tar<span class="w"> </span>xzf<span class="w"> </span>oxo-flow.tar.gz<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>mv<span class="w"> </span>oxo-flow<span class="w"> </span>/usr/local/bin/
@@ -779,16 +750,21 @@
 <li>annotate_genes</li>
 <li>plot_tracks</li>
 <li>ucsc_hub</li>
+<li>split_sc_bam</li>
+<li>merge_sc_bams</li>
+<li>coverage_sc</li>
+<li>make_bed</li>
+<li>igv_report</li>
 <li>annot_export</li>
 <li>gene_list_export</li>
 <li>config_export</li>
+<li>env_export_pygenometracks</li>
+<li>env_export_sinto</li>
+<li>env_export_igv_reports</li>
 </ul>
 <p><strong>Excluded</strong></p>
 <ul>
-<li>split_sc_bam — single-cell sinto branch, not on the default path</li>
-<li>igv_report — temporarily deactivated upstream (commented out of rule all)</li>
-<li>make_bed — only feeds the deactivated igv_report rule</li>
-<li>env_export — conda-runtime documentation rule for envs of non-ported branches; envs/ yamls serve the same role</li>
+<li>none</li>
 </ul>
 <h2 id="fidelity">Fidelity</h2>
 <table>
@@ -833,9 +809,9 @@
 </tr>
 <tr>
 <td><code>env_export</code></td>
-<td>not ported</td>
-<td>—</td>
-<td>upstream requests <code>conda env export</code> for the pygenometracks/igv_reports/sinto envs; needs a conda runtime and documents envs of branches not ported — the checked-in <code>envs/pygenometracks.yaml</code> serves the same reproducibility role</td>
+<td><code>env_export_pygenometracks</code> / <code>env_export_sinto</code> / <code>env_export_igv_reports</code></td>
+<td>conda</td>
+<td>upstream fans <code>{env}</code> over the three envs; oxo-flow cannot wildcard <code>[rules.environment]</code>, so one rule per env — identical <code>conda env export</code> shell, each rule exports its own activated env (the engine's <code>conda run -n &lt;env&gt;</code> wrapper + <code>conda env export</code> = the upstream semantics, verified live with conda 26.1.1). Upstream runs it in <code>rule all</code>; the port gates it on <code>env_export_enabled</code> (default off) so the default graph is unchanged — the checked-in <code>envs/*.yaml</code> serve the same reproducibility role. DRAFT (mechanics live-verified; the three real env builds not yet run)</td>
 </tr>
 <tr>
 <td><code>config_export</code></td>
@@ -856,22 +832,34 @@
 <td>identical (<code>cp</code> of the gene list CSV)</td>
 </tr>
 <tr>
-<td><code>make_bed</code></td>
-<td>not ported</td>
-<td>—</td>
-<td>only feeds the deactivated <code>igv_report</code> rule (not in the default target)</td>
+<td><code>split_sc_bam</code></td>
+<td><code>split_sc_bam</code></td>
+<td>sinto 0.10.0</td>
+<td>live-verified 2026-08-23 (tx-ubuntu, exit 0 — see the site audit): same <code>sinto filterbarcodes -b -c --outdir -p</code> command + upstream's touch-empty-bam fallback for groups absent in a sample (replaced by a header-only-BAM fallback for modern samtools); fan-out via <code>[[values]]</code> <code>sc_sample</code> × <code>sc_group</code> (upstream derives them from the metadata TSVs at load time; oxo-flow declares them — keep <code>[[values]] sc_sample</code>/<code>sc_group</code> in sync with <code>sc_bam_dir</code>/<code>sc_metadata</code>/<code>sc_groups</code>); upstream's <code>{sample}</code> = BAM-path md5 is replaced by readable sc ids</td>
 </tr>
 <tr>
-<td><code>split_sc_bam</code></td>
-<td>not ported</td>
-<td>—</td>
-<td>single-cell branch (sinto 0.10.0); not on the default path (no <code>.tsv</code> <code>group</code> entries in the default annotation)</td>
+<td><code>merge_bams</code> (sc variant)</td>
+<td><code>merge_sc_bams</code></td>
+<td>samtools 1.19.2</td>
+<td>live-verified 2026-08-23: upstream switches <code>merge_bams</code> inputs per wildcard (sc groups read <code>sc_bams/</code>, bulk groups the annotation BAM column); oxo-flow cannot switch inputs per wildcard, so the sc variant is a separate rule writing the same <code>merged_bams/</code> namespace, gated on <code>sc_enabled</code></td>
+</tr>
+<tr>
+<td><code>coverage</code> (sc variant)</td>
+<td><code>coverage_sc</code></td>
+<td>deepTools 3.5.5</td>
+<td>live-verified 2026-08-23: same <code>bamCoverage</code> command as bulk <code>coverage</code>; sc groups' bigWigs join <code>plot_tracks</code>/<code>ucsc_hub</code> via <code>config.samples_list</code></td>
+</tr>
+<tr>
+<td><code>make_bed</code></td>
+<td><code>make_bed</code></td>
+<td>awk</td>
+<td>DRAFT: upstream projects <code>gene_annot_df</code> to <code>chr,start,end,name</code> in Python; the port uses an awk projection of <code>genes_annotated.tsv</code> (name,chr,start,end → BED4); gated on <code>igv_report_enabled</code> like the rule it feeds</td>
 </tr>
 <tr>
 <td><code>igv_report</code></td>
-<td>not ported</td>
-<td>—</td>
-<td><strong>temporarily deactivated upstream</strong> (commented out of <code>rule all</code> at v2.0.5)</td>
+<td><code>igv_report</code></td>
+<td>igv-reports 1.14.1</td>
+<td>DRAFT: <strong>temporarily deactivated upstream</strong> (commented out of <code>rule all</code> at v2.0.5), ported as opt-in (<code>igv_report_enabled = true</code> + <code>-t igv_report</code>); same <code>create_report --genome --tracks --output</code> + the upstream <code>Variants</code>→<code>Genes and genomic regions</code> sed; track list = <code>config.samples_list</code> BAMs; memory fixed at the upstream 8000 MB minimum (oxo-flow resources are static)</td>
 </tr>
 <tr>
 <td>Snakemake <code>report()</code> wrappers</td>
@@ -886,10 +874,18 @@ keys with upstream defaults, except <code>result_path</code> (placeholder path �
 <code>results</code>), <code>mem</code>/<code>threads</code> (→ per-rule <code>[rules.resources]</code>; upstream's
 <code>4 × threads</code> for merge/coverage baked in as <code>threads = 4</code>), and
 <code>track_colors</code> (YAML dict → comma-joined <code>group=#hex</code> string with the same
-<code>#000000</code> default). Group fan-out uses <code>[[sample_groups]]</code> (one <code>{sample}</code>
-per annotation group), gene fan-out uses <code>[[pairs]]</code>. Sample annotation,
-gene list, genome BED and BAM files must be kept in sync with <code>[[sample_groups]]</code>/
-<code>[[pairs]]</code> and <code>config.bam_dir</code>; the annotation CSV itself remains the
+<code>#000000</code> default). New keys for the ported sc/IGV branches: <code>sc_enabled</code>,
+<code>sc_bam_dir</code>, <code>sc_metadata</code> (directory keys — oxo-flow rule inputs cannot
+index comma-joined config lists), <code>sc_groups</code> (merged + sorted into
+<code>samples_list</code>), <code>igv_report_enabled</code>, <code>igv_report_memory</code> (documented mirror;
+the rule's <code>memory</code> is the fixed upstream minimum), <code>env_export_enabled</code>
+(opt-in, default off — upstream runs <code>env_export</code> in <code>rule all</code>; the checked-in
+<code>envs/*.yaml</code> serve the same reproducibility role, so the port keeps the
+default graph unchanged). Group fan-out uses
+<code>[[sample_groups]]</code> (one <code>{sample}</code> per annotation group) + <code>[[values]]</code>
+<code>sc_sample</code> × <code>sc_group</code>, gene fan-out uses <code>[[pairs]]</code>. Sample annotation,
+gene list, genome BED, metadata TSVs and BAM files must be kept in sync with
+those tables and <code>config.bam_dir</code>; the annotation CSV itself remains the
 documentation record (<code>annot_export</code>).</p>
 <h2 id="links">Links</h2>
 <ul>
@@ -933,7 +929,7 @@ documentation record (<code>annot_export</code>).</p>
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      © 2026 oxo-flow-community · Apache-2.0 · Ports are based on their upstream workflows — see each repository's NOTICE.
+      © 2026 <a href="https://github.com/oxo-flow-community">oxo-flow-community</a> · Apache-2.0 · engine <a href="https://github.com/Traitome/oxo-flow">oxo-flow</a> · <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues">issues</a> · evidence: ✔ live-tested ⊃ ★ verified ⊃ ☆ community · ports are based on their upstream workflows — see each repository's NOTICE
     </div>
   
   

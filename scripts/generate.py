@@ -14,6 +14,7 @@ The generated files are committed, so CI only runs `mkdocs build`.
 """
 from __future__ import annotations
 
+import html
 import json
 import pathlib
 import sys
@@ -49,6 +50,11 @@ def load_configs() -> dict:
     if not CONFIGS.is_file():
         return {}
     return json.loads(CONFIGS.read_text())
+
+
+def _esc(value) -> str:
+    """HTML-escape a registry value for raw-HTML panel output."""
+    return html.escape(str(value), quote=True)
 
 
 REQUIRED_FIELDS = ("name", "title", "description", "repo_url", "domain", "tags", "tools")
@@ -167,31 +173,61 @@ def badges(p: dict) -> str:
     return f'<div class="ox-page-badges">{star} <span class="ox-badge ox-badge--origin">{origin}</span> {eng}</div>'
 
 
-def meta_table(p: dict) -> str:
+def glance_panel(p: dict) -> str:
+    """P2 detail header — the right-hand 'At a glance' panel (was meta_table).
+
+    Same rows, same data as the old table; rating keeps the coverage
+    suffix here (cards drop it — see spec §Rating 后缀对账). Links and
+    code are emitted as raw HTML because the panel is not markdown-parsed.
+    """
     rating = p.get("rating", "community")
     rating_text = {
         "live-verified": "✔ Live-tested",
         "verified": "★ Verified",
         "community": "☆ Community",
     }.get(rating, "☆ Community")
+    coverage = p.get("coverage", "")
+    if coverage in ("full-line", "default-path"):
+        rating_text += f" · {coverage}"
+    origin = {
+        "port": "⇄ Official port",
+        "original": "✦ Original",
+        "curated": "♺ Community listing",
+    }.get(p.get("origin"), "♺ Community listing")
+    eng = {
+        "nextflow": '<span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span>',
+        "snakemake": '<span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span>',
+    }.get(p.get("engine"), "")
     rows = [
-        ("Rating", rating_text),
-        ("Origin", p.get("origin", "curated")),
-        ("Domain", p.get("domain", "")),
-        ("Rules", str(p.get("rule_count", "—"))),
-        ("Compute", p.get("compute", "—")),
-        ("Tools", " · ".join(p.get("tools", []))),
-        ("Ported", p.get("created", "2026-08-15")),
-        ("License", p.get("license", "Apache-2.0")),
+        ("Rating", rating_text, "live"),
+        ("Rules", str(p.get("rule_count", "—")), ""),
+        ("Compute", p.get("compute", "—"), ""),
+        ("Engine", eng or "—", ""),
+        ("Origin", origin, ""),
+        ("Domain", p.get("domain", ""), ""),
     ]
     src = p.get("source")
     if src:
         rows += [
-            ("Source", f"[{src['repo']}]({src['url']})"),
-            ("Pinned version", f"`{src.get('tag') or src.get('sha', '')}`"),
+            ("Source", f'<a href="{_esc(src["url"])}">{_esc(src["repo"])}</a>', ""),
+            ("Pinned version", f'<code>{_esc(src.get("tag") or src.get("sha", ""))}</code>', ""),
         ]
-    head = "| | |\n|---:|---|\n"
-    return head + "\n".join(f"| **{k}** | {v} |" for k, v in rows)
+    rows += [
+        ("Ported", p.get("created", "2026-08-15"), ""),
+        ("License", p.get("license", "Apache-2.0"), ""),
+    ]
+    kv = "\n".join(
+        f'<div class="ox-kv"><span class="k">{k}</span>'
+        f'<span class="v{(" " + cls) if cls else ""}">{v}</span></div>'
+        for k, v, cls in rows
+    )
+    return (
+        '<div class="ox-glance">\n'
+        '<div class="ox-glance-title">At a glance</div>\n'
+        f"{kv}\n"
+        f'<p class="cmd">$ {_esc(p["quickstart"])}</p>\n'
+        "</div>"
+    )
 
 
 def gh_pull_url(repo_url: str) -> str:
@@ -322,13 +358,27 @@ def make_page(p: dict, configs: dict) -> str:
     excluded = "\n".join(f"- {s}" for s in p.get("excluded", [])) or "- none"
     fidelity = p.get("fidelity_md")
     parts = [
+        f'<div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>{_esc(p["name"])}</span></div>',
+        # md_in_html only processes markdown="1" blocks at the markdown root
+        # level — a nested attributed div inside an unattributed raw-HTML
+        # block is ignored. The outer grid div must carry the attribute too,
+        # or the h1/badges/description stay raw text.
+        '<div class="ox-detail-cols" markdown="1">',
+        '<div markdown="1">',
+        "",
         f"# {p['title']}",
         "",
         badges(p),
         "",
         p.get("description", ""),
         "",
-        meta_table(p),
+        "</div>",
+        "<div>",
+        "",
+        glance_panel(p),
+        "",
+        "</div>",
+        "</div>",
         "",
         "## Run it" if "dry-run" not in p["quickstart"] else "## Preview the plan",
         "",

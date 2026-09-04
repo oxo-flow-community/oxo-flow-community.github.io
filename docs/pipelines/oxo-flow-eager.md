@@ -1,21 +1,33 @@
+<div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-eager</span></div>
+<div class="ox-detail-cols" markdown="1">
+<div markdown="1">
+
 # Ancient DNA (aDNA): QC, mapping, damage estimation and genotyping
 
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
 
 Ancient DNA (aDNA) analysis in one run: FastQC raw QC, optional fastp poly-G filtering (2-colour chemistry), AdapterRemoval adapter clipping and paired-end read merging, BWA aln mapping with ancient-DNA parameters, picard MarkDuplicates (or DeDup) deduplication, preseq library-complexity curves, DamageProfiler damage estimation, Qualimap BAM QC, optional pileupCaller genotyping with eigenstrat SNP coverage, optional metagenomic screening of the unmapped reads (bbduk entropy complexity filter, MALT or kraken2 classification with kraken_parse/kraken_merge tables, MaltExtract aDNA evaluation), and a final MultiQC report — every rule pinned to the nf-core/eager 2.5.3 tool versions in the upstream container (MALT 0.61 and HOPs 0.35 ship in the pinned nfcore/eager:2.5.3 image).
 
-| | |
-|---:|---|
-| **Rating** | ✔ Live-tested |
-| **Origin** | port |
-| **Domain** | genomics |
-| **Rules** | 57 |
-| **Compute** | up to 4 CPUs / 8 GB per rule (bwa_aln) |
-| **Tools** | fastqc · adapterremoval · adapterremovalfixprefix · bwa · samtools · picard · dedup · preseq · damageprofiler · qualimap · sequencetools · eigenstratdatabasetools · fastp · bbduk · kraken2 · malt · hops · pigz · multiqc · rename · python |
-| **Ported** | 2026-08-15 |
-| **License** | Apache-2.0 |
-| **Source** | [nf-core/eager](https://github.com/nf-core/eager) |
-| **Pinned version** | `2.5.3` |
+</div>
+<div>
+
+<div class="ox-glance">
+<div class="ox-glance-title">At a glance</div>
+<div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">57</span></div>
+<div class="ox-kv"><span class="k">Compute</span><span class="v">up to 4 CPUs / 8 GB per rule (bwa_aln)</span></div>
+<div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Domain</span><span class="v">genomics</span></div>
+<div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/nf-core/eager">nf-core/eager</a></span></div>
+<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>2.5.3</code></span></div>
+<div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
+<div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
+<p class="cmd">$ oxo-flow run main.oxoflow</p>
+</div>
+
+</div>
+</div>
 
 ## Run it
 

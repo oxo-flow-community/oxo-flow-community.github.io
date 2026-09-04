@@ -1,21 +1,33 @@
+<div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-bgcflow</span></div>
+<div class="ox-detail-cols" markdown="1">
+<div markdown="1">
+
 # Biosynthetic gene cluster (BGC) genome mining: annotation, antiSMASH and data warehouse
 
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
 
 End-to-end biosynthetic gene cluster (BGC) analysis of user-provided bacterial genomes: prokka annotation, antiSMASH 7 secondary-metabolite mining with automated database setup, per-genome BGC counts and overview tables, GTDB taxonomy lookup, MIBiG reference table download, BigSCAPE-compatible comparison preparation (symlinks, taxonomy, dataset registry, visualization mapping), and conversion of all result tables into a parquet data warehouse — ready for downstream comparison and exploration.
 
-| | |
-|---:|---|
-| **Rating** | ✔ Live-tested |
-| **Origin** | port |
-| **Domain** | genome-mining |
-| **Rules** | 60 |
-| **Compute** | up to 4 CPUs per rule (antiSMASH) |
-| **Tools** | prokka · antismash · python · pandas · pyarrow · biopython · requests · alive_progress |
-| **Ported** | 2026-08-15 |
-| **License** | Apache-2.0 |
-| **Source** | [NBChub/bgcflow](https://github.com/NBChub/bgcflow) |
-| **Pinned version** | `v1.1.2` |
+</div>
+<div>
+
+<div class="ox-glance">
+<div class="ox-glance-title">At a glance</div>
+<div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">60</span></div>
+<div class="ox-kv"><span class="k">Compute</span><span class="v">up to 4 CPUs per rule (antiSMASH)</span></div>
+<div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Domain</span><span class="v">genome-mining</span></div>
+<div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/NBChub/bgcflow">NBChub/bgcflow</a></span></div>
+<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>v1.1.2</code></span></div>
+<div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
+<div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
+<p class="cmd">$ oxo-flow run main.oxoflow</p>
+</div>
+
+</div>
+</div>
 
 ## Run it
 

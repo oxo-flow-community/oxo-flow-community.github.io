@@ -1,21 +1,33 @@
+<div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-rnaseq</span></div>
+<div class="ox-detail-cols" markdown="1">
+<div markdown="1">
+
 # RNA-seq: alignment, quantification and QC
 
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
 
 End-to-end bulk RNA-seq analysis for paired-end reads: fq lint and FastQC raw-read QC, TrimGalore adapter/quality trimming (including the UMI-extraction path), STAR, HISAT2 and Bowtie2-transcriptome (bowtie2_salmon) alignment with the BBSplit / SortMeRNA / Bowtie2 rRNA-filtered read variants, Picard MarkDuplicates or UMI-tools / UMICollapse dedup (genome and transcriptome chains), Salmon quantification in alignment mode (STAR and Bowtie2 orig_bams, raw and UMI-prepared) and pseudo-alignment mode (Salmon or Kallisto), RSEM alignment-mode quantification with per-sample results and merged count tables, tximport-merged gene/transcript count tables with SummarizedExperiment R objects, StringTie reference-guided assembly and quantification, featureCounts gene counts with biotype tables, RSeQC / dupRadar / Qualimap QC, DESeq2 sample-level QC (PCA, sample distances, size factors) per quantification branch, strand-specific bigWig tracks, and one final MultiQC report with the nf-core/rnaseq custom content (fail_trimmed / fail_mapped tables, strandedness checks, software versions). A faithful port of the nf-core/rnaseq 3.26.0 default star_salmon path plus the star_rsem, hisat2, bowtie2_salmon, with_umi, salmon-pseudo and kallisto-pseudo branches — same tools, same versions, same commands.
 
-| | |
-|---:|---|
-| **Rating** | ✔ Live-tested |
-| **Origin** | port |
-| **Domain** | transcriptomics |
-| **Rules** | 257 |
-| **Compute** | up to 12 CPUs / 72 GB per rule (STAR align) |
-| **Tools** | fastqc · trim-galore · fq · star · salmon · stringtie · python · samtools · htslib · gawk · picard · subread · rseqc · r-base · bioconductor-dupradar · qualimap · bedtools · ucsc-bedclip · ucsc-bedgraphtobigwig · bioconductor-tximeta · bioconductor-summarizedexperiment · r-optparse · r-ggplot2 · r-rcolorbrewer · r-pheatmap · bioconductor-deseq2 · bioconductor-biocparallel · bioconductor-tximport · bioconductor-complexheatmap · multiqc · perl |
-| **Ported** | 2026-08-15 |
-| **License** | Apache-2.0 |
-| **Source** | [nf-core/rnaseq](https://github.com/nf-core/rnaseq) |
-| **Pinned version** | `3.26.0` |
+</div>
+<div>
+
+<div class="ox-glance">
+<div class="ox-glance-title">At a glance</div>
+<div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">257</span></div>
+<div class="ox-kv"><span class="k">Compute</span><span class="v">up to 12 CPUs / 72 GB per rule (STAR align)</span></div>
+<div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Domain</span><span class="v">transcriptomics</span></div>
+<div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/nf-core/rnaseq">nf-core/rnaseq</a></span></div>
+<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>3.26.0</code></span></div>
+<div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
+<div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
+<p class="cmd">$ oxo-flow run main.oxoflow</p>
+</div>
+
+</div>
+</div>
 
 ## Run it
 

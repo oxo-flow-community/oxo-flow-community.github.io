@@ -1,0 +1,150 @@
+<h2>方向 A 确认 ✅ — 下一步：首页 hero 的布局</h2>
+<p class="subtitle">保持绿+白科研风不变。三个 hero 布局变体，内容元素完全相同（eyebrow / 标题 / 副文 / 终端窗口 / 数据条），只动骨架。看哪个最"贵"。</p>
+
+<style>
+  .hm { height: 360px; overflow: hidden; font-size: 12px; position: relative; box-sizing: border-box; }
+  .hm * { box-sizing: border-box; margin: 0; }
+  .hm .nav { display: flex; justify-content: space-between; align-items: center; padding-bottom: 9px; border-bottom: 1px solid #dfe8e3; font-family: -apple-system, sans-serif; }
+  .hm .nav b { color: #0e7a5f; font-size: 11px; }
+  .hm .nav span { color: #6b7d73; font-size: 9px; margin-left: 9px; }
+  .hm .eyebrow { font-family: ui-monospace, monospace; font-size: 7.5px; letter-spacing: 0.22em; color: #0e7a5f; text-transform: uppercase; margin-bottom: 6px; }
+  .hm h1 { font-size: 22px; line-height: 1.06; letter-spacing: -0.02em; font-weight: 700; color: #17211c; font-family: -apple-system, sans-serif; }
+  .hm .sub { color: #3f5047; font-size: 10px; margin: 7px 0 9px; line-height: 1.5; }
+  .hm .rule { width: 58px; height: 3px; border-radius: 2px; background: linear-gradient(90deg, #0b93b8, #0e7a5f); margin-bottom: 11px; }
+  .hm .term { background: #fff; border: 1px solid #dfe8e3; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 2px rgba(23,33,28,.05), 0 4px 14px rgba(23,33,28,.04); }
+  .hm .term-head { display: flex; gap: 4px; align-items: center; padding: 5px 9px; border-bottom: 1px solid #dfe8e3; background: #eff4f1; font-family: ui-monospace, monospace; font-size: 7px; color: #6b7d73; }
+  .hm .term-head i { width: 5px; height: 5px; border-radius: 50%; background: #e36c5f; }
+  .hm .term-head i:nth-child(2) { background: #b45309; } .hm .term-head i:nth-child(3) { background: #0e7a5f; }
+  .hm .term-body { font-family: ui-monospace, monospace; font-size: 8px; line-height: 1.9; padding: 6px 9px; color: #6b7d73; }
+  .hm .term-body b { color: #0e7a5f; }
+  .hm .stats { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid #dfe8e3; border-radius: 8px; background: #fff; overflow: hidden; box-shadow: 0 4px 14px rgba(23,33,28,.04); }
+  .hm .stat { padding: 7px 9px; border-left: 1px solid #dfe8e3; }
+  .hm .stat:first-child { border-left: none; }
+  .hm .stat .v { font-weight: 700; font-size: 12px; color: #17211c; }
+  .hm .stat .k { font-family: ui-monospace, monospace; font-size: 6px; letter-spacing: .12em; text-transform: uppercase; color: #97a69e; }
+  .hm .follow { margin-top: 12px; display: flex; gap: 8px; align-items: center; }
+  .hm .follow .fc { background: #fff; border: 1px solid #dfe8e3; border-radius: 7px; padding: 7px 9px; flex: 1; }
+  .hm .follow .nm { font-family: ui-monospace, monospace; font-weight: 600; font-size: 8px; color: #17211c; }
+  .hm .follow .sub2 { font-size: 7px; color: #97a69e; margin-top: 2px; }
+  .hm .sect { font-family: -apple-system, sans-serif; font-size: 9px; font-weight: 700; color: #17211c; margin-bottom: 6px; }
+
+  /* V1 — 纵向堆叠（现状精修） */
+  .v1 { background: #f7faf8; padding: 13px 20px; }
+  .v1 .inner { max-width: 100%; }
+  .v1 h1 { font-size: 25px; }
+  .v1 .sub { max-width: 290px; }
+
+  /* V2 — 左右分栏 */
+  .v2 { background: #f7faf8; padding: 13px 20px; }
+  .v2 .split { display: grid; grid-template-columns: 1fr 1.15fr; gap: 16px; align-items: center; margin-top: 10px; }
+  .v2 h1 { font-size: 23px; }
+  .v2 .sub { max-width: 220px; }
+  .v2 .cta { display: inline-block; font-size: 8.5px; font-weight: 600; color: #fff; background: #0e7a5f; border-radius: 99px; padding: 5px 11px; margin-top: 4px; }
+  .v2 .stats { margin-top: 8px; }
+  .v2 .stat .v { font-size: 10.5px; }
+
+  /* V3 — 居中对称 */
+  .v3 { background: #f7faf8; padding: 13px 20px; text-align: center; }
+  .v3 .nav { text-align: left; }
+  .v3 .eyebrow { margin-top: 16px; }
+  .v3 h1 { font-size: 25px; }
+  .v3 .sub { max-width: 320px; margin-left: auto; margin-right: auto; }
+  .v3 .rule { margin-left: auto; margin-right: auto; }
+  .v3 .term { max-width: 330px; margin: 0 auto 11px; }
+  .v3 .stat .v { font-size: 11px; }
+</style>
+
+<div class="cards">
+  <div class="card" data-choice="v1" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:0">
+      <div class="hm v1">
+        <div class="nav"><b>⌘ oxo-flow-community</b><div><span>Pipelines</span><span>Curation</span><span>Porting</span></div></div>
+        <div class="eyebrow" style="margin-top:14px">oxo-flow · community catalog</div>
+        <h1>Curated workflows. Ready to run.</h1>
+        <div class="sub">24 bioinformatics workflows ported to a deterministic engine — every one validated end-to-end.</div>
+        <div class="rule"></div>
+        <div class="term">
+          <div class="term-head"><i></i><i></i><i></i>oxo-flow run main.oxoflow</div>
+          <div class="term-body"><b>✔</b> validated — 44 rules · 3 samples · 132 instances<br><b>▸</b> planning DAG …</div>
+        </div>
+        <div class="stats">
+          <div class="stat"><div class="v">24</div><div class="k">workflows</div></div>
+          <div class="stat"><div class="v">24/24</div><div class="k">live-tested</div></div>
+          <div class="stat"><div class="v">417</div><div class="k">rules</div></div>
+          <div class="stat"><div class="v">126</div><div class="k">tools</div></div>
+        </div>
+        <div class="follow"><div class="sect">Start here</div><div style="display:flex;gap:8px">
+          <div class="fc"><div class="nm">oxo-flow-rnaseq</div><div class="sub2">✔ live-tested · nf-core port</div></div>
+          <div class="fc"><div class="nm">oxo-flow-sarek</div><div class="sub2">✔ live-tested · nf-core port</div></div>
+        </div></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>V1 · 纵向堆叠（现状精修）</h3>
+      <p>保持现在的单栏从上往下：标题更大、留白更松、卡片阴影更柔。阅读动线自然，但首屏要滚动才能看到卡片。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="v2" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:0">
+      <div class="hm v2">
+        <div class="nav"><b>⌘ oxo-flow-community</b><div><span>Pipelines</span><span>Curation</span><span>Porting</span></div></div>
+        <div class="split">
+          <div>
+            <div class="eyebrow">oxo-flow · community catalog</div>
+            <h1>Curated workflows.<br>Ready to run.</h1>
+            <div class="sub">24 bioinformatics workflows ported to a deterministic engine — every one validated end-to-end.</div>
+            <div class="rule"></div>
+            <div class="cta">Browse the catalog →</div>
+          </div>
+          <div>
+            <div class="term">
+              <div class="term-head"><i></i><i></i><i></i>oxo-flow run main.oxoflow</div>
+              <div class="term-body"><b>✔</b> validated — 44 rules · 3 samples · 132 instances<br><b>▸</b> planning DAG …</div>
+            </div>
+            <div class="stats">
+              <div class="stat"><div class="v">24</div><div class="k">workflows</div></div>
+              <div class="stat"><div class="v">24/24</div><div class="k">live</div></div>
+              <div class="stat"><div class="v">417</div><div class="k">rules</div></div>
+              <div class="stat"><div class="v">126</div><div class="k">tools</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="follow"><div class="sect">Start here</div><div style="display:flex;gap:8px">
+          <div class="fc"><div class="nm">oxo-flow-rnaseq</div><div class="sub2">✔ live-tested · nf-core port</div></div>
+          <div class="fc"><div class="nm">oxo-flow-sarek</div><div class="sub2">✔ live-tested · nf-core port</div></div>
+        </div></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>V2 · 左右分栏 ★ 推荐</h3>
+      <p>文字在左、终端+数据在右，垂直居中。首屏一屏装下全部关键信息，还能放下 CTA 按钮。信息密度和呼吸感兼得，是现代产品站的成熟骨架。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="v3" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:0">
+      <div class="hm v3">
+        <div class="nav"><b>⌘ oxo-flow-community</b><div><span>Pipelines</span><span>Curation</span><span>Porting</span></div></div>
+        <div class="eyebrow" style="margin-top:14px">oxo-flow · community catalog</div>
+        <h1>Curated workflows. Ready to run.</h1>
+        <div class="sub">24 bioinformatics workflows ported to a deterministic engine — every one validated end-to-end.</div>
+        <div class="rule"></div>
+        <div class="term">
+          <div class="term-head"><i></i><i></i><i></i>oxo-flow run main.oxoflow</div>
+          <div class="term-body"><b>✔</b> validated — 44 rules · 3 samples · 132 instances<br><b>▸</b> planning DAG …</div>
+        </div>
+        <div class="stats">
+          <div class="stat"><div class="v">24</div><div class="k">workflows</div></div>
+          <div class="stat"><div class="v">24/24</div><div class="k">live-tested</div></div>
+          <div class="stat"><div class="v">417</div><div class="k">rules</div></div>
+          <div class="stat"><div class="v">126</div><div class="k">tools</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>V3 · 居中对称</h3>
+      <p>所有元素居中排列，终端窗口成为绝对主角，仪式感最强。但左对齐的长文页（pipeline 详情）与居中 hero 的气质衔接稍弱。</p>
+    </div>
+  </div>
+</div>

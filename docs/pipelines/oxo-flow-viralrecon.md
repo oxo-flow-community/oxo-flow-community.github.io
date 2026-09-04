@@ -1,21 +1,33 @@
+<div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-viralrecon</span></div>
+<div class="ox-detail-cols" markdown="1">
+<div markdown="1">
+
 # Viral assembly and intrahost variant calling for Illumina amplicon data
 
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
 
 Turns paired-end Illumina reads into a complete viral genomics report: read QC and trimming (FastQC, fastp), host-sequence removal (Kraken2), alignment to a user-provided reference genome (Bowtie2), primer trimming for amplicon runs, intrahost variant calling and annotation (iVar or bcftools, snpEff/SnpSift), consensus building with low-coverage masking (bcftools or ivar), lineage assignment and deconvolution (Pangolin, Nextclade, Freyja), de novo assembly with QC (SPAdes, Unicycler, minia, Bandage, BLAST, QUAST, ABACAS, plasmidID), and a single MultiQC report. The amplicon + iVar path is the default; the bcftools caller, ivar consensus, metagenomic protocol, alternative assemblers (any comma-separated combination of spades/unicycler/minia in one run), MarkDuplicates, plasmidID, network-driven database updates and additional annotation are ported as gated branches off by default.
 
-| | |
-|---:|---|
-| **Rating** | ✔ Live-tested |
-| **Origin** | port |
-| **Domain** | genomics |
-| **Rules** | 84 |
-| **Compute** | up to 12 CPUs / 72 GB per rule |
-| **Tools** | abacas · bandage · bcftools · bedtools · blast · bowtie2 · cutadapt · fastp · fastqc · freyja · htslib · ivar · kraken2 · mosdepth · multiqc · nextclade · pangolin · picard · pigz · python · quast · r · samtools · snpeff · snpsift · spades · unicycler · minia · plasmidid |
-| **Ported** | 2026-08-15 |
-| **License** | Apache-2.0 |
-| **Source** | [nf-core/viralrecon](https://github.com/nf-core/viralrecon) |
-| **Pinned version** | `3.0.0` |
+</div>
+<div>
+
+<div class="ox-glance">
+<div class="ox-glance-title">At a glance</div>
+<div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">84</span></div>
+<div class="ox-kv"><span class="k">Compute</span><span class="v">up to 12 CPUs / 72 GB per rule</span></div>
+<div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Domain</span><span class="v">genomics</span></div>
+<div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/nf-core/viralrecon">nf-core/viralrecon</a></span></div>
+<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>3.0.0</code></span></div>
+<div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
+<div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
+<p class="cmd">$ oxo-flow run main.oxoflow --samples first:1</p>
+</div>
+
+</div>
+</div>
 
 ## Run it
 

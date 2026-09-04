@@ -8,7 +8,7 @@ something you can rely on.
 
 **By domain.** Each workflow carries one primary domain (bulk RNA-seq,
 single-cell, variant calling, metagenomics, epigenetics, …) plus free-form
-tags. Domains and tags are searchable on the [catalog page](../pipelines/).
+tags. Domains and tags are searchable on the [catalog page](../pipelines/index.md).
 
 **By origin.** Where a workflow came from, shown on every card:
 

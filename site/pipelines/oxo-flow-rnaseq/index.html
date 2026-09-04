@@ -23,7 +23,7 @@
     
     
       
-        <title>RNA-seq: alignment, quantification and QC - oxo-flow-community</title>
+        <title>Oxo flow rnaseq - oxo-flow-community</title>
       
     
     
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              RNA-seq: alignment, quantification and QC
+              Oxo flow rnaseq
             
           </span>
         </div>
@@ -584,60 +584,30 @@
   
 
 
+<div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-rnaseq</span></div>
+<div class="ox-detail-cols">
+<div>
 <h1 id="rna-seq-alignment-quantification-and-qc">RNA-seq: alignment, quantification and QC</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
-
-<p>End-to-end bulk RNA-seq analysis for paired-end reads: fq lint and FastQC raw-read QC, TrimGalore adapter/quality trimming, STAR alignment, Picard MarkDuplicates, Salmon alignment-mode quantification with tximport-merged gene/transcript count tables and SummarizedExperiment R objects, StringTie reference-guided assembly and quantification, featureCounts gene counts with biotype tables, RSeQC / dupRadar / Qualimap QC, DESeq2 sample-level QC (PCA, sample distances, size factors), strand-specific bigWig tracks, and one final MultiQC report with the nf-core/rnaseq custom content (fail_trimmed / fail_mapped tables, strandedness checks, software versions). A faithful port of the nf-core/rnaseq 3.26.0 default star_salmon path — same tools, same versions, same commands.</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: right;"></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: right;"><strong>Rating</strong></td>
-<td>✔ Live-tested</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Origin</strong></td>
-<td>port</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Domain</strong></td>
-<td>transcriptomics</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Rules</strong></td>
-<td>44</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Compute</strong></td>
-<td>up to 12 CPUs / 72 GB per rule (STAR align)</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Tools</strong></td>
-<td>fastqc · trim-galore · fq · star · salmon · stringtie · python · samtools · htslib · gawk · picard · subread · rseqc · r-base · bioconductor-dupradar · qualimap · bedtools · ucsc-bedclip · ucsc-bedgraphtobigwig · bioconductor-tximeta · bioconductor-summarizedexperiment · r-optparse · r-ggplot2 · r-rcolorbrewer · r-pheatmap · bioconductor-deseq2 · bioconductor-biocparallel · bioconductor-tximport · bioconductor-complexheatmap · multiqc</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Ported</strong></td>
-<td>2026-08-15</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>License</strong></td>
-<td>Apache-2.0</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Source</strong></td>
-<td><a href="https://github.com/nf-core/rnaseq">nf-core/rnaseq</a></td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Pinned version</strong></td>
-<td><code>3.26.0</code></td>
-</tr>
-</tbody>
-</table>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
+<p>End-to-end bulk RNA-seq analysis for paired-end reads: fq lint and FastQC raw-read QC, TrimGalore adapter/quality trimming (including the UMI-extraction path), STAR, HISAT2 and Bowtie2-transcriptome (bowtie2_salmon) alignment with the BBSplit / SortMeRNA / Bowtie2 rRNA-filtered read variants, Picard MarkDuplicates or UMI-tools / UMICollapse dedup (genome and transcriptome chains), Salmon quantification in alignment mode (STAR and Bowtie2 orig_bams, raw and UMI-prepared) and pseudo-alignment mode (Salmon or Kallisto), RSEM alignment-mode quantification with per-sample results and merged count tables, tximport-merged gene/transcript count tables with SummarizedExperiment R objects, StringTie reference-guided assembly and quantification, featureCounts gene counts with biotype tables, RSeQC / dupRadar / Qualimap QC, DESeq2 sample-level QC (PCA, sample distances, size factors) per quantification branch, strand-specific bigWig tracks, and one final MultiQC report with the nf-core/rnaseq custom content (fail_trimmed / fail_mapped tables, strandedness checks, software versions). A faithful port of the nf-core/rnaseq 3.26.0 default star_salmon path plus the star_rsem, hisat2, bowtie2_salmon, with_umi, salmon-pseudo and kallisto-pseudo branches — same tools, same versions, same commands.</p>
+</div>
+<div>
+<div class="ox-glance">
+<div class="ox-glance-title">At a glance</div>
+<div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">257</span></div>
+<div class="ox-kv"><span class="k">Compute</span><span class="v">up to 12 CPUs / 72 GB per rule (STAR align)</span></div>
+<div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Domain</span><span class="v">transcriptomics</span></div>
+<div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/nf-core/rnaseq">nf-core/rnaseq</a></span></div>
+<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>3.26.0</code></span></div>
+<div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
+<div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
+<p class="cmd">$ oxo-flow run main.oxoflow</p>
+</div>
+</div>
+</div>
 <h2 id="run-it">Run it</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>oxo-flow<span class="w"> </span>run<span class="w"> </span>main.oxoflow
 </code></pre></div>
@@ -649,11 +619,11 @@
 - paired-end FASTQ reads: reads_dir/<sample>_R1.fastq.gz + _R2.fastq.gz, cohort declared in [[sample_groups]]
 - reference genome FASTA (uncompressed)
 - gene annotation GTF
-- transcriptome FASTA (Salmon alignment-mode quant + StringTie)
-- 12-column gene BED (RSeQC input)
-- UCSC chrom.sizes file
-- STAR genome index built from the same FASTA/GTF (PREPARE_GENOME is not ported; build once with STAR --runMode genomeGenerate)
-- compute: up to 12 CPUs / 72 GB per rule (STAR align); most rules run on 6 CPUs / 36 GB or 1 CPU / 6 GB
+- transcriptome FASTA (Salmon alignment-mode quant + the bowtie2/salmon/kallisto index builders); empty config key = derived from fasta + gtf by prepare_genome::transcript_fasta (RSEM)
+- 12-column gene BED (RSeQC input); empty config key = derived from the GTF by prepare_genome::gene_bed (ea-utils gtf2bed)
+- UCSC chrom.sizes file; empty config key = derived from the fasta by prepare_genome::chrom_sizes (samtools faidx)
+- branch indexes (STAR / HISAT2 / RSEM / Salmon / Bowtie2 / Kallisto) are auto-built by when-gated builder rules from the shipped fixtures when the config key is empty; for real data set config.star_index / hisat2_index / rsem_index / salmon_index / bowtie2_index / kallisto_index to your own index directories
+- compute: up to 12 CPUs / 200 GB per rule (UMI dedup); STAR align 12 CPUs / 72 GB; most rules run on 6 CPUs / 36 GB or 1 CPU / 6 GB
 - conda or mamba to create the pinned per-rule environments (envs/)</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># 1. install oxo-flow (release binary, recommended)</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>curl<span class="w"> </span>-fL<span class="w"> </span>-o<span class="w"> </span>oxo-flow.tar.gz<span class="w"> </span>https://github.com/Traitome/oxo-flow/releases/latest/download/oxo-flow-latest-x86_64-unknown-linux-gnu.tar.gz
@@ -683,32 +653,50 @@
 <tr>
 <td style="text-align: right;"><code>aligner</code></td>
 <td><code>star_salmon</code></td>
-<td>Aligner: only the upstream default 'star_salmon' path is ported.</td>
+<td>Aligner selector (upstream: --aligner). The port supports the upstream default 'star_salmon' plus the non-default branches (star_rsem, hisat2, bowtie2_salmon); all downstream results paths follow {config.out_dir}/{config.aligner}/... exactly like upstream's params.aligner-based publishDirs. bowtie2_salmon maps reads to the transcriptome with Bowtie2 and quantifies the orig_bam with Salmon (upstream ALIGN_BOWTIE2 -&gt; QUANTIFY_BAM_SALMON).</td>
+<td><code>alignment::bam_dedup_genome_umicollapse</code>, <code>alignment::bam_dedup_genome_umitools</code>, <code>alignment::bam_dedup_genome_umitools_primary</code>, <code>alignment::bam_dedup_genome_umitools_primary_stats</code>, <code>alignment::bam_dedup_genome_umitools_stats</code>, <code>alignment::bowtie2_align</code>, <code>alignment::bowtie2_align_bbsplit</code>, <code>alignment::bowtie2_align_bowtie2</code>, <code>alignment::bowtie2_align_sortmerna</code>, <code>alignment::bowtie2_index</code>, <code>alignment::hisat2_align</code>, <code>alignment::hisat2_align_bbsplit</code>, <code>alignment::hisat2_align_bowtie2</code>, <code>alignment::hisat2_align_sortmerna</code>, <code>alignment::hisat2_index</code>, <code>alignment::hisat2_splicesites</code>, <code>alignment::picard_markduplicates</code>, <code>alignment::samtools_flagstat_dedup</code>, <code>alignment::samtools_flagstat_markdup</code>, <code>alignment::samtools_flagstat_sorted</code>, <code>alignment::samtools_idxstats_dedup</code>, <code>alignment::samtools_idxstats_markdup</code>, <code>alignment::samtools_idxstats_sorted</code>, <code>alignment::samtools_index_dedup</code>, <code>alignment::samtools_index_markdup</code>, <code>alignment::samtools_index_primary</code>, <code>alignment::samtools_index_sorted</code>, <code>alignment::samtools_sort</code>, <code>alignment::samtools_sort_bowtie2</code>, <code>alignment::samtools_sort_hisat2</code>, <code>alignment::samtools_stats_dedup</code>, <code>alignment::samtools_stats_markdup</code>, <code>alignment::samtools_stats_sorted</code>, <code>alignment::samtools_view_primary</code>, <code>alignment::star_align</code>, <code>alignment::star_align_bbsplit</code>, <code>alignment::star_align_bowtie2</code>, <code>alignment::star_align_rsem</code>, <code>alignment::star_align_rsem_bbsplit</code>, <code>alignment::star_align_rsem_bowtie2</code>, <code>alignment::star_align_rsem_sortmerna</code>, <code>alignment::star_align_sortmerna</code>, <code>bam_qc::biotype_multiqc</code>, <code>bam_qc::dupradar</code>, <code>bam_qc::featurecounts</code>, <code>bam_qc::qualimap_rnaseq</code>, <code>bam_qc::rseqc_bam_stat</code>, <code>bam_qc::rseqc_infer_experiment</code>, <code>bam_qc::rseqc_inner_distance</code>, <code>bam_qc::rseqc_junction_annotation</code>, <code>bam_qc::rseqc_junction_saturation</code>, <code>bam_qc::rseqc_read_distribution</code>, <code>bam_qc::rseqc_read_duplication</code>, <code>bam_qc::samtools_sort_qualimap</code>, <code>bigwig::bedclip_combined</code>, <code>bigwig::bedclip_fw</code>, <code>bigwig::bedclip_rev</code>, <code>bigwig::bigwig_combined</code>, <code>bigwig::bigwig_fw</code>, <code>bigwig::bigwig_rev</code>, <code>bigwig::genomecov_combined</code>, <code>bigwig::genomecov_fw</code>, <code>bigwig::genomecov_rev</code>, <code>multiqc</code>, <code>multiqc_custom_content</code>, <code>prepare_genome::transcript_fasta</code>, <code>quantification::bam_dedup_transcriptome_umicollapse</code>, <code>quantification::bam_dedup_transcriptome_umitools</code>, <code>quantification::bam_dedup_transcriptome_umitools_primary</code>, <code>quantification::bam_dedup_transcriptome_umitools_primary_stats</code>, <code>quantification::bam_dedup_transcriptome_umitools_stats</code>, <code>quantification::bam_sort_transcriptome</code>, <code>quantification::bam_sort_transcriptome_bowtie2</code>, <code>quantification::deseq2_qc</code>, <code>quantification::deseq2_qc_rsem</code>, <code>quantification::rsem_calculateexpression</code>, <code>quantification::rsem_calculateexpression_umi</code>, <code>quantification::rsem_index</code>, <code>quantification::rsem_merge_counts</code>, <code>quantification::salmon_quant</code>, <code>quantification::salmon_quant_bowtie2</code>, <code>quantification::salmon_quant_umi</code>, <code>quantification::samtools_flagstat_transcriptome_dedup</code>, <code>quantification::samtools_idxstats_transcriptome_dedup</code>, <code>quantification::samtools_index_primary_transcriptome</code>, <code>quantification::samtools_sort_name_transcriptome</code>, <code>quantification::samtools_stats_transcriptome_dedup</code>, <code>quantification::samtools_view_primary_transcriptome</code>, <code>quantification::stringtie</code>, <code>quantification::summarizedexperiment</code>, <code>quantification::summarizedexperiment_rsem</code>, <code>quantification::tx2gene</code>, <code>quantification::tx2gene_rsem</code>, <code>quantification::tximport</code>, <code>quantification::tximport_rsem</code>, <code>quantification::umitools_prepareforrsem</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>bbsplit_fasta_list</code></td>
+<td>``</td>
 <td>—</td>
+<td><code>fastq_qc::bbsplit_index</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>bbsplit_index</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>fastq_qc::bbsplit_index</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>bowtie2_index</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>alignment::bowtie2_index</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>chrom_sizes</code></td>
 <td><code>test/fixtures/reference/chrom_sizes.txt</code></td>
 <td>—</td>
-<td><code>bigwig::bedclip_combined</code>, <code>bigwig::bedclip_fw</code>, <code>bigwig::bedclip_rev</code>, <code>bigwig::bigwig_combined</code>, <code>bigwig::bigwig_fw</code>, <code>bigwig::bigwig_rev</code></td>
+<td><code>prepare_genome::chrom_sizes</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>deseq2_vst</code></td>
 <td><code>true</code></td>
 <td>DESeq2 QC transform: variance stabilizing transformation (upstream --deseq2_vst default true).</td>
-<td><code>quantification::deseq2_qc</code></td>
+<td><code>quantification::deseq2_qc</code>, <code>quantification::deseq2_qc_pseudo</code>, <code>quantification::deseq2_qc_rsem</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>extra_fqlint_args</code></td>
 <td><code>--disable-validator P001</code></td>
 <td>fq lint extra args (upstream: --extra_fqlint_args).</td>
-<td><code>fastq_qc::fq_lint_raw</code>, <code>fastq_qc::fq_lint_trimmed</code></td>
+<td><code>fastq_qc::fq_lint_bbsplit</code>, <code>fastq_qc::fq_lint_raw</code>, <code>fastq_qc::fq_lint_rrna_bowtie2</code>, <code>fastq_qc::fq_lint_rrna_sortmerna</code>, <code>fastq_qc::fq_lint_trimmed</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>fasta</code></td>
 <td><code>test/fixtures/reference/genome.fa</code></td>
-<td>Reference artifacts (upstream: --fasta / --gtf / --gene_bed / --chrom_sizes / --transcript_fasta / STAR index). PREPARE_GENOME is not ported: the STAR index is an input. transcript_fasta feeds Salmon alignment-mode quant and StringTie.</td>
-<td><code>alignment::picard_markduplicates</code>, <code>alignment::samtools_sort</code>, <code>alignment::samtools_stats_markdup</code>, <code>alignment::samtools_stats_sorted</code>, <code>bam_qc::samtools_sort_qualimap</code></td>
+<td>Reference artifacts (upstream: --fasta / --gtf / --gene_bed / --chrom_sizes / --transcript_fasta / STAR index). fasta and gtf are always inputs; the other three are inputs by default but are DERIVED from fasta+gtf when the key is empty (modules/prepare_genome.oxoflow mirrors upstream PREPARE_GENOME: gene_bed via ea-utils gtf2bed, chrom_sizes via samtools faidx, transcript_fasta via RSEM). The STAR index is an input (auto-built from the shipped fixture genome by the [[references]] builder below when SAindex is missing).</td>
+<td><code>alignment::hisat2_index</code>, <code>alignment::picard_markduplicates</code>, <code>alignment::samtools_sort</code>, <code>alignment::samtools_sort_bowtie2</code>, <code>alignment::samtools_sort_hisat2</code>, <code>alignment::samtools_stats_dedup</code>, <code>alignment::samtools_stats_markdup</code>, <code>alignment::samtools_stats_sorted</code>, <code>bam_qc::samtools_sort_qualimap</code>, <code>fastq_qc::bbsplit_index</code>, <code>prepare_genome::chrom_sizes</code>, <code>prepare_genome::transcript_fasta</code>, <code>quantification::bam_sort_transcriptome</code>, <code>quantification::bam_sort_transcriptome_bowtie2</code>, <code>quantification::rsem_index</code>, <code>quantification::salmon_index</code>, <code>quantification::samtools_sort_name_transcriptome</code>, <code>quantification::samtools_stats_transcriptome_dedup</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>featurecounts_feature_type</code></td>
@@ -726,13 +714,37 @@
 <td style="text-align: right;"><code>gene_bed</code></td>
 <td><code>test/fixtures/reference/gene.bed</code></td>
 <td>—</td>
-<td><code>bam_qc::rseqc_infer_experiment</code>, <code>bam_qc::rseqc_inner_distance</code>, <code>bam_qc::rseqc_junction_annotation</code>, <code>bam_qc::rseqc_junction_saturation</code>, <code>bam_qc::rseqc_read_distribution</code></td>
+<td><code>prepare_genome::gene_bed</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gtf</code></td>
 <td><code>test/fixtures/reference/genes.gtf</code></td>
 <td>—</td>
-<td><code>alignment::star_align</code>, <code>bam_qc::dupradar</code>, <code>bam_qc::featurecounts</code>, <code>bam_qc::qualimap_rnaseq</code>, <code>quantification::salmon_quant</code>, <code>quantification::stringtie</code>, <code>quantification::tx2gene</code></td>
+<td><code>alignment::hisat2_index</code>, <code>alignment::hisat2_splicesites</code>, <code>alignment::star_align</code>, <code>alignment::star_align_bbsplit</code>, <code>alignment::star_align_bowtie2</code>, <code>alignment::star_align_rsem</code>, <code>alignment::star_align_rsem_bbsplit</code>, <code>alignment::star_align_rsem_bowtie2</code>, <code>alignment::star_align_rsem_sortmerna</code>, <code>alignment::star_align_sortmerna</code>, <code>bam_qc::dupradar</code>, <code>bam_qc::featurecounts</code>, <code>bam_qc::qualimap_rnaseq</code>, <code>prepare_genome::gene_bed</code>, <code>prepare_genome::transcript_fasta</code>, <code>quantification::kallisto_quant_pseudo</code>, <code>quantification::kallisto_quant_pseudo_bbsplit</code>, <code>quantification::kallisto_quant_pseudo_bowtie2</code>, <code>quantification::kallisto_quant_pseudo_sortmerna</code>, <code>quantification::rsem_index</code>, <code>quantification::salmon_quant</code>, <code>quantification::salmon_quant_bowtie2</code>, <code>quantification::salmon_quant_pseudo</code>, <code>quantification::salmon_quant_pseudo_bbsplit</code>, <code>quantification::salmon_quant_pseudo_bowtie2</code>, <code>quantification::salmon_quant_pseudo_sortmerna</code>, <code>quantification::salmon_quant_umi</code>, <code>quantification::stringtie</code>, <code>quantification::tx2gene</code>, <code>quantification::tx2gene_pseudo</code>, <code>quantification::tx2gene_rsem</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>gtf_extra_attributes</code></td>
+<td><code>gene_name</code></td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>gtf_group_features</code></td>
+<td><code>gene_id</code></td>
+<td>tximport gene attributes (upstream: --gtf_group_features / --gtf_extra_attributes; same defaults).</td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>hisat2_index</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>alignment::hisat2_index</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>kallisto_index</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>quantification::kallisto_index</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>min_mapped_reads</code></td>
@@ -750,22 +762,76 @@
 <td style="text-align: right;"><code>out_dir</code></td>
 <td><code>results</code></td>
 <td>Output directory (upstream: --outdir).</td>
-<td><code>alignment::picard_markduplicates</code>, <code>alignment::samtools_flagstat_markdup</code>, <code>alignment::samtools_flagstat_sorted</code>, <code>alignment::samtools_idxstats_markdup</code>, <code>alignment::samtools_idxstats_sorted</code>, <code>alignment::samtools_index_markdup</code>, <code>alignment::samtools_index_sorted</code>, <code>alignment::samtools_sort</code>, <code>alignment::samtools_stats_markdup</code>, <code>alignment::samtools_stats_sorted</code>, <code>alignment::star_align</code>, <code>bam_qc::biotype_multiqc</code>, <code>bam_qc::dupradar</code>, <code>bam_qc::featurecounts</code>, <code>bam_qc::qualimap_rnaseq</code>, <code>bam_qc::rseqc_bam_stat</code>, <code>bam_qc::rseqc_infer_experiment</code>, <code>bam_qc::rseqc_inner_distance</code>, <code>bam_qc::rseqc_junction_annotation</code>, <code>bam_qc::rseqc_junction_saturation</code>, <code>bam_qc::rseqc_read_distribution</code>, <code>bam_qc::rseqc_read_duplication</code>, <code>bam_qc::samtools_sort_qualimap</code>, <code>bigwig::bedclip_combined</code>, <code>bigwig::bedclip_fw</code>, <code>bigwig::bedclip_rev</code>, <code>bigwig::bigwig_combined</code>, <code>bigwig::bigwig_fw</code>, <code>bigwig::bigwig_rev</code>, <code>bigwig::genomecov_combined</code>, <code>bigwig::genomecov_fw</code>, <code>bigwig::genomecov_rev</code>, <code>fastq_qc::fastqc_raw</code>, <code>fastq_qc::fq_lint_raw</code>, <code>fastq_qc::fq_lint_trimmed</code>, <code>fastq_qc::trimgalore</code>, <code>multiqc</code>, <code>multiqc_custom_content</code>, <code>quantification::deseq2_qc</code>, <code>quantification::salmon_quant</code>, <code>quantification::stringtie</code>, <code>quantification::summarizedexperiment</code>, <code>quantification::tx2gene</code>, <code>quantification::tximport</code></td>
+<td><code>alignment::bam_dedup_genome_umicollapse</code>, <code>alignment::bam_dedup_genome_umitools</code>, <code>alignment::bam_dedup_genome_umitools_primary</code>, <code>alignment::bam_dedup_genome_umitools_primary_stats</code>, <code>alignment::bam_dedup_genome_umitools_stats</code>, <code>alignment::bowtie2_align</code>, <code>alignment::bowtie2_align_bbsplit</code>, <code>alignment::bowtie2_align_bowtie2</code>, <code>alignment::bowtie2_align_sortmerna</code>, <code>alignment::bowtie2_index</code>, <code>alignment::hisat2_align</code>, <code>alignment::hisat2_align_bbsplit</code>, <code>alignment::hisat2_align_bowtie2</code>, <code>alignment::hisat2_align_sortmerna</code>, <code>alignment::hisat2_index</code>, <code>alignment::hisat2_splicesites</code>, <code>alignment::picard_markduplicates</code>, <code>alignment::samtools_flagstat_dedup</code>, <code>alignment::samtools_flagstat_markdup</code>, <code>alignment::samtools_flagstat_sorted</code>, <code>alignment::samtools_idxstats_dedup</code>, <code>alignment::samtools_idxstats_markdup</code>, <code>alignment::samtools_idxstats_sorted</code>, <code>alignment::samtools_index_dedup</code>, <code>alignment::samtools_index_markdup</code>, <code>alignment::samtools_index_primary</code>, <code>alignment::samtools_index_sorted</code>, <code>alignment::samtools_sort</code>, <code>alignment::samtools_sort_bowtie2</code>, <code>alignment::samtools_sort_hisat2</code>, <code>alignment::samtools_stats_dedup</code>, <code>alignment::samtools_stats_markdup</code>, <code>alignment::samtools_stats_sorted</code>, <code>alignment::samtools_view_primary</code>, <code>alignment::star_align</code>, <code>alignment::star_align_bbsplit</code>, <code>alignment::star_align_bowtie2</code>, <code>alignment::star_align_rsem</code>, <code>alignment::star_align_rsem_bbsplit</code>, <code>alignment::star_align_rsem_bowtie2</code>, <code>alignment::star_align_rsem_sortmerna</code>, <code>alignment::star_align_sortmerna</code>, <code>bam_qc::biotype_multiqc</code>, <code>bam_qc::dupradar</code>, <code>bam_qc::featurecounts</code>, <code>bam_qc::qualimap_rnaseq</code>, <code>bam_qc::rseqc_bam_stat</code>, <code>bam_qc::rseqc_infer_experiment</code>, <code>bam_qc::rseqc_inner_distance</code>, <code>bam_qc::rseqc_junction_annotation</code>, <code>bam_qc::rseqc_junction_saturation</code>, <code>bam_qc::rseqc_read_distribution</code>, <code>bam_qc::rseqc_read_duplication</code>, <code>bam_qc::samtools_sort_qualimap</code>, <code>bigwig::bedclip_combined</code>, <code>bigwig::bedclip_fw</code>, <code>bigwig::bedclip_rev</code>, <code>bigwig::bigwig_combined</code>, <code>bigwig::bigwig_fw</code>, <code>bigwig::bigwig_rev</code>, <code>bigwig::genomecov_combined</code>, <code>bigwig::genomecov_fw</code>, <code>bigwig::genomecov_rev</code>, <code>fastq_qc::bbsplit</code>, <code>fastq_qc::bbsplit_index</code>, <code>fastq_qc::bowtie2_align_rrna</code>, <code>fastq_qc::bowtie2_align_rrna_bbsplit</code>, <code>fastq_qc::bowtie2_rrna_index</code>, <code>fastq_qc::fastqc_filtered_bbsplit</code>, <code>fastq_qc::fastqc_filtered_bowtie2</code>, <code>fastq_qc::fastqc_filtered_sortmerna</code>, <code>fastq_qc::fastqc_raw</code>, <code>fastq_qc::fq_lint_bbsplit</code>, <code>fastq_qc::fq_lint_raw</code>, <code>fastq_qc::fq_lint_rrna_bowtie2</code>, <code>fastq_qc::fq_lint_rrna_sortmerna</code>, <code>fastq_qc::fq_lint_trimmed</code>, <code>fastq_qc::rrna_fastas_prepare</code>, <code>fastq_qc::samtools_fastq_rrna</code>, <code>fastq_qc::samtools_view_rrna</code>, <code>fastq_qc::sortmerna</code>, <code>fastq_qc::sortmerna_bbsplit</code>, <code>fastq_qc::sortmerna_index</code>, <code>fastq_qc::trimgalore</code>, <code>fastq_qc::trimgalore_umi</code>, <code>fastq_qc::umitools_extract_umis</code>, <code>multiqc</code>, <code>multiqc_custom_content</code>, <code>prepare_genome::chrom_sizes</code>, <code>prepare_genome::gene_bed</code>, <code>prepare_genome::transcript_fasta</code>, <code>quantification::bam_dedup_transcriptome_umicollapse</code>, <code>quantification::bam_dedup_transcriptome_umitools</code>, <code>quantification::bam_dedup_transcriptome_umitools_primary</code>, <code>quantification::bam_dedup_transcriptome_umitools_primary_stats</code>, <code>quantification::bam_dedup_transcriptome_umitools_stats</code>, <code>quantification::bam_sort_transcriptome</code>, <code>quantification::bam_sort_transcriptome_bowtie2</code>, <code>quantification::deseq2_qc</code>, <code>quantification::deseq2_qc_pseudo</code>, <code>quantification::deseq2_qc_rsem</code>, <code>quantification::kallisto_index</code>, <code>quantification::kallisto_quant_pseudo</code>, <code>quantification::kallisto_quant_pseudo_bbsplit</code>, <code>quantification::kallisto_quant_pseudo_bowtie2</code>, <code>quantification::kallisto_quant_pseudo_sortmerna</code>, <code>quantification::rsem_calculateexpression</code>, <code>quantification::rsem_calculateexpression_umi</code>, <code>quantification::rsem_index</code>, <code>quantification::rsem_merge_counts</code>, <code>quantification::salmon_index</code>, <code>quantification::salmon_quant</code>, <code>quantification::salmon_quant_bowtie2</code>, <code>quantification::salmon_quant_pseudo</code>, <code>quantification::salmon_quant_pseudo_bbsplit</code>, <code>quantification::salmon_quant_pseudo_bowtie2</code>, <code>quantification::salmon_quant_pseudo_sortmerna</code>, <code>quantification::salmon_quant_umi</code>, <code>quantification::samtools_flagstat_transcriptome_dedup</code>, <code>quantification::samtools_idxstats_transcriptome_dedup</code>, <code>quantification::samtools_index_primary_transcriptome</code>, <code>quantification::samtools_sort_name_transcriptome</code>, <code>quantification::samtools_stats_transcriptome_dedup</code>, <code>quantification::samtools_view_primary_transcriptome</code>, <code>quantification::stringtie</code>, <code>quantification::summarizedexperiment</code>, <code>quantification::summarizedexperiment_pseudo</code>, <code>quantification::summarizedexperiment_rsem</code>, <code>quantification::tx2gene</code>, <code>quantification::tx2gene_pseudo</code>, <code>quantification::tx2gene_rsem</code>, <code>quantification::tximport</code>, <code>quantification::tximport_pseudo</code>, <code>quantification::tximport_rsem</code>, <code>quantification::umitools_prepareforrsem</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>pseudo_aligner</code></td>
+<td>``</td>
+<td>Pseudo-alignment (upstream: --pseudo_aligner, 'salmon' or 'kallisto'; default null = alignment-mode Salmon only). Both aligners are ported; the index builders are when-gated on this key (salmon_index / kallisto_index short-circuit with a user-supplied path). pseudo_aligner_kmer_size is the upstream KALLISTO_INDEX -k default (31).</td>
+<td><code>multiqc</code>, <code>prepare_genome::transcript_fasta</code>, <code>quantification::deseq2_qc_pseudo</code>, <code>quantification::kallisto_index</code>, <code>quantification::kallisto_quant_pseudo</code>, <code>quantification::kallisto_quant_pseudo_bbsplit</code>, <code>quantification::kallisto_quant_pseudo_bowtie2</code>, <code>quantification::kallisto_quant_pseudo_sortmerna</code>, <code>quantification::salmon_index</code>, <code>quantification::salmon_quant_pseudo</code>, <code>quantification::salmon_quant_pseudo_bbsplit</code>, <code>quantification::salmon_quant_pseudo_bowtie2</code>, <code>quantification::salmon_quant_pseudo_sortmerna</code>, <code>quantification::summarizedexperiment_pseudo</code>, <code>quantification::tx2gene_pseudo</code>, <code>quantification::tximport_pseudo</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>pseudo_aligner_kmer_size</code></td>
+<td><code>31</code></td>
+<td>—</td>
+<td><code>quantification::kallisto_index</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>reads_dir</code></td>
 <td><code>test/fixtures/raw</code></td>
 <td>Input reads directory: reads_dir/<sample>_R1.fastq.gz + _R2.fastq.gz (paired-end). The repo default ships the tiny committed fixtures; point this at your data.</td>
-<td><code>fastq_qc::fastqc_raw</code>, <code>fastq_qc::fq_lint_raw</code>, <code>fastq_qc::trimgalore</code>, <code>multiqc_custom_content</code></td>
+<td><code>fastq_qc::fastqc_raw</code>, <code>fastq_qc::fq_lint_raw</code>, <code>fastq_qc::trimgalore</code>, <code>fastq_qc::umitools_extract_umis</code>, <code>multiqc_custom_content</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>remove_ribo_rna</code></td>
+<td><code>false</code></td>
+<td>Ribosomal RNA removal (upstream: --remove_ribo_rna / --ribo_removal_tool / --ribo_database_manifest / --save_non_ribo_reads; same defaults). The manifest is one fasta path per line; .gz entries are gunzipped before use.</td>
+<td><code>alignment::bowtie2_align</code>, <code>alignment::bowtie2_align_bbsplit</code>, <code>alignment::bowtie2_align_bowtie2</code>, <code>alignment::bowtie2_align_sortmerna</code>, <code>alignment::hisat2_align</code>, <code>alignment::hisat2_align_bbsplit</code>, <code>alignment::hisat2_align_bowtie2</code>, <code>alignment::hisat2_align_sortmerna</code>, <code>alignment::star_align</code>, <code>alignment::star_align_bbsplit</code>, <code>alignment::star_align_bowtie2</code>, <code>alignment::star_align_rsem</code>, <code>alignment::star_align_rsem_bbsplit</code>, <code>alignment::star_align_rsem_bowtie2</code>, <code>alignment::star_align_rsem_sortmerna</code>, <code>alignment::star_align_sortmerna</code>, <code>fastq_qc::bowtie2_align_rrna</code>, <code>fastq_qc::bowtie2_align_rrna_bbsplit</code>, <code>fastq_qc::bowtie2_rrna_index</code>, <code>fastq_qc::fastqc_filtered_bbsplit</code>, <code>fastq_qc::fastqc_filtered_bowtie2</code>, <code>fastq_qc::fastqc_filtered_sortmerna</code>, <code>fastq_qc::fq_lint_rrna_bowtie2</code>, <code>fastq_qc::fq_lint_rrna_sortmerna</code>, <code>fastq_qc::rrna_fastas_prepare</code>, <code>fastq_qc::samtools_fastq_rrna</code>, <code>fastq_qc::samtools_view_rrna</code>, <code>fastq_qc::sortmerna</code>, <code>fastq_qc::sortmerna_bbsplit</code>, <code>fastq_qc::sortmerna_index</code>, <code>quantification::kallisto_quant_pseudo</code>, <code>quantification::kallisto_quant_pseudo_bbsplit</code>, <code>quantification::kallisto_quant_pseudo_bowtie2</code>, <code>quantification::kallisto_quant_pseudo_sortmerna</code>, <code>quantification::salmon_quant_pseudo</code>, <code>quantification::salmon_quant_pseudo_bbsplit</code>, <code>quantification::salmon_quant_pseudo_bowtie2</code>, <code>quantification::salmon_quant_pseudo_sortmerna</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>ribo_database_manifest</code></td>
+<td><code>assets/rrna-db-defaults.txt</code></td>
+<td>—</td>
+<td><code>fastq_qc::rrna_fastas_prepare</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>ribo_removal_tool</code></td>
+<td><code>sortmerna</code></td>
+<td>—</td>
+<td><code>alignment::bowtie2_align_bowtie2</code>, <code>alignment::bowtie2_align_sortmerna</code>, <code>alignment::hisat2_align_bowtie2</code>, <code>alignment::hisat2_align_sortmerna</code>, <code>alignment::star_align_bowtie2</code>, <code>alignment::star_align_rsem_bowtie2</code>, <code>alignment::star_align_rsem_sortmerna</code>, <code>alignment::star_align_sortmerna</code>, <code>fastq_qc::bowtie2_align_rrna</code>, <code>fastq_qc::bowtie2_align_rrna_bbsplit</code>, <code>fastq_qc::bowtie2_rrna_index</code>, <code>fastq_qc::fastqc_filtered_bowtie2</code>, <code>fastq_qc::fastqc_filtered_sortmerna</code>, <code>fastq_qc::fq_lint_rrna_bowtie2</code>, <code>fastq_qc::fq_lint_rrna_sortmerna</code>, <code>fastq_qc::rrna_fastas_prepare</code>, <code>fastq_qc::samtools_fastq_rrna</code>, <code>fastq_qc::samtools_view_rrna</code>, <code>fastq_qc::sortmerna</code>, <code>fastq_qc::sortmerna_bbsplit</code>, <code>fastq_qc::sortmerna_index</code>, <code>quantification::kallisto_quant_pseudo_bowtie2</code>, <code>quantification::kallisto_quant_pseudo_sortmerna</code>, <code>quantification::salmon_quant_pseudo_bowtie2</code>, <code>quantification::salmon_quant_pseudo_sortmerna</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>rsem_index</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>quantification::rsem_index</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>salmon_index</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>quantification::salmon_index</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>salmon_quant_libtype</code></td>
 <td>``</td>
 <td>Salmon quantification (upstream default path, alignment mode on the STAR toTranscriptome BAM). --libType is derived from config.strandedness (forward -&gt; ISF, reverse -&gt; ISR, unstranded -&gt; IU); set salmon_quant_libtype to override (e.g. "A" for auto-detection).</td>
-<td><code>quantification::salmon_quant</code></td>
+<td><code>quantification::salmon_quant</code>, <code>quantification::salmon_quant_bowtie2</code>, <code>quantification::salmon_quant_pseudo</code>, <code>quantification::salmon_quant_pseudo_bbsplit</code>, <code>quantification::salmon_quant_pseudo_bowtie2</code>, <code>quantification::salmon_quant_pseudo_sortmerna</code>, <code>quantification::salmon_quant_umi</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>save_align_intermeds</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>save_bbsplit_reads</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>save_non_ribo_reads</code></td>
 <td><code>false</code></td>
 <td>—</td>
 <td>—</td>
@@ -777,28 +843,46 @@
 <td>—</td>
 </tr>
 <tr>
+<td style="text-align: right;"><code>save_umi_intermeds</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_alignment</code></td>
+<td><code>false</code></td>
+<td>Non-default alignment branches (upstream: --aligner / --skip_alignment / --rsem_index / --hisat2_index / --salmon_index / --bbsplit_index / --sortmerna_index). Empty index keys are auto-built by when-gated builder rules in modules/alignment.oxoflow / quantification.oxoflow from the shipped fixtures when the branch is enabled (like star_index); a user-supplied path is symlinked in instead.</td>
+<td><code>alignment::bam_dedup_genome_umicollapse</code>, <code>alignment::bam_dedup_genome_umitools</code>, <code>alignment::bam_dedup_genome_umitools_primary</code>, <code>alignment::bam_dedup_genome_umitools_primary_stats</code>, <code>alignment::bam_dedup_genome_umitools_stats</code>, <code>alignment::bowtie2_align</code>, <code>alignment::bowtie2_align_bbsplit</code>, <code>alignment::bowtie2_align_bowtie2</code>, <code>alignment::bowtie2_align_sortmerna</code>, <code>alignment::bowtie2_index</code>, <code>alignment::hisat2_align</code>, <code>alignment::hisat2_align_bbsplit</code>, <code>alignment::hisat2_align_bowtie2</code>, <code>alignment::hisat2_align_sortmerna</code>, <code>alignment::hisat2_index</code>, <code>alignment::hisat2_splicesites</code>, <code>alignment::samtools_flagstat_dedup</code>, <code>alignment::samtools_idxstats_dedup</code>, <code>alignment::samtools_index_dedup</code>, <code>alignment::samtools_index_primary</code>, <code>alignment::samtools_sort_bowtie2</code>, <code>alignment::samtools_sort_hisat2</code>, <code>alignment::samtools_stats_dedup</code>, <code>alignment::samtools_view_primary</code>, <code>alignment::star_align</code>, <code>alignment::star_align_bbsplit</code>, <code>alignment::star_align_bowtie2</code>, <code>alignment::star_align_rsem</code>, <code>alignment::star_align_rsem_bbsplit</code>, <code>alignment::star_align_rsem_bowtie2</code>, <code>alignment::star_align_rsem_sortmerna</code>, <code>alignment::star_align_sortmerna</code>, <code>prepare_genome::transcript_fasta</code>, <code>quantification::bam_dedup_transcriptome_umicollapse</code>, <code>quantification::bam_dedup_transcriptome_umitools</code>, <code>quantification::bam_dedup_transcriptome_umitools_primary</code>, <code>quantification::bam_dedup_transcriptome_umitools_primary_stats</code>, <code>quantification::bam_dedup_transcriptome_umitools_stats</code>, <code>quantification::bam_sort_transcriptome</code>, <code>quantification::bam_sort_transcriptome_bowtie2</code>, <code>quantification::deseq2_qc</code>, <code>quantification::deseq2_qc_rsem</code>, <code>quantification::rsem_calculateexpression</code>, <code>quantification::rsem_calculateexpression_umi</code>, <code>quantification::rsem_merge_counts</code>, <code>quantification::salmon_quant</code>, <code>quantification::salmon_quant_bowtie2</code>, <code>quantification::salmon_quant_umi</code>, <code>quantification::samtools_flagstat_transcriptome_dedup</code>, <code>quantification::samtools_idxstats_transcriptome_dedup</code>, <code>quantification::samtools_index_primary_transcriptome</code>, <code>quantification::samtools_sort_name_transcriptome</code>, <code>quantification::samtools_stats_transcriptome_dedup</code>, <code>quantification::samtools_view_primary_transcriptome</code>, <code>quantification::summarizedexperiment</code>, <code>quantification::summarizedexperiment_rsem</code>, <code>quantification::tx2gene</code>, <code>quantification::tx2gene_rsem</code>, <code>quantification::tximport</code>, <code>quantification::tximport_rsem</code>, <code>quantification::umitools_prepareforrsem</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_bbsplit</code></td>
+<td><code>true</code></td>
+<td>BBSplit genome filtering (upstream: --skip_bbsplit / --bbsplit_fasta_list / --save_bbsplit_reads; same defaults). bbsplit_fasta_list is a 2-column CSV (short_name,path_to_fasta) plus the primary genome in config.fasta.</td>
+<td><code>alignment::bowtie2_align</code>, <code>alignment::bowtie2_align_bbsplit</code>, <code>alignment::hisat2_align</code>, <code>alignment::hisat2_align_bbsplit</code>, <code>alignment::star_align</code>, <code>alignment::star_align_bbsplit</code>, <code>alignment::star_align_rsem</code>, <code>alignment::star_align_rsem_bbsplit</code>, <code>fastq_qc::bbsplit</code>, <code>fastq_qc::bbsplit_index</code>, <code>fastq_qc::bowtie2_align_rrna</code>, <code>fastq_qc::bowtie2_align_rrna_bbsplit</code>, <code>fastq_qc::fastqc_filtered_bbsplit</code>, <code>fastq_qc::fq_lint_bbsplit</code>, <code>fastq_qc::sortmerna</code>, <code>fastq_qc::sortmerna_bbsplit</code>, <code>quantification::kallisto_quant_pseudo</code>, <code>quantification::kallisto_quant_pseudo_bbsplit</code>, <code>quantification::salmon_quant_pseudo</code>, <code>quantification::salmon_quant_pseudo_bbsplit</code></td>
+</tr>
+<tr>
 <td style="text-align: right;"><code>skip_bigwig</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>bigwig::bedclip_combined</code>, <code>bigwig::bedclip_fw</code>, <code>bigwig::bedclip_rev</code>, <code>bigwig::bigwig_combined</code>, <code>bigwig::bigwig_fw</code>, <code>bigwig::bigwig_rev</code>, <code>bigwig::genomecov_combined</code>, <code>bigwig::genomecov_fw</code>, <code>bigwig::genomecov_rev</code></td>
+<td><code>bigwig::bedclip_combined</code>, <code>bigwig::bedclip_fw</code>, <code>bigwig::bedclip_rev</code>, <code>bigwig::bigwig_combined</code>, <code>bigwig::bigwig_fw</code>, <code>bigwig::bigwig_rev</code>, <code>bigwig::genomecov_combined</code>, <code>bigwig::genomecov_fw</code>, <code>bigwig::genomecov_rev</code>, <code>prepare_genome::chrom_sizes</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_deseq2_qc</code></td>
 <td><code>false</code></td>
 <td>DESeq2 sample-level QC (PCA / sample distances / size factors; upstream default path, runs on salmon.merged.gene_counts_length_scaled.tsv).</td>
-<td><code>quantification::deseq2_qc</code></td>
+<td><code>quantification::deseq2_qc</code>, <code>quantification::deseq2_qc_pseudo</code>, <code>quantification::deseq2_qc_rsem</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_fastqc</code></td>
 <td><code>false</code></td>
 <td>Skip options (upstream: --skip_fastqc / --skip_linting / --skip_trimming / --skip_markduplicates / --skip_qc / --skip_bigwig). Same defaults as upstream. NOTE: skip_trimming=true and skip_markduplicates=true break the downstream chain (trimmed reads / markdup BAM are inputs of later rules); unlike upstream there is no per-branch rewire, see README fidelity table.</td>
-<td><code>fastq_qc::fastqc_raw</code></td>
+<td><code>fastq_qc::fastqc_filtered_bbsplit</code>, <code>fastq_qc::fastqc_filtered_bowtie2</code>, <code>fastq_qc::fastqc_filtered_sortmerna</code>, <code>fastq_qc::fastqc_raw</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_linting</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>fastq_qc::fq_lint_raw</code>, <code>fastq_qc::fq_lint_trimmed</code></td>
+<td><code>fastq_qc::fq_lint_bbsplit</code>, <code>fastq_qc::fq_lint_raw</code>, <code>fastq_qc::fq_lint_rrna_bowtie2</code>, <code>fastq_qc::fq_lint_rrna_sortmerna</code>, <code>fastq_qc::fq_lint_trimmed</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_markduplicates</code></td>
@@ -807,16 +891,22 @@
 <td><code>alignment::picard_markduplicates</code>, <code>alignment::samtools_flagstat_markdup</code>, <code>alignment::samtools_idxstats_markdup</code>, <code>alignment::samtools_index_markdup</code>, <code>alignment::samtools_stats_markdup</code></td>
 </tr>
 <tr>
+<td style="text-align: right;"><code>skip_pseudo_alignment</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>prepare_genome::transcript_fasta</code>, <code>quantification::deseq2_qc_pseudo</code>, <code>quantification::kallisto_index</code>, <code>quantification::kallisto_quant_pseudo</code>, <code>quantification::kallisto_quant_pseudo_bbsplit</code>, <code>quantification::kallisto_quant_pseudo_bowtie2</code>, <code>quantification::kallisto_quant_pseudo_sortmerna</code>, <code>quantification::salmon_index</code>, <code>quantification::salmon_quant_pseudo</code>, <code>quantification::salmon_quant_pseudo_bbsplit</code>, <code>quantification::salmon_quant_pseudo_bowtie2</code>, <code>quantification::salmon_quant_pseudo_sortmerna</code>, <code>quantification::summarizedexperiment_pseudo</code>, <code>quantification::tx2gene_pseudo</code>, <code>quantification::tximport_pseudo</code></td>
+</tr>
+<tr>
 <td style="text-align: right;"><code>skip_qc</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>bam_qc::biotype_multiqc</code>, <code>bam_qc::dupradar</code>, <code>bam_qc::featurecounts</code>, <code>bam_qc::qualimap_rnaseq</code>, <code>bam_qc::rseqc_bam_stat</code>, <code>bam_qc::rseqc_infer_experiment</code>, <code>bam_qc::rseqc_inner_distance</code>, <code>bam_qc::rseqc_junction_annotation</code>, <code>bam_qc::rseqc_junction_saturation</code>, <code>bam_qc::rseqc_read_distribution</code>, <code>bam_qc::rseqc_read_duplication</code>, <code>bam_qc::samtools_sort_qualimap</code>, <code>quantification::deseq2_qc</code></td>
+<td><code>bam_qc::biotype_multiqc</code>, <code>bam_qc::dupradar</code>, <code>bam_qc::featurecounts</code>, <code>bam_qc::qualimap_rnaseq</code>, <code>bam_qc::rseqc_bam_stat</code>, <code>bam_qc::rseqc_infer_experiment</code>, <code>bam_qc::rseqc_inner_distance</code>, <code>bam_qc::rseqc_junction_annotation</code>, <code>bam_qc::rseqc_junction_saturation</code>, <code>bam_qc::rseqc_read_distribution</code>, <code>bam_qc::rseqc_read_duplication</code>, <code>bam_qc::samtools_sort_qualimap</code>, <code>prepare_genome::gene_bed</code>, <code>quantification::deseq2_qc</code>, <code>quantification::deseq2_qc_pseudo</code>, <code>quantification::deseq2_qc_rsem</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_quantification_merge</code></td>
 <td><code>false</code></td>
 <td>Cross-sample tximport merge + SummarizedExperiment RDS objects.</td>
-<td><code>quantification::deseq2_qc</code>, <code>quantification::summarizedexperiment</code>, <code>quantification::tximport</code></td>
+<td><code>quantification::deseq2_qc</code>, <code>quantification::deseq2_qc_pseudo</code>, <code>quantification::deseq2_qc_rsem</code>, <code>quantification::rsem_merge_counts</code>, <code>quantification::summarizedexperiment</code>, <code>quantification::summarizedexperiment_pseudo</code>, <code>quantification::summarizedexperiment_rsem</code>, <code>quantification::tximport</code>, <code>quantification::tximport_pseudo</code>, <code>quantification::tximport_rsem</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_stringtie</code></td>
@@ -828,13 +918,25 @@
 <td style="text-align: right;"><code>skip_trimming</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>fastq_qc::trimgalore</code></td>
+<td><code>fastq_qc::trimgalore</code>, <code>fastq_qc::trimgalore_umi</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_umi_extract</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>fastq_qc::trimgalore</code>, <code>fastq_qc::trimgalore_umi</code>, <code>fastq_qc::umitools_extract_umis</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>sortmerna_index</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>fastq_qc::sortmerna_index</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>star_index</code></td>
 <td><code>test/fixtures/reference/star_index</code></td>
 <td>—</td>
-<td><code>alignment::star_align</code></td>
+<td><code>alignment::star_align</code>, <code>alignment::star_align_bbsplit</code>, <code>alignment::star_align_bowtie2</code>, <code>alignment::star_align_rsem</code>, <code>alignment::star_align_rsem_bbsplit</code>, <code>alignment::star_align_rsem_bowtie2</code>, <code>alignment::star_align_rsem_sortmerna</code>, <code>alignment::star_align_sortmerna</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>stranded_threshold</code></td>
@@ -846,19 +948,61 @@
 <td style="text-align: right;"><code>strandedness</code></td>
 <td><code>unstranded</code></td>
 <td>Library strandedness. Upstream reads this per-sample from the samplesheet ('auto' supported); the port is pipeline-level and supports the three explicit values only. Used by featureCounts (-s), Qualimap (-p), dupRadar and the forward/reverse bigWig gates.</td>
-<td><code>bam_qc::dupradar</code>, <code>bam_qc::featurecounts</code>, <code>bam_qc::qualimap_rnaseq</code>, <code>bigwig::bedclip_fw</code>, <code>bigwig::bedclip_rev</code>, <code>bigwig::bigwig_fw</code>, <code>bigwig::bigwig_rev</code>, <code>bigwig::genomecov_fw</code>, <code>bigwig::genomecov_rev</code>, <code>multiqc_custom_content</code>, <code>quantification::salmon_quant</code>, <code>quantification::stringtie</code></td>
+<td><code>alignment::hisat2_align</code>, <code>alignment::hisat2_align_bbsplit</code>, <code>alignment::hisat2_align_bowtie2</code>, <code>alignment::hisat2_align_sortmerna</code>, <code>bam_qc::dupradar</code>, <code>bam_qc::featurecounts</code>, <code>bam_qc::qualimap_rnaseq</code>, <code>bigwig::bedclip_fw</code>, <code>bigwig::bedclip_rev</code>, <code>bigwig::bigwig_fw</code>, <code>bigwig::bigwig_rev</code>, <code>bigwig::genomecov_fw</code>, <code>bigwig::genomecov_rev</code>, <code>multiqc_custom_content</code>, <code>quantification::kallisto_quant_pseudo</code>, <code>quantification::kallisto_quant_pseudo_bbsplit</code>, <code>quantification::kallisto_quant_pseudo_bowtie2</code>, <code>quantification::kallisto_quant_pseudo_sortmerna</code>, <code>quantification::rsem_calculateexpression</code>, <code>quantification::rsem_calculateexpression_umi</code>, <code>quantification::salmon_quant</code>, <code>quantification::salmon_quant_bowtie2</code>, <code>quantification::salmon_quant_pseudo</code>, <code>quantification::salmon_quant_pseudo_bbsplit</code>, <code>quantification::salmon_quant_pseudo_bowtie2</code>, <code>quantification::salmon_quant_pseudo_sortmerna</code>, <code>quantification::salmon_quant_umi</code>, <code>quantification::stringtie</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>transcript_fasta</code></td>
 <td><code>test/fixtures/reference/transcripts.fa</code></td>
 <td>—</td>
-<td><code>quantification::salmon_quant</code></td>
+<td><code>prepare_genome::transcript_fasta</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>umi_dedup_tool</code></td>
+<td><code>umitools</code></td>
+<td>—</td>
+<td><code>alignment::bam_dedup_genome_umicollapse</code>, <code>alignment::bam_dedup_genome_umitools</code>, <code>alignment::bam_dedup_genome_umitools_primary</code>, <code>alignment::bam_dedup_genome_umitools_primary_stats</code>, <code>alignment::bam_dedup_genome_umitools_stats</code>, <code>alignment::samtools_index_primary</code>, <code>alignment::samtools_view_primary</code>, <code>quantification::bam_dedup_transcriptome_umicollapse</code>, <code>quantification::bam_dedup_transcriptome_umitools</code>, <code>quantification::bam_dedup_transcriptome_umitools_primary</code>, <code>quantification::bam_dedup_transcriptome_umitools_primary_stats</code>, <code>quantification::bam_dedup_transcriptome_umitools_stats</code>, <code>quantification::samtools_index_primary_transcriptome</code>, <code>quantification::samtools_view_primary_transcriptome</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>umi_discard_read</code></td>
+<td><code>0</code></td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>umitools_dedup_primary_only</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>alignment::bam_dedup_genome_umitools</code>, <code>alignment::bam_dedup_genome_umitools_primary</code>, <code>alignment::bam_dedup_genome_umitools_primary_stats</code>, <code>alignment::bam_dedup_genome_umitools_stats</code>, <code>alignment::samtools_index_primary</code>, <code>alignment::samtools_view_primary</code>, <code>quantification::bam_dedup_transcriptome_umitools</code>, <code>quantification::bam_dedup_transcriptome_umitools_primary</code>, <code>quantification::bam_dedup_transcriptome_umitools_primary_stats</code>, <code>quantification::bam_dedup_transcriptome_umitools_stats</code>, <code>quantification::samtools_index_primary_transcriptome</code>, <code>quantification::samtools_view_primary_transcriptome</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>umitools_dedup_stats</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>alignment::bam_dedup_genome_umitools</code>, <code>alignment::bam_dedup_genome_umitools_primary</code>, <code>alignment::bam_dedup_genome_umitools_primary_stats</code>, <code>alignment::bam_dedup_genome_umitools_stats</code>, <code>quantification::bam_dedup_transcriptome_umitools</code>, <code>quantification::bam_dedup_transcriptome_umitools_primary</code>, <code>quantification::bam_dedup_transcriptome_umitools_primary_stats</code>, <code>quantification::bam_dedup_transcriptome_umitools_stats</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>umitools_grouping_method</code></td>
+<td><code>directional</code></td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>umitools_umi_separator</code></td>
+<td>``</td>
+<td>Empty = no --umi-separator flag (upstream default null).</td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>unstranded_threshold</code></td>
 <td><code>0.1</code></td>
 <td>—</td>
 <td><code>multiqc_custom_content</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>with_umi</code></td>
+<td><code>false</code></td>
+<td>UMI handling (upstream: --with_umi / --skip_umi_extract / --umi_dedup_tool / --umitools_* / --umi_discard_read / --save_umi_intermeds; same defaults).</td>
+<td><code>alignment::bam_dedup_genome_umicollapse</code>, <code>alignment::bam_dedup_genome_umitools</code>, <code>alignment::bam_dedup_genome_umitools_primary</code>, <code>alignment::bam_dedup_genome_umitools_primary_stats</code>, <code>alignment::bam_dedup_genome_umitools_stats</code>, <code>alignment::picard_markduplicates</code>, <code>alignment::samtools_flagstat_dedup</code>, <code>alignment::samtools_flagstat_markdup</code>, <code>alignment::samtools_idxstats_dedup</code>, <code>alignment::samtools_idxstats_markdup</code>, <code>alignment::samtools_index_dedup</code>, <code>alignment::samtools_index_markdup</code>, <code>alignment::samtools_index_primary</code>, <code>alignment::samtools_stats_dedup</code>, <code>alignment::samtools_stats_markdup</code>, <code>alignment::samtools_view_primary</code>, <code>fastq_qc::trimgalore</code>, <code>fastq_qc::trimgalore_umi</code>, <code>fastq_qc::umitools_extract_umis</code>, <code>quantification::bam_dedup_transcriptome_umicollapse</code>, <code>quantification::bam_dedup_transcriptome_umitools</code>, <code>quantification::bam_dedup_transcriptome_umitools_primary</code>, <code>quantification::bam_dedup_transcriptome_umitools_primary_stats</code>, <code>quantification::bam_dedup_transcriptome_umitools_stats</code>, <code>quantification::bam_sort_transcriptome</code>, <code>quantification::bam_sort_transcriptome_bowtie2</code>, <code>quantification::rsem_calculateexpression</code>, <code>quantification::rsem_calculateexpression_umi</code>, <code>quantification::salmon_quant</code>, <code>quantification::salmon_quant_bowtie2</code>, <code>quantification::salmon_quant_umi</code>, <code>quantification::samtools_flagstat_transcriptome_dedup</code>, <code>quantification::samtools_idxstats_transcriptome_dedup</code>, <code>quantification::samtools_index_primary_transcriptome</code>, <code>quantification::samtools_sort_name_transcriptome</code>, <code>quantification::samtools_stats_transcriptome_dedup</code>, <code>quantification::samtools_view_primary_transcriptome</code>, <code>quantification::umitools_prepareforrsem</code></td>
 </tr>
 </tbody>
 </table>
@@ -872,6 +1016,20 @@
 <p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
 <p><strong>In scope</strong></p>
 <ul>
+<li>bam_dedup_genome_umicollapse</li>
+<li>bam_dedup_genome_umitools</li>
+<li>bam_dedup_genome_umitools_primary</li>
+<li>bam_dedup_genome_umitools_primary_stats</li>
+<li>bam_dedup_genome_umitools_stats</li>
+<li>bam_dedup_transcriptome_umicollapse</li>
+<li>bam_dedup_transcriptome_umitools</li>
+<li>bam_dedup_transcriptome_umitools_primary</li>
+<li>bam_dedup_transcriptome_umitools_primary_stats</li>
+<li>bam_dedup_transcriptome_umitools_stats</li>
+<li>bam_sort_transcriptome</li>
+<li>bam_sort_transcriptome_bowtie2</li>
+<li>bbsplit</li>
+<li>bbsplit_index</li>
 <li>bedclip_combined</li>
 <li>bedclip_fw</li>
 <li>bedclip_rev</li>
@@ -879,19 +1037,53 @@
 <li>bigwig_fw</li>
 <li>bigwig_rev</li>
 <li>biotype_multiqc</li>
+<li>bowtie2_align</li>
+<li>bowtie2_align_bbsplit</li>
+<li>bowtie2_align_bowtie2</li>
+<li>bowtie2_align_rrna</li>
+<li>bowtie2_align_rrna_bbsplit</li>
+<li>bowtie2_align_sortmerna</li>
+<li>bowtie2_index</li>
+<li>bowtie2_rrna_index</li>
+<li>chrom_sizes</li>
 <li>deseq2_qc</li>
+<li>deseq2_qc_pseudo</li>
+<li>deseq2_qc_rsem</li>
 <li>dupradar</li>
+<li>fastqc_filtered_bbsplit</li>
+<li>fastqc_filtered_bowtie2</li>
+<li>fastqc_filtered_sortmerna</li>
 <li>fastqc_raw</li>
 <li>featurecounts</li>
+<li>fq_lint_bbsplit</li>
 <li>fq_lint_raw</li>
+<li>fq_lint_rrna_bowtie2</li>
+<li>fq_lint_rrna_sortmerna</li>
 <li>fq_lint_trimmed</li>
+<li>gene_bed</li>
 <li>genomecov_combined</li>
 <li>genomecov_fw</li>
 <li>genomecov_rev</li>
+<li>hisat2_align</li>
+<li>hisat2_align_bbsplit</li>
+<li>hisat2_align_bowtie2</li>
+<li>hisat2_align_sortmerna</li>
+<li>hisat2_index</li>
+<li>hisat2_splicesites</li>
+<li>kallisto_index</li>
+<li>kallisto_quant_pseudo</li>
+<li>kallisto_quant_pseudo_bbsplit</li>
+<li>kallisto_quant_pseudo_bowtie2</li>
+<li>kallisto_quant_pseudo_sortmerna</li>
 <li>multiqc</li>
 <li>multiqc_custom_content</li>
 <li>picard_markduplicates</li>
 <li>qualimap_rnaseq</li>
+<li>rrna_fastas_prepare</li>
+<li>rsem_calculateexpression</li>
+<li>rsem_calculateexpression_umi</li>
+<li>rsem_index</li>
+<li>rsem_merge_counts</li>
 <li>rseqc_bam_stat</li>
 <li>rseqc_infer_experiment</li>
 <li>rseqc_inner_distance</li>
@@ -899,35 +1091,70 @@
 <li>rseqc_junction_saturation</li>
 <li>rseqc_read_distribution</li>
 <li>rseqc_read_duplication</li>
+<li>salmon_index</li>
 <li>salmon_quant</li>
+<li>salmon_quant_bowtie2</li>
+<li>salmon_quant_pseudo</li>
+<li>salmon_quant_pseudo_bbsplit</li>
+<li>salmon_quant_pseudo_bowtie2</li>
+<li>salmon_quant_pseudo_sortmerna</li>
+<li>salmon_quant_umi</li>
+<li>samtools_fastq_rrna</li>
+<li>samtools_flagstat_dedup</li>
 <li>samtools_flagstat_markdup</li>
 <li>samtools_flagstat_sorted</li>
+<li>samtools_flagstat_transcriptome_dedup</li>
+<li>samtools_idxstats_dedup</li>
 <li>samtools_idxstats_markdup</li>
 <li>samtools_idxstats_sorted</li>
+<li>samtools_idxstats_transcriptome_dedup</li>
+<li>samtools_index_dedup</li>
 <li>samtools_index_markdup</li>
+<li>samtools_index_primary</li>
+<li>samtools_index_primary_transcriptome</li>
 <li>samtools_index_sorted</li>
 <li>samtools_sort</li>
+<li>samtools_sort_bowtie2</li>
+<li>samtools_sort_hisat2</li>
+<li>samtools_sort_name_transcriptome</li>
 <li>samtools_sort_qualimap</li>
+<li>samtools_stats_dedup</li>
 <li>samtools_stats_markdup</li>
 <li>samtools_stats_sorted</li>
+<li>samtools_stats_transcriptome_dedup</li>
+<li>samtools_view_primary</li>
+<li>samtools_view_primary_transcriptome</li>
+<li>samtools_view_rrna</li>
+<li>sortmerna</li>
+<li>sortmerna_bbsplit</li>
+<li>sortmerna_index</li>
 <li>star_align</li>
+<li>star_align_bbsplit</li>
+<li>star_align_bowtie2</li>
+<li>star_align_rsem</li>
+<li>star_align_rsem_bbsplit</li>
+<li>star_align_rsem_bowtie2</li>
+<li>star_align_rsem_sortmerna</li>
+<li>star_align_sortmerna</li>
 <li>stringtie</li>
 <li>summarizedexperiment</li>
+<li>summarizedexperiment_pseudo</li>
+<li>summarizedexperiment_rsem</li>
+<li>transcript_fasta</li>
 <li>trimgalore</li>
+<li>trimgalore_umi</li>
 <li>tx2gene</li>
+<li>tx2gene_pseudo</li>
+<li>tx2gene_rsem</li>
 <li>tximport</li>
+<li>tximport_pseudo</li>
+<li>tximport_rsem</li>
+<li>umitools_extract_umis</li>
+<li>umitools_prepareforrsem</li>
 </ul>
 <p><strong>Excluded</strong></p>
 <ul>
-<li>rsem / hisat2 / umicollapse quantification and as_quantification — non-default aligner branches, not ported</li>
-<li>PREPARE_GENOME — reference artifacts (fasta, gtf, transcript_fasta, gene_bed, chrom_sizes, star_index) are inputs</li>
-<li>per-sample min_trimmed_reads filtering — data-dependent per-sample state; only the MultiQC fail_trimmed table is produced</li>
-<li>UMI extraction (umitools) — --with_umi branch, off by default</li>
-<li>BBSplit — --skip_bbsplit default path only</li>
-<li>SortMeRNA / Bowtie2 rRNA removal — ribo-removal is off by default</li>
-<li>cat_fastq — only active for samples with more than one fastq pair</li>
-<li>DESeq2 QC sample-name group decomposition (Group columns for PCA-by-group plots) — coldata is the sample IDs only</li>
-<li>auto strandedness (per-sample inference from the samplesheet) — pipeline-level config.strandedness with forward/reverse/unstranded values only</li>
+<li>PREPARE_GENOME <code>.tar.gz</code> reference bundles — bbsplit / sortmerna index archives; the GTF preprocessing chain itself (CUSTOM_GTFFILTER with the upstream filter_gtf_needed gate, gffread GFF-&gt;GTF, additional_fasta transgenes with biotype featurecounts_group_type / gene_type, GENCODE preprocessing, .gz references) is ported as gated prepare_genome::* builder rules with canonical results/reference/ artifacts</li>
 <li>workflow_summary_mqc.yaml / methods_description_mqc.yaml — Nextflow-param-rendered MultiQC sections</li>
 </ul>
 <h2 id="fidelity">Fidelity</h2>
@@ -950,20 +1177,20 @@ the exact upstream conda version (see <code>envs/</code>).</p>
 <tr>
 <td>1</td>
 <td>Per-sample strandedness from the samplesheet (<code>auto</code> supported)</td>
-<td>Pipeline-level <code>config.strandedness</code>, three explicit values only</td>
-<td>oxo-flow has one config per run; <code>auto</code> needs a Salmon inference branch</td>
+<td>Ported via a <code>metadata_file</code> <code>strandedness</code> column: <code>forward</code> / <code>reverse</code> / <code>unstranded</code> resolve per sample, empty / <code>auto</code> / missing cells fall back to <code>config.strandedness</code>, bigWig FW/REV rules prune per sample at plan time</td>
+<td><code>auto</code> resolves to the pipeline-level value instead of a Salmon <code>--libType A</code> inference run; runs without a <code>metadata_file</code> keep the previous single-config behavior</td>
 </tr>
 <tr>
 <td>2</td>
-<td><code>PREPARE_GENOME</code> builds the STAR index</td>
-<td>Reference artifacts (incl. STAR index) are inputs</td>
-<td>Excluded as infra; build once and point <code>config.star_index</code> at it</td>
+<td><code>PREPARE_GENOME</code> derives the reference artifacts (gene_bed via EAUTILS_GTF2BED, chrom_sizes via SAMTOOLS_FAIDX, transcript_fasta via RSEM_PREPAREREFERENCE) and builds the branch indexes (STAR / HISAT2 / RSEM / Salmon)</td>
+<td>The artifact derivations are ported as <code>prepare_genome::gene_bed</code> / <code>chrom_sizes</code> / <code>transcript_fasta</code> builder rules (empty config key = derive from fasta + gtf like upstream; non-empty key = the user path is symlinked in); the index builders: STAR via the <code>[[references]]</code> builder, HISAT2 / RSEM / Salmon / Bowtie2 / Kallisto via when-gated builder rules</td>
+<td>The GTF preprocessing chain is ported (CUSTOM_GTFFILTER with the upstream <code>filter_gtf_needed</code> gate, gffread GFF→GTF, additional_fasta transgenes, GENCODE preprocessing, <code>.gz</code> references — see <code>modules/prepare_genome.oxoflow</code>); fasta and gtf remain required inputs; <code>.tar.gz</code> index bundles (bbsplit / sortmerna) stay excluded</td>
 </tr>
 <tr>
 <td>3</td>
-<td>RSEM / HISAT2 / UMIcollapse quantification and <code>as_quantification</code></td>
-<td>Not ported</td>
-<td>Non-default aligner branches (scope: default <code>star_salmon</code> main path)</td>
+<td>Non-default branches: <code>star_rsem</code>, <code>hisat2</code>, <code>bowtie2_salmon</code>, <code>--with_umi</code>, <code>--pseudo_aligner salmon</code>, <code>--pseudo_aligner kallisto</code></td>
+<td>Ported — see rows 16-27 for their deviations</td>
+<td>RSEM runs in <code>--alignments</code> mode in every RSEM path, exactly like upstream (the nf-core <code>as_quantification</code> mode never existed in the rnaseq pipeline)</td>
 </tr>
 <tr>
 <td>4</td>
@@ -1028,17 +1255,99 @@ the exact upstream conda version (see <code>envs/</code>).</p>
 <tr>
 <td>14</td>
 <td>DESEQ2_QC (default path, runs on <code>salmon.merged.gene_counts_length_scaled.tsv</code> with <code>--id_col 1 --sample_suffix '' --count_col 3</code>, <code>--vst TRUE</code> by default)</td>
-<td>Ported as <code>quantification::deseq2_qc</code> with the upstream header sed (label <code>star_salmon</code>)</td>
-<td>Blind design (<code>design=~1</code>, as upstream); upstream's sample-name group decomposition (Group columns for PCA-by-group plots) is not ported — coldata is the sample IDs only; the <code>star_salmon.*_mqc.tsv</code> tables are kept in <code>results/</code> (upstream feeds them to MultiQC without publishing). Like <code>skip_qc</code> for the other QC files, <code>skip_deseq2_qc=true</code> / <code>skip_quantification_merge=true</code> leave the MultiQC rule's DESeq2 inputs missing — use the defaults</td>
+<td>Ported as <code>quantification::deseq2_qc</code> with the upstream header sed (label <code>star_salmon</code>); the port script is byte-identical to upstream <code>bin/deseq2_qc.r</code> and the three args equal the script's defaults (upstream <code>conf/modules/deseq2_qc.config</code> passes them explicitly)</td>
+<td>Blind design (<code>design=~1</code>, as upstream), with the upstream sample-name group decomposition (Group1/Group2 coldata columns split on <code>_</code> when the sample names decompose consistently) live in the byte-identical script; the <code>star_salmon.*_mqc.tsv</code> tables are kept in <code>results/</code> (upstream feeds them to MultiQC without publishing). Like <code>skip_qc</code> for the other QC files, <code>skip_deseq2_qc=true</code> / <code>skip_quantification_merge=true</code> leave the MultiQC rule's DESeq2 inputs missing — use the defaults</td>
 </tr>
 <tr>
 <td>15</td>
-<td>UMI extraction (<code>umitools</code>), BBSplit, SortMeRNA/Bowtie2 rRNA removal, <code>cat_fastq</code></td>
-<td>Not ported</td>
-<td><code>with_umi</code> / <code>--skip_bbsplit</code> (default) / ribo-removal (off by default) / multi-fastq-sample branches</td>
+<td>UMI extraction (<code>umitools</code>), BBSplit, SortMeRNA/Bowtie2 rRNA removal</td>
+<td>Ported as when-gated rules (off by default, same gates as upstream: <code>with_umi</code> / <code>!skip_bbsplit</code> / <code>remove_ribo_rna</code> + <code>ribo_removal_tool</code>)</td>
+<td>The four trimmed-read variants each feed the aligners, quantification and MultiQC exactly like upstream; <code>cat_fastq</code> multi-pair read merging is ported as <code>fastq_qc::cat_reads</code> (input_groups, single-pair samples pass through byte-identically)</td>
+</tr>
+<tr>
+<td>16</td>
+<td>UMI transcriptome intermediates are unpublished Nextflow work-dir files (<code>{id}.bam</code>, <code>{id}.sorted.bam</code>, <code>{id}.filtered.bam</code> from <code>bam_dedup_umi</code>'s SAMTOOLS_SORT / UMITOOLS_PREPAREFORRSEM)</td>
+<td>Stable canonical names: <code>{sample}.transcriptome.sorted.bam</code> → <code>{sample}.umi_dedup.transcriptome.sorted.bam</code> → <code>{sample}.umi_dedup.transcriptome.bam</code> → <code>{sample}.umi_dedup.transcriptome.filtered.bam</code></td>
+<td>oxo-flow has no work dirs; every intermediate is a declared output. Published names are unchanged upstream (logs, stats, prepared BAM)</td>
+</tr>
+<tr>
+<td>17</td>
+<td>UMI dedup outputs are tool-specific upstream (<code>{prefix}.dedup.bam</code> from UMITOOLS_DEDUP, <code>{prefix}.UMICollapse.bam</code> from UMICOLLAPSE)</td>
+<td>All four umitools variants and the umicollapse variant write the shared path <code>{sample}.markdup.sorted.bam</code> (exclusive when-gates; downstream rules resolve one path)</td>
+<td>Duplicate-output exclusive-gate idiom — same published artifact set per config; the <code>.log</code> / <code>_UMICollapse.log</code> logs keep their tool-specific names</td>
+</tr>
+<tr>
+<td>18</td>
+<td>Transcriptome-side BAM stats (<code>samtools_stats</code> for <code>{prefix}.umi_dedup.transcriptome.sorted.bam</code>)</td>
+<td>Only the dedup-side stats are ported (<code>{aligner}/samtools_stats/{sample}.umi_dedup.transcriptome.sorted.bam.{stats,flagstat,idxstats}</code>); the coordinate-sorted index + sort-side stats are not</td>
+<td>Sort-side stats and the index are unpublished upstream unless <code>--save_umi_intermeds</code>; dedup-side stats publish unconditionally. MultiQC excludes the transcriptome stats upstream too (<code>bam_dedup_umi</code> never mixes them into <code>multiqc_files</code>) — the port mirrors that</td>
+</tr>
+<tr>
+<td>19</td>
+<td><code>RSEM_PREPAREREFERENCE</code> emits <code>transcripts.fa</code> next to the index</td>
+<td>The <code>rsem_index</code> builder does not emit it; the separate <code>prepare_genome::transcript_fasta</code> builder derives <code>reference/transcripts.fa</code> for the Salmon / bowtie2 / pseudo-alignment consumers (gated off the star_rsem branch)</td>
+<td>Nothing in the RSEM chain consumes <code>transcripts.fa</code>; the align-mode RSEM input is the toTranscriptome BAM</td>
+</tr>
+<tr>
+<td>20</td>
+<td><code>STAR_ALIGN</code> passes no <code>--limitBAMsortRAM</code></td>
+<td>The port adds <code>--limitBAMsortRAM $(( effective_memory_mb * 1000000 ))</code></td>
+<td>Without it STAR's 50 GB default sort-RAM cap can fail on small hosts; the value is derived from the rule's memory like every other engine resource</td>
+</tr>
+<tr>
+<td>21</td>
+<td><code>HISAT2_EXTRACTSPLICESITES</code> names the splice-site file after the GTF (<code>{gtf.baseName}.splice_sites.txt</code>)</td>
+<td>Fixed canonical path <code>reference/genes.splice_sites.txt</code></td>
+<td>The port's hisat2 index builder and align rules consume it; the align command's <code>--rna-strandness</code> is rendered via a shell branch (FR forward / RF reverse / omitted unstranded — same values as the upstream <code>meta.strandedness</code> branch)</td>
+</tr>
+<tr>
+<td>22</td>
+<td><code>SALMON_QUANT</code> (alignment mode) runs without <code>--no-version-check</code></td>
+<td>The port adds <code>--no-version-check</code></td>
+<td>Pre-existing port-wide deviation kept for consistency across all salmon quant rules (bam / umi / pseudo)</td>
+</tr>
+<tr>
+<td>23</td>
+<td>RSEM tximport reads the flat per-sample <code>*.isoforms.results</code> files; <code>DESEQ2_QC_RSEM</code> passes <code>--id_col 1 --sample_suffix '' --count_col 3</code> via the rsem deseq2 config</td>
+<td><code>tx2gene_rsem</code> stages the first sample's <code>isoforms.results</code> into a flat dir (same first-sample semantics as the salmon tx2gene); <code>deseq2_qc_rsem</code> passes the three args explicitly</td>
+<td>The args equal the port script defaults but are passed explicitly for parity; the flat staging preserves the upstream first-sample <code>.first()</code> semantics</td>
+</tr>
+<tr>
+<td>24</td>
+<td><code>bowtie2_salmon</code> aligner: <code>BOWTIE2_ALIGN</code> (sort_bam=false → <code>samtools view</code> keeps the query-grouped orig_bam) → <code>BAM_SORT_STATS_SAMTOOLS</code> → <code>QUANTIFY_BAM_SALMON</code> on the orig_bam; the BAM-chain prefix is hardcoded <code>salmon.merged</code></td>
+<td>Ported as <code>alignment::bowtie2_index</code> + <code>bowtie2_align</code> (+3 read-source variants) + <code>samtools_sort_bowtie2</code>; <code>quantification::salmon_quant_bowtie2</code> quantifies the orig_bam (<code>-t transcript_fasta -a orig_bam</code>); tx2gene/tximport/SE/DESeq2 share the star_salmon rules via widened when-gates</td>
+<td>The upstream <code>salmon.merged</code> prefix quirk is preserved (quantify_bam_salmon.config hardcodes it for both aligners); the UMI transcriptome chain (<code>bam_sort_transcriptome_bowtie2</code> → dedup → <code>salmon_quant_umi</code>) mirrors the STAR chain; the MultiQC fail_mapped table keeps the hardcoded <code>STAR uniquely mapped reads (%)</code> header with the percent parsed from <code>{id}.bowtie2.log</code> ("N% overall alignment rate") — an upstream quirk of multiqc_rnaseq</td>
+</tr>
+<tr>
+<td>25</td>
+<td><code>kallisto</code> pseudo-aligner: <code>KALLISTO_INDEX</code> (<code>kallisto index -k 31 -i kallisto tx.fa</code>, process_medium) + <code>KALLISTO_QUANT</code> (process_high, <code>--gtf</code>, <code>--fr/--rf-stranded</code> from strandedness, <code>2&gt; &gt;(tee log)</code>)</td>
+<td>Ported as <code>quantification::kallisto_index</code> + <code>kallisto_quant_pseudo</code> (+3 read-source variants) reusing the salmon pseudo branch's when gates; tx2gene/tximport/SE/DESeq2 pseudo rules are shared via widened when-gates with the tool label (<code>--quant-type</code>, MultiQC <code>KALLISTO DESeq2 ...</code> labels)</td>
+<td>The port scripts (tx2gene.py / tximport.r) already handle kallisto (<code>abundance.tsv</code>, <code>dropInfReps=TRUE</code>); <code>-k</code> comes from <code>config.pseudo_aligner_kmer_size</code> (upstream default 31); extra_kallisto_quant_args stays at the upstream default (null)</td>
+</tr>
+<tr>
+<td>26</td>
+<td><code>KALLISTO_QUANT</code> logs: upstream publishes the work-dir <code>{prefix}.log</code> (the <code>.run_info.json</code> and <code>.log</code> copies are unpublished, saveAs null) and feeds MultiQC from the work dir</td>
+<td>The port declares <code>{pseudo_aligner}/&lt;id&gt;/kallisto_quant.log</code> as a rule output and stages it into MultiQC as <code>&lt;id&gt;.kallisto_quant.log</code></td>
+<td>oxo-flow has no work dirs, so the log must be a declared output to reach MultiQC; the MultiQC kallisto module matches by content ("[quant] finding pseudoalignments for the reads"), so the per-sample rename is safe</td>
+</tr>
+<tr>
+<td>27</td>
+<td><code>DESEQ2_QC_PSEUDO</code> MultiQC labels come from <code>params.pseudo_aligner</code> (SALMON / KALLISTO)</td>
+<td>The port derives the label from <code>config.pseudo_aligner</code> at render time (<code>tr [:lower:] [:upper:]</code>)</td>
+<td>Config-derived label — same value as upstream's param-derived label</td>
 </tr>
 </tbody>
 </table>
+<p><strong>Not ported (metadata <code>excluded</code>):</strong></p>
+<p>Per-sample <code>min_trimmed_reads</code> filtering (data-dependent per-sample state;
+only the MultiQC fail_trimmed table is produced); <code>auto</code> strandedness
+inference without a metadata_file column (with the column, <code>auto</code> / empty
+values fall back to <code>config.strandedness</code> — no Salmon <code>--libType A</code>
+inference run); <code>.tar.gz</code> reference bundles for the bbsplit / sortmerna
+indexes (gtf, gff, fasta, additional_fasta and transcript_fasta accept plain
+or <code>.gz</code> paths like upstream); the Nextflow-param-rendered MultiQC sections
+(<code>workflow_summary_mqc.yaml</code> / <code>methods_description_mqc.yaml</code>).</p>
+<p><strong>Test fixtures</strong> (reworked live, engine 0.15.0): 60 genes (DESeq2's dispersion fit needs gene support — 4 genes x 6 samples still failed <code>estimateDispersionsFit</code>) spread 100x apart (contiguous aligners like bowtie2 collide on packed genes — live: 64% Picard duplicates, dupRadar density NaN); unique read fragments only (random draws over 400 bp exons collided massively — 64% duplicates live, dupRadar bandwidth NaN); log-normal expression-weighted reads with PCR duplicates biased to high-expression genes (~5% overall, like real data — a uniform dup rate collapsed dupRadar's density bandwidth); FR-oriented mates with identical read names (<code>@S1_1</code> — forward-forward mates made STAR classify every pair as 'too short'). bowtie2_salmon live note (engine 0.15.0): under a contiguous aligner the ~30% spliced fixture reads map clipped and their positional collisions dominate dupRadar's density plot — <code>duprateExpDensPlot</code> dies with a NaN bandwidth (upstream script unchanged); alignment, Salmon quant and DESeq2 all pass; the dupRadar density plot needs real-library data.</p>
 <h2 id="links">Links</h2>
 <ul>
 <li>Repository: <a href="https://github.com/oxo-flow-community/oxo-flow-rnaseq">oxo-flow-rnaseq</a></li>
@@ -1081,7 +1390,7 @@ the exact upstream conda version (see <code>envs/</code>).</p>
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      © 2026 oxo-flow-community · Apache-2.0 · Ports are based on their upstream workflows — see each repository's NOTICE.
+      © 2026 <a href="https://github.com/oxo-flow-community">oxo-flow-community</a> · Apache-2.0 · engine <a href="https://github.com/Traitome/oxo-flow">oxo-flow</a> · <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues">issues</a> · evidence: ✔ live-tested ⊃ ★ verified ⊃ ☆ community · ports are based on their upstream workflows — see each repository's NOTICE
     </div>
   
   

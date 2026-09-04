@@ -23,7 +23,7 @@
     
     
       
-        <title>ChIP-seq: peak calling, QC and differential analysis - oxo-flow-community</title>
+        <title>Oxo flow chipseq - oxo-flow-community</title>
       
     
     
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              ChIP-seq: peak calling, QC and differential analysis
+              Oxo flow chipseq
             
           </span>
         </div>
@@ -601,76 +601,46 @@
   
 
 
+<div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-chipseq</span></div>
+<div class="ox-detail-cols">
+<div>
 <h1 id="chip-seq-peak-calling-qc-and-differential-analysis">ChIP-seq: peak calling, QC and differential analysis</h1>
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
-
-<p>ChIP-seq peak calling, QC and differential analysis for paired-end reads: FastQC and Trim Galore read QC, BWA-MEM alignment, library merge and Picard mark-duplicates, BAMTools filtering against a blacklist with orphan-read removal, preseq and phantompeakqualtools library complexity QC, bigWig tracks and deepTools QC plots, MACS3 broad-peak calling with input controls, HOMER peak annotation, FRiP scoring, consensus peaks across replicates (MACS3 merge, featureCounts quantification, DESeq2 QC), an IGV session and a MultiQC report.</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: right;"></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: right;"><strong>Rating</strong></td>
-<td>✔ Live-tested</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Origin</strong></td>
-<td>port</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Domain</strong></td>
-<td>genomics</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Rules</strong></td>
-<td>46</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Compute</strong></td>
-<td>up to 12 CPUs / 72 GB per rule</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Tools</strong></td>
-<td>fastqc · trim-galore · bwa · samtools · picard · bamtools · preseq · r-base · phantompeakqualtools · bedtools · ucsc-bedgraphtobigwig · deeptools · khmer · macs3 · homer · subread · multiqc · python</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Ported</strong></td>
-<td>2026-08-15</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>License</strong></td>
-<td>Apache-2.0</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Source</strong></td>
-<td><a href="https://github.com/nf-core/chipseq">nf-core/chipseq</a></td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Pinned version</strong></td>
-<td><code>2.1.0</code></td>
-</tr>
-</tbody>
-</table>
+<p>ChIP-seq peak calling, QC and differential analysis for paired-end reads: FastQC and Trim Galore read QC, BWA-MEM (default), Bowtie2, Chromap or STAR alignment, library merge and Picard mark-duplicates, BAMTools filtering against a blacklist with orphan-read removal, preseq and phantompeakqualtools library complexity QC, bigWig tracks and deepTools QC plots, MACS3 peak calling with input controls in broad (default) or narrow mode, HOMER peak annotation, FRiP scoring, consensus peaks across replicates (MACS3 merge, featureCounts quantification, DESeq2 QC), an IGV session and a MultiQC report. Optional multi-antibody mode (metadata_file + input_groups group_by meta.antibody) runs the consensus chain once per distinct antibody. Optional gated rules derive the gene-body BED from the GTF (GTF2BED), the blacklist-complement regions file, the chromosome sizes and FASTA index (CUSTOM_GETCHROMSIZES), and BWA / Bowtie2 / Chromap / STAR indexes from the reference FASTA.</p>
+</div>
+<div>
+<div class="ox-glance">
+<div class="ox-glance-title">At a glance</div>
+<div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested · default-path</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">83</span></div>
+<div class="ox-kv"><span class="k">Compute</span><span class="v">up to 12 CPUs / 72 GB per rule (bwa_mem, bowtie2_align, star_align, trimgalore, star_genomegenerate); bowtie2_index_build 12 CPUs / 36 GB; most rules request 6 CPUs / 36 GB (chromap_align, chromap_index_build included)</span></div>
+<div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Domain</span><span class="v">genomics</span></div>
+<div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/nf-core/chipseq">nf-core/chipseq</a></span></div>
+<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>2.1.0</code></span></div>
+<div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
+<div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
+<p class="cmd">$ oxo-flow run main.oxoflow</p>
+</div>
+</div>
+</div>
 <h2 id="run-it">Run it</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>oxo-flow<span class="w"> </span>run<span class="w"> </span>main.oxoflow
 </code></pre></div>
-<p>Runs the default path on the shipped fixtures — about 154 instances.</p>
+<p>Runs the default path on the shipped fixtures — about 153 instances (212-rule DAG; 59 rules gated off). Multi-antibody runs: <code>oxo-flow run main.oxoflow --profile multi_antibody</code> (consensus chain once per antibody). Preview with <code>oxo-flow dry-run main.oxoflow</code>.</p>
 <h2 id="installation">Installation</h2>
-<p><strong>Engine.</strong> oxo-flow &gt;= 0.12.0</p>
+<p><strong>Engine.</strong> oxo-flow &gt;= 0.17.0</p>
 <p><strong>Toolchain.</strong> containers (Docker/Singularity) — pinned images</p>
 <p><strong>Requirements.</strong>
-- genome FASTA and FASTA index (fasta, fai)
+- genome FASTA (fasta; a FASTA index fai is only required with make_star_index)
 - annotation GTF (gtf)
-- gene-body regions BED, derived upstream via GTF2BED (gene_bed)
-- chromosome sizes file (chrom_sizes)
+- gene-body regions BED, derived upstream via GTF2BED (gene_bed, or derive with make_gene_bed=true)
+- chromosome sizes file (chrom_sizes, or derive with make_chrom_sizes=true)
 - blacklist regions BED (blacklist)
-- BWA index directory for the reference FASTA (bwa_index: <em>.amb, </em>.ann, <em>.bwt, </em>.pac, *.sa)
-- raw paired-end FASTQ reads named raw/{pair_id}_R{1,2}.fastq.gz with sample metadata in [[pairs]] and ip_ids
-- compute: up to 12 CPUs / 72 GB per rule (bwa_mem, trimgalore); most rules request 6 CPUs / 36 GB
+- aligner index — BWA index directory (bwa_index: <em>.amb, </em>.ann, <em>.bwt, </em>.pac, *.sa); for aligner='bowtie2' a Bowtie2 index directory (bowtie2_index), for aligner='chromap' a Chromap index file (chromap_index), and for aligner='star' a STAR index directory (star_index). Each can be built from the FASTA with the matching make_bwa_index / make_bowtie2_index / make_chromap_index / make_star_index gated rule
+- raw paired-end FASTQ reads named raw/{pair_id}_R{1,2}.fastq.gz with sample metadata in [[pairs]] and ip_ids (multi-antibody runs add a metadata_file TSV with an antibody column; see README)
+- compute: up to 12 CPUs / 72 GB per rule (bwa_mem, bowtie2_align, star_align, trimgalore, star_genomegenerate); most rules request 6 CPUs / 36 GB
 - disk: several GB of pinned container images pulled by Docker/Singularity</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># 1. install oxo-flow (release binary, recommended)</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>curl<span class="w"> </span>-fL<span class="w"> </span>-o<span class="w"> </span>oxo-flow.tar.gz<span class="w"> </span>https://github.com/Traitome/oxo-flow/releases/latest/download/oxo-flow-latest-x86_64-unknown-linux-gnu.tar.gz
@@ -698,21 +668,33 @@
 </thead>
 <tbody>
 <tr>
+<td style="text-align: right;"><code>aligner</code></td>
+<td><code>bwa</code></td>
+<td>Alignment / filtering. aligner selects the read aligner: 'bwa' (the nf-core default), 'bowtie2', 'chromap' or 'star'. Each mode takes a pre-built index (bwa_index directory / bowtie2_index directory / chromap_index file / star_index directory, e.g. from the upstream iGenomes bundle) — or derives it from the reference FASTA with the gated builders below, mirroring the upstream PREPARE_GENOME index branches (make_bwa_index / make_bowtie2_index / make_chromap_index / make_star_index; point the corresponding index config at the generated results/... path in that case).</td>
+<td><code>align::bowtie2_align</code>, <code>align::bwa_mem</code>, <code>align::chromap_align</code>, <code>align::star_align</code>, <code>reference::bowtie2_index_build</code>, <code>reference::bwa_index_build</code>, <code>reference::chromap_index_build</code>, <code>reference::star_genomegenerate</code></td>
+</tr>
+<tr>
 <td style="text-align: right;"><code>antibody</code></td>
 <td><code>H3K4me3</code></td>
 <td>—</td>
-<td><code>consensus::annotate_boolean_peaks</code>, <code>consensus::deseq2_qc</code>, <code>consensus::homer_annotate_consensus</code>, <code>consensus::macs3_consensus</code>, <code>consensus::subread_featurecounts</code>, <code>report::igv</code>, <code>report::multiqc</code></td>
+<td><code>consensus::annotate_boolean_peaks</code>, <code>consensus::annotate_boolean_peaks_narrow</code>, <code>consensus::deseq2_qc</code>, <code>consensus::deseq2_qc_narrow</code>, <code>consensus::homer_annotate_consensus</code>, <code>consensus::homer_annotate_consensus_narrow</code>, <code>consensus::macs3_consensus</code>, <code>consensus::macs3_consensus_narrow</code>, <code>consensus::subread_featurecounts</code>, <code>consensus::subread_featurecounts_narrow</code>, <code>report::igv</code>, <code>report::igv_narrow</code>, <code>report::multiqc</code>, <code>report::multiqc_narrow</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>blacklist</code></td>
 <td><code>test/fixtures/references/blacklist.bed</code></td>
 <td>—</td>
-<td><code>filter::bamtools_filter</code></td>
+<td><code>filter::bamtools_filter</code>, <code>reference::blacklist_regions</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>bowtie2_index</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>align::bowtie2_align</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>broad_cutoff</code></td>
 <td><code>0.1</code></td>
-<td>Peaks (broad mode only — the nf-core default)</td>
+<td>—</td>
 <td><code>peaks::macs3_callpeak</code></td>
 </tr>
 <tr>
@@ -724,14 +706,20 @@
 <tr>
 <td style="text-align: right;"><code>bwa_min_score</code></td>
 <td><code>0</code></td>
-<td>Alignment / filtering</td>
+<td>—</td>
 <td><code>align::bwa_mem</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>chrom_sizes</code></td>
 <td><code>test/fixtures/references/chrom.sizes</code></td>
 <td>—</td>
-<td><code>tracks::ucsc_bedgraphtobigwig</code></td>
+<td><code>reference::blacklist_regions</code>, <code>tracks::ucsc_bedgraphtobigwig</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>chromap_index</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>align::chromap_align</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>clip_r1</code></td>
@@ -749,13 +737,13 @@
 <td style="text-align: right;"><code>fai</code></td>
 <td><code>test/fixtures/references/genome.fa.fai</code></td>
 <td>—</td>
-<td><code>align::markduplicates</code>, <code>filter::picard_collectmultiplemetrics</code></td>
+<td><code>align::markduplicates</code>, <code>filter::picard_collectmultiplemetrics</code>, <code>reference::star_genomegenerate</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>fasta</code></td>
 <td><code>test/fixtures/references/genome.fa</code></td>
 <td>—</td>
-<td><code>align::bwa_mem</code>, <code>align::index_align</code>, <code>align::index_markdup</code>, <code>align::markduplicates</code>, <code>align::mergesamfiles</code>, <code>align::sort_align</code>, <code>align::stats_align</code>, <code>align::stats_markdup</code>, <code>consensus::homer_annotate_consensus</code>, <code>filter::index_filter</code>, <code>filter::picard_collectmultiplemetrics</code>, <code>filter::sort_filter</code>, <code>filter::sort_name</code>, <code>filter::stats_filter</code>, <code>peaks::homer_annotatepeaks</code>, <code>report::igv</code>, <code>tracks::khmer</code></td>
+<td><code>align::bowtie2_align</code>, <code>align::bwa_mem</code>, <code>align::chromap_align</code>, <code>align::index_align</code>, <code>align::index_markdup</code>, <code>align::markduplicates</code>, <code>align::mergesamfiles</code>, <code>align::sort_align</code>, <code>align::stats_align</code>, <code>align::stats_markdup</code>, <code>consensus::homer_annotate_consensus</code>, <code>consensus::homer_annotate_consensus_narrow</code>, <code>filter::index_filter</code>, <code>filter::picard_collectmultiplemetrics</code>, <code>filter::sort_filter</code>, <code>filter::sort_name</code>, <code>filter::stats_filter</code>, <code>peaks::homer_annotatepeaks</code>, <code>peaks::homer_annotatepeaks_narrow</code>, <code>reference::bowtie2_index_build</code>, <code>reference::bwa_index_build</code>, <code>reference::chromap_index_build</code>, <code>reference::getchromsizes</code>, <code>reference::star_genomegenerate</code>, <code>report::igv</code>, <code>report::igv_narrow</code>, <code>tracks::khmer</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>fingerprint_bins</code></td>
@@ -779,7 +767,7 @@
 <td style="text-align: right;"><code>gtf</code></td>
 <td><code>test/fixtures/references/genome.gtf</code></td>
 <td>—</td>
-<td><code>consensus::homer_annotate_consensus</code>, <code>peaks::homer_annotatepeaks</code></td>
+<td><code>consensus::homer_annotate_consensus</code>, <code>consensus::homer_annotate_consensus_narrow</code>, <code>peaks::homer_annotatepeaks</code>, <code>peaks::homer_annotatepeaks_narrow</code>, <code>reference::gtf2bed</code>, <code>reference::star_genomegenerate</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>ip_ids</code></td>
@@ -803,37 +791,85 @@
 <td style="text-align: right;"><code>macs_fdr</code></td>
 <td><code>0</code></td>
 <td>—</td>
-<td><code>peaks::macs3_callpeak</code></td>
+<td><code>peaks::macs3_callpeak</code>, <code>peaks::macs3_callpeak_narrow</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>macs_gsize</code></td>
 <td>``</td>
 <td>MACS3 genome size. Empty string = derive from read length via khmer (faithful to the upstream default).</td>
-<td><code>peaks::macs3_callpeak</code>, <code>tracks::khmer</code></td>
+<td><code>peaks::macs3_callpeak</code>, <code>peaks::macs3_callpeak_narrow</code>, <code>tracks::khmer</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>macs_pvalue</code></td>
 <td><code>0</code></td>
 <td>—</td>
-<td><code>peaks::macs3_callpeak</code></td>
+<td><code>peaks::macs3_callpeak</code>, <code>peaks::macs3_callpeak_narrow</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>make_blacklist_regions</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>reference::blacklist_regions</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>make_bowtie2_index</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>reference::bowtie2_index_build</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>make_bwa_index</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>reference::bwa_index_build</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>make_chrom_sizes</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>reference::getchromsizes</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>make_chromap_index</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>reference::chromap_index_build</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>make_gene_bed</code></td>
+<td><code>false</code></td>
+<td>Reference preparation — ports of the upstream PREPARE_GENOME steps that can run on the port's plain reference files (all off by default). When enabled, point the corresponding input above at the generated file, e.g. gene_bed = "results/genome/gene.bed" with make_gene_bed = true; chrom_sizes = "results/genome/chrom.sizes" and fai = "results/genome/genome.fa.fai" with make_chrom_sizes = true; bwa_index = "results/bwa/index" with make_bwa_index = true; bowtie2_index = "results/bowtie2/index" with make_bowtie2_index = true; chromap_index = "results/chromap/index/genome.index" with make_chromap_index = true.</td>
+<td><code>reference::gtf2bed</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>make_star_index</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>reference::star_genomegenerate</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>min_reps_consensus</code></td>
 <td><code>1</code></td>
 <td>—</td>
-<td><code>consensus::macs3_consensus</code></td>
+<td><code>consensus::macs3_consensus</code>, <code>consensus::macs3_consensus_narrow</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>multiple_groups</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>consensus::annotate_boolean_peaks</code>, <code>consensus::deseq2_qc</code>, <code>consensus::homer_annotate_consensus</code>, <code>consensus::macs3_consensus</code>, <code>consensus::subread_featurecounts</code></td>
+<td><code>consensus::annotate_boolean_peaks</code>, <code>consensus::annotate_boolean_peaks_narrow</code>, <code>consensus::deseq2_qc</code>, <code>consensus::deseq2_qc_narrow</code>, <code>consensus::homer_annotate_consensus</code>, <code>consensus::homer_annotate_consensus_narrow</code>, <code>consensus::macs3_consensus</code>, <code>consensus::macs3_consensus_narrow</code>, <code>consensus::subread_featurecounts</code>, <code>consensus::subread_featurecounts_narrow</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>multiqc_title</code></td>
 <td>``</td>
 <td>—</td>
-<td><code>report::multiqc</code></td>
+<td><code>report::multiqc</code>, <code>report::multiqc_narrow</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>narrow_peak</code></td>
+<td><code>false</code></td>
+<td>Peaks — broad mode is the nf-core default (narrow_peak = false); setting narrow_peak = true switches the whole peak chain (MACS3 narrowPeak calling, FRiP/annotation/QC, consensus, IGV and MultiQC) to the upstream narrow_peak layout.</td>
+<td><code>consensus::annotate_boolean_peaks</code>, <code>consensus::annotate_boolean_peaks_narrow</code>, <code>consensus::deseq2_qc</code>, <code>consensus::deseq2_qc_narrow</code>, <code>consensus::homer_annotate_consensus</code>, <code>consensus::homer_annotate_consensus_narrow</code>, <code>consensus::macs3_consensus</code>, <code>consensus::macs3_consensus_narrow</code>, <code>consensus::subread_featurecounts</code>, <code>consensus::subread_featurecounts_narrow</code>, <code>peaks::frip_score</code>, <code>peaks::frip_score_narrow</code>, <code>peaks::homer_annotatepeaks</code>, <code>peaks::homer_annotatepeaks_narrow</code>, <code>peaks::macs3_callpeak</code>, <code>peaks::macs3_callpeak_narrow</code>, <code>peaks::multiqc_custom_peaks</code>, <code>peaks::multiqc_custom_peaks_narrow</code>, <code>peaks::plot_homer_annotatepeaks</code>, <code>peaks::plot_homer_annotatepeaks_narrow</code>, <code>peaks::plot_macs3_qc</code>, <code>peaks::plot_macs3_qc_narrow</code>, <code>report::igv</code>, <code>report::igv_narrow</code>, <code>report::multiqc</code>, <code>report::multiqc_narrow</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>pair_ids</code></td>
@@ -857,31 +893,31 @@
 <td style="text-align: right;"><code>replicates_exist</code></td>
 <td><code>true</code></td>
 <td>—</td>
-<td><code>consensus::annotate_boolean_peaks</code>, <code>consensus::deseq2_qc</code>, <code>consensus::homer_annotate_consensus</code>, <code>consensus::macs3_consensus</code>, <code>consensus::subread_featurecounts</code></td>
+<td><code>consensus::annotate_boolean_peaks</code>, <code>consensus::annotate_boolean_peaks_narrow</code>, <code>consensus::deseq2_qc</code>, <code>consensus::deseq2_qc_narrow</code>, <code>consensus::homer_annotate_consensus</code>, <code>consensus::homer_annotate_consensus_narrow</code>, <code>consensus::macs3_consensus</code>, <code>consensus::macs3_consensus_narrow</code>, <code>consensus::subread_featurecounts</code>, <code>consensus::subread_featurecounts_narrow</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>save_macs_pileup</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>peaks::macs3_callpeak</code></td>
+<td><code>peaks::macs3_callpeak</code>, <code>peaks::macs3_callpeak_narrow</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>seq_center</code></td>
 <td>``</td>
 <td>Read group / trimming</td>
-<td><code>align::bwa_mem</code></td>
+<td><code>align::bowtie2_align</code>, <code>align::bwa_mem</code>, <code>align::chromap_align</code>, <code>align::star_align</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_consensus_peaks</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>consensus::annotate_boolean_peaks</code>, <code>consensus::deseq2_qc</code>, <code>consensus::homer_annotate_consensus</code>, <code>consensus::macs3_consensus</code>, <code>consensus::subread_featurecounts</code></td>
+<td><code>consensus::annotate_boolean_peaks</code>, <code>consensus::annotate_boolean_peaks_narrow</code>, <code>consensus::deseq2_qc</code>, <code>consensus::deseq2_qc_narrow</code>, <code>consensus::homer_annotate_consensus</code>, <code>consensus::homer_annotate_consensus_narrow</code>, <code>consensus::macs3_consensus</code>, <code>consensus::macs3_consensus_narrow</code>, <code>consensus::subread_featurecounts</code>, <code>consensus::subread_featurecounts_narrow</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_deseq2_qc</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>consensus::deseq2_qc</code></td>
+<td><code>consensus::deseq2_qc</code>, <code>consensus::deseq2_qc_narrow</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_fastqc</code></td>
@@ -893,25 +929,25 @@
 <td style="text-align: right;"><code>skip_igv</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>report::igv</code></td>
+<td><code>report::igv</code>, <code>report::igv_narrow</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_multiqc</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>report::multiqc</code></td>
+<td><code>report::multiqc</code>, <code>report::multiqc_narrow</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_peak_annotation</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>consensus::annotate_boolean_peaks</code>, <code>consensus::homer_annotate_consensus</code>, <code>peaks::homer_annotatepeaks</code>, <code>peaks::plot_homer_annotatepeaks</code>, <code>peaks::plot_macs3_qc</code></td>
+<td><code>consensus::annotate_boolean_peaks</code>, <code>consensus::annotate_boolean_peaks_narrow</code>, <code>consensus::homer_annotate_consensus</code>, <code>consensus::homer_annotate_consensus_narrow</code>, <code>peaks::homer_annotatepeaks</code>, <code>peaks::homer_annotatepeaks_narrow</code>, <code>peaks::plot_homer_annotatepeaks</code>, <code>peaks::plot_homer_annotatepeaks_narrow</code>, <code>peaks::plot_macs3_qc</code>, <code>peaks::plot_macs3_qc_narrow</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_peak_qc</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>peaks::plot_homer_annotatepeaks</code>, <code>peaks::plot_macs3_qc</code></td>
+<td><code>peaks::plot_homer_annotatepeaks</code>, <code>peaks::plot_homer_annotatepeaks_narrow</code>, <code>peaks::plot_macs3_qc</code>, <code>peaks::plot_macs3_qc_narrow</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_picard_metrics</code></td>
@@ -956,6 +992,12 @@
 <td><code>qc::trimgalore</code></td>
 </tr>
 <tr>
+<td style="text-align: right;"><code>star_index</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>align::star_align</code></td>
+</tr>
+<tr>
 <td style="text-align: right;"><code>three_prime_clip_r1</code></td>
 <td><code>0</code></td>
 <td>—</td>
@@ -985,47 +1027,98 @@
 <p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
 <p><strong>In scope</strong></p>
 <ul>
-<li>FASTQ_FASTQC_UMITOOLS_TRIMGALORE (FASTQC + TRIMGALORE)</li>
-<li>BWA_MEM</li>
-<li>BAM_SORT_STATS_SAMTOOLS (library: SAMTOOLS_SORT + SAMTOOLS_INDEX + SAMTOOLS_STATS + SAMTOOLS_FLAGSTAT + SAMTOOLS_IDXSTATS)</li>
-<li>PICARD_MERGESAMFILES_LIBRARY</li>
-<li>BAM_MARKDUPLICATES_PICARD (PICARD_MARKDUPLICATES + SAMTOOLS_INDEX + SAMTOOLS_STATS + SAMTOOLS_FLAGSTAT + SAMTOOLS_IDXSTATS)</li>
-<li>BAM_FILTER_BAMTOOLS (BAMTOOLS_FILTER + SAMTOOLS_SORT name-sort + BAM_REMOVE_ORPHANS + BAM_SORT_STATS_SAMTOOLS + SAMTOOLS_INDEX + BAM_STATS_SAMTOOLS)</li>
-<li>PRESEQ_LCEXTRAP</li>
-<li>PICARD_COLLECTMULTIPLEMETRICS</li>
-<li>PHANTOM_PEAK_QUALTOOLS</li>
-<li>MULTIQC_CUSTOM_PHANTOM_PEAK_QUALTOOLS</li>
-<li>BEDTOOLS_GENOMECOV</li>
-<li>UCSC_BEDGRAPHTOBIGWIG</li>
-<li>DEEPTOOLS_COMPUTEMATRIX (scale-regions) + DEEPTOOLS_PLOTPROFILE + DEEPTOOLS_PLOTHEATMAP</li>
-<li>DEEPTOOLS_PLOTFINGERPRINT</li>
-<li>KHMER_UNIQUEKMERS</li>
-<li>MACS2_CALLPEAK (MACS3, broad mode)</li>
-<li>FRIP_SCORE</li>
-<li>MULTIQC_CUSTOM_PEAKS</li>
-<li>HOMER_ANNOTATEPEAKS</li>
-<li>PLOT_MACS3_QC</li>
-<li>PLOT_HOMER_ANNOTATEPEAKS</li>
-<li>BED_CONSENSUS_QUANTIFY_QC_BEDTOOLS_FEATURECOUNTS_DESEQ2 (MACS3_CONSENSUS + HOMER_ANNOTATEPEAKS + ANNOTATE_BOOLEAN_PEAKS + SUBREAD_FEATURECOUNTS + DESEQ2_QC)</li>
-<li>IGV</li>
-<li>MULTIQC</li>
+<li>annotate_boolean_peaks</li>
+<li>annotate_boolean_peaks_multi</li>
+<li>annotate_boolean_peaks_narrow</li>
+<li>annotate_boolean_peaks_narrow_multi</li>
+<li>bam_remove_orphans</li>
+<li>bamtools_filter</li>
+<li>bedtools_genomecov</li>
+<li>blacklist_regions</li>
+<li>bowtie2_align</li>
+<li>bowtie2_index_build</li>
+<li>bwa_index_build</li>
+<li>bwa_mem</li>
+<li>chromap_align</li>
+<li>chromap_index_build</li>
+<li>deeptools_computematrix</li>
+<li>deeptools_plotfingerprint</li>
+<li>deeptools_plotheatmap</li>
+<li>deeptools_plotprofile</li>
+<li>deseq2_qc</li>
+<li>deseq2_qc_multi</li>
+<li>deseq2_qc_narrow</li>
+<li>deseq2_qc_narrow_multi</li>
+<li>fastqc</li>
+<li>flagstat_align</li>
+<li>flagstat_filter</li>
+<li>flagstat_markdup</li>
+<li>frip_score</li>
+<li>frip_score_narrow</li>
+<li>getchromsizes</li>
+<li>gtf2bed</li>
+<li>homer_annotate_consensus</li>
+<li>homer_annotate_consensus_multi</li>
+<li>homer_annotate_consensus_narrow</li>
+<li>homer_annotate_consensus_narrow_multi</li>
+<li>homer_annotatepeaks</li>
+<li>homer_annotatepeaks_narrow</li>
+<li>idxstats_align</li>
+<li>idxstats_filter</li>
+<li>idxstats_markdup</li>
+<li>igv</li>
+<li>igv_multi</li>
+<li>igv_narrow</li>
+<li>igv_narrow_multi</li>
+<li>index_align</li>
+<li>index_filter</li>
+<li>index_markdup</li>
+<li>khmer</li>
+<li>macs3_callpeak</li>
+<li>macs3_callpeak_narrow</li>
+<li>macs3_consensus</li>
+<li>macs3_consensus_multi</li>
+<li>macs3_consensus_narrow</li>
+<li>macs3_consensus_narrow_multi</li>
+<li>markduplicates</li>
+<li>mergesamfiles</li>
+<li>multiqc</li>
+<li>multiqc_custom_peaks</li>
+<li>multiqc_custom_peaks_narrow</li>
+<li>multiqc_custom_phantompeakqualtools</li>
+<li>multiqc_multi</li>
+<li>multiqc_narrow</li>
+<li>multiqc_narrow_multi</li>
+<li>phantompeakqualtools</li>
+<li>picard_collectmultiplemetrics</li>
+<li>plot_homer_annotatepeaks</li>
+<li>plot_homer_annotatepeaks_narrow</li>
+<li>plot_macs3_qc</li>
+<li>plot_macs3_qc_narrow</li>
+<li>preseq</li>
+<li>sort_align</li>
+<li>sort_filter</li>
+<li>sort_name</li>
+<li>star_align</li>
+<li>star_genomegenerate</li>
+<li>stats_align</li>
+<li>stats_filter</li>
+<li>stats_markdup</li>
+<li>subread_featurecounts</li>
+<li>subread_featurecounts_multi</li>
+<li>subread_featurecounts_narrow</li>
+<li>subread_featurecounts_narrow_multi</li>
+<li>trimgalore</li>
+<li>ucsc_bedgraphtobigwig</li>
 </ul>
 <p><strong>Excluded</strong></p>
 <ul>
-<li>UMITOOLS_EXTRACT / umi_extract — with_umi defaults to false upstream</li>
-<li>narrow-peak mode (narrow_peak=true) — port covers the broad-peak default only</li>
-<li>GTF2BED / GENOME_BLACKLIST_REGIONS / prepare_genome / samplesheet_check — reference derivation and pipeline plumbing; the port takes pre-built references (fasta, gtf, gene_bed, chrom_sizes, blacklist, bwa_index)</li>
-<li>multi-antibody consensus grouping (consensus_cluster) — port assumes a single antibody (config.antibody)</li>
-<li>save_align_intermeds / save_mapped / save_tracks / save_macs_pileup publish branches — all off by default upstream</li>
-<li>multiqc_data / multiqc_plots directory publication and pipeline summary / software versions MultiQC sections — Nextflow plumbing</li>
-<li>multi-library MergeSamFiles branch — single-library default path only (upstream symlinks for single-library samples, replicated exactly)</li>
-<li>STAR aligner alternative — aligner=bwa is the default</li>
-<li>DUMP_SOFTWARE_VERSIONS — Nextflow plumbing (oxo-flow has no nf-core pipelines version dump)</li>
+<li>UMITOOLS_EXTRACT / umi_extract — with_umi is hardcoded to false in chipseq.nf (dead branch at 2.1.0; the parameter does not exist in nextflow.config)</li>
+<li>prepare_genome / samplesheet_check — compressed-reference gunzip/untar convenience, GFFREAD (GFF3 -&gt; GTF) and samplesheet validation/staging (Nextflow plumbing; the port consumes pre-built plain reference files). The index/chrom-sizes generation steps are ported as gated rules: GTF2BED (make_gene_bed), GENOME_BLACKLIST_REGIONS (make_blacklist_regions), CUSTOM_GETCHROMSIZES (make_chrom_sizes), BWA_INDEX (make_bwa_index), BOWTIE2_BUILD (make_bowtie2_index), CHROMAP_INDEX (make_chromap_index) and STAR_GENOMEGENERATE (make_star_index)</li>
+<li>save_reference / save_trimmed / save_unaligned publish branches — the port always keeps intermediates (behaves as save_align_intermeds=true); upstream 2.1.0 has no save_mapped / save_tracks params. save_macs_pileup is ported (conditional pileup .bdg publication in both macs3 rules)</li>
+<li>multiqc pipeline summary / software versions sections — nf-core template paramsSummaryMap/softwareVersionsToYAML from Nextflow metadata; multiqc_data / multiqc_plots directory publication is ported. Note: the software-versions half (DUMP_SOFTWARE_VERSIONS) is since covered by the engine-native export <code>oxo-flow report --versions-yml</code> (engine &gt;= 0.17.0); this item now refers only to the MultiQC paramsSummaryMap summary section</li>
 </ul>
 <h2 id="fidelity">Fidelity</h2>
-<p>Ported with upstream defaults: <code>aligner=bwa</code>, paired-end, <code>narrow_peak=false</code>
-(broad peaks), <code>with_umi=false</code>. One row per upstream process; steps not
-ported are listed with reasons.</p>
 <table>
 <thead>
 <tr>
@@ -1052,7 +1145,31 @@ ported are listed with reasons.</p>
 <td>BWA_MEM</td>
 <td><code>bwa_mem</code></td>
 <td>bwa 0.7.17, samtools 1.17</td>
-<td>identical (<code>-M -R '@RG...'</code>, secondary filter <code>-F 0x0100</code>, <code>-t</code> cores, <code>sort -T</code>); index lookup via <code>find</code> over <code>config.bwa_index</code>, same as upstream</td>
+<td>identical (<code>-M -R '@RG...'</code>, secondary filter <code>-F 0x0100</code>, <code>-t</code> cores, <code>sort -T</code>); index lookup via <code>find</code> over <code>config.bwa_index</code>, same as upstream; gated on <code>aligner='bwa'</code></td>
+</tr>
+<tr>
+<td>STAR_GENOMEGENERATE (local)</td>
+<td><code>star_genomegenerate</code></td>
+<td>star 2.6.1d</td>
+<td>gated (<code>aligner='star' &amp;&amp; make_star_index</code>); identical command (<code>--genomeSAindexNbases</code> awk over the <code>.fai</code>); index written to <code>results/star/index/</code></td>
+</tr>
+<tr>
+<td>STAR_ALIGN (local)</td>
+<td><code>star_align</code></td>
+<td>star 2.6.1d</td>
+<td>gated (<code>aligner='star'</code>); identical command (defaults + <code>--outSAMtype BAM Unsorted</code>, RG line with ID/SM + conditional CN); <code>Aligned.out.bam</code> renamed to <code>.Lb.bam</code> so the shared downstream chain is reused; logs published to <code>results/bwa/library/log/</code> for MultiQC auto-discovery</td>
+</tr>
+<tr>
+<td>BOWTIE2_ALIGN</td>
+<td><code>bowtie2_align</code></td>
+<td>bowtie2 2.5.2, samtools 1.18</td>
+<td>gated (<code>aligner='bowtie2'</code>); identical command (<code>find</code>-located index with <code>.bt2l</code> fallback, paired-end <code>-1/-2</code>, <code>--threads</code>, RG flags <code>--rg-id/--rg</code> with <code>SM</code> minus <code>_T\d+</code> + conditional <code>CN</code>, <code>sort_bam=false</code>/<code>save_unaligned=false</code> so <code>samtools view</code> emits the BAM directly); stderr teed to <code>{pair_id}.Lb.bowtie2.log</code>, published under <code>results/bwa/library/log/</code> for MultiQC auto-discovery (upstream drops the log — no MultiQC bowtie2 section there)</td>
+</tr>
+<tr>
+<td>CHROMAP_CHROMAP</td>
+<td><code>chromap_align</code></td>
+<td>chromap 0.2.6, samtools 1.20</td>
+<td>gated (<code>aligner='chromap'</code>); identical command (<code>-l 2000 --low-mem --SAM -t -x -r -1/-2</code>, then <code>samtools addreplacerg -r '@RG...'</code> + <code>samtools view -bh</code>); barcodes/whitelist/chr-order inputs are empty upstream (<code>[]</code>), so no such flags</td>
 </tr>
 <tr>
 <td>BAM_SORT_STATS_SAMTOOLS (library, SAMTOOLS_SORT + SAMTOOLS_INDEX + BAM_STATS_SAMTOOLS)</td>
@@ -1064,7 +1181,7 @@ ported are listed with reasons.</p>
 <td>PICARD_MERGESAMFILES_LIBRARY</td>
 <td><code>mergesamfiles</code></td>
 <td>picard 3.2.0</td>
-<td>upstream symlink branch for single-library samples replicated exactly (<code>ln -s</code>); the multi-library MergeSamFiles branch is off the default path</td>
+<td>per-library chain via the <code>library</code> [[values]] table (<code>values_from = "config.library_ids"</code>, default <code>Lb</code> = single-library byte-identical); <code>--arg library_ids=Lb,Lb2</code> fans aligner/sort/index/QC per library and MergeSamFiles gathers into the per-pair mLb BAM (upstream multi-library branch); the single-library symlink fast-path is subsumed — MergeSamFiles over one input produces the same mLb output</td>
 </tr>
 <tr>
 <td>BAM_MARKDUPLICATES_PICARD (PICARD_MARKDUPLICATES + SAMTOOLS_INDEX + BAM_STATS_SAMTOOLS)</td>
@@ -1160,121 +1277,157 @@ ported are listed with reasons.</p>
 <td>MACS2_CALLPEAK (nf-core)</td>
 <td><code>macs3_callpeak</code></td>
 <td>macs3 3.0.1</td>
-<td>identical flags (<code>--keep-dup all --broad --broad-cutoff 0.1</code>, conditional <code>--bdg --SPMR</code> on <code>save_macs_pileup</code>, gsize from khmer or config); treatment/control pairs map the upstream <code>ch_ip</code>/<code>ch_ip_control_bam</code> join — control-only samples are skipped via <code>optional = true</code></td>
+<td>identical flags (<code>--keep-dup all --broad --broad-cutoff 0.1</code>, conditional <code>--bdg --SPMR</code> on <code>save_macs_pileup</code>, gsize from khmer or config); treatment/control pairs map the upstream <code>ch_ip</code>/<code>ch_ip_control_bam</code> join — control-only samples are skipped via <code>optional = true</code>; gated on <code>narrow_peak=false</code>; pileup <code>.bdg</code> files moved to the macs3 dir when <code>save_macs_pileup=true</code></td>
 </tr>
 <tr>
 <td>FRIP_SCORE</td>
 <td><code>frip_score</code></td>
 <td>bedtools 2.30.0, samtools 1.17</td>
-<td>identical (intersectBed <code>-c -f 0.20</code>, flagstat <code>mapped (</code> non-primary fraction)</td>
+<td>identical (intersectBed <code>-c -f 0.20</code>, flagstat <code>mapped (</code> non-primary fraction); gated on <code>narrow_peak=false</code></td>
 </tr>
 <tr>
 <td>MULTIQC_CUSTOM_PEAKS</td>
 <td><code>multiqc_custom_peaks</code></td>
 <td>bash, awk</td>
-<td>identical (<code>wc -l</code> peak count, FRiP header concat); peak-count for control-only samples skipped like upstream</td>
+<td>identical (<code>wc -l</code> peak count, FRiP header concat); peak-count for control-only samples skipped like upstream; gated on <code>narrow_peak=false</code></td>
 </tr>
 <tr>
 <td>HOMER_ANNOTATEPEAKS</td>
 <td><code>homer_annotatepeaks</code></td>
 <td>homer 4.11</td>
-<td>identical (<code>-gid -gtf -cpu</code>)</td>
+<td>identical (<code>-gid -gtf -cpu</code>); gated on <code>narrow_peak=false</code></td>
 </tr>
 <tr>
 <td>PLOT_MACS3_QC</td>
 <td><code>plot_macs3_qc</code></td>
 <td>r-base 3.5.1, macs3 3.0.1</td>
-<td>identical (<code>-i</code> comma paths, <code>-s</code> paths minus <code>_peaks.broadPeak</code>, <code>-o qc -p macs3_peak</code>)</td>
+<td>identical (<code>-i</code> comma paths, <code>-s</code> paths minus <code>_peaks.broadPeak</code>, <code>-o qc -p macs3_peak</code>); gated on <code>narrow_peak=false</code></td>
 </tr>
 <tr>
 <td>PLOT_HOMER_ANNOTATEPEAKS</td>
 <td><code>plot_homer_annotatepeaks</code></td>
 <td>r-base 3.5.1, homer 4.11</td>
-<td>identical (comma paths, summary + MQC header concat)</td>
+<td>identical (comma paths, summary + MQC header concat); gated on <code>narrow_peak=false</code></td>
 </tr>
 <tr>
 <td>BED_CONSENSUS_QUANTIFY_QC_BEDTOOLS_FEATURECOUNTS_DESEQ2 → MACS3_CONSENSUS (local)</td>
 <td><code>macs3_consensus</code></td>
 <td>bedtools 2.30.0, macs3 3.0.1</td>
-<td>identical (mergeBed collapse, <code>macs3_merged_expand.py --min_replicates</code>, awk BED/SAF conversion, <code>plot_peak_intersect.r</code>, antibody.txt)</td>
+<td>identical (mergeBed collapse, <code>macs3_merged_expand.py --min_replicates</code>, awk BED/SAF conversion, <code>plot_peak_intersect.r</code>, antibody.txt); gated on <code>narrow_peak=false</code></td>
 </tr>
 <tr>
 <td>BED_CONSENSUS_QUANTIFY_QC_BEDTOOLS_FEATURECOUNTS_DESEQ2 → HOMER_ANNOTATEPEAKS (consensus)</td>
 <td><code>homer_annotate_consensus</code></td>
 <td>homer 4.11</td>
-<td>identical</td>
+<td>identical; gated on <code>narrow_peak=false</code></td>
 </tr>
 <tr>
 <td>ANNOTATE_BOOLEAN_PEAKS (local)</td>
 <td><code>annotate_boolean_peaks</code></td>
 <td>ubuntu 20.04</td>
-<td>identical (<code>cut -f2-</code>, sorted paste)</td>
+<td>identical (<code>cut -f2-</code>, sorted paste); gated on <code>narrow_peak=false</code></td>
 </tr>
 <tr>
 <td>SUBREAD_FEATURECOUNTS</td>
 <td><code>subread_featurecounts</code></td>
 <td>subread 2.0.1</td>
-<td>identical (<code>-F SAF -O --fracOverlap 0.2 -p -s 0</code>, counts IP-sample BAMs only)</td>
+<td>identical (<code>-F SAF -O --fracOverlap 0.2 -p -s 0</code>, counts IP-sample BAMs only); gated on <code>narrow_peak=false</code></td>
 </tr>
 <tr>
 <td>DESEQ2_QC (local)</td>
 <td><code>deseq2_qc</code></td>
 <td>mulled DESeq2 1.38.0</td>
-<td>identical (<code>--id_col 1 --sample_suffix .mLb.clN.sorted.bam --count_col 7 --vst TRUE</code>, header sed <code>_1</code> suffixes, mv to deseq2/)</td>
+<td>identical (<code>--id_col 1 --sample_suffix .mLb.clN.sorted.bam --count_col 7 --vst TRUE</code>, header sed <code>_1</code> suffixes, mv to deseq2/); gated on <code>narrow_peak=false</code></td>
 </tr>
 <tr>
 <td>IGV (local)</td>
 <td><code>igv</code></td>
 <td>python 3.8.3</td>
-<td>identical (bigWig/Peak/bed find, consensus guard, antibody.txt, <code>igv_files_to_session.py ... --path_prefix '../../'</code>, genome.fa publish)</td>
+<td>identical (bigWig/Peak/bed find, consensus guard, antibody.txt, <code>igv_files_to_session.py ... --path_prefix '../../'</code>, genome.fa publish); gated on <code>narrow_peak=false</code></td>
 </tr>
 <tr>
 <td>MULTIQC (local)</td>
 <td><code>multiqc</code></td>
 <td>multiqc 1.23</td>
-<td>upstream mechanism replicated: <code>multiqc_config.yml</code> staged in cwd, <code>multiqc -f .</code>; config <code>path_filters</code>/<code>report_section_order</code> adapted to this port's <code>results/</code> layout</td>
+<td>upstream mechanism replicated: <code>multiqc_config.yml</code> staged in cwd, <code>multiqc -f .</code>; config <code>path_filters</code>/<code>report_section_order</code> adapted to this port's <code>results/</code> layout; report, <code>multiqc_data/</code> and <code>multiqc_plots/</code> moved into <code>results/multiqc/broad_peak/</code>; gated on <code>narrow_peak=false</code></td>
+</tr>
+<tr>
+<td>MACS2_CALLPEAK / FRIP_SCORE / MULTIQC_CUSTOM_PEAKS / HOMER_ANNOTATEPEAKS / PLOT_MACS3_QC / PLOT_HOMER_ANNOTATEPEAKS / MACS3_CONSENSUS / HOMER_ANNOTATEPEAKS (consensus) / ANNOTATE_BOOLEAN_PEAKS / SUBREAD_FEATURECOUNTS / DESEQ2_QC / IGV / MULTIQC — narrow_peak mode</td>
+<td><code>*_narrow</code> rules (13)</td>
+<td>same tools</td>
+<td>identical commands with the upstream narrow_peak layout: MACS3 without <code>--broad/--broad-cutoff</code> (plus <code>*_summits.bed</code>), <code>narrowPeak</code> suffixes everywhere, <code>narrow_peak/</code> dirs (macs3, consensus, igv, multiqc), consensus merge of columns 2-10 (<code>collapse</code> x9) and <code>--is_narrow_peak</code>; all gated on <code>narrow_peak=true</code></td>
 </tr>
 <tr>
 <td>GTF2BED</td>
-<td>—</td>
-<td>—</td>
-<td><strong>not ported</strong> — upstream derives <code>gene_bed</code> from the GTF; the port takes <code>gene_bed</code> directly as an input</td>
+<td><code>gtf2bed</code></td>
+<td>perl 5.26.2</td>
+<td>gated (<code>make_gene_bed</code>); runs the upstream <code>bin/gtf2bed</code> script verbatim; output fixed at <code>results/genome/gene.bed</code> (upstream names it after the GTF basename)</td>
 </tr>
 <tr>
-<td>GENOME_BLACKLIST_REGIONS / GTF2BED / samplesheet_check</td>
+<td>GENOME_BLACKLIST_REGIONS</td>
+<td><code>blacklist_regions</code></td>
+<td>bedtools 2.30.0</td>
+<td>gated (<code>make_blacklist_regions</code>); identical <code>sortBed \| complementBed</code> pipeline producing <code>chrom.sizes.include_regions.bed</code></td>
+</tr>
+<tr>
+<td>CUSTOM_GETCHROMSIZES</td>
+<td><code>getchromsizes</code></td>
+<td>samtools 1.20</td>
+<td>gated (<code>make_chrom_sizes</code>); identical script (<code>samtools faidx</code> + <code>cut -f 1,2</code>); the fasta is symlinked into <code>results/genome/</code> so the user's reference files are never touched; outputs fixed at <code>results/genome/chrom.sizes</code> + <code>results/genome/genome.fa.fai</code> (upstream names them <code>{fasta}.sizes</code> / <code>{fasta}.fai</code>)</td>
+</tr>
+<tr>
+<td>BWA_INDEX</td>
+<td><code>bwa_index_build</code></td>
+<td>bwa 0.7.18</td>
+<td>gated (<code>aligner='bwa' &amp;&amp; make_bwa_index</code>); identical command (<code>bwa index -p {prefix} {fasta}</code>); prefix fixed at <code>results/bwa/index/genome</code> (upstream names the files after the fasta basename — <code>bwa_mem</code> locates the index by <code>find</code>, so the prefix is transparent)</td>
+</tr>
+<tr>
+<td>BOWTIE2_BUILD</td>
+<td><code>bowtie2_index_build</code></td>
+<td>bowtie2 2.5.2</td>
+<td>gated (<code>aligner='bowtie2' &amp;&amp; make_bowtie2_index</code>); identical command (<code>bowtie2-build --threads</code>); index base fixed at <code>results/bowtie2/index/genome</code> (upstream names the files after the fasta basename — <code>bowtie2_align</code> locates the index by <code>find</code>, so the base is transparent)</td>
+</tr>
+<tr>
+<td>CHROMAP_INDEX</td>
+<td><code>chromap_index_build</code></td>
+<td>chromap 0.2.6</td>
+<td>gated (<code>aligner='chromap' &amp;&amp; make_chromap_index</code>); identical command (<code>chromap -i -t -r -o</code>); output fixed at <code>results/chromap/index/genome.index</code> (upstream names it <code>{fasta.baseName}.index</code>)</td>
+</tr>
+<tr>
+<td>prepare_genome (gunzip/untar, GFFREAD) / samplesheet_check</td>
 <td>—</td>
 <td>—</td>
-<td><strong>not ported</strong> — pipeline plumbing / reference derivation; the port takes pre-built references</td>
+<td><strong>not ported</strong> — compressed-reference gunzip/untar convenience, GFFREAD (GFF3 -&gt; GTF) and samplesheet validation/staging (the port consumes pre-built plain reference files; the samplesheet analogue is <code>[[pairs]]</code>). The reference-derivation steps that make sense on plain files ARE ported as gated rules — getchromsizes and the BWA/Bowtie2/Chromap/STAR index builders (rows above)</td>
 </tr>
 <tr>
 <td>UMI handling (UMITOOLS_EXTRACT, umi_extract)</td>
 <td>—</td>
 <td>—</td>
-<td><strong>not ported</strong> — <code>with_umi=false</code> by default</td>
+<td><strong>not ported</strong> — <code>with_umi=false</code> is hardcoded in chipseq.nf at 2.1.0 (dead branch; the parameter does not exist)</td>
 </tr>
 <tr>
-<td>narrow-peak mode (<code>narrow_peak=true</code>, <code>--narrow-cutoff</code>)</td>
+<td>save_reference / save_trimmed / save_unaligned outputs</td>
 <td>—</td>
 <td>—</td>
-<td><strong>not ported</strong> — port covers the broad-peak default (<code>narrow_peak=false</code>)</td>
+<td>publish branches that are <code>false</code> by default upstream; the port always behaves as <code>save_align_intermeds=true</code> (intermediates are kept). Upstream 2.1.0 has no <code>save_mapped</code> / <code>save_tracks</code> params. <code>save_macs_pileup</code> IS ported (conditional pileup publication in both macs3 rules)</td>
 </tr>
 <tr>
-<td>save_macs_pileup / save_align_intermeds / save_mapped / save_tracks outputs</td>
+<td>DUMP_SOFTWARE_VERSIONS</td>
+<td>engine-native export: <code>oxo-flow report --versions-yml &lt;file&gt; main.oxoflow</code></td>
 <td>—</td>
-<td>—</td>
-<td>intermediate BAM/bedGraph publish branches are <code>false</code> by default upstream; only the default-published files are produced here</td>
+<td>oxo-flow ≥ 0.17.0 exports an nf-core-style <code>versions.yml</code> derived statically from the workflow declarations: one entry per rule (83 rules) with the pinned container image (registry + tag). Deviation: it is a standalone CI-diff artifact, not a per-process runtime capture — upstream records each tool's runtime version at execution time; the export reflects the pinned versions in the definition (resolved runtime package versions depend on the execution environment). Per-rule <code>versions.yml</code> emission inside every command is deliberately not replicated (it would change every rule's command while the default plan stays byte-identical).</td>
 </tr>
 <tr>
-<td>DUMP_SOFTWARE_VERSIONS / pipeline summary sections of MultiQC</td>
+<td>pipeline summary + software versions sections of MultiQC</td>
 <td>—</td>
 <td>—</td>
-<td><strong>not ported</strong> — Nextflow plumbing / report plumbing (multiqc_data, multiqc_plots not published)</td>
+<td><strong>not ported</strong> — nf-core template paramsSummaryMap section from Nextflow metadata; <code>multiqc_data/</code> and <code>multiqc_plots/</code> ARE published. (The software-versions half — DUMP_SOFTWARE_VERSIONS — is covered by the engine-native export above.)</td>
 </tr>
 <tr>
 <td>Multi-antibody consensus (<code>consensus_cluster</code> grouping)</td>
-<td>—</td>
-<td>—</td>
-<td>single antibody (<code>config.antibody</code>) per run; upstream multi-antibody grouping is out of scope</td>
+<td><code>macs3_consensus_multi</code> / <code>homer_annotate_consensus_multi</code> / <code>annotate_boolean_peaks_multi</code> / <code>subread_featurecounts_multi</code> / <code>deseq2_qc_multi</code> / <code>igv_multi</code> / <code>multiqc_multi</code> (+ <code>*_narrow_multi</code> variants)</td>
+<td>same tools</td>
+<td>upstream groups the consensus chain by <code>meta.antibody</code> (groupTuple <code>by: antibody</code>); the port does the same with the engine's metadata binding — <code>[workflow] metadata_file</code> (TSV: sample + antibody columns) + <code>input_groups</code> <code>group_by = "meta.antibody"</code> runs the consensus chain once per distinct antibody with per-antibody inputs, and the IGV/MultiQC rules collect every antibody. Gated on <code>config.multi_antibody</code> (default <code>false</code> — the single-antibody <code>config.antibody</code> path is byte-identical); see <a href="#known-divergences">Multi-antibody runs</a></td>
 </tr>
 </tbody>
 </table>
@@ -1289,11 +1442,55 @@ ported are listed with reasons.</p>
   (<code>optional = true</code>).</li>
 <li><strong>Reference inputs</strong>: upstream derives references from <code>--genome</code>/iGenomes
   (GTF2BED for gene body regions, blacklist check); this port consumes
-  pre-built files (<code>fasta</code>, <code>fai</code>, <code>gtf</code>, <code>gene_bed</code>, <code>chrom_sizes</code>,
-  <code>blacklist</code>, <code>bwa_index</code> prefix).</li>
+  pre-built files (<code>fasta</code>, <code>gtf</code>, <code>gene_bed</code>, <code>chrom_sizes</code>, <code>blacklist</code>,
+  index prefixes). The derivation steps that make sense on plain reference
+  files are ported as gated rules — <code>make_gene_bed</code>, <code>make_blacklist_regions</code>,
+  <code>make_chrom_sizes</code>, <code>make_bwa_index</code>, <code>make_bowtie2_index</code>,
+  <code>make_chromap_index</code>, <code>make_star_index</code> (see the Fidelity table).</li>
+<li><strong>Fixed output names for derived references</strong>: the gated reference rules
+  write fixed names — <code>results/genome/gene.bed</code>,
+  <code>results/genome/chrom.sizes</code>, <code>results/genome/genome.fa.fai</code>,
+  <code>results/bwa/index/genome.*</code>, <code>results/bowtie2/index/genome.*.bt2</code>,
+  <code>results/chromap/index/genome.index</code>, <code>results/star/index/</code> — where
+  upstream names outputs after the FASTA/GTF basename. The consuming rules
+  locate indexes by <code>find</code>, so the prefix is transparent; point the config
+  keys at the generated paths when the rules are enabled.</li>
+<li><strong>Multi-library merge not ported</strong>: upstream groups libraries by
+  <code>meta.id</code> minus <code>_T\d+</code> and merges variable-size library sets before
+  markduplicates. The merge itself is expressible in oxo-flow
+  (<code>expand_inputs</code> glob over the libraries), but every downstream rule keys
+  on <code>pair_id</code>; a second per-sample grouping dimension would restructure the
+  whole pipeline, so only the single-library default path (the upstream
+  symlink shortcut, replicated exactly) is ported.</li>
 <li><strong>MultiQC config</strong>: <code>path_filters</code> and <code>report_section_order</code> were adapted
-  to the port's <code>results/</code> layout and the single-antibody assumption;
-  module order and custom-content sections are otherwise identical.</li>
+  to the port's <code>results/</code> layout and the <code>antibody.txt</code> convention; the
+  <code>multiqc_multi</code> variant scans the per-antibody <code>consensus/{antibody}/</code>
+  trees instead of relying on antibody-specific inputs. Module order and
+  custom-content sections are otherwise identical.</li>
+<li><strong>Aligner output tree</strong>: every aligner's results stay under <code>results/bwa/</code>
+  (bwa_mem/star_align/bowtie2_align/chromap_align all produce
+  <code>results/bwa/library/{pair_id}.Lb.bam</code>, so the whole downstream chain is
+  shared — upstream writes <code>results/{aligner}/library/</code> instead). Upstream
+  also routes STAR BAMs through the same <code>results/bwa/</code> subworkflows — the
+  difference is only that upstream STAR alignment writes
+  <code>{id}.Aligned.out.bam</code>; the port renames it to <code>.Lb.bam</code>. STAR logs are
+  published to <code>results/bwa/library/log/</code> (upstream feeds them to MultiQC
+  only, from the workdir); the bowtie2 log (<code>{pair_id}.Lb.bowtie2.log</code>) is
+  published to the same directory for MultiQC auto-discovery (upstream does
+  not feed it to MultiQC at all).</li>
+<li><strong>STAR index generation</strong>: <code>star_genomegenerate</code> computes
+  <code>--genomeSAindexNbases</code> from the provided <code>.fai</code> (upstream re-derives the
+  index with <code>samtools faidx</code> inside its workdir); this port consumes the
+  supplied index so the reference files are never touched. Index outputs go
+  to a fixed <code>results/star/index/</code> directory — set
+  <code>star_index = "results/star/index"</code> with <code>make_star_index = true</code>.</li>
+<li><strong>GTF2BED output name</strong>: <code>gtf2bed</code> writes <code>results/genome/gene.bed</code>
+  (upstream names it <code>{gtf.baseName}.bed</code>); point <code>gene_bed</code> at the generated
+  file when using <code>make_gene_bed = true</code>.</li>
+<li><strong>No <code>--narrow-cutoff</code> at 2.1.0</strong>: the upstream <code>narrow_peak</code> parameter has
+  no cutoff argument in this release (it only switches file names, MACS3
+  broad args and the consensus merge columns) — the port matches that
+  behaviour exactly.</li>
 <li><strong>known limitation</strong>: with <code>skip_consensus_peaks = true</code> the IGV/MultiQC
   consensus inputs (<code>consensus_peaks.bed</code>, featureCounts summary) are absent;
   keep the default (<code>false</code>) or set <code>skip_igv</code>/<code>skip_multiqc</code> together.</li>
@@ -1340,7 +1537,7 @@ ported are listed with reasons.</p>
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      © 2026 oxo-flow-community · Apache-2.0 · Ports are based on their upstream workflows — see each repository's NOTICE.
+      © 2026 <a href="https://github.com/oxo-flow-community">oxo-flow-community</a> · Apache-2.0 · engine <a href="https://github.com/Traitome/oxo-flow">oxo-flow</a> · <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues">issues</a> · evidence: ✔ live-tested ⊃ ★ verified ⊃ ☆ community · ports are based on their upstream workflows — see each repository's NOTICE
     </div>
   
   

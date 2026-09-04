@@ -1,0 +1,166 @@
+<h2>Hero 定为 V2 ✅ — 下一步：工作流卡片的质量</h2>
+<p class="subtitle">目录是 24 张卡片的主场，卡片质感决定整站的"贵"。三个变体都用真实数据、按真实网格平铺，看平铺后的节奏感和单卡质感。</p>
+
+<style>
+  .grid-mock { padding: 16px 18px; background: #f7faf8; font-size: 12px; box-sizing: border-box; }
+  .grid-mock * { box-sizing: border-box; margin: 0; }
+  .grid-mock .g { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .grid-mock .c { background: #fff; border: 1px solid #dfe8e3; border-radius: 10px; padding: 13px 14px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 1px 2px rgba(23,33,28,.05), 0 4px 14px rgba(23,33,28,.04); }
+  .grid-mock .c.hide3 { display: none; }
+
+  /* shared atoms */
+  .nm { font-family: ui-monospace, monospace; font-weight: 600; font-size: 12.5px; color: #17211c; }
+  .bdg { font-family: ui-monospace, monospace; font-size: 8px; padding: 2px 7px; border-radius: 99px; border: 1px solid #dfe8e3; color: #6b7d73; background: #eff4f1; white-space: nowrap; }
+  .bdg.live { color: #0F9D6E; border-color: #9fd8c3; background: #ecf9f3; font-weight: 600; }
+  .bdg .dot { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: #0c8a5d; margin-right: 4px; vertical-align: 1px; }
+  .bdg .dot.sn { background: #1a64b8; }
+  .ttl { font-size: 10.5px; color: #3f5047; line-height: 1.45; }
+  .tools { font-family: ui-monospace, monospace; font-size: 8.5px; color: #6b7d73; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .tools i { color: #c6d5cd; padding: 0 3px; font-style: normal; }
+  .cmd { font-family: ui-monospace, monospace; font-size: 8.5px; color: #3f5047; background: #eff4f1; border: 1px solid #dfe8e3; border-radius: 6px; padding: 5px 8px; white-space: nowrap; overflow: hidden; }
+  .lnk { display: flex; gap: 12px; font-size: 9.5px; color: #0e7a5f; margin-top: auto; }
+  .row { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+
+  /* W1 · 现状精修 */
+  .w1 .c:hover { border-color: #c6d5cd; }
+  .w1 .meta { display: flex; flex-wrap: wrap; gap: 4px; }
+
+  /* W2 · 证据优先 */
+  .w2 .c { border-top: 3px solid #dfe8e3; }
+  .w2 .c.live-card { border-top-color: #0F9D6E; }
+  .w2 .ttl { font-size: 11px; color: #17211c; }
+  .w2 .mt { display: flex; flex-wrap: wrap; gap: 5px; }
+  .w2 .tchip { font-family: ui-monospace, monospace; font-size: 8px; color: #3f5047; background: #eff4f1; border-radius: 5px; padding: 2px 6px; }
+  .w2 .cmd { background: #fff; border-radius: 6px; }
+  .w2 .foot { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 8px; border-top: 1px solid #eff4f1; }
+
+  /* W3 · 编辑部紧凑 */
+  .w3 .c { gap: 6px; padding: 12px 13px; }
+  .w3 .inline-meta { font-family: ui-monospace, monospace; font-size: 8.5px; color: #97a69e; }
+  .w3 .inline-meta b { color: #0c8a5d; font-weight: 600; }
+  .w3 .inline-meta .sn { color: #1a64b8; font-weight: 600; }
+  .w3 .live-flag { color: #0F9D6E; font-weight: 600; }
+  .w3 .cmd { background: transparent; border: none; border-top: 1px solid #dfe8e3; border-radius: 0; padding: 7px 0 0; margin-top: auto; }
+</style>
+
+<div class="cards">
+  <div class="card" data-choice="w1" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:0">
+      <div class="grid-mock w1">
+        <div class="g">
+          <div class="c">
+            <div class="row"><span class="nm">oxo-flow-rnaseq</span><span class="bdg live">✔ Live-tested</span></div>
+            <div class="ttl" style="margin:-3px 0 0">RNA-seq — align, quantify, differential expression</div>
+            <div class="meta"><span class="bdg">⇄ Official port</span><span class="bdg"><span class="dot"></span>nf-core port</span><span class="bdg">44 rules</span></div>
+            <div class="tools">STAR<i>·</i>featureCounts<i>·</i>DESeq2<i>·</i>MultiQC</div>
+            <div class="cmd">$ oxo-flow run main.oxoflow --samples 3</div>
+            <div class="row" style="font-size:9px;color:#6b7d73"><span>Run notes</span><span>GitHub ↗</span></div>
+          </div>
+          <div class="c">
+            <div class="row"><span class="nm">oxo-flow-sarek</span><span class="bdg live">✔ Live-tested</span></div>
+            <div class="ttl" style="margin:-3px 0 0">Somatic variant calling — germline + somatic</div>
+            <div class="meta"><span class="bdg">⇄ Official port</span><span class="bdg"><span class="dot"></span>nf-core port</span><span class="bdg">61 rules</span></div>
+            <div class="tools">bwa-mem2<i>·</i>gatk<i>·</i>freebayes<i>·</i>vep</div>
+            <div class="cmd">$ oxo-flow run main.oxoflow</div>
+            <div class="row" style="font-size:9px;color:#6b7d73"><span>Run notes</span><span>GitHub ↗</span></div>
+          </div>
+          <div class="c">
+            <div class="row"><span class="nm">oxo-flow-viralrecon</span><span class="bdg live">✔ Live-tested</span></div>
+            <div class="ttl" style="margin:-3px 0 0">Viral genome reconstruction from sequencing data</div>
+            <div class="meta"><span class="bdg">⇄ Official port</span><span class="bdg"><span class="dot"></span>nf-core port</span><span class="bdg">38 rules</span></div>
+            <div class="tools">ivar<i>·</i>fastp<i>·</i>ivar-consensus<i>·</i>pangolin</div>
+            <div class="cmd">$ oxo-flow run main.oxoflow</div>
+            <div class="row" style="font-size:9px;color:#6b7d73"><span>Run notes</span><span>GitHub ↗</span></div>
+          </div>
+          <div class="c hide3"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>W1 · 现状精修</h3>
+      <p>保持现在的信息结构：徽章行 + 工具行 + 命令条。徽章更小更整齐、标题与徽章层级拉开、命令条更轻。变化最保守。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="w2" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:0">
+      <div class="grid-mock w2">
+        <div class="g">
+          <div class="c live-card">
+            <div class="row"><span class="nm">oxo-flow-rnaseq</span><span class="bdg">genomics</span></div>
+            <div class="ttl">RNA-seq — align, quantify, call differential expression</div>
+            <div class="mt"><span class="bdg">44 rules</span><span class="tchip">STAR</span><span class="tchip">featureCounts</span><span class="tchip">DESeq2</span></div>
+            <div class="foot" style="display:flex;justify-content:space-between;align-items:center;margin-top:2px">
+              <span class="bdg live">✔ Live-tested</span>
+              <span class="bdg"><span class="dot"></span>nf-core</span>
+            </div>
+            <div class="cmd">$ oxo-flow run main.oxoflow --samples 3</div>
+            <div class="foot" style="border-top:none;padding-top:0;font-size:9px;color:#6b7d73"><span>Run notes</span><span>GitHub ↗</span></div>
+          </div>
+          <div class="c live-card">
+            <div class="row"><span class="nm">oxo-flow-sarek</span><span class="bdg">genomics</span></div>
+            <div class="ttl">Somatic variant calling — germline + somatic</div>
+            <div class="mt"><span class="bdg">61 rules</span><span class="tchip">bwa-mem2</span><span class="tchip">gatk</span><span class="tchip">vep</span></div>
+            <div class="foot" style="display:flex;justify-content:space-between;align-items:center;margin-top:2px">
+              <span class="bdg live">✔ Live-tested</span>
+              <span class="bdg"><span class="dot"></span>nf-core</span>
+            </div>
+            <div class="cmd">$ oxo-flow run main.oxoflow</div>
+            <div class="foot" style="border-top:none;padding-top:0;font-size:9px;color:#6b7d73"><span>Run notes</span><span>GitHub ↗</span></div>
+          </div>
+          <div class="c live-card">
+            <div class="row"><span class="nm">oxo-flow-viralrecon</span><span class="bdg">viral</span></div>
+            <div class="ttl">Viral genome reconstruction from sequencing data</div>
+            <div class="mt"><span class="bdg">38 rules</span><span class="tchip">ivar</span><span class="tchip">fastp</span><span class="tchip">pangolin</span></div>
+            <div class="foot" style="display:flex;justify-content:space-between;align-items:center;margin-top:2px">
+              <span class="bdg live">✔ Live-tested</span>
+              <span class="bdg"><span class="dot"></span>nf-core</span>
+            </div>
+            <div class="cmd">$ oxo-flow run main.oxoflow</div>
+            <div class="foot" style="border-top:none;padding-top:0;font-size:9px;color:#6b7d73"><span>Run notes</span><span>GitHub ↗</span></div>
+          </div>
+          <div class="c hide3"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>W2 · 证据优先 ★ 推荐</h3>
+      <p>卡片顶部一条彩色边——live-tested 的卡有绿色顶线，扫一眼就能读出证据分布。工具从徽章降级为轻量 tag，命令条成为卡片底部锚点。层级最清晰。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="w3" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:0">
+      <div class="grid-mock w3">
+        <div class="g">
+          <div class="c">
+            <div class="row"><span class="nm">oxo-flow-rnaseq</span><span class="live-flag">✔ live-tested</span></div>
+            <div class="inline-meta"><b>nf-core port</b> · genomics · 44 rules</div>
+            <div class="ttl">RNA-seq — align, quantify, call differential expression</div>
+            <div class="tools">STAR<i>·</i>featureCounts<i>·</i>DESeq2<i>·</i>MultiQC</div>
+            <div class="cmd">$ oxo-flow run main.oxoflow --samples 3</div>
+          </div>
+          <div class="c">
+            <div class="row"><span class="nm">oxo-flow-sarek</span><span class="live-flag">✔ live-tested</span></div>
+            <div class="inline-meta"><b>nf-core port</b> · genomics · 61 rules</div>
+            <div class="ttl">Somatic variant calling — germline + somatic</div>
+            <div class="tools">bwa-mem2<i>·</i>gatk<i>·</i>freebayes<i>·</i>vep</div>
+            <div class="cmd">$ oxo-flow run main.oxoflow</div>
+          </div>
+          <div class="c">
+            <div class="row"><span class="nm">oxo-flow-viralrecon</span><span class="live-flag">✔ live-tested</span></div>
+            <div class="inline-meta"><b>nf-core port</b> · viral · 38 rules</div>
+            <div class="ttl">Viral genome reconstruction from sequencing data</div>
+            <div class="tools">ivar<i>·</i>fastp<i>·</i>ivar-consensus<i>·</i>pangolin</div>
+            <div class="cmd">$ oxo-flow run main.oxoflow</div>
+          </div>
+          <div class="c hide3"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>W3 · 编辑部紧凑</h3>
+      <p>去掉徽章堆，元信息压成一行 mono 小字。卡片最矮、密度最高，24 张一屏能扫完。但丢失了"官方 port"这类徽章的正式感。</p>
+    </div>
+  </div>
+</div>

@@ -23,7 +23,7 @@
     
     
       
-        <title>Bisulfite methylation analysis: alignment, methylation calls and QC - oxo-flow-community</title>
+        <title>Oxo flow methylseq - oxo-flow-community</title>
       
     
     
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Bisulfite methylation analysis: alignment, methylation calls and QC
+              Oxo flow methylseq
             
           </span>
         </div>
@@ -584,71 +584,41 @@
   
 
 
+<div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-methylseq</span></div>
+<div class="ox-detail-cols">
+<div>
 <h1 id="bisulfite-methylation-analysis-alignment-methylation-calls-and-qc">Bisulfite methylation analysis: alignment, methylation calls and QC</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
-
-<p>Run end-to-end bisulfite methylation analysis (WGBS, and RRBS-compatible) of paired-end reads: FastQC quality control, TrimGalore adapter trimming, alignment to the bisulfite-converted reference genome with Bismark (bowtie2), PCR-deduplication, samtools sort/index, methylation extraction with per-context (CpG/CHG/CHH) calls plus bedGraph and coverage output, per-sample and project-wide Bismark HTML reports, and a final MultiQC report.</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: right;"></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: right;"><strong>Rating</strong></td>
-<td>✔ Live-tested</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Origin</strong></td>
-<td>port</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Domain</strong></td>
-<td>genomics</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Rules</strong></td>
-<td>13</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Compute</strong></td>
-<td>up to 12 CPUs / 72 GB per rule (bismark)</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Tools</strong></td>
-<td>fastqc · trim-galore · cutadapt · pigz · bismark · samtools · htslib · multiqc</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Ported</strong></td>
-<td>2026-08-15</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>License</strong></td>
-<td>Apache-2.0</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Source</strong></td>
-<td><a href="https://github.com/nf-core/methylseq">nf-core/methylseq</a></td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Pinned version</strong></td>
-<td><code>4.2.0</code></td>
-</tr>
-</tbody>
-</table>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
+<p>Run end-to-end bisulfite methylation analysis (WGBS, and RRBS-compatible) of paired-end reads (default) and single-end reads (upstream single_end samplesheet column, via the engine metadata binding): FastQC quality control, TrimGalore adapter trimming, alignment to the bisulfite-converted reference genome with any of the four upstream aligners — Bismark bowtie2 (default), Bismark hisat2, bwameth (bwa-meth) or BWA-MEM — PCR-deduplication, samtools sort/index, methylation calls (bismark_methylation_extractor, MethylDackel on bwameth, rastair for TAPS), per-sample and project-wide Bismark HTML reports, optional QualiMap BamQC, preseq complexity estimates and targeted-sequencing (bedtools intersect + Picard HS metrics), and a final MultiQC report. All optional branches are gated on the same config keys as the upstream params and off by default.</p>
+</div>
+<div>
+<div class="ox-glance">
+<div class="ox-glance-title">At a glance</div>
+<div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">61</span></div>
+<div class="ox-kv"><span class="k">Compute</span><span class="v">up to 12 CPUs / 72 GB per rule (genome preparation, index builds, trimgalore, aligners, deduplicate, extractor)</span></div>
+<div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Domain</span><span class="v">genomics</span></div>
+<div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/nf-core/methylseq">nf-core/methylseq</a></span></div>
+<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>4.2.0</code></span></div>
+<div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
+<div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
+<p class="cmd">$ oxo-flow run main.oxoflow</p>
+</div>
+</div>
+</div>
 <h2 id="run-it">Run it</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>oxo-flow<span class="w"> </span>run<span class="w"> </span>main.oxoflow
 </code></pre></div>
 <p>Needs reference genome and reads — see Requirements.</p>
 <h2 id="installation">Installation</h2>
-<p><strong>Engine.</strong> oxo-flow &gt;= 0.12.0</p>
+<p><strong>Engine.</strong> oxo-flow &gt;= 0.17.0</p>
 <p><strong>Toolchain.</strong> conda envs — pinned versions (conda-forge/bioconda)</p>
 <p><strong>Requirements.</strong>
-- reference genome FASTA (uncompressed) — the Bismark bowtie2 index is built automatically on first run; no prebuilt index required
-- paired-end raw reads: <dir>/<sample>_R1.fastq.gz and <dir>/<sample>_R2.fastq.gz
-- compute: up to 12 CPUs / 72 GB RAM per rule (bismark_genomepreparation, trimgalore, bismark_align, bismark_deduplicate, bismark_methylationextractor)
+- reference genome FASTA (a .gz FASTA is decompressed automatically before indexing) — the Bismark bowtie2 index is built automatically on first run; a prebuilt index archive (--bismark_index) is also supported
+- paired-end raw reads: <dir>/<sample><em>R1.fastq.gz and <dir>/<sample>_R2.fastq.gz (samples with &gt;1 pair: <dir>/<sample></em><unit>_R{1,2}.fastq.gz per unit — concatenated by cat_fastq); single-end samples: <dir>/<sample>_R1.fastq.gz only, listed as SE in metadata/samples.tsv with config.single_end_mode = true
+- compute: up to 12 CPUs / 72 GB RAM per rule (bismark_genomepreparation, trimgalore, bismark_align, bismark_deduplicate, bismark_methylationextractor, bwameth_index, bwameth_align, bwa_mem)
 - conda or mamba to create the pinned per-rule environments
 - disk: space in config.out_dir (default results/) for aligned BAMs, methylation calls and reports</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># 1. install oxo-flow (release binary, recommended)</span>
@@ -680,19 +650,43 @@
 <td style="text-align: right;"><code>accel</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>trimgalore</code></td>
+<td><code>trimgalore</code>, <code>trimgalore_se</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>aligner</code></td>
 <td><code>bismark</code></td>
-<td>Only the 'bismark' (bowtie2) aligner is ported. 'bismark_hisat', 'bwameth', 'bwamem' are NOT ported (see README fidelity table).</td>
+<td>Aligner (upstream: --aligner, default 'bismark'). One of: 'bismark'       - bowtie2, the default main path 'bismark_hisat' - hisat2 (needs a --known_splices GTF for splice sites) 'bwameth'       - bwa-meth (needs a --use_mem2 flag to use the mem2 index) 'bwamem'        - BWA-MEM (TAPS-optimized)</td>
+<td><code>bedtools_intersect</code>, <code>bedtools_intersect_bwameth</code>, <code>bedtools_intersect_bwameth_chg</code>, <code>bedtools_intersect_bwameth_chh</code>, <code>bismark_align</code>, <code>bismark_align_se</code>, <code>bismark_coverage2cytosine</code>, <code>bismark_deduplicate</code>, <code>bismark_deduplicate_se</code>, <code>bismark_genomepreparation</code>, <code>bismark_methylationextractor</code>, <code>bismark_methylationextractor_se</code>, <code>bismark_report</code>, <code>bismark_report_se</code>, <code>bismark_summary</code>, <code>bismark_untar</code>, <code>bwa_index</code>, <code>bwa_mem</code>, <code>bwameth_align</code>, <code>bwameth_index</code>, <code>methyldackel_extract</code>, <code>methyldackel_extract_allcontexts</code>, <code>methyldackel_extract_methylkit</code>, <code>methyldackel_mbias</code>, <code>multiqc</code>, <code>multiqc_bwamem</code>, <code>multiqc_bwameth</code>, <code>picard_addorreplacereadgroups</code>, <code>picard_collecthsmetrics</code>, <code>picard_collecthsmetrics_alt</code>, <code>picard_markduplicates</code>, <code>picard_markduplicates_bwamem</code>, <code>preseq_lcextrap</code>, <code>preseq_lcextrap_alt</code>, <code>qualimap_bamqc</code>, <code>qualimap_bamqc_alt</code>, <code>rastair_call_bwamem</code>, <code>rastair_call_bwameth</code>, <code>rastair_mbias_bwamem</code>, <code>rastair_mbias_bwameth</code>, <code>rastair_mbiasparser</code>, <code>rastair_methylkit</code>, <code>samtools_faidx</code>, <code>samtools_flagstat</code>, <code>samtools_idxstats</code>, <code>samtools_index</code>, <code>samtools_index_alignment</code>, <code>samtools_index_deduplicated</code>, <code>samtools_index_deduplicated_bwamem</code>, <code>samtools_sort</code>, <code>samtools_sort_alignment</code>, <code>samtools_stats</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>all_contexts</code></td>
+<td><code>false</code></td>
+<td>Methyldackel options (upstream params with the same defaults, active on the bwameth branch when TAPS is off)</td>
+<td><code>bedtools_intersect_bwameth_chg</code>, <code>bedtools_intersect_bwameth_chh</code>, <code>methyldackel_extract</code>, <code>methyldackel_extract_allcontexts</code>, <code>methyldackel_extract_methylkit</code>, <code>methyldackel_mbias</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>bamqc_regions_file</code></td>
+<td>``</td>
 <td>—</td>
+<td><code>qualimap_bamqc</code>, <code>qualimap_bamqc_alt</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>bismark_index</code></td>
+<td>``</td>
+<td>Prebuilt Bismark index archive (.tar.gz/.tar.bz2, as produced by bismark_genome_preparation). Empty string (default) = build the index from config.fasta (upstream default). When set, the archive is untarred into refs/BismarkIndex and the build is skipped, like the upstream UNTAR module.</td>
+<td><code>bismark_genomepreparation</code>, <code>bismark_untar</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>cat_fastq</code></td>
+<td><code>true</code></td>
+<td>Concatenate multi-pair fastqs (upstream: CAT_FASTQ — always active for samples with &gt;1 fastq pair; upstream has no param for it). Set to false only when every sample has a single pair: multi-pair samples would then lack the merged reads the downstream rules consume.</td>
+<td><code>cat_fastq_r1</code>, <code>cat_fastq_r2</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>clip_r1</code></td>
 <td><code>0</code></td>
 <td>Trimming options (upstream params with the same defaults)</td>
-<td><code>trimgalore</code></td>
+<td><code>trimgalore</code>, <code>trimgalore_se</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>clip_r2</code></td>
@@ -701,10 +695,16 @@
 <td><code>trimgalore</code></td>
 </tr>
 <tr>
-<td style="text-align: right;"><code>comprehensive</code></td>
+<td style="text-align: right;"><code>collecthsmetrics</code></td>
 <td><code>false</code></td>
-<td>—</td>
-<td><code>bismark_methylationextractor</code></td>
+<td>Collect Picard HS metrics within the targeted-sequencing branch (upstream: --collecthsmetrics, default false)</td>
+<td><code>multiqc</code>, <code>multiqc_bwameth</code>, <code>picard_bedtointervallist</code>, <code>picard_collecthsmetrics</code>, <code>picard_collecthsmetrics_alt</code>, <code>picard_createsequencedictionary</code>, <code>samtools_faidx</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>comprehensive</code></td>
+<td><code>true</code></td>
+<td>The port's DAG consumes the merged (--comprehensive) methylation-call outputs, so the default differs from upstream (false): the per-strand split files would leave the declared outputs unmoved.</td>
+<td><code>bismark_methylationextractor</code>, <code>bismark_methylationextractor_se</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cytosine_report</code></td>
@@ -716,19 +716,19 @@
 <td style="text-align: right;"><code>em_seq</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>bismark_align</code>, <code>trimgalore</code></td>
+<td><code>bismark_align</code>, <code>trimgalore</code>, <code>trimgalore_se</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>fasta</code></td>
 <td><code>test/fixtures/refs/genome.fa</code></td>
-<td>Reference genome (upstream: --fasta). Uncompressed FASTA; the port always builds the Bismark index from it (upstream default when --bismark_index is not supplied). Point this at your genome; the repo default ships the tiny test fixture.</td>
-<td><code>bismark_genomepreparation</code></td>
+<td>Reference genome (upstream: --fasta). Uncompressed FASTA (a .gz FASTA is decompressed automatically before indexing, like the upstream GUNZIP module). The Bismark index is built from it automatically (upstream default when --bismark_index is not supplied). Point this at your genome; the repo default ships the tiny test fixture.</td>
+<td><code>bismark_genomepreparation</code>, <code>bwa_index</code>, <code>bwameth_align</code>, <code>bwameth_index</code>, <code>samtools_faidx</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>ignore_3prime_r1</code></td>
 <td><code>0</code></td>
 <td>—</td>
-<td><code>bismark_methylationextractor</code></td>
+<td><code>bismark_methylationextractor</code>, <code>bismark_methylationextractor_se</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>ignore_3prime_r2</code></td>
@@ -737,10 +737,16 @@
 <td><code>bismark_methylationextractor</code></td>
 </tr>
 <tr>
+<td style="text-align: right;"><code>ignore_flags</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>methyldackel_extract</code>, <code>methyldackel_extract_allcontexts</code>, <code>methyldackel_extract_methylkit</code>, <code>methyldackel_mbias</code></td>
+</tr>
+<tr>
 <td style="text-align: right;"><code>ignore_r1</code></td>
 <td><code>0</code></td>
 <td>—</td>
-<td><code>bismark_methylationextractor</code></td>
+<td><code>bismark_methylationextractor</code>, <code>bismark_methylationextractor_se</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>ignore_r2</code></td>
@@ -749,16 +755,22 @@
 <td><code>bismark_methylationextractor</code></td>
 </tr>
 <tr>
+<td style="text-align: right;"><code>known_splices</code></td>
+<td>``</td>
+<td>bismark_hisat splice-site GTF (upstream: --known_splices, default empty). When set and aligner = 'bismark_hisat', bismark is given the splice sites extracted from this file (upstream uses process substitution for the same data).</td>
+<td><code>bismark_align</code>, <code>bismark_align_se</code></td>
+</tr>
+<tr>
 <td style="text-align: right;"><code>length_trim</code></td>
 <td><code>0</code></td>
 <td>—</td>
-<td><code>trimgalore</code></td>
+<td><code>trimgalore</code>, <code>trimgalore_se</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>local_alignment</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>bismark_align</code></td>
+<td><code>bismark_align</code>, <code>bismark_align_se</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>maxins</code></td>
@@ -767,10 +779,28 @@
 <td><code>bismark_align</code></td>
 </tr>
 <tr>
+<td style="text-align: right;"><code>merge_context</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>methyldackel_extract</code>, <code>methyldackel_extract_allcontexts</code>, <code>methyldackel_extract_methylkit</code></td>
+</tr>
+<tr>
 <td style="text-align: right;"><code>meth_cutoff</code></td>
 <td>``</td>
 <td>—</td>
-<td><code>bismark_methylationextractor</code></td>
+<td><code>bismark_methylationextractor</code>, <code>bismark_methylationextractor_se</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>methyl_kit</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>methyldackel_extract_methylkit</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>min_depth</code></td>
+<td><code>0</code></td>
+<td>—</td>
+<td><code>methyldackel_extract</code>, <code>methyldackel_extract_allcontexts</code>, <code>methyldackel_extract_methylkit</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>minins</code></td>
@@ -782,13 +812,13 @@
 <td style="text-align: right;"><code>multiqc_title</code></td>
 <td>``</td>
 <td>MultiQC</td>
-<td><code>multiqc</code></td>
+<td><code>multiqc</code>, <code>multiqc_bwamem</code>, <code>multiqc_bwameth</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>nextseq_trim</code></td>
 <td><code>0</code></td>
 <td>—</td>
-<td><code>trimgalore</code></td>
+<td><code>trimgalore</code>, <code>trimgalore_se</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>no_overlap</code></td>
@@ -800,97 +830,133 @@
 <td style="text-align: right;"><code>nomeseq</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>bismark_coverage2cytosine</code>, <code>bismark_methylationextractor</code></td>
+<td><code>bismark_coverage2cytosine</code>, <code>bismark_methylationextractor</code>, <code>bismark_methylationextractor_se</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>non_directional</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>bismark_align</code></td>
+<td><code>bismark_align</code>, <code>bismark_align_se</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>num_mismatches</code></td>
 <td><code>0.6</code></td>
 <td>—</td>
-<td><code>bismark_align</code></td>
+<td><code>bismark_align</code>, <code>bismark_align_se</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>out_dir</code></td>
 <td><code>results</code></td>
 <td>—</td>
-<td><code>bismark_align</code>, <code>bismark_coverage2cytosine</code>, <code>bismark_deduplicate</code>, <code>bismark_methylationextractor</code>, <code>bismark_report</code>, <code>bismark_summary</code>, <code>fastqc</code>, <code>multiqc</code>, <code>multiqc_versions</code>, <code>samtools_index</code>, <code>samtools_sort</code>, <code>trimgalore</code></td>
+<td><code>bedtools_intersect</code>, <code>bedtools_intersect_bwameth</code>, <code>bedtools_intersect_bwameth_chg</code>, <code>bedtools_intersect_bwameth_chh</code>, <code>bismark_align</code>, <code>bismark_align_se</code>, <code>bismark_coverage2cytosine</code>, <code>bismark_deduplicate</code>, <code>bismark_deduplicate_se</code>, <code>bismark_methylationextractor</code>, <code>bismark_methylationextractor_se</code>, <code>bismark_report</code>, <code>bismark_report_se</code>, <code>bismark_summary</code>, <code>bwa_mem</code>, <code>bwameth_align</code>, <code>cat_fastq_r1</code>, <code>cat_fastq_r2</code>, <code>fastqc</code>, <code>fastqc_se</code>, <code>methyldackel_extract</code>, <code>methyldackel_extract_allcontexts</code>, <code>methyldackel_extract_methylkit</code>, <code>methyldackel_mbias</code>, <code>multiqc</code>, <code>multiqc_bwamem</code>, <code>multiqc_bwameth</code>, <code>multiqc_versions</code>, <code>picard_addorreplacereadgroups</code>, <code>picard_bedtointervallist</code>, <code>picard_collecthsmetrics</code>, <code>picard_collecthsmetrics_alt</code>, <code>picard_markduplicates</code>, <code>picard_markduplicates_bwamem</code>, <code>preseq_lcextrap</code>, <code>preseq_lcextrap_alt</code>, <code>qualimap_bamqc</code>, <code>qualimap_bamqc_alt</code>, <code>rastair_call_bwamem</code>, <code>rastair_call_bwameth</code>, <code>rastair_mbias_bwamem</code>, <code>rastair_mbias_bwameth</code>, <code>rastair_mbiasparser</code>, <code>rastair_methylkit</code>, <code>samtools_flagstat</code>, <code>samtools_idxstats</code>, <code>samtools_index</code>, <code>samtools_index_alignment</code>, <code>samtools_index_deduplicated</code>, <code>samtools_index_deduplicated_bwamem</code>, <code>samtools_sort</code>, <code>samtools_sort_alignment</code>, <code>samtools_stats</code>, <code>trimgalore</code>, <code>trimgalore_se</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>pbat</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>bismark_align</code>, <code>trimgalore</code></td>
+<td><code>bismark_align</code>, <code>bismark_align_se</code>, <code>trimgalore</code>, <code>trimgalore_se</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>raw_dir</code></td>
 <td><code>test/fixtures/raw</code></td>
 <td>Input reads directory: raw/<sample>_R1.fastq.gz + _R2.fastq.gz (paired-end). The repo default ships the tiny test fixtures; point this at your data.</td>
-<td><code>fastqc</code>, <code>trimgalore</code></td>
+<td><code>fastqc</code>, <code>fastqc_se</code>, <code>trimgalore</code>, <code>trimgalore_se</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>relax_mismatches</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>bismark_align</code></td>
+<td><code>bismark_align</code>, <code>bismark_align_se</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>rrbs</code></td>
 <td><code>false</code></td>
 <td>Library presets (upstream params with the same defaults).</td>
-<td><code>bismark_deduplicate</code>, <code>trimgalore</code></td>
+<td><code>bismark_deduplicate</code>, <code>bismark_deduplicate_se</code>, <code>multiqc_bwameth</code>, <code>picard_markduplicates</code>, <code>samtools_index_deduplicated</code>, <code>trimgalore</code>, <code>trimgalore_se</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>run_preseq</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>multiqc</code>, <code>multiqc_bwamem</code>, <code>multiqc_bwameth</code>, <code>preseq_lcextrap</code>, <code>preseq_lcextrap_alt</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>run_qualimap</code></td>
+<td><code>false</code></td>
+<td>Optional QC branches (upstream params, all off by default)</td>
+<td><code>multiqc</code>, <code>multiqc_bwamem</code>, <code>multiqc_bwameth</code>, <code>qualimap_bamqc</code>, <code>qualimap_bamqc_alt</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>run_targeted_sequencing</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>bedtools_intersect</code>, <code>bedtools_intersect_bwameth</code>, <code>bedtools_intersect_bwameth_chg</code>, <code>bedtools_intersect_bwameth_chh</code>, <code>multiqc</code>, <code>multiqc_bwameth</code>, <code>picard_bedtointervallist</code>, <code>picard_collecthsmetrics</code>, <code>picard_collecthsmetrics_alt</code>, <code>picard_createsequencedictionary</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>single_cell</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>bismark_align</code>, <code>trimgalore</code></td>
+<td><code>bismark_align</code>, <code>bismark_align_se</code>, <code>trimgalore</code>, <code>trimgalore_se</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>single_end_mode</code></td>
+<td><code>false</code></td>
+<td>Single-end reads (upstream: the samplesheet <code>single_end</code> column, absent fastq_2 -&gt; single_end). Off by default (all samples paired-end, the byte-identical default). Set to true AND uncomment [workflow] metadata_file to route samples per-row: metadata/samples.tsv lists each sample's <code>endedness</code> (SE or PE); a sample without a row — or with no metadata_file at all — stays paired-end. The SE branches are separate gated rules mirroring the upstream per-sample routing (bismark chain: fastqc_se -&gt; trimgalore_se -&gt; bismark_align_se -&gt; bismark_deduplicate_se -&gt; bismark_methylationextractor_se -&gt; bismark_report_se; the bwameth/ bwamem aligners take the trimmed single read directly). Requires oxo-flow &gt;= 0.17.0: on older engines <code>{meta.*}</code> is inert, so the SE rules stay closed while this key is false.</td>
+<td><code>bismark_align_se</code>, <code>bismark_deduplicate_se</code>, <code>bismark_methylationextractor_se</code>, <code>bismark_report_se</code>, <code>fastqc_se</code>, <code>trimgalore_se</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_deduplication</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>bismark_deduplicate</code></td>
+<td><code>bismark_deduplicate</code>, <code>bismark_deduplicate_se</code>, <code>multiqc_bwamem</code>, <code>multiqc_bwameth</code>, <code>picard_addorreplacereadgroups</code>, <code>picard_markduplicates</code>, <code>picard_markduplicates_bwamem</code>, <code>samtools_index_deduplicated</code>, <code>samtools_index_deduplicated_bwamem</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_fastqc</code></td>
 <td><code>false</code></td>
 <td>Skip options (upstream: --skip_fastqc / --skip_trimming / --skip_deduplication / --skip_multiqc). Same defaults as upstream.</td>
-<td><code>fastqc</code></td>
+<td><code>fastqc</code>, <code>fastqc_se</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_multiqc</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>multiqc</code></td>
+<td><code>multiqc</code>, <code>multiqc_bwamem</code>, <code>multiqc_bwameth</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_trimming</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>trimgalore</code></td>
+<td><code>trimgalore</code>, <code>trimgalore_se</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_trimming_presets</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>trimgalore</code></td>
+<td><code>trimgalore</code>, <code>trimgalore_se</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>slamseq</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td>—</td>
+<td><code>bismark_genomepreparation</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>taps</code></td>
+<td><code>false</code></td>
+<td>TAPS protocol (upstream: --taps, default false). Runs rastair conversion on the alignments. Only meaningful with the bwameth or bwamem aligners (upstream builds no fasta index for TAPS on the bismark aligners, so rastair silently produces nothing there — replicated).</td>
+<td><code>bedtools_intersect</code>, <code>bedtools_intersect_bwameth</code>, <code>bedtools_intersect_bwameth_chg</code>, <code>bedtools_intersect_bwameth_chh</code>, <code>methyldackel_extract</code>, <code>methyldackel_extract_allcontexts</code>, <code>methyldackel_extract_methylkit</code>, <code>methyldackel_mbias</code>, <code>picard_collecthsmetrics</code>, <code>picard_collecthsmetrics_alt</code>, <code>rastair_call_bwameth</code>, <code>rastair_mbias_bwameth</code>, <code>rastair_mbiasparser</code>, <code>rastair_methylkit</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>target_regions_file</code></td>
+<td>``</td>
+<td>Targeted-sequencing inputs (upstream: --target_regions_file / --bamqc_regions_file, default empty)</td>
+<td><code>bedtools_intersect</code>, <code>bedtools_intersect_bwameth</code>, <code>bedtools_intersect_bwameth_chg</code>, <code>bedtools_intersect_bwameth_chh</code>, <code>picard_bedtointervallist</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>three_prime_clip_r1</code></td>
 <td><code>0</code></td>
 <td>—</td>
-<td><code>trimgalore</code></td>
+<td><code>trimgalore</code>, <code>trimgalore_se</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>three_prime_clip_r2</code></td>
@@ -902,13 +968,19 @@
 <td style="text-align: right;"><code>unmapped</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>bismark_align</code></td>
+<td><code>bismark_align</code>, <code>bismark_align_se</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>use_mem2</code></td>
+<td><code>false</code></td>
+<td>bwameth index variant (upstream: --use_mem2, default false).</td>
+<td><code>bwameth_index</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>zymo</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>bismark_align</code>, <code>trimgalore</code></td>
+<td><code>bismark_align</code>, <code>bismark_align_se</code>, <code>trimgalore</code>, <code>trimgalore_se</code></td>
 </tr>
 </tbody>
 </table>
@@ -923,177 +995,122 @@
 <p><strong>In scope</strong></p>
 <ul>
 <li>bismark_genomepreparation</li>
+<li>bismark_untar</li>
+<li>bwameth_index</li>
+<li>bwa_index</li>
+<li>samtools_faidx</li>
+<li>cat_fastq_r1</li>
+<li>cat_fastq_r2</li>
 <li>fastqc</li>
+<li>fastqc_se</li>
 <li>trimgalore</li>
+<li>trimgalore_se</li>
 <li>bismark_align</li>
-<li>bismark_deduplicate</li>
+<li>bismark_align_se</li>
+<li>bwameth_align</li>
+<li>bwa_mem</li>
 <li>samtools_sort</li>
+<li>samtools_sort_alignment</li>
 <li>samtools_index</li>
+<li>samtools_index_alignment</li>
+<li>samtools_flagstat</li>
+<li>samtools_stats</li>
+<li>samtools_idxstats</li>
+<li>bismark_deduplicate</li>
+<li>bismark_deduplicate_se</li>
+<li>picard_markduplicates</li>
+<li>samtools_index_deduplicated</li>
+<li>picard_addorreplacereadgroups</li>
+<li>picard_markduplicates_bwamem</li>
+<li>samtools_index_deduplicated_bwamem</li>
 <li>bismark_methylationextractor</li>
+<li>bismark_methylationextractor_se</li>
+<li>methyldackel_extract</li>
+<li>methyldackel_extract_allcontexts</li>
+<li>methyldackel_extract_methylkit</li>
+<li>methyldackel_mbias</li>
+<li>rastair_mbias_bwameth</li>
+<li>rastair_mbias_bwamem</li>
+<li>rastair_mbiasparser</li>
+<li>rastair_call_bwameth</li>
+<li>rastair_call_bwamem</li>
+<li>rastair_methylkit</li>
 <li>bismark_coverage2cytosine</li>
 <li>bismark_report</li>
+<li>bismark_report_se</li>
 <li>bismark_summary</li>
+<li>qualimap_bamqc</li>
+<li>qualimap_bamqc_alt</li>
+<li>preseq_lcextrap</li>
+<li>preseq_lcextrap_alt</li>
+<li>picard_createsequencedictionary</li>
+<li>picard_bedtointervallist</li>
+<li>bedtools_intersect</li>
+<li>bedtools_intersect_bwameth</li>
+<li>bedtools_intersect_bwameth_chg</li>
+<li>bedtools_intersect_bwameth_chh</li>
+<li>picard_collecthsmetrics</li>
+<li>picard_collecthsmetrics_alt</li>
 <li>multiqc_versions</li>
 <li>multiqc</li>
+<li>multiqc_bwameth</li>
+<li>multiqc_bwamem</li>
 </ul>
 <p><strong>Excluded</strong></p>
 <ul>
-<li>single_end — paired-end only; the upstream samplesheet 'single_end' column is not ported</li>
-<li>bwameth (bwa-meth) aligner — non-default aligner branch, not ported</li>
-<li>bwamem aligner — non-default aligner branch, not ported</li>
-<li>bismark_hisat aligner — non-default aligner branch, not ported</li>
-<li>BAM_TAPS_CONVERSION (rastair) — taps/bwamem branch, off by default</li>
-<li>BAM_METHYLDACKEL — bwameth branch, off by default</li>
-<li>QUALIMAP_BAMQC — --run_qualimap branch, off by default</li>
-<li>PRESEQ_LCEXTRAP — --run_preseq branch, off by default</li>
-<li>TARGETED_SEQUENCING (+ PICARD_MARKDUPLICATES, PICARD_ADDORREPLACEREADGROUPS) — --run_targeted_sequencing branch, off by default</li>
-<li>CAT_FASTQ — only active for samples with more than one fastq pair; fixture samplesheets have one pair per sample</li>
-<li>GUNZIP / UNTAR — only active when a prebuilt --bismark_index is supplied; the port always builds the index from the reference FASTA (upstream default)</li>
+<li>none</li>
 </ul>
 <h2 id="fidelity">Fidelity</h2>
-<table>
-<thead>
-<tr>
-<th>Upstream process/rule</th>
-<th>oxo-flow rule</th>
-<th>Tool (version)</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>FASTQC</td>
-<td><code>fastqc</code></td>
-<td>fastqc 0.12.1</td>
-<td>identical command; <code>--memory</code> derived from task resources</td>
-</tr>
-<tr>
-<td>TRIMGALORE</td>
-<td><code>trimgalore</code></td>
-<td>trim-galore 0.6.10, cutadapt 4.9, pigz 2.8</td>
-<td>identical command incl. library-preset clipping and <code>--cores</code> clamp</td>
-</tr>
-<tr>
-<td>BISMARK_GENOMEPREPARATION</td>
-<td><code>bismark_genomepreparation</code></td>
-<td>bismark 0.25.1</td>
-<td><code>--bowtie2</code>; runs when no prebuilt index is supplied (upstream default)</td>
-</tr>
-<tr>
-<td>BISMARK_ALIGN</td>
-<td><code>bismark_align</code></td>
-<td>bismark 0.25.1</td>
-<td>identical flag order (pbat/non_directional/unmapped/score_min/local/minins/maxins/multicore)</td>
-</tr>
-<tr>
-<td>BISMARK_DEDUPLICATE</td>
-<td><code>bismark_deduplicate</code></td>
-<td>bismark 0.25.1</td>
-<td>identical command; skipped with <code>skip_deduplication</code>/<code>rrbs</code> like upstream</td>
-</tr>
-<tr>
-<td>SAMTOOLS_SORT</td>
-<td><code>samtools_sort</code></td>
-<td>samtools 1.22.1, htslib 1.22.1</td>
-<td>upstream prefix <code>${sample}.deduplicated.sorted</code></td>
-</tr>
-<tr>
-<td>SAMTOOLS_INDEX</td>
-<td><code>samtools_index</code></td>
-<td>samtools 1.22.1</td>
-<td>identical command</td>
-</tr>
-<tr>
-<td>BISMARK_METHYLATIONEXTRACTOR</td>
-<td><code>bismark_methylationextractor</code></td>
-<td>bismark 0.25.1</td>
-<td>identical flag order on the <strong>deduplicated</strong> BAM; <code>--multicore</code>/<code>--buffer_size</code> derived from resources</td>
-</tr>
-<tr>
-<td>BISMARK_COVERAGE2CYTOSINE</td>
-<td><code>bismark_coverage2cytosine</code></td>
-<td>bismark 0.25.1</td>
-<td>off by default; runs with <code>cytosine_report</code>/<code>nomeseq</code></td>
-</tr>
-<tr>
-<td>BISMARK_REPORT</td>
-<td><code>bismark_report</code></td>
-<td>bismark 0.25.1</td>
-<td>bismark2report run with the four reports co-located, as in the upstream workdir</td>
-</tr>
-<tr>
-<td>BISMARK_SUMMARY</td>
-<td><code>bismark_summary</code></td>
-<td>bismark 0.25.1</td>
-<td>bismark2summary with upstream BAM-name arguments</td>
-</tr>
-<tr>
-<td>MULTIQC</td>
-<td><code>multiqc</code></td>
-<td>multiqc 1.32</td>
-<td>same search space + <code>assets/multiqc_config.yml</code>; versions pinned statically</td>
-</tr>
-<tr>
-<td>softwareVersionsToYAML + collectFile</td>
-<td><code>multiqc_versions</code></td>
-<td>—</td>
-<td>upstream extracts versions at runtime; port pins the module versions statically</td>
-</tr>
-<tr>
-<td>CAT_FASTQ</td>
-<td>not ported</td>
-<td>—</td>
-<td>only active when a sample has &gt;1 fastq pair; single-pair samplesheets cover the default path</td>
-</tr>
-<tr>
-<td>GUNZIP / UNTAR</td>
-<td>not ported</td>
-<td>—</td>
-<td>only active when a prebuilt <code>--bismark_index</code> is supplied; the port always builds the index</td>
-</tr>
-<tr>
-<td>QUALIMAP_BAMQC</td>
-<td>not ported</td>
-<td>—</td>
-<td><code>--run_qualimap</code> branch, off by default</td>
-</tr>
-<tr>
-<td>PRESEQ_LCEXTRAP</td>
-<td>not ported</td>
-<td>—</td>
-<td><code>--run_preseq</code> branch, off by default</td>
-</tr>
-<tr>
-<td>TARGETED_SEQUENCING (+ PICARD_MARKDUPLICATES / ADDORREPLACEREADGROUPS)</td>
-<td>not ported</td>
-<td>—</td>
-<td><code>--run_targeted_sequencing</code> branch, off by default</td>
-</tr>
-<tr>
-<td>BAM_TAPS_CONVERSION (rastair)</td>
-<td>not ported</td>
-<td>—</td>
-<td><code>--taps</code> / bwamem branch, off by default</td>
-</tr>
-<tr>
-<td>BAM_METHYLDACKEL</td>
-<td>not ported</td>
-<td>—</td>
-<td>bwameth branch, off by default</td>
-</tr>
-<tr>
-<td>aligners bismark_hisat / bwameth / bwamem</td>
-<td>not ported</td>
-<td>—</td>
-<td><code>aligner</code> config accepts only <code>bismark</code> (the default)</td>
-</tr>
-</tbody>
-</table>
-<p>Additional notes: paired-end only (<code>single_end</code> samplesheet column is not
-ported); <code>--save_*</code> / <code>publish_dir_mode</code> params are N/A (oxo-flow publishes
-every declared output); per-process <code>withName:</code> resource overrides are baked
-into <code>[rules.resources]</code> (upstream labels process_single/low/medium/high +
-BISMARK_ALIGN 8d / DEDUPLICATE 2d / METHYLATIONEXTRACTOR 1d time limits).</p>
+<p>| Upstream process/rule | oxo-flow rule | Tool (version) | Notes |
+|---|---|---|
+| CAT_FASTQ | <code>cat_fastq_r1</code> / <code>cat_fastq_r2</code> | coreutils 9.5 | ported via the engine's <code>input_groups</code> primitive (issue #227, oxo-flow &gt;= 0.17.0): one instance per sample with &gt;1 fastq pair, R1s and R2s concatenated into <code>results/fastq/&lt;sample&gt;_R{1,2}.fastq.gz</code>; single-pair samples pass through unchanged (downstream falls back to the raw pair). Upstream's single process is split into two rules (one per read); see deviations |
+--|
+| FASTQC | <code>fastqc</code> / <code>fastqc_se</code> | fastqc 0.12.1 | identical command; <code>--memory</code> derived from task resources. The <code>_se</code> variant runs the single-end chain (reads named <code>{sample}.fastq.gz</code>, outputs <code>{sample}_fastqc.*</code>) when <code>single_end_mode</code> is on |
+| TRIMGALORE | <code>trimgalore</code> / <code>trimgalore_se</code> | trim-galore 0.6.10, cutadapt 4.9, pigz 2.8 | identical command incl. library-preset clipping and <code>--cores</code> clamp. The <code>_se</code> variant is the upstream SE module: R1-side clipping only, <code>--cores cpus-3</code> clamped to [1, 8] |
+| BISMARK_GENOMEPREPARATION | <code>bismark_genomepreparation</code> | bismark 0.25.1, gzip 1.13 | <code>--bowtie2</code> (or <code>--hisat2</code> for bismark_hisat, <code>--slam</code> for slamseq); runs when no prebuilt index is supplied (upstream default) |
+| GUNZIP | (merged into the index-preparation shells) | gzip 1.13 | a gzipped reference FASTA is decompressed before index building, as in the upstream fasta_index_methylseq subworkflow |
+| UNTAR | <code>bismark_untar</code> | tar 1.34 | active only when a prebuilt <code>--bismark_index</code> archive is supplied; strips a single top-level directory, like upstream |
+| BISMARK_ALIGN | <code>bismark_align</code> / <code>bismark_align_se</code> | bismark 0.25.1 | identical flag order (pbat/non_directional/unmapped/score_min/local/minins/maxins/multicore); hisat2 splice sites via <code>known_splices</code> (see deviations). The <code>_se</code> variant drops <code>--minins</code>/<code>--maxins</code> (upstream <code>!meta.single_end</code> gate), keeps <code>--multicore</code> and the hisat2 rename |
+| BISMARK_DEDUPLICATE | <code>bismark_deduplicate</code> / <code>bismark_deduplicate_se</code> | bismark 0.25.1 | identical command (<code>-s</code> for single-end, <code>-p</code> paired-end); skipped with <code>skip_deduplication</code>/<code>rrbs</code> like upstream |
+| SAMTOOLS_SORT | <code>samtools_sort</code> | samtools 1.22.1, htslib 1.22.1 | upstream prefix <code>${sample}.deduplicated.sorted</code>; takes the SE deduplicated BAM when the sample is single-end |
+| SAMTOOLS_INDEX | <code>samtools_index</code> | samtools 1.22.1 | identical command |
+| BISMARK_METHYLATIONEXTRACTOR | <code>bismark_methylationextractor</code> / <code>bismark_methylationextractor_se</code> | bismark 0.25.1 | identical flag order on the <strong>deduplicated</strong> BAM; <code>--multicore</code>/<code>--buffer_size</code> derived from resources. The <code>_se</code> variant uses <code>-s</code> and drops <code>--no_overlap</code>/<code>--ignore_r2</code>/<code>--ignore_3prime_r2</code> (upstream <code>!meta.single_end</code> gate) |
+| BISMARK_COVERAGE2CYTOSINE | <code>bismark_coverage2cytosine</code> | bismark 0.25.1 | off by default; runs with <code>cytosine_report</code>/<code>nomeseq</code>; takes the SE coverage file when the sample is single-end |
+| BISMARK_REPORT | <code>bismark_report</code> / <code>bismark_report_se</code> | bismark 0.25.1 | bismark2report run with the four reports co-located, as in the upstream workdir; the <code>_se</code> variant feeds the <code>*_SE_report.txt</code> files |
+| BISMARK_SUMMARY | <code>bismark_summary</code> | bismark 0.25.1 | bismark2summary with upstream BAM-name arguments; per-sample SE/PE detection via a <code>[ -f ]</code> probe on the SE alignment report (no per-sample binding) |
+| BWAMETH_INDEX | <code>bwameth_index</code> | bwameth 0.2.9 | <code>bwameth.py index</code>, or <code>index-mem2</code> with <code>use_mem2</code>; index dir <code>refs/BwamethIndex</code> |
+| BWAMETH_ALIGN | <code>bwameth_align</code> | bwameth 0.2.9 | identical command (reference symlink re-created in the index dir, <code>samtools view -bhS</code>); one or two reads are passed positionally per sample (SE/PE from its metadata row) |
+| BWA_INDEX | <code>bwa_index</code> | bwa 0.7.19 | <code>bwa index -p</code>; upstream sizes memory dynamically (5.37x FASTA) — the port uses a fixed 4 threads/24G/24h budget (see deviations) |
+| BWA_MEM | <code>bwa_mem</code> | bwa 0.7.19, samtools 1.22.1 | upstream <code>sort_bam = true</code>: <code>bwa mem \| samtools sort</code>; index prefix found by globbing <code>*.amb</code>; one or two reads passed positionally per sample (SE/PE) |
+| SAMTOOLS_INDEX_ALIGNMENTS | <code>samtools_index_alignment</code> | samtools 1.22.1 | index of the sorted alignment BAM (bwameth/bwamem) |
+| SAMTOOLS_FLAGSTAT | <code>samtools_flagstat</code> | samtools 1.22.1 | identical command |
+| SAMTOOLS_STATS | <code>samtools_stats</code> | samtools 1.22.1 | identical command |
+| SAMTOOLS_IDXSTATS | <code>samtools_idxstats</code> | samtools 1.22.1 | bwamem branch; <code>--threads cpus-1</code> as upstream |
+| PICARD_MARKDUPLICATES | <code>picard_markduplicates</code> / <code>picard_markduplicates_bwamem</code> | picard 3.4.0 | identical args (ASSUME_SORTED/REMOVE_DUPLICATES/LENIENT/PROGRAM_RECORD_ID null/TMP_DIR); -Xmx = 0.8 x memory |
+| PICARD_ADDORREPLACEREADGROUPS | <code>picard_addorreplacereadgroups</code> | picard 3.4.0 | identical args; upstream does not publish this BAM — the port declares it so the DAG can consume it |
+| SAMTOOLS_INDEX_DEDUPLICATED | <code>samtools_index_deduplicated</code> / <code>samtools_index_deduplicated_bwamem</code> | samtools 1.22.1 | index of the deduplicated BAM |
+| METHYLDACKEL_EXTRACT | <code>methyldackel_extract</code> (+ <code>_allcontexts</code>, <code>_methylkit</code>) | methyldackel 0.6.1 | same flags (CHG/CHH, mergeContext, ignoreFlags, minDepth, methylKit); the methylKit table and the all-contexts bedGraphs are separate gated rules (see deviations) |
+| METHYLDACKEL_MBIAS | <code>methyldackel_mbias</code> | methyldackel 0.6.1 | identical command |
+| RASTAIR_MBIAS | <code>rastair_mbias_bwameth</code> / <code>rastair_mbias_bwamem</code> | rastair 0.8.2 | active with <code>taps</code> on bwameth and always on bwamem, exactly like the upstream <code>if (params.taps \|\| aligner == 'bwamem')</code> |
+| RASTAIR_MBIASPARSER | <code>rastair_mbiasparser</code> | rastair 0.8.2, r-base 4.4.0 | plot_mbias.R + parse_mbias.R |
+| RASTAIR_CALL | <code>rastair_call_bwameth</code> / <code>rastair_call_bwamem</code> | rastair 0.8.2 | trim values flow from the mbiasparser CSV (see deviations) |
+| RASTAIR_METHYLKIT | <code>rastair_methylkit</code> | rastair 0.8.2 | <code>rastair_call_to_methylkit.sh \| gzip</code> |
+| QUALIMAP_BAMQC | <code>qualimap_bamqc</code> / <code>qualimap_bamqc_alt</code> | qualimap 2.3 | <code>-p non-strand-specific</code>, <code>--gff</code> with <code>bamqc_regions_file</code>, <code>_JAVA_OPTIONS</code> tmpdir; <code>--collect-overlap-pairs</code> only for paired-end samples (upstream <code>!meta.single_end</code> gate) |
+| PRESEQ_LCEXTRAP | <code>preseq_lcextrap</code> / <code>preseq_lcextrap_alt</code> | preseq 3.2.0 | <code>-verbose -bam</code>, <code>-pe</code> only for paired-end samples (upstream <code>!meta.single_end</code> gate); the <code>*.command.log</code> is preseq's own stderr (see deviations) |
+| PICARD_CREATESEQUENCEDICTIONARY | <code>picard_createsequencedictionary</code> | picard 3.4.0 | runs only when <code>collecthsmetrics</code> is requested, like upstream |
+| PICARD_BEDTOINTERVALLIST | <code>picard_bedtointervallist</code> | picard 3.4.0 | output named <code>target_regions.intervallist</code> (fixed name; see deviations) |
+| BEDTOOLS_INTERSECT | <code>bedtools_intersect</code> (+ <code>_bwameth</code>, <code>_chg</code>, <code>_chh</code>) | bedtools 2.31.1 | prefix = the bedGraph basename, suffix <code>targeted.bedGraph</code>, as upstream; the bismark variant takes the SE bedGraph when the sample is single-end |
+| PICARD_COLLECTHSMETRICS | <code>picard_collecthsmetrics</code> / <code>picard_collecthsmetrics_alt</code> | picard 3.4.0 | same intervals for bait and target; excluded on the taps/bwamem branches, like the upstream rastair error |
+| SAMTOOLS_FAIDX | <code>samtools_faidx</code> | samtools 1.22.1, htslib 1.22.1, gzip 1.13 | stages the reference at <code>refs/FastaRef/reference.fa</code>; upstream gate (bwameth/bwamem/collecthsmetrics) reproduced |
+| MULTIQC | <code>multiqc</code> / <code>multiqc_bwameth</code> / <code>multiqc_bwamem</code> | multiqc 1.32 | one rule per aligner branch; same search space as upstream (fastqc zips, trimgalore logs, samtools stats/flagstat/idxstats, picard metrics + qualimap/preseq/HS extras), plus the single-end report names (<code>{sample}_fastqc.zip</code>, <code>{sample}.fastq.gz_trimming_report.txt</code>, <code>*_SE_report.txt</code>, ...) which are picked up exactly when present; the methyldackel/rastair outputs are not fed to MultiQC, exactly like upstream |
+| softwareVersionsToYAML + collectFile | <code>multiqc_versions</code> | — | upstream extracts versions at runtime; port pins the module versions statically |</p>
+<p>Additional notes: single-end samples are supported via the engine's
+metadata binding (<code>[workflow] metadata_file</code> + <code>{meta.endedness}</code>, gated on
+<code>config.single_end_mode</code>, oxo-flow &gt;= 0.17.0); <code>--save_*</code> / <code>publish_dir_mode</code>
+params are N/A (oxo-flow publishes every declared output); per-process
+<code>withName:</code> resource overrides are baked into <code>[rules.resources]</code> (upstream
+labels process_single/low/medium/high + BISMARK_ALIGN 8d / DEDUPLICATE 2d /
+METHYLATIONEXTRACTOR 1d time limits).</p>
 <h2 id="links">Links</h2>
 <ul>
 <li>Repository: <a href="https://github.com/oxo-flow-community/oxo-flow-methylseq">oxo-flow-methylseq</a></li>
@@ -1136,7 +1153,7 @@ BISMARK_ALIGN 8d / DEDUPLICATE 2d / METHYLATIONEXTRACTOR 1d time limits).</p>
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      © 2026 oxo-flow-community · Apache-2.0 · Ports are based on their upstream workflows — see each repository's NOTICE.
+      © 2026 <a href="https://github.com/oxo-flow-community">oxo-flow-community</a> · Apache-2.0 · engine <a href="https://github.com/Traitome/oxo-flow">oxo-flow</a> · <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues">issues</a> · evidence: ✔ live-tested ⊃ ★ verified ⊃ ☆ community · ports are based on their upstream workflows — see each repository's NOTICE
     </div>
   
   

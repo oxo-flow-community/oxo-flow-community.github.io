@@ -23,7 +23,7 @@
     
     
       
-        <title>Biosynthetic gene cluster (BGC) genome mining: annotation, antiSMASH and data warehouse - oxo-flow-community</title>
+        <title>Oxo flow bgcflow - oxo-flow-community</title>
       
     
     
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Biosynthetic gene cluster (BGC) genome mining: annotation, antiSMASH and data warehouse
+              Oxo flow bgcflow
             
           </span>
         </div>
@@ -584,60 +584,30 @@
   
 
 
+<div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-bgcflow</span></div>
+<div class="ox-detail-cols">
+<div>
 <h1 id="biosynthetic-gene-cluster-bgc-genome-mining-annotation-antismash-and-data-warehouse">Biosynthetic gene cluster (BGC) genome mining: annotation, antiSMASH and data warehouse</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
-
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
 <p>End-to-end biosynthetic gene cluster (BGC) analysis of user-provided bacterial genomes: prokka annotation, antiSMASH 7 secondary-metabolite mining with automated database setup, per-genome BGC counts and overview tables, GTDB taxonomy lookup, MIBiG reference table download, BigSCAPE-compatible comparison preparation (symlinks, taxonomy, dataset registry, visualization mapping), and conversion of all result tables into a parquet data warehouse — ready for downstream comparison and exploration.</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: right;"></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: right;"><strong>Rating</strong></td>
-<td>✔ Live-tested</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Origin</strong></td>
-<td>port</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Domain</strong></td>
-<td>genome-mining</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Rules</strong></td>
-<td>18</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Compute</strong></td>
-<td>up to 4 CPUs per rule (antiSMASH)</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Tools</strong></td>
-<td>prokka · antismash · python · pandas · pyarrow · biopython · requests · alive_progress</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Ported</strong></td>
-<td>2026-08-15</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>License</strong></td>
-<td>Apache-2.0</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Source</strong></td>
-<td><a href="https://github.com/NBChub/bgcflow">NBChub/bgcflow</a></td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Pinned version</strong></td>
-<td><code>v1.1.2</code></td>
-</tr>
-</tbody>
-</table>
+</div>
+<div>
+<div class="ox-glance">
+<div class="ox-glance-title">At a glance</div>
+<div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">60</span></div>
+<div class="ox-kv"><span class="k">Compute</span><span class="v">up to 4 CPUs per rule (antiSMASH)</span></div>
+<div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Domain</span><span class="v">genome-mining</span></div>
+<div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/NBChub/bgcflow">NBChub/bgcflow</a></span></div>
+<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>v1.1.2</code></span></div>
+<div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
+<div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
+<p class="cmd">$ oxo-flow run main.oxoflow</p>
+</div>
+</div>
+</div>
 <h2 id="run-it">Run it</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>oxo-flow<span class="w"> </span>run<span class="w"> </span>main.oxoflow
 </code></pre></div>
@@ -687,19 +657,19 @@
 <td style="text-align: right;"><code>antismash_major</code></td>
 <td><code>7</code></td>
 <td>antiSMASH (upstream rule_parameters.antismash + envs/antismash.yaml)</td>
-<td>—</td>
+<td><code>antismash_v6</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>antismash_taxon</code></td>
 <td><code>bacteria</code></td>
 <td>upstream env var BGCFLOW_ANTISMASH_MODE</td>
-<td><code>antismash</code></td>
+<td><code>antismash</code>, <code>antismash_v6</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>antismash_version</code></td>
 <td><code>7.1.0</code></td>
 <td>derived from envs/antismash.yaml pip pin git@7-1-0-1</td>
-<td><code>antismash</code>, <code>antismash_overview</code>, <code>antismash_overview_gather</code>, <code>antismash_summary</code>, <code>bgc_count</code>, <code>copy_antismash</code>, <code>copy_log_changes</code>, <code>csv_to_parquet</code>, <code>downstream_bgc_prep</code></td>
+<td><code>antismash</code>, <code>antismash_overview</code>, <code>antismash_overview_gather</code>, <code>antismash_summary</code>, <code>antismash_v6</code>, <code>arts</code>, <code>bgc_count</code>, <code>bigscape</code>, <code>copy_antismash</code>, <code>copy_log_changes</code>, <code>csv_to_parquet</code>, <code>downstream_bgc_prep</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>bgc_dataset</code></td>
@@ -712,6 +682,12 @@
 <td><code>1.1.2</code></td>
 <td>BGCflow housekeeping</td>
 <td><code>format_gbk</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>gecco_version</code></td>
+<td><code>0.9.10</code></td>
+<td>—</td>
+<td><code>gecco</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gtdb_api_base</code></td>
@@ -729,19 +705,19 @@
 <td style="text-align: right;"><code>gtdb_release</code></td>
 <td><code>220.0</code></td>
 <td>GTDB taxonomy (upstream rule_parameters.install_gtdbtk + use_gtdb_api)</td>
-<td><code>gtdb_prep</code></td>
+<td><code>gtdb_prep</code>, <code>install_gtdbtk</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gtdb_release_major</code></td>
 <td><code>220</code></td>
 <td>GTDB release major version (upstream: release.split('.')[0])</td>
-<td><code>gtdb_prep</code></td>
+<td><code>gtdb_prep</code>, <code>install_gtdbtk</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gtdb_release_version</code></td>
 <td><code>r220</code></td>
 <td>GTDB release id (e.g. r214, r220)</td>
-<td>—</td>
+<td><code>install_gtdbtk</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gtdb_tax_paths</code></td>
@@ -753,7 +729,7 @@
 <td style="text-align: right;"><code>input_type</code></td>
 <td><code>fna</code></td>
 <td>upstream get_input_location(): fna | gbk</td>
-<td>—</td>
+<td><code>copy_custom_fasta</code>, <code>copy_custom_genbank</code>, <code>format_gbk</code>, <code>genbank_to_fna</code>, <code>prokka</code>, <code>prokka_gbk</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>mibig_version</code></td>
@@ -762,16 +738,106 @@
 <td><code>get_mibig_table</code></td>
 </tr>
 <tr>
+<td style="text-align: right;"><code>ncbi_genera</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>ncbi_genome_download</code></td>
+</tr>
+<tr>
 <td style="text-align: right;"><code>project</code></td>
 <td><code>genomes</code></td>
 <td>Project / input genomes (upstream: config.yaml <code>projects</code> + data/raw/fasta)</td>
-<td><code>antismash_overview_gather</code>, <code>antismash_summary</code>, <code>copy_log_changes</code>, <code>copy_mibig_table</code>, <code>csv_to_parquet</code>, <code>downstream_bgc_prep</code>, <code>fix_gtdb_taxonomy</code></td>
+<td><code>amrfinder_gather</code>, <code>antismash_overview_gather</code>, <code>antismash_summary</code>, <code>bigscape</code>, <code>cblaster_genome_db</code>, <code>checkm</code>, <code>copy_log_changes</code>, <code>copy_mibig_table</code>, <code>csv_to_parquet</code>, <code>downstream_bgc_prep</code>, <code>fastani</code>, <code>fastani_convert</code>, <code>fix_gtdb_taxonomy</code>, <code>gtdbtk</code>, <code>mash</code>, <code>mash_convert</code>, <code>roary</code>, <code>roary_out</code>, <code>seqfu_combine</code>, <code>write_dependency_versions</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>project_source</code></td>
+<td><code>custom</code></td>
+<td>—</td>
+<td><code>ncbi_genome_download</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>raw_dir</code></td>
 <td><code>test/fixtures/raw</code></td>
 <td>directory containing fasta/<genome_id>.fna</td>
-<td><code>copy_custom_fasta</code></td>
+<td><code>copy_custom_fasta</code>, <code>copy_custom_genbank</code>, <code>genbank_to_fna</code>, <code>prokka_gbk</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>run_amrfinderplus</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>amrfinder_gather</code>, <code>amrfinderplus</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>run_arts</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>arts</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>run_bigscape</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>bigscape</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>run_cblaster</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>cblaster_genome_db</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>run_checkm</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>checkm</code>, <code>install_checkm</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>run_eggnog</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>eggnog</code>, <code>install_eggnog</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>run_fastani</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>fastani</code>, <code>fastani_convert</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>run_gecco</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>gecco</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>run_gtdbtk</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>gtdbtk</code>, <code>install_gtdbtk</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>run_mash</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>mash</code>, <code>mash_convert</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>run_roary</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>roary</code>, <code>roary_out</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>run_seqfu</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>seqfu_combine</code>, <code>seqfu_stats</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>write_dependency_versions</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>write_dependency_versions</code></td>
 </tr>
 </tbody>
 </table>
@@ -806,28 +872,9 @@
 </ul>
 <p><strong>Excluded</strong></p>
 <ul>
-<li>prokka_gbk / copy_custom_genbank / copy_converted_gbk / genbank_to_fna|gff|faa / extract_meta_genbank — genbank input path, off by default (default config ships fna inputs)</li>
-<li>antismash v6 branch — off by default (config default is antismash v7)</li>
-<li>write_dependency_versions — dependency bookkeeping, not on the default main path</li>
-<li>seqfu_stats/seqfu_combine — run_seqfu: true only</li>
-<li>mash/mash_convert — run_mash: true only</li>
-<li>fastani/fastani_convert — run_fastani: true only</li>
-<li>checkm/checkm_out — run_checkm: true only</li>
-<li>gtdbtk/gtdbtk_fna_fail/evaluate_gtdbtk_input/install_gtdbtk — run_gtdbtk: true only</li>
-<li>prokka_db_setup, install_* helpers — install rules for off-by-default pipelines</li>
-<li>bigscape/bigscape_no_mibig/bigscape_to_cytoscape/copy_bigscape/copy_bigscape_zip — run_bigscape: true only</li>
-<li>bigslice/bigslice_prep/query_bigslice/summarize_bigslice_query/fetch_bigslice_db — run_bigslice: true only</li>
-<li>automlst_wrapper/automlst_wrapper_out/prep_automlst_gbk/install_automlst_wrapper — run_automlst: true only</li>
-<li>arts + arts_extract/arts_knownhits_combine/arts_allhits_combine/arts_bgctable_combine/arts_coretable_combine/arts_final — run_arts: true only</li>
-<li>roary/roary_reassign_pangene_categories/roary_out — run_roary: true only</li>
-<li>eggnog/eggnog_roary/eggnog_roary_result_copy — run_eggnog: true only</li>
-<li>deeptfactor + deeptfactor_setup/to_json/summary/roary — run_deeptfactor: true only</li>
-<li>cblaster_genome_db/cblaster_bgc_db — run_cblaster: true only</li>
-<li>gecco/gecco_aggregate/antismash_sideload_gecco — run_gecco: true only</li>
-<li>amrfinderplus/amrfinder_gather — run_amrfinderplus: true only</li>
-<li>metabase_install/metabase_duckdb_plugin/build_warehouse — run_metabase: true only</li>
-<li>ncbi_genome_download/extract_ncbi_information / patric_genome_download/extract_patric_meta/download_patric_tables — non-custom genome sources, off by default</li>
-<li>report rules (copy_readme, copy_template_notebook, mkdocs_py_report, mkdocs_rpy_report, copy_template_rnotebook) — separate 'bgcflow build report' command, not part of the main Snakefile default path</li>
+<li>metabase_install / metabase_duckdb_plugin / build_warehouse — metabase.smk + build-database.smk are not included in the main Snakefile and are only reachable outside the pipeline (wrapper CLI / manual); no pipeline gate to mirror; the warehouse branch additionally needs a live Metabase server + credentials (the jar/plugin URLs themselves are alive, but the rules are unreachable from the default Snakefile path)</li>
+<li>patric_genome_download / download_patric_tables / extract_patric_meta — download endpoint ftp.patricbrc.org is dead: PATRIC was decommissioned in 2023 (merged into BV-BRC); verified 550 / connection refused 2026-08</li>
+<li>report rules (copy_readme, copy_template_notebook, mkdocs_py_report, mkdocs_rpy_report, copy_template_rnotebook) — separate 'bgcflow build report' entrypoint (wrapper CLI), not part of the main Snakefile default path</li>
 </ul>
 <h2 id="fidelity">Fidelity</h2>
 <table>
@@ -950,135 +997,147 @@
 </tr>
 <tr>
 <td>prokka_gbk</td>
-<td>not ported</td>
+<td><code>prokka_gbk</code></td>
 <td>prokka 1.14.6</td>
-<td>off by default — only for genbank input files</td>
+<td><code>when = config.input_type == 'gbk'</code>; default copy_custom_fasta/prokka/format_gbk now gate on <code>'fna'</code> (upstream resolves the same producer overlap with input-function branching)</td>
 </tr>
 <tr>
 <td>antismash (v6 branch)</td>
-<td>not ported</td>
+<td><code>antismash_v6</code></td>
 <td>antiSMASH 6.x</td>
-<td>off by default — <code>antismash: v6</code> config branch</td>
+<td><code>when = config.antismash_major == '6'</code>, envs/antismash6.yaml (upstream antismash_v6.yaml verbatim)</td>
 </tr>
 <tr>
 <td>write_dependency_versions</td>
-<td>not ported</td>
-<td>python</td>
-<td>metadata bookkeeping, not on the default main path</td>
+<td><code>write_dependency_versions</code></td>
+<td>python 3.9.18, pyyaml 6.0.1</td>
+<td><code>when = config.write_dependency_versions</code>; upstream get_dependencies.py ported as scripts/write_dependency_versions.py (metadata/dependency_versions.json, upstream output path)</td>
 </tr>
 <tr>
 <td>seqfu_stats / seqfu_combine</td>
-<td>not ported</td>
-<td>seqfu</td>
-<td><code>run_seqfu: true</code> only</td>
+<td><code>seqfu_stats</code> / <code>seqfu_combine</code></td>
+<td>seqfu 1.20.3</td>
+<td><code>when = config.run_seqfu</code>; combine gathers via expand_inputs</td>
 </tr>
 <tr>
 <td>mash / mash_convert</td>
-<td>not ported</td>
-<td>mash</td>
-<td><code>run_mash: true</code> only</td>
+<td><code>mash</code> / <code>mash_convert</code></td>
+<td>mash 2.3</td>
+<td><code>when = config.run_mash</code>; convert_triangular_matrix.py verbatim</td>
 </tr>
 <tr>
 <td>fastani / fastani_convert</td>
-<td>not ported</td>
-<td>fastani</td>
-<td><code>run_fastani: true</code> only</td>
+<td><code>fastani</code> / <code>fastani_convert</code></td>
+<td>fastani 1.33</td>
+<td><code>when = config.run_fastani</code></td>
 </tr>
 <tr>
-<td>checkm / checkm_out</td>
-<td>not ported</td>
-<td>checkm</td>
-<td><code>run_checkm: true</code> only</td>
+<td>install_checkm / checkm / checkm_out</td>
+<td><code>install_checkm</code> / <code>checkm</code></td>
+<td>checkm-genome 1.2.2</td>
+<td><code>when = config.run_checkm</code>; the 2015 CheckM DB download is the upstream install rule; checkm_out (report-table extraction via get_checkm_data.py) not ported</td>
 </tr>
 <tr>
-<td>gtdbtk / gtdbtk_fna_fail / evaluate_gtdbtk_input</td>
-<td>not ported</td>
-<td>gtdbtk</td>
-<td><code>run_gtdbtk: true</code> only</td>
+<td>install_gtdbtk / gtdbtk / gtdbtk_fna_fail / evaluate_gtdbtk_input</td>
+<td><code>install_gtdbtk</code> / <code>gtdbtk</code></td>
+<td>gtdbtk 2.4.0</td>
+<td><code>when = config.run_gtdbtk</code>; the release package download is multi-GB (upstream install rule); the gtdbtk_fna_fail rule + evaluate_gtdbtk_input branching (fna-fail reroute) not ported</td>
 </tr>
 <tr>
 <td>prokka_db_setup / install_* rules</td>
-<td>not ported</td>
+<td><code>install_checkm</code> / <code>install_gtdbtk</code> / <code>install_eggnog</code></td>
 <td>various</td>
-<td>install helpers for off-by-default pipelines</td>
+<td>install rules for the off-by-default pipelines, same downloads as upstream</td>
 </tr>
 <tr>
-<td>bigscape / bigscape_no_mibig / bigscape_to_cytoscape / copy_bigscape*</td>
-<td>not ported</td>
-<td>bigscape</td>
-<td><code>run_bigscape: true</code> only</td>
+<td>bigscape / bigscape_no_mibig / copy_bigscape_zip / bigscape_to_cytoscape / copy_bigscape</td>
+<td><code>bigscape</code></td>
+<td>bigscape (conda)</td>
+<td><code>when = config.run_bigscape</code>; needs the pfam + MIBiG databases in resources/ (upstream install_bigscape step); bigscape_no_mibig / copy_bigscape_zip / bigscape_to_cytoscape / copy_bigscape (report-view variants) not ported — documented in the rule header</td>
 </tr>
 <tr>
-<td>bigslice / bigslice_prep / query_bigslice / fetch_bigslice_db</td>
-<td>not ported</td>
-<td>bigslice</td>
-<td><code>run_bigslice: true</code> only</td>
+<td>bigslice / bigslice_prep</td>
+<td><code>bigslice</code> / <code>bigslice_prep</code></td>
+<td>bigslice (NBChub fork)</td>
+<td><code>when = config.run_bigslice</code>; models downloaded by install_bigslice (upstream env post-deploy equivalent); env pip-installs the NBChub fork @c0085de (original medema-group/bigslice discontinued)</td>
 </tr>
 <tr>
-<td>automlst_wrapper / automlst_wrapper_out / prep_automlst_gbk</td>
-<td>not ported</td>
-<td>automlst</td>
-<td><code>run_automlst: true</code> only</td>
+<td>fetch_bigslice_db / query_bigslice / summarize_bigslice_query / annotate_bigfam_hits</td>
+<td><code>fetch_bigslice_db</code> / <code>query_bigslice</code> / <code>summarize_bigslice_query</code> / <code>annotate_bigfam_hits</code></td>
+<td>bigslice + python</td>
+<td><code>when = config.run_query_bigslice</code>; fetch_bigslice_db downloads the BiG-FAM full-run-result bundle (~18GB, bioinformatics.nl — verified alive 2026-08)</td>
 </tr>
 <tr>
-<td>arts + 7 arts_* rules</td>
-<td>not ported</td>
-<td>arts</td>
-<td><code>run_arts: true</code> only</td>
+<td>automlst_wrapper / automlst_wrapper_out / prep_automlst_gbk / install_automlst_wrapper</td>
+<td><code>automlst_wrapper</code> / <code>automlst_wrapper_out</code> / <code>prep_automlst_gbk</code> / <code>install_automlst_wrapper</code></td>
+<td>automlst-simplified-wrapper 0.1.2 (python 2.7 env)</td>
+<td><code>when = config.run_automlst</code>; install downloads the release zip (not a git clone); scripts verbatim</td>
 </tr>
 <tr>
-<td>roary / roary_reassign_pangene_categories / roary_out</td>
-<td>not ported</td>
-<td>roary</td>
-<td><code>run_roary: true</code> only</td>
+<td>arts + 6 arts_* rules</td>
+<td><code>arts</code></td>
+<td>arts env (upstream pins)</td>
+<td><code>when = config.run_arts</code>; needs the ARTS reference bundle in resources/arts; arts_extract + the 5 arts_*_combine/final report rules not ported (arts_extract_all.py is shipped but no rule consumes it)</td>
 </tr>
 <tr>
-<td>eggnog / eggnog_roary / eggnog_roary_result_copy</td>
-<td>not ported</td>
-<td>eggnog-mapper</td>
-<td><code>run_eggnog: true</code> only</td>
+<td>roary / roary_out / roary_reassign_pangene_categories / eggnog_roary / eggnog_roary_result_copy / deeptfactor_roary / diamond_roary</td>
+<td><code>roary</code> / <code>roary_out</code></td>
+<td>roary 3.13.0</td>
+<td><code>when = config.run_roary</code>; verbatim flags (-i 80 -g 80000 -e -n -r -v); the reassign / eggnog_roary / deeptfactor_roary / diamond_roary report rules not ported</td>
 </tr>
 <tr>
-<td>deeptfactor + 5 deeptfactor_* rules</td>
-<td>not ported</td>
-<td>deeptfactor</td>
-<td><code>run_deeptfactor: true</code> only</td>
+<td>install_eggnog / eggnog</td>
+<td><code>install_eggnog</code> / <code>eggnog</code></td>
+<td>eggnog-mapper 2.1.6</td>
+<td><code>when = config.run_eggnog</code>; DB download + create_dbs.py as upstream</td>
+</tr>
+<tr>
+<td>deeptfactor / deeptfactor_setup / deeptfactor_to_json / deeptfactor_summary</td>
+<td><code>deeptfactor</code> / <code>deeptfactor_setup</code> / <code>deeptfactor_to_json</code> / <code>deeptfactor_summary</code></td>
+<td>deeptfactor (bitbucket, ~23MB)</td>
+<td><code>when = config.run_deeptfactor</code>; setup git-clones the unpinned bitbucket repo (model bundle included — verified public 2026-08); env is upstream's python 3.6 + pytorch 1.10.2 pin</td>
 </tr>
 <tr>
 <td>cblaster_genome_db / cblaster_bgc_db</td>
-<td>not ported</td>
-<td>cblaster</td>
-<td><code>run_cblaster: true</code> only</td>
+<td><code>cblaster_genome_db</code></td>
+<td>cblaster 1.3.18</td>
+<td><code>when = config.run_cblaster</code>; verbatim makedb over prokka GBKs; cblaster_bgc_db (MIBiG-BGC database build) not ported</td>
 </tr>
 <tr>
-<td>gecco / gecco_aggregate / antismash_sideload_gecco</td>
-<td>not ported</td>
-<td>gecco</td>
-<td><code>run_gecco: true</code> only</td>
+<td>gecco / antismash_sideload_gecco / gecco_aggregate</td>
+<td><code>gecco</code></td>
+<td>gecco 0.9.10</td>
+<td><code>when = config.run_gecco</code>; verbatim gecco run --antismash-sideload; antismash_sideload_gecco + gecco_aggregate (report tables) not ported</td>
 </tr>
 <tr>
 <td>amrfinderplus / amrfinder_gather</td>
-<td>not ported</td>
-<td>amrfinderplus</td>
-<td><code>run_amrfinderplus: true</code> only</td>
+<td><code>amrfinderplus</code> / <code>amrfinder_gather</code></td>
+<td>ncbi-amrfinderplus</td>
+<td><code>when = config.run_amrfinderplus</code>; verbatim flags; gather_amrfinder.py verbatim</td>
 </tr>
 <tr>
 <td>metabase_install / metabase_duckdb_plugin / build_warehouse</td>
 <td>not ported</td>
 <td>metabase/duckdb</td>
-<td><code>run_metabase: true</code> only</td>
+<td>metabase.smk + build-database.smk are not included in the main Snakefile and are only reachable outside the pipeline (wrapper CLI / manual) — no pipeline gate to mirror; the warehouse branch needs a live Metabase server + credentials</td>
 </tr>
 <tr>
-<td>ncbi_genome_download / patric_genome_download + patric/ncbi meta rules</td>
-<td>not ported</td>
+<td>ncbi_genome_download / extract_ncbi_information (+ patric meta rules)</td>
+<td><code>ncbi_genome_download</code></td>
 <td>ncbi-genome-download</td>
-<td>non-custom genome sources</td>
+<td><code>when = config.project_source == 'ncbi'</code>; deviation: bulk genus download via <code>--genera</code> (upstream fetches per-accession with <code>-A</code>); extract_ncbi_information / download_patric_tables / extract_patric_meta meta rules not ported</td>
 </tr>
 <tr>
-<td>copy_custom_genbank / copy_converted_gbk / genbank_to_fna/gff/faa / format_genbank_meta extras</td>
+<td>patric_genome_download + patric meta rules</td>
 <td>not ported</td>
+<td>patric</td>
+<td>per-sample source=patric; download endpoint ftp.patricbrc.org is dead (PATRIC decommissioned 2023, merged into BV-BRC; verified 550/connection-refused 2026-08)</td>
+</tr>
+<tr>
+<td>copy_custom_genbank / genbank_to_fna + genbank_to_faa / extract_meta_genbank / genbank_to_gff / copy_converted_gbk / summarize_converted_gbk</td>
+<td><code>copy_custom_genbank</code> / <code>genbank_to_fna</code></td>
 <td>python</td>
-<td>genbank input path, off by default</td>
+<td>gbk-input path (<code>input_type = 'gbk'</code>); genbank_to_fna reads the raw gbk directly (upstream uses input-function branching to avoid the producer overlap); the faa/gff/meta/summary extras not ported</td>
 </tr>
 <tr>
 <td>report rules (copy_readme, copy_template_notebook, mkdocs_*_report)</td>
@@ -1088,9 +1147,10 @@
 </tr>
 </tbody>
 </table>
-<p><strong>Live-test fixes (tx-ubuntu clean run, verdict #19 — 17 succeeded / 0 failed / 10 skipped, exit=0):</strong>
-- gtdb_prep API call arg order corrected; the overview gather guards the <code>similarity</code> column (antismash omits it when no region matched MIBiG — live KeyError);
-- prokka + antismash envs dropped the proprietary <code>defaults</code> channel (conda-forge + bioconda suffice; CN mirrors 404 it).</p>
+<p><strong>Live-verified on bioinfo-wsx (oxo-flow 0.14.1, conda envs):</strong> default path
+(S1/S2 mini fixtures) + tier-1 branches (seqfu/mash/fastani/roary) + tier-2
+(checkm/amrfinderplus); resource-gated, not live-run: gtdbtk/eggnog/gecco/
+cblaster/arts/bigscape/bigslice/automlst/deeptfactor (multi-GB DBs/downloads).</p>
 <h2 id="links">Links</h2>
 <ul>
 <li>Repository: <a href="https://github.com/oxo-flow-community/oxo-flow-bgcflow">oxo-flow-bgcflow</a></li>
@@ -1133,7 +1193,7 @@
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      © 2026 oxo-flow-community · Apache-2.0 · Ports are based on their upstream workflows — see each repository's NOTICE.
+      © 2026 <a href="https://github.com/oxo-flow-community">oxo-flow-community</a> · Apache-2.0 · engine <a href="https://github.com/Traitome/oxo-flow">oxo-flow</a> · <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues">issues</a> · evidence: ✔ live-tested ⊃ ★ verified ⊃ ☆ community · ports are based on their upstream workflows — see each repository's NOTICE
     </div>
   
   

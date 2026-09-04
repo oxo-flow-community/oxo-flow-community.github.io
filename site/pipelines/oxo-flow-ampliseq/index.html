@@ -23,7 +23,7 @@
     
     
       
-        <title>Amplicon sequencing (16S/ITS): DADA2 denoising, taxonomy assignment and QC - oxo-flow-community</title>
+        <title>Oxo flow ampliseq - oxo-flow-community</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#amplicon-sequencing-16sits-dada2-denoising-taxonomy-assignment-and-qc" class="md-skip">
+        <a href="#amplicon-sequencing-16sits-dada2-denoising-taxonomy-assignment-qiime2-diversityancom-picrust-sbdi-export-phyloseqtse-objects-and-qc" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Amplicon sequencing (16S/ITS): DADA2 denoising, taxonomy assignment and QC
+              Oxo flow ampliseq
             
           </span>
         </div>
@@ -584,73 +584,43 @@
   
 
 
-<h1 id="amplicon-sequencing-16sits-dada2-denoising-taxonomy-assignment-and-qc">Amplicon sequencing (16S/ITS): DADA2 denoising, taxonomy assignment and QC</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
-
-<p>Amplicon sequencing analysis (16S/ITS) that takes raw paired-end reads through FastQC quality control, cutadapt primer trimming, DADA2 denoising (quality profiles, filterAndTrim, learnErrors, denoise, chimera removal, read tracking), taxonomy assignment against the SBDI-GTDB reference, a QIIME2 taxa barplot over sample metadata, an overall summary table and a MultiQC report.</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: right;"></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: right;"><strong>Rating</strong></td>
-<td>✔ Live-tested</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Origin</strong></td>
-<td>port</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Domain</strong></td>
-<td>amplicon</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Rules</strong></td>
-<td>26</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Compute</strong></td>
-<td>up to 10 CPUs / 20 GB per rule (dada2)</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Tools</strong></td>
-<td>fastqc · cutadapt · python · pandas · r-base · dada2 · bioconductor-digest · curl · biocontainers · qiime2 · multiqc</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Ported</strong></td>
-<td>2026-08-15</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>License</strong></td>
-<td>Apache-2.0</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Source</strong></td>
-<td><a href="https://github.com/nf-core/ampliseq">nf-core/ampliseq</a></td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Pinned version</strong></td>
-<td><code>2.18.0</code></td>
-</tr>
-</tbody>
-</table>
+<div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-ampliseq</span></div>
+<div class="ox-detail-cols">
+<div>
+<h1 id="amplicon-sequencing-16sits-dada2-denoising-taxonomy-assignment-qiime2-diversityancom-picrust-sbdi-export-phyloseqtse-objects-and-qc">Amplicon sequencing (16S/ITS): DADA2 denoising, taxonomy assignment, QIIME2 diversity/ANCOM, PICRUSt, SBDI export, phyloseq/TSE objects and QC</h1>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
+<p>Amplicon sequencing analysis (16S/ITS) that takes raw paired-end reads through FastQC quality control, cutadapt primer trimming (incl. the illumina_pe_its read-through pass), DADA2 denoising (quality profiles, filterAndTrim, learnErrors, denoise, chimera removal, read tracking, optional multi-run merge), taxonomy assignment against the SBDI-GTDB reference (or the ITS-cut length-filtered branch), a QIIME2 taxa barplot over sample metadata, optional QIIME2 downstream analyses (phylogenetic tree, alpha/beta diversity, abundance table exports, ANCOM/ANCOM-BC/ANCOM-BC2, classifier training/prediction), optional PICRUSt2 functional predictions, an overall summary table and a MultiQC report.</p>
+</div>
+<div>
+<div class="ox-glance">
+<div class="ox-glance-title">At a glance</div>
+<div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">54</span></div>
+<div class="ox-kv"><span class="k">Compute</span><span class="v">up to 10 CPUs / 20 GB per rule (DADA2 rules; qiime2_preptax/qiime2_classify 10c/20G, 24h limits); picrust 10 CPUs / 50 GB / 24h; QIIME2 rules need the qiime2 container (~20GB unpacked)</span></div>
+<div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Domain</span><span class="v">amplicon</span></div>
+<div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/nf-core/ampliseq">nf-core/ampliseq</a></span></div>
+<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>2.18.0</code></span></div>
+<div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
+<div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
+<p class="cmd">$ oxo-flow run main.oxoflow</p>
+</div>
+</div>
+</div>
 <h2 id="run-it">Run it</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>oxo-flow<span class="w"> </span>run<span class="w"> </span>main.oxoflow
 </code></pre></div>
-<p>Needs primer set and reference databases — see Requirements; preview with <code>oxo-flow dry-run main.oxoflow</code>.</p>
+<p>Default config runs the DADA2 path (denoising, taxonomy against the auto-downloaded SBDI-GTDB reference, read-tracking summary, MultiQC); the QIIME2 (barplot + downstream diversity/ANCOM/classifier), ITS, multi-run and PICRUSt branches are opt-in toggles — see Fidelity. Preview with <code>oxo-flow dry-run main.oxoflow</code>.</p>
 <h2 id="installation">Installation</h2>
-<p><strong>Engine.</strong> oxo-flow &gt;= 0.12.0</p>
+<p><strong>Engine.</strong> oxo-flow &gt;= 0.17.0</p>
 <p><strong>Toolchain.</strong> containers (Docker/Singularity) — pinned images</p>
 <p><strong>Requirements.</strong>
 - raw paired-end FASTQ reads per sample (raw/<sample>_R1.fastq.gz / _R2.fastq.gz) plus a sample groups file (default test/fixtures/groups.tsv)
-- sample metadata TSV for the QIIME2 taxa barplot (config metadata_file, default test/fixtures/metadata.tsv); the SBDI-GTDB taxonomy reference database is downloaded automatically
-- compute: up to 10 CPUs / 20 GB per rule (dada2_denoising with 48h limit, dada2_taxonomy with 24h limit); most rules need 1-6 CPUs / 1-6 GB
-- host: Docker or Singularity to run the pinned container images, curl for the taxonomy-database download rule, and network access to figshare
-- optional: disk for intermediates/ and results/ plus the auto-downloaded SBDI-GTDB reference database</p>
+- sample metadata TSV for the QIIME2 analyses (config metadata_file, default test/fixtures/metadata.tsv); the SBDI-GTDB taxonomy reference database is downloaded automatically
+- compute: up to 10 CPUs / 20 GB per rule (dada2_denoising with 48h limit, dada2_taxonomy/dada2_taxonomy_its/qiime2_preptax/qiime2_classify with 24h limits); the QIIME2 rules need the qiime2 container (~20GB unpacked), picrust needs 10 CPUs / 50 GB
+- host: Docker or Singularity to run the pinned container images, curl for the taxonomy-database download rule, and network access to figshare / data.qiime2.org
+- optional: disk for intermediates/ and results/ plus the auto-downloaded SBDI-GTDB reference database and SILVA classifier inputs</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># 1. install oxo-flow (release binary, recommended)</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>curl<span class="w"> </span>-fL<span class="w"> </span>-o<span class="w"> </span>oxo-flow.tar.gz<span class="w"> </span>https://github.com/Traitome/oxo-flow/releases/latest/download/oxo-flow-latest-x86_64-unknown-linux-gnu.tar.gz
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>tar<span class="w"> </span>xzf<span class="w"> </span>oxo-flow.tar.gz<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>mv<span class="w"> </span>oxo-flow<span class="w"> </span>/usr/local/bin/
@@ -680,13 +650,67 @@
 <td style="text-align: right;"><code>FW_primer</code></td>
 <td>``</td>
 <td>--- primers (upstream default null renders literal "null" adapters; port uses empty strings — see README fidelity table) ---</td>
-<td><code>cutadapt</code></td>
+<td><code>cutadapt</code>, <code>qiime2_preptax</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>RV_primer</code></td>
 <td>``</td>
 <td>—</td>
-<td><code>cutadapt</code></td>
+<td><code>cutadapt</code>, <code>qiime2_preptax</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>ancom</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>qiime2_ancom</code>, <code>qiime2_metadata_categories</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>ancombc</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>qiime2_ancombc</code>, <code>qiime2_metadata_categories</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>ancombc2</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>qiime2_ancombc2</code>, <code>qiime2_metadata_categories</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>ancombc2_formula</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>qiime2_ancombc2</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>ancombc_effect_size</code></td>
+<td><code>1</code></td>
+<td>—</td>
+<td><code>qiime2_ancombc</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>ancombc_formula</code></td>
+<td>``</td>
+<td>comma-separated formulas</td>
+<td><code>qiime2_ancombc</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>ancombc_significance</code></td>
+<td><code>0.05</code></td>
+<td>—</td>
+<td><code>qiime2_ancombc</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>classifier</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>qiime2_classify</code>, <code>qiime2_intax</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>cut_its</code></td>
+<td><code>none</code></td>
+<td>truncation (truncLen=0) + a second cutadapt read-through pass removing revcomp primers</td>
+<td><code>dada2_taxonomy</code>, <code>dada2_taxonomy_its</code>, <code>filter_len_itsx</code>, <code>itsx_cutasv</code>, <code>itsxrust_cutasv</code>, <code>qiime2_inasv</code>, <code>qiime2_inasv_its</code>, <code>qiime2_inseq</code>, <code>qiime2_inseq_its</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cutadapt_max_error_rate</code></td>
@@ -704,25 +728,25 @@
 <td style="text-align: right;"><code>dada_addspecies_allowmultiple</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>dada2_taxonomy</code></td>
+<td><code>dada2_taxonomy</code>, <code>dada2_taxonomy_its</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>dada_assign_chunksize</code></td>
 <td><code>10000</code></td>
 <td>—</td>
-<td><code>dada2_taxonomy</code></td>
+<td><code>dada2_taxonomy</code>, <code>dada2_taxonomy_its</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>dada_assign_taxlevels</code></td>
 <td><code>Domain,Kingdom,Phylum,Class,Order,Family,Genus,Species</code></td>
 <td>—</td>
-<td><code>dada2_taxonomy</code></td>
+<td><code>dada2_taxonomy</code>, <code>dada2_taxonomy_its</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>dada_min_boot</code></td>
 <td><code>50</code></td>
 <td>DADA2 taxonomy assignment</td>
-<td><code>dada2_taxonomy</code></td>
+<td><code>dada2_taxonomy</code>, <code>dada2_taxonomy_its</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>dada_ref_taxonomy</code></td>
@@ -758,7 +782,31 @@
 <td style="text-align: right;"><code>dada_taxonomy_rc</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>dada2_taxonomy</code></td>
+<td><code>dada2_taxonomy</code>, <code>dada2_taxonomy_its</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>diversity_rarefaction_depth</code></td>
+<td><code>500</code></td>
+<td>floor for core-metrics depth</td>
+<td><code>qiime2_diversity_core</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>illumina_pe_its</code></td>
+<td><code>false</code></td>
+<td>--- ITS branch (upstream params.illumina_pe_its / cut_its / its_partial / its_extractor — all default off -&gt; 16S path) ---</td>
+<td><code>cutadapt</code>, <code>dada2_filtntrim</code>, <code>trunclen_fw</code>, <code>trunclen_rv</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>its_extractor</code></td>
+<td><code>itsx</code></td>
+<td>"itsx" | "itsxrust"</td>
+<td><code>itsx_cutasv</code>, <code>itsxrust_cutasv</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>its_partial</code></td>
+<td><code>0</code></td>
+<td>keep partial ITS hits (ITSx --partial N)</td>
+<td><code>itsx_cutasv</code>, <code>itsxrust_cutasv</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>max_ee</code></td>
@@ -773,6 +821,12 @@
 <td><code>dada2_filtntrim</code></td>
 </tr>
 <tr>
+<td style="text-align: right;"><code>merge_runs</code></td>
+<td><code>false</code></td>
+<td>--- multi-run merge (upstream DADA2_MERGE globs <em>.stats.tsv / </em>.ASVtable.rds when several --run_ids are given) ---</td>
+<td><code>dada2_merge</code></td>
+</tr>
+<tr>
 <td style="text-align: right;"><code>mergepairs_strategy</code></td>
 <td><code>merge</code></td>
 <td>"merge" | "consensus" | "concatenate"</td>
@@ -782,13 +836,37 @@
 <td style="text-align: right;"><code>metadata_file</code></td>
 <td><code>test/fixtures/metadata.tsv</code></td>
 <td>—</td>
-<td><code>qiime2_barplot</code></td>
+<td><code>qiime2_alphararefaction</code>, <code>qiime2_ancom</code>, <code>qiime2_ancombc</code>, <code>qiime2_ancombc2</code>, <code>qiime2_barplot</code>, <code>qiime2_diversity_adonis</code>, <code>qiime2_diversity_alpha</code>, <code>qiime2_diversity_beta</code>, <code>qiime2_diversity_betaord</code>, <code>qiime2_diversity_core</code>, <code>qiime2_metadata_categories</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>min_len</code></td>
 <td><code>50</code></td>
 <td>—</td>
 <td><code>dada2_filtntrim</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>picrust</code></td>
+<td><code>false</code></td>
+<td>picrust (upstream params.picrust, default false)</td>
+<td><code>picrust</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>qiime_adonis_formula</code></td>
+<td>``</td>
+<td>comma-separated, e.g. "group"</td>
+<td><code>qiime2_diversity_adonis</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>qiime_ref_taxonomy</code></td>
+<td>``</td>
+<td>--- QIIME2 taxonomy classifier (upstream params.qiime_ref_taxonomy / params.classifier — off by default; DADA2 taxonomy is the default path). qiime_ref_taxonomy trains a Naive-Bayes classifier on the primer-extracted reference below; classifier is a path to a pre-trained .qza (skips training). ---</td>
+<td><code>qiime2_classify</code>, <code>qiime2_intax</code>, <code>qiime2_preptax</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>qiime_ref_taxonomy_urls</code></td>
+<td><code>https://data.qiime2.org/2023.7/common/silva-138-99-seqs.qza,https://data.qiime2.org/2023.7/common/silva-138-99-tax.qza</code></td>
+<td>—</td>
+<td><code>qiime2_preptax</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>quality_type</code></td>
@@ -803,6 +881,12 @@
 <td><code>dada2_denoising</code>, <code>dada2_err</code>, <code>dada2_merge</code>, <code>dada2_rmchimera</code>, <code>dada2_stats</code></td>
 </tr>
 <tr>
+<td style="text-align: right;"><code>run_qiime2</code></td>
+<td><code>false</code></td>
+<td>the four qiime2 rules run in the quay.io/qiime2/amplicon container (~20GB unpacked — needs ~25GB free disk for the pull; there is no conda qiime2 on common mirrors). Upstream runs qiime2 always; the port gates it (default false) so a fresh clone completes the DADA2 analysis without the container. Set true (with the disk) to enable.</td>
+<td><code>qiime2_alphararefaction</code>, <code>qiime2_ancom</code>, <code>qiime2_ancombc</code>, <code>qiime2_ancombc2</code>, <code>qiime2_barplot</code>, <code>qiime2_classify</code>, <code>qiime2_diversity_adonis</code>, <code>qiime2_diversity_alpha</code>, <code>qiime2_diversity_beta</code>, <code>qiime2_diversity_betaord</code>, <code>qiime2_diversity_core</code>, <code>qiime2_diversity_tree</code>, <code>qiime2_export_absolute</code>, <code>qiime2_export_relasv</code>, <code>qiime2_export_reltax</code>, <code>qiime2_inasv</code>, <code>qiime2_inasv_its</code>, <code>qiime2_inseq</code>, <code>qiime2_inseq_its</code>, <code>qiime2_intax</code>, <code>qiime2_metadata_categories</code>, <code>qiime2_preptax</code></td>
+</tr>
+<tr>
 <td style="text-align: right;"><code>sample_inference</code></td>
 <td><code>independent</code></td>
 <td>"independent" | "pooled" | "pseudo"</td>
@@ -812,7 +896,19 @@
 <td style="text-align: right;"><code>seed</code></td>
 <td><code>100</code></td>
 <td>—</td>
-<td><code>dada2_denoising</code>, <code>dada2_err</code>, <code>dada2_taxonomy</code></td>
+<td><code>dada2_denoising</code>, <code>dada2_err</code>, <code>dada2_taxonomy</code>, <code>dada2_taxonomy_its</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_abundance_tables</code></td>
+<td><code>false</code></td>
+<td>feature-table exports (abs/rel)</td>
+<td><code>qiime2_export_absolute</code>, <code>qiime2_export_relasv</code>, <code>qiime2_export_reltax</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_alpha_rarefaction</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>qiime2_alphararefaction</code>, <code>qiime2_diversity_tree</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_barplot</code></td>
@@ -824,7 +920,13 @@
 <td style="text-align: right;"><code>skip_dada_taxonomy</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>dada2_taxonomy</code>, <code>download_taxonomy_db</code>, <code>format_taxonomy</code>, <code>qiime2_barplot</code>, <code>qiime2_intax</code></td>
+<td><code>dada2_taxonomy</code>, <code>dada2_taxonomy_its</code>, <code>download_taxonomy_db</code>, <code>format_taxonomy</code>, <code>qiime2_barplot</code>, <code>qiime2_intax</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_diversity_indices</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>qiime2_diversity_adonis</code>, <code>qiime2_diversity_alpha</code>, <code>qiime2_diversity_beta</code>, <code>qiime2_diversity_betaord</code>, <code>qiime2_diversity_core</code>, <code>qiime2_diversity_tree</code>, <code>qiime2_metadata_categories</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_fastqc</code></td>
@@ -842,13 +944,31 @@
 <td style="text-align: right;"><code>skip_qiime</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>qiime2_barplot</code>, <code>qiime2_inasv</code>, <code>qiime2_inseq</code>, <code>qiime2_intax</code></td>
+<td><code>qiime2_barplot</code>, <code>qiime2_inasv</code>, <code>qiime2_inasv_its</code>, <code>qiime2_inseq</code>, <code>qiime2_inseq_its</code>, <code>qiime2_intax</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_qiime_downstream</code></td>
+<td><code>false</code></td>
+<td>--- QIIME2 downstream analyses beyond the taxa barplot (upstream params.skip_qiime_downstream default false; the port gates all of these on run_qiime2 as well) ---</td>
+<td><code>qiime2_alphararefaction</code>, <code>qiime2_ancom</code>, <code>qiime2_ancombc</code>, <code>qiime2_ancombc2</code>, <code>qiime2_diversity_adonis</code>, <code>qiime2_diversity_alpha</code>, <code>qiime2_diversity_beta</code>, <code>qiime2_diversity_betaord</code>, <code>qiime2_diversity_core</code>, <code>qiime2_diversity_tree</code>, <code>qiime2_export_absolute</code>, <code>qiime2_export_relasv</code>, <code>qiime2_export_reltax</code>, <code>qiime2_metadata_categories</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_taxonomy</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>dada2_taxonomy</code>, <code>download_taxonomy_db</code>, <code>format_taxonomy</code>, <code>qiime2_barplot</code>, <code>qiime2_intax</code></td>
+<td><code>dada2_taxonomy</code>, <code>dada2_taxonomy_its</code>, <code>download_taxonomy_db</code>, <code>format_taxonomy</code>, <code>qiime2_ancom</code>, <code>qiime2_ancombc</code>, <code>qiime2_ancombc2</code>, <code>qiime2_barplot</code>, <code>qiime2_classify</code>, <code>qiime2_export_absolute</code>, <code>qiime2_export_relasv</code>, <code>qiime2_export_reltax</code>, <code>qiime2_intax</code>, <code>qiime2_preptax</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>tax_agglom_max</code></td>
+<td><code>6</code></td>
+<td>—</td>
+<td><code>qiime2_ancom</code>, <code>qiime2_ancombc</code>, <code>qiime2_ancombc2</code>, <code>qiime2_export_absolute</code>, <code>qiime2_export_reltax</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>tax_agglom_min</code></td>
+<td><code>2</code></td>
+<td>—</td>
+<td><code>qiime2_ancom</code>, <code>qiime2_ancombc</code>, <code>qiime2_ancombc2</code>, <code>qiime2_export_absolute</code>, <code>qiime2_export_reltax</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>trunc_qmin</code></td>
@@ -898,23 +1018,42 @@
 <li>dada2_stats</li>
 <li>dada2_merge</li>
 <li>merge_stats</li>
+<li>itsx_cutasv</li>
+<li>itsxrust_cutasv</li>
+<li>filter_len_itsx</li>
 <li>download_taxonomy_db</li>
 <li>format_taxonomy</li>
 <li>dada2_taxonomy</li>
+<li>dada2_taxonomy_its</li>
 <li>qiime2_inasv</li>
 <li>qiime2_inseq</li>
+<li>qiime2_inasv_its</li>
+<li>qiime2_inseq_its</li>
 <li>qiime2_intax</li>
 <li>qiime2_barplot</li>
+<li>qiime2_metadata_categories</li>
+<li>qiime2_diversity_tree</li>
+<li>qiime2_alphararefaction</li>
+<li>qiime2_diversity_core</li>
+<li>qiime2_diversity_alpha</li>
+<li>qiime2_diversity_beta</li>
+<li>qiime2_diversity_betaord</li>
+<li>qiime2_diversity_adonis</li>
+<li>qiime2_export_absolute</li>
+<li>qiime2_export_relasv</li>
+<li>qiime2_export_reltax</li>
+<li>qiime2_ancom</li>
+<li>qiime2_ancombc</li>
+<li>qiime2_ancombc2</li>
+<li>qiime2_preptax</li>
+<li>qiime2_classify</li>
 <li>multiqc</li>
+<li>picrust</li>
 </ul>
 <p><strong>Excluded</strong></p>
 <ul>
-<li>dada2_its: ITS (fungal) analysis branch — not in the default main path (params.its false by default)</li>
-<li>qiime2: QIIME2 downstream analyses beyond the default taxa barplot (diversity, ANCOM, classifier training/prediction, feature table exports) — off by default (params.qiime2 false)</li>
-<li>nanopore: nanopore sequencing branch (params.nanopore false by default)</li>
-<li>syncom: synthetic community controls branch (params.syncom false by default)</li>
-<li>multi-run merge: DADA2_MERGE mergeSequenceTables branch for multiple --run_ids — single-run default path only</li>
-<li>picrust / other optional reports gated by additional params off by default</li>
+<li>nanopore: nanopore sequencing branch (params.nanopore) — absent from the 2.18.0 codebase (grep-verified; only docs/usage.md mentions Nanopore re ITSxRust long reads)</li>
+<li>syncom: synthetic community controls branch (params.syncom) — absent from the 2.18.0 codebase (grep-verified)</li>
 </ul>
 <h2 id="fidelity">Fidelity</h2>
 <table>
@@ -1003,7 +1142,109 @@
 <td>DADA2_MERGE</td>
 <td><code>dada2_merge</code></td>
 <td>dada2 1.26.0 / digest 0.6.27</td>
-<td>single-run default path only; multi-run <code>mergeSequenceTables</code> branch not ported</td>
+<td>both branches: single-run path, and <code>merge_runs = true</code> merges all run-level stats/ASV tables (unique rbind + <code>mergeSequenceTables</code> <code>repeats="error", orderBy="abundance", tryRC=FALSE</code>); the port passes the run-level files as argv (upstream globs <code>*.stats.tsv</code>/<code>*.ASVtable.rds</code> in its cwd) — see <code>scripts/dada2_merge.R</code></td>
+</tr>
+<tr>
+<td>ITSX_CUTASV</td>
+<td><code>itsx_cutasv</code></td>
+<td>itsx 1.1.3</td>
+<td>identical <code>ITSx</code> call (<code>--save_regions</code> from <code>cut_its</code>, <code>--partial</code> from <code>its_partial</code>); the config-dependent outfile is copied to the fixed <code>intermediates/itsx/ASV_ITS_seqs.fasta</code> so downstream rules have static inputs</td>
+</tr>
+<tr>
+<td>ITSXRUST_CUTASV</td>
+<td><code>itsxrust_cutasv</code></td>
+<td>itsxrust 0.2.2</td>
+<td>identical <code>itsxrust extract</code> (HMM from <code>share/itsxrust/hmm/F.hmm</code>), same region outputs + <code>sed</code> header cleanup</td>
+</tr>
+<tr>
+<td>FILTER_LEN_ITSX</td>
+<td><code>filter_len_itsx</code></td>
+<td>biostrings 2.66.0 (R 4.2 build; upstream 2.58.0 on R 4.0.3)</td>
+<td>verbatim <code>bin/filter_len.R</code> with the ITSX <code>ext.args</code> (min 50 / max 1000000)</td>
+</tr>
+<tr>
+<td>DADA2_TAXONOMY_WF (ITS)</td>
+<td><code>dada2_taxonomy_its</code></td>
+<td>dada2 1.26.0</td>
+<td>same chunked assignTaxonomy/addSpecies machinery as <code>dada2_taxonomy</code>, on the ITS-cut length-filtered fasta with the <code>.ASV_ITS_tax.&lt;ref&gt;</code> suffix, then <code>bin/add_full_sequence_to_taxfile.py</code> maps the taxonomy back onto the full ASV fasta — same published <code>ASV_tax.&lt;ref&gt;.tsv</code> / <code>ASV_tax_species.&lt;ref&gt;.tsv</code> paths as the default branch (the two rules are mutually exclusive via their gates)</td>
+</tr>
+<tr>
+<td>QIIME2_INASV / QIIME2_INSEQ (ITS)</td>
+<td><code>qiime2_inasv_its</code>, <code>qiime2_inseq_its</code></td>
+<td>qiime2 2026.4</td>
+<td>same imports as the default variants but over the ITS-cut length-filtered table/seqs; they share the <code>intermediates/qiime2/table.qza</code> / <code>rep-seqs.qza</code> output paths with the default rules (mutually exclusive gates)</td>
+</tr>
+<tr>
+<td>METADATA_ALL / METADATA_PAIRWISE</td>
+<td><code>qiime2_metadata_categories</code></td>
+<td>r-base 4.2</td>
+<td>verbatim <code>bin/metadata_all.r</code> / <code>bin/metadata_pairwise.r</code> in a conda rule (the qiime2 image has no Rscript); runs only when the QIIME2 downstream analyses need categories</td>
+</tr>
+<tr>
+<td>QIIME2_TREE</td>
+<td><code>qiime2_diversity_tree</code></td>
+<td>qiime2 2026.4</td>
+<td>identical mafft → mask → fasttree → midpoint-root chain; rooted tree exported as <code>tree.nwk</code></td>
+</tr>
+<tr>
+<td>QIIME2_ALPHARAREFACTION</td>
+<td><code>qiime2_alphararefaction</code></td>
+<td>qiime2 2026.4</td>
+<td>identical: max-depth = min-read-count of <code>results/overall_summary.tsv</code> (via <code>bin/count_table_minmax_reads.py</code>, same file format as upstream MERGE_STATS_STD output) capped at 75000, steps 250 or maxdepth/20, 10 iterations</td>
+</tr>
+<tr>
+<td>QIIME2_DIVERSITY_CORE</td>
+<td><code>qiime2_diversity_core</code></td>
+<td>qiime2 2026.4</td>
+<td>identical core-metrics (sampling depth = min-read-count with <code>diversity_rarefaction_depth</code> floor, <code>UNIFRAC_USE_GPU=N</code>); the qza outputs feed the alpha/beta/betaord/adonis rules, the 4 distance matrices are exported as tsv</td>
+</tr>
+<tr>
+<td>QIIME2_DIVERSITY_ALPHA / BETA / BETAORD / ADONIS</td>
+<td><code>qiime2_diversity_alpha</code>, <code>qiime2_diversity_beta</code>, <code>qiime2_diversity_betaord</code>, <code>qiime2_diversity_adonis</code></td>
+<td>qiime2 2026.4</td>
+<td>identical commands (beta: <code>--p-pairwise</code> per distance × metadata category; adonis: <code>--p-n-jobs 1</code>, <code>--p-formula</code> per comma-separated <code>qiime_adonis_formula</code>); upstream fans channels out, the port loops over the category/formula lists in-shell — <strong>data-dependent outputs</strong>: the declared file sets assume the default fixture metadata ("group") / configured formulas</td>
+</tr>
+<tr>
+<td>QIIME2_EXPORT_ABSOLUTE / RELASV / RELTAX</td>
+<td><code>qiime2_export_absolute</code>, <code>qiime2_export_relasv</code>, <code>qiime2_export_reltax</code></td>
+<td>qiime2 2026.4</td>
+<td>identical export + biom convert + collapse/relative-frequency loops over <code>tax_agglom_min</code>..<code>tax_agglom_max</code> (default 2..6, so the declared outputs cover that range)</td>
+</tr>
+<tr>
+<td>QIIME2_ANCOM / ANCOMBC / ANCOMBC2</td>
+<td><code>qiime2_ancom</code>, <code>qiime2_ancombc</code>, <code>qiime2_ancombc2</code></td>
+<td>qiime2 2026.4</td>
+<td>identical per-category filtering (<code>--p-where "${cat}&lt;&gt;''"</code>), ASV + per-level analyses, <code>&lt;2</code>-taxa WARNING branch, ANCOMBC <code>--p-prv-cut 0.1 --p-lib-cut 500 --p-alpha 0.05 --p-conserve</code> + da-barplot thresholds, ANCOMBC2 <code>--p-p-adjust-method "holm" --p-prevalence-cutoff 0.1 --p-alpha 0.05</code> + <code>bin/ancombc_volcanoplot.r</code>; <code>ancombc_formula</code>/<code>ancombc2_formula</code> variants run on the unfiltered table like upstream. Upstream's error-ignore WARNING files become <code>&lt;...&gt;.WARNING.txt</code> next to the export dirs</td>
+</tr>
+<tr>
+<td>QIIME2_PREPTAX (incl. EXTRACT + TRAIN)</td>
+<td><code>qiime2_preptax</code></td>
+<td>qiime2 2026.4</td>
+<td>identical: downloads the <code>qiime_ref_taxonomy_urls</code> qza pair, <code>bin/taxref_reformat_qiime_silva138.sh</code>, imports, <code>extract-reads</code> with <code>FW_primer</code>/<code>RV_primer</code>, <code>fit-classifier-naive-bayes</code> → <code>intermediates/qiime2/classifier.qza</code></td>
+</tr>
+<tr>
+<td>QIIME2_TAXONOMY (classify)</td>
+<td><code>qiime2_classify</code></td>
+<td>qiime2 2026.4</td>
+<td>identical <code>classify-sklearn --p-n-jobs</code> + tabulate + export to <code>results/qiime2/taxonomy/</code>; a user-supplied <code>classifier</code> is copied in-shell (skips training); in classifier mode the DADA2-taxonomy import (<code>qiime2_intax</code>) is gated off and the classifier taxonomy takes over the same <code>intermediates/qiime2/taxonomy.qza</code> path</td>
+</tr>
+<tr>
+<td>PICRUST</td>
+<td><code>picrust</code></td>
+<td>picrust2 2.6.3</td>
+<td>identical <code>picrust2_pipeline.py -t epa-ng --remove_intermediate --in_traits EC,KO</code> + <code>add_descriptions.py</code> ×3 (EC/KO/METACYC); the upstream source-message file (filename == message text) is written as <code>picrust_message.txt</code>; resource hint process_high + process_medium_memory = 10 cpus / 50G</td>
+</tr>
+<tr>
+<td>— (not ported)</td>
+<td>—</td>
+<td>—</td>
+<td>nanopore branch (<code>params.nanopore</code> — absent from the 2.18.0 codebase, docs only), syncom controls (<code>params.syncom</code> — absent from the 2.18.0 codebase)</td>
+</tr>
+<tr>
+<td>softwareVersionsToYAML + <code>versions.yml</code> collection (<code>pipeline_info/nf_core_ampliseq_software_mqc_versions.yml</code>, mixed into MultiQC inputs)</td>
+<td>engine-native export: <code>oxo-flow report --versions-yml &lt;file&gt; main.oxoflow</code></td>
+<td>—</td>
+<td>oxo-flow ≥ 0.17.0 exports an nf-core-style <code>versions.yml</code> derived statically from the workflow declarations: one entry per rule with the pinned container tag or conda env file + its sha256, plus a <code>references:</code> section fed by the workflow's <code>[[reference_db]]</code> blocks (SBDI-GTDB R11-RS232-1 here). Deviation: it is a standalone CI-diff artifact, not a per-process runtime capture — upstream records each tool's runtime version at execution time and mixes the collected file into MultiQC, while the export reflects the pinned versions in the definition (resolved runtime package versions depend on the execution environment). Per-rule <code>versions.yml</code> emission inside every command is deliberately not replicated (it would change every rule's command while the default plan stays byte-identical).</td>
 </tr>
 <tr>
 <td>MERGE_STATS_STD</td>
@@ -1060,31 +1301,37 @@
 <td>identical command in a scratch dir (<code>multiqc</code> scans cwd <code>.</code>); verbatim <code>assets/multiqc_config.yml</code></td>
 </tr>
 <tr>
-<td>— (not ported)</td>
-<td>—</td>
-<td>—</td>
-<td>ITS branch (<code>params.its</code>, default false), nanopore branch (<code>params.nanopore</code>, default false), syncom controls (<code>params.syncom</code>, default false), QIIME2 analyses beyond the barplot (diversity, ANCOM, classifier — <code>params.qiime2</code> default false), multi-run merge, <code>versions.yml</code> per-module tool version files, PICRUSt and other optional reports</td>
+<td>SBDIEXPORT</td>
+<td><code>sbdiexport</code></td>
+<td>r-base + SBDI export scripts (sbdiexport 1.2.1)</td>
+<td>identical <code>sbdiexport()</code> call (paired mode, <code>FW_primer</code>/<code>RV_primer</code>, dada2 taxmethod); writes <code>results/SBDI/{event,dna,emof,asv-table}.tsv</code></td>
+</tr>
+<tr>
+<td>SBDIEXPORTREANNOTATE</td>
+<td><code>sbdiexportreannotate</code></td>
+<td>r-base + SBDI export scripts</td>
+<td>identical re-annotation table (<code>annotation.tsv</code>); the barrnap-prediction arg is omitted (no barrnap branch in the port — the R script treats it as <code>NA</code>, same as upstream when no predictions exist)</td>
+</tr>
+<tr>
+<td>PHYLOSEQ</td>
+<td><code>phyloseq</code></td>
+<td>phyloseq 1.52.1</td>
+<td>identical inline R (<code>make_phyloseq</code> path); prefix literal <code>dada2</code>, tree arg = nonexistent <code>none.tree</code> (no phylogeny branch in the port — <code>file.exists</code> guard skips it, as upstream when no tree is staged)</td>
+</tr>
+<tr>
+<td>TREESUMMARIZEDEXPERIMENT</td>
+<td><code>treesummarizedexperiment</code></td>
+<td>TreeSummarizedExperiment 2.10.1</td>
+<td>identical inline R; referenceSeq slot filled from the taxonomy <code>sequence</code> column; same <code>none.tree</code> convention</td>
+</tr>
+<tr>
+<td>SUMMARY_REPORT</td>
+<td><code>summary_report</code></td>
+<td>r-base 4.2 + rmarkdown</td>
+<td>identical <code>rmarkdown::render</code> of <code>assets/report_template.Rmd</code> with the upstream params-list contract (params_list_named, all string values single-quoted); SBDI/phyloseq/TSE/ITS sections are <code>[ -f ]</code>-conditional in-shell (their artifacts are not declared inputs — see deviations); <code>mqc_plot</code>/picrust sections omitted (see deviations)</td>
 </tr>
 </tbody>
 </table>
-<p>Other notes:</p>
-<ul>
-<li><code>params.FW_primer</code>/<code>RV_primer</code> default to <code>null</code> upstream, which renders
-  a literal <code>null</code> adapter into the cutadapt command; the port defaults
-  them to empty strings (<code>-g ""</code>/<code>-G ""</code> = no 5'/3' adapter trimming), the
-  behavior the upstream docs describe.</li>
-<li>All skip flags map 1:1 to <code>params.skip_*</code> (default false = full path).
-  <code>skip_fastqc</code> requires <code>skip_multiqc</code> too — the MultiQC rule consumes the
-  FastQC zips. <code>skip_taxonomy</code>/<code>skip_dada_taxonomy</code> additionally gate the
-  QIIME2 taxonomy import and barplot, mirroring upstream's empty-taxonomy
-  channel handling.</li>
-<li><code>metadata_file</code> is a config key (default <code>test/fixtures/metadata.tsv</code>);
-  upstream takes it from the samplesheet.</li>
-</ul>
-<p><strong>Live-test fixes (tx-ubuntu clean run, verdict #18 — 25/25 rules, exit=0, 64 outputs):</strong>
-- container rules run via the singularity backend (<code>docker://</code> URIs, same images); qiime2 points at <code>quay.io/qiime2/amplicon:2026.1</code> (the docker-hub qiime2/qiime2 repo does not exist); format_taxonomy runs in <code>quay.io/nf-core/ubuntu:20.04</code> (pure sh).
-- <strong>the four qiime2 rules gate on <code>run_qiime2</code></strong> (default false): the amplicon container is ~20GB unpacked and no conda qiime2 exists on common mirrors — a fresh clone completes the DADA2 analysis; enable with ~25GB free disk.
-- DADA2 contract: fixtures carry Illumina-like declining qualities + 1% errors (uniform Q40 gives learnErrors a NULL matrix even with template structure); the R scripts unwrap the conda bioconductor-dada2 detailed-list return (err_out/err_in/trans) for the RDS while the raw return feeds plotErrors/checkConvergence; the denoise shell passes the err RDS at argv 5-6 and the filt fastqs via glob.</p>
 <h2 id="links">Links</h2>
 <ul>
 <li>Repository: <a href="https://github.com/oxo-flow-community/oxo-flow-ampliseq">oxo-flow-ampliseq</a></li>
@@ -1127,7 +1374,7 @@
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      © 2026 oxo-flow-community · Apache-2.0 · Ports are based on their upstream workflows — see each repository's NOTICE.
+      © 2026 <a href="https://github.com/oxo-flow-community">oxo-flow-community</a> · Apache-2.0 · engine <a href="https://github.com/Traitome/oxo-flow">oxo-flow</a> · <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues">issues</a> · evidence: ✔ live-tested ⊃ ★ verified ⊃ ☆ community · ports are based on their upstream workflows — see each repository's NOTICE
     </div>
   
   

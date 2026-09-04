@@ -23,7 +23,7 @@
     
     
       
-        <title>Pooled CRISPR perturbation analysis with Seurat Mixscape - oxo-flow-community</title>
+        <title>Oxo flow mixscape - oxo-flow-community</title>
       
     
     
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Pooled CRISPR perturbation analysis with Seurat Mixscape
+              Oxo flow mixscape
             
           </span>
         </div>
@@ -584,60 +584,30 @@
   
 
 
+<div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-mixscape</span></div>
+<div class="ox-detail-cols">
+<div>
 <h1 id="pooled-crispr-perturbation-analysis-with-seurat-mixscape">Pooled CRISPR perturbation analysis with Seurat Mixscape</h1>
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · full-line</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
-
 <p>Pooled CRISPR perturbation analysis (scCRISPR-seq / CROP-seq / Perturb-seq) with Seurat Mixscape: per-cell perturbation signatures (CalcPerturbSig), perturbed vs. non-perturbed classification (RunMixscape), LDA + UMAP projection of the perturbed subset, the full visualization suite (classification statistics, perturbation-score density, posterior-probability and optional antibody-expression violin plots), and reproducibility exports (exact conda envs, runtime config, annotation file). Input is one processed Seurat object per sample.</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: right;"></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: right;"><strong>Rating</strong></td>
-<td>✔ Live-tested</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Origin</strong></td>
-<td>port</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Domain</strong></td>
-<td>single-cell</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Rules</strong></td>
-<td>7</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Compute</strong></td>
-<td>up to 8 CPUs / 32 GB per rule (mixscape)</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Tools</strong></td>
-<td>Seurat · seuratobject · irlba · matrix · mixtools · ggplot2 · scales · patchwork · data.table · pyyaml · conda</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Ported</strong></td>
-<td>2026-08-15</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>License</strong></td>
-<td>Apache-2.0</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Source</strong></td>
-<td><a href="https://github.com/epigen/mixscape_seurat">epigen/mixscape_seurat</a></td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Pinned version</strong></td>
-<td><code>v2.0.3</code></td>
-</tr>
-</tbody>
-</table>
+</div>
+<div>
+<div class="ox-glance">
+<div class="ox-glance-title">At a glance</div>
+<div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested · full-line</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">7</span></div>
+<div class="ox-kv"><span class="k">Compute</span><span class="v">mixscape 8 CPUs / 32 GB; lda, visualize 1 CPU / 32 GB each; export rules 1 CPU / 1 GB</span></div>
+<div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Domain</span><span class="v">single-cell</span></div>
+<div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/epigen/mixscape_seurat">epigen/mixscape_seurat</a></span></div>
+<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>v2.0.3</code></span></div>
+<div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
+<div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
+<p class="cmd">$ oxo-flow run main.oxoflow</p>
+</div>
+</div>
+</div>
 <h2 id="run-it">Run it</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>oxo-flow<span class="w"> </span>run<span class="w"> </span>main.oxoflow
 </code></pre></div>
@@ -649,7 +619,7 @@
 - One processed Seurat object per sample, as {data_dir}/{sample}.rds (already normalized/integrated — QC/normalization run upstream)
 - Annotation CSV (name, data columns) mapping sample names to object paths
 - Optional: 10X Antibody_Capture assay 'AB' for antibody-expression violin plots
-- Compute: up to 8 CPUs / 32000 MB (32 GB) per rule (mixscape, lda, visualize); export rules 1 CPU / 1 GB; -j controls parallelism</p>
+- Compute: mixscape up to 8 CPUs / 32000 MB (32 GB); lda, visualize 1 CPU / 32 GB each; export rules 1 CPU / 1 GB; -j controls parallelism</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># 1. install oxo-flow (release binary, recommended)</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>curl<span class="w"> </span>-fL<span class="w"> </span>-o<span class="w"> </span>oxo-flow.tar.gz<span class="w"> </span>https://github.com/Traitome/oxo-flow/releases/latest/download/oxo-flow-latest-x86_64-unknown-linux-gnu.tar.gz
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>tar<span class="w"> </span>xzf<span class="w"> </span>oxo-flow.tar.gz<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>mv<span class="w"> </span>oxo-flow<span class="w"> </span>/usr/local/bin/
@@ -683,14 +653,14 @@
 </tr>
 <tr>
 <td style="text-align: right;"><code>antibody_capture</code></td>
-<td><code>AB</code></td>
+<td>``</td>
 <td>VISUALIZATION</td>
 <td><code>config_export</code>, <code>visualize</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>assay</code></td>
 <td><code>SCT</code></td>
-<td>assay to analyse ("SCT" or "RNA")</td>
+<td>assay to analyse ("SCT" or "RNA") — upstream default "SCT"</td>
 <td><code>config_export</code>, <code>lda</code>, <code>mixscape</code></td>
 </tr>
 <tr>
@@ -810,7 +780,7 @@
 <tr>
 <td style="text-align: right;"><code>variable_features_only</code></td>
 <td><code>0</code></td>
-<td>analyse only variable features (1=yes, 0=no)</td>
+<td>(objects carry SCTransform normalization; the bundled fixtures are generated that way via make_fixtures.R)</td>
 <td><code>config_export</code>, <code>mixscape</code></td>
 </tr>
 </tbody>
@@ -835,10 +805,10 @@
 </ul>
 <p><strong>Excluded</strong></p>
 <ul>
-<li>demultiplexing — upstream module (scrnaseq_processing_seurat), not part of mixscape_seurat v2.0.3</li>
-<li>scdna — upstream module, not part of mixscape_seurat v2.0.3</li>
-<li>normalization — QC/normalization/integration are upstream MrBiomics recipe modules; the input is a processed Seurat object</li>
-<li>differential_test — perturbation DE runs inside Seurat RunMixscape (min.de.genes/logfc.threshold), no separate rule</li>
+<li>demultiplexing — verified at v2.0.3 (sha bcf72d5): no demultiplexing rule in the repo — the Snakefile includes only common/mixscape/visualize/envs_export (DAG rulegraph: 7 rules); upstream README §Resources delegates pre-processing to the separate epigen/scrnaseq_processing_seurat module</li>
+<li>scdna — verified at v2.0.3 (sha bcf72d5): zero references anywhere in the repo; single-cell DNA is a different MrBiomics recipe domain, not a mixscape_seurat module</li>
+<li>normalization — verified at v2.0.3 (sha bcf72d5): no QC/normalization/integration rule; the input contract is a processed Seurat object (upstream delegates processing to epigen/scrnaseq_processing_seurat). The in-script NormalizeData fallbacks inside mixscape.R/visualize.R ARE ported</li>
+<li>differential_test — verified at v2.0.3 (sha bcf72d5): no DE rule; per-gene DE runs inside Seurat::RunMixscape (config min_de_genes/lfc_th, both ported); separate downstream DE module is epigen/dea_seurat</li>
 </ul>
 <h2 id="fidelity">Fidelity</h2>
 <p>Default-parameters main execution path only. The upstream annotation CSV maps
@@ -902,25 +872,25 @@ upstream file names.</p>
 <td>demultiplexing</td>
 <td>—</td>
 <td>—</td>
-<td>not ported: upstream module (scrnaseq_processing_seurat), outside this repo.</td>
+<td>not ported: not present at v2.0.3 — the Snakefile includes only <code>common</code>/<code>mixscape</code>/<code>visualize</code>/<code>envs_export</code> (DAG: 7 rules); pre-processing lives in the separate <a href="https://github.com/epigen/scrnaseq_processing_seurat">epigen/scrnaseq_processing_seurat</a> module (upstream README §Resources).</td>
 </tr>
 <tr>
 <td>scdna</td>
 <td>—</td>
 <td>—</td>
-<td>not ported: upstream module, outside this repo.</td>
+<td>not ported: not present at v2.0.3 (zero references in the repo); single-cell DNA is a separate MrBiomics recipe domain, not a mixscape_seurat module.</td>
 </tr>
 <tr>
 <td>normalization (QC/normalization/integration)</td>
 <td>—</td>
 <td>—</td>
-<td>not ported: performed upstream of this workflow by the MrBiomics recipe modules; the input is a processed Seurat object.</td>
+<td>not ported: no QC/normalization/integration rule at v2.0.3; the input is a processed Seurat object (upstream delegates processing to <code>scrnaseq_processing_seurat</code>). The in-script <code>NormalizeData</code> fallbacks (<code>mixscape.R</code>, <code>visualize.R</code>) are ported.</td>
 </tr>
 <tr>
 <td>differential_test (perturbation DE)</td>
 <td>—</td>
 <td>—</td>
-<td>not ported: the per-gene DE runs inside <code>Seurat::RunMixscape</code> (min.de.genes / logfc.threshold), not as a separate rule.</td>
+<td>not ported: no DE rule at v2.0.3; the per-gene DE runs inside <code>Seurat::RunMixscape</code> (<code>min_de_genes</code> / <code>lfc_th</code> config, both ported); the separate downstream DE module is <a href="https://github.com/epigen/dea_seurat">epigen/dea_seurat</a>.</td>
 </tr>
 </tbody>
 </table>
@@ -928,8 +898,10 @@ upstream file names.</p>
 convention instead of per-row CSV paths — the annotation CSV is retained as
 the reproducibility artifact (copied by <code>annot_export</code>); (2) the upstream
 nested config keys (<code>CalcPerturbSig.*</code>, <code>RunMixscape.*</code>, <code>MixscapeLDA.npcs</code>,
-<code>Antibody_Capture</code>) are flattened in <code>[config]</code> — values and defaults are
-identical; (3) <code>test/fixtures/*.rds</code> are tiny genuine Seurat objects generated
+<code>Antibody_Capture</code>) are flattened in <code>[config]</code> — values identical; defaults
+identical except <code>antibody_capture</code> (port default <code>""</code> = disabled, because the
+bundled fixtures carry no CITE-seq assay; upstream default <code>"AB"</code> — set
+<code>antibody_capture = "AB"</code> for the upstream behavior); (3) <code>test/fixtures/*.rds</code> are tiny genuine Seurat objects generated
 with Seurat 5.4.0 (local toolchain) for dry-run validation only — upstream
 pins r-seurat 4.4.0; (4) the <code>snakemake@</code> object access in the R scripts is
 replaced with positional CLI args (the ported scripts document the arg
@@ -977,7 +949,7 @@ was dropped.</p>
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      © 2026 oxo-flow-community · Apache-2.0 · Ports are based on their upstream workflows — see each repository's NOTICE.
+      © 2026 <a href="https://github.com/oxo-flow-community">oxo-flow-community</a> · Apache-2.0 · engine <a href="https://github.com/Traitome/oxo-flow">oxo-flow</a> · <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues">issues</a> · evidence: ✔ live-tested ⊃ ★ verified ⊃ ☆ community · ports are based on their upstream workflows — see each repository's NOTICE
     </div>
   
   

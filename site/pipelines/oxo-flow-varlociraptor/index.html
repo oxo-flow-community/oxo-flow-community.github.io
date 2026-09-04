@@ -23,7 +23,7 @@
     
     
       
-        <title>Small and structural variant calling with Varlociraptor - oxo-flow-community</title>
+        <title>Oxo flow varlociraptor - oxo-flow-community</title>
       
     
     
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Small and structural variant calling with Varlociraptor
+              Oxo flow varlociraptor
             
           </span>
         </div>
@@ -584,60 +584,30 @@
   
 
 
+<div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-varlociraptor</span></div>
+<div class="ox-detail-cols">
+<div>
 <h1 id="small-and-structural-variant-calling-with-varlociraptor">Small and structural variant calling with Varlociraptor</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
-
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
 <p>Scenario-driven somatic small and structural variant calling with Varlociraptor: paired-end reads are aligned against the 1000 Genomes human pangenome with vg giraffe, QC'd with FastQC/MultiQC, covered with mosdepth, and used for freebayes and delly candidate calling; Varlociraptor then estimates alignment properties and calls variants under a tumor scenario (events present + somatic_tumor_high + somatic_tumor_medium, FDR 0.05), FDR is controlled per variant type (SNV/INS/DEL/MNV/BND/INV/DUP/REP) with merge and phred decoding, and the calls are annotated with VEP (LoFtool/REVEL plugins) and dbSNFP/dbSNP, filtered, turned into a 34-column variant table with oncoprint label-sorting, and rendered as interactive datavzrd variant and gene-coverage reports. All reference data (GRCh38 FASTA and GTF, VEP cache/plugins, REVEL scores, known-variants VCFs, HPRC pangenome graph) is downloaded automatically into resources/.</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: right;"></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: right;"><strong>Rating</strong></td>
-<td>✔ Live-tested</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Origin</strong></td>
-<td>port</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Domain</strong></td>
-<td>genomics</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Rules</strong></td>
-<td>88</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Compute</strong></td>
-<td>up to 96 CPUs / 32 GB per rule (freebayes)</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Tools</strong></td>
-<td>altair · bcftools · bedtools · biopython · curl · datavzrd · delly · ensembl-vep · fastqc · freebayes · gatk4 · gawk · htslib · mosdepth · multiqc · openpyxl · pandas · parallel · picard · pysam · python · rust-bio-tools · samtools · scikit-learn · sed · snpsift · statsmodels · unzip · varlociraptor · vcflib · vega-lite-cli · vembrane · vg</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Ported</strong></td>
-<td>2026-08-15</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>License</strong></td>
-<td>Apache-2.0</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Source</strong></td>
-<td><a href="https://github.com/snakemake-workflows/dna-seq-varlociraptor">snakemake-workflows/dna-seq-varlociraptor</a></td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Pinned version</strong></td>
-<td><code>v6.10.0</code></td>
-</tr>
-</tbody>
-</table>
+</div>
+<div>
+<div class="ox-glance">
+<div class="ox-glance-title">At a glance</div>
+<div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">159</span></div>
+<div class="ox-kv"><span class="k">Compute</span><span class="v">up to 64 CPUs / 32 GB per rule (freebayes candidates 48 threads; vg giraffe 64 threads)</span></div>
+<div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Domain</span><span class="v">genomics</span></div>
+<div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/snakemake-workflows/dna-seq-varlociraptor">snakemake-workflows/dna-seq-varlociraptor</a></span></div>
+<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>v6.10.0</code></span></div>
+<div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
+<div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
+<p class="cmd">$ oxo-flow run main.oxoflow</p>
+</div>
+</div>
+</div>
 <h2 id="run-it">Run it</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>oxo-flow<span class="w"> </span>run<span class="w"> </span>main.oxoflow
 </code></pre></div>
@@ -648,7 +618,7 @@
 <p><strong>Requirements.</strong>
 - paired-end FASTQ reads at reads_dir/<sample>_1.fastq.gz / _2.fastq.gz; sample cohort declared in [[sample_groups]] (one group = one tumor sample); fixtures bundled for dry-run
 - reference data: downloaded automatically into resources/ — GRCh38 primary assembly FASTA (Ensembl release 111) + .fai/.dict, Ensembl release 111 GTF, VEP cache and plugins (release 111), REVEL scores, Ensembl known-variants VCFs, HPRC v1.1 human pangenome graph
-- compute: up to 96 CPUs / 32 GB per rule (freebayes candidates 96 threads; vg giraffe 64 threads; samtools sort 16 threads/32G; Varlociraptor call 8G)
+- compute: up to 64 CPUs / 32 GB per rule (freebayes candidates 48 threads — upstream 96, scaled; vg giraffe 64 threads; samtools sort 16 threads/32G; Varlociraptor call 8G; consensus/bam-name sorting 16 threads/64G when the gated branches are on)
 - tools: conda envs with pinned versions (envs/*.yaml, one env per tool pin set); conda/mamba required at runtime
 - disk: multi-GB reference downloads under resources/ (pangenome graph, VEP cache, known-variants VCFs) plus results/ for BAMs, BCFs, tables and reports</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># 1. install oxo-flow (release binary, recommended)</span>
@@ -677,10 +647,136 @@
 </thead>
 <tbody>
 <tr>
+<td style="text-align: right;"><code>benchmarking_activate</code></td>
+<td><code>false</code></td>
+<td>upstream config: benchmarking (Snakefile rule benchmark / benchmarking.smk; the CHM1 sample and chm-eval-kit downloads are excluded, see module header).</td>
+<td><code>benchmarking::chromosome_map</code>, <code>benchmarking::gather_benchmark_calls</code>, <code>benchmarking::rename_chromosomes</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>bwa_align_activate</code></td>
+<td><code>false</code></td>
+<td>upstream config: linear-reference (bwa) aligner branch of mapping.smk (map_reads_bwa + ref.smk bwa_index). The default path aligns with vg giraffe to the pangenome (ref/pangenome/activate = true upstream).</td>
+<td><code>mapping_bwa::bwa_index</code>, <code>mapping_bwa::map_reads_bwa</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>cadd_build</code></td>
+<td><code>GRCh38</code></td>
+<td>—</td>
+<td><code>plugins::download_cadd_scores_for_vep</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>cadd_variant_type</code></td>
+<td><code>snv</code></td>
+<td>—</td>
+<td><code>plugins::download_cadd_scores_for_vep</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>cadd_version</code></td>
+<td><code>v1.7</code></td>
+<td>—</td>
+<td><code>plugins::download_cadd_scores_for_vep</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>fusion_activate</code></td>
+<td><code>false</code></td>
+<td>upstream config: fusion calling branch (fusion_calling.smk star_arriba meta wrapper: star_index / star_align / arriba / annotate_exons / convert_fusions / sort_arriba_calls / bcftools_concat_candidates).</td>
+<td><code>fusion::annotate_exons</code>, <code>fusion::arriba</code>, <code>fusion::bcf_index_arriba</code>, <code>fusion::bcftools_concat_candidates</code>, <code>fusion::convert_fusions</code>, <code>fusion::sort_arriba_calls</code>, <code>fusion::star_align</code>, <code>fusion::star_index</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>maf_activate</code></td>
+<td><code>false</code></td>
+<td>upstream config: maf/activate (group_bcf_to_vcf + group_vcf_to_maf).</td>
+<td><code>maf::group_bcf_to_vcf_fusions</code>, <code>maf::group_bcf_to_vcf_variants</code>, <code>maf::group_vcf_to_maf_fusions</code>, <code>maf::group_vcf_to_maf_variants</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>mutational_burden_activate</code></td>
+<td><code>false</code></td>
+<td>upstream config: mutational_burden/activate + events (calculate_covered_coding_sites + estimate_mutational_burden; events are comma-joined, split to space-separated in the rule shells).</td>
+<td><code>burden_signatures::calculate_covered_coding_sites</code>, <code>burden_signatures::determine_coding_regions</code>, <code>burden_signatures::estimate_mutational_burden_curve</code>, <code>burden_signatures::estimate_mutational_burden_hist</code>, <code>population::annotated_index</code>, <code>population::gather_annotated_calls</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>mutational_burden_events</code></td>
+<td><code>somatic_tumor_low,somatic_tumor_medium,somatic_tumor_high</code></td>
+<td>—</td>
+<td><code>burden_signatures::estimate_mutational_burden_curve</code>, <code>burden_signatures::estimate_mutational_burden_hist</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>mutational_signatures_activate</code></td>
+<td><code>false</code></td>
+<td>upstream config: mutational_signatures/activate (create_mutational_context_file ... plot_mutational_signatures; upstream default events = [some_id], samples = [tumor], frozen in the module).</td>
+<td><code>burden_signatures::annotate_descriptions</code>, <code>burden_signatures::annotate_mutational_signatures</code>, <code>burden_signatures::bcf_index_final</code>, <code>burden_signatures::create_mutational_context_file</code>, <code>burden_signatures::determine_coding_regions</code>, <code>burden_signatures::download_cosmic_signatures</code>, <code>burden_signatures::join_mutational_signatures</code>, <code>burden_signatures::plot_mutational_signatures</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>plugins_activate</code></td>
+<td><code>false</code></td>
+<td>upstream config: plugins (download_cadd_scores_for_vep; download_revel and process_revel_scores are already ported in ref.oxoflow). cadd_build / cadd_version / cadd_variant_type are the upstream wildcards of the same rule with their upstream defaults.</td>
+<td><code>plugins::download_cadd_scores_for_vep</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>population_db_activate</code></td>
+<td><code>false</code></td>
+<td>upstream config: population/db/activate + path/alias/fdr/events (rules clean_population_db / population_filter_variants / population_db_update).</td>
+<td><code>population::annotated_index</code>, <code>population::bcf_index_cleaned_db</code>, <code>population::bcf_index_population_filtered</code>, <code>population::clean_population_db</code>, <code>population::gather_annotated_calls</code>, <code>population::population_db_update</code>, <code>population::population_filter_variants</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>population_db_alias</code></td>
+<td><code>tumor</code></td>
+<td>—</td>
+<td><code>population::population_filter_variants</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>population_db_events</code></td>
+<td><code>somatic_tumor_high,somatic_tumor_medium</code></td>
+<td>—</td>
+<td><code>population::population_filter_variants</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>population_db_fdr</code></td>
+<td><code>0.05</code></td>
+<td>—</td>
+<td><code>population::population_filter_variants</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>population_db_path</code></td>
+<td><code>resources/population_db.variants.bcf</code></td>
+<td>—</td>
+<td><code>population::clean_population_db</code>, <code>population::population_db_update</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>primers_activate</code></td>
+<td><code>false</code></td>
+<td>upstream config: primers/trimming (rules assign_primers ... build_primer_regions). primers_fa1/primers_fa2 are the upstream primers/trimming/primers_fa{1,2} fasta files (empty upstream default = primers flow off); fa2 empty means single-end primer fasta.</td>
+<td><code>mapping_bwa::bwa_index</code>, <code>primers::assign_primers</code>, <code>primers::build_primer_regions</code>, <code>primers::filter_primerless_reads</code>, <code>primers::filter_unmapped_primers</code>, <code>primers::map_primers</code>, <code>primers::primer_to_bed</code>, <code>primers::trim_primers</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>primers_fa1</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>primers::map_primers</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>primers_fa2</code></td>
+<td>``</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
 <td style="text-align: right;"><code>reads_dir</code></td>
 <td><code>test/fixtures/raw</code></td>
 <td>Path to the raw paired-end FASTQs of the single sample (upstream config/units.tsv points at absolute /projects/... paths; the port reads from the repository fixtures instead).</td>
-<td><code>mapping::merge_trimmed_fastqs_r1</code>, <code>mapping::merge_trimmed_fastqs_r2</code>, <code>qc::fastqc_r1</code>, <code>qc::fastqc_r2</code></td>
+<td><code>mapping::merge_trimmed_fastqs_r1</code>, <code>mapping::merge_trimmed_fastqs_r2</code>, <code>qc::fastqc_r1</code>, <code>qc::fastqc_r2</code>, <code>trimming::fastp_pe</code>, <code>trimming::fastp_pipe</code>, <code>trimming::fastp_se</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>skip_ref_downloads</code></td>
+<td><code>false</code></td>
+<td>Skip the ref:: download rules (genome, annotation, VEP cache/plugins, pangenome, REVEL, known variants — ~5 GB of public databases). Set to true when you have pre-placed the files at the resource paths the rules declare (see README "Reference databases"); the downloads are hardcoded upstream URLs and need unimpeded network access.</td>
+<td><code>ref::download_revel</code>, <code>ref::get_annotation</code>, <code>ref::get_genome</code>, <code>ref::get_known_variants</code>, <code>ref::get_pangenome</code>, <code>ref::get_vep_cache</code>, <code>ref::get_vep_plugins</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>trimming_activate</code></td>
+<td><code>false</code></td>
+<td>upstream config: trimming (get_sra / fastp rules). The default path has no trimming configured — reads pass through mapping::merge_trimmed_fastqs.</td>
+<td><code>trimming::fastp_pe</code>, <code>trimming::fastp_pipe</code>, <code>trimming::fastp_se</code>, <code>trimming::get_sra</code></td>
 </tr>
 </tbody>
 </table>
@@ -694,50 +790,109 @@
 <p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
 <p><strong>In scope</strong></p>
 <ul>
-<li>pangenome_index</li>
-<li>vg_giraffe_map</li>
-<li>samtools_sort_index</li>
-<li>markduplicates</li>
-<li>baserecalibrator</li>
-<li>applybqsr</li>
-<li>fastqc</li>
-<li>multiqc</li>
-<li>mosdepth_coverage</li>
-<li>covered_regions</li>
-<li>expanded_regions</li>
-<li>delly_excluded_regions</li>
-<li>freebayes_candidates</li>
-<li>delly_candidates</li>
-<li>varlociraptor_estimate</li>
-<li>varlociraptor_call</li>
-<li>fdr_control</li>
-<li>merge_calls</li>
-<li>decode_phred</li>
-<li>vep_annotation</li>
-<li>dbnsfp_annotation</li>
-<li>annotation_filtering</li>
-<li>vembrane_table</li>
-<li>oncoprint_prepare</li>
-<li>datavzrd_report</li>
+<li>annotate_candidate_variants_delly</li>
+<li>annotate_candidate_variants_freebayes</li>
+<li>annotate_variants</li>
+<li>annotate_vcfs</li>
+<li>apply_bqsr</li>
+<li>bam_index_dedup</li>
+<li>bcf_index_arriba</li>
+<li>bcf_index_candidate_delly</li>
+<li>bcf_index_candidate_freebayes</li>
+<li>bcf_index_delly</li>
+<li>bcf_index_fdr_BND</li>
+<li>bcf_index_fdr_DEL</li>
+<li>bcf_index_fdr_DUP</li>
+<li>bcf_index_fdr_INS</li>
+<li>bcf_index_fdr_INV</li>
+<li>bcf_index_fdr_MNV</li>
+<li>bcf_index_fdr_REP</li>
+<li>bcf_index_fdr_SNV</li>
+<li>bcf_index_filtered</li>
+<li>bcf_index_freebayes</li>
+<li>bcf_index_vep_annotated</li>
+<li>bcftools_concat</li>
+<li>bcftools_concat_fusions</li>
+<li>bedtools_merge</li>
+<li>build_sample_regions</li>
+<li>control_fdr_BND</li>
+<li>control_fdr_DEL</li>
+<li>control_fdr_DUP</li>
+<li>control_fdr_INS</li>
+<li>control_fdr_INV</li>
+<li>control_fdr_MNV</li>
+<li>control_fdr_REP</li>
+<li>control_fdr_SNV</li>
+<li>convert_phred_scores</li>
 <li>coverage_table</li>
+<li>datavzrd_coverage</li>
+<li>datavzrd_variants_calls</li>
+<li>delly</li>
+<li>download_delly_excluded_regions</li>
+<li>download_revel</li>
+<li>fastqc_r1</li>
+<li>fastqc_r2</li>
+<li>filter_by_annotation</li>
+<li>filter_candidates_by_annotation_delly</li>
+<li>filter_candidates_by_annotation_freebayes</li>
+<li>filter_group_regions_covered</li>
+<li>filter_group_regions_expanded</li>
+<li>filter_offtarget_variants_delly</li>
+<li>filter_offtarget_variants_freebayes</li>
+<li>fix_delly_calls</li>
+<li>freebayes</li>
+<li>gather_calls</li>
+<li>genome_dict</li>
+<li>genome_faidx</li>
+<li>get_annotation</li>
+<li>get_genome</li>
+<li>get_known_variants</li>
+<li>get_pangenome</li>
+<li>get_reference_paths</li>
+<li>get_target_regions</li>
+<li>get_vep_cache</li>
+<li>get_vep_plugins</li>
+<li>map_reads_vg</li>
+<li>mark_duplicates</li>
+<li>merge_calls</li>
+<li>merge_covered_group_regions</li>
+<li>merge_expanded_group_regions</li>
+<li>merge_trimmed_fastqs_r1</li>
+<li>merge_trimmed_fastqs_r2</li>
+<li>multiqc</li>
+<li>pangenome_autoindex</li>
+<li>postprocess_vg_alignments</li>
+<li>prepare_oncoprint</li>
+<li>process_call_tables</li>
+<li>process_revel_scores</li>
+<li>recalibrate_base_qualities</li>
+<li>remove_iupac_codes</li>
+<li>render_scenario</li>
+<li>samtools_idxstats</li>
+<li>samtools_stats</li>
+<li>scatter_candidates_delly</li>
+<li>scatter_candidates_freebayes</li>
+<li>sort_alignments</li>
+<li>sort_calls_arriba</li>
+<li>sort_calls_delly</li>
+<li>sort_calls_freebayes</li>
+<li>tabix_noiupac</li>
+<li>tabix_revel</li>
+<li>tabix_variation</li>
+<li>transform_gene_annotations</li>
+<li>varlociraptor_alignment_properties</li>
+<li>varlociraptor_call_arriba</li>
+<li>varlociraptor_call_delly</li>
+<li>varlociraptor_call_freebayes</li>
+<li>varlociraptor_preprocess_arriba</li>
+<li>varlociraptor_preprocess_delly</li>
+<li>varlociraptor_preprocess_freebayes</li>
+<li>vembrane_table</li>
 </ul>
 <p><strong>Excluded</strong></p>
 <ul>
-<li>bwa mapping — non-default aligner branch, not ported</li>
-<li>fastp/trimming — non-default trimming branch, not ported</li>
-<li>fusions (arriba) — fusion calling is off in the default config (calling mode variants)</li>
-<li>MAF conversion — not reachable with the default config</li>
-<li>mutational burden and mutational signature analyses — non-default branches</li>
-<li>population database (germline AF annotation) — population db is off in the default config</li>
-<li>dgidb druggability annotation — off by default</li>
-<li>CADD annotation — off by default</li>
-<li>primer design — off by default</li>
-<li>benchmarking — upstream benchmarking rules are not ported</li>
-<li>consensus reads — non-default branch</li>
-<li>target regions — not part of the default path</li>
-<li>template oncoprint views (gene_oncoprint / variant_oncoprints datasets) — empty with the default single group; prepare_oncoprint itself runs</li>
-<li>gather_annotated_calls / filter_odds — not reachable in the default path (benchmarking off, filter present only)</li>
-<li>upstream scatter.calling(16) chunks beyond scatteritem=0 — collapsed to a single chunk</li>
+<li>fusions FDR-control chain (filtering.smk) — the ported fusions branch ends at the fusions callset (calls/varlociraptor/{group}/{group}.fusions.0.bcf); the subsequent vartype FDR-control and fusions report steps stay out of scope (requires calling mode fusions + fusion_activate = true)</li>
+<li>multi-file target_regions lists — the port freezes a single BED path (config target_regions); the merge step handles one file</li>
 </ul>
 <h2 id="fidelity">Fidelity</h2>
 <p>The port aims for byte-identical commands on the default path. Known,
@@ -754,7 +909,7 @@ deliberate deviations:</p>
 <tr>
 <td><code>scatter.calling(16)</code> (rules run 16x, once per scatter item)</td>
 <td>single chunk, <code>scatteritem=0</code></td>
-<td>oxo-flow has no scatter construct; with one small sample the 16 chunks are identical work</td>
+<td>the port freezes <code>scatteritem=0</code>; <code>rbt vcf-split</code> with one output chunk writes the whole callset, so the chunk content is identical to upstream's 16 chunks gathered with <code>bcftools concat -a</code> before <code>control_fdr</code> (oxo-flow does have a scatter construct; it is not exercised because the port's single sample makes the split work-identical)</td>
 </tr>
 <tr>
 <td>rule outputs that are directories (VEP cache/plugins, oncoprint <code>label_sortings/</code>/<code>variant-oncoprints/</code> dirs)</td>
@@ -777,9 +932,9 @@ deliberate deviations:</p>
 <td>wrapper-utils is a Snakemake runtime; the ported scripts keep the wrapper logic verbatim</td>
 </tr>
 <tr>
-<td><code>gather_annotated_calls</code> / <code>filter_odds</code></td>
+<td><code>filter_odds</code></td>
 <td>not ported</td>
-<td>not reachable in the default path (benchmarking off + <code>filter: present</code> only)</td>
+<td>not reachable in the default path (<code>filter: present</code> only); the population/burden branches consume <code>gather_annotated_calls</code> instead (ported in <code>population.oxoflow</code>)</td>
 </tr>
 <tr>
 <td>template oncoprint views (<code>gene_oncoprint</code> / <code>variant_oncoprints</code> datasets)</td>
@@ -805,6 +960,71 @@ deliberate deviations:</p>
 <td>per-rule conda environments</td>
 <td>one env per tool pin set (<code>envs/</code>)</td>
 <td>same packages, same pins, consolidated</td>
+</tr>
+<tr>
+<td>snakemake <code>before_update</code>/<code>update</code> flags (population db)</td>
+<td>no input edge; the db path is read/written as-is</td>
+<td>oxo-flow has no such flags; a declared input would create a DAG cycle (<code>validate</code> rejects it)</td>
+</tr>
+<tr>
+<td>snakemake <code>temp()</code> outputs of the gated branch modules</td>
+<td>plain outputs (<code>temporary = true</code> where the default path used it)</td>
+<td>see the module headers; <code>join_mutational_signatures</code> writes with <code>&gt;</code> instead of the upstream <code>&gt;&gt;</code> because the engine does not pre-delete outputs</td>
+</tr>
+<tr>
+<td>snakemake script API (<code>snakemake.input/output/params</code>) in the 6 branch scripts</td>
+<td>argv ports (<code>--output</code>/<code>--log</code> flags, comma-joined lists)</td>
+<td>same logic verbatim, cf. the default-path script ports</td>
+</tr>
+<tr>
+<td>chm sample group vertical slice (benchmarking)</td>
+<td>not ported</td>
+<td>the ported CHM-eval flow (<code>chm_eval_sample</code> ... <code>chm_eval</code>) re-derives the CHM1 FASTQs, but the chm sample is not in the port's <code>config/samples.tsv</code>, so the chm reads do not flow through mapping -&gt; calling -&gt; <code>control_fdr</code>; <code>rename_chromosomes</code>/<code>chm_eval</code> keep orphan inputs (validate warns, like upstream without the chm sample)</td>
+</tr>
+<tr>
+<td>consensus-read calling (<code>calc_consensus_reads</code> flow)</td>
+<td><code>consensus.oxoflow</code>, gated on <code>consensus_activate</code></td>
+<td>upstream switches the <code>recalibrate_base_qualities</code>/<code>apply_bqsr</code> input via <code>get_recalibrate_quality_input</code>; the port models this as gated duplicate rules with the same outputs and exclusive <code>when</code> gates (<code>!consensus_activate</code> vs <code>consensus_activate</code>)</td>
+</tr>
+<tr>
+<td><code>annotate_dgidb</code></td>
+<td><code>annotation::annotate_dgidb</code>, gated on <code>dgidb_activate</code> + <code>annotation_selection</code></td>
+<td>upstream <code>get_final_selected_annotation</code> switches the annotated callset consumed by filtering and the final-calls chain; the port exposes the same selection as <code>config.annotation_selection</code></td>
+</tr>
+<tr>
+<td><code>filter_offtarget_variants</code> (wrapper v2.3.2/bio/bcftools/filter, <code>params.extra=""</code>)</td>
+<td>pass-through <code>bcftools filter -o/-O b</code> on the fixed calls; the <code>regions</code>/index inputs are declared (as upstream) so <code>get_target_regions</code> and the candidate indexes exist pre-scatter</td>
+<td>the pinned wrapper consumes only <code>input[0]</code> (verified against its source); the actual target-region restriction is the <code>filter_group_regions</code> bedtools intersect below</td>
+</tr>
+<tr>
+<td><code>target_regions</code> list config</td>
+<td>single BED path (<code>config.target_regions</code>)</td>
+<td>upstream merges one or more files; the port freezes one path</td>
+</tr>
+<tr>
+<td><code>filter_group_regions</code> <code>get_filter_targets</code> (bedtools intersect)</td>
+<td>same command inline in the two <code>filter_group_regions_*</code> rules</td>
+<td>byte-identical output; intersect branch only when <code>target_regions</code> is set</td>
+</tr>
+<tr>
+<td>per-group <code>calling</code> column of <code>config/samples.tsv</code></td>
+<td><code>[sample_groups.metadata] calling</code> on each group</td>
+<td>fusions continuation rules gate on <code>wildcard.calling == "fusions" || "variants,fusions"</code></td>
+</tr>
+<tr>
+<td><code>get_candidate_calls</code> for caller=arriba (UNFILTERED group concat) + <code>get_varlociraptor_params</code> (propagate-info-fields extra)</td>
+<td><code>calling::varlociraptor_preprocess_arriba</code>/<code>varlociraptor_call_arriba</code> consuming <code>results/candidate-calls/arriba/{group}/{group}.bcf</code></td>
+<td>command text identical; the arriba path has no scatter fan-out (no scatteritem)</td>
+</tr>
+<tr>
+<td><code>scatter_candidates</code>/<code>filter_group_regions</code> conditional inputs (Python <code>if config.get("target_regions", None)</code>)</td>
+<td><code>optional = "any"</code> input pairs + <code>if [ -n "{config.target_regions}" ]</code> shell switch</td>
+<td>engine equivalent of the upstream input selection</td>
+</tr>
+<tr>
+<td>upstream <code>get_target_regions</code> chr-strip (<code>awk '{sub("^chr","",$0); print}'</code>)</td>
+<td>verbatim</td>
+<td>target BEDs must be chr-less (Ensembl GRCh38 primary assembly); chr-prefixed files fail closed, exactly as upstream</td>
 </tr>
 </tbody>
 </table>
@@ -850,7 +1070,7 @@ deliberate deviations:</p>
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      © 2026 oxo-flow-community · Apache-2.0 · Ports are based on their upstream workflows — see each repository's NOTICE.
+      © 2026 <a href="https://github.com/oxo-flow-community">oxo-flow-community</a> · Apache-2.0 · engine <a href="https://github.com/Traitome/oxo-flow">oxo-flow</a> · <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues">issues</a> · evidence: ✔ live-tested ⊃ ★ verified ⊃ ☆ community · ports are based on their upstream workflows — see each repository's NOTICE
     </div>
   
   

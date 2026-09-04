@@ -1,21 +1,33 @@
+<div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-auto-sra-rnaseq-pipeline</span></div>
+<div class="ox-detail-cols" markdown="1">
+<div markdown="1">
+
 # SRA-powered RNA-seq: .sra archives to differential expression
 
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
 
 Automated RNA-seq analysis from locally downloaded SRA archives to differential expression results: verify and symlink .sra files, fasterq-dump conversion to FASTQ, read merging across multiple SRR runs per sample, fastp trimming, STAR alignment with gene counts, BAM indexing, BPM-normalized bigWig signal tracks, a merged count matrix, and DESeq2 differential analysis with ashr shrinkage. Single-end and paired-end samples are routed by the metadata `paired` column through wildcard-scoped when-gates; a separate ENCODE entry point (main_encode.oxoflow) consumes pre-downloaded FASTQs. Every tool is pinned to an exact conda version for reproducibility.
 
-| | |
-|---:|---|
-| **Rating** | ✔ Live-tested |
-| **Origin** | port |
-| **Domain** | transcriptomics |
-| **Rules** | 13 |
-| **Compute** | up to 20 threads / 10 GB per rule (align_and_count) |
-| **Tools** | sra-tools · fastp · star · samtools · deeptools · pandas · bioconductor-deseq2 · r-ashr · r-data.table |
-| **Ported** | 2026-08-15 |
-| **License** | Apache-2.0 |
-| **Source** | [xuzhougeng/auto_sra_rnaseq_pipeline](https://github.com/xuzhougeng/auto_sra_rnaseq_pipeline) |
-| **Pinned version** | `main` |
+</div>
+<div>
+
+<div class="ox-glance">
+<div class="ox-glance-title">At a glance</div>
+<div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">13</span></div>
+<div class="ox-kv"><span class="k">Compute</span><span class="v">up to 20 threads / 10 GB per rule (align_and_count)</span></div>
+<div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Domain</span><span class="v">transcriptomics</span></div>
+<div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/xuzhougeng/auto_sra_rnaseq_pipeline">xuzhougeng/auto_sra_rnaseq_pipeline</a></span></div>
+<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>main</code></span></div>
+<div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
+<div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
+<p class="cmd">$ oxo-flow run main.oxoflow</p>
+</div>
+
+</div>
+</div>
 
 ## Run it
 

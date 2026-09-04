@@ -23,7 +23,7 @@
     
     
       
-        <title>Variant calling for non-model organisms: trimming, alignment and per-sample gVCFs - oxo-flow-community</title>
+        <title>Oxo flow snparcher - oxo-flow-community</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#variant-calling-for-non-model-organisms-trimming-alignment-and-per-sample-gvcfs" class="md-skip">
+        <a href="#variant-calling-for-non-model-organisms-trimming-alignment-per-sample-gvcfs-joint-genotyping-callable-sites-postprocessing-and-qc-dashboard" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Variant calling for non-model organisms: trimming, alignment and per-sample gVCFs
+              Oxo flow snparcher
             
           </span>
         </div>
@@ -554,6 +554,78 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#fidelity_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fidelity
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Fidelity">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#remaining-exclusions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remaining exclusions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#documented-deviations-from-upstream" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Documented deviations from upstream
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#live-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Live verification
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#license" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        License
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#links" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -584,70 +656,40 @@
   
 
 
-<h1 id="variant-calling-for-non-model-organisms-trimming-alignment-and-per-sample-gvcfs">Variant calling for non-model organisms: trimming, alignment and per-sample gVCFs</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
-
-<p>Variant calling for non-model organisms: paired FASTQ reads are trimmed and filtered with fastp, aligned with BWA-MEM, and called to per-sample gVCFs with GATK HaplotypeCaller (low-coverage defaults: -ploidy 2, --min-pruning 1), alongside a cohort QC metrics report aggregating fastp and samtools stats.</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: right;"></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: right;"><strong>Rating</strong></td>
-<td>✔ Live-tested</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Origin</strong></td>
-<td>port</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Domain</strong></td>
-<td>genomics</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Rules</strong></td>
-<td>12</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Compute</strong></td>
-<td>up to 8 CPUs / 8 GB per rule (bwa_mem)</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Tools</strong></td>
-<td>fastp · bwa · samtools · gatk4 · python</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Ported</strong></td>
-<td>2026-08-15</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>License</strong></td>
-<td>Apache-2.0</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Source</strong></td>
-<td><a href="https://github.com/harvardinformatics/snparcher">harvardinformatics/snparcher</a></td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Pinned version</strong></td>
-<td><code>v2.2</code></td>
-</tr>
-</tbody>
-</table>
+<div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-snparcher</span></div>
+<div class="ox-detail-cols">
+<div>
+<h1 id="variant-calling-for-non-model-organisms-trimming-alignment-per-sample-gvcfs-joint-genotyping-callable-sites-postprocessing-and-qc-dashboard">Variant calling for non-model organisms: trimming, alignment, per-sample gVCFs, joint genotyping, callable sites, postprocessing and QC dashboard</h1>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
+<p>Variant calling for non-model organisms: paired FASTQ reads (or SRA accessions, or external BAMs) are trimmed and filtered with fastp, aligned with BWA-MEM, optionally duplicate-marked with sambamba, and called to per-sample gVCFs with GATK HaplotypeCaller or DeepVariant (low-coverage defaults: -ploidy 2, --min-pruning 1). Optional upstream branches are gated by config keys: joint genotyping (GenomicsDBImport + GenotypeGVCFs, or GLnexus for DeepVariant), GATK hard variant filtration, callable-sites BED (mosdepth/clam coverage + genmap mappability), the postprocess module (clean SNP/indel call sets), the qc module (PLINK PCA/relatedness, ADMIXTURE, interactive dashboard), and a cohort QC metrics report. Two runtime-fan-out branches are ported with the engine's output_pattern primitive (oxo-flow &gt;= 0.17): interval scatter (per-interval gVCF calling and per-shard joint genotyping) and the per-region bcftools caller; both default off.</p>
+</div>
+<div>
+<div class="ox-glance">
+<div class="ox-glance-title">At a glance</div>
+<div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">89</span></div>
+<div class="ox-kv"><span class="k">Compute</span><span class="v">up to 8 CPUs / 8 GB per rule (bwa_mem)</span></div>
+<div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Domain</span><span class="v">genomics</span></div>
+<div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/harvardinformatics/snparcher">harvardinformatics/snparcher</a></span></div>
+<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>v2.2</code></span></div>
+<div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
+<div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
+<p class="cmd">$ oxo-flow run main.oxoflow reference_source=/path/to/genome.fa.gz</p>
+</div>
+</div>
+</div>
 <h2 id="run-it">Run it</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>oxo-flow<span class="w"> </span>run<span class="w"> </span>main.oxoflow<span class="w"> </span><span class="nv">reference_source</span><span class="o">=</span>/path/to/genome.fa.gz
 </code></pre></div>
 <p>Set your reference genome as shown; preview with <code>oxo-flow dry-run main.oxoflow</code>.</p>
 <h2 id="installation">Installation</h2>
-<p><strong>Engine.</strong> oxo-flow &gt;= 0.12.0</p>
-<p><strong>Toolchain.</strong> conda envs — pinned versions (fastp 1.3.6, bwa 0.7.19, samtools 1.24, gatk4 4.6.2.0; conda-forge + bioconda)</p>
+<p><strong>Engine.</strong> oxo-flow &gt;= 0.12.0 (interval-scatter and bcftools branches need output_pattern: &gt;= 0.17)</p>
+<p><strong>Toolchain.</strong> conda envs — pinned versions (fastp 1.3.6, bwa 0.7.19, samtools 1.24, gatk4 4.6.2.0, sambamba 1.0.1, sra-tools 3.2.1, mosdepth 0.3.3, vcftools 0.1.16, bcftools 1.23, plink2; conda-forge + bioconda); deepvariant branch needs a docker backend</p>
 <p><strong>Requirements.</strong>
 - reference genome FASTA (plain or gzip), passed as reference_source at run time — bgzip-compressed and indexed by the workflow itself (no pre-built indices)
-- paired-end reads at raw/<sample>_1.fastq.gz and raw/<sample>_2.fastq.gz for each sample in the [[sample_groups]] list
+- paired-end reads at raw/<sample>_1.fastq.gz and raw/<sample>_2.fastq.gz for fastq samples; SRA accession metadata for srr samples; bam_path metadata for bam samples
 - compute: up to 8 CPUs / 8 GB per rule (bwa_mem 8 threads, fastp 4, gatk_haplotypecaller 7 GB Java heap)
 - conda or mamba at runtime to create the pinned envs/*.yaml environments</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># 1. install oxo-flow (release binary, recommended)</span>
@@ -676,10 +718,70 @@
 </thead>
 <tbody>
 <tr>
+<td style="text-align: right;"><code>callable_sites_enabled</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>callable_coverage_thresholds</code>, <code>callable_sites_bed</code>, <code>clam_collect</code>, <code>clam_loci</code>, <code>coverage_bed</code>, <code>genmap_index</code>, <code>genmap_mappability</code>, <code>mappability_bed</code>, <code>mosdepth</code>, <code>mosdepth_external</code>, <code>mosdepth_markdup</code>, <code>postprocess_basic_filter</code>, <code>postprocess_drop_indel_snps</code>, <code>postprocess_filter_individuals</code>, <code>postprocess_strict_filter</code>, <code>postprocess_subset_indels</code>, <code>postprocess_subset_snps</code>, <code>postprocess_update_bed</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>callable_sites_fraction</code></td>
+<td><code>1.0</code></td>
+<td>—</td>
+<td><code>coverage_bed</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>callable_sites_kmer</code></td>
+<td><code>150</code></td>
+<td>—</td>
+<td><code>genmap_mappability</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>callable_sites_max_coverage</code></td>
+<td><code>auto</code></td>
+<td>—</td>
+<td><code>callable_coverage_thresholds</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>callable_sites_merge_distance</code></td>
+<td><code>100</code></td>
+<td>—</td>
+<td><code>coverage_bed</code>, <code>mappability_bed</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>callable_sites_min_coverage</code></td>
+<td><code>auto</code></td>
+<td>—</td>
+<td><code>callable_coverage_thresholds</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>callable_sites_min_score</code></td>
+<td><code>1</code></td>
+<td>—</td>
+<td><code>mappability_bed</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>deepvariant_model_type</code></td>
+<td><code>WGS</code></td>
+<td>—</td>
+<td><code>deepvariant_call</code>, <code>deepvariant_call_external</code>, <code>deepvariant_call_markdup</code></td>
+</tr>
+<tr>
 <td style="text-align: right;"><code>expected_coverage</code></td>
 <td><code>low</code></td>
 <td>—</td>
 <td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>gatk_het_prior</code></td>
+<td><code>0.005</code></td>
+<td>—</td>
+<td><code>joint_genotype_gvcfs</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>generate_filtered_vcf</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>variant_filtration</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>intervals_enabled</code></td>
@@ -688,28 +790,118 @@
 <td>—</td>
 </tr>
 <tr>
+<td style="text-align: right;"><code>joint_genotyping_enabled</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>create_db_mapfile</code>, <code>glnexus_joint</code>, <code>joint_genomics_db_import</code>, <code>joint_genotype_gvcfs</code>, <code>variant_filtration</code></td>
+</tr>
+<tr>
 <td style="text-align: right;"><code>mark_duplicates</code></td>
 <td><code>false</code></td>
 <td>—</td>
+<td><code>bam_stats</code>, <code>bam_stats_markdup</code>, <code>deepvariant_call</code>, <code>deepvariant_call_markdup</code>, <code>gatk_haplotypecaller</code>, <code>gatk_haplotypecaller_markdup</code>, <code>index_bam_csi</code>, <code>index_bam_csi_markdup</code>, <code>markdup_library</code>, <code>merge_dedup_libraries</code>, <code>merge_library_level_bams</code>, <code>mosdepth</code>, <code>mosdepth_markdup</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>modules_postprocess_enabled</code></td>
+<td><code>false</code></td>
 <td>—</td>
+<td><code>postprocess_basic_filter</code>, <code>postprocess_drop_indel_snps</code>, <code>postprocess_filter_individuals</code>, <code>postprocess_strict_filter</code>, <code>postprocess_subset_indels</code>, <code>postprocess_subset_snps</code>, <code>postprocess_update_bed</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>modules_qc_enabled</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>generate_coords_file</code>, <code>qc_admixture</code>, <code>qc_contig_map</code>, <code>qc_copy_qc_report</code>, <code>qc_dashboard</code>, <code>qc_plink</code>, <code>qc_prepare_plink_inputs</code>, <code>qc_setup_admixture</code>, <code>qc_subsample_snps</code>, <code>qc_vcftools_individuals</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>ploidy</code></td>
 <td><code>2</code></td>
 <td>—</td>
-<td><code>gatk_haplotypecaller</code></td>
+<td><code>gatk_haplotypecaller</code>, <code>gatk_haplotypecaller_external</code>, <code>gatk_haplotypecaller_markdup</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>postprocess_contig_size</code></td>
+<td><code>10000</code></td>
+<td>—</td>
+<td><code>postprocess_update_bed</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>postprocess_exclude_scaffolds</code></td>
+<td><code>mtDNA,Y</code></td>
+<td>—</td>
+<td><code>postprocess_strict_filter</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>postprocess_maf</code></td>
+<td><code>0.01</code></td>
+<td>—</td>
+<td><code>postprocess_strict_filter</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>postprocess_missingness</code></td>
+<td><code>0.75</code></td>
+<td>—</td>
+<td><code>postprocess_strict_filter</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>qc_clusters</code></td>
+<td><code>3</code></td>
+<td>—</td>
+<td><code>qc_dashboard</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>qc_exclude_scaffolds</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>qc_subsample_snps</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>qc_google_api_key</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>qc_dashboard</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>qc_max_sample_missingness</code></td>
+<td><code>0.49</code></td>
+<td>—</td>
+<td><code>qc_plink</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>qc_min_depth</code></td>
+<td><code>2</code></td>
+<td>—</td>
+<td><code>qc_vcftools_individuals</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>qc_pca_dims</code></td>
+<td><code>10</code></td>
+<td>—</td>
+<td><code>qc_plink</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>reference_name</code></td>
 <td><code>my_organism</code></td>
 <td>—</td>
-<td><code>bwa_mem</code>, <code>gatk_haplotypecaller</code>, <code>index_reference</code>, <code>prepare_reference</code></td>
+<td><code>bwa_mem</code>, <code>deepvariant_call</code>, <code>deepvariant_call_external</code>, <code>deepvariant_call_markdup</code>, <code>gatk_haplotypecaller</code>, <code>gatk_haplotypecaller_external</code>, <code>gatk_haplotypecaller_markdup</code>, <code>genmap_index</code>, <code>index_reference</code>, <code>joint_genomics_db_import</code>, <code>joint_genotype_gvcfs</code>, <code>postprocess_update_bed</code>, <code>prepare_reference</code>, <code>qc_contig_map</code>, <code>qc_prepare_plink_inputs</code>, <code>qc_subsample_snps</code>, <code>variant_filtration</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>reference_source</code></td>
 <td><code>test/fixtures/ref/genome.fa</code></td>
 <td>—</td>
 <td><code>prepare_reference</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>sample_metadata</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>generate_coords_file</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>variant_tool</code></td>
+<td><code>gatk</code></td>
+<td>—</td>
+<td><code>create_db_mapfile</code>, <code>deepvariant_call</code>, <code>deepvariant_call_external</code>, <code>deepvariant_call_markdup</code>, <code>gatk_haplotypecaller</code>, <code>gatk_haplotypecaller_external</code>, <code>gatk_haplotypecaller_markdup</code>, <code>glnexus_joint</code>, <code>joint_genomics_db_import</code>, <code>joint_genotype_gvcfs</code>, <code>variant_filtration</code></td>
 </tr>
 </tbody>
 </table>
@@ -726,37 +918,114 @@
 <li>prepare_reference</li>
 <li>index_reference</li>
 <li>fastp</li>
+<li>download_sra</li>
+<li>fastp_srr</li>
 <li>bwa_mem</li>
 <li>merge_library_bams</li>
 <li>merge_library_level_bams</li>
+<li>markdup_library</li>
+<li>merge_dedup_libraries</li>
+<li>stage_external_bam</li>
 <li>index_bam_csi</li>
+<li>index_bam_csi_markdup</li>
+<li>index_bam_csi_external</li>
+<li>normalize_external_gvcf_for_gatk</li>
 <li>gatk_haplotypecaller</li>
+<li>gatk_haplotypecaller_markdup</li>
+<li>gatk_haplotypecaller_external</li>
+<li>deepvariant_call</li>
+<li>deepvariant_call_markdup</li>
+<li>deepvariant_call_external</li>
+<li>create_db_mapfile</li>
+<li>joint_genomics_db_import</li>
+<li>joint_genotype_gvcfs</li>
+<li>glnexus_joint</li>
+<li>variant_filtration</li>
 <li>collect_fastp_stats</li>
 <li>bam_stats</li>
+<li>bam_stats_markdup</li>
+<li>bam_stats_external</li>
 <li>parse_bam_stats</li>
 <li>combine_qc_metrics</li>
+<li>mosdepth</li>
+<li>mosdepth_markdup</li>
+<li>mosdepth_external</li>
+<li>clam_collect</li>
+<li>callable_coverage_thresholds</li>
+<li>clam_loci</li>
+<li>coverage_bed</li>
+<li>genmap_index</li>
+<li>genmap_mappability</li>
+<li>mappability_bed</li>
+<li>callable_sites_bed</li>
+<li>postprocess_filter_individuals</li>
+<li>postprocess_basic_filter</li>
+<li>postprocess_basic_filter_long</li>
+<li>postprocess_update_bed</li>
+<li>postprocess_strict_filter</li>
+<li>postprocess_strict_filter_long</li>
+<li>postprocess_subset_indels</li>
+<li>postprocess_subset_indels_long</li>
+<li>postprocess_subset_snps</li>
+<li>postprocess_subset_snps_long</li>
+<li>postprocess_drop_indel_snps</li>
+<li>postprocess_drop_indel_snps_long</li>
+<li>qc_contig_map</li>
+<li>qc_vcftools_individuals</li>
+<li>qc_subsample_snps</li>
+<li>qc_prepare_plink_inputs</li>
+<li>qc_copy_qc_report</li>
+<li>qc_plink</li>
+<li>qc_setup_admixture</li>
+<li>qc_admixture</li>
+<li>generate_coords_file</li>
+<li>qc_dashboard</li>
+<li>picard_intervals</li>
+<li>filter_picard_intervals</li>
+<li>create_gvcf_intervals</li>
+<li>gatk_haplotypecaller_interval</li>
+<li>gatk_haplotypecaller_interval_markdup</li>
+<li>gatk_haplotypecaller_interval_external</li>
+<li>concat_interval_gvcfs</li>
+<li>create_db_intervals</li>
+<li>gatk_genomics_db_import_interval</li>
+<li>gatk_genotype_gvcfs_interval</li>
+<li>concat_interval_vcfs</li>
+<li>resolve_long_contig_mode</li>
+<li>gatk_haplotypecaller_interval_long</li>
+<li>gatk_haplotypecaller_interval_markdup_long</li>
+<li>gatk_haplotypecaller_interval_external_long</li>
+<li>concat_interval_gvcfs_long</li>
+<li>create_db_mapfile_long</li>
+<li>gatk_genomics_db_import_interval_long</li>
+<li>gatk_genotype_gvcfs_interval_long</li>
+<li>concat_interval_vcfs_long</li>
+<li>variant_filtration_long</li>
+<li>bcftools_regions</li>
+<li>bcftools_call</li>
+<li>bcftools_concat_regions</li>
 </ul>
 <p><strong>Excluded</strong></p>
 <ul>
-<li>markdup (sambamba markdup + merge_dedup_libraries) — committee exclusion; port default mark_duplicates=false</li>
-<li>joint_genotyping (GenomicsDBImport/GenotypeGVCFs + interval scatter machinery) — committee exclusion</li>
-<li>denovo — no such step in upstream v2.2 (v2 redesign)</li>
+<li>parabricks — every rule runs with --nv GPU passthrough (workflow/rules/parabricks.smk); the oxo-flow docker backend has no --nv support, plus NVIDIA EULA/license cannot be enforced</li>
+<li>sentieon — proprietary SENTIEON_LICENSE server gating (config/config.yaml sentieon section); cannot be distributed or verified</li>
+<li>denovo — no such step in upstream v2.2</li>
 <li>structural_variants — no such step in upstream v2.2</li>
-<li>variant_filtration — requires the excluded joint-genotyping raw VCF</li>
-<li>download_sra — srr input type out of scope</li>
-<li>stage_external_bam — bam input type out of scope</li>
-<li>callable_sites (mosdepth/clam/genmap/bedtools chain) — out of scope</li>
-<li>non-gatk callers (bcftools/deepvariant/glnexus/parabricks/sentieon rules) — config-selected only</li>
-<li>modules qc and postprocess — disabled by default upstream</li>
 </ul>
 <h2 id="fidelity">Fidelity</h2>
-<p>Port scope: the default-parameters main execution path (FASTQ inputs,
-<code>variant_calling.tool = gatk</code>), with the committee-approved exclusions
-<code>markdup</code>, <code>joint_genotyping</code>, <code>denovo</code>, and <code>structural_variants</code> (the
-latter two do not exist as steps in upstream v2.2). Intermediate machinery
-that only serves excluded branches (interval scatter, GenomicsDB,
-callable-sites, SRA downloads, optional modules, non-GATK callers) is listed
-as "not ported" below.</p>
+<h2 id="fidelity_1">Fidelity</h2>
+<p>74 rules ported from upstream v2.2 (up from 60), covering every branch that
+can be expressed in oxo-flow's DAG. Commands are ported verbatim
+(same flags, same output paths); upstream's snakemake <code>{{...}}</code> shell escaping
+is unwrapped to literal braces, and snakemake <code>{params.*}</code>/<code>{resources.*}</code>
+references are resolved to their upstream values or to <code>{config.*}</code> keys.
+The two runtime-fan-out branches (interval scatter, bcftools caller) are
+ported with the engine's <code>output_pattern</code> primitive (issue #227 item 5,
+merged in oxo-flow 0.17): a producer rule whose outputs are enumerated by a
+filesystem scan after it completes, instantiating one downstream consumer per
+discovered value. These branches require an engine with <code>output_pattern</code>
+support; older engines ignore the key and the when-gates keep the default
+plan unchanged.</p>
 <table>
 <thead>
 <tr>
@@ -781,9 +1050,15 @@ as "not ported" below.</p>
 </tr>
 <tr>
 <td><code>fastp</code></td>
-<td><code>fastp</code></td>
+<td><code>fastp</code> / <code>fastp_srr</code></td>
 <td>fastp 1.3.6</td>
-<td>identical flags; per (sample, library, input_unit) fan-out modeled as <code>{sample}/{sample}/u1</code> — the upstream default for single-row-per-sample sheets with empty <code>library_id</code></td>
+<td>identical flags; <code>{sample}/{sample}/u1</code> fan-out for single-row sheets with empty <code>library_id</code>; SRA-downloaded reads via <code>fastp_srr</code></td>
+</tr>
+<tr>
+<td><code>download_sra</code></td>
+<td><code>download_sra</code></td>
+<td>sra-tools 3.2.1, ffq, curl, pigz</td>
+<td>identical prefetch→fasterq-dump→pigz flow with ffq/ENA fallback; fasterq-dump <code>--tmpdir</code> dropped (oxo-flow has no per-rule tmpdir)</td>
 </tr>
 <tr>
 <td><code>bwa_mem</code></td>
@@ -801,25 +1076,145 @@ as "not ported" below.</p>
 <td><code>merge_library_level_bams</code></td>
 <td><code>merge_library_level_bams</code></td>
 <td>samtools 1.24</td>
-<td>no-markdup path (<code>results/bams/merged/{sample}.bam</code>); used because markdup is excluded</td>
+<td>no-markdup path (<code>results/bams/merged/{sample}.bam</code>)</td>
 </tr>
 <tr>
 <td><code>markdup_library</code> / <code>merge_dedup_libraries</code></td>
-<td>not ported</td>
-<td>sambamba 1.0.1</td>
-<td>committee exclusion <code>markdup</code>; port default <code>mark_duplicates = false</code> (upstream default true)</td>
+<td><code>markdup_library</code> / <code>merge_dedup_libraries</code></td>
+<td>sambamba 1.0.1, samtools 1.24</td>
+<td>identical commands; gated on <code>mark_duplicates</code> (default <code>false</code>; upstream default <code>true</code> — see deviations below; per-sample override via the <code>metadata_file</code> <code>mark_duplicates</code> column)</td>
 </tr>
 <tr>
 <td><code>index_bam_csi</code></td>
-<td><code>index_bam_csi</code></td>
+<td><code>index_bam_csi</code> / <code>index_bam_csi_markdup</code> / <code>index_bam_csi_external</code></td>
 <td>samtools 1.24</td>
-<td>identical (<code>samtools index -c</code>)</td>
+<td>identical (<code>samtools index -c</code>), one per BAM-producing branch</td>
+</tr>
+<tr>
+<td><code>stage_external_bam</code></td>
+<td><code>stage_external_bam</code></td>
+<td>—</td>
+<td>external BAM inputs symlinked into <code>results/bams/input/</code> then run through the standard callers</td>
+</tr>
+<tr>
+<td><code>normalize_external_gvcf_for_gatk</code> / <code>archive_gatk_gvcf</code> (gvcf input type)</td>
+<td><code>normalize_external_gvcf_for_gatk</code></td>
+<td>bcftools 1.23</td>
+<td>external gVCF inputs recompressed + tabix-indexed to <code>results/gvcfs/{sample}.g.vcf.gz</code> (upstream long-contig mode's archive command) and fed straight into joint genotyping; gVCF samples skip calling. Upstream short mode feeds the raw external path to the mapfile; the port normalizes so the uniform <code>results/gvcfs/{sample}.g.vcf.gz</code> pattern holds. Upstream refuses gvcf inputs with non-GATK callers; the port accepts them in the GLnexus path (normalized gVCFs are valid GLnexus input) — see deviations</td>
 </tr>
 <tr>
 <td><code>gatk_haplotypecaller</code> (standard mode)</td>
-<td><code>gatk_haplotypecaller</code></td>
+<td><code>gatk_haplotypecaller</code> / <code>_markdup</code> / <code>_external</code></td>
 <td>gatk4 4.6.2.0</td>
 <td>identical flags incl. <code>-ploidy 2 --emit-ref-confidence GVCF --min-pruning 1 --min-dangling-branch-length 1</code> (low-coverage defaults); <code>-Xmx7000m</code> = upstream default profile <code>mem_mb_reduced</code>; threads 1 as upstream</td>
+</tr>
+<tr>
+<td><code>picard_intervals</code> (interval mode)</td>
+<td><code>picard_intervals</code></td>
+<td>picard 3.5.0</td>
+<td>identical <code>ScatterIntervalsByNs</code> call (<code>MAX_TO_MERGE=500</code>, <code>OUTPUT_TYPE=ACGT</code> = upstream <code>ScatterIntervalsByNs</code> block)</td>
+</tr>
+<tr>
+<td><code>create_gvcf_intervals</code> (interval mode)</td>
+<td><code>create_gvcf_intervals</code></td>
+<td>gatk4 4.6.2.0</td>
+<td>upstream <code>intervals.smk:59</code> checkpoint: one <code>SplitIntervals --scatter-count N --subdivision-mode BALANCING_WITHOUT_INTERVAL_SUBDIVISION</code> per sample, then the per-interval file list is enumerated by the engine's <code>output_pattern</code> scan (see deviations)</td>
+</tr>
+<tr>
+<td><code>gatk_haplotypecaller</code> (interval mode)</td>
+<td><code>gatk_haplotypecaller_interval</code> / <code>_markdup</code> / <code>_external</code> (short mode) + <code>_long</code> twins</td>
+<td>gatk4 4.6.2.0</td>
+<td>deferred consumers, instantiated once per discovered interval; same flags as standard mode plus <code>-L {interval}</code> from the scattered list; long-contig mode writes plain <code>.vcf</code> (no <code>.gz</code>, no index) since GATK silently omits the index for <code>-O *.vcf.gz</code> on long contigs</td>
+</tr>
+<tr>
+<td><code>concat_interval_gvcfs</code></td>
+<td><code>concat_interval_gvcfs</code></td>
+<td>bcftools 1.23</td>
+<td><code>bcftools concat -D -a</code> over the per-interval gVCFs + <code>bcftools sort</code> + <code>index -t</code>, one per sample</td>
+</tr>
+<tr>
+<td><code>create_db_intervals</code> (interval mode)</td>
+<td><code>create_db_intervals</code></td>
+<td>gatk4 4.6.2.0, python</td>
+<td>upstream <code>intervals.smk:89</code> checkpoint: <code>DB_SCATTER = db_scatter_factor × samples × num_gvcf_intervals</code> (computed from <code>{config.samples_list}</code>), <code>SplitIntervals --subdivision-mode INTERVAL_SUBDIVISION</code>, then <code>scripts/interval_list_tools.py split-db</code> re-shards to the per-shard interval/contig caps</td>
+</tr>
+<tr>
+<td><code>gatk_genomics_db_import</code> (interval mode)</td>
+<td><code>gatk_genomics_db_import_interval</code></td>
+<td>gatk4 4.6.2.0</td>
+<td>deferred consumer, one import per db shard (<code>-L {db_interval}</code>, mapfile + <code>--merge-input-intervals</code> like the cohort rule)</td>
+</tr>
+<tr>
+<td><code>gatk_genotype_gvcfs</code> (interval mode)</td>
+<td><code>gatk_genotype_gvcfs_interval</code></td>
+<td>gatk4 4.6.2.0</td>
+<td>deferred consumer, <code>gendb://</code> per-shard GenotypeGVCFs → <code>results/vcfs/intervals/L{db_interval}.vcf.gz</code></td>
+</tr>
+<tr>
+<td><code>concat_interval_vcfs</code></td>
+<td><code>concat_interval_vcfs</code> / <code>concat_interval_vcfs_long</code></td>
+<td>bcftools 1.23</td>
+<td><code>bcftools concat -D -a</code> + sort + index over the per-shard VCFs → <code>results/vcfs/raw.vcf.gz</code> (+ <code>.tbi</code> short mode, <code>.csi</code> long mode)</td>
+</tr>
+<tr>
+<td><code>bcftools_regions</code> (bcftools caller)</td>
+<td><code>bcftools_regions</code></td>
+<td>bcftools 1.23</td>
+<td>upstream <code>bcftools.smk:13</code> checkpoint: enumerates reference contigs from the runtime <code>.fai</code> into per-contig marker files + <code>regions.tsv</code>; the file list is runtime-discovered via <code>output_pattern</code></td>
+</tr>
+<tr>
+<td><code>bcftools_call</code> (bcftools caller)</td>
+<td><code>bcftools_call</code></td>
+<td>bcftools 1.23</td>
+<td>deferred consumer, one mpileup+call per region (<code>-q/-Q/-d</code> from config, <code>-r "$CONTIG"</code>, <code>--ploidy</code>, <code>-v</code>); the cohort BAM list is resolved per sample with upstream's markdup → merged → external priority (see deviations)</td>
+</tr>
+<tr>
+<td><code>bcftools_concatenate_vcfs</code> (bcftools caller)</td>
+<td><code>bcftools_concat_regions</code></td>
+<td>bcftools 1.23</td>
+<td><code>bcftools concat -D -a</code> + sort + index over the per-region VCFs → <code>results/vcfs/raw.vcf.gz</code></td>
+</tr>
+<tr>
+<td><code>deepvariant_call</code></td>
+<td><code>deepvariant_call</code> / <code>_markdup</code> / <code>_external</code></td>
+<td>google/deepvariant:1.10.0 (docker)</td>
+<td>identical <code>/opt/deepvariant/bin/run_deepvariant</code> invocation; gated on <code>variant_tool = "deepvariant"</code></td>
+</tr>
+<tr>
+<td><code>create_db_mapfile</code></td>
+<td><code>create_db_mapfile</code></td>
+<td>python (script)</td>
+<td>identical logic, ported as <code>scripts/write_joint_gvcf_mapfile.py</code></td>
+</tr>
+<tr>
+<td><code>joint_genomics_db_import</code></td>
+<td><code>joint_genomics_db_import</code></td>
+<td>gatk4</td>
+<td>identical GenomicsDBImport flow incl. <code>TILEDB_DISABLE_FILE_LOCKING</code> and <code>--merge-input-intervals</code> from <code>scripts/interval_list_tools.py</code> (merge threshold 50 = upstream <code>GENOMICSDB_MERGE_CONTIG_THRESHOLD</code>)</td>
+</tr>
+<tr>
+<td><code>joint_genotype_gvcfs</code></td>
+<td><code>joint_genotype_gvcfs</code></td>
+<td>gatk4</td>
+<td>identical (tar-extract → <code>gendb://</code> GenotypeGVCFs → <code>results/vcfs/raw.vcf.gz</code>); temp raw VCF like upstream</td>
+</tr>
+<tr>
+<td><code>glnexus_joint</code></td>
+<td><code>glnexus_joint</code></td>
+<td>glnexus, bcftools 1.23</td>
+<td>identical DeepVariant-config GLnexus join; <code>mem_gbytes</code> = <code>mem_mb_reduced/1024</code> rounded to 8, computed from the default profile (see deviations)</td>
+</tr>
+<tr>
+<td><code>variant_filtration</code></td>
+<td><code>variant_filtration</code></td>
+<td>gatk4, bcftools</td>
+<td>identical RPRS/FS_SOR/MQ/QUAL hard filters, <code>--invalidate-previous-filters true</code>, then <code>bcftools index -f -t</code></td>
+</tr>
+<tr>
+<td>long-contig (CSI) indexing — <code>_resolve_long_contig_mode</code> (common.smk) + <code>compress_interval_raw_vcf</code> (interval mode) + postprocess module <code>regions_to_index</code></td>
+<td><code>resolve_long_contig_mode</code> + <code>*_long</code> twins (<code>gatk_haplotypecaller_interval_long</code>/<code>_markdup_long</code>/<code>_external_long</code>, <code>concat_interval_gvcfs_long</code>, <code>create_db_mapfile_long</code>, <code>gatk_genomics_db_import_interval_long</code>, <code>gatk_genotype_gvcfs_interval_long</code>, <code>concat_interval_vcfs_long</code>, <code>variant_filtration_long</code>, <code>postprocess_basic_filter_long</code>, <code>postprocess_strict_filter_long</code>, <code>postprocess_subset_indels_long</code>, <code>postprocess_subset_snps_long</code>, <code>postprocess_drop_indel_snps_long</code>)</td>
+<td>bcftools 1.24, gatk4 4.6.2.0</td>
+<td>config <code>long_contig_mode</code> ("auto"/true/false) mirrors upstream <code>TBI_MAX_CONTIG_LENGTH = 2**29 - 1</code> auto-detection from the <code>.fai</code>; long mode emits <code>.csi</code> (<code>bcftools index -c</code>) and keeps GATK consumers on plain <code>.vcf</code> + <code>.idx</code>; the postprocess module follows the same twin pattern (<code>.csi</code> produced and consumed end-to-end); short mode is byte-identical to a run without the key (see deviations 3, 10, 13, 14)</td>
 </tr>
 <tr>
 <td><code>collect_fastp_stats</code></td>
@@ -829,7 +1224,7 @@ as "not ported" below.</p>
 </tr>
 <tr>
 <td><code>bam_stats</code></td>
-<td><code>bam_stats</code></td>
+<td><code>bam_stats</code> / <code>_markdup</code> / <code>_external</code></td>
 <td>samtools 1.24</td>
 <td>identical (coverage + flagstat -O tsv); outputs temp like upstream</td>
 </tr>
@@ -846,58 +1241,70 @@ as "not ported" below.</p>
 <td>identical report format; gather via <code>expand_inputs</code></td>
 </tr>
 <tr>
-<td><code>download_sra</code></td>
-<td>not ported</td>
-<td>sra-tools</td>
-<td>SRA (<code>srr</code>) inputs out of scope; port default path uses local FASTQ inputs</td>
+<td><code>mosdepth</code></td>
+<td><code>mosdepth</code> / <code>_markdup</code> / <code>_external</code></td>
+<td>mosdepth 0.3.3</td>
+<td>identical (<code>--d4 -t {threads}</code>), per BAM branch</td>
 </tr>
 <tr>
-<td><code>stage_external_bam</code></td>
-<td>not ported</td>
-<td>—</td>
-<td>BAM input type out of scope</td>
+<td><code>clam_collect</code></td>
+<td><code>clam_collect</code></td>
+<td>clam</td>
+<td>identical (<code>clam collect -o depths.zarr</code>)</td>
 </tr>
 <tr>
-<td>interval machinery (<code>picard_intervals</code>, <code>create_gvcf_intervals</code>, <code>create_db_intervals</code>, <code>gatk_haplotypecaller_interval</code>, <code>concat_interval_gvcfs*</code>, <code>concat_interval_vcfs*</code>, <code>compress_interval_raw_vcf</code>, <code>normalize_external_gvcf_for_gatk</code>, <code>archive_gatk_gvcf</code>)</td>
-<td>not ported</td>
-<td>—</td>
-<td>upstream default <code>intervals.enabled: true</code>; excluded per committee scope (interval scatter serves joint genotyping). Port default <code>intervals_enabled = false</code></td>
+<td><code>callable_coverage_thresholds</code></td>
+<td><code>callable_coverage_thresholds</code></td>
+<td>python (script)</td>
+<td>identical logic, ported verbatim as <code>scripts/callable_coverage_thresholds.py</code></td>
 </tr>
 <tr>
-<td>joint genotyping (<code>joint_genomics_db_import</code>, <code>joint_genotype_gvcfs</code>, <code>create_db_mapfile</code>, <code>gatk_genomics_db_import</code>, <code>gatk_genotype_gvcfs</code>)</td>
-<td>not ported</td>
-<td>—</td>
-<td>committee exclusion <code>joint_genotyping</code>; per-sample gVCF is the port's final call-set output</td>
+<td><code>clam_loci</code></td>
+<td><code>clam_loci</code></td>
+<td>clam</td>
+<td>identical incl. per-sample mode and <code>-m/-M</code> from the thresholds TSV</td>
 </tr>
 <tr>
-<td><code>variant_filtration</code> (hard filters)</td>
-<td>not ported</td>
-<td>gatk4, bcftools</td>
-<td>downstream of the excluded joint-genotyping raw VCF; cannot run faithfully without it</td>
+<td><code>coverage_bed</code></td>
+<td><code>coverage_bed</code></td>
+<td>python, bedtools</td>
+<td>identical logic, ported verbatim as <code>scripts/callable_zarr_to_bed.py</code></td>
 </tr>
 <tr>
-<td>callable sites (<code>mosdepth</code>, <code>clam_collect</code>, <code>callable_coverage_thresholds</code>, <code>clam_loci</code>, <code>coverage_bed</code>, <code>genmap_index</code>, <code>genmap_mappability</code>, <code>mappability_bed</code>, <code>callable_sites_bed</code>)</td>
-<td>not ported</td>
-<td>mosdepth, clam, genmap, bedtools</td>
-<td>coverage/mappability BED branch out of scope (not in the ~9-rule committee scope)</td>
+<td><code>genmap_index</code></td>
+<td><code>genmap_index</code></td>
+<td>genmap</td>
+<td>identical index-mode switching on decompressed FASTA size (skew ≥ 5 GB, sampled ≥ 2 GB)</td>
 </tr>
 <tr>
-<td><code>bcftools_call</code> / <code>deepvariant_call</code> / <code>glnexus_joint</code> / parabricks / sentieon rules</td>
-<td>not ported</td>
-<td>—</td>
-<td>non-GATK callers, selected by config only</td>
+<td><code>genmap_mappability</code></td>
+<td><code>genmap_mappability</code></td>
+<td>genmap</td>
+<td>identical (<code>-K 150 -E 2 -bg -T</code>)</td>
 </tr>
 <tr>
-<td>postprocess module rules (<code>basic_filter</code>, <code>strict_filter</code>, <code>drop_indel_SNPs</code>, <code>subset_snps</code>, <code>subset_indels</code>, <code>contig_map</code>, <code>update_bed</code>, …)</td>
-<td>not ported</td>
-<td>—</td>
-<td><code>modules.postprocess.enabled: false</code> by default upstream</td>
+<td><code>mappability_bed</code></td>
+<td><code>mappability_bed</code></td>
+<td>awk, bedtools</td>
+<td>identical score filter + <code>-d 100</code> merge</td>
 </tr>
 <tr>
-<td>qc module rules (<code>plink</code>, <code>admixture</code>, <code>subsample_snps</code>, <code>filter_individuals</code>, <code>vcftools_individuals</code>, <code>prepare_plink_inputs</code>, <code>setup_admixture</code>, <code>generate_coords_file</code>, <code>copy_qc_report</code>, <code>qc_dashboard</code>, <code>denovo</code>-style dashboard inputs)</td>
-<td>not ported</td>
-<td>—</td>
-<td><code>modules.qc.enabled: false</code> by default upstream</td>
+<td><code>callable_sites_bed</code></td>
+<td><code>callable_sites_bed</code></td>
+<td>bedtools</td>
+<td>identical sort/merge of coverage + mappability BEDs</td>
+</tr>
+<tr>
+<td>postprocess module (<code>filter_individuals</code>, <code>basic_filter</code>, <code>update_bed</code>, <code>strict_filter</code>, <code>subset_snps</code>, <code>subset_indels</code>, <code>drop_indel_SNPs</code>)</td>
+<td><code>postprocess_filter_individuals</code> … <code>postprocess_drop_indel_snps</code></td>
+<td>bcftools 1.23, awk, bedtools, tabix</td>
+<td>identical commands; <code>scripts/write_include_samples.py</code> for the sample list; AF upper bound computed as <code>1 - maf</code> (upstream <code>1-{params.maf}</code>)</td>
+</tr>
+<tr>
+<td>qc module (<code>contig_map</code>, <code>vcftools_individuals</code>, <code>subsample_snps</code>, <code>prepare_plink_inputs</code>, <code>copy_qc_report</code>, <code>plink</code>, <code>setup_admixture</code>, <code>admixture</code>, <code>generate_coords_file</code>, <code>qc_dashboard</code>)</td>
+<td><code>qc_contig_map</code> … <code>qc_dashboard</code></td>
+<td>vcftools 0.1.16, bcftools 1.23, plink2/plink, admixture, R</td>
+<td>identical commands; logic ported to <code>scripts/contig_map.py</code>, <code>vcftools_individuals.py</code>, <code>prepare_plink_inputs.py</code>, <code>contigs4admixture.py</code>, <code>generate_coords.py</code>, <code>qc_dashboard_render.R</code>. <code>generate_coords_file</code> reads the optional <code>sample_metadata</code> CSV (lat/long) into <code>results/qc/coords.txt</code>, consumed by the dashboard's terrain-map panel when <code>qc_google_api_key</code> is set; without metadata it writes the empty placeholder (upstream's own else branch) so the panel just prints its placeholder text</td>
 </tr>
 <tr>
 <td><code>setup</code> / <code>download_reads</code> / <code>map_samples</code> / <code>call_variants</code> / <code>qc_report</code> / <code>callable_sites</code> / <code>gvcfs</code> (Snakefile aggregation targets)</td>
@@ -907,11 +1314,98 @@ as "not ported" below.</p>
 </tr>
 </tbody>
 </table>
+<h3 id="remaining-exclusions">Remaining exclusions</h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Why excluded</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>parabricks (all <code>parabricks_*</code> rules)</td>
+<td>requires <code>--nv</code> GPU passthrough (upstream <code>parabricks.smk</code> runs <code>--nv</code> images with <code>nvidia-docker</code>); the oxo-flow docker backend has no <code>--nv</code> support and no GPU device declaration; additionally NVIDIA EULA/license enforcement cannot be guaranteed in CI</td>
+<td><code>variant_calling/parabricks.smk</code> (every rule is <code>--nv</code>)</td>
+</tr>
+<tr>
+<td>sentieon (all <code>sentieon_*</code> rules)</td>
+<td>proprietary tool gated on a <code>SENTIEON_LICENSE</code> server and a pre-installed license; cannot be distributed or verified in a community port</td>
+<td><code>config/config.yaml</code> <code>sentieon</code> section; <code>workflow/rules/sentieon.smk</code></td>
+</tr>
+<tr>
+<td><code>denovo</code> and <code>structural_variants</code> pipeline sections</td>
+<td>do not exist as rules in upstream v2.2</td>
+<td>grep of <code>workflow/</code> at e0e7a94 finds neither rule set</td>
+</tr>
+<tr>
+<td>multi-library / multi-unit rows (library_id, input_unit)</td>
+<td>the sample-group model has one unit per sample; consumers of <code>results/bams/raw/{sample}/{sample}/u1.bam</code> are hard-coded to the <code>u1</code> unit</td>
+<td>sample sheet semantics in upstream <code>README</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="documented-deviations-from-upstream">Documented deviations from upstream</h3>
+<ol>
+<li><strong>Default config differs from upstream</strong>: upstream defaults <code>mark_duplicates: true</code>, <code>joint_genotyping: true</code>, <code>generate_filtered_vcf: true</code>, <code>callable_sites.enabled: true</code>; the port defaults all of these to <code>false</code> so its default plan is byte-identical to the previous 12-rule port. Flip the keys to get upstream's full pipeline.</li>
+<li><strong>postprocess/qc modules consume <code>results/vcfs/raw.vcf.gz</code></strong>, not upstream's <code>FINAL_VCF</code> (which is the hard-filtered VCF when <code>generate_filtered_vcf: true</code> and GATK is used). The modules were run on the raw joint VCF. The difference only matters when combining GATK + <code>generate_filtered_vcf</code> + a module, and reproduces upstream behavior for the DeepVariant path.</li>
+<li><strong>Postprocess module long-contig CSI mode</strong>: upstream conditionally uses CSI indexes when contigs exceed 512 Mb (<code>regions_to_index</code>); the port's postprocess rules follow the calling side's <code>*_long</code> twin pattern — <code>postprocess_basic_filter_long</code>/<code>postprocess_strict_filter_long</code>/<code>postprocess_subset_indels_long</code>/<code>postprocess_subset_snps_long</code>/<code>postprocess_drop_indel_snps_long</code> emit <code>.csi</code> (<code>bcftools index -c</code>; <code>tabix -C</code> for the SNP-positions file) and consume the <code>.csi</code>-indexed upstream VCFs of the chain when <code>long_contig_mode</code> selects long mode. Short mode is unchanged (<code>.tbi</code> everywhere, byte-identical plans).</li>
+<li><strong><code>glnexus_joint</code> memory</strong>: upstream computes <code>mem_gbytes</code> from the default profile's <code>mem_mb_reduced</code>; the port inlines the resulting value 8 (with the same <code>if &lt; 1 then 1</code> clamp).</li>
+<li><strong>QC-metrics and callable-sites branches with non-fastq input types</strong>: <code>combine_qc_metrics</code> and the callable-sites <code>expand_inputs</code> reference <code>results/fastp/{sample}/{sample}/u1.json</code> / <code>results/callable_sites/depths/{sample}.*</code> for every sample, which only exist for fastq/srr (fastp stats) or BAM-bearing samples (depths). For bam/gvcf cohorts the expands fail at plan time. Use fastq/srr groups when combining QC metrics or computing callable sites.</li>
+<li><strong><code>fasterq-dump --tmpdir</code> dropped</strong> (no per-rule tmpdir in oxo-flow); SRA downloads use the current directory.</li>
+<li><strong>gvcf inputs are accepted on any caller</strong>: upstream hard-fails gvcf inputs with non-GATK callers (bcftools/deepvariant/parabricks); the port normalizes them regardless, so the DeepVariant GLnexus path also accepts them. Normalized gVCFs are valid GLnexus input, so this is a relaxation, not a behavior change.</li>
+<li><strong><code>coords.txt</code> is always produced in qc mode</strong>: upstream only creates it when the metadata CSV actually has lat/long rows; the port writes the same file empty otherwise (upstream's own placeholder branch), so the dashboard's map panel shows its placeholder text instead of being absent.</li>
+<li><strong>Interval scatter runs one <code>SplitIntervals</code> per sample</strong> (gVCF mode): upstream's <code>create_gvcf_intervals</code> checkpoint runs once for the whole cohort and downstream per-interval rules address the shared <code>results/intervals/{sample}/...</code> per-sample subdirectory; the engine's <code>output_pattern</code> gives each producer instance its own scan domain, so the port runs the split per sample (identical inputs → identical interval lists) and the per-interval HaplotypeCallers read <code>results/intervals/gvcf/{sample}/{interval}-scattered.interval_list</code>. Functionally equivalent, N × the split work (N = samples); the per-sample scans are independent, so a scatter of 50 × 20 samples costs 20 short GATK calls instead of 1.</li>
+<li><strong>No standalone <code>compress_interval_raw_vcf</code> step</strong>: upstream re-compresses the per-shard raw VCFs before concatenation; the port's <code>concat_interval_vcfs</code> consumes the per-shard VCFs directly (<code>bcftools concat -D -a</code> is format-agnostic) and <code>bcftools sort</code> normalizes coordinate order. The long-contig (CSI) side of that step IS ported (<code>concat_interval_vcfs_long</code> emits <code>raw.vcf.gz</code> + <code>.csi</code>; <code>archive_gatk_gvcf</code> is folded into <code>concat_interval_gvcfs_long</code>, which writes the GATK-consumable plain <code>.vcf</code> + <code>.idx</code> that upstream stages in <code>results/gvcfs/work/</code> and never emits a separate durable gz+csi archive — nothing consumes one in the port's interval chain).</li>
+<li><strong><code>bcftools_call</code> resolves the per-sample final BAM in the shell</strong> (upstream's <code>get_final_bam</code> markdup → merged → external priority) from <code>{config.samples_list}</code>, instead of a static input per branch; the declared <code>results/bams/{merged,markdup,input}/*.bam</code> glob inputs still order the calls behind every BAM-producing branch via DAG edges. A sample with no final BAM (e.g. gvcf-only cohorts) contributes nothing and the call proceeds with the remaining samples; an empty BAM list exits 0 with a log note (upstream's shell has the same degenerate-cohort behavior).</li>
+<li><strong>The interval and bcftools branches need an engine with <code>output_pattern</code></strong> (oxo-flow ≥ 0.17). On older engines the key is ignored and the fresh wildcards (<code>{interval}</code>, <code>{db_interval}</code>, <code>{region}</code>) stay unbound, so <code>validate</code>/<code>lint</code>/<code>dry-run</code> still pass (when-gates keep both branches off by default) but those branches must not be enabled there.</li>
+<li><strong>Long-contig mode gates on a side-effect flag file</strong>: <code>resolve_long_contig_mode</code> writes a fixed-path flag (<code>results/reference/.long_contig.flag</code>) and every <code>*_long</code> rule is gated on it (<code>depends_on = ["resolve_long_contig_mode"]</code>); the short rules carry the negated gate. Engine gotcha: a <code>when</code> containing <code>wildcard.</code> is evaluated at PLAN time for DAG morphing, when the flag does not exist yet — a plan-level long rule would be dropped from the plan entirely. Plan-level long rules therefore avoid <code>wildcard.</code> in <code>when</code>: <code>concat_interval_gvcfs_long</code> gates on <code>{meta.input_type} != 'gvcf'</code> (baked per instance at expansion time, no <code>wildcard.</code> reference), so its <code>file_exists(...)</code> gate is evaluated at execution time. Rules instantiated at run time via <code>output_pattern</code> (per-interval HC long, db import long, genotype long) are unaffected. The <code>when</code> evaluator does not expand <code>{config.x}</code> inside <code>file_exists()</code>, hence the fixed flag path. Changing the reference or <code>long_contig_mode</code> between runs requires a fresh run directory (standard checkpoint semantics).</li>
+<li><strong>GATK cannot read <code>.csi</code>-indexed VCFs</strong> (verified with GATK 4.6.2.0: VariantFiltration and GenomicsDBImport reject <code>.csi</code>, accepting <code>.tbi</code>/<code>.idx</code>; GATK also silently writes no index for <code>-O x.vcf.gz</code> on long contigs). Upstream's long-mode <code>variant_filtration</code> feeds <code>raw.vcf.gz</code> + <code>.csi</code> to GATK and fails; the port's <code>variant_filtration_long</code> converts to plain <code>.vcf</code> in-shell (<code>bcftools view -O v</code>), filters, and re-indexes with <code>bcftools index -f -c</code>. GenomicsDBImport reads the plain work gVCFs via GATK <code>.idx</code> (created by <code>gatk IndexFeatureFile</code> in <code>concat_interval_gvcfs_long</code>); GATK reads plain <code>.vcf</code> without any index for streaming tools, but db import strictly requires <code>.idx</code>. Memory: the port mirrors upstream's default GATK heap (<code>-Xmx7000m</code> = upstream profile <code>mem_mb_reduced: attempt * 7000</code>). A fully homozygous-reference interval over a contig at the CSI limit can exhaust this heap at gVCF finalization (GATK materializes the whole hom-ref block's depth array for <code>getMedianDP</code>; a 600 Mb hom-ref block peaks around 7.2 GB and dies with <code>OutOfMemoryError</code> at the default heap — verified live, upstream-inherited since upstream assigns whole contigs to intervals too, <code>BALANCING_WITHOUT_INTERVAL_SUBDIVISION</code>). Raise <code>-Xmx</code> in the two interval HaplotypeCaller rules (short and long) for such references. The postprocess module is bcftools-only, so its long mode needs no GATK workaround: the <code>*_long</code> twins produce and consume <code>.csi</code> directly. Two long-chain fixes on top of PR #17: <code>concat_interval_gvcfs_long</code> and <code>concat_interval_vcfs_long</code> stage bgzip-compressed, indexed copies of the plain per-interval gVCFs / per-shard VCFs in <code>results/{gvcfs,vcfs}/work/</code> before concatenating — <code>bcftools concat</code> cannot read the plain <code>.g.vcf</code>/<code>.vcf</code> files the long HaplotypeCaller and GenotypeGVCFs emit (GATK <code>.idx</code> convention). One long-chain fix on top of PR #17: <code>concat_interval_gvcfs_long</code> stages bgzip-compressed, indexed copies of the plain per-interval gVCFs in <code>results/gvcfs/work/</code> before concatenating — <code>bcftools concat</code> cannot read the plain <code>.g.vcf</code> files the long HaplotypeCaller emits.</li>
+</ol>
 <p>Version pinning: upstream envs declare only <code>&gt;=</code> ranges with no lockfile;
-exact pins (fastp 1.3.6, samtools 1.24, bwa 0.7.19, gatk4 4.6.2.0, picard
-3.5.0, bcftools 1.24) were resolved from bioconda/conda-forge at port time
-(2026-08-15). Upstream default-profile thread overrides (fastp 6, bwa_mem
-16) are runtime knobs; the port keeps the rules' own declarations (4 and 8).</p>
+exact pins (fastp 1.3.6, samtools 1.24, bwa 0.7.19, gatk4 4.6.2.0, bcftools
+1.23, sra-tools 3.2.1, mosdepth 0.3.3, vcftools 0.1.16, plink2) were resolved
+from bioconda/conda-forge at port time (2026-08-15). Upstream default-profile
+thread overrides (fastp 6, bwa_mem 16) are runtime knobs; the port keeps the
+rules' own declarations (4 and 8).</p>
+<h2 id="live-verification">Live verification</h2>
+<ul>
+<li><code>normalize_external_gvcf_for_gatk</code> + <code>joint_genomics_db_import</code> +
+  <code>joint_genotype_gvcfs</code> + <code>generate_coords_file</code>: live-verified on
+  bioinfo-wsx 2026-08-28 (external gVCF cohort, 0 failed; the run also
+  fixed two gvcf-cohort bugs — <code>parse_bam_stats</code> and
+  <code>combine_qc_metrics.py</code> now skip gvcf samples, PR #13).</li>
+<li>bcftools caller branch (<code>bcftools_regions</code> → <code>bcftools_call</code> →
+  <code>bcftools_concat_regions</code>): live-verified 2026-08-28 on macOS (engine
+  0.16.0 + output_pattern from engine-235, conda). The runtime <code>.fai</code>
+  scan instantiated one deferred <code>bcftools_call</code> per contig (1-contig
+  fixture → exactly one region) and produced real variants in
+  <code>results/vcfs/regions/L000000.vcf.gz</code> (GT:PL:AD for all samples,
+  AC/AN=6); 30 succeeded / 0 failed / 34 skipped.</li>
+<li>interval-scatter branch (<code>picard_intervals</code> → <code>create_gvcf_intervals</code> /
+  <code>create_db_intervals</code> → per-interval HaplotypeCallers / per-shard
+  GenomicsDBImport + GenotypeGVCFs → <code>concat_interval_gvcfs</code> /
+  <code>concat_interval_vcfs</code>): live-verified 2026-08-28 on macOS (same
+  engine). The SplitIntervals scans instantiated per-interval
+  HaplotypeCallers per sample (1-contig fixture → 1 interval) and 22 db
+  shards (DB_SCATTER = 0.15 × 3 samples × 50), each shard run through
+  GenomicsDBImport + GenotypeGVCFs and concatenated to
+  <code>results/vcfs/raw.vcf.gz</code> (30 real variants, all 3 samples); 85
+  succeeded / 0 failed / 37 skipped, 117 outputs verified.</li>
+<li>The qc module's plink steps need <strong>≥ 2 samples</strong> (a 1-sample cohort
+  prunes to an empty VCF and <code>qc_plink</code> fails with "No samples in .vcf
+  file" — upstream behaves the same on a single-sample cohort).</li>
+</ul>
+<h2 id="test">Test</h2>
+<p>Run the acceptance suite (validate + lint + dry-run) against the committed
+fixture data:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>bash<span class="w"> </span>test/run.sh
+</code></pre></div>
+<h2 id="license">License</h2>
+<p>Apache-2.0. Copyright (c) 2026 oxo-flow-community. Upstream attribution in
+<code>NOTICE.md</code>. The upstream snpArcher project is MIT-licensed; its
+license text is included verbatim at <code>LICENSE.upstream</code>.</p>
 <h2 id="links">Links</h2>
 <ul>
 <li>Repository: <a href="https://github.com/oxo-flow-community/oxo-flow-snparcher">oxo-flow-snparcher</a></li>
@@ -954,7 +1448,7 @@ exact pins (fastp 1.3.6, samtools 1.24, bwa 0.7.19, gatk4 4.6.2.0, picard
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      © 2026 oxo-flow-community · Apache-2.0 · Ports are based on their upstream workflows — see each repository's NOTICE.
+      © 2026 <a href="https://github.com/oxo-flow-community">oxo-flow-community</a> · Apache-2.0 · engine <a href="https://github.com/Traitome/oxo-flow">oxo-flow</a> · <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues">issues</a> · evidence: ✔ live-tested ⊃ ★ verified ⊃ ☆ community · ports are based on their upstream workflows — see each repository's NOTICE
     </div>
   
   

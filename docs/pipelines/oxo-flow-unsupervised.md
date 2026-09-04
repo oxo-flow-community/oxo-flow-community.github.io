@@ -1,21 +1,33 @@
+<div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-unsupervised</span></div>
+<div class="ox-detail-cols" markdown="1">
+<div markdown="1">
+
 # Unsupervised analysis of omics matrices: PCA, UMAP, clustering and validation
 
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
 
 Unsupervised analysis of omics matrices: PCA, UMAP and densMAP embeddings (2D/3D), distance matrices, hierarchical clustering heatmaps, Leiden clustering across partition types and resolutions, clustree analysis, external and internal cluster validation with TOPSIS ranking, static and interactive visualizations, per-feature dimred scatter plots (when-gated), and resolved-environment snapshots. A verified port of the default-parameter path of epigen/unsupervised_analysis v4.0.2 (Snakemake); all 61 rules and tool versions are pinned to the upstream release.
 
-| | |
-|---:|---|
-| **Rating** | ✔ Live-tested |
-| **Origin** | port |
-| **Domain** | other |
-| **Rules** | 61 |
-| **Compute** | up to 2 CPUs / 32 GB per rule |
-| **Tools** | igraph · leidenalg · scikit-learn · python · pandas · scipy · numpy · pynndescent · numba · dask · scikit-image · umap-learn · matplotlib-base · bokeh · datashader · holoviews · colorcet · r-ggplot2 · r-patchwork · r-ggally · r-ggrepel · r-reshape2 · r-stringi · r-data.table · plotly · plotly_express · seaborn-base · bioconductor-complexheatmap · r-rcolorbrewer · r-fastcluster · r-magick · r-clustree · r-clustercrit · pymcdm |
-| **Ported** | 2026-08-15 |
-| **License** | Apache-2.0 |
-| **Source** | [epigen/unsupervised_analysis](https://github.com/epigen/unsupervised_analysis) |
-| **Pinned version** | `v4.0.2` |
+</div>
+<div>
+
+<div class="ox-glance">
+<div class="ox-glance-title">At a glance</div>
+<div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested · default-path</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">61</span></div>
+<div class="ox-kv"><span class="k">Compute</span><span class="v">up to 2 CPUs / 32 GB per rule</span></div>
+<div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Domain</span><span class="v">other</span></div>
+<div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/epigen/unsupervised_analysis">epigen/unsupervised_analysis</a></span></div>
+<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>v4.0.2</code></span></div>
+<div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
+<div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
+<p class="cmd">$ oxo-flow run main.oxoflow</p>
+</div>
+
+</div>
+</div>
 
 ## Run it
 
