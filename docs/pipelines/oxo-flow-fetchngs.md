@@ -27,7 +27,7 @@ Downloads public data by SRA/ENA accessions (network required) — configure you
 
 ## Installation
 
-**Engine.** oxo-flow >= 0.12.0
+**Engine.** oxo-flow >= 0.17.0
 
 **Toolchain.** containers (Docker) — pinned images (quay.io/biocontainers, identical to upstream)
 
@@ -104,13 +104,9 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- softwareVersionsToYAML + versions.yml — nf-core boilerplate: a faithful versions.yml port needs every rule to emit a per-process versions.yml (would change every rule command; the default plan is byte-identical) and the collected file has no consumer in fetchngs itself. PIPELINE_COMPLETION is ported, not excluded: the nf-core workflow.onComplete emails/summary/webhook are replaced by the [workflow] on_complete/on_error terminal hooks (config email/email_on_fail/hook_url, scripts/pipeline_completion.sh — sendmail/mail + curl POST, best-effort). The hooks require engine >= 0.17.0 to fire; on older engines the [workflow] keys are ignored and the hooks no-op
+- none
 
 ## Fidelity
-
-Default-parameters main execution path (`--download_method ftp`,
-`--skip_fastq_download false`). Rows cover every upstream process/subworkflow
-that the default path touches.
 
 | Upstream process/rule | oxo-flow rule | Tool (version) | Notes |
 |---|---|---|---|
@@ -122,7 +118,7 @@ that the default path touches.
 | `collectFile('samplesheet.csv')` | `combine_samplesheets` | system (bash + coreutils) | Gather via `expand_inputs` over `config.samples_list`; header kept once, sorted by basename (upstream `keepHeader: true, sort: { it.baseName }`); `results/samplesheet/samplesheet.csv`. |
 | `collectFile('id_mappings.csv')` | `combine_mappings` | system (bash + coreutils) | Same gather semantics; `results/samplesheet/id_mappings.csv`. |
 | MULTIQC_MAPPINGS_CONFIG | `multiqc_mappings_config` | python 3.9.5 | `multiqc_mappings_config.py` verbatim; output `results/samplesheet/multiqc_config.yml` (upstream publishDir). Gated on `sample_mapping_fields` being set — on by default, same as upstream. |
-| softwareVersionsToYAML + `versions.yml` | not ported | — | nf-core boilerplate: every upstream process emits a per-process `versions.yml`, and the SRA workflow collects them into `pipeline_info/nf_core_fetchngs_software_mqc_versions.yml`. A faithful port would require every rule to emit a `versions.yml`, which would change every rule's command (the default plan is byte-identical) — and the collected file has no consumer in fetchngs itself (no MultiQC process; the mappings config targets downstream pipelines). Structural exclusion. |
+| softwareVersionsToYAML + `versions.yml` | engine-native export: `oxo-flow report --versions-yml <file> main.oxoflow` | — | oxo-flow ≥ 0.17.0 exports an nf-core-style `versions.yml` derived statically from the workflow declarations: one entry per rule (16 rules) with the pinned container image (registry + tag), or a `system` entry with an explicit "no software versions declared" note for the host-tool gather rules. Deviation: it is a standalone CI-diff artifact, not a per-process runtime capture — upstream records each tool's runtime version at execution time and collects the per-process files into `pipeline_info/nf_core_fetchngs_software_mqc_versions.yml`; the export reflects the pinned versions in the definition (resolved runtime package versions depend on the execution environment). Per-rule `versions.yml` emission inside every command is deliberately not replicated (it would change every rule's command while the default plan stays byte-identical). The collected file has no consumer in fetchngs itself (no MultiQC process; the mappings config targets downstream pipelines) — upstream ships it as boilerplate, here the export serves the same CI-diff purpose. |
 | PIPELINE_COMPLETION (`workflow.onComplete`: completionEmail / completionSummary / imNotification / sraCurateSamplesheetWarn) | `[workflow] on_complete` + `on_error` hooks (`scripts/pipeline_completion.sh`) | sendmail / mail / curl (host tools) | Ported onto the engine's workflow-level terminal hooks (engine >= 0.17.0): `email` mails the run-summary on completion, `email_on_fail` after a failed run (falling back to `email`, like upstream), `hook_url` POSTs a JSON notification with the run counters on both (upstream `imNotification` posts an Adaptive-Card/Slack JSON; here the payload is a `{"text": ...}` summary). All three default empty (upstream's null params), so the hooks no-op; older engines ignore the `[workflow]` keys entirely, keeping the default plan unchanged. `completionSummary`'s stdout line is covered by the engine's own "Done: N succeeded..." line, and `sraCurateSamplesheetWarn` is a static log note (see Known limitations). Hooks are best-effort: a missing mail tool or failing webhook only warns and never changes the run status. |
 | CUSTOM_SRATOOLSNCBISETTINGS + SRATOOLS_PREFETCH | `sra_prefetch` | sra-tools 3.0.8 (`quay.io/biocontainers/sra-tools:3.0.8--h9f5acd7_0`) | When-gated branch, off by default (`download_method = "sratools"` + `dbgap_key` empty): per-run `prefetch` under the upstream `retry_with_backoff` policy (5 attempts / 1 s base / 100 s max, `scripts/retry_with_backoff.sh` verbatim) + `vdb-validate` incl. the `.sralite` variant; fresh NCBI settings file per id (upstream CUSTOM_SRATOOLSNCBISETTINGS GUID config). SRA records land in `results/sra/<id>/` (upstream publishDir `results/sra`, `enabled: false` — intermediates). Applies to **all** runs, matching upstream's explicit `--download_method sratools` mode; with `dbgap_key` set, the dbGaP variant below takes over. |
 | SRATOOLS_FASTERQDUMP | `sra_fastq_sratools` | sra-tools 2.11.0 + pigz 2.6 (`quay.io/biocontainers/mulled-v2-5f89fe0cd045cb1d615630b9261a1d17943a9b6a:6a9ff0e76ec016c3d0d27e0c0d362339f2d787e6-0`, fetchngs' patched image) | When-gated on `download_method = "sratools"` (+ `dbgap_key` empty); depends on `sra_prefetch`. `fasterq-dump --split-files --include-technical --threads` + `pigz --no-name --processes` translated from the fetchngs module (env pinned to upstream environment.yml: sra-tools 2.11.0 + pigz 2.6); files land in `results/fastq/` with the same names as the FTP branch so the samplesheet is method-agnostic. |
@@ -153,8 +149,8 @@ before downstream use (the upstream `sraCurateSamplesheetWarn` end-of-run
 note): public databases don't reliably hold information such as strandedness
 or controls, and all sample metadata from the ENA is appended as additional
 columns to help manual curation. The nf-core boilerplate (`versions.yml`
-collection) is not ported (see table).
-
+collection) is covered by the engine-native export
+(`oxo-flow report --versions-yml <file> main.oxoflow`, see table).
 
 ## Links
 
