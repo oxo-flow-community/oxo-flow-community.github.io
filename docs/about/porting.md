@@ -728,7 +728,7 @@ file, `oxo-flow`.
 
 ## 9. README.md template (~80 lines, exact skeleton)
 
-```markdown
+````markdown
 # <repo-name> — <catalog-style title>
 
 [![CI](https://github.com/oxo-flow-community/<repo>/actions/workflows/ci.yml/badge.svg)](https://github.com/oxo-flow-community/<repo>/actions/workflows/ci.yml)
@@ -811,7 +811,7 @@ Apache-2.0. Copyright (c) 2026 oxo-flow-community.
 ## Community
 
 https://oxo-flow-community.github.io/
-```
+````
 
 ---
 
