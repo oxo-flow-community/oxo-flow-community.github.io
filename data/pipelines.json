@@ -160,7 +160,6 @@
       "umitools_prepareforrsem"
     ],
     "excluded": [
-      "per-sample min_trimmed_reads filtering — data-dependent per-sample state (n of trimmed reads); only the MultiQC fail_trimmed table is produced",
       "PREPARE_GENOME `.tar.gz` reference bundles — bbsplit / sortmerna index archives; the GTF preprocessing chain itself (CUSTOM_GTFFILTER with the upstream filter_gtf_needed gate, gffread GFF->GTF, additional_fasta transgenes with biotype featurecounts_group_type / gene_type, GENCODE preprocessing, .gz references) is ported as gated prepare_genome::* builder rules with canonical results/reference/ artifacts",
       "workflow_summary_mqc.yaml / methods_description_mqc.yaml — Nextflow-param-rendered MultiQC sections"
     ],
