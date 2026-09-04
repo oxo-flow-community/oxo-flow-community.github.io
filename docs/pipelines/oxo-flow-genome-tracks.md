@@ -70,24 +70,162 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-genome-tracks
 
 ## Parameters
 
-| Parameter | Default | Description | Used by |
-|---:|---|---|---|
-| `bamCoverage_parameters` | `-p max --binSize 10  --normalizeUsing RPGC --effectiveGenomeSize 2407883318` | — | `coverage` |
-| `bam_dir` | `test/fixtures/bams` | — | `merge_bams` |
-| `base_buffer` | `2000` | — | `annotate_genes` |
-| `email` | `sreichl@cemm.at` | — | `ucsc_hub` |
-| `file_type` | `pdf` | — | `plot_tracks` |
-| `gene_list` | `test/fixtures/genes.csv` | — | `annotate_genes`, `gene_list_export`, `plot_tracks` |
-| `genome` | `mm10` | — | `ucsc_hub` |
-| `genome_bed` | `test/fixtures/genome_bed/ref.bed.gz` | — | `annotate_genes`, `plot_tracks` |
-| `project_name` | `myData` | upstream config/config.yaml defaults, adapted paths | `annot_export`, `config_export`, `ucsc_hub` |
-| `result_path` | `results` | — | `annot_export`, `annotate_genes`, `config_export`, `coverage`, `gene_list_export`, `merge_bams`, `plot_tracks`, `ucsc_hub` |
-| `sample_annotation` | `test/fixtures/annotation.csv` | — | `annot_export` |
-| `track_colors` | `untreated=#800080,treated=#00FFFF` | — | `plot_tracks`, `ucsc_hub` |
-| `width` | `20` | — | `plot_tracks` |
-| `x_axis` | `bottom` | — | `plot_tracks` |
-
-{: .ox-params }
+<div class="ox-params">
+<div class="ox-param">
+<div class="ox-param-head"><code>bamCoverage_parameters</code><span class="ox-param-default">-p max --binSize 10  --normalizeUsing RPGC --effectiveGenomeSize 2407883318</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>coverage</code> <code>coverage_sc</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>bam_dir</code><span class="ox-param-default">test/fixtures/bams</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>merge_bams</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>base_buffer</code><span class="ox-param-default">2000</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>annotate_genes</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>email</code><span class="ox-param-default">sreichl@cemm.at</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>ucsc_hub</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>env_export_enabled</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">export the built conda environments as results/genome_tracks/envs/*.yaml (upstream &#x27;env_export&#x27; runs in rule all; the port keeps it opt-in so the default graph is unchanged — the checked-in envs/*.yaml already document the pinned versions; see README &quot;Fidelity&quot;)</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>env_export_igv_reports</code> <code>env_export_pygenometracks</code> <code>env_export_sinto</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>file_type</code><span class="ox-param-default">pdf</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>plot_tracks</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>gene_list</code><span class="ox-param-default">test/fixtures/genes.csv</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>annotate_genes</code> <code>gene_list_export</code> <code>plot_tracks</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>genome</code><span class="ox-param-default">mm10</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>igv_report</code> <code>ucsc_hub</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>genome_bed</code><span class="ox-param-default">test/fixtures/genome_bed/ref.bed.gz</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>annotate_genes</code> <code>plot_tracks</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>igv_report_enabled</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">IGV report (igv-reports), deactivated upstream (commented out of rule all) — opt-in: set igv_report_enabled = true, then <code>-t igv_report</code>.</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>igv_report</code> <code>make_bed</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>igv_report_memory</code><span class="ox-param-default">8000M</span></div>
+<p class="ox-param-desc">upstream&#x27;s dynamic <code>max(2 * input.size_mb, 8000)</code> memory is not expressible statically in oxo-flow — fixed at the upstream 8000 MB minimum</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>plot_enabled</code><span class="ox-param-default">true</span></div>
+<p class="ox-param-desc">pair-level gtracks plots: needs gene-named bigWigs (upstream&#x27;s data layout); set false for the generic-named mini fixtures.</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>plot_tracks</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>project_name</code><span class="ox-param-default">myData</span></div>
+<p class="ox-param-desc">upstream config/config.yaml defaults, adapted paths</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>annot_export</code> <code>config_export</code> <code>ucsc_hub</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>result_path</code><span class="ox-param-default">results</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 16 rules</summary>
+<div class="ox-param-rules"><code>annot_export</code> <code>annotate_genes</code> <code>config_export</code> <code>coverage</code> <code>coverage_sc</code> <code>env_export_igv_reports</code> <code>env_export_pygenometracks</code> <code>env_export_sinto</code> <code>gene_list_export</code> <code>igv_report</code> <code>make_bed</code> <code>merge_bams</code> <code>merge_sc_bams</code> <code>plot_tracks</code> <code>split_sc_bam</code> <code>ucsc_hub</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>sample_annotation</code><span class="ox-param-default">test/fixtures/annotation.csv</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>annot_export</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>sc_bam_dir</code><span class="ox-param-default">test/fixtures/sc_bams</span></div>
+<p class="ox-param-desc">one aligned BAM per sc sample: {sc_bam_dir}/{sc_id}.bam (BAMs need a CB cell-barcode tag per read, see test/fixtures/make_sc_fixtures.py)</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>split_sc_bam</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>sc_enabled</code><span class="ox-param-default">true</span></div>
+<p class="ox-param-desc">Single-cell mode (upstream: any annotation &#x27;group&#x27; value ending in .tsv switches that sample to sinto barcode splitting). oxo-flow cannot discover groups from TSV contents at load time, so the sc samples, their BAM/metadata paths and the sc groups are declared explicitly. Set sc_enabled = false if you have no single-cell samples.</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>coverage_sc</code> <code>merge_sc_bams</code> <code>split_sc_bam</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>sc_groups</code><span class="ox-param-default">g1,g2</span></div>
+<p class="ox-param-desc">unique group values of the sc metadata TSV col-2 (merged + sorted into samples_list above)</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>sc_metadata</code><span class="ox-param-default">test/fixtures/sc_metadata</span></div>
+<p class="ox-param-desc">one 2-column barcode TSV (barcode&lt;TAB&gt;group, no header) per sc sample: {sc_metadata}/{sc_id}.tsv — the group values of col 2 become the sc groups</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>split_sc_bam</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>track_colors</code><span class="ox-param-default">untreated=#800080,treated=#00FFFF</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>plot_tracks</code> <code>ucsc_hub</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>width</code><span class="ox-param-default">20</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>plot_tracks</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>x_axis</code><span class="ox-param-default">bottom</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>plot_tracks</code></div>
+</details>
+</div>
+</div>
 
 Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
 
@@ -97,9 +235,11 @@ Descriptions are the workflow's own `#` comments from its `[config]` section, su
 
 ![oxo-flow-genome-tracks rule-level DAG](../assets/dag/oxo-flow-genome-tracks.svg)
 
+<p class="ox-dag-caption">figure · oxo-flow-genome-tracks — rule-level transit map (nf-metro)</p>
+
 </div>
 
-The graph is derived at catalog-build time from `oxo-flow graph -f dot` and rendered with Graphviz. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
+The graph is derived at catalog-build time from `oxo-flow graph -f metro` and rendered with [nf-metro](https://github.com/seqeralabs/nf-metro) — rules are grouped into colored transit lines by analysis stage. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

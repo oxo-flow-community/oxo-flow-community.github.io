@@ -67,18 +67,99 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-fetchngs
 
 ## Parameters
 
-| Parameter | Default | Description | Used by |
-|---:|---|---|---|
-| `download_method` | `ftp` | — | `sra_fastq_ftp` |
-| `ena_metadata_fields` | `` | Comma-separated ENA metadata fields; empty = upstream default field list. | `sra_ids_to_runinfo` |
-| `input` | `test/fixtures/ids.txt` | File containing SRA/ENA/GEO/DDBJ identifiers, one per line (upstream --input). Keep in sync with the [[sample_groups]] list below: check_ids validates this file, the sample source drives the per-id expansion. Add extra ids on the CLI with `oxo-flow run main.oxoflow --sample <ID>`. | `check_ids` |
-| `nf_core_pipeline` | `` | nf-core pipeline to tailor the samplesheet for (rnaseq/atacseq/taxprofiler); empty = none. | `sra_to_samplesheet` |
-| `nf_core_rnaseq_strandedness` | `auto` | — | `sra_to_samplesheet` |
-| `out_dir` | `results` | — | `check_ids`, `combine_mappings`, `combine_samplesheets`, `multiqc_mappings_config`, `sra_fastq_ftp`, `sra_ids_to_runinfo`, `sra_runinfo_to_ftp`, `sra_to_samplesheet` |
-| `sample_mapping_fields` | `experiment_accession,run_accession,sample_accession,experiment_alias,run_alias,sample_alias,experiment_title,sample_title,sample_description` | — | `multiqc_mappings_config`, `sra_to_samplesheet` |
-| `skip_fastq_download` | `false` | — | `combine_mappings`, `combine_samplesheets`, `sra_fastq_ftp`, `sra_to_samplesheet` |
-
-{: .ox-params }
+<div class="ox-params">
+<div class="ox-param">
+<div class="ox-param-head"><code>dbgap_key</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">dbGaP authorized-access certificate for the sratools branch (upstream --dbgap_key): path to a .ngc or .jwt file. Empty = public data only — the public sratools branch works without it; when set, the certificate is passed through verbatim (prefetch/fasterq-dump --ngc or --perm).</p>
+<details class="ox-param-usedby"><summary>used by 4 rules</summary>
+<div class="ox-param-rules"><code>sra_fastq_sratools</code> <code>sra_fastq_sratools_dbgap</code> <code>sra_prefetch</code> <code>sra_prefetch_dbgap</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>download_method</code><span class="ox-param-default">ftp</span></div>
+<p class="ox-param-desc">Download method, one of &#x27;ftp&#x27; (upstream default), &#x27;sratools&#x27; or &#x27;aspera&#x27;. Each method gates its own branch of download rules; the default &#x27;ftp&#x27; plan is unchanged when the other branches are off.</p>
+<details class="ox-param-usedby"><summary>used by 9 rules</summary>
+<div class="ox-param-rules"><code>sra_fastq_aspera</code> <code>sra_fastq_ftp</code> <code>sra_fastq_ftp_aspera_fallback</code> <code>sra_fastq_sratools</code> <code>sra_fastq_sratools_dbgap</code> <code>sra_fastq_sratools_fallback</code> <code>sra_prefetch</code> <code>sra_prefetch_dbgap</code> <code>sra_prefetch_fallback</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>email</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">Completion notifications (upstream PIPELINE_COMPLETION, --email / --email_on_fail / --hook_url; upstream defaults are null, here &quot;&quot;): - email          address the completion summary is mailed to (sendmail/mail on the host) after a run without failed rules - email_on_fail  address mailed after a failed run; falls back to <code>email</code> when empty (nf-core sends the failure mail to email_on_fail, or to email when only that is set) - hook_url       webhook URL receiving a JSON notification (curl POST) with the run counters, on completion and failure alike These drive the [workflow] on_complete / on_error hooks above (engine &gt;= 0.17.0). With all three empty (the default) both hooks are no-ops, matching upstream&#x27;s null params; older engines ignore the [workflow] keys entirely. sraCurateSamplesheetWarn (the upstream end-of-run &quot;double-check the samplesheet&quot; log note) has no hook: the auto-created samplesheet curation caveat is documented in README.md instead.</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>email_on_fail</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>ena_metadata_fields</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">Comma-separated ENA metadata fields; empty = upstream default field list.</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>sra_ids_to_runinfo</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>hook_url</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>input</code><span class="ox-param-default">test/fixtures/ids.txt</span></div>
+<p class="ox-param-desc">File containing SRA/ENA/GEO/DDBJ identifiers, one per line (upstream --input). Keep in sync with the [[sample_groups]] list below: check_ids validates this file, the sample source drives the per-id expansion. Add extra ids on the CLI with <code>oxo-flow run main.oxoflow --sample &lt;ID&gt;</code>.</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>check_ids</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>nf_core_pipeline</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">nf-core pipeline to tailor the samplesheet for (rnaseq/atacseq/taxprofiler); empty = none.</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>sra_to_samplesheet</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>nf_core_rnaseq_strandedness</code><span class="ox-param-default">auto</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>sra_to_samplesheet</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>out_dir</code><span class="ox-param-default">results</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 16 rules</summary>
+<div class="ox-param-rules"><code>check_ids</code> <code>combine_mappings</code> <code>combine_samplesheets</code> <code>multiqc_mappings_config</code> <code>sra_fastq_aspera</code> <code>sra_fastq_ftp</code> <code>sra_fastq_ftp_aspera_fallback</code> <code>sra_fastq_sratools</code> <code>sra_fastq_sratools_dbgap</code> <code>sra_fastq_sratools_fallback</code> <code>sra_ids_to_runinfo</code> <code>sra_prefetch</code> <code>sra_prefetch_dbgap</code> <code>sra_prefetch_fallback</code> <code>sra_runinfo_to_ftp</code> <code>sra_to_samplesheet</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>sample_mapping_fields</code><span class="ox-param-default">experiment_accession,run_accession,sample_accession,experiment_alias,run_alias,sample_alias,experiment_title,sample_title,sample_description</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>multiqc_mappings_config</code> <code>sra_to_samplesheet</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_fastq_download</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 12 rules</summary>
+<div class="ox-param-rules"><code>combine_mappings</code> <code>combine_samplesheets</code> <code>sra_fastq_aspera</code> <code>sra_fastq_ftp</code> <code>sra_fastq_ftp_aspera_fallback</code> <code>sra_fastq_sratools</code> <code>sra_fastq_sratools_dbgap</code> <code>sra_fastq_sratools_fallback</code> <code>sra_prefetch</code> <code>sra_prefetch_dbgap</code> <code>sra_prefetch_fallback</code> <code>sra_to_samplesheet</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>sra_tools_fallback</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">Per-run fallback (upstream SRA workflow <code>branch</code>), off by default so the default &#x27;ftp&#x27; plan stays byte-identical; enable to match upstream&#x27;s per-run triage for both methods: - download_method = &#x27;ftp&#x27;: runs whose ENA metadata has NEITHER an FTP link (fastq_1) NOR a fasp link (fastq_aspera) are routed to prefetch + fasterq-dump at runtime (sra_prefetch_fallback + sra_fastq_sratools_fallback); - download_method = &#x27;aspera&#x27;: runs without a fasp link are routed to the FTP branch when they have an FTP link (fastq_1, sra_fastq_ftp_aspera_fallback) and to prefetch + fasterq-dump otherwise (the same fallback rules). Without it, such runs are skipped with a warning.</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>sra_fastq_ftp_aspera_fallback</code> <code>sra_fastq_sratools_fallback</code> <code>sra_prefetch_fallback</code></div>
+</details>
+</div>
+</div>
 
 Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
 
@@ -88,9 +169,11 @@ Descriptions are the workflow's own `#` comments from its `[config]` section, su
 
 ![oxo-flow-fetchngs rule-level DAG](../assets/dag/oxo-flow-fetchngs.svg)
 
+<p class="ox-dag-caption">figure · oxo-flow-fetchngs — rule-level transit map (nf-metro)</p>
+
 </div>
 
-The graph is derived at catalog-build time from `oxo-flow graph -f dot` and rendered with Graphviz. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
+The graph is derived at catalog-build time from `oxo-flow graph -f metro` and rendered with [nf-metro](https://github.com/seqeralabs/nf-metro) — rules are grouped into colored transit lines by analysis stage. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

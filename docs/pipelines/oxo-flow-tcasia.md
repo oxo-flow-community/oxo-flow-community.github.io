@@ -66,39 +66,211 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-tcasia
 
 ## Parameters
 
-| Parameter | Default | Description | Used by |
-|---:|---|---|---|
-| `align_out_dir` | `results/alignment` | 01_alignment (upstream config.yml) | `alignment::fastp_qc`, `alignment::featurecounts`, `alignment::index_bam`, `alignment::sort_bam`, `alignment::star_align` |
-| `aligned_dir` | `results/alignment/aligned` | upstream: 01 output_dir/aligned == 02 bam_dir | `alignment::featurecounts`, `alignment::index_bam`, `alignment::sort_bam`, `alignment::star_align`, `as_calling::majiq_create_ini`, `as_calling::rmats_create_input`, `as_calling::spladder_run` |
-| `as_out_dir` | `results/as_calling` | 02_as_calling (upstream config.yml) | `as_calling::format_suppa_fields`, `as_calling::majiq_build`, `as_calling::majiq_create_ini`, `as_calling::majiq_psi`, `as_calling::rmats_create_input`, `as_calling::rmats_run`, `as_calling::salmon_quant`, `as_calling::select_suppa_fields`, `as_calling::spladder_run`, `as_calling::suppa_run`, `as_calling::voila_modulize`, `as_calling::voila_tsv` |
-| `fastp_min_length` | `36` | fastp (upstream fastp.*) | `alignment::fastp_qc` |
-| `fastp_n_base_limit` | `5` | — | `alignment::fastp_qc` |
-| `fastp_qualified_quality_phred` | `20` | — | `alignment::fastp_qc` |
-| `fastp_unqualified_percent_limit` | `40` | — | `alignment::fastp_qc` |
-| `gff` | `test/fixtures/reference/genes.gff3` | upstream: GFF (tiny synthetic) | `as_calling::majiq_build` |
-| `majiq_genome` | `hg38` | — | `as_calling::majiq_create_ini` |
-| `majiq_license` | `test/fixtures/reference/majiq_license.lic` | MAJIQ requires the upstream academic license file — place it at test/fixtures/reference/majiq_license.lic (obtain from MAJIQ) and set run_majiq = true. Upstream fails hard without the license; the port gates the whole MAJIQ chain on this flag instead (documented in the README fidelity table). | `as_calling::majiq_build`, `as_calling::majiq_psi`, `as_calling::voila_modulize`, `as_calling::voila_tsv` |
-| `majiq_minreads` | `10` | — | `as_calling::majiq_build` |
-| `majiq_strandness` | `reverse` | fr-firststrand -> reverse \| fr-secondstrand -> forward \| fr-unstranded -> none | `as_calling::majiq_create_ini` |
-| `read_len` | `150` | — | `as_calling::majiq_create_ini`, `as_calling::rmats_run` |
-| `reads_dir` | `test/fixtures/raw` | point at your own fastq directory for real runs | `alignment::fastp_qc`, `as_calling::salmon_quant` |
-| `ref` | `test/fixtures/reference/genes.gtf` | featureCounts / rMATS / SplAdder annotation (tiny synthetic; GRCh38 GTF for real runs) | `alignment::featurecounts`, `as_calling::rmats_run`, `as_calling::spladder_run` |
-| `rmats_cstat` | `0.0001` | — | `as_calling::rmats_run` |
-| `rmats_extra` | `` | — | `as_calling::rmats_run` |
-| `run_majiq` | `false` | — | `as_calling::majiq_build`, `as_calling::majiq_create_ini`, `as_calling::majiq_psi`, `as_calling::voila_modulize`, `as_calling::voila_tsv` |
-| `salmon_index` | `test/fixtures/reference/salmon_index` | salmon_index is auto-built below from the shipped transcripts.fa | `as_calling::salmon_quant` |
-| `salmon_library_type` | `ISR` | Derived from `strandness` by upstream tcasia_config.py; kept explicit here: | `as_calling::salmon_quant` |
-| `spladder_confidence` | `3` | — | `as_calling::spladder_run` |
-| `spladder_event_types` | `exon_skip,intron_retention,alt_3prime,alt_5prime,mutex_exons` | — | `as_calling::spladder_run` |
-| `spladder_merge_strategy` | `single` | — | `as_calling::spladder_run` |
-| `star_index_dir` | `test/fixtures/reference/STAR_index` | star_index_dir is auto-built below from test/fixtures/reference (tiny synthetic genome) — point it at a real GRCh38 STAR index for real runs. | `alignment::star_align` |
-| `star_limit_bam_sort_ram` | `0` | 0 = auto: the machine-effective memory (clamped declared value) | `alignment::star_align` |
-| `star_out_filter_mismatch_nmax` | `15` | STAR (upstream star.*) | `alignment::star_align` |
-| `strandness` | `fr-firststrand` | shared | `as_calling::rmats_run` |
-| `suppa2_events` | `test/fixtures/reference/events.ioe` | suppa2_events is auto-built below from the shipped GTF (SUPPA2 generateEvents) | `as_calling::suppa_run` |
-| `suppa2_min_tpm` | `1` | — | `as_calling::suppa_run` |
-
-{: .ox-params }
+<div class="ox-params">
+<div class="ox-param">
+<div class="ox-param-head"><code>align_out_dir</code><span class="ox-param-default">results/alignment</span></div>
+<p class="ox-param-desc">01_alignment (upstream config.yml)</p>
+<details class="ox-param-usedby"><summary>used by 5 rules</summary>
+<div class="ox-param-rules"><code>alignment::fastp_qc</code> <code>alignment::featurecounts</code> <code>alignment::index_bam</code> <code>alignment::sort_bam</code> <code>alignment::star_align</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>aligned_dir</code><span class="ox-param-default">results/alignment/aligned</span></div>
+<p class="ox-param-desc">upstream: 01 output_dir/aligned == 02 bam_dir</p>
+<details class="ox-param-usedby"><summary>used by 7 rules</summary>
+<div class="ox-param-rules"><code>alignment::featurecounts</code> <code>alignment::index_bam</code> <code>alignment::sort_bam</code> <code>alignment::star_align</code> <code>as_calling::majiq_create_ini</code> <code>as_calling::rmats_create_input</code> <code>as_calling::spladder_run</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>as_out_dir</code><span class="ox-param-default">results/as_calling</span></div>
+<p class="ox-param-desc">02_as_calling (upstream config.yml)</p>
+<details class="ox-param-usedby"><summary>used by 12 rules</summary>
+<div class="ox-param-rules"><code>as_calling::format_suppa_fields</code> <code>as_calling::majiq_build</code> <code>as_calling::majiq_create_ini</code> <code>as_calling::majiq_psi</code> <code>as_calling::rmats_create_input</code> <code>as_calling::rmats_run</code> <code>as_calling::salmon_quant</code> <code>as_calling::select_suppa_fields</code> <code>as_calling::spladder_run</code> <code>as_calling::suppa_run</code> <code>as_calling::voila_modulize</code> <code>as_calling::voila_tsv</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>fastp_min_length</code><span class="ox-param-default">36</span></div>
+<p class="ox-param-desc">fastp (upstream fastp.*)</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>alignment::fastp_qc</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>fastp_n_base_limit</code><span class="ox-param-default">5</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>alignment::fastp_qc</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>fastp_qualified_quality_phred</code><span class="ox-param-default">20</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>alignment::fastp_qc</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>fastp_unqualified_percent_limit</code><span class="ox-param-default">40</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>alignment::fastp_qc</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>gff</code><span class="ox-param-default">test/fixtures/reference/genes.gff3</span></div>
+<p class="ox-param-desc">upstream: GFF (tiny synthetic)</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>as_calling::majiq_build</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>majiq_genome</code><span class="ox-param-default">hg38</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>as_calling::majiq_create_ini</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>majiq_license</code><span class="ox-param-default">test/fixtures/reference/majiq_license.lic</span></div>
+<p class="ox-param-desc">MAJIQ requires the upstream academic license file — place it at test/fixtures/reference/majiq_license.lic (obtain from MAJIQ) and set run_majiq = true. Upstream fails hard without the license; the port gates the whole MAJIQ chain on this flag instead (documented in the README fidelity table).</p>
+<details class="ox-param-usedby"><summary>used by 4 rules</summary>
+<div class="ox-param-rules"><code>as_calling::majiq_build</code> <code>as_calling::majiq_psi</code> <code>as_calling::voila_modulize</code> <code>as_calling::voila_tsv</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>majiq_minreads</code><span class="ox-param-default">10</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>as_calling::majiq_build</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>majiq_strandness</code><span class="ox-param-default">reverse</span></div>
+<p class="ox-param-desc">fr-firststrand -&gt; reverse | fr-secondstrand -&gt; forward | fr-unstranded -&gt; none</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>as_calling::majiq_create_ini</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>read_len</code><span class="ox-param-default">150</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>as_calling::majiq_create_ini</code> <code>as_calling::rmats_run</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>reads_dir</code><span class="ox-param-default">test/fixtures/raw</span></div>
+<p class="ox-param-desc">point at your own fastq directory for real runs</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>alignment::fastp_qc</code> <code>as_calling::salmon_quant</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>ref</code><span class="ox-param-default">test/fixtures/reference/genes.gtf</span></div>
+<p class="ox-param-desc">featureCounts / rMATS / SplAdder annotation (tiny synthetic; GRCh38 GTF for real runs)</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>alignment::featurecounts</code> <code>as_calling::rmats_run</code> <code>as_calling::spladder_run</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>rmats_cstat</code><span class="ox-param-default">0.0001</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>as_calling::rmats_run</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>rmats_extra</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>as_calling::rmats_run</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>run_majiq</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 5 rules</summary>
+<div class="ox-param-rules"><code>as_calling::majiq_build</code> <code>as_calling::majiq_create_ini</code> <code>as_calling::majiq_psi</code> <code>as_calling::voila_modulize</code> <code>as_calling::voila_tsv</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>salmon_index</code><span class="ox-param-default">test/fixtures/reference/salmon_index</span></div>
+<p class="ox-param-desc">salmon_index is auto-built below from the shipped transcripts.fa</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>as_calling::salmon_quant</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>salmon_library_type</code><span class="ox-param-default">ISR</span></div>
+<p class="ox-param-desc">Derived from <code>strandness</code> by upstream tcasia_config.py; kept explicit here:</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>as_calling::salmon_quant</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>spladder_confidence</code><span class="ox-param-default">3</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>as_calling::spladder_run</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>spladder_event_types</code><span class="ox-param-default">exon_skip,intron_retention,alt_3prime,alt_5prime,mutex_exons</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>as_calling::spladder_run</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>spladder_merge_strategy</code><span class="ox-param-default">single</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>as_calling::spladder_run</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>star_index_dir</code><span class="ox-param-default">test/fixtures/reference/STAR_index</span></div>
+<p class="ox-param-desc">star_index_dir is auto-built below from test/fixtures/reference (tiny synthetic genome) — point it at a real GRCh38 STAR index for real runs.</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>alignment::star_align</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>star_limit_bam_sort_ram</code><span class="ox-param-default">0</span></div>
+<p class="ox-param-desc">0 = auto: the machine-effective memory (clamped declared value)</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>alignment::star_align</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>star_out_filter_mismatch_nmax</code><span class="ox-param-default">15</span></div>
+<p class="ox-param-desc">STAR (upstream star.*)</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>alignment::star_align</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>strandness</code><span class="ox-param-default">fr-firststrand</span></div>
+<p class="ox-param-desc">shared</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>as_calling::rmats_run</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>suppa2_events</code><span class="ox-param-default">test/fixtures/reference/events.ioe</span></div>
+<p class="ox-param-desc">suppa2_events is auto-built below from the shipped GTF (SUPPA2 generateEvents)</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>as_calling::suppa_run</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>suppa2_min_tpm</code><span class="ox-param-default">1</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>as_calling::suppa_run</code></div>
+</details>
+</div>
+</div>
 
 Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
 
@@ -108,9 +280,11 @@ Descriptions are the workflow's own `#` comments from its `[config]` section, su
 
 ![oxo-flow-tcasia rule-level DAG](../assets/dag/oxo-flow-tcasia.svg)
 
+<p class="ox-dag-caption">figure · oxo-flow-tcasia — rule-level transit map (nf-metro)</p>
+
 </div>
 
-The graph is derived at catalog-build time from `oxo-flow graph -f dot` and rendered with Graphviz. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
+The graph is derived at catalog-build time from `oxo-flow graph -f metro` and rendered with [nf-metro](https://github.com/seqeralabs/nf-metro) — rules are grouped into colored transit lines by analysis stage. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

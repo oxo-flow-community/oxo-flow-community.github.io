@@ -66,11 +66,15 @@ oxo-flow pull gh:WangLabCSU/oxo-flow-circrna
 
 ## Parameters
 
-| Parameter | Default | Description | Used by |
-|---:|---|---|---|
-| `reference_dir` | `./reference` | === The only path you need to set === reference_dir/ layout: genome.fa, genes.gtf, hg38_ref.txt, bwa/genome.fa.{bwt,pac,ann,amb,sa}, hisat2/genome.fa.{1-8}.ht2, bowtie2/genome.fa.*.bt2, star/ | `circexplorer2` |
-
-{: .ox-params }
+<div class="ox-params">
+<div class="ox-param">
+<div class="ox-param-head"><code>reference_dir</code><span class="ox-param-default">./reference</span></div>
+<p class="ox-param-desc">=== The only path you need to set === reference_dir/ layout: genome.fa, genes.gtf, hg38_ref.txt, bwa/genome.fa.{bwt,pac,ann,amb,sa}, hisat2/genome.fa.{1-8}.ht2, bowtie2/genome.fa.*.bt2, star/</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>circexplorer2</code></div>
+</details>
+</div>
+</div>
 
 Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
 
@@ -80,9 +84,11 @@ Descriptions are the workflow's own `#` comments from its `[config]` section, su
 
 ![oxo-flow-circrna rule-level DAG](../assets/dag/oxo-flow-circrna.svg)
 
+<p class="ox-dag-caption">figure · oxo-flow-circrna — rule-level transit map (nf-metro)</p>
+
 </div>
 
-The graph is derived at catalog-build time from `oxo-flow graph -f dot` and rendered with Graphviz. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
+The graph is derived at catalog-build time from `oxo-flow graph -f metro` and rendered with [nf-metro](https://github.com/seqeralabs/nf-metro) — rules are grouped into colored transit lines by analysis stage. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

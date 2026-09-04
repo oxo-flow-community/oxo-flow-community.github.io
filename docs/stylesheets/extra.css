@@ -655,8 +655,9 @@ a.ox-cta:hover {
 }
 
 /* ---- DAG figure card ---- */
-/* The Graphviz SVG ships dark text on transparent ground; the card pins a
-   light surface in both themes so the diagram stays legible (like a figure). */
+/* The nf-metro transit-map SVG ships dark text on a white ground; the card
+   pins a light surface in both themes so the diagram stays legible (like a
+   figure). */
 .ox-dag-card {
   margin: 1rem 0 1.4rem;
   padding: 1rem;
@@ -670,6 +671,16 @@ a.ox-cta:hover {
   margin: 0 auto;
   max-width: 100%;
   height: auto;
+}
+
+/* Publication-style figure caption under the transit map */
+.ox-dag-card .ox-dag-caption {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.68rem;
+  color: var(--faint);
+  margin: 0.8rem 0 0;
+  padding-top: 0.55rem;
+  border-top: 1px solid var(--edge);
 }
 
 /* ---- Detail-page header (P2) ---- */
@@ -766,42 +777,98 @@ a.ox-cta:hover {
   white-space: nowrap;
 }
 
-/* ---- Parameters table (detail pages) ----
-   Material strips its default table styling from classed tables
-   (`table:not([class])`), so .ox-params carries the full style. */
+/* ---- Parameters list (detail pages) ----
+   One collapsible block per config key; the used-by rule list collapses
+   behind a native <details> — no JS. (Replaces the old 4-column table.) */
 .ox-params {
-  display: table;
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.78rem;
+  display: block;
   margin: 1rem 0;
 }
 
-.ox-params th,
-.ox-params td {
-  padding: 0.5rem 0.7rem;
-  border-top: 1px solid var(--edge);
-  text-align: left;
-  vertical-align: top;
+.ox-param {
+  border: 1px solid var(--edge);
+  border-radius: 10px;
+  background: var(--panel);
+  box-shadow: var(--shadow);
+  padding: 0.7rem 0.9rem;
+  margin: 0 0 0.6rem;
 }
 
-.ox-params th {
+.ox-param-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.ox-param-head code {
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 600;
+  font-size: 0.82rem;
+  color: var(--brand);
+  background: transparent;
+  padding: 0;
+}
+
+.ox-param-default {
   font-family: "JetBrains Mono", monospace;
   font-size: 0.68rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
   color: var(--muted);
   background: var(--panel-2);
-  border-top: none;
+  border-radius: 5px;
+  padding: 0.1rem 0.4rem;
+  overflow-wrap: anywhere;
 }
 
-.ox-params td:first-child {
-  white-space: nowrap;
+.ox-param-desc {
+  margin: 0.35rem 0 0.45rem;
+  font-size: 0.82rem;
+  color: var(--ink-2);
+  line-height: 1.55;
+}
+
+.ox-param-desc code {
+  background: var(--panel-2);
+  padding: 0 0.2rem;
+  border-radius: 4px;
+  font-size: 0.74rem;
+}
+
+.ox-param-usedby summary {
   font-family: "JetBrains Mono", monospace;
+  font-size: 0.68rem;
+  color: var(--faint);
+  cursor: pointer;
+  list-style: none;
 }
 
-.ox-params td:nth-child(2) {
-  white-space: nowrap;
+.ox-param-usedby summary::before {
+  content: "▸ ";
+  color: var(--brand);
+}
+
+.ox-param-usedby[open] summary::before {
+  content: "▾ ";
+}
+
+.ox-param-usedby summary::-webkit-details-marker {
+  display: none;
+}
+
+.ox-param-rules {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.4rem;
+}
+
+.ox-param-rules code {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.68rem;
+  color: var(--ink-2);
+  background: var(--panel-2);
+  border-radius: 5px;
+  padding: 0.1rem 0.35rem;
 }
 
 /* ---- Dark scheme (D2 · instrument) component overrides ---- */

@@ -66,55 +66,337 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-atacseq
 
 ## Parameters
 
-| Parameter | Default | Description | Used by |
-|---:|---|---|---|
-| `aligner` | `bwa` | params.aligner: "bwa" (default) \| "bowtie2" \| "chromap" \| "star" (SE only) | `alt::bowtie2_align`, `alt::chromap_align`, `alt::star_align`, `bwa_mem`, `pe::bwa_mem_pe`, `ref::bwa_index` |
-| `blacklist` | `` | params.blacklist — include-regions BED (complement of ENCODE | `bamtools_filter`, `pe::bamtools_filter_pe` |
-| `bowtie2_index` | `` | params.bowtie2 — index prefix (.rev.1.bt2 etc. beside it) for aligner="bowtie2" | `alt::bowtie2_align` |
-| `broad_cutoff` | `0.1` | — | `macs2_callpeak` |
-| `bwa_index` | `test/fixtures/genome/genome.fa` | params.bwa — index prefix (.amb/.ann/.bwt/.pac/.sa beside it) | `bwa_mem`, `pe::bwa_mem_pe`, `ref::bwa_index` |
-| `chrom_sizes` | `test/fixtures/genome/genome.fa.sizes` | CUSTOM_GETCHROMSIZES output | `mito::genome_blacklist_regions`, `ref::custom_getchromsizes`, `ucsc_bedgraphtobigwig` |
-| `chromap_index` | `` | params.chromap — index file for aligner="chromap" | `alt::chromap_align` |
-| `deseq2_vst` | `true` | params.deseq2_vst | `cons::deseq2_qc` |
-| `fingerprint_bins` | `500000` | — | `pe::plotfingerprint_pe`, `plotfingerprint` |
-| `fragment_size` | `200` | — | `bedtools_genomecov`, `plotfingerprint` |
-| `gene_bed` | `test/fixtures/genome/gene.bed` | params.gene_bed | `deeptools_plots` |
-| `gtf` | `test/fixtures/genome/genes.gtf` | params.gtf | `cons::homer_annotatepeaks_consensus`, `homer_annotatepeaks` |
-| `keep_dups` | `false` | — | — |
-| `keep_mito` | `false` | params.keep_mito — keep mitochondrial reads when mito_name set | `mito::genome_blacklist_regions` |
-| `keep_multi_map` | `false` | — | — |
-| `macs_gsize` | `2.7e9` | blacklist + chrM when keep_mito=false); empty = no -L filter | `macs2_callpeak` |
-| `min_reps_consensus` | `1` | params.min_reps_consensus | `cons::macs2_consensus` |
-| `min_trimmed_reads` | `10000` | — | — |
-| `mito_name` | `` | params.mito_name, e.g. "chrM" — enables mitochondrial filtering (needs config.chrom_sizes) | `bamtools_filter`, `mito::genome_blacklist_regions`, `pe::bamtools_filter_pe`, `qce::ataqv` |
-| `multiqc_custom_peaks` | `false` | port-only switch: emit MULTIQC_CUSTOM_PEAKS peak-count/FRiP TSVs | `qce::multiqc_custom_peaks` |
-| `narrow_peak` | `false` | Upstream default params (kept as config so CLI overrides work) | — |
-| `out_dir` | `results` | params.outdir | `alt::bowtie2_align`, `alt::chromap_align`, `alt::star_align`, `bamtools_filter`, `bedtools_genomecov`, `bwa_mem`, `cons::deseq2_qc`, `cons::homer_annotatepeaks_consensus`, `cons::macs2_consensus`, `cons::subread_featurecounts`, `deeptools_plots`, `fastqc`, `frip_score`, `homer_annotatepeaks`, `macs2_callpeak`, `mito::genome_blacklist_regions`, `multiqc`, `pe::bamtools_filter_pe`, `pe::bedtools_genomecov_pe`, `pe::bwa_mem_pe`, `pe::fastqc_pe`, `pe::multiqc_pe`, `pe::pe_name_sort_remove_orphans`, `pe::plotfingerprint_pe`, `pe::trimgalore_pe`, `picard_markduplicates`, `picard_mergesamfiles`, `plotfingerprint`, `qce::ataqv`, `qce::get_autosomes`, `qce::igv`, `qce::mkarv`, `qce::multiqc_custom_peaks`, `qce::picard_collectmultiplemetrics`, `qce::plot_homer_annotatepeaks`, `qce::plot_macs2_qc`, `qce::preseq_lcextrap`, `samtools_sort_stats`, `trimgalore`, `ucsc_bedgraphtobigwig` |
-| `paired` | `false` | Gated branches (defaults keep the default plan identical to the upstream default main path; toggle one key at a time to activate its branch only) | `alt::bowtie2_align`, `alt::chromap_align`, `alt::star_align`, `bamtools_filter`, `bedtools_genomecov`, `bwa_mem`, `cons::subread_featurecounts`, `fastqc`, `multiqc`, `pe::bamtools_filter_pe`, `pe::bedtools_genomecov_pe`, `pe::bwa_mem_pe`, `pe::fastqc_pe`, `pe::multiqc_pe`, `pe::pe_name_sort_remove_orphans`, `pe::plotfingerprint_pe`, `pe::trimgalore_pe`, `plotfingerprint`, `qce::ataqv`, `qce::get_autosomes`, `qce::mkarv`, `qce::picard_collectmultiplemetrics`, `qce::preseq_lcextrap`, `trimgalore` |
-| `picard_xmx_gb` | `8` | GB passed to picard -Xmx. Previously derived from the rule's 36G resource budget (Xmx≈30G), which thrash-killed the JVM on a 3.7 GB machine (live run); the resource budget still drives scheduling. | `picard_markduplicates`, `qce::picard_collectmultiplemetrics` |
-| `prepare_reference` | `false` | port switch: build BWA index + chrom sizes from config.reference | `ref::bwa_index`, `ref::custom_getchromsizes` |
-| `raw_blacklist` | `` | params.blacklist — raw ENCODE blacklist BED (complemented into include-regions) | `bamtools_filter`, `mito::genome_blacklist_regions`, `pe::bamtools_filter_pe` |
-| `raw_dir` | `test/fixtures/raw` | input fastqs (raw/<sample>.fastq.gz for single-end) | `fastqc`, `pe::fastqc_pe`, `pe::trimgalore_pe`, `trimgalore` |
-| `reference` | `test/fixtures/genome/genome.fa` | Reference inputs. Upstream obtains these from nf-core iGenomes (--genome); this port expects pre-built files (see README "References"). | `alt::chromap_align`, `bamtools_filter`, `cons::homer_annotatepeaks_consensus`, `homer_annotatepeaks`, `pe::pe_name_sort_remove_orphans`, `picard_markduplicates`, `qce::get_autosomes`, `qce::igv`, `qce::picard_collectmultiplemetrics`, `ref::bwa_index`, `ref::custom_getchromsizes`, `samtools_sort_stats` |
-| `save_trimmed` | `false` | — | — |
-| `skip_ataqv` | `true` | upstream default false; port ships this branch OFF (set false to enable) | `qce::ataqv`, `qce::get_autosomes`, `qce::mkarv` |
-| `skip_consensus_peaks` | `true` | upstream default false; port ships this branch OFF (set false to enable) | `cons::deseq2_qc`, `cons::homer_annotatepeaks_consensus`, `cons::macs2_consensus`, `cons::subread_featurecounts` |
-| `skip_deseq2_qc` | `true` | upstream default false; port ships DESeq2 QC OFF (set false to enable) | `cons::deseq2_qc` |
-| `skip_fastqc` | `false` | — | `fastqc`, `pe::fastqc_pe` |
-| `skip_igv` | `true` | upstream default false; port ships this branch OFF (set false to enable) | `qce::igv` |
-| `skip_multiqc` | `false` | — | `multiqc`, `pe::multiqc_pe` |
-| `skip_peak_annotation` | `false` | params.skip_peak_annotation (default false — HOMER annotation on by default, as upstream) | `cons::homer_annotatepeaks_consensus`, `homer_annotatepeaks`, `qce::plot_homer_annotatepeaks`, `qce::plot_macs2_qc` |
-| `skip_peak_qc` | `true` | upstream default false; port ships the R QC plots OFF (set false to enable) | `qce::plot_homer_annotatepeaks`, `qce::plot_macs2_qc` |
-| `skip_picard_metrics` | `true` | upstream default false; port ships this branch OFF (set false to enable) | `qce::picard_collectmultiplemetrics` |
-| `skip_plot_fingerprint` | `false` | — | `pe::plotfingerprint_pe`, `plotfingerprint` |
-| `skip_plot_profile` | `false` | — | `deeptools_plots` |
-| `skip_preseq` | `true` | params.skip_preseq (upstream default true — preseq off by default) | `qce::preseq_lcextrap` |
-| `skip_qc` | `false` | — | `fastqc`, `pe::fastqc_pe` |
-| `skip_trimming` | `false` | — | `pe::trimgalore_pe`, `trimgalore` |
-| `star_index` | `` | params.star — STAR genome dir (built by STAR_GENOMEGENERATE upstream) for aligner="star" | `alt::star_align` |
-| `tss_bed` | `test/fixtures/genome/tss.bed` | params.tss_bed | `deeptools_plots`, `qce::ataqv` |
-
-{: .ox-params }
+<div class="ox-params">
+<div class="ox-param">
+<div class="ox-param-head"><code>aligner</code><span class="ox-param-default">bwa</span></div>
+<p class="ox-param-desc">params.aligner: &quot;bwa&quot; (default) | &quot;bowtie2&quot; | &quot;chromap&quot; | &quot;star&quot; (SE only)</p>
+<details class="ox-param-usedby"><summary>used by 6 rules</summary>
+<div class="ox-param-rules"><code>alt::bowtie2_align</code> <code>alt::chromap_align</code> <code>alt::star_align</code> <code>bwa_mem</code> <code>pe::bwa_mem_pe</code> <code>ref::bwa_index</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>blacklist</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">params.blacklist — include-regions BED (complement of ENCODE</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>bamtools_filter</code> <code>pe::bamtools_filter_pe</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>bowtie2_index</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">params.bowtie2 — index prefix (.rev.1.bt2 etc. beside it) for aligner=&quot;bowtie2&quot;</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>alt::bowtie2_align</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>broad_cutoff</code><span class="ox-param-default">0.1</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>macs2_callpeak</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>bwa_index</code><span class="ox-param-default">test/fixtures/genome/genome.fa</span></div>
+<p class="ox-param-desc">params.bwa — index prefix (.amb/.ann/.bwt/.pac/.sa beside it)</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>bwa_mem</code> <code>pe::bwa_mem_pe</code> <code>ref::bwa_index</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>chrom_sizes</code><span class="ox-param-default">test/fixtures/genome/genome.fa.sizes</span></div>
+<p class="ox-param-desc">CUSTOM_GETCHROMSIZES output</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>mito::genome_blacklist_regions</code> <code>ref::custom_getchromsizes</code> <code>ucsc_bedgraphtobigwig</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>chromap_index</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">params.chromap — index file for aligner=&quot;chromap&quot;</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>alt::chromap_align</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>deseq2_vst</code><span class="ox-param-default">true</span></div>
+<p class="ox-param-desc">params.deseq2_vst</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>cons::deseq2_qc</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>fingerprint_bins</code><span class="ox-param-default">500000</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>pe::plotfingerprint_pe</code> <code>plotfingerprint</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>fragment_size</code><span class="ox-param-default">200</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>bedtools_genomecov</code> <code>plotfingerprint</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>gene_bed</code><span class="ox-param-default">test/fixtures/genome/gene.bed</span></div>
+<p class="ox-param-desc">params.gene_bed</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>deeptools_plots</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>gtf</code><span class="ox-param-default">test/fixtures/genome/genes.gtf</span></div>
+<p class="ox-param-desc">params.gtf</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>cons::homer_annotatepeaks_consensus</code> <code>homer_annotatepeaks</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>keep_dups</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>keep_mito</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">params.keep_mito — keep mitochondrial reads when mito_name set</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>mito::genome_blacklist_regions</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>keep_multi_map</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>macs_gsize</code><span class="ox-param-default">2.7e9</span></div>
+<p class="ox-param-desc">blacklist + chrM when keep_mito=false); empty = no -L filter</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>macs2_callpeak</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>merged_samples</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">base names of replicate groups (e.g. &quot;S1,S2&quot; for samples S1_REP1/S1_REP2/S2_REP1/S2_REP2) — feeds merged-replicate files into the MultiQC / IGV aggregation rules; empty = no-op</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>merge_replicates</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>min_reps_consensus</code><span class="ox-param-default">1</span></div>
+<p class="ox-param-desc">params.min_reps_consensus</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>cons::macs2_consensus</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>min_trimmed_reads</code><span class="ox-param-default">10000</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>mito_name</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">params.mito_name, e.g. &quot;chrM&quot; — enables mitochondrial filtering (needs config.chrom_sizes)</p>
+<details class="ox-param-usedby"><summary>used by 4 rules</summary>
+<div class="ox-param-rules"><code>bamtools_filter</code> <code>mito::genome_blacklist_regions</code> <code>pe::bamtools_filter_pe</code> <code>qce::ataqv</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>multiqc_custom_peaks</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">port-only switch: emit MULTIQC_CUSTOM_PEAKS peak-count/FRiP TSVs</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>qce::multiqc_custom_peaks</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>narrow_peak</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">Upstream default params (kept as config so CLI overrides work)</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>out_dir</code><span class="ox-param-default">results</span></div>
+<p class="ox-param-desc">params.outdir</p>
+<details class="ox-param-usedby"><summary>used by 41 rules</summary>
+<div class="ox-param-rules"><code>alt::bowtie2_align</code> <code>alt::chromap_align</code> <code>alt::star_align</code> <code>bamtools_filter</code> <code>bedtools_genomecov</code> <code>bwa_mem</code> <code>cons::deseq2_qc</code> <code>cons::homer_annotatepeaks_consensus</code> <code>cons::macs2_consensus</code> <code>cons::subread_featurecounts</code> <code>deeptools_plots</code> <code>fastqc</code> <code>frip_score</code> <code>homer_annotatepeaks</code> <code>macs2_callpeak</code> <code>merge_replicates</code> <code>mito::genome_blacklist_regions</code> <code>multiqc</code> <code>pe::bamtools_filter_pe</code> <code>pe::bedtools_genomecov_pe</code> <code>pe::bwa_mem_pe</code> <code>pe::fastqc_pe</code> <code>pe::multiqc_pe</code> <code>pe::pe_name_sort_remove_orphans</code> <code>pe::plotfingerprint_pe</code> <code>pe::trimgalore_pe</code> <code>picard_markduplicates</code> <code>picard_mergesamfiles</code> <code>plotfingerprint</code> <code>qce::ataqv</code> <code>qce::get_autosomes</code> <code>qce::igv</code> <code>qce::mkarv</code> <code>qce::multiqc_custom_peaks</code> <code>qce::picard_collectmultiplemetrics</code> <code>qce::plot_homer_annotatepeaks</code> <code>qce::plot_macs2_qc</code> <code>qce::preseq_lcextrap</code> <code>samtools_sort_stats</code> <code>trimgalore</code> <code>ucsc_bedgraphtobigwig</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>paired</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">Gated branches (defaults keep the default plan identical to the upstream default main path; toggle one key at a time to activate its branch only)</p>
+<details class="ox-param-usedby"><summary>used by 24 rules</summary>
+<div class="ox-param-rules"><code>alt::bowtie2_align</code> <code>alt::chromap_align</code> <code>alt::star_align</code> <code>bamtools_filter</code> <code>bedtools_genomecov</code> <code>bwa_mem</code> <code>cons::subread_featurecounts</code> <code>fastqc</code> <code>multiqc</code> <code>pe::bamtools_filter_pe</code> <code>pe::bedtools_genomecov_pe</code> <code>pe::bwa_mem_pe</code> <code>pe::fastqc_pe</code> <code>pe::multiqc_pe</code> <code>pe::pe_name_sort_remove_orphans</code> <code>pe::plotfingerprint_pe</code> <code>pe::trimgalore_pe</code> <code>plotfingerprint</code> <code>qce::ataqv</code> <code>qce::get_autosomes</code> <code>qce::mkarv</code> <code>qce::picard_collectmultiplemetrics</code> <code>qce::preseq_lcextrap</code> <code>trimgalore</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>picard_xmx_gb</code><span class="ox-param-default">8</span></div>
+<p class="ox-param-desc">GB passed to picard -Xmx. Previously derived from the rule&#x27;s 36G resource budget (Xmx≈30G), which thrash-killed the JVM on a 3.7 GB machine (live run); the resource budget still drives scheduling.</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>merge_replicates</code> <code>picard_markduplicates</code> <code>qce::picard_collectmultiplemetrics</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>prepare_reference</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">port switch: build BWA index + chrom sizes from config.reference</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>ref::bwa_index</code> <code>ref::custom_getchromsizes</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>raw_blacklist</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">params.blacklist — raw ENCODE blacklist BED (complemented into include-regions)</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>bamtools_filter</code> <code>mito::genome_blacklist_regions</code> <code>pe::bamtools_filter_pe</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>raw_dir</code><span class="ox-param-default">test/fixtures/raw</span></div>
+<p class="ox-param-desc">input fastqs (raw/&lt;sample&gt;.fastq.gz for single-end)</p>
+<details class="ox-param-usedby"><summary>used by 4 rules</summary>
+<div class="ox-param-rules"><code>fastqc</code> <code>pe::fastqc_pe</code> <code>pe::trimgalore_pe</code> <code>trimgalore</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>reference</code><span class="ox-param-default">test/fixtures/genome/genome.fa</span></div>
+<p class="ox-param-desc">Reference inputs. Upstream obtains these from nf-core iGenomes (--genome); this port expects pre-built files (see README &quot;References&quot;).</p>
+<details class="ox-param-usedby"><summary>used by 13 rules</summary>
+<div class="ox-param-rules"><code>alt::chromap_align</code> <code>bamtools_filter</code> <code>cons::homer_annotatepeaks_consensus</code> <code>homer_annotatepeaks</code> <code>merge_replicates</code> <code>pe::pe_name_sort_remove_orphans</code> <code>picard_markduplicates</code> <code>qce::get_autosomes</code> <code>qce::igv</code> <code>qce::picard_collectmultiplemetrics</code> <code>ref::bwa_index</code> <code>ref::custom_getchromsizes</code> <code>samtools_sort_stats</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>save_trimmed</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_ataqv</code><span class="ox-param-default">true</span></div>
+<p class="ox-param-desc">upstream default false; port ships this branch OFF (set false to enable)</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>qce::ataqv</code> <code>qce::get_autosomes</code> <code>qce::mkarv</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_consensus_peaks</code><span class="ox-param-default">true</span></div>
+<p class="ox-param-desc">upstream default false; port ships this branch OFF (set false to enable)</p>
+<details class="ox-param-usedby"><summary>used by 4 rules</summary>
+<div class="ox-param-rules"><code>cons::deseq2_qc</code> <code>cons::homer_annotatepeaks_consensus</code> <code>cons::macs2_consensus</code> <code>cons::subread_featurecounts</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_deseq2_qc</code><span class="ox-param-default">true</span></div>
+<p class="ox-param-desc">upstream default false; port ships DESeq2 QC OFF (set false to enable)</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>cons::deseq2_qc</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_fastqc</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>fastqc</code> <code>pe::fastqc_pe</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_igv</code><span class="ox-param-default">true</span></div>
+<p class="ox-param-desc">upstream default false; port ships this branch OFF (set false to enable)</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>qce::igv</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_merge_replicates</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">params.skip_merge_replicates (upstream default false = merged-replicate analysis ON when replicate samples are declared)</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>merge_replicates</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_multiqc</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>multiqc</code> <code>pe::multiqc_pe</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_peak_annotation</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">params.skip_peak_annotation (default false — HOMER annotation on by default, as upstream)</p>
+<details class="ox-param-usedby"><summary>used by 4 rules</summary>
+<div class="ox-param-rules"><code>cons::homer_annotatepeaks_consensus</code> <code>homer_annotatepeaks</code> <code>qce::plot_homer_annotatepeaks</code> <code>qce::plot_macs2_qc</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_peak_qc</code><span class="ox-param-default">true</span></div>
+<p class="ox-param-desc">upstream default false; port ships the R QC plots OFF (set false to enable)</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>qce::plot_homer_annotatepeaks</code> <code>qce::plot_macs2_qc</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_picard_metrics</code><span class="ox-param-default">true</span></div>
+<p class="ox-param-desc">upstream default false; port ships this branch OFF (set false to enable)</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>qce::picard_collectmultiplemetrics</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_plot_fingerprint</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>pe::plotfingerprint_pe</code> <code>plotfingerprint</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_plot_profile</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>deeptools_plots</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_preseq</code><span class="ox-param-default">true</span></div>
+<p class="ox-param-desc">params.skip_preseq (upstream default true — preseq off by default)</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>qce::preseq_lcextrap</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_qc</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>fastqc</code> <code>pe::fastqc_pe</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_trimming</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>pe::trimgalore_pe</code> <code>trimgalore</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>star_index</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">params.star — STAR genome dir (built by STAR_GENOMEGENERATE upstream) for aligner=&quot;star&quot;</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>alt::star_align</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>tss_bed</code><span class="ox-param-default">test/fixtures/genome/tss.bed</span></div>
+<p class="ox-param-desc">params.tss_bed</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>deeptools_plots</code> <code>qce::ataqv</code></div>
+</details>
+</div>
+</div>
 
 Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
 
@@ -124,9 +406,11 @@ Descriptions are the workflow's own `#` comments from its `[config]` section, su
 
 ![oxo-flow-atacseq rule-level DAG](../assets/dag/oxo-flow-atacseq.svg)
 
+<p class="ox-dag-caption">figure · oxo-flow-atacseq — rule-level transit map (nf-metro)</p>
+
 </div>
 
-The graph is derived at catalog-build time from `oxo-flow graph -f dot` and rendered with Graphviz. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
+The graph is derived at catalog-build time from `oxo-flow graph -f metro` and rendered with [nf-metro](https://github.com/seqeralabs/nf-metro) — rules are grouped into colored transit lines by analysis stage. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

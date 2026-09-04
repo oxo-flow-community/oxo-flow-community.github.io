@@ -71,68 +71,414 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-chipseq
 
 ## Parameters
 
-| Parameter | Default | Description | Used by |
-|---:|---|---|---|
-| `aligner` | `bwa` | Alignment / filtering. aligner selects the read aligner: 'bwa' (the nf-core default), 'bowtie2', 'chromap' or 'star'. Each mode takes a pre-built index (bwa_index directory / bowtie2_index directory / chromap_index file / star_index directory, e.g. from the upstream iGenomes bundle) — or derives it from the reference FASTA with the gated builders below, mirroring the upstream PREPARE_GENOME index branches (make_bwa_index / make_bowtie2_index / make_chromap_index / make_star_index; point the corresponding index config at the generated results/... path in that case). | `align::bowtie2_align`, `align::bwa_mem`, `align::chromap_align`, `align::star_align`, `reference::bowtie2_index_build`, `reference::bwa_index_build`, `reference::chromap_index_build`, `reference::star_genomegenerate` |
-| `antibody` | `H3K4me3` | — | `consensus::annotate_boolean_peaks`, `consensus::annotate_boolean_peaks_narrow`, `consensus::deseq2_qc`, `consensus::deseq2_qc_narrow`, `consensus::homer_annotate_consensus`, `consensus::homer_annotate_consensus_narrow`, `consensus::macs3_consensus`, `consensus::macs3_consensus_narrow`, `consensus::subread_featurecounts`, `consensus::subread_featurecounts_narrow`, `report::igv`, `report::igv_narrow`, `report::multiqc`, `report::multiqc_narrow` |
-| `blacklist` | `test/fixtures/references/blacklist.bed` | — | `filter::bamtools_filter`, `reference::blacklist_regions` |
-| `bowtie2_index` | `` | — | `align::bowtie2_align` |
-| `broad_cutoff` | `0.1` | — | `peaks::macs3_callpeak` |
-| `bwa_index` | `test/fixtures/references/bwa_index` | — | `align::bwa_mem` |
-| `bwa_min_score` | `0` | — | `align::bwa_mem` |
-| `chrom_sizes` | `test/fixtures/references/chrom.sizes` | — | `reference::blacklist_regions`, `tracks::ucsc_bedgraphtobigwig` |
-| `chromap_index` | `` | — | `align::chromap_align` |
-| `clip_r1` | `0` | — | `qc::trimgalore` |
-| `clip_r2` | `0` | — | `qc::trimgalore` |
-| `fai` | `test/fixtures/references/genome.fa.fai` | — | `align::markduplicates`, `filter::picard_collectmultiplemetrics`, `reference::star_genomegenerate` |
-| `fasta` | `test/fixtures/references/genome.fa` | — | `align::bowtie2_align`, `align::bwa_mem`, `align::chromap_align`, `align::index_align`, `align::index_markdup`, `align::markduplicates`, `align::mergesamfiles`, `align::sort_align`, `align::stats_align`, `align::stats_markdup`, `consensus::homer_annotate_consensus`, `consensus::homer_annotate_consensus_narrow`, `filter::index_filter`, `filter::picard_collectmultiplemetrics`, `filter::sort_filter`, `filter::sort_name`, `filter::stats_filter`, `peaks::homer_annotatepeaks`, `peaks::homer_annotatepeaks_narrow`, `reference::bowtie2_index_build`, `reference::bwa_index_build`, `reference::chromap_index_build`, `reference::getchromsizes`, `reference::star_genomegenerate`, `report::igv`, `report::igv_narrow`, `tracks::khmer` |
-| `fingerprint_bins` | `500000` | — | `tracks::deeptools_plotfingerprint` |
-| `fragment_size` | `0` | — | — |
-| `gene_bed` | `test/fixtures/references/gene.bed` | — | `tracks::deeptools_computematrix` |
-| `gtf` | `test/fixtures/references/genome.gtf` | — | `consensus::homer_annotate_consensus`, `consensus::homer_annotate_consensus_narrow`, `peaks::homer_annotatepeaks`, `peaks::homer_annotatepeaks_narrow`, `reference::gtf2bed`, `reference::star_genomegenerate` |
-| `ip_ids` | `'S1_REP1', 'S1_REP2'` | — | — |
-| `keep_dups` | `false` | — | `filter::bamtools_filter` |
-| `keep_multi_map` | `false` | — | `filter::bamtools_filter` |
-| `macs_fdr` | `0` | — | `peaks::macs3_callpeak`, `peaks::macs3_callpeak_narrow` |
-| `macs_gsize` | `` | MACS3 genome size. Empty string = derive from read length via khmer (faithful to the upstream default). | `peaks::macs3_callpeak`, `peaks::macs3_callpeak_narrow`, `tracks::khmer` |
-| `macs_pvalue` | `0` | — | `peaks::macs3_callpeak`, `peaks::macs3_callpeak_narrow` |
-| `make_blacklist_regions` | `false` | — | `reference::blacklist_regions` |
-| `make_bowtie2_index` | `false` | — | `reference::bowtie2_index_build` |
-| `make_bwa_index` | `false` | — | `reference::bwa_index_build` |
-| `make_chrom_sizes` | `false` | — | `reference::getchromsizes` |
-| `make_chromap_index` | `false` | — | `reference::chromap_index_build` |
-| `make_gene_bed` | `false` | Reference preparation — ports of the upstream PREPARE_GENOME steps that can run on the port's plain reference files (all off by default). When enabled, point the corresponding input above at the generated file, e.g. gene_bed = "results/genome/gene.bed" with make_gene_bed = true; chrom_sizes = "results/genome/chrom.sizes" and fai = "results/genome/genome.fa.fai" with make_chrom_sizes = true; bwa_index = "results/bwa/index" with make_bwa_index = true; bowtie2_index = "results/bowtie2/index" with make_bowtie2_index = true; chromap_index = "results/chromap/index/genome.index" with make_chromap_index = true. | `reference::gtf2bed` |
-| `make_star_index` | `false` | — | `reference::star_genomegenerate` |
-| `min_reps_consensus` | `1` | — | `consensus::macs3_consensus`, `consensus::macs3_consensus_narrow` |
-| `multiple_groups` | `false` | — | `consensus::annotate_boolean_peaks`, `consensus::annotate_boolean_peaks_narrow`, `consensus::deseq2_qc`, `consensus::deseq2_qc_narrow`, `consensus::homer_annotate_consensus`, `consensus::homer_annotate_consensus_narrow`, `consensus::macs3_consensus`, `consensus::macs3_consensus_narrow`, `consensus::subread_featurecounts`, `consensus::subread_featurecounts_narrow` |
-| `multiqc_title` | `` | — | `report::multiqc`, `report::multiqc_narrow` |
-| `narrow_peak` | `false` | Peaks — broad mode is the nf-core default (narrow_peak = false); setting narrow_peak = true switches the whole peak chain (MACS3 narrowPeak calling, FRiP/annotation/QC, consensus, IGV and MultiQC) to the upstream narrow_peak layout. | `consensus::annotate_boolean_peaks`, `consensus::annotate_boolean_peaks_narrow`, `consensus::deseq2_qc`, `consensus::deseq2_qc_narrow`, `consensus::homer_annotate_consensus`, `consensus::homer_annotate_consensus_narrow`, `consensus::macs3_consensus`, `consensus::macs3_consensus_narrow`, `consensus::subread_featurecounts`, `consensus::subread_featurecounts_narrow`, `peaks::frip_score`, `peaks::frip_score_narrow`, `peaks::homer_annotatepeaks`, `peaks::homer_annotatepeaks_narrow`, `peaks::macs3_callpeak`, `peaks::macs3_callpeak_narrow`, `peaks::multiqc_custom_peaks`, `peaks::multiqc_custom_peaks_narrow`, `peaks::plot_homer_annotatepeaks`, `peaks::plot_homer_annotatepeaks_narrow`, `peaks::plot_macs3_qc`, `peaks::plot_macs3_qc_narrow`, `report::igv`, `report::igv_narrow`, `report::multiqc`, `report::multiqc_narrow` |
-| `pair_ids` | `'S1_REP1', 'S1_REP2', 'C1_REP1', 'C1_REP2'` | Sample metadata. pair_ids MUST be kept in sync with [[pairs]] (the oxo-flow analogue of the nf-core samplesheet meta.id column). ip_ids lists the samples that get peak calling — upstream only runs MACS3 for samples that have a control; the port mirrors this with per-pair rules whose {control} input is empty for control-only samples and skipped via `optional = true`. | — |
-| `raw_dir` | `test/fixtures/raw` | — | `qc::fastqc`, `qc::trimgalore` |
-| `read_length` | `75` | — | `tracks::khmer` |
-| `replicates_exist` | `true` | — | `consensus::annotate_boolean_peaks`, `consensus::annotate_boolean_peaks_narrow`, `consensus::deseq2_qc`, `consensus::deseq2_qc_narrow`, `consensus::homer_annotate_consensus`, `consensus::homer_annotate_consensus_narrow`, `consensus::macs3_consensus`, `consensus::macs3_consensus_narrow`, `consensus::subread_featurecounts`, `consensus::subread_featurecounts_narrow` |
-| `save_macs_pileup` | `false` | — | `peaks::macs3_callpeak`, `peaks::macs3_callpeak_narrow` |
-| `seq_center` | `` | Read group / trimming | `align::bowtie2_align`, `align::bwa_mem`, `align::chromap_align`, `align::star_align` |
-| `skip_consensus_peaks` | `false` | — | `consensus::annotate_boolean_peaks`, `consensus::annotate_boolean_peaks_narrow`, `consensus::deseq2_qc`, `consensus::deseq2_qc_narrow`, `consensus::homer_annotate_consensus`, `consensus::homer_annotate_consensus_narrow`, `consensus::macs3_consensus`, `consensus::macs3_consensus_narrow`, `consensus::subread_featurecounts`, `consensus::subread_featurecounts_narrow` |
-| `skip_deseq2_qc` | `false` | — | `consensus::deseq2_qc`, `consensus::deseq2_qc_narrow` |
-| `skip_fastqc` | `false` | Step toggles (mirror the nf-core/chipseq params.skip_* / when gates) | `qc::fastqc` |
-| `skip_igv` | `false` | — | `report::igv`, `report::igv_narrow` |
-| `skip_multiqc` | `false` | — | `report::multiqc`, `report::multiqc_narrow` |
-| `skip_peak_annotation` | `false` | — | `consensus::annotate_boolean_peaks`, `consensus::annotate_boolean_peaks_narrow`, `consensus::homer_annotate_consensus`, `consensus::homer_annotate_consensus_narrow`, `peaks::homer_annotatepeaks`, `peaks::homer_annotatepeaks_narrow`, `peaks::plot_homer_annotatepeaks`, `peaks::plot_homer_annotatepeaks_narrow`, `peaks::plot_macs3_qc`, `peaks::plot_macs3_qc_narrow` |
-| `skip_peak_qc` | `false` | — | `peaks::plot_homer_annotatepeaks`, `peaks::plot_homer_annotatepeaks_narrow`, `peaks::plot_macs3_qc`, `peaks::plot_macs3_qc_narrow` |
-| `skip_picard_metrics` | `false` | — | `filter::picard_collectmultiplemetrics` |
-| `skip_plot_fingerprint` | `false` | — | `tracks::deeptools_plotfingerprint` |
-| `skip_plot_profile` | `false` | — | `tracks::deeptools_computematrix`, `tracks::deeptools_plotheatmap`, `tracks::deeptools_plotprofile` |
-| `skip_preseq` | `false` | — | `filter::preseq` |
-| `skip_qc` | `false` | — | `qc::fastqc` |
-| `skip_spp` | `false` | — | `filter::multiqc_custom_phantompeakqualtools`, `filter::phantompeakqualtools` |
-| `skip_trimming` | `false` | — | `qc::trimgalore` |
-| `star_index` | `` | — | `align::star_align` |
-| `three_prime_clip_r1` | `0` | — | `qc::trimgalore` |
-| `three_prime_clip_r2` | `0` | — | `qc::trimgalore` |
-| `trim_nextseq` | `0` | — | `qc::trimgalore` |
-
-{: .ox-params }
+<div class="ox-params">
+<div class="ox-param">
+<div class="ox-param-head"><code>aligner</code><span class="ox-param-default">bwa</span></div>
+<p class="ox-param-desc">Alignment / filtering. aligner selects the read aligner: &#x27;bwa&#x27; (the nf-core default), &#x27;bowtie2&#x27;, &#x27;chromap&#x27; or &#x27;star&#x27;. Each mode takes a pre-built index (bwa_index directory / bowtie2_index directory / chromap_index file / star_index directory, e.g. from the upstream iGenomes bundle) — or derives it from the reference FASTA with the gated builders below, mirroring the upstream PREPARE_GENOME index branches (make_bwa_index / make_bowtie2_index / make_chromap_index / make_star_index; point the corresponding index config at the generated results/... path in that case).</p>
+<details class="ox-param-usedby"><summary>used by 8 rules</summary>
+<div class="ox-param-rules"><code>align::bowtie2_align</code> <code>align::bwa_mem</code> <code>align::chromap_align</code> <code>align::star_align</code> <code>reference::bowtie2_index_build</code> <code>reference::bwa_index_build</code> <code>reference::chromap_index_build</code> <code>reference::star_genomegenerate</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>antibody</code><span class="ox-param-default">H3K4me3</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 14 rules</summary>
+<div class="ox-param-rules"><code>consensus::annotate_boolean_peaks</code> <code>consensus::annotate_boolean_peaks_narrow</code> <code>consensus::deseq2_qc</code> <code>consensus::deseq2_qc_narrow</code> <code>consensus::homer_annotate_consensus</code> <code>consensus::homer_annotate_consensus_narrow</code> <code>consensus::macs3_consensus</code> <code>consensus::macs3_consensus_narrow</code> <code>consensus::subread_featurecounts</code> <code>consensus::subread_featurecounts_narrow</code> <code>report::igv</code> <code>report::igv_narrow</code> <code>report::multiqc</code> <code>report::multiqc_narrow</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>blacklist</code><span class="ox-param-default">test/fixtures/references/blacklist.bed</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>filter::bamtools_filter</code> <code>reference::blacklist_regions</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>bowtie2_index</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>align::bowtie2_align</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>broad_cutoff</code><span class="ox-param-default">0.1</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>peaks::macs3_callpeak</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>bwa_index</code><span class="ox-param-default">test/fixtures/references/bwa_index</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>align::bwa_mem</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>bwa_min_score</code><span class="ox-param-default">0</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>align::bwa_mem</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>chrom_sizes</code><span class="ox-param-default">test/fixtures/references/chrom.sizes</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>reference::blacklist_regions</code> <code>tracks::ucsc_bedgraphtobigwig</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>chromap_index</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>align::chromap_align</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>clip_r1</code><span class="ox-param-default">0</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>qc::trimgalore</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>clip_r2</code><span class="ox-param-default">0</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>qc::trimgalore</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>fai</code><span class="ox-param-default">test/fixtures/references/genome.fa.fai</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>align::markduplicates</code> <code>filter::picard_collectmultiplemetrics</code> <code>reference::star_genomegenerate</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>fasta</code><span class="ox-param-default">test/fixtures/references/genome.fa</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 27 rules</summary>
+<div class="ox-param-rules"><code>align::bowtie2_align</code> <code>align::bwa_mem</code> <code>align::chromap_align</code> <code>align::index_align</code> <code>align::index_markdup</code> <code>align::markduplicates</code> <code>align::mergesamfiles</code> <code>align::sort_align</code> <code>align::stats_align</code> <code>align::stats_markdup</code> <code>consensus::homer_annotate_consensus</code> <code>consensus::homer_annotate_consensus_narrow</code> <code>filter::index_filter</code> <code>filter::picard_collectmultiplemetrics</code> <code>filter::sort_filter</code> <code>filter::sort_name</code> <code>filter::stats_filter</code> <code>peaks::homer_annotatepeaks</code> <code>peaks::homer_annotatepeaks_narrow</code> <code>reference::bowtie2_index_build</code> <code>reference::bwa_index_build</code> <code>reference::chromap_index_build</code> <code>reference::getchromsizes</code> <code>reference::star_genomegenerate</code> <code>report::igv</code> <code>report::igv_narrow</code> <code>tracks::khmer</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>fingerprint_bins</code><span class="ox-param-default">500000</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>tracks::deeptools_plotfingerprint</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>fragment_size</code><span class="ox-param-default">0</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>gene_bed</code><span class="ox-param-default">test/fixtures/references/gene.bed</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>tracks::deeptools_computematrix</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>gtf</code><span class="ox-param-default">test/fixtures/references/genome.gtf</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 6 rules</summary>
+<div class="ox-param-rules"><code>consensus::homer_annotate_consensus</code> <code>consensus::homer_annotate_consensus_narrow</code> <code>peaks::homer_annotatepeaks</code> <code>peaks::homer_annotatepeaks_narrow</code> <code>reference::gtf2bed</code> <code>reference::star_genomegenerate</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>ip_ids</code><span class="ox-param-default">S1_REP1, S1_REP2</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>keep_dups</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>filter::bamtools_filter</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>keep_multi_map</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>filter::bamtools_filter</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>macs_fdr</code><span class="ox-param-default">0</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>peaks::macs3_callpeak</code> <code>peaks::macs3_callpeak_narrow</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>macs_gsize</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">MACS3 genome size. Empty string = derive from read length via khmer (faithful to the upstream default).</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>peaks::macs3_callpeak</code> <code>peaks::macs3_callpeak_narrow</code> <code>tracks::khmer</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>macs_pvalue</code><span class="ox-param-default">0</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>peaks::macs3_callpeak</code> <code>peaks::macs3_callpeak_narrow</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>make_blacklist_regions</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>reference::blacklist_regions</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>make_bowtie2_index</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>reference::bowtie2_index_build</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>make_bwa_index</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>reference::bwa_index_build</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>make_chrom_sizes</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>reference::getchromsizes</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>make_chromap_index</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>reference::chromap_index_build</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>make_gene_bed</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">Reference preparation — ports of the upstream PREPARE_GENOME steps that can run on the port&#x27;s plain reference files (all off by default). When enabled, point the corresponding input above at the generated file, e.g. gene_bed = &quot;results/genome/gene.bed&quot; with make_gene_bed = true; chrom_sizes = &quot;results/genome/chrom.sizes&quot; and fai = &quot;results/genome/genome.fa.fai&quot; with make_chrom_sizes = true; bwa_index = &quot;results/bwa/index&quot; with make_bwa_index = true; bowtie2_index = &quot;results/bowtie2/index&quot; with make_bowtie2_index = true; chromap_index = &quot;results/chromap/index/genome.index&quot; with make_chromap_index = true.</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>reference::gtf2bed</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>make_star_index</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>reference::star_genomegenerate</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>min_reps_consensus</code><span class="ox-param-default">1</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>consensus::macs3_consensus</code> <code>consensus::macs3_consensus_narrow</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>multiple_groups</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 10 rules</summary>
+<div class="ox-param-rules"><code>consensus::annotate_boolean_peaks</code> <code>consensus::annotate_boolean_peaks_narrow</code> <code>consensus::deseq2_qc</code> <code>consensus::deseq2_qc_narrow</code> <code>consensus::homer_annotate_consensus</code> <code>consensus::homer_annotate_consensus_narrow</code> <code>consensus::macs3_consensus</code> <code>consensus::macs3_consensus_narrow</code> <code>consensus::subread_featurecounts</code> <code>consensus::subread_featurecounts_narrow</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>multiqc_title</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>report::multiqc</code> <code>report::multiqc_narrow</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>narrow_peak</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">Peaks — broad mode is the nf-core default (narrow_peak = false); setting narrow_peak = true switches the whole peak chain (MACS3 narrowPeak calling, FRiP/annotation/QC, consensus, IGV and MultiQC) to the upstream narrow_peak layout.</p>
+<details class="ox-param-usedby"><summary>used by 26 rules</summary>
+<div class="ox-param-rules"><code>consensus::annotate_boolean_peaks</code> <code>consensus::annotate_boolean_peaks_narrow</code> <code>consensus::deseq2_qc</code> <code>consensus::deseq2_qc_narrow</code> <code>consensus::homer_annotate_consensus</code> <code>consensus::homer_annotate_consensus_narrow</code> <code>consensus::macs3_consensus</code> <code>consensus::macs3_consensus_narrow</code> <code>consensus::subread_featurecounts</code> <code>consensus::subread_featurecounts_narrow</code> <code>peaks::frip_score</code> <code>peaks::frip_score_narrow</code> <code>peaks::homer_annotatepeaks</code> <code>peaks::homer_annotatepeaks_narrow</code> <code>peaks::macs3_callpeak</code> <code>peaks::macs3_callpeak_narrow</code> <code>peaks::multiqc_custom_peaks</code> <code>peaks::multiqc_custom_peaks_narrow</code> <code>peaks::plot_homer_annotatepeaks</code> <code>peaks::plot_homer_annotatepeaks_narrow</code> <code>peaks::plot_macs3_qc</code> <code>peaks::plot_macs3_qc_narrow</code> <code>report::igv</code> <code>report::igv_narrow</code> <code>report::multiqc</code> <code>report::multiqc_narrow</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>pair_ids</code><span class="ox-param-default">S1_REP1, S1_REP2, C1_REP1, C1_REP2</span></div>
+<p class="ox-param-desc">Sample metadata. pair_ids MUST be kept in sync with [[pairs]] (the oxo-flow analogue of the nf-core samplesheet meta.id column). ip_ids lists the samples that get peak calling — upstream only runs MACS3 for samples that have a control; the port mirrors this with per-pair rules whose {control} input is empty for control-only samples and skipped via <code>optional = true</code>.</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>raw_dir</code><span class="ox-param-default">test/fixtures/raw</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>qc::fastqc</code> <code>qc::trimgalore</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>read_length</code><span class="ox-param-default">75</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>tracks::khmer</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>replicates_exist</code><span class="ox-param-default">true</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 10 rules</summary>
+<div class="ox-param-rules"><code>consensus::annotate_boolean_peaks</code> <code>consensus::annotate_boolean_peaks_narrow</code> <code>consensus::deseq2_qc</code> <code>consensus::deseq2_qc_narrow</code> <code>consensus::homer_annotate_consensus</code> <code>consensus::homer_annotate_consensus_narrow</code> <code>consensus::macs3_consensus</code> <code>consensus::macs3_consensus_narrow</code> <code>consensus::subread_featurecounts</code> <code>consensus::subread_featurecounts_narrow</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>save_macs_pileup</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>peaks::macs3_callpeak</code> <code>peaks::macs3_callpeak_narrow</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>seq_center</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">Read group / trimming</p>
+<details class="ox-param-usedby"><summary>used by 4 rules</summary>
+<div class="ox-param-rules"><code>align::bowtie2_align</code> <code>align::bwa_mem</code> <code>align::chromap_align</code> <code>align::star_align</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_consensus_peaks</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 10 rules</summary>
+<div class="ox-param-rules"><code>consensus::annotate_boolean_peaks</code> <code>consensus::annotate_boolean_peaks_narrow</code> <code>consensus::deseq2_qc</code> <code>consensus::deseq2_qc_narrow</code> <code>consensus::homer_annotate_consensus</code> <code>consensus::homer_annotate_consensus_narrow</code> <code>consensus::macs3_consensus</code> <code>consensus::macs3_consensus_narrow</code> <code>consensus::subread_featurecounts</code> <code>consensus::subread_featurecounts_narrow</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_deseq2_qc</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>consensus::deseq2_qc</code> <code>consensus::deseq2_qc_narrow</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_fastqc</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">Step toggles (mirror the nf-core/chipseq params.skip_* / when gates)</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>qc::fastqc</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_igv</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>report::igv</code> <code>report::igv_narrow</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_multiqc</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>report::multiqc</code> <code>report::multiqc_narrow</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_peak_annotation</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 10 rules</summary>
+<div class="ox-param-rules"><code>consensus::annotate_boolean_peaks</code> <code>consensus::annotate_boolean_peaks_narrow</code> <code>consensus::homer_annotate_consensus</code> <code>consensus::homer_annotate_consensus_narrow</code> <code>peaks::homer_annotatepeaks</code> <code>peaks::homer_annotatepeaks_narrow</code> <code>peaks::plot_homer_annotatepeaks</code> <code>peaks::plot_homer_annotatepeaks_narrow</code> <code>peaks::plot_macs3_qc</code> <code>peaks::plot_macs3_qc_narrow</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_peak_qc</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 4 rules</summary>
+<div class="ox-param-rules"><code>peaks::plot_homer_annotatepeaks</code> <code>peaks::plot_homer_annotatepeaks_narrow</code> <code>peaks::plot_macs3_qc</code> <code>peaks::plot_macs3_qc_narrow</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_picard_metrics</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>filter::picard_collectmultiplemetrics</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_plot_fingerprint</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>tracks::deeptools_plotfingerprint</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_plot_profile</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>tracks::deeptools_computematrix</code> <code>tracks::deeptools_plotheatmap</code> <code>tracks::deeptools_plotprofile</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_preseq</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>filter::preseq</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_qc</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>qc::fastqc</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_spp</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>filter::multiqc_custom_phantompeakqualtools</code> <code>filter::phantompeakqualtools</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_trimming</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>qc::trimgalore</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>star_index</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>align::star_align</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>three_prime_clip_r1</code><span class="ox-param-default">0</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>qc::trimgalore</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>three_prime_clip_r2</code><span class="ox-param-default">0</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>qc::trimgalore</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>trim_nextseq</code><span class="ox-param-default">0</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>qc::trimgalore</code></div>
+</details>
+</div>
+</div>
 
 Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
 
@@ -142,9 +488,11 @@ Descriptions are the workflow's own `#` comments from its `[config]` section, su
 
 ![oxo-flow-chipseq rule-level DAG](../assets/dag/oxo-flow-chipseq.svg)
 
+<p class="ox-dag-caption">figure · oxo-flow-chipseq — rule-level transit map (nf-metro)</p>
+
 </div>
 
-The graph is derived at catalog-build time from `oxo-flow graph -f dot` and rendered with Graphviz. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
+The graph is derived at catalog-build time from `oxo-flow graph -f metro` and rendered with [nf-metro](https://github.com/seqeralabs/nf-metro) — rules are grouped into colored transit lines by analysis stage. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 
