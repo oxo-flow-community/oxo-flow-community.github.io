@@ -68,42 +68,260 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-bgcflow
 
 ## Parameters
 
-| Parameter | Default | Description | Used by |
-|---:|---|---|---|
-| `antismash_db_path` | `resources/antismash_db` | upstream resources_path.antismash_db | `antismash`, `antismash_db_setup` |
-| `antismash_major` | `7` | antiSMASH (upstream rule_parameters.antismash + envs/antismash.yaml) | `antismash_v6` |
-| `antismash_taxon` | `bacteria` | upstream env var BGCFLOW_ANTISMASH_MODE | `antismash`, `antismash_v6` |
-| `antismash_version` | `7.1.0` | derived from envs/antismash.yaml pip pin git@7-1-0-1 | `antismash`, `antismash_overview`, `antismash_overview_gather`, `antismash_summary`, `antismash_v6`, `arts`, `bgc_count`, `bigscape`, `copy_antismash`, `copy_log_changes`, `csv_to_parquet`, `downstream_bgc_prep` |
-| `bgc_dataset` | `data/interim/bgcs/datasets.tsv` | — | `downstream_bgc_prep` |
-| `bgcflow_version` | `1.1.2` | BGCflow housekeeping | `format_gbk` |
-| `gecco_version` | `0.9.10` | — | `gecco` |
-| `gtdb_api_base` | `https://gtdb-api.ecogenomic.org` | — | `gtdb_prep` |
-| `gtdb_offline` | `False` | upstream: use_gtdb_api False -> offline mode | `gtdb_prep` |
-| `gtdb_release` | `220.0` | GTDB taxonomy (upstream rule_parameters.install_gtdbtk + use_gtdb_api) | `gtdb_prep`, `install_gtdbtk` |
-| `gtdb_release_major` | `220` | GTDB release major version (upstream: release.split('.')[0]) | `gtdb_prep`, `install_gtdbtk` |
-| `gtdb_release_version` | `r220` | GTDB release id (e.g. r214, r220) | `install_gtdbtk` |
-| `gtdb_tax_paths` | `[]` | upstream GTDB_PATHS: space-separated user gtdb-tax tsv(s) | `gtdb_prep` |
-| `input_type` | `fna` | upstream get_input_location(): fna \| gbk | `copy_custom_fasta`, `copy_custom_genbank`, `format_gbk`, `genbank_to_fna`, `prokka`, `prokka_gbk` |
-| `mibig_version` | `3.1` | MIBiG JSON release used by get_mibig_table | `get_mibig_table` |
-| `ncbi_genera` | `` | — | `ncbi_genome_download` |
-| `project` | `genomes` | Project / input genomes (upstream: config.yaml `projects` + data/raw/fasta) | `amrfinder_gather`, `antismash_overview_gather`, `antismash_summary`, `bigscape`, `cblaster_genome_db`, `checkm`, `copy_log_changes`, `copy_mibig_table`, `csv_to_parquet`, `downstream_bgc_prep`, `fastani`, `fastani_convert`, `fix_gtdb_taxonomy`, `gtdbtk`, `mash`, `mash_convert`, `roary`, `roary_out`, `seqfu_combine`, `write_dependency_versions` |
-| `project_source` | `custom` | — | `ncbi_genome_download` |
-| `raw_dir` | `test/fixtures/raw` | directory containing fasta/<genome_id>.fna | `copy_custom_fasta`, `copy_custom_genbank`, `genbank_to_fna`, `prokka_gbk` |
-| `run_amrfinderplus` | `false` | — | `amrfinder_gather`, `amrfinderplus` |
-| `run_arts` | `false` | — | `arts` |
-| `run_bigscape` | `false` | — | `bigscape` |
-| `run_cblaster` | `false` | — | `cblaster_genome_db` |
-| `run_checkm` | `false` | — | `checkm`, `install_checkm` |
-| `run_eggnog` | `false` | — | `eggnog`, `install_eggnog` |
-| `run_fastani` | `false` | — | `fastani`, `fastani_convert` |
-| `run_gecco` | `false` | — | `gecco` |
-| `run_gtdbtk` | `false` | — | `gtdbtk`, `install_gtdbtk` |
-| `run_mash` | `false` | — | `mash`, `mash_convert` |
-| `run_roary` | `false` | — | `roary`, `roary_out` |
-| `run_seqfu` | `false` | — | `seqfu_combine`, `seqfu_stats` |
-| `write_dependency_versions` | `false` | — | `write_dependency_versions` |
-
-{: .ox-params }
+<div class="ox-params">
+<div class="ox-param">
+<div class="ox-param-head"><code>antismash_db_path</code><span class="ox-param-default">resources/antismash_db</span></div>
+<p class="ox-param-desc">upstream resources_path.antismash_db</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>antismash</code> <code>antismash_db_setup</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>antismash_major</code><span class="ox-param-default">7</span></div>
+<p class="ox-param-desc">antiSMASH (upstream rule_parameters.antismash + envs/antismash.yaml)</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>antismash_v6</code> <code>write_dependency_versions</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>antismash_taxon</code><span class="ox-param-default">bacteria</span></div>
+<p class="ox-param-desc">upstream env var BGCFLOW_ANTISMASH_MODE</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>antismash</code> <code>antismash_v6</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>antismash_version</code><span class="ox-param-default">7.1.0</span></div>
+<p class="ox-param-desc">matches envs/antismash.yaml bioconda::antismash=7.1.0</p>
+<details class="ox-param-usedby"><summary>used by 17 rules</summary>
+<div class="ox-param-rules"><code>annotate_bigfam_hits</code> <code>antismash</code> <code>antismash_overview</code> <code>antismash_overview_gather</code> <code>antismash_summary</code> <code>antismash_v6</code> <code>arts</code> <code>bgc_count</code> <code>bigscape</code> <code>bigslice</code> <code>bigslice_prep</code> <code>copy_antismash</code> <code>copy_log_changes</code> <code>csv_to_parquet</code> <code>downstream_bgc_prep</code> <code>query_bigslice</code> <code>summarize_bigslice_query</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>bgc_dataset</code><span class="ox-param-default">data/interim/bgcs/datasets.tsv</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>downstream_bgc_prep</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>bgcflow_version</code><span class="ox-param-default">1.1.2</span></div>
+<p class="ox-param-desc">BGCflow housekeeping</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>format_gbk</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>gecco_version</code><span class="ox-param-default">0.9.10</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>gecco</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>gtdb_api_base</code><span class="ox-param-default">https://gtdb-api.ecogenomic.org</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>gtdb_prep</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>gtdb_offline</code><span class="ox-param-default">False</span></div>
+<p class="ox-param-desc">upstream: use_gtdb_api False -&gt; offline mode</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>gtdb_prep</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>gtdb_release</code><span class="ox-param-default">220.0</span></div>
+<p class="ox-param-desc">GTDB taxonomy (upstream rule_parameters.install_gtdbtk + use_gtdb_api)</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>gtdb_prep</code> <code>install_gtdbtk</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>gtdb_release_major</code><span class="ox-param-default">220</span></div>
+<p class="ox-param-desc">GTDB release major version (upstream: release.split(&#x27;.&#x27;)[0])</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>gtdb_prep</code> <code>install_gtdbtk</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>gtdb_release_version</code><span class="ox-param-default">r220</span></div>
+<p class="ox-param-desc">GTDB release id (e.g. r214, r220)</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>install_gtdbtk</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>gtdb_tax_paths</code><span class="ox-param-default">[]</span></div>
+<p class="ox-param-desc">upstream GTDB_PATHS: space-separated user gtdb-tax tsv(s)</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>gtdb_prep</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>input_type</code><span class="ox-param-default">fna</span></div>
+<p class="ox-param-desc">upstream get_input_location(): fna | gbk</p>
+<details class="ox-param-usedby"><summary>used by 6 rules</summary>
+<div class="ox-param-rules"><code>copy_custom_fasta</code> <code>copy_custom_genbank</code> <code>format_gbk</code> <code>genbank_to_fna</code> <code>prokka</code> <code>prokka_gbk</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>mibig_version</code><span class="ox-param-default">3.1</span></div>
+<p class="ox-param-desc">MIBiG JSON release used by get_mibig_table</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>get_mibig_table</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>ncbi_genera</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>ncbi_genome_download</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>project</code><span class="ox-param-default">genomes</span></div>
+<p class="ox-param-desc">Project / input genomes (upstream: config.yaml <code>projects</code> + data/raw/fasta)</p>
+<details class="ox-param-usedby"><summary>used by 29 rules</summary>
+<div class="ox-param-rules"><code>amrfinder_gather</code> <code>annotate_bigfam_hits</code> <code>antismash_overview_gather</code> <code>antismash_summary</code> <code>automlst_wrapper</code> <code>automlst_wrapper_out</code> <code>bigscape</code> <code>bigslice</code> <code>bigslice_prep</code> <code>cblaster_genome_db</code> <code>checkm</code> <code>copy_log_changes</code> <code>copy_mibig_table</code> <code>csv_to_parquet</code> <code>deeptfactor_summary</code> <code>downstream_bgc_prep</code> <code>fastani</code> <code>fastani_convert</code> <code>fix_gtdb_taxonomy</code> <code>gtdbtk</code> <code>mash</code> <code>mash_convert</code> <code>prep_automlst_gbk</code> <code>query_bigslice</code> <code>roary</code> <code>roary_out</code> <code>seqfu_combine</code> <code>summarize_bigslice_query</code> <code>write_dependency_versions</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>project_source</code><span class="ox-param-default">custom</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>ncbi_genome_download</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>raw_dir</code><span class="ox-param-default">test/fixtures/raw</span></div>
+<p class="ox-param-desc">directory containing fasta/&lt;genome_id&gt;.fna</p>
+<details class="ox-param-usedby"><summary>used by 4 rules</summary>
+<div class="ox-param-rules"><code>copy_custom_fasta</code> <code>copy_custom_genbank</code> <code>genbank_to_fna</code> <code>prokka_gbk</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>run_amrfinderplus</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>amrfinder_gather</code> <code>amrfinderplus</code> <code>install_amrfinder</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>run_arts</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>arts</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>run_automlst</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">upstream pipelines.automlst-wrapper</p>
+<details class="ox-param-usedby"><summary>used by 4 rules</summary>
+<div class="ox-param-rules"><code>automlst_wrapper</code> <code>automlst_wrapper_out</code> <code>install_automlst_wrapper</code> <code>prep_automlst_gbk</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>run_bigscape</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>bigscape</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>run_bigslice</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">upstream pipelines.bigslice</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>bigslice</code> <code>bigslice_prep</code> <code>install_bigslice</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>run_cblaster</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>cblaster_genome_db</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>run_checkm</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>checkm</code> <code>install_checkm</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>run_deeptfactor</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">upstream pipelines.deeptfactor</p>
+<details class="ox-param-usedby"><summary>used by 4 rules</summary>
+<div class="ox-param-rules"><code>deeptfactor</code> <code>deeptfactor_setup</code> <code>deeptfactor_summary</code> <code>deeptfactor_to_json</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>run_eggnog</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>eggnog</code> <code>install_eggnog</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>run_fastani</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>fastani</code> <code>fastani_convert</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>run_gecco</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>gecco</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>run_gtdbtk</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>gtdbtk</code> <code>install_gtdbtk</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>run_mash</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>mash</code> <code>mash_convert</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>run_query_bigslice</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">upstream pipelines.query-bigslice (needs the 18GB BiG-FAM bundle)</p>
+<details class="ox-param-usedby"><summary>used by 4 rules</summary>
+<div class="ox-param-rules"><code>annotate_bigfam_hits</code> <code>fetch_bigslice_db</code> <code>query_bigslice</code> <code>summarize_bigslice_query</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>run_roary</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>roary</code> <code>roary_out</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>run_seqfu</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>seqfu_combine</code> <code>seqfu_stats</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>write_dependency_versions</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>write_dependency_versions</code></div>
+</details>
+</div>
+</div>
 
 Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
 
@@ -113,9 +331,11 @@ Descriptions are the workflow's own `#` comments from its `[config]` section, su
 
 ![oxo-flow-bgcflow rule-level DAG](../assets/dag/oxo-flow-bgcflow.svg)
 
+<p class="ox-dag-caption">figure · oxo-flow-bgcflow — rule-level transit map (nf-metro)</p>
+
 </div>
 
-The graph is derived at catalog-build time from `oxo-flow graph -f dot` and rendered with Graphviz. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
+The graph is derived at catalog-build time from `oxo-flow graph -f metro` and rendered with [nf-metro](https://github.com/seqeralabs/nf-metro) — rules are grouped into colored transit lines by analysis stage. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

@@ -70,76 +70,470 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-viralrecon
 
 ## Parameters
 
-| Parameter | Default | Description | Used by |
-|---:|---|---|---|
-| `additional_annotation` | `` | --- Additional annotation (upstream params.additional_annotation; empty = off. A GFF/GTF to annotate the variants with in addition to the main reference annotation, run through snpEff + SnpSift + the variants long table. .gz files are gunzipped by build_snpeff_db_additional.) --- | `additional_annotation`, `build_snpeff_db_additional` |
-| `assemblers` | `spades` | --- Assembly (upstream params.assemblers is a comma-separated list, e.g. 'spades,unicycler'; the port's when-language has no 'in' operator, so every combination of the three assemblers is enumerated with explicit equality tests. Give the canonical lowercase form, commas with no spaces: 'spades' \| 'unicycler' \| 'minia' \| 'spades,unicycler' \| ... ) --- | `abacas`, `abacas_minia`, `abacas_unicycler`, `assemble_minia`, `assemble_spades`, `assemble_unicycler`, `bandage`, `bandage_unicycler`, `blast_assembly`, `blast_assembly_minia`, `blast_assembly_unicycler`, `plasmidid`, `plasmidid_minia`, `plasmidid_unicycler`, `quast_assembly`, `quast_assembly_minia`, `quast_assembly_unicycler` |
-| `consensus_caller` | `bcftools` | --- Consensus caller (upstream params.consensus_caller; both the bcftools and ivar branches are ported as when-gated rules) --- | `consensus_call`, `consensus_call_wgs`, `consensus_filter`, `consensus_filter_bcftools`, `consensus_ivar`, `consensus_ivar_wgs` |
-| `fasta` | `reference/genome.fa` | The port expects uncompressed files at these paths. Set the *_ends_gz keys to true to run the upstream GUNZIP_* steps first (outputs land at the same fixed reference/ paths). | `gunzip_fasta` |
-| `fasta_ends_gz` | `false` | — | `gunzip_fasta` |
-| `filter_duplicates` | `false` | upstream params.filter_duplicates (default false) — passed to PICARD_MARKDUPLICATES as REMOVE_DUPLICATES=true when set | `markduplicates`, `markduplicates_wgs` |
-| `freyja_barcodes` | `test/fixtures/refs/freyja_barcodes.csv` | --- Freyja (upstream --freyja_barcodes / --freyja_lineages. When either is left empty the gated rules freyja_update + freyja_demix_updated / freyja_boot_updated download and use the upstream DB instead.) --- | `freyja_boot`, `freyja_boot_updated`, `freyja_demix`, `freyja_demix_updated`, `freyja_update` |
-| `freyja_db_name` | `reference/freyja_db` | upstream params.freyja_db_name — where FREYJA_UPDATE writes its download (upstream default 'freyja_db'; the port points into reference/) | `freyja_boot_updated`, `freyja_demix_updated`, `freyja_update` |
-| `freyja_depthcutoff` | `0` | — | `freyja_boot`, `freyja_boot_updated`, `freyja_demix`, `freyja_demix_updated` |
-| `freyja_lineages` | `test/fixtures/refs/freyja_lineages.json` | freyja's meta format is the curated_lineages JSON (buildLineageMap json.loads it — live: the CSV default died in freyja boot with JSONDecodeError); the CSV sibling is kept as the barcodes-side table | `freyja_boot`, `freyja_boot_updated`, `freyja_demix`, `freyja_demix_updated`, `freyja_update` |
-| `freyja_repeats` | `100` | — | `freyja_boot`, `freyja_boot_updated` |
-| `gff` | `reference/genome.gff` | — | `gunzip_gff` |
-| `gff_ends_gz` | `false` | — | `gunzip_gff` |
-| `ivar_trim_noprimer` | `false` | — | `ivar_trim` |
-| `ivar_trim_offset` | `` | — | `ivar_trim` |
-| `kraken2_assembly_host_filter` | `true` | — | `assembly_fastq` |
-| `kraken2_db` | `reference/kraken2_db.tar.gz` | Kraken2 host-removal database (upstream --kraken2_db, tar.gz) | `kraken2_build`, `untar_kraken2_db` |
-| `kraken2_db_name` | `human` | upstream params.kraken2_db_name — the library KRAKEN2_BUILD downloads when kraken2_db is left empty (gated rule kraken2_build) | `kraken2_build` |
-| `kraken2_variants_host_filter` | `false` | — | — |
-| `min_contig_length` | `200` | Consensus QC | `blast_assembly`, `blast_assembly_minia`, `blast_assembly_unicycler` |
-| `min_mapped_reads` | `1000` | upstream params.min_mapped_reads — the per-sample channel DROP is a documented runtime-filter deviation (no dynamic DAG); the reporting half (fail_mapped_samples_mqc.tsv in the MultiQC data) is ported inside the multiqc rule | `multiqc` |
-| `min_perc_contig_aligned` | `0.7` | — | `blast_assembly`, `blast_assembly_minia`, `blast_assembly_unicycler` |
-| `multiqc_title` | `` | MultiQC | `multiqc` |
-| `nextclade_dataset` | `` | Nextclade dataset (upstream genome config for MN908947.3) | `get_nextclade_dataset` |
-| `nextclade_dataset_name` | `sars-cov-2` | — | `get_nextclade_dataset` |
-| `nextclade_dataset_tag` | `2024-10-17--16-48-48Z` | — | `get_nextclade_dataset` |
-| `out_dir` | `results` | — | `fastqc_primers`, `fastqc_raw`, `fastqc_trim`, `multiqc` |
-| `pango_database` | `test/fixtures/refs/pangolin_db` | --- Pangolin (upstream --pango_database; a directory. When left empty the gated rules pangolin_updatedata + pangolin_run_updated download the data directory instead, mirroring upstream PANGOLIN_UPDATEDATA.) --- | `pangolin`, `pangolin_run_updated`, `pangolin_updatedata` |
-| `platform` | `illumina` | Platform / protocol | `multiqc` |
-| `primer_bed` | `reference/primers.bed` | — | `gunzip_primer_bed` |
-| `primer_bed_ends_gz` | `false` | — | `gunzip_primer_bed` |
-| `primer_left_suffix` | `_LEFT` | Primer trimming for assembly | `collapse_primers` |
-| `primer_right_suffix` | `_RIGHT` | — | `collapse_primers` |
-| `protocol` | `amplicon` | — | `bam_sort_index_trimmed`, `call_variants_bcftools`, `call_variants_bcftools_wgs`, `call_variants_ivar`, `collapse_primers`, `consensus_call`, `consensus_call_wgs`, `consensus_filter`, `consensus_filter_bcftools`, `consensus_ivar`, `consensus_ivar_wgs`, `cutadapt`, `fastqc_primers`, `freyja_variants`, `freyja_variants_wgs`, `get_primer_fasta`, `ivar_to_vcf`, `ivar_trim`, `markduplicates`, `markduplicates_wgs`, `mosdepth_amplicon`, `mosdepth_genome`, `mosdepth_genome_wgs`, `norm_vcf_bcftools`, `picard_metrics`, `picard_metrics_wgs`, `plot_mosdepth_amplicon`, `prepare_primer_fasta`, `sort_vcf`, `variants_long_table`, `variants_long_table_bcftools` |
-| `raw_dir` | `test/fixtures/raw` | Directory holding raw/<sample>_R1.fastq.gz + raw/<sample>_R2.fastq.gz. The repo default ships the tiny test fixtures; point this at your data. | `cat_fastq`, `fastqc_raw` |
-| `save_mpileup` | `false` | upstream params.save_mpileup — when true, call_variants_ivar tees the samtools mpileup stream to variants/ivar/{sample}.mpileup (off by default, exactly like upstream; the port emits an empty placeholder when false so the declared output stays present) | `call_variants_ivar` |
-| `save_trimmed_fail` | `false` | upstream params.save_trimmed_fail — when true, fastp keeps the reads that failed filtering (--failed_out + --unpaired1/2); off by default, exactly like upstream (empty placeholders when false) | `fastp` |
-| `save_unaligned` | `false` | upstream params.save_unaligned — NOT ported as a gate: the Kraken2 unclassified reads feed the assembly branch (upstream channel wiring), so they always land in results/kraken2/ — the flag is effectively always on in the port (benign over-emission vs upstream's default publish) | — |
-| `skip_abacas` | `false` | — | `abacas`, `abacas_minia`, `abacas_unicycler` |
-| `skip_assembly` | `false` | — | `abacas`, `abacas_minia`, `abacas_unicycler`, `assemble_minia`, `assemble_spades`, `assemble_unicycler`, `bandage`, `bandage_unicycler`, `blast_assembly`, `blast_assembly_minia`, `blast_assembly_unicycler`, `cutadapt`, `fastqc_primers`, `get_primer_fasta`, `make_blast_db`, `plasmidid`, `plasmidid_minia`, `plasmidid_unicycler`, `prepare_primer_fasta`, `quast_assembly`, `quast_assembly_minia`, `quast_assembly_unicycler` |
-| `skip_assembly_quast` | `false` | — | `quast_assembly`, `quast_assembly_minia`, `quast_assembly_unicycler` |
-| `skip_bandage` | `false` | — | `bandage`, `bandage_unicycler` |
-| `skip_blast` | `false` | — | `blast_assembly`, `blast_assembly_minia`, `blast_assembly_unicycler`, `make_blast_db` |
-| `skip_consensus` | `false` | — | `consensus_call`, `consensus_call_wgs`, `consensus_filter`, `consensus_filter_bcftools`, `consensus_ivar`, `consensus_ivar_wgs`, `get_nextclade_dataset`, `nextclade`, `nextclade_clade_mqc`, `pangolin`, `pangolin_run_updated`, `pangolin_updatedata`, `plot_base_density`, `quast_consensus` |
-| `skip_consensus_plots` | `false` | — | `plot_base_density` |
-| `skip_cutadapt` | `false` | — | `cutadapt`, `fastqc_primers`, `get_primer_fasta`, `prepare_primer_fasta` |
-| `skip_fastp` | `false` | — | `fastp`, `fastqc_trim` |
-| `skip_fastqc` | `false` | Skip flags (identical defaults to upstream params) | `fastqc_primers`, `fastqc_raw`, `fastqc_trim` |
-| `skip_freyja` | `false` | — | `freyja_boot`, `freyja_boot_updated`, `freyja_demix`, `freyja_demix_updated`, `freyja_update`, `freyja_variants`, `freyja_variants_wgs` |
-| `skip_freyja_boot` | `false` | — | `freyja_boot`, `freyja_boot_updated` |
-| `skip_ivar_trim` | `false` | — | `bam_sort_index_trimmed`, `ivar_trim` |
-| `skip_kraken2` | `false` | — | `assembly_fastq`, `kraken2`, `kraken2_build`, `untar_kraken2_db` |
-| `skip_markduplicates` | `true` | — | `markduplicates`, `markduplicates_wgs` |
-| `skip_mosdepth` | `false` | — | `collapse_primers`, `mosdepth_amplicon`, `mosdepth_genome`, `mosdepth_genome_wgs`, `plot_mosdepth_amplicon`, `plot_mosdepth_genome` |
-| `skip_nextclade` | `false` | — | `get_nextclade_dataset`, `nextclade`, `nextclade_clade_mqc` |
-| `skip_noninternal_primers` | `false` | — | `prepare_primer_fasta` |
-| `skip_pangolin` | `false` | — | `pangolin`, `pangolin_run_updated`, `pangolin_updatedata` |
-| `skip_picard_metrics` | `false` | — | `picard_metrics`, `picard_metrics_wgs` |
-| `skip_plasmidid` | `true` | — | `plasmidid`, `plasmidid_minia`, `plasmidid_unicycler` |
-| `skip_snpeff` | `false` | — | `build_snpeff_db`, `snpeff_ann`, `snpsift_extract`, `variants_long_table`, `variants_long_table_bcftools` |
-| `skip_variants` | `false` | — | `align_bowtie2`, `bam_sort_index`, `bam_sort_index_trimmed`, `build_bowtie2_index`, `build_snpeff_db`, `call_variants_bcftools`, `call_variants_bcftools_wgs`, `call_variants_ivar`, `collapse_primers`, `freyja_boot`, `freyja_boot_updated`, `freyja_demix`, `freyja_demix_updated`, `freyja_update`, `freyja_variants`, `freyja_variants_wgs`, `ivar_to_vcf`, `ivar_trim`, `markduplicates`, `markduplicates_wgs`, `mosdepth_amplicon`, `mosdepth_genome`, `mosdepth_genome_wgs`, `norm_vcf_bcftools`, `picard_metrics`, `picard_metrics_wgs`, `plot_mosdepth_amplicon`, `plot_mosdepth_genome`, `snpeff_ann`, `snpsift_extract`, `sort_vcf`, `variants_long_table`, `variants_long_table_bcftools` |
-| `skip_variants_long_table` | `false` | — | `variants_long_table`, `variants_long_table_bcftools` |
-| `skip_variants_quast` | `false` | — | `quast_consensus` |
-| `spades_mode` | `rnaviral` | — | `assemble_spades` |
-| `threeprime_adapters` | `false` | — | — |
-| `variant_caller` | `ivar` | --- Variant calling (upstream params.variant_caller defaults to 'ivar' for the amplicon protocol and 'bcftools' otherwise; both branches are ported as when-gated rules). The metagenomic branch auto-runs the bcftools caller regardless of this key — upstream derives variant_caller in nextflow.config (params.variant_caller = protocol == 'metagenomic' ? 'bcftools' : 'ivar'), and the port mirrors that derivation in the wgs rules' when conditions, so a metagenomic run needs no extra --arg --- | `additional_annotation`, `call_variants_bcftools`, `call_variants_ivar`, `consensus_filter`, `consensus_filter_bcftools`, `ivar_to_vcf`, `norm_vcf_bcftools`, `sort_vcf`, `variants_long_table`, `variants_long_table_bcftools` |
-
-{: .ox-params }
+<div class="ox-params">
+<div class="ox-param">
+<div class="ox-param-head"><code>additional_annotation</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">--- Additional annotation (upstream params.additional_annotation; empty = off. A GFF/GTF to annotate the variants with in addition to the main reference annotation, run through snpEff + SnpSift + the variants long table. .gz files are gunzipped by build_snpeff_db_additional.) ---</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>additional_annotation</code> <code>build_snpeff_db_additional</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>assemblers</code><span class="ox-param-default">spades</span></div>
+<p class="ox-param-desc">--- Assembly (upstream params.assemblers is a comma-separated list, e.g. &#x27;spades,unicycler&#x27;; the port&#x27;s when-language has no &#x27;in&#x27; operator, so every combination of the three assemblers is enumerated with explicit equality tests. Give the canonical lowercase form, commas with no spaces: &#x27;spades&#x27; | &#x27;unicycler&#x27; | &#x27;minia&#x27; | &#x27;spades,unicycler&#x27; | ... ) ---</p>
+<details class="ox-param-usedby"><summary>used by 17 rules</summary>
+<div class="ox-param-rules"><code>abacas</code> <code>abacas_minia</code> <code>abacas_unicycler</code> <code>assemble_minia</code> <code>assemble_spades</code> <code>assemble_unicycler</code> <code>bandage</code> <code>bandage_unicycler</code> <code>blast_assembly</code> <code>blast_assembly_minia</code> <code>blast_assembly_unicycler</code> <code>plasmidid</code> <code>plasmidid_minia</code> <code>plasmidid_unicycler</code> <code>quast_assembly</code> <code>quast_assembly_minia</code> <code>quast_assembly_unicycler</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>consensus_caller</code><span class="ox-param-default">bcftools</span></div>
+<p class="ox-param-desc">--- Consensus caller (upstream params.consensus_caller; both the bcftools and ivar branches are ported as when-gated rules) ---</p>
+<details class="ox-param-usedby"><summary>used by 6 rules</summary>
+<div class="ox-param-rules"><code>consensus_call</code> <code>consensus_call_wgs</code> <code>consensus_filter</code> <code>consensus_filter_bcftools</code> <code>consensus_ivar</code> <code>consensus_ivar_wgs</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>fasta</code><span class="ox-param-default">reference/genome.fa</span></div>
+<p class="ox-param-desc">The port expects uncompressed files at these paths. Set the *_ends_gz keys to true to run the upstream GUNZIP_* steps first (outputs land at the same fixed reference/ paths).</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>gunzip_fasta</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>fasta_ends_gz</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>gunzip_fasta</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>filter_duplicates</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">upstream params.filter_duplicates (default false) — passed to PICARD_MARKDUPLICATES as REMOVE_DUPLICATES=true when set</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>markduplicates</code> <code>markduplicates_wgs</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>freyja_barcodes</code><span class="ox-param-default">test/fixtures/refs/freyja_barcodes.csv</span></div>
+<p class="ox-param-desc">--- Freyja (upstream --freyja_barcodes / --freyja_lineages. When either is left empty the gated rules freyja_update + freyja_demix_updated / freyja_boot_updated download and use the upstream DB instead.) ---</p>
+<details class="ox-param-usedby"><summary>used by 5 rules</summary>
+<div class="ox-param-rules"><code>freyja_boot</code> <code>freyja_boot_updated</code> <code>freyja_demix</code> <code>freyja_demix_updated</code> <code>freyja_update</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>freyja_db_name</code><span class="ox-param-default">reference/freyja_db</span></div>
+<p class="ox-param-desc">upstream params.freyja_db_name — where FREYJA_UPDATE writes its download (upstream default &#x27;freyja_db&#x27;; the port points into reference/)</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>freyja_boot_updated</code> <code>freyja_demix_updated</code> <code>freyja_update</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>freyja_depthcutoff</code><span class="ox-param-default">0</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 4 rules</summary>
+<div class="ox-param-rules"><code>freyja_boot</code> <code>freyja_boot_updated</code> <code>freyja_demix</code> <code>freyja_demix_updated</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>freyja_lineages</code><span class="ox-param-default">test/fixtures/refs/freyja_lineages.json</span></div>
+<p class="ox-param-desc">freyja&#x27;s meta format is the curated_lineages JSON (buildLineageMap json.loads it — live: the CSV default died in freyja boot with JSONDecodeError); the CSV sibling is kept as the barcodes-side table</p>
+<details class="ox-param-usedby"><summary>used by 5 rules</summary>
+<div class="ox-param-rules"><code>freyja_boot</code> <code>freyja_boot_updated</code> <code>freyja_demix</code> <code>freyja_demix_updated</code> <code>freyja_update</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>freyja_repeats</code><span class="ox-param-default">100</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>freyja_boot</code> <code>freyja_boot_updated</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>gff</code><span class="ox-param-default">reference/genome.gff</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>gunzip_gff</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>gff_ends_gz</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>gunzip_gff</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>ivar_trim_noprimer</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>ivar_trim</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>ivar_trim_offset</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>ivar_trim</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>kraken2_assembly_host_filter</code><span class="ox-param-default">true</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>assembly_fastq</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>kraken2_db</code><span class="ox-param-default">reference/kraken2_db.tar.gz</span></div>
+<p class="ox-param-desc">Kraken2 host-removal database (upstream --kraken2_db, tar.gz)</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>kraken2_build</code> <code>untar_kraken2_db</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>kraken2_db_name</code><span class="ox-param-default">human</span></div>
+<p class="ox-param-desc">upstream params.kraken2_db_name — the library KRAKEN2_BUILD downloads when kraken2_db is left empty (gated rule kraken2_build)</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>kraken2_build</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>kraken2_variants_host_filter</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>min_contig_length</code><span class="ox-param-default">200</span></div>
+<p class="ox-param-desc">Consensus QC</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>blast_assembly</code> <code>blast_assembly_minia</code> <code>blast_assembly_unicycler</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>min_mapped_reads</code><span class="ox-param-default">1000</span></div>
+<p class="ox-param-desc">upstream params.min_mapped_reads — the per-sample channel DROP is a documented runtime-filter deviation (no dynamic DAG); the reporting half (fail_mapped_samples_mqc.tsv in the MultiQC data) is ported inside the multiqc rule</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>multiqc</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>min_perc_contig_aligned</code><span class="ox-param-default">0.7</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>blast_assembly</code> <code>blast_assembly_minia</code> <code>blast_assembly_unicycler</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>multiqc_title</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">MultiQC</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>multiqc</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>nextclade_dataset</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">Nextclade dataset (upstream genome config for MN908947.3)</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>get_nextclade_dataset</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>nextclade_dataset_name</code><span class="ox-param-default">sars-cov-2</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>get_nextclade_dataset</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>nextclade_dataset_tag</code><span class="ox-param-default">2024-10-17--16-48-48Z</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>get_nextclade_dataset</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>out_dir</code><span class="ox-param-default">results</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 4 rules</summary>
+<div class="ox-param-rules"><code>fastqc_primers</code> <code>fastqc_raw</code> <code>fastqc_trim</code> <code>multiqc</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>pango_database</code><span class="ox-param-default">test/fixtures/refs/pangolin_db</span></div>
+<p class="ox-param-desc">--- Pangolin (upstream --pango_database; a directory. When left empty the gated rules pangolin_updatedata + pangolin_run_updated download the data directory instead, mirroring upstream PANGOLIN_UPDATEDATA.) ---</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>pangolin</code> <code>pangolin_run_updated</code> <code>pangolin_updatedata</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>platform</code><span class="ox-param-default">illumina</span></div>
+<p class="ox-param-desc">Platform / protocol</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>multiqc</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>primer_bed</code><span class="ox-param-default">reference/primers.bed</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>gunzip_primer_bed</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>primer_bed_ends_gz</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>gunzip_primer_bed</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>primer_left_suffix</code><span class="ox-param-default">_LEFT</span></div>
+<p class="ox-param-desc">Primer trimming for assembly</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>collapse_primers</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>primer_right_suffix</code><span class="ox-param-default">_RIGHT</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>collapse_primers</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>protocol</code><span class="ox-param-default">amplicon</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 31 rules</summary>
+<div class="ox-param-rules"><code>bam_sort_index_trimmed</code> <code>call_variants_bcftools</code> <code>call_variants_bcftools_wgs</code> <code>call_variants_ivar</code> <code>collapse_primers</code> <code>consensus_call</code> <code>consensus_call_wgs</code> <code>consensus_filter</code> <code>consensus_filter_bcftools</code> <code>consensus_ivar</code> <code>consensus_ivar_wgs</code> <code>cutadapt</code> <code>fastqc_primers</code> <code>freyja_variants</code> <code>freyja_variants_wgs</code> <code>get_primer_fasta</code> <code>ivar_to_vcf</code> <code>ivar_trim</code> <code>markduplicates</code> <code>markduplicates_wgs</code> <code>mosdepth_amplicon</code> <code>mosdepth_genome</code> <code>mosdepth_genome_wgs</code> <code>norm_vcf_bcftools</code> <code>picard_metrics</code> <code>picard_metrics_wgs</code> <code>plot_mosdepth_amplicon</code> <code>prepare_primer_fasta</code> <code>sort_vcf</code> <code>variants_long_table</code> <code>variants_long_table_bcftools</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>raw_dir</code><span class="ox-param-default">test/fixtures/raw</span></div>
+<p class="ox-param-desc">Directory holding raw/&lt;sample&gt;_R1.fastq.gz + raw/&lt;sample&gt;_R2.fastq.gz. The repo default ships the tiny test fixtures; point this at your data.</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>cat_fastq</code> <code>fastqc_raw</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>save_mpileup</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">upstream params.save_mpileup — when true, call_variants_ivar tees the samtools mpileup stream to variants/ivar/{sample}.mpileup (off by default, exactly like upstream; the port emits an empty placeholder when false so the declared output stays present)</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>call_variants_ivar</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>save_trimmed_fail</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">upstream params.save_trimmed_fail — when true, fastp keeps the reads that failed filtering (--failed_out + --unpaired1/2); off by default, exactly like upstream (empty placeholders when false)</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>fastp</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>save_unaligned</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">upstream params.save_unaligned — NOT ported as a gate: the Kraken2 unclassified reads feed the assembly branch (upstream channel wiring), so they always land in results/kraken2/ — the flag is effectively always on in the port (benign over-emission vs upstream&#x27;s default publish)</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_abacas</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>abacas</code> <code>abacas_minia</code> <code>abacas_unicycler</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_assembly</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 22 rules</summary>
+<div class="ox-param-rules"><code>abacas</code> <code>abacas_minia</code> <code>abacas_unicycler</code> <code>assemble_minia</code> <code>assemble_spades</code> <code>assemble_unicycler</code> <code>bandage</code> <code>bandage_unicycler</code> <code>blast_assembly</code> <code>blast_assembly_minia</code> <code>blast_assembly_unicycler</code> <code>cutadapt</code> <code>fastqc_primers</code> <code>get_primer_fasta</code> <code>make_blast_db</code> <code>plasmidid</code> <code>plasmidid_minia</code> <code>plasmidid_unicycler</code> <code>prepare_primer_fasta</code> <code>quast_assembly</code> <code>quast_assembly_minia</code> <code>quast_assembly_unicycler</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_assembly_quast</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>quast_assembly</code> <code>quast_assembly_minia</code> <code>quast_assembly_unicycler</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_bandage</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>bandage</code> <code>bandage_unicycler</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_blast</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 4 rules</summary>
+<div class="ox-param-rules"><code>blast_assembly</code> <code>blast_assembly_minia</code> <code>blast_assembly_unicycler</code> <code>make_blast_db</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_consensus</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 14 rules</summary>
+<div class="ox-param-rules"><code>consensus_call</code> <code>consensus_call_wgs</code> <code>consensus_filter</code> <code>consensus_filter_bcftools</code> <code>consensus_ivar</code> <code>consensus_ivar_wgs</code> <code>get_nextclade_dataset</code> <code>nextclade</code> <code>nextclade_clade_mqc</code> <code>pangolin</code> <code>pangolin_run_updated</code> <code>pangolin_updatedata</code> <code>plot_base_density</code> <code>quast_consensus</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_consensus_plots</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>plot_base_density</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_cutadapt</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 4 rules</summary>
+<div class="ox-param-rules"><code>cutadapt</code> <code>fastqc_primers</code> <code>get_primer_fasta</code> <code>prepare_primer_fasta</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_fastp</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>fastp</code> <code>fastqc_trim</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_fastqc</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">Skip flags (identical defaults to upstream params)</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>fastqc_primers</code> <code>fastqc_raw</code> <code>fastqc_trim</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_freyja</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 7 rules</summary>
+<div class="ox-param-rules"><code>freyja_boot</code> <code>freyja_boot_updated</code> <code>freyja_demix</code> <code>freyja_demix_updated</code> <code>freyja_update</code> <code>freyja_variants</code> <code>freyja_variants_wgs</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_freyja_boot</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>freyja_boot</code> <code>freyja_boot_updated</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_ivar_trim</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>bam_sort_index_trimmed</code> <code>ivar_trim</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_kraken2</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 4 rules</summary>
+<div class="ox-param-rules"><code>assembly_fastq</code> <code>kraken2</code> <code>kraken2_build</code> <code>untar_kraken2_db</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_markduplicates</code><span class="ox-param-default">true</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>markduplicates</code> <code>markduplicates_wgs</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_mosdepth</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 6 rules</summary>
+<div class="ox-param-rules"><code>collapse_primers</code> <code>mosdepth_amplicon</code> <code>mosdepth_genome</code> <code>mosdepth_genome_wgs</code> <code>plot_mosdepth_amplicon</code> <code>plot_mosdepth_genome</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_nextclade</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>get_nextclade_dataset</code> <code>nextclade</code> <code>nextclade_clade_mqc</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_noninternal_primers</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>prepare_primer_fasta</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_pangolin</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>pangolin</code> <code>pangolin_run_updated</code> <code>pangolin_updatedata</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_picard_metrics</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>picard_metrics</code> <code>picard_metrics_wgs</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_plasmidid</code><span class="ox-param-default">true</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>plasmidid</code> <code>plasmidid_minia</code> <code>plasmidid_unicycler</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_snpeff</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 5 rules</summary>
+<div class="ox-param-rules"><code>build_snpeff_db</code> <code>snpeff_ann</code> <code>snpsift_extract</code> <code>variants_long_table</code> <code>variants_long_table_bcftools</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_variants</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 33 rules</summary>
+<div class="ox-param-rules"><code>align_bowtie2</code> <code>bam_sort_index</code> <code>bam_sort_index_trimmed</code> <code>build_bowtie2_index</code> <code>build_snpeff_db</code> <code>call_variants_bcftools</code> <code>call_variants_bcftools_wgs</code> <code>call_variants_ivar</code> <code>collapse_primers</code> <code>freyja_boot</code> <code>freyja_boot_updated</code> <code>freyja_demix</code> <code>freyja_demix_updated</code> <code>freyja_update</code> <code>freyja_variants</code> <code>freyja_variants_wgs</code> <code>ivar_to_vcf</code> <code>ivar_trim</code> <code>markduplicates</code> <code>markduplicates_wgs</code> <code>mosdepth_amplicon</code> <code>mosdepth_genome</code> <code>mosdepth_genome_wgs</code> <code>norm_vcf_bcftools</code> <code>picard_metrics</code> <code>picard_metrics_wgs</code> <code>plot_mosdepth_amplicon</code> <code>plot_mosdepth_genome</code> <code>snpeff_ann</code> <code>snpsift_extract</code> <code>sort_vcf</code> <code>variants_long_table</code> <code>variants_long_table_bcftools</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_variants_long_table</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>variants_long_table</code> <code>variants_long_table_bcftools</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_variants_quast</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>quast_consensus</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>spades_mode</code><span class="ox-param-default">rnaviral</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>assemble_spades</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>threeprime_adapters</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>variant_caller</code><span class="ox-param-default">ivar</span></div>
+<p class="ox-param-desc">--- Variant calling (upstream params.variant_caller defaults to &#x27;ivar&#x27; for the amplicon protocol and &#x27;bcftools&#x27; otherwise; both branches are ported as when-gated rules). The metagenomic branch auto-runs the bcftools caller regardless of this key — upstream derives variant_caller in nextflow.config (params.variant_caller = protocol == &#x27;metagenomic&#x27; ? &#x27;bcftools&#x27; : &#x27;ivar&#x27;), and the port mirrors that derivation in the wgs rules&#x27; when conditions, so a metagenomic run needs no extra --arg ---</p>
+<details class="ox-param-usedby"><summary>used by 10 rules</summary>
+<div class="ox-param-rules"><code>additional_annotation</code> <code>call_variants_bcftools</code> <code>call_variants_ivar</code> <code>consensus_filter</code> <code>consensus_filter_bcftools</code> <code>ivar_to_vcf</code> <code>norm_vcf_bcftools</code> <code>sort_vcf</code> <code>variants_long_table</code> <code>variants_long_table_bcftools</code></div>
+</details>
+</div>
+</div>
 
 Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
 
@@ -149,9 +543,11 @@ Descriptions are the workflow's own `#` comments from its `[config]` section, su
 
 ![oxo-flow-viralrecon rule-level DAG](../assets/dag/oxo-flow-viralrecon.svg)
 
+<p class="ox-dag-caption">figure · oxo-flow-viralrecon — rule-level transit map (nf-metro)</p>
+
 </div>
 
-The graph is derived at catalog-build time from `oxo-flow graph -f dot` and rendered with Graphviz. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
+The graph is derived at catalog-build time from `oxo-flow graph -f metro` and rendered with [nf-metro](https://github.com/seqeralabs/nf-metro) — rules are grouped into colored transit lines by analysis stage. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

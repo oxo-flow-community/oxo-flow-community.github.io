@@ -5,10 +5,11 @@ hide:
 
 # Pipeline catalog
 
-Every workflow in the catalog. **★ Verified** entries are fidelity-checked and
-pass `validate` + `dry-run` in CI; **☆ Community** entries meet the listing
-requirements and are maintained by their authors. Filter by domain, origin, or
-source engine; search by name, tool, or tag.
+Every workflow in the catalog. Ratings are an [evidence ladder](../about/curation.md):
+**✔ live-tested** end-to-end on real data, **★ verified** (fidelity-checked,
+passes `validate` + `dry-run` in CI), **☆ community** (meets listing
+requirements, maintained by its authors). Filter by domain, origin, or source
+engine; search by name, tool, or tag.
 
 <div class="ox-filter">
   <input type="search" id="ox-search" placeholder="search: rna, star, variant, bam…" aria-label="Search workflows">

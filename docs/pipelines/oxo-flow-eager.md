@@ -70,170 +70,1128 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-eager
 
 ## Parameters
 
-| Parameter | Default | Description | Used by |
-|---:|---|---|---|
-| `angsd_fasta_arg` | `` | — | `genotyping_angsd` |
-| `angsd_glformat` | `4` | — | `genotyping_angsd` |
-| `angsd_glmodel` | `1` | — | `genotyping_angsd` |
-| `angsd_majorminor_arg` | `` | — | `genotyping_angsd` |
-| `anno_file` | `` | — | `bedtools_coverage` |
-| `anno_file_is_unsorted_neg` | `-sorted` | — | `bedtools_coverage` |
-| `bam_input` | `false` | — | `convert_bam` |
-| `bam_mapping_quality_threshold` | `0` | — | `samtools_filter_bowtie2`, `samtools_filter_bwaaln`, `samtools_filter_bwamem`, `samtools_filter_circularmapper` |
-| `bam_unmapped_type` | `discard` | — | `kraken`, `kraken_merge`, `kraken_parse`, `malt`, `metagenomic_complexity_filter`, `samtools_filter_bowtie2`, `samtools_filter_bwaaln`, `samtools_filter_bwamem`, `samtools_filter_circularmapper` |
-| `bamutils_clip_double_stranded_none_udg_left` | `1` | — | `bam_trim` |
-| `bamutils_clip_double_stranded_none_udg_right` | `1` | — | `bam_trim` |
-| `bamutils_softclip_arg` | `` | — | `bam_trim` |
-| `bcftools_stats_source` | `haplotypecaller` | — | `bcftools_stats` |
-| `bt2_preset` | `` | — | `bowtie2` |
-| `bwaalnk` | `2` | — | `bwa_aln`, `circularmapper` |
-| `bwaalnl` | `1024` | — | `bwa_aln`, `circularmapper` |
-| `bwaalnn` | `0.01` | — | `bwa_aln`, `circularmapper` |
-| `bwaalno` | `2` | — | `bwa_aln` |
-| `circularextension` | `100` | — | `circulargenerator`, `circularmapper` |
-| `circularfilter_arg` | `` | — | `circularmapper` |
-| `circulartarget` | `chrMT` | — | `circulargenerator` |
-| `clip_forward_adaptor` | `AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC` | read clipping / merging | `adapter_removal` |
-| `clip_min_read_quality` | `20` | — | `adapter_removal` |
-| `clip_readlength` | `30` | — | `adapter_removal` |
-| `clip_reverse_adaptor` | `AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTA` | — | `adapter_removal` |
-| `colour_chemistry` | `4` | — | `fastp` |
-| `complexity_filter_poly_g` | `false` | complexity (poly-G) filter | `fastp` |
-| `complexity_filter_poly_g_min` | `10` | — | `fastp` |
-| `damage_calculation_tool` | `damageprofiler` | damage estimation | `damageprofiler`, `mapdamage_calculation` |
-| `damageprofiler_length` | `100` | — | `damageprofiler` |
-| `damageprofiler_threshold` | `15` | — | `damageprofiler` |
-| `damageprofiler_yaxis` | `0.30` | — | `damageprofiler` |
-| `dedup_all_merged` | `false` | — | — |
-| `dedupper` | `markduplicates` | deduplication | `dedup`, `markduplicates` |
-| `fasta` | `test/fixtures/reference/genome.fa` | input / library metadata (directory-input mode defaults) | `make_bwa_index`, `make_fasta_index`, `make_seq_dict`, `unzip_reference` |
-| `freebayes_C` | `2` | — | `genotyping_freebayes` |
-| `freebayes_g_arg` | `` | — | `genotyping_freebayes` |
-| `freebayes_p` | `1` | — | `genotyping_freebayes` |
-| `gatk_call_conf` | `30` | — | `genotyping_hc`, `genotyping_ug` |
-| `gatk_downsample` | `250` | — | `genotyping_ug` |
-| `gatk_hc_emitrefconf` | `NONE` | — | `genotyping_hc` |
-| `gatk_hc_out_mode` | `EMIT_VARIANTS_ONLY` | — | `genotyping_hc` |
-| `gatk_ploidy` | `2` | — | `genotyping_hc`, `genotyping_ug` |
-| `gatk_ug_defaultbasequalities_arg` | `` | — | `genotyping_ug` |
-| `gatk_ug_genotype_model` | `SNP` | — | `genotyping_ug` |
-| `gatk_ug_out_mode` | `EMIT_VARIANTS_ONLY` | — | `genotyping_ug` |
-| `genotyping_source` | `raw` | — | — |
-| `genotyping_tool` | `` | — | `eigenstrat_snp_coverage`, `genotyping_angsd`, `genotyping_freebayes`, `genotyping_hc`, `genotyping_pileupcaller`, `genotyping_ug`, `multivcfanalyzer`, `picard_addorreplacereadgroups` |
-| `hostremoval_input_fastq` | `false` | — | `hostremoval_input_fastq` |
-| `hostremoval_mode` | `mapped` | — | `hostremoval_input_fastq` |
-| `input_bam` | `` | — | `convert_bam` |
-| `kraken2_db` | `` | — | `kraken` |
-| `lane` | `0` | — | `adapter_removal`, `bwa_aln`, `fastp`, `fastqc_after_clipping`, `post_ar_fastq_trimming` |
-| `large_ref` | `false` | — | — |
-| `malt_alignment_mode` | `SemiGlobal` | — | `malt` |
-| `malt_db` | `` | — | `malt` |
-| `malt_max_queries` | `100` | — | `malt` |
-| `malt_memory_mode` | `load` | — | `malt` |
-| `malt_min_support_mode` | `percent` | — | `malt` |
-| `malt_min_support_percent` | `0.01` | — | `malt` |
-| `malt_mode` | `BlastN` | — | `malt` |
-| `malt_sam_output` | `false` | — | `malt` |
-| `malt_top_percent` | `1` | — | `malt` |
-| `maltextract_destackingoff` | `false` | — | `maltextract` |
-| `maltextract_downsamplingoff` | `false` | — | `maltextract` |
-| `maltextract_duplicateremovaloff` | `false` | — | `maltextract` |
-| `maltextract_filter` | `def_anc` | — | `maltextract` |
-| `maltextract_matches` | `false` | — | `maltextract` |
-| `maltextract_megansummary` | `false` | — | `maltextract` |
-| `maltextract_ncbifiles` | `` | — | `maltextract` |
-| `maltextract_percentidentity` | `85.0` | — | `maltextract` |
-| `maltextract_taxon_list` | `` | — | `maltextract` |
-| `maltextract_topalignment` | `false` | — | `maltextract` |
-| `maltextract_toppercent` | `0.01` | — | `maltextract` |
-| `mapdamage_downsample_arg` | `` | — | `mapdamage_calculation` |
-| `mapdamage_singlestranded_arg` | `` | — | `mapdamage_calculation`, `mapdamage_rescaling` |
-| `mapdamage_yaxis` | `0.25` | — | `mapdamage_calculation` |
-| `mapper` | `bwaaln` | mapping | `bowtie2`, `bwa_aln`, `bwamem`, `circulargenerator`, `circularmapper`, `make_bt2_index`, `samtools_filter_bowtie2`, `samtools_filter_bwaaln`, `samtools_filter_bwamem`, `samtools_filter_circularmapper` |
-| `mergedonly` | `false` | — | — |
-| `metagenomic_complexity_entropy` | `0.3` | — | `metagenomic_complexity_filter` |
-| `metagenomic_complexity_filter` | `false` | — | `kraken`, `malt`, `metagenomic_complexity_filter` |
-| `metagenomic_min_support_reads` | `1` | — | `kraken_parse`, `malt` |
-| `metagenomic_tool` | `` | — | `kraken`, `kraken_merge`, `kraken_parse`, `malt`, `maltextract` |
-| `min_adap_overlap` | `1` | — | `adapter_removal` |
-| `min_allele_freq_het` | `0.2` | — | `multivcfanalyzer` |
-| `min_allele_freq_hom` | `0.8` | — | `multivcfanalyzer` |
-| `min_base_coverage` | `0` | — | `multivcfanalyzer` |
-| `min_genotype_quality` | `0` | — | `multivcfanalyzer` |
-| `mtnucratio_header` | `MT` | — | `mtnucratio` |
-| `multivcf_samples` | `'S1', 'S2'` | — | — |
-| `nuclear_contamination_header` | `` | — | `nuclear_contamination` |
-| `out_dir` | `results` | — | — |
-| `percent_identity` | `85` | — | `malt` |
-| `pileupcaller_bedfile` | `` | — | `genotyping_pileupcaller` |
-| `pileupcaller_method` | `randomHaploid` | — | — |
-| `pileupcaller_min_base_quality` | `30` | — | `genotyping_pileupcaller` |
-| `pileupcaller_min_map_quality` | `30` | — | `genotyping_pileupcaller` |
-| `pileupcaller_snpfile` | `` | — | `genotyping_pileupcaller` |
-| `pileupcaller_transitions_mode` | `AllSites` | — | — |
-| `pmdtools_mask_bed` | `` | — | `mask_reference_for_pmdtools` |
-| `pmdtools_max_reads` | `1000000` | — | `pmdtools` |
-| `pmdtools_platypus_arg` | `` | — | `pmdtools` |
-| `pmdtools_range` | `10` | — | `pmdtools` |
-| `pmdtools_reference_mask` | `false` | — | `mask_reference_for_pmdtools` |
-| `pmdtools_threshold` | `3` | — | `pmdtools` |
-| `pmdtools_treatment_arg` | `--UDGminus` | — | `pmdtools` |
-| `post_ar_trim_front` | `0` | — | `post_ar_fastq_trimming` |
-| `post_ar_trim_front2` | `0` | — | — |
-| `post_ar_trim_tail` | `0` | — | `post_ar_fastq_trimming` |
-| `post_ar_trim_tail2` | `0` | — | — |
-| `preseq_bootstrap` | `100` | — | — |
-| `preseq_cval` | `0.95` | — | — |
-| `preseq_maxextrap` | `10000000000` | — | — |
-| `preseq_mode` | `c_curve` | — | — |
-| `preseq_step_size` | `1000` | preseq | `preseq` |
-| `preseq_terms` | `100` | — | — |
-| `preserve5p` | `false` | — | — |
-| `qualitymax` | `41` | — | `adapter_removal` |
-| `reference_gff_annotations` | `` | — | `multivcfanalyzer` |
-| `reference_gff_exclude` | `` | — | `multivcfanalyzer` |
-| `rescale_length_3p_arg` | `` | — | `mapdamage_rescaling` |
-| `rescale_length_5p_arg` | `` | — | `mapdamage_rescaling` |
-| `rescale_seqlength` | `12` | — | `mapdamage_rescaling` |
-| `run_bam_filtering` | `false` | — | `kraken`, `kraken_merge`, `kraken_parse`, `malt`, `metagenomic_complexity_filter`, `samtools_filter_bowtie2`, `samtools_filter_bwaaln`, `samtools_filter_bwamem`, `samtools_filter_circularmapper`, `samtools_flagstat_after_filter` |
-| `run_bcftools_stats` | `false` | — | `bcftools_stats` |
-| `run_bedtools_coverage` | `false` | — | `bedtools_coverage` |
-| `run_endor_spy` | `false` | — | `endor_spy` |
-| `run_genotyping` | `false` | genotyping (pileupCaller branch) | `eigenstrat_snp_coverage`, `genotyping_angsd`, `genotyping_freebayes`, `genotyping_hc`, `genotyping_pileupcaller`, `genotyping_ug`, `multivcfanalyzer`, `picard_addorreplacereadgroups` |
-| `run_maltextract` | `false` | — | `maltextract` |
-| `run_mapdamage_rescaling` | `false` | — | `mapdamage_rescaling` |
-| `run_metagenomic_screening` | `false` | — | `kraken`, `kraken_merge`, `kraken_parse`, `malt` |
-| `run_mtnucratio` | `false` | — | `mtnucratio` |
-| `run_multivcfanalyzer` | `false` | — | `multivcfanalyzer`, `picard_addorreplacereadgroups` |
-| `run_nuclear_contamination` | `false` | — | `nuclear_contamination`, `print_nuclear_contamination` |
-| `run_pmdtools` | `false` | — | `mask_reference_for_pmdtools`, `pmdtools` |
-| `run_post_ar_trimming` | `false` | — | `post_ar_fastq_trimming` |
-| `run_sexdeterrmine` | `false` | — | `sexdeterrmine`, `sexdeterrmine_prep` |
-| `run_trim_bam` | `false` | — | `bam_trim` |
-| `run_vcf2genome` | `false` | — | `vcf2genome` |
-| `save_reference` | `false` | — | — |
-| `seqtype` | `PE` | — | `bwa_aln` |
-| `sexdeterrmine_prep_s` | `1000000` | — | `sexdeterrmine_prep` |
-| `sexdeterrmine_s` | `1000000` | — | `sexdeterrmine` |
-| `single_end` | `false` | — | — |
-| `single_stranded` | `false` | — | `maltextract` |
-| `skip_adapterremoval` | `false` | — | `adapter_removal`, `fastqc_after_clipping` |
-| `skip_collapse` | `false` | — | — |
-| `skip_damage_calculation` | `false` | — | `damageprofiler`, `mapdamage_calculation` |
-| `skip_deduplication` | `false` | — | `dedup`, `markduplicates` |
-| `skip_fastqc` | `false` | skipping (upstream defaults: run everything except optional branches) | `fastqc`, `fastqc_after_clipping` |
-| `skip_preseq` | `false` | — | `preseq` |
-| `skip_qualimap` | `false` | — | `qualimap` |
-| `skip_trim` | `false` | — | — |
-| `snp_eff_results` | `` | — | `multivcfanalyzer` |
-| `udg_type` | `none` | — | — |
-| `unzip_reference` | `false` | see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate). | `unzip_reference` |
-| `vcf2genome_minc` | `5` | — | `vcf2genome` |
-| `vcf2genome_minfreq` | `0.5` | — | `vcf2genome` |
-| `vcf2genome_minq` | `30` | — | `vcf2genome` |
-| `write_allele_frequencies_arg` | `F` | — | `multivcfanalyzer` |
-
-{: .ox-params }
+<div class="ox-params">
+<div class="ox-param">
+<div class="ox-param-head"><code>angsd_fasta_arg</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>genotyping_angsd</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>angsd_glformat</code><span class="ox-param-default">4</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>genotyping_angsd</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>angsd_glmodel</code><span class="ox-param-default">1</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>genotyping_angsd</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>angsd_majorminor_arg</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>genotyping_angsd</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>anno_file</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>bedtools_coverage</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>anno_file_is_unsorted_neg</code><span class="ox-param-default">-sorted</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>bedtools_coverage</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>bam_input</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>convert_bam</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>bam_mapping_quality_threshold</code><span class="ox-param-default">0</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 4 rules</summary>
+<div class="ox-param-rules"><code>samtools_filter_bowtie2</code> <code>samtools_filter_bwaaln</code> <code>samtools_filter_bwamem</code> <code>samtools_filter_circularmapper</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>bam_unmapped_type</code><span class="ox-param-default">discard</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 9 rules</summary>
+<div class="ox-param-rules"><code>kraken</code> <code>kraken_merge</code> <code>kraken_parse</code> <code>malt</code> <code>metagenomic_complexity_filter</code> <code>samtools_filter_bowtie2</code> <code>samtools_filter_bwaaln</code> <code>samtools_filter_bwamem</code> <code>samtools_filter_circularmapper</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>bamutils_clip_double_stranded_none_udg_left</code><span class="ox-param-default">1</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>bam_trim</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>bamutils_clip_double_stranded_none_udg_right</code><span class="ox-param-default">1</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>bam_trim</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>bamutils_softclip_arg</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>bam_trim</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>bcftools_stats_source</code><span class="ox-param-default">haplotypecaller</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>bcftools_stats</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>bt2_preset</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>bowtie2</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>bwaalnk</code><span class="ox-param-default">2</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>bwa_aln</code> <code>circularmapper</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>bwaalnl</code><span class="ox-param-default">1024</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>bwa_aln</code> <code>circularmapper</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>bwaalnn</code><span class="ox-param-default">0.01</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>bwa_aln</code> <code>circularmapper</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>bwaalno</code><span class="ox-param-default">2</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>bwa_aln</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>circularextension</code><span class="ox-param-default">100</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>circulargenerator</code> <code>circularmapper</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>circularfilter_arg</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>circularmapper</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>circulartarget</code><span class="ox-param-default">chrMT</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>circulargenerator</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>clip_forward_adaptor</code><span class="ox-param-default">AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC</span></div>
+<p class="ox-param-desc">read clipping / merging</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>adapter_removal</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>clip_min_read_quality</code><span class="ox-param-default">20</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>adapter_removal</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>clip_readlength</code><span class="ox-param-default">30</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>adapter_removal</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>clip_reverse_adaptor</code><span class="ox-param-default">AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTA</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>adapter_removal</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>colour_chemistry</code><span class="ox-param-default">4</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>fastp</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>complexity_filter_poly_g</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">complexity (poly-G) filter</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>fastp</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>complexity_filter_poly_g_min</code><span class="ox-param-default">10</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>fastp</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>damage_calculation_tool</code><span class="ox-param-default">damageprofiler</span></div>
+<p class="ox-param-desc">damage estimation</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>damageprofiler</code> <code>mapdamage_calculation</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>damageprofiler_length</code><span class="ox-param-default">100</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>damageprofiler</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>damageprofiler_threshold</code><span class="ox-param-default">15</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>damageprofiler</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>damageprofiler_yaxis</code><span class="ox-param-default">0.30</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>damageprofiler</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>dedup_all_merged</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>dedupper</code><span class="ox-param-default">markduplicates</span></div>
+<p class="ox-param-desc">deduplication</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>dedup</code> <code>markduplicates</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>fasta</code><span class="ox-param-default">test/fixtures/reference/genome.fa</span></div>
+<p class="ox-param-desc">input / library metadata (directory-input mode defaults)</p>
+<details class="ox-param-usedby"><summary>used by 4 rules</summary>
+<div class="ox-param-rules"><code>make_bwa_index</code> <code>make_fasta_index</code> <code>make_seq_dict</code> <code>unzip_reference</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>freebayes_C</code><span class="ox-param-default">2</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>genotyping_freebayes</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>freebayes_g_arg</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>genotyping_freebayes</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>freebayes_p</code><span class="ox-param-default">1</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>genotyping_freebayes</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>gatk_call_conf</code><span class="ox-param-default">30</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>genotyping_hc</code> <code>genotyping_ug</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>gatk_downsample</code><span class="ox-param-default">250</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>genotyping_ug</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>gatk_hc_emitrefconf</code><span class="ox-param-default">NONE</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>genotyping_hc</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>gatk_hc_out_mode</code><span class="ox-param-default">EMIT_VARIANTS_ONLY</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>genotyping_hc</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>gatk_ploidy</code><span class="ox-param-default">2</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>genotyping_hc</code> <code>genotyping_ug</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>gatk_ug_defaultbasequalities_arg</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>genotyping_ug</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>gatk_ug_genotype_model</code><span class="ox-param-default">SNP</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>genotyping_ug</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>gatk_ug_out_mode</code><span class="ox-param-default">EMIT_VARIANTS_ONLY</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>genotyping_ug</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>genotyping_source</code><span class="ox-param-default">raw</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>genotyping_tool</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 8 rules</summary>
+<div class="ox-param-rules"><code>eigenstrat_snp_coverage</code> <code>genotyping_angsd</code> <code>genotyping_freebayes</code> <code>genotyping_hc</code> <code>genotyping_pileupcaller</code> <code>genotyping_ug</code> <code>multivcfanalyzer</code> <code>picard_addorreplacereadgroups</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>hostremoval_input_fastq</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>hostremoval_input_fastq</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>hostremoval_mode</code><span class="ox-param-default">mapped</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>hostremoval_input_fastq</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>input_bam</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>convert_bam</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>kraken2_db</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>kraken</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>lane</code><span class="ox-param-default">0</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 5 rules</summary>
+<div class="ox-param-rules"><code>adapter_removal</code> <code>bwa_aln</code> <code>fastp</code> <code>fastqc_after_clipping</code> <code>post_ar_fastq_trimming</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>large_ref</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>malt_alignment_mode</code><span class="ox-param-default">SemiGlobal</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>malt</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>malt_db</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>malt</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>malt_max_queries</code><span class="ox-param-default">100</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>malt</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>malt_memory_mode</code><span class="ox-param-default">load</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>malt</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>malt_min_support_mode</code><span class="ox-param-default">percent</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>malt</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>malt_min_support_percent</code><span class="ox-param-default">0.01</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>malt</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>malt_mode</code><span class="ox-param-default">BlastN</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>malt</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>malt_sam_output</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>malt</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>malt_top_percent</code><span class="ox-param-default">1</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>malt</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>maltextract_destackingoff</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>maltextract</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>maltextract_downsamplingoff</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>maltextract</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>maltextract_duplicateremovaloff</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>maltextract</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>maltextract_filter</code><span class="ox-param-default">def_anc</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>maltextract</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>maltextract_matches</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>maltextract</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>maltextract_megansummary</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>maltextract</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>maltextract_ncbifiles</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>maltextract</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>maltextract_percentidentity</code><span class="ox-param-default">85.0</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>maltextract</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>maltextract_taxon_list</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>maltextract</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>maltextract_topalignment</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>maltextract</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>maltextract_toppercent</code><span class="ox-param-default">0.01</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>maltextract</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>mapdamage_downsample_arg</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>mapdamage_calculation</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>mapdamage_singlestranded_arg</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>mapdamage_calculation</code> <code>mapdamage_rescaling</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>mapdamage_yaxis</code><span class="ox-param-default">0.25</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>mapdamage_calculation</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>mapper</code><span class="ox-param-default">bwaaln</span></div>
+<p class="ox-param-desc">mapping</p>
+<details class="ox-param-usedby"><summary>used by 10 rules</summary>
+<div class="ox-param-rules"><code>bowtie2</code> <code>bwa_aln</code> <code>bwamem</code> <code>circulargenerator</code> <code>circularmapper</code> <code>make_bt2_index</code> <code>samtools_filter_bowtie2</code> <code>samtools_filter_bwaaln</code> <code>samtools_filter_bwamem</code> <code>samtools_filter_circularmapper</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>mergedonly</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>metagenomic_complexity_entropy</code><span class="ox-param-default">0.3</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>metagenomic_complexity_filter</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>metagenomic_complexity_filter</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>kraken</code> <code>malt</code> <code>metagenomic_complexity_filter</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>metagenomic_min_support_reads</code><span class="ox-param-default">1</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>kraken_parse</code> <code>malt</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>metagenomic_tool</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 5 rules</summary>
+<div class="ox-param-rules"><code>kraken</code> <code>kraken_merge</code> <code>kraken_parse</code> <code>malt</code> <code>maltextract</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>min_adap_overlap</code><span class="ox-param-default">1</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>adapter_removal</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>min_allele_freq_het</code><span class="ox-param-default">0.2</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>multivcfanalyzer</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>min_allele_freq_hom</code><span class="ox-param-default">0.8</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>multivcfanalyzer</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>min_base_coverage</code><span class="ox-param-default">0</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>multivcfanalyzer</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>min_genotype_quality</code><span class="ox-param-default">0</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>multivcfanalyzer</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>mtnucratio_header</code><span class="ox-param-default">MT</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>mtnucratio</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>multivcf_samples</code><span class="ox-param-default">S1, S2</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>nuclear_contamination_header</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>nuclear_contamination</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>out_dir</code><span class="ox-param-default">results</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>percent_identity</code><span class="ox-param-default">85</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>malt</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>pileupcaller_bedfile</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>genotyping_pileupcaller</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>pileupcaller_method</code><span class="ox-param-default">randomHaploid</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>pileupcaller_min_base_quality</code><span class="ox-param-default">30</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>genotyping_pileupcaller</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>pileupcaller_min_map_quality</code><span class="ox-param-default">30</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>genotyping_pileupcaller</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>pileupcaller_snpfile</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>genotyping_pileupcaller</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>pileupcaller_transitions_mode</code><span class="ox-param-default">AllSites</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>pmdtools_mask_bed</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>mask_reference_for_pmdtools</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>pmdtools_max_reads</code><span class="ox-param-default">1000000</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>pmdtools</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>pmdtools_platypus_arg</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>pmdtools</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>pmdtools_range</code><span class="ox-param-default">10</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>pmdtools</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>pmdtools_reference_mask</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>mask_reference_for_pmdtools</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>pmdtools_threshold</code><span class="ox-param-default">3</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>pmdtools</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>pmdtools_treatment_arg</code><span class="ox-param-default">--UDGminus</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>pmdtools</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>post_ar_trim_front</code><span class="ox-param-default">0</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>post_ar_fastq_trimming</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>post_ar_trim_front2</code><span class="ox-param-default">0</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>post_ar_trim_tail</code><span class="ox-param-default">0</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>post_ar_fastq_trimming</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>post_ar_trim_tail2</code><span class="ox-param-default">0</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>preseq_bootstrap</code><span class="ox-param-default">100</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>preseq_cval</code><span class="ox-param-default">0.95</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>preseq_maxextrap</code><span class="ox-param-default">10000000000</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>preseq_mode</code><span class="ox-param-default">c_curve</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>preseq_step_size</code><span class="ox-param-default">1000</span></div>
+<p class="ox-param-desc">preseq</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>preseq</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>preseq_terms</code><span class="ox-param-default">100</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>preserve5p</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>qualitymax</code><span class="ox-param-default">41</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>adapter_removal</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>reference_gff_annotations</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>multivcfanalyzer</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>reference_gff_exclude</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>multivcfanalyzer</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>rescale_length_3p_arg</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>mapdamage_rescaling</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>rescale_length_5p_arg</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>mapdamage_rescaling</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>rescale_seqlength</code><span class="ox-param-default">12</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>mapdamage_rescaling</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>run_bam_filtering</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 10 rules</summary>
+<div class="ox-param-rules"><code>kraken</code> <code>kraken_merge</code> <code>kraken_parse</code> <code>malt</code> <code>metagenomic_complexity_filter</code> <code>samtools_filter_bowtie2</code> <code>samtools_filter_bwaaln</code> <code>samtools_filter_bwamem</code> <code>samtools_filter_circularmapper</code> <code>samtools_flagstat_after_filter</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>run_bcftools_stats</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>bcftools_stats</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>run_bedtools_coverage</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>bedtools_coverage</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>run_endor_spy</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>endor_spy</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>run_genotyping</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">genotyping (pileupCaller branch)</p>
+<details class="ox-param-usedby"><summary>used by 8 rules</summary>
+<div class="ox-param-rules"><code>eigenstrat_snp_coverage</code> <code>genotyping_angsd</code> <code>genotyping_freebayes</code> <code>genotyping_hc</code> <code>genotyping_pileupcaller</code> <code>genotyping_ug</code> <code>multivcfanalyzer</code> <code>picard_addorreplacereadgroups</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>run_maltextract</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>maltextract</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>run_mapdamage_rescaling</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>mapdamage_rescaling</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>run_metagenomic_screening</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 4 rules</summary>
+<div class="ox-param-rules"><code>kraken</code> <code>kraken_merge</code> <code>kraken_parse</code> <code>malt</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>run_mtnucratio</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>mtnucratio</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>run_multivcfanalyzer</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>multivcfanalyzer</code> <code>picard_addorreplacereadgroups</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>run_nuclear_contamination</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>nuclear_contamination</code> <code>print_nuclear_contamination</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>run_pmdtools</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>mask_reference_for_pmdtools</code> <code>pmdtools</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>run_post_ar_trimming</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>post_ar_fastq_trimming</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>run_sexdeterrmine</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>sexdeterrmine</code> <code>sexdeterrmine_prep</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>run_trim_bam</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>bam_trim</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>run_vcf2genome</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>vcf2genome</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>save_reference</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>seqtype</code><span class="ox-param-default">PE</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>bwa_aln</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>sexdeterrmine_prep_s</code><span class="ox-param-default">1000000</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>sexdeterrmine_prep</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>sexdeterrmine_s</code><span class="ox-param-default">1000000</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>sexdeterrmine</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>single_end</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>single_stranded</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>maltextract</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_adapterremoval</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>adapter_removal</code> <code>fastqc_after_clipping</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_collapse</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_damage_calculation</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>damageprofiler</code> <code>mapdamage_calculation</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_deduplication</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>dedup</code> <code>markduplicates</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_fastqc</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">skipping (upstream defaults: run everything except optional branches)</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>fastqc</code> <code>fastqc_after_clipping</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_preseq</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>preseq</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_qualimap</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>qualimap</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_trim</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>snp_eff_results</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>multivcfanalyzer</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>udg_type</code><span class="ox-param-default">none</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>unzip_reference</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>unzip_reference</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>vcf2genome_minc</code><span class="ox-param-default">5</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>vcf2genome</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>vcf2genome_minfreq</code><span class="ox-param-default">0.5</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>vcf2genome</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>vcf2genome_minq</code><span class="ox-param-default">30</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>vcf2genome</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>write_allele_frequencies_arg</code><span class="ox-param-default">F</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>multivcfanalyzer</code></div>
+</details>
+</div>
+</div>
 
 Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
 
@@ -243,9 +1201,11 @@ Descriptions are the workflow's own `#` comments from its `[config]` section, su
 
 ![oxo-flow-eager rule-level DAG](../assets/dag/oxo-flow-eager.svg)
 
+<p class="ox-dag-caption">figure · oxo-flow-eager — rule-level transit map (nf-metro)</p>
+
 </div>
 
-The graph is derived at catalog-build time from `oxo-flow graph -f dot` and rendered with Graphviz. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
+The graph is derived at catalog-build time from `oxo-flow graph -f metro` and rendered with [nf-metro](https://github.com/seqeralabs/nf-metro) — rules are grouped into colored transit lines by analysis stage. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

@@ -66,41 +66,288 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-snparcher
 
 ## Parameters
 
-| Parameter | Default | Description | Used by |
-|---:|---|---|---|
-| `callable_sites_enabled` | `false` | — | `callable_coverage_thresholds`, `callable_sites_bed`, `clam_collect`, `clam_loci`, `coverage_bed`, `genmap_index`, `genmap_mappability`, `mappability_bed`, `mosdepth`, `mosdepth_external`, `mosdepth_markdup`, `postprocess_basic_filter`, `postprocess_drop_indel_snps`, `postprocess_filter_individuals`, `postprocess_strict_filter`, `postprocess_subset_indels`, `postprocess_subset_snps`, `postprocess_update_bed` |
-| `callable_sites_fraction` | `1.0` | — | `coverage_bed` |
-| `callable_sites_kmer` | `150` | — | `genmap_mappability` |
-| `callable_sites_max_coverage` | `auto` | — | `callable_coverage_thresholds` |
-| `callable_sites_merge_distance` | `100` | — | `coverage_bed`, `mappability_bed` |
-| `callable_sites_min_coverage` | `auto` | — | `callable_coverage_thresholds` |
-| `callable_sites_min_score` | `1` | — | `mappability_bed` |
-| `deepvariant_model_type` | `WGS` | — | `deepvariant_call`, `deepvariant_call_external`, `deepvariant_call_markdup` |
-| `expected_coverage` | `low` | — | — |
-| `gatk_het_prior` | `0.005` | — | `joint_genotype_gvcfs` |
-| `generate_filtered_vcf` | `false` | — | `variant_filtration` |
-| `intervals_enabled` | `false` | — | — |
-| `joint_genotyping_enabled` | `false` | — | `create_db_mapfile`, `glnexus_joint`, `joint_genomics_db_import`, `joint_genotype_gvcfs`, `variant_filtration` |
-| `mark_duplicates` | `false` | — | `bam_stats`, `bam_stats_markdup`, `deepvariant_call`, `deepvariant_call_markdup`, `gatk_haplotypecaller`, `gatk_haplotypecaller_markdup`, `index_bam_csi`, `index_bam_csi_markdup`, `markdup_library`, `merge_dedup_libraries`, `merge_library_level_bams`, `mosdepth`, `mosdepth_markdup` |
-| `modules_postprocess_enabled` | `false` | — | `postprocess_basic_filter`, `postprocess_drop_indel_snps`, `postprocess_filter_individuals`, `postprocess_strict_filter`, `postprocess_subset_indels`, `postprocess_subset_snps`, `postprocess_update_bed` |
-| `modules_qc_enabled` | `false` | — | `generate_coords_file`, `qc_admixture`, `qc_contig_map`, `qc_copy_qc_report`, `qc_dashboard`, `qc_plink`, `qc_prepare_plink_inputs`, `qc_setup_admixture`, `qc_subsample_snps`, `qc_vcftools_individuals` |
-| `ploidy` | `2` | — | `gatk_haplotypecaller`, `gatk_haplotypecaller_external`, `gatk_haplotypecaller_markdup` |
-| `postprocess_contig_size` | `10000` | — | `postprocess_update_bed` |
-| `postprocess_exclude_scaffolds` | `mtDNA,Y` | — | `postprocess_strict_filter` |
-| `postprocess_maf` | `0.01` | — | `postprocess_strict_filter` |
-| `postprocess_missingness` | `0.75` | — | `postprocess_strict_filter` |
-| `qc_clusters` | `3` | — | `qc_dashboard` |
-| `qc_exclude_scaffolds` | `` | — | `qc_subsample_snps` |
-| `qc_google_api_key` | `` | — | `qc_dashboard` |
-| `qc_max_sample_missingness` | `0.49` | — | `qc_plink` |
-| `qc_min_depth` | `2` | — | `qc_vcftools_individuals` |
-| `qc_pca_dims` | `10` | — | `qc_plink` |
-| `reference_name` | `my_organism` | — | `bwa_mem`, `deepvariant_call`, `deepvariant_call_external`, `deepvariant_call_markdup`, `gatk_haplotypecaller`, `gatk_haplotypecaller_external`, `gatk_haplotypecaller_markdup`, `genmap_index`, `index_reference`, `joint_genomics_db_import`, `joint_genotype_gvcfs`, `postprocess_update_bed`, `prepare_reference`, `qc_contig_map`, `qc_prepare_plink_inputs`, `qc_subsample_snps`, `variant_filtration` |
-| `reference_source` | `test/fixtures/ref/genome.fa` | — | `prepare_reference` |
-| `sample_metadata` | `` | — | `generate_coords_file` |
-| `variant_tool` | `gatk` | — | `create_db_mapfile`, `deepvariant_call`, `deepvariant_call_external`, `deepvariant_call_markdup`, `gatk_haplotypecaller`, `gatk_haplotypecaller_external`, `gatk_haplotypecaller_markdup`, `glnexus_joint`, `joint_genomics_db_import`, `joint_genotype_gvcfs`, `variant_filtration` |
-
-{: .ox-params }
+<div class="ox-params">
+<div class="ox-param">
+<div class="ox-param-head"><code>bcftools_max_depth</code><span class="ox-param-default">250</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>bcftools_call</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>bcftools_min_baseq</code><span class="ox-param-default">20</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>bcftools_call</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>bcftools_min_mapq</code><span class="ox-param-default">20</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>bcftools_call</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>callable_sites_enabled</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 18 rules</summary>
+<div class="ox-param-rules"><code>callable_coverage_thresholds</code> <code>callable_sites_bed</code> <code>clam_collect</code> <code>clam_loci</code> <code>coverage_bed</code> <code>genmap_index</code> <code>genmap_mappability</code> <code>mappability_bed</code> <code>mosdepth</code> <code>mosdepth_external</code> <code>mosdepth_markdup</code> <code>postprocess_basic_filter</code> <code>postprocess_drop_indel_snps</code> <code>postprocess_filter_individuals</code> <code>postprocess_strict_filter</code> <code>postprocess_subset_indels</code> <code>postprocess_subset_snps</code> <code>postprocess_update_bed</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>callable_sites_fraction</code><span class="ox-param-default">1.0</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>coverage_bed</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>callable_sites_kmer</code><span class="ox-param-default">150</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>genmap_mappability</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>callable_sites_max_coverage</code><span class="ox-param-default">auto</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>callable_coverage_thresholds</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>callable_sites_merge_distance</code><span class="ox-param-default">100</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>coverage_bed</code> <code>mappability_bed</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>callable_sites_min_coverage</code><span class="ox-param-default">auto</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>callable_coverage_thresholds</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>callable_sites_min_score</code><span class="ox-param-default">1</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>mappability_bed</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>deepvariant_model_type</code><span class="ox-param-default">WGS</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>deepvariant_call</code> <code>deepvariant_call_external</code> <code>deepvariant_call_markdup</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>expected_coverage</code><span class="ox-param-default">low</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>gatk_het_prior</code><span class="ox-param-default">0.005</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>gatk_genotype_gvcfs_interval</code> <code>joint_genotype_gvcfs</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>generate_filtered_vcf</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>variant_filtration</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>intervals_db_max_contigs_per_shard</code><span class="ox-param-default">200</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>create_db_intervals</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>intervals_db_max_intervals_per_shard</code><span class="ox-param-default">200</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>create_db_intervals</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>intervals_db_scatter_factor</code><span class="ox-param-default">0.15</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>create_db_intervals</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>intervals_enabled</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 16 rules</summary>
+<div class="ox-param-rules"><code>concat_interval_gvcfs</code> <code>concat_interval_vcfs</code> <code>create_db_intervals</code> <code>create_gvcf_intervals</code> <code>filter_picard_intervals</code> <code>gatk_genomics_db_import_interval</code> <code>gatk_genotype_gvcfs_interval</code> <code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_external</code> <code>gatk_haplotypecaller_interval</code> <code>gatk_haplotypecaller_interval_external</code> <code>gatk_haplotypecaller_interval_markdup</code> <code>gatk_haplotypecaller_markdup</code> <code>joint_genomics_db_import</code> <code>joint_genotype_gvcfs</code> <code>picard_intervals</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>intervals_min_contig_length</code><span class="ox-param-default">0</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>filter_picard_intervals</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>intervals_min_nmer</code><span class="ox-param-default">500</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>picard_intervals</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>intervals_scatter_count</code><span class="ox-param-default">50</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>create_db_intervals</code> <code>create_gvcf_intervals</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>joint_genotyping_enabled</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 9 rules</summary>
+<div class="ox-param-rules"><code>concat_interval_vcfs</code> <code>create_db_intervals</code> <code>create_db_mapfile</code> <code>gatk_genomics_db_import_interval</code> <code>gatk_genotype_gvcfs_interval</code> <code>glnexus_joint</code> <code>joint_genomics_db_import</code> <code>joint_genotype_gvcfs</code> <code>variant_filtration</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>mark_duplicates</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 15 rules</summary>
+<div class="ox-param-rules"><code>bam_stats</code> <code>bam_stats_markdup</code> <code>deepvariant_call</code> <code>deepvariant_call_markdup</code> <code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_interval</code> <code>gatk_haplotypecaller_interval_markdup</code> <code>gatk_haplotypecaller_markdup</code> <code>index_bam_csi</code> <code>index_bam_csi_markdup</code> <code>markdup_library</code> <code>merge_dedup_libraries</code> <code>merge_library_level_bams</code> <code>mosdepth</code> <code>mosdepth_markdup</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>modules_postprocess_enabled</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 7 rules</summary>
+<div class="ox-param-rules"><code>postprocess_basic_filter</code> <code>postprocess_drop_indel_snps</code> <code>postprocess_filter_individuals</code> <code>postprocess_strict_filter</code> <code>postprocess_subset_indels</code> <code>postprocess_subset_snps</code> <code>postprocess_update_bed</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>modules_qc_enabled</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 10 rules</summary>
+<div class="ox-param-rules"><code>generate_coords_file</code> <code>qc_admixture</code> <code>qc_contig_map</code> <code>qc_copy_qc_report</code> <code>qc_dashboard</code> <code>qc_plink</code> <code>qc_prepare_plink_inputs</code> <code>qc_setup_admixture</code> <code>qc_subsample_snps</code> <code>qc_vcftools_individuals</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>ploidy</code><span class="ox-param-default">2</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 7 rules</summary>
+<div class="ox-param-rules"><code>bcftools_call</code> <code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_external</code> <code>gatk_haplotypecaller_interval</code> <code>gatk_haplotypecaller_interval_external</code> <code>gatk_haplotypecaller_interval_markdup</code> <code>gatk_haplotypecaller_markdup</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>postprocess_contig_size</code><span class="ox-param-default">10000</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>postprocess_update_bed</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>postprocess_exclude_scaffolds</code><span class="ox-param-default">mtDNA,Y</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>postprocess_strict_filter</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>postprocess_maf</code><span class="ox-param-default">0.01</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>postprocess_strict_filter</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>postprocess_missingness</code><span class="ox-param-default">0.75</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>postprocess_strict_filter</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>qc_clusters</code><span class="ox-param-default">3</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>qc_dashboard</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>qc_exclude_scaffolds</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>qc_subsample_snps</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>qc_google_api_key</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>qc_dashboard</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>qc_max_sample_missingness</code><span class="ox-param-default">0.49</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>qc_plink</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>qc_min_depth</code><span class="ox-param-default">2</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>qc_vcftools_individuals</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>qc_pca_dims</code><span class="ox-param-default">10</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>qc_plink</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>reference_name</code><span class="ox-param-default">my_organism</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 27 rules</summary>
+<div class="ox-param-rules"><code>bcftools_call</code> <code>bcftools_regions</code> <code>bwa_mem</code> <code>create_db_intervals</code> <code>create_gvcf_intervals</code> <code>deepvariant_call</code> <code>deepvariant_call_external</code> <code>deepvariant_call_markdup</code> <code>gatk_genomics_db_import_interval</code> <code>gatk_genotype_gvcfs_interval</code> <code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_external</code> <code>gatk_haplotypecaller_interval</code> <code>gatk_haplotypecaller_interval_external</code> <code>gatk_haplotypecaller_interval_markdup</code> <code>gatk_haplotypecaller_markdup</code> <code>genmap_index</code> <code>index_reference</code> <code>joint_genomics_db_import</code> <code>joint_genotype_gvcfs</code> <code>picard_intervals</code> <code>postprocess_update_bed</code> <code>prepare_reference</code> <code>qc_contig_map</code> <code>qc_prepare_plink_inputs</code> <code>qc_subsample_snps</code> <code>variant_filtration</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>reference_source</code><span class="ox-param-default">test/fixtures/ref/genome.fa</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>prepare_reference</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>sample_metadata</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>generate_coords_file</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>variant_tool</code><span class="ox-param-default">gatk</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 25 rules</summary>
+<div class="ox-param-rules"><code>bcftools_call</code> <code>bcftools_concat_regions</code> <code>bcftools_regions</code> <code>concat_interval_gvcfs</code> <code>concat_interval_vcfs</code> <code>create_db_intervals</code> <code>create_db_mapfile</code> <code>create_gvcf_intervals</code> <code>deepvariant_call</code> <code>deepvariant_call_external</code> <code>deepvariant_call_markdup</code> <code>filter_picard_intervals</code> <code>gatk_genomics_db_import_interval</code> <code>gatk_genotype_gvcfs_interval</code> <code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_external</code> <code>gatk_haplotypecaller_interval</code> <code>gatk_haplotypecaller_interval_external</code> <code>gatk_haplotypecaller_interval_markdup</code> <code>gatk_haplotypecaller_markdup</code> <code>glnexus_joint</code> <code>joint_genomics_db_import</code> <code>joint_genotype_gvcfs</code> <code>picard_intervals</code> <code>variant_filtration</code></div>
+</details>
+</div>
+</div>
 
 Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
 
@@ -110,9 +357,11 @@ Descriptions are the workflow's own `#` comments from its `[config]` section, su
 
 ![oxo-flow-snparcher rule-level DAG](../assets/dag/oxo-flow-snparcher.svg)
 
+<p class="ox-dag-caption">figure · oxo-flow-snparcher — rule-level transit map (nf-metro)</p>
+
 </div>
 
-The graph is derived at catalog-build time from `oxo-flow graph -f dot` and rendered with Graphviz. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
+The graph is derived at catalog-build time from `oxo-flow graph -f metro` and rendered with [nf-metro](https://github.com/seqeralabs/nf-metro) — rules are grouped into colored transit lines by analysis stage. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

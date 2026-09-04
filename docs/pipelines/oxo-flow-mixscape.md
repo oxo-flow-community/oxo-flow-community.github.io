@@ -66,33 +66,169 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-mixscape
 
 ## Parameters
 
-| Parameter | Default | Description | Used by |
-|---:|---|---|---|
-| `annotation` | `test/fixtures/annotation.csv` | GENERAL | `annot_export`, `config_export` |
-| `antibody_capture` | `` | VISUALIZATION | `config_export`, `visualize` |
-| `assay` | `SCT` | assay to analyse ("SCT" or "RNA") — upstream default "SCT" | `config_export`, `lda`, `mixscape` |
-| `cps_split_by_col` | `` | — | `config_export`, `mixscape`, `visualize` |
-| `data_dir` | `test/fixtures/data` | per-sample Seurat .rds inputs: {data_dir}/{sample}.rds | `mixscape` |
-| `fine_mode` | `FALSE` | RunMixscape (flattened) | `config_export`, `mixscape` |
-| `gene_col` | `KOcall` | — | `config_export`, `lda`, `mixscape`, `visualize` |
-| `grna_col` | `gRNAcall` | CalcPerturbSig (upstream nested keys flattened; values identical) | `config_export`, `mixscape` |
-| `grna_split_symbol` | `-` | MIXSCAPE | `config_export`, `mixscape` |
-| `lda_npcs` | `10` | LDA | `config_export`, `lda`, `mixscape` |
-| `lfc_th` | `0.1` | — | `config_export`, `lda`, `mixscape` |
-| `mem` | `32000` | RESOURCES (upstream config/config.yaml) | `config_export` |
-| `min_cells` | `5` | — | `config_export`, `mixscape` |
-| `min_de_genes` | `5` | — | `config_export`, `mixscape` |
-| `mixscape_split_by_col` | `` | — | `config_export`, `mixscape`, `visualize` |
-| `n_neighbors` | `30` | — | `config_export`, `mixscape` |
-| `ndims` | `40` | — | `config_export`, `mixscape` |
-| `nt_term` | `NonTargeting` | — | `config_export`, `lda`, `mixscape`, `visualize` |
-| `project_name` | `myCROPseq` | — | `annot_export`, `config_export` |
-| `prtb_type` | `KO` | — | `config_export`, `lda`, `mixscape`, `visualize` |
-| `result_path` | `results` | upstream result_path; results land under result_path/mixscape_seurat | `annot_export`, `config_export`, `env_export_lda`, `env_export_mixscape`, `lda`, `mixscape`, `visualize` |
-| `threads` | `1` | upstream threads; mixscape rule runs 8x | `config_export` |
-| `variable_features_only` | `0` | (objects carry SCTransform normalization; the bundled fixtures are generated that way via make_fixtures.R) | `config_export`, `mixscape` |
-
-{: .ox-params }
+<div class="ox-params">
+<div class="ox-param">
+<div class="ox-param-head"><code>annotation</code><span class="ox-param-default">test/fixtures/annotation.csv</span></div>
+<p class="ox-param-desc">GENERAL</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>annot_export</code> <code>config_export</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>antibody_capture</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">VISUALIZATION</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>config_export</code> <code>visualize</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>assay</code><span class="ox-param-default">SCT</span></div>
+<p class="ox-param-desc">assay to analyse (&quot;SCT&quot; or &quot;RNA&quot;) — upstream default &quot;SCT&quot;</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>config_export</code> <code>lda</code> <code>mixscape</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>cps_split_by_col</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>config_export</code> <code>mixscape</code> <code>visualize</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>data_dir</code><span class="ox-param-default">test/fixtures/data</span></div>
+<p class="ox-param-desc">per-sample Seurat .rds inputs: {data_dir}/{sample}.rds</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>mixscape</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>fine_mode</code><span class="ox-param-default">FALSE</span></div>
+<p class="ox-param-desc">RunMixscape (flattened)</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>config_export</code> <code>mixscape</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>gene_col</code><span class="ox-param-default">KOcall</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 4 rules</summary>
+<div class="ox-param-rules"><code>config_export</code> <code>lda</code> <code>mixscape</code> <code>visualize</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>grna_col</code><span class="ox-param-default">gRNAcall</span></div>
+<p class="ox-param-desc">CalcPerturbSig (upstream nested keys flattened; values identical)</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>config_export</code> <code>mixscape</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>grna_split_symbol</code><span class="ox-param-default">-</span></div>
+<p class="ox-param-desc">MIXSCAPE</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>config_export</code> <code>mixscape</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>lda_npcs</code><span class="ox-param-default">10</span></div>
+<p class="ox-param-desc">LDA</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>config_export</code> <code>lda</code> <code>mixscape</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>lfc_th</code><span class="ox-param-default">0.1</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>config_export</code> <code>lda</code> <code>mixscape</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>mem</code><span class="ox-param-default">32000</span></div>
+<p class="ox-param-desc">RESOURCES (upstream config/config.yaml)</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>config_export</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>min_cells</code><span class="ox-param-default">5</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>config_export</code> <code>mixscape</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>min_de_genes</code><span class="ox-param-default">5</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>config_export</code> <code>mixscape</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>mixscape_split_by_col</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>config_export</code> <code>mixscape</code> <code>visualize</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>n_neighbors</code><span class="ox-param-default">30</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>config_export</code> <code>mixscape</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>ndims</code><span class="ox-param-default">40</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>config_export</code> <code>mixscape</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>nt_term</code><span class="ox-param-default">NonTargeting</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 4 rules</summary>
+<div class="ox-param-rules"><code>config_export</code> <code>lda</code> <code>mixscape</code> <code>visualize</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>project_name</code><span class="ox-param-default">myCROPseq</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>annot_export</code> <code>config_export</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>prtb_type</code><span class="ox-param-default">KO</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 4 rules</summary>
+<div class="ox-param-rules"><code>config_export</code> <code>lda</code> <code>mixscape</code> <code>visualize</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>result_path</code><span class="ox-param-default">results</span></div>
+<p class="ox-param-desc">upstream result_path; results land under result_path/mixscape_seurat</p>
+<details class="ox-param-usedby"><summary>used by 7 rules</summary>
+<div class="ox-param-rules"><code>annot_export</code> <code>config_export</code> <code>env_export_lda</code> <code>env_export_mixscape</code> <code>lda</code> <code>mixscape</code> <code>visualize</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>threads</code><span class="ox-param-default">1</span></div>
+<p class="ox-param-desc">upstream threads; mixscape rule runs 8x</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>config_export</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>variable_features_only</code><span class="ox-param-default">0</span></div>
+<p class="ox-param-desc">(objects carry SCTransform normalization; the bundled fixtures are generated that way via make_fixtures.R)</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>config_export</code> <code>mixscape</code></div>
+</details>
+</div>
+</div>
 
 Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
 
@@ -102,9 +238,11 @@ Descriptions are the workflow's own `#` comments from its `[config]` section, su
 
 ![oxo-flow-mixscape rule-level DAG](../assets/dag/oxo-flow-mixscape.svg)
 
+<p class="ox-dag-caption">figure · oxo-flow-mixscape — rule-level transit map (nf-metro)</p>
+
 </div>
 
-The graph is derived at catalog-build time from `oxo-flow graph -f dot` and rendered with Graphviz. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
+The graph is derived at catalog-build time from `oxo-flow graph -f metro` and rendered with [nf-metro](https://github.com/seqeralabs/nf-metro) — rules are grouped into colored transit lines by analysis stage. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

@@ -71,69 +71,421 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-sarek
 
 ## Parameters
 
-| Parameter | Default | Description | Used by |
-|---:|---|---|---|
-| `aligner` | `bwa-mem` | — | `bwa_mem`, `bwa_mem2`, `bwa_mem2_split`, `bwa_mem_split` |
-| `alignment_ext` | `cram` | Alignment-file mode: 'cram' (default) or 'bam' (when save_output_as_bam=true). recal_index_ext must match the mode ('cram.crai' vs 'bam.bai'). | `bcftools_mpileup_call`, `bcftools_mpileup_ngscheckmate`, `deepvariant`, `freebayes`, `gatk_applybqsr`, `gatk_applybqsr_scatter`, `gatk_baserecalibrator`, `gatk_baserecalibrator_scatter`, `gatk_haplotypecaller`, `gatk_haplotypecaller_gvcf`, `gatk_haplotypecaller_gvcf_scatter`, `gatk_haplotypecaller_scatter`, `manta_germline`, `merge_index_samtools`, `mosdepth_md`, `mosdepth_recal`, `samtools_index_recal`, `samtools_reindex_bam`, `samtools_stats_md`, `samtools_stats_recal`, `strelka_germline`, `tiddit_sv` |
-| `annotate_vep` | `true` | — | `ensemblvep_vep`, `ensemblvep_vep_deepvariant`, `ensemblvep_vep_freebayes`, `ensemblvep_vep_joint`, `ensemblvep_vep_manta`, `ensemblvep_vep_mpileup`, `ensemblvep_vep_strelka`, `ensemblvep_vep_tiddit` |
-| `bwa_index_dir` | `/data/references/GRCh38/Sequence/BWAIndex/` | — | `bwa_mem`, `bwa_mem_split`, `bwa_mem_umi` |
-| `bwa_mem2_index_dir` | `/data/references/GRCh38/Sequence/BWAmem2Index/` | — | `bwa_mem2`, `bwa_mem2_split` |
-| `call_deepvariant` | `false` | — | `bcftools_stats_deepvariant`, `deepvariant`, `ensemblvep_vep_deepvariant`, `vcftools_filter_summary_deepvariant`, `vcftools_tstv_count_deepvariant`, `vcftools_tstv_qual_deepvariant` |
-| `call_freebayes` | `false` | Optional callers (upstream --tools list, one boolean per tool) | `bcftools_sort_freebayes`, `bcftools_stats_freebayes`, `ensemblvep_vep_freebayes`, `freebayes`, `tabix_freebayes`, `tabix_freebayes_filt`, `vcffilter_freebayes`, `vcftools_filter_summary_freebayes`, `vcftools_tstv_count_freebayes`, `vcftools_tstv_qual_freebayes` |
-| `call_haplotypecaller` | `true` | tools / skip_tools equivalents (upstream comma-list params expressed as booleans) | `bcftools_sort_joint`, `bcftools_stats`, `bcftools_stats_joint`, `ensemblvep_vep`, `ensemblvep_vep_joint`, `gatk_applyvqsr_indel`, `gatk_applyvqsr_snp`, `gatk_cnnscorevariants`, `gatk_filtervarianttranches`, `gatk_genomicsdbimport`, `gatk_genotypegvcfs`, `gatk_haplotypecaller`, `gatk_haplotypecaller_gvcf`, `gatk_mergevcfs_joint`, `gatk_variantrecalibrator_indel`, `gatk_variantrecalibrator_snp`, `vcftools_filter_summary`, `vcftools_filter_summary_joint`, `vcftools_tstv_count`, `vcftools_tstv_count_joint`, `vcftools_tstv_qual`, `vcftools_tstv_qual_joint` |
-| `call_indexcov` | `false` | upstream runs indexcov on WGS only (germline) | `goleft_indexcov`, `samtools_reindex_bam` |
-| `call_manta` | `false` | — | `bcftools_stats_manta`, `ensemblvep_vep_manta`, `manta_germline`, `vcftools_filter_summary_manta`, `vcftools_tstv_count_manta`, `vcftools_tstv_qual_manta` |
-| `call_mpileup` | `false` | — | `bcftools_mpileup_call`, `bcftools_stats_mpileup`, `ensemblvep_vep_mpileup`, `vcftools_filter_summary_mpileup`, `vcftools_tstv_count_mpileup`, `vcftools_tstv_qual_mpileup` |
-| `call_strelka` | `false` | — | `bcftools_stats_strelka`, `ensemblvep_vep_strelka`, `strelka_germline`, `vcftools_filter_summary_strelka`, `vcftools_tstv_count_strelka`, `vcftools_tstv_qual_strelka` |
-| `call_tiddit` | `false` | — | `bcftools_stats_tiddit`, `ensemblvep_vep_tiddit`, `tabix_tiddit`, `tiddit_sv`, `vcftools_filter_summary_tiddit`, `vcftools_tstv_count_tiddit`, `vcftools_tstv_qual_tiddit` |
-| `chromosomes` | `'chr1', 'chr2', 'chr3', 'chr4', 'chr5', 'chr6', 'chr7', 'chr8', 'chr9', 'chr10', 'chr11', 'chr12', 'chr13', 'chr14', 'chr15', 'chr16', 'chr17', 'chr18', 'chr19', 'chr20', 'chr21', 'chr22', 'chrX', 'chrY', 'chrM'` | — | — |
-| `dbsnp` | `/data/references/GRCh38/Annotation/GATKBundle/dbsnp_146.hg38.vcf.gz` | — | `gatk_baserecalibrator`, `gatk_baserecalibrator_scatter`, `gatk_filtervarianttranches`, `gatk_genotypegvcfs`, `gatk_genotypegvcfs_scatter`, `gatk_haplotypecaller`, `gatk_haplotypecaller_gvcf`, `gatk_haplotypecaller_gvcf_scatter`, `gatk_haplotypecaller_scatter`, `gatk_variantrecalibrator_indel`, `gatk_variantrecalibrator_snp` |
-| `dbsnp_tbi` | `/data/references/GRCh38/Annotation/GATKBundle/dbsnp_146.hg38.vcf.gz.tbi` | — | `gatk_baserecalibrator`, `gatk_baserecalibrator_scatter`, `gatk_filtervarianttranches`, `gatk_genotypegvcfs`, `gatk_genotypegvcfs_scatter`, `gatk_haplotypecaller`, `gatk_haplotypecaller_gvcf`, `gatk_haplotypecaller_gvcf_scatter`, `gatk_haplotypecaller_scatter`, `gatk_variantrecalibrator_indel`, `gatk_variantrecalibrator_snp` |
-| `dict` | `/data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.dict` | — | `gatk_applybqsr`, `gatk_applybqsr_scatter`, `gatk_applyvqsr_indel`, `gatk_applyvqsr_snp`, `gatk_baserecalibrator`, `gatk_baserecalibrator_scatter`, `gatk_cnnscorevariants`, `gatk_filtervarianttranches`, `gatk_genotypegvcfs`, `gatk_genotypegvcfs_scatter`, `gatk_haplotypecaller`, `gatk_haplotypecaller_gvcf`, `gatk_haplotypecaller_gvcf_scatter`, `gatk_haplotypecaller_scatter`, `gatk_markduplicates`, `gatk_markduplicates_bam`, `gatk_variantrecalibrator_indel`, `gatk_variantrecalibrator_snp`, `manta_germline` |
-| `fasta` | `/data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.fasta` | Reference data (user-provided; GRCh38 GATK bundle layout from upstream conf/igenomes.config, substituted at port time) | `bcftools_mpileup_call`, `bcftools_mpileup_ngscheckmate`, `bwa_index`, `bwa_mem`, `bwa_mem2`, `bwa_mem2_split`, `bwa_mem_split`, `bwa_mem_umi`, `bwamem2_index`, `deepvariant`, `freebayes`, `gatk_applybqsr`, `gatk_applybqsr_scatter`, `gatk_applyvqsr_indel`, `gatk_applyvqsr_snp`, `gatk_baserecalibrator`, `gatk_baserecalibrator_scatter`, `gatk_cnnscorevariants`, `gatk_createsequencedictionary`, `gatk_filtervarianttranches`, `gatk_genotypegvcfs`, `gatk_genotypegvcfs_scatter`, `gatk_haplotypecaller`, `gatk_haplotypecaller_gvcf`, `gatk_haplotypecaller_gvcf_scatter`, `gatk_haplotypecaller_scatter`, `gatk_markduplicates`, `gatk_markduplicates_bam`, `gatk_variantrecalibrator_indel`, `gatk_variantrecalibrator_snp`, `manta_germline`, `merge_index_samtools`, `mosdepth_md`, `mosdepth_recal`, `ngscheckmate_ncm`, `samtools_faidx`, `samtools_reindex_bam`, `samtools_stats_md`, `samtools_stats_recal`, `strelka_germline`, `tiddit_sv` |
-| `fasta_fai` | `/data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.fasta.fai` | — | `create_intervals_bed`, `deepvariant`, `freebayes`, `gatk_applybqsr`, `gatk_applybqsr_scatter`, `gatk_applyvqsr_indel`, `gatk_applyvqsr_snp`, `gatk_baserecalibrator`, `gatk_baserecalibrator_scatter`, `gatk_cnnscorevariants`, `gatk_filtervarianttranches`, `gatk_genomicsdbimport`, `gatk_genotypegvcfs`, `gatk_genotypegvcfs_scatter`, `gatk_haplotypecaller`, `gatk_haplotypecaller_gvcf`, `gatk_haplotypecaller_gvcf_scatter`, `gatk_haplotypecaller_scatter`, `gatk_markduplicates`, `gatk_markduplicates_bam`, `gatk_variantrecalibrator_indel`, `gatk_variantrecalibrator_snp`, `goleft_indexcov`, `manta_germline`, `strelka_germline`, `tiddit_sv` |
-| `freebayes_filter` | `30` | upstream params.freebayes_filter | `vcffilter_freebayes` |
-| `gatk_pcr_indel_model` | `CONSERVATIVE` | — | `gatk_haplotypecaller`, `gatk_haplotypecaller_gvcf`, `gatk_haplotypecaller_gvcf_scatter`, `gatk_haplotypecaller_scatter` |
-| `genome` | `GRCh38` | — | — |
-| `group_by_umi_strategy` | `Adjacency` | upstream params.group_by_umi_strategy | `fgbio_groupreadsbyumi` |
-| `joint_germline` | `false` | — | `bcftools_sort_joint`, `bcftools_sort_joint_scatter`, `bcftools_stats`, `bcftools_stats_joint`, `ensemblvep_vep`, `ensemblvep_vep_joint`, `gatk_applyvqsr_indel`, `gatk_applyvqsr_snp`, `gatk_cnnscorevariants`, `gatk_filtervarianttranches`, `gatk_genomicsdbimport`, `gatk_genomicsdbimport_scatter`, `gatk_genotypegvcfs`, `gatk_genotypegvcfs_scatter`, `gatk_haplotypecaller`, `gatk_haplotypecaller_gvcf`, `gatk_haplotypecaller_gvcf_scatter`, `gatk_haplotypecaller_scatter`, `gatk_mergevcfs_joint`, `gatk_mergevcfs_joint_scatter`, `gatk_mergevcfs_scatter`, `gatk_variantrecalibrator_indel`, `gatk_variantrecalibrator_snp`, `vcftools_filter_summary`, `vcftools_filter_summary_joint`, `vcftools_tstv_count`, `vcftools_tstv_count_joint`, `vcftools_tstv_qual`, `vcftools_tstv_qual_joint` |
-| `joint_interval_name` | `whole_genome` | Joint germline: the port runs without interval scatter; a single whole-genome interval is built from the fasta .fai (upstream: per-contig BED_PREPARE_INTERVALS) | `bcftools_sort_joint`, `gatk_genomicsdbimport`, `gatk_genotypegvcfs`, `gatk_mergevcfs_joint` |
-| `known_indels` | `'/data/references/GRCh38/Annotation/GATKBundle/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz', '/data/references/GRCh38/Annotation/GATKBundle/Homo_sapiens_assembly38.known_indels.vcf.gz'` | — | `gatk_baserecalibrator`, `gatk_baserecalibrator_scatter`, `gatk_filtervarianttranches`, `gatk_variantrecalibrator_indel` |
-| `known_indels_tbi` | `'/data/references/GRCh38/Annotation/GATKBundle/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz.tbi', '/data/references/GRCh38/Annotation/GATKBundle/Homo_sapiens_assembly38.known_indels.vcf.gz.tbi'` | — | `gatk_baserecalibrator`, `gatk_baserecalibrator_scatter`, `gatk_filtervarianttranches`, `gatk_variantrecalibrator_indel` |
-| `known_snps` | `/data/references/GRCh38/Annotation/GATKBundle/1000G_omni2.5.hg38.vcf.gz` | VQSR resources for joint germline (upstream conf/igenomes.config known_snps) | `gatk_variantrecalibrator_snp` |
-| `known_snps_tbi` | `/data/references/GRCh38/Annotation/GATKBundle/1000G_omni2.5.hg38.vcf.gz.tbi` | — | `gatk_variantrecalibrator_snp` |
-| `lane` | `L1` | — | `bcftools_mpileup_ngscheckmate`, `bwa_mem`, `bwa_mem2`, `bwa_mem2_split`, `bwa_mem_split`, `bwa_mem_umi`, `fastp`, `fastp_split`, `fastp_umi`, `fastqc`, `fgbio_callmolecularconsensusreads`, `fgbio_fastqtobam`, `fgbio_groupreadsbyumi`, `samtools_bam2fq_consensus`, `samtools_bam2fq_umi` |
-| `length_required` | `15` | — | `fastp`, `fastp_split`, `fastp_umi` |
-| `mapped_bam` | `0001` | mapped bam stem fed to markduplicates: {sample}.{mapped_bam}.bam ("sorted" with split_parts = true) | `gatk_markduplicates`, `gatk_markduplicates_bam` |
-| `ngscheckmate_bed` | `/data/references/GRCh38/Annotation/NGSCheckMate/SNP_GRCh38_hg38_wChr.bed` | — | `bcftools_mpileup_ngscheckmate`, `ngscheckmate_ncm` |
-| `out_dir` | `results` | — | `bam_merge_index_samtools`, `bcftools_mpileup_call`, `bcftools_mpileup_ngscheckmate`, `bcftools_sort_freebayes`, `bcftools_sort_joint`, `bcftools_sort_joint_scatter`, `bcftools_stats`, `bcftools_stats_deepvariant`, `bcftools_stats_freebayes`, `bcftools_stats_joint`, `bcftools_stats_manta`, `bcftools_stats_mpileup`, `bcftools_stats_strelka`, `bcftools_stats_tiddit`, `bwa_index`, `bwa_mem`, `bwa_mem2`, `bwa_mem2_split`, `bwa_mem_split`, `bwa_mem_umi`, `bwamem2_index`, `create_intervals_bed`, `deepvariant`, `ensemblvep_vep`, `ensemblvep_vep_deepvariant`, `ensemblvep_vep_freebayes`, `ensemblvep_vep_joint`, `ensemblvep_vep_manta`, `ensemblvep_vep_mpileup`, `ensemblvep_vep_strelka`, `ensemblvep_vep_tiddit`, `fastp`, `fastp_split`, `fastp_umi`, `fastqc`, `fgbio_callmolecularconsensusreads`, `fgbio_fastqtobam`, `fgbio_groupreadsbyumi`, `freebayes`, `gatk_applybqsr`, `gatk_applybqsr_scatter`, `gatk_applyvqsr_indel`, `gatk_applyvqsr_snp`, `gatk_baserecalibrator`, `gatk_baserecalibrator_scatter`, `gatk_cnnscorevariants`, `gatk_createsequencedictionary`, `gatk_filtervarianttranches`, `gatk_gatherbqsrreports`, `gatk_genomicsdbimport`, `gatk_genomicsdbimport_scatter`, `gatk_genotypegvcfs`, `gatk_genotypegvcfs_scatter`, `gatk_haplotypecaller`, `gatk_haplotypecaller_gvcf`, `gatk_haplotypecaller_gvcf_scatter`, `gatk_haplotypecaller_scatter`, `gatk_markduplicates`, `gatk_markduplicates_bam`, `gatk_mergevcfs_joint`, `gatk_mergevcfs_joint_scatter`, `gatk_mergevcfs_scatter`, `gatk_variantrecalibrator_indel`, `gatk_variantrecalibrator_snp`, `goleft_indexcov`, `manta_germline`, `merge_index_samtools`, `mosdepth_md`, `mosdepth_recal`, `multiqc`, `ngscheckmate_ncm`, `samtools_bam2fq_consensus`, `samtools_bam2fq_umi`, `samtools_faidx`, `samtools_index_recal`, `samtools_reindex_bam`, `samtools_stats_md`, `samtools_stats_recal`, `strelka_germline`, `tabix_freebayes`, `tabix_freebayes_filt`, `tabix_interval`, `tabix_tiddit`, `tiddit_sv`, `vcffilter_freebayes`, `vcftools_filter_summary`, `vcftools_filter_summary_deepvariant`, `vcftools_filter_summary_freebayes`, `vcftools_filter_summary_joint`, `vcftools_filter_summary_manta`, `vcftools_filter_summary_mpileup`, `vcftools_filter_summary_strelka`, `vcftools_filter_summary_tiddit`, `vcftools_tstv_count`, `vcftools_tstv_count_deepvariant`, `vcftools_tstv_count_freebayes`, `vcftools_tstv_count_joint`, `vcftools_tstv_count_manta`, `vcftools_tstv_count_mpileup`, `vcftools_tstv_count_strelka`, `vcftools_tstv_count_tiddit`, `vcftools_tstv_qual`, `vcftools_tstv_qual_deepvariant`, `vcftools_tstv_qual_freebayes`, `vcftools_tstv_qual_joint`, `vcftools_tstv_qual_manta`, `vcftools_tstv_qual_mpileup`, `vcftools_tstv_qual_strelka`, `vcftools_tstv_qual_tiddit` |
-| `patient` | `test` | Sample metadata — mirrors tests/csv/3.0/fastq_single.csv (single-lane model: nf-core/sarek meta.id = "{sample}-{lane}", read-group ID = "{sample}.{lane}") | `bwa_mem`, `bwa_mem2`, `bwa_mem2_split`, `bwa_mem_split`, `bwa_mem_umi` |
-| `prepare_reference` | `false` | Optional branches (all default-off; upstream equivalents in parentheses) Reference preparation — upstream PREPARE_GENOME builds the BWA/BWAmem2 indexes + .dict + .fai when the reference lacks them; the port gates this on prepare_reference and writes into results/reference/. Point bwa_index_dir / bwa_mem2_index_dir / fasta_fai / dict at the built files to use them. | `bwa_index`, `bwamem2_index`, `gatk_createsequencedictionary`, `samtools_faidx` |
-| `recal_index_ext` | `cram.crai` | — | `merge_index_samtools`, `mosdepth_recal`, `samtools_index_recal` |
-| `save_output_as_bam` | `false` | CRAM output mode (upstream default) | `gatk_markduplicates`, `gatk_markduplicates_bam` |
-| `scatter_gatk` | `false` | Optional per-chromosome scatter/gather branch (default off). When scatter_gatk = true, BQSR / ApplyBQSR / HaplotypeCaller (and the joint GenotypeGVCFs) run one job per chromosome and the per-chromosome outputs are gathered (GatherBQSRReports / samtools merge+index / MergeVcfs) — results identical to the single whole-genome job (gathers are exact), with per-chromosome parallelism. Upstream scatters over dynamic duration-binned interval files; the engine's scatter takes a static value list, so the port uses one interval per chromosome. Keep `chromosomes` in sync with the contigs of your fasta .fai (each entry must exist in the .fai). | `bcftools_sort_joint`, `bcftools_sort_joint_scatter`, `create_intervals_bed`, `gatk_applybqsr`, `gatk_applybqsr_scatter`, `gatk_baserecalibrator`, `gatk_baserecalibrator_scatter`, `gatk_gatherbqsrreports`, `gatk_genomicsdbimport`, `gatk_genomicsdbimport_scatter`, `gatk_genotypegvcfs`, `gatk_genotypegvcfs_scatter`, `gatk_haplotypecaller`, `gatk_haplotypecaller_gvcf`, `gatk_haplotypecaller_gvcf_scatter`, `gatk_haplotypecaller_scatter`, `gatk_mergevcfs_joint`, `gatk_mergevcfs_joint_scatter`, `gatk_mergevcfs_scatter`, `merge_index_samtools`, `samtools_index_recal`, `tabix_interval` |
-| `seq_platform` | `ILLUMINA` | — | `bwa_mem`, `bwa_mem2`, `bwa_mem2_split`, `bwa_mem_split`, `bwa_mem_umi` |
-| `sex` | `XX` | — | — |
-| `skip_bcftools` | `false` | — | `bcftools_stats`, `bcftools_stats_deepvariant`, `bcftools_stats_freebayes`, `bcftools_stats_joint`, `bcftools_stats_manta`, `bcftools_stats_mpileup`, `bcftools_stats_strelka`, `bcftools_stats_tiddit` |
-| `skip_fastqc` | `false` | — | `fastqc` |
-| `skip_mosdepth` | `false` | — | `mosdepth_md`, `mosdepth_recal` |
-| `skip_multiqc` | `false` | — | `multiqc` |
-| `skip_samtools` | `false` | — | `samtools_stats_md`, `samtools_stats_recal` |
-| `skip_vcftools` | `false` | — | `vcftools_filter_summary`, `vcftools_filter_summary_deepvariant`, `vcftools_filter_summary_freebayes`, `vcftools_filter_summary_joint`, `vcftools_filter_summary_manta`, `vcftools_filter_summary_mpileup`, `vcftools_filter_summary_strelka`, `vcftools_filter_summary_tiddit`, `vcftools_tstv_count`, `vcftools_tstv_count_deepvariant`, `vcftools_tstv_count_freebayes`, `vcftools_tstv_count_joint`, `vcftools_tstv_count_manta`, `vcftools_tstv_count_mpileup`, `vcftools_tstv_count_strelka`, `vcftools_tstv_count_tiddit`, `vcftools_tstv_qual`, `vcftools_tstv_qual_deepvariant`, `vcftools_tstv_qual_freebayes`, `vcftools_tstv_qual_joint`, `vcftools_tstv_qual_manta`, `vcftools_tstv_qual_mpileup`, `vcftools_tstv_qual_strelka`, `vcftools_tstv_qual_tiddit` |
-| `split_fastq` | `50000000` | fastp --split_by_lines = split_fastq * 4 | `fastp`, `fastp_split`, `fastp_umi` |
-| `split_parts` | `false` | Runtime-discovered split parts: when true, fastp's --split_by_lines parts are discovered by filesystem scan (engine output_pattern primitive) and the BWA_MEM + BAM_MERGE_INDEX_SAMTOOLS stages fan out per part — no 0001-only cap. Requires mapped_bam = "sorted" (the merge output name). Not supported with umi_read_structure. Off by default (upstream single-part behavior). | `bam_merge_index_samtools`, `bwa_mem`, `bwa_mem2`, `bwa_mem2_split`, `bwa_mem_split`, `fastp`, `fastp_split`, `fastp_umi` |
-| `status` | `0` | — | — |
-| `tools_ngscheckmate` | `false` | — | `bcftools_mpileup_ngscheckmate`, `ngscheckmate_ncm` |
-| `trim_fastq` | `false` | — | `fastp`, `fastp_split`, `fastp_umi` |
-| `umi_read_structure` | `` | UMI consensus preprocessing (upstream params.umi_read_structure, e.g. '3M2S+T' or '5M2S+T'; empty string disables the whole UMI chain) | `bwa_mem_umi`, `fastp`, `fastp_split`, `fastp_umi`, `fgbio_callmolecularconsensusreads`, `fgbio_fastqtobam`, `fgbio_groupreadsbyumi`, `samtools_bam2fq_consensus`, `samtools_bam2fq_umi` |
-| `vep_cache_ready` | `false` | — | `ensemblvep_vep`, `ensemblvep_vep_deepvariant`, `ensemblvep_vep_freebayes`, `ensemblvep_vep_joint`, `ensemblvep_vep_manta`, `ensemblvep_vep_mpileup`, `ensemblvep_vep_strelka`, `ensemblvep_vep_tiddit` |
-| `vep_cache_version` | `112` | The VEP cache version must match the VEP binary in envs/vep.yaml (upstream's image pins 116; this env ships ensembl-vep 112, whose cache format is version-locked — a 116 cache is unreadable). The cache itself is user data (upstream bundles it in the container at /.vep; ~30GB for whole-genome GRCh38, or a gtf2vep subset) — the VEP rule gates on vep_cache_ready. Upstream fails hard without the cache; set the flag after placing it at vep_dir_cache (see README fidelity table). | `ensemblvep_vep`, `ensemblvep_vep_deepvariant`, `ensemblvep_vep_freebayes`, `ensemblvep_vep_joint`, `ensemblvep_vep_manta`, `ensemblvep_vep_mpileup`, `ensemblvep_vep_strelka`, `ensemblvep_vep_tiddit` |
-| `vep_dir_cache` | `/.vep` | — | `ensemblvep_vep`, `ensemblvep_vep_deepvariant`, `ensemblvep_vep_freebayes`, `ensemblvep_vep_joint`, `ensemblvep_vep_manta`, `ensemblvep_vep_mpileup`, `ensemblvep_vep_strelka`, `ensemblvep_vep_tiddit` |
-| `vep_genome` | `GRCh38` | — | `ensemblvep_vep`, `ensemblvep_vep_deepvariant`, `ensemblvep_vep_freebayes`, `ensemblvep_vep_joint`, `ensemblvep_vep_manta`, `ensemblvep_vep_mpileup`, `ensemblvep_vep_strelka`, `ensemblvep_vep_tiddit` |
-| `vep_species` | `homo_sapiens` | — | `ensemblvep_vep`, `ensemblvep_vep_deepvariant`, `ensemblvep_vep_freebayes`, `ensemblvep_vep_joint`, `ensemblvep_vep_manta`, `ensemblvep_vep_mpileup`, `ensemblvep_vep_strelka`, `ensemblvep_vep_tiddit` |
-| `wes` | `false` | — | `goleft_indexcov`, `samtools_reindex_bam` |
-
-{: .ox-params }
+<div class="ox-params">
+<div class="ox-param">
+<div class="ox-param-head"><code>aligner</code><span class="ox-param-default">bwa-mem</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 4 rules</summary>
+<div class="ox-param-rules"><code>bwa_mem</code> <code>bwa_mem2</code> <code>bwa_mem2_split</code> <code>bwa_mem_split</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>alignment_ext</code><span class="ox-param-default">cram</span></div>
+<p class="ox-param-desc">Alignment-file mode: &#x27;cram&#x27; (default) or &#x27;bam&#x27; (when save_output_as_bam=true). recal_index_ext must match the mode (&#x27;cram.crai&#x27; vs &#x27;bam.bai&#x27;).</p>
+<details class="ox-param-usedby"><summary>used by 22 rules</summary>
+<div class="ox-param-rules"><code>bcftools_mpileup_call</code> <code>bcftools_mpileup_ngscheckmate</code> <code>deepvariant</code> <code>freebayes</code> <code>gatk_applybqsr</code> <code>gatk_applybqsr_scatter</code> <code>gatk_baserecalibrator</code> <code>gatk_baserecalibrator_scatter</code> <code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_gvcf</code> <code>gatk_haplotypecaller_gvcf_scatter</code> <code>gatk_haplotypecaller_scatter</code> <code>manta_germline</code> <code>merge_index_samtools</code> <code>mosdepth_md</code> <code>mosdepth_recal</code> <code>samtools_index_recal</code> <code>samtools_reindex_bam</code> <code>samtools_stats_md</code> <code>samtools_stats_recal</code> <code>strelka_germline</code> <code>tiddit_sv</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>annotate_vep</code><span class="ox-param-default">true</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 8 rules</summary>
+<div class="ox-param-rules"><code>ensemblvep_vep</code> <code>ensemblvep_vep_deepvariant</code> <code>ensemblvep_vep_freebayes</code> <code>ensemblvep_vep_joint</code> <code>ensemblvep_vep_manta</code> <code>ensemblvep_vep_mpileup</code> <code>ensemblvep_vep_strelka</code> <code>ensemblvep_vep_tiddit</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>bwa_index_dir</code><span class="ox-param-default">/data/references/GRCh38/Sequence/BWAIndex/</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>bwa_mem</code> <code>bwa_mem_split</code> <code>bwa_mem_umi</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>bwa_mem2_index_dir</code><span class="ox-param-default">/data/references/GRCh38/Sequence/BWAmem2Index/</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>bwa_mem2</code> <code>bwa_mem2_split</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>call_deepvariant</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 6 rules</summary>
+<div class="ox-param-rules"><code>bcftools_stats_deepvariant</code> <code>deepvariant</code> <code>ensemblvep_vep_deepvariant</code> <code>vcftools_filter_summary_deepvariant</code> <code>vcftools_tstv_count_deepvariant</code> <code>vcftools_tstv_qual_deepvariant</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>call_freebayes</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">Optional callers (upstream --tools list, one boolean per tool)</p>
+<details class="ox-param-usedby"><summary>used by 10 rules</summary>
+<div class="ox-param-rules"><code>bcftools_sort_freebayes</code> <code>bcftools_stats_freebayes</code> <code>ensemblvep_vep_freebayes</code> <code>freebayes</code> <code>tabix_freebayes</code> <code>tabix_freebayes_filt</code> <code>vcffilter_freebayes</code> <code>vcftools_filter_summary_freebayes</code> <code>vcftools_tstv_count_freebayes</code> <code>vcftools_tstv_qual_freebayes</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>call_haplotypecaller</code><span class="ox-param-default">true</span></div>
+<p class="ox-param-desc">tools / skip_tools equivalents (upstream comma-list params expressed as booleans)</p>
+<details class="ox-param-usedby"><summary>used by 22 rules</summary>
+<div class="ox-param-rules"><code>bcftools_sort_joint</code> <code>bcftools_stats</code> <code>bcftools_stats_joint</code> <code>ensemblvep_vep</code> <code>ensemblvep_vep_joint</code> <code>gatk_applyvqsr_indel</code> <code>gatk_applyvqsr_snp</code> <code>gatk_cnnscorevariants</code> <code>gatk_filtervarianttranches</code> <code>gatk_genomicsdbimport</code> <code>gatk_genotypegvcfs</code> <code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_gvcf</code> <code>gatk_mergevcfs_joint</code> <code>gatk_variantrecalibrator_indel</code> <code>gatk_variantrecalibrator_snp</code> <code>vcftools_filter_summary</code> <code>vcftools_filter_summary_joint</code> <code>vcftools_tstv_count</code> <code>vcftools_tstv_count_joint</code> <code>vcftools_tstv_qual</code> <code>vcftools_tstv_qual_joint</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>call_indexcov</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">upstream runs indexcov on WGS only (germline)</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>goleft_indexcov</code> <code>samtools_reindex_bam</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>call_manta</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 6 rules</summary>
+<div class="ox-param-rules"><code>bcftools_stats_manta</code> <code>ensemblvep_vep_manta</code> <code>manta_germline</code> <code>vcftools_filter_summary_manta</code> <code>vcftools_tstv_count_manta</code> <code>vcftools_tstv_qual_manta</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>call_mpileup</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 6 rules</summary>
+<div class="ox-param-rules"><code>bcftools_mpileup_call</code> <code>bcftools_stats_mpileup</code> <code>ensemblvep_vep_mpileup</code> <code>vcftools_filter_summary_mpileup</code> <code>vcftools_tstv_count_mpileup</code> <code>vcftools_tstv_qual_mpileup</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>call_strelka</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 6 rules</summary>
+<div class="ox-param-rules"><code>bcftools_stats_strelka</code> <code>ensemblvep_vep_strelka</code> <code>strelka_germline</code> <code>vcftools_filter_summary_strelka</code> <code>vcftools_tstv_count_strelka</code> <code>vcftools_tstv_qual_strelka</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>call_tiddit</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 7 rules</summary>
+<div class="ox-param-rules"><code>bcftools_stats_tiddit</code> <code>ensemblvep_vep_tiddit</code> <code>tabix_tiddit</code> <code>tiddit_sv</code> <code>vcftools_filter_summary_tiddit</code> <code>vcftools_tstv_count_tiddit</code> <code>vcftools_tstv_qual_tiddit</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>chromosomes</code><span class="ox-param-default">chr1, chr2, chr3, chr4, chr5, chr6, chr7, chr8, chr9, chr10, chr11, chr12, chr13, chr14, chr15, chr16, chr17, chr18, chr19, chr20, chr21, chr22, chrX, chrY, chrM</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>dbsnp</code><span class="ox-param-default">/data/references/GRCh38/Annotation/GATKBundle/dbsnp_146.hg38.vcf.gz</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 11 rules</summary>
+<div class="ox-param-rules"><code>gatk_baserecalibrator</code> <code>gatk_baserecalibrator_scatter</code> <code>gatk_filtervarianttranches</code> <code>gatk_genotypegvcfs</code> <code>gatk_genotypegvcfs_scatter</code> <code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_gvcf</code> <code>gatk_haplotypecaller_gvcf_scatter</code> <code>gatk_haplotypecaller_scatter</code> <code>gatk_variantrecalibrator_indel</code> <code>gatk_variantrecalibrator_snp</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>dbsnp_tbi</code><span class="ox-param-default">/data/references/GRCh38/Annotation/GATKBundle/dbsnp_146.hg38.vcf.gz.tbi</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 11 rules</summary>
+<div class="ox-param-rules"><code>gatk_baserecalibrator</code> <code>gatk_baserecalibrator_scatter</code> <code>gatk_filtervarianttranches</code> <code>gatk_genotypegvcfs</code> <code>gatk_genotypegvcfs_scatter</code> <code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_gvcf</code> <code>gatk_haplotypecaller_gvcf_scatter</code> <code>gatk_haplotypecaller_scatter</code> <code>gatk_variantrecalibrator_indel</code> <code>gatk_variantrecalibrator_snp</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>dict</code><span class="ox-param-default">/data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.dict</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 19 rules</summary>
+<div class="ox-param-rules"><code>gatk_applybqsr</code> <code>gatk_applybqsr_scatter</code> <code>gatk_applyvqsr_indel</code> <code>gatk_applyvqsr_snp</code> <code>gatk_baserecalibrator</code> <code>gatk_baserecalibrator_scatter</code> <code>gatk_cnnscorevariants</code> <code>gatk_filtervarianttranches</code> <code>gatk_genotypegvcfs</code> <code>gatk_genotypegvcfs_scatter</code> <code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_gvcf</code> <code>gatk_haplotypecaller_gvcf_scatter</code> <code>gatk_haplotypecaller_scatter</code> <code>gatk_markduplicates</code> <code>gatk_markduplicates_bam</code> <code>gatk_variantrecalibrator_indel</code> <code>gatk_variantrecalibrator_snp</code> <code>manta_germline</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>fasta</code><span class="ox-param-default">/data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.fasta</span></div>
+<p class="ox-param-desc">Reference data (user-provided; GRCh38 GATK bundle layout from upstream conf/igenomes.config, substituted at port time)</p>
+<details class="ox-param-usedby"><summary>used by 41 rules</summary>
+<div class="ox-param-rules"><code>bcftools_mpileup_call</code> <code>bcftools_mpileup_ngscheckmate</code> <code>bwa_index</code> <code>bwa_mem</code> <code>bwa_mem2</code> <code>bwa_mem2_split</code> <code>bwa_mem_split</code> <code>bwa_mem_umi</code> <code>bwamem2_index</code> <code>deepvariant</code> <code>freebayes</code> <code>gatk_applybqsr</code> <code>gatk_applybqsr_scatter</code> <code>gatk_applyvqsr_indel</code> <code>gatk_applyvqsr_snp</code> <code>gatk_baserecalibrator</code> <code>gatk_baserecalibrator_scatter</code> <code>gatk_cnnscorevariants</code> <code>gatk_createsequencedictionary</code> <code>gatk_filtervarianttranches</code> <code>gatk_genotypegvcfs</code> <code>gatk_genotypegvcfs_scatter</code> <code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_gvcf</code> <code>gatk_haplotypecaller_gvcf_scatter</code> <code>gatk_haplotypecaller_scatter</code> <code>gatk_markduplicates</code> <code>gatk_markduplicates_bam</code> <code>gatk_variantrecalibrator_indel</code> <code>gatk_variantrecalibrator_snp</code> <code>manta_germline</code> <code>merge_index_samtools</code> <code>mosdepth_md</code> <code>mosdepth_recal</code> <code>ngscheckmate_ncm</code> <code>samtools_faidx</code> <code>samtools_reindex_bam</code> <code>samtools_stats_md</code> <code>samtools_stats_recal</code> <code>strelka_germline</code> <code>tiddit_sv</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>fasta_fai</code><span class="ox-param-default">/data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.fasta.fai</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 26 rules</summary>
+<div class="ox-param-rules"><code>create_intervals_bed</code> <code>deepvariant</code> <code>freebayes</code> <code>gatk_applybqsr</code> <code>gatk_applybqsr_scatter</code> <code>gatk_applyvqsr_indel</code> <code>gatk_applyvqsr_snp</code> <code>gatk_baserecalibrator</code> <code>gatk_baserecalibrator_scatter</code> <code>gatk_cnnscorevariants</code> <code>gatk_filtervarianttranches</code> <code>gatk_genomicsdbimport</code> <code>gatk_genotypegvcfs</code> <code>gatk_genotypegvcfs_scatter</code> <code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_gvcf</code> <code>gatk_haplotypecaller_gvcf_scatter</code> <code>gatk_haplotypecaller_scatter</code> <code>gatk_markduplicates</code> <code>gatk_markduplicates_bam</code> <code>gatk_variantrecalibrator_indel</code> <code>gatk_variantrecalibrator_snp</code> <code>goleft_indexcov</code> <code>manta_germline</code> <code>strelka_germline</code> <code>tiddit_sv</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>freebayes_filter</code><span class="ox-param-default">30</span></div>
+<p class="ox-param-desc">upstream params.freebayes_filter</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>vcffilter_freebayes</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>gatk_pcr_indel_model</code><span class="ox-param-default">CONSERVATIVE</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 4 rules</summary>
+<div class="ox-param-rules"><code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_gvcf</code> <code>gatk_haplotypecaller_gvcf_scatter</code> <code>gatk_haplotypecaller_scatter</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>genome</code><span class="ox-param-default">GRCh38</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>group_by_umi_strategy</code><span class="ox-param-default">Adjacency</span></div>
+<p class="ox-param-desc">upstream params.group_by_umi_strategy</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>fgbio_groupreadsbyumi</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>joint_germline</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 29 rules</summary>
+<div class="ox-param-rules"><code>bcftools_sort_joint</code> <code>bcftools_sort_joint_scatter</code> <code>bcftools_stats</code> <code>bcftools_stats_joint</code> <code>ensemblvep_vep</code> <code>ensemblvep_vep_joint</code> <code>gatk_applyvqsr_indel</code> <code>gatk_applyvqsr_snp</code> <code>gatk_cnnscorevariants</code> <code>gatk_filtervarianttranches</code> <code>gatk_genomicsdbimport</code> <code>gatk_genomicsdbimport_scatter</code> <code>gatk_genotypegvcfs</code> <code>gatk_genotypegvcfs_scatter</code> <code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_gvcf</code> <code>gatk_haplotypecaller_gvcf_scatter</code> <code>gatk_haplotypecaller_scatter</code> <code>gatk_mergevcfs_joint</code> <code>gatk_mergevcfs_joint_scatter</code> <code>gatk_mergevcfs_scatter</code> <code>gatk_variantrecalibrator_indel</code> <code>gatk_variantrecalibrator_snp</code> <code>vcftools_filter_summary</code> <code>vcftools_filter_summary_joint</code> <code>vcftools_tstv_count</code> <code>vcftools_tstv_count_joint</code> <code>vcftools_tstv_qual</code> <code>vcftools_tstv_qual_joint</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>joint_interval_name</code><span class="ox-param-default">whole_genome</span></div>
+<p class="ox-param-desc">Joint germline: the port runs without interval scatter; a single whole-genome interval is built from the fasta .fai (upstream: per-contig BED_PREPARE_INTERVALS)</p>
+<details class="ox-param-usedby"><summary>used by 4 rules</summary>
+<div class="ox-param-rules"><code>bcftools_sort_joint</code> <code>gatk_genomicsdbimport</code> <code>gatk_genotypegvcfs</code> <code>gatk_mergevcfs_joint</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>known_indels</code><span class="ox-param-default">/data/references/GRCh38/Annotation/GATKBundle/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz, /data/references/GRCh38/Annotation/GATKBundle/Homo_sapiens_assembly38.known_indels.vcf.gz</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 4 rules</summary>
+<div class="ox-param-rules"><code>gatk_baserecalibrator</code> <code>gatk_baserecalibrator_scatter</code> <code>gatk_filtervarianttranches</code> <code>gatk_variantrecalibrator_indel</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>known_indels_tbi</code><span class="ox-param-default">/data/references/GRCh38/Annotation/GATKBundle/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz.tbi, /data/references/GRCh38/Annotation/GATKBundle/Homo_sapiens_assembly38.known_indels.vcf.gz.tbi</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 4 rules</summary>
+<div class="ox-param-rules"><code>gatk_baserecalibrator</code> <code>gatk_baserecalibrator_scatter</code> <code>gatk_filtervarianttranches</code> <code>gatk_variantrecalibrator_indel</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>known_snps</code><span class="ox-param-default">/data/references/GRCh38/Annotation/GATKBundle/1000G_omni2.5.hg38.vcf.gz</span></div>
+<p class="ox-param-desc">VQSR resources for joint germline (upstream conf/igenomes.config known_snps)</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>gatk_variantrecalibrator_snp</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>known_snps_tbi</code><span class="ox-param-default">/data/references/GRCh38/Annotation/GATKBundle/1000G_omni2.5.hg38.vcf.gz.tbi</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>gatk_variantrecalibrator_snp</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>lane</code><span class="ox-param-default">L1</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 15 rules</summary>
+<div class="ox-param-rules"><code>bcftools_mpileup_ngscheckmate</code> <code>bwa_mem</code> <code>bwa_mem2</code> <code>bwa_mem2_split</code> <code>bwa_mem_split</code> <code>bwa_mem_umi</code> <code>fastp</code> <code>fastp_split</code> <code>fastp_umi</code> <code>fastqc</code> <code>fgbio_callmolecularconsensusreads</code> <code>fgbio_fastqtobam</code> <code>fgbio_groupreadsbyumi</code> <code>samtools_bam2fq_consensus</code> <code>samtools_bam2fq_umi</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>length_required</code><span class="ox-param-default">15</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>fastp</code> <code>fastp_split</code> <code>fastp_umi</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>mapped_bam</code><span class="ox-param-default">0001</span></div>
+<p class="ox-param-desc">mapped bam stem fed to markduplicates: {sample}.{mapped_bam}.bam (&quot;sorted&quot; with split_parts = true)</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>gatk_markduplicates</code> <code>gatk_markduplicates_bam</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>ngscheckmate_bed</code><span class="ox-param-default">/data/references/GRCh38/Annotation/NGSCheckMate/SNP_GRCh38_hg38_wChr.bed</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>bcftools_mpileup_ngscheckmate</code> <code>ngscheckmate_ncm</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>out_dir</code><span class="ox-param-default">results</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 109 rules</summary>
+<div class="ox-param-rules"><code>bam_merge_index_samtools</code> <code>bcftools_mpileup_call</code> <code>bcftools_mpileup_ngscheckmate</code> <code>bcftools_sort_freebayes</code> <code>bcftools_sort_joint</code> <code>bcftools_sort_joint_scatter</code> <code>bcftools_stats</code> <code>bcftools_stats_deepvariant</code> <code>bcftools_stats_freebayes</code> <code>bcftools_stats_joint</code> <code>bcftools_stats_manta</code> <code>bcftools_stats_mpileup</code> <code>bcftools_stats_strelka</code> <code>bcftools_stats_tiddit</code> <code>bwa_index</code> <code>bwa_mem</code> <code>bwa_mem2</code> <code>bwa_mem2_split</code> <code>bwa_mem_split</code> <code>bwa_mem_umi</code> <code>bwamem2_index</code> <code>create_intervals_bed</code> <code>deepvariant</code> <code>ensemblvep_vep</code> <code>ensemblvep_vep_deepvariant</code> <code>ensemblvep_vep_freebayes</code> <code>ensemblvep_vep_joint</code> <code>ensemblvep_vep_manta</code> <code>ensemblvep_vep_mpileup</code> <code>ensemblvep_vep_strelka</code> <code>ensemblvep_vep_tiddit</code> <code>fastp</code> <code>fastp_split</code> <code>fastp_umi</code> <code>fastqc</code> <code>fgbio_callmolecularconsensusreads</code> <code>fgbio_fastqtobam</code> <code>fgbio_groupreadsbyumi</code> <code>freebayes</code> <code>gatk_applybqsr</code> <code>gatk_applybqsr_scatter</code> <code>gatk_applyvqsr_indel</code> <code>gatk_applyvqsr_snp</code> <code>gatk_baserecalibrator</code> <code>gatk_baserecalibrator_scatter</code> <code>gatk_cnnscorevariants</code> <code>gatk_createsequencedictionary</code> <code>gatk_filtervarianttranches</code> <code>gatk_gatherbqsrreports</code> <code>gatk_genomicsdbimport</code> <code>gatk_genomicsdbimport_scatter</code> <code>gatk_genotypegvcfs</code> <code>gatk_genotypegvcfs_scatter</code> <code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_gvcf</code> <code>gatk_haplotypecaller_gvcf_scatter</code> <code>gatk_haplotypecaller_scatter</code> <code>gatk_markduplicates</code> <code>gatk_markduplicates_bam</code> <code>gatk_mergevcfs_joint</code> <code>gatk_mergevcfs_joint_scatter</code> <code>gatk_mergevcfs_scatter</code> <code>gatk_variantrecalibrator_indel</code> <code>gatk_variantrecalibrator_snp</code> <code>goleft_indexcov</code> <code>manta_germline</code> <code>merge_index_samtools</code> <code>mosdepth_md</code> <code>mosdepth_recal</code> <code>multiqc</code> <code>ngscheckmate_ncm</code> <code>samtools_bam2fq_consensus</code> <code>samtools_bam2fq_umi</code> <code>samtools_faidx</code> <code>samtools_index_recal</code> <code>samtools_reindex_bam</code> <code>samtools_stats_md</code> <code>samtools_stats_recal</code> <code>strelka_germline</code> <code>tabix_freebayes</code> <code>tabix_freebayes_filt</code> <code>tabix_interval</code> <code>tabix_tiddit</code> <code>tiddit_sv</code> <code>vcffilter_freebayes</code> <code>vcftools_filter_summary</code> <code>vcftools_filter_summary_deepvariant</code> <code>vcftools_filter_summary_freebayes</code> <code>vcftools_filter_summary_joint</code> <code>vcftools_filter_summary_manta</code> <code>vcftools_filter_summary_mpileup</code> <code>vcftools_filter_summary_strelka</code> <code>vcftools_filter_summary_tiddit</code> <code>vcftools_tstv_count</code> <code>vcftools_tstv_count_deepvariant</code> <code>vcftools_tstv_count_freebayes</code> <code>vcftools_tstv_count_joint</code> <code>vcftools_tstv_count_manta</code> <code>vcftools_tstv_count_mpileup</code> <code>vcftools_tstv_count_strelka</code> <code>vcftools_tstv_count_tiddit</code> <code>vcftools_tstv_qual</code> <code>vcftools_tstv_qual_deepvariant</code> <code>vcftools_tstv_qual_freebayes</code> <code>vcftools_tstv_qual_joint</code> <code>vcftools_tstv_qual_manta</code> <code>vcftools_tstv_qual_mpileup</code> <code>vcftools_tstv_qual_strelka</code> <code>vcftools_tstv_qual_tiddit</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>patient</code><span class="ox-param-default">test</span></div>
+<p class="ox-param-desc">Sample metadata — mirrors tests/csv/3.0/fastq_single.csv (single-lane model: nf-core/sarek meta.id = &quot;{sample}-{lane}&quot;, read-group ID = &quot;{sample}.{lane}&quot;)</p>
+<details class="ox-param-usedby"><summary>used by 5 rules</summary>
+<div class="ox-param-rules"><code>bwa_mem</code> <code>bwa_mem2</code> <code>bwa_mem2_split</code> <code>bwa_mem_split</code> <code>bwa_mem_umi</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>prepare_reference</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">Optional branches (all default-off; upstream equivalents in parentheses) Reference preparation — upstream PREPARE_GENOME builds the BWA/BWAmem2 indexes + .dict + .fai when the reference lacks them; the port gates this on prepare_reference and writes into results/reference/. Point bwa_index_dir / bwa_mem2_index_dir / fasta_fai / dict at the built files to use them.</p>
+<details class="ox-param-usedby"><summary>used by 4 rules</summary>
+<div class="ox-param-rules"><code>bwa_index</code> <code>bwamem2_index</code> <code>gatk_createsequencedictionary</code> <code>samtools_faidx</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>recal_index_ext</code><span class="ox-param-default">cram.crai</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>merge_index_samtools</code> <code>mosdepth_recal</code> <code>samtools_index_recal</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>save_output_as_bam</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">CRAM output mode (upstream default)</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>gatk_markduplicates</code> <code>gatk_markduplicates_bam</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>scatter_gatk</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">Optional per-chromosome scatter/gather branch (default off). When scatter_gatk = true, BQSR / ApplyBQSR / HaplotypeCaller (and the joint GenotypeGVCFs) run one job per chromosome and the per-chromosome outputs are gathered (GatherBQSRReports / samtools merge+index / MergeVcfs) — results identical to the single whole-genome job (gathers are exact), with per-chromosome parallelism. Upstream scatters over dynamic duration-binned interval files; the engine&#x27;s scatter takes a static value list, so the port uses one interval per chromosome. Keep <code>chromosomes</code> in sync with the contigs of your fasta .fai (each entry must exist in the .fai).</p>
+<details class="ox-param-usedby"><summary>used by 22 rules</summary>
+<div class="ox-param-rules"><code>bcftools_sort_joint</code> <code>bcftools_sort_joint_scatter</code> <code>create_intervals_bed</code> <code>gatk_applybqsr</code> <code>gatk_applybqsr_scatter</code> <code>gatk_baserecalibrator</code> <code>gatk_baserecalibrator_scatter</code> <code>gatk_gatherbqsrreports</code> <code>gatk_genomicsdbimport</code> <code>gatk_genomicsdbimport_scatter</code> <code>gatk_genotypegvcfs</code> <code>gatk_genotypegvcfs_scatter</code> <code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_gvcf</code> <code>gatk_haplotypecaller_gvcf_scatter</code> <code>gatk_haplotypecaller_scatter</code> <code>gatk_mergevcfs_joint</code> <code>gatk_mergevcfs_joint_scatter</code> <code>gatk_mergevcfs_scatter</code> <code>merge_index_samtools</code> <code>samtools_index_recal</code> <code>tabix_interval</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>seq_platform</code><span class="ox-param-default">ILLUMINA</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 5 rules</summary>
+<div class="ox-param-rules"><code>bwa_mem</code> <code>bwa_mem2</code> <code>bwa_mem2_split</code> <code>bwa_mem_split</code> <code>bwa_mem_umi</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>sex</code><span class="ox-param-default">XX</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_bcftools</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 8 rules</summary>
+<div class="ox-param-rules"><code>bcftools_stats</code> <code>bcftools_stats_deepvariant</code> <code>bcftools_stats_freebayes</code> <code>bcftools_stats_joint</code> <code>bcftools_stats_manta</code> <code>bcftools_stats_mpileup</code> <code>bcftools_stats_strelka</code> <code>bcftools_stats_tiddit</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_fastqc</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>fastqc</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_mosdepth</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>mosdepth_md</code> <code>mosdepth_recal</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_multiqc</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>multiqc</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_samtools</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>samtools_stats_md</code> <code>samtools_stats_recal</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_vcftools</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 24 rules</summary>
+<div class="ox-param-rules"><code>vcftools_filter_summary</code> <code>vcftools_filter_summary_deepvariant</code> <code>vcftools_filter_summary_freebayes</code> <code>vcftools_filter_summary_joint</code> <code>vcftools_filter_summary_manta</code> <code>vcftools_filter_summary_mpileup</code> <code>vcftools_filter_summary_strelka</code> <code>vcftools_filter_summary_tiddit</code> <code>vcftools_tstv_count</code> <code>vcftools_tstv_count_deepvariant</code> <code>vcftools_tstv_count_freebayes</code> <code>vcftools_tstv_count_joint</code> <code>vcftools_tstv_count_manta</code> <code>vcftools_tstv_count_mpileup</code> <code>vcftools_tstv_count_strelka</code> <code>vcftools_tstv_count_tiddit</code> <code>vcftools_tstv_qual</code> <code>vcftools_tstv_qual_deepvariant</code> <code>vcftools_tstv_qual_freebayes</code> <code>vcftools_tstv_qual_joint</code> <code>vcftools_tstv_qual_manta</code> <code>vcftools_tstv_qual_mpileup</code> <code>vcftools_tstv_qual_strelka</code> <code>vcftools_tstv_qual_tiddit</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>split_fastq</code><span class="ox-param-default">50000000</span></div>
+<p class="ox-param-desc">fastp --split_by_lines = split_fastq * 4</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>fastp</code> <code>fastp_split</code> <code>fastp_umi</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>split_parts</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">Runtime-discovered split parts: when true, fastp&#x27;s --split_by_lines parts are discovered by filesystem scan (engine output_pattern primitive) and the BWA_MEM + BAM_MERGE_INDEX_SAMTOOLS stages fan out per part — no 0001-only cap. Requires mapped_bam = &quot;sorted&quot; (the merge output name). Not supported with umi_read_structure. Off by default (upstream single-part behavior).</p>
+<details class="ox-param-usedby"><summary>used by 8 rules</summary>
+<div class="ox-param-rules"><code>bam_merge_index_samtools</code> <code>bwa_mem</code> <code>bwa_mem2</code> <code>bwa_mem2_split</code> <code>bwa_mem_split</code> <code>fastp</code> <code>fastp_split</code> <code>fastp_umi</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>status</code><span class="ox-param-default">0</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>tools_ngscheckmate</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>bcftools_mpileup_ngscheckmate</code> <code>ngscheckmate_ncm</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>trim_fastq</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>fastp</code> <code>fastp_split</code> <code>fastp_umi</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>umi_read_structure</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">UMI consensus preprocessing (upstream params.umi_read_structure, e.g. &#x27;3M2S+T&#x27; or &#x27;5M2S+T&#x27;; empty string disables the whole UMI chain)</p>
+<details class="ox-param-usedby"><summary>used by 9 rules</summary>
+<div class="ox-param-rules"><code>bwa_mem_umi</code> <code>fastp</code> <code>fastp_split</code> <code>fastp_umi</code> <code>fgbio_callmolecularconsensusreads</code> <code>fgbio_fastqtobam</code> <code>fgbio_groupreadsbyumi</code> <code>samtools_bam2fq_consensus</code> <code>samtools_bam2fq_umi</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>vep_cache_ready</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 8 rules</summary>
+<div class="ox-param-rules"><code>ensemblvep_vep</code> <code>ensemblvep_vep_deepvariant</code> <code>ensemblvep_vep_freebayes</code> <code>ensemblvep_vep_joint</code> <code>ensemblvep_vep_manta</code> <code>ensemblvep_vep_mpileup</code> <code>ensemblvep_vep_strelka</code> <code>ensemblvep_vep_tiddit</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>vep_cache_version</code><span class="ox-param-default">112</span></div>
+<p class="ox-param-desc">The VEP cache version must match the VEP binary in envs/vep.yaml (upstream&#x27;s image pins 116; this env ships ensembl-vep 112, whose cache format is version-locked — a 116 cache is unreadable). The cache itself is user data (upstream bundles it in the container at /.vep; ~30GB for whole-genome GRCh38, or a gtf2vep subset) — the VEP rule gates on vep_cache_ready. Upstream fails hard without the cache; set the flag after placing it at vep_dir_cache (see README fidelity table).</p>
+<details class="ox-param-usedby"><summary>used by 8 rules</summary>
+<div class="ox-param-rules"><code>ensemblvep_vep</code> <code>ensemblvep_vep_deepvariant</code> <code>ensemblvep_vep_freebayes</code> <code>ensemblvep_vep_joint</code> <code>ensemblvep_vep_manta</code> <code>ensemblvep_vep_mpileup</code> <code>ensemblvep_vep_strelka</code> <code>ensemblvep_vep_tiddit</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>vep_dir_cache</code><span class="ox-param-default">/.vep</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 8 rules</summary>
+<div class="ox-param-rules"><code>ensemblvep_vep</code> <code>ensemblvep_vep_deepvariant</code> <code>ensemblvep_vep_freebayes</code> <code>ensemblvep_vep_joint</code> <code>ensemblvep_vep_manta</code> <code>ensemblvep_vep_mpileup</code> <code>ensemblvep_vep_strelka</code> <code>ensemblvep_vep_tiddit</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>vep_genome</code><span class="ox-param-default">GRCh38</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 8 rules</summary>
+<div class="ox-param-rules"><code>ensemblvep_vep</code> <code>ensemblvep_vep_deepvariant</code> <code>ensemblvep_vep_freebayes</code> <code>ensemblvep_vep_joint</code> <code>ensemblvep_vep_manta</code> <code>ensemblvep_vep_mpileup</code> <code>ensemblvep_vep_strelka</code> <code>ensemblvep_vep_tiddit</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>vep_species</code><span class="ox-param-default">homo_sapiens</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 8 rules</summary>
+<div class="ox-param-rules"><code>ensemblvep_vep</code> <code>ensemblvep_vep_deepvariant</code> <code>ensemblvep_vep_freebayes</code> <code>ensemblvep_vep_joint</code> <code>ensemblvep_vep_manta</code> <code>ensemblvep_vep_mpileup</code> <code>ensemblvep_vep_strelka</code> <code>ensemblvep_vep_tiddit</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>wes</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>goleft_indexcov</code> <code>samtools_reindex_bam</code></div>
+</details>
+</div>
+</div>
 
 Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
 
@@ -143,9 +495,11 @@ Descriptions are the workflow's own `#` comments from its `[config]` section, su
 
 ![oxo-flow-sarek rule-level DAG](../assets/dag/oxo-flow-sarek.svg)
 
+<p class="ox-dag-caption">figure · oxo-flow-sarek — rule-level transit map (nf-metro)</p>
+
 </div>
 
-The graph is derived at catalog-build time from `oxo-flow graph -f dot` and rendered with Graphviz. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
+The graph is derived at catalog-build time from `oxo-flow graph -f metro` and rendered with [nf-metro](https://github.com/seqeralabs/nf-metro) — rules are grouped into colored transit lines by analysis stage. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

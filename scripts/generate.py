@@ -285,40 +285,66 @@ def install_section(p: dict) -> str:
     return "\n".join(lines)
 
 
-def fmt_default(value) -> str:
-    """Render a `[config]` default as a code span (JSON/TOML-style scalars)."""
+def fmt_default_plain(value) -> str:
+    """Render a `[config]` default as plain text (no backticks — the params
+    block is raw HTML and carries its own badge styling)."""
     if isinstance(value, bool):
         value = "true" if value else "false"
     elif isinstance(value, list):
-        value = ", ".join(fmt_default(item) for item in value)
+        value = ", ".join(fmt_default_plain(item) for item in value)
     elif value is None:
         value = "—"
-    text = str(value).replace("`", "'").replace("|", "\\|").replace("\n", " ")
-    return f"`{text}`"
+    return str(value).replace("\n", " ")
 
 
 def params_section(p: dict, config: list[dict] | None) -> list[str]:
-    """`## Parameters` table derived from `oxo-flow info` (regen-configs.py)."""
+    """`## Parameters` — one collapsible block per config key (was a table).
+
+    Long "used by" fan-outs (rnaseq has a key used by 135 rules) made the
+    4-column table unreadable; blocks show key + default + description and
+    collapse the rule list behind a native <details> — no JS. The whole
+    section is ONE raw-HTML block (no blank lines inside; a blank line
+    terminates a raw HTML block), so blocks are joined by single newlines.
+    """
     if not config:
         return []
-    rows = []
+    blocks = []
     for record in config:
         key = record.get("key", "?")
-        used_by = ", ".join(f"`{rule}`" for rule in record.get("used_by", [])) or "—"
-        description = record.get("description") or "—"
-        description = description.replace("|", "\\|").replace("\n", " ")
-        rows.append(
-            f"| `{key}` | {fmt_default(record.get('default'))} | {description} | {used_by} |"
+        used_by = record.get("used_by", []) or []
+        description = _desc_html(record.get("description") or "—")
+        if used_by:
+            rules = " ".join(
+                f"<code>{html.escape(rule, quote=True)}</code>" for rule in used_by
+            )
+            usedby_html = (
+                f'<details class="ox-param-usedby">'
+                f"<summary>used by {len(used_by)} rules</summary>\n"
+                f'<div class="ox-param-rules">{rules}</div>\n'
+                "</details>"
+            )
+        else:
+            usedby_html = (
+                '<details class="ox-param-usedby">'
+                "<summary>not referenced by any rule</summary>\n"
+                '<div class="ox-param-rules">—</div>\n'
+                "</details>"
+            )
+        blocks.append(
+            f'<div class="ox-param">\n'
+            f'<div class="ox-param-head"><code>{_esc(key)}</code>'
+            f'<span class="ox-param-default">{_esc(fmt_default_plain(record.get("default")))}</span></div>\n'
+            f'<p class="ox-param-desc">{description}</p>\n'
+            f"{usedby_html}\n"
+            "</div>"
         )
     return [
         "",
         "## Parameters",
         "",
-        "| Parameter | Default | Description | Used by |",
-        "|---:|---|---|---|",
-        *rows,
-        "",
-        "{: .ox-params }",
+        '<div class="ox-params">',
+        "\n".join(blocks),
+        "</div>",
         "",
         "Descriptions are the workflow's own `#` comments from its `[config]` "
         "section, surfaced by `oxo-flow info` — no schema file to maintain.",
@@ -327,7 +353,8 @@ def params_section(p: dict, config: list[dict] | None) -> list[str]:
 
 def dag_section(p: dict) -> list[str]:
     """`## Workflow graph` — the static rule-level DAG SVG that
-    regen-configs.py renders from `oxo-flow graph -f dot` + Graphviz."""
+    regen-configs.py renders from `oxo-flow graph -f metro` + nf-metro
+    (transit-map style)."""
     name = p["name"]
     svg = OUT_PAGES.parent / "assets" / "dag" / f"{name}.svg"
     if not svg.is_file():
@@ -338,6 +365,8 @@ def dag_section(p: dict) -> list[str]:
         '<div class="ox-dag-card" markdown="1">',
         "",
         f"![{name} rule-level DAG](../assets/dag/{name}.svg)",
+        "",
+        f'<p class="ox-dag-caption">figure · {name} — rule-level transit map (nf-metro)</p>',
         "",
         "</div>",
     ]
@@ -353,6 +382,8 @@ def dag_section(p: dict) -> list[str]:
             "",
             f"![{name} — {ew['label']}](../assets/dag/{ew['dag']}.svg)",
             "",
+            f'<p class="ox-dag-caption">figure · {name} — {ew["label"]} (nf-metro)</p>',
+            "",
             "</div>",
         ]
     return [
@@ -362,9 +393,11 @@ def dag_section(p: dict) -> list[str]:
         *cards,
         "",
         "The graph is derived at catalog-build time from "
-        "`oxo-flow graph -f dot` and rendered with Graphviz. It shows the "
-        "workflow at rule level: wildcard `{sample}` instances expand at run "
-        "time when sample data is discovered (the runtime view is "
+        "`oxo-flow graph -f metro` and rendered with [nf-metro]"
+        "(https://github.com/seqeralabs/nf-metro) — rules are grouped into "
+        "colored transit lines by analysis stage. It shows the workflow at "
+        "rule level: wildcard `{sample}` instances expand at run time when "
+        "sample data is discovered (the runtime view is "
         "`oxo-flow graph --expanded`).",
     ]
 

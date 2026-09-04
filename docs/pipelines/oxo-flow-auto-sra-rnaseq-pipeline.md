@@ -68,20 +68,78 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipeline
 
 ## Parameters
 
-| Parameter | Default | Description | Used by |
-|---:|---|---|---|
-| `GTF` | `/data/reference/genome/GRCh38/Homo_sapiens.GRCh38.95.sort.gtf` | — | `align_and_count` |
-| `db_id` | `D21122` | DB_ID — upstream: basename(metadata).replace(".txt", ""). | `DGE_analysis`, `combine_count` |
-| `index` | `/data/reference/genome/GRCh38/STAR` | STAR index dir and GTF (upstream keys index / GTF). | `align_and_count` |
-| `mail` | `false` | Email notification (upstream onsuccess + onerror). Keep off unless SMTP is configured — the [workflow] on_error hook reuses these same keys. | — |
-| `mail_to` | `` | — | — |
-| `metadata` | `test/fixtures/metadata/D21122.txt` | Metadata TSV (upstream key metadata). Columns: Dataset GSE GSM gene method celline group group_name type platform SRR paired The repo default points at the bundled example dataset (upstream doc/D21122.txt). | `DGE_analysis`, `combine_count`, `data_conversion_pair`, `get_sra`, `merge_R1_data`, `merge_R2_data` |
-| `sender` | `` | — | — |
-| `sender_password` | `` | — | — |
-| `sra_data_path` | `sra` | Directory holding pre-downloaded .sra files, layout <dir>/<SRR>/<SRR>.sra (upstream key sra_data_path). | `get_sra` |
-| `srr_separator` | `,` | Separator joining multiple SRR runs per sample in the metadata SRR column. | `data_conversion_pair`, `get_sra`, `merge_R1_data`, `merge_R2_data` |
-
-{: .ox-params }
+<div class="ox-params">
+<div class="ox-param">
+<div class="ox-param-head"><code>GTF</code><span class="ox-param-default">/data/reference/genome/GRCh38/Homo_sapiens.GRCh38.95.sort.gtf</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>align_and_count</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>db_id</code><span class="ox-param-default">D21122</span></div>
+<p class="ox-param-desc">DB_ID — upstream: basename(metadata).replace(&quot;.txt&quot;, &quot;&quot;).</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>DGE_analysis</code> <code>combine_count</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>index</code><span class="ox-param-default">/data/reference/genome/GRCh38/STAR</span></div>
+<p class="ox-param-desc">STAR index dir and GTF (upstream keys index / GTF).</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>align_and_count</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>mail</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">Email notification (upstream onsuccess + onerror). Keep off unless SMTP is configured — the [workflow] on_error hook reuses these same keys.</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>mail_to</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>metadata</code><span class="ox-param-default">test/fixtures/metadata/D21122.txt</span></div>
+<p class="ox-param-desc">Metadata TSV (upstream key metadata). Columns: Dataset GSE GSM gene method celline group group_name type platform SRR paired The repo default points at the bundled example dataset (upstream doc/D21122.txt).</p>
+<details class="ox-param-usedby"><summary>used by 6 rules</summary>
+<div class="ox-param-rules"><code>DGE_analysis</code> <code>combine_count</code> <code>data_conversion_pair</code> <code>get_sra</code> <code>merge_R1_data</code> <code>merge_R2_data</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>sender</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>sender_password</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>sra_data_path</code><span class="ox-param-default">sra</span></div>
+<p class="ox-param-desc">Directory holding pre-downloaded .sra files, layout &lt;dir&gt;/&lt;SRR&gt;/&lt;SRR&gt;.sra (upstream key sra_data_path).</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>get_sra</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>srr_separator</code><span class="ox-param-default">,</span></div>
+<p class="ox-param-desc">Separator joining multiple SRR runs per sample in the metadata SRR column.</p>
+<details class="ox-param-usedby"><summary>used by 4 rules</summary>
+<div class="ox-param-rules"><code>data_conversion_pair</code> <code>get_sra</code> <code>merge_R1_data</code> <code>merge_R2_data</code></div>
+</details>
+</div>
+</div>
 
 Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
 
@@ -91,9 +149,11 @@ Descriptions are the workflow's own `#` comments from its `[config]` section, su
 
 ![oxo-flow-auto-sra-rnaseq-pipeline rule-level DAG](../assets/dag/oxo-flow-auto-sra-rnaseq-pipeline.svg)
 
+<p class="ox-dag-caption">figure · oxo-flow-auto-sra-rnaseq-pipeline — rule-level transit map (nf-metro)</p>
+
 </div>
 
-The graph is derived at catalog-build time from `oxo-flow graph -f dot` and rendered with Graphviz. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
+The graph is derived at catalog-build time from `oxo-flow graph -f metro` and rendered with [nf-metro](https://github.com/seqeralabs/nf-metro) — rules are grouped into colored transit lines by analysis stage. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

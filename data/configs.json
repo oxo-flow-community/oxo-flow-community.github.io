@@ -1949,7 +1949,7 @@
       },
       {
         "default": false,
-        "description": "Runtime-discovered split parts: when true, fastp's --split_by_lines parts are discovered by filesystem scan (engine output_pattern primitive) and the BWA_MEM + BAM_MERGE_INDEX_SAMTOOLS stages fan out per part — no 0001-only cap. Requires mapped_bam = \"sorted\" (the merge output name). Not supported with umi_read_structure. Off by default (upstream single-part behavior).",
+        "description": "Runtime-discovered split parts: when true, fastp's --split_by_lines parts are discovered by filesystem scan (engine output_pattern primitive) and the BWA_MEM + BAM_MERGE_INDEX_SAMTOOLS stages fan out per part \u2014 no 0001-only cap. Requires mapped_bam = \"sorted\" (the merge output name). Not supported with umi_read_structure. Off by default (upstream single-part behavior).",
         "key": "split_parts",
         "used_by": [
           "bam_merge_index_samtools",
@@ -2097,9 +2097,50 @@
     "config": [
       {
         "default": "cellranger",
-        "description": "--aligner / --protocol (port implements the cellranger branch; see README fidelity table)",
+        "description": "--aligner / --protocol. The port implements ALL upstream aligner branches: cellranger (default, matches upstream's most-tested path), simpleaf (upstream default aligner), kallisto (kallisto/bustools), star (STARsolo) and cellrangerarc (multiome ATAC+GEX). Protocol values are mapped per aligner inside the alignment rules (upstream protocols.json); 'auto' is only valid for cellranger/cellrangerarc, exactly like upstream.",
         "key": "aligner",
-        "used_by": [],
+        "used_by": [
+          "anndata_barcodes",
+          "anndatar_convert_cellbender_filter",
+          "anndatar_convert_combined_cellbender_filter",
+          "anndatar_convert_combined_filtered",
+          "anndatar_convert_combined_raw",
+          "anndatar_convert_filtered",
+          "anndatar_convert_raw",
+          "cellbender_removebackground",
+          "cellranger_count",
+          "cellranger_mkgtf",
+          "cellranger_mkref",
+          "cellranger_mkvdjref",
+          "cellranger_multi",
+          "cellrangerarc_count",
+          "cellrangerarc_mkgtf",
+          "cellrangerarc_mkref",
+          "collect_versions",
+          "concat_h5ad_cellbender_filter",
+          "concat_h5ad_filtered",
+          "concat_h5ad_raw",
+          "fastqc",
+          "kallistobustools_count",
+          "kallistobustools_ref_standard",
+          "kallistobustools_ref_velocity",
+          "mtx_to_h5ad_filtered",
+          "mtx_to_h5ad_kallisto_filtered",
+          "mtx_to_h5ad_kallisto_raw",
+          "mtx_to_h5ad_multi_filtered",
+          "mtx_to_h5ad_multi_raw",
+          "mtx_to_h5ad_raw",
+          "mtx_to_h5ad_simpleaf",
+          "mtx_to_h5ad_star_filtered",
+          "mtx_to_h5ad_star_raw",
+          "qcatch",
+          "simpleaf_index",
+          "simpleaf_quant",
+          "star_align",
+          "star_genomegenerate",
+          "star_genomeparams_upgrade",
+          "workflow_summary"
+        ],
         "value_type": "string"
       },
       {
@@ -2108,7 +2149,9 @@
         "key": "build_cellranger_index",
         "used_by": [
           "cellranger_mkgtf",
-          "cellranger_mkref"
+          "cellranger_mkref",
+          "cellrangerarc_mkgtf",
+          "cellrangerarc_mkref"
         ],
         "value_type": "bool"
       },
@@ -2118,16 +2161,107 @@
         "key": "cellranger_localmem",
         "used_by": [
           "cellranger_count",
-          "cellranger_mkref"
+          "cellranger_mkref",
+          "cellranger_mkvdjref",
+          "cellranger_multi",
+          "cellrangerarc_count"
         ],
         "value_type": "int"
       },
       {
+        "default": false,
+        "description": "cellranger multi (upstream aligner = cellrangermulti): the multiome VDJ / Ab-seq / CRO branch. OFF by default. Enabling it supersedes cellranger_count (upstream's aligner branches are exclusive). Per-sample per-modality FASTQs come from the [workflow] metadata_file table (refs/cellranger_multi_metadata.tsv): one pair per modality per sample in columns <modality>_fastq_1/<modality>_fastq_2 for vdj/ab/beam/crispr/cmo; an empty cell = modality absent for that sample \u2014 the engine renders {meta.<col>} as '', the port's equivalent of upstream's EMPTY-file injection (the exclusion is closed without an engine follow-up).",
+        "key": "cellranger_multi",
+        "used_by": [
+          "cellranger_count",
+          "cellranger_mkvdjref",
+          "cellranger_multi",
+          "mtx_to_h5ad_filtered",
+          "mtx_to_h5ad_multi_filtered",
+          "mtx_to_h5ad_multi_raw",
+          "mtx_to_h5ad_raw"
+        ],
+        "value_type": "bool"
+      },
+      {
         "default": "",
-        "description": "samplesheet `expected_cells` column -> `--expect-cells` when set",
+        "description": "upstream --cellranger_multi_barcodes: barcode table (sample,multiplexed_sample_id,description[,cmo_ids])",
+        "key": "cellranger_multi_barcodes",
+        "used_by": [
+          "cellranger_multi"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "description": "upstream --fb_reference: feature-barcoding reference (antibody/CRISPR)",
+        "key": "cellranger_multi_fb_reference",
+        "used_by": [
+          "cellranger_multi"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "description": "upstream --cellranger_index; empty = the built {config.transcriptome}",
+        "key": "cellranger_multi_gex_reference",
+        "used_by": [
+          "cellranger_multi"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "description": "upstream --cellranger_vdj_index; empty = built by cellranger_mkvdjref",
+        "key": "cellranger_multi_vdj_reference",
+        "used_by": [
+          "cellranger_mkvdjref",
+          "cellranger_multi"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "description": "optional mkref config json (upstream --cellrangerarc_config); auto-generated when empty",
+        "key": "cellrangerarc_config",
+        "used_by": [
+          "cellrangerarc_mkref"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "refs/cellrangerarc_reference",
+        "description": "cellrangerarc reference (multiome ATAC+GEX)",
+        "key": "cellrangerarc_reference",
+        "used_by": [
+          "cellrangerarc_count",
+          "cellrangerarc_mkref"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "description": "completion notifications (nf-core PIPELINE_COMPLETION port): summary email on success (`email`), failure address (`email_on_fail`) and a webhook (`hook_url`). Empty = no notification, exactly like upstream's empty email params. Consumed by the workflow-level on_complete / on_error hooks above (engine >= 0.17.0); older engines ignore the hook keys and the run is untouched.",
+        "key": "email",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "email_on_fail",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "description": "samplesheet `expected_cells` column -> --expect-cells/--soloCellFilter when set",
         "key": "expected_cells",
         "used_by": [
-          "cellranger_count"
+          "cellranger_count",
+          "cellranger_multi",
+          "cellrangerarc_count",
+          "star_align",
+          "workflow_summary"
         ],
         "value_type": "string"
       },
@@ -2136,7 +2270,8 @@
         "description": "reference genome (upstream --fasta / --gtf; may be .gz)",
         "key": "fasta",
         "used_by": [
-          "gunzip_fasta"
+          "gunzip_fasta",
+          "workflow_summary"
         ],
         "value_type": "string"
       },
@@ -2154,8 +2289,14 @@
         "key": "fasta_prepared",
         "used_by": [
           "cellranger_mkref",
+          "cellranger_mkvdjref",
+          "cellrangerarc_mkref",
           "gtf_gene_filter",
-          "gunzip_fasta"
+          "gunzip_fasta",
+          "kallistobustools_ref_standard",
+          "kallistobustools_ref_velocity",
+          "simpleaf_index",
+          "star_genomegenerate"
         ],
         "value_type": "string"
       },
@@ -2163,7 +2304,8 @@
         "default": "refs/refdata.gtf.gz",
         "key": "gtf",
         "used_by": [
-          "gunzip_gtf"
+          "gunzip_gtf",
+          "workflow_summary"
         ],
         "value_type": "string"
       },
@@ -2171,8 +2313,14 @@
         "default": "refs/refdata_genes.gtf",
         "key": "gtf_filtered",
         "used_by": [
+          "cellrangerarc_mkgtf",
           "gtf_gene_filter",
-          "gtf_source_fix"
+          "gtf_source_fix",
+          "kallistobustools_ref_standard",
+          "kallistobustools_ref_velocity",
+          "simpleaf_index",
+          "star_align",
+          "star_genomegenerate"
         ],
         "value_type": "string"
       },
@@ -2189,7 +2337,8 @@
         "key": "gtf_mkgtf",
         "used_by": [
           "cellranger_mkgtf",
-          "cellranger_mkref"
+          "cellranger_mkref",
+          "cellranger_mkvdjref"
         ],
         "value_type": "string"
       },
@@ -2229,6 +2378,55 @@
         "value_type": "string"
       },
       {
+        "default": "",
+        "key": "hook_url",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "description": "kallisto/bustools",
+        "key": "kallisto_index",
+        "used_by": [
+          "kallistobustools_count",
+          "kallistobustools_ref_standard",
+          "kallistobustools_ref_velocity"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "description": "optional cdna_t2c.txt override",
+        "key": "kb_t1c",
+        "used_by": [
+          "kallistobustools_count"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "description": "optional intron_t2c.txt override",
+        "key": "kb_t2c",
+        "used_by": [
+          "kallistobustools_count"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "standard",
+        "description": "standard | lamanno | nac (any non-standard builds the intron index too)",
+        "key": "kb_workflow",
+        "used_by": [
+          "kallistobustools_count",
+          "kallistobustools_ref_standard",
+          "kallistobustools_ref_velocity",
+          "mtx_to_h5ad_kallisto_filtered",
+          "mtx_to_h5ad_kallisto_raw",
+          "workflow_summary"
+        ],
+        "value_type": "string"
+      },
+      {
         "default": "assets/multiqc_config.yml",
         "key": "multiqc_config",
         "used_by": [
@@ -2241,7 +2439,8 @@
         "description": "-> `--title` when set",
         "key": "multiqc_title",
         "used_by": [
-          "multiqc"
+          "multiqc",
+          "workflow_summary"
         ],
         "value_type": "string"
       },
@@ -2253,12 +2452,42 @@
       },
       {
         "default": "auto",
-        "description": "passed verbatim as `--chemistry` (10x auto-detection)",
+        "description": "cellranger/arc: 'auto' or 10XV1-4; simpleaf/kallisto/star: 10XV1-4/dropseq(/smartseq)",
         "key": "protocol",
         "used_by": [
-          "cellranger_count"
+          "anndatar_convert_combined_filtered",
+          "anndatar_convert_filtered",
+          "cellranger_count",
+          "cellranger_multi",
+          "concat_h5ad_filtered",
+          "kallistobustools_count",
+          "mtx_to_h5ad_kallisto_filtered",
+          "mtx_to_h5ad_star_filtered",
+          "mtx_to_h5ad_star_raw",
+          "qcatch",
+          "simpleaf_quant",
+          "star_align",
+          "workflow_summary"
         ],
         "value_type": "string"
+      },
+      {
+        "default": "",
+        "description": "qcatch --n_partitions when set (for protocols without a chemistry mapping)",
+        "key": "qcatch_n_partitions",
+        "used_by": [
+          "qcatch"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "key": "remove_doublets",
+        "used_by": [
+          "qcatch",
+          "workflow_summary"
+        ],
+        "value_type": "bool"
       },
       {
         "default": "test/fixtures/samplesheet.csv",
@@ -2267,18 +2496,50 @@
         "used_by": [
           "concat_h5ad_cellbender_filter",
           "concat_h5ad_filtered",
-          "concat_h5ad_raw"
+          "concat_h5ad_raw",
+          "workflow_summary"
         ],
         "value_type": "string"
       },
       {
         "default": true,
-        "description": "-> `--create-bam true`",
+        "description": "-> `--create-bam true` (cellranger) / publish the BAM (star)",
         "key": "save_align_intermeds",
         "used_by": [
-          "cellranger_count"
+          "cellranger_count",
+          "cellranger_multi",
+          "star_align",
+          "workflow_summary"
         ],
         "value_type": "bool"
+      },
+      {
+        "default": "",
+        "description": "--outSAMattrRGline CN field when set",
+        "key": "seq_center",
+        "used_by": [
+          "star_align"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "description": "simpleaf (upstream default aligner)",
+        "key": "simpleaf_index",
+        "used_by": [
+          "simpleaf_index",
+          "simpleaf_quant"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "cr-like",
+        "key": "simpleaf_umi_resolution",
+        "used_by": [
+          "simpleaf_quant",
+          "workflow_summary"
+        ],
+        "value_type": "string"
       },
       {
         "default": false,
@@ -2290,8 +2551,20 @@
           "anndatar_convert_combined_raw",
           "anndatar_convert_raw",
           "cellbender_removebackground",
+          "collect_versions",
           "concat_h5ad_cellbender_filter",
-          "concat_h5ad_raw"
+          "concat_h5ad_raw",
+          "workflow_summary"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "description": "upstream same name: skip the VDJ reference build",
+        "key": "skip_cellrangermulti_vdjref",
+        "used_by": [
+          "cellranger_mkvdjref",
+          "cellranger_multi"
         ],
         "value_type": "bool"
       },
@@ -2300,7 +2573,8 @@
         "description": "QC / reporting knobs",
         "key": "skip_fastqc",
         "used_by": [
-          "fastqc"
+          "fastqc",
+          "workflow_summary"
         ],
         "value_type": "bool"
       },
@@ -2308,16 +2582,101 @@
         "default": false,
         "key": "skip_multiqc",
         "used_by": [
-          "multiqc"
+          "multiqc",
+          "workflow_summary"
         ],
         "value_type": "bool"
+      },
+      {
+        "default": false,
+        "key": "skip_qcatch",
+        "used_by": [
+          "qcatch",
+          "workflow_summary"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "Gene",
+        "description": "--soloFeatures (Gene | Gene Velocyto | ...)",
+        "key": "star_feature",
+        "used_by": [
+          "mtx_to_h5ad_star_filtered",
+          "mtx_to_h5ad_star_raw",
+          "star_align",
+          "workflow_summary"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "description": "skip --sjdbGTFfile",
+        "key": "star_ignore_sjdbgtf",
+        "used_by": [
+          "star_align"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "",
+        "description": "STARsolo",
+        "key": "star_index",
+        "used_by": [
+          "star_align",
+          "star_genomegenerate",
+          "star_genomeparams_upgrade"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": false,
+        "description": "upgrade a legacy 2.6.x iGenomes index (genomeParameters rewrite)",
+        "key": "star_index_legacy",
+        "used_by": [
+          "star_genomeparams_upgrade"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "",
+        "description": "transcript FASTA for simpleaf index building (mutually exclusive with fasta/gtf)",
+        "key": "transcript_fasta",
+        "used_by": [
+          "simpleaf_index"
+        ],
+        "value_type": "string"
       },
       {
         "default": "refs/cellranger_reference",
         "key": "transcriptome",
         "used_by": [
           "cellranger_count",
-          "cellranger_mkref"
+          "cellranger_mkref",
+          "cellranger_multi"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "description": "t2g map (required with transcript_fasta; also used as the kallisto t2g)",
+        "key": "txp2gene",
+        "used_by": [
+          "kallistobustools_count",
+          "mtx_to_h5ad_kallisto_filtered",
+          "mtx_to_h5ad_kallisto_raw",
+          "simpleaf_index",
+          "simpleaf_quant"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "description": "barcode whitelist for simpleaf/star. Empty = mapped per protocol from assets/whitelist/10x_V{1..4}_barcode_whitelist.txt.gz (upstream protocols.json behavior); set a path to override.",
+        "key": "whitelist",
+        "used_by": [
+          "simpleaf_quant",
+          "star_align",
+          "workflow_summary"
         ],
         "value_type": "string"
       }
@@ -4792,6 +5151,15 @@
         "value_type": "string"
       },
       {
+        "default": "",
+        "description": "base names of replicate groups (e.g. \"S1,S2\" for samples S1_REP1/S1_REP2/S2_REP1/S2_REP2) \u2014 feeds merged-replicate files into the MultiQC / IGV aggregation rules; empty = no-op",
+        "key": "merged_samples",
+        "used_by": [
+          "merge_replicates"
+        ],
+        "value_type": "string"
+      },
+      {
         "default": 1,
         "description": "params.min_reps_consensus",
         "key": "min_reps_consensus",
@@ -4854,6 +5222,7 @@
           "frip_score",
           "homer_annotatepeaks",
           "macs2_callpeak",
+          "merge_replicates",
           "mito::genome_blacklist_regions",
           "multiqc",
           "pe::bamtools_filter_pe",
@@ -4919,6 +5288,7 @@
         "description": "GB passed to picard -Xmx. Previously derived from the rule's 36G resource budget (Xmx\u224830G), which thrash-killed the JVM on a 3.7 GB machine (live run); the resource budget still drives scheduling.",
         "key": "picard_xmx_gb",
         "used_by": [
+          "merge_replicates",
           "picard_markduplicates",
           "qce::picard_collectmultiplemetrics"
         ],
@@ -4966,6 +5336,7 @@
           "bamtools_filter",
           "cons::homer_annotatepeaks_consensus",
           "homer_annotatepeaks",
+          "merge_replicates",
           "pe::pe_name_sort_remove_orphans",
           "picard_markduplicates",
           "qce::get_autosomes",
@@ -5030,6 +5401,15 @@
         "key": "skip_igv",
         "used_by": [
           "qce::igv"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "description": "params.skip_merge_replicates (upstream default false = merged-replicate analysis ON when replicate samples are declared)",
+        "key": "skip_merge_replicates",
+        "used_by": [
+          "merge_replicates"
         ],
         "value_type": "bool"
       },
@@ -8474,11 +8854,45 @@
     "workflow": "main.oxoflow",
     "config": [
       {
+        "default": "",
+        "description": "dbGaP authorized-access certificate for the sratools branch (upstream --dbgap_key): path to a .ngc or .jwt file. Empty = public data only \u2014 the public sratools branch works without it; when set, the certificate is passed through verbatim (prefetch/fasterq-dump --ngc or --perm).",
+        "key": "dbgap_key",
+        "used_by": [
+          "sra_fastq_sratools",
+          "sra_fastq_sratools_dbgap",
+          "sra_prefetch",
+          "sra_prefetch_dbgap"
+        ],
+        "value_type": "string"
+      },
+      {
         "default": "ftp",
+        "description": "Download method, one of 'ftp' (upstream default), 'sratools' or 'aspera'. Each method gates its own branch of download rules; the default 'ftp' plan is unchanged when the other branches are off.",
         "key": "download_method",
         "used_by": [
-          "sra_fastq_ftp"
+          "sra_fastq_aspera",
+          "sra_fastq_ftp",
+          "sra_fastq_ftp_aspera_fallback",
+          "sra_fastq_sratools",
+          "sra_fastq_sratools_dbgap",
+          "sra_fastq_sratools_fallback",
+          "sra_prefetch",
+          "sra_prefetch_dbgap",
+          "sra_prefetch_fallback"
         ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "description": "Completion notifications (upstream PIPELINE_COMPLETION, --email / --email_on_fail / --hook_url; upstream defaults are null, here \"\"): - email          address the completion summary is mailed to (sendmail/mail on the host) after a run without failed rules - email_on_fail  address mailed after a failed run; falls back to `email` when empty (nf-core sends the failure mail to email_on_fail, or to email when only that is set) - hook_url       webhook URL receiving a JSON notification (curl POST) with the run counters, on completion and failure alike These drive the [workflow] on_complete / on_error hooks above (engine >= 0.17.0). With all three empty (the default) both hooks are no-ops, matching upstream's null params; older engines ignore the [workflow] keys entirely. sraCurateSamplesheetWarn (the upstream end-of-run \"double-check the samplesheet\" log note) has no hook: the auto-created samplesheet curation caveat is documented in README.md instead.",
+        "key": "email",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "email_on_fail",
+        "used_by": [],
         "value_type": "string"
       },
       {
@@ -8488,6 +8902,12 @@
         "used_by": [
           "sra_ids_to_runinfo"
         ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "hook_url",
+        "used_by": [],
         "value_type": "string"
       },
       {
@@ -8524,8 +8944,16 @@
           "combine_mappings",
           "combine_samplesheets",
           "multiqc_mappings_config",
+          "sra_fastq_aspera",
           "sra_fastq_ftp",
+          "sra_fastq_ftp_aspera_fallback",
+          "sra_fastq_sratools",
+          "sra_fastq_sratools_dbgap",
+          "sra_fastq_sratools_fallback",
           "sra_ids_to_runinfo",
+          "sra_prefetch",
+          "sra_prefetch_dbgap",
+          "sra_prefetch_fallback",
           "sra_runinfo_to_ftp",
           "sra_to_samplesheet"
         ],
@@ -8546,8 +8974,27 @@
         "used_by": [
           "combine_mappings",
           "combine_samplesheets",
+          "sra_fastq_aspera",
           "sra_fastq_ftp",
+          "sra_fastq_ftp_aspera_fallback",
+          "sra_fastq_sratools",
+          "sra_fastq_sratools_dbgap",
+          "sra_fastq_sratools_fallback",
+          "sra_prefetch",
+          "sra_prefetch_dbgap",
+          "sra_prefetch_fallback",
           "sra_to_samplesheet"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "description": "Per-run fallback (upstream SRA workflow `branch`), off by default so the default 'ftp' plan stays byte-identical; enable to match upstream's per-run triage for both methods: - download_method = 'ftp': runs whose ENA metadata has NEITHER an FTP link (fastq_1) NOR a fasp link (fastq_aspera) are routed to prefetch + fasterq-dump at runtime (sra_prefetch_fallback + sra_fastq_sratools_fallback); - download_method = 'aspera': runs without a fasp link are routed to the FTP branch when they have an FTP link (fastq_1, sra_fastq_ftp_aspera_fallback) and to prefetch + fasterq-dump otherwise (the same fallback rules). Without it, such runs are skipped with a warning.",
+        "key": "sra_tools_fallback",
+        "used_by": [
+          "sra_fastq_ftp_aspera_fallback",
+          "sra_fastq_sratools_fallback",
+          "sra_prefetch_fallback"
         ],
         "value_type": "bool"
       }
@@ -8748,6 +9195,7 @@
         "used_by": [
           "fastp_pe",
           "fastp_se",
+          "get_sra",
           "star_align_raw",
           "star_align_se_raw"
         ],
@@ -8843,10 +9291,26 @@
     "workflow": "main.oxoflow",
     "config": [
       {
+        "default": "db_annotated",
+        "description": "The annotated-callset selection for gather_annotated_calls (upstream get_final_selected_annotation): \"db_annotated\" (annotations/vcfs active, the default), \"dgidb_annotated\" when dgidb is activated, or \"vep_annotated\" when annotations/vcfs is deactivated.",
+        "key": "annotation_selection",
+        "used_by": [
+          "filtering::filter_by_annotation",
+          "population::annotated_index",
+          "population::gather_annotated_calls"
+        ],
+        "value_type": "string"
+      },
+      {
         "default": false,
-        "description": "upstream config: benchmarking (Snakefile rule benchmark / benchmarking.smk; the CHM1 sample and chm-eval-kit downloads are excluded, see module header).",
+        "description": "upstream config: benchmarking (Snakefile rule benchmark / benchmarking.smk; the full CHM-eval flow is ported, except the chm sample group vertical slice (see module header)).",
         "key": "benchmarking_activate",
         "used_by": [
+          "benchmarking::chm_eval",
+          "benchmarking::chm_eval_kit",
+          "benchmarking::chm_eval_sample",
+          "benchmarking::chm_namesort",
+          "benchmarking::chm_to_fastq",
           "benchmarking::chromosome_map",
           "benchmarking::gather_benchmark_calls",
           "benchmarking::rename_chromosomes"
@@ -8889,6 +9353,42 @@
       },
       {
         "default": false,
+        "description": "upstream config: calc_consensus_reads/activate (consensus.oxoflow: rbt collapse-reads-to-fragments + re-mapping to the linear bwa reference). Activating it also needs the bwa reference index (bwa_align_activate or primers_activate builds it) and, upstream-faithful, markduplicates_extra = \"--TAG_DUPLICATE_SET_MEMBERS true\" and freebayes_min_alternate_count = 1 (see those keys below).",
+        "key": "consensus_activate",
+        "used_by": [
+          "consensus::apply_bqsr_consensus",
+          "consensus::bam_index_consensus",
+          "consensus::calc_consensus_reads",
+          "consensus::map_consensus_reads_pe",
+          "consensus::map_consensus_reads_se",
+          "consensus::merge_consensus_reads",
+          "consensus::recalibrate_base_qualities_consensus",
+          "consensus::sort_consensus_reads",
+          "mapping::apply_bqsr",
+          "mapping::recalibrate_base_qualities"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "description": "upstream config: annotations/dgidb (annotate_dgidb; datasources = [DrugBank]). Activating dgidb changes which annotated callset the final-calls chain consumes upstream (get_final_selected_annotation): set annotation_selection below to \"dgidb_annotated\" together with this key.",
+        "key": "dgidb_activate",
+        "used_by": [
+          "annotation::annotate_dgidb"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": 2,
+        "description": "upstream config: params/freebayes \u2014 the min-alternate-count for candidate calling (2, or 1 when calc_consensus_reads is active).",
+        "key": "freebayes_min_alternate_count",
+        "used_by": [
+          "candidate_calling::freebayes"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": false,
         "description": "upstream config: fusion calling branch (fusion_calling.smk star_arriba meta wrapper: star_index / star_align / arriba / annotate_exons / convert_fusions / sort_arriba_calls / bcftools_concat_candidates).",
         "key": "fusion_activate",
         "used_by": [
@@ -8914,6 +9414,15 @@
           "maf::group_vcf_to_maf_variants"
         ],
         "value_type": "bool"
+      },
+      {
+        "default": "",
+        "description": "upstream config: params/picard/MarkDuplicates + get_markduplicates_extra \u2014 extra MarkDuplicates arguments (upstream adds \"--TAG_DUPLICATE_SET_MEMBERS true\" when calc_consensus_reads is active; empty by default).",
+        "key": "markduplicates_extra",
+        "used_by": [
+          "mapping::mark_duplicates"
+        ],
+        "value_type": "string"
       },
       {
         "default": false,
@@ -9089,6 +9598,30 @@
     "workflow": "main.oxoflow",
     "config": [
       {
+        "default": 250,
+        "key": "bcftools_max_depth",
+        "used_by": [
+          "bcftools_call"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 20,
+        "key": "bcftools_min_baseq",
+        "used_by": [
+          "bcftools_call"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 20,
+        "key": "bcftools_min_mapq",
+        "used_by": [
+          "bcftools_call"
+        ],
+        "value_type": "int"
+      },
+      {
         "default": false,
         "key": "callable_sites_enabled",
         "used_by": [
@@ -9182,6 +9715,7 @@
         "default": 0.005,
         "key": "gatk_het_prior",
         "used_by": [
+          "gatk_genotype_gvcfs_interval",
           "joint_genotype_gvcfs"
         ],
         "value_type": "float"
@@ -9195,16 +9729,86 @@
         "value_type": "bool"
       },
       {
+        "default": 200,
+        "key": "intervals_db_max_contigs_per_shard",
+        "used_by": [
+          "create_db_intervals"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 200,
+        "key": "intervals_db_max_intervals_per_shard",
+        "used_by": [
+          "create_db_intervals"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 0.15,
+        "key": "intervals_db_scatter_factor",
+        "used_by": [
+          "create_db_intervals"
+        ],
+        "value_type": "float"
+      },
+      {
         "default": false,
         "key": "intervals_enabled",
-        "used_by": [],
+        "used_by": [
+          "concat_interval_gvcfs",
+          "concat_interval_vcfs",
+          "create_db_intervals",
+          "create_gvcf_intervals",
+          "filter_picard_intervals",
+          "gatk_genomics_db_import_interval",
+          "gatk_genotype_gvcfs_interval",
+          "gatk_haplotypecaller",
+          "gatk_haplotypecaller_external",
+          "gatk_haplotypecaller_interval",
+          "gatk_haplotypecaller_interval_external",
+          "gatk_haplotypecaller_interval_markdup",
+          "gatk_haplotypecaller_markdup",
+          "joint_genomics_db_import",
+          "joint_genotype_gvcfs",
+          "picard_intervals"
+        ],
         "value_type": "bool"
+      },
+      {
+        "default": 0,
+        "key": "intervals_min_contig_length",
+        "used_by": [
+          "filter_picard_intervals"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 500,
+        "key": "intervals_min_nmer",
+        "used_by": [
+          "picard_intervals"
+        ],
+        "value_type": "int"
+      },
+      {
+        "default": 50,
+        "key": "intervals_scatter_count",
+        "used_by": [
+          "create_db_intervals",
+          "create_gvcf_intervals"
+        ],
+        "value_type": "int"
       },
       {
         "default": false,
         "key": "joint_genotyping_enabled",
         "used_by": [
+          "concat_interval_vcfs",
+          "create_db_intervals",
           "create_db_mapfile",
+          "gatk_genomics_db_import_interval",
+          "gatk_genotype_gvcfs_interval",
           "glnexus_joint",
           "joint_genomics_db_import",
           "joint_genotype_gvcfs",
@@ -9221,6 +9825,8 @@
           "deepvariant_call",
           "deepvariant_call_markdup",
           "gatk_haplotypecaller",
+          "gatk_haplotypecaller_interval",
+          "gatk_haplotypecaller_interval_markdup",
           "gatk_haplotypecaller_markdup",
           "index_bam_csi",
           "index_bam_csi_markdup",
@@ -9267,8 +9873,12 @@
         "default": 2,
         "key": "ploidy",
         "used_by": [
+          "bcftools_call",
           "gatk_haplotypecaller",
           "gatk_haplotypecaller_external",
+          "gatk_haplotypecaller_interval",
+          "gatk_haplotypecaller_interval_external",
+          "gatk_haplotypecaller_interval_markdup",
           "gatk_haplotypecaller_markdup"
         ],
         "value_type": "int"
@@ -9357,17 +9967,27 @@
         "default": "my_organism",
         "key": "reference_name",
         "used_by": [
+          "bcftools_call",
+          "bcftools_regions",
           "bwa_mem",
+          "create_db_intervals",
+          "create_gvcf_intervals",
           "deepvariant_call",
           "deepvariant_call_external",
           "deepvariant_call_markdup",
+          "gatk_genomics_db_import_interval",
+          "gatk_genotype_gvcfs_interval",
           "gatk_haplotypecaller",
           "gatk_haplotypecaller_external",
+          "gatk_haplotypecaller_interval",
+          "gatk_haplotypecaller_interval_external",
+          "gatk_haplotypecaller_interval_markdup",
           "gatk_haplotypecaller_markdup",
           "genmap_index",
           "index_reference",
           "joint_genomics_db_import",
           "joint_genotype_gvcfs",
+          "picard_intervals",
           "postprocess_update_bed",
           "prepare_reference",
           "qc_contig_map",
@@ -9397,16 +10017,30 @@
         "default": "gatk",
         "key": "variant_tool",
         "used_by": [
+          "bcftools_call",
+          "bcftools_concat_regions",
+          "bcftools_regions",
+          "concat_interval_gvcfs",
+          "concat_interval_vcfs",
+          "create_db_intervals",
           "create_db_mapfile",
+          "create_gvcf_intervals",
           "deepvariant_call",
           "deepvariant_call_external",
           "deepvariant_call_markdup",
+          "filter_picard_intervals",
+          "gatk_genomics_db_import_interval",
+          "gatk_genotype_gvcfs_interval",
           "gatk_haplotypecaller",
           "gatk_haplotypecaller_external",
+          "gatk_haplotypecaller_interval",
+          "gatk_haplotypecaller_interval_external",
+          "gatk_haplotypecaller_interval_markdup",
           "gatk_haplotypecaller_markdup",
           "glnexus_joint",
           "joint_genomics_db_import",
           "joint_genotype_gvcfs",
+          "picard_intervals",
           "variant_filtration"
         ],
         "value_type": "string"
@@ -10307,7 +10941,8 @@
         "default": "-p max --binSize 10  --normalizeUsing RPGC --effectiveGenomeSize 2407883318",
         "key": "bamCoverage_parameters",
         "used_by": [
-          "coverage"
+          "coverage",
+          "coverage_sc"
         ],
         "value_type": "string"
       },
@@ -10336,6 +10971,17 @@
         "value_type": "string"
       },
       {
+        "default": false,
+        "description": "export the built conda environments as results/genome_tracks/envs/*.yaml (upstream 'env_export' runs in rule all; the port keeps it opt-in so the default graph is unchanged \u2014 the checked-in envs/*.yaml already document the pinned versions; see README \"Fidelity\")",
+        "key": "env_export_enabled",
+        "used_by": [
+          "env_export_igv_reports",
+          "env_export_pygenometracks",
+          "env_export_sinto"
+        ],
+        "value_type": "bool"
+      },
+      {
         "default": "pdf",
         "key": "file_type",
         "used_by": [
@@ -10357,6 +11003,7 @@
         "default": "mm10",
         "key": "genome",
         "used_by": [
+          "igv_report",
           "ucsc_hub"
         ],
         "value_type": "string"
@@ -10369,6 +11016,32 @@
           "plot_tracks"
         ],
         "value_type": "string"
+      },
+      {
+        "default": false,
+        "description": "IGV report (igv-reports), deactivated upstream (commented out of rule all) \u2014 opt-in: set igv_report_enabled = true, then `-t igv_report`.",
+        "key": "igv_report_enabled",
+        "used_by": [
+          "igv_report",
+          "make_bed"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "8000M",
+        "description": "upstream's dynamic `max(2 * input.size_mb, 8000)` memory is not expressible statically in oxo-flow \u2014 fixed at the upstream 8000 MB minimum",
+        "key": "igv_report_memory",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": true,
+        "description": "pair-level gtracks plots: needs gene-named bigWigs (upstream's data layout); set false for the generic-named mini fixtures.",
+        "key": "plot_enabled",
+        "used_by": [
+          "plot_tracks"
+        ],
+        "value_type": "bool"
       },
       {
         "default": "myData",
@@ -10389,9 +11062,17 @@
           "annotate_genes",
           "config_export",
           "coverage",
+          "coverage_sc",
+          "env_export_igv_reports",
+          "env_export_pygenometracks",
+          "env_export_sinto",
           "gene_list_export",
+          "igv_report",
+          "make_bed",
           "merge_bams",
+          "merge_sc_bams",
           "plot_tracks",
+          "split_sc_bam",
           "ucsc_hub"
         ],
         "value_type": "string"
@@ -10401,6 +11082,42 @@
         "key": "sample_annotation",
         "used_by": [
           "annot_export"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/sc_bams",
+        "description": "one aligned BAM per sc sample: {sc_bam_dir}/{sc_id}.bam (BAMs need a CB cell-barcode tag per read, see test/fixtures/make_sc_fixtures.py)",
+        "key": "sc_bam_dir",
+        "used_by": [
+          "split_sc_bam"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": true,
+        "description": "Single-cell mode (upstream: any annotation 'group' value ending in .tsv switches that sample to sinto barcode splitting). oxo-flow cannot discover groups from TSV contents at load time, so the sc samples, their BAM/metadata paths and the sc groups are declared explicitly. Set sc_enabled = false if you have no single-cell samples.",
+        "key": "sc_enabled",
+        "used_by": [
+          "coverage_sc",
+          "merge_sc_bams",
+          "split_sc_bam"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": "g1,g2",
+        "description": "unique group values of the sc metadata TSV col-2 (merged + sorted into samples_list above)",
+        "key": "sc_groups",
+        "used_by": [],
+        "value_type": "string"
+      },
+      {
+        "default": "test/fixtures/sc_metadata",
+        "description": "one 2-column barcode TSV (barcode<TAB>group, no header) per sc sample: {sc_metadata}/{sc_id}.tsv \u2014 the group values of col 2 become the sc groups",
+        "key": "sc_metadata",
+        "used_by": [
+          "split_sc_bam"
         ],
         "value_type": "string"
       },
@@ -10686,7 +11403,8 @@
         "description": "antiSMASH (upstream rule_parameters.antismash + envs/antismash.yaml)",
         "key": "antismash_major",
         "used_by": [
-          "antismash_v6"
+          "antismash_v6",
+          "write_dependency_versions"
         ],
         "value_type": "string"
       },
@@ -10702,9 +11420,10 @@
       },
       {
         "default": "7.1.0",
-        "description": "derived from envs/antismash.yaml pip pin git@7-1-0-1",
+        "description": "matches envs/antismash.yaml bioconda::antismash=7.1.0",
         "key": "antismash_version",
         "used_by": [
+          "annotate_bigfam_hits",
           "antismash",
           "antismash_overview",
           "antismash_overview_gather",
@@ -10713,10 +11432,14 @@
           "arts",
           "bgc_count",
           "bigscape",
+          "bigslice",
+          "bigslice_prep",
           "copy_antismash",
           "copy_log_changes",
           "csv_to_parquet",
-          "downstream_bgc_prep"
+          "downstream_bgc_prep",
+          "query_bigslice",
+          "summarize_bigslice_query"
         ],
         "value_type": "string"
       },
@@ -10837,14 +11560,20 @@
         "key": "project",
         "used_by": [
           "amrfinder_gather",
+          "annotate_bigfam_hits",
           "antismash_overview_gather",
           "antismash_summary",
+          "automlst_wrapper",
+          "automlst_wrapper_out",
           "bigscape",
+          "bigslice",
+          "bigslice_prep",
           "cblaster_genome_db",
           "checkm",
           "copy_log_changes",
           "copy_mibig_table",
           "csv_to_parquet",
+          "deeptfactor_summary",
           "downstream_bgc_prep",
           "fastani",
           "fastani_convert",
@@ -10852,9 +11581,12 @@
           "gtdbtk",
           "mash",
           "mash_convert",
+          "prep_automlst_gbk",
+          "query_bigslice",
           "roary",
           "roary_out",
           "seqfu_combine",
+          "summarize_bigslice_query",
           "write_dependency_versions"
         ],
         "value_type": "string"
@@ -10884,7 +11616,8 @@
         "key": "run_amrfinderplus",
         "used_by": [
           "amrfinder_gather",
-          "amrfinderplus"
+          "amrfinderplus",
+          "install_amrfinder"
         ],
         "value_type": "bool"
       },
@@ -10898,9 +11631,32 @@
       },
       {
         "default": false,
+        "description": "upstream pipelines.automlst-wrapper",
+        "key": "run_automlst",
+        "used_by": [
+          "automlst_wrapper",
+          "automlst_wrapper_out",
+          "install_automlst_wrapper",
+          "prep_automlst_gbk"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
         "key": "run_bigscape",
         "used_by": [
           "bigscape"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "description": "upstream pipelines.bigslice",
+        "key": "run_bigslice",
+        "used_by": [
+          "bigslice",
+          "bigslice_prep",
+          "install_bigslice"
         ],
         "value_type": "bool"
       },
@@ -10918,6 +11674,18 @@
         "used_by": [
           "checkm",
           "install_checkm"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "description": "upstream pipelines.deeptfactor",
+        "key": "run_deeptfactor",
+        "used_by": [
+          "deeptfactor",
+          "deeptfactor_setup",
+          "deeptfactor_summary",
+          "deeptfactor_to_json"
         ],
         "value_type": "bool"
       },
@@ -10962,6 +11730,18 @@
         "used_by": [
           "mash",
           "mash_convert"
+        ],
+        "value_type": "bool"
+      },
+      {
+        "default": false,
+        "description": "upstream pipelines.query-bigslice (needs the 18GB BiG-FAM bundle)",
+        "key": "run_query_bigslice",
+        "used_by": [
+          "annotate_bigfam_hits",
+          "fetch_bigslice_db",
+          "query_bigslice",
+          "summarize_bigslice_query"
         ],
         "value_type": "bool"
       },
@@ -11055,6 +11835,8 @@
           "plot_dimred_clustering_densmap",
           "plot_dimred_clustering_pca",
           "plot_dimred_clustering_umap",
+          "plot_dimred_features_pca",
+          "plot_dimred_features_umap",
           "plot_dimred_metadata_densmap",
           "plot_dimred_metadata_pca",
           "plot_dimred_metadata_umap"
@@ -11222,6 +12004,7 @@
         "used_by": [
           "pca",
           "plot_dimred_clustering_pca",
+          "plot_dimred_features_pca",
           "plot_dimred_interactive_pca_2d",
           "plot_dimred_interactive_pca_3d",
           "plot_dimred_metadata_pca",
@@ -11242,6 +12025,7 @@
         "used_by": [
           "pca",
           "plot_dimred_clustering_pca",
+          "plot_dimred_features_pca",
           "plot_dimred_interactive_pca_2d",
           "plot_dimred_interactive_pca_3d",
           "plot_dimred_metadata_pca",
@@ -11254,6 +12038,16 @@
           "validation_internal_Silhouette"
         ],
         "value_type": "string"
+      },
+      {
+        "default": false,
+        "description": "FEATURE PLOTS: upstream runs plot_dimred_features only when len(features_to_plot) > 0; the oxo-flow `when` evaluator compares scalars, not arrays, so this boolean switch carries the gate (set it to true together with a non-empty features_to_plot)",
+        "key": "plot_dimred_features",
+        "used_by": [
+          "plot_dimred_features_pca",
+          "plot_dimred_features_umap"
+        ],
+        "value_type": "bool"
       },
       {
         "default": "digits",
@@ -11281,6 +12075,13 @@
           "distance_matrix_features_cosine",
           "distance_matrix_observations_correlation",
           "distance_matrix_observations_cosine",
+          "env_export_ComplexHeatmap",
+          "env_export_clusterCrit",
+          "env_export_clustree",
+          "env_export_ggplot",
+          "env_export_plotly",
+          "env_export_pymcdm",
+          "env_export_umap_leiden",
           "leiden_ModularityVertexPartition_NA",
           "leiden_RBConfigurationVertexPartition_0p5",
           "leiden_RBConfigurationVertexPartition_1",
@@ -11291,6 +12092,8 @@
           "plot_dimred_clustering_densmap",
           "plot_dimred_clustering_pca",
           "plot_dimred_clustering_umap",
+          "plot_dimred_features_pca",
+          "plot_dimred_features_umap",
           "plot_dimred_interactive_densmap_2d",
           "plot_dimred_interactive_densmap_3d",
           "plot_dimred_interactive_pca_2d",
@@ -11344,6 +12147,8 @@
           "plot_dimred_clustering_densmap",
           "plot_dimred_clustering_pca",
           "plot_dimred_clustering_umap",
+          "plot_dimred_features_pca",
+          "plot_dimred_features_umap",
           "plot_dimred_interactive_densmap_2d",
           "plot_dimred_interactive_densmap_3d",
           "plot_dimred_interactive_pca_2d",
@@ -11364,6 +12169,8 @@
           "plot_dimred_clustering_densmap",
           "plot_dimred_clustering_pca",
           "plot_dimred_clustering_umap",
+          "plot_dimred_features_pca",
+          "plot_dimred_features_umap",
           "plot_dimred_interactive_densmap_2d",
           "plot_dimred_interactive_densmap_3d",
           "plot_dimred_interactive_pca_2d",
@@ -11411,6 +12218,7 @@
           "densmap_embed_3d",
           "plot_dimred_clustering_densmap",
           "plot_dimred_clustering_umap",
+          "plot_dimred_features_umap",
           "plot_dimred_interactive_densmap_2d",
           "plot_dimred_interactive_densmap_3d",
           "plot_dimred_interactive_umap_2d",
@@ -11435,6 +12243,7 @@
           "densmap_embed_3d",
           "plot_dimred_clustering_densmap",
           "plot_dimred_clustering_umap",
+          "plot_dimred_features_umap",
           "plot_dimred_interactive_densmap_2d",
           "plot_dimred_interactive_densmap_3d",
           "plot_dimred_interactive_umap_2d",
@@ -11458,6 +12267,7 @@
           "densmap_embed_3d",
           "plot_dimred_clustering_densmap",
           "plot_dimred_clustering_umap",
+          "plot_dimred_features_umap",
           "plot_dimred_interactive_densmap_2d",
           "plot_dimred_interactive_densmap_3d",
           "plot_dimred_interactive_umap_2d",
