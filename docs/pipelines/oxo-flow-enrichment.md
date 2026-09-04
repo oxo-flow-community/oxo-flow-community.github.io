@@ -214,7 +214,6 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- RcisTarget/ORA .txt gene-set aggregate/visualize — upstream also folds the per-.txt-set RcisTarget and ORA_GSEApy results into the annotation group's aggregate summary; the port's static per-group aggregate blocks cannot enumerate user-defined .txt gene sets (engine scatter on config lists cannot feed a static group label), so txt-set results are produced per set (analysis + plot) and the aggregate/visualize rows cover the region-set path only
 - env_export — conda env export requires the conda CLI inside the runtime environment and dumps the runtime env state, not the declared pins; exact pins are already declared in envs/*.yaml
 - report rendering — upstream wraps outputs in snakemake's report() (HTML report with .rst captions); oxo-flow has no report module, so config_export and annot_export are ported as plain rules (env_export is excluded separately above)
 - note: the anticipated names liftover/enrichr/gost/single_region_mode do not exist in v3.0.1 (Enrichr appears only as a commented-out reference in gene_ORA_GSEApy.py and a database-source comment in config.yaml)

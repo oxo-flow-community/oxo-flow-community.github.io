@@ -1,4 +1,4 @@
-# Amplicon sequencing (16S/ITS): DADA2 denoising, taxonomy assignment, QIIME2 diversity/ANCOM, PICRUSt and QC
+# Amplicon sequencing (16S/ITS): DADA2 denoising, taxonomy assignment, QIIME2 diversity/ANCOM, PICRUSt, SBDI export, phyloseq/TSE objects and QC
 
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
 
@@ -9,7 +9,7 @@ Amplicon sequencing analysis (16S/ITS) that takes raw paired-end reads through F
 | **Rating** | ✔ Live-tested |
 | **Origin** | port |
 | **Domain** | amplicon |
-| **Rules** | 49 |
+| **Rules** | 54 |
 | **Compute** | up to 10 CPUs / 20 GB per rule (DADA2 rules; qiime2_preptax/qiime2_classify 10c/20G, 24h limits); picrust 10 CPUs / 50 GB / 24h; QIIME2 rules need the qiime2 container (~20GB unpacked) |
 | **Tools** | fastqc · cutadapt · python · pandas · r-base · dada2 · bioconductor-digest · bioconductor-biostrings · itsx · itsxrust · curl · biocontainers · qiime2 · picrust2 · multiqc |
 | **Ported** | 2026-08-15 |
@@ -189,7 +189,6 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - nanopore: nanopore sequencing branch (params.nanopore) — absent from the 2.18.0 codebase (grep-verified; only docs/usage.md mentions Nanopore re ITSxRust long reads)
 - syncom: synthetic community controls branch (params.syncom) — absent from the 2.18.0 codebase (grep-verified)
 - versions.yml: per-module tool version files — the port pins versions in the env files / container tags instead
-- report generators not ported: SBDI export (params.sbdiexport, default false — off by default upstream); phyloseq/TSE R objects and the Rmd summary report (default-on upstream — params.skip_phyloseq/skip_tse/skip_report all default false)
 
 ## Fidelity
 

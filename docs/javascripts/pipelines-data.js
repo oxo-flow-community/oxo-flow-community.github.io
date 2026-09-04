@@ -931,7 +931,7 @@ window.OXO_PIPELINES = [
   },
   {
     "name": "oxo-flow-ampliseq",
-    "title": "Amplicon sequencing (16S/ITS): DADA2 denoising, taxonomy assignment, QIIME2 diversity/ANCOM, PICRUSt and QC",
+    "title": "Amplicon sequencing (16S/ITS): DADA2 denoising, taxonomy assignment, QIIME2 diversity/ANCOM, PICRUSt, SBDI export, phyloseq/TSE objects and QC",
     "origin": "port",
     "rating": "live-verified",
     "engine": "nextflow",
@@ -951,6 +951,8 @@ window.OXO_PIPELINES = [
       "dada2",
       "qiime2",
       "picrust",
+      "sbdi",
+      "phyloseq",
       "nf-core"
     ],
     "scope": [
@@ -1007,10 +1009,9 @@ window.OXO_PIPELINES = [
     "excluded": [
       "nanopore: nanopore sequencing branch (params.nanopore) \u2014 absent from the 2.18.0 codebase (grep-verified; only docs/usage.md mentions Nanopore re ITSxRust long reads)",
       "syncom: synthetic community controls branch (params.syncom) \u2014 absent from the 2.18.0 codebase (grep-verified)",
-      "versions.yml: per-module tool version files \u2014 the port pins versions in the env files / container tags instead",
-      "report generators not ported: SBDI export (params.sbdiexport, default false \u2014 off by default upstream); phyloseq/TSE R objects and the Rmd summary report (default-on upstream \u2014 params.skip_phyloseq/skip_tse/skip_report all default false)"
+      "versions.yml: per-module tool version files \u2014 the port pins versions in the env files / container tags instead"
     ],
-    "rule_count": 49,
+    "rule_count": 54,
     "tools": [
       "fastqc",
       "cutadapt",
@@ -2494,7 +2495,6 @@ window.OXO_PIPELINES = [
       "visualize_pycisTarget_hg38_screen_v10clust_ATAC"
     ],
     "excluded": [
-      "RcisTarget/ORA .txt gene-set aggregate/visualize \u2014 upstream also folds the per-.txt-set RcisTarget and ORA_GSEApy results into the annotation group's aggregate summary; the port's static per-group aggregate blocks cannot enumerate user-defined .txt gene sets (engine scatter on config lists cannot feed a static group label), so txt-set results are produced per set (analysis + plot) and the aggregate/visualize rows cover the region-set path only",
       "env_export \u2014 conda env export requires the conda CLI inside the runtime environment and dumps the runtime env state, not the declared pins; exact pins are already declared in envs/*.yaml",
       "report rendering \u2014 upstream wraps outputs in snakemake's report() (HTML report with .rst captions); oxo-flow has no report module, so config_export and annot_export are ported as plain rules (env_export is excluded separately above)",
       "note: the anticipated names liftover/enrichr/gost/single_region_mode do not exist in v3.0.1 (Enrichr appears only as a commented-out reference in gene_ORA_GSEApy.py and a database-source comment in config.yaml)"
