@@ -68,14 +68,17 @@
     if (!el || !P.length) return;
     const rules = P.reduce((a, p) => a + (Number(p.rule_count) || 0), 0);
     const tools = new Set(P.flatMap((p) => p.tools || [])).size;
+    // Tier counts are cumulative (evidence ladder), so a bare "verified"
+    // count alongside live-tested would violate monotonicity: every
+    // live-tested workflow already satisfies verified. Show coverage of
+    // the top rung instead; per-workflow badges carry the ladder detail.
     const live = P.filter((p) => p.rating === "live-verified").length;
-    const verified = P.filter((p) => p.rating === "verified").length;
     el.innerHTML = `
       <div class="ox-stat"><div class="v">${P.length}</div><div class="k">workflows</div></div>
-      <div class="ox-stat"><div class="v">${live}</div><div class="k">live-tested</div></div>
-      <div class="ox-stat"><div class="v">${verified}</div><div class="k">verified</div></div>
+      <div class="ox-stat"><div class="v">${live}/${P.length}</div><div class="k">live-tested</div></div>
       <div class="ox-stat"><div class="v">${rules}</div><div class="k">rules</div></div>
-      <div class="ox-stat"><div class="v">${tools}</div><div class="k">tools pinned</div></div>`;
+      <div class="ox-stat"><div class="v">${tools}</div><div class="k">tools pinned</div></div>
+      <p class="ox-stats-note">Ratings are an evidence ladder — ✔ live-tested already includes ★ verified. <a href="/about/curation/">What the ratings mean</a></p>`;
   }
 
   function renderFeatured() {
