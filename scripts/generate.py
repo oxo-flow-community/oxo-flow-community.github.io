@@ -57,6 +57,19 @@ def _esc(value) -> str:
     return html.escape(str(value), quote=True)
 
 
+def _desc_html(desc: str) -> str:
+    """Description paragraph as raw HTML; inline `code` spans become <code>.
+
+    Descriptions are prose with occasional backtick code spans (e.g.
+    ``_REP\\d+``); everything else is escaped to plain text.
+    """
+    parts = _esc(desc).split("`")
+    return "".join(
+        f"<code>{part}</code>" if i % 2 else part
+        for i, part in enumerate(parts)
+    )
+
+
 REQUIRED_FIELDS = ("name", "title", "description", "repo_url", "domain", "tags", "tools")
 
 
@@ -248,7 +261,9 @@ def install_section(p: dict) -> str:
         f"**Toolchain.** {inst.get('toolchain', 'containers or conda envs — pinned')}",
     ]
     if inst.get("requirements"):
-        lines += ["", "**Requirements.**"] + [f"- {r}" for r in inst["requirements"]]
+        # The blank line is required — without it the `- item` lines merge
+        # into the "Requirements." paragraph and render as literal text.
+        lines += ["", "**Requirements.**", ""] + [f"- {r}" for r in inst["requirements"]]
     lines += [
         "",
         "```bash",
@@ -302,6 +317,8 @@ def params_section(p: dict, config: list[dict] | None) -> list[str]:
         "| Parameter | Default | Description | Used by |",
         "|---:|---|---|---|",
         *rows,
+        "",
+        "{: .ox-params }",
         "",
         "Descriptions are the workflow's own `#` comments from its `[config]` "
         "section, surfaced by `oxo-flow info` — no schema file to maintain.",
@@ -358,25 +375,23 @@ def make_page(p: dict, configs: dict) -> str:
     excluded = "\n".join(f"- {s}" for s in p.get("excluded", [])) or "- none"
     fidelity = p.get("fidelity_md")
     parts = [
+        "---",
+        f"title: {json.dumps(p['title'])}",
+        "---",
+        "",
         f'<div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>{_esc(p["name"])}</span></div>',
-        # md_in_html only processes markdown="1" blocks at the markdown root
-        # level — a nested attributed div inside an unattributed raw-HTML
-        # block is ignored. The outer grid div must carry the attribute too,
-        # or the h1/badges/description stay raw text.
-        '<div class="ox-detail-cols" markdown="1">',
-        '<div markdown="1">',
-        "",
-        f"# {p['title']}",
-        "",
+        # The header is ONE raw-HTML block: a raw HTML block ends at the
+        # first blank line, so there must be no blank lines inside the
+        # grid/columns (live-finding 2026-09-05 — markdown="1" nesting
+        # shreds nested raw HTML into code blocks).
+        '<div class="ox-detail-cols">',
+        "<div>",
+        f"<h1>{_esc(p['title'])}</h1>",
         badges(p),
-        "",
-        p.get("description", ""),
-        "",
+        f"<p>{_desc_html(p.get('description', ''))}</p>",
         "</div>",
         "<div>",
-        "",
         glance_panel(p),
-        "",
         "</div>",
         "</div>",
         "",

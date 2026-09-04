@@ -1,16 +1,15 @@
+---
+title: "Viral assembly and intrahost variant calling for Illumina amplicon data"
+---
+
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-viralrecon</span></div>
-<div class="ox-detail-cols" markdown="1">
-<div markdown="1">
-
-# Viral assembly and intrahost variant calling for Illumina amplicon data
-
+<div class="ox-detail-cols">
+<div>
+<h1>Viral assembly and intrahost variant calling for Illumina amplicon data</h1>
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
-
-Turns paired-end Illumina reads into a complete viral genomics report: read QC and trimming (FastQC, fastp), host-sequence removal (Kraken2), alignment to a user-provided reference genome (Bowtie2), primer trimming for amplicon runs, intrahost variant calling and annotation (iVar or bcftools, snpEff/SnpSift), consensus building with low-coverage masking (bcftools or ivar), lineage assignment and deconvolution (Pangolin, Nextclade, Freyja), de novo assembly with QC (SPAdes, Unicycler, minia, Bandage, BLAST, QUAST, ABACAS, plasmidID), and a single MultiQC report. The amplicon + iVar path is the default; the bcftools caller, ivar consensus, metagenomic protocol, alternative assemblers (any comma-separated combination of spades/unicycler/minia in one run), MarkDuplicates, plasmidID, network-driven database updates and additional annotation are ported as gated branches off by default.
-
+<p>Turns paired-end Illumina reads into a complete viral genomics report: read QC and trimming (FastQC, fastp), host-sequence removal (Kraken2), alignment to a user-provided reference genome (Bowtie2), primer trimming for amplicon runs, intrahost variant calling and annotation (iVar or bcftools, snpEff/SnpSift), consensus building with low-coverage masking (bcftools or ivar), lineage assignment and deconvolution (Pangolin, Nextclade, Freyja), de novo assembly with QC (SPAdes, Unicycler, minia, Bandage, BLAST, QUAST, ABACAS, plasmidID), and a single MultiQC report. The amplicon + iVar path is the default; the bcftools caller, ivar consensus, metagenomic protocol, alternative assemblers (any comma-separated combination of spades/unicycler/minia in one run), MarkDuplicates, plasmidID, network-driven database updates and additional annotation are ported as gated branches off by default.</p>
 </div>
 <div>
-
 <div class="ox-glance">
 <div class="ox-glance-title">At a glance</div>
 <div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested</span></div>
@@ -25,7 +24,6 @@ Turns paired-end Illumina reads into a complete viral genomics report: read QC a
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <p class="cmd">$ oxo-flow run main.oxoflow --samples first:1</p>
 </div>
-
 </div>
 </div>
 
@@ -44,6 +42,7 @@ Needs a reference genome bundle — see Requirements; `--samples first:1` runs a
 **Toolchain.** conda envs — pinned versions (envs/*.yaml, conda-forge + bioconda channels; no containers)
 
 **Requirements.**
+
 - reference genome FASTA and annotation GFF (config.fasta / config.gff) — uncompressed by default, or set fasta_ends_gz / gff_ends_gz
 - primer scheme BED for the amplicon protocol (config.primer_bed)
 - Kraken2 host-removal database as a tar.gz (config.kraken2_db)
@@ -139,6 +138,8 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-viralrecon
 | `spades_mode` | `rnaviral` | — | `assemble_spades` |
 | `threeprime_adapters` | `false` | — | — |
 | `variant_caller` | `ivar` | --- Variant calling (upstream params.variant_caller defaults to 'ivar' for the amplicon protocol and 'bcftools' otherwise; both branches are ported as when-gated rules). The metagenomic branch auto-runs the bcftools caller regardless of this key — upstream derives variant_caller in nextflow.config (params.variant_caller = protocol == 'metagenomic' ? 'bcftools' : 'ivar'), and the port mirrors that derivation in the wgs rules' when conditions, so a metagenomic run needs no extra --arg --- | `additional_annotation`, `call_variants_bcftools`, `call_variants_ivar`, `consensus_filter`, `consensus_filter_bcftools`, `ivar_to_vcf`, `norm_vcf_bcftools`, `sort_vcf`, `variants_long_table`, `variants_long_table_bcftools` |
+
+{: .ox-params }
 
 Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
 

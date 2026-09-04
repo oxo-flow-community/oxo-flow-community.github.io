@@ -1,16 +1,15 @@
+---
+title: "Biosynthetic gene cluster (BGC) genome mining: annotation, antiSMASH and data warehouse"
+---
+
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-bgcflow</span></div>
-<div class="ox-detail-cols" markdown="1">
-<div markdown="1">
-
-# Biosynthetic gene cluster (BGC) genome mining: annotation, antiSMASH and data warehouse
-
+<div class="ox-detail-cols">
+<div>
+<h1>Biosynthetic gene cluster (BGC) genome mining: annotation, antiSMASH and data warehouse</h1>
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
-
-End-to-end biosynthetic gene cluster (BGC) analysis of user-provided bacterial genomes: prokka annotation, antiSMASH 7 secondary-metabolite mining with automated database setup, per-genome BGC counts and overview tables, GTDB taxonomy lookup, MIBiG reference table download, BigSCAPE-compatible comparison preparation (symlinks, taxonomy, dataset registry, visualization mapping), and conversion of all result tables into a parquet data warehouse — ready for downstream comparison and exploration.
-
+<p>End-to-end biosynthetic gene cluster (BGC) analysis of user-provided bacterial genomes: prokka annotation, antiSMASH 7 secondary-metabolite mining with automated database setup, per-genome BGC counts and overview tables, GTDB taxonomy lookup, MIBiG reference table download, BigSCAPE-compatible comparison preparation (symlinks, taxonomy, dataset registry, visualization mapping), and conversion of all result tables into a parquet data warehouse — ready for downstream comparison and exploration.</p>
 </div>
 <div>
-
 <div class="ox-glance">
 <div class="ox-glance-title">At a glance</div>
 <div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested</span></div>
@@ -25,7 +24,6 @@ End-to-end biosynthetic gene cluster (BGC) analysis of user-provided bacterial g
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <p class="cmd">$ oxo-flow run main.oxoflow</p>
 </div>
-
 </div>
 </div>
 
@@ -44,6 +42,7 @@ Needs input genomes and the antiSMASH database — see Requirements.
 **Toolchain.** conda envs — pinned versions (declared in main.oxoflow: envs/antismash.yaml, envs/prokka.yaml, envs/bgc_analytics.yaml; a few antiSMASH helper packages use unpinned ranges)
 
 **Requirements.**
+
 - genome FASTA per genome at {config.raw_dir}/fasta/<genome_id>.fna (raw_dir defaults to test/fixtures/raw; .fna/.fasta/.fa accepted)
 - sample table config/samples.csv — columns genome_id,source,organism,genus,species,strain
 - network access on first run: antiSMASH databases (~several GB, into resources/antismash_db), GTDB bac120_metadata_r220.tsv fallback table, MIBiG JSON 3.1
@@ -103,6 +102,8 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-bgcflow
 | `run_roary` | `false` | — | `roary`, `roary_out` |
 | `run_seqfu` | `false` | — | `seqfu_combine`, `seqfu_stats` |
 | `write_dependency_versions` | `false` | — | `write_dependency_versions` |
+
+{: .ox-params }
 
 Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
 

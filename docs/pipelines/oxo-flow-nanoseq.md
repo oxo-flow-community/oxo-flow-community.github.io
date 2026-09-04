@@ -1,16 +1,15 @@
+---
+title: "Nanopore long-read: demultiplexing, QC and alignment"
+---
+
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-nanoseq</span></div>
-<div class="ox-detail-cols" markdown="1">
-<div markdown="1">
-
-# Nanopore long-read: demultiplexing, QC and alignment
-
+<div class="ox-detail-cols">
+<div>
+<h1>Nanopore long-read: demultiplexing, QC and alignment</h1>
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
-
-A nanopore long-read pipeline: samplesheet check, qcat barcode demultiplexing, NanoPlot + FastQC QC, minimap2 (or graphmap2) alignment, samtools view/sort/index, samtools stats/flagstat/idxstats, BigWig/BigBed tracks, NanoLyse contamination filtering, medaka/DeepVariant/PEPPER-Margin-DeepVariant short variant calling, Sniffles/cuteSV structural variant calling, bambu/StringTie2+featureCounts quantification with DESeq2/DEXSeq differential analysis, Nanopolish+xPore/m6anet RNA modification analysis, pre-aligned-BAM input, and a MultiQC report. The default path is the DNA protocol with all gated branches off by default (matching upstream). Every rule runs the upstream module's exact pinned container image.
-
+<p>A nanopore long-read pipeline: samplesheet check, qcat barcode demultiplexing, NanoPlot + FastQC QC, minimap2 (or graphmap2) alignment, samtools view/sort/index, samtools stats/flagstat/idxstats, BigWig/BigBed tracks, NanoLyse contamination filtering, medaka/DeepVariant/PEPPER-Margin-DeepVariant short variant calling, Sniffles/cuteSV structural variant calling, bambu/StringTie2+featureCounts quantification with DESeq2/DEXSeq differential analysis, Nanopolish+xPore/m6anet RNA modification analysis, pre-aligned-BAM input, and a MultiQC report. The default path is the DNA protocol with all gated branches off by default (matching upstream). Every rule runs the upstream module&#x27;s exact pinned container image.</p>
 </div>
 <div>
-
 <div class="ox-glance">
 <div class="ox-glance-title">At a glance</div>
 <div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested</span></div>
@@ -25,7 +24,6 @@ A nanopore long-read pipeline: samplesheet check, qcat barcode demultiplexing, N
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <p class="cmd">$ oxo-flow run main.oxoflow</p>
 </div>
-
 </div>
 </div>
 
@@ -44,6 +42,7 @@ Default path is the DNA protocol with all gated branches off (matching upstream)
 **Toolchain.** containers (Docker/Singularity) — pinned images
 
 **Requirements.**
+
 - genome FASTA reference (config.reference; defaults to test fixtures — override for real data)
 - samplesheet CSV (config.input) plus raw nanopore FASTQ for demultiplexing (config.input_path; skip with skip_demultiplexing=true)
 - optional GTF annotation (config.gtf + config.gtf_base) — only needed for the cDNA/directRNA junction-bed path
@@ -112,6 +111,8 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-nanoseq
 | `stranded` | `false` | — | `minimap2_align`, `minimap2_index` |
 | `structural_variant_caller` | `sniffles` | — | `cutesv`, `cutesv_sort_vcf`, `cutesv_tabix_vcf`, `sniffles`, `sniffles_sort_vcf`, `sniffles_tabix_vcf` |
 | `variant_caller` | `medaka` | — | `deepvariant`, `deepvariant_tabix_gvcf`, `deepvariant_tabix_vcf`, `medaka_bgzip_vcf`, `medaka_tabix_vcf`, `medaka_variant`, `pepper_margin_deepvariant` |
+
+{: .ox-params }
 
 Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
 
