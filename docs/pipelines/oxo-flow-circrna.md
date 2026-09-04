@@ -1,16 +1,15 @@
+---
+title: "circRNA detection: four callers with ensemble aggregation"
+---
+
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-circrna</span></div>
-<div class="ox-detail-cols" markdown="1">
-<div markdown="1">
-
-# circRNA detection: four callers with ensemble aggregation
-
+<div class="ox-detail-cols">
+<div>
+<h1>circRNA detection: four callers with ensemble aggregation</h1>
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · full-line</span> <span class="ox-badge ox-badge--origin">✦ Original</span> </div>
-
-Circular RNA detection with four independent callers (CIRIquant, CIRCexplorer2, find_circ, circRNA_finder) and ensemble aggregation of calls supported by at least two methods. Indexes and conda environments are built automatically on first run from a single reference_dir; samples are auto-discovered from raw/ with no CSV.
-
+<p>Circular RNA detection with four independent callers (CIRIquant, CIRCexplorer2, find_circ, circRNA_finder) and ensemble aggregation of calls supported by at least two methods. Indexes and conda environments are built automatically on first run from a single reference_dir; samples are auto-discovered from raw/ with no CSV.</p>
 </div>
 <div>
-
 <div class="ox-glance">
 <div class="ox-glance-title">At a glance</div>
 <div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested · full-line</span></div>
@@ -25,7 +24,6 @@ Circular RNA detection with four independent callers (CIRIquant, CIRCexplorer2, 
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <p class="cmd">$ oxo-flow run circrna.oxoflow -j 16</p>
 </div>
-
 </div>
 </div>
 
@@ -44,6 +42,7 @@ Set `reference_dir` in `circrna.oxoflow` and place FASTQ pairs in `raw/`; indexe
 **Toolchain.** conda envs — one per tool (envs/*.yaml, most tools version-pinned)
 
 **Requirements.**
+
 - reference_dir with genome.fa, genes.gtf, hg38_ref.txt
 - paired FASTQ per sample in raw/ (<sample>_1.fastq.gz / <sample>_2.fastq.gz)
 - compute: up to 8 threads / 32 GB per rule
@@ -70,6 +69,8 @@ oxo-flow pull gh:WangLabCSU/oxo-flow-circrna
 | Parameter | Default | Description | Used by |
 |---:|---|---|---|
 | `reference_dir` | `./reference` | === The only path you need to set === reference_dir/ layout: genome.fa, genes.gtf, hg38_ref.txt, bwa/genome.fa.{bwt,pac,ann,amb,sa}, hisat2/genome.fa.{1-8}.ht2, bowtie2/genome.fa.*.bt2, star/ | `circexplorer2` |
+
+{: .ox-params }
 
 Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
 

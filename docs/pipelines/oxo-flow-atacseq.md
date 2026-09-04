@@ -1,16 +1,15 @@
+---
+title: "ATAC-seq: peak calling and QC"
+---
+
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-atacseq</span></div>
-<div class="ox-detail-cols" markdown="1">
-<div markdown="1">
-
-# ATAC-seq: peak calling and QC
-
+<div class="ox-detail-cols">
+<div>
+<h1>ATAC-seq: peak calling and QC</h1>
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
-
-ATAC-seq peak calling and QC: FastQC raw-read QC, Trim Galore adapter trimming, BWA-MEM alignment, Picard mark-duplicates, BAMTools filtering, MACS2 broad-peak calling, HOMER peak annotation, FRiP scoring, normalised bigWig tracks, deepTools QC plots and a combined MultiQC report. Default plan is the upstream single-end aligner=bwa main path (15 rules); when-gated branches port the paired-end path, Bowtie2/Chromap/STAR aligners, reference preparation, mitochondrial filtering, consensus peaks/DESeq2, preseq, Picard metrics, ataqv, IGV and R QC plots (27 further rules), and the merged-replicate analysis over `_REP\d+` sample groups (43 total).
-
+<p>ATAC-seq peak calling and QC: FastQC raw-read QC, Trim Galore adapter trimming, BWA-MEM alignment, Picard mark-duplicates, BAMTools filtering, MACS2 broad-peak calling, HOMER peak annotation, FRiP scoring, normalised bigWig tracks, deepTools QC plots and a combined MultiQC report. Default plan is the upstream single-end aligner=bwa main path (15 rules); when-gated branches port the paired-end path, Bowtie2/Chromap/STAR aligners, reference preparation, mitochondrial filtering, consensus peaks/DESeq2, preseq, Picard metrics, ataqv, IGV and R QC plots (27 further rules), and the merged-replicate analysis over <code>_REP\d+</code> sample groups (43 total).</p>
 </div>
 <div>
-
 <div class="ox-glance">
 <div class="ox-glance-title">At a glance</div>
 <div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested</span></div>
@@ -25,7 +24,6 @@ ATAC-seq peak calling and QC: FastQC raw-read QC, Trim Galore adapter trimming, 
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <p class="cmd">$ oxo-flow run main.oxoflow</p>
 </div>
-
 </div>
 </div>
 
@@ -44,6 +42,7 @@ Needs reference genome and peak-calling inputs — see Requirements.
 **Toolchain.** containers (Docker/Singularity) — pinned images for 40 of 43 rules, plus one pinned conda env (envs/picard-samtools.yaml) shared by the three picard rules (picard_mergesamfiles, picard_markduplicates, merge_replicates)
 
 **Requirements.**
+
 - reference data: genome FASTA with .fai, BWA index prefix (.amb/.ann/.bwt/.pac/.sa), chrom sizes file, GTF annotation, gene BED, TSS BED (optional blacklist BED); alt-aligner indexes for aligner=bowtie2/chromap/star
 - input: single-end <sample>.fastq.gz reads (default) or <sample>_1/2.fastq.gz (paired=true), declared in [[sample_groups]]; replicate groups use the upstream _REP\d+ suffix and feed config.merged_samples (see README)
 - compute: up to 12 CPUs / 72 GB per rule
@@ -114,6 +113,8 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-atacseq
 | `skip_trimming` | `false` | — | `pe::trimgalore_pe`, `trimgalore` |
 | `star_index` | `` | params.star — STAR genome dir (built by STAR_GENOMEGENERATE upstream) for aligner="star" | `alt::star_align` |
 | `tss_bed` | `test/fixtures/genome/tss.bed` | params.tss_bed | `deeptools_plots`, `qce::ataqv` |
+
+{: .ox-params }
 
 Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
 

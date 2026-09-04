@@ -1,16 +1,15 @@
+---
+title: "Fetching public sequencing data: FastQ download, metadata and samplesheets"
+---
+
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-fetchngs</span></div>
-<div class="ox-detail-cols" markdown="1">
-<div markdown="1">
-
-# Fetching public sequencing data: FastQ download, metadata and samplesheets
-
+<div class="ox-detail-cols">
+<div>
+<h1>Fetching public sequencing data: FastQ download, metadata and samplesheets</h1>
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
-
-Fetch metadata and raw FastQ files from public sequence databases (SRA/ENA/DDBJ/GEO). Given a list of database identifiers — run accessions (SRR/ERR/DRR), experiments, studies, biosamples or GEO series — the pipeline retrieves the ENA run metadata, downloads the FastQ files over FTP, validates every download against its ENA md5 sum, and auto-creates a samplesheet plus sample id-mappings and a MultiQC mappings config, ready for downstream nf-core pipelines such as rnaseq, atacseq or taxprofiler.
-
+<p>Fetch metadata and raw FastQ files from public sequence databases (SRA/ENA/DDBJ/GEO). Given a list of database identifiers — run accessions (SRR/ERR/DRR), experiments, studies, biosamples or GEO series — the pipeline retrieves the ENA run metadata, downloads the FastQ files over FTP, validates every download against its ENA md5 sum, and auto-creates a samplesheet plus sample id-mappings and a MultiQC mappings config, ready for downstream nf-core pipelines such as rnaseq, atacseq or taxprofiler.</p>
 </div>
 <div>
-
 <div class="ox-glance">
 <div class="ox-glance-title">At a glance</div>
 <div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested · default-path</span></div>
@@ -25,7 +24,6 @@ Fetch metadata and raw FastQ files from public sequence databases (SRA/ENA/DDBJ/
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <p class="cmd">$ oxo-flow run main.oxoflow</p>
 </div>
-
 </div>
 </div>
 
@@ -44,6 +42,7 @@ Downloads public data by SRA/ENA accessions (network required) — configure you
 **Toolchain.** containers (Docker) — pinned images (quay.io/biocontainers, identical to upstream)
 
 **Requirements.**
+
 - ids file: one SRA/ENA/DDBJ/GEO accession per line (config.input, default test/fixtures/ids.txt), kept in sync with the [[sample_groups]] sample source
 - reference data: none — the workflow downloads data from public archives; no genome FASTA, annotation or indices required
 - network: outbound access to ENA over FTP (wget -t 5 -c -T 60, 2 retries); the sratools branch needs NCBI SRA outbound access (prefetch/fasterq-dump), the aspera branch ENA fasp on port 33001
@@ -78,6 +77,8 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-fetchngs
 | `out_dir` | `results` | — | `check_ids`, `combine_mappings`, `combine_samplesheets`, `multiqc_mappings_config`, `sra_fastq_ftp`, `sra_ids_to_runinfo`, `sra_runinfo_to_ftp`, `sra_to_samplesheet` |
 | `sample_mapping_fields` | `experiment_accession,run_accession,sample_accession,experiment_alias,run_alias,sample_alias,experiment_title,sample_title,sample_description` | — | `multiqc_mappings_config`, `sra_to_samplesheet` |
 | `skip_fastq_download` | `false` | — | `combine_mappings`, `combine_samplesheets`, `sra_fastq_ftp`, `sra_to_samplesheet` |
+
+{: .ox-params }
 
 Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
 

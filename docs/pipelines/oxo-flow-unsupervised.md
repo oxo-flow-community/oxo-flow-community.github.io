@@ -1,16 +1,15 @@
+---
+title: "Unsupervised analysis of omics matrices: PCA, UMAP, clustering and validation"
+---
+
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-unsupervised</span></div>
-<div class="ox-detail-cols" markdown="1">
-<div markdown="1">
-
-# Unsupervised analysis of omics matrices: PCA, UMAP, clustering and validation
-
+<div class="ox-detail-cols">
+<div>
+<h1>Unsupervised analysis of omics matrices: PCA, UMAP, clustering and validation</h1>
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
-
-Unsupervised analysis of omics matrices: PCA, UMAP and densMAP embeddings (2D/3D), distance matrices, hierarchical clustering heatmaps, Leiden clustering across partition types and resolutions, clustree analysis, external and internal cluster validation with TOPSIS ranking, static and interactive visualizations, per-feature dimred scatter plots (when-gated), and resolved-environment snapshots. A verified port of the default-parameter path of epigen/unsupervised_analysis v4.0.2 (Snakemake); all 61 rules and tool versions are pinned to the upstream release.
-
+<p>Unsupervised analysis of omics matrices: PCA, UMAP and densMAP embeddings (2D/3D), distance matrices, hierarchical clustering heatmaps, Leiden clustering across partition types and resolutions, clustree analysis, external and internal cluster validation with TOPSIS ranking, static and interactive visualizations, per-feature dimred scatter plots (when-gated), and resolved-environment snapshots. A verified port of the default-parameter path of epigen/unsupervised_analysis v4.0.2 (Snakemake); all 61 rules and tool versions are pinned to the upstream release.</p>
 </div>
 <div>
-
 <div class="ox-glance">
 <div class="ox-glance-title">At a glance</div>
 <div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested · default-path</span></div>
@@ -25,7 +24,6 @@ Unsupervised analysis of omics matrices: PCA, UMAP and densMAP embeddings (2D/3D
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <p class="cmd">$ oxo-flow run main.oxoflow</p>
 </div>
-
 </div>
 </div>
 
@@ -44,6 +42,7 @@ Real sklearn `digits` data is committed under `test/fixtures/` — fully runnabl
 **Toolchain.** conda envs — pinned versions (7 environments under envs/, created by conda/mamba)
 
 **Requirements.**
+
 - per-sample omics matrix CSV and optional labels CSV ({config.data_dir}/{sample}_data.csv / _labels.csv), registered in config/annotation.csv; no reference genomes or index files needed (default fixtures: sklearn digits, 1797 samples x 64 features)
 - compute: up to 2 CPUs / 32 GB RAM per rule (defaults threads=2, mem_mb=32000; 7 plotting rules use 8 GB)
 - conda or mamba installed to build the 7 pinned environments on first run
@@ -98,6 +97,8 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-unsupervised
 | `umap_metric` | `euclidean` | UMAP & densMAP (upstream umap: single default metric/neighbors/min_dist) | `densmap_embed_2d`, `densmap_embed_3d`, `plot_dimred_clustering_densmap`, `plot_dimred_clustering_umap`, `plot_dimred_interactive_densmap_2d`, `plot_dimred_interactive_densmap_3d`, `plot_dimred_interactive_umap_2d`, `plot_dimred_interactive_umap_3d`, `plot_dimred_metadata_densmap`, `plot_dimred_metadata_umap`, `plot_umap_connectivity_densmap`, `plot_umap_connectivity_umap`, `plot_umap_diagnostics_densmap`, `plot_umap_diagnostics_umap`, `umap_embed_2d`, `umap_embed_3d`, `umap_graph` |
 | `umap_min_dist` | `0.1` | — | `densmap_embed_2d`, `densmap_embed_3d`, `plot_dimred_clustering_densmap`, `plot_dimred_clustering_umap`, `plot_dimred_interactive_densmap_2d`, `plot_dimred_interactive_densmap_3d`, `plot_dimred_interactive_umap_2d`, `plot_dimred_interactive_umap_3d`, `plot_dimred_metadata_densmap`, `plot_dimred_metadata_umap`, `plot_umap_connectivity_densmap`, `plot_umap_connectivity_umap`, `plot_umap_diagnostics_densmap`, `plot_umap_diagnostics_umap`, `umap_embed_2d`, `umap_embed_3d` |
 | `umap_n_neighbors` | `15` | — | `densmap_embed_2d`, `densmap_embed_3d`, `plot_dimred_clustering_densmap`, `plot_dimred_clustering_umap`, `plot_dimred_interactive_densmap_2d`, `plot_dimred_interactive_densmap_3d`, `plot_dimred_interactive_umap_2d`, `plot_dimred_interactive_umap_3d`, `plot_dimred_metadata_densmap`, `plot_dimred_metadata_umap`, `plot_umap_connectivity_densmap`, `plot_umap_connectivity_umap`, `plot_umap_diagnostics_densmap`, `plot_umap_diagnostics_umap`, `umap_embed_2d`, `umap_embed_3d`, `umap_graph` |
+
+{: .ox-params }
 
 Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
 

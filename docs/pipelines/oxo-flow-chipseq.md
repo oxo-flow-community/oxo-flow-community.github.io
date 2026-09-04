@@ -1,16 +1,15 @@
+---
+title: "ChIP-seq: peak calling, QC and differential analysis"
+---
+
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-chipseq</span></div>
-<div class="ox-detail-cols" markdown="1">
-<div markdown="1">
-
-# ChIP-seq: peak calling, QC and differential analysis
-
+<div class="ox-detail-cols">
+<div>
+<h1>ChIP-seq: peak calling, QC and differential analysis</h1>
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
-
-ChIP-seq peak calling, QC and differential analysis for paired-end reads: FastQC and Trim Galore read QC, BWA-MEM (default), Bowtie2, Chromap or STAR alignment, library merge and Picard mark-duplicates, BAMTools filtering against a blacklist with orphan-read removal, preseq and phantompeakqualtools library complexity QC, bigWig tracks and deepTools QC plots, MACS3 peak calling with input controls in broad (default) or narrow mode, HOMER peak annotation, FRiP scoring, consensus peaks across replicates (MACS3 merge, featureCounts quantification, DESeq2 QC), an IGV session and a MultiQC report. Optional multi-antibody mode (metadata_file + input_groups group_by meta.antibody) runs the consensus chain once per distinct antibody. Optional gated rules derive the gene-body BED from the GTF (GTF2BED), the blacklist-complement regions file, the chromosome sizes and FASTA index (CUSTOM_GETCHROMSIZES), and BWA / Bowtie2 / Chromap / STAR indexes from the reference FASTA.
-
+<p>ChIP-seq peak calling, QC and differential analysis for paired-end reads: FastQC and Trim Galore read QC, BWA-MEM (default), Bowtie2, Chromap or STAR alignment, library merge and Picard mark-duplicates, BAMTools filtering against a blacklist with orphan-read removal, preseq and phantompeakqualtools library complexity QC, bigWig tracks and deepTools QC plots, MACS3 peak calling with input controls in broad (default) or narrow mode, HOMER peak annotation, FRiP scoring, consensus peaks across replicates (MACS3 merge, featureCounts quantification, DESeq2 QC), an IGV session and a MultiQC report. Optional multi-antibody mode (metadata_file + input_groups group_by meta.antibody) runs the consensus chain once per distinct antibody. Optional gated rules derive the gene-body BED from the GTF (GTF2BED), the blacklist-complement regions file, the chromosome sizes and FASTA index (CUSTOM_GETCHROMSIZES), and BWA / Bowtie2 / Chromap / STAR indexes from the reference FASTA.</p>
 </div>
 <div>
-
 <div class="ox-glance">
 <div class="ox-glance-title">At a glance</div>
 <div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested · default-path</span></div>
@@ -25,7 +24,6 @@ ChIP-seq peak calling, QC and differential analysis for paired-end reads: FastQC
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <p class="cmd">$ oxo-flow run main.oxoflow</p>
 </div>
-
 </div>
 </div>
 
@@ -44,6 +42,7 @@ Runs the default path on the shipped fixtures — about 153 instances (212-rule 
 **Toolchain.** containers (Docker/Singularity) — pinned images
 
 **Requirements.**
+
 - genome FASTA (fasta; a FASTA index fai is only required with make_star_index)
 - annotation GTF (gtf)
 - gene-body regions BED, derived upstream via GTF2BED (gene_bed, or derive with make_gene_bed=true)
@@ -132,6 +131,8 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-chipseq
 | `three_prime_clip_r1` | `0` | — | `qc::trimgalore` |
 | `three_prime_clip_r2` | `0` | — | `qc::trimgalore` |
 | `trim_nextseq` | `0` | — | `qc::trimgalore` |
+
+{: .ox-params }
 
 Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
 

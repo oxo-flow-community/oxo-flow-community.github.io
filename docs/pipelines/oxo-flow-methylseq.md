@@ -1,16 +1,15 @@
+---
+title: "Bisulfite methylation analysis: alignment, methylation calls and QC"
+---
+
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-methylseq</span></div>
-<div class="ox-detail-cols" markdown="1">
-<div markdown="1">
-
-# Bisulfite methylation analysis: alignment, methylation calls and QC
-
+<div class="ox-detail-cols">
+<div>
+<h1>Bisulfite methylation analysis: alignment, methylation calls and QC</h1>
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
-
-Run end-to-end bisulfite methylation analysis (WGBS, and RRBS-compatible) of paired-end reads (default) and single-end reads (upstream single_end samplesheet column, via the engine metadata binding): FastQC quality control, TrimGalore adapter trimming, alignment to the bisulfite-converted reference genome with any of the four upstream aligners — Bismark bowtie2 (default), Bismark hisat2, bwameth (bwa-meth) or BWA-MEM — PCR-deduplication, samtools sort/index, methylation calls (bismark_methylation_extractor, MethylDackel on bwameth, rastair for TAPS), per-sample and project-wide Bismark HTML reports, optional QualiMap BamQC, preseq complexity estimates and targeted-sequencing (bedtools intersect + Picard HS metrics), and a final MultiQC report. All optional branches are gated on the same config keys as the upstream params and off by default.
-
+<p>Run end-to-end bisulfite methylation analysis (WGBS, and RRBS-compatible) of paired-end reads (default) and single-end reads (upstream single_end samplesheet column, via the engine metadata binding): FastQC quality control, TrimGalore adapter trimming, alignment to the bisulfite-converted reference genome with any of the four upstream aligners — Bismark bowtie2 (default), Bismark hisat2, bwameth (bwa-meth) or BWA-MEM — PCR-deduplication, samtools sort/index, methylation calls (bismark_methylation_extractor, MethylDackel on bwameth, rastair for TAPS), per-sample and project-wide Bismark HTML reports, optional QualiMap BamQC, preseq complexity estimates and targeted-sequencing (bedtools intersect + Picard HS metrics), and a final MultiQC report. All optional branches are gated on the same config keys as the upstream params and off by default.</p>
 </div>
 <div>
-
 <div class="ox-glance">
 <div class="ox-glance-title">At a glance</div>
 <div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested</span></div>
@@ -25,7 +24,6 @@ Run end-to-end bisulfite methylation analysis (WGBS, and RRBS-compatible) of pai
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <p class="cmd">$ oxo-flow run main.oxoflow</p>
 </div>
-
 </div>
 </div>
 
@@ -44,6 +42,7 @@ Needs reference genome and reads — see Requirements.
 **Toolchain.** conda envs — pinned versions (conda-forge/bioconda)
 
 **Requirements.**
+
 - reference genome FASTA (a .gz FASTA is decompressed automatically before indexing) — the Bismark bowtie2 index is built automatically on first run; a prebuilt index archive (--bismark_index) is also supported
 - paired-end raw reads: <dir>/<sample>_R1.fastq.gz and <dir>/<sample>_R2.fastq.gz (samples with >1 pair: <dir>/<sample>_<unit>_R{1,2}.fastq.gz per unit — concatenated by cat_fastq); single-end samples: <dir>/<sample>_R1.fastq.gz only, listed as SE in metadata/samples.tsv with config.single_end_mode = true
 - compute: up to 12 CPUs / 72 GB RAM per rule (bismark_genomepreparation, trimgalore, bismark_align, bismark_deduplicate, bismark_methylationextractor, bwameth_index, bwameth_align, bwa_mem)
@@ -126,6 +125,8 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-methylseq
 | `unmapped` | `false` | — | `bismark_align`, `bismark_align_se` |
 | `use_mem2` | `false` | bwameth index variant (upstream: --use_mem2, default false). | `bwameth_index` |
 | `zymo` | `false` | — | `bismark_align`, `bismark_align_se`, `trimgalore`, `trimgalore_se` |
+
+{: .ox-params }
 
 Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
 

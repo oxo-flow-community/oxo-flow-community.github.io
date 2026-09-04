@@ -1,16 +1,15 @@
+---
+title: "Region set and gene set enrichment: LOLA, GREAT, pycisTarget and GSEA"
+---
+
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-enrichment</span></div>
-<div class="ox-detail-cols" markdown="1">
-<div markdown="1">
-
-# Region set and gene set enrichment: LOLA, GREAT, pycisTarget and GSEA
-
+<div class="ox-detail-cols">
+<div>
+<h1>Region set and gene set enrichment: LOLA, GREAT, pycisTarget and GSEA</h1>
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
-
-Run a complete region set and gene set enrichment analysis on your own data: region overlap enrichment (LOLA), genomic region enrichment of annotated terms (rGREAT), region TFBS motif enrichment (pycisTarget), gene TFBS motif enrichment (RcisTarget), and gene over-representation analysis (ORA) and preranked GSEA (GSEApy). Every tool applies its own multiple-test correction; the workflow produces per-set enrichment plots, per-group summary plots, and reproducibility exports (configs/ and envs/). Official port of epigen/enrichment_analysis v3.0.1 with tool versions and commands pinned to the source.
-
+<p>Run a complete region set and gene set enrichment analysis on your own data: region overlap enrichment (LOLA), genomic region enrichment of annotated terms (rGREAT), region TFBS motif enrichment (pycisTarget), gene TFBS motif enrichment (RcisTarget), and gene over-representation analysis (ORA) and preranked GSEA (GSEApy). Every tool applies its own multiple-test correction; the workflow produces per-set enrichment plots, per-group summary plots, and reproducibility exports (configs/ and envs/). Official port of epigen/enrichment_analysis v3.0.1 with tool versions and commands pinned to the source.</p>
 </div>
 <div>
-
 <div class="ox-glance">
 <div class="ox-glance-title">At a glance</div>
 <div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested · default-path</span></div>
@@ -25,7 +24,6 @@ Run a complete region set and gene set enrichment analysis on your own data: reg
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <p class="cmd">$ oxo-flow run main.oxoflow</p>
 </div>
-
 </div>
 </div>
 
@@ -44,6 +42,7 @@ Needs ATAC peak / BAM inputs — see Requirements.
 **Toolchain.** conda envs — pinned (conda/mamba at runtime; five environments declared in main.oxoflow, exact pins from upstream)
 
 **Requirements.**
+
 - annotation.csv declaring each feature set (region set or ranked gene set), its path, background, and group
 - region BED files, one per region set, plus a background BED (hg38)
 - ranked gene list CSVs, one per gene set (gene, score columns)
@@ -160,6 +159,8 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-enrichment
 | `rnk_sets` | `'Bcell_ranked', 'Ery_ranked'` | — | — |
 | `species` | `homo_sapiens` | upstream derives species from genome (hg19/hg38 -> homo_sapiens); ported as config key | `region_motif_enrichment_analysis_pycisTarget` |
 | `top_terms_n` | `5` | aggregate & summarize (upstream top_terms_n / adjp_cap / or_cap / nes_cap / cluster_summary) | `visualize_GREAT_Azimuth_2023_ATAC`, `visualize_GREAT_Reactome_ATAC`, `visualize_LOLA_LOLACore_ATAC`, `visualize_ORA_GSEApy_Azimuth_2023_ATAC`, `visualize_ORA_GSEApy_Reactome_ATAC`, `visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC`, `visualize_preranked_GSEApy_Azimuth_2023_RNA`, `visualize_preranked_GSEApy_Reactome_RNA`, `visualize_pycisTarget_hg38_screen_v10clust_ATAC` |
+
+{: .ox-params }
 
 Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
 

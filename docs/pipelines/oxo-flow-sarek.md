@@ -1,16 +1,15 @@
+---
+title: "WGS/WES germline and somatic variant calling"
+---
+
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-sarek</span></div>
-<div class="ox-detail-cols" markdown="1">
-<div markdown="1">
-
-# WGS/WES germline and somatic variant calling
-
+<div class="ox-detail-cols">
+<div>
+<h1>WGS/WES germline and somatic variant calling</h1>
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
-
-GATK best-practice variant calling for whole-genome and whole-exome sequencing (WGS/WES), germline by default: FastQC quality control, fastp trimming and splitting, BWA-MEM (or BWA-MEM2) alignment, MarkDuplicates with CRAM or BAM output, base quality score recalibration (BQSR), single-sample HaplotypeCaller variant calling with CNN 1D scoring and tranche filtering, VEP annotation, per-sample VCF QC and a final MultiQC report. Optional ported branches (all gated off by default): reference preparation (BWA/BWAmem2 index, .dict, .fai), UMI-aware consensus calling (fgbio chain + fastp), fastp split-parts fan-out (split_parts=true: runtime-discovered per-part BWA-MEM/BWA-MEM2 alignment + BAM merge + index, no input cap), FreeBayes, Strelka2 germline, Manta germline, bcftools mpileup, TIDDIT SV, goleft indexcov, DeepVariant, NGSCheckMate sample-identity QC, and the joint-germline path (GVCF mode + GenomicsDBImport + GenotypeGVCFs + VQSR).
-
+<p>GATK best-practice variant calling for whole-genome and whole-exome sequencing (WGS/WES), germline by default: FastQC quality control, fastp trimming and splitting, BWA-MEM (or BWA-MEM2) alignment, MarkDuplicates with CRAM or BAM output, base quality score recalibration (BQSR), single-sample HaplotypeCaller variant calling with CNN 1D scoring and tranche filtering, VEP annotation, per-sample VCF QC and a final MultiQC report. Optional ported branches (all gated off by default): reference preparation (BWA/BWAmem2 index, .dict, .fai), UMI-aware consensus calling (fgbio chain + fastp), fastp split-parts fan-out (split_parts=true: runtime-discovered per-part BWA-MEM/BWA-MEM2 alignment + BAM merge + index, no input cap), FreeBayes, Strelka2 germline, Manta germline, bcftools mpileup, TIDDIT SV, goleft indexcov, DeepVariant, NGSCheckMate sample-identity QC, and the joint-germline path (GVCF mode + GenomicsDBImport + GenotypeGVCFs + VQSR).</p>
 </div>
 <div>
-
 <div class="ox-glance">
 <div class="ox-glance-title">At a glance</div>
 <div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested · default-path</span></div>
@@ -25,7 +24,6 @@ GATK best-practice variant calling for whole-genome and whole-exome sequencing (
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <p class="cmd">$ oxo-flow run main.oxoflow</p>
 </div>
-
 </div>
 </div>
 
@@ -44,6 +42,7 @@ Point the `[config]` fasta / bwa_index / dbsnp / known_indels paths at your GRCh
 **Toolchain.** containers (Docker) — pinned images
 
 **Requirements.**
+
 - paired-end FASTQ reads at raw/{sample}_R1.fastq.gz / raw/{sample}_R2.fastq.gz
 - GRCh38 genome FASTA plus .fai and .dict
 - GRCh38 BWA index directory (bwa_index_dir); bwa_mem2_index_dir when aligner = "bwa-mem2"
@@ -133,6 +132,8 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-sarek
 | `vep_genome` | `GRCh38` | — | `ensemblvep_vep`, `ensemblvep_vep_deepvariant`, `ensemblvep_vep_freebayes`, `ensemblvep_vep_joint`, `ensemblvep_vep_manta`, `ensemblvep_vep_mpileup`, `ensemblvep_vep_strelka`, `ensemblvep_vep_tiddit` |
 | `vep_species` | `homo_sapiens` | — | `ensemblvep_vep`, `ensemblvep_vep_deepvariant`, `ensemblvep_vep_freebayes`, `ensemblvep_vep_joint`, `ensemblvep_vep_manta`, `ensemblvep_vep_mpileup`, `ensemblvep_vep_strelka`, `ensemblvep_vep_tiddit` |
 | `wes` | `false` | — | `goleft_indexcov`, `samtools_reindex_bam` |
+
+{: .ox-params }
 
 Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
 

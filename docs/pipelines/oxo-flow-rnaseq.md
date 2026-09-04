@@ -1,16 +1,15 @@
+---
+title: "RNA-seq: alignment, quantification and QC"
+---
+
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-rnaseq</span></div>
-<div class="ox-detail-cols" markdown="1">
-<div markdown="1">
-
-# RNA-seq: alignment, quantification and QC
-
+<div class="ox-detail-cols">
+<div>
+<h1>RNA-seq: alignment, quantification and QC</h1>
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
-
-End-to-end bulk RNA-seq analysis for paired-end reads: fq lint and FastQC raw-read QC, TrimGalore adapter/quality trimming (including the UMI-extraction path), STAR, HISAT2 and Bowtie2-transcriptome (bowtie2_salmon) alignment with the BBSplit / SortMeRNA / Bowtie2 rRNA-filtered read variants, Picard MarkDuplicates or UMI-tools / UMICollapse dedup (genome and transcriptome chains), Salmon quantification in alignment mode (STAR and Bowtie2 orig_bams, raw and UMI-prepared) and pseudo-alignment mode (Salmon or Kallisto), RSEM alignment-mode quantification with per-sample results and merged count tables, tximport-merged gene/transcript count tables with SummarizedExperiment R objects, StringTie reference-guided assembly and quantification, featureCounts gene counts with biotype tables, RSeQC / dupRadar / Qualimap QC, DESeq2 sample-level QC (PCA, sample distances, size factors) per quantification branch, strand-specific bigWig tracks, and one final MultiQC report with the nf-core/rnaseq custom content (fail_trimmed / fail_mapped tables, strandedness checks, software versions). A faithful port of the nf-core/rnaseq 3.26.0 default star_salmon path plus the star_rsem, hisat2, bowtie2_salmon, with_umi, salmon-pseudo and kallisto-pseudo branches — same tools, same versions, same commands.
-
+<p>End-to-end bulk RNA-seq analysis for paired-end reads: fq lint and FastQC raw-read QC, TrimGalore adapter/quality trimming (including the UMI-extraction path), STAR, HISAT2 and Bowtie2-transcriptome (bowtie2_salmon) alignment with the BBSplit / SortMeRNA / Bowtie2 rRNA-filtered read variants, Picard MarkDuplicates or UMI-tools / UMICollapse dedup (genome and transcriptome chains), Salmon quantification in alignment mode (STAR and Bowtie2 orig_bams, raw and UMI-prepared) and pseudo-alignment mode (Salmon or Kallisto), RSEM alignment-mode quantification with per-sample results and merged count tables, tximport-merged gene/transcript count tables with SummarizedExperiment R objects, StringTie reference-guided assembly and quantification, featureCounts gene counts with biotype tables, RSeQC / dupRadar / Qualimap QC, DESeq2 sample-level QC (PCA, sample distances, size factors) per quantification branch, strand-specific bigWig tracks, and one final MultiQC report with the nf-core/rnaseq custom content (fail_trimmed / fail_mapped tables, strandedness checks, software versions). A faithful port of the nf-core/rnaseq 3.26.0 default star_salmon path plus the star_rsem, hisat2, bowtie2_salmon, with_umi, salmon-pseudo and kallisto-pseudo branches — same tools, same versions, same commands.</p>
 </div>
 <div>
-
 <div class="ox-glance">
 <div class="ox-glance-title">At a glance</div>
 <div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested</span></div>
@@ -25,7 +24,6 @@ End-to-end bulk RNA-seq analysis for paired-end reads: fq lint and FastQC raw-re
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <p class="cmd">$ oxo-flow run main.oxoflow</p>
 </div>
-
 </div>
 </div>
 
@@ -44,6 +42,7 @@ The default config ships with `test/fixtures/` so the plan previews with no data
 **Toolchain.** conda envs — pinned (envs/*.yaml, versions pinned to the upstream nf-core/rnaseq 3.26.0 module environments; requires conda or mamba)
 
 **Requirements.**
+
 - paired-end FASTQ reads: reads_dir/<sample>_R1.fastq.gz + _R2.fastq.gz, cohort declared in [[sample_groups]]
 - reference genome FASTA (uncompressed)
 - gene annotation GTF
@@ -133,6 +132,8 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq
 | `umitools_umi_separator` | `` | Empty = no --umi-separator flag (upstream default null). | — |
 | `unstranded_threshold` | `0.1` | — | `multiqc_custom_content` |
 | `with_umi` | `false` | UMI handling (upstream: --with_umi / --skip_umi_extract / --umi_dedup_tool / --umitools_* / --umi_discard_read / --save_umi_intermeds; same defaults). | `alignment::bam_dedup_genome_umicollapse`, `alignment::bam_dedup_genome_umitools`, `alignment::bam_dedup_genome_umitools_primary`, `alignment::bam_dedup_genome_umitools_primary_stats`, `alignment::bam_dedup_genome_umitools_stats`, `alignment::picard_markduplicates`, `alignment::samtools_flagstat_dedup`, `alignment::samtools_flagstat_markdup`, `alignment::samtools_idxstats_dedup`, `alignment::samtools_idxstats_markdup`, `alignment::samtools_index_dedup`, `alignment::samtools_index_markdup`, `alignment::samtools_index_primary`, `alignment::samtools_stats_dedup`, `alignment::samtools_stats_markdup`, `alignment::samtools_view_primary`, `fastq_qc::trimgalore`, `fastq_qc::trimgalore_umi`, `fastq_qc::umitools_extract_umis`, `quantification::bam_dedup_transcriptome_umicollapse`, `quantification::bam_dedup_transcriptome_umitools`, `quantification::bam_dedup_transcriptome_umitools_primary`, `quantification::bam_dedup_transcriptome_umitools_primary_stats`, `quantification::bam_dedup_transcriptome_umitools_stats`, `quantification::bam_sort_transcriptome`, `quantification::bam_sort_transcriptome_bowtie2`, `quantification::rsem_calculateexpression`, `quantification::rsem_calculateexpression_umi`, `quantification::salmon_quant`, `quantification::salmon_quant_bowtie2`, `quantification::salmon_quant_umi`, `quantification::samtools_flagstat_transcriptome_dedup`, `quantification::samtools_idxstats_transcriptome_dedup`, `quantification::samtools_index_primary_transcriptome`, `quantification::samtools_sort_name_transcriptome`, `quantification::samtools_stats_transcriptome_dedup`, `quantification::samtools_view_primary_transcriptome`, `quantification::umitools_prepareforrsem` |
+
+{: .ox-params }
 
 Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
 

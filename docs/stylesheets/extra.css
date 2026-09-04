@@ -104,6 +104,7 @@
   --md-accent-fg-color: var(--brand);
   --md-code-bg-color: var(--code-bg);
   --md-footer-bg-color: var(--bg);
+  --md-footer-bg-color--dark: var(--bg);
   --md-footer-fg-color: var(--muted);
   --md-footer-fg-color--light: var(--faint);
   --md-shadow-z1: var(--shadow);
@@ -252,7 +253,9 @@ html {
   margin: 0 0 1.4rem;
 }
 
-.ox-cta {
+/* a.ox-cta beats Material's `.md-typeset a` color (same specificity, later
+   file) — otherwise the CTA text renders green-on-green and is unreadable */
+a.ox-cta {
   display: inline-block;
   background: var(--brand);
   color: var(--on-brand);
@@ -263,7 +266,7 @@ html {
   text-decoration: none;
 }
 
-.ox-cta:hover {
+a.ox-cta:hover {
   background: var(--brand-deep);
   color: var(--on-brand);
 }
@@ -760,6 +763,44 @@ html {
   border-radius: 6px;
   padding: 0.45rem 0.6rem;
   overflow-x: auto;
+  white-space: nowrap;
+}
+
+/* ---- Parameters table (detail pages) ----
+   Material strips its default table styling from classed tables
+   (`table:not([class])`), so .ox-params carries the full style. */
+.ox-params {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+  margin: 1rem 0;
+}
+
+.ox-params th,
+.ox-params td {
+  padding: 0.5rem 0.7rem;
+  border-top: 1px solid var(--edge);
+  text-align: left;
+  vertical-align: top;
+}
+
+.ox-params th {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: var(--panel-2);
+  border-top: none;
+}
+
+.ox-params td:first-child {
+  white-space: nowrap;
+  font-family: "JetBrains Mono", monospace;
+}
+
+.ox-params td:nth-child(2) {
   white-space: nowrap;
 }
 

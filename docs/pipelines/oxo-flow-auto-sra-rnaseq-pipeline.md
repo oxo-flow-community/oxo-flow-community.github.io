@@ -1,16 +1,15 @@
+---
+title: "SRA-powered RNA-seq: .sra archives to differential expression"
+---
+
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-auto-sra-rnaseq-pipeline</span></div>
-<div class="ox-detail-cols" markdown="1">
-<div markdown="1">
-
-# SRA-powered RNA-seq: .sra archives to differential expression
-
+<div class="ox-detail-cols">
+<div>
+<h1>SRA-powered RNA-seq: .sra archives to differential expression</h1>
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
-
-Automated RNA-seq analysis from locally downloaded SRA archives to differential expression results: verify and symlink .sra files, fasterq-dump conversion to FASTQ, read merging across multiple SRR runs per sample, fastp trimming, STAR alignment with gene counts, BAM indexing, BPM-normalized bigWig signal tracks, a merged count matrix, and DESeq2 differential analysis with ashr shrinkage. Single-end and paired-end samples are routed by the metadata `paired` column through wildcard-scoped when-gates; a separate ENCODE entry point (main_encode.oxoflow) consumes pre-downloaded FASTQs. Every tool is pinned to an exact conda version for reproducibility.
-
+<p>Automated RNA-seq analysis from locally downloaded SRA archives to differential expression results: verify and symlink .sra files, fasterq-dump conversion to FASTQ, read merging across multiple SRR runs per sample, fastp trimming, STAR alignment with gene counts, BAM indexing, BPM-normalized bigWig signal tracks, a merged count matrix, and DESeq2 differential analysis with ashr shrinkage. Single-end and paired-end samples are routed by the metadata <code>paired</code> column through wildcard-scoped when-gates; a separate ENCODE entry point (main_encode.oxoflow) consumes pre-downloaded FASTQs. Every tool is pinned to an exact conda version for reproducibility.</p>
 </div>
 <div>
-
 <div class="ox-glance">
 <div class="ox-glance-title">At a glance</div>
 <div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested</span></div>
@@ -25,7 +24,6 @@ Automated RNA-seq analysis from locally downloaded SRA archives to differential 
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <p class="cmd">$ oxo-flow run main.oxoflow</p>
 </div>
-
 </div>
 </div>
 
@@ -44,6 +42,7 @@ Downloads public data by accessions (network required); `--resume-failed` retrie
 **Toolchain.** conda envs — pinned
 
 **Requirements.**
+
 - Reference data: STAR index dir and GTF (config index / GTF, e.g. GRCh38)
 - Pre-downloaded .sra files at <sra_data_path>/<SRR>/<SRR>.sra, one metadata TSV row per sample (GSM) with columns: Dataset GSE GSM gene method celline group group_name type platform SRR paired
 - Sample list in [[sample_groups]] and config db_id must match the metadata file (see repo README Usage)
@@ -81,6 +80,8 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipeline
 | `sender_password` | `` | — | — |
 | `sra_data_path` | `sra` | Directory holding pre-downloaded .sra files, layout <dir>/<SRR>/<SRR>.sra (upstream key sra_data_path). | `get_sra` |
 | `srr_separator` | `,` | Separator joining multiple SRR runs per sample in the metadata SRR column. | `data_conversion_pair`, `get_sra`, `merge_R1_data`, `merge_R2_data` |
+
+{: .ox-params }
 
 Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
 

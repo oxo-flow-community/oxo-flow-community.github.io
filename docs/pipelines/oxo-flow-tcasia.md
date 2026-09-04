@@ -1,16 +1,15 @@
+---
+title: "Paired-end RNA-seq alignment and four-caller alternative-splicing analysis"
+---
+
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-tcasia</span></div>
-<div class="ox-detail-cols" markdown="1">
-<div markdown="1">
-
-# Paired-end RNA-seq alignment and four-caller alternative-splicing analysis
-
+<div class="ox-detail-cols">
+<div>
+<h1>Paired-end RNA-seq alignment and four-caller alternative-splicing analysis</h1>
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · full-line</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
-
-Paired-end RNA-seq from FASTQ to per-sample alternative-splicing calls: reads are trimmed with fastp, aligned with two-pass STAR and counted per gene with featureCounts; each sample's splicing is then quantified independently with four callers — rMATS, MAJIQ (with Voila export), SUPPA2 (via Salmon transcript quantification) and SplAdder. The alignment and AS-calling stages are one chained DAG (run one stage with -t alignment / -t as_calling).
-
+<p>Paired-end RNA-seq from FASTQ to per-sample alternative-splicing calls: reads are trimmed with fastp, aligned with two-pass STAR and counted per gene with featureCounts; each sample&#x27;s splicing is then quantified independently with four callers — rMATS, MAJIQ (with Voila export), SUPPA2 (via Salmon transcript quantification) and SplAdder. The alignment and AS-calling stages are one chained DAG (run one stage with -t alignment / -t as_calling).</p>
 </div>
 <div>
-
 <div class="ox-glance">
 <div class="ox-glance-title">At a glance</div>
 <div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested · full-line</span></div>
@@ -25,7 +24,6 @@ Paired-end RNA-seq from FASTQ to per-sample alternative-splicing calls: reads ar
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <p class="cmd">$ oxo-flow run main.oxoflow</p>
 </div>
-
 </div>
 </div>
 
@@ -44,6 +42,7 @@ Needs raw FASTQs and reference data — see Requirements.
 **Toolchain.** conda envs — pinned versions (fastp 0.23.4, STAR 2.7.7a, samtools 1.13/1.15, subread 2.0.1, salmon 1.10.3, suppa 2.3, rMATS 4.3.0, MAJIQ 2.5, SplAdder 3.1.1; conda-forge + bioconda)
 
 **Requirements.**
+
 - reference data (GRCh38 + GENCODE v34): STAR index (STAR 2.7.7a), annotation GTF + GFF3, Salmon transcript index, SUPPA2 events file, MAJIQ academic license
 - paired-end reads at reads_dir/<sample>_1.fastq.gz / <sample>_2.fastq.gz for each sample in the [[sample_groups]] list
 - compute: up to 10 threads per rule (STAR/rMATS), no memory limits set
@@ -98,6 +97,8 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-tcasia
 | `strandness` | `fr-firststrand` | shared | `as_calling::rmats_run` |
 | `suppa2_events` | `test/fixtures/reference/events.ioe` | suppa2_events is auto-built below from the shipped GTF (SUPPA2 generateEvents) | `as_calling::suppa_run` |
 | `suppa2_min_tpm` | `1` | — | `as_calling::suppa_run` |
+
+{: .ox-params }
 
 Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
 

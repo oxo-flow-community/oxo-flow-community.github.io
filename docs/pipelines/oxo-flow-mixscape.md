@@ -1,16 +1,15 @@
+---
+title: "Pooled CRISPR perturbation analysis with Seurat Mixscape"
+---
+
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-mixscape</span></div>
-<div class="ox-detail-cols" markdown="1">
-<div markdown="1">
-
-# Pooled CRISPR perturbation analysis with Seurat Mixscape
-
+<div class="ox-detail-cols">
+<div>
+<h1>Pooled CRISPR perturbation analysis with Seurat Mixscape</h1>
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · full-line</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
-
-Pooled CRISPR perturbation analysis (scCRISPR-seq / CROP-seq / Perturb-seq) with Seurat Mixscape: per-cell perturbation signatures (CalcPerturbSig), perturbed vs. non-perturbed classification (RunMixscape), LDA + UMAP projection of the perturbed subset, the full visualization suite (classification statistics, perturbation-score density, posterior-probability and optional antibody-expression violin plots), and reproducibility exports (exact conda envs, runtime config, annotation file). Input is one processed Seurat object per sample.
-
+<p>Pooled CRISPR perturbation analysis (scCRISPR-seq / CROP-seq / Perturb-seq) with Seurat Mixscape: per-cell perturbation signatures (CalcPerturbSig), perturbed vs. non-perturbed classification (RunMixscape), LDA + UMAP projection of the perturbed subset, the full visualization suite (classification statistics, perturbation-score density, posterior-probability and optional antibody-expression violin plots), and reproducibility exports (exact conda envs, runtime config, annotation file). Input is one processed Seurat object per sample.</p>
 </div>
 <div>
-
 <div class="ox-glance">
 <div class="ox-glance-title">At a glance</div>
 <div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested · full-line</span></div>
@@ -25,7 +24,6 @@ Pooled CRISPR perturbation analysis (scCRISPR-seq / CROP-seq / Perturb-seq) with
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <p class="cmd">$ oxo-flow run main.oxoflow</p>
 </div>
-
 </div>
 </div>
 
@@ -44,6 +42,7 @@ Point `data_dir=` and `annotation=` at your inputs (see README); the shipped fix
 **Toolchain.** conda envs — pinned (r-seurat 4.4.0, r-seuratobject 4.1.4, r-irlba 2.3.5.1, r-matrix, r-mixtools 2.0.0, r-ggplot2 3.5.2, r-scales 1.3.0, r-patchwork 1.2.0, r-data.table 1.14.10, pyyaml 6.0.1); conda/mamba required at runtime, conda binary on PATH for env export
 
 **Requirements.**
+
 - One processed Seurat object per sample, as {data_dir}/{sample}.rds (already normalized/integrated — QC/normalization run upstream)
 - Annotation CSV (name, data columns) mapping sample names to object paths
 - Optional: 10X Antibody_Capture assay 'AB' for antibody-expression violin plots
@@ -92,6 +91,8 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-mixscape
 | `result_path` | `results` | upstream result_path; results land under result_path/mixscape_seurat | `annot_export`, `config_export`, `env_export_lda`, `env_export_mixscape`, `lda`, `mixscape`, `visualize` |
 | `threads` | `1` | upstream threads; mixscape rule runs 8x | `config_export` |
 | `variable_features_only` | `0` | (objects carry SCTransform normalization; the bundled fixtures are generated that way via make_fixtures.R) | `config_export`, `mixscape` |
+
+{: .ox-params }
 
 Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
 
