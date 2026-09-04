@@ -27,7 +27,7 @@ Needs a reference genome bundle — see Requirements; `--samples first:1` runs a
 
 ## Installation
 
-**Engine.** oxo-flow >= 0.12.0
+**Engine.** oxo-flow >= 0.17.0
 
 **Toolchain.** conda envs — pinned versions (envs/*.yaml, conda-forge + bioconda channels; no containers)
 
@@ -234,7 +234,7 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 **Excluded**
 
 - nanopore platform branch (ARTIC_GUPPYPLEX, ARTIC_MINION, NANOPLOT, PYCOQC, VCFLIB_VCFUNIQ, PREPARE_GENOME_NANOPORE) — upstream discovers per-barcode read directories (fastq_dir/barcode* + sequencing_summary, workflows/viralrecon.nf:693-920) with single-end meta flags, requires ONT reads basecalled by the commercial guppy_basecaller/guppy_barcoder, and no nanopore fixture exists; the port is paired-end Illumina filesystem discovery only (structural)
-- channel-level runtime filters — the per-sample DROPS (fastp empty-after-filtering, the min_mapped_reads flagstat gate, the zero-variant-sample filter) run on values computed at runtime in Nextflow channel code, which has no oxo-flow when-equivalent; the reporting half is ported inside the multiqc rule (fail_mapped_reads_mqc.tsv / fail_mapped_samples_mqc.tsv custom content, same headers/rows as upstream multiqcTsvFromList, written only when samples fail)
+- channel-level runtime filters, partially adopted — the fastp empty-after-filtering drop IS ported as `reads_count('fastp/{sample}_1.fastp.fastq.gz') > 0` gates on the trimmed-reads consumers (kraken2, align_bowtie2, assembly_fastq; engine 0.17.0 `when` runtime functions). The remaining DROPS are documented deviations: the min_mapped_reads flagstat gate (a strict `>` on the mapped count parsed out of samtools flagstat text — no engine runtime fn can extract it, so only the reporting half is ported as fail_mapped_samples_mqc.tsv inside the multiqc rule) and the zero-variant-sample filters (ivar: `wc_lines(tsv) > 1` is expressible but the port deliberately keeps zero-variant samples flowing downstream with a placeholder-header VCF for live-fixture robustness; bcftools: the record count needs a regex over `bcftools stats` output — fail_mapped_reads_mqc.tsv reports fastp failures inside the multiqc rule)
 
 ## Fidelity
 
