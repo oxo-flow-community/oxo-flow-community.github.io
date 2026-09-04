@@ -23,7 +23,7 @@
     
     
       
-        <title>Ancient DNA (aDNA): QC, mapping, damage estimation and genotyping - oxo-flow-community</title>
+        <title>Oxo flow eager - oxo-flow-community</title>
       
     
     
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Ancient DNA (aDNA): QC, mapping, damage estimation and genotyping
+              Oxo flow eager
             
           </span>
         </div>
@@ -584,72 +584,44 @@
   
 
 
+<div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-eager</span></div>
+<div class="ox-detail-cols">
+<div>
 <h1 id="ancient-dna-adna-qc-mapping-damage-estimation-and-genotyping">Ancient DNA (aDNA): QC, mapping, damage estimation and genotyping</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
-
-<p>Ancient DNA (aDNA) analysis in one run: FastQC raw QC, optional fastp poly-G filtering (2-colour chemistry), AdapterRemoval adapter clipping and paired-end read merging, BWA aln mapping with ancient-DNA parameters, picard MarkDuplicates (or DeDup) deduplication, preseq library-complexity curves, DamageProfiler damage estimation, Qualimap BAM QC, optional pileupCaller genotyping with eigenstrat SNP coverage, and a final MultiQC report — every rule pinned to the nf-core/eager 2.5.3 tool versions in the upstream container.</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: right;"></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: right;"><strong>Rating</strong></td>
-<td>✔ Live-tested</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Origin</strong></td>
-<td>port</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Domain</strong></td>
-<td>genomics</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Rules</strong></td>
-<td>17</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Compute</strong></td>
-<td>up to 4 CPUs / 8 GB per rule (bwa_aln)</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Tools</strong></td>
-<td>fastqc · adapterremoval · adapterremovalfixprefix · bwa · samtools · picard · dedup · preseq · damageprofiler · qualimap · sequencetools · eigenstratdatabasetools · fastp · pigz · multiqc · rename · python</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Ported</strong></td>
-<td>2026-08-15</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>License</strong></td>
-<td>Apache-2.0</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Source</strong></td>
-<td><a href="https://github.com/nf-core/eager">nf-core/eager</a></td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Pinned version</strong></td>
-<td><code>2.5.3</code></td>
-</tr>
-</tbody>
-</table>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
+<p>Ancient DNA (aDNA) analysis in one run: FastQC raw QC, optional fastp poly-G filtering (2-colour chemistry), AdapterRemoval adapter clipping and paired-end read merging, BWA aln mapping with ancient-DNA parameters, picard MarkDuplicates (or DeDup) deduplication, preseq library-complexity curves, DamageProfiler damage estimation, Qualimap BAM QC, optional pileupCaller genotyping with eigenstrat SNP coverage, optional metagenomic screening of the unmapped reads (bbduk entropy complexity filter, MALT or kraken2 classification with kraken_parse/kraken_merge tables, MaltExtract aDNA evaluation), and a final MultiQC report — every rule pinned to the nf-core/eager 2.5.3 tool versions in the upstream container (MALT 0.61 and HOPs 0.35 ship in the pinned nfcore/eager:2.5.3 image).</p>
+</div>
+<div>
+<div class="ox-glance">
+<div class="ox-glance-title">At a glance</div>
+<div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">57</span></div>
+<div class="ox-kv"><span class="k">Compute</span><span class="v">up to 4 CPUs / 8 GB per rule (bwa_aln)</span></div>
+<div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Domain</span><span class="v">genomics</span></div>
+<div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/nf-core/eager">nf-core/eager</a></span></div>
+<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>2.5.3</code></span></div>
+<div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
+<div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
+<p class="cmd">$ oxo-flow run main.oxoflow</p>
+</div>
+</div>
+</div>
 <h2 id="run-it">Run it</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>oxo-flow<span class="w"> </span>run<span class="w"> </span>main.oxoflow
 </code></pre></div>
 <p>Needs reference genome and reads — see Requirements.</p>
 <h2 id="installation">Installation</h2>
-<p><strong>Engine.</strong> oxo-flow &gt;= 0.12.0</p>
+<p><strong>Engine.</strong> oxo-flow &gt;= 0.12.0 (the gated multi-lane mode — run_lanemerge=true — additionally requires oxo-flow &gt;= 0.16.0 with input_groups support, Traitome/oxo-flow#231; on older engines the gate is inert and the default single-pair path is unchanged)</p>
 <p><strong>Toolchain.</strong> containers (Docker/Singularity) — pinned image nfcore/eager:2.5.3 for all rules (bundles the pinned conda env from envs/eager.yaml)</p>
 <p><strong>Requirements.</strong>
 - reference genome FASTA, plain and uncompressed (.gz references are not supported — upstream's unzip_reference step is not ported); the workflow builds the .fai / .dict / BWA indices itself
 - paired-end FASTQ pairs named <sample>_R1.fastq.gz / <sample>_R2.fastq.gz in a directory (directory input mode; sample = text before the _R1/_R2 suffix); single-end is not supported
+- optional — multi-lane input: name the pairs <sample>_L<lane>_R1.fastq.gz / _R2.fastq.gz (lane-tagged, as in upstream's TSV mode) and set run_lanemerge=true: the lanemerge rules concatenate the per-lane pairs of each sample into one merged pair (results/lanemerging/) that feeds AdapterRemoval and hostremoval_input_fastq; samples without lane-tagged files keep using the default-named pair. Requires oxo-flow &gt;= 0.16.0 (input_groups, Traitome/oxo-flow#231)
 - optional — pileupCaller genotyping (run_genotyping=true genotyping_tool='pileupcaller') requires pileupcaller_snpfile and pileupcaller_bedfile; the rule fails fast without them
-- compute: up to 4 CPUs / 8 GB RAM per rule (bwa_aln: 4 threads / 8G; reference-index and MultiQC rules up to 8 GB; base default 1 CPU / 7 GB / 24 h)
+- optional — metagenomic screening (run_metagenomic_screening=true, bam_unmapped_type='fastq') requires metagenomic_tool='kraken' with a kraken2_db (kraken2 database directory or .tar.gz bundle, unpacked by the kraken rule) or metagenomic_tool='malt' with a malt_db (MALT database directory); maltextract additionally requires maltextract_taxon_list and maltextract_ncbifiles. The chain is validate/dry-run-tested but not yet live-verified
+- compute: up to 4 CPUs / 8 GB RAM per rule (bwa_aln: 4 threads / 8G; kraken: 4 threads / 8G — upstream's mc_huge label is 32 cpus / 256 GB, tune via CLI overrides; reference-index and MultiQC rules up to 8 GB; base default 1 CPU / 7 GB / 24 h)
 - Docker or Singularity to run the pinned container nfcore/eager:2.5.3 (not needed for validate / lint / dry-run)
 - disk: results/ holds reference indices, mapped BAMs and reports — size grows with the reference genome and number of samples</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># 1. install oxo-flow (release binary, recommended)</span>
@@ -678,28 +650,130 @@
 </thead>
 <tbody>
 <tr>
+<td style="text-align: right;"><code>angsd_fasta_arg</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>genotyping_angsd</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>angsd_glformat</code></td>
+<td><code>4</code></td>
+<td>—</td>
+<td><code>genotyping_angsd</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>angsd_glmodel</code></td>
+<td><code>1</code></td>
+<td>—</td>
+<td><code>genotyping_angsd</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>angsd_majorminor_arg</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>genotyping_angsd</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>anno_file</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>bedtools_coverage</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>anno_file_is_unsorted_neg</code></td>
+<td><code>-sorted</code></td>
+<td>—</td>
+<td><code>bedtools_coverage</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>bam_input</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>convert_bam</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>bam_mapping_quality_threshold</code></td>
+<td><code>0</code></td>
+<td>—</td>
+<td><code>samtools_filter_bowtie2</code>, <code>samtools_filter_bwaaln</code>, <code>samtools_filter_bwamem</code>, <code>samtools_filter_circularmapper</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>bam_unmapped_type</code></td>
+<td><code>discard</code></td>
+<td>—</td>
+<td><code>kraken</code>, <code>kraken_merge</code>, <code>kraken_parse</code>, <code>malt</code>, <code>metagenomic_complexity_filter</code>, <code>samtools_filter_bowtie2</code>, <code>samtools_filter_bwaaln</code>, <code>samtools_filter_bwamem</code>, <code>samtools_filter_circularmapper</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>bamutils_clip_double_stranded_none_udg_left</code></td>
+<td><code>1</code></td>
+<td>—</td>
+<td><code>bam_trim</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>bamutils_clip_double_stranded_none_udg_right</code></td>
+<td><code>1</code></td>
+<td>—</td>
+<td><code>bam_trim</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>bamutils_softclip_arg</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>bam_trim</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>bcftools_stats_source</code></td>
+<td><code>haplotypecaller</code></td>
+<td>—</td>
+<td><code>bcftools_stats</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>bt2_preset</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>bowtie2</code></td>
+</tr>
+<tr>
 <td style="text-align: right;"><code>bwaalnk</code></td>
 <td><code>2</code></td>
 <td>—</td>
-<td><code>bwa_aln</code></td>
+<td><code>bwa_aln</code>, <code>circularmapper</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>bwaalnl</code></td>
 <td><code>1024</code></td>
 <td>—</td>
-<td><code>bwa_aln</code></td>
+<td><code>bwa_aln</code>, <code>circularmapper</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>bwaalnn</code></td>
 <td><code>0.01</code></td>
 <td>—</td>
-<td><code>bwa_aln</code></td>
+<td><code>bwa_aln</code>, <code>circularmapper</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>bwaalno</code></td>
 <td><code>2</code></td>
 <td>—</td>
 <td><code>bwa_aln</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>circularextension</code></td>
+<td><code>100</code></td>
+<td>—</td>
+<td><code>circulargenerator</code>, <code>circularmapper</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>circularfilter_arg</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>circularmapper</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>circulartarget</code></td>
+<td><code>chrMT</code></td>
+<td>—</td>
+<td><code>circulargenerator</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>clip_forward_adaptor</code></td>
@@ -747,7 +821,7 @@
 <td style="text-align: right;"><code>damage_calculation_tool</code></td>
 <td><code>damageprofiler</code></td>
 <td>damage estimation</td>
-<td><code>damageprofiler</code></td>
+<td><code>damageprofiler</code>, <code>mapdamage_calculation</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>damageprofiler_length</code></td>
@@ -783,7 +857,73 @@
 <td style="text-align: right;"><code>fasta</code></td>
 <td><code>test/fixtures/reference/genome.fa</code></td>
 <td>input / library metadata (directory-input mode defaults)</td>
-<td><code>make_bwa_index</code>, <code>make_fasta_index</code>, <code>make_seq_dict</code></td>
+<td><code>make_bwa_index</code>, <code>make_fasta_index</code>, <code>make_seq_dict</code>, <code>unzip_reference</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>freebayes_C</code></td>
+<td><code>2</code></td>
+<td>—</td>
+<td><code>genotyping_freebayes</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>freebayes_g_arg</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>genotyping_freebayes</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>freebayes_p</code></td>
+<td><code>1</code></td>
+<td>—</td>
+<td><code>genotyping_freebayes</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>gatk_call_conf</code></td>
+<td><code>30</code></td>
+<td>—</td>
+<td><code>genotyping_hc</code>, <code>genotyping_ug</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>gatk_downsample</code></td>
+<td><code>250</code></td>
+<td>—</td>
+<td><code>genotyping_ug</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>gatk_hc_emitrefconf</code></td>
+<td><code>NONE</code></td>
+<td>—</td>
+<td><code>genotyping_hc</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>gatk_hc_out_mode</code></td>
+<td><code>EMIT_VARIANTS_ONLY</code></td>
+<td>—</td>
+<td><code>genotyping_hc</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>gatk_ploidy</code></td>
+<td><code>2</code></td>
+<td>—</td>
+<td><code>genotyping_hc</code>, <code>genotyping_ug</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>gatk_ug_defaultbasequalities_arg</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>genotyping_ug</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>gatk_ug_genotype_model</code></td>
+<td><code>SNP</code></td>
+<td>—</td>
+<td><code>genotyping_ug</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>gatk_ug_out_mode</code></td>
+<td><code>EMIT_VARIANTS_ONLY</code></td>
+<td>—</td>
+<td><code>genotyping_ug</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>genotyping_source</code></td>
@@ -795,13 +935,37 @@
 <td style="text-align: right;"><code>genotyping_tool</code></td>
 <td>``</td>
 <td>—</td>
-<td><code>eigenstrat_snp_coverage</code>, <code>genotyping_pileupcaller</code></td>
+<td><code>eigenstrat_snp_coverage</code>, <code>genotyping_angsd</code>, <code>genotyping_freebayes</code>, <code>genotyping_hc</code>, <code>genotyping_pileupcaller</code>, <code>genotyping_ug</code>, <code>multivcfanalyzer</code>, <code>picard_addorreplacereadgroups</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>hostremoval_input_fastq</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>hostremoval_input_fastq</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>hostremoval_mode</code></td>
+<td><code>mapped</code></td>
+<td>—</td>
+<td><code>hostremoval_input_fastq</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>input_bam</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>convert_bam</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>kraken2_db</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>kraken</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>lane</code></td>
 <td><code>0</code></td>
 <td>—</td>
-<td><code>adapter_removal</code>, <code>bwa_aln</code>, <code>fastp</code>, <code>fastqc_after_clipping</code></td>
+<td><code>adapter_removal</code>, <code>bwa_aln</code>, <code>fastp</code>, <code>fastqc_after_clipping</code>, <code>post_ar_fastq_trimming</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>large_ref</code></td>
@@ -810,10 +974,148 @@
 <td>—</td>
 </tr>
 <tr>
+<td style="text-align: right;"><code>malt_alignment_mode</code></td>
+<td><code>SemiGlobal</code></td>
+<td>—</td>
+<td><code>malt</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>malt_db</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>malt</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>malt_max_queries</code></td>
+<td><code>100</code></td>
+<td>—</td>
+<td><code>malt</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>malt_memory_mode</code></td>
+<td><code>load</code></td>
+<td>—</td>
+<td><code>malt</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>malt_min_support_mode</code></td>
+<td><code>percent</code></td>
+<td>—</td>
+<td><code>malt</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>malt_min_support_percent</code></td>
+<td><code>0.01</code></td>
+<td>—</td>
+<td><code>malt</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>malt_mode</code></td>
+<td><code>BlastN</code></td>
+<td>—</td>
+<td><code>malt</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>malt_sam_output</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>malt</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>malt_top_percent</code></td>
+<td><code>1</code></td>
+<td>—</td>
+<td><code>malt</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>maltextract_destackingoff</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>maltextract</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>maltextract_downsamplingoff</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>maltextract</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>maltextract_duplicateremovaloff</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>maltextract</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>maltextract_filter</code></td>
+<td><code>def_anc</code></td>
+<td>—</td>
+<td><code>maltextract</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>maltextract_matches</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>maltextract</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>maltextract_megansummary</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>maltextract</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>maltextract_ncbifiles</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>maltextract</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>maltextract_percentidentity</code></td>
+<td><code>85.0</code></td>
+<td>—</td>
+<td><code>maltextract</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>maltextract_taxon_list</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>maltextract</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>maltextract_topalignment</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>maltextract</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>maltextract_toppercent</code></td>
+<td><code>0.01</code></td>
+<td>—</td>
+<td><code>maltextract</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>mapdamage_downsample_arg</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>mapdamage_calculation</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>mapdamage_singlestranded_arg</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>mapdamage_calculation</code>, <code>mapdamage_rescaling</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>mapdamage_yaxis</code></td>
+<td><code>0.25</code></td>
+<td>—</td>
+<td><code>mapdamage_calculation</code></td>
+</tr>
+<tr>
 <td style="text-align: right;"><code>mapper</code></td>
 <td><code>bwaaln</code></td>
 <td>mapping</td>
-<td><code>bwa_aln</code></td>
+<td><code>bowtie2</code>, <code>bwa_aln</code>, <code>bwamem</code>, <code>circulargenerator</code>, <code>circularmapper</code>, <code>make_bt2_index</code>, <code>samtools_filter_bowtie2</code>, <code>samtools_filter_bwaaln</code>, <code>samtools_filter_bwamem</code>, <code>samtools_filter_circularmapper</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>mergedonly</code></td>
@@ -822,16 +1124,88 @@
 <td>—</td>
 </tr>
 <tr>
+<td style="text-align: right;"><code>metagenomic_complexity_entropy</code></td>
+<td><code>0.3</code></td>
+<td>—</td>
+<td><code>metagenomic_complexity_filter</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>metagenomic_complexity_filter</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>kraken</code>, <code>malt</code>, <code>metagenomic_complexity_filter</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>metagenomic_min_support_reads</code></td>
+<td><code>1</code></td>
+<td>—</td>
+<td><code>kraken_parse</code>, <code>malt</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>metagenomic_tool</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>kraken</code>, <code>kraken_merge</code>, <code>kraken_parse</code>, <code>malt</code>, <code>maltextract</code></td>
+</tr>
+<tr>
 <td style="text-align: right;"><code>min_adap_overlap</code></td>
 <td><code>1</code></td>
 <td>—</td>
 <td><code>adapter_removal</code></td>
 </tr>
 <tr>
+<td style="text-align: right;"><code>min_allele_freq_het</code></td>
+<td><code>0.2</code></td>
+<td>—</td>
+<td><code>multivcfanalyzer</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>min_allele_freq_hom</code></td>
+<td><code>0.8</code></td>
+<td>—</td>
+<td><code>multivcfanalyzer</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>min_base_coverage</code></td>
+<td><code>0</code></td>
+<td>—</td>
+<td><code>multivcfanalyzer</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>min_genotype_quality</code></td>
+<td><code>0</code></td>
+<td>—</td>
+<td><code>multivcfanalyzer</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>mtnucratio_header</code></td>
+<td><code>MT</code></td>
+<td>—</td>
+<td><code>mtnucratio</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>multivcf_samples</code></td>
+<td><code>'S1', 'S2'</code></td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>nuclear_contamination_header</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>nuclear_contamination</code></td>
+</tr>
+<tr>
 <td style="text-align: right;"><code>out_dir</code></td>
 <td><code>results</code></td>
 <td>—</td>
 <td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>percent_identity</code></td>
+<td><code>85</code></td>
+<td>—</td>
+<td><code>malt</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>pileupcaller_bedfile</code></td>
@@ -866,6 +1240,72 @@
 <tr>
 <td style="text-align: right;"><code>pileupcaller_transitions_mode</code></td>
 <td><code>AllSites</code></td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>pmdtools_mask_bed</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>mask_reference_for_pmdtools</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>pmdtools_max_reads</code></td>
+<td><code>1000000</code></td>
+<td>—</td>
+<td><code>pmdtools</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>pmdtools_platypus_arg</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>pmdtools</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>pmdtools_range</code></td>
+<td><code>10</code></td>
+<td>—</td>
+<td><code>pmdtools</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>pmdtools_reference_mask</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>mask_reference_for_pmdtools</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>pmdtools_threshold</code></td>
+<td><code>3</code></td>
+<td>—</td>
+<td><code>pmdtools</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>pmdtools_treatment_arg</code></td>
+<td><code>--UDGminus</code></td>
+<td>—</td>
+<td><code>pmdtools</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>post_ar_trim_front</code></td>
+<td><code>0</code></td>
+<td>—</td>
+<td><code>post_ar_fastq_trimming</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>post_ar_trim_front2</code></td>
+<td><code>0</code></td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>post_ar_trim_tail</code></td>
+<td><code>0</code></td>
+<td>—</td>
+<td><code>post_ar_fastq_trimming</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>post_ar_trim_tail2</code></td>
+<td><code>0</code></td>
 <td>—</td>
 <td>—</td>
 </tr>
@@ -918,10 +1358,130 @@
 <td><code>adapter_removal</code></td>
 </tr>
 <tr>
+<td style="text-align: right;"><code>reference_gff_annotations</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>multivcfanalyzer</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>reference_gff_exclude</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>multivcfanalyzer</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>rescale_length_3p_arg</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>mapdamage_rescaling</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>rescale_length_5p_arg</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>mapdamage_rescaling</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>rescale_seqlength</code></td>
+<td><code>12</code></td>
+<td>—</td>
+<td><code>mapdamage_rescaling</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>run_bam_filtering</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>kraken</code>, <code>kraken_merge</code>, <code>kraken_parse</code>, <code>malt</code>, <code>metagenomic_complexity_filter</code>, <code>samtools_filter_bowtie2</code>, <code>samtools_filter_bwaaln</code>, <code>samtools_filter_bwamem</code>, <code>samtools_filter_circularmapper</code>, <code>samtools_flagstat_after_filter</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>run_bcftools_stats</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>bcftools_stats</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>run_bedtools_coverage</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>bedtools_coverage</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>run_endor_spy</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>endor_spy</code></td>
+</tr>
+<tr>
 <td style="text-align: right;"><code>run_genotyping</code></td>
 <td><code>false</code></td>
 <td>genotyping (pileupCaller branch)</td>
-<td><code>eigenstrat_snp_coverage</code>, <code>genotyping_pileupcaller</code></td>
+<td><code>eigenstrat_snp_coverage</code>, <code>genotyping_angsd</code>, <code>genotyping_freebayes</code>, <code>genotyping_hc</code>, <code>genotyping_pileupcaller</code>, <code>genotyping_ug</code>, <code>multivcfanalyzer</code>, <code>picard_addorreplacereadgroups</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>run_maltextract</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>maltextract</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>run_mapdamage_rescaling</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>mapdamage_rescaling</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>run_metagenomic_screening</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>kraken</code>, <code>kraken_merge</code>, <code>kraken_parse</code>, <code>malt</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>run_mtnucratio</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>mtnucratio</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>run_multivcfanalyzer</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>multivcfanalyzer</code>, <code>picard_addorreplacereadgroups</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>run_nuclear_contamination</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>nuclear_contamination</code>, <code>print_nuclear_contamination</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>run_pmdtools</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>mask_reference_for_pmdtools</code>, <code>pmdtools</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>run_post_ar_trimming</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>post_ar_fastq_trimming</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>run_sexdeterrmine</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>sexdeterrmine</code>, <code>sexdeterrmine_prep</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>run_trim_bam</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>bam_trim</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>run_vcf2genome</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>vcf2genome</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>save_reference</code></td>
@@ -936,10 +1496,28 @@
 <td><code>bwa_aln</code></td>
 </tr>
 <tr>
+<td style="text-align: right;"><code>sexdeterrmine_prep_s</code></td>
+<td><code>1000000</code></td>
+<td>—</td>
+<td><code>sexdeterrmine_prep</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>sexdeterrmine_s</code></td>
+<td><code>1000000</code></td>
+<td>—</td>
+<td><code>sexdeterrmine</code></td>
+</tr>
+<tr>
 <td style="text-align: right;"><code>single_end</code></td>
 <td><code>false</code></td>
 <td>—</td>
 <td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>single_stranded</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>maltextract</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_adapterremoval</code></td>
@@ -957,7 +1535,7 @@
 <td style="text-align: right;"><code>skip_damage_calculation</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>damageprofiler</code></td>
+<td><code>damageprofiler</code>, <code>mapdamage_calculation</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_deduplication</code></td>
@@ -990,10 +1568,46 @@
 <td>—</td>
 </tr>
 <tr>
+<td style="text-align: right;"><code>snp_eff_results</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>multivcfanalyzer</code></td>
+</tr>
+<tr>
 <td style="text-align: right;"><code>udg_type</code></td>
 <td><code>none</code></td>
 <td>—</td>
 <td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>unzip_reference</code></td>
+<td><code>false</code></td>
+<td>see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</td>
+<td><code>unzip_reference</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>vcf2genome_minc</code></td>
+<td><code>5</code></td>
+<td>—</td>
+<td><code>vcf2genome</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>vcf2genome_minfreq</code></td>
+<td><code>0.5</code></td>
+<td>—</td>
+<td><code>vcf2genome</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>vcf2genome_minq</code></td>
+<td><code>30</code></td>
+<td>—</td>
+<td><code>vcf2genome</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>write_allele_frequencies_arg</code></td>
+<td><code>F</code></td>
+<td>—</td>
+<td><code>multivcfanalyzer</code></td>
 </tr>
 </tbody>
 </table>
@@ -1011,7 +1625,10 @@
 <li>make_seq_dict</li>
 <li>make_bwa_index</li>
 <li>fastqc</li>
+<li>fastqc_lanemerged</li>
 <li>fastp</li>
+<li>lanemerge</li>
+<li>lanemerge_r2</li>
 <li>adapter_removal</li>
 <li>fastqc_after_clipping</li>
 <li>bwa_aln</li>
@@ -1024,35 +1641,50 @@
 <li>genotyping_pileupcaller</li>
 <li>eigenstrat_snp_coverage</li>
 <li>multiqc</li>
+<li>unzip_reference</li>
+<li>bwamem</li>
+<li>make_bt2_index</li>
+<li>bowtie2</li>
+<li>circulargenerator</li>
+<li>circularmapper</li>
+<li>convert_bam</li>
+<li>hostremoval_input_fastq</li>
+<li>samtools_filter</li>
+<li>samtools_flagstat_after_filter</li>
+<li>endor_spy</li>
+<li>bedtools_coverage</li>
+<li>post_ar_fastq_trimming</li>
+<li>bam_trim</li>
+<li>picard_addorreplacereadgroups</li>
+<li>genotyping_ug</li>
+<li>genotyping_hc</li>
+<li>genotyping_freebayes</li>
+<li>genotyping_angsd</li>
+<li>bcftools_stats</li>
+<li>vcf2genome</li>
+<li>multivcfanalyzer</li>
+<li>sexdeterrmine_prep</li>
+<li>sexdeterrmine</li>
+<li>mtnucratio</li>
+<li>nuclear_contamination</li>
+<li>print_nuclear_contamination</li>
+<li>mapdamage_calculation</li>
+<li>mapdamage_rescaling</li>
+<li>mask_reference_for_pmdtools</li>
+<li>pmdtools</li>
+<li>metagenomic_complexity_filter</li>
+<li>kraken</li>
+<li>kraken_parse</li>
+<li>kraken_merge</li>
+<li>malt</li>
+<li>maltextract</li>
 </ul>
 <p><strong>Excluded</strong></p>
 <ul>
-<li>unzip_reference: conditional .gz-fasta decompression process (main.nf line 187) — the port requires a plain FASTA (a .gz reference is silently unsupported)</li>
-<li>bwamem / bowtie2: non-default mappers (params.mapper) — default path uses bwa aln</li>
-<li>makeBT2Index: bowtie2 mapper's conditional index process (main.nf line 523) — unreachable with the default bwaaln mapper</li>
-<li>circulargenerator / circularmapper: circular mapping branch (params.circularfilter, off by default)</li>
-<li>convertBam / indexinputbam: BAM-input mode preprocessing (params.bam, off by default)</li>
-<li>hostremoval_input_fastq: host removal branch (params.hostremoval_input_fastq, off by default)</li>
-<li>samtools_filter / samtools_flagstat_after_filter: BAM filtering branch (params.run_bam_filtering, off by default)</li>
-<li>picard_addorreplacereadgroups: read-group replacement branch (off by default)</li>
-<li>bedtools: coverage branch (params.run_bedtools_coverage, off by default)</li>
-<li>mapdamage_calculation / mapdamage_rescaling / mask_reference_for_pmdtools / pmdtools: mapDamage and pmdtools branches (damage_calculation_tool='damageprofiler' default; run_mapdamage_rescaling / run_pmdtools off by default)</li>
-<li>bam_trim: trimbam branch (params.run_trim_bam, off by default)</li>
-<li>post_ar_fastq_trimming: post-AdapterRemoval trimming branch (params.run_post_ar_trimming, off by default)</li>
-<li>lanemerge / lanemerge_hostremoval_fastq: multi-lane merging — unreachable in the single-lane default path</li>
-<li>library_merge / additional_library_merge: multi-library merging — unreachable in the single-library default path</li>
-<li>seqtype_merge: PE/SE mixed-input merge (main.nf line 1597) — unreachable in the pure-PE port</li>
-<li>genotyping_ug / genotyping_hc / genotyping_freebayes: non-pileupcaller genotyping tools (genotyping_tool default null; genotyping off by default)</li>
-<li>genotyping_angsd: ANGSD genotyping branch (genotyping_tool='angsd')</li>
-<li>bcftools_stats: only consumes UG/HC/FB outputs, which are not ported</li>
-<li>malt / maltextract / metagenomic_complexity_filter / kraken / kraken_parse / kraken_merge / decomp_kraken: metagenomic screening branch (params.run_metagenomic_screening, off by default; decomp_kraken is the conditional .tar.gz DB unpacker)</li>
-<li>sexdeterrmine / sexdeterrmine_prep: sex determination branch (params.run_sexdeterrmine, off by default)</li>
-<li>mtnucratio: mitochondrial-to-nuclear ratio branch (params.run_mtnucratio, off by default)</li>
-<li>endorSpy: endogenous-content branch (params.run_endorSpy, off by default)</li>
-<li>nuclear_contamination / print_nuclear_contamination: nuclear contamination branch (params.run_nuclear_contamination, off by default; nuclear_contamination is the angsd estimation process, print_nuclear_contamination the report-only consumer)</li>
-<li>multivcfanalyzer: branch gated by params.run_multivcfanalyzer (off by default)</li>
-<li>vcf2genome: consensus-sequence branch (params.run_vcf2genome, off by default)</li>
-<li>output_documentation / get_software_versions: nf-core boilerplate processes</li>
+<li>library_merge / additional_library_merge: structural — upstream merges the per-LIBRARY BAMs of a sample (samtools merge of the per-library dedup / bam_trim BAMs, main.nf 1967 / 2320). The port's directory-input model has ONE library per sample (library = sample, lane = 0) and one BAM per sample at every stage, so there are no multi-library BAMs to merge; declaring each library as its own sample (or pre-merging) remains the workaround. lanemerge-style input_groups cannot express this either: it groups FILES of a pattern, and the port has no per-library file dimension</li>
+<li>seqtype_merge: structural — upstream merges the per-seqtype mapped BAMs of mixed PE/SE libraries into one BAM per library (samtools merge, main.nf 1597); the port is pure-PE (directory input, sample = text before _R1/_R2) with one mapped BAM per sample, so there are no mixed-PE/SE BAMs to merge. Convert SE samples to PE or run SE-only samples separately</li>
+<li>output_documentation: nf-core boilerplate docs process (markdown_to_html.py of static run docs); upstream runs it unconditionally, so porting it would change the default plan for zero analytical value</li>
+<li>get_software_versions: nf-core boilerplate versions process (scrapes $workflow/$nextflow native variables into a versions.yml, which has no oxo-flow equivalent)</li>
 </ul>
 <h2 id="fidelity">Fidelity</h2>
 <p>Every upstream process of nf-core/eager 2.5.3 (63 total: 56 top-level
@@ -1061,7 +1693,20 @@ processes plus 7 conditional/indented ones — <code>makeBWAIndex</code>,
 <code>nuclear_contamination</code>, <code>decomp_kraken</code>) is listed below.
 The 17 processes on the default-parameters main path (directory input,
 paired-end, <code>mapper=bwaaln</code>, <code>dedupper=markduplicates</code>) are ported
-byte-faithfully; everything else is <code>not ported</code> with a reason.</p>
+byte-faithfully. The non-default branches are ported as <code>rules/branches.oxoflow</code>
+(each gated on its upstream param, off by default) — including the full
+metagenomic screening chain (bbduk complexity filter, kraken, kraken_parse,
+kraken_merge, malt, maltextract; note the old "needs the upstream's bundled
+MALT install (no conda package)" exclusion reason was wrong — the upstream
+<code>environment.yml</code> pins <code>bioconda::malt=0.61</code> and <code>bioconda::hops=0.35</code>, so
+MALT and MaltExtract ship inside the pinned <code>nfcore/eager:2.5.3</code> container).
+The multi-lane raw-level merges (<code>lanemerge</code>, <code>lanemerge_hostremoval_fastq</code>)
+are ported as a gated mode (<code>run_lanemerge</code>, off by default) built on the
+<code>input_groups</code> engine primitive (Traitome/oxo-flow#231, oxo-flow &gt;= 0.16.0) —
+see the rows below. The remaining <code>not ported</code> rows are the BAM-level
+library/seqtype channel merges (the port's model has one library per sample),
+the unported BAM pass-through mode (<code>indexinputbam</code>), or nf-core boilerplate
+(<code>output_documentation</code>, <code>get_software_versions</code>).</p>
 <table>
 <thead>
 <tr>
@@ -1074,9 +1719,9 @@ byte-faithfully; everything else is <code>not ported</code> with a reason.</p>
 <tbody>
 <tr>
 <td>unzip_reference</td>
-<td>—</td>
+<td><code>unzip_reference</code></td>
 <td>pigz 2.6</td>
-<td>not ported — upstream's conditional process (main.nf line 187) decompresses a <code>.gz</code> reference FASTA with <code>pigz -d</code> before indexing. <strong>A <code>.gz</code>-compressed FASTA is therefore NOT supported: pass a plain FASTA</strong> (the port's index rules would run samtools/bwa on the gzipped file and fail)</td>
+<td><code>gunzip -c</code> into the canonical reference path; <code>when = config.unzip_reference</code> (default false — pass a plain FASTA as before)</td>
 </tr>
 <tr>
 <td>makeFastaIndex</td>
@@ -1128,51 +1773,51 @@ byte-faithfully; everything else is <code>not ported</code> with a reason.</p>
 </tr>
 <tr>
 <td>bwamem</td>
-<td>—</td>
-<td>bwa 0.7.17</td>
-<td>not ported — non-default mapper (<code>--mapper bwamem</code>)</td>
+<td><code>bwamem</code></td>
+<td>bwa 0.7.17, samtools 1.12</td>
+<td><code>bwa mem -t N</code> + sort + index with the eager @RG string; <code>when = config.mapper == 'bwamem'</code></td>
 </tr>
 <tr>
 <td>bowtie2</td>
-<td>—</td>
-<td>bowtie2 2.4.4</td>
-<td>not ported — non-default mapper (<code>--mapper bowtie2</code>)</td>
+<td><code>bowtie2</code></td>
+<td>bowtie2 2.4.4, samtools 1.12</td>
+<td><code>bowtie2 -x reference -1/-2</code> + sort + index; <code>when = config.mapper == 'bowtie2'</code></td>
 </tr>
 <tr>
 <td>makeBT2Index</td>
-<td>—</td>
+<td><code>make_bt2_index</code></td>
 <td>bowtie2 2.4.4</td>
-<td>not ported — bowtie2 mapper's conditional index process (main.nf line 523), only reachable with <code>--mapper bowtie2</code></td>
+<td><code>bowtie2-build</code> into <code>results/reference_genome/bt2_index/</code>; <code>when = config.mapper == 'bowtie2'</code></td>
 </tr>
 <tr>
 <td>circulargenerator</td>
-<td>—</td>
-<td>circularmapper 1.93.5</td>
-<td>not ported — circular-mapping branch (gated by <code>params.circularfilter</code>)</td>
+<td><code>circulargenerator</code></td>
+<td>circularmapper 1.93.5, bwa</td>
+<td><code>circulargenerator -e -i -s</code> + <code>bwa index</code> on the elongated fasta; <code>when = config.mapper == 'circularmapper'</code></td>
 </tr>
 <tr>
 <td>circularmapper</td>
-<td>—</td>
-<td>circularmapper 1.93.5</td>
-<td>not ported — circular-mapping branch (gated by <code>params.circularfilter</code>)</td>
+<td><code>circularmapper</code></td>
+<td>bwa + circularmapper 1.93.5</td>
+<td><code>bwa aln</code> on the elongated reference + <code>realignsamfile</code> + sort/index; <code>when = config.mapper == 'circularmapper'</code></td>
 </tr>
 <tr>
 <td>convertBam</td>
-<td>—</td>
-<td>samtools 1.12</td>
-<td>not ported — BAM-input mode (<code>--bam</code>) preprocessing</td>
+<td><code>convert_bam</code></td>
+<td>samtools 1.12, pigz</td>
+<td><code>samtools bam2fq | pigz</code>; <code>when = config.bam_input</code> (default false — the fixture is FASTQ)</td>
 </tr>
 <tr>
 <td>indexinputbam</td>
 <td>—</td>
 <td>samtools 1.12</td>
-<td>not ported — BAM-input mode</td>
+<td>not ported — indexes the input BAM for upstream's BAM pass-through mode (<code>bam != 'NA' &amp;&amp; !run_convertinputbam</code>, main.nf 657); the port's BAM-input mode routes through <code>convert_bam</code> (bam2fq) instead and nothing downstream consumes the input BAM directly, so no index is needed</td>
 </tr>
 <tr>
 <td>hostremoval_input_fastq</td>
-<td>—</td>
-<td>—</td>
-<td>not ported — host-removal branch (gated by <code>params.hostremoval_input_fastq</code>)</td>
+<td><code>hostremoval_input_fastq</code></td>
+<td>extract_map_reads.py (bundled)</td>
+<td>PE branch verbatim (<code>-m</code>, <code>-of</code>/<code>-or</code>, <code>-t</code>); <code>when = config.hostremoval_input_fastq</code></td>
 </tr>
 <tr>
 <td>samtools_flagstat</td>
@@ -1182,21 +1827,21 @@ byte-faithfully; everything else is <code>not ported</code> with a reason.</p>
 </tr>
 <tr>
 <td>samtools_filter</td>
-<td>—</td>
-<td>samtools 1.12</td>
-<td>not ported — BAM filtering branch (gated by <code>params.run_bam_filtering</code>)</td>
+<td><code>samtools_filter_{bwaaln,bwamem,bowtie2,circularmapper}</code></td>
+<td>samtools 1.12, pigz 2.6</td>
+<td>Four per-mapper rules sharing ONE output set; each is gated <code>when = config.run_bam_filtering &amp;&amp; config.mapper == '&lt;mapper&gt;'</code> (mutually exclusive, so the released engine needs no any-mode semantics) and takes its mapper's mapped BAM as <code>BAM="{input[0]}"</code> (<code>results/mapping/bwa/{sample}_PE.mapped.bam</code> / <code>results/mapping/bwa/{sample}.mapped.bam</code> / <code>results/mapping/bt2/{sample}.mapped.bam</code> / <code>results/mapping/circularmapper/{sample}.mapped.bam</code>). The shared body carries the minreadlength-0 branches selected by <code>bam_unmapped_type</code>: <code>discard</code> (<code>-F4 -q &lt;thr&gt;</code>, default) and <code>fastq</code> (upstream <code>-f4</code> / <code>-F4 -q</code> + <code>samtools fastq -tN \| pigz -p &lt;cpus-1&gt;</code> + <code>rm</code>, the metagenomic-chain producer), both verbatim. The discard branch additionally writes an EMPTY <code>{sample}.unmapped.fastq.gz</code> placeholder — the engine requires every declared output to exist, and it is never consumed (the metagenomic rules are gated on <code>bam_unmapped_type == 'fastq'</code>). The <code>keep</code>/<code>bam</code>/<code>both</code> branches fail fast with a clear error; bwaaln variant live-verified on tx-ubuntu 2026-08-27 (run_bam_filtering=true, 15 succeeded / 0 failed)</td>
 </tr>
 <tr>
 <td>samtools_flagstat_after_filter</td>
-<td>—</td>
+<td><code>samtools_flagstat_after_filter</code></td>
 <td>samtools 1.12</td>
-<td>not ported — downstream of samtools_filter</td>
+<td><code>samtools flagstat</code> on the filtered BAM; <code>when = config.run_bam_filtering</code></td>
 </tr>
 <tr>
 <td>picard_addorreplacereadgroups</td>
-<td>—</td>
-<td>picard 2.26.0</td>
-<td>not ported — read-group replacement branch (off by default)</td>
+<td><code>picard_addorreplacereadgroups</code></td>
+<td>picard 2.26.0, samtools</td>
+<td>verbatim RG replacement for MultiVCFAnalyzer; <code>when = run_genotyping &amp;&amp; genotyping_tool == 'ug' &amp;&amp; run_multivcfanalyzer</code></td>
 </tr>
 <tr>
 <td>markduplicates</td>
@@ -1218,9 +1863,9 @@ byte-faithfully; everything else is <code>not ported</code> with a reason.</p>
 </tr>
 <tr>
 <td>bedtools</td>
-<td>—</td>
-<td>bedtools 2.30.0</td>
-<td>not ported — coverage branch (gated by <code>params.run_bedtools_coverage</code>)</td>
+<td><code>bedtools_coverage</code></td>
+<td>bedtools 2.30.0, pigz</td>
+<td>verbatim genome.txt + <code>bedtools coverage</code> breadth/depth; <code>when = config.run_bedtools_coverage</code></td>
 </tr>
 <tr>
 <td>damageprofiler</td>
@@ -1230,69 +1875,69 @@ byte-faithfully; everything else is <code>not ported</code> with a reason.</p>
 </tr>
 <tr>
 <td>mapdamage_calculation</td>
-<td>—</td>
+<td><code>mapdamage_calculation</code></td>
 <td>mapdamage2 2.2.1</td>
-<td>not ported — <code>damage_calculation_tool='mapdamage'</code> alternative</td>
+<td>verbatim <code>mapDamage -i -r --ymax --no-stats</code>; <code>when = !skip_damage_calculation &amp;&amp; damage_calculation_tool == 'mapdamage'</code></td>
 </tr>
 <tr>
 <td>mapdamage_rescaling</td>
-<td>—</td>
-<td>mapdamage2 2.2.1</td>
-<td>not ported — rescaling branch (gated by <code>params.run_mapdamage_rescaling</code>)</td>
+<td><code>mapdamage_rescaling</code></td>
+<td>mapdamage2 2.2.1, samtools</td>
+<td>verbatim <code>--rescale --rescale-out --seq-length</code> + index; <code>when = config.run_mapdamage_rescaling</code></td>
 </tr>
 <tr>
 <td>mask_reference_for_pmdtools</td>
-<td>—</td>
+<td><code>mask_reference_for_pmdtools</code></td>
 <td>bedtools 2.30.0</td>
-<td>not ported — pmdtools branch (gated by <code>params.run_pmdtools</code>)</td>
+<td><code>bedtools maskfasta</code>; <code>when = pmdtools_reference_mask &amp;&amp; run_pmdtools</code></td>
 </tr>
 <tr>
 <td>pmdtools</td>
-<td>—</td>
-<td>pmdtools 0.60</td>
-<td>not ported — pmdtools branch (gated by <code>params.run_pmdtools</code>)</td>
+<td><code>pmdtools</code></td>
+<td>pmdtools 0.60, samtools</td>
+<td>verbatim calmd</td>
 </tr>
 <tr>
 <td>bam_trim</td>
-<td>—</td>
-<td>bamutil 1.0.15</td>
-<td>not ported — trimbam branch (gated by <code>params.run_trim_bam</code>)</td>
+<td><code>bam_trim</code></td>
+<td>bamutil 1.0.15, samtools</td>
+<td><code>bam trimBam -L -R</code> (double-stranded none-UDG clip values) + sort/index; <code>when = config.run_trim_bam</code></td>
 </tr>
 <tr>
 <td>post_ar_fastq_trimming</td>
-<td>—</td>
+<td><code>post_ar_fastq_trimming</code></td>
 <td>fastp 0.20.1</td>
-<td>not ported — post-AR trimming branch (gated by <code>params.run_post_ar_trimming</code>)</td>
+<td>PE branch verbatim (<code>--trim_front1/2 --trim_tail1/2</code>); <code>when = config.run_post_ar_trimming</code></td>
 </tr>
 <tr>
 <td>lanemerge</td>
-<td>—</td>
-<td>—</td>
-<td>not ported — multi-lane merging; unreachable in the single-lane default path</td>
+<td><code>lanemerge</code> + <code>lanemerge_r2</code></td>
+<td>cat (pigz 2.6)</td>
+<td>ported as a gated mode (<code>run_lanemerge=true</code>, off by default): the two rules group each sample's lane-tagged pairs (<code>{sample}_L{lane}_R{1,2}.fastq.gz</code>) via <code>input_groups</code> (group_by = sample, keep = lane; Traitome/oxo-flow#231, oxo-flow &gt;= 0.16.0) and <code>cat</code> the pair into one merged fastq (<code>results/lanemerging/{sample}_R{1,2}_lanemerged.fq.gz</code>) consumed by fastp / adapter_removal / hostremoval_input_fastq. Deviations: upstream merges the per-library collapsed fastqs AFTER AdapterRemoval (main.nf 1125) and only merges R2 when <code>single_end=false</code>; the port merges the raw per-lane pairs pre-clipping (the raw-level <code>lanemerge_hostremoval_fastq</code> semantics) and always merges R2 (the port is pure-PE). Samples without lane-tagged files are untouched; with the gate off (or on a released engine without <code>input_groups</code>) the default single-pair path is byte-identical, and a fail-fast <code>{input}</code> guard prevents silently empty merges. Merged-content E2E passed locally 2026-08-27 (byte-identical to the single-pair inputs); full container run queued for tx-ubuntu</td>
 </tr>
 <tr>
 <td>lanemerge_hostremoval_fastq</td>
-<td>—</td>
-<td>—</td>
-<td>not ported — multi-lane + host removal combination</td>
+<td><code>hostremoval_input_fastq</code> (shell switch)</td>
+<td>extract_map_reads.py (bundled)</td>
+<td>ported as part of the gated mode: when <code>run_lanemerge=true</code> the rule feeds the merged pair from <code>results/lanemerging/</code> instead of the raw one — upstream's raw-level merge-into-hostremoval semantics (main.nf 1197). Without lane-tagged files the raw pair is used, exactly as before</td>
 </tr>
 <tr>
 <td>library_merge</td>
 <td>—</td>
-<td>—</td>
-<td>not ported — multi-library merging; unreachable in the single-library default path</td>
+<td>samtools 1.12</td>
+<td>not ported — structural: upstream merges the per-LIBRARY dedup BAMs of a sample (<code>samtools merge</code>, main.nf 1967); the port's directory-input model has ONE library per sample (library = sample, lane = 0) and one BAM per sample at every stage, so there are no multi-library BAMs to merge. <code>input_groups</code> cannot express it either — it groups FILES of a pattern, and the port has no per-library file dimension. Declare each library as its own sample (or pre-merge) before running</td>
 </tr>
 <tr>
 <td>additional_library_merge</td>
 <td>—</td>
-<td>—</td>
-<td>not ported — multi-library merging</td>
+<td>samtools 1.12</td>
+<td>not ported — structural: same constraint as <code>library_merge</code> (merges the per-library bam_trim BAMs, main.nf 2320); the port has one BAM per sample per stage</td>
 </tr>
 <tr>
 <td>seqtype_merge</td>
 <td>—</td>
 <td>samtools 1.12</td>
-<td>not ported — PE/SE mixed-input merge (main.nf line 1597); unreachable in the pure-PE port</td>
+<td>not ported — structural: upstream merges the per-seqtype mapped BAMs of mixed PE/SE libraries into one BAM per library (<code>samtools merge</code>, main.nf 1597); the port is pure-PE (sample = text before <code>_R1</code>/<code>_R2</code>) with one mapped BAM per sample, so there are no mixed-PE/SE BAMs to merge. Convert SE samples to PE or run SE-only samples separately</td>
 </tr>
 <tr>
 <td>qualimap</td>
@@ -1308,33 +1953,33 @@ byte-faithfully; everything else is <code>not ported</code> with a reason.</p>
 </tr>
 <tr>
 <td>genotyping_ug</td>
-<td>—</td>
-<td>gatk 3.5</td>
-<td>not ported — UnifiedGenotyper branch (<code>genotyping_tool='unifiedgenotyper'</code>)</td>
+<td><code>genotyping_ug</code></td>
+<td>gatk3 3.5, bgzip</td>
+<td>verbatim RealignerTargetCreator → IndelRealigner → UnifiedGenotyper → bgzip; <code>when = run_genotyping &amp;&amp; genotyping_tool == 'ug'</code></td>
 </tr>
 <tr>
 <td>genotyping_hc</td>
-<td>—</td>
-<td>gatk4 4.2.0.0</td>
-<td>not ported — HaplotypeCaller branch (<code>genotyping_tool='haplotypecaller'</code>)</td>
+<td><code>genotyping_hc</code></td>
+<td>gatk4 4.2.0.0, bgzip</td>
+<td>verbatim HaplotypeCaller flags + bgzip; <code>when = run_genotyping &amp;&amp; genotyping_tool == 'hc'</code></td>
 </tr>
 <tr>
 <td>genotyping_freebayes</td>
-<td>—</td>
-<td>freebayes 1.3.5</td>
-<td>not ported — FreeBayes branch (<code>genotyping_tool='freebayes'</code>)</td>
+<td><code>genotyping_freebayes</code></td>
+<td>freebayes 1.3.5, bgzip</td>
+<td>verbatim <code>freebayes -f -p -C [-g]</code> + bgzip; <code>when = run_genotyping &amp;&amp; genotyping_tool == 'freebayes'</code></td>
 </tr>
 <tr>
 <td>genotyping_angsd</td>
-<td>—</td>
+<td><code>genotyping_angsd</code></td>
 <td>angsd 0.935</td>
-<td>not ported — ANGSD branch (<code>genotyping_tool='angsd'</code>)</td>
+<td>verbatim bam.filelist + <code>angsd -GL -doGlF</code>; <code>when = run_genotyping &amp;&amp; genotyping_tool == 'angsd'</code></td>
 </tr>
 <tr>
 <td>bcftools_stats</td>
-<td>—</td>
+<td><code>bcftools_stats</code></td>
 <td>bcftools 1.12</td>
-<td>not ported — only consumes UG/HC/FB outputs, which are not ported</td>
+<td><code>bcftools stats &lt;vcf.gz&gt; -F &lt;fasta&gt;</code>; <code>when = config.run_bcftools_stats</code> (source VCF via <code>bcftools_stats_source</code>)</td>
 </tr>
 <tr>
 <td>eigenstrat_snp_coverage</td>
@@ -1343,94 +1988,94 @@ byte-faithfully; everything else is <code>not ported</code> with a reason.</p>
 <td>Off by default, same as upstream. Verbatim: <code>eigenstrat_snp_coverage -i pileupcaller.double &gt;double_eigenstrat_coverage.txt</code> + <code>parse_snp_cov.py</code> (bundled upstream script, called via <code>python3 scripts/parse_snp_cov.py</code> — oxo-flow does not auto-add <code>bin/</code> to PATH)</td>
 </tr>
 <tr>
+<td>metagenomic_complexity_filter</td>
+<td><code>metagenomic_complexity_filter</code></td>
+<td>bbduk 38.92</td>
+<td>verbatim <code>bbduk.sh -Xmx&lt;g&gt;g in=... threads=N entropymask=f entropy=&lt;entropy&gt; out=&lt;in&gt;_lowcomplexityremoved.fq.gz 2&gt; &lt;in&gt;_bbduk.stats</code> — the output keeps upstream's <code>${input}_lowcomplexityremoved.fq.gz</code> naming; <code>when = metagenomic_complexity_filter &amp;&amp; run_bam_filtering &amp;&amp; bam_unmapped_type == 'fastq'</code> (upstream validates the same combination at workflow start, main.nf 115-122)</td>
+</tr>
+<tr>
 <td>malt</td>
-<td>—</td>
+<td><code>malt</code></td>
 <td>malt 0.61</td>
-<td>not ported — metagenomic screening branch (gated by <code>params.run_metagenomic_screening</code>)</td>
+<td>verbatim <code>malt-run -J-Xmx&lt;g&gt;g -t N -v -o . -d &lt;db&gt; [-a . -f SAM] -id -m -at -top &lt;min-supp&gt; -mq --memoryMode -i &lt;all fastqs&gt;</code> — one instance over ALL samples' unmapped reads (upstream <code>collect()</code>); reads the entropy-filtered fastqs when the complexity filter is on (upstream channel switch); <code>--database</code> is split into <code>malt_db</code> + <code>kraken2_db</code>; the percent/reads min-support exclusivity check (main.nf 129-134) is a shell guard; the per-input <code>.rma6</code> outputs are undeclared (no fixed template) — only <code>malt.log</code> is declared; NOT yet live-verified; <code>when = run_metagenomic_screening &amp;&amp; run_bam_filtering &amp;&amp; bam_unmapped_type == 'fastq' &amp;&amp; metagenomic_tool == 'malt'</code></td>
 </tr>
 <tr>
 <td>maltextract</td>
-<td>—</td>
-<td>malt 0.61</td>
-<td>not ported — metagenomic screening branch</td>
-</tr>
-<tr>
-<td>metagenomic_complexity_filter</td>
-<td>—</td>
-<td>fastp 0.20.1</td>
-<td>not ported — metagenomic screening branch</td>
+<td><code>maltextract</code></td>
+<td>hops 0.35</td>
+<td>verbatim <code>MaltExtract -Xmx&lt;g&gt;g -t &lt;taxon_list&gt; -i &lt;rma6s&gt; -o results/ -r &lt;ncbifiles&gt; -p N -f -a --minPI &lt;flags&gt;</code> + <code>postprocessing.AMPS.r -r results/ -m -t N -n &lt;taxon_list&gt; -j</code>; requires <code>maltextract_taxon_list</code> + <code>maltextract_ncbifiles</code> (fail-fast guard); consumes the rma6s via glob with a DAG edge through <code>malt.log</code>; NOT yet live-verified; <code>when = run_maltextract &amp;&amp; metagenomic_tool == 'malt'</code> (upstream verbatim)</td>
 </tr>
 <tr>
 <td>kraken</td>
-<td>—</td>
+<td><code>kraken</code></td>
 <td>kraken2 2.1.2</td>
-<td>not ported — metagenomic screening branch</td>
+<td>verbatim <code>kraken2 --db &lt;db&gt; --threads N --output &lt;prefix&gt;.kraken.out --report-minimizer-data --report &lt;prefix&gt;.kraken2_report &lt;fastq&gt;</code> + <code>cut -f1-3,6-8 &gt; &lt;prefix&gt;.kreport</code>; reads the entropy-filtered fastq when the complexity filter is on (upstream channel switch); the output prefix is normalized to <code>{sample}.unmapped.fastq</code> in both branches (upstream prefixes by the input basename — see deviations); live-verified on tx-ubuntu 2026-08-27 (synthetic 2-taxon kraken2 DB built in-container via <code>kraken2-build --add-to-library</code> with <code>kraken:taxid|</code> headers; 14/14 injected alien reads classified as <em>Alienus syntheticus</em>, 18 succeeded / 0 failed); <code>when = run_metagenomic_screening &amp;&amp; run_bam_filtering &amp;&amp; bam_unmapped_type == 'fastq' &amp;&amp; metagenomic_tool == 'kraken'</code></td>
 </tr>
 <tr>
 <td>kraken_parse</td>
-<td>—</td>
-<td>kraken2 2.1.2</td>
-<td>not ported — metagenomic screening branch</td>
+<td><code>kraken_parse</code></td>
+<td>python 3.9.4</td>
+<td>verbatim <code>kraken_parse.py -c &lt;min_support_reads&gt; -or &lt;read csv&gt; -ok &lt;kmer csv&gt; &lt;kreport&gt;</code> (upstream script bundled in <code>scripts/</code>, called via <code>python3 scripts/kraken_parse.py</code> — oxo-flow does not auto-add <code>bin/</code> to PATH); gated on the same <code>when</code> as kraken (upstream no-ops the process via an empty channel); live-verified on tx-ubuntu 2026-08-27 (same run as kraken)</td>
 </tr>
 <tr>
 <td>kraken_merge</td>
-<td>—</td>
-<td>kraken2 2.1.2</td>
-<td>not ported — metagenomic screening branch</td>
+<td><code>kraken_merge</code></td>
+<td>python 3.9.4</td>
+<td>verbatim <code>merge_kraken_res.py -or kraken_read_count.csv -ok kraken_kmer_duplication.csv</code> (upstream script bundled in <code>scripts/</code>; it scans the working dir for the per-sample CSVs, which the fan-in gathers into one instance); gated on the same <code>when</code> as kraken; live-verified on tx-ubuntu 2026-08-27 (same run as kraken)</td>
 </tr>
 <tr>
 <td>decomp_kraken</td>
-<td>—</td>
+<td><code>kraken</code> (folded in)</td>
 <td>kraken2 2.1.2</td>
-<td>not ported — conditional process (main.nf line 3080) that unpacks a <code>.tar.gz</code> kraken DB; only reachable with <code>--run_metagenomic_screening --metagenomic_tool kraken</code> on a <code>.tar.gz</code> database</td>
+<td>folded into the kraken shell: a <code>.tar.gz</code> <code>kraken2_db</code> is unpacked in place (<code>tar xzf</code>, <code>mkdir -p &lt;db&gt;</code>, <code>mv *.k2d &lt;db&gt;/</code>) — no when-expression can test a filename suffix (deviation, documented below)</td>
 </tr>
 <tr>
 <td>sexdeterrmine</td>
-<td>—</td>
+<td><code>sexdeterrmine</code></td>
 <td>sexdeterrmine 1.1.2</td>
-<td>not ported — sex determination branch (gated by <code>params.run_sexdeterrmine</code>)</td>
+<td>verbatim sexdeterrmine.py run; <code>when = config.run_sexdeterrmine</code></td>
 </tr>
 <tr>
 <td>sexdeterrmine_prep</td>
-<td>—</td>
-<td>—</td>
-<td>not ported — sex determination branch</td>
+<td><code>sexdeterrmine_prep</code></td>
+<td>sexdeterrmine 1.1.2</td>
+<td>verbatim sexdeterrmine_prep.py; <code>when = config.run_sexdeterrmine</code></td>
 </tr>
 <tr>
 <td>mtnucratio</td>
-<td>—</td>
-<td>samtools 1.12, sequencetools 1.5.2</td>
-<td>not ported — mitochondrial-to-nuclear ratio branch (gated by <code>params.run_mtnucratio</code>, main.nf line 2812)</td>
+<td><code>mtnucratio</code></td>
+<td>sequencetools 1.5.2</td>
+<td>verbatim <code>mtnucratio -Xmx</code>; <code>when = config.run_mtnucratio</code></td>
 </tr>
 <tr>
 <td>nuclear_contamination</td>
-<td>—</td>
-<td>angsd 0.935</td>
-<td>not ported — nuclear contamination estimation branch (gated by <code>params.run_nuclear_contamination</code>, main.nf line 2881; consumes a BAM, unlike the report-only <code>print_nuclear_contamination</code> below)</td>
+<td><code>nuclear_contamination</code></td>
+<td>angsd 0.935 (contaminationX)</td>
+<td>verbatim contaminationX invocation; <code>when = config.run_nuclear_contamination</code></td>
 </tr>
 <tr>
 <td>endorSpy</td>
-<td>—</td>
+<td><code>endor_spy</code></td>
 <td>endorSpy</td>
-<td>not ported — endogenous-content branch (gated by <code>params.run_endorSpy</code>)</td>
+<td><code>endorS.py -o json -n &lt;sample&gt; &lt;flagstat&gt;</code>; <code>when = config.run_endor_spy</code> (upstream runs it unconditionally; the port gates it to keep the default path unchanged)</td>
 </tr>
 <tr>
 <td>print_nuclear_contamination</td>
-<td>—</td>
-<td>python 3.9.4</td>
-<td>not ported — nuclear contamination report branch (gated by <code>params.run_nuclear_contamination</code>)</td>
+<td><code>print_nuclear_contamination</code></td>
+<td>grep</td>
+<td>report row extraction; <code>when = config.run_nuclear_contamination</code></td>
 </tr>
 <tr>
 <td>multivcfanalyzer</td>
-<td>—</td>
-<td>multivcfanalyzer 0.85.2</td>
-<td>not ported — branch (gated by <code>params.run_multivcfanalyzer</code>)</td>
+<td><code>multivcfanalyzer</code></td>
+<td>multivcfanalyzer 0.85.2, pigz</td>
+<td>verbatim cohort run over all UG VCFs (expand_inputs over <code>multivcf_samples</code>); <code>when = run_genotyping &amp;&amp; genotyping_tool == 'ug' &amp;&amp; run_multivcfanalyzer</code></td>
 </tr>
 <tr>
 <td>vcf2genome</td>
-<td>—</td>
-<td>vcf2genome 0.91</td>
-<td>not ported — consensus-sequence branch (gated by <code>params.run_vcf2genome</code>)</td>
+<td><code>vcf2genome</code></td>
+<td>vcf2genome 0.91, pigz</td>
+<td>verbatim consensus call incl. refMod/uncertainty fastas; <code>when = config.run_vcf2genome</code></td>
 </tr>
 <tr>
 <td>multiqc</td>
@@ -1442,13 +2087,13 @@ byte-faithfully; everything else is <code>not ported</code> with a reason.</p>
 <td>output_documentation</td>
 <td>—</td>
 <td>—</td>
-<td>not ported — nf-core boilerplate docs process</td>
+<td>not ported — nf-core boilerplate docs process (markdown_to_html.py of static run docs); upstream runs it unconditionally, so porting it would change the default plan for zero analytical value</td>
 </tr>
 <tr>
 <td>get_software_versions</td>
 <td>—</td>
 <td>—</td>
-<td>not ported — nf-core boilerplate versions process</td>
+<td>not ported — nf-core boilerplate versions process (scrapes <code>$workflow</code>/<code>$nextflow</code> native variables into a versions.yml; a versions.yml has no oxo-flow equivalent, and <code>scrape_software_versions.py</code> targets Nextflow env vars)</td>
 </tr>
 </tbody>
 </table>
@@ -1467,6 +2112,59 @@ byte-faithfully; everything else is <code>not ported</code> with a reason.</p>
   used by the undefined <code>mc_tiny</code> label (eigenstrat_snp_coverage).
   JVM heaps are byte-identical (<code>-Xmx8192M</code>, <code>-Xmx4096M</code>, <code>-Xmx4g</code>,
   <code>--java-mem-size=4G</code>).</li>
+<li>Gated-mode deviations (<code>run_lanemerge=true</code>, off by default):</li>
+<li>upstream runs <code>lanemerge</code> on the per-library collapsed fastqs AFTER
+    AdapterRemoval (main.nf 1125, a small post-collapse cat of the <code>.pe</code>
+    pair); the port merges the raw per-lane pairs BEFORE clipping (the
+    <code>lanemerge_hostremoval_fastq</code> raw-level semantics, main.nf 1197) so
+    that clipping, mapping, dedup, damage and QC all run on the merged
+    pair exactly once. The lane-tagged naming (<code>{sample}_L{lane}_R{1,2}</code>)
+    is upstream's TSV input-mode style; upstream detects multi-lane from
+    the sample sheet, the port gates on <code>run_lanemerge</code> (auto-detection
+    from filenames is impossible for a when-expression). Only R1 was
+    upstream's documented lanemerge concern; the port merges R2 as well
+    (pure-PE, both ends must exist).</li>
+<li><code>fastqc</code> runs on the merged pair in gated mode (twin rule
+    <code>fastqc_lanemerged</code> with an exclusive when-gate); upstream runs
+    FastQC on the per-lane input fastqs.</li>
+<li>samples with lane-tagged files mixed with default-named files in one
+    directory: lane-tagged samples flow through the merged path, the
+    others through the default path (shell existence-check switch in
+    fastp / adapter_removal / hostremoval_input_fastq).</li>
+<li>local E2E 2026-08-27 (dev engine, no container): merged pairs
+    byte-identical to the single-pair inputs (S1: 3635 reads, S2: 3602
+    reads, R1/R2 counts equal). Full container run queued for tx-ubuntu
+    (docker daemon unavailable on the authoring machine).</li>
+<li>Metagenomic-chain deviations (<code>rules/branches.oxoflow</code> B32-B37, all off by
+  default):</li>
+<li>upstream's run-level validation (main.nf 115-137) becomes rule gates +
+    fail-fast shell guards (oxo-flow has no params-validation stage).</li>
+<li><code>kraken_parse</code>/<code>kraken_merge</code> carry the same <code>when</code> as <code>kraken</code>
+    (upstream no-ops them via empty channels).</li>
+<li><code>decomp_kraken</code> (<code>.tar.gz</code> kraken2 DB unpack) is folded into the
+    <code>kraken</code> shell — no when-expression can test a filename suffix.</li>
+<li>the kraken output prefix is normalized to <code>{sample}.unmapped.fastq</code>
+    in both filter branches (upstream prefixes by the input basename,
+    which differs when the complexity filter is on).</li>
+<li>MALT <code>.rma6</code> outputs are undeclared (per-input names, no fixed
+    template; <code>.sai</code> precedent); only <code>malt.log</code> is declared and
+    <code>maltextract</code> consumes the rma6s via glob with a DAG edge through
+    <code>malt.log</code>.</li>
+<li>upstream's single <code>--database</code> param is split into <code>malt_db</code> and
+    <code>kraken2_db</code>.</li>
+<li>each <code>samtools_filter_&lt;mapper&gt;</code> variant writes an empty <code>{sample}.unmapped.fastq.gz</code>
+    placeholder in discard mode (engine output-existence contract; never
+    consumed — the metagenomic rules are gated on <code>bam_unmapped_type == 'fastq'</code>).</li>
+<li>the kraken metagenomic chain (kraken/kraken_parse/kraken_merge) is
+    live-verified on tx-ubuntu 2026-08-27 with a synthetic 2-taxon
+    kraken2 DB (build recipe: <code>kraken2-build --add-to-library</code> with
+    <code>kraken:taxid|N|</code> sequence headers — a manual <code>seqid2taxid.map</code>
+    alone builds an EMPTY table, and the map must be sorted);
+    <code>bam_unmapped_type=fastq</code> + <code>run_bam_filtering</code> + 
+    <code>run_metagenomic_screening</code> + <code>metagenomic_tool=kraken</code>, 18
+    succeeded / 0 failed. The MALT half (malt/maltextract) remains NOT
+    live-verified (needs a MALT index DB, not yet available on the test
+    server).</li>
 <li>A <code>.gz</code>-compressed reference FASTA is not supported (upstream's
   <code>unzip_reference</code> pigz pre-step is not ported): pass a plain FASTA.</li>
 <li>Upstream's startup parameter validation (e.g. the pileupCaller
@@ -1481,14 +2179,18 @@ byte-faithfully; everything else is <code>not ported</code> with a reason.</p>
 <li>The conditional <code>preserve5p</code>/<code>mergedonly</code> AR branches (both off by
   default) are not ported; their config keys are kept with upstream
   defaults.</li>
-<li><code>run_pmdtools</code>, <code>run_bam_filtering</code>, <code>run_trim_bam</code>,
-  <code>run_post_ar_trimming</code>, <code>run_mapdamage_rescaling</code>, <code>run_bedtools_coverage</code>,
-  <code>run_vcf2genome</code>, <code>run_multivcfanalyzer</code>, <code>run_sexdeterrmine</code>,
-  <code>run_mtnucratio</code>, <code>run_nuclear_contamination</code>, <code>run_endorSpy</code>,
-  <code>run_metagenomic_screening</code>, <code>run_convertinputbam</code>, <code>run_hostremoval</code> and
-  the non-default mapper/dedupper/damage-tool/genotyping-tool choices are
-  all listed above as <code>not ported</code> branches; default values are kept in
-  <code>[config]</code> where a config key exists.</li>
+<li><code>run_pmdtools</code>, <code>run_trim_bam</code>, <code>run_post_ar_trimming</code>,
+  <code>run_mapdamage_rescaling</code>, <code>run_bedtools_coverage</code>, <code>run_vcf2genome</code>,
+  <code>run_multivcfanalyzer</code>, <code>run_sexdeterrmine</code>, <code>run_mtnucratio</code>,
+  <code>run_nuclear_contamination</code>, <code>run_endorSpy</code>, <code>run_convertinputbam</code>,
+  <code>run_hostremoval</code> and the non-default mapper/dedupper/damage-tool/
+  genotyping-tool choices are all ported as the gated branch rules above
+  (the port's keys are <code>run_endor_spy</code>, <code>bam_input</code> and
+  <code>hostremoval_input_fastq</code> where the upstream names <code>run_endorSpy</code>,
+  <code>run_convertinputbam</code> and <code>hostremoval_input_fastq</code> differ);
+  <code>run_bam_filtering</code> (incl. the metagenomic screening chain under
+  <code>run_metagenomic_screening</code> with <code>metagenomic_tool</code> = <code>kraken</code>/<code>malt</code>) IS
+  ported. Default values are kept in <code>[config]</code> where a config key exists.</li>
 </ul>
 <h2 id="links">Links</h2>
 <ul>
@@ -1532,7 +2234,7 @@ byte-faithfully; everything else is <code>not ported</code> with a reason.</p>
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      © 2026 oxo-flow-community · Apache-2.0 · Ports are based on their upstream workflows — see each repository's NOTICE.
+      © 2026 <a href="https://github.com/oxo-flow-community">oxo-flow-community</a> · Apache-2.0 · engine <a href="https://github.com/Traitome/oxo-flow">oxo-flow</a> · <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues">issues</a> · evidence: ✔ live-tested ⊃ ★ verified ⊃ ☆ community · ports are based on their upstream workflows — see each repository's NOTICE
     </div>
   
   

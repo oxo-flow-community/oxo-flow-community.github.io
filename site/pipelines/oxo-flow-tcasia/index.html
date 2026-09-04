@@ -23,7 +23,7 @@
     
     
       
-        <title>Paired-end RNA-seq alignment and four-caller alternative-splicing analysis - oxo-flow-community</title>
+        <title>Oxo flow tcasia - oxo-flow-community</title>
       
     
     
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Paired-end RNA-seq alignment and four-caller alternative-splicing analysis
+              Oxo flow tcasia
             
           </span>
         </div>
@@ -584,66 +584,36 @@
   
 
 
+<div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-tcasia</span></div>
+<div class="ox-detail-cols">
+<div>
 <h1 id="paired-end-rna-seq-alignment-and-four-caller-alternative-splicing-analysis">Paired-end RNA-seq alignment and four-caller alternative-splicing analysis</h1>
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · full-line</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
-
 <p>Paired-end RNA-seq from FASTQ to per-sample alternative-splicing calls: reads are trimmed with fastp, aligned with two-pass STAR and counted per gene with featureCounts; each sample's splicing is then quantified independently with four callers — rMATS, MAJIQ (with Voila export), SUPPA2 (via Salmon transcript quantification) and SplAdder. The alignment and AS-calling stages are one chained DAG (run one stage with -t alignment / -t as_calling).</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: right;"></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: right;"><strong>Rating</strong></td>
-<td>✔ Live-tested</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Origin</strong></td>
-<td>port</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Domain</strong></td>
-<td>transcriptomics</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Rules</strong></td>
-<td>17</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Compute</strong></td>
-<td>up to 10 threads per rule (STAR / rMATS)</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Tools</strong></td>
-<td>fastp · star · samtools · subread · salmon · suppa · rmats · majiq · voila · spladder · perl</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Ported</strong></td>
-<td>2026-08-15</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>License</strong></td>
-<td>Apache-2.0</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Source</strong></td>
-<td><a href="https://github.com/OncoHarmony-Network/TCASIA_pipeline">OncoHarmony-Network/TCASIA_pipeline</a></td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Pinned version</strong></td>
-<td><code>main@06564ff1</code></td>
-</tr>
-</tbody>
-</table>
+</div>
+<div>
+<div class="ox-glance">
+<div class="ox-glance-title">At a glance</div>
+<div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested · full-line</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">17</span></div>
+<div class="ox-kv"><span class="k">Compute</span><span class="v">up to 10 threads per rule (STAR / rMATS)</span></div>
+<div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Domain</span><span class="v">transcriptomics</span></div>
+<div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/OncoHarmony-Network/TCASIA_pipeline">OncoHarmony-Network/TCASIA_pipeline</a></span></div>
+<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>main@06564ff1</code></span></div>
+<div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
+<div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
+<p class="cmd">$ oxo-flow run main.oxoflow</p>
+</div>
+</div>
+</div>
 <h2 id="run-it">Run it</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>oxo-flow<span class="w"> </span>run<span class="w"> </span>main.oxoflow
 </code></pre></div>
 <p>Needs raw FASTQs and reference data — see Requirements.</p>
 <h2 id="installation">Installation</h2>
-<p><strong>Engine.</strong> oxo-flow &gt;= 0.12.0</p>
+<p><strong>Engine.</strong> oxo-flow &gt;= 0.14.0</p>
 <p><strong>Toolchain.</strong> conda envs — pinned versions (fastp 0.23.4, STAR 2.7.7a, samtools 1.13/1.15, subread 2.0.1, salmon 1.10.3, suppa 2.3, rMATS 4.3.0, MAJIQ 2.5, SplAdder 3.1.1; conda-forge + bioconda)</p>
 <p><strong>Requirements.</strong>
 - reference data (GRCh38 + GENCODE v34): STAR index (STAR 2.7.7a), annotation GTF + GFF3, Salmon transcript index, SUPPA2 events file, MAJIQ academic license
@@ -677,19 +647,19 @@
 <tbody>
 <tr>
 <td style="text-align: right;"><code>align_out_dir</code></td>
-<td><code>/path/to/output/alignment</code></td>
+<td><code>results/alignment</code></td>
 <td>01_alignment (upstream config.yml)</td>
 <td><code>alignment::fastp_qc</code>, <code>alignment::featurecounts</code>, <code>alignment::index_bam</code>, <code>alignment::sort_bam</code>, <code>alignment::star_align</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>aligned_dir</code></td>
-<td><code>/path/to/output/alignment/aligned</code></td>
+<td><code>results/alignment/aligned</code></td>
 <td>upstream: 01 output_dir/aligned == 02 bam_dir</td>
 <td><code>alignment::featurecounts</code>, <code>alignment::index_bam</code>, <code>alignment::sort_bam</code>, <code>alignment::star_align</code>, <code>as_calling::majiq_create_ini</code>, <code>as_calling::rmats_create_input</code>, <code>as_calling::spladder_run</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>as_out_dir</code></td>
-<td><code>/path/to/output/as_calling</code></td>
+<td><code>results/as_calling</code></td>
 <td>02_as_calling (upstream config.yml)</td>
 <td><code>as_calling::format_suppa_fields</code>, <code>as_calling::majiq_build</code>, <code>as_calling::majiq_create_ini</code>, <code>as_calling::majiq_psi</code>, <code>as_calling::rmats_create_input</code>, <code>as_calling::rmats_run</code>, <code>as_calling::salmon_quant</code>, <code>as_calling::select_suppa_fields</code>, <code>as_calling::spladder_run</code>, <code>as_calling::suppa_run</code>, <code>as_calling::voila_modulize</code>, <code>as_calling::voila_tsv</code></td>
 </tr>
@@ -719,8 +689,8 @@
 </tr>
 <tr>
 <td style="text-align: right;"><code>gff</code></td>
-<td><code>/path/to/references/gencode.v34.annotation.gff3</code></td>
-<td>upstream: GFF</td>
+<td><code>test/fixtures/reference/genes.gff3</code></td>
+<td>upstream: GFF (tiny synthetic)</td>
 <td><code>as_calling::majiq_build</code></td>
 </tr>
 <tr>
@@ -731,8 +701,8 @@
 </tr>
 <tr>
 <td style="text-align: right;"><code>majiq_license</code></td>
-<td><code>/path/to/majiq_license_academic_official.lic</code></td>
-<td>—</td>
+<td><code>test/fixtures/reference/majiq_license.lic</code></td>
+<td>MAJIQ requires the upstream academic license file — place it at test/fixtures/reference/majiq_license.lic (obtain from MAJIQ) and set run_majiq = true. Upstream fails hard without the license; the port gates the whole MAJIQ chain on this flag instead (documented in the README fidelity table).</td>
 <td><code>as_calling::majiq_build</code>, <code>as_calling::majiq_psi</code>, <code>as_calling::voila_modulize</code>, <code>as_calling::voila_tsv</code></td>
 </tr>
 <tr>
@@ -761,8 +731,8 @@
 </tr>
 <tr>
 <td style="text-align: right;"><code>ref</code></td>
-<td><code>/path/to/references/gencode.v34.annotation.gtf</code></td>
-<td>featureCounts / rMATS / SplAdder annotation</td>
+<td><code>test/fixtures/reference/genes.gtf</code></td>
+<td>featureCounts / rMATS / SplAdder annotation (tiny synthetic; GRCh38 GTF for real runs)</td>
 <td><code>alignment::featurecounts</code>, <code>as_calling::rmats_run</code>, <code>as_calling::spladder_run</code></td>
 </tr>
 <tr>
@@ -778,9 +748,15 @@
 <td><code>as_calling::rmats_run</code></td>
 </tr>
 <tr>
-<td style="text-align: right;"><code>salmon_index</code></td>
-<td><code>/path/to/references/gencode.v34.transcripts.salmon.index</code></td>
+<td style="text-align: right;"><code>run_majiq</code></td>
+<td><code>false</code></td>
 <td>—</td>
+<td><code>as_calling::majiq_build</code>, <code>as_calling::majiq_create_ini</code>, <code>as_calling::majiq_psi</code>, <code>as_calling::voila_modulize</code>, <code>as_calling::voila_tsv</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>salmon_index</code></td>
+<td><code>test/fixtures/reference/salmon_index</code></td>
+<td>salmon_index is auto-built below from the shipped transcripts.fa</td>
 <td><code>as_calling::salmon_quant</code></td>
 </tr>
 <tr>
@@ -809,14 +785,14 @@
 </tr>
 <tr>
 <td style="text-align: right;"><code>star_index_dir</code></td>
-<td><code>/path/to/references/STAR_index</code></td>
-<td>GRCh38 STAR index built with STAR 2.7.7a + GENCODE v34</td>
+<td><code>test/fixtures/reference/STAR_index</code></td>
+<td>star_index_dir is auto-built below from test/fixtures/reference (tiny synthetic genome) — point it at a real GRCh38 STAR index for real runs.</td>
 <td><code>alignment::star_align</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>star_limit_bam_sort_ram</code></td>
-<td><code>39050942993</code></td>
-<td>—</td>
+<td><code>0</code></td>
+<td>0 = auto: the machine-effective memory (clamped declared value)</td>
 <td><code>alignment::star_align</code></td>
 </tr>
 <tr>
@@ -833,8 +809,8 @@
 </tr>
 <tr>
 <td style="text-align: right;"><code>suppa2_events</code></td>
-<td><code>/path/to/references/gencode.v34.events.ioe</code></td>
-<td>—</td>
+<td><code>test/fixtures/reference/events.ioe</code></td>
+<td>suppa2_events is auto-built below from the shipped GTF (SUPPA2 generateEvents)</td>
 <td><code>as_calling::suppa_run</code></td>
 </tr>
 <tr>
@@ -899,13 +875,13 @@
 <td>star_align</td>
 <td><code>alignment::star_align</code></td>
 <td>STAR 2.7.7a</td>
-<td>identical command; <code>params.prefix</code> inlined</td>
+<td>identical command; <code>params.prefix</code> inlined; <code>--limitBAMsortRAM</code> differs — upstream hardcodes 39050942993 (~36 G), the port defaults <code>star_limit_bam_sort_ram = 0</code> → machine-effective memory</td>
 </tr>
 <tr>
 <td>sort_bam</td>
 <td><code>alignment::sort_bam</code></td>
 <td>samtools 1.15</td>
-<td>identical command</td>
+<td>same sort; <code>-@ {effective_threads}</code> + <code>-m 512M</code> cap added (upstream <code>-@ 8</code> with sort's default 768 MB/thread buffer over-allocated the live box)</td>
 </tr>
 <tr>
 <td>index_bam</td>
@@ -935,7 +911,7 @@
 <td>format_suppa_fields</td>
 <td><code>as_calling::format_suppa_fields</code></td>
 <td>suppa 2.3</td>
-<td>identical perl one-liner</td>
+<td>equivalent perl one-liner (anchored rewrite of the upstream regex; same output)</td>
 </tr>
 <tr>
 <td>suppa_run</td>
@@ -1005,6 +981,9 @@
 - <strong>Strandness-derived values are explicit config keys</strong>: upstream computes <code>salmon_library_type</code> (<code>fr-firststrand→ISR</code>, <code>fr-secondstrand→ISF</code>, <code>fr-unstranded→IU</code>) and <code>majiq_strandness</code> (<code>fr-firststrand→reverse</code>, <code>fr-secondstrand→forward</code>, <code>fr-unstranded→none</code>) in <code>tcasia_config.py</code>; rMATS uses the <code>strandness</code> value directly (as upstream). Change <code>strandness</code> <strong>and</strong> the two derived keys together.
 - <strong>Helper scripts not ported</strong>: <code>scripts/validate_config.py</code> and <code>scripts/read_length.sh</code> are user-facing helpers; oxo-flow validates config/inputs natively.
 - <strong>Threads only, no memory</strong>: upstream declares threads per tool and no memory; the port mirrors that exactly.
+- <strong>STAR BAM-sort RAM is machine-sized by default</strong>: upstream hardcodes <code>--limitBAMsortRAM 39050942993</code> (~36 GB); the port adds <code>star_limit_bam_sort_ram</code> (default <code>0</code> = auto) and sizes the limit from <code>{effective_memory_mb}</code>, so STAR adapts to small boxes; set it to a byte count to pin an exact value.
+- <strong>samtools sort buffer cap</strong>: <code>sort_bam</code> runs <code>samtools sort -@ {effective_threads} -m 512M</code> instead of upstream's plain <code>-@ 8</code> — sort's default 768 MB/thread buffer over-allocated the live box.
+- <strong>SUPPA2 field formatting regex</strong>: <code>format_suppa_fields</code> applies the same transformation as the upstream one-liner with an anchored regex (<code>s/^\|.*?\|\t//</code> instead of upstream's capture-and-delete); output is identical for the quant.sf-derived input shape.
 - <strong>MAJIQ is license-gated</strong>: upstream runs the 5-rule MAJIQ chain unconditionally and fails hard without the academic license file. The port gates the chain on <code>run_majiq</code> (default <code>false</code>): a fresh clone completes with rMATS + SUPPA2 + SplAdder; set <code>run_majiq = true</code> after placing the license at <code>majiq_license</code> (commands unchanged when enabled).
 - <strong>MAJIQ env fixes</strong>: upstream's own <code>pip majiq==2.5</code> installs from no index (PyPI/bioconda both lack majiq) — the port installs OncoHarmony-Network/majiq_academic@v2.5 (the TCASIA org's fork), with numpy=1.26 (the fork's Cython extensions break on numpy 2.x ABI) and setuptools=75.8.2 (voila's gunicorn imports pkg_resources, removed in setuptools 81+).</p>
 <h2 id="links">Links</h2>
@@ -1049,7 +1028,7 @@
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      © 2026 oxo-flow-community · Apache-2.0 · Ports are based on their upstream workflows — see each repository's NOTICE.
+      © 2026 <a href="https://github.com/oxo-flow-community">oxo-flow-community</a> · Apache-2.0 · engine <a href="https://github.com/Traitome/oxo-flow">oxo-flow</a> · <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues">issues</a> · evidence: ✔ live-tested ⊃ ★ verified ⊃ ☆ community · ports are based on their upstream workflows — see each repository's NOTICE
     </div>
   
   

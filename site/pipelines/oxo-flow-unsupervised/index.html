@@ -23,7 +23,7 @@
     
     
       
-        <title>Unsupervised analysis of omics matrices: PCA, UMAP, clustering and validation - oxo-flow-community</title>
+        <title>Oxo flow unsupervised - oxo-flow-community</title>
       
     
     
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Unsupervised analysis of omics matrices: PCA, UMAP, clustering and validation
+              Oxo flow unsupervised
             
           </span>
         </div>
@@ -601,60 +601,30 @@
   
 
 
+<div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-unsupervised</span></div>
+<div class="ox-detail-cols">
+<div>
 <h1 id="unsupervised-analysis-of-omics-matrices-pca-umap-clustering-and-validation">Unsupervised analysis of omics matrices: PCA, UMAP, clustering and validation</h1>
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
-
-<p>Unsupervised analysis of omics matrices: PCA, UMAP and densMAP embeddings (2D/3D), distance matrices, hierarchical clustering heatmaps, Leiden clustering across partition types and resolutions, clustree analysis, external and internal cluster validation with TOPSIS ranking, and static and interactive visualizations. A verified port of the default-parameter path of epigen/unsupervised_analysis v4.0.2 (Snakemake); all 52 rules and tool versions are pinned to the upstream release.</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: right;"></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: right;"><strong>Rating</strong></td>
-<td>✔ Live-tested</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Origin</strong></td>
-<td>port</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Domain</strong></td>
-<td>other</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Rules</strong></td>
-<td>52</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Compute</strong></td>
-<td>up to 2 CPUs / 32 GB per rule</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Tools</strong></td>
-<td>igraph · leidenalg · scikit-learn · python · pandas · scipy · numpy · pynndescent · numba · dask · scikit-image · umap-learn · matplotlib-base · bokeh · datashader · holoviews · colorcet · r-ggplot2 · r-patchwork · r-ggally · r-ggrepel · r-reshape2 · r-stringi · r-data.table · plotly · plotly_express · seaborn-base · bioconductor-complexheatmap · r-rcolorbrewer · r-fastcluster · r-magick · r-clustree · r-clustercrit · pymcdm</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Ported</strong></td>
-<td>2026-08-15</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>License</strong></td>
-<td>Apache-2.0</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Source</strong></td>
-<td><a href="https://github.com/epigen/unsupervised_analysis">epigen/unsupervised_analysis</a></td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Pinned version</strong></td>
-<td><code>v4.0.2</code></td>
-</tr>
-</tbody>
-</table>
+<p>Unsupervised analysis of omics matrices: PCA, UMAP and densMAP embeddings (2D/3D), distance matrices, hierarchical clustering heatmaps, Leiden clustering across partition types and resolutions, clustree analysis, external and internal cluster validation with TOPSIS ranking, static and interactive visualizations, per-feature dimred scatter plots (when-gated), and resolved-environment snapshots. A verified port of the default-parameter path of epigen/unsupervised_analysis v4.0.2 (Snakemake); all 61 rules and tool versions are pinned to the upstream release.</p>
+</div>
+<div>
+<div class="ox-glance">
+<div class="ox-glance-title">At a glance</div>
+<div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested · default-path</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">61</span></div>
+<div class="ox-kv"><span class="k">Compute</span><span class="v">up to 2 CPUs / 32 GB per rule</span></div>
+<div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Domain</span><span class="v">other</span></div>
+<div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/epigen/unsupervised_analysis">epigen/unsupervised_analysis</a></span></div>
+<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>v4.0.2</code></span></div>
+<div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
+<div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
+<p class="cmd">$ oxo-flow run main.oxoflow</p>
+</div>
+</div>
+</div>
 <h2 id="run-it">Run it</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>oxo-flow<span class="w"> </span>run<span class="w"> </span>main.oxoflow
 </code></pre></div>
@@ -894,6 +864,8 @@
 <li>distance_matrix_features_correlation</li>
 <li>distance_matrix_features_cosine</li>
 <li>prep_feature_plot</li>
+<li>plot_dimred_features_pca</li>
+<li>plot_dimred_features_umap</li>
 <li>leiden_RBConfigurationVertexPartition_0p5</li>
 <li>leiden_RBConfigurationVertexPartition_1</li>
 <li>leiden_RBConfigurationVertexPartition_1p5</li>
@@ -935,16 +907,20 @@
 <li>plot_indices_external</li>
 <li>plot_indices_internal</li>
 <li>annot_export</li>
+<li>env_export_umap_leiden</li>
+<li>env_export_clusterCrit</li>
+<li>env_export_clustree</li>
+<li>env_export_ComplexHeatmap</li>
+<li>env_export_ggplot</li>
+<li>env_export_plotly</li>
+<li>env_export_pymcdm</li>
 </ul>
 <p><strong>Excluded</strong></p>
 <ul>
-<li>env_export (7 rules) — runs <code>conda env export</code> inside the rule and requires a runtime conda installation; oxo-flow rules execute in one pinned environment, so the exported result would be the host environment, not the analysis environment. The exact pins are committed under envs/ instead.</li>
-<li>config_export — dumps the in-memory Snakemake config object via a run: block; the equivalent oxo-flow [config] is documented in main.oxoflow and this README.</li>
-<li>plot_dimred_features — upstream default config <code>features_to_plot: []</code> means the rule has no output on the default path (fan-out over a per-feature wildcard); skipped with the upstream default.</li>
-<li>report/ generation — Snakemake <code>report(...)</code> wrapper metadata (captions, categories, labels) has no oxo-flow counterpart; rule outputs are identical, only the report book is not produced.</li>
+<li>report/ generation — Snakemake <code>report(...)</code> wrapper metadata (captions, categories, labels) has no oxo-flow counterpart; all underlying rule outputs are produced, and <code>oxo-flow report</code> generates an execution report from the checkpoint (rule status/timings), not the Snakemake artifact-catalog book.</li>
 </ul>
 <h2 id="fidelity">Fidelity</h2>
-<p>Upstream rules and how each is ported (52 ported rules; every analysis step
+<p>Upstream rules and how each is ported (61 ported rules; every analysis step
 of the default-parameter path is executed, none are stubbed):</p>
 <table>
 <thead>
@@ -999,6 +975,11 @@ of the default-parameter path is executed, none are stubbed):</p>
 <td><code>aggregate_all_clustering_results</code></td>
 <td><code>aggregate_all_clustering_results</code></td>
 <td><code>run:</code> block ported to <code>scripts/aggregate_all_clustering.py</code></td>
+</tr>
+<tr>
+<td><code>plot_dimred_features</code></td>
+<td><code>plot_dimred_features_{pca,umap}</code> (2)</td>
+<td>method fan-out (upstream appends "features" content only for PCA and UMAP); gated on <code>config.plot_dimred_features</code> — see porting note 7</td>
 </tr>
 <tr>
 <td><code>plot_dimred_metadata</code></td>
@@ -1072,23 +1053,18 @@ of the default-parameter path is executed, none are stubbed):</p>
 </tr>
 <tr>
 <td><code>env_export</code> (7)</td>
-<td><strong>not ported</strong></td>
-<td>requires runtime <code>conda env export</code>; the pinned envs are committed under <code>envs/</code> instead (see README)</td>
+<td><code>env_export_{umap_leiden,clusterCrit,clustree,ComplexHeatmap,ggplot,plotly,pymcdm}</code> (7)</td>
+<td>resolved-env snapshot: oxo-flow runs each rule inside its pinned env via <code>conda run</code>, so <code>conda env export -p "$CONDA_PREFIX"</code> exports the ANALYSIS env (mamba fallback; mem 1000M like upstream)</td>
 </tr>
 <tr>
 <td><code>config_export</code></td>
 <td><strong>not ported</strong></td>
-<td>dumps the in-memory Snakemake config; <code>[config]</code> in <code>main.oxoflow</code> documents the same values</td>
-</tr>
-<tr>
-<td><code>plot_dimred_features</code></td>
-<td><strong>not ported</strong></td>
-<td>upstream default <code>features_to_plot: []</code> produces no output on the default path</td>
+<td>excluded — see the Excluded list above</td>
 </tr>
 <tr>
 <td><code>report/</code> generation</td>
 <td><strong>not ported</strong></td>
-<td>Snakemake report metadata has no oxo-flow counterpart</td>
+<td>excluded — see the Excluded list above</td>
 </tr>
 </tbody>
 </table>
@@ -1114,6 +1090,14 @@ of the default-parameter path is executed, none are stubbed):</p>
    interactive plots 8000M, internal validation 2x).</li>
 <li><strong>Environment</strong>: each rule pins the same conda environment as upstream
    (7 environments, copied verbatim from <code>workflow/envs/</code>).</li>
+<li><strong>Boolean gate instead of list gate</strong>: upstream runs <code>plot_dimred_features</code>
+   only when <code>len(features_to_plot) &gt; 0</code>; the oxo-flow <code>when</code> evaluator
+   compares scalar config values (booleans, numbers, strings), not arrays, so
+   the port carries the gate on <code>config.plot_dimred_features</code> (default
+   <code>false</code>, matching the upstream default of an empty <code>features_to_plot</code>).
+   Enable it together with a non-empty <code>features_to_plot</code> — the plotting
+   script then uses the requested features, or falls back to the first 10
+   columns when the requested features are absent.</li>
 </ol>
 <h2 id="links">Links</h2>
 <ul>
@@ -1157,7 +1141,7 @@ of the default-parameter path is executed, none are stubbed):</p>
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      © 2026 oxo-flow-community · Apache-2.0 · Ports are based on their upstream workflows — see each repository's NOTICE.
+      © 2026 <a href="https://github.com/oxo-flow-community">oxo-flow-community</a> · Apache-2.0 · engine <a href="https://github.com/Traitome/oxo-flow">oxo-flow</a> · <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues">issues</a> · evidence: ✔ live-tested ⊃ ★ verified ⊃ ☆ community · ports are based on their upstream workflows — see each repository's NOTICE
     </div>
   
   

@@ -23,7 +23,7 @@
     
     
       
-        <title>Viral assembly and intrahost variant calling for Illumina amplicon data - oxo-flow-community</title>
+        <title>Oxo flow viralrecon - oxo-flow-community</title>
       
     
     
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Viral assembly and intrahost variant calling for Illumina amplicon data
+              Oxo flow viralrecon
             
           </span>
         </div>
@@ -612,66 +612,36 @@
   
 
 
+<div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-viralrecon</span></div>
+<div class="ox-detail-cols">
+<div>
 <h1 id="viral-assembly-and-intrahost-variant-calling-for-illumina-amplicon-data">Viral assembly and intrahost variant calling for Illumina amplicon data</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
-
-<p>Turns paired-end Illumina amplicon reads into a complete viral genomics report: read QC and trimming (FastQC, fastp), host-sequence removal (Kraken2), alignment to a user-provided reference genome (Bowtie2), primer trimming, intrahost variant calling and annotation (iVar, snpEff/SnpSift), consensus building with low-coverage masking (bcftools), lineage assignment and deconvolution (Pangolin, Nextclade, Freyja), de novo assembly with QC (SPAdes, Bandage, BLAST, QUAST, ABACAS), and a single MultiQC report.</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: right;"></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: right;"><strong>Rating</strong></td>
-<td>✔ Live-tested</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Origin</strong></td>
-<td>port</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Domain</strong></td>
-<td>genomics</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Rules</strong></td>
-<td>51</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Compute</strong></td>
-<td>up to 12 CPUs / 72 GB per rule</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Tools</strong></td>
-<td>abacas · bandage · bcftools · bedtools · blast · bowtie2 · cutadapt · fastp · fastqc · freyja · htslib · ivar · kraken2 · mosdepth · multiqc · nextclade · pangolin · picard · pigz · python · quast · r · samtools · snpeff · snpsift · spades</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Ported</strong></td>
-<td>2026-08-15</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>License</strong></td>
-<td>Apache-2.0</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Source</strong></td>
-<td><a href="https://github.com/nf-core/viralrecon">nf-core/viralrecon</a></td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Pinned version</strong></td>
-<td><code>3.0.0</code></td>
-</tr>
-</tbody>
-</table>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
+<p>Turns paired-end Illumina reads into a complete viral genomics report: read QC and trimming (FastQC, fastp), host-sequence removal (Kraken2), alignment to a user-provided reference genome (Bowtie2), primer trimming for amplicon runs, intrahost variant calling and annotation (iVar or bcftools, snpEff/SnpSift), consensus building with low-coverage masking (bcftools or ivar), lineage assignment and deconvolution (Pangolin, Nextclade, Freyja), de novo assembly with QC (SPAdes, Unicycler, minia, Bandage, BLAST, QUAST, ABACAS, plasmidID), and a single MultiQC report. The amplicon + iVar path is the default; the bcftools caller, ivar consensus, metagenomic protocol, alternative assemblers (any comma-separated combination of spades/unicycler/minia in one run), MarkDuplicates, plasmidID, network-driven database updates and additional annotation are ported as gated branches off by default.</p>
+</div>
+<div>
+<div class="ox-glance">
+<div class="ox-glance-title">At a glance</div>
+<div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">84</span></div>
+<div class="ox-kv"><span class="k">Compute</span><span class="v">up to 12 CPUs / 72 GB per rule</span></div>
+<div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Domain</span><span class="v">genomics</span></div>
+<div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/nf-core/viralrecon">nf-core/viralrecon</a></span></div>
+<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>3.0.0</code></span></div>
+<div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
+<div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
+<p class="cmd">$ oxo-flow run main.oxoflow --samples first:1</p>
+</div>
+</div>
+</div>
 <h2 id="run-it">Run it</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>oxo-flow<span class="w"> </span>run<span class="w"> </span>main.oxoflow<span class="w"> </span>--samples<span class="w"> </span>first:1
 </code></pre></div>
 <p>Needs a reference genome bundle — see Requirements; <code>--samples first:1</code> runs a single sample.</p>
 <h2 id="installation">Installation</h2>
-<p><strong>Engine.</strong> oxo-flow &gt;= 0.12.0</p>
+<p><strong>Engine.</strong> oxo-flow &gt;= 0.17.0</p>
 <p><strong>Toolchain.</strong> conda envs — pinned versions (envs/*.yaml, conda-forge + bioconda channels; no containers)</p>
 <p><strong>Requirements.</strong>
 - reference genome FASTA and annotation GFF (config.fasta / config.gff) — uncompressed by default, or set fasta_ends_gz / gff_ends_gz
@@ -708,16 +678,22 @@
 </thead>
 <tbody>
 <tr>
+<td style="text-align: right;"><code>additional_annotation</code></td>
+<td>``</td>
+<td>--- Additional annotation (upstream params.additional_annotation; empty = off. A GFF/GTF to annotate the variants with in addition to the main reference annotation, run through snpEff + SnpSift + the variants long table. .gz files are gunzipped by build_snpeff_db_additional.) ---</td>
+<td><code>additional_annotation</code>, <code>build_snpeff_db_additional</code></td>
+</tr>
+<tr>
 <td style="text-align: right;"><code>assemblers</code></td>
 <td><code>spades</code></td>
-<td>Assembly (only the upstream default 'spades' assembler is ported)</td>
-<td>—</td>
+<td>--- Assembly (upstream params.assemblers is a comma-separated list, e.g. 'spades,unicycler'; the port's when-language has no 'in' operator, so every combination of the three assemblers is enumerated with explicit equality tests. Give the canonical lowercase form, commas with no spaces: 'spades' | 'unicycler' | 'minia' | 'spades,unicycler' | ... ) ---</td>
+<td><code>abacas</code>, <code>abacas_minia</code>, <code>abacas_unicycler</code>, <code>assemble_minia</code>, <code>assemble_spades</code>, <code>assemble_unicycler</code>, <code>bandage</code>, <code>bandage_unicycler</code>, <code>blast_assembly</code>, <code>blast_assembly_minia</code>, <code>blast_assembly_unicycler</code>, <code>plasmidid</code>, <code>plasmidid_minia</code>, <code>plasmidid_unicycler</code>, <code>quast_assembly</code>, <code>quast_assembly_minia</code>, <code>quast_assembly_unicycler</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>consensus_caller</code></td>
 <td><code>bcftools</code></td>
-<td>—</td>
-<td><code>consensus_call</code>, <code>consensus_filter</code></td>
+<td>--- Consensus caller (upstream params.consensus_caller; both the bcftools and ivar branches are ported as when-gated rules) ---</td>
+<td><code>consensus_call</code>, <code>consensus_call_wgs</code>, <code>consensus_filter</code>, <code>consensus_filter_bcftools</code>, <code>consensus_ivar</code>, <code>consensus_ivar_wgs</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>fasta</code></td>
@@ -732,28 +708,40 @@
 <td><code>gunzip_fasta</code></td>
 </tr>
 <tr>
+<td style="text-align: right;"><code>filter_duplicates</code></td>
+<td><code>false</code></td>
+<td>upstream params.filter_duplicates (default false) — passed to PICARD_MARKDUPLICATES as REMOVE_DUPLICATES=true when set</td>
+<td><code>markduplicates</code>, <code>markduplicates_wgs</code></td>
+</tr>
+<tr>
 <td style="text-align: right;"><code>freyja_barcodes</code></td>
 <td><code>test/fixtures/refs/freyja_barcodes.csv</code></td>
-<td>--- Freyja (upstream --freyja_barcodes / --freyja_lineages. FREYJA_UPDATE, the network download, is not ported.) ---</td>
-<td><code>freyja_boot</code>, <code>freyja_demix</code></td>
+<td>--- Freyja (upstream --freyja_barcodes / --freyja_lineages. When either is left empty the gated rules freyja_update + freyja_demix_updated / freyja_boot_updated download and use the upstream DB instead.) ---</td>
+<td><code>freyja_boot</code>, <code>freyja_boot_updated</code>, <code>freyja_demix</code>, <code>freyja_demix_updated</code>, <code>freyja_update</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>freyja_db_name</code></td>
+<td><code>reference/freyja_db</code></td>
+<td>upstream params.freyja_db_name — where FREYJA_UPDATE writes its download (upstream default 'freyja_db'; the port points into reference/)</td>
+<td><code>freyja_boot_updated</code>, <code>freyja_demix_updated</code>, <code>freyja_update</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>freyja_depthcutoff</code></td>
 <td><code>0</code></td>
 <td>—</td>
-<td><code>freyja_boot</code>, <code>freyja_demix</code></td>
+<td><code>freyja_boot</code>, <code>freyja_boot_updated</code>, <code>freyja_demix</code>, <code>freyja_demix_updated</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>freyja_lineages</code></td>
-<td><code>test/fixtures/refs/freyja_lineages.csv</code></td>
-<td>—</td>
-<td><code>freyja_boot</code>, <code>freyja_demix</code></td>
+<td><code>test/fixtures/refs/freyja_lineages.json</code></td>
+<td>freyja's meta format is the curated_lineages JSON (buildLineageMap json.loads it — live: the CSV default died in freyja boot with JSONDecodeError); the CSV sibling is kept as the barcodes-side table</td>
+<td><code>freyja_boot</code>, <code>freyja_boot_updated</code>, <code>freyja_demix</code>, <code>freyja_demix_updated</code>, <code>freyja_update</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>freyja_repeats</code></td>
 <td><code>100</code></td>
 <td>—</td>
-<td><code>freyja_boot</code></td>
+<td><code>freyja_boot</code>, <code>freyja_boot_updated</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>gff</code></td>
@@ -789,7 +777,13 @@
 <td style="text-align: right;"><code>kraken2_db</code></td>
 <td><code>reference/kraken2_db.tar.gz</code></td>
 <td>Kraken2 host-removal database (upstream --kraken2_db, tar.gz)</td>
-<td><code>untar_kraken2_db</code></td>
+<td><code>kraken2_build</code>, <code>untar_kraken2_db</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>kraken2_db_name</code></td>
+<td><code>human</code></td>
+<td>upstream params.kraken2_db_name — the library KRAKEN2_BUILD downloads when kraken2_db is left empty (gated rule kraken2_build)</td>
+<td><code>kraken2_build</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>kraken2_variants_host_filter</code></td>
@@ -801,19 +795,19 @@
 <td style="text-align: right;"><code>min_contig_length</code></td>
 <td><code>200</code></td>
 <td>Consensus QC</td>
-<td><code>blast_assembly</code></td>
+<td><code>blast_assembly</code>, <code>blast_assembly_minia</code>, <code>blast_assembly_unicycler</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>min_mapped_reads</code></td>
 <td><code>1000</code></td>
-<td>—</td>
-<td>—</td>
+<td>upstream params.min_mapped_reads — the per-sample channel DROP is a documented runtime-filter deviation (no dynamic DAG); the reporting half (fail_mapped_samples_mqc.tsv in the MultiQC data) is ported inside the multiqc rule</td>
+<td><code>multiqc</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>min_perc_contig_aligned</code></td>
 <td><code>0.7</code></td>
 <td>—</td>
-<td><code>blast_assembly</code></td>
+<td><code>blast_assembly</code>, <code>blast_assembly_minia</code>, <code>blast_assembly_unicycler</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>multiqc_title</code></td>
@@ -848,8 +842,8 @@
 <tr>
 <td style="text-align: right;"><code>pango_database</code></td>
 <td><code>test/fixtures/refs/pangolin_db</code></td>
-<td>--- Pangolin (upstream --pango_database; a directory. PANGOLIN_UPDATEDATA, the network download of the data directory, is not ported.) ---</td>
-<td><code>pangolin</code></td>
+<td>--- Pangolin (upstream --pango_database; a directory. When left empty the gated rules pangolin_updatedata + pangolin_run_updated download the data directory instead, mirroring upstream PANGOLIN_UPDATEDATA.) ---</td>
+<td><code>pangolin</code>, <code>pangolin_run_updated</code>, <code>pangolin_updatedata</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>platform</code></td>
@@ -885,7 +879,7 @@
 <td style="text-align: right;"><code>protocol</code></td>
 <td><code>amplicon</code></td>
 <td>—</td>
-<td><code>bam_sort_index_trimmed</code>, <code>call_variants_ivar</code>, <code>collapse_primers</code>, <code>consensus_call</code>, <code>consensus_filter</code>, <code>cutadapt</code>, <code>fastqc_primers</code>, <code>freyja_boot</code>, <code>freyja_demix</code>, <code>freyja_variants</code>, <code>get_primer_fasta</code>, <code>ivar_to_vcf</code>, <code>ivar_trim</code>, <code>mosdepth_amplicon</code>, <code>mosdepth_genome</code>, <code>nextclade</code>, <code>nextclade_clade_mqc</code>, <code>pangolin</code>, <code>picard_metrics</code>, <code>plot_base_density</code>, <code>plot_mosdepth_amplicon</code>, <code>plot_mosdepth_genome</code>, <code>prepare_primer_fasta</code>, <code>quast_consensus</code>, <code>snpeff_ann</code>, <code>snpsift_extract</code>, <code>sort_vcf</code>, <code>variants_long_table</code></td>
+<td><code>bam_sort_index_trimmed</code>, <code>call_variants_bcftools</code>, <code>call_variants_bcftools_wgs</code>, <code>call_variants_ivar</code>, <code>collapse_primers</code>, <code>consensus_call</code>, <code>consensus_call_wgs</code>, <code>consensus_filter</code>, <code>consensus_filter_bcftools</code>, <code>consensus_ivar</code>, <code>consensus_ivar_wgs</code>, <code>cutadapt</code>, <code>fastqc_primers</code>, <code>freyja_variants</code>, <code>freyja_variants_wgs</code>, <code>get_primer_fasta</code>, <code>ivar_to_vcf</code>, <code>ivar_trim</code>, <code>markduplicates</code>, <code>markduplicates_wgs</code>, <code>mosdepth_amplicon</code>, <code>mosdepth_genome</code>, <code>mosdepth_genome_wgs</code>, <code>norm_vcf_bcftools</code>, <code>picard_metrics</code>, <code>picard_metrics_wgs</code>, <code>plot_mosdepth_amplicon</code>, <code>prepare_primer_fasta</code>, <code>sort_vcf</code>, <code>variants_long_table</code>, <code>variants_long_table_bcftools</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>raw_dir</code></td>
@@ -896,56 +890,56 @@
 <tr>
 <td style="text-align: right;"><code>save_mpileup</code></td>
 <td><code>false</code></td>
-<td>—</td>
-<td>—</td>
+<td>upstream params.save_mpileup — when true, call_variants_ivar tees the samtools mpileup stream to variants/ivar/{sample}.mpileup (off by default, exactly like upstream; the port emits an empty placeholder when false so the declared output stays present)</td>
+<td><code>call_variants_ivar</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>save_trimmed_fail</code></td>
 <td><code>false</code></td>
-<td>—</td>
-<td>—</td>
+<td>upstream params.save_trimmed_fail — when true, fastp keeps the reads that failed filtering (--failed_out + --unpaired1/2); off by default, exactly like upstream (empty placeholders when false)</td>
+<td><code>fastp</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>save_unaligned</code></td>
 <td><code>false</code></td>
-<td>—</td>
+<td>upstream params.save_unaligned — NOT ported as a gate: the Kraken2 unclassified reads feed the assembly branch (upstream channel wiring), so they always land in results/kraken2/ — the flag is effectively always on in the port (benign over-emission vs upstream's default publish)</td>
 <td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_abacas</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>abacas</code></td>
+<td><code>abacas</code>, <code>abacas_minia</code>, <code>abacas_unicycler</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_assembly</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>abacas</code>, <code>assemble_spades</code>, <code>bandage</code>, <code>blast_assembly</code>, <code>cutadapt</code>, <code>fastqc_primers</code>, <code>get_primer_fasta</code>, <code>make_blast_db</code>, <code>prepare_primer_fasta</code>, <code>quast_assembly</code></td>
+<td><code>abacas</code>, <code>abacas_minia</code>, <code>abacas_unicycler</code>, <code>assemble_minia</code>, <code>assemble_spades</code>, <code>assemble_unicycler</code>, <code>bandage</code>, <code>bandage_unicycler</code>, <code>blast_assembly</code>, <code>blast_assembly_minia</code>, <code>blast_assembly_unicycler</code>, <code>cutadapt</code>, <code>fastqc_primers</code>, <code>get_primer_fasta</code>, <code>make_blast_db</code>, <code>plasmidid</code>, <code>plasmidid_minia</code>, <code>plasmidid_unicycler</code>, <code>prepare_primer_fasta</code>, <code>quast_assembly</code>, <code>quast_assembly_minia</code>, <code>quast_assembly_unicycler</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_assembly_quast</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>quast_assembly</code></td>
+<td><code>quast_assembly</code>, <code>quast_assembly_minia</code>, <code>quast_assembly_unicycler</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_bandage</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>bandage</code></td>
+<td><code>bandage</code>, <code>bandage_unicycler</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_blast</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>blast_assembly</code>, <code>make_blast_db</code></td>
+<td><code>blast_assembly</code>, <code>blast_assembly_minia</code>, <code>blast_assembly_unicycler</code>, <code>make_blast_db</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_consensus</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>consensus_call</code>, <code>consensus_filter</code>, <code>get_nextclade_dataset</code>, <code>nextclade</code>, <code>nextclade_clade_mqc</code>, <code>pangolin</code>, <code>plot_base_density</code>, <code>quast_consensus</code></td>
+<td><code>consensus_call</code>, <code>consensus_call_wgs</code>, <code>consensus_filter</code>, <code>consensus_filter_bcftools</code>, <code>consensus_ivar</code>, <code>consensus_ivar_wgs</code>, <code>get_nextclade_dataset</code>, <code>nextclade</code>, <code>nextclade_clade_mqc</code>, <code>pangolin</code>, <code>pangolin_run_updated</code>, <code>pangolin_updatedata</code>, <code>plot_base_density</code>, <code>quast_consensus</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_consensus_plots</code></td>
@@ -975,13 +969,13 @@
 <td style="text-align: right;"><code>skip_freyja</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>freyja_boot</code>, <code>freyja_demix</code>, <code>freyja_variants</code></td>
+<td><code>freyja_boot</code>, <code>freyja_boot_updated</code>, <code>freyja_demix</code>, <code>freyja_demix_updated</code>, <code>freyja_update</code>, <code>freyja_variants</code>, <code>freyja_variants_wgs</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_freyja_boot</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>freyja_boot</code></td>
+<td><code>freyja_boot</code>, <code>freyja_boot_updated</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_ivar_trim</code></td>
@@ -993,19 +987,19 @@
 <td style="text-align: right;"><code>skip_kraken2</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>assembly_fastq</code>, <code>kraken2</code>, <code>untar_kraken2_db</code></td>
+<td><code>assembly_fastq</code>, <code>kraken2</code>, <code>kraken2_build</code>, <code>untar_kraken2_db</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_markduplicates</code></td>
 <td><code>true</code></td>
 <td>—</td>
-<td>—</td>
+<td><code>markduplicates</code>, <code>markduplicates_wgs</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_mosdepth</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>collapse_primers</code>, <code>mosdepth_amplicon</code>, <code>mosdepth_genome</code>, <code>plot_mosdepth_amplicon</code>, <code>plot_mosdepth_genome</code></td>
+<td><code>collapse_primers</code>, <code>mosdepth_amplicon</code>, <code>mosdepth_genome</code>, <code>mosdepth_genome_wgs</code>, <code>plot_mosdepth_amplicon</code>, <code>plot_mosdepth_genome</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_nextclade</code></td>
@@ -1023,37 +1017,37 @@
 <td style="text-align: right;"><code>skip_pangolin</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>pangolin</code></td>
+<td><code>pangolin</code>, <code>pangolin_run_updated</code>, <code>pangolin_updatedata</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_picard_metrics</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>picard_metrics</code></td>
+<td><code>picard_metrics</code>, <code>picard_metrics_wgs</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_plasmidid</code></td>
 <td><code>true</code></td>
 <td>—</td>
-<td>—</td>
+<td><code>plasmidid</code>, <code>plasmidid_minia</code>, <code>plasmidid_unicycler</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_snpeff</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>build_snpeff_db</code>, <code>snpeff_ann</code>, <code>snpsift_extract</code>, <code>variants_long_table</code></td>
+<td><code>build_snpeff_db</code>, <code>snpeff_ann</code>, <code>snpsift_extract</code>, <code>variants_long_table</code>, <code>variants_long_table_bcftools</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_variants</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>align_bowtie2</code>, <code>bam_sort_index</code>, <code>bam_sort_index_trimmed</code>, <code>build_bowtie2_index</code>, <code>build_snpeff_db</code>, <code>call_variants_ivar</code>, <code>collapse_primers</code>, <code>freyja_boot</code>, <code>freyja_demix</code>, <code>freyja_variants</code>, <code>ivar_to_vcf</code>, <code>ivar_trim</code>, <code>mosdepth_amplicon</code>, <code>mosdepth_genome</code>, <code>picard_metrics</code>, <code>plot_mosdepth_amplicon</code>, <code>plot_mosdepth_genome</code>, <code>snpeff_ann</code>, <code>snpsift_extract</code>, <code>sort_vcf</code>, <code>variants_long_table</code></td>
+<td><code>align_bowtie2</code>, <code>bam_sort_index</code>, <code>bam_sort_index_trimmed</code>, <code>build_bowtie2_index</code>, <code>build_snpeff_db</code>, <code>call_variants_bcftools</code>, <code>call_variants_bcftools_wgs</code>, <code>call_variants_ivar</code>, <code>collapse_primers</code>, <code>freyja_boot</code>, <code>freyja_boot_updated</code>, <code>freyja_demix</code>, <code>freyja_demix_updated</code>, <code>freyja_update</code>, <code>freyja_variants</code>, <code>freyja_variants_wgs</code>, <code>ivar_to_vcf</code>, <code>ivar_trim</code>, <code>markduplicates</code>, <code>markduplicates_wgs</code>, <code>mosdepth_amplicon</code>, <code>mosdepth_genome</code>, <code>mosdepth_genome_wgs</code>, <code>norm_vcf_bcftools</code>, <code>picard_metrics</code>, <code>picard_metrics_wgs</code>, <code>plot_mosdepth_amplicon</code>, <code>plot_mosdepth_genome</code>, <code>snpeff_ann</code>, <code>snpsift_extract</code>, <code>sort_vcf</code>, <code>variants_long_table</code>, <code>variants_long_table_bcftools</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_variants_long_table</code></td>
 <td><code>false</code></td>
 <td>—</td>
-<td><code>variants_long_table</code></td>
+<td><code>variants_long_table</code>, <code>variants_long_table_bcftools</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>skip_variants_quast</code></td>
@@ -1076,8 +1070,8 @@
 <tr>
 <td style="text-align: right;"><code>variant_caller</code></td>
 <td><code>ivar</code></td>
-<td>--- Variant calling (upstream params.variant_caller defaults to 'ivar' for the amplicon protocol; the bcftools variant-caller branch is not ported) ---</td>
-<td><code>call_variants_ivar</code>, <code>ivar_to_vcf</code>, <code>sort_vcf</code></td>
+<td>--- Variant calling (upstream params.variant_caller defaults to 'ivar' for the amplicon protocol and 'bcftools' otherwise; both branches are ported as when-gated rules). The metagenomic branch auto-runs the bcftools caller regardless of this key — upstream derives variant_caller in nextflow.config (params.variant_caller = protocol == 'metagenomic' ? 'bcftools' : 'ivar'), and the port mirrors that derivation in the wgs rules' when conditions, so a metagenomic run needs no extra --arg ---</td>
+<td><code>additional_annotation</code>, <code>call_variants_bcftools</code>, <code>call_variants_ivar</code>, <code>consensus_filter</code>, <code>consensus_filter_bcftools</code>, <code>ivar_to_vcf</code>, <code>norm_vcf_bcftools</code>, <code>sort_vcf</code>, <code>variants_long_table</code>, <code>variants_long_table_bcftools</code></td>
 </tr>
 </tbody>
 </table>
@@ -1096,6 +1090,7 @@
 <li>gunzip_primer_bed</li>
 <li>prepare_genome</li>
 <li>untar_kraken2_db</li>
+<li>kraken2_build</li>
 <li>collapse_primers</li>
 <li>get_primer_fasta</li>
 <li>build_bowtie2_index</li>
@@ -1111,27 +1106,47 @@
 <li>bam_sort_index</li>
 <li>ivar_trim</li>
 <li>bam_sort_index_trimmed</li>
+<li>markduplicates</li>
+<li>markduplicates_wgs</li>
 <li>picard_metrics</li>
+<li>picard_metrics_wgs</li>
 <li>mosdepth_genome</li>
+<li>mosdepth_genome_wgs</li>
 <li>plot_mosdepth_genome</li>
 <li>mosdepth_amplicon</li>
 <li>plot_mosdepth_amplicon</li>
 <li>freyja_variants</li>
+<li>freyja_variants_wgs</li>
 <li>freyja_demix</li>
 <li>freyja_boot</li>
+<li>freyja_update</li>
+<li>freyja_demix_updated</li>
+<li>freyja_boot_updated</li>
 <li>call_variants_ivar</li>
 <li>ivar_to_vcf</li>
 <li>sort_vcf</li>
+<li>call_variants_bcftools</li>
+<li>call_variants_bcftools_wgs</li>
+<li>norm_vcf_bcftools</li>
 <li>snpeff_ann</li>
 <li>snpsift_extract</li>
 <li>consensus_filter</li>
+<li>consensus_filter_bcftools</li>
 <li>consensus_call</li>
+<li>consensus_call_wgs</li>
+<li>consensus_ivar</li>
+<li>consensus_ivar_wgs</li>
 <li>quast_consensus</li>
 <li>pangolin</li>
+<li>pangolin_updatedata</li>
+<li>pangolin_run_updated</li>
 <li>nextclade</li>
 <li>plot_base_density</li>
 <li>nextclade_clade_mqc</li>
 <li>variants_long_table</li>
+<li>variants_long_table_bcftools</li>
+<li>build_snpeff_db_additional</li>
+<li>additional_annotation</li>
 <li>assembly_fastq</li>
 <li>prepare_primer_fasta</li>
 <li>cutadapt</li>
@@ -1141,24 +1156,24 @@
 <li>blast_assembly</li>
 <li>quast_assembly</li>
 <li>abacas</li>
+<li>assemble_unicycler</li>
+<li>bandage_unicycler</li>
+<li>blast_assembly_unicycler</li>
+<li>quast_assembly_unicycler</li>
+<li>abacas_unicycler</li>
+<li>assemble_minia</li>
+<li>blast_assembly_minia</li>
+<li>quast_assembly_minia</li>
+<li>abacas_minia</li>
+<li>plasmidid</li>
+<li>plasmidid_unicycler</li>
+<li>plasmidid_minia</li>
 <li>multiqc</li>
 </ul>
 <p><strong>Excluded</strong></p>
 <ul>
-<li>nanopore platform branch (ARTIC_GUPPYPLEX, ARTIC_MINION, NANOPLOT, PYCOQC, VCFLIB_VCFUNIQ, PREPARE_GENOME_NANOPORE) — illumina only</li>
-<li>variant_caller='bcftools' branch (VARIANTS_BCFTOOLS subworkflow: BCFTOOLS_MPILEUP, BCFTOOLS_NORM, BCFTOOLS_MPILEUP_FILTER, custom filter scripts) — non-default; only the iVar caller (the amplicon default) is ported</li>
-<li>consensus_caller='ivar' branch (CONSENSUS_IVAR subworkflow: IVAR_CONSENSUS) — non-default; only bcftools consensus (the default) is ported</li>
-<li>wgs (shotgun) protocol variant branch — the port runs the amplicon protocol gates (primer trimming, collapsed-primer mosdepth); non-amplicon variant calling is not ported</li>
-<li>unicycler and minia assemblers (ASSEMBLY_UNICYCLER / ASSEMBLY_MINIA subworkflows) — assemblers is fixed to the upstream default 'spades'</li>
-<li>PICARD_MARKDUPLICATES — skip_markduplicates defaults to true upstream and in this port</li>
-<li>PLASMIDID — skip_plasmidid defaults to true upstream and in this port</li>
-<li>KRAKEN2_BUILD — upstream downloads the human host database over the network; this port takes a local kraken2_db tar.gz (empty-stub fixture provided)</li>
-<li>FREYJA_UPDATE — upstream downloads barcodes/lineages over the network; this port takes config.freyja_barcodes / config.freyja_lineages (fixtures provided)</li>
-<li>PANGOLIN_UPDATEDATA — upstream downloads the pangolin data directory over the network; this port takes config.pango_database (fixture placeholder provided)</li>
-<li>ADDITIONAL_ANNOTATION — off by default upstream (params.additional_annotation is empty)</li>
-<li>channel-level runtime filters — the fastp reads-after-filtering empty check, the min_mapped_reads flagstat gate, the zero-variant-sample filter and optional-file existence gates have no oxo-flow equivalent (documented deviations)</li>
-<li>save_<em> extra outputs — save_unaligned, save_trimmed_fail, save_mpileup, save_ivar_trimmed_bam and the other save_</em> flags are off by default upstream and not ported</li>
-<li>MultiQC extras — the multiqc_data/versions.yml software table and *_plots directory are not emitted; the port keeps the report HTML, the data directory and the variants/assembly metrics CSVs</li>
+<li>nanopore platform branch (ARTIC_GUPPYPLEX, ARTIC_MINION, NANOPLOT, PYCOQC, VCFLIB_VCFUNIQ, PREPARE_GENOME_NANOPORE) — upstream discovers per-barcode read directories (fastq_dir/barcode* + sequencing_summary, workflows/viralrecon.nf:693-920) with single-end meta flags, requires ONT reads basecalled by the commercial guppy_basecaller/guppy_barcoder, and no nanopore fixture exists; the port is paired-end Illumina filesystem discovery only (structural)</li>
+<li>channel-level runtime filters, partially adopted — the fastp empty-after-filtering drop IS ported as <code>reads_count('fastp/{sample}_1.fastp.fastq.gz') &gt; 0</code> gates on the trimmed-reads consumers (kraken2, align_bowtie2, assembly_fastq; engine 0.17.0 <code>when</code> runtime functions). The remaining DROPS are documented deviations: the min_mapped_reads flagstat gate (a strict <code>&gt;</code> on the mapped count parsed out of samtools flagstat text — no engine runtime fn can extract it, so only the reporting half is ported as fail_mapped_samples_mqc.tsv inside the multiqc rule) and the zero-variant-sample filters (ivar: <code>wc_lines(tsv) &gt; 1</code> is expressible but the port deliberately keeps zero-variant samples flowing downstream with a placeholder-header VCF for live-fixture robustness; bcftools: the record count needs a regex over <code>bcftools stats</code> output — fail_mapped_reads_mqc.tsv reports fastp failures inside the multiqc rule)</li>
 </ul>
 <h2 id="fidelity">Fidelity</h2>
 <p>Every upstream process and subworkflow on the default path, and what happened
@@ -1185,7 +1200,7 @@ to it in this port:</p>
 <tr>
 <td>FASTP</td>
 <td><code>fastp</code></td>
-<td><code>ext.args</code> baked in verbatim (cut_front/cut_tail/trim_poly_x/cut_mean_quality 30/...) + <code>--detect_adapter_for_pe</code>, <code>2&gt;| &gt;(tee log &gt;&amp;2)</code></td>
+<td><code>ext.args</code> baked in verbatim (cut_front/cut_tail/trim_poly_x/cut_mean_quality 30/...) + <code>--detect_adapter_for_pe</code>, <code>2&gt;| &gt;(tee log &gt;&amp;2)</code>; <code>save_trimmed_fail=true</code> adds upstream's <code>--failed_out {sample}.paired.fail.fastq.gz --unpaired1/2 {sample}_{1,2}.fail.fastq.gz</code> (off by default — empty placeholders)</td>
 </tr>
 <tr>
 <td>FASTQC_TRIM</td>
@@ -1224,8 +1239,8 @@ to it in this port:</p>
 </tr>
 <tr>
 <td>PICARD_MARKDUPLICATES</td>
-<td>—</td>
-<td>excluded: <code>skip_markduplicates=true</code> by default</td>
+<td><code>markduplicates</code> / <code>markduplicates_wgs</code></td>
+<td>gated <code>skip_markduplicates=false</code>; <code>--ASSUME_SORTED true --VALIDATION_STRINGENCY LENIENT --TMP_DIR tmp</code> + <code>REMOVE_DUPLICATES=true</code> when <code>filter_duplicates</code>; samtools index + stats/flagstat/idxstats; upstream replaces <code>ch_bam</code> with the marked BAM, the port keeps the pre-dedup BAM in the pipeline and publishes the marked BAM alongside (see deviations)</td>
 </tr>
 <tr>
 <td>PICARD_COLLECTMULTIPLEMETRICS</td>
@@ -1265,7 +1280,7 @@ to it in this port:</p>
 <tr>
 <td>IVAR_VARIANTS</td>
 <td><code>call_variants_ivar</code></td>
-<td><code>samtools mpileup</code> (<code>--ignore-overlaps --count-orphans --no-BAQ --max-depth 0 --min-BQ 0</code>) | <code>ivar variants -t 0.25 -q 20 -m 10 -g -r -p</code></td>
+<td><code>samtools mpileup</code> (<code>--ignore-overlaps --count-orphans --no-BAQ --max-depth 0 --min-BQ 0</code>) | <code>ivar variants -t 0.25 -q 20 -m 10 -g -r -p</code>; <code>save_mpileup=true</code> tees the mpileup stream to <code>variants/ivar/{sample}.mpileup</code> (off by default — empty placeholder)</td>
 </tr>
 <tr>
 <td>IVAR_VARIANTS_TO_VCF</td>
@@ -1281,6 +1296,11 @@ to it in this port:</p>
 <td>VCF_TABIX_STATS</td>
 <td><code>sort_vcf</code></td>
 <td>merged: tabix (<code>--threads -p vcf -f</code>) + <code>bcftools stats</code></td>
+</tr>
+<tr>
+<td>VARIANTS_BCFTOOLS</td>
+<td><code>call_variants_bcftools</code> / <code>call_variants_bcftools_wgs</code> + <code>norm_vcf_bcftools</code></td>
+<td>gated <code>variant_caller='bcftools'</code> (amplicon) or <code>protocol='metagenomic'</code> (auto, mirroring upstream's derived default — see deviations); mpileup (<code>--ignore-overlaps --count-orphans --no-BAQ --max-depth 0 --min-BQ 20</code>) | <code>bcftools call</code> (<code>--ploidy 1 --multiallelic-caller</code>) | reheader | view <code>--include 'INFO/DP&gt;=10'</code>, then <code>bcftools norm</code> (<code>--do-not-normalize --multiallelics -any</code>) merged with tabix + <code>bcftools stats</code> (VCF_TABIX_STATS); canonical <code>variants/ivar/</code> VCF paths shared with the ivar caller — 3.0.0 has no BCFTOOLS_MPILEUP_FILTER process, filtering lives in the BCFTOOLS_FILTER consensus-branch process</td>
 </tr>
 <tr>
 <td>SNPEFF_ANN</td>
@@ -1299,13 +1319,18 @@ to it in this port:</p>
 </tr>
 <tr>
 <td>BCFTOOLS_FILTER</td>
-<td><code>consensus_filter</code></td>
-<td><code>--include 'FORMAT/ALT_FREQ &gt;= 0.75'</code></td>
+<td><code>consensus_filter</code> / <code>consensus_filter_bcftools</code></td>
+<td>ivar-caller branch <code>--include 'FORMAT/ALT_FREQ &gt;= 0.75'</code>; bcftools-caller branch <code>--include 'FORMAT/AD[:1] / FORMAT/DP &gt;= 0.75'</code> (upstream ext.args, both filtered to the same canonical VCF)</td>
 </tr>
 <tr>
 <td>TABIX_TABIX</td>
 <td><code>consensus_filter</code></td>
 <td>merged</td>
+</tr>
+<tr>
+<td>IVAR_CONSENSUS (CONSENSUS_IVAR)</td>
+<td><code>consensus_ivar</code> / <code>consensus_ivar_wgs</code></td>
+<td>gated <code>consensus_caller='ivar'</code>; <code>samtools mpileup --count-orphans --no-BAQ --max-depth 0 --min-BQ 0 -aa</code> | <code>ivar consensus -t 0.75 -q 20 -m 10 -n N</code>; writes the canonical <code>consensus/bcftools/{sample}.consensus.fa</code> path so downstream consensus-QC rules are shared (see deviations)</td>
 </tr>
 <tr>
 <td>MAKE_BED_MASK</td>
@@ -1343,6 +1368,11 @@ to it in this port:</p>
 <td><code>XDG_CACHE_HOME=/tmp/.cache</code>, <code>--datadir --outfile --threads</code></td>
 </tr>
 <tr>
+<td>PANGOLIN_UPDATEDATA</td>
+<td><code>pangolin_updatedata</code> + <code>pangolin_run_updated</code></td>
+<td>gated <code>pango_database=''</code>; <code>pangolin --update-data --datadir reference/pangolin_db</code> then the same PANGOLIN_RUN shell against the downloaded data</td>
+</tr>
+<tr>
 <td>NEXTCLADE_RUN</td>
 <td><code>nextclade</code></td>
 <td><code>--jobs --input-dataset --output-all --output-basename</code></td>
@@ -1364,8 +1394,18 @@ to it in this port:</p>
 </tr>
 <tr>
 <td>MAKE_VARIANTS_LONG_TABLE</td>
-<td><code>variants_long_table</code></td>
-<td>merged with query; symlink-collect pattern, <code>--variant_caller ivar</code></td>
+<td><code>variants_long_table</code> / <code>variants_long_table_bcftools</code></td>
+<td>merged with query; symlink-collect pattern, <code>--variant_caller {config.variant_caller}</code>; bcftools-caller query reads the AD field (<code>[%AD\t]</code>), ivar query reads REF_DP/ALT_DP</td>
+</tr>
+<tr>
+<td>FREYJA_UPDATE</td>
+<td><code>freyja_update</code> + <code>freyja_demix_updated</code> / <code>freyja_boot_updated</code></td>
+<td>gated when <code>freyja_barcodes</code> or <code>freyja_lineages</code> is empty; <code>freyja update --outdir {config.freyja_db_name}</code> then the same demix/boot shells against the downloaded DB</td>
+</tr>
+<tr>
+<td>ADDITIONAL_ANNOTATION</td>
+<td><code>build_snpeff_db_additional</code> + <code>additional_annotation</code></td>
+<td>gated <code>additional_annotation</code> non-empty (off by default upstream); snpEff <code>-gff3</code> build of the extra annotation in a scratch dir, then per-sample snpEff ann + bgzip/tabix + SnpSift extract + query + <code>make_variants_long_table.py --variant_caller {config.variant_caller} --output_file additional_variants_long_table.csv</code></td>
 </tr>
 <tr>
 <td>PREPARE_PRIMER_FASTA</td>
@@ -1411,6 +1451,31 @@ to it in this port:</p>
 <td>ABACAS</td>
 <td><code>abacas</code></td>
 <td><code>-m -p nucmer</code>, sorted <code>.bin</code>, nucmer delta/filtered/tiling + unused contigs moves</td>
+</tr>
+<tr>
+<td>UNICYCLER</td>
+<td><code>assemble_unicycler</code></td>
+<td>gated on <code>assemblers</code> containing <code>unicycler</code>; <code>--threads</code> in a per-sample scratch dir (unicycler writes generic-named files), <code>mv assembly.fasta {sample}.scaffolds.fa</code> + gzip, <code>assembly.gfa</code> + log kept; BANDAGE/BLAST/QUAST/ABACAS QC chained as <code>bandage_unicycler</code> / <code>blast_assembly_unicycler</code> / <code>quast_assembly_unicycler</code> / <code>abacas_unicycler</code></td>
+</tr>
+<tr>
+<td>MINIA</td>
+<td><code>assemble_minia</code></td>
+<td>gated on <code>assemblers</code> containing <code>minia</code>; <code>-kmer-size 31 -abundance-min 20 -nb-cores {threads} -in input_files.txt</code>; BLAST/QUAST/ABACAS QC chained as <code>blast_assembly_minia</code> / <code>quast_assembly_minia</code> / <code>abacas_minia</code> (no Bandage: minia has no graph file, upstream runs Bandage only on the unicycler gfa)</td>
+</tr>
+<tr>
+<td>PLASMIDID</td>
+<td><code>plasmidid</code> / <code>plasmidid_unicycler</code> / <code>plasmidid_minia</code></td>
+<td>gated <code>skip_plasmidid=false</code>; one rule per assembler branch, mirroring upstream ASSEMBLY_QC; <code>--only-reconstruct -C 47 -S 47 -i 60 --no-trim -k 0.80 -d reference/genome.fa</code> — plasmidID needs no database download (verified: only the reference fasta)</td>
+</tr>
+<tr>
+<td>KRAKEN2_BUILD</td>
+<td><code>kraken2_build</code></td>
+<td>gated <code>kraken2_db=''</code>; <code>kraken2-build --download-taxonomy</code> + <code>--download-library {config.kraken2_db_name}</code> + <code>--build --threads</code> into <code>reference/kraken2_db</code> (upstream <code>params.kraken2_db_name</code>, default <code>human</code>)</td>
+</tr>
+<tr>
+<td>(metagenomic branch)</td>
+<td><code>mosdepth_genome_wgs</code> / <code>picard_metrics_wgs</code> / <code>freyja_variants_wgs</code> / <code>consensus_call_wgs</code> / <code>markduplicates_wgs</code> / <code>call_variants_bcftools_wgs</code> / <code>consensus_ivar_wgs</code></td>
+<td>gated <code>protocol='metagenomic'</code>; the same shells as their amplicon counterparts running on the untrimmed <code>sorted.bam</code>, writing the same canonical outputs (exclusive gates; upstream 3.0.0 protocol enum has no <code>wgs</code> value — the port maps the non-amplicon branch to <code>metagenomic</code> and calls it <code>wgs</code> in rule names)</td>
 </tr>
 <tr>
 <td>GUNZIP_FASTA/GFF/PRIMER_BED</td>
@@ -1460,7 +1525,7 @@ to it in this port:</p>
 <tr>
 <td>MULTIQC</td>
 <td><code>multiqc</code></td>
-<td>both passes kept (parse pass + <code>-e general_stats --ignore *nextclade_clade_mqc.tsv</code> final pass), <code>grep -q "&gt;skip_assembly&lt;"</code> / <code>&gt;skip_variants&lt;</code> / <code>platform=illumina</code> rm rules, <code>multiqc_config_illumina.yml</code>; inputs mirror upstream <code>ch_multiqc_files</code> — snpeff <code>-csvStats</code> per-sample csv added (SnpEff section), mosdepth fed as genome <code>global.dist.txt</code> (distribution plots) + amplicon <code>all_samples.mosdepth.coverage.tsv</code> (heatmap), with the genome <code>summary.txt</code> additionally kept for the General Stats table (the inert genome coverage.tsv and amplicon per-sample summary.txt are not fed)</td>
+<td>both passes kept (parse pass + <code>-e general_stats --ignore *nextclade_clade_mqc.tsv</code> final pass), <code>grep -q "&gt;skip_assembly&lt;"</code> / <code>&gt;skip_variants&lt;</code> / <code>platform=illumina</code> rm rules, <code>multiqc_config_illumina.yml</code>; inputs mirror upstream <code>ch_multiqc_files</code> — snpeff <code>-csvStats</code> per-sample csv added (SnpEff section), mosdepth fed as genome <code>global.dist.txt</code> (distribution plots) + amplicon <code>all_samples.mosdepth.coverage.tsv</code> (heatmap), with the genome <code>summary.txt</code> additionally kept for the General Stats table (the inert genome coverage.tsv and amplicon per-sample summary.txt are not fed); the runtime-filter reporting half is ported (fail_mapped_reads_mqc.tsv / fail_mapped_samples_mqc.tsv custom content, same headers/rows as upstream <code>multiqcTsvFromList</code>, written only when samples fail)</td>
 </tr>
 <tr>
 <td>multiqc_to_custom_csv.py</td>
@@ -1469,23 +1534,87 @@ to it in this port:</p>
 </tr>
 </tbody>
 </table>
-<p>Excluded branches (not on the default path; see metadata.json for the full
-list): nanopore platform (ARTIC_GUPPYPLEX/ARTIC_MINION/NANOPLOT/PYCOQC/
-VCFLIB_VCFUNIQ), <code>variant_caller='bcftools'</code>, <code>consensus_caller='ivar'</code>,
-unicycler/minia assemblers, PICARD_MARKDUPLICATES, PLASMIDID, and the
-network-download processes KRAKEN2_BUILD / FREYJA_UPDATE / PANGOLIN_UPDATEDATA
-/ ADDITIONAL_ANNOTATION.</p>
+<p>Ported branches (all gated off by default, mirroring the upstream
+<code>params</code> defaults; the default run is byte-for-byte the amplicon ivar path):</p>
+<ul>
+<li><code>variant_caller='bcftools'</code> — VARIANTS_BCFTOOLS (<code>call_variants_bcftools</code>,
+  <code>norm_vcf_bcftools</code>), BCFTOOLS_FILTER (<code>consensus_filter_bcftools</code>) and the
+  bcftools long table (<code>variants_long_table_bcftools</code>); activates with
+  <code>--arg variant_caller=bcftools</code>, deactivating the ivar caller chain</li>
+<li><code>consensus_caller='ivar'</code> — CONSENSUS_IVAR (<code>consensus_ivar</code>) with
+  <code>--arg consensus_caller=ivar</code></li>
+<li>non-amplicon (shotgun / "wgs") protocol — <code>--arg protocol=metagenomic</code>;
+  the untrimmed-BAM counterparts <code>mosdepth_genome_wgs</code>, <code>picard_metrics_wgs</code>,
+  <code>freyja_variants_wgs</code>, <code>consensus_call_wgs</code>, <code>markduplicates_wgs</code>,
+  <code>call_variants_bcftools_wgs</code>, <code>consensus_ivar_wgs</code>; upstream derives
+  <code>variant_caller='bcftools'</code> for non-amplicon runs (nextflow.config), and the
+  port mirrors that derivation in the wgs rules' when conditions — a
+  metagenomic run needs no extra <code>--arg</code>, the bcftools caller chain
+  (<code>call_variants_bcftools_wgs</code>, <code>norm_vcf_bcftools</code>,
+  <code>consensus_filter_bcftools</code>, <code>variants_long_table_bcftools</code>) runs
+  automatically and the iVar caller chain stays amplicon-gated</li>
+<li>alternative assemblers — <code>--arg assemblers=unicycler</code> /
+  <code>--arg assemblers=minia</code> or any comma-separated combination
+  (<code>--arg assemblers=spades,unicycler</code> runs both in one run, like upstream)
+  with their full QC chains (Bandage for spades and unicycler, matching
+  upstream; plasmidID per assembler like upstream ASSEMBLY_QC)</li>
+<li>PICARD_MARKDUPLICATES — <code>--arg skip_markduplicates=false</code></li>
+<li>PLASMIDID — <code>--arg skip_plasmidid=false</code> (no database download; verified
+  upstream uses only the reference fasta)</li>
+<li>network downloads — <code>kraken2_build</code> (leave <code>kraken2_db</code> empty),
+  <code>freyja_update</code> (leave <code>freyja_barcodes</code>/<code>freyja_lineages</code> empty),
+  <code>pangolin_updatedata</code> (leave <code>pango_database</code> empty)</li>
+<li>ADDITIONAL_ANNOTATION — <code>--arg additional_annotation=path/to.gff</code></li>
+</ul>
+<p>Still excluded (see metadata.json): the nanopore platform
+(ARTIC_GUPPYPLEX/ARTIC_MINION/NANOPLOT/PYCOQC/VCFLIB_VCFUNIQ — upstream
+wires per-barcode read channels with single-end meta flags, guppybasecaller
+is a commercial ONT tool and no nanopore fixture exists; structural) and the
+per-sample DROPS of the channel-level runtime filters (their reporting half
+is ported inside the multiqc rule — see deviations).</p>
 <h3 id="documented-deviations">Documented deviations</h3>
 <p>Everything below has no oxo-flow equivalent and is the closest faithful
 approximation; none silently change results:</p>
 <ol>
-<li><strong>Channel-level runtime filters are not ported.</strong> The upstream
-   <code>process_trim_fastq</code> filter (drop samples with 0 reads after fastp), the
-   <code>min_mapped_reads</code> flagstat gate before variant calling, the
-   zero-variant-sample filter and optional-file existence gates run in
-   Nextflow channel code, not in a process. <code>min_mapped_reads</code> still exists as
-   config for documentation but has no effect. Rule shells run unconditioned
-   on their inputs.</li>
+<li><strong><code>config.assemblers</code> is a comma-separated list in canonical lowercase
+   form (commas, no spaces).</strong> The upstream <code>params.assemblers</code> accepts any
+   comma-separated combination — e.g. <code>spades,unicycler</code> runs SPAdes AND
+   Unicycler in the same run — trimming and lowercasing each entry. oxo-flow
+   <code>when</code> conditions have no <code>in</code>/contains operator, so the port enumerates
+   every combination of the three assemblers with explicit equality tests:
+   each assembler family (<code>assemble_*</code> plus its Bandage/BLAST/QUAST/ABACAS/
+   plasmidID QC chain) is gated on a disjunction of the four combinations
+   that contain it. Spelling the list with spaces (<code>spades, unicycler</code>) is
+   not accepted — upstream's trim is not reproducible without an <code>in</code>
+   operator. (Negative equality gates were rejected as incorrect:
+   <code>!= 'spades'</code> would wrongly enable <code>minia</code> for
+   <code>assemblers = 'spades,unicycler'</code>.)</li>
+<li><strong>The per-sample DROPS of the channel-level runtime filters are not
+   ported.</strong> The upstream <code>process_trim_fastq</code> filter (drop samples with 0
+   reads after fastp), the <code>min_mapped_reads</code> flagstat gate before variant
+   calling and the zero-variant-sample filter run in Nextflow channel code,
+   not in a process — oxo-flow rules are all-or-nothing on their sample set,
+   so a sample cannot be dropped mid-DAG. The reporting half IS ported: the
+   multiqc rule regenerates upstream's custom-content TSVs
+   (<code>fail_mapped_reads_mqc.tsv</code> from the fastp JSONs, <code>fail_mapped_samples_mqc.tsv</code>
+   from the Bowtie2 flagstats, same headers/rows as <code>multiqcTsvFromList</code>),
+   written only when samples fail. <code>min_mapped_reads</code> config now feeds that
+   flagstat comparison. Placeholder artifacts (<code>: &gt; {sample}.scaffolds.fa</code>
+   etc.) stand in where upstream would drop an empty assembly from the channel.</li>
+<li><strong>MarkDuplicates does not replace <code>ch_bam</code>.</strong> Upstream
+   <code>BAM_MARKDUPLICATES_PICARD</code> swaps <code>ch_bam</code> so mosdepth, picard metrics and
+   variant calling all consume the marked BAM. The port publishes the marked
+   BAM (bam/bai/stats/flagstat/idxstats/metrics) as standalone rules
+   (<code>markduplicates</code>, <code>markduplicates_wgs</code>) while the pipeline keeps the
+   pre-dedup BAM — the upstream module itself forbids same-name in/out, and a
+   canonical-path swap is impossible in oxo-flow (the rule would read and
+   write the same path).</li>
+<li><strong>Consensus paths are canonicalised across callers.</strong> Upstream ivar
+   consensus publishes under <code>consensus/ivar/</code> and bcftools under
+   <code>consensus/bcftools/</code>. The port's ivar caller writes the canonical
+   <code>variants/ivar/consensus/bcftools/{sample}.consensus.fa</code> path so
+   QUAST/Pangolin/Nextclade/base-density/MultiQC rules are shared across
+   both callers with no duplicate outputs.</li>
 <li><strong>Kraken2 host-filter routing.</strong> When Kraken2 runs with
    <code>kraken2_assembly_host_filter=false</code>, upstream routes the assembly branch
    to the fastp reads (channel wiring) while Kraken2 still writes its
@@ -1505,11 +1634,23 @@ approximation; none silently change results:</p>
    <code>consensus.yaml</code>; tabix's htslib 1.21 → 1.22.1 in <code>bcftools.yaml</code>;
    r-base 4.2 → 4.2.0 in <code>r.yaml</code>; mosdepth's build string
    <code>=0.3.11=h0ec343a_1</code> → <code>=0.3.11</code> for cross-platform resolution.</li>
-<li><strong>MultiQC extras</strong> (<code>multiqc_data/versions.yml</code>, <code>*_plots</code> directory) are
-   not emitted; the report HTML, data directory and the two metrics CSVs are.</li>
 <li><strong>QUAST/ABACAS/Bandage inputs</strong> gated by upstream <code>file(...)</code> existence
    checks (e.g. empty scaffolds) run unconditionally in the port; on the
    fixture and real data the files always exist.</li>
+<li><strong><code>save_unaligned</code> / <code>save_reference</code> are effectively always on.</strong> The
+    Kraken2 unclassified reads feed the assembly branch via upstream channel
+    wiring (not a publish gate), so they always land in <code>kraken2/</code>; the
+    reference files feed every rule and always publish. Both flags are kept as
+    config for documentation. (<code>save_ivar_trimmed_bam</code> does not exist at
+    3.0.0 — only <code>save_reference</code>, <code>save_trimmed_fail</code>, <code>save_unaligned</code> and
+    <code>save_mpileup</code> do; the latter two are now ported as in-rule switches.)</li>
+<li><strong>The upstream <code>multiqc_data/versions.yml</code> and <code>*_plots</code> outputs are not
+    emitted — at parity, not a deviation.</strong> Verified at the pinned 3.0.0 tag:
+    the MULTIQC call receives no versions channel and the config has no
+    software_versions dict; MultiQC 1.31's search pattern for the software
+    table is <code>.+_mqc_versions\.(yaml|yml)</code> (plain <code>versions.yml</code> is not
+    picked up), and <code>export_plots</code> defaults false (flat threshold 2000), so
+    upstream emits neither artifact on its default path — matching the port.</li>
 </ol>
 <h3 id="resources">Resources</h3>
 <p>Resource labels map 1:1 to upstream <code>withLabel</code> profiles: <code>process_single</code>
@@ -1558,7 +1699,7 @@ approximation; none silently change results:</p>
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      © 2026 oxo-flow-community · Apache-2.0 · Ports are based on their upstream workflows — see each repository's NOTICE.
+      © 2026 <a href="https://github.com/oxo-flow-community">oxo-flow-community</a> · Apache-2.0 · engine <a href="https://github.com/Traitome/oxo-flow">oxo-flow</a> · <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues">issues</a> · evidence: ✔ live-tested ⊃ ★ verified ⊃ ☆ community · ports are based on their upstream workflows — see each repository's NOTICE
     </div>
   
   

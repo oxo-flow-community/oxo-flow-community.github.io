@@ -23,7 +23,7 @@
     
     
       
-        <title>Metagenome assembly, binning and taxonomic classification - oxo-flow-community</title>
+        <title>Oxo flow mag - oxo-flow-community</title>
       
     
     
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Metagenome assembly, binning and taxonomic classification
+              Oxo flow mag
             
           </span>
         </div>
@@ -555,10 +555,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#not-ported-off-by-default-upstream" class="md-nav__link">
+  <a href="#gated-branches-all-off-by-default-one-config-key-each" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Not ported (off by default upstream)
+        Gated branches (all off by default, one config key each)
       
     </span>
   </a>
@@ -601,73 +601,44 @@
   
 
 
+<div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-mag</span></div>
+<div class="ox-detail-cols">
+<div>
 <h1 id="metagenome-assembly-binning-and-taxonomic-classification">Metagenome assembly, binning and taxonomic classification</h1>
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
-
-<p>Turn paired-end metagenomic reads into quality-checked, taxonomically classified draft genomes: FastQC and fastp QC with phiX removal, SPAdes and MEGAHIT assembly, QUAST and Prodigal assessment, bowtie2 mapping, binning with six binners (MetaBAT2, MaxBin2, CONCOCT, COMEBin, MetaBinner, SemiBin2), BUSCO bin QC, GTDB-Tk classification with a combined summary, PROKKA annotation, ALE evaluation and a final MultiQC report. The default short-read path of nf-core/mag, faithfully ported with the same tool versions and commands.</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: right;"></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: right;"><strong>Rating</strong></td>
-<td>✔ Live-tested</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Origin</strong></td>
-<td>port</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Domain</strong></td>
-<td>metagenomics</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Rules</strong></td>
-<td>134</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Compute</strong></td>
-<td>up to 12 CPUs / 140 GB per rule (defaults 1 thread / 6 GB)</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Tools</strong></td>
-<td>fastqc · fastp · bowtie2 · samtools · spades · megahit · quast · prodigal · bioawk · seqkit · metabat2 · maxbin2 · concoct · comebin · metabinner · semibin · busco · qsv · ale · gtdbtk · prokka · multiqc · python · pandas · biopython</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Ported</strong></td>
-<td>2026-08-15</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>License</strong></td>
-<td>Apache-2.0</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Source</strong></td>
-<td><a href="https://github.com/nf-core/mag">nf-core/mag</a></td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Pinned version</strong></td>
-<td><code>5.5.0</code></td>
-</tr>
-</tbody>
-</table>
+<p>Turn paired-end metagenomic reads into quality-checked, taxonomically classified draft genomes: FastQC and fastp QC with phiX removal, SPAdes and MEGAHIT assembly, QUAST and Prodigal assessment, bowtie2 mapping, binning with six binners (MetaBAT2, MaxBin2, CONCOCT, COMEBin, MetaBinner, SemiBin2), BUSCO bin QC, GTDB-Tk classification with a combined summary, PROKKA annotation, ALE evaluation and a final MultiQC report. The default short-read path of nf-core/mag, faithfully ported with the same tool versions and commands. Optional upstream branches are ported as when-gated rules, all off by default: host read removal (config.host_fasta), read normalization (config.bbnorm), adapterremoval/trimmomatic clipping (config.clip_tool), DAS Tool bin refinement (config.refine_bins_dastool), CheckM bin QC (config.run_checkm), CheckM2 bin QC (config.run_checkm2), GUNC contamination QC (config.run_gunc), Tiara domain classification (config.bin_domain_classification), CAT/BAT bin classification (config.cat_db) and virus identification with geNomad (config.run_virus_identification).</p>
+</div>
+<div>
+<div class="ox-glance">
+<div class="ox-glance-title">At a glance</div>
+<div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested · default-path</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">311</span></div>
+<div class="ox-kv"><span class="k">Compute</span><span class="v">up to 12 CPUs / 140 GB per rule (defaults 1 thread / 6 GB)</span></div>
+<div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Domain</span><span class="v">metagenomics</span></div>
+<div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/nf-core/mag">nf-core/mag</a></span></div>
+<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>5.5.0</code></span></div>
+<div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
+<div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
+<p class="cmd">$ oxo-flow run main.oxoflow</p>
+</div>
+</div>
+</div>
 <h2 id="run-it">Run it</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>oxo-flow<span class="w"> </span>run<span class="w"> </span>main.oxoflow
 </code></pre></div>
 <p>Download the GTDB-Tk database (~100 GB), set <code>config.gtdb_db</code>, then run — the default config otherwise points at committed test fixtures.</p>
 <h2 id="installation">Installation</h2>
-<p><strong>Engine.</strong> oxo-flow &gt;= 0.12.0</p>
+<p><strong>Engine.</strong> oxo-flow &gt;= 0.17.0</p>
 <p><strong>Toolchain.</strong> conda envs — pinned</p>
 <p><strong>Requirements.</strong>
-- input: paired-end reads as {sample}_R1.fastq.gz / {sample}_R2.fastq.gz in config.input_dir (default test/fixtures/raw); single-end not ported
+- input: paired-end reads as {sample}_R1.fastq.gz / {sample}_R2.fastq.gz in config.input_dir (default test/fixtures/raw); uniform single-end libraries runnable via config.sample_pattern override; interleaved and mixed-library samplesheets not ported
+- compute: up to 12 CPUs / 140 GB RAM per rule (SPAdes 10 CPUs/72 GB/24 h; GTDB-Tk classifywf 2 CPUs/140 GB/12 h; defaults 1 thread/6 GB)
 - reference: GTDB-Tk database — download gtdbtk_data.tar.gz (~100 GB) or unpacked directory and set config.gtdb_db (oxo-flow cannot download it mid-run)
 - reference: phiX genome FASTA bundled in the repo (assets/data/GCA_002596845.1_ASM259684v1_genomic.fna.gz) — no download needed
-- compute: up to 12 CPUs / 140 GB per rule (defaults 1 thread / 6 GB; per-rule maxima below)
-- per-rule maxima: SPAdes 10 CPUs/72 GB/24 h; GTDB-Tk classifywf 2 CPUs/140 GB/12 h
+- reference (optional): host genome FASTA for config.host_fasta (host read removal branch); CheckM lineage database comes with the conda env (config.run_checkm branch, ~1.1 GB unpacked); Tiara downloads its model on first run (config.bin_domain_classification branch)
+- reference (optional, per gated branch): CheckM2 database — checkm2 database --download (~8 GB, config.run_checkm2); GUNC reference database — gunc download_db (~21 GB, config.run_gunc); CAT-nr database — CAT_pack download + prepare, archive or unpacked directory with db/ and tax/ subdirectories (config.cat_db); geNomad database — genomad download-database (~10 GB, config.run_virus_identification); each branch fails fast with a clear message when its database is not set
 - software: conda or mamba with the pinned envs/*.yaml environments (one per tool, no container layer)
 - optional: disk — hundreds of GB for real datasets (GTDB-Tk database plus per-sample assemblies and bins)</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># 1. install oxo-flow (release binary, recommended)</span>
@@ -696,10 +667,52 @@
 </thead>
 <tbody>
 <tr>
+<td style="text-align: right;"><code>adapterremoval_adapter1</code></td>
+<td><code>AGATCGGAAGAGCACACGTCTGAACTCCAGTCACNNNNNNATCTCGTATGCCGTCTTCTGCTTG</code></td>
+<td>—</td>
+<td><code>adapterremoval_pe</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>adapterremoval_adapter2</code></td>
+<td><code>AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT</code></td>
+<td>—</td>
+<td><code>adapterremoval_pe</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>adapterremoval_minquality</code></td>
+<td><code>2</code></td>
+<td>—</td>
+<td><code>adapterremoval_pe</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>adapterremoval_trim_quality_stretch</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>adapterremoval_pe</code></td>
+</tr>
+<tr>
 <td style="text-align: right;"><code>ale_per_base_output</code></td>
 <td><code>false</code></td>
 <td>ALE (upstream --ale_per_base_output default false -&gt; --metagenome --nout)</td>
 <td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>bbnorm</code></td>
+<td><code>false</code></td>
+<td>Read normalization (upstream --bbnorm; runs between phiX removal and assembly)</td>
+<td><code>bbnorm</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>bbnorm_min</code></td>
+<td><code>5</code></td>
+<td>—</td>
+<td><code>bbnorm</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>bbnorm_target</code></td>
+<td><code>100</code></td>
+<td>—</td>
+<td><code>bbnorm</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>bin_concoct_chunksize</code></td>
@@ -720,6 +733,12 @@
 <td><code>concoct_cutup_megahit</code>, <code>concoct_cutup_spades</code></td>
 </tr>
 <tr>
+<td style="text-align: right;"><code>bin_domain_classification</code></td>
+<td><code>false</code></td>
+<td>Domain classification with Tiara (upstream --bin_domain_classification / --tiara_min_length)</td>
+<td><code>concat_tiara_tsv</code>, <code>fastatocontig2bin_tiara_megahit_comebin_bins</code>, <code>fastatocontig2bin_tiara_megahit_concoct_bins</code>, <code>fastatocontig2bin_tiara_megahit_maxbin2_bins</code>, <code>fastatocontig2bin_tiara_megahit_maxbin2_unbins</code>, <code>fastatocontig2bin_tiara_megahit_metabat2_bins</code>, <code>fastatocontig2bin_tiara_megahit_metabat2_unbins</code>, <code>fastatocontig2bin_tiara_megahit_metabinner_bins</code>, <code>fastatocontig2bin_tiara_megahit_metabinner_unbins</code>, <code>fastatocontig2bin_tiara_megahit_semibin2_bins</code>, <code>fastatocontig2bin_tiara_spades_comebin_bins</code>, <code>fastatocontig2bin_tiara_spades_concoct_bins</code>, <code>fastatocontig2bin_tiara_spades_maxbin2_bins</code>, <code>fastatocontig2bin_tiara_spades_maxbin2_unbins</code>, <code>fastatocontig2bin_tiara_spades_metabat2_bins</code>, <code>fastatocontig2bin_tiara_spades_metabat2_unbins</code>, <code>fastatocontig2bin_tiara_spades_metabinner_bins</code>, <code>fastatocontig2bin_tiara_spades_metabinner_unbins</code>, <code>fastatocontig2bin_tiara_spades_semibin2_bins</code>, <code>tiara_classify_megahit_comebin_bins</code>, <code>tiara_classify_megahit_concoct_bins</code>, <code>tiara_classify_megahit_maxbin2_bins</code>, <code>tiara_classify_megahit_maxbin2_unbins</code>, <code>tiara_classify_megahit_metabat2_bins</code>, <code>tiara_classify_megahit_metabat2_unbins</code>, <code>tiara_classify_megahit_metabinner_bins</code>, <code>tiara_classify_megahit_metabinner_unbins</code>, <code>tiara_classify_megahit_semibin2_bins</code>, <code>tiara_classify_spades_comebin_bins</code>, <code>tiara_classify_spades_concoct_bins</code>, <code>tiara_classify_spades_maxbin2_bins</code>, <code>tiara_classify_spades_maxbin2_unbins</code>, <code>tiara_classify_spades_metabat2_bins</code>, <code>tiara_classify_spades_metabat2_unbins</code>, <code>tiara_classify_spades_metabinner_bins</code>, <code>tiara_classify_spades_metabinner_unbins</code>, <code>tiara_classify_spades_semibin2_bins</code>, <code>tiara_tiara_megahit</code>, <code>tiara_tiara_spades</code></td>
+</tr>
+<tr>
 <td style="text-align: right;"><code>bin_max_size</code></td>
 <td>``</td>
 <td>—</td>
@@ -736,6 +755,36 @@
 <td><code>0</code></td>
 <td>Bin size filtering (upstream --bin_min_size / --bin_max_size; defaults 0/null make the seqkit-based filter a no-op)</td>
 <td>—</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>cat_allow_unofficial_lineages</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>catpack_addnames_megahit_comebin</code>, <code>catpack_addnames_megahit_concoct</code>, <code>catpack_addnames_megahit_maxbin2</code>, <code>catpack_addnames_megahit_metabat2</code>, <code>catpack_addnames_megahit_metabinner</code>, <code>catpack_addnames_megahit_semibin2</code>, <code>catpack_addnames_spades_comebin</code>, <code>catpack_addnames_spades_concoct</code>, <code>catpack_addnames_spades_maxbin2</code>, <code>catpack_addnames_spades_metabat2</code>, <code>catpack_addnames_spades_metabinner</code>, <code>catpack_addnames_spades_semibin2</code>, <code>catpack_summarise_megahit_comebin</code>, <code>catpack_summarise_megahit_concoct</code>, <code>catpack_summarise_megahit_maxbin2</code>, <code>catpack_summarise_megahit_metabat2</code>, <code>catpack_summarise_megahit_metabinner</code>, <code>catpack_summarise_megahit_semibin2</code>, <code>catpack_summarise_spades_comebin</code>, <code>catpack_summarise_spades_concoct</code>, <code>catpack_summarise_spades_maxbin2</code>, <code>catpack_summarise_spades_metabat2</code>, <code>catpack_summarise_spades_metabinner</code>, <code>catpack_summarise_spades_semibin2</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>cat_db</code></td>
+<td>``</td>
+<td>CAT/BAT bin classification (upstream --cat_db; the CAT_prepare database is user-provided — CAT_pack download + prepare, or the archive/directory itself; db/ and tax/ directories are discovered inside it)</td>
+<td><code>cat_db_preparation</code>, <code>catpack_addnames_megahit_comebin</code>, <code>catpack_addnames_megahit_concoct</code>, <code>catpack_addnames_megahit_maxbin2</code>, <code>catpack_addnames_megahit_metabat2</code>, <code>catpack_addnames_megahit_metabinner</code>, <code>catpack_addnames_megahit_semibin2</code>, <code>catpack_addnames_spades_comebin</code>, <code>catpack_addnames_spades_concoct</code>, <code>catpack_addnames_spades_maxbin2</code>, <code>catpack_addnames_spades_metabat2</code>, <code>catpack_addnames_spades_metabinner</code>, <code>catpack_addnames_spades_semibin2</code>, <code>catpack_bat_summary</code>, <code>catpack_bins_megahit_comebin</code>, <code>catpack_bins_megahit_concoct</code>, <code>catpack_bins_megahit_maxbin2</code>, <code>catpack_bins_megahit_metabat2</code>, <code>catpack_bins_megahit_metabinner</code>, <code>catpack_bins_megahit_semibin2</code>, <code>catpack_bins_spades_comebin</code>, <code>catpack_bins_spades_concoct</code>, <code>catpack_bins_spades_maxbin2</code>, <code>catpack_bins_spades_metabat2</code>, <code>catpack_bins_spades_metabinner</code>, <code>catpack_bins_spades_semibin2</code>, <code>catpack_summarise_megahit_comebin</code>, <code>catpack_summarise_megahit_concoct</code>, <code>catpack_summarise_megahit_maxbin2</code>, <code>catpack_summarise_megahit_metabat2</code>, <code>catpack_summarise_megahit_metabinner</code>, <code>catpack_summarise_megahit_semibin2</code>, <code>catpack_summarise_spades_comebin</code>, <code>catpack_summarise_spades_concoct</code>, <code>catpack_summarise_spades_maxbin2</code>, <code>catpack_summarise_spades_metabat2</code>, <code>catpack_summarise_spades_metabinner</code>, <code>catpack_summarise_spades_semibin2</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>checkm2_db</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>checkm2_megahit_comebin</code>, <code>checkm2_megahit_concoct</code>, <code>checkm2_megahit_maxbin2</code>, <code>checkm2_megahit_metabat2</code>, <code>checkm2_megahit_metabinner</code>, <code>checkm2_megahit_semibin2</code>, <code>checkm2_spades_comebin</code>, <code>checkm2_spades_concoct</code>, <code>checkm2_spades_maxbin2</code>, <code>checkm2_spades_metabat2</code>, <code>checkm2_spades_metabinner</code>, <code>checkm2_spades_semibin2</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>checkm_db</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>checkm_lineagewf_megahit_comebin</code>, <code>checkm_lineagewf_megahit_concoct</code>, <code>checkm_lineagewf_megahit_maxbin2</code>, <code>checkm_lineagewf_megahit_metabat2</code>, <code>checkm_lineagewf_megahit_metabinner</code>, <code>checkm_lineagewf_megahit_semibin2</code>, <code>checkm_lineagewf_spades_comebin</code>, <code>checkm_lineagewf_spades_concoct</code>, <code>checkm_lineagewf_spades_maxbin2</code>, <code>checkm_lineagewf_spades_metabat2</code>, <code>checkm_lineagewf_spades_metabinner</code>, <code>checkm_lineagewf_spades_semibin2</code>, <code>checkm_qa_megahit_comebin</code>, <code>checkm_qa_megahit_concoct</code>, <code>checkm_qa_megahit_maxbin2</code>, <code>checkm_qa_megahit_metabat2</code>, <code>checkm_qa_megahit_metabinner</code>, <code>checkm_qa_megahit_semibin2</code>, <code>checkm_qa_spades_comebin</code>, <code>checkm_qa_spades_concoct</code>, <code>checkm_qa_spades_maxbin2</code>, <code>checkm_qa_spades_metabat2</code>, <code>checkm_qa_spades_metabinner</code>, <code>checkm_qa_spades_semibin2</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>clip_tool</code></td>
+<td><code>fastp</code></td>
+<td>Clipping (upstream params with the same defaults; --clip_tool selects the adapter trimmer, fastp is the upstream default)</td>
+<td><code>adapterremoval_pe</code>, <code>fastp</code>, <code>trimmomatic</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cohort_samples</code></td>
@@ -762,9 +811,15 @@
 <td><code>fastp</code></td>
 </tr>
 <tr>
+<td style="text-align: right;"><code>genomad_db</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>genomad_db_preparation</code>, <code>genomad_megahit</code>, <code>genomad_spades</code></td>
+</tr>
+<tr>
 <td style="text-align: right;"><code>gtdb_db</code></td>
-<td><code>https://data.gtdb.aau.ecogenomic.org/releases/release232/232.0/auxillary_files/gtdbtk_package/full_package/gtdbtk_r232_data.tar.gz</code></td>
-<td>GTDB-Tk database: URL of the .tar.gz release or a local directory (upstream --gtdb_db default). gtdbtk_db_preparation unpacks .tar.gz.</td>
+<td>``</td>
+<td>GTDB-Tk database: local path to the release .tar.gz or an unpacked directory (upstream --gtdb_db, ~100GB). oxo-flow cannot download it mid-run (the prep rule only unpacks), so the default is empty and run_gtdbtk=true fails fast until a local path is set.</td>
 <td><code>gtdbtk_db_preparation</code></td>
 </tr>
 <tr>
@@ -810,10 +865,34 @@
 <td>—</td>
 </tr>
 <tr>
+<td style="text-align: right;"><code>gunc_db</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>gunc_megahit_comebin</code>, <code>gunc_megahit_concoct</code>, <code>gunc_megahit_maxbin2</code>, <code>gunc_megahit_metabat2</code>, <code>gunc_megahit_metabinner</code>, <code>gunc_megahit_semibin2</code>, <code>gunc_spades_comebin</code>, <code>gunc_spades_concoct</code>, <code>gunc_spades_maxbin2</code>, <code>gunc_spades_metabat2</code>, <code>gunc_spades_metabinner</code>, <code>gunc_spades_semibin2</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>host_fasta</code></td>
+<td>``</td>
+<td>Host read removal (upstream --host_fasta / --host_fasta_bowtie2index; the reference fasta is required, the prebuilt bowtie2 index is optional and skips the build rule)</td>
+<td><code>host_removal_align</code>, <code>host_removal_build</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>host_fasta_bowtie2index</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>host_removal_align</code>, <code>host_removal_build</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>host_removal_verysensitive</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>host_removal_align</code></td>
+</tr>
+<tr>
 <td style="text-align: right;"><code>input_dir</code></td>
 <td><code>test/fixtures/raw</code></td>
 <td>Input directory containing {sample}_R1.fastq.gz / {sample}_R2.fastq.gz paired-end read files (upstream --input samplesheet; single-end and multi-library lanes are not ported). The repo default ships tiny test fixtures; point this at your data.</td>
-<td><code>fastp</code>, <code>fastqc_raw</code></td>
+<td><code>adapterremoval_pe</code>, <code>fastp</code>, <code>fastqc_raw</code>, <code>trimmomatic</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>max_unbinned_contigs</code></td>
@@ -843,7 +922,7 @@
 <td style="text-align: right;"><code>out_dir</code></td>
 <td><code>results</code></td>
 <td>—</td>
-<td><code>ale_megahit</code>, <code>ale_spades</code>, <code>bin_summary</code>, <code>bowtie2_align_megahit</code>, <code>bowtie2_align_spades</code>, <code>busco_megahit_comebin</code>, <code>busco_megahit_concoct</code>, <code>busco_megahit_maxbin2</code>, <code>busco_megahit_metabat2</code>, <code>busco_megahit_metabinner</code>, <code>busco_megahit_semibin2</code>, <code>busco_spades_comebin</code>, <code>busco_spades_concoct</code>, <code>busco_spades_maxbin2</code>, <code>busco_spades_metabat2</code>, <code>busco_spades_metabinner</code>, <code>busco_spades_semibin2</code>, <code>comebin_megahit</code>, <code>comebin_spades</code>, <code>concat_busco</code>, <code>concat_quast</code>, <code>concoct_extract_megahit</code>, <code>concoct_extract_spades</code>, <code>concoct_merge_megahit</code>, <code>concoct_merge_spades</code>, <code>depths_megahit</code>, <code>depths_spades</code>, <code>fastp</code>, <code>fastqc_raw</code>, <code>fastqc_trimmed</code>, <code>gtdbtk_megahit_comebin</code>, <code>gtdbtk_megahit_concoct</code>, <code>gtdbtk_megahit_maxbin2</code>, <code>gtdbtk_megahit_metabat2</code>, <code>gtdbtk_megahit_metabinner</code>, <code>gtdbtk_megahit_semibin2</code>, <code>gtdbtk_spades_comebin</code>, <code>gtdbtk_spades_concoct</code>, <code>gtdbtk_spades_maxbin2</code>, <code>gtdbtk_spades_metabat2</code>, <code>gtdbtk_spades_metabinner</code>, <code>gtdbtk_spades_semibin2</code>, <code>gtdbtk_summary</code>, <code>mag_depths_megahit_comebin</code>, <code>mag_depths_megahit_concoct</code>, <code>mag_depths_megahit_maxbin2</code>, <code>mag_depths_megahit_metabat2</code>, <code>mag_depths_megahit_metabinner</code>, <code>mag_depths_megahit_semibin2</code>, <code>mag_depths_spades_comebin</code>, <code>mag_depths_spades_concoct</code>, <code>mag_depths_spades_maxbin2</code>, <code>mag_depths_spades_metabat2</code>, <code>mag_depths_spades_metabinner</code>, <code>mag_depths_spades_semibin2</code>, <code>mag_depths_summary</code>, <code>maxbin2_megahit</code>, <code>maxbin2_spades</code>, <code>megahit</code>, <code>metabat2_megahit</code>, <code>metabat2_spades</code>, <code>metabinner_bins_megahit</code>, <code>metabinner_bins_spades</code>, <code>multiqc</code>, <code>phix_align</code>, <code>prodigal_megahit</code>, <code>prodigal_spades</code>, <code>prokka_megahit_comebin</code>, <code>prokka_megahit_concoct</code>, <code>prokka_megahit_maxbin2</code>, <code>prokka_megahit_metabat2</code>, <code>prokka_megahit_metabinner</code>, <code>prokka_megahit_semibin2</code>, <code>prokka_spades_comebin</code>, <code>prokka_spades_concoct</code>, <code>prokka_spades_maxbin2</code>, <code>prokka_spades_metabat2</code>, <code>prokka_spades_metabinner</code>, <code>prokka_spades_semibin2</code>, <code>quast_bins_megahit_comebin</code>, <code>quast_bins_megahit_concoct</code>, <code>quast_bins_megahit_maxbin2</code>, <code>quast_bins_megahit_metabat2</code>, <code>quast_bins_megahit_metabinner</code>, <code>quast_bins_megahit_semibin2</code>, <code>quast_bins_spades_comebin</code>, <code>quast_bins_spades_concoct</code>, <code>quast_bins_spades_maxbin2</code>, <code>quast_bins_spades_metabat2</code>, <code>quast_bins_spades_metabinner</code>, <code>quast_bins_spades_semibin2</code>, <code>quast_megahit</code>, <code>quast_spades</code>, <code>semibin_megahit</code>, <code>semibin_spades</code>, <code>seqkit_megahit_comebin</code>, <code>seqkit_megahit_concoct</code>, <code>seqkit_megahit_maxbin2</code>, <code>seqkit_megahit_metabat2</code>, <code>seqkit_megahit_metabinner</code>, <code>seqkit_megahit_semibin</code>, <code>seqkit_spades_comebin</code>, <code>seqkit_spades_concoct</code>, <code>seqkit_spades_maxbin2</code>, <code>seqkit_spades_metabat2</code>, <code>seqkit_spades_metabinner</code>, <code>seqkit_spades_semibin</code>, <code>spades</code>, <code>split_fasta_maxbin2_megahit</code>, <code>split_fasta_maxbin2_spades</code>, <code>split_fasta_metabat2_megahit</code>, <code>split_fasta_metabat2_spades</code>, <code>split_fasta_metabinner_megahit</code>, <code>split_fasta_metabinner_spades</code></td>
+<td><code>adapterremoval_pe</code>, <code>ale_megahit</code>, <code>ale_spades</code>, <code>bbnorm</code>, <code>bin_summary</code>, <code>bowtie2_align_megahit</code>, <code>bowtie2_align_spades</code>, <code>busco_megahit_comebin</code>, <code>busco_megahit_concoct</code>, <code>busco_megahit_maxbin2</code>, <code>busco_megahit_metabat2</code>, <code>busco_megahit_metabinner</code>, <code>busco_megahit_semibin2</code>, <code>busco_spades_comebin</code>, <code>busco_spades_concoct</code>, <code>busco_spades_maxbin2</code>, <code>busco_spades_metabat2</code>, <code>busco_spades_metabinner</code>, <code>busco_spades_semibin2</code>, <code>catpack_addnames_megahit_comebin</code>, <code>catpack_addnames_megahit_concoct</code>, <code>catpack_addnames_megahit_maxbin2</code>, <code>catpack_addnames_megahit_metabat2</code>, <code>catpack_addnames_megahit_metabinner</code>, <code>catpack_addnames_megahit_semibin2</code>, <code>catpack_addnames_spades_comebin</code>, <code>catpack_addnames_spades_concoct</code>, <code>catpack_addnames_spades_maxbin2</code>, <code>catpack_addnames_spades_metabat2</code>, <code>catpack_addnames_spades_metabinner</code>, <code>catpack_addnames_spades_semibin2</code>, <code>catpack_bat_summary</code>, <code>catpack_bins_megahit_comebin</code>, <code>catpack_bins_megahit_concoct</code>, <code>catpack_bins_megahit_maxbin2</code>, <code>catpack_bins_megahit_metabat2</code>, <code>catpack_bins_megahit_metabinner</code>, <code>catpack_bins_megahit_semibin2</code>, <code>catpack_bins_spades_comebin</code>, <code>catpack_bins_spades_concoct</code>, <code>catpack_bins_spades_maxbin2</code>, <code>catpack_bins_spades_metabat2</code>, <code>catpack_bins_spades_metabinner</code>, <code>catpack_bins_spades_semibin2</code>, <code>catpack_summarise_megahit_comebin</code>, <code>catpack_summarise_megahit_concoct</code>, <code>catpack_summarise_megahit_maxbin2</code>, <code>catpack_summarise_megahit_metabat2</code>, <code>catpack_summarise_megahit_metabinner</code>, <code>catpack_summarise_megahit_semibin2</code>, <code>catpack_summarise_spades_comebin</code>, <code>catpack_summarise_spades_concoct</code>, <code>catpack_summarise_spades_maxbin2</code>, <code>catpack_summarise_spades_metabat2</code>, <code>catpack_summarise_spades_metabinner</code>, <code>catpack_summarise_spades_semibin2</code>, <code>checkm2_megahit_comebin</code>, <code>checkm2_megahit_concoct</code>, <code>checkm2_megahit_maxbin2</code>, <code>checkm2_megahit_metabat2</code>, <code>checkm2_megahit_metabinner</code>, <code>checkm2_megahit_semibin2</code>, <code>checkm2_spades_comebin</code>, <code>checkm2_spades_concoct</code>, <code>checkm2_spades_maxbin2</code>, <code>checkm2_spades_metabat2</code>, <code>checkm2_spades_metabinner</code>, <code>checkm2_spades_semibin2</code>, <code>checkm_lineagewf_megahit_comebin</code>, <code>checkm_lineagewf_megahit_concoct</code>, <code>checkm_lineagewf_megahit_maxbin2</code>, <code>checkm_lineagewf_megahit_metabat2</code>, <code>checkm_lineagewf_megahit_metabinner</code>, <code>checkm_lineagewf_megahit_semibin2</code>, <code>checkm_lineagewf_spades_comebin</code>, <code>checkm_lineagewf_spades_concoct</code>, <code>checkm_lineagewf_spades_maxbin2</code>, <code>checkm_lineagewf_spades_metabat2</code>, <code>checkm_lineagewf_spades_metabinner</code>, <code>checkm_lineagewf_spades_semibin2</code>, <code>checkm_qa_megahit_comebin</code>, <code>checkm_qa_megahit_concoct</code>, <code>checkm_qa_megahit_maxbin2</code>, <code>checkm_qa_megahit_metabat2</code>, <code>checkm_qa_megahit_metabinner</code>, <code>checkm_qa_megahit_semibin2</code>, <code>checkm_qa_spades_comebin</code>, <code>checkm_qa_spades_concoct</code>, <code>checkm_qa_spades_maxbin2</code>, <code>checkm_qa_spades_metabat2</code>, <code>checkm_qa_spades_metabinner</code>, <code>checkm_qa_spades_semibin2</code>, <code>comebin_megahit</code>, <code>comebin_spades</code>, <code>concat_busco</code>, <code>concat_checkm2_tsv</code>, <code>concat_checkm_tsv</code>, <code>concat_gunc_checkm_tsv</code>, <code>concat_gunc_tsv</code>, <code>concat_quast</code>, <code>concat_tiara_tsv</code>, <code>concoct_extract_megahit</code>, <code>concoct_extract_spades</code>, <code>concoct_merge_megahit</code>, <code>concoct_merge_spades</code>, <code>dastool_dastool_megahit</code>, <code>dastool_dastool_spades</code>, <code>dastool_rename_post_megahit</code>, <code>dastool_rename_post_spades</code>, <code>dastool_rename_pre_megahit_comebin</code>, <code>dastool_rename_pre_megahit_concoct</code>, <code>dastool_rename_pre_megahit_maxbin2</code>, <code>dastool_rename_pre_megahit_metabat2</code>, <code>dastool_rename_pre_megahit_metabinner</code>, <code>dastool_rename_pre_megahit_semibin2</code>, <code>dastool_rename_pre_spades_comebin</code>, <code>dastool_rename_pre_spades_concoct</code>, <code>dastool_rename_pre_spades_maxbin2</code>, <code>dastool_rename_pre_spades_metabat2</code>, <code>dastool_rename_pre_spades_metabinner</code>, <code>dastool_rename_pre_spades_semibin2</code>, <code>depths_megahit</code>, <code>depths_spades</code>, <code>fastatocontig2bin_tiara_megahit_comebin_bins</code>, <code>fastatocontig2bin_tiara_megahit_concoct_bins</code>, <code>fastatocontig2bin_tiara_megahit_maxbin2_bins</code>, <code>fastatocontig2bin_tiara_megahit_maxbin2_unbins</code>, <code>fastatocontig2bin_tiara_megahit_metabat2_bins</code>, <code>fastatocontig2bin_tiara_megahit_metabat2_unbins</code>, <code>fastatocontig2bin_tiara_megahit_metabinner_bins</code>, <code>fastatocontig2bin_tiara_megahit_metabinner_unbins</code>, <code>fastatocontig2bin_tiara_megahit_semibin2_bins</code>, <code>fastatocontig2bin_tiara_spades_comebin_bins</code>, <code>fastatocontig2bin_tiara_spades_concoct_bins</code>, <code>fastatocontig2bin_tiara_spades_maxbin2_bins</code>, <code>fastatocontig2bin_tiara_spades_maxbin2_unbins</code>, <code>fastatocontig2bin_tiara_spades_metabat2_bins</code>, <code>fastatocontig2bin_tiara_spades_metabat2_unbins</code>, <code>fastatocontig2bin_tiara_spades_metabinner_bins</code>, <code>fastatocontig2bin_tiara_spades_metabinner_unbins</code>, <code>fastatocontig2bin_tiara_spades_semibin2_bins</code>, <code>fastp</code>, <code>fastqc_raw</code>, <code>fastqc_trimmed</code>, <code>genomad_megahit</code>, <code>genomad_spades</code>, <code>gtdbtk_megahit_comebin</code>, <code>gtdbtk_megahit_concoct</code>, <code>gtdbtk_megahit_maxbin2</code>, <code>gtdbtk_megahit_metabat2</code>, <code>gtdbtk_megahit_metabinner</code>, <code>gtdbtk_megahit_semibin2</code>, <code>gtdbtk_spades_comebin</code>, <code>gtdbtk_spades_concoct</code>, <code>gtdbtk_spades_maxbin2</code>, <code>gtdbtk_spades_metabat2</code>, <code>gtdbtk_spades_metabinner</code>, <code>gtdbtk_spades_semibin2</code>, <code>gtdbtk_summary</code>, <code>gunc_megahit_comebin</code>, <code>gunc_megahit_concoct</code>, <code>gunc_megahit_maxbin2</code>, <code>gunc_megahit_metabat2</code>, <code>gunc_megahit_metabinner</code>, <code>gunc_megahit_semibin2</code>, <code>gunc_mergecheckm_megahit_comebin</code>, <code>gunc_mergecheckm_megahit_concoct</code>, <code>gunc_mergecheckm_megahit_maxbin2</code>, <code>gunc_mergecheckm_megahit_metabat2</code>, <code>gunc_mergecheckm_megahit_metabinner</code>, <code>gunc_mergecheckm_megahit_semibin2</code>, <code>gunc_mergecheckm_spades_comebin</code>, <code>gunc_mergecheckm_spades_concoct</code>, <code>gunc_mergecheckm_spades_maxbin2</code>, <code>gunc_mergecheckm_spades_metabat2</code>, <code>gunc_mergecheckm_spades_metabinner</code>, <code>gunc_mergecheckm_spades_semibin2</code>, <code>gunc_spades_comebin</code>, <code>gunc_spades_concoct</code>, <code>gunc_spades_maxbin2</code>, <code>gunc_spades_metabat2</code>, <code>gunc_spades_metabinner</code>, <code>gunc_spades_semibin2</code>, <code>host_removal_align</code>, <code>mag_depths_megahit_comebin</code>, <code>mag_depths_megahit_concoct</code>, <code>mag_depths_megahit_maxbin2</code>, <code>mag_depths_megahit_metabat2</code>, <code>mag_depths_megahit_metabinner</code>, <code>mag_depths_megahit_semibin2</code>, <code>mag_depths_spades_comebin</code>, <code>mag_depths_spades_concoct</code>, <code>mag_depths_spades_maxbin2</code>, <code>mag_depths_spades_metabat2</code>, <code>mag_depths_spades_metabinner</code>, <code>mag_depths_spades_semibin2</code>, <code>mag_depths_summary</code>, <code>maxbin2_megahit</code>, <code>maxbin2_spades</code>, <code>megahit</code>, <code>metabat2_megahit</code>, <code>metabat2_spades</code>, <code>metabinner_bins_megahit</code>, <code>metabinner_bins_spades</code>, <code>multiqc</code>, <code>phix_align</code>, <code>prodigal_megahit</code>, <code>prodigal_spades</code>, <code>prokka_megahit_comebin</code>, <code>prokka_megahit_concoct</code>, <code>prokka_megahit_maxbin2</code>, <code>prokka_megahit_metabat2</code>, <code>prokka_megahit_metabinner</code>, <code>prokka_megahit_semibin2</code>, <code>prokka_spades_comebin</code>, <code>prokka_spades_concoct</code>, <code>prokka_spades_maxbin2</code>, <code>prokka_spades_metabat2</code>, <code>prokka_spades_metabinner</code>, <code>prokka_spades_semibin2</code>, <code>quast_bins_megahit_comebin</code>, <code>quast_bins_megahit_concoct</code>, <code>quast_bins_megahit_maxbin2</code>, <code>quast_bins_megahit_metabat2</code>, <code>quast_bins_megahit_metabinner</code>, <code>quast_bins_megahit_semibin2</code>, <code>quast_bins_spades_comebin</code>, <code>quast_bins_spades_concoct</code>, <code>quast_bins_spades_maxbin2</code>, <code>quast_bins_spades_metabat2</code>, <code>quast_bins_spades_metabinner</code>, <code>quast_bins_spades_semibin2</code>, <code>quast_megahit</code>, <code>quast_spades</code>, <code>semibin_megahit</code>, <code>semibin_spades</code>, <code>seqkit_megahit_comebin</code>, <code>seqkit_megahit_concoct</code>, <code>seqkit_megahit_maxbin2</code>, <code>seqkit_megahit_metabat2</code>, <code>seqkit_megahit_metabinner</code>, <code>seqkit_megahit_semibin</code>, <code>seqkit_spades_comebin</code>, <code>seqkit_spades_concoct</code>, <code>seqkit_spades_maxbin2</code>, <code>seqkit_spades_metabat2</code>, <code>seqkit_spades_metabinner</code>, <code>seqkit_spades_semibin</code>, <code>spades</code>, <code>split_fasta_maxbin2_megahit</code>, <code>split_fasta_maxbin2_spades</code>, <code>split_fasta_metabat2_megahit</code>, <code>split_fasta_metabat2_spades</code>, <code>split_fasta_metabinner_megahit</code>, <code>split_fasta_metabinner_spades</code>, <code>tiara_classify_megahit_comebin_bins</code>, <code>tiara_classify_megahit_concoct_bins</code>, <code>tiara_classify_megahit_maxbin2_bins</code>, <code>tiara_classify_megahit_maxbin2_unbins</code>, <code>tiara_classify_megahit_metabat2_bins</code>, <code>tiara_classify_megahit_metabat2_unbins</code>, <code>tiara_classify_megahit_metabinner_bins</code>, <code>tiara_classify_megahit_metabinner_unbins</code>, <code>tiara_classify_megahit_semibin2_bins</code>, <code>tiara_classify_spades_comebin_bins</code>, <code>tiara_classify_spades_concoct_bins</code>, <code>tiara_classify_spades_maxbin2_bins</code>, <code>tiara_classify_spades_maxbin2_unbins</code>, <code>tiara_classify_spades_metabat2_bins</code>, <code>tiara_classify_spades_metabat2_unbins</code>, <code>tiara_classify_spades_metabinner_bins</code>, <code>tiara_classify_spades_metabinner_unbins</code>, <code>tiara_classify_spades_semibin2_bins</code>, <code>tiara_tiara_megahit</code>, <code>tiara_tiara_spades</code>, <code>trimmomatic</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>phix_reference</code></td>
@@ -866,8 +945,50 @@
 <tr>
 <td style="text-align: right;"><code>reads_minlength</code></td>
 <td><code>15</code></td>
-<td>fastp clipping (upstream params with the same defaults)</td>
-<td><code>fastp</code></td>
+<td>—</td>
+<td><code>adapterremoval_pe</code>, <code>fastp</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>refine_bins_dastool</code></td>
+<td><code>false</code></td>
+<td>DAS Tool bin refinement (upstream --refine_bins_dastool / --refine_bins_dastool_threshold)</td>
+<td><code>dastool_dastool_megahit</code>, <code>dastool_dastool_spades</code>, <code>dastool_fastatocontig2bin_megahit_comebin</code>, <code>dastool_fastatocontig2bin_megahit_concoct</code>, <code>dastool_fastatocontig2bin_megahit_maxbin2</code>, <code>dastool_fastatocontig2bin_megahit_metabat2</code>, <code>dastool_fastatocontig2bin_megahit_metabinner</code>, <code>dastool_fastatocontig2bin_megahit_semibin2</code>, <code>dastool_fastatocontig2bin_spades_comebin</code>, <code>dastool_fastatocontig2bin_spades_concoct</code>, <code>dastool_fastatocontig2bin_spades_maxbin2</code>, <code>dastool_fastatocontig2bin_spades_metabat2</code>, <code>dastool_fastatocontig2bin_spades_metabinner</code>, <code>dastool_fastatocontig2bin_spades_semibin2</code>, <code>dastool_rename_post_megahit</code>, <code>dastool_rename_post_spades</code>, <code>dastool_rename_pre_megahit_comebin</code>, <code>dastool_rename_pre_megahit_concoct</code>, <code>dastool_rename_pre_megahit_maxbin2</code>, <code>dastool_rename_pre_megahit_metabat2</code>, <code>dastool_rename_pre_megahit_metabinner</code>, <code>dastool_rename_pre_megahit_semibin2</code>, <code>dastool_rename_pre_spades_comebin</code>, <code>dastool_rename_pre_spades_concoct</code>, <code>dastool_rename_pre_spades_maxbin2</code>, <code>dastool_rename_pre_spades_metabat2</code>, <code>dastool_rename_pre_spades_metabinner</code>, <code>dastool_rename_pre_spades_semibin2</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>refine_bins_dastool_threshold</code></td>
+<td><code>0.5</code></td>
+<td>—</td>
+<td><code>dastool_dastool_megahit</code>, <code>dastool_dastool_spades</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>run_checkm</code></td>
+<td><code>false</code></td>
+<td>CheckM bin QC (upstream --run_checkm; the 1.1GB lineage database is downloaded at env creation and unpacked at run time — see README)</td>
+<td><code>checkm_lineagewf_megahit_comebin</code>, <code>checkm_lineagewf_megahit_concoct</code>, <code>checkm_lineagewf_megahit_maxbin2</code>, <code>checkm_lineagewf_megahit_metabat2</code>, <code>checkm_lineagewf_megahit_metabinner</code>, <code>checkm_lineagewf_megahit_semibin2</code>, <code>checkm_lineagewf_spades_comebin</code>, <code>checkm_lineagewf_spades_concoct</code>, <code>checkm_lineagewf_spades_maxbin2</code>, <code>checkm_lineagewf_spades_metabat2</code>, <code>checkm_lineagewf_spades_metabinner</code>, <code>checkm_lineagewf_spades_semibin2</code>, <code>checkm_qa_megahit_comebin</code>, <code>checkm_qa_megahit_concoct</code>, <code>checkm_qa_megahit_maxbin2</code>, <code>checkm_qa_megahit_metabat2</code>, <code>checkm_qa_megahit_metabinner</code>, <code>checkm_qa_megahit_semibin2</code>, <code>checkm_qa_spades_comebin</code>, <code>checkm_qa_spades_concoct</code>, <code>checkm_qa_spades_maxbin2</code>, <code>checkm_qa_spades_metabat2</code>, <code>checkm_qa_spades_metabinner</code>, <code>checkm_qa_spades_semibin2</code>, <code>concat_checkm_tsv</code>, <code>concat_gunc_checkm_tsv</code>, <code>gunc_mergecheckm_megahit_comebin</code>, <code>gunc_mergecheckm_megahit_concoct</code>, <code>gunc_mergecheckm_megahit_maxbin2</code>, <code>gunc_mergecheckm_megahit_metabat2</code>, <code>gunc_mergecheckm_megahit_metabinner</code>, <code>gunc_mergecheckm_megahit_semibin2</code>, <code>gunc_mergecheckm_spades_comebin</code>, <code>gunc_mergecheckm_spades_concoct</code>, <code>gunc_mergecheckm_spades_maxbin2</code>, <code>gunc_mergecheckm_spades_metabat2</code>, <code>gunc_mergecheckm_spades_metabinner</code>, <code>gunc_mergecheckm_spades_semibin2</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>run_checkm2</code></td>
+<td><code>false</code></td>
+<td>CheckM2 bin QC (upstream --run_checkm2; the ~10GB .dmnd database is user-provided — checkm2 database --download; fails fast when empty)</td>
+<td><code>checkm2_megahit_comebin</code>, <code>checkm2_megahit_concoct</code>, <code>checkm2_megahit_maxbin2</code>, <code>checkm2_megahit_metabat2</code>, <code>checkm2_megahit_metabinner</code>, <code>checkm2_megahit_semibin2</code>, <code>checkm2_spades_comebin</code>, <code>checkm2_spades_concoct</code>, <code>checkm2_spades_maxbin2</code>, <code>checkm2_spades_metabat2</code>, <code>checkm2_spades_metabinner</code>, <code>checkm2_spades_semibin2</code>, <code>concat_checkm2_tsv</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>run_gtdbtk</code></td>
+<td><code>true</code></td>
+<td>GTDB-Tk gate: the ~100GB reference database is user-provided (see the README requirements); run_gtdbtk=false runs the full pipeline minus the GTDB-Tk classification (the documented live-test contract).</td>
+<td><code>gtdbtk_db_preparation</code>, <code>gtdbtk_megahit_comebin</code>, <code>gtdbtk_megahit_concoct</code>, <code>gtdbtk_megahit_maxbin2</code>, <code>gtdbtk_megahit_metabat2</code>, <code>gtdbtk_megahit_metabinner</code>, <code>gtdbtk_megahit_semibin2</code>, <code>gtdbtk_spades_comebin</code>, <code>gtdbtk_spades_concoct</code>, <code>gtdbtk_spades_maxbin2</code>, <code>gtdbtk_spades_metabat2</code>, <code>gtdbtk_spades_metabinner</code>, <code>gtdbtk_spades_semibin2</code>, <code>gtdbtk_summary</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>run_gunc</code></td>
+<td><code>false</code></td>
+<td>GUNC contamination QC (upstream --run_gunc; the reference database is user-provided — gunc download_db; fails fast when empty)</td>
+<td><code>concat_gunc_checkm_tsv</code>, <code>concat_gunc_tsv</code>, <code>gunc_megahit_comebin</code>, <code>gunc_megahit_concoct</code>, <code>gunc_megahit_maxbin2</code>, <code>gunc_megahit_metabat2</code>, <code>gunc_megahit_metabinner</code>, <code>gunc_megahit_semibin2</code>, <code>gunc_mergecheckm_megahit_comebin</code>, <code>gunc_mergecheckm_megahit_concoct</code>, <code>gunc_mergecheckm_megahit_maxbin2</code>, <code>gunc_mergecheckm_megahit_metabat2</code>, <code>gunc_mergecheckm_megahit_metabinner</code>, <code>gunc_mergecheckm_megahit_semibin2</code>, <code>gunc_mergecheckm_spades_comebin</code>, <code>gunc_mergecheckm_spades_concoct</code>, <code>gunc_mergecheckm_spades_maxbin2</code>, <code>gunc_mergecheckm_spades_metabat2</code>, <code>gunc_mergecheckm_spades_metabinner</code>, <code>gunc_mergecheckm_spades_semibin2</code>, <code>gunc_spades_comebin</code>, <code>gunc_spades_concoct</code>, <code>gunc_spades_maxbin2</code>, <code>gunc_spades_metabat2</code>, <code>gunc_spades_metabinner</code>, <code>gunc_spades_semibin2</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>run_virus_identification</code></td>
+<td><code>false</code></td>
+<td>Virus identification (upstream --run_virus_identification; the geNomad database is user-provided — genomad download-database; fails fast when empty)</td>
+<td><code>genomad_db_preparation</code>, <code>genomad_megahit</code>, <code>genomad_spades</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>semibin_environment</code></td>
@@ -887,6 +1008,12 @@
 <td>—</td>
 <td>—</td>
 </tr>
+<tr>
+<td style="text-align: right;"><code>tiara_min_length</code></td>
+<td><code>3000</code></td>
+<td>—</td>
+<td><code>tiara_tiara_megahit</code>, <code>tiara_tiara_spades</code></td>
+</tr>
 </tbody>
 </table>
 <p>Descriptions are the workflow's own <code>#</code> comments from its <code>[config]</code> section, surfaced by <code>oxo-flow info</code> — no schema file to maintain.</p>
@@ -899,8 +1026,10 @@
 <p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
 <p><strong>In scope</strong></p>
 <ul>
+<li>adapterremoval_pe</li>
 <li>ale_megahit</li>
 <li>ale_spades</li>
+<li>bbnorm</li>
 <li>bin_summary</li>
 <li>bowtie2_align_megahit</li>
 <li>bowtie2_align_spades</li>
@@ -918,10 +1047,89 @@
 <li>busco_spades_metabat2</li>
 <li>busco_spades_metabinner</li>
 <li>busco_spades_semibin2</li>
+<li>cat_db_preparation</li>
+<li>catpack_addnames_megahit_comebin</li>
+<li>catpack_addnames_megahit_concoct</li>
+<li>catpack_addnames_megahit_maxbin2</li>
+<li>catpack_addnames_megahit_metabat2</li>
+<li>catpack_addnames_megahit_metabinner</li>
+<li>catpack_addnames_megahit_semibin2</li>
+<li>catpack_addnames_spades_comebin</li>
+<li>catpack_addnames_spades_concoct</li>
+<li>catpack_addnames_spades_maxbin2</li>
+<li>catpack_addnames_spades_metabat2</li>
+<li>catpack_addnames_spades_metabinner</li>
+<li>catpack_addnames_spades_semibin2</li>
+<li>catpack_bat_summary</li>
+<li>catpack_bins_megahit_comebin</li>
+<li>catpack_bins_megahit_concoct</li>
+<li>catpack_bins_megahit_maxbin2</li>
+<li>catpack_bins_megahit_metabat2</li>
+<li>catpack_bins_megahit_metabinner</li>
+<li>catpack_bins_megahit_semibin2</li>
+<li>catpack_bins_spades_comebin</li>
+<li>catpack_bins_spades_concoct</li>
+<li>catpack_bins_spades_maxbin2</li>
+<li>catpack_bins_spades_metabat2</li>
+<li>catpack_bins_spades_metabinner</li>
+<li>catpack_bins_spades_semibin2</li>
+<li>catpack_summarise_megahit_comebin</li>
+<li>catpack_summarise_megahit_concoct</li>
+<li>catpack_summarise_megahit_maxbin2</li>
+<li>catpack_summarise_megahit_metabat2</li>
+<li>catpack_summarise_megahit_metabinner</li>
+<li>catpack_summarise_megahit_semibin2</li>
+<li>catpack_summarise_spades_comebin</li>
+<li>catpack_summarise_spades_concoct</li>
+<li>catpack_summarise_spades_maxbin2</li>
+<li>catpack_summarise_spades_metabat2</li>
+<li>catpack_summarise_spades_metabinner</li>
+<li>catpack_summarise_spades_semibin2</li>
+<li>checkm2_megahit_comebin</li>
+<li>checkm2_megahit_concoct</li>
+<li>checkm2_megahit_maxbin2</li>
+<li>checkm2_megahit_metabat2</li>
+<li>checkm2_megahit_metabinner</li>
+<li>checkm2_megahit_semibin2</li>
+<li>checkm2_spades_comebin</li>
+<li>checkm2_spades_concoct</li>
+<li>checkm2_spades_maxbin2</li>
+<li>checkm2_spades_metabat2</li>
+<li>checkm2_spades_metabinner</li>
+<li>checkm2_spades_semibin2</li>
+<li>checkm_lineagewf_megahit_comebin</li>
+<li>checkm_lineagewf_megahit_concoct</li>
+<li>checkm_lineagewf_megahit_maxbin2</li>
+<li>checkm_lineagewf_megahit_metabat2</li>
+<li>checkm_lineagewf_megahit_metabinner</li>
+<li>checkm_lineagewf_megahit_semibin2</li>
+<li>checkm_lineagewf_spades_comebin</li>
+<li>checkm_lineagewf_spades_concoct</li>
+<li>checkm_lineagewf_spades_maxbin2</li>
+<li>checkm_lineagewf_spades_metabat2</li>
+<li>checkm_lineagewf_spades_metabinner</li>
+<li>checkm_lineagewf_spades_semibin2</li>
+<li>checkm_qa_megahit_comebin</li>
+<li>checkm_qa_megahit_concoct</li>
+<li>checkm_qa_megahit_maxbin2</li>
+<li>checkm_qa_megahit_metabat2</li>
+<li>checkm_qa_megahit_metabinner</li>
+<li>checkm_qa_megahit_semibin2</li>
+<li>checkm_qa_spades_comebin</li>
+<li>checkm_qa_spades_concoct</li>
+<li>checkm_qa_spades_maxbin2</li>
+<li>checkm_qa_spades_metabat2</li>
+<li>checkm_qa_spades_metabinner</li>
+<li>checkm_qa_spades_semibin2</li>
 <li>comebin_megahit</li>
 <li>comebin_spades</li>
 <li>concat_busco</li>
+<li>concat_checkm2_tsv</li>
+<li>concat_checkm_tsv</li>
+<li>concat_gunc_checkm_tsv</li>
+<li>concat_gunc_tsv</li>
 <li>concat_quast</li>
+<li>concat_tiara_tsv</li>
 <li>concoct_cutup_megahit</li>
 <li>concoct_cutup_spades</li>
 <li>concoct_extract_megahit</li>
@@ -934,11 +1142,60 @@
 <li>concoct_table_spades</li>
 <li>convert_depths_megahit</li>
 <li>convert_depths_spades</li>
+<li>dastool_dastool_megahit</li>
+<li>dastool_dastool_spades</li>
+<li>dastool_fastatocontig2bin_megahit_comebin</li>
+<li>dastool_fastatocontig2bin_megahit_concoct</li>
+<li>dastool_fastatocontig2bin_megahit_maxbin2</li>
+<li>dastool_fastatocontig2bin_megahit_metabat2</li>
+<li>dastool_fastatocontig2bin_megahit_metabinner</li>
+<li>dastool_fastatocontig2bin_megahit_semibin2</li>
+<li>dastool_fastatocontig2bin_spades_comebin</li>
+<li>dastool_fastatocontig2bin_spades_concoct</li>
+<li>dastool_fastatocontig2bin_spades_maxbin2</li>
+<li>dastool_fastatocontig2bin_spades_metabat2</li>
+<li>dastool_fastatocontig2bin_spades_metabinner</li>
+<li>dastool_fastatocontig2bin_spades_semibin2</li>
+<li>dastool_rename_post_megahit</li>
+<li>dastool_rename_post_spades</li>
+<li>dastool_rename_pre_megahit_comebin</li>
+<li>dastool_rename_pre_megahit_concoct</li>
+<li>dastool_rename_pre_megahit_maxbin2</li>
+<li>dastool_rename_pre_megahit_metabat2</li>
+<li>dastool_rename_pre_megahit_metabinner</li>
+<li>dastool_rename_pre_megahit_semibin2</li>
+<li>dastool_rename_pre_spades_comebin</li>
+<li>dastool_rename_pre_spades_concoct</li>
+<li>dastool_rename_pre_spades_maxbin2</li>
+<li>dastool_rename_pre_spades_metabat2</li>
+<li>dastool_rename_pre_spades_metabinner</li>
+<li>dastool_rename_pre_spades_semibin2</li>
 <li>depths_megahit</li>
 <li>depths_spades</li>
+<li>fastatocontig2bin_tiara_megahit_comebin_bins</li>
+<li>fastatocontig2bin_tiara_megahit_concoct_bins</li>
+<li>fastatocontig2bin_tiara_megahit_maxbin2_bins</li>
+<li>fastatocontig2bin_tiara_megahit_maxbin2_unbins</li>
+<li>fastatocontig2bin_tiara_megahit_metabat2_bins</li>
+<li>fastatocontig2bin_tiara_megahit_metabat2_unbins</li>
+<li>fastatocontig2bin_tiara_megahit_metabinner_bins</li>
+<li>fastatocontig2bin_tiara_megahit_metabinner_unbins</li>
+<li>fastatocontig2bin_tiara_megahit_semibin2_bins</li>
+<li>fastatocontig2bin_tiara_spades_comebin_bins</li>
+<li>fastatocontig2bin_tiara_spades_concoct_bins</li>
+<li>fastatocontig2bin_tiara_spades_maxbin2_bins</li>
+<li>fastatocontig2bin_tiara_spades_maxbin2_unbins</li>
+<li>fastatocontig2bin_tiara_spades_metabat2_bins</li>
+<li>fastatocontig2bin_tiara_spades_metabat2_unbins</li>
+<li>fastatocontig2bin_tiara_spades_metabinner_bins</li>
+<li>fastatocontig2bin_tiara_spades_metabinner_unbins</li>
+<li>fastatocontig2bin_tiara_spades_semibin2_bins</li>
 <li>fastp</li>
 <li>fastqc_raw</li>
 <li>fastqc_trimmed</li>
+<li>genomad_db_preparation</li>
+<li>genomad_megahit</li>
+<li>genomad_spades</li>
 <li>gtdbtk_db_preparation</li>
 <li>gtdbtk_megahit_comebin</li>
 <li>gtdbtk_megahit_concoct</li>
@@ -953,8 +1210,34 @@
 <li>gtdbtk_spades_metabinner</li>
 <li>gtdbtk_spades_semibin2</li>
 <li>gtdbtk_summary</li>
+<li>gunc_megahit_comebin</li>
+<li>gunc_megahit_concoct</li>
+<li>gunc_megahit_maxbin2</li>
+<li>gunc_megahit_metabat2</li>
+<li>gunc_megahit_metabinner</li>
+<li>gunc_megahit_semibin2</li>
+<li>gunc_mergecheckm_megahit_comebin</li>
+<li>gunc_mergecheckm_megahit_concoct</li>
+<li>gunc_mergecheckm_megahit_maxbin2</li>
+<li>gunc_mergecheckm_megahit_metabat2</li>
+<li>gunc_mergecheckm_megahit_metabinner</li>
+<li>gunc_mergecheckm_megahit_semibin2</li>
+<li>gunc_mergecheckm_spades_comebin</li>
+<li>gunc_mergecheckm_spades_concoct</li>
+<li>gunc_mergecheckm_spades_maxbin2</li>
+<li>gunc_mergecheckm_spades_metabat2</li>
+<li>gunc_mergecheckm_spades_metabinner</li>
+<li>gunc_mergecheckm_spades_semibin2</li>
+<li>gunc_spades_comebin</li>
+<li>gunc_spades_concoct</li>
+<li>gunc_spades_maxbin2</li>
+<li>gunc_spades_metabat2</li>
+<li>gunc_spades_metabinner</li>
+<li>gunc_spades_semibin2</li>
 <li>gunzip_megahit</li>
 <li>gunzip_spades</li>
+<li>host_removal_align</li>
+<li>host_removal_build</li>
 <li>mag_depths_megahit_comebin</li>
 <li>mag_depths_megahit_concoct</li>
 <li>mag_depths_megahit_maxbin2</li>
@@ -1033,21 +1316,58 @@
 <li>split_fasta_metabat2_spades</li>
 <li>split_fasta_metabinner_megahit</li>
 <li>split_fasta_metabinner_spades</li>
+<li>tiara_classify_megahit_comebin_bins</li>
+<li>tiara_classify_megahit_concoct_bins</li>
+<li>tiara_classify_megahit_maxbin2_bins</li>
+<li>tiara_classify_megahit_maxbin2_unbins</li>
+<li>tiara_classify_megahit_metabat2_bins</li>
+<li>tiara_classify_megahit_metabat2_unbins</li>
+<li>tiara_classify_megahit_metabinner_bins</li>
+<li>tiara_classify_megahit_metabinner_unbins</li>
+<li>tiara_classify_megahit_semibin2_bins</li>
+<li>tiara_classify_spades_comebin_bins</li>
+<li>tiara_classify_spades_concoct_bins</li>
+<li>tiara_classify_spades_maxbin2_bins</li>
+<li>tiara_classify_spades_maxbin2_unbins</li>
+<li>tiara_classify_spades_metabat2_bins</li>
+<li>tiara_classify_spades_metabat2_unbins</li>
+<li>tiara_classify_spades_metabinner_bins</li>
+<li>tiara_classify_spades_metabinner_unbins</li>
+<li>tiara_classify_spades_semibin2_bins</li>
+<li>tiara_tiara_megahit</li>
+<li>tiara_tiara_spades</li>
+<li>trimmomatic</li>
+<li>fastp_sheet</li>
+<li>fastp_single_sheet</li>
+<li>fastqc_raw_sheet</li>
+<li>fastqc_trimmed_sheet</li>
+<li>megahit_interleaved_sheet</li>
+<li>megahit_single_sheet</li>
+<li>spades_interleaved_sheet</li>
+<li>phix_align_sheet</li>
+<li>bowtie2_align_megahit_sheet</li>
+<li>bowtie2_align_spades_sheet</li>
+<li>depths_megahit_sheet</li>
+<li>depths_spades_sheet</li>
+<li>catpack_unbinned_spades_metabat2</li>
+<li>pydamage_analyze_spades</li>
+<li>pydamage_analyze_megahit</li>
+<li>ancient_consensus_spades</li>
+<li>ancient_consensus_megahit</li>
+<li>pydamage_bins_summary</li>
+<li>flye_lr</li>
+<li>metamdbg_lr</li>
+<li>minimap2_align_lr_flye</li>
+<li>minimap2_align_lr_metamdbg</li>
+<li>metabat2_lr_flye</li>
+<li>maxbin2_lr_flye</li>
+<li>concoct_lr_flye</li>
 </ul>
 <p><strong>Excluded</strong></p>
 <ul>
-<li>longreads — long-read assemblies (Flye/MetaMDBG) and long-read binning, off by default</li>
-<li>refinement — DAS Tool binning refinement, off by default</li>
-<li>kaiju — taxonomic profiling with kaiju, off by default</li>
-<li>diamond — taxonomic profiling with diamond, off by default</li>
-<li>run_checkm / run_checkm2 / run_gunc — additional bin QC tools, off by default (the GTDB-Tk filter therefore uses BUSCO metrics only, which is the default configuration)</li>
-<li>bin_domain_classification (tiara) — off by default; all bins keep domain='unclassified' exactly like the upstream default</li>
-<li>hostremoval — off by default</li>
-<li>assembly_input / bbnorm / adapters trimming variants (adapterremoval, trimmomatic) — non-default preprocessing branches</li>
-<li>ancient_dna / catpack / virus_identification — dedicated subworkflows, off by default</li>
-<li>pydamage, checkm2 and gunc report pages — off by default</li>
-<li>BUSCO <code>*-busco.batch_summary.failed.txt</code> artifact — only produced by upstream when a BUSCO run fails</li>
-<li>nf-core boilerplate files (pipeline_summary/methods_description, versions.yml) — not part of the analysis</li>
+<li>kaiju — taxonomic profiling with kaiju; not portable: the process is absent from upstream nf-core/mag 5.5.0 entirely (removed upstream), so there is no module script to translate</li>
+<li>diamond — taxonomic profiling with diamond; same as kaiju: absent from upstream 5.5.0, no module script to translate</li>
+<li>nf-core boilerplate files (pipeline_summary/methods_description) — not part of the analysis. Note: the versions.yml half is since covered by the engine-native export <code>oxo-flow report --versions-yml</code> (engine &gt;= 0.17.0)</li>
 </ul>
 <h2 id="fidelity">Fidelity</h2>
 <table>
@@ -1062,7 +1382,7 @@
 <tr>
 <td>Process-per-(assembler, binner) with <code>meta</code> tuples</td>
 <td>One rule per (assembler, binner, ...) combination, names hard-coded</td>
-<td>oxo-flow has no assembler/binner wildcard; <code>04_binning</code> has 48 rules, <code>05_binqc</code> 41, <code>06_taxonomy</code> 28</td>
+<td>oxo-flow has no assembler/binner wildcard; <code>04_binning</code> has 48 rules, <code>05_binqc</code> 66, <code>06_taxonomy</code> 28, <code>07_refinement</code> 28, <code>08_domain</code> 39 (231 rules total)</td>
 </tr>
 <tr>
 <td>Nextflow task workdir per process</td>
@@ -1100,7 +1420,12 @@
 <td>The pipeline never fails on empty groups</td>
 </tr>
 <tr>
-<td>Versions.yml / pipeline boilerplate (summary, methods_description)</td>
+<td>nf-core boilerplate (<code>versions.yml</code>)</td>
+<td>engine-native export: <code>oxo-flow report --versions-yml &lt;file&gt; main.oxoflow</code></td>
+<td>oxo-flow ≥ 0.17.0 exports an nf-core-style <code>versions.yml</code> derived statically from the workflow declarations: one entry per rule (311 rules) with the pinned conda environment, or a <code>system</code> entry with an explicit "no software versions declared" note where no env is declared. Deviation: it is a standalone CI-diff artifact, not a per-process runtime capture — per-rule <code>versions.yml</code> emission inside every command is deliberately not replicated (it would change every rule's command while the default plan stays byte-identical).</td>
+</tr>
+<tr>
+<td>nf-core boilerplate (pipeline_summary, methods_description)</td>
 <td>Not ported</td>
 <td>Not analysis output</td>
 </tr>
@@ -1169,10 +1494,143 @@
 <td>per-sample scratch dirs and guarded sample-scoped globs</td>
 <td>oxo-flow executes rules in one shared working directory (upstream gives every task its own); the generic <code>mv *.abund</code> / <code>mv *.pooled.fa.gz *.remaining.fa.gz</code> would otherwise race or fail when a sample produces no such files</td>
 </tr>
+<tr>
+<td>BINNING_REFINEMENT (DAS Tool)</td>
+<td><code>07_refinement.oxoflow</code>, 28 rules gated on <code>config.refine_bins_dastool</code></td>
+<td>RENAME_PREDASTOOL -&gt; FASTATOCONTIG2BIN -&gt; DASTOOL_DASTOOL -&gt; RENAME_POSTDASTOOL mirror the upstream wiring; empty binner groups are dropped before DAS Tool exactly like upstream (<code>binners with no bins never reach DAS Tool</code>); the <code>_DASTool_bins</code>, log/summary/eval/seqlength aux files and <code>_DASToolUnbinned</code> gz are published to <code>GenomeBinning/DASTool/</code></td>
+</tr>
+<tr>
+<td>DAS Tool contig2bin join (upstream bash quirk)</td>
+<td><code>IFS=\t'</code> (ANSI-C) instead of upstream <code>IFS=$"\t"</code></td>
+<td>Verified empirically: <code>IFS=$"\t"</code> splits on the letter <code>t</code>, not tabs, so the upstream tiara_classify while-loop is broken for bin names containing <code>t</code> (e.g. MetaBAT2); the port uses the ANSI-C form</td>
+</tr>
+<tr>
+<td>CHECKM_LINEAGEWF / CHECKM_QA (--run_checkm)</td>
+<td><code>05_binqc.oxoflow</code> + 25 rules, gated on <code>config.run_checkm</code></td>
+<td><code>run_checkm()</code> shell function (gunzip-to-scratch with <code>-x fa</code>, <code>--pplacer_threads</code>, empty-group touched artifacts), then <code>checkm qa</code> with <code>-o 2 --tab_table</code>; both per-(assembler, binner) runs cover bins and unbinned chunks; outputs land in <code>GenomeBinning/QC/CheckM/</code> with the <code>-unclassified-unrefined[-_unbinned]</code> naming; a qsv rowskey concat produces <code>checkm_summary.tsv</code></td>
+</tr>
+<tr>
+<td>CheckM metrics into the GTDB-Tk filter</td>
+<td><code>filter_bins_by_qc.py --checkm-qa-file</code> on both gtdbtk rules; <code>bin_summary</code> passes <code>--checkm_summary</code></td>
+<td>Matches upstream: with <code>--run_checkm</code> the GTDB-Tk filter uses CheckM completeness/contamination instead of BUSCO; without it (the default) the BUSCO-only filter matches the upstream default config</td>
+</tr>
+<tr>
+<td>CHECKM2_PREDICT / CONCAT_CHECKM2_TSV (--run_checkm2)</td>
+<td><code>05_binqc.oxoflow</code> + 13 rules gated on <code>config.run_checkm2</code></td>
+<td><code>checkm2 predict --input input_bins/*</code> per (assembler, binner) group (gunzip-to-scratch like the CheckM branch), report copied to <code>QC/CheckM2/{prefix}_checkm2_report.tsv</code>, qsv rowskey concat into <code>checkm2_summary.tsv</code>; <code>config.checkm2_db</code> points at the local <code>.dmnd</code> database (the upstream module environment, <code>checkm2=1.1.0</code> + keras/numpy/pandas/scikit-learn/scipy/tensorflow pins, is in <code>envs/checkm2.yaml</code>); fails fast when unset</td>
+</tr>
+<tr>
+<td>CheckM2 metrics into the GTDB-Tk filter</td>
+<td><code>filter_bins_by_qc.py --checkm2-qa-file</code> on both gtdbtk rules; <code>bin_summary</code> passes <code>--checkm2_summary</code></td>
+<td>Matches upstream: CheckM2 'Name' column is matched to the bin files with '.fa' appended (upstream appends the extension after CheckM2 strips <code>.gz</code>/<code>.fa</code>); with <code>--run_checkm2</code> the filter uses CheckM2 completeness/contamination (BUSCO/CheckM readings are still merged in exactly like upstream's <code>[busco, checkm2, checkm]</code> column list)</td>
+</tr>
+<tr>
+<td>GUNC_RUN / CONCAT_GUNC_TSV (--run_gunc)</td>
+<td><code>05_binqc.oxoflow</code> + 13 rules gated on <code>config.run_gunc</code></td>
+<td><code>gunc run --input_file</code> per (assembler, binner) group (bins + unbinned chunks, gunzip-to-scratch), per-database outputs renamed to <code>{prefix}_maxCSS_level.tsv</code> and moved under <code>QC/GUNC/raw/{prefix}/</code> like the upstream publishDir, qsv rowskey concat into <code>gunc_summary.tsv</code>; <code>config.gunc_db</code> points at the local reference database (<code>gunc=1.1.0</code> in <code>envs/gunc.yaml</code>); fails fast when unset</td>
+</tr>
+<tr>
+<td>GUNC_MERGECHECKM (--run_gunc + --run_checkm)</td>
+<td><code>05_binqc.oxoflow</code> + 13 rules gated on <code>config.run_gunc &amp;&amp; config.run_checkm</code></td>
+<td><code>gunc merge_checkm -g &lt;gunc&gt; -c &lt;checkm&gt; -o .</code> per group, guarded on both inputs being non-empty (upstream <code>if (params.run_gunc)</code> requires CheckM output); <code>gunc_merge_checkm.tsv</code> moved to <code>QC/GUNC/checkmmerged/{prefix}/</code> like the upstream publishDir, qsv rowskey concat into <code>gunc_checkm_summary.tsv</code></td>
+</tr>
+<tr>
+<td>CATPACK_BINS / ADDNAMES / SUMMARISE (--cat_db)</td>
+<td><code>09_catpack.oxoflow</code>, 38 rules gated on <code>config.cat_db</code></td>
+<td><code>cat_db_preparation</code> unpacks the archive/directory and locates the <code>db/</code> + <code>tax/</code> directories; <code>CAT_pack bins</code> per (assembler, binner) group with the upstream <code>-d -t -s .fa</code> args (input bins decompressed to a scratch <code>input_bins/</code>), results published to <code>Taxonomy/CAT/{assembler}/{binner}/{sample}/bins/</code>; <code>CAT_pack add_names</code> (with <code>--only_official</code> unless <code>cat_allow_unofficial_lineages=true</code>) and <code>CAT_pack summarise</code> (only with the official-lineage default, as upstream) per group; a header-keeping sorted <code>bat_summary.tsv</code> replicates upstream <code>collectFile keepHeader + sort 'deep'</code>; <code>cat=6.0.1</code> + <code>gzip=1.14</code> in <code>envs/catpack.yaml</code></td>
+</tr>
+<tr>
+<td>GENOMAD_ENDTOEND (--run_virus_identification)</td>
+<td><code>10_virus_identification.oxoflow</code>, 3 rules gated on <code>config.run_virus_identification</code></td>
+<td><code>genomad_db_preparation</code> unpacks the archive/directory; <code>genomad end-to-end</code> per assembly (SPAdes scaffolds + MEGAHIT contigs) with the upstream default args <code>--cleanup --min-score 0.7 --splits 1</code>, output <code>.fna</code>/<code>.faa</code> gzipped and the whole per-sample dir moved to <code>VirusIdentification/geNomad/{sample}/</code> like the upstream publishDir; degenerate empty results touch the declared outputs instead of crashing; <code>genomad=1.11.2</code> in <code>envs/genomad.yaml</code></td>
+</tr>
+<tr>
+<td>TIARA_TIARA / TIARA_CLASSIFY (--bin_domain_classification)</td>
+<td><code>08_domain.oxoflow</code>, 39 rules gated on <code>config.bin_domain_classification</code></td>
+<td><code>tiara --probabilities</code> per assembly, FASTATOCONTIG2BIN per (assembler, binner, bins/unbins) group, <code>domain_classification.R --join_prokaryotes</code> per group, one qsv-concatenated <code>tiara_summary.tsv</code>; unbins groups exist only for the three binners upstream splits (MetaBAT2, MaxBin2, MetaBinner); only the classification tables are published (as upstream)</td>
+</tr>
 </tbody>
 </table>
-<h3 id="not-ported-off-by-default-upstream">Not ported (off by default upstream)</h3>
-<p>Long-read assembly and binning, DAS Tool refinement, kaiju and diamond taxonomic profiling, CheckM/CheckM2/GUNC QC, tiara domain classification, host removal, ancient DNA, CAT/BAT, pydamage, hybrid assembly, and the benchmarking modes.</p>
+<h3 id="gated-branches-all-off-by-default-one-config-key-each">Gated branches (all off by default, one config key each)</h3>
+<table>
+<thead>
+<tr>
+<th>Branch</th>
+<th>Config key</th>
+<th>Rules</th>
+<th>Upstream process</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AdapterRemoval clipping</td>
+<td><code>clip_tool = "adapterremoval"</code></td>
+<td>1</td>
+<td><code>ADAPTERREMOVAL</code> (nf-core/adapterremoval 2.3.2)</td>
+</tr>
+<tr>
+<td>Trimmomatic clipping</td>
+<td><code>clip_tool = "trimmomatic"</code></td>
+<td>1</td>
+<td><code>TRIMMOMATIC</code> (nf-core/trimmomatic 0.39)</td>
+</tr>
+<tr>
+<td>Host read removal</td>
+<td><code>host_fasta = "path/to/host.fna"</code></td>
+<td>2</td>
+<td><code>HOST_REMOVAL_BUILD</code>, <code>HOST_REMOVAL_ALIGN</code> (bowtie2; <code>host_fasta_bowtie2index</code> skips the build, <code>host_removal_verysensitive</code> toggles <code>--very-sensitive</code>)</td>
+</tr>
+<tr>
+<td>Read normalization</td>
+<td><code>bbnorm = true</code></td>
+<td>1</td>
+<td><code>BBNORM</code> (bbmap 39.18, params <code>bbnorm_target</code>/<code>bbnorm_min</code>)</td>
+</tr>
+<tr>
+<td>DAS Tool bin refinement</td>
+<td><code>refine_bins_dastool = true</code></td>
+<td>28</td>
+<td><code>BINNING_REFINEMENT</code> subworkflow (<code>refine_bins_dastool_threshold</code>)</td>
+</tr>
+<tr>
+<td>CheckM bin QC</td>
+<td><code>run_checkm = true</code></td>
+<td>25</td>
+<td><code>CHECKM_LINEAGEWF</code> + <code>CHECKM_QA</code> (checkm-genome 1.2.5); feeds the GTDB-Tk filter (<code>checkm_db</code> optional local lineage DB)</td>
+</tr>
+<tr>
+<td>CheckM2 bin QC</td>
+<td><code>run_checkm2 = true</code></td>
+<td>13</td>
+<td><code>CHECKM2_PREDICT</code> + <code>CONCAT_CHECKM2_TSV</code> (checkm2 1.1.0, <code>checkm2_db</code>); feeds the GTDB-Tk filter</td>
+</tr>
+<tr>
+<td>GUNC contamination QC</td>
+<td><code>run_gunc = true</code></td>
+<td>13</td>
+<td><code>GUNC_RUN</code> + <code>CONCAT_GUNC_TSV</code> (gunc 1.1.0, <code>gunc_db</code>); with <code>run_checkm</code> also 13 <code>GUNC_MERGECHECKM</code> rules + <code>CONCAT_GUNC_CHECKM_TSV</code></td>
+</tr>
+<tr>
+<td>Tiara domain classification</td>
+<td><code>bin_domain_classification = true</code></td>
+<td>39</td>
+<td><code>TIARA</code> subworkflow (tiara 1.0.3, <code>tiara_min_length</code>)</td>
+</tr>
+<tr>
+<td>CAT/BAT bin classification</td>
+<td><code>cat_db = "path/to/db.tar.gz"</code></td>
+<td>38</td>
+<td><code>CAT/BAT</code> subworkflow bins column (cat 6.0.1; <code>cat_allow_unofficial_lineages</code> toggles <code>--only_official</code>)</td>
+</tr>
+<tr>
+<td>Virus identification</td>
+<td><code>run_virus_identification = true</code></td>
+<td>3</td>
+<td><code>GENOMAD_ENDTOEND</code> (genomad 1.11.2, <code>genomad_db</code>)</td>
+</tr>
+</tbody>
+</table>
+<p>Each gate activates exactly its own branch: with the default config the executed plan (134 rules of 311 total) is identical to the pre-branch port, and toggling one key adds only that branch's rules (verified by <code>dry-run</code> per key).</p>
 <h2 id="links">Links</h2>
 <ul>
 <li>Repository: <a href="https://github.com/oxo-flow-community/oxo-flow-mag">oxo-flow-mag</a></li>
@@ -1215,7 +1673,7 @@
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      © 2026 oxo-flow-community · Apache-2.0 · Ports are based on their upstream workflows — see each repository's NOTICE.
+      © 2026 <a href="https://github.com/oxo-flow-community">oxo-flow-community</a> · Apache-2.0 · engine <a href="https://github.com/Traitome/oxo-flow">oxo-flow</a> · <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues">issues</a> · evidence: ✔ live-tested ⊃ ★ verified ⊃ ☆ community · ports are based on their upstream workflows — see each repository's NOTICE
     </div>
   
   

@@ -23,7 +23,7 @@
     
     
       
-        <title>circRNA detection: four callers with ensemble aggregation - oxo-flow-community</title>
+        <title>Oxo flow circrna - oxo-flow-community</title>
       
     
     
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              circRNA detection: four callers with ensemble aggregation
+              Oxo flow circrna
             
           </span>
         </div>
@@ -532,6 +532,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scope
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#links" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -562,61 +573,39 @@
   
 
 
+<div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-circrna</span></div>
+<div class="ox-detail-cols">
+<div>
 <h1 id="circrna-detection-four-callers-with-ensemble-aggregation">circRNA detection: four callers with ensemble aggregation</h1>
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · full-line</span> <span class="ox-badge ox-badge--origin">✦ Original</span> </div>
-
 <p>Circular RNA detection with four independent callers (CIRIquant, CIRCexplorer2, find_circ, circRNA_finder) and ensemble aggregation of calls supported by at least two methods. Indexes and conda environments are built automatically on first run from a single reference_dir; samples are auto-discovered from raw/ with no CSV.</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: right;"></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: right;"><strong>Rating</strong></td>
-<td>✔ Live-tested</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Origin</strong></td>
-<td>original</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Domain</strong></td>
-<td>transcriptomics (circRNA)</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Rules</strong></td>
-<td>9</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Compute</strong></td>
-<td>up to 8 threads / 32 GB per rule</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Tools</strong></td>
-<td>fastp · ciriquant · circexplorer2 · find_circ · circrna_finder · r-base · multiqc</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Ported</strong></td>
-<td>2026-08-15</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>License</strong></td>
-<td>Apache-2.0</td>
-</tr>
-</tbody>
-</table>
+</div>
+<div>
+<div class="ox-glance">
+<div class="ox-glance-title">At a glance</div>
+<div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested · full-line</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">9</span></div>
+<div class="ox-kv"><span class="k">Compute</span><span class="v">up to 8 threads / 32 GB per rule</span></div>
+<div class="ox-kv"><span class="k">Engine</span><span class="v">—</span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">✦ Original</span></div>
+<div class="ox-kv"><span class="k">Domain</span><span class="v">transcriptomics (circRNA)</span></div>
+<div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/WangLabCSU/oxo-flow-circrna">WangLabCSU/oxo-flow-circrna</a></span></div>
+<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>main</code></span></div>
+<div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
+<div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
+<p class="cmd">$ oxo-flow run circrna.oxoflow -j 16</p>
+</div>
+</div>
+</div>
 <h2 id="run-it">Run it</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>oxo-flow<span class="w"> </span>run<span class="w"> </span>circrna.oxoflow<span class="w"> </span>-j<span class="w"> </span><span class="m">16</span>
 </code></pre></div>
 <p>Set <code>reference_dir</code> in <code>circrna.oxoflow</code> and place FASTQ pairs in <code>raw/</code>; indexes and environments build on first run.</p>
 <h2 id="installation">Installation</h2>
 <p><strong>Engine.</strong> oxo-flow &gt;= 0.12.0</p>
-<p><strong>Toolchain.</strong> conda envs — pinned (envs/*.yaml, one per tool)</p>
+<p><strong>Toolchain.</strong> conda envs — one per tool (envs/*.yaml, most tools version-pinned)</p>
 <p><strong>Requirements.</strong>
-- reference_dir with genome.fa, genes.gtf, hg38_ref.txt, CIRIquant.yml
+- reference_dir with genome.fa, genes.gtf, hg38_ref.txt
 - paired FASTQ per sample in raw/ (<sample>_1.fastq.gz / <sample>_2.fastq.gz)
 - compute: up to 8 threads / 32 GB per rule
 - conda or mamba to create the pinned per-rule environments on first run</p>
@@ -659,10 +648,31 @@
 <p><img alt="oxo-flow-circrna rule-level DAG" src="../../assets/dag/oxo-flow-circrna.svg" /></p>
 </div>
 <p>The graph is derived at catalog-build time from <code>oxo-flow graph -f dot</code> and rendered with Graphviz. It shows the workflow at rule level: wildcard <code>{sample}</code> instances expand at run time when sample data is discovered (the runtime view is <code>oxo-flow graph --expanded</code>).</p>
+<h2 id="scope">Scope</h2>
+<p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
+<p><strong>In scope</strong></p>
+<ul>
+<li>aggregate</li>
+<li>aggregate_dataset</li>
+<li>circexplorer2</li>
+<li>circrna_finder</li>
+<li>ciriquant</li>
+<li>fastp</li>
+<li>find_circ</li>
+<li>multiqc</li>
+<li>report</li>
+</ul>
+<p><strong>Excluded</strong></p>
+<ul>
+<li>none</li>
+</ul>
 <h2 id="links">Links</h2>
 <ul>
 <li>Repository: <a href="https://github.com/WangLabCSU/oxo-flow-circrna">oxo-flow-circrna</a></li>
+<li>Upstream: <a href="https://github.com/WangLabCSU/oxo-flow-circrna">WangLabCSU/oxo-flow-circrna</a> @ <code>main</code></li>
+<li>License: Apache-2.0 (this workflow) · Apache-2.0 (upstream)</li>
 </ul>
+<p>Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.</p>
 
 
 
@@ -698,7 +708,7 @@
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      © 2026 oxo-flow-community · Apache-2.0 · Ports are based on their upstream workflows — see each repository's NOTICE.
+      © 2026 <a href="https://github.com/oxo-flow-community">oxo-flow-community</a> · Apache-2.0 · engine <a href="https://github.com/Traitome/oxo-flow">oxo-flow</a> · <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues">issues</a> · evidence: ✔ live-tested ⊃ ★ verified ⊃ ☆ community · ports are based on their upstream workflows — see each repository's NOTICE
     </div>
   
   

@@ -23,7 +23,7 @@
     
     
       
-        <title>Region set and gene set enrichment: LOLA, GREAT, pycisTarget and GSEA - oxo-flow-community</title>
+        <title>Oxo flow enrichment - oxo-flow-community</title>
       
     
     
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Region set and gene set enrichment: LOLA, GREAT, pycisTarget and GSEA
+              Oxo flow enrichment
             
           </span>
         </div>
@@ -584,67 +584,37 @@
   
 
 
+<div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-enrichment</span></div>
+<div class="ox-detail-cols">
+<div>
 <h1 id="region-set-and-gene-set-enrichment-lola-great-pycistarget-and-gsea">Region set and gene set enrichment: LOLA, GREAT, pycisTarget and GSEA</h1>
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
-
-<p>Run a complete region set and gene set enrichment analysis on your own data: region overlap enrichment (LOLA), genomic region enrichment of annotated terms (rGREAT), region TFBS motif enrichment (pycisTarget), and gene over-representation analysis (ORA) and preranked GSEA (GSEApy). Every tool applies its own multiple-test correction; the workflow produces per-set enrichment plots, per-group summary plots, and reproducibility exports (configs/ and envs/). Official port of epigen/enrichment_analysis v3.0.1 with tool versions and commands pinned to the source.</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: right;"></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: right;"><strong>Rating</strong></td>
-<td>✔ Live-tested</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Origin</strong></td>
-<td>port</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Domain</strong></td>
-<td>genomics</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Rules</strong></td>
-<td>38</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Compute</strong></td>
-<td>up to 10 CPUs / 32 GB per rule</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Tools</strong></td>
-<td>gseapy · pandas · pycistarget · bioconductor-lola · bioconductor-rgreat · r-base · r-ggplot2 · r-pheatmap · r-svglite · r-reshape2 · r-data.table · bioconductor-rtracklayer · bioconductor-org.hs.eg.db</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Ported</strong></td>
-<td>2026-08-15</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>License</strong></td>
-<td>Apache-2.0</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Source</strong></td>
-<td><a href="https://github.com/epigen/enrichment_analysis">epigen/enrichment_analysis</a></td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Pinned version</strong></td>
-<td><code>v3.0.1</code></td>
-</tr>
-</tbody>
-</table>
+<p>Run a complete region set and gene set enrichment analysis on your own data: region overlap enrichment (LOLA), genomic region enrichment of annotated terms (rGREAT), region TFBS motif enrichment (pycisTarget), gene TFBS motif enrichment (RcisTarget), and gene over-representation analysis (ORA) and preranked GSEA (GSEApy). Every tool applies its own multiple-test correction; the workflow produces per-set enrichment plots, per-group summary plots, and reproducibility exports (configs/ and envs/). Official port of epigen/enrichment_analysis v3.0.1 with tool versions and commands pinned to the source.</p>
+</div>
+<div>
+<div class="ox-glance">
+<div class="ox-glance-title">At a glance</div>
+<div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested · default-path</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">48</span></div>
+<div class="ox-kv"><span class="k">Compute</span><span class="v">up to 10 CPUs / 32 GB per rule</span></div>
+<div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Domain</span><span class="v">genomics</span></div>
+<div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/epigen/enrichment_analysis">epigen/enrichment_analysis</a></span></div>
+<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>v3.0.1</code></span></div>
+<div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
+<div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
+<p class="cmd">$ oxo-flow run main.oxoflow</p>
+</div>
+</div>
+</div>
 <h2 id="run-it">Run it</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>oxo-flow<span class="w"> </span>run<span class="w"> </span>main.oxoflow
 </code></pre></div>
 <p>Needs ATAC peak / BAM inputs — see Requirements.</p>
 <h2 id="installation">Installation</h2>
 <p><strong>Engine.</strong> oxo-flow &gt;= 0.12.0</p>
-<p><strong>Toolchain.</strong> conda envs — pinned (conda/mamba at runtime; four environments declared in main.oxoflow, exact pins from upstream)</p>
+<p><strong>Toolchain.</strong> conda envs — pinned (conda/mamba at runtime; five environments declared in main.oxoflow, exact pins from upstream)</p>
 <p><strong>Requirements.</strong>
 - annotation.csv declaring each feature set (region set or ranked gene set), its path, background, and group
 - region BED files, one per region set, plus a background BED (hg38)
@@ -652,6 +622,7 @@
 - gene-set databases for GSEApy ORA: Azimuth_2023.json and ReactomePathways.gmt
 - LOLA region database for the genome of interest (e.g. LOLACore hg38)
 - pycisTarget cisTarget rankings (.feather) and motif annotation table
+- RcisTarget gene-motif rankings (.feather) and motif-to-TF annotation table (optional; both empty by default)
 - compute: up to 10 CPUs and 32 GB RAM per rule (defaults: 1 thread / 32 GB per rule; pycisTarget uses 10 threads as upstream)
 - disk: modest — enrichment tables, per-set plots, and pycisTarget HDF5 outputs (a few GB)</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># 1. install oxo-flow (release binary, recommended)</span>
@@ -683,7 +654,7 @@
 <td style="text-align: right;"><code>adjp_cap</code></td>
 <td><code>4</code></td>
 <td>—</td>
-<td><code>visualize_GREAT_Azimuth_2023_ATAC</code>, <code>visualize_GREAT_Reactome_ATAC</code>, <code>visualize_LOLA_LOLACore_ATAC</code>, <code>visualize_ORA_GSEApy_Azimuth_2023_ATAC</code>, <code>visualize_ORA_GSEApy_Reactome_ATAC</code>, <code>visualize_preranked_GSEApy_Azimuth_2023_RNA</code>, <code>visualize_preranked_GSEApy_Reactome_RNA</code>, <code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></td>
+<td><code>visualize_GREAT_Azimuth_2023_ATAC</code>, <code>visualize_GREAT_Reactome_ATAC</code>, <code>visualize_LOLA_LOLACore_ATAC</code>, <code>visualize_ORA_GSEApy_Azimuth_2023_ATAC</code>, <code>visualize_ORA_GSEApy_Reactome_ATAC</code>, <code>visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</code>, <code>visualize_preranked_GSEApy_Azimuth_2023_RNA</code>, <code>visualize_preranked_GSEApy_Reactome_RNA</code>, <code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>adjp_th_GREAT</code></td>
@@ -702,6 +673,12 @@
 <td><code>0.05</code></td>
 <td>significance thresholds (upstream adjp_th)</td>
 <td><code>visualize_ORA_GSEApy_Azimuth_2023_ATAC</code>, <code>visualize_ORA_GSEApy_Reactome_ATAC</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>adjp_th_RcisTarget</code></td>
+<td><code>5</code></td>
+<td>—</td>
+<td><code>visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>adjp_th_preranked_GSEApy</code></td>
@@ -731,13 +708,13 @@
 <td style="text-align: right;"><code>background_name</code></td>
 <td><code>all_regions</code></td>
 <td>upstream annotation background_name (all region sets)</td>
-<td><code>gene_ORA_GSEApy_Azimuth_2023</code>, <code>gene_ORA_GSEApy_Reactome</code>, <code>region_enrichment_analysis_GREAT_Azimuth_2023</code>, <code>region_enrichment_analysis_GREAT_Reactome</code>, <code>region_enrichment_analysis_LOLA</code></td>
+<td><code>gene_ORA_GSEApy_Azimuth_2023</code>, <code>gene_ORA_GSEApy_Reactome</code>, <code>gene_motif_enrichment_analysis_RcisTarget</code>, <code>region_enrichment_analysis_GREAT_Azimuth_2023</code>, <code>region_enrichment_analysis_GREAT_Reactome</code>, <code>region_enrichment_analysis_LOLA</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cluster_summary</code></td>
 <td><code>1</code></td>
 <td>—</td>
-<td><code>visualize_GREAT_Azimuth_2023_ATAC</code>, <code>visualize_GREAT_Reactome_ATAC</code>, <code>visualize_LOLA_LOLACore_ATAC</code>, <code>visualize_ORA_GSEApy_Azimuth_2023_ATAC</code>, <code>visualize_ORA_GSEApy_Reactome_ATAC</code>, <code>visualize_preranked_GSEApy_Azimuth_2023_RNA</code>, <code>visualize_preranked_GSEApy_Reactome_RNA</code>, <code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></td>
+<td><code>visualize_GREAT_Azimuth_2023_ATAC</code>, <code>visualize_GREAT_Reactome_ATAC</code>, <code>visualize_LOLA_LOLACore_ATAC</code>, <code>visualize_ORA_GSEApy_Azimuth_2023_ATAC</code>, <code>visualize_ORA_GSEApy_Reactome_ATAC</code>, <code>visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</code>, <code>visualize_preranked_GSEApy_Azimuth_2023_RNA</code>, <code>visualize_preranked_GSEApy_Reactome_RNA</code>, <code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cn_GREAT_adj_pvalue</code></td>
@@ -846,6 +823,42 @@
 <td><code>25</code></td>
 <td>tool-specific column names (upstream column_names)</td>
 <td><code>plot_enrichment_result_ORA_GSEApy_Azimuth_2023</code>, <code>plot_enrichment_result_ORA_GSEApy_Reactome</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>cn_RcisTarget_adj_pvalue</code></td>
+<td><code>NES</code></td>
+<td>—</td>
+<td><code>plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust</code>, <code>visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>cn_RcisTarget_effect_size</code></td>
+<td><code>NES</code></td>
+<td>NES combines significance and effect size</td>
+<td><code>plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust</code>, <code>visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>cn_RcisTarget_overlap</code></td>
+<td><code>nEnrGenes</code></td>
+<td>—</td>
+<td><code>plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>cn_RcisTarget_p_value</code></td>
+<td><code>AUC</code></td>
+<td>—</td>
+<td><code>plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>cn_RcisTarget_term</code></td>
+<td><code>description</code></td>
+<td>motif name + highConfCat TFs</td>
+<td><code>plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust</code>, <code>visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>cn_RcisTarget_top_n</code></td>
+<td><code>25</code></td>
+<td>—</td>
+<td><code>plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>cn_preranked_GSEApy_adj_pvalue</code></td>
@@ -989,13 +1002,13 @@
 <td style="text-align: right;"><code>or_cap</code></td>
 <td><code>5</code></td>
 <td>—</td>
-<td><code>visualize_GREAT_Azimuth_2023_ATAC</code>, <code>visualize_GREAT_Reactome_ATAC</code>, <code>visualize_LOLA_LOLACore_ATAC</code>, <code>visualize_ORA_GSEApy_Azimuth_2023_ATAC</code>, <code>visualize_ORA_GSEApy_Reactome_ATAC</code>, <code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></td>
+<td><code>visualize_GREAT_Azimuth_2023_ATAC</code>, <code>visualize_GREAT_Reactome_ATAC</code>, <code>visualize_LOLA_LOLACore_ATAC</code>, <code>visualize_ORA_GSEApy_Azimuth_2023_ATAC</code>, <code>visualize_ORA_GSEApy_Reactome_ATAC</code>, <code>visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</code>, <code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>path_to_motif_annotations</code></td>
-<td><code>test/resources/enrichment_analysis/89_motifs_test.tbl</code></td>
-<td>—</td>
-<td><code>region_motif_enrichment_analysis_pycisTarget</code></td>
+<td>``</td>
+<td>user-provided motif annotation tbl; "" disables motif enrichment</td>
+<td><code>aggregate_pycisTarget_hg38_screen_v10clust_ATAC</code>, <code>plot_enrichment_result_pycisTarget_hg38_screen_v10clust</code>, <code>process_results_pycisTarget</code>, <code>region_motif_enrichment_analysis_pycisTarget</code>, <code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>project_name</code></td>
@@ -1023,9 +1036,9 @@
 </tr>
 <tr>
 <td style="text-align: right;"><code>pycistarget_db_hg38_screen_v10clust</code></td>
-<td><code>test/resources/enrichment_analysis/600regions_test.regions_vs_motifs.rankings.feather</code></td>
-<td>—</td>
-<td><code>region_motif_enrichment_analysis_pycisTarget</code></td>
+<td>``</td>
+<td>user-provided pycisTarget rankings DB; "" disables motif enrichment</td>
+<td><code>aggregate_pycisTarget_hg38_screen_v10clust_ATAC</code>, <code>plot_enrichment_result_pycisTarget_hg38_screen_v10clust</code>, <code>process_results_pycisTarget</code>, <code>region_motif_enrichment_analysis_pycisTarget</code>, <code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>pycistarget_fraction_overlap_w_cistarget_database</code></td>
@@ -1064,6 +1077,54 @@
 <td><code>process_results_pycisTarget</code></td>
 </tr>
 <tr>
+<td style="text-align: right;"><code>rcistarget_aucMaxRank_factor</code></td>
+<td><code>0.05</code></td>
+<td>aucMaxRank = factor * ncol(motifRankings)</td>
+<td><code>gene_motif_enrichment_analysis_RcisTarget</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>rcistarget_db_hg38_500bp_up_100bp_down_v10clust</code></td>
+<td>``</td>
+<td>gene-based TFBS motif enrichment (RcisTarget); "" disables both rules, matching upstream's "to skip you have to leave one database entry with an empty path" convention</td>
+<td><code>aggregate_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</code>, <code>gene_motif_enrichment_analysis_RcisTarget</code>, <code>plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust</code>, <code>visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>rcistarget_geneErnMaxRank</code></td>
+<td><code>5000</code></td>
+<td>—</td>
+<td><code>gene_motif_enrichment_analysis_RcisTarget</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>rcistarget_geneErnMethod</code></td>
+<td><code>aprox</code></td>
+<td>alternatively exact but more intense: "icistarget"</td>
+<td><code>gene_motif_enrichment_analysis_RcisTarget</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>rcistarget_motifAnnot_highConfCat</code></td>
+<td><code>directAnnotation,inferredBy_Orthology</code></td>
+<td>upstream python lists; comma-joined so the rendered command stays a single token (values contain no commas)</td>
+<td><code>gene_motif_enrichment_analysis_RcisTarget</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>rcistarget_motifAnnot_lowConfCat</code></td>
+<td><code>inferredBy_MotifSimilarity,inferredBy_MotifSimilarity_n_Orthology</code></td>
+<td>—</td>
+<td><code>gene_motif_enrichment_analysis_RcisTarget</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>rcistarget_motif_annot</code></td>
+<td>``</td>
+<td>user-provided motif-to-TF annotation tbl; "" disables</td>
+<td><code>aggregate_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</code>, <code>gene_motif_enrichment_analysis_RcisTarget</code>, <code>plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust</code>, <code>visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>rcistarget_nesThreshold</code></td>
+<td><code>3</code></td>
+<td>—</td>
+<td><code>gene_motif_enrichment_analysis_RcisTarget</code></td>
+</tr>
+<tr>
 <td style="text-align: right;"><code>region_beds</code></td>
 <td><code>test/data/CorcesATAC</code></td>
 <td>feature sets (derived from config/annotation.csv at port time)</td>
@@ -1079,7 +1140,7 @@
 <td style="text-align: right;"><code>result_path</code></td>
 <td><code>test/results/enrichment_analysis</code></td>
 <td>—</td>
-<td><code>aggregate_GREAT_Azimuth_2023_ATAC</code>, <code>aggregate_GREAT_Reactome_ATAC</code>, <code>aggregate_LOLA_LOLACore_ATAC</code>, <code>aggregate_ORA_GSEApy_Azimuth_2023_ATAC</code>, <code>aggregate_ORA_GSEApy_Reactome_ATAC</code>, <code>aggregate_preranked_GSEApy_Azimuth_2023_RNA</code>, <code>aggregate_preranked_GSEApy_Reactome_RNA</code>, <code>aggregate_pycisTarget_hg38_screen_v10clust_ATAC</code>, <code>annot_export</code>, <code>config_export</code>, <code>gene_ORA_GSEApy_Azimuth_2023</code>, <code>gene_ORA_GSEApy_Reactome</code>, <code>gene_preranked_GSEApy_Azimuth_2023</code>, <code>gene_preranked_GSEApy_Reactome</code>, <code>plot_enrichment_result_GREAT_Azimuth_2023</code>, <code>plot_enrichment_result_GREAT_Reactome</code>, <code>plot_enrichment_result_LOLA_LOLACore</code>, <code>plot_enrichment_result_ORA_GSEApy_Azimuth_2023</code>, <code>plot_enrichment_result_ORA_GSEApy_Reactome</code>, <code>plot_enrichment_result_preranked_GSEApy_Azimuth_2023</code>, <code>plot_enrichment_result_preranked_GSEApy_Reactome</code>, <code>plot_enrichment_result_pycisTarget_hg38_screen_v10clust</code>, <code>process_results_pycisTarget</code>, <code>region_enrichment_analysis_GREAT_Azimuth_2023</code>, <code>region_enrichment_analysis_GREAT_Reactome</code>, <code>region_enrichment_analysis_LOLA</code>, <code>region_gene_association_GREAT</code>, <code>region_motif_enrichment_analysis_pycisTarget</code>, <code>visualize_GREAT_Azimuth_2023_ATAC</code>, <code>visualize_GREAT_Reactome_ATAC</code>, <code>visualize_LOLA_LOLACore_ATAC</code>, <code>visualize_ORA_GSEApy_Azimuth_2023_ATAC</code>, <code>visualize_ORA_GSEApy_Reactome_ATAC</code>, <code>visualize_preranked_GSEApy_Azimuth_2023_RNA</code>, <code>visualize_preranked_GSEApy_Reactome_RNA</code>, <code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></td>
+<td><code>aggregate_GREAT_Azimuth_2023_ATAC</code>, <code>aggregate_GREAT_Reactome_ATAC</code>, <code>aggregate_LOLA_LOLACore_ATAC</code>, <code>aggregate_ORA_GSEApy_Azimuth_2023_ATAC</code>, <code>aggregate_ORA_GSEApy_Reactome_ATAC</code>, <code>aggregate_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</code>, <code>aggregate_preranked_GSEApy_Azimuth_2023_RNA</code>, <code>aggregate_preranked_GSEApy_Reactome_RNA</code>, <code>aggregate_pycisTarget_hg38_screen_v10clust_ATAC</code>, <code>annot_export</code>, <code>config_export</code>, <code>gene_ORA_GSEApy_Azimuth_2023</code>, <code>gene_ORA_GSEApy_Reactome</code>, <code>gene_motif_enrichment_analysis_RcisTarget</code>, <code>gene_preranked_GSEApy_Azimuth_2023</code>, <code>gene_preranked_GSEApy_Reactome</code>, <code>plot_enrichment_result_GREAT_Azimuth_2023</code>, <code>plot_enrichment_result_GREAT_Reactome</code>, <code>plot_enrichment_result_LOLA_LOLACore</code>, <code>plot_enrichment_result_ORA_GSEApy_Azimuth_2023</code>, <code>plot_enrichment_result_ORA_GSEApy_Reactome</code>, <code>plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust</code>, <code>plot_enrichment_result_preranked_GSEApy_Azimuth_2023</code>, <code>plot_enrichment_result_preranked_GSEApy_Reactome</code>, <code>plot_enrichment_result_pycisTarget_hg38_screen_v10clust</code>, <code>process_results_pycisTarget</code>, <code>region_enrichment_analysis_GREAT_Azimuth_2023</code>, <code>region_enrichment_analysis_GREAT_Reactome</code>, <code>region_enrichment_analysis_LOLA</code>, <code>region_gene_association_GREAT</code>, <code>region_motif_enrichment_analysis_pycisTarget</code>, <code>visualize_GREAT_Azimuth_2023_ATAC</code>, <code>visualize_GREAT_Reactome_ATAC</code>, <code>visualize_LOLA_LOLACore_ATAC</code>, <code>visualize_ORA_GSEApy_Azimuth_2023_ATAC</code>, <code>visualize_ORA_GSEApy_Reactome_ATAC</code>, <code>visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</code>, <code>visualize_preranked_GSEApy_Azimuth_2023_RNA</code>, <code>visualize_preranked_GSEApy_Reactome_RNA</code>, <code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>rnk_dir</code></td>
@@ -1103,7 +1164,7 @@
 <td style="text-align: right;"><code>top_terms_n</code></td>
 <td><code>5</code></td>
 <td>aggregate &amp; summarize (upstream top_terms_n / adjp_cap / or_cap / nes_cap / cluster_summary)</td>
-<td><code>visualize_GREAT_Azimuth_2023_ATAC</code>, <code>visualize_GREAT_Reactome_ATAC</code>, <code>visualize_LOLA_LOLACore_ATAC</code>, <code>visualize_ORA_GSEApy_Azimuth_2023_ATAC</code>, <code>visualize_ORA_GSEApy_Reactome_ATAC</code>, <code>visualize_preranked_GSEApy_Azimuth_2023_RNA</code>, <code>visualize_preranked_GSEApy_Reactome_RNA</code>, <code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></td>
+<td><code>visualize_GREAT_Azimuth_2023_ATAC</code>, <code>visualize_GREAT_Reactome_ATAC</code>, <code>visualize_LOLA_LOLACore_ATAC</code>, <code>visualize_ORA_GSEApy_Azimuth_2023_ATAC</code>, <code>visualize_ORA_GSEApy_Reactome_ATAC</code>, <code>visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</code>, <code>visualize_preranked_GSEApy_Azimuth_2023_RNA</code>, <code>visualize_preranked_GSEApy_Reactome_RNA</code>, <code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></td>
 </tr>
 </tbody>
 </table>
@@ -1122,6 +1183,7 @@
 <li>aggregate_LOLA_LOLACore_ATAC</li>
 <li>aggregate_ORA_GSEApy_Azimuth_2023_ATAC</li>
 <li>aggregate_ORA_GSEApy_Reactome_ATAC</li>
+<li>aggregate_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</li>
 <li>aggregate_preranked_GSEApy_Azimuth_2023_RNA</li>
 <li>aggregate_preranked_GSEApy_Reactome_RNA</li>
 <li>aggregate_pycisTarget_hg38_screen_v10clust_ATAC</li>
@@ -1129,6 +1191,8 @@
 <li>config_export</li>
 <li>gene_ORA_GSEApy_Azimuth_2023</li>
 <li>gene_ORA_GSEApy_Reactome</li>
+<li>gene_motif_enrichment_analysis_RcisTarget</li>
+<li>gene_motif_enrichment_analysis_RcisTarget_txt</li>
 <li>gene_preranked_GSEApy_Azimuth_2023</li>
 <li>gene_preranked_GSEApy_Reactome</li>
 <li>plot_enrichment_result_GREAT_Azimuth_2023</li>
@@ -1136,6 +1200,8 @@
 <li>plot_enrichment_result_LOLA_LOLACore</li>
 <li>plot_enrichment_result_ORA_GSEApy_Azimuth_2023</li>
 <li>plot_enrichment_result_ORA_GSEApy_Reactome</li>
+<li>plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust</li>
+<li>plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust_txt</li>
 <li>plot_enrichment_result_preranked_GSEApy_Azimuth_2023</li>
 <li>plot_enrichment_result_preranked_GSEApy_Reactome</li>
 <li>plot_enrichment_result_pycisTarget_hg38_screen_v10clust</li>
@@ -1152,16 +1218,16 @@
 <li>visualize_LOLA_LOLACore_ATAC</li>
 <li>visualize_ORA_GSEApy_Azimuth_2023_ATAC</li>
 <li>visualize_ORA_GSEApy_Reactome_ATAC</li>
+<li>visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</li>
 <li>visualize_preranked_GSEApy_Azimuth_2023_RNA</li>
 <li>visualize_preranked_GSEApy_Reactome_RNA</li>
 <li>visualize_pycisTarget_hg38_screen_v10clust_ATAC</li>
 </ul>
 <p><strong>Excluded</strong></p>
 <ul>
-<li>gene_motif_enrichment_analysis_RcisTarget — zero instances on the default path: RcisTarget needs .txt gene sets in the annotation; the default annotation has none (region sets + ranked gene sets only)</li>
-<li>env_export — conda env export requires the conda CLI inside the runtime environment; exact pins are already declared in envs/*.yaml</li>
-<li>report rendering — oxo-flow has no report module; the reproducibility exports (configs/, envs) are kept as upstream rules</li>
-<li>note: the anticipated names liftover/enrichr/gost/single_region_mode do not exist in v3.0.1 (Enrichr appears only as a database-source reference in config comments)</li>
+<li>env_export — conda env export requires the conda CLI inside the runtime environment and dumps the runtime env state, not the declared pins; exact pins are already declared in envs/*.yaml</li>
+<li>report rendering — upstream wraps outputs in snakemake's report() (HTML report with .rst captions); oxo-flow has no report module, so config_export and annot_export are ported as plain rules (env_export is excluded separately above)</li>
+<li>note: the anticipated names liftover/enrichr/gost/single_region_mode do not exist in v3.0.1 (Enrichr appears only as a commented-out reference in gene_ORA_GSEApy.py and a database-source comment in config.yaml)</li>
 </ul>
 <h2 id="fidelity">Fidelity</h2>
 <table>
@@ -1212,9 +1278,9 @@
 </tr>
 <tr>
 <td>gene_motif_enrichment_analysis_RcisTarget</td>
-<td>not ported</td>
-<td>RcisTarget</td>
-<td>zero instances on the default path: needs <code>.txt</code> gene sets in the annotation, the default annotation has none (region sets + ranked sets only)</td>
+<td><code>gene_motif_enrichment_analysis_RcisTarget</code> (+ <code>_txt</code>) + plot/aggregate/visualize <code>*_RcisTarget_*</code> blocks</td>
+<td>bioconductor-rcistarget 1.20.0</td>
+<td>identical command/logic; when-gated on the user-provided rankings feather + motif annotation (both <code>""</code> by default); fans over region sets (via GREAT <code>genes.txt</code>) and <code>.txt</code> gene sets (<code>config.txt_gene_sets</code>; zero instances when the default-empty list is unset, so the default plan is unchanged); upstream also folds the <code>.txt</code>-set results into the group aggregate/visualize — the port's static per-group blocks cannot enumerate user-defined gene sets, so txt-set results stop at per-set plots</td>
 </tr>
 <tr>
 <td>gene_ORA_GSEApy</td>
@@ -1230,19 +1296,19 @@
 </tr>
 <tr>
 <td>plot_enrichment_result</td>
-<td><code>plot_enrichment_result_*</code> (8 blocks)</td>
+<td><code>plot_enrichment_result_*</code> (9 blocks)</td>
 <td>r-ggplot2 3.5.0, r-svglite 2.1.0</td>
 <td>identical command; upstream wildcard fan-out (tool × db × feature_set) baked as per-(tool,db) scatter blocks</td>
 </tr>
 <tr>
 <td>aggregate</td>
-<td><code>aggregate_*</code> (8 blocks)</td>
+<td><code>aggregate_*</code> (9 blocks)</td>
 <td>pandas 1.1.4 / 1.5.3</td>
 <td>identical logic; upstream wildcards group/tool/db passed as CLI args</td>
 </tr>
 <tr>
 <td>visualize</td>
-<td><code>visualize_*</code> (8 blocks)</td>
+<td><code>visualize_*</code> (9 blocks)</td>
 <td>r-ggplot2 3.5.0, r-pheatmap 1.0.12</td>
 <td>identical command/logic; <code>cluster_summary</code> config key kept as upstream numeric flag</td>
 </tr>
@@ -1268,7 +1334,7 @@
 <td>report rendering</td>
 <td>not ported</td>
 <td>—</td>
-<td>oxo-flow has no report module; reproducibility exports (configs/, envs) are kept as upstream rules</td>
+<td>oxo-flow has no report module; <code>config_export</code> / <code>annot_export</code> are ported as plain rules (<code>env_export</code> is excluded separately — see the row above)</td>
 </tr>
 </tbody>
 </table>
@@ -1277,10 +1343,13 @@ namespace; the port passes the same values as positional CLI arguments
 (<code>scripts/*</code>), keeping every analysis step and output byte-identical.
 <code>utils.R</code> is copied verbatim. Fidelity conventions: <code>{config.a.b}</code> nested
 access does not exist in oxo-flow — all upstream nested config dicts
-(<code>great_parameters</code>, <code>pycistarget_parameters</code>, <code>column_names</code>, <code>adjp_th</code>,
-caps) are flattened into prefixed top-level keys; the pycisTarget
-<code>annotations_to_use</code> list is carried as a python-list literal string so the
-rendered command is byte-identical to upstream.</p>
+(<code>great_parameters</code>, <code>pycistarget_parameters</code>, <code>rcistarget_parameters</code>,
+<code>column_names</code>, <code>adjp_th</code>, caps) are flattened into prefixed top-level
+keys; the pycisTarget <code>annotations_to_use</code> list is carried as a python-list
+literal string, and the RcisTarget <code>motifAnnot_highConfCat</code> /
+<code>motifAnnot_lowConfCat</code> lists are comma-joined strings (values contain no
+commas; split back to vectors inside the R script), so the rendered
+commands are byte-identical to upstream.</p>
 <h2 id="links">Links</h2>
 <ul>
 <li>Repository: <a href="https://github.com/oxo-flow-community/oxo-flow-enrichment">oxo-flow-enrichment</a></li>
@@ -1323,7 +1392,7 @@ rendered command is byte-identical to upstream.</p>
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      © 2026 oxo-flow-community · Apache-2.0 · Ports are based on their upstream workflows — see each repository's NOTICE.
+      © 2026 <a href="https://github.com/oxo-flow-community">oxo-flow-community</a> · Apache-2.0 · engine <a href="https://github.com/Traitome/oxo-flow">oxo-flow</a> · <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues">issues</a> · evidence: ✔ live-tested ⊃ ★ verified ⊃ ☆ community · ports are based on their upstream workflows — see each repository's NOTICE
     </div>
   
   

@@ -23,7 +23,7 @@
     
     
       
-        <title>RNA-seq: STAR alignment, DESeq2 differential expression and QC - oxo-flow-community</title>
+        <title>Oxo flow rnaseq star deseq2 - oxo-flow-community</title>
       
     
     
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              RNA-seq: STAR alignment, DESeq2 differential expression and QC
+              Oxo flow rnaseq star deseq2
             
           </span>
         </div>
@@ -584,71 +584,41 @@
   
 
 
+<div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-rnaseq-star-deseq2</span></div>
+<div class="ox-detail-cols">
+<div>
 <h1 id="rna-seq-star-alignment-deseq2-differential-expression-and-qc">RNA-seq: STAR alignment, DESeq2 differential expression and QC</h1>
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
-
-<p>End-to-end RNA-seq differential-expression analysis with STAR and DESeq2: Ensembl reference download, fastp trimming, STAR alignment with gene counts, RSeQC QC + MultiQC, count matrix with technical-replicate collapse, Ensembl biomaRt gene-symbol annotation, and DESeq2 (normalized counts, PCA plots, per-contrast results with ashr shrinkage and MA plots). Every tool is pinned to an exact conda version for reproducibility.</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: right;"></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: right;"><strong>Rating</strong></td>
-<td>✔ Live-tested</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Origin</strong></td>
-<td>port</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Domain</strong></td>
-<td>transcriptomics</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Rules</strong></td>
-<td>22</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Compute</strong></td>
-<td>up to 24 CPUs per rule (star_align)</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Tools</strong></td>
-<td>star · fastp · rseqc · gffutils · pandas · multiqc · bioconductor-deseq2 · r-stringr · r-ashr · bioconductor-biomart · r-tidyverse · r-dbplyr · curl</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Ported</strong></td>
-<td>2026-08-15</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>License</strong></td>
-<td>Apache-2.0</td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Source</strong></td>
-<td><a href="https://github.com/snakemake-workflows/rna-seq-star-deseq2">snakemake-workflows/rna-seq-star-deseq2</a></td>
-</tr>
-<tr>
-<td style="text-align: right;"><strong>Pinned version</strong></td>
-<td><code>v3.1.1</code></td>
-</tr>
-</tbody>
-</table>
+<p>End-to-end RNA-seq differential-expression analysis with STAR and DESeq2: Ensembl reference download, fastp trimming, STAR alignment with gene counts, RSeQC QC + MultiQC, count matrix with technical-replicate collapse, Ensembl biomaRt gene-symbol annotation, and DESeq2 (normalized counts, PCA plots, per-contrast results with ashr shrinkage and MA plots). Every tool is pinned to an exact conda version for reproducibility. Per-unit upstream semantics are ported via the engine metadata binding: the units sheet doubles as the metadata table, so per-unit fastp_adapters/fastp_extra overrides and per-unit SRA accessions (the get_sra auto-feed) resolve per unit with the global config as fallback. Non-default upstream branches are config-gated and off by default: SRA download (get_sra), single-end mode (fastp_se + star_align_se), raw-read alignment (trimming_activate = false), bwa index and samtools faidx.</p>
+</div>
+<div>
+<div class="ox-glance">
+<div class="ox-glance-title">At a glance</div>
+<div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested · default-path</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">31</span></div>
+<div class="ox-kv"><span class="k">Compute</span><span class="v">up to 24 CPUs per rule (star_align)</span></div>
+<div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Domain</span><span class="v">transcriptomics</span></div>
+<div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/snakemake-workflows/rna-seq-star-deseq2">snakemake-workflows/rna-seq-star-deseq2</a></span></div>
+<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>v3.1.1</code></span></div>
+<div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
+<div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
+<p class="cmd">$ oxo-flow run main.oxoflow</p>
+</div>
+</div>
+</div>
 <h2 id="run-it">Run it</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>oxo-flow<span class="w"> </span>run<span class="w"> </span>main.oxoflow
 </code></pre></div>
 <p>Needs reference genome, annotation and reads — see Requirements.</p>
 <h2 id="installation">Installation</h2>
-<p><strong>Engine.</strong> oxo-flow &gt;= 0.12.0</p>
+<p><strong>Engine.</strong> oxo-flow &gt;= 0.12.0 (per-unit metadata features — per-unit fastp_adapters/fastp_extra lookup and the SRA auto-feed — require &gt;= 0.17.0; on older engines the global config defaults apply)</p>
 <p><strong>Toolchain.</strong> conda envs — pinned</p>
 <p><strong>Requirements.</strong>
 - paired-end FASTQ reads per config/units.tsv (raw/<unit-key>_R1.fastq.gz / _R2.fastq.gz) and sample conditions in config/samples.tsv
 - reference genome + annotation downloaded automatically from Ensembl release 115 (GRCh38) — network access required (also for biomaRt gene-symbol annotation)
-- compute: up to 24 CPUs per rule (star_align); 8 (fastp_pe); 4 (star_index); no per-rule memory limits configured in the workflow
+- compute: up to 24 CPUs per rule (star_align); 8 (fastp_pe); 4 (fastp_se, star_index); no per-rule memory limits configured in the workflow
 - disk: several tens of GB — ~30 GB GRCh38 STAR index, plus BAMs and trimmed reads</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># 1. install oxo-flow (release binary, recommended)</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>curl<span class="w"> </span>-fL<span class="w"> </span>-o<span class="w"> </span>oxo-flow.tar.gz<span class="w"> </span>https://github.com/Traitome/oxo-flow/releases/latest/download/oxo-flow-latest-x86_64-unknown-linux-gnu.tar.gz
@@ -676,6 +646,12 @@
 </thead>
 <tbody>
 <tr>
+<td style="text-align: right;"><code>annotation_gtf</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>get_annotation</code></td>
+</tr>
+<tr>
 <td style="text-align: right;"><code>annotation_url</code></td>
 <td><code>ftp://ftp.ensembl.org/pub/release-115/gtf/homo_sapiens/Homo_sapiens.GRCh38.115.gtf.gz</code></td>
 <td>—</td>
@@ -686,6 +662,18 @@
 <td><code>hsapiens</code></td>
 <td>biomaRt species dataset suffix (upstream get_bioc_species_name()).</td>
 <td><code>gene_2_symbol_counts</code>, <code>gene_2_symbol_diffexp</code>, <code>gene_2_symbol_normcounts</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>bwa_index_activate</code></td>
+<td><code>false</code></td>
+<td>Activate the BWA index / samtools faidx rules. Upstream declares both but its default path never requests them (snakemake lazy evaluation); oxo-flow runs every rule in the file, so both are gated off unless activated.</td>
+<td><code>bwa_index</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>contrast_exprs</code></td>
+<td>``</td>
+<td>String-form DESeq2 contrasts (upstream diffexp.contrasts string entries, e.g. 'list(c("treatment_1_treated_vs_untreated", ...))'). Semicolon-joined list parallel to <code>contrasts</code>; an empty entry = list-form for that contrast. Entries are R expressions evaluated by DESeq2: use single quotes for R strings (the value is double-quoted on the shell command line) and no semicolons inside an entry.</td>
+<td><code>deseq2</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>contrast_levels</code></td>
@@ -703,7 +691,7 @@
 <td style="text-align: right;"><code>contrasts</code></td>
 <td><code>treatment_1</code></td>
 <td>Contrasts (upstream: diffexp.contrasts). One comma-joined entry per contrast: contrast id, its variable_of_interest, its level_of_interest. The base level comes from diffexp_base_levels.</td>
-<td>—</td>
+<td><code>deseq2</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>diffexp_base_levels</code></td>
@@ -721,7 +709,7 @@
 <td style="text-align: right;"><code>diffexp_model</code></td>
 <td>``</td>
 <td>—</td>
-<td><code>deseq2_init</code></td>
+<td>—</td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>diffexp_variables</code></td>
@@ -732,14 +720,32 @@
 <tr>
 <td style="text-align: right;"><code>fastp_adapters</code></td>
 <td><code>--detect_adapter_for_pe</code></td>
-<td>fastp adapter args and extra args (upstream: per-unit columns fastp_adapters / fastp_extra; the port uses the upstream defaults).</td>
+<td>fastp adapter args and extra args (upstream: per-unit columns fastp_adapters / fastp_extra in config/units.tsv, looked up per unit via the metadata binding — {meta.fastp_adapters} / {meta.fastp_extra} render per unit and these global keys are the per-unit defaults when a unit's column is empty; equal the upstream defaults). fastp_adapters_se matches the upstream single-end default ("").</td>
 <td><code>fastp_pe</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>fastp_adapters_se</code></td>
+<td>``</td>
+<td>—</td>
+<td><code>fastp_se</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>fastp_extra</code></td>
 <td><code>--trim_poly_x --poly_x_min_len 7 --trim_poly_g --poly_g_min_len 7</code></td>
 <td>—</td>
-<td><code>fastp_pe</code></td>
+<td><code>fastp_pe</code>, <code>fastp_se</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>genome_faidx_activate</code></td>
+<td><code>false</code></td>
+<td>—</td>
+<td><code>genome_faidx</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>genome_fasta</code></td>
+<td>``</td>
+<td>Local reference overrides: set to a local FASTA/GTF to skip the Ensembl download entirely (offline machines, tiny test runs). Empty = download (the upstream-faithful default). A tiny synthetic kit ships at test/fixtures/reference/ with matching reads in raw-synthetic/.</td>
+<td><code>get_genome</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>genome_url</code></td>
@@ -757,7 +763,7 @@
 <td style="text-align: right;"><code>pca_activate</code></td>
 <td><code>true</code></td>
 <td>PCA (upstream: pca.activate / pca.labels). pca_variables is the derived upstream list (variables_of_interest + batch_effects + labels), kept explicit here — keep it in sync with the diffexp keys below.</td>
-<td><code>pca</code></td>
+<td><code>pca_jointly_handled</code>, <code>pca_treatment_1</code>, <code>pca_treatment_2</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>pca_labels</code></td>
@@ -775,7 +781,7 @@
 <td style="text-align: right;"><code>raw_dir</code></td>
 <td><code>test/fixtures/raw</code></td>
 <td>Directory holding <unit-key>_R1.fastq.gz / _R2.fastq.gz per config/units.tsv. The repo default ships the tiny test fixtures; point this at your data (e.g. "raw").</td>
-<td><code>fastp_pe</code></td>
+<td><code>fastp_pe</code>, <code>fastp_se</code>, <code>star_align_raw</code>, <code>star_align_se_raw</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>ref_build</code></td>
@@ -796,10 +802,22 @@
 <td>—</td>
 </tr>
 <tr>
+<td style="text-align: right;"><code>single_end</code></td>
+<td><code>false</code></td>
+<td>Single-end mode (upstream decides per sample from the units.tsv fq2/sra columns; the port applies it globally — engine rules have fixed input arities). Single-end units provide only <unit-key>_R1.fastq.gz. Default false = the paired-end path.</td>
+<td><code>fastp_pe</code>, <code>fastp_se</code>, <code>star_align</code>, <code>star_align_raw</code>, <code>star_align_se</code>, <code>star_align_se_raw</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>sra_accessions</code></td>
+<td>``</td>
+<td>SRA auto-feed master switch (upstream get_sra branch: units whose fq1/fq2 are empty carry an sra accession in config/units.tsv). Any non-empty value enables the per-unit download; each unit's accession comes from its units sheet sra column (the {meta.sra} lookup), and reads land at <raw_dir>/<unit-key>_R{1,2}.fastq.gz (the raw_dir convention) so the trimming/alignment rules consume them automatically (upstream get_units_fastqs). Default empty = no SRA download. Requires oxo-flow &gt;= 0.17.0 — on older engines keep this empty (the per-unit sra column is not read, and the gate then stays closed).</td>
+<td><code>get_sra</code></td>
+</tr>
+<tr>
 <td style="text-align: right;"><code>star_align_extra</code></td>
 <td>``</td>
 <td>—</td>
-<td><code>star_align</code></td>
+<td><code>star_align</code>, <code>star_align_raw</code>, <code>star_align_se</code>, <code>star_align_se_raw</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>star_index_extra</code></td>
@@ -810,8 +828,8 @@
 <tr>
 <td style="text-align: right;"><code>trimming_activate</code></td>
 <td><code>true</code></td>
-<td>Trimming (upstream: trimming.activate). The fastp rule runs only when activated; deactivating breaks star_align in this port (upstream rewires star_align to the raw reads — not ported).</td>
-<td><code>fastp_pe</code></td>
+<td>Trimming (upstream: trimming.activate). With trimming off, the port's star_align_raw / star_align_se_raw variants feed the raw reads to STAR, mirroring the upstream rewiring (get_fq with trimming.activate = False).</td>
+<td><code>fastp_pe</code>, <code>fastp_se</code>, <code>star_align</code>, <code>star_align_raw</code>, <code>star_align_se</code>, <code>star_align_se_raw</code></td>
 </tr>
 <tr>
 <td style="text-align: right;"><code>units_file</code></td>
@@ -831,15 +849,19 @@
 <p>The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.</p>
 <p><strong>In scope</strong></p>
 <ul>
+<li>bwa_index</li>
 <li>count_matrix</li>
 <li>deseq2</li>
 <li>deseq2_init</li>
 <li>fastp_pe</li>
+<li>fastp_se</li>
 <li>gene_2_symbol_counts</li>
 <li>gene_2_symbol_diffexp</li>
 <li>gene_2_symbol_normcounts</li>
+<li>genome_faidx</li>
 <li>get_annotation</li>
 <li>get_genome</li>
+<li>get_sra</li>
 <li>multiqc</li>
 <li>pca_jointly_handled</li>
 <li>pca_treatment_1</li>
@@ -854,28 +876,25 @@
 <li>rseqc_readgc</li>
 <li>rseqc_stat</li>
 <li>star_align</li>
+<li>star_align_raw</li>
+<li>star_align_se</li>
+<li>star_align_se_raw</li>
 <li>star_index</li>
 </ul>
 <p><strong>Excluded</strong></p>
 <ul>
-<li>get_sra — SRA-accession branch (fasterq-dump), not in the default path</li>
-<li>fastp_se — single-end branch, not in the default path</li>
-<li>bwa_index — no consumer in the upstream default path</li>
-<li>genome_faidx — no consumer in the upstream default path</li>
-<li>edger — not present in upstream v3.1.1</li>
-<li>kallisto — not present in upstream v3.1.1</li>
-<li>trimgalore — not present in upstream v3.1.1 (fastp is the trimmer)</li>
-<li>trimming.activate=false rewiring (star_align from raw reads) — default path only</li>
-<li>complex string-form DESeq2 contrasts — list-form (default) only</li>
-<li>Snakemake report artifacts (report/*.rst) — no oxo-flow equivalent</li>
-<li>per-unit fastp_adapters/fastp_extra lookup — pipeline-level config instead</li>
+<li>Snakemake report artifacts (workflow/report/*.rst) — jinja captions rendered by the sphinx-based snakemake --report machinery (report: directive + report() output annotations); no oxo-flow equivalent</li>
 </ul>
 <h2 id="fidelity">Fidelity</h2>
 <p>Scope: the <strong>default-parameters main execution path</strong> (upstream <code>rule all</code>).
 Rows cover every upstream rule; "not ported" rows carry a reason. Upstream
 rules use snakemake wrappers v7.2.0 (<code>bio/fastp</code>, <code>bio/star/*</code>,
 <code>bio/multiqc</code>, <code>bio/reference/ensembl-*</code>, <code>bio/samtools/faidx</code>,
-<code>bio/bwa/index</code>) whose conda pins were carried over verbatim.</p>
+<code>bio/bwa/index</code>, <code>bio/sra-tools/fasterq-dump</code>) whose conda pins were carried
+over verbatim. Rules that upstream declares but never runs in the default
+path (get_sra, fastp_se, bwa_index, genome_faidx) and the alternate
+trimming/SE wiring are ported as config-gated rules (see the <code>when</code>/flag
+notes per row); they appear as <code>skip</code> in the default dry-run plan.</p>
 <table>
 <thead>
 <tr>
@@ -908,25 +927,25 @@ rules use snakemake wrappers v7.2.0 (<code>bio/fastp</code>, <code>bio/star/*</c
 <td>fastp_pe</td>
 <td><code>fastp_pe</code></td>
 <td>fastp 1.0.1</td>
-<td>fastp wrapper verbatim (extra + adapters + reads + trimmed + json + html ordering); upstream per-unit <code>fastp_adapters</code>/<code>fastp_extra</code> columns → global <code>[config] fastp_adapters</code>/<code>fastp_extra</code> (defaults equal upstream defaults)</td>
+<td>fastp wrapper verbatim (extra + adapters + reads + trimmed + json + html ordering); upstream per-unit <code>fastp_adapters</code>/<code>fastp_extra</code> lookup() columns → per-unit <code>{meta.fastp_adapters}</code>/<code>{meta.fastp_extra}</code> from the units sheet (<code>config/units.tsv</code>), with the global <code>[config] fastp_adapters</code>/<code>fastp_extra</code> as per-unit defaults (empty column → global value, both equal upstream defaults)</td>
 </tr>
 <tr>
 <td>star_align</td>
-<td><code>star_align</code></td>
+<td><code>star_align</code> (+ <code>star_align_raw</code>, <code>star_align_se</code>, <code>star_align_se_raw</code>)</td>
 <td>STAR 2.7.11b</td>
-<td>star/align wrapper verbatim: <code>--outSAMtype BAM SortedByCoordinate --quantMode GeneCounts --sjdbGTFfile "&lt;gtf&gt;"</code> in the upstream extra-string order, <code>--readFilesCommand gunzip -c</code>, <code>--outStd BAM_SortedByCoordinate</code> to the BAM, <code>cat</code> of ReadsPerGene/SJ/Logs out of the tmp prefix</td>
+<td>star/align wrapper verbatim: <code>--outSAMtype BAM SortedByCoordinate --quantMode GeneCounts --sjdbGTFfile "&lt;gtf&gt;"</code> in the upstream extra-string order, <code>--readFilesCommand gunzip -c</code>, <code>--outStd BAM_SortedByCoordinate</code> to the BAM, <code>cat</code> of ReadsPerGene/SJ/Logs out of the tmp prefix. Upstream's one rule takes trimmed or raw, one or two reads per sample (get_fq + units.tsv); engine rules have fixed input patterns, so the port makes the 2×2 matrix explicit: PE-trimmed (default), PE-raw (<code>trimming_activate = false</code>), SE-trimmed, SE-raw — each gated so exactly one variant is active</td>
 </tr>
 <tr>
 <td>get_sra</td>
-<td>not ported</td>
-<td>sra-tools</td>
-<td>SRA-accession branch (fasterq-dump); not in the default path</td>
+<td><code>get_sra</code></td>
+<td>sra-tools 3.2.1</td>
+<td>fasterq-dump wrapper verbatim (<code>-x</code>, tmpdir via <code>mktemp -d</code>, log <code>logs/get-sra/{sample}.log</code>); per-unit auto-feed ported via the units sheet <code>sra</code> column: <code>{meta.sra}</code> routes each unit to its own accession, gated on <code>config.sra_accessions != ''</code> as the master switch (default empty → skip; upstream triggers per unit from the same column). Deviation: upstream writes uncompressed <code>sra/{accession}_1.fastq</code> and get_units_fastqs binds them as inputs; the port gzips into <code>&lt;raw_dir&gt;/&lt;unit-key&gt;_R{1,2}.fastq.gz</code> (the raw_dir naming convention) so the trimming/alignment rules consume the reads without per-unit input binding. On engines &lt; 0.17.0 keep the default empty <code>sra_accessions</code> — the per-unit auto-feed requires the <code>{meta.*}</code> binding (oxo-flow &gt;= 0.17.0)</td>
 </tr>
 <tr>
 <td>fastp_se</td>
-<td>not ported</td>
-<td>fastp</td>
-<td>single-end branch; not in the default path (paired-end fixtures)</td>
+<td><code>fastp_se</code></td>
+<td>fastp 1.0.1</td>
+<td>fastp wrapper verbatim (single-end arg set: <code>--in1 --out1 --failed_out --json --html</code>); gated on <code>single_end &amp;&amp; trimming_activate</code> (default off). Deviation: upstream writes the shared <code>{sample}-{unit}.json</code> for both SE and PE; the port names the SE report <code>{sample}_single.json</code> because two rules must not share an output file here</td>
 </tr>
 <tr>
 <td>rseqc_gtf2bed</td>
@@ -1008,39 +1027,45 @@ rules use snakemake wrappers v7.2.0 (<code>bio/fastp</code>, <code>bio/star/*</c
 </tr>
 <tr>
 <td>pca</td>
-<td><code>pca</code></td>
+<td><code>pca_treatment_1</code> / <code>pca_treatment_2</code> / <code>pca_jointly_handled</code></td>
 <td>DESeq2 1.46.0</td>
-<td>plot-pca.R verbatim (<code>rlog(blind=FALSE)</code>, <code>plotPCA(intgroup=variable)</code>); one instance per <code>pca_variables</code> entry; gated by <code>pca_activate</code></td>
+<td>plot-pca.R verbatim (<code>rlog(blind=FALSE)</code>, <code>plotPCA(intgroup=variable)</code>); one explicit rule per <code>pca_variables</code> entry (the engine's scatter does not substitute <code>{variable}</code> inside the script field), gated by <code>pca_activate</code></td>
 </tr>
 <tr>
 <td>deseq2</td>
 <td><code>deseq2</code></td>
 <td>DESeq2 1.46.0, r-ashr 2.2_63</td>
-<td>deseq2.R logic identical (list-form contrast = vof + level + base_level, ashr <code>lfcShrink</code>, <code>order(padj)</code>, MA plot); complex string-form contrasts not ported (not in default config); one instance per <code>contrasts</code> entry</td>
+<td>deseq2.R logic identical (list-form contrast = vof + level + base_level, ashr <code>lfcShrink</code>, <code>order(padj)</code>, MA plot); string-form contrasts ported via <code>contrast_exprs</code> (semicolon-joined R expressions parallel to <code>contrasts</code>, e.g. <code>list(c('a_vs_b', ...))</code>, evaluated <code>eval(parse(text = ...))</code> verbatim like upstream; entries must use single-quoted R strings and no semicolons); one instance per <code>contrasts</code> entry</td>
 </tr>
 <tr>
 <td>bwa_index</td>
-<td>not ported</td>
-<td>bwa</td>
-<td>no consumer in the default path (upstream <code>rule all</code> never requests it)</td>
+<td><code>bwa_index</code></td>
+<td>bwa 0.7.19</td>
+<td>bwa/index wrapper verbatim: <code>-b &lt;size/10 MB, clamped to [10, 51200]&gt;M -p resources/genome.fasta</code> (the wrapper's block-size formula, replicated with <code>wc -c</code> + shell arithmetic), outputs <code>resources/genome.fasta.{amb,ann,bwt,pac,sa}</code>; gated on <code>bwa_index_activate</code> (default off — upstream <code>rule all</code> never requests it; snakemake lazy evaluation vs oxo-flow runs every rule)</td>
 </tr>
 <tr>
 <td>genome_faidx</td>
-<td>not ported</td>
-<td>samtools</td>
-<td>no consumer in the default path</td>
+<td><code>genome_faidx</code></td>
+<td>samtools 1.22</td>
+<td><code>samtools faidx</code> wrapper verbatim → <code>resources/genome.fasta.fai</code>; gated on <code>genome_faidx_activate</code> (same reasoning as bwa_index)</td>
 </tr>
 <tr>
 <td>report/ (<code>report/*.rst</code>)</td>
 <td>not ported</td>
 <td>—</td>
-<td>Snakemake report artifacts; no oxo-flow equivalent</td>
+<td>Snakemake report artifacts: the <code>.rst</code> captions are jinja templates rendered by the sphinx-based <code>snakemake --report</code> machinery (<code>report:</code> directive + <code>report()</code> output annotations); no oxo-flow equivalent</td>
 </tr>
 <tr>
 <td>trimming.activate = False rewiring</td>
-<td>not ported</td>
+<td><code>star_align_raw</code> / <code>star_align_se_raw</code></td>
+<td>STAR 2.7.11b</td>
+<td>upstream then feeds raw reads to star_align; ported as explicit variants gated on <code>!trimming_activate</code></td>
+</tr>
+<tr>
+<td>edger / kallisto / trimgalore</td>
+<td>n/a</td>
 <td>—</td>
-<td>upstream then feeds raw reads to star_align; the port keeps the default trimmed-read chain</td>
+<td>not present in upstream v3.1.1 (fastp is the trimmer, DESeq2 the DE tool)</td>
 </tr>
 </tbody>
 </table>
@@ -1051,12 +1076,21 @@ byte-identical to upstream (<code>results/trimmed/A-lane1/A-lane1_R1.fastq.gz</c
 <code>results/star/A-lane1/...</code>). Nested upstream config (<code>diffexp.*</code>, <code>ref.*</code>,
 <code>trimming.activate</code>, <code>pca.*</code>) is flattened into flat <code>[config]</code> keys with the
 same defaults (see <code>main.oxoflow</code> header). The upstream <code>config/samples.tsv</code>
-demo sheet (samples A–E) and <code>config/units.tsv</code> (6 units) ship with the port;
-raw reads live at <code>&lt;raw_dir&gt;/&lt;unit-key&gt;_R1.fastq.gz</code> / <code>_R2.fastq.gz</code>
-(<code>[config] raw_dir</code> defaults to <code>test/fixtures/raw/</code>, which contains tiny real
-reads so the dry-run resolves every input; point it at your data, e.g.
-<code>raw_dir = "raw"</code>). Upstream demo-data FASTQ paths (<code>A.1.fq.gz</code> etc.) were
-renamed to this convention — data-path substitution only.</p>
+demo sheet ships with the port, extended with replicate units F/G/H so every
+treatment combination has ≥2 samples (a DESeq2 run requirement): 8 samples
+(A–H), 9 units (A-lane1, A-lane2, B–H lane1). Raw reads live at
+<code>&lt;raw_dir&gt;/&lt;unit-key&gt;_R1.fastq.gz</code> / <code>_R2.fastq.gz</code> (<code>[config] raw_dir</code>
+defaults to <code>test/fixtures/raw/</code>, which contains tiny real reads so the
+dry-run resolves every input; point it at your data, e.g. <code>raw_dir = "raw"</code>).
+Upstream demo-data FASTQ paths (<code>A.1.fq.gz</code> etc.) were renamed to this
+convention — data-path substitution only. <code>config/units.tsv</code> keeps the
+upstream columns (<code>sample_name</code>, <code>unit_name</code>, <code>fq1</code>, <code>fq2</code>, <code>sra</code>,
+<code>strandedness</code>, <code>fastp_adapters</code>, <code>fastp_extra</code>) and adds a leading
+<code>unit_key</code> column holding the composite <code>{sample}</code> wildcard values
+(<code>A-lane1</code>, …) — the sheet doubles as the workflow's metadata table
+(<code>[workflow] metadata_file</code>): <code>{meta.sra}</code>, <code>{meta.fastp_adapters}</code> and
+<code>{meta.fastp_extra}</code> resolve per unit, and an empty per-unit cell falls back
+to the global config defaults (upstream <code>lookup()</code> semantics).</p>
 <h2 id="links">Links</h2>
 <ul>
 <li>Repository: <a href="https://github.com/oxo-flow-community/oxo-flow-rnaseq-star-deseq2">oxo-flow-rnaseq-star-deseq2</a></li>
@@ -1099,7 +1133,7 @@ renamed to this convention — data-path substitution only.</p>
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      © 2026 oxo-flow-community · Apache-2.0 · Ports are based on their upstream workflows — see each repository's NOTICE.
+      © 2026 <a href="https://github.com/oxo-flow-community">oxo-flow-community</a> · Apache-2.0 · engine <a href="https://github.com/Traitome/oxo-flow">oxo-flow</a> · <a href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues">issues</a> · evidence: ✔ live-tested ⊃ ★ verified ⊃ ☆ community · ports are based on their upstream workflows — see each repository's NOTICE
     </div>
   
   
