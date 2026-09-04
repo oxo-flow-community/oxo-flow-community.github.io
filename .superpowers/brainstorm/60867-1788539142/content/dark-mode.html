@@ -1,0 +1,229 @@
+<h2>P2 定了 ✅ — 下一步：暗色模式的性格</h2>
+<p class="subtitle">浅色保持默认。暗色（slate）是切换项，可以比浅色更大胆。三个变体都套用已定稿的 V2 hero + W2 卡片，只动暗色配色。回想方向选择时你在 C 暗色控制台上停留过——这题就是把那份感觉决定放多少进来。</p>
+
+<style>
+  .dm { height: 392px; overflow: hidden; font-size: 12px; position: relative; box-sizing: border-box; }
+  .dm * { box-sizing: border-box; margin: 0; }
+  .dm .nav { display: flex; justify-content: space-between; align-items: center; padding-bottom: 8px; border-bottom: 1px solid; font-family: -apple-system, sans-serif; }
+  .dm .nav b { font-size: 11px; }
+  .dm .nav span { font-size: 9px; margin-left: 9px; }
+  .dm .eyebrow { font-family: ui-monospace, monospace; font-size: 7.5px; letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 6px; }
+  .dm h1 { font-size: 20px; line-height: 1.08; letter-spacing: -0.02em; font-weight: 700; font-family: -apple-system, sans-serif; }
+  .dm .sub { font-size: 9.5px; margin: 6px 0 8px; line-height: 1.5; max-width: 210px; }
+  .dm .rule { width: 52px; height: 3px; border-radius: 2px; margin-bottom: 10px; }
+  .dm .cta { display: inline-block; font-size: 8px; font-weight: 600; border-radius: 99px; padding: 4px 10px; }
+  .dm .split { display: grid; grid-template-columns: 1fr 1.15fr; gap: 14px; align-items: center; margin-top: 8px; }
+  .dm .term { border: 1px solid; border-radius: 8px; overflow: hidden; }
+  .dm .term-head { display: flex; gap: 4px; align-items: center; padding: 5px 9px; border-bottom: 1px solid; font-family: ui-monospace, monospace; font-size: 7px; }
+  .dm .term-head i { width: 5px; height: 5px; border-radius: 50%; }
+  .dm .term-body { font-family: ui-monospace, monospace; font-size: 8px; line-height: 1.9; padding: 6px 9px; }
+  .dm .term-body b { font-weight: 600; }
+  .dm .stats { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid; border-radius: 8px; overflow: hidden; margin-top: 8px; }
+  .dm .stat { padding: 6px 8px; border-left: 1px solid; }
+  .dm .stat:first-child { border-left: none; }
+  .dm .stat .v { font-weight: 700; font-size: 10.5px; }
+  .dm .stat .k { font-family: ui-monospace, monospace; font-size: 6px; letter-spacing: .12em; text-transform: uppercase; }
+  .dm .card { border: 1px solid; border-radius: 10px; padding: 10px 12px; margin-top: 10px; }
+  .dm .row { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+  .dm .nm { font-family: ui-monospace, monospace; font-weight: 600; font-size: 11px; }
+  .dm .ttl { font-size: 9.5px; line-height: 1.4; margin-top: 3px; }
+  .dm .mt { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 5px; }
+  .dm .bdg { font-family: ui-monospace, monospace; font-size: 7px; padding: 2px 6px; border-radius: 99px; border: 1px solid; white-space: nowrap; }
+  .dm .tchip { font-family: ui-monospace, monospace; font-size: 7px; border-radius: 5px; padding: 2px 5px; }
+  .dm .cmd { font-family: ui-monospace, monospace; font-size: 7.5px; border-radius: 6px; padding: 5px 8px; margin-top: 8px; }
+  .dm .c { border-top: 3px solid; }
+
+  /* D1 · 同源暗色 — 现有暗色精修 */
+  .d1 { background: #0f1512; padding: 13px 18px; }
+  .d1 .nav { border-color: #24302a; }
+  .d1 .nav b { color: #3ba585; } .d1 .nav span { color: #8ca096; }
+  .d1 .eyebrow { color: #3ba585; }
+  .d1 h1 { color: #e8f1ec; }
+  .d1 .sub { color: #8ca096; }
+  .d1 .rule { background: linear-gradient(90deg, #1e7fa0, #2e9c7c); }
+  .d1 .cta { color: #eef7f2; background: #1e6b54; }
+  .d1 .term { background: #141c17; border-color: #24302a; }
+  .d1 .term-head { border-color: #24302a; color: #8ca096; background: #111814; }
+  .d1 .term-head i { background: #3ba585; }
+  .d1 .term-body { color: #7a8f84; } .d1 .term-body b { color: #3ba585; }
+  .d1 .stats { background: #141c17; border-color: #24302a; }
+  .d1 .stat { border-color: #24302a; }
+  .d1 .stat .v { color: #e8f1ec; } .d1 .stat .k { color: #64766c; }
+  .d1 .card { background: #141c17; border-color: #24302a; }
+  .d1 .card.live-card { border-top-color: #2e9c7c; }
+  .d1 .nm { color: #e8f1ec; }
+  .d1 .ttl { color: #a8bab0; }
+  .d1 .bdg { color: #8ca096; border-color: #24302a; background: #111814; }
+  .d1 .bdg.live { color: #3ba585; border-color: #275543; background: #12241d; font-weight: 600; }
+  .d1 .tchip { color: #a8bab0; background: #1a241e; }
+  .d1 .cmd { color: #a8bab0; background: #111814; border-color: #24302a; }
+
+  /* D2 · 仪器暗色 — C 的荧光仪器感 */
+  .d2 { background: #0a0f0d; padding: 13px 18px; }
+  .d2 .nav { border-color: #1d2a24; }
+  .d2 .nav b { color: #34d399; } .d2 .nav span { color: #5e6f65; }
+  .d2 .eyebrow { color: #34d399; }
+  .d2 h1 { color: #eef7f2; }
+  .d2 .sub { color: #8ca096; }
+  .d2 .rule { background: linear-gradient(90deg, #22b8d4, #34d399); }
+  .d2 .cta { color: #04120c; background: #34d399; }
+  .d2 .term { background: #0e1613; border-color: #1d2a24; box-shadow: 0 0 22px rgba(52,211,153,.07); }
+  .d2 .term-head { border-color: #1d2a24; color: #5e6f65; }
+  .d2 .term-head i { background: #3ddc84; box-shadow: 0 0 5px #3ddc8488; }
+  .d2 .term-body { color: #5e6f65; } .d2 .term-body b { color: #34d399; text-shadow: 0 0 7px #34d39955; }
+  .d2 .stats { background: #101915; border-color: #1d2a24; }
+  .d2 .stat { border-color: #1d2a24; }
+  .d2 .stat .v { color: #eef7f2; } .d2 .stat .k { color: #5e6f65; }
+  .d2 .card { background: #101915; border-color: #1d2a24; }
+  .d2 .card.live-card { border-top-color: #34d399; }
+  .d2 .nm { color: #eef7f2; }
+  .d2 .ttl { color: #8ca096; }
+  .d2 .bdg { color: #5e6f65; border-color: #1d2a24; background: #0c1310; }
+  .d2 .bdg.live { color: #34d399; border-color: #1f4d38; background: #0f2a1e; font-weight: 600; }
+  .d2 .tchip { color: #8ca096; background: #16211b; }
+  .d2 .cmd { color: #8ca096; background: #0c1310; border-color: #1d2a24; }
+
+  /* D3 · 蓝黑夜间 — 实验室的深夜蓝 */
+  .d3 { background: #0b1220; padding: 13px 18px; }
+  .d3 .nav { border-color: #1e2a3f; }
+  .d3 .nav b { color: #38bdf8; } .d3 .nav span { color: #64778f; }
+  .d3 .eyebrow { color: #38bdf8; }
+  .d3 h1 { color: #eaf1fa; }
+  .d3 .sub { color: #7e93ad; }
+  .d3 .rule { background: linear-gradient(90deg, #38bdf8, #34d399); }
+  .d3 .cta { color: #06121c; background: #38bdf8; }
+  .d3 .term { background: #0f1725; border-color: #1e2a3f; }
+  .d3 .term-head { border-color: #1e2a3f; color: #64778f; }
+  .d3 .term-head i { background: #38bdf8; }
+  .d3 .term-body { color: #5d7189; } .d3 .term-body b { color: #38bdf8; }
+  .d3 .stats { background: #0f1725; border-color: #1e2a3f; }
+  .d3 .stat { border-color: #1e2a3f; }
+  .d3 .stat .v { color: #eaf1fa; } .d3 .stat .k { color: #55677e; }
+  .d3 .card { background: #0f1725; border-color: #1e2a3f; }
+  .d3 .card.live-card { border-top-color: #4ade80; }
+  .d3 .nm { color: #eaf1fa; }
+  .d3 .ttl { color: #93a7bd; }
+  .d3 .bdg { color: #64778f; border-color: #1e2a3f; background: #0c1420; }
+  .d3 .bdg.live { color: #4ade80; border-color: #1f5138; background: #0f2a1c; font-weight: 600; }
+  .d3 .tchip { color: #93a7bd; background: #141f30; }
+  .d3 .cmd { color: #93a7bd; background: #0c1420; border-color: #1e2a3f; }
+</style>
+
+<div class="cards">
+  <div class="card" data-choice="d1" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:0">
+      <div class="dm d1">
+        <div class="nav"><b>⌘ oxo-flow-community</b><div><span>Pipelines</span><span>Curation</span><span>Porting</span></div></div>
+        <div class="split">
+          <div>
+            <div class="eyebrow">oxo-flow · community catalog</div>
+            <h1>Curated workflows.<br>Ready to run.</h1>
+            <div class="sub">24 bioinformatics workflows — every one validated end-to-end.</div>
+            <div class="rule"></div>
+            <div class="cta">Browse the catalog →</div>
+          </div>
+          <div>
+            <div class="term">
+              <div class="term-head"><i></i><i></i><i></i>oxo-flow run main.oxoflow</div>
+              <div class="term-body"><b>✔</b> validated — 44 rules · 132 instances<br><b>▸</b> planning DAG …</div>
+            </div>
+            <div class="stats">
+              <div class="stat"><div class="v">24</div><div class="k">workflows</div></div>
+              <div class="stat"><div class="v">24/24</div><div class="k">live</div></div>
+              <div class="stat"><div class="v">417</div><div class="k">rules</div></div>
+              <div class="stat"><div class="v">126</div><div class="k">tools</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="card live-card">
+          <div class="row"><span class="nm">oxo-flow-rnaseq</span><span class="bdg live">✔ Live-tested</span></div>
+          <div class="ttl">RNA-seq — align, quantify, call differential expression</div>
+          <div class="mt"><span class="bdg">44 rules</span><span class="tchip">STAR</span><span class="tchip">DESeq2</span></div>
+          <div class="cmd">$ oxo-flow run main.oxoflow --samples 3</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>D1 · 同源暗色</h3>
+      <p>把浅色的绿白系统直接压暗：同样的绿、同样的语气，只是换了底色。与浅色切换最无痕，但性格平静，没有"第二张面孔"。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="d2" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:0">
+      <div class="dm d2">
+        <div class="nav"><b>⌗ oxo-flow-community</b><div><span>pipelines</span><span>curation</span><span>porting</span></div></div>
+        <div class="split">
+          <div>
+            <div class="eyebrow">$ catalog --list</div>
+            <h1>Curated workflows.<br>Ready to run.</h1>
+            <div class="sub">24 bioinformatics workflows — every one validated end-to-end.</div>
+            <div class="rule"></div>
+            <div class="cta">Browse the catalog →</div>
+          </div>
+          <div>
+            <div class="term">
+              <div class="term-head"><i></i><i></i><i></i>oxo-flow run main.oxoflow</div>
+              <div class="term-body"><b>✔</b> validated — 44 rules · 132 instances<br><b>▸</b> planning DAG …</div>
+            </div>
+            <div class="stats">
+              <div class="stat"><div class="v">24</div><div class="k">workflows</div></div>
+              <div class="stat"><div class="v">24/24</div><div class="k">live</div></div>
+              <div class="stat"><div class="v">417</div><div class="k">rules</div></div>
+              <div class="stat"><div class="v">126</div><div class="k">tools</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="card live-card">
+          <div class="row"><span class="nm">oxo-flow-rnaseq</span><span class="bdg live">✔ live-tested</span></div>
+          <div class="ttl">RNA-seq — align, quantify, call differential expression</div>
+          <div class="mt"><span class="bdg">44 rules</span><span class="tchip">STAR</span><span class="tchip">DESeq2</span></div>
+          <div class="cmd">$ oxo-flow run main.oxoflow --samples 3</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>D2 · 仪器暗色 ★ 推荐</h3>
+      <p>把 C 方向的荧光仪器感收进暗色模式：荧光绿点缀、终端微光、eyebrow 换成命令行语气。浅色默认不受影响，暗色成为开发者的"第二张面孔"。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="d3" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:0">
+      <div class="dm d3">
+        <div class="nav"><b>⌘ oxo-flow-community</b><div><span>Pipelines</span><span>Curation</span><span>Porting</span></div></div>
+        <div class="split">
+          <div>
+            <div class="eyebrow">oxo-flow · community catalog</div>
+            <h1>Curated workflows.<br>Ready to run.</h1>
+            <div class="sub">24 bioinformatics workflows — every one validated end-to-end.</div>
+            <div class="rule"></div>
+            <div class="cta">Browse the catalog →</div>
+          </div>
+          <div>
+            <div class="term">
+              <div class="term-head"><i></i><i></i><i></i>oxo-flow run main.oxoflow</div>
+              <div class="term-body"><b>✔</b> validated — 44 rules · 132 instances<br><b>▸</b> planning DAG …</div>
+            </div>
+            <div class="stats">
+              <div class="stat"><div class="v">24</div><div class="k">workflows</div></div>
+              <div class="stat"><div class="v">24/24</div><div class="k">live</div></div>
+              <div class="stat"><div class="v">417</div><div class="k">rules</div></div>
+              <div class="stat"><div class="v">126</div><div class="k">tools</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="card live-card">
+          <div class="row"><span class="nm">oxo-flow-rnaseq</span><span class="bdg live">✔ Live-tested</span></div>
+          <div class="ttl">RNA-seq — align, quantify, call differential expression</div>
+          <div class="mt"><span class="bdg">44 rules</span><span class="tchip">STAR</span><span class="tchip">DESeq2</span></div>
+          <div class="cmd">$ oxo-flow run main.oxoflow --samples 3</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>D3 · 蓝黑夜间</h3>
+      <p>暗色换成实验室深夜蓝：青色点缀、蓝黑底。证据语义色（live-tested 绿）在三种暗色里保持绿色不变。与浅色的绿主导衔接最弱，但气质冷静高级。</p>
+    </div>
+  </div>
+</div>

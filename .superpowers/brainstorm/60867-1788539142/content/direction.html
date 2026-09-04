@@ -1,0 +1,165 @@
+<h2>三个视觉方向，选一个基调</h2>
+<p class="subtitle">每个方向都套用了真实内容（首页 hero + 一张 rnaseq 卡片）。看整体气质：布局骨架、配色、字体性格。点击选择，或在终端里说感受。</p>
+
+<style>
+  .dir-mock { height: 380px; overflow: hidden; font-size: 12px; position: relative; }
+  .dir-mock * { box-sizing: border-box; margin: 0; }
+
+  /* ---------- A. 精修现有（绿野·清爽科研风） ---------- */
+  .mA { background: #f7faf8; color: #17211c; font-family: -apple-system, "Segoe UI", sans-serif; padding: 14px 18px; }
+  .mA .nav { display: flex; justify-content: space-between; align-items: center; padding-bottom: 10px; border-bottom: 1px solid #dfe8e3; }
+  .mA .nav b { color: #0e7a5f; font-size: 12px; }
+  .mA .nav span { color: #6b7d73; font-size: 10px; margin-left: 10px; }
+  .mA .eyebrow { font-family: ui-monospace, monospace; font-size: 8px; letter-spacing: 0.22em; color: #0e7a5f; text-transform: uppercase; margin: 18px 0 6px; }
+  .mA h1 { font-size: 24px; line-height: 1.08; letter-spacing: -0.02em; font-weight: 700; }
+  .mA .sub { color: #3f5047; font-size: 11px; margin: 8px 0 10px; max-width: 300px; line-height: 1.5; }
+  .mA .rule { width: 64px; height: 3px; border-radius: 2px; background: linear-gradient(90deg, #0b93b8, #0e7a5f); margin-bottom: 12px; }
+  .mA .term { background: #fff; border: 1px solid #dfe8e3; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 2px rgba(23,33,28,.05), 0 4px 14px rgba(23,33,28,.04); }
+  .mA .term-head { display: flex; gap: 4px; align-items: center; padding: 5px 9px; border-bottom: 1px solid #dfe8e3; background: #eff4f1; font-family: ui-monospace, monospace; font-size: 7.5px; color: #6b7d73; }
+  .mA .term-head i { width: 6px; height: 6px; border-radius: 50%; background: #e36c5f; }
+  .mA .term-head i:nth-child(2) { background: #b45309; } .mA .term-head i:nth-child(3) { background: #0e7a5f; }
+  .mA .term-body { font-family: ui-monospace, monospace; font-size: 8.5px; line-height: 1.9; padding: 7px 10px; color: #6b7d73; }
+  .mA .term-body b { color: #0e7a5f; }
+  .mA .stats { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid #dfe8e3; border-radius: 8px; background: #fff; margin-top: 10px; overflow: hidden; }
+  .mA .stat { padding: 7px 9px; border-left: 1px solid #dfe8e3; }
+  .mA .stat:first-child { border-left: none; }
+  .mA .stat .v { font-weight: 700; font-size: 13px; }
+  .mA .stat .k { font-family: ui-monospace, monospace; font-size: 6.5px; letter-spacing: .12em; text-transform: uppercase; color: #97a69e; }
+  .mA .pcard { background: #fff; border: 1px solid #dfe8e3; border-radius: 8px; padding: 9px 11px; margin-top: 10px; box-shadow: 0 4px 14px rgba(23,33,28,.04); }
+  .mA .pcard .row { display: flex; justify-content: space-between; align-items: center; }
+  .mA .pcard .nm { font-family: ui-monospace, monospace; font-weight: 600; font-size: 9.5px; }
+  .mA .pcard .bdg { font-family: ui-monospace, monospace; font-size: 6.5px; padding: 1.5px 6px; border-radius: 99px; border: 1px solid #dfe8e3; color: #6b7d73; }
+  .mA .pcard .live { color: #0F9D6E; border-color: #9fd8c3; background: #ecf9f3; font-weight: 600; }
+  .mA .pcard .cmd { font-family: ui-monospace, monospace; font-size: 7.5px; background: #eff4f1; border: 1px solid #dfe8e3; border-radius: 5px; padding: 4px 6px; margin-top: 6px; color: #3f5047; }
+
+  /* ---------- B. 学术期刊（纸面·衬线编辑部风） ---------- */
+  .mB { background: #fbfaf7; color: #1c1a17; font-family: Georgia, "Times New Roman", serif; padding: 14px 18px; }
+  .mB .nav { display: flex; justify-content: space-between; padding-bottom: 9px; border-bottom: 1px solid #d8d2c4; font-family: ui-monospace, monospace; font-size: 8.5px; color: #7a7263; }
+  .mB .over { font-family: ui-monospace, monospace; font-size: 7.5px; letter-spacing: 0.28em; text-transform: uppercase; color: #9a5b2e; margin: 20px 0 8px; }
+  .mB h1 { font-family: Georgia, serif; font-size: 27px; line-height: 1.12; font-weight: 400; letter-spacing: -0.01em; }
+  .mB h1 em { font-style: italic; color: #9a5b2e; }
+  .mB .sub { font-size: 11.5px; color: #4a463e; margin: 9px 0 14px; line-height: 1.6; max-width: 310px; }
+  .mB .fig { border-top: 2px solid #1c1a17; padding-top: 8px; display: flex; gap: 14px; }
+  .mB .fig .num { font-family: Georgia, serif; font-size: 22px; color: #d8d2c4; line-height: 1; }
+  .mB .fig .body { font-family: -apple-system, sans-serif; font-size: 8.5px; color: #7a7263; line-height: 1.7; }
+  .mB .fig .body b { color: #1c1a17; font-family: ui-monospace, monospace; font-size: 8.5px; }
+  .mB .pcard { border-top: 1px solid #d8d2c4; padding-top: 9px; margin-top: 14px; }
+  .mB .pcard .nm { font-family: ui-monospace, monospace; font-size: 10px; font-weight: 600; }
+  .mB .pcard .tt { font-family: Georgia, serif; font-style: italic; font-size: 10.5px; color: #4a463e; margin: 3px 0 6px; }
+  .mB .pcard .ln { font-family: ui-monospace, monospace; font-size: 7.5px; color: #9a5b2e; border-bottom: 1px solid #e6e1d4; padding-bottom: 4px; }
+  .mB .pcard .mt { font-family: ui-monospace, monospace; font-size: 7px; color: #a39b8a; margin-top: 5px; }
+
+  /* ---------- C. 暗色控制台（终端·荧光仪器风） ---------- */
+  .mC { background: #0a0f0d; color: #d7e4dd; font-family: -apple-system, "Segoe UI", sans-serif; padding: 14px 18px; }
+  .mC .nav { display: flex; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid #1d2a24; font-size: 10px; }
+  .mC .nav b { color: #34d399; }
+  .mC .nav span { color: #5e6f65; font-size: 9px; margin-left: 10px; }
+  .mC .eyebrow { font-family: ui-monospace, monospace; font-size: 8px; letter-spacing: 0.22em; color: #34d399; text-transform: uppercase; margin: 18px 0 6px; }
+  .mC h1 { font-size: 24px; line-height: 1.08; font-weight: 700; letter-spacing: -0.02em; color: #eef7f2; }
+  .mC .sub { color: #8ca096; font-size: 11px; margin: 8px 0 12px; max-width: 300px; line-height: 1.5; }
+  .mC .term { background: #0e1613; border: 1px solid #1d2a24; border-radius: 8px; overflow: hidden; }
+  .mC .term-head { display: flex; gap: 4px; align-items: center; padding: 5px 9px; border-bottom: 1px solid #1d2a24; font-family: ui-monospace, monospace; font-size: 7.5px; color: #5e6f65; }
+  .mC .term-head i { width: 6px; height: 6px; border-radius: 50%; background: #3ddc84; box-shadow: 0 0 6px #3ddc8488; }
+  .mC .term-body { font-family: ui-monospace, monospace; font-size: 8.5px; line-height: 1.9; padding: 7px 10px; color: #5e6f65; }
+  .mC .term-body b { color: #34d399; text-shadow: 0 0 8px #34d39955; }
+  .mC .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 10px; }
+  .mC .g { background: #101915; border: 1px solid #1d2a24; border-radius: 6px; padding: 6px 8px; }
+  .mC .g .v { color: #eef7f2; font-weight: 700; font-size: 12px; }
+  .mC .g .k { font-family: ui-monospace, monospace; font-size: 6.5px; letter-spacing: .12em; text-transform: uppercase; color: #5e6f65; }
+  .mC .pcard { background: #101915; border: 1px solid #1d2a24; border-radius: 8px; padding: 9px 11px; margin-top: 6px; }
+  .mC .pcard .row { display: flex; justify-content: space-between; align-items: center; }
+  .mC .pcard .nm { font-family: ui-monospace, monospace; font-weight: 600; font-size: 9.5px; color: #eef7f2; }
+  .mC .pcard .bdg { font-family: ui-monospace, monospace; font-size: 6.5px; padding: 1.5px 6px; border-radius: 99px; border: 1px solid #1d2a24; color: #5e6f65; }
+  .mC .pcard .live { color: #34d399; border-color: #1f4d38; background: #0f2a1e; font-weight: 600; }
+  .mC .pcard .cmd { font-family: ui-monospace, monospace; font-size: 7.5px; background: #0c1310; border: 1px solid #1d2a24; border-radius: 5px; padding: 4px 6px; margin-top: 6px; color: #8ca096; }
+</style>
+
+<div class="cards">
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:0">
+      <div class="dir-mock mA">
+        <div class="nav"><b>⌘ oxo-flow-community</b><div><span>Pipelines</span><span>Curation</span><span>Porting</span></div></div>
+        <div class="eyebrow">oxo-flow · community catalog</div>
+        <h1>Curated workflows.<br>Ready to run.</h1>
+        <div class="sub">24 bioinformatics workflows ported to a deterministic engine — every one validated end-to-end.</div>
+        <div class="rule"></div>
+        <div class="term">
+          <div class="term-head"><i></i><i></i><i></i>oxo-flow run main.oxoflow</div>
+          <div class="term-body"><b>✔</b> validated — 44 rules · 3 samples · 132 instances<br><b>▸</b> planning DAG …</div>
+        </div>
+        <div class="stats">
+          <div class="stat"><div class="v">24</div><div class="k">workflows</div></div>
+          <div class="stat"><div class="v">24/24</div><div class="k">live-tested</div></div>
+          <div class="stat"><div class="v">417</div><div class="k">rules</div></div>
+          <div class="stat"><div class="v">126</div><div class="k">tools</div></div>
+        </div>
+        <div class="pcard">
+          <div class="row"><span class="nm">oxo-flow-rnaseq</span><span class="bdg live">✔ Live-tested</span></div>
+          <div class="cmd">$ oxo-flow run main.oxoflow --samples 3</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A · 精修现有 — 清爽科研绿</h3>
+      <p>保持现在的绿+白气质，但把排版层级、留白、卡片质感做精。风险最低，是"现在的网站但更贵"。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:0">
+      <div class="dir-mock mB">
+        <div class="nav"><div>oxo-flow-community</div><div>pipelines / curation / porting</div></div>
+        <div class="over">Catalog — Issue Nº 01</div>
+        <h1>Curated workflows, <em>ready to run.</em></h1>
+        <div class="sub">Twenty-four bioinformatics workflows, ported rule-for-rule and validated end-to-end on real data.</div>
+        <div class="fig">
+          <div class="num">01</div>
+          <div class="body"><b>24 workflows</b> — each entry carries its run notes, pinned tool versions, and a rule-level DAG rendered at build time.</div>
+        </div>
+        <div class="fig">
+          <div class="num">02</div>
+          <div class="body"><b>24/24 live-tested</b> — ratings are an evidence ladder: live-tested ⊃ verified ⊃ community.</div>
+        </div>
+        <div class="pcard">
+          <div class="nm">oxo-flow-rnaseq</div>
+          <div class="tt">RNA-seq — align, quantify, and call differential expression</div>
+          <div class="ln">Run notes ↗ · Repository ↗ · <span style="color:#1c1a17">✔ live-tested</span></div>
+          <div class="mt">nf-core port · 44 rules · STAR · featureCounts · DESeq2</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B · 学术期刊 — 纸面衬线编辑部风</h3>
+      <p>像一期经过编辑的期刊：衬线大标题、编号条目、发丝线分隔、焦橙点缀。最有"策展"气质，与生信文献感契合，但改动最大。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:0">
+      <div class="dir-mock mC">
+        <div class="nav"><b>⌗ oxo-flow-community</b><div><span>pipelines</span><span>curation</span><span>porting</span></div></div>
+        <div class="eyebrow">$ catalog --list</div>
+        <h1>Curated workflows.<br>Ready to run.</h1>
+        <div class="sub">24 bioinformatics workflows on a deterministic engine — every one validated end-to-end.</div>
+        <div class="term">
+          <div class="term-head"><i></i>oxo-flow run main.oxoflow</div>
+          <div class="term-body"><b>✔</b> validated — 44 rules · 3 samples · 132 instances<br><b>▸</b> planning DAG …</div>
+        </div>
+        <div class="grid">
+          <div class="g"><div class="v">24</div><div class="k">workflows</div></div>
+          <div class="g"><div class="v">24/24</div><div class="k">live-tested</div></div>
+          <div class="g"><div class="v">417</div><div class="k">rules</div></div>
+          <div class="g"><div class="v">126</div><div class="k">tools</div></div>
+        </div>
+        <div class="pcard">
+          <div class="row"><span class="nm">oxo-flow-rnaseq</span><span class="bdg live">✔ live-tested</span></div>
+          <div class="cmd">$ oxo-flow run main.oxoflow --samples 3</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C · 暗色控制台 — 终端仪器风</h3>
+      <p>整站转暗色优先：荧光绿点缀、命令行即视觉主体，像一台专业仪器面板。对开发者最有冲击力，但白天阅读长文稍累，和"策展目录"的亲和感有距离。</p>
+    </div>
+  </div>
+</div>
