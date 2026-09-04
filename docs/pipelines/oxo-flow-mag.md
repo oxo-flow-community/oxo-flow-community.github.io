@@ -27,7 +27,7 @@ Download the GTDB-Tk database (~100 GB), set `config.gtdb_db`, then run — the 
 
 ## Installation
 
-**Engine.** oxo-flow >= 0.12.0
+**Engine.** oxo-flow >= 0.17.0
 
 **Toolchain.** conda envs — pinned
 
@@ -479,10 +479,9 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 - kaiju — taxonomic profiling with kaiju; not portable: the process is absent from upstream nf-core/mag 5.5.0 entirely (removed upstream), so there is no module script to translate
 - diamond — taxonomic profiling with diamond; same as kaiju: absent from upstream 5.5.0, no module script to translate
-- nf-core boilerplate files (pipeline_summary/methods_description, versions.yml) — not part of the analysis
+- nf-core boilerplate files (pipeline_summary/methods_description) — not part of the analysis. Note: the versions.yml half is since covered by the engine-native export `oxo-flow report --versions-yml` (engine >= 0.17.0)
 
 ## Fidelity
-
 
 | Upstream | Port | Notes |
 |----------|------|-------|
@@ -494,7 +493,8 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 | `gtdbtk_single_job` option | Not ported | Off by default upstream |
 | `gtdbtk_use_full_tree` / `gtdbtk_place_species` | Config keys not exposed | Off by default upstream |
 | Empty bin groups crash upstream (BUSCO on no input) | Empty groups produce empty/touched outputs and skip downstream classification | The pipeline never fails on empty groups |
-| Versions.yml / pipeline boilerplate (summary, methods_description) | Not ported | Not analysis output |
+| nf-core boilerplate (`versions.yml`) | engine-native export: `oxo-flow report --versions-yml <file> main.oxoflow` | oxo-flow ≥ 0.17.0 exports an nf-core-style `versions.yml` derived statically from the workflow declarations: one entry per rule (311 rules) with the pinned conda environment, or a `system` entry with an explicit "no software versions declared" note where no env is declared. Deviation: it is a standalone CI-diff artifact, not a per-process runtime capture — per-rule `versions.yml` emission inside every command is deliberately not replicated (it would change every rule's command while the default plan stays byte-identical). |
+| nf-core boilerplate (pipeline_summary, methods_description) | Not ported | Not analysis output |
 | `*-busco.batch_summary.failed.txt` | Not produced | Only exists upstream when a BUSCO run failed |
 | `results/GenomeBinning/QC/BUSCO/` flat short_summaries | Published into the same per-group dir as upstream | Same publish pattern `*{.txt,.json,.log}` |
 | Conda environments | `envs/*.yaml` with the same pins | `tar` added to `gunzip`/`gtdbtk_db_preparation` because there is no container layer; `split_fasta` and `mag_depths` pin `conda-forge::pandas=1.1.5` exactly like upstream (the other pins use the `bioconda::` channel prefix instead of `conda-forge::` — same package, same version) |
@@ -537,19 +537,6 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 | Virus identification | `run_virus_identification = true` | 3 | `GENOMAD_ENDTOEND` (genomad 1.11.2, `genomad_db`) |
 
 Each gate activates exactly its own branch: with the default config the executed plan (134 rules of 311 total) is identical to the pre-branch port, and toggling one key adds only that branch's rules (verified by `dry-run` per key).
-
-### Not ported (with reasons)
-
-- **Long-read assembly and binning** (`--longreads`): the upstream longreads subworkflow doubles the whole binning graph (every assembler x binner x sample) and needs long-read input files the paired-end `{sample}_R1/_R2` input model does not provide.
-- **Kaiju and diamond taxonomic profiling**: absent from upstream 5.5.0 entirely (removed upstream) — there is no module script to translate.
-- **Single-end / interleaved input modes** (upstream `--input` samplesheet modes): the port's default input model is paired-end `{sample}_R1.fastq.gz` / `{sample}_R2.fastq.gz`; uniform single-end libraries can be run by overriding `config.sample_pattern` (e.g. `{sample}.fastq.gz`); interleaved and mixed-library samplesheets are not ported.
-- **Ancient DNA** (`--ancient_dna`): rewires the workflow at 8 points — skips host removal, phiX removal and assembly; adds pydamage damage correction and freebayes/bcftools SNP calling into the GTDB-Tk filter and bin summary — for a niche off-by-default parameter; porting it would double the rule graph around the QC and taxonomy stages.
-- **CAT/BAT unbinned-contigs classification** (`--cat_classify_unbinned`, upstream default `false`): the ported CAT branch classifies binned contigs only; the unbinned column would add a second full `CAT_pack` pass over the chunked contigs, which are already classified by Tiara in the `bin_domain_classification` branch.
-- **Pydamage report page**: part of the ancient DNA branch (above); the CheckM2 and GUNC report pages are ported with their tools.
-- **BUSCO `*-busco.batch_summary.failed.txt`**: only exists upstream when a BUSCO run failed — an error-only artifact.
-- **nf-core boilerplate files** (pipeline_summary/methods_description, versions.yml): not analysis output.
-
-Live verification (bioinfo-wsx, real metagenome data, `run_gtdbtk=false`): default, `clip_tool=trimmomatic`, `bbnorm=true`, `refine_bins_dastool=true`, `run_checkm=true` and `bin_domain_classification=true` all PASS. The four branches ported in the 2026-08-27 catalog truthification wave — `run_checkm2`, `run_gunc`, `cat_db`, `run_virus_identification` — are statically verified (validate + lint + dry-run per gate) and queued for live testing (each needs a real reference database, 8-35 GB).
 
 ## Links
 
