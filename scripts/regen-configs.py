@@ -45,6 +45,11 @@ DATA = ROOT / "data" / "pipelines.json"
 OUT = ROOT / "data" / "configs.json"
 DAG_DIR = ROOT / "docs" / "assets" / "dag"
 STAGING = pathlib.Path.home() / "Documents" / "GitHub" / "oxo-community" / "staging"
+if not STAGING.is_dir():
+    # Fresh clones: the pipeline repos may sit as siblings of the site repo
+    # (oxo-flow-rnaseq, … next to oxo-flow-community.github.io) instead of
+    # under ~/Documents/GitHub/oxo-community/staging.
+    STAGING = ROOT.parent
 
 # First engine version carrying both the config descriptions in `info`
 # (v0.13.1, Traitome/oxo-flow#86) and the metro graph export (v0.16.0).
