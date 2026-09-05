@@ -316,8 +316,8 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-methylseq
 <div class="ox-param">
 <div class="ox-param-head"><code>raw_dir</code><span class="ox-param-default">test/fixtures/raw</span></div>
 <p class="ox-param-desc">Input reads directory: raw/&lt;sample&gt;_R1.fastq.gz + _R2.fastq.gz (paired-end). The repo default ships the tiny test fixtures; point this at your data.</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>fastqc</code> <code>fastqc_se</code> <code>trimgalore</code> <code>trimgalore_se</code></div>
+<details class="ox-param-usedby"><summary>used by 6 rules</summary>
+<div class="ox-param-rules"><code>cat_fastq_r1</code> <code>cat_fastq_r2</code> <code>fastqc</code> <code>fastqc_se</code> <code>trimgalore</code> <code>trimgalore_se</code></div>
 </details>
 </div>
 <div class="ox-param">

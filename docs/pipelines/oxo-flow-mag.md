@@ -261,7 +261,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-mag
 </details>
 </div>
 <div class="ox-param">
-<div class="ox-param-head"><code>gtdb_db</code><span class="ox-param-default">/data/home/wsx/databases/gtdb-r232/gtdbtk_r232_data.tar.gz</span></div>
+<div class="ox-param-head"><code>gtdb_db</code><span class="ox-param-default"></span></div>
 <p class="ox-param-desc">GTDB-Tk database: local path to the release .tar.gz or an unpacked directory (upstream --gtdb_db, ~100GB). oxo-flow cannot download it mid-run (the prep rule only unpacks), so the default is empty and run_gtdbtk=true fails fast until a local path is set.</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>gtdbtk_db_preparation</code></div>

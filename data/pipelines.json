@@ -2388,7 +2388,7 @@
     "quickstart": "oxo-flow run main.oxoflow",
     "compute": "up to 64 CPUs / 32 GB per rule (freebayes candidates 48 threads; vg giraffe 64 threads)",
     "quickstart_note": "Needs reference data — see Requirements; preview with `oxo-flow dry-run main.oxoflow --samples first:1`.",
-    "coverage": "default path (pangenome mapping, freebayes+delly candidates, Varlociraptor calling, VEP, report) + 9 gated branch modules (47 rules): trimming (fastp/SRA), primers (fgbio/rs), MAF export, population DB, VEP plugins, bwa mapping, mutational burden+signatures, STAR/arriba fusions. Branch smoke live-verified on bioinfo-wsx (trimming/bwa/star_index); branches needing the full default-path outputs (maf/burden/population/signatures) are ported and dry-run-verified."
+    "coverage": "default path (pangenome mapping, freebayes+delly candidates, Varlociraptor calling, VEP, report) + 10 gated branch modules (60 rules): trimming (fastp/SRA), primers (fgbio/rs), MAF export, population DB, VEP plugins, bwa mapping, CHM benchmarking, mutational burden+signatures, consensus reads, STAR/arriba fusions. Branch smoke live-verified on bioinfo-wsx (trimming/bwa/star_index); branches needing the full default-path outputs (maf/burden/population/signatures) are ported and dry-run-verified."
   },
   {
     "name": "oxo-flow-snparcher",

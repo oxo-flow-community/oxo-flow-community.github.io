@@ -13,7 +13,7 @@ title: "Ancient DNA (aDNA): QC, mapping, damage estimation and genotyping"
 <div class="ox-glance">
 <div class="ox-glance-title">At a glance</div>
 <div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested</span></div>
-<div class="ox-kv"><span class="k">Rules</span><span class="v">60</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">61</span></div>
 <div class="ox-kv"><span class="k">Compute</span><span class="v">up to 4 CPUs / 8 GB per rule (bwa_aln)</span></div>
 <div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></span></div>
 <div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
@@ -410,15 +410,15 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-eager
 <div class="ox-param">
 <div class="ox-param-head"><code>hostremoval_input_fastq</code><span class="ox-param-default">false</span></div>
 <p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>hostremoval_input_fastq</code></div>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>hostremoval_input_fastq</code> <code>hostremoval_input_fastq_bwamem</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>hostremoval_mode</code><span class="ox-param-default">mapped</span></div>
 <p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>hostremoval_input_fastq</code></div>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>hostremoval_input_fastq</code> <code>hostremoval_input_fastq_bwamem</code></div>
 </details>
 </div>
 <div class="ox-param">
@@ -613,8 +613,8 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-eager
 <div class="ox-param">
 <div class="ox-param-head"><code>mapper</code><span class="ox-param-default">bwaaln</span></div>
 <p class="ox-param-desc">mapping</p>
-<details class="ox-param-usedby"><summary>used by 10 rules</summary>
-<div class="ox-param-rules"><code>bowtie2</code> <code>bwa_aln</code> <code>bwamem</code> <code>circulargenerator</code> <code>circularmapper</code> <code>make_bt2_index</code> <code>samtools_filter_bowtie2</code> <code>samtools_filter_bwaaln</code> <code>samtools_filter_bwamem</code> <code>samtools_filter_circularmapper</code></div>
+<details class="ox-param-usedby"><summary>used by 12 rules</summary>
+<div class="ox-param-rules"><code>bowtie2</code> <code>bwa_aln</code> <code>bwamem</code> <code>circulargenerator</code> <code>circularmapper</code> <code>hostremoval_input_fastq</code> <code>hostremoval_input_fastq_bwamem</code> <code>make_bt2_index</code> <code>samtools_filter_bowtie2</code> <code>samtools_filter_bwaaln</code> <code>samtools_filter_bwamem</code> <code>samtools_filter_circularmapper</code></div>
 </details>
 </div>
 <div class="ox-param">
@@ -1248,7 +1248,11 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - circularmapper
 - convert_bam
 - hostremoval_input_fastq
-- samtools_filter
+- hostremoval_input_fastq_bwamem
+- samtools_filter_bwaaln
+- samtools_filter_bwamem
+- samtools_filter_bowtie2
+- samtools_filter_circularmapper
 - samtools_flagstat_after_filter
 - endor_spy
 - bedtools_coverage
