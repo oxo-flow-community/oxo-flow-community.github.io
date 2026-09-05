@@ -37,7 +37,7 @@ The default config ships with `test/fixtures/` so the plan previews with no data
 
 ## Installation
 
-**Engine.** oxo-flow >= 0.12.0
+**Engine.** oxo-flow >= 0.17.0
 
 **Toolchain.** conda envs — pinned (envs/*.yaml, versions pinned to the upstream nf-core/rnaseq 3.26.0 module environments; requires conda or mamba)
 
@@ -646,7 +646,6 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 **Excluded**
 
 - PREPARE_GENOME `.tar.gz` reference bundles — bbsplit / sortmerna index archives; the GTF preprocessing chain itself (CUSTOM_GTFFILTER with the upstream filter_gtf_needed gate, gffread GFF->GTF, additional_fasta transgenes with biotype featurecounts_group_type / gene_type, GENCODE preprocessing, .gz references) is ported as gated prepare_genome::* builder rules with canonical results/reference/ artifacts
-- workflow_summary_mqc.yaml / methods_description_mqc.yaml — Nextflow-param-rendered MultiQC sections
 
 ## Fidelity
 
@@ -661,15 +660,15 @@ Known, documented deviations:
 | # | upstream (3.26.0) | port | reason |
 |---|---|---|---|
 | 1 | Per-sample strandedness from the samplesheet (`auto` supported) | Ported via a `metadata_file` `strandedness` column: `forward` / `reverse` / `unstranded` resolve per sample, empty / `auto` / missing cells fall back to `config.strandedness`, bigWig FW/REV rules prune per sample at plan time | `auto` resolves to the pipeline-level value instead of a Salmon `--libType A` inference run; runs without a `metadata_file` keep the previous single-config behavior |
-| 2 | `PREPARE_GENOME` derives the reference artifacts (gene_bed via EAUTILS_GTF2BED, chrom_sizes via SAMTOOLS_FAIDX, transcript_fasta via RSEM_PREPAREREFERENCE) and builds the branch indexes (STAR / HISAT2 / RSEM / Salmon) | The artifact derivations are ported as `prepare_genome::gene_bed` / `chrom_sizes` / `transcript_fasta` builder rules (empty config key = derive from fasta + gtf like upstream; non-empty key = the user path is symlinked in); the index builders: STAR via the `[[references]]` builder, HISAT2 / RSEM / Salmon / Bowtie2 / Kallisto via when-gated builder rules | The GTF preprocessing chain is ported (CUSTOM_GTFFILTER with the upstream `filter_gtf_needed` gate, gffread GFF→GTF, additional_fasta transgenes, GENCODE preprocessing, `.gz` references — see `modules/prepare_genome.oxoflow`); fasta and gtf remain required inputs; `.tar.gz` index bundles (bbsplit / sortmerna) stay excluded |
+| 2 | `PREPARE_GENOME` derives the reference artifacts (gene_bed via EAUTILS_GTF2BED, chrom_sizes via SAMTOOLS_FAIDX, transcript_fasta via RSEM_PREPAREREFERENCE) and builds the branch indexes (STAR / HISAT2 / RSEM / Salmon) | The artifact derivations are ported as `prepare_genome::gene_bed` / `chrom_sizes` / `transcript_fasta` builder rules (empty config key = derive from fasta + gtf like upstream; non-empty key = the user path is symlinked in); the index builders: STAR via the `[[references]]` builder, HISAT2 / RSEM / Salmon / Bowtie2 / Kallisto via when-gated builder rules | The GTF preprocessing chain is ported (CUSTOM_GTFFILTER with the upstream `filter_gtf_needed` gate, gffread GFF→GTF, additional_fasta transgenes, GENCODE preprocessing, `.gz` references — see `modules/prepare_genome.oxoflow`); fasta and gtf remain required inputs; user-supplied `bbsplit_index` / `sortmerna_index` paths are staged into the canonical dir like upstream `UNTAR_BBSPLIT_INDEX` / `UNTAR_SORTMERNA_INDEX` (`.tar.gz`/`.tgz`/`.tar` archives untarred, directories symlinked) |
 | 3 | Non-default branches: `star_rsem`, `hisat2`, `bowtie2_salmon`, `--with_umi`, `--pseudo_aligner salmon`, `--pseudo_aligner kallisto` | Ported — see rows 16-27 for their deviations | RSEM runs in `--alignments` mode in every RSEM path, exactly like upstream (the nf-core `as_quantification` mode never existed in the rnaseq pipeline) |
 | 4 | SALMON_QUANT (alignment mode) + CUSTOM_TX2GENE + TXIMETA_TXIMPORT + SUMMARIZEDEXPERIMENT_* — the default-path quantification chain | Ported as `quantification::salmon_quant` / `tx2gene` / `tximport` / `summarizedexperiment` | The upstream 4-process chain is mirrored as 4 rules; tx2gene runs on the first sample's quant dir (upstream `.first()`); the SE process runs twice (gene + transcript) inside one rule with the upstream `--assay_names` values |
-| 5 | `min_trimmed_reads` gate drops failing samples from the downstream chain | Only the MultiQC fail_trimmed table is produced | The filter is data-dependent per-sample state (n of trimmed reads), not expressible as a static DAG |
+| 5 | `min_trimmed_reads` gate drops failing samples from the downstream chain | The `fastqc_filtered_*` QC rules gate on the R2 trimmed-read count via `reads_count('{config.out_dir}/trimgalore/{sample}_trimmed_2_val_2.fq.gz') >= config.min_trimmed_reads` (matching the upstream drop filter `>=`); failing samples get their filtered-read QC skipped and the MultiQC fail_trimmed table is still produced | Requires oxo-flow >= 0.17.0. The port gates only the filtered-read QC steps — the upstream chain-wide per-sample drop (alignment, quantification and every other downstream step also excluded for failing samples) is data-dependent channel state and remains not ported; the fail_trimmed TSV keeps the upstream `n <= threshold` listing quirk (a sample exactly at the threshold passes the drop but is still listed) |
 | 6 | `skip_trimming` / `skip_markduplicates` rewire the downstream inputs (QC runs on raw / sorted BAM) | `skip_trimming=true` / `skip_markduplicates=true` break the downstream chain (trimmed reads / markdup BAM are rule inputs) | oxo-flow inputs are static paths; use the defaults |
 | 7 | `save_trimmed` / `save_align_intermeds` control publication; intermediates live in workdir | Trimmed FASTQs and intermediate BAMs are always kept at `results/` paths (they double as run checkpoints) | oxo-flow re-executes from declared outputs |
 | 8 | RSeQC PDFs are published upstream: `*.pdf` outputs of RSEQC_JUNCTIONANNOTATION (`splicing_events_pie.pdf`, `splicing_junction_pie.pdf`), RSEQC_JUNCTIONSATURATION (`junctionSaturation_plot.pdf`), read_duplication and inner_distance — plus two zero-byte touch placeholders (`junction.pdf`, `events.pdf`) | The same PDFs are kept under `junction_annotation/pdf/`, `junction_saturation/pdf/`, `read_duplication/pdf/`, `inner_distance/pdf/` with `<id>.`-prefixed names (e.g. `<id>.junction_events.pdf`); the zero-byte `junction.pdf` / `events.pdf` touch placeholders are not produced | Layout only — the published artifact set is the same; the touch placeholders are upstream artifacts MultiQC ignores |
 | 9 | `BEDTOOLS_GENOMECOV_FW/REV` swap their prefixes between forward and reverse libraries | `genomecov_fw` always emits `<id>.forward` (strand `+`), `genomecov_rev` always `<id>.reverse` (strand `-`) | With pipeline-level strandedness both rules never run together; the published artifact set is identical |
-| 10 | `workflow_summary_mqc.yaml` and `methods_description_mqc.yaml` MultiQC sections (Nextflow-param rendered) | Not generated | Nextflow-specific param rendering |
+| 10 | `workflow_summary_mqc.yaml` and `methods_description_mqc.yaml` MultiQC sections (Nextflow-param rendered) | Generated by `scripts/multiqc_custom_content.py` (`workflow_summary_mqc.yaml`, `methods_description_mqc.yaml`) | `paramsSummaryMap` runs only over params passed as `--config` CLI flags plus hardcoded port options (`strandedness`, `reads_dir`); Core group shows the engine version / command instead of Nextflow runtime info |
 | 11 | Merged-mode software versions are runtime-collated from per-process `versions.yml` | Static `nf_core_rnaseq_software_mqc_versions.yml` pinned to the env versions | Tools are pinned in `envs/*.yaml`; there are no per-process version captures in oxo-flow |
 | 12 | `CUSTOM_MULTIQCCUSTOMBIOTYPE` supports `--max_biotypes` via `ext.args` | Fixed at the upstream default `100` | The upstream pipeline never sets it |
 | 13 | STRINGTIE_STRINGTIE (default path, runs on the markdup BAM with `-G gtf -e`) | Ported as `quantification::stringtie` (`--fr`/`--rf` from strandedness like upstream) | The `<id>.ballgown/` directory is moved into `results/` but is not declared as a rule output (upstream emits it) |
@@ -688,18 +687,19 @@ Known, documented deviations:
 | 26 | `KALLISTO_QUANT` logs: upstream publishes the work-dir `{prefix}.log` (the `.run_info.json` and `.log` copies are unpublished, saveAs null) and feeds MultiQC from the work dir | The port declares `{pseudo_aligner}/<id>/kallisto_quant.log` as a rule output and stages it into MultiQC as `<id>.kallisto_quant.log` | oxo-flow has no work dirs, so the log must be a declared output to reach MultiQC; the MultiQC kallisto module matches by content ("[quant] finding pseudoalignments for the reads"), so the per-sample rename is safe |
 | 27 | `DESEQ2_QC_PSEUDO` MultiQC labels come from `params.pseudo_aligner` (SALMON / KALLISTO) | The port derives the label from `config.pseudo_aligner` at render time (`tr [:lower:] [:upper:]`) | Config-derived label — same value as upstream's param-derived label |
 
-**Not ported (metadata `excluded`):**
+## Not ported (metadata `excluded`)
 
-Per-sample `min_trimmed_reads` filtering (data-dependent per-sample state;
-only the MultiQC fail_trimmed table is produced); `auto` strandedness
-inference without a metadata_file column (with the column, `auto` / empty
-values fall back to `config.strandedness` — no Salmon `--libType A`
-inference run); `.tar.gz` reference bundles for the bbsplit / sortmerna
-indexes (gtf, gff, fasta, additional_fasta and transcript_fasta accept plain
-or `.gz` paths like upstream); the Nextflow-param-rendered MultiQC sections
-(`workflow_summary_mqc.yaml` / `methods_description_mqc.yaml`).
-
-**Test fixtures** (reworked live, engine 0.15.0): 60 genes (DESeq2's dispersion fit needs gene support — 4 genes x 6 samples still failed `estimateDispersionsFit`) spread 100x apart (contiguous aligners like bowtie2 collide on packed genes — live: 64% Picard duplicates, dupRadar density NaN); unique read fragments only (random draws over 400 bp exons collided massively — 64% duplicates live, dupRadar bandwidth NaN); log-normal expression-weighted reads with PCR duplicates biased to high-expression genes (~5% overall, like real data — a uniform dup rate collapsed dupRadar's density bandwidth); FR-oriented mates with identical read names (`@S1_1` — forward-forward mates made STAR classify every pair as 'too short'). bowtie2_salmon live note (engine 0.15.0): under a contiguous aligner the ~30% spliced fixture reads map clipped and their positional collisions dominate dupRadar's density plot — `duprateExpDensPlot` dies with a NaN bandwidth (upstream script unchanged); alignment, Salmon quant and DESeq2 all pass; the dupRadar density plot needs real-library data.
+The chain-wide per-sample `min_trimmed_reads` drop (alignment, quantification
+and all other downstream steps of failing samples remain scheduled; only the
+`fastqc_filtered_*` QC rules gate on the trimmed-read count via
+`reads_count(...) >= config.min_trimmed_reads`, requires oxo-flow >= 0.17.0);
+`auto` strandedness inference without a metadata_file column (with the column,
+`auto` / empty values fall back to `config.strandedness` — no Salmon
+`--libType A` inference run). User-supplied
+`bbsplit_index` / `sortmerna_index` bundles are staged like upstream
+(`.tar.gz`/`.tgz`/`.tar` archives untarred into the canonical dir, plain
+directories symlinked; gtf, gff, fasta, additional_fasta and
+transcript_fasta accept plain or `.gz` paths).
 
 ## Links
 
