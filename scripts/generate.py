@@ -229,6 +229,11 @@ def glance_panel(p: dict) -> str:
         ("Ported", p.get("created", "2026-08-15"), ""),
         ("License", p.get("license", "Apache-2.0"), ""),
     ]
+    wh = p.get("workflowhub")
+    if wh:
+        rows += [
+            ("Cite", f'<a href="{_esc(wh["doi_url"])}"><code>{_esc(wh["doi"])}</code></a>', ""),
+        ]
     kv = "\n".join(
         f'<div class="ox-kv"><span class="k">{k}</span>'
         f'<span class="v{(" " + cls) if cls else ""}">{v}</span></div>'

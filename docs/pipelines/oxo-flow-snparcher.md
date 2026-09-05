@@ -22,6 +22,7 @@ title: "Variant calling for non-model organisms: trimming, alignment, per-sample
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>v2.2</code></span></div>
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
+<div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2292.1"><code>10.48546/workflowhub.workflow.2292.1</code></a></span></div>
 <p class="cmd">$ oxo-flow run main.oxoflow reference_source=/path/to/genome.fa.gz</p>
 </div>
 </div>

@@ -1,0 +1,170 @@
+{
+  "oxo-flow-rnaseq": {
+    "id": 2278,
+    "url": "https://workflowhub.eu/workflows/2278",
+    "title": "RNA-seq: alignment, quantification and QC",
+    "doi": "10.48546/workflowhub.workflow.2278.1",
+    "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2278.1"
+  },
+  "oxo-flow-sarek": {
+    "id": 2279,
+    "url": "https://workflowhub.eu/workflows/2279",
+    "title": "WGS/WES germline and somatic variant calling",
+    "doi": "10.48546/workflowhub.workflow.2279.1",
+    "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2279.1"
+  },
+  "oxo-flow-scrnaseq": {
+    "id": 2280,
+    "url": "https://workflowhub.eu/workflows/2280",
+    "title": "Single-cell RNA-seq: alignment, quantification and QC",
+    "doi": "10.48546/workflowhub.workflow.2280.1",
+    "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2280.1"
+  },
+  "oxo-flow-mag": {
+    "id": 2281,
+    "url": "https://workflowhub.eu/workflows/2281",
+    "title": "Metagenome assembly, binning and taxonomic classification",
+    "doi": "10.48546/workflowhub.workflow.2281.1",
+    "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2281.1"
+  },
+  "oxo-flow-ampliseq": {
+    "id": 2282,
+    "url": "https://workflowhub.eu/workflows/2282",
+    "title": "Amplicon sequencing (16S/ITS): DADA2 denoising, taxonomy assignment, QIIME2 diversity/ANCOM, PICRUSt, SBDI export, phyloseq/TSE objects and QC",
+    "doi": "10.48546/workflowhub.workflow.2282.1",
+    "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2282.1"
+  },
+  "oxo-flow-chipseq": {
+    "id": 2283,
+    "url": "https://workflowhub.eu/workflows/2283",
+    "title": "ChIP-seq: peak calling, QC and differential analysis",
+    "doi": "10.48546/workflowhub.workflow.2283.1",
+    "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2283.1"
+  },
+  "oxo-flow-atacseq": {
+    "id": 2284,
+    "url": "https://workflowhub.eu/workflows/2284",
+    "title": "ATAC-seq: peak calling and QC",
+    "doi": "10.48546/workflowhub.workflow.2284.1",
+    "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2284.1"
+  },
+  "oxo-flow-methylseq": {
+    "id": 2285,
+    "url": "https://workflowhub.eu/workflows/2285",
+    "title": "Bisulfite methylation analysis: alignment, methylation calls and QC",
+    "doi": "10.48546/workflowhub.workflow.2285.1",
+    "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2285.1"
+  },
+  "oxo-flow-nanoseq": {
+    "id": 2286,
+    "url": "https://workflowhub.eu/workflows/2286",
+    "title": "Nanopore long-read: demultiplexing, QC and alignment",
+    "doi": "10.48546/workflowhub.workflow.2286.1",
+    "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2286.1"
+  },
+  "oxo-flow-viralrecon": {
+    "id": 2287,
+    "url": "https://workflowhub.eu/workflows/2287",
+    "title": "Viral assembly and intrahost variant calling for Illumina amplicon data",
+    "doi": "10.48546/workflowhub.workflow.2287.1",
+    "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2287.1"
+  },
+  "oxo-flow-eager": {
+    "id": 2288,
+    "url": "https://workflowhub.eu/workflows/2288",
+    "title": "Ancient DNA (aDNA): QC, mapping, damage estimation and genotyping",
+    "doi": "10.48546/workflowhub.workflow.2288.1",
+    "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2288.1"
+  },
+  "oxo-flow-fetchngs": {
+    "id": 2289,
+    "url": "https://workflowhub.eu/workflows/2289",
+    "title": "Fetching public sequencing data: FastQ download, metadata and samplesheets",
+    "doi": "10.48546/workflowhub.workflow.2289.1",
+    "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2289.1"
+  },
+  "oxo-flow-rnaseq-star-deseq2": {
+    "id": 2290,
+    "url": "https://workflowhub.eu/workflows/2290",
+    "title": "RNA-seq: STAR alignment, DESeq2 differential expression and QC",
+    "doi": "10.48546/workflowhub.workflow.2290.1",
+    "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2290.1"
+  },
+  "oxo-flow-varlociraptor": {
+    "id": 2291,
+    "url": "https://workflowhub.eu/workflows/2291",
+    "title": "Small and structural variant calling with Varlociraptor",
+    "doi": "10.48546/workflowhub.workflow.2291.1",
+    "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2291.1"
+  },
+  "oxo-flow-snparcher": {
+    "id": 2292,
+    "url": "https://workflowhub.eu/workflows/2292",
+    "title": "Variant calling for non-model organisms: trimming, alignment, per-sample gVCFs, joint genotyping, callable sites, postprocessing and QC dashboard",
+    "doi": "10.48546/workflowhub.workflow.2292.1",
+    "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2292.1"
+  },
+  "oxo-flow-enrichment": {
+    "id": 2293,
+    "url": "https://workflowhub.eu/workflows/2293",
+    "title": "Region set and gene set enrichment: LOLA, GREAT, pycisTarget and GSEA",
+    "doi": "10.48546/workflowhub.workflow.2293.1",
+    "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2293.1"
+  },
+  "oxo-flow-genome-tracks": {
+    "id": 2294,
+    "url": "https://workflowhub.eu/workflows/2294",
+    "title": "Genome browser tracks: coverage, gene plots and UCSC hub",
+    "doi": "10.48546/workflowhub.workflow.2294.1",
+    "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2294.1"
+  },
+  "oxo-flow-mixscape": {
+    "id": 2295,
+    "url": "https://workflowhub.eu/workflows/2295",
+    "title": "Pooled CRISPR perturbation analysis with Seurat Mixscape",
+    "doi": "10.48546/workflowhub.workflow.2295.1",
+    "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2295.1"
+  },
+  "oxo-flow-bgcflow": {
+    "id": 2296,
+    "url": "https://workflowhub.eu/workflows/2296",
+    "title": "Biosynthetic gene cluster (BGC) genome mining: annotation, antiSMASH and data warehouse",
+    "doi": "10.48546/workflowhub.workflow.2296.1",
+    "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2296.1"
+  },
+  "oxo-flow-unsupervised": {
+    "id": 2297,
+    "url": "https://workflowhub.eu/workflows/2297",
+    "title": "Unsupervised analysis of omics matrices: PCA, UMAP, clustering and validation",
+    "doi": "10.48546/workflowhub.workflow.2297.1",
+    "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2297.1"
+  },
+  "oxo-flow-circrna": {
+    "id": 2298,
+    "url": "https://workflowhub.eu/workflows/2298",
+    "title": "circRNA detection: four callers with ensemble aggregation",
+    "doi": "10.48546/workflowhub.workflow.2298.1",
+    "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2298.1"
+  },
+  "oxo-flow-clindet": {
+    "id": 2299,
+    "url": "https://workflowhub.eu/workflows/2299",
+    "title": "Cancer genome & transcriptome analysis (WES/WGS/RNA, single entry): somatic+germline+CNV+SV calling, MAF annotation, case report",
+    "doi": "10.48546/workflowhub.workflow.2299.1",
+    "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2299.1"
+  },
+  "oxo-flow-auto-sra-rnaseq-pipeline": {
+    "id": 2300,
+    "url": "https://workflowhub.eu/workflows/2300",
+    "title": "SRA-powered RNA-seq: .sra archives to differential expression",
+    "doi": "10.48546/workflowhub.workflow.2300.1",
+    "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2300.1"
+  },
+  "oxo-flow-tcasia": {
+    "id": 2301,
+    "url": "https://workflowhub.eu/workflows/2301",
+    "title": "Paired-end RNA-seq alignment and four-caller alternative-splicing analysis",
+    "doi": "10.48546/workflowhub.workflow.2301.1",
+    "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2301.1"
+  }
+}

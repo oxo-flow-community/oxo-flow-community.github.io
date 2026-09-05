@@ -22,6 +22,7 @@ title: "circRNA detection: four callers with ensemble aggregation"
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>main</code></span></div>
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
+<div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2298.1"><code>10.48546/workflowhub.workflow.2298.1</code></a></span></div>
 <p class="cmd">$ oxo-flow run circrna.oxoflow -j 16</p>
 </div>
 </div>
