@@ -2028,7 +2028,7 @@ window.OXO_PIPELINES = [
       "star_index"
     ],
     "excluded": [
-      "Snakemake report artifacts (workflow/report/*.rst) \u2014 jinja captions rendered by the sphinx-based snakemake --report machinery (report: directive + report() output annotations); no oxo-flow equivalent"
+      "Snakemake report artifacts \u2014 per-rule .rst captions (workflow/report/fastp.rst, pca.rst, diffexp.rst, ma.rst) ported as report = \"\u2026\" annotations on the 6 report()-wrapped rules (fastp_pe, fastp_se, 3x pca, deseq2), rendered by the engine rule-captions report section (needs oxo-flow >= 0.17.0; older engines ignore the key); the workflow-level report: directive (workflow/report/workflow.rst) and the sphinx-based snakemake --report HTML book (self-contained, figures embedded, categories/subcategories/labels) have no oxo-flow equivalent"
     ],
     "rule_count": 31,
     "tools": [
