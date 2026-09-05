@@ -37,7 +37,7 @@ Real sklearn `digits` data is committed under `test/fixtures/` — fully runnabl
 
 ## Installation
 
-**Engine.** oxo-flow >= 0.12.0
+**Engine.** oxo-flow >= 0.12.0 (the report = caption annotations on 28 rules require >= 0.17.0 — the rule-captions report section; older engines ignore the key)
 
 **Toolchain.** conda envs — pinned versions (7 environments under envs/, created by conda/mamba)
 
@@ -369,7 +369,7 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- report/ generation — Snakemake `report(...)` wrapper metadata (captions, categories, labels) has no oxo-flow counterpart; all underlying rule outputs are produced, and `oxo-flow report` generates an execution report from the checkpoint (rule status/timings), not the Snakemake artifact-catalog book.
+- report/ generation — Snakemake `report(...)` wrapper metadata is partially ported: the per-rule .rst captions (workflow/report/dimred_2d_features.rst, dimred_2d_metadata.rst, dimred_2d_clusterings.rst, pca_diagnostics.rst, umap_diagnostics.rst, umap_connectivity.rst, heatmap.rst, clustree.rst, cluster_validation.rst, software.rst, configs.rst) are carried as report = "…" annotations on the 28 rules upstream wraps in report() (dimred/heatmap/clustree/indices plots, PCA/UMAP diagnostics and connectivity, 7 env_export snapshots, annot_export), rendered by the engine rule-captions report section (needs oxo-flow >= 0.17.0; older engines ignore the key). Still without an oxo-flow equivalent: the Snakemake artifact-catalog book itself (self-contained HTML with figures embedded, categories/subcategories/labels) and the workflow-level report: directive (workflow/report/workflow.rst); `oxo-flow report` generates an execution report from the checkpoint (rule status/timings). All underlying rule outputs are produced.
 
 ## Fidelity
 
