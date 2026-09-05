@@ -260,6 +260,10 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
+- none
+
+**Not applicable** (upstream-absent features, boilerplate, dead code, deliberate non-goals — see the excluded-key taxonomy in [Traitome/oxo-flow#267](https://github.com/Traitome/oxo-flow/issues/267))
+
 - demultiplexing — verified at v2.0.3 (sha bcf72d5): no demultiplexing rule in the repo — the Snakefile includes only common/mixscape/visualize/envs_export (DAG rulegraph: 7 rules); upstream README §Resources delegates pre-processing to the separate epigen/scrnaseq_processing_seurat module
 - scdna — verified at v2.0.3 (sha bcf72d5): zero references anywhere in the repo; single-cell DNA is a different MrBiomics recipe domain, not a mixscape_seurat module
 - normalization — verified at v2.0.3 (sha bcf72d5): no QC/normalization/integration rule; the input contract is a processed Seurat object (upstream delegates processing to epigen/scrnaseq_processing_seurat). The in-script NormalizeData fallbacks inside mixscape.R/visualize.R ARE ported

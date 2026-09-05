@@ -541,6 +541,10 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
+- none
+
+**Not applicable** (upstream-absent features, boilerplate, dead code, deliberate non-goals — see the excluded-key taxonomy in [Traitome/oxo-flow#267](https://github.com/Traitome/oxo-flow/issues/267))
+
 - nanopore: nanopore sequencing branch (params.nanopore) — absent from the 2.18.0 codebase (grep-verified; only docs/usage.md mentions Nanopore re ITSxRust long reads)
 - syncom: synthetic community controls branch (params.syncom) — absent from the 2.18.0 codebase (grep-verified)
 

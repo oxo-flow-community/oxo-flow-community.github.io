@@ -406,6 +406,10 @@ def make_page(p: dict, configs: dict) -> str:
     src = p.get("source") or {}
     scope = "\n".join(f"- {s}" for s in p.get("scope", []))
     excluded = "\n".join(f"- {s}" for s in p.get("excluded", [])) or "- none"
+    # not_applicable: upstream-absent features / boilerplate / dead code /
+    # deliberate non-goals (Traitome/oxo-flow#267 bucket D) — shown under a
+    # separate heading so excluded reads as "genuinely blocked/missing".
+    not_applicable = "\n".join(f"- {s}" for s in p.get("not_applicable", []))
     fidelity = p.get("fidelity_md")
     parts = [
         "---",
@@ -460,6 +464,15 @@ def make_page(p: dict, configs: dict) -> str:
             "**Excluded**",
             "",
             excluded,
+        ]
+    if not_applicable:
+        parts += [
+            "",
+            "**Not applicable** (upstream-absent features, boilerplate, dead code, "
+            "deliberate non-goals — see the excluded-key taxonomy in "
+            "[Traitome/oxo-flow#267](https://github.com/Traitome/oxo-flow/issues/267))",
+            "",
+            not_applicable,
         ]
     if fidelity:
         parts += ["", "## Fidelity", "", fidelity]

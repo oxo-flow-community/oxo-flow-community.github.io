@@ -463,6 +463,9 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 - parabricks — every rule runs with --nv GPU passthrough (workflow/rules/parabricks.smk); the oxo-flow docker backend has no --nv support, plus NVIDIA EULA/license cannot be enforced
 - sentieon — proprietary SENTIEON_LICENSE server gating (config/config.yaml sentieon section); cannot be distributed or verified
+
+**Not applicable** (upstream-absent features, boilerplate, dead code, deliberate non-goals — see the excluded-key taxonomy in [Traitome/oxo-flow#267](https://github.com/Traitome/oxo-flow/issues/267))
+
 - denovo — no such step in upstream v2.2
 - structural_variants — no such step in upstream v2.2
 

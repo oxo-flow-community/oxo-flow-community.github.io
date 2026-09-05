@@ -1275,6 +1275,9 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 - library_merge / additional_library_merge: structural — upstream merges the per-LIBRARY BAMs of a sample (samtools merge of the per-library dedup / bam_trim BAMs, main.nf 1967 / 2320). The port's directory-input model has ONE library per sample (library = sample, lane = 0) and one BAM per sample at every stage, so there are no multi-library BAMs to merge; declaring each library as its own sample (or pre-merging) remains the workaround. lanemerge-style input_groups cannot express this either: it groups FILES of a pattern, and the port has no per-library file dimension
 - seqtype_merge: structural — upstream merges the per-seqtype mapped BAMs of mixed PE/SE libraries into one BAM per library (samtools merge, main.nf 1597); the port is pure-PE (directory input, sample = text before _R1/_R2) with one mapped BAM per sample, so there are no mixed-PE/SE BAMs to merge. Convert SE samples to PE or run SE-only samples separately
+
+**Not applicable** (upstream-absent features, boilerplate, dead code, deliberate non-goals — see the excluded-key taxonomy in [Traitome/oxo-flow#267](https://github.com/Traitome/oxo-flow/issues/267))
+
 - output_documentation: nf-core boilerplate docs process (markdown_to_html.py of static run docs); upstream runs it unconditionally, so porting it would change the default plan for zero analytical value
 - get_software_versions: nf-core boilerplate versions process (scrapes $workflow/$nextflow native variables into a versions.yml, which has no oxo-flow equivalent)
 
