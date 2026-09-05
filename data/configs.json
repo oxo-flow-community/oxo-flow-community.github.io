@@ -83,6 +83,7 @@
           "bigwig::genomecov_rev",
           "multiqc",
           "multiqc_custom_content",
+          "multiqc_pseudo",
           "prepare_genome::gtf_filter",
           "prepare_genome::gtf_filter_pass",
           "prepare_genome::transcript_fasta",
@@ -383,6 +384,7 @@
           "fastq_qc::umitools_extract_umis",
           "multiqc",
           "multiqc_custom_content",
+          "multiqc_pseudo",
           "prepare_genome::chrom_sizes",
           "prepare_genome::fa_additional",
           "prepare_genome::fa_gunzip",
@@ -447,6 +449,7 @@
         "key": "pseudo_aligner",
         "used_by": [
           "multiqc",
+          "multiqc_pseudo",
           "prepare_genome::gtf_filter",
           "prepare_genome::gtf_filter_pass",
           "prepare_genome::transcript_fasta",
@@ -480,6 +483,7 @@
         "description": "Input reads directory: reads_dir/<sample>_R1.fastq.gz + _R2.fastq.gz (paired-end). The repo default ships the tiny committed fixtures; point this at your data.",
         "key": "reads_dir",
         "used_by": [
+          "fastq_qc::cat_reads",
           "multiqc_custom_content"
         ],
         "value_type": "string"
@@ -2233,6 +2237,7 @@
           "mtx_to_h5ad_simpleaf",
           "mtx_to_h5ad_star_filtered",
           "mtx_to_h5ad_star_raw",
+          "multiqc",
           "qcatch",
           "simpleaf_index",
           "simpleaf_quant",
@@ -3185,7 +3190,7 @@
         "value_type": "string"
       },
       {
-        "default": "/data/home/wsx/databases/gtdb-r232/gtdbtk_r232_data.tar.gz",
+        "default": "",
         "description": "GTDB-Tk database: local path to the release .tar.gz or an unpacked directory (upstream --gtdb_db, ~100GB). oxo-flow cannot download it mid-run (the prep rule only unpacks), so the default is empty and run_gtdbtk=true fails fast until a local path is set.",
         "key": "gtdb_db",
         "used_by": [
@@ -4467,6 +4472,15 @@
         "value_type": "string"
       },
       {
+        "default": "test/fixtures/raw",
+        "description": "raw input dir: point at your real data directory (e.g. \"raw\") after cloning; the default ships the test fixtures so a fresh checkout dry-runs cleanly. Files are read as <raw_dir>/<sample>_R1/_R2.fastq.gz.",
+        "key": "raw_dir",
+        "used_by": [
+          "rename_raw_data_files"
+        ],
+        "value_type": "string"
+      },
+      {
         "default": "1",
         "description": "run / metadata",
         "key": "run_id",
@@ -4775,7 +4789,8 @@
           "reference::bowtie2_index_build",
           "reference::bwa_index_build",
           "reference::chromap_index_build",
-          "reference::star_genomegenerate"
+          "reference::star_genomegenerate",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "string"
       },
@@ -4796,7 +4811,8 @@
           "report::igv",
           "report::igv_narrow",
           "report::multiqc",
-          "report::multiqc_narrow"
+          "report::multiqc_narrow",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "string"
       },
@@ -4805,7 +4821,8 @@
         "key": "blacklist",
         "used_by": [
           "filter::bamtools_filter",
-          "reference::blacklist_regions"
+          "reference::blacklist_regions",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "string"
       },
@@ -4813,7 +4830,8 @@
         "default": "",
         "key": "bowtie2_index",
         "used_by": [
-          "align::bowtie2_align"
+          "align::bowtie2_align",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "string"
       },
@@ -4821,7 +4839,8 @@
         "default": 0.1,
         "key": "broad_cutoff",
         "used_by": [
-          "peaks::macs3_callpeak"
+          "peaks::macs3_callpeak",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "float"
       },
@@ -4829,7 +4848,8 @@
         "default": "test/fixtures/references/bwa_index",
         "key": "bwa_index",
         "used_by": [
-          "align::bwa_mem"
+          "align::bwa_mem",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "string"
       },
@@ -4837,7 +4857,8 @@
         "default": 0,
         "key": "bwa_min_score",
         "used_by": [
-          "align::bwa_mem"
+          "align::bwa_mem",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "int"
       },
@@ -4846,6 +4867,7 @@
         "key": "chrom_sizes",
         "used_by": [
           "reference::blacklist_regions",
+          "report::multiqc_workflow_summary",
           "tracks::ucsc_bedgraphtobigwig"
         ],
         "value_type": "string"
@@ -4854,7 +4876,8 @@
         "default": "",
         "key": "chromap_index",
         "used_by": [
-          "align::chromap_align"
+          "align::chromap_align",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "string"
       },
@@ -4862,7 +4885,8 @@
         "default": 0,
         "key": "clip_r1",
         "used_by": [
-          "qc::trimgalore"
+          "qc::trimgalore",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "int"
       },
@@ -4870,7 +4894,8 @@
         "default": 0,
         "key": "clip_r2",
         "used_by": [
-          "qc::trimgalore"
+          "qc::trimgalore",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "int"
       },
@@ -4880,7 +4905,8 @@
         "used_by": [
           "align::markduplicates",
           "filter::picard_collectmultiplemetrics",
-          "reference::star_genomegenerate"
+          "reference::star_genomegenerate",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "string"
       },
@@ -4918,6 +4944,7 @@
           "report::igv_multi",
           "report::igv_narrow",
           "report::igv_narrow_multi",
+          "report::multiqc_workflow_summary",
           "tracks::khmer"
         ],
         "value_type": "string"
@@ -4926,6 +4953,7 @@
         "default": 500000,
         "key": "fingerprint_bins",
         "used_by": [
+          "report::multiqc_workflow_summary",
           "tracks::deeptools_plotfingerprint"
         ],
         "value_type": "int"
@@ -4933,13 +4961,16 @@
       {
         "default": 0,
         "key": "fragment_size",
-        "used_by": [],
+        "used_by": [
+          "report::multiqc_workflow_summary"
+        ],
         "value_type": "int"
       },
       {
         "default": "test/fixtures/references/gene.bed",
         "key": "gene_bed",
         "used_by": [
+          "report::multiqc_workflow_summary",
           "tracks::deeptools_computematrix"
         ],
         "value_type": "string"
@@ -4955,7 +4986,8 @@
           "peaks::homer_annotatepeaks",
           "peaks::homer_annotatepeaks_narrow",
           "reference::gtf2bed",
-          "reference::star_genomegenerate"
+          "reference::star_genomegenerate",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "string"
       },
@@ -4972,7 +5004,8 @@
         "default": false,
         "key": "keep_dups",
         "used_by": [
-          "filter::bamtools_filter"
+          "filter::bamtools_filter",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "bool"
       },
@@ -4980,7 +5013,8 @@
         "default": false,
         "key": "keep_multi_map",
         "used_by": [
-          "filter::bamtools_filter"
+          "filter::bamtools_filter",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "bool"
       },
@@ -4988,7 +5022,9 @@
         "default": "Lb",
         "description": "Library fan-out dimension (issue #7): the aligner/sort/index/QC chain fans per {library} and Picard MergeSamFiles gathers every library into the per-pair mLb BAM (upstream library_id rows). Default \"Lb\" preserves the single-library port byte-for-byte; multi-library pairs: --arg library_ids=Lb,Lb2 (or a profile).",
         "key": "library_ids",
-        "used_by": [],
+        "used_by": [
+          "report::multiqc_workflow_summary"
+        ],
         "value_type": "string"
       },
       {
@@ -4996,7 +5032,8 @@
         "key": "macs_fdr",
         "used_by": [
           "peaks::macs3_callpeak",
-          "peaks::macs3_callpeak_narrow"
+          "peaks::macs3_callpeak_narrow",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "int"
       },
@@ -5007,6 +5044,7 @@
         "used_by": [
           "peaks::macs3_callpeak",
           "peaks::macs3_callpeak_narrow",
+          "report::multiqc_workflow_summary",
           "tracks::khmer"
         ],
         "value_type": "string"
@@ -5016,7 +5054,8 @@
         "key": "macs_pvalue",
         "used_by": [
           "peaks::macs3_callpeak",
-          "peaks::macs3_callpeak_narrow"
+          "peaks::macs3_callpeak_narrow",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "int"
       },
@@ -5084,7 +5123,8 @@
           "consensus::macs3_consensus",
           "consensus::macs3_consensus_multi",
           "consensus::macs3_consensus_narrow",
-          "consensus::macs3_consensus_narrow_multi"
+          "consensus::macs3_consensus_narrow_multi",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "int"
       },
@@ -5120,7 +5160,8 @@
           "report::multiqc",
           "report::multiqc_multi",
           "report::multiqc_narrow",
-          "report::multiqc_narrow_multi"
+          "report::multiqc_narrow_multi",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "bool"
       },
@@ -5147,7 +5188,8 @@
           "consensus::subread_featurecounts",
           "consensus::subread_featurecounts_multi",
           "consensus::subread_featurecounts_narrow",
-          "consensus::subread_featurecounts_narrow_multi"
+          "consensus::subread_featurecounts_narrow_multi",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "bool"
       },
@@ -5158,7 +5200,8 @@
           "report::multiqc",
           "report::multiqc_multi",
           "report::multiqc_narrow",
-          "report::multiqc_narrow_multi"
+          "report::multiqc_narrow_multi",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "string"
       },
@@ -5206,7 +5249,8 @@
           "report::multiqc",
           "report::multiqc_multi",
           "report::multiqc_narrow",
-          "report::multiqc_narrow_multi"
+          "report::multiqc_narrow_multi",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "bool"
       },
@@ -5227,7 +5271,8 @@
         "key": "raw_dir",
         "used_by": [
           "qc::fastqc",
-          "qc::trimgalore"
+          "qc::trimgalore",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "string"
       },
@@ -5235,6 +5280,7 @@
         "default": 75,
         "key": "read_length",
         "used_by": [
+          "report::multiqc_workflow_summary",
           "tracks::khmer"
         ],
         "value_type": "int"
@@ -5262,7 +5308,8 @@
           "consensus::subread_featurecounts",
           "consensus::subread_featurecounts_multi",
           "consensus::subread_featurecounts_narrow",
-          "consensus::subread_featurecounts_narrow_multi"
+          "consensus::subread_featurecounts_narrow_multi",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "bool"
       },
@@ -5271,7 +5318,8 @@
         "key": "save_macs_pileup",
         "used_by": [
           "peaks::macs3_callpeak",
-          "peaks::macs3_callpeak_narrow"
+          "peaks::macs3_callpeak_narrow",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "bool"
       },
@@ -5283,7 +5331,8 @@
           "align::bowtie2_align",
           "align::bwa_mem",
           "align::chromap_align",
-          "align::star_align"
+          "align::star_align",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "string"
       },
@@ -5310,7 +5359,8 @@
           "consensus::subread_featurecounts",
           "consensus::subread_featurecounts_multi",
           "consensus::subread_featurecounts_narrow",
-          "consensus::subread_featurecounts_narrow_multi"
+          "consensus::subread_featurecounts_narrow_multi",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "bool"
       },
@@ -5321,7 +5371,8 @@
           "consensus::deseq2_qc",
           "consensus::deseq2_qc_multi",
           "consensus::deseq2_qc_narrow",
-          "consensus::deseq2_qc_narrow_multi"
+          "consensus::deseq2_qc_narrow_multi",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "bool"
       },
@@ -5330,7 +5381,8 @@
         "description": "Step toggles (mirror the nf-core/chipseq params.skip_* / when gates)",
         "key": "skip_fastqc",
         "used_by": [
-          "qc::fastqc"
+          "qc::fastqc",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "bool"
       },
@@ -5341,7 +5393,8 @@
           "report::igv",
           "report::igv_multi",
           "report::igv_narrow",
-          "report::igv_narrow_multi"
+          "report::igv_narrow_multi",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "bool"
       },
@@ -5352,7 +5405,8 @@
           "report::multiqc",
           "report::multiqc_multi",
           "report::multiqc_narrow",
-          "report::multiqc_narrow_multi"
+          "report::multiqc_narrow_multi",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "bool"
       },
@@ -5373,7 +5427,8 @@
           "peaks::plot_homer_annotatepeaks",
           "peaks::plot_homer_annotatepeaks_narrow",
           "peaks::plot_macs3_qc",
-          "peaks::plot_macs3_qc_narrow"
+          "peaks::plot_macs3_qc_narrow",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "bool"
       },
@@ -5384,7 +5439,8 @@
           "peaks::plot_homer_annotatepeaks",
           "peaks::plot_homer_annotatepeaks_narrow",
           "peaks::plot_macs3_qc",
-          "peaks::plot_macs3_qc_narrow"
+          "peaks::plot_macs3_qc_narrow",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "bool"
       },
@@ -5392,7 +5448,8 @@
         "default": false,
         "key": "skip_picard_metrics",
         "used_by": [
-          "filter::picard_collectmultiplemetrics"
+          "filter::picard_collectmultiplemetrics",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "bool"
       },
@@ -5400,6 +5457,7 @@
         "default": false,
         "key": "skip_plot_fingerprint",
         "used_by": [
+          "report::multiqc_workflow_summary",
           "tracks::deeptools_plotfingerprint"
         ],
         "value_type": "bool"
@@ -5408,6 +5466,7 @@
         "default": false,
         "key": "skip_plot_profile",
         "used_by": [
+          "report::multiqc_workflow_summary",
           "tracks::deeptools_computematrix",
           "tracks::deeptools_plotheatmap",
           "tracks::deeptools_plotprofile"
@@ -5418,7 +5477,8 @@
         "default": false,
         "key": "skip_preseq",
         "used_by": [
-          "filter::preseq"
+          "filter::preseq",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "bool"
       },
@@ -5426,7 +5486,8 @@
         "default": false,
         "key": "skip_qc",
         "used_by": [
-          "qc::fastqc"
+          "qc::fastqc",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "bool"
       },
@@ -5435,7 +5496,8 @@
         "key": "skip_spp",
         "used_by": [
           "filter::multiqc_custom_phantompeakqualtools",
-          "filter::phantompeakqualtools"
+          "filter::phantompeakqualtools",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "bool"
       },
@@ -5443,7 +5505,8 @@
         "default": false,
         "key": "skip_trimming",
         "used_by": [
-          "qc::trimgalore"
+          "qc::trimgalore",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "bool"
       },
@@ -5451,7 +5514,8 @@
         "default": "",
         "key": "star_index",
         "used_by": [
-          "align::star_align"
+          "align::star_align",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "string"
       },
@@ -5459,7 +5523,8 @@
         "default": 0,
         "key": "three_prime_clip_r1",
         "used_by": [
-          "qc::trimgalore"
+          "qc::trimgalore",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "int"
       },
@@ -5467,7 +5532,8 @@
         "default": 0,
         "key": "three_prime_clip_r2",
         "used_by": [
-          "qc::trimgalore"
+          "qc::trimgalore",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "int"
       },
@@ -5475,7 +5541,8 @@
         "default": 0,
         "key": "trim_nextseq",
         "used_by": [
-          "qc::trimgalore"
+          "qc::trimgalore",
+          "report::multiqc_workflow_summary"
         ],
         "value_type": "int"
       }
@@ -6450,6 +6517,8 @@
         "description": "Input reads directory: raw/<sample>_R1.fastq.gz + _R2.fastq.gz (paired-end). The repo default ships the tiny test fixtures; point this at your data.",
         "key": "raw_dir",
         "used_by": [
+          "cat_fastq_r1",
+          "cat_fastq_r2",
           "fastqc",
           "fastqc_se",
           "trimgalore",
@@ -6713,8 +6782,10 @@
         "description": "-- Suffix appended to per-sample bam names wherever rules consume reads: \".sorted.bam\" (alignment branch) or \".bam\" (skip_alignment branch, user bams linked by bam_rename). Mirrors the upstream channel swap between BAM_SORT_INDEX_SAMTOOLS.out.sortbam and BAM_RENAME.out.bam.",
         "key": "bam_suffix",
         "used_by": [
+          "bambu",
           "nanopolish_index_eventalign",
-          "stringtie2"
+          "stringtie2",
+          "subread_featurecounts"
         ],
         "value_type": "string"
       },
@@ -8446,7 +8517,8 @@
         "default": false,
         "key": "hostremoval_input_fastq",
         "used_by": [
-          "hostremoval_input_fastq"
+          "hostremoval_input_fastq",
+          "hostremoval_input_fastq_bwamem"
         ],
         "value_type": "bool"
       },
@@ -8454,7 +8526,8 @@
         "default": "mapped",
         "key": "hostremoval_mode",
         "used_by": [
-          "hostremoval_input_fastq"
+          "hostremoval_input_fastq",
+          "hostremoval_input_fastq_bwamem"
         ],
         "value_type": "string"
       },
@@ -8687,6 +8760,8 @@
           "bwamem",
           "circulargenerator",
           "circularmapper",
+          "hostremoval_input_fastq",
+          "hostremoval_input_fastq_bwamem",
           "make_bt2_index",
           "samtools_filter_bowtie2",
           "samtools_filter_bwaaln",
@@ -10103,7 +10178,7 @@
       },
       {
         "default": "",
-        "description": "upstream config: target_regions (regions.smk get_target_regions + candidate_calling.smk filter_offtarget_variants, see module headers). One BED path; empty (default) = whole-genome calling exactly as today. Upstream accepts one or more files (merged); the port freezes a single path.",
+        "description": "upstream config: target_regions (regions.smk get_target_regions + candidate_calling.smk filter_offtarget_variants, see module headers). One BED path or a list of BED paths (all merged + chr-stripped by regions::get_target_regions); empty (default) = whole-genome calling exactly as today. Gate is len(config.target_regions) > 0, so \"\" and [] both disable. Note: CLI overrides are single-valued strings (--arg target_regions=path or --target-regions=path) \u2014 pass a list in main.oxoflow itself for multiple files.",
         "key": "target_regions",
         "used_by": [
           "candidate_calling::bcf_index_candidate_delly",
@@ -12098,6 +12173,7 @@
         "description": "antiSMASH (upstream rule_parameters.antismash + envs/antismash.yaml)",
         "key": "antismash_major",
         "used_by": [
+          "antismash",
           "antismash_v6",
           "write_dependency_versions"
         ],
@@ -12630,6 +12706,7 @@
         "description": "LEIDEN (upstream leiden: metric euclidean / n_neighbors 15 -> 6 rules)",
         "key": "leiden_metric",
         "used_by": [
+          "aggregate_clustering_results",
           "leiden_ModularityVertexPartition_NA",
           "leiden_RBConfigurationVertexPartition_0p5",
           "leiden_RBConfigurationVertexPartition_1",
@@ -12656,6 +12733,7 @@
         "default": 15,
         "key": "leiden_n_neighbors",
         "used_by": [
+          "aggregate_clustering_results",
           "leiden_ModularityVertexPartition_NA",
           "leiden_RBConfigurationVertexPartition_0p5",
           "leiden_RBConfigurationVertexPartition_1",
@@ -13083,7 +13161,7 @@
       },
       {
         "default": false,
-        "description": "CNV branch (upstream somatic_cnv_list; mini-test default = [] -> off). Set true to run the ported subset (freec/sequenza/exomedepth/ASCAT \u2014 purple/amber/cobalt/facets need the upstream's custom containers, see rules/80_cnv.oxoflow).",
+        "description": "CNV branch (upstream somatic_cnv_list; mini-test default = [notrun] sentinel -> off). Set true to run the ported subset (freec/sequenza/exomedepth/ASCAT \u2014 purple/amber/cobalt/facets need the upstream's custom containers, see rules/80_cnv.oxoflow).",
         "key": "cnv_enabled",
         "used_by": [
           "ASCAT_EXTRACT_PURITYPLOIDY",
@@ -13211,7 +13289,10 @@
           "SV_delly_germ",
           "SV_delly_sample_tsv",
           "SV_delly_to_vcf",
+          "SV_sansa_anno_svaba",
+          "SV_sansa_annodelly",
           "SV_svaba",
+          "SV_svanno_svaba",
           "SplitNCigarReads",
           "TRUST4_TBCR",
           "all",
@@ -13289,6 +13370,8 @@
           "picard_flength_wgs_tumor",
           "plot_freec",
           "prep_multiqc_data",
+          "prep_multiqc_data_tumor_only",
+          "prep_multiqc_data_wgs",
           "recal_link_normal",
           "recal_link_tumor",
           "recal_link_tumor_unpaired",
@@ -13411,6 +13494,7 @@
           "M2_filter_unpaired",
           "M2_filter_unpaired_rna",
           "M2_filter_wgs",
+          "SV_svanno_svaba",
           "SplitNCigarReads",
           "apply_base_quality_recalibration_normal",
           "apply_base_quality_recalibration_tumor",
@@ -13565,7 +13649,10 @@
           "SV_delly_germ",
           "SV_delly_sample_tsv",
           "SV_delly_to_vcf",
+          "SV_sansa_anno_svaba",
+          "SV_sansa_annodelly",
           "SV_svaba",
+          "SV_svanno_svaba",
           "SplitNCigarReads",
           "TRUST4_TBCR",
           "all",
@@ -13643,6 +13730,8 @@
           "picard_flength_wgs_tumor",
           "plot_freec",
           "prep_multiqc_data",
+          "prep_multiqc_data_tumor_only",
+          "prep_multiqc_data_wgs",
           "recal_link_normal",
           "recal_link_tumor",
           "recal_link_tumor_unpaired",
@@ -13861,6 +13950,20 @@
         "value_type": "string"
       },
       {
+        "default": [
+          "freebayes",
+          "HaplotypeCaller",
+          "lofreq",
+          "Mutect2",
+          "vardict",
+          "varscan2"
+        ],
+        "description": "RNA SNV callers for the vcf2maf merge tail (upstream run_params.rna_caller_list in mini_test_data/rna/fusion/data/test_rna.yaml; matches the six unrolled vcf2maf_rna_* rules in rules/rna/60_vcf2maf_merge.oxoflow)",
+        "key": "rna_caller_list",
+        "used_by": [],
+        "value_type": "array"
+      },
+      {
         "default": "test/fixtures/reads/mini-T_RNA_R1.fq.gz",
         "description": "RNA (upstream wrapper/rna.smk; run_type = \"rna\"). Default stages: [arriba, call_mut]; quant/isofox rules run when explicitly targeted.",
         "key": "rna_fastq_r1",
@@ -13921,6 +14024,8 @@
           "combined_multiqc",
           "combined_multiqc_prep_multiqc_data",
           "prep_multiqc_data",
+          "prep_multiqc_data_tumor_only",
+          "prep_multiqc_data_wgs",
           "run_cancer_report"
         ],
         "value_type": "bool"
@@ -13957,7 +14062,10 @@
           "SV_delly_germ",
           "SV_delly_sample_tsv",
           "SV_delly_to_vcf",
+          "SV_sansa_anno_svaba",
+          "SV_sansa_annodelly",
           "SV_svaba",
+          "SV_svanno_svaba",
           "SplitNCigarReads",
           "TRUST4_TBCR",
           "all",
@@ -14035,6 +14143,8 @@
           "picard_flength_wgs_tumor",
           "plot_freec",
           "prep_multiqc_data",
+          "prep_multiqc_data_tumor_only",
+          "prep_multiqc_data_wgs",
           "recal_link_normal",
           "recal_link_tumor",
           "recal_link_tumor_unpaired",
@@ -14133,6 +14243,34 @@
         "value_type": "string"
       },
       {
+        "default": "sansa",
+        "key": "sansa_call",
+        "used_by": [
+          "SV_sansa_anno_svaba",
+          "SV_sansa_annodelly"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "description": "SV annotation branch (issue #7; upstream WGS SV rules gate on the sansa software config being present \u2014 absent upstream by default, so these are off by default and the port mirrors that with empty keys = zero instances). sansa_db/sansa_g: the sansa annotate -a database and -g gene-model inputs (upstream softwares.sansa[<genome_version>].{db,g}); sansa_call: the binary/invocation (upstream config[softwares][sansa][call]).",
+        "key": "sansa_db",
+        "used_by": [
+          "SV_sansa_anno_svaba",
+          "SV_sansa_annodelly"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "key": "sansa_g",
+        "used_by": [
+          "SV_sansa_anno_svaba",
+          "SV_sansa_annodelly"
+        ],
+        "value_type": "string"
+      },
+      {
         "default": "test/fixtures/cnv/sequenza_gc.wig",
         "key": "sequenza_gc_wiggle",
         "used_by": [
@@ -14162,6 +14300,15 @@
           "STAR_arriba_map",
           "STAR_isofox_map",
           "STAR_mut_map"
+        ],
+        "value_type": "string"
+      },
+      {
+        "default": "",
+        "description": "svanno: gatk SVAnnotate needs a protein-coding GTF (upstream resources[genome_version].GTF). Empty default = rule never runs.",
+        "key": "svanno_gtf",
+        "used_by": [
+          "SV_svanno_svaba"
         ],
         "value_type": "string"
       },

@@ -78,8 +78,8 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-nanoseq
 <div class="ox-param">
 <div class="ox-param-head"><code>bam_suffix</code><span class="ox-param-default">.sorted.bam</span></div>
 <p class="ox-param-desc">-- Suffix appended to per-sample bam names wherever rules consume reads: &quot;.sorted.bam&quot; (alignment branch) or &quot;.bam&quot; (skip_alignment branch, user bams linked by bam_rename). Mirrors the upstream channel swap between BAM_SORT_INDEX_SAMTOOLS.out.sortbam and BAM_RENAME.out.bam.</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>nanopolish_index_eventalign</code> <code>stringtie2</code></div>
+<details class="ox-param-usedby"><summary>used by 4 rules</summary>
+<div class="ox-param-rules"><code>bambu</code> <code>nanopolish_index_eventalign</code> <code>stringtie2</code> <code>subread_featurecounts</code></div>
 </details>
 </div>
 <div class="ox-param">

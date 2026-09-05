@@ -79,8 +79,8 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-bgcflow
 <div class="ox-param">
 <div class="ox-param-head"><code>antismash_major</code><span class="ox-param-default">7</span></div>
 <p class="ox-param-desc">antiSMASH (upstream rule_parameters.antismash + envs/antismash.yaml)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>antismash_v6</code> <code>write_dependency_versions</code></div>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>antismash</code> <code>antismash_v6</code> <code>write_dependency_versions</code></div>
 </details>
 </div>
 <div class="ox-param">

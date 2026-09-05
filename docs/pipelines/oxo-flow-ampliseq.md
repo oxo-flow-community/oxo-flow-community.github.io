@@ -335,6 +335,13 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-ampliseq
 </details>
 </div>
 <div class="ox-param">
+<div class="ox-param-head"><code>raw_dir</code><span class="ox-param-default">test/fixtures/raw</span></div>
+<p class="ox-param-desc">raw input dir: point at your real data directory (e.g. &quot;raw&quot;) after cloning; the default ships the test fixtures so a fresh checkout dry-runs cleanly. Files are read as &lt;raw_dir&gt;/&lt;sample&gt;_R1/_R2.fastq.gz.</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>rename_raw_data_files</code></div>
+</details>
+</div>
+<div class="ox-param">
 <div class="ox-param-head"><code>run_id</code><span class="ox-param-default">1</span></div>
 <p class="ox-param-desc">run / metadata</p>
 <details class="ox-param-usedby"><summary>used by 6 rules</summary>

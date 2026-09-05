@@ -146,8 +146,8 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-unsupervised
 <div class="ox-param">
 <div class="ox-param-head"><code>leiden_metric</code><span class="ox-param-default">euclidean</span></div>
 <p class="ox-param-desc">LEIDEN (upstream leiden: metric euclidean / n_neighbors 15 -&gt; 6 rules)</p>
-<details class="ox-param-usedby"><summary>used by 6 rules</summary>
-<div class="ox-param-rules"><code>leiden_ModularityVertexPartition_NA</code> <code>leiden_RBConfigurationVertexPartition_0p5</code> <code>leiden_RBConfigurationVertexPartition_1</code> <code>leiden_RBConfigurationVertexPartition_1p5</code> <code>leiden_RBConfigurationVertexPartition_2</code> <code>leiden_RBConfigurationVertexPartition_4</code></div>
+<details class="ox-param-usedby"><summary>used by 7 rules</summary>
+<div class="ox-param-rules"><code>aggregate_clustering_results</code> <code>leiden_ModularityVertexPartition_NA</code> <code>leiden_RBConfigurationVertexPartition_0p5</code> <code>leiden_RBConfigurationVertexPartition_1</code> <code>leiden_RBConfigurationVertexPartition_1p5</code> <code>leiden_RBConfigurationVertexPartition_2</code> <code>leiden_RBConfigurationVertexPartition_4</code></div>
 </details>
 </div>
 <div class="ox-param">
@@ -160,8 +160,8 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-unsupervised
 <div class="ox-param">
 <div class="ox-param-head"><code>leiden_n_neighbors</code><span class="ox-param-default">15</span></div>
 <p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 6 rules</summary>
-<div class="ox-param-rules"><code>leiden_ModularityVertexPartition_NA</code> <code>leiden_RBConfigurationVertexPartition_0p5</code> <code>leiden_RBConfigurationVertexPartition_1</code> <code>leiden_RBConfigurationVertexPartition_1p5</code> <code>leiden_RBConfigurationVertexPartition_2</code> <code>leiden_RBConfigurationVertexPartition_4</code></div>
+<details class="ox-param-usedby"><summary>used by 7 rules</summary>
+<div class="ox-param-rules"><code>aggregate_clustering_results</code> <code>leiden_ModularityVertexPartition_NA</code> <code>leiden_RBConfigurationVertexPartition_0p5</code> <code>leiden_RBConfigurationVertexPartition_1</code> <code>leiden_RBConfigurationVertexPartition_1p5</code> <code>leiden_RBConfigurationVertexPartition_2</code> <code>leiden_RBConfigurationVertexPartition_4</code></div>
 </details>
 </div>
 <div class="ox-param">
