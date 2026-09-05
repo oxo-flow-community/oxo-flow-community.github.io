@@ -2195,8 +2195,7 @@ window.OXO_PIPELINES = [
       "vembrane_table"
     ],
     "excluded": [
-      "fusions FDR-control chain (filtering.smk) \u2014 the ported fusions branch ends at the fusions callset (calls/varlociraptor/{group}/{group}.fusions.0.bcf); the subsequent vartype FDR-control and fusions report steps stay out of scope (requires calling mode fusions + fusion_activate = true)",
-      "multi-file target_regions lists \u2014 the port freezes a single BED path (config target_regions); the merge step handles one file"
+      "fusions report and table exports (report.smk / table.smk fusions instances) \u2014 the ported fusions FDR-control chain (filtering.oxoflow) ends at the fdr-controlled/normal-probs callsets; the fusions vembrane table, oncoprints and report datasets need calling mode fusions + fusion_activate = true end-to-end data to verify"
     ],
     "rule_count": 159,
     "tools": [
