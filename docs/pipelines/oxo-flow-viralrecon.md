@@ -213,7 +213,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-viralrecon
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>min_mapped_reads</code><span class="ox-param-default">1000</span></div>
-<p class="ox-param-desc">upstream params.min_mapped_reads — the per-sample channel DROP is a documented runtime-filter deviation (no dynamic DAG); the reporting half (fail_mapped_samples_mqc.tsv in the MultiQC data) is ported inside the multiqc rule</p>
+<p class="ox-param-desc">upstream params.min_mapped_reads — the per-sample channel DROP is a documented runtime-filter deviation (no engine runtime fn can read the mapped count out of a samtools flagstat); the reporting half (fail_mapped_samples_mqc.tsv in the MultiQC data) is ported inside the multiqc rule</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>multiqc</code></div>
 </details>
@@ -396,8 +396,8 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-viralrecon
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_fastp</code><span class="ox-param-default">false</span></div>
 <p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>fastp</code> <code>fastqc_trim</code></div>
+<details class="ox-param-usedby"><summary>used by 5 rules</summary>
+<div class="ox-param-rules"><code>align_bowtie2</code> <code>assembly_fastq</code> <code>fastp</code> <code>fastqc_trim</code> <code>kraken2</code></div>
 </details>
 </div>
 <div class="ox-param">

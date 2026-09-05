@@ -13,7 +13,7 @@ title: "Small and structural variant calling with Varlociraptor"
 <div class="ox-glance">
 <div class="ox-glance-title">At a glance</div>
 <div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested</span></div>
-<div class="ox-kv"><span class="k">Rules</span><span class="v">159</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">165</span></div>
 <div class="ox-kv"><span class="k">Compute</span><span class="v">up to 64 CPUs / 32 GB per rule (freebayes candidates 48 threads; vg giraffe 64 threads)</span></div>
 <div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></span></div>
 <div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
@@ -133,7 +133,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-varlociraptor
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>fusion_activate</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">upstream config: fusion calling branch (fusion_calling.smk star_arriba meta wrapper: star_index / star_align / arriba / annotate_exons / convert_fusions / sort_arriba_calls / bcftools_concat_candidates).</p>
+<p class="ox-param-desc">upstream config: fusion calling branch (fusion_calling.smk star_arriba meta wrapper: star_index / star_align / arriba / annotate_exons / convert_fusions / sort_arriba_calls / bcftools_concat_candidates). With a group whose <code>calling</code> metadata includes &quot;fusions&quot;, the candidates continue into the varlociraptor calling flow (calling.smk get_candidate_calls — see modules/calling.oxoflow).</p>
 <details class="ox-param-usedby"><summary>used by 8 rules</summary>
 <div class="ox-param-rules"><code>fusion::annotate_exons</code> <code>fusion::arriba</code> <code>fusion::bcf_index_arriba</code> <code>fusion::bcftools_concat_candidates</code> <code>fusion::convert_fusions</code> <code>fusion::sort_arriba_calls</code> <code>fusion::star_align</code> <code>fusion::star_index</code></div>
 </details>
@@ -251,6 +251,13 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-varlociraptor
 </details>
 </div>
 <div class="ox-param">
+<div class="ox-param-head"><code>target_regions</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">upstream config: target_regions (regions.smk get_target_regions + candidate_calling.smk filter_offtarget_variants, see module headers). One BED path; empty (default) = whole-genome calling exactly as today. Upstream accepts one or more files (merged); the port freezes a single path.</p>
+<details class="ox-param-usedby"><summary>used by 9 rules</summary>
+<div class="ox-param-rules"><code>candidate_calling::bcf_index_candidate_delly</code> <code>candidate_calling::bcf_index_candidate_freebayes</code> <code>candidate_calling::filter_offtarget_variants_delly</code> <code>candidate_calling::filter_offtarget_variants_freebayes</code> <code>candidate_calling::scatter_candidates_delly</code> <code>candidate_calling::scatter_candidates_freebayes</code> <code>regions::filter_group_regions_covered</code> <code>regions::filter_group_regions_expanded</code> <code>regions::get_target_regions</code></div>
+</details>
+</div>
+<div class="ox-param">
 <div class="ox-param-head"><code>trimming_activate</code><span class="ox-param-default">false</span></div>
 <p class="ox-param-desc">upstream config: trimming (get_sra / fastp rules). The default path has no trimming configured — reads pass through mapping::merge_trimmed_fastqs.</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
@@ -290,6 +297,7 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - bcf_index_candidate_freebayes
 - bcf_index_delly
 - bcf_index_fdr_BND
+- bcf_index_fdr_BND_fusions
 - bcf_index_fdr_DEL
 - bcf_index_fdr_DUP
 - bcf_index_fdr_INS
@@ -299,12 +307,14 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - bcf_index_fdr_SNV
 - bcf_index_filtered
 - bcf_index_freebayes
+- bcf_index_fusions_callset
 - bcf_index_vep_annotated
 - bcftools_concat
 - bcftools_concat_fusions
 - bedtools_merge
 - build_sample_regions
 - control_fdr_BND
+- control_fdr_BND_fusions
 - control_fdr_DEL
 - control_fdr_DUP
 - control_fdr_INS
@@ -313,6 +323,7 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - control_fdr_REP
 - control_fdr_SNV
 - convert_phred_scores
+- convert_phred_scores_fusions
 - coverage_table
 - datavzrd_coverage
 - datavzrd_variants_calls
@@ -330,6 +341,7 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - filter_offtarget_variants_freebayes
 - fix_delly_calls
 - freebayes
+- gather_annotated_calls_fusions
 - gather_calls
 - genome_dict
 - genome_faidx
@@ -344,6 +356,7 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - map_reads_vg
 - mark_duplicates
 - merge_calls
+- merge_calls_fusions
 - merge_covered_group_regions
 - merge_expanded_group_regions
 - merge_trimmed_fastqs_r1

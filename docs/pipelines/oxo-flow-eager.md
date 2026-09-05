@@ -13,7 +13,7 @@ title: "Ancient DNA (aDNA): QC, mapping, damage estimation and genotyping"
 <div class="ox-glance">
 <div class="ox-glance-title">At a glance</div>
 <div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested</span></div>
-<div class="ox-kv"><span class="k">Rules</span><span class="v">57</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">60</span></div>
 <div class="ox-kv"><span class="k">Compute</span><span class="v">up to 4 CPUs / 8 GB per rule (bwa_aln)</span></div>
 <div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></span></div>
 <div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
@@ -968,6 +968,13 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-eager
 </details>
 </div>
 <div class="ox-param">
+<div class="ox-param-head"><code>run_lanemerge</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">--- multi-lane input merging (gated; upstream auto-detects lanes from the TSV input mode, the port&#x27;s directory model needs an explicit gate). When on, per-lane pairs named {sample}_L{lane}_R{1,2}.fastq.gz are merged into one pair per sample (results/lanemerging/) that feeds AdapterRemoval (and hostremoval_input_fastq); requires oxo-flow with input_groups support (&gt;= 0.16.0, Traitome/oxo-flow#231). ---</p>
+<details class="ox-param-usedby"><summary>used by 4 rules</summary>
+<div class="ox-param-rules"><code>fastqc</code> <code>fastqc_lanemerged</code> <code>lanemerge</code> <code>lanemerge_r2</code></div>
+</details>
+</div>
+<div class="ox-param">
 <div class="ox-param-head"><code>run_maltextract</code><span class="ox-param-default">false</span></div>
 <p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
@@ -1117,8 +1124,8 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-eager
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_fastqc</code><span class="ox-param-default">false</span></div>
 <p class="ox-param-desc">skipping (upstream defaults: run everything except optional branches)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>fastqc</code> <code>fastqc_after_clipping</code></div>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>fastqc</code> <code>fastqc_after_clipping</code> <code>fastqc_lanemerged</code></div>
 </details>
 </div>
 <div class="ox-param">
