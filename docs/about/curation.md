@@ -64,10 +64,25 @@ from the workflow file itself, so they cannot drift from the code:
   or a trailing comment on the key line). A `—` in the *Used by* column means
   the key is defined but not wired into any rule — a documented knob kept for
   fidelity with the source pipeline. No schema file to maintain.
-- **Workflow graph.** Each page embeds the rule-level DAG rendered from
-  `oxo-flow graph -f dot` + Graphviz. Wildcard `{sample}` instances expand at
-  run time when sample data is discovered, so the static graph shows the
-  structural DAG (the runtime view is `oxo-flow graph --expanded`).
+- **Workflow graph.** Each page embeds a metro-map figure rendered by the
+  adaptive ladder in `scripts/metro_tiers.py` (site issue #16): the ladder
+  walks rule-level (sectioned → flat) to the overview tiers
+  (module-stage → engine-native module), picking the finest tier that
+  nf-metro renders **and** stays readable at site card width — a
+  publication-grade map for every pipeline, no per-pipeline curation.
+  Wildcard `{sample}` instances expand at run time when sample data is
+  discovered, so the static graph shows the structural DAG (the runtime
+  view is `oxo-flow graph --expanded`).
+- **Multi-workflow repositories.** One repo = one card, driven by the
+  workflow's *primary entry* (`main.oxoflow` convention): the entry is a
+  single interface whose module includes carry every omics flow (live:
+  clindet — somatic + germline calling, tumor-only, CNV, WGS and the
+  conditional RNA sub-workflow are `[[include]]` modules of `main.oxoflow`,
+  not separate entry files). Only a genuinely separate entry — an
+  alternative CLI entry shipped as its own artifact — is listed under
+  `extra_workflows` with a label naming the entry file; split entry files
+  that have been merged back into the primary entry are removed from the
+  catalog together with their old cards.
 - **Metadata cross-checks.** `rule_count`, tools, resources, and environments
   are derived the same way and diffed against the hand-maintained registry
   entry when a workflow is listed or reviewed.
@@ -77,7 +92,7 @@ The derived data is committed (`data/configs.json` plus
 
 ```bash
 scripts/regen-configs.py    # staged clones → data/configs.json + DAG SVGs
-                            # (needs an oxo-flow binary and Graphviz `dot`)
+                            # (needs an oxo-flow binary and nf-metro 1.1.0)
 scripts/generate.py         # regenerates the run-notes pages (CI checks for drift)
 ```
 
