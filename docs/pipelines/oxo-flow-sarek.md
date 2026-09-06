@@ -83,7 +83,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-sarek
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>alignment_ext</code><span class="ox-param-default">cram</span></div>
-<p class="ox-param-desc">Alignment-file mode: &#x27;cram&#x27; (default) or &#x27;bam&#x27; (when save_output_as_bam=true). recal_index_ext must match the mode (&#x27;cram.crai&#x27; vs &#x27;bam.bai&#x27;).</p>
+<p class="ox-param-desc">Alignment-file mode: &#x27;cram&#x27; (default) or &#x27;bam&#x27; (when save_output_as_bam=true).<br>recal_index_ext must match the mode (&#x27;cram.crai&#x27; vs &#x27;bam.bai&#x27;).</p>
 <details class="ox-param-usedby"><summary>used by 22 rules</summary>
 <div class="ox-param-rules"><code>bcftools_mpileup_call</code> <code>bcftools_mpileup_ngscheckmate</code> <code>deepvariant</code> <code>freebayes</code> <code>gatk_applybqsr</code> <code>gatk_applybqsr_scatter</code> <code>gatk_baserecalibrator</code> <code>gatk_baserecalibrator_scatter</code> <code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_gvcf</code> <code>gatk_haplotypecaller_gvcf_scatter</code> <code>gatk_haplotypecaller_scatter</code> <code>manta_germline</code> <code>merge_index_samtools</code> <code>mosdepth_md</code> <code>mosdepth_recal</code> <code>samtools_index_recal</code> <code>samtools_reindex_bam</code> <code>samtools_stats_md</code> <code>samtools_stats_recal</code> <code>strelka_germline</code> <code>tiddit_sv</code></div>
 </details>
@@ -97,14 +97,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-sarek
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>bwa_index_dir</code><span class="ox-param-default">/data/references/GRCh38/Sequence/BWAIndex/</span></div>
-<p class="ox-param-desc">Reference data (user-provided; GRCh38 GATK bundle layout from upstream conf/igenomes.config, substituted at port time)</p>
+<p class="ox-param-desc">Reference data (user-provided; GRCh38 GATK bundle layout from upstream<br>conf/igenomes.config, substituted at port time)</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>bwa_mem</code> <code>bwa_mem_split</code> <code>bwa_mem_umi</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>bwa_mem2_index_dir</code><span class="ox-param-default">/data/references/GRCh38/Sequence/BWAmem2Index/</span></div>
-<p class="ox-param-desc">Optional branches (all default-off; upstream equivalents in parentheses) Reference preparation — upstream PREPARE_GENOME builds the BWA/BWAmem2 indexes + .dict + .fai when the reference lacks them; the port gates this on prepare_reference and writes into results/reference/. Point bwa_index_dir / bwa_mem2_index_dir / fasta_fai / dict at the built files to use them.</p>
+<p class="ox-param-desc">Optional branches (all default-off; upstream equivalents in parentheses)<br>Reference preparation — upstream PREPARE_GENOME builds the BWA/BWAmem2<br>indexes + .dict + .fai when the reference lacks them; the port gates this on<br>prepare_reference and writes into results/reference/. Point bwa_index_dir /<br>bwa_mem2_index_dir / fasta_fai / dict at the built files to use them.</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>bwa_mem2</code> <code>bwa_mem2_split</code></div>
 </details>
@@ -167,42 +167,42 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-sarek
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>chromosomes</code><span class="ox-param-default">chr1, chr2, chr3, chr4, chr5, chr6, chr7, chr8, chr9, chr10, chr11, chr12, chr13, chr14, chr15, chr16, chr17, chr18, chr19, chr20, chr21, chr22, chrX, chrY, chrM</span></div>
-<p class="ox-param-desc">Optional per-chromosome scatter/gather branch (default off). When scatter_gatk = true, BQSR / ApplyBQSR / HaplotypeCaller (and the joint GenotypeGVCFs) run one job per chromosome and the per-chromosome outputs are gathered (GatherBQSRReports / samtools merge+index / MergeVcfs) — results identical to the single whole-genome job (gathers are exact), with per-chromosome parallelism. Upstream scatters over dynamic duration-binned interval files; the engine&#x27;s scatter takes a static value list, so the port uses one interval per chromosome. Keep <code>chromosomes</code> in sync with the contigs of your fasta .fai (each entry must exist in the .fai).</p>
+<p class="ox-param-desc">Optional per-chromosome scatter/gather branch (default off). When<br>scatter_gatk = true, BQSR / ApplyBQSR / HaplotypeCaller (and the joint<br>GenotypeGVCFs) run one job per chromosome and the per-chromosome outputs<br>are gathered (GatherBQSRReports / samtools merge+index / MergeVcfs) —<br>results identical to the single whole-genome job (gathers are exact), with<br>per-chromosome parallelism. Upstream scatters over dynamic duration-binned<br>interval files; the engine&#x27;s scatter takes a static value list, so the port<br>uses one interval per chromosome. Keep <code>chromosomes</code> in sync with the<br>contigs of your fasta .fai (each entry must exist in the .fai).</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>dbsnp</code><span class="ox-param-default">/data/references/GRCh38/Annotation/GATKBundle/dbsnp_146.hg38.vcf.gz</span></div>
-<p class="ox-param-desc">Reference data (user-provided; GRCh38 GATK bundle layout from upstream conf/igenomes.config, substituted at port time)</p>
+<p class="ox-param-desc">Reference data (user-provided; GRCh38 GATK bundle layout from upstream<br>conf/igenomes.config, substituted at port time)</p>
 <details class="ox-param-usedby"><summary>used by 11 rules</summary>
 <div class="ox-param-rules"><code>gatk_baserecalibrator</code> <code>gatk_baserecalibrator_scatter</code> <code>gatk_filtervarianttranches</code> <code>gatk_genotypegvcfs</code> <code>gatk_genotypegvcfs_scatter</code> <code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_gvcf</code> <code>gatk_haplotypecaller_gvcf_scatter</code> <code>gatk_haplotypecaller_scatter</code> <code>gatk_variantrecalibrator_indel</code> <code>gatk_variantrecalibrator_snp</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>dbsnp_tbi</code><span class="ox-param-default">/data/references/GRCh38/Annotation/GATKBundle/dbsnp_146.hg38.vcf.gz.tbi</span></div>
-<p class="ox-param-desc">Reference data (user-provided; GRCh38 GATK bundle layout from upstream conf/igenomes.config, substituted at port time)</p>
+<p class="ox-param-desc">Reference data (user-provided; GRCh38 GATK bundle layout from upstream<br>conf/igenomes.config, substituted at port time)</p>
 <details class="ox-param-usedby"><summary>used by 11 rules</summary>
 <div class="ox-param-rules"><code>gatk_baserecalibrator</code> <code>gatk_baserecalibrator_scatter</code> <code>gatk_filtervarianttranches</code> <code>gatk_genotypegvcfs</code> <code>gatk_genotypegvcfs_scatter</code> <code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_gvcf</code> <code>gatk_haplotypecaller_gvcf_scatter</code> <code>gatk_haplotypecaller_scatter</code> <code>gatk_variantrecalibrator_indel</code> <code>gatk_variantrecalibrator_snp</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>dict</code><span class="ox-param-default">/data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.dict</span></div>
-<p class="ox-param-desc">Reference data (user-provided; GRCh38 GATK bundle layout from upstream conf/igenomes.config, substituted at port time)</p>
+<p class="ox-param-desc">Reference data (user-provided; GRCh38 GATK bundle layout from upstream<br>conf/igenomes.config, substituted at port time)</p>
 <details class="ox-param-usedby"><summary>used by 19 rules</summary>
 <div class="ox-param-rules"><code>gatk_applybqsr</code> <code>gatk_applybqsr_scatter</code> <code>gatk_applyvqsr_indel</code> <code>gatk_applyvqsr_snp</code> <code>gatk_baserecalibrator</code> <code>gatk_baserecalibrator_scatter</code> <code>gatk_cnnscorevariants</code> <code>gatk_filtervarianttranches</code> <code>gatk_genotypegvcfs</code> <code>gatk_genotypegvcfs_scatter</code> <code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_gvcf</code> <code>gatk_haplotypecaller_gvcf_scatter</code> <code>gatk_haplotypecaller_scatter</code> <code>gatk_markduplicates</code> <code>gatk_markduplicates_bam</code> <code>gatk_variantrecalibrator_indel</code> <code>gatk_variantrecalibrator_snp</code> <code>manta_germline</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>fasta</code><span class="ox-param-default">/data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.fasta</span></div>
-<p class="ox-param-desc">Reference data (user-provided; GRCh38 GATK bundle layout from upstream conf/igenomes.config, substituted at port time)</p>
+<p class="ox-param-desc">Reference data (user-provided; GRCh38 GATK bundle layout from upstream<br>conf/igenomes.config, substituted at port time)</p>
 <details class="ox-param-usedby"><summary>used by 41 rules</summary>
 <div class="ox-param-rules"><code>bcftools_mpileup_call</code> <code>bcftools_mpileup_ngscheckmate</code> <code>bwa_index</code> <code>bwa_mem</code> <code>bwa_mem2</code> <code>bwa_mem2_split</code> <code>bwa_mem_split</code> <code>bwa_mem_umi</code> <code>bwamem2_index</code> <code>deepvariant</code> <code>freebayes</code> <code>gatk_applybqsr</code> <code>gatk_applybqsr_scatter</code> <code>gatk_applyvqsr_indel</code> <code>gatk_applyvqsr_snp</code> <code>gatk_baserecalibrator</code> <code>gatk_baserecalibrator_scatter</code> <code>gatk_cnnscorevariants</code> <code>gatk_createsequencedictionary</code> <code>gatk_filtervarianttranches</code> <code>gatk_genotypegvcfs</code> <code>gatk_genotypegvcfs_scatter</code> <code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_gvcf</code> <code>gatk_haplotypecaller_gvcf_scatter</code> <code>gatk_haplotypecaller_scatter</code> <code>gatk_markduplicates</code> <code>gatk_markduplicates_bam</code> <code>gatk_variantrecalibrator_indel</code> <code>gatk_variantrecalibrator_snp</code> <code>manta_germline</code> <code>merge_index_samtools</code> <code>mosdepth_md</code> <code>mosdepth_recal</code> <code>ngscheckmate_ncm</code> <code>samtools_faidx</code> <code>samtools_reindex_bam</code> <code>samtools_stats_md</code> <code>samtools_stats_recal</code> <code>strelka_germline</code> <code>tiddit_sv</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>fasta_fai</code><span class="ox-param-default">/data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.fasta.fai</span></div>
-<p class="ox-param-desc">Reference data (user-provided; GRCh38 GATK bundle layout from upstream conf/igenomes.config, substituted at port time)</p>
+<p class="ox-param-desc">Reference data (user-provided; GRCh38 GATK bundle layout from upstream<br>conf/igenomes.config, substituted at port time)</p>
 <details class="ox-param-usedby"><summary>used by 26 rules</summary>
 <div class="ox-param-rules"><code>create_intervals_bed</code> <code>deepvariant</code> <code>freebayes</code> <code>gatk_applybqsr</code> <code>gatk_applybqsr_scatter</code> <code>gatk_applyvqsr_indel</code> <code>gatk_applyvqsr_snp</code> <code>gatk_baserecalibrator</code> <code>gatk_baserecalibrator_scatter</code> <code>gatk_cnnscorevariants</code> <code>gatk_filtervarianttranches</code> <code>gatk_genomicsdbimport</code> <code>gatk_genotypegvcfs</code> <code>gatk_genotypegvcfs_scatter</code> <code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_gvcf</code> <code>gatk_haplotypecaller_gvcf_scatter</code> <code>gatk_haplotypecaller_scatter</code> <code>gatk_markduplicates</code> <code>gatk_markduplicates_bam</code> <code>gatk_variantrecalibrator_indel</code> <code>gatk_variantrecalibrator_snp</code> <code>goleft_indexcov</code> <code>manta_germline</code> <code>strelka_germline</code> <code>tiddit_sv</code></div>
 </details>
@@ -244,21 +244,21 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-sarek
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>joint_interval_name</code><span class="ox-param-default">whole_genome</span></div>
-<p class="ox-param-desc">Joint germline: the port runs without interval scatter; a single whole-genome interval is built from the fasta .fai (upstream: per-contig BED_PREPARE_INTERVALS)</p>
+<p class="ox-param-desc">Joint germline: the port runs without interval scatter; a single whole-genome<br>interval is built from the fasta .fai (upstream: per-contig BED_PREPARE_INTERVALS)</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>bcftools_sort_joint</code> <code>gatk_genomicsdbimport</code> <code>gatk_genotypegvcfs</code> <code>gatk_mergevcfs_joint</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>known_indels</code><span class="ox-param-default">/data/references/GRCh38/Annotation/GATKBundle/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz, /data/references/GRCh38/Annotation/GATKBundle/Homo_sapiens_assembly38.known_indels.vcf.gz</span></div>
-<p class="ox-param-desc">Reference data (user-provided; GRCh38 GATK bundle layout from upstream conf/igenomes.config, substituted at port time)</p>
+<p class="ox-param-desc">Reference data (user-provided; GRCh38 GATK bundle layout from upstream<br>conf/igenomes.config, substituted at port time)</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>gatk_baserecalibrator</code> <code>gatk_baserecalibrator_scatter</code> <code>gatk_filtervarianttranches</code> <code>gatk_variantrecalibrator_indel</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>known_indels_tbi</code><span class="ox-param-default">/data/references/GRCh38/Annotation/GATKBundle/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz.tbi, /data/references/GRCh38/Annotation/GATKBundle/Homo_sapiens_assembly38.known_indels.vcf.gz.tbi</span></div>
-<p class="ox-param-desc">Reference data (user-provided; GRCh38 GATK bundle layout from upstream conf/igenomes.config, substituted at port time)</p>
+<p class="ox-param-desc">Reference data (user-provided; GRCh38 GATK bundle layout from upstream<br>conf/igenomes.config, substituted at port time)</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>gatk_baserecalibrator</code> <code>gatk_baserecalibrator_scatter</code> <code>gatk_filtervarianttranches</code> <code>gatk_variantrecalibrator_indel</code></div>
 </details>
@@ -279,7 +279,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-sarek
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>lane</code><span class="ox-param-default">L1</span></div>
-<p class="ox-param-desc">Sample metadata — mirrors tests/csv/3.0/fastq_single.csv (single-lane model: nf-core/sarek meta.id = &quot;{sample}-{lane}&quot;, read-group ID = &quot;{sample}.{lane}&quot;)</p>
+<p class="ox-param-desc">Sample metadata — mirrors tests/csv/3.0/fastq_single.csv (single-lane model:<br>nf-core/sarek meta.id = &quot;{sample}-{lane}&quot;, read-group ID = &quot;{sample}.{lane}&quot;)</p>
 <details class="ox-param-usedby"><summary>used by 15 rules</summary>
 <div class="ox-param-rules"><code>bcftools_mpileup_ngscheckmate</code> <code>bwa_mem</code> <code>bwa_mem2</code> <code>bwa_mem2_split</code> <code>bwa_mem_split</code> <code>bwa_mem_umi</code> <code>fastp</code> <code>fastp_split</code> <code>fastp_umi</code> <code>fastqc</code> <code>fgbio_callmolecularconsensusreads</code> <code>fgbio_fastqtobam</code> <code>fgbio_groupreadsbyumi</code> <code>samtools_bam2fq_consensus</code> <code>samtools_bam2fq_umi</code></div>
 </details>
@@ -314,21 +314,21 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-sarek
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>patient</code><span class="ox-param-default">test</span></div>
-<p class="ox-param-desc">Sample metadata — mirrors tests/csv/3.0/fastq_single.csv (single-lane model: nf-core/sarek meta.id = &quot;{sample}-{lane}&quot;, read-group ID = &quot;{sample}.{lane}&quot;)</p>
+<p class="ox-param-desc">Sample metadata — mirrors tests/csv/3.0/fastq_single.csv (single-lane model:<br>nf-core/sarek meta.id = &quot;{sample}-{lane}&quot;, read-group ID = &quot;{sample}.{lane}&quot;)</p>
 <details class="ox-param-usedby"><summary>used by 5 rules</summary>
 <div class="ox-param-rules"><code>bwa_mem</code> <code>bwa_mem2</code> <code>bwa_mem2_split</code> <code>bwa_mem_split</code> <code>bwa_mem_umi</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>prepare_reference</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Optional branches (all default-off; upstream equivalents in parentheses) Reference preparation — upstream PREPARE_GENOME builds the BWA/BWAmem2 indexes + .dict + .fai when the reference lacks them; the port gates this on prepare_reference and writes into results/reference/. Point bwa_index_dir / bwa_mem2_index_dir / fasta_fai / dict at the built files to use them.</p>
+<p class="ox-param-desc">Optional branches (all default-off; upstream equivalents in parentheses)<br>Reference preparation — upstream PREPARE_GENOME builds the BWA/BWAmem2<br>indexes + .dict + .fai when the reference lacks them; the port gates this on<br>prepare_reference and writes into results/reference/. Point bwa_index_dir /<br>bwa_mem2_index_dir / fasta_fai / dict at the built files to use them.</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>bwa_index</code> <code>bwamem2_index</code> <code>gatk_createsequencedictionary</code> <code>samtools_faidx</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>recal_index_ext</code><span class="ox-param-default">cram.crai</span></div>
-<p class="ox-param-desc">Alignment-file mode: &#x27;cram&#x27; (default) or &#x27;bam&#x27; (when save_output_as_bam=true). recal_index_ext must match the mode (&#x27;cram.crai&#x27; vs &#x27;bam.bai&#x27;).</p>
+<p class="ox-param-desc">Alignment-file mode: &#x27;cram&#x27; (default) or &#x27;bam&#x27; (when save_output_as_bam=true).<br>recal_index_ext must match the mode (&#x27;cram.crai&#x27; vs &#x27;bam.bai&#x27;).</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>merge_index_samtools</code> <code>mosdepth_recal</code> <code>samtools_index_recal</code></div>
 </details>
@@ -342,7 +342,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-sarek
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>scatter_gatk</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Optional per-chromosome scatter/gather branch (default off). When scatter_gatk = true, BQSR / ApplyBQSR / HaplotypeCaller (and the joint GenotypeGVCFs) run one job per chromosome and the per-chromosome outputs are gathered (GatherBQSRReports / samtools merge+index / MergeVcfs) — results identical to the single whole-genome job (gathers are exact), with per-chromosome parallelism. Upstream scatters over dynamic duration-binned interval files; the engine&#x27;s scatter takes a static value list, so the port uses one interval per chromosome. Keep <code>chromosomes</code> in sync with the contigs of your fasta .fai (each entry must exist in the .fai).</p>
+<p class="ox-param-desc">Optional per-chromosome scatter/gather branch (default off). When<br>scatter_gatk = true, BQSR / ApplyBQSR / HaplotypeCaller (and the joint<br>GenotypeGVCFs) run one job per chromosome and the per-chromosome outputs<br>are gathered (GatherBQSRReports / samtools merge+index / MergeVcfs) —<br>results identical to the single whole-genome job (gathers are exact), with<br>per-chromosome parallelism. Upstream scatters over dynamic duration-binned<br>interval files; the engine&#x27;s scatter takes a static value list, so the port<br>uses one interval per chromosome. Keep <code>chromosomes</code> in sync with the<br>contigs of your fasta .fai (each entry must exist in the .fai).</p>
 <details class="ox-param-usedby"><summary>used by 22 rules</summary>
 <div class="ox-param-rules"><code>bcftools_sort_joint</code> <code>bcftools_sort_joint_scatter</code> <code>create_intervals_bed</code> <code>gatk_applybqsr</code> <code>gatk_applybqsr_scatter</code> <code>gatk_baserecalibrator</code> <code>gatk_baserecalibrator_scatter</code> <code>gatk_gatherbqsrreports</code> <code>gatk_genomicsdbimport</code> <code>gatk_genomicsdbimport_scatter</code> <code>gatk_genotypegvcfs</code> <code>gatk_genotypegvcfs_scatter</code> <code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_gvcf</code> <code>gatk_haplotypecaller_gvcf_scatter</code> <code>gatk_haplotypecaller_scatter</code> <code>gatk_mergevcfs_joint</code> <code>gatk_mergevcfs_joint_scatter</code> <code>gatk_mergevcfs_scatter</code> <code>merge_index_samtools</code> <code>samtools_index_recal</code> <code>tabix_interval</code></div>
 </details>
@@ -356,7 +356,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-sarek
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>sex</code><span class="ox-param-default">XX</span></div>
-<p class="ox-param-desc">Sample metadata — mirrors tests/csv/3.0/fastq_single.csv (single-lane model: nf-core/sarek meta.id = &quot;{sample}-{lane}&quot;, read-group ID = &quot;{sample}.{lane}&quot;)</p>
+<p class="ox-param-desc">Sample metadata — mirrors tests/csv/3.0/fastq_single.csv (single-lane model:<br>nf-core/sarek meta.id = &quot;{sample}-{lane}&quot;, read-group ID = &quot;{sample}.{lane}&quot;)</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
@@ -412,14 +412,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-sarek
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>split_parts</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Runtime-discovered split parts: when true, fastp&#x27;s --split_by_lines parts are discovered by filesystem scan (engine output_pattern primitive) and the BWA_MEM + BAM_MERGE_INDEX_SAMTOOLS stages fan out per part — no 0001-only cap. Requires mapped_bam = &quot;sorted&quot; (the merge output name). Not supported with umi_read_structure. Off by default (upstream single-part behavior).</p>
+<p class="ox-param-desc">Runtime-discovered split parts: when true, fastp&#x27;s --split_by_lines parts<br>are discovered by filesystem scan (engine output_pattern primitive) and the<br>BWA_MEM + BAM_MERGE_INDEX_SAMTOOLS stages fan out per part — no 0001-only<br>cap. Requires mapped_bam = &quot;sorted&quot; (the merge output name). Not supported<br>with umi_read_structure. Off by default (upstream single-part behavior).</p>
 <details class="ox-param-usedby"><summary>used by 8 rules</summary>
 <div class="ox-param-rules"><code>bam_merge_index_samtools</code> <code>bwa_mem</code> <code>bwa_mem2</code> <code>bwa_mem2_split</code> <code>bwa_mem_split</code> <code>fastp</code> <code>fastp_split</code> <code>fastp_umi</code></div>
 </details>
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>status</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">Sample metadata — mirrors tests/csv/3.0/fastq_single.csv (single-lane model: nf-core/sarek meta.id = &quot;{sample}-{lane}&quot;, read-group ID = &quot;{sample}.{lane}&quot;)</p>
+<p class="ox-param-desc">Sample metadata — mirrors tests/csv/3.0/fastq_single.csv (single-lane model:<br>nf-core/sarek meta.id = &quot;{sample}-{lane}&quot;, read-group ID = &quot;{sample}.{lane}&quot;)</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
@@ -440,28 +440,28 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-sarek
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>umi_read_structure</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">UMI consensus preprocessing (upstream params.umi_read_structure, e.g. &#x27;3M2S+T&#x27; or &#x27;5M2S+T&#x27;; empty string disables the whole UMI chain)</p>
+<p class="ox-param-desc">UMI consensus preprocessing (upstream params.umi_read_structure, e.g.<br>&#x27;3M2S+T&#x27; or &#x27;5M2S+T&#x27;; empty string disables the whole UMI chain)</p>
 <details class="ox-param-usedby"><summary>used by 9 rules</summary>
 <div class="ox-param-rules"><code>bwa_mem_umi</code> <code>fastp</code> <code>fastp_split</code> <code>fastp_umi</code> <code>fgbio_callmolecularconsensusreads</code> <code>fgbio_fastqtobam</code> <code>fgbio_groupreadsbyumi</code> <code>samtools_bam2fq_consensus</code> <code>samtools_bam2fq_umi</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>vep_cache_ready</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">The VEP cache version must match the VEP binary in envs/vep.yaml (upstream&#x27;s image pins 116; this env ships ensembl-vep 112, whose cache format is version-locked — a 116 cache is unreadable). The cache itself is user data (upstream bundles it in the container at /.vep; ~30GB for whole-genome GRCh38, or a gtf2vep subset) — the VEP rule gates on vep_cache_ready. Upstream fails hard without the cache; set the flag after placing it at vep_dir_cache (see README fidelity table).</p>
+<p class="ox-param-desc">The VEP cache version must match the VEP binary in envs/vep.yaml<br>(upstream&#x27;s image pins 116; this env ships ensembl-vep 112, whose<br>cache format is version-locked — a 116 cache is unreadable).<br>The cache itself is user data (upstream bundles it in the container<br>at /.vep; ~30GB for whole-genome GRCh38, or a gtf2vep subset) —<br>the VEP rule gates on vep_cache_ready. Upstream fails hard without<br>the cache; set the flag after placing it at vep_dir_cache (see<br>README fidelity table).</p>
 <details class="ox-param-usedby"><summary>used by 8 rules</summary>
 <div class="ox-param-rules"><code>ensemblvep_vep</code> <code>ensemblvep_vep_deepvariant</code> <code>ensemblvep_vep_freebayes</code> <code>ensemblvep_vep_joint</code> <code>ensemblvep_vep_manta</code> <code>ensemblvep_vep_mpileup</code> <code>ensemblvep_vep_strelka</code> <code>ensemblvep_vep_tiddit</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>vep_cache_version</code><span class="ox-param-default">112</span></div>
-<p class="ox-param-desc">The VEP cache version must match the VEP binary in envs/vep.yaml (upstream&#x27;s image pins 116; this env ships ensembl-vep 112, whose cache format is version-locked — a 116 cache is unreadable). The cache itself is user data (upstream bundles it in the container at /.vep; ~30GB for whole-genome GRCh38, or a gtf2vep subset) — the VEP rule gates on vep_cache_ready. Upstream fails hard without the cache; set the flag after placing it at vep_dir_cache (see README fidelity table).</p>
+<p class="ox-param-desc">The VEP cache version must match the VEP binary in envs/vep.yaml<br>(upstream&#x27;s image pins 116; this env ships ensembl-vep 112, whose<br>cache format is version-locked — a 116 cache is unreadable).<br>The cache itself is user data (upstream bundles it in the container<br>at /.vep; ~30GB for whole-genome GRCh38, or a gtf2vep subset) —<br>the VEP rule gates on vep_cache_ready. Upstream fails hard without<br>the cache; set the flag after placing it at vep_dir_cache (see<br>README fidelity table).</p>
 <details class="ox-param-usedby"><summary>used by 8 rules</summary>
 <div class="ox-param-rules"><code>ensemblvep_vep</code> <code>ensemblvep_vep_deepvariant</code> <code>ensemblvep_vep_freebayes</code> <code>ensemblvep_vep_joint</code> <code>ensemblvep_vep_manta</code> <code>ensemblvep_vep_mpileup</code> <code>ensemblvep_vep_strelka</code> <code>ensemblvep_vep_tiddit</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>vep_dir_cache</code><span class="ox-param-default">/.vep</span></div>
-<p class="ox-param-desc">The VEP cache version must match the VEP binary in envs/vep.yaml (upstream&#x27;s image pins 116; this env ships ensembl-vep 112, whose cache format is version-locked — a 116 cache is unreadable). The cache itself is user data (upstream bundles it in the container at /.vep; ~30GB for whole-genome GRCh38, or a gtf2vep subset) — the VEP rule gates on vep_cache_ready. Upstream fails hard without the cache; set the flag after placing it at vep_dir_cache (see README fidelity table).</p>
+<p class="ox-param-desc">The VEP cache version must match the VEP binary in envs/vep.yaml<br>(upstream&#x27;s image pins 116; this env ships ensembl-vep 112, whose<br>cache format is version-locked — a 116 cache is unreadable).<br>The cache itself is user data (upstream bundles it in the container<br>at /.vep; ~30GB for whole-genome GRCh38, or a gtf2vep subset) —<br>the VEP rule gates on vep_cache_ready. Upstream fails hard without<br>the cache; set the flag after placing it at vep_dir_cache (see<br>README fidelity table).</p>
 <details class="ox-param-usedby"><summary>used by 8 rules</summary>
 <div class="ox-param-rules"><code>ensemblvep_vep</code> <code>ensemblvep_vep_deepvariant</code> <code>ensemblvep_vep_freebayes</code> <code>ensemblvep_vep_joint</code> <code>ensemblvep_vep_manta</code> <code>ensemblvep_vep_mpileup</code> <code>ensemblvep_vep_strelka</code> <code>ensemblvep_vep_tiddit</code></div>
 </details>
@@ -501,7 +501,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 </div>
 
-The graph is derived at catalog-build time from `oxo-flow graph -f metro` and rendered with [nf-metro](https://github.com/seqeralabs/nf-metro) — rules are grouped into colored transit lines by analysis stage. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
+The graph is derived at catalog-build time from `oxo-flow graph -f metro` through the adaptive render ladder (`scripts/metro_tiers.py`): each workflow gets the finest metro tier that nf-metro renders while staying readable at site width — rule-level stations for smaller workflows, module-stage or module overview stations for dense ones. Colored transit lines group stations by analysis stage. Wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

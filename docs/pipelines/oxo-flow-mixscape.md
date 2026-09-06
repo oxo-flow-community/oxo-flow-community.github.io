@@ -225,7 +225,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-mixscape
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>variable_features_only</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">(objects carry SCTransform normalization; the bundled fixtures are generated that way via make_fixtures.R)</p>
+<p class="ox-param-desc">(objects carry SCTransform normalization; the bundled fixtures<br>are generated that way via make_fixtures.R)</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>config_export</code> <code>mixscape</code></div>
 </details>
@@ -244,7 +244,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 </div>
 
-The graph is derived at catalog-build time from `oxo-flow graph -f metro` and rendered with [nf-metro](https://github.com/seqeralabs/nf-metro) — rules are grouped into colored transit lines by analysis stage. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
+The graph is derived at catalog-build time from `oxo-flow graph -f metro` through the adaptive render ladder (`scripts/metro_tiers.py`): each workflow gets the finest metro tier that nf-metro renders while staying readable at site width — rule-level stations for smaller workflows, module-stage or module overview stations for dense ones. Colored transit lines group stations by analysis stage. Wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

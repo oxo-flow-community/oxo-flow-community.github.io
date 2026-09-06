@@ -134,7 +134,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-tcasia
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>majiq_license</code><span class="ox-param-default">test/fixtures/reference/majiq_license.lic</span></div>
-<p class="ox-param-desc">MAJIQ requires the upstream academic license file — place it at test/fixtures/reference/majiq_license.lic (obtain from MAJIQ) and set run_majiq = true. Upstream fails hard without the license; the port gates the whole MAJIQ chain on this flag instead (documented in the README fidelity table).</p>
+<p class="ox-param-desc">MAJIQ requires the upstream academic license file — place it at<br>test/fixtures/reference/majiq_license.lic (obtain from MAJIQ) and set<br>run_majiq = true. Upstream fails hard without the license; the port<br>gates the whole MAJIQ chain on this flag instead (documented in the<br>README fidelity table).</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>as_calling::majiq_build</code> <code>as_calling::majiq_psi</code> <code>as_calling::voila_modulize</code> <code>as_calling::voila_tsv</code></div>
 </details>
@@ -190,7 +190,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-tcasia
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_majiq</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">MAJIQ requires the upstream academic license file — place it at test/fixtures/reference/majiq_license.lic (obtain from MAJIQ) and set run_majiq = true. Upstream fails hard without the license; the port gates the whole MAJIQ chain on this flag instead (documented in the README fidelity table).</p>
+<p class="ox-param-desc">MAJIQ requires the upstream academic license file — place it at<br>test/fixtures/reference/majiq_license.lic (obtain from MAJIQ) and set<br>run_majiq = true. Upstream fails hard without the license; the port<br>gates the whole MAJIQ chain on this flag instead (documented in the<br>README fidelity table).</p>
 <details class="ox-param-usedby"><summary>used by 5 rules</summary>
 <div class="ox-param-rules"><code>as_calling::majiq_build</code> <code>as_calling::majiq_create_ini</code> <code>as_calling::majiq_psi</code> <code>as_calling::voila_modulize</code> <code>as_calling::voila_tsv</code></div>
 </details>
@@ -232,7 +232,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-tcasia
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>star_index_dir</code><span class="ox-param-default">test/fixtures/reference/STAR_index</span></div>
-<p class="ox-param-desc">star_index_dir is auto-built below from test/fixtures/reference (tiny synthetic genome) — point it at a real GRCh38 STAR index for real runs.</p>
+<p class="ox-param-desc">star_index_dir is auto-built below from test/fixtures/reference (tiny<br>synthetic genome) — point it at a real GRCh38 STAR index for real runs.</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>alignment::star_align</code></div>
 </details>
@@ -286,7 +286,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 </div>
 
-The graph is derived at catalog-build time from `oxo-flow graph -f metro` and rendered with [nf-metro](https://github.com/seqeralabs/nf-metro) — rules are grouped into colored transit lines by analysis stage. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
+The graph is derived at catalog-build time from `oxo-flow graph -f metro` through the adaptive render ladder (`scripts/metro_tiers.py`): each workflow gets the finest metro tier that nf-metro renders while staying readable at site width — rule-level stations for smaller workflows, module-stage or module overview stations for dense ones. Colored transit lines group stations by analysis stage. Wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

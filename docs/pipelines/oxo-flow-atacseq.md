@@ -232,14 +232,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-atacseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>paired</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Gated branches (defaults keep the default plan identical to the upstream default main path; toggle one key at a time to activate its branch only)</p>
+<p class="ox-param-desc">Gated branches (defaults keep the default plan identical to the upstream<br>default main path; toggle one key at a time to activate its branch only)</p>
 <details class="ox-param-usedby"><summary>used by 24 rules</summary>
 <div class="ox-param-rules"><code>alt::bowtie2_align</code> <code>alt::chromap_align</code> <code>alt::star_align</code> <code>bamtools_filter</code> <code>bedtools_genomecov</code> <code>bwa_mem</code> <code>cons::subread_featurecounts</code> <code>fastqc</code> <code>multiqc</code> <code>pe::bamtools_filter_pe</code> <code>pe::bedtools_genomecov_pe</code> <code>pe::bwa_mem_pe</code> <code>pe::fastqc_pe</code> <code>pe::multiqc_pe</code> <code>pe::pe_name_sort_remove_orphans</code> <code>pe::plotfingerprint_pe</code> <code>pe::trimgalore_pe</code> <code>plotfingerprint</code> <code>qce::ataqv</code> <code>qce::get_autosomes</code> <code>qce::mkarv</code> <code>qce::picard_collectmultiplemetrics</code> <code>qce::preseq_lcextrap</code> <code>trimgalore</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>picard_xmx_gb</code><span class="ox-param-default">8</span></div>
-<p class="ox-param-desc">GB passed to picard -Xmx. Previously derived from the rule&#x27;s 36G resource budget (Xmx≈30G), which thrash-killed the JVM on a 3.7 GB machine (live run); the resource budget still drives scheduling.</p>
+<p class="ox-param-desc">GB passed to picard -Xmx. Previously derived from the rule&#x27;s 36G<br>resource budget (Xmx≈30G), which thrash-killed the JVM on a 3.7 GB<br>machine (live run); the resource budget still drives scheduling.</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>merge_replicates</code> <code>picard_markduplicates</code> <code>qce::picard_collectmultiplemetrics</code></div>
 </details>
@@ -267,7 +267,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-atacseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>reference</code><span class="ox-param-default">test/fixtures/genome/genome.fa</span></div>
-<p class="ox-param-desc">Reference inputs. Upstream obtains these from nf-core iGenomes (--genome); this port expects pre-built files (see README &quot;References&quot;).</p>
+<p class="ox-param-desc">Reference inputs. Upstream obtains these from nf-core iGenomes (--genome);<br>this port expects pre-built files (see README &quot;References&quot;).</p>
 <details class="ox-param-usedby"><summary>used by 13 rules</summary>
 <div class="ox-param-rules"><code>alt::chromap_align</code> <code>bamtools_filter</code> <code>cons::homer_annotatepeaks_consensus</code> <code>homer_annotatepeaks</code> <code>merge_replicates</code> <code>pe::pe_name_sort_remove_orphans</code> <code>picard_markduplicates</code> <code>qce::get_autosomes</code> <code>qce::igv</code> <code>qce::picard_collectmultiplemetrics</code> <code>ref::bwa_index</code> <code>ref::custom_getchromsizes</code> <code>samtools_sort_stats</code></div>
 </details>
@@ -412,7 +412,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 </div>
 
-The graph is derived at catalog-build time from `oxo-flow graph -f metro` and rendered with [nf-metro](https://github.com/seqeralabs/nf-metro) — rules are grouped into colored transit lines by analysis stage. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
+The graph is derived at catalog-build time from `oxo-flow graph -f metro` through the adaptive render ladder (`scripts/metro_tiers.py`): each workflow gets the finest metro tier that nf-metro renders while staying readable at site width — rule-level stations for smaller workflows, module-stage or module overview stations for dense ones. Colored transit lines group stations by analysis stage. Wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

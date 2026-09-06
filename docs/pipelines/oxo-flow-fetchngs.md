@@ -72,28 +72,28 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-fetchngs
 <div class="ox-params">
 <div class="ox-param">
 <div class="ox-param-head"><code>dbgap_key</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">dbGaP authorized-access certificate for the sratools branch (upstream --dbgap_key): path to a .ngc or .jwt file. Empty = public data only — the public sratools branch works without it; when set, the certificate is passed through verbatim (prefetch/fasterq-dump --ngc or --perm).</p>
+<p class="ox-param-desc">dbGaP authorized-access certificate for the sratools branch (upstream<br>--dbgap_key): path to a .ngc or .jwt file. Empty = public data only — the<br>public sratools branch works without it; when set, the certificate is<br>passed through verbatim (prefetch/fasterq-dump --ngc or --perm).</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>sra_fastq_sratools</code> <code>sra_fastq_sratools_dbgap</code> <code>sra_prefetch</code> <code>sra_prefetch_dbgap</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>download_method</code><span class="ox-param-default">ftp</span></div>
-<p class="ox-param-desc">Download method, one of &#x27;ftp&#x27; (upstream default), &#x27;sratools&#x27; or &#x27;aspera&#x27;. Each method gates its own branch of download rules; the default &#x27;ftp&#x27; plan is unchanged when the other branches are off.</p>
+<p class="ox-param-desc">Download method, one of &#x27;ftp&#x27; (upstream default), &#x27;sratools&#x27; or &#x27;aspera&#x27;.<br>Each method gates its own branch of download rules; the default &#x27;ftp&#x27;<br>plan is unchanged when the other branches are off.</p>
 <details class="ox-param-usedby"><summary>used by 9 rules</summary>
 <div class="ox-param-rules"><code>sra_fastq_aspera</code> <code>sra_fastq_ftp</code> <code>sra_fastq_ftp_aspera_fallback</code> <code>sra_fastq_sratools</code> <code>sra_fastq_sratools_dbgap</code> <code>sra_fastq_sratools_fallback</code> <code>sra_prefetch</code> <code>sra_prefetch_dbgap</code> <code>sra_prefetch_fallback</code></div>
 </details>
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>email</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Completion notifications (upstream PIPELINE_COMPLETION, --email / --email_on_fail / --hook_url; upstream defaults are null, here &quot;&quot;): - email          address the completion summary is mailed to (sendmail/mail on the host) after a run without failed rules - email_on_fail  address mailed after a failed run; falls back to <code>email</code> when empty (nf-core sends the failure mail to email_on_fail, or to email when only that is set) - hook_url       webhook URL receiving a JSON notification (curl POST) with the run counters, on completion and failure alike These drive the [workflow] on_complete / on_error hooks above (engine &gt;= 0.17.0). With all three empty (the default) both hooks are no-ops, matching upstream&#x27;s null params; older engines ignore the [workflow] keys entirely. sraCurateSamplesheetWarn (the upstream end-of-run &quot;double-check the samplesheet&quot; log note) has no hook: the auto-created samplesheet curation caveat is documented in README.md instead.</p>
+<p class="ox-param-desc">Completion notifications (upstream PIPELINE_COMPLETION, --email /<br>--email_on_fail / --hook_url; upstream defaults are null, here &quot;&quot;):<br>- email          address the completion summary is mailed to (sendmail/mail<br>on the host) after a run without failed rules<br>- email_on_fail  address mailed after a failed run; falls back to <code>email</code><br>when empty (nf-core sends the failure mail to email_on_fail,<br>or to email when only that is set)<br>- hook_url       webhook URL receiving a JSON notification (curl POST) with<br>the run counters, on completion and failure alike<br>These drive the [workflow] on_complete / on_error hooks above (engine &gt;=<br>0.17.0). With all three empty (the default) both hooks are no-ops, matching<br>upstream&#x27;s null params; older engines ignore the [workflow] keys entirely.<br>sraCurateSamplesheetWarn (the upstream end-of-run &quot;double-check the<br>samplesheet&quot; log note) has no hook: the auto-created samplesheet curation<br>caveat is documented in README.md instead.</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>email_on_fail</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Completion notifications (upstream PIPELINE_COMPLETION, --email / --email_on_fail / --hook_url; upstream defaults are null, here &quot;&quot;): - email          address the completion summary is mailed to (sendmail/mail on the host) after a run without failed rules - email_on_fail  address mailed after a failed run; falls back to <code>email</code> when empty (nf-core sends the failure mail to email_on_fail, or to email when only that is set) - hook_url       webhook URL receiving a JSON notification (curl POST) with the run counters, on completion and failure alike These drive the [workflow] on_complete / on_error hooks above (engine &gt;= 0.17.0). With all three empty (the default) both hooks are no-ops, matching upstream&#x27;s null params; older engines ignore the [workflow] keys entirely. sraCurateSamplesheetWarn (the upstream end-of-run &quot;double-check the samplesheet&quot; log note) has no hook: the auto-created samplesheet curation caveat is documented in README.md instead.</p>
+<p class="ox-param-desc">Completion notifications (upstream PIPELINE_COMPLETION, --email /<br>--email_on_fail / --hook_url; upstream defaults are null, here &quot;&quot;):<br>- email          address the completion summary is mailed to (sendmail/mail<br>on the host) after a run without failed rules<br>- email_on_fail  address mailed after a failed run; falls back to <code>email</code><br>when empty (nf-core sends the failure mail to email_on_fail,<br>or to email when only that is set)<br>- hook_url       webhook URL receiving a JSON notification (curl POST) with<br>the run counters, on completion and failure alike<br>These drive the [workflow] on_complete / on_error hooks above (engine &gt;=<br>0.17.0). With all three empty (the default) both hooks are no-ops, matching<br>upstream&#x27;s null params; older engines ignore the [workflow] keys entirely.<br>sraCurateSamplesheetWarn (the upstream end-of-run &quot;double-check the<br>samplesheet&quot; log note) has no hook: the auto-created samplesheet curation<br>caveat is documented in README.md instead.</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
@@ -107,14 +107,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-fetchngs
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>hook_url</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Completion notifications (upstream PIPELINE_COMPLETION, --email / --email_on_fail / --hook_url; upstream defaults are null, here &quot;&quot;): - email          address the completion summary is mailed to (sendmail/mail on the host) after a run without failed rules - email_on_fail  address mailed after a failed run; falls back to <code>email</code> when empty (nf-core sends the failure mail to email_on_fail, or to email when only that is set) - hook_url       webhook URL receiving a JSON notification (curl POST) with the run counters, on completion and failure alike These drive the [workflow] on_complete / on_error hooks above (engine &gt;= 0.17.0). With all three empty (the default) both hooks are no-ops, matching upstream&#x27;s null params; older engines ignore the [workflow] keys entirely. sraCurateSamplesheetWarn (the upstream end-of-run &quot;double-check the samplesheet&quot; log note) has no hook: the auto-created samplesheet curation caveat is documented in README.md instead.</p>
+<p class="ox-param-desc">Completion notifications (upstream PIPELINE_COMPLETION, --email /<br>--email_on_fail / --hook_url; upstream defaults are null, here &quot;&quot;):<br>- email          address the completion summary is mailed to (sendmail/mail<br>on the host) after a run without failed rules<br>- email_on_fail  address mailed after a failed run; falls back to <code>email</code><br>when empty (nf-core sends the failure mail to email_on_fail,<br>or to email when only that is set)<br>- hook_url       webhook URL receiving a JSON notification (curl POST) with<br>the run counters, on completion and failure alike<br>These drive the [workflow] on_complete / on_error hooks above (engine &gt;=<br>0.17.0). With all three empty (the default) both hooks are no-ops, matching<br>upstream&#x27;s null params; older engines ignore the [workflow] keys entirely.<br>sraCurateSamplesheetWarn (the upstream end-of-run &quot;double-check the<br>samplesheet&quot; log note) has no hook: the auto-created samplesheet curation<br>caveat is documented in README.md instead.</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>input</code><span class="ox-param-default">test/fixtures/ids.txt</span></div>
-<p class="ox-param-desc">File containing SRA/ENA/GEO/DDBJ identifiers, one per line (upstream --input). Keep in sync with the [[sample_groups]] list below: check_ids validates this file, the sample source drives the per-id expansion. Add extra ids on the CLI with <code>oxo-flow run main.oxoflow --sample &lt;ID&gt;</code>.</p>
+<p class="ox-param-desc">File containing SRA/ENA/GEO/DDBJ identifiers, one per line (upstream --input).<br>Keep in sync with the [[sample_groups]] list below: check_ids validates this<br>file, the sample source drives the per-id expansion. Add extra ids on the<br>CLI with <code>oxo-flow run main.oxoflow --sample &lt;ID&gt;</code>.</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>check_ids</code></div>
 </details>
@@ -135,7 +135,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-fetchngs
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>out_dir</code><span class="ox-param-default">results</span></div>
-<p class="ox-param-desc">File containing SRA/ENA/GEO/DDBJ identifiers, one per line (upstream --input). Keep in sync with the [[sample_groups]] list below: check_ids validates this file, the sample source drives the per-id expansion. Add extra ids on the CLI with <code>oxo-flow run main.oxoflow --sample &lt;ID&gt;</code>.</p>
+<p class="ox-param-desc">File containing SRA/ENA/GEO/DDBJ identifiers, one per line (upstream --input).<br>Keep in sync with the [[sample_groups]] list below: check_ids validates this<br>file, the sample source drives the per-id expansion. Add extra ids on the<br>CLI with <code>oxo-flow run main.oxoflow --sample &lt;ID&gt;</code>.</p>
 <details class="ox-param-usedby"><summary>used by 16 rules</summary>
 <div class="ox-param-rules"><code>check_ids</code> <code>combine_mappings</code> <code>combine_samplesheets</code> <code>multiqc_mappings_config</code> <code>sra_fastq_aspera</code> <code>sra_fastq_ftp</code> <code>sra_fastq_ftp_aspera_fallback</code> <code>sra_fastq_sratools</code> <code>sra_fastq_sratools_dbgap</code> <code>sra_fastq_sratools_fallback</code> <code>sra_ids_to_runinfo</code> <code>sra_prefetch</code> <code>sra_prefetch_dbgap</code> <code>sra_prefetch_fallback</code> <code>sra_runinfo_to_ftp</code> <code>sra_to_samplesheet</code></div>
 </details>
@@ -149,14 +149,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-fetchngs
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_fastq_download</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Download method, one of &#x27;ftp&#x27; (upstream default), &#x27;sratools&#x27; or &#x27;aspera&#x27;. Each method gates its own branch of download rules; the default &#x27;ftp&#x27; plan is unchanged when the other branches are off.</p>
+<p class="ox-param-desc">Download method, one of &#x27;ftp&#x27; (upstream default), &#x27;sratools&#x27; or &#x27;aspera&#x27;.<br>Each method gates its own branch of download rules; the default &#x27;ftp&#x27;<br>plan is unchanged when the other branches are off.</p>
 <details class="ox-param-usedby"><summary>used by 12 rules</summary>
 <div class="ox-param-rules"><code>combine_mappings</code> <code>combine_samplesheets</code> <code>sra_fastq_aspera</code> <code>sra_fastq_ftp</code> <code>sra_fastq_ftp_aspera_fallback</code> <code>sra_fastq_sratools</code> <code>sra_fastq_sratools_dbgap</code> <code>sra_fastq_sratools_fallback</code> <code>sra_prefetch</code> <code>sra_prefetch_dbgap</code> <code>sra_prefetch_fallback</code> <code>sra_to_samplesheet</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>sra_tools_fallback</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Per-run fallback (upstream SRA workflow <code>branch</code>), off by default so the default &#x27;ftp&#x27; plan stays byte-identical; enable to match upstream&#x27;s per-run triage for both methods: - download_method = &#x27;ftp&#x27;: runs whose ENA metadata has NEITHER an FTP link (fastq_1) NOR a fasp link (fastq_aspera) are routed to prefetch + fasterq-dump at runtime (sra_prefetch_fallback + sra_fastq_sratools_fallback); - download_method = &#x27;aspera&#x27;: runs without a fasp link are routed to the FTP branch when they have an FTP link (fastq_1, sra_fastq_ftp_aspera_fallback) and to prefetch + fasterq-dump otherwise (the same fallback rules). Without it, such runs are skipped with a warning.</p>
+<p class="ox-param-desc">Per-run fallback (upstream SRA workflow <code>branch</code>), off by default so the<br>default &#x27;ftp&#x27; plan stays byte-identical; enable to match upstream&#x27;s<br>per-run triage for both methods:<br>- download_method = &#x27;ftp&#x27;: runs whose ENA metadata has NEITHER an FTP<br>link (fastq_1) NOR a fasp link (fastq_aspera) are routed to prefetch<br>+ fasterq-dump at runtime (sra_prefetch_fallback +<br>sra_fastq_sratools_fallback);<br>- download_method = &#x27;aspera&#x27;: runs without a fasp link are routed to<br>the FTP branch when they have an FTP link (fastq_1,<br>sra_fastq_ftp_aspera_fallback) and to prefetch + fasterq-dump<br>otherwise (the same fallback rules).<br>Without it, such runs are skipped with a warning.</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>sra_fastq_ftp_aspera_fallback</code> <code>sra_fastq_sratools_fallback</code> <code>sra_prefetch_fallback</code></div>
 </details>
@@ -175,7 +175,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 </div>
 
-The graph is derived at catalog-build time from `oxo-flow graph -f metro` and rendered with [nf-metro](https://github.com/seqeralabs/nf-metro) — rules are grouped into colored transit lines by analysis stage. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
+The graph is derived at catalog-build time from `oxo-flow graph -f metro` through the adaptive render ladder (`scripts/metro_tiers.py`): each workflow gets the finest metro tier that nf-metro renders while staying readable at site width — rule-level stations for smaller workflows, module-stage or module overview stations for dense ones. Colored transit lines group stations by analysis stage. Wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

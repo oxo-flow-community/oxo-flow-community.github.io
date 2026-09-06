@@ -63,13 +63,17 @@ def _desc_html(desc: str) -> str:
     """Description paragraph as raw HTML; inline `code` spans become <code>.
 
     Descriptions are prose with occasional backtick code spans (e.g.
-    ``_REP\\d+``); everything else is escaped to plain text.
+    ``_REP\\d+``); everything else is escaped to plain text. Newlines
+    survive as <br> — the workflow's own comment blocks fold multi-line
+    prose (a reference_dir layout list, say) into the description and a
+    single-run paragraph is unreadable (live: circrna reference_dir).
     """
     parts = _esc(desc).split("`")
-    return "".join(
+    rendered = "".join(
         f"<code>{part}</code>" if i % 2 else part
         for i, part in enumerate(parts)
     )
+    return rendered.replace("\n", "<br>")
 
 
 REQUIRED_FIELDS = ("name", "title", "description", "repo_url", "domain", "tags", "tools")
@@ -426,11 +430,13 @@ def dag_section(p: dict) -> list[str]:
         *cards,
         "",
         "The graph is derived at catalog-build time from "
-        "`oxo-flow graph -f metro` and rendered with [nf-metro]"
-        "(https://github.com/seqeralabs/nf-metro) — rules are grouped into "
-        "colored transit lines by analysis stage. It shows the workflow at "
-        "rule level: wildcard `{sample}` instances expand at run time when "
-        "sample data is discovered (the runtime view is "
+        "`oxo-flow graph -f metro` through the adaptive render ladder "
+        "(`scripts/metro_tiers.py`): each workflow gets the finest metro "
+        "tier that nf-metro renders while staying readable at site width — "
+        "rule-level stations for smaller workflows, module-stage or module "
+        "overview stations for dense ones. Colored transit lines group "
+        "stations by analysis stage. Wildcard `{sample}` instances expand "
+        "at run time when sample data is discovered (the runtime view is "
         "`oxo-flow graph --expanded`).",
     ]
 

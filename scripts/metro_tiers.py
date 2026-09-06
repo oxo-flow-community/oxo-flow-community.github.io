@@ -49,8 +49,10 @@ MAX_RULE_STATIONS = 40
 # A rendered tier narrower than this (portrait-ish) falls through to the
 # next tier: site pages host horizontal figures, and nf-core's reference
 # maps are 1.6-3.2:1 landscape. The widest rendered tier wins when none
-# clears the gate.
-MIN_ASPECT = 1.15
+# clears the gate. 1.15 proved too strict — a fine 16-station map at
+# 1.144 (live: genome-tracks) was demoted to a 2-station overview empty
+# of meaning. 1.05 only rejects genuinely portrait maps.
+MIN_ASPECT = 1.05
 
 
 # ---------------------------------------------------------------------------
@@ -126,8 +128,8 @@ def scc_of(edges: list[tuple], order: list[str]) -> dict:
     (module interdependencies can genuinely cycle even when the rule DAG
     does not) collapse into one merged station."""
     adj = defaultdict(set)
-    for s, t, _lab in edges:
-        adj[s].add(t)
+    for e in edges:
+        adj[e[0]].add(e[1])
     index, low, stack, on_stack, idx = {}, {}, [], set(), [0]
     comps = []
 
@@ -161,6 +163,38 @@ def scc_of(edges: list[tuple], order: list[str]) -> dict:
         for s in comp:
             rep_of[s] = rep
     return rep_of
+
+
+def _join_compact(names: list[str]) -> str:
+    """Module-stage station title: joined with ' • ', wrapped to <= 40 chars.
+
+    SCC-merged stations can carry many module titles (live: sarek merged
+    four groups into "Alignment + Variant Calling + Analysis + Read
+    Trimming", 55 chars — nf-metro leaves such labels clipped at the
+    viewport edge). Join compactly and wrap at group boundaries, which
+    nf-metro renders as a second label line.
+    """
+    # Segment at " + " first (an SCC-merged section title already joins
+    # several module titles), then wrap at segment boundaries. 40 chars is
+    # still too wide for a leading station's label (sarek clipped
+    # "Alignment + Variant Calling ..." at the viewport edge); 32 keeps
+    # each label line inside the canvas.
+    segments: list[str] = []
+    for name in names:
+        segments.extend(part for part in name.split(" + ") if part)
+    joined = " • ".join(segments)
+    if len(joined) <= 32:
+        return joined
+    lines, line = [], ""
+    for seg in segments:
+        cand = f"{line} • {seg}" if line else seg
+        if line and len(cand) > 32:
+            lines.append(line)
+            line = seg
+        else:
+            line = cand
+    lines.append(line)
+    return "\\n".join(lines)
 
 
 def _emit(lines_decl: dict, station_titles: dict, out_edges: list) -> str:
@@ -216,20 +250,43 @@ def module_stage_mmd(text: str) -> str:
         seen.add(key)
         out_edges.append((gs, gt, node_stage[s]))
 
-    rep_of = scc_of([(gs, gt, l) for gs, gt, l in out_edges], order)
+    # SCC over (section, stage)-group nodes (two-element edge pairs: the
+    # group keys themselves — a three-element pair keyed the rep_of map by
+    # edges, so every lookup missed and the contraction never applied).
+    rep_of = scc_of([(g1, g2) for g1, g2, _l in out_edges], order)
     station_groups: dict[tuple, list] = defaultdict(list)
     for g in groups:
         station_groups[rep_of.get(g, g)].append(g)
+    # One station per section for the overview: distinct stage-groups of
+    # the same section (a cyclic-merged module like sarek's four-way
+    # "align + variant + analysis + trim", or stages that only connect
+    # inside the module, live: rnaseq's fastq_qc generic group) would emit
+    # several stations carrying the same long title — fold each section
+    # onto its first (main) group, which also keeps isolated groups off
+    # the map as phantom stations.
+    first_of_section: dict[str, tuple] = {}
+    for rep in station_groups:
+        first_of_section.setdefault(rep[0], rep)
+    section_groups: dict[tuple, list] = defaultdict(list)
+    for rep, gs in station_groups.items():
+        section_groups[first_of_section[rep[0]]].extend(gs)
+    station_groups = section_groups
     station_titles = {}
     for rep, gs in station_groups.items():
         names = sorted({sections[g[0]]["title"] for g in gs})
-        station_titles[f"g_{rep[0]}_{rep[1]}"] = " + ".join(names)
+        station_titles[f"g_{rep[0]}_{rep[1]}"] = _join_compact(names)
 
     cedges: dict[tuple, Counter] = defaultdict(Counter)
     for gs, gt, lab in out_edges:
         rs, rt = rep_of.get(gs, gs), rep_of.get(gt, gt)
         if rs != rt:
-            cedges[(f"g_{rs[0]}_{rs[1]}", f"g_{rt[0]}_{rt[1]}")][lab] += 1
+            # Section-fold edge endpoints too: they must reference the same
+            # stations the title map declares, or nf-metro renders the
+            # undeclared endpoint as a bare `g_section_stage` station
+            # (live: rnaseq showed "g_report_report" after the fold).
+            rs, rt = first_of_section.get(rs[0], rs), first_of_section.get(rt[0], rt)
+            if rs != rt:
+                cedges[(f"g_{rs[0]}_{rs[1]}", f"g_{rt[0]}_{rt[1]}")][lab] += 1
     final = [(s, t, c.most_common(1)[0][0]) for (s, t), c in sorted(cedges.items())]
     return _emit(mmd["line_decls"], station_titles, final)
 
@@ -245,9 +302,16 @@ def svg_aspect(svg: pathlib.Path) -> float | None:
 
 
 def render_mmd(nf_metro: str, mmd: pathlib.Path, svg: pathlib.Path) -> str | None:
-    """nf-metro render → svg; None on success, failure cause otherwise."""
+    """nf-metro render → svg; None on success, failure cause otherwise.
+
+    Spacing policy: 130/70 clears long station labels from the viewport
+    edge (live: sarek's module-stage row labels were clipped on the left)
+    and keeps the legend clear of the trunk; the auto-adaptive default
+    under-allocates there. Rendering policy lives here, not in the engine.
+    """
     proc = subprocess.run(
-        [nf_metro, "render", str(mmd), "-o", str(svg), "--theme", "light"],
+        [nf_metro, "render", str(mmd), "-o", str(svg), "--theme", "light",
+         "--x-spacing", "130", "--y-spacing", "70"],
         capture_output=True,
         text=True,
     )

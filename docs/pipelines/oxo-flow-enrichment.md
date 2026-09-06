@@ -510,7 +510,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-enrichment
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>pycistarget_annotations_to_use</code><span class="ox-param-default">[&#x27;Direct_annot&#x27;, &#x27;Motif_similarity_annot&#x27;, &#x27;Orthology_annot&#x27;, &#x27;Motif_similarity_and_Orthology_annot&#x27;]</span></div>
-<p class="ox-param-desc">upstream passes the python list literal; kept as a string so the rendered command is byte-identical to upstream&#x27;s</p>
+<p class="ox-param-desc">upstream passes the python list literal; kept as a string so the rendered<br>command is byte-identical to upstream&#x27;s</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>region_motif_enrichment_analysis_pycisTarget</code></div>
 </details>
@@ -580,7 +580,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-enrichment
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>rcistarget_db_hg38_500bp_up_100bp_down_v10clust</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">gene-based TFBS motif enrichment (RcisTarget); &quot;&quot; disables both rules, matching upstream&#x27;s &quot;to skip you have to leave one database entry with an empty path&quot; convention</p>
+<p class="ox-param-desc">gene-based TFBS motif enrichment (RcisTarget); &quot;&quot; disables both rules,<br>matching upstream&#x27;s &quot;to skip you have to leave one database entry with an<br>empty path&quot; convention</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>aggregate_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</code> <code>gene_motif_enrichment_analysis_RcisTarget</code> <code>plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust</code> <code>visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</code></div>
 </details>
@@ -601,14 +601,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-enrichment
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>rcistarget_motifAnnot_highConfCat</code><span class="ox-param-default">directAnnotation,inferredBy_Orthology</span></div>
-<p class="ox-param-desc">upstream python lists; comma-joined so the rendered command stays a single token (values contain no commas)</p>
+<p class="ox-param-desc">upstream python lists; comma-joined so the rendered command stays a single<br>token (values contain no commas)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>gene_motif_enrichment_analysis_RcisTarget</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>rcistarget_motifAnnot_lowConfCat</code><span class="ox-param-default">inferredBy_MotifSimilarity,inferredBy_MotifSimilarity_n_Orthology</span></div>
-<p class="ox-param-desc">upstream python lists; comma-joined so the rendered command stays a single token (values contain no commas)</p>
+<p class="ox-param-desc">upstream python lists; comma-joined so the rendered command stays a single<br>token (values contain no commas)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>gene_motif_enrichment_analysis_RcisTarget</code></div>
 </details>
@@ -622,7 +622,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-enrichment
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>rcistarget_nesThreshold</code><span class="ox-param-default">3</span></div>
-<p class="ox-param-desc">upstream python lists; comma-joined so the rendered command stays a single token (values contain no commas)</p>
+<p class="ox-param-desc">upstream python lists; comma-joined so the rendered command stays a single<br>token (values contain no commas)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>gene_motif_enrichment_analysis_RcisTarget</code></div>
 </details>
@@ -690,7 +690,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 </div>
 
-The graph is derived at catalog-build time from `oxo-flow graph -f metro` and rendered with [nf-metro](https://github.com/seqeralabs/nf-metro) — rules are grouped into colored transit lines by analysis stage. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
+The graph is derived at catalog-build time from `oxo-flow graph -f metro` through the adaptive render ladder (`scripts/metro_tiers.py`): each workflow gets the finest metro tier that nf-metro renders while staying readable at site width — rule-level stations for smaller workflows, module-stage or module overview stations for dense ones. Colored transit lines group stations by analysis stage. Wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

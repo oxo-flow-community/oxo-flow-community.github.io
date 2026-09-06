@@ -71,77 +71,77 @@ oxo-flow pull gh:WangLabCSU/oxo-flow-clindet
 <div class="ox-params">
 <div class="ox-param">
 <div class="ox-param-head"><code>annotate_beds_file</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">BED tracks used by mutation_flag — name/path TSV mirroring upstream softwares_params[genome].annotate_beds dict (empty = header-only, no flags)</p>
+<p class="ox-param-desc">BED tracks used by mutation_flag — name/path TSV mirroring upstream<br>softwares_params[genome].annotate_beds dict (empty = header-only, no flags)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>make_region_bed_list</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>arriba_blacklist</code><span class="ox-param-default">test/fixtures/refs/annotations/arriba_blacklist.tsv</span></div>
-<p class="ox-param-desc">Arriba databases (upstream softwares_params[genome].arriba.database). Mini-test: blacklist + mini known_fusions/protein_domains/cytobands are local files matching the 922 bp fixture reference (the whole-genome DBs in the uhrigs/arriba:2.4.0 image fail to parse against it, observed live). Real hg38 runs keep the container paths; the mini DBs mirror the formats 1:1.</p>
+<p class="ox-param-desc">Arriba databases (upstream softwares_params[genome].arriba.database).<br>Mini-test: blacklist + mini known_fusions/protein_domains/cytobands are<br>local files matching the 922 bp fixture reference (the whole-genome DBs<br>in the uhrigs/arriba:2.4.0 image fail to parse against it, observed live).<br>Real hg38 runs keep the container paths; the mini DBs mirror the formats 1:1.</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>arriba_fusion</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>arriba_cytobands</code><span class="ox-param-default">test/fixtures/refs/annotations/arriba_cytobands_mini.tsv</span></div>
-<p class="ox-param-desc">Arriba databases (upstream softwares_params[genome].arriba.database). Mini-test: blacklist + mini known_fusions/protein_domains/cytobands are local files matching the 922 bp fixture reference (the whole-genome DBs in the uhrigs/arriba:2.4.0 image fail to parse against it, observed live). Real hg38 runs keep the container paths; the mini DBs mirror the formats 1:1.</p>
+<p class="ox-param-desc">Arriba databases (upstream softwares_params[genome].arriba.database).<br>Mini-test: blacklist + mini known_fusions/protein_domains/cytobands are<br>local files matching the 922 bp fixture reference (the whole-genome DBs<br>in the uhrigs/arriba:2.4.0 image fail to parse against it, observed live).<br>Real hg38 runs keep the container paths; the mini DBs mirror the formats 1:1.</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>arriba_draw</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>arriba_known_fusions</code><span class="ox-param-default">test/fixtures/refs/annotations/arriba_known_fusions_mini.tsv.gz</span></div>
-<p class="ox-param-desc">Arriba databases (upstream softwares_params[genome].arriba.database). Mini-test: blacklist + mini known_fusions/protein_domains/cytobands are local files matching the 922 bp fixture reference (the whole-genome DBs in the uhrigs/arriba:2.4.0 image fail to parse against it, observed live). Real hg38 runs keep the container paths; the mini DBs mirror the formats 1:1.</p>
+<p class="ox-param-desc">Arriba databases (upstream softwares_params[genome].arriba.database).<br>Mini-test: blacklist + mini known_fusions/protein_domains/cytobands are<br>local files matching the 922 bp fixture reference (the whole-genome DBs<br>in the uhrigs/arriba:2.4.0 image fail to parse against it, observed live).<br>Real hg38 runs keep the container paths; the mini DBs mirror the formats 1:1.</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>arriba_fusion</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>arriba_protein_domains</code><span class="ox-param-default">test/fixtures/refs/annotations/arriba_protein_domains_mini.gff3</span></div>
-<p class="ox-param-desc">Arriba databases (upstream softwares_params[genome].arriba.database). Mini-test: blacklist + mini known_fusions/protein_domains/cytobands are local files matching the 922 bp fixture reference (the whole-genome DBs in the uhrigs/arriba:2.4.0 image fail to parse against it, observed live). Real hg38 runs keep the container paths; the mini DBs mirror the formats 1:1.</p>
+<p class="ox-param-desc">Arriba databases (upstream softwares_params[genome].arriba.database).<br>Mini-test: blacklist + mini known_fusions/protein_domains/cytobands are<br>local files matching the 922 bp fixture reference (the whole-genome DBs<br>in the uhrigs/arriba:2.4.0 image fail to parse against it, observed live).<br>Real hg38 runs keep the container paths; the mini DBs mirror the formats 1:1.</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>arriba_draw</code> <code>arriba_fusion</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>ascat_alleles_prefix</code><span class="ox-param-default">test/fixtures/cnv/ascat_alleles/</span></div>
-<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun] sentinel -&gt; off). Set true to run the ported subset (freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
+<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>CNA_ASCAT</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>ascat_chroms</code><span class="ox-param-default">21</span></div>
-<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun] sentinel -&gt; off). Set true to run the ported subset (freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
+<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>CNA_ASCAT</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>ascat_gc_file</code><span class="ox-param-default">test/fixtures/cnv/ascat_gc.txt</span></div>
-<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun] sentinel -&gt; off). Set true to run the ported subset (freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
+<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>CNA_ASCAT</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>ascat_loci_prefix</code><span class="ox-param-default">test/fixtures/cnv/ascat_loci/</span></div>
-<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun] sentinel -&gt; off). Set true to run the ported subset (freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
+<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>CNA_ASCAT</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>ascat_rt_file</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun] sentinel -&gt; off). Set true to run the ported subset (freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
+<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>CNA_ASCAT</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cnv_enabled</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun] sentinel -&gt; off). Set true to run the ported subset (freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
+<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
 <details class="ox-param-usedby"><summary>used by 10 rules</summary>
 <div class="ox-param-rules"><code>ASCAT_EXTRACT_PURITYPLOIDY</code> <code>CNA_ASCAT</code> <code>CNA_exomedepth</code> <code>all_cnv</code> <code>freec_call_paired</code> <code>freec_config</code> <code>plot_freec</code> <code>sequenza_bam2seqz</code> <code>sequenza_call</code> <code>sequenza_seqz_binning</code></div>
 </details>
@@ -169,14 +169,14 @@ oxo-flow pull gh:WangLabCSU/oxo-flow-clindet
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>exomedepth_bed</code><span class="ox-param-default">test/fixtures/cnv/exomedepth_regions.bed</span></div>
-<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun] sentinel -&gt; off). Set true to run the ported subset (freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
+<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>CNA_exomedepth</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>exomedepth_use_target_bed</code><span class="ox-param-default">true</span></div>
-<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun] sentinel -&gt; off). Set true to run the ported subset (freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
+<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>CNA_exomedepth</code></div>
 </details>
@@ -190,28 +190,28 @@ oxo-flow pull gh:WangLabCSU/oxo-flow-clindet
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>freec_chr_files</code><span class="ox-param-default">test/fixtures/cnv/freec_chr_fasta</span></div>
-<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun] sentinel -&gt; off). Set true to run the ported subset (freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
+<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>freec_config</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>freec_chr_len_file</code><span class="ox-param-default">test/fixtures/cnv/freec_chrlen.txt</span></div>
-<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun] sentinel -&gt; off). Set true to run the ported subset (freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
+<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>freec_config</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>freec_ini_template</code><span class="ox-param-default">scripts/config_exome.mini.ini</span></div>
-<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun] sentinel -&gt; off). Set true to run the ported subset (freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
+<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>freec_config</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>freec_sambamba</code><span class="ox-param-default">sambamba</span></div>
-<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun] sentinel -&gt; off). Set true to run the ported subset (freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
+<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>freec_config</code></div>
 </details>
@@ -232,14 +232,14 @@ oxo-flow pull gh:WangLabCSU/oxo-flow-clindet
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>hmftools_ensembl_data_dir</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">HMF tools (isofox; excluded for hg38_chr21 upstream — needs the multi-GB hmf_pipeline_resources tree, not shipped in the mini-test)</p>
+<p class="ox-param-desc">HMF tools (isofox; excluded for hg38_chr21 upstream — needs the multi-GB<br>hmf_pipeline_resources tree, not shipped in the mini-test)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>isofox_call</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>isofox_mem_mb</code><span class="ox-param-default">30000</span></div>
-<p class="ox-param-desc">HMF tools (isofox; excluded for hg38_chr21 upstream — needs the multi-GB hmf_pipeline_resources tree, not shipped in the mini-test)</p>
+<p class="ox-param-desc">HMF tools (isofox; excluded for hg38_chr21 upstream — needs the multi-GB<br>hmf_pipeline_resources tree, not shipped in the mini-test)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>isofox_call</code></div>
 </details>
@@ -253,21 +253,21 @@ oxo-flow pull gh:WangLabCSU/oxo-flow-clindet
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>kallisto_index</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Quant indexes are empty in the upstream hg38_chr21 test config — the RSEM/kallisto/salmon rules only run when explicitly targeted</p>
+<p class="ox-param-desc">Quant indexes are empty in the upstream hg38_chr21 test config — the<br>RSEM/kallisto/salmon rules only run when explicitly targeted</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>kallisto</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>known_sites1</code><span class="ox-param-default">test/fixtures/refs/annotations/known_sites1.mini.vcf.gz</span></div>
-<p class="ox-param-desc">BQSR (upstream config[&#x27;project&#x27;][&#x27;recal_BQSR&#x27;] + resources[&#x27;varanno&#x27;][genome]): recal_bqsr = false is the upstream mini-test default (recal_link symlinks the dedup BAM); set true to run BaseRecalibrator + ApplyBQSR instead.</p>
+<p class="ox-param-desc">BQSR (upstream config[&#x27;project&#x27;][&#x27;recal_BQSR&#x27;] + resources[&#x27;varanno&#x27;][genome]):<br>recal_bqsr = false is the upstream mini-test default (recal_link symlinks the<br>dedup BAM); set true to run BaseRecalibrator + ApplyBQSR instead.</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>recalibrate_base_qualities_normal</code> <code>recalibrate_base_qualities_tumor</code> <code>recalibrate_base_qualities_tumor_unpaired</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>known_sites2</code><span class="ox-param-default">test/fixtures/refs/annotations/known_sites2.mini.vcf.gz</span></div>
-<p class="ox-param-desc">BQSR (upstream config[&#x27;project&#x27;][&#x27;recal_BQSR&#x27;] + resources[&#x27;varanno&#x27;][genome]): recal_bqsr = false is the upstream mini-test default (recal_link symlinks the dedup BAM); set true to run BaseRecalibrator + ApplyBQSR instead.</p>
+<p class="ox-param-desc">BQSR (upstream config[&#x27;project&#x27;][&#x27;recal_BQSR&#x27;] + resources[&#x27;varanno&#x27;][genome]):<br>recal_bqsr = false is the upstream mini-test default (recal_link symlinks the<br>dedup BAM); set true to run BaseRecalibrator + ApplyBQSR instead.</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>recalibrate_base_qualities_normal</code> <code>recalibrate_base_qualities_tumor</code> <code>recalibrate_base_qualities_tumor_unpaired</code></div>
 </details>
@@ -295,14 +295,14 @@ oxo-flow pull gh:WangLabCSU/oxo-flow-clindet
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>normal_fastq_r1</code><span class="ox-param-default">test/fixtures/reads/mini-NC_R1.fq.gz</span></div>
-<p class="ox-param-desc">Reads (upstream samplesheet columns Tumor_R1_file_path / Normal_R1_file_path ...). The sample-sheet pairs (pairs_file above) drive {pair_id}/{experiment}/ {control} fan-out; these config paths are the fixture FASTQ locations.</p>
+<p class="ox-param-desc">Reads (upstream samplesheet columns Tumor_R1_file_path / Normal_R1_file_path<br>...). The sample-sheet pairs (pairs_file above) drive {pair_id}/{experiment}/<br>{control} fan-out; these config paths are the fixture FASTQ locations.</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>fastp_normal_sample</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>normal_fastq_r2</code><span class="ox-param-default">test/fixtures/reads/mini-NC_R2.fq.gz</span></div>
-<p class="ox-param-desc">Reads (upstream samplesheet columns Tumor_R1_file_path / Normal_R1_file_path ...). The sample-sheet pairs (pairs_file above) drive {pair_id}/{experiment}/ {control} fan-out; these config paths are the fixture FASTQ locations.</p>
+<p class="ox-param-desc">Reads (upstream samplesheet columns Tumor_R1_file_path / Normal_R1_file_path<br>...). The sample-sheet pairs (pairs_file above) drive {pair_id}/{experiment}/<br>{control} fan-out; these config paths are the fixture FASTQ locations.</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>fastp_normal_sample</code></div>
 </details>
@@ -316,7 +316,7 @@ oxo-flow pull gh:WangLabCSU/oxo-flow-clindet
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>recal_bqsr</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">BQSR (upstream config[&#x27;project&#x27;][&#x27;recal_BQSR&#x27;] + resources[&#x27;varanno&#x27;][genome]): recal_bqsr = false is the upstream mini-test default (recal_link symlinks the dedup BAM); set true to run BaseRecalibrator + ApplyBQSR instead.</p>
+<p class="ox-param-desc">BQSR (upstream config[&#x27;project&#x27;][&#x27;recal_BQSR&#x27;] + resources[&#x27;varanno&#x27;][genome]):<br>recal_bqsr = false is the upstream mini-test default (recal_link symlinks the<br>dedup BAM); set true to run BaseRecalibrator + ApplyBQSR instead.</p>
 <details class="ox-param-usedby"><summary>used by 9 rules</summary>
 <div class="ox-param-rules"><code>apply_base_quality_recalibration_normal</code> <code>apply_base_quality_recalibration_tumor</code> <code>apply_base_quality_recalibration_tumor_unpaired</code> <code>recal_link_normal</code> <code>recal_link_tumor</code> <code>recal_link_tumor_unpaired</code> <code>recalibrate_base_qualities_normal</code> <code>recalibrate_base_qualities_tumor</code> <code>recalibrate_base_qualities_tumor_unpaired</code></div>
 </details>
@@ -337,42 +337,42 @@ oxo-flow pull gh:WangLabCSU/oxo-flow-clindet
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>rna_caller_list</code><span class="ox-param-default">freebayes, HaplotypeCaller, lofreq, Mutect2, vardict, varscan2</span></div>
-<p class="ox-param-desc">RNA SNV callers for the vcf2maf merge tail (upstream run_params.rna_caller_list in mini_test_data/rna/fusion/data/test_rna.yaml; matches the six unrolled vcf2maf_rna_* rules in rules/rna/60_vcf2maf_merge.oxoflow)</p>
+<p class="ox-param-desc">RNA SNV callers for the vcf2maf merge tail (upstream<br>run_params.rna_caller_list in mini_test_data/rna/fusion/data/test_rna.yaml;<br>matches the six unrolled vcf2maf_rna_* rules in rules/rna/60_vcf2maf_merge.oxoflow)</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>rna_fastq_r1</code><span class="ox-param-default">test/fixtures/reads/mini-T_RNA_R1.fq.gz</span></div>
-<p class="ox-param-desc">RNA (upstream wrapper/rna.smk; run_type = &quot;rna&quot;). Default stages: [arriba, call_mut]; quant/isofox rules run when explicitly targeted.</p>
+<p class="ox-param-desc">RNA (upstream wrapper/rna.smk; run_type = &quot;rna&quot;). Default stages:<br>[arriba, call_mut]; quant/isofox rules run when explicitly targeted.</p>
 <details class="ox-param-usedby"><summary>used by 8 rules</summary>
 <div class="ox-param-rules"><code>STAR_1_pass</code> <code>STAR_arriba_map</code> <code>STAR_isofox_map</code> <code>STAR_mut_map</code> <code>cal_exp_RSEM</code> <code>fastp_trim</code> <code>kallisto</code> <code>salmon</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>rna_fastq_r2</code><span class="ox-param-default">test/fixtures/reads/mini-T_RNA_R2.fq.gz</span></div>
-<p class="ox-param-desc">RNA (upstream wrapper/rna.smk; run_type = &quot;rna&quot;). Default stages: [arriba, call_mut]; quant/isofox rules run when explicitly targeted.</p>
+<p class="ox-param-desc">RNA (upstream wrapper/rna.smk; run_type = &quot;rna&quot;). Default stages:<br>[arriba, call_mut]; quant/isofox rules run when explicitly targeted.</p>
 <details class="ox-param-usedby"><summary>used by 8 rules</summary>
 <div class="ox-param-rules"><code>STAR_1_pass</code> <code>STAR_arriba_map</code> <code>STAR_isofox_map</code> <code>STAR_mut_map</code> <code>cal_exp_RSEM</code> <code>fastp_trim</code> <code>kallisto</code> <code>salmon</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>rna_gtf</code><span class="ox-param-default">test/fixtures/refs/annotations/mini_chr21.gtf</span></div>
-<p class="ox-param-desc">RNA (upstream wrapper/rna.smk; run_type = &quot;rna&quot;). Default stages: [arriba, call_mut]; quant/isofox rules run when explicitly targeted.</p>
+<p class="ox-param-desc">RNA (upstream wrapper/rna.smk; run_type = &quot;rna&quot;). Default stages:<br>[arriba, call_mut]; quant/isofox rules run when explicitly targeted.</p>
 <details class="ox-param-usedby"><summary>used by 6 rules</summary>
 <div class="ox-param-rules"><code>STAR_1_pass</code> <code>STAR_arriba_map</code> <code>STAR_isofox_map</code> <code>STAR_mut_map</code> <code>arriba_draw</code> <code>arriba_fusion</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>rsem_index</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Quant indexes are empty in the upstream hg38_chr21 test config — the RSEM/kallisto/salmon rules only run when explicitly targeted</p>
+<p class="ox-param-desc">Quant indexes are empty in the upstream hg38_chr21 test config — the<br>RSEM/kallisto/salmon rules only run when explicitly targeted</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>cal_exp_RSEM</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_report</code><span class="ox-param-default">true</span></div>
-<p class="ox-param-desc">Report stages (upstream <code>stages</code>): case_report + multiqc are ON in the port default; set run_report = false to match the upstream mini-test default.</p>
+<p class="ox-param-desc">Report stages (upstream <code>stages</code>): case_report + multiqc are ON in the port<br>default; set run_report = false to match the upstream mini-test default.</p>
 <details class="ox-param-usedby"><summary>used by 6 rules</summary>
 <div class="ox-param-rules"><code>combined_multiqc</code> <code>combined_multiqc_prep_multiqc_data</code> <code>prep_multiqc_data</code> <code>prep_multiqc_data_tumor_only</code> <code>prep_multiqc_data_wgs</code> <code>run_cancer_report</code></div>
 </details>
@@ -386,42 +386,42 @@ oxo-flow pull gh:WangLabCSU/oxo-flow-clindet
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>sage_ref_genome_version</code><span class="ox-param-default">38</span></div>
-<p class="ox-param-desc">HMF tools (isofox; excluded for hg38_chr21 upstream — needs the multi-GB hmf_pipeline_resources tree, not shipped in the mini-test)</p>
+<p class="ox-param-desc">HMF tools (isofox; excluded for hg38_chr21 upstream — needs the multi-GB<br>hmf_pipeline_resources tree, not shipped in the mini-test)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>isofox_call</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>salmon_index</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Quant indexes are empty in the upstream hg38_chr21 test config — the RSEM/kallisto/salmon rules only run when explicitly targeted</p>
+<p class="ox-param-desc">Quant indexes are empty in the upstream hg38_chr21 test config — the<br>RSEM/kallisto/salmon rules only run when explicitly targeted</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>salmon</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>sansa_call</code><span class="ox-param-default">sansa</span></div>
-<p class="ox-param-desc">SV annotation branch (issue #7; upstream WGS SV rules gate on the sansa software config being present — absent upstream by default, so these are off by default and the port mirrors that with empty keys = zero instances). sansa_db/sansa_g: the sansa annotate -a database and -g gene-model inputs (upstream softwares.sansa[&lt;genome_version&gt;].{db,g}); sansa_call: the binary/invocation (upstream config[softwares][sansa][call]).</p>
+<p class="ox-param-desc">SV annotation branch (issue #7; upstream WGS SV rules gate on the sansa<br>software config being present — absent upstream by default, so these are<br>off by default and the port mirrors that with empty keys = zero instances).<br>sansa_db/sansa_g: the sansa annotate -a database and -g gene-model inputs<br>(upstream softwares.sansa[&lt;genome_version&gt;].{db,g}); sansa_call: the<br>binary/invocation (upstream config[softwares][sansa][call]).</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>SV_sansa_anno_svaba</code> <code>SV_sansa_annodelly</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>sansa_db</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">SV annotation branch (issue #7; upstream WGS SV rules gate on the sansa software config being present — absent upstream by default, so these are off by default and the port mirrors that with empty keys = zero instances). sansa_db/sansa_g: the sansa annotate -a database and -g gene-model inputs (upstream softwares.sansa[&lt;genome_version&gt;].{db,g}); sansa_call: the binary/invocation (upstream config[softwares][sansa][call]).</p>
+<p class="ox-param-desc">SV annotation branch (issue #7; upstream WGS SV rules gate on the sansa<br>software config being present — absent upstream by default, so these are<br>off by default and the port mirrors that with empty keys = zero instances).<br>sansa_db/sansa_g: the sansa annotate -a database and -g gene-model inputs<br>(upstream softwares.sansa[&lt;genome_version&gt;].{db,g}); sansa_call: the<br>binary/invocation (upstream config[softwares][sansa][call]).</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>SV_sansa_anno_svaba</code> <code>SV_sansa_annodelly</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>sansa_g</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">SV annotation branch (issue #7; upstream WGS SV rules gate on the sansa software config being present — absent upstream by default, so these are off by default and the port mirrors that with empty keys = zero instances). sansa_db/sansa_g: the sansa annotate -a database and -g gene-model inputs (upstream softwares.sansa[&lt;genome_version&gt;].{db,g}); sansa_call: the binary/invocation (upstream config[softwares][sansa][call]).</p>
+<p class="ox-param-desc">SV annotation branch (issue #7; upstream WGS SV rules gate on the sansa<br>software config being present — absent upstream by default, so these are<br>off by default and the port mirrors that with empty keys = zero instances).<br>sansa_db/sansa_g: the sansa annotate -a database and -g gene-model inputs<br>(upstream softwares.sansa[&lt;genome_version&gt;].{db,g}); sansa_call: the<br>binary/invocation (upstream config[softwares][sansa][call]).</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>SV_sansa_anno_svaba</code> <code>SV_sansa_annodelly</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>sequenza_gc_wiggle</code><span class="ox-param-default">test/fixtures/cnv/sequenza_gc.wig</span></div>
-<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun] sentinel -&gt; off). Set true to run the ported subset (freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
+<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>sequenza_bam2seqz</code></div>
 </details>
@@ -435,14 +435,14 @@ oxo-flow pull gh:WangLabCSU/oxo-flow-clindet
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>star_index</code><span class="ox-param-default">test/fixtures/refs/star_index</span></div>
-<p class="ox-param-desc">STAR index built inline by STAR_1_pass when missing (upstream ships a pre-built index; the synthetic fixture reference needs its own)</p>
+<p class="ox-param-desc">STAR index built inline by STAR_1_pass when missing (upstream ships a<br>pre-built index; the synthetic fixture reference needs its own)</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>STAR_1_pass</code> <code>STAR_arriba_map</code> <code>STAR_isofox_map</code> <code>STAR_mut_map</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>svanno_gtf</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">svanno: gatk SVAnnotate needs a protein-coding GTF (upstream resources[genome_version].GTF). Empty default = rule never runs.</p>
+<p class="ox-param-desc">svanno: gatk SVAnnotate needs a protein-coding GTF (upstream<br>resources[genome_version].GTF). Empty default = rule never runs.</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>SV_svanno_svaba</code></div>
 </details>
@@ -456,49 +456,49 @@ oxo-flow pull gh:WangLabCSU/oxo-flow-clindet
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>trust4_dir</code><span class="ox-param-default">resources/softwares/TRUST4</span></div>
-<p class="ox-param-desc">TRUST4 (upstream softwares_params[genome].trust4; git-cloned at rule runtime into trust4_dir when trust4_f is missing — not in default stages)</p>
+<p class="ox-param-desc">TRUST4 (upstream softwares_params[genome].trust4; git-cloned at rule<br>runtime into trust4_dir when trust4_f is missing — not in default stages)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>TRUST4_TBCR</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>trust4_f</code><span class="ox-param-default">resources/softwares/TRUST4/hg38_bcrtcr.fa</span></div>
-<p class="ox-param-desc">TRUST4 (upstream softwares_params[genome].trust4; git-cloned at rule runtime into trust4_dir when trust4_f is missing — not in default stages)</p>
+<p class="ox-param-desc">TRUST4 (upstream softwares_params[genome].trust4; git-cloned at rule<br>runtime into trust4_dir when trust4_f is missing — not in default stages)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>TRUST4_TBCR</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>trust4_ref</code><span class="ox-param-default">resources/softwares/TRUST4/human_IMGT+C.fa</span></div>
-<p class="ox-param-desc">TRUST4 (upstream softwares_params[genome].trust4; git-cloned at rule runtime into trust4_dir when trust4_f is missing — not in default stages)</p>
+<p class="ox-param-desc">TRUST4 (upstream softwares_params[genome].trust4; git-cloned at rule<br>runtime into trust4_dir when trust4_f is missing — not in default stages)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>TRUST4_TBCR</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>tumor_fastq_r1</code><span class="ox-param-default">test/fixtures/reads/mini-T_R1.fq.gz</span></div>
-<p class="ox-param-desc">Reads (upstream samplesheet columns Tumor_R1_file_path / Normal_R1_file_path ...). The sample-sheet pairs (pairs_file above) drive {pair_id}/{experiment}/ {control} fan-out; these config paths are the fixture FASTQ locations.</p>
+<p class="ox-param-desc">Reads (upstream samplesheet columns Tumor_R1_file_path / Normal_R1_file_path<br>...). The sample-sheet pairs (pairs_file above) drive {pair_id}/{experiment}/<br>{control} fan-out; these config paths are the fixture FASTQ locations.</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>fastp_tumor_sample</code> <code>fastp_tumor_sample_unpaired</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>tumor_fastq_r2</code><span class="ox-param-default">test/fixtures/reads/mini-T_R2.fq.gz</span></div>
-<p class="ox-param-desc">Reads (upstream samplesheet columns Tumor_R1_file_path / Normal_R1_file_path ...). The sample-sheet pairs (pairs_file above) drive {pair_id}/{experiment}/ {control} fan-out; these config paths are the fixture FASTQ locations.</p>
+<p class="ox-param-desc">Reads (upstream samplesheet columns Tumor_R1_file_path / Normal_R1_file_path<br>...). The sample-sheet pairs (pairs_file above) drive {pair_id}/{experiment}/<br>{control} fan-out; these config paths are the fixture FASTQ locations.</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>fastp_tumor_sample</code> <code>fastp_tumor_sample_unpaired</code></div>
 </details>
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>unpaired_caller_list</code><span class="ox-param-default">Mutect2, HaplotypeCaller, varscan2, strelka, vardict, lofreq, freebayes</span></div>
-<p class="ox-param-desc">Tumor-only callers (upstream run_params.tumor_only_caller; upstream default is [sage] — needs the custom hmftools container, so the port defaults to the seven portable callers, see rules/70_unpaired.oxoflow)</p>
+<p class="ox-param-desc">Tumor-only callers (upstream run_params.tumor_only_caller; upstream default<br>is [sage] — needs the custom hmftools container, so the port defaults to<br>the seven portable callers, see rules/70_unpaired.oxoflow)</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>vep_cache_ready</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">VEP needs a local cache at {vep_data}/{vep_species} (~10GB download; the fixture kit does not ship it). The vcf2maf rules and the downstream MAF merge/flag/cancer-report tail gate on this flag — set true once the cache is in place (upstream fails hard without it).</p>
+<p class="ox-param-desc">VEP needs a local cache at {vep_data}/{vep_species} (~10GB download; the<br>fixture kit does not ship it). The vcf2maf rules and the downstream MAF<br>merge/flag/cancer-report tail gate on this flag — set true once the cache<br>is in place (upstream fails hard without it).</p>
 <details class="ox-param-usedby"><summary>used by 28 rules</summary>
 <div class="ox-param-rules"><code>all</code> <code>all_unpaired_maf</code> <code>flag_mutation_pairead_maf</code> <code>merge_paired_germ_maf</code> <code>merge_paired_maf</code> <code>merge_rna_maf</code> <code>merge_unpaired_maf</code> <code>run_cancer_report</code> <code>vcf2maf_HaplotypeCaller</code> <code>vcf2maf_Mutect2</code> <code>vcf2maf_germ_caveman</code> <code>vcf2maf_germ_strelkamanta</code> <code>vcf2maf_muse</code> <code>vcf2maf_rna_HaplotypeCaller</code> <code>vcf2maf_rna_Mutect2</code> <code>vcf2maf_rna_freebayes</code> <code>vcf2maf_rna_lofreq</code> <code>vcf2maf_rna_vardict</code> <code>vcf2maf_rna_varscan2</code> <code>vcf2maf_unpaired_HaplotypeCaller</code> <code>vcf2maf_unpaired_Mutect2</code> <code>vcf2maf_unpaired_freebayes</code> <code>vcf2maf_unpaired_lofreq</code> <code>vcf2maf_unpaired_strelka</code> <code>vcf2maf_unpaired_vardict</code> <code>vcf2maf_unpaired_varscan2</code> <code>vcf2maf_vardict</code> <code>vcf2maf_varscan2</code></div>
 </details>
@@ -552,7 +552,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 </div>
 
-The graph is derived at catalog-build time from `oxo-flow graph -f metro` and rendered with [nf-metro](https://github.com/seqeralabs/nf-metro) — rules are grouped into colored transit lines by analysis stage. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
+The graph is derived at catalog-build time from `oxo-flow graph -f metro` through the adaptive render ladder (`scripts/metro_tiers.py`): each workflow gets the finest metro tier that nf-metro renders while staying readable at site width — rule-level stations for smaller workflows, module-stage or module overview stations for dense ones. Colored transit lines group stations by analysis stage. Wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

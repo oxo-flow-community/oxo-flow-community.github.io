@@ -72,70 +72,70 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-varlociraptor
 <div class="ox-params">
 <div class="ox-param">
 <div class="ox-param-head"><code>annotation_selection</code><span class="ox-param-default">db_annotated</span></div>
-<p class="ox-param-desc">The annotated-callset selection for gather_annotated_calls (upstream get_final_selected_annotation): &quot;db_annotated&quot; (annotations/vcfs active, the default), &quot;dgidb_annotated&quot; when dgidb is activated, or &quot;vep_annotated&quot; when annotations/vcfs is deactivated.</p>
+<p class="ox-param-desc">The annotated-callset selection for gather_annotated_calls (upstream<br>get_final_selected_annotation): &quot;db_annotated&quot; (annotations/vcfs active,<br>the default), &quot;dgidb_annotated&quot; when dgidb is activated, or &quot;vep_annotated&quot;<br>when annotations/vcfs is deactivated.</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>filtering::filter_by_annotation</code> <code>population::annotated_index</code> <code>population::gather_annotated_calls</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>benchmarking_activate</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">upstream config: benchmarking (Snakefile rule benchmark / benchmarking.smk; the full CHM-eval flow is ported, except the chm sample group vertical slice (see module header)).</p>
+<p class="ox-param-desc">upstream config: benchmarking (Snakefile rule benchmark / benchmarking.smk;<br>the full CHM-eval flow is ported, except the chm sample group vertical<br>slice (see module header)).</p>
 <details class="ox-param-usedby"><summary>used by 8 rules</summary>
 <div class="ox-param-rules"><code>benchmarking::chm_eval</code> <code>benchmarking::chm_eval_kit</code> <code>benchmarking::chm_eval_sample</code> <code>benchmarking::chm_namesort</code> <code>benchmarking::chm_to_fastq</code> <code>benchmarking::chromosome_map</code> <code>benchmarking::gather_benchmark_calls</code> <code>benchmarking::rename_chromosomes</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>bwa_align_activate</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">upstream config: linear-reference (bwa) aligner branch of mapping.smk (map_reads_bwa + ref.smk bwa_index). The default path aligns with vg giraffe to the pangenome (ref/pangenome/activate = true upstream).</p>
+<p class="ox-param-desc">upstream config: linear-reference (bwa) aligner branch of mapping.smk<br>(map_reads_bwa + ref.smk bwa_index). The default path aligns with vg<br>giraffe to the pangenome (ref/pangenome/activate = true upstream).</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>mapping_bwa::bwa_index</code> <code>mapping_bwa::map_reads_bwa</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cadd_build</code><span class="ox-param-default">GRCh38</span></div>
-<p class="ox-param-desc">upstream config: plugins (download_cadd_scores_for_vep; download_revel and process_revel_scores are already ported in ref.oxoflow). cadd_build / cadd_version / cadd_variant_type are the upstream wildcards of the same rule with their upstream defaults.</p>
+<p class="ox-param-desc">upstream config: plugins (download_cadd_scores_for_vep; download_revel and<br>process_revel_scores are already ported in ref.oxoflow). cadd_build /<br>cadd_version / cadd_variant_type are the upstream wildcards of the same<br>rule with their upstream defaults.</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>plugins::download_cadd_scores_for_vep</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cadd_variant_type</code><span class="ox-param-default">snv</span></div>
-<p class="ox-param-desc">upstream config: plugins (download_cadd_scores_for_vep; download_revel and process_revel_scores are already ported in ref.oxoflow). cadd_build / cadd_version / cadd_variant_type are the upstream wildcards of the same rule with their upstream defaults.</p>
+<p class="ox-param-desc">upstream config: plugins (download_cadd_scores_for_vep; download_revel and<br>process_revel_scores are already ported in ref.oxoflow). cadd_build /<br>cadd_version / cadd_variant_type are the upstream wildcards of the same<br>rule with their upstream defaults.</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>plugins::download_cadd_scores_for_vep</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cadd_version</code><span class="ox-param-default">v1.7</span></div>
-<p class="ox-param-desc">upstream config: plugins (download_cadd_scores_for_vep; download_revel and process_revel_scores are already ported in ref.oxoflow). cadd_build / cadd_version / cadd_variant_type are the upstream wildcards of the same rule with their upstream defaults.</p>
+<p class="ox-param-desc">upstream config: plugins (download_cadd_scores_for_vep; download_revel and<br>process_revel_scores are already ported in ref.oxoflow). cadd_build /<br>cadd_version / cadd_variant_type are the upstream wildcards of the same<br>rule with their upstream defaults.</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>plugins::download_cadd_scores_for_vep</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>consensus_activate</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">upstream config: calc_consensus_reads/activate (consensus.oxoflow: rbt collapse-reads-to-fragments + re-mapping to the linear bwa reference). Activating it also needs the bwa reference index (bwa_align_activate or primers_activate builds it) and, upstream-faithful, markduplicates_extra = &quot;--TAG_DUPLICATE_SET_MEMBERS true&quot; and freebayes_min_alternate_count = 1 (see those keys below).</p>
+<p class="ox-param-desc">upstream config: calc_consensus_reads/activate (consensus.oxoflow: rbt<br>collapse-reads-to-fragments + re-mapping to the linear bwa reference).<br>Activating it also needs the bwa reference index (bwa_align_activate or<br>primers_activate builds it) and, upstream-faithful,<br>markduplicates_extra = &quot;--TAG_DUPLICATE_SET_MEMBERS true&quot; and<br>freebayes_min_alternate_count = 1 (see those keys below).</p>
 <details class="ox-param-usedby"><summary>used by 10 rules</summary>
 <div class="ox-param-rules"><code>consensus::apply_bqsr_consensus</code> <code>consensus::bam_index_consensus</code> <code>consensus::calc_consensus_reads</code> <code>consensus::map_consensus_reads_pe</code> <code>consensus::map_consensus_reads_se</code> <code>consensus::merge_consensus_reads</code> <code>consensus::recalibrate_base_qualities_consensus</code> <code>consensus::sort_consensus_reads</code> <code>mapping::apply_bqsr</code> <code>mapping::recalibrate_base_qualities</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>dgidb_activate</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">upstream config: annotations/dgidb (annotate_dgidb; datasources = [DrugBank]). Activating dgidb changes which annotated callset the final-calls chain consumes upstream (get_final_selected_annotation): set annotation_selection below to &quot;dgidb_annotated&quot; together with this key.</p>
+<p class="ox-param-desc">upstream config: annotations/dgidb (annotate_dgidb; datasources = [DrugBank]).<br>Activating dgidb changes which annotated callset the final-calls chain<br>consumes upstream (get_final_selected_annotation): set annotation_selection<br>below to &quot;dgidb_annotated&quot; together with this key.</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>annotation::annotate_dgidb</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>freebayes_min_alternate_count</code><span class="ox-param-default">2</span></div>
-<p class="ox-param-desc">upstream config: params/freebayes — the min-alternate-count for candidate calling (2, or 1 when calc_consensus_reads is active).</p>
+<p class="ox-param-desc">upstream config: params/freebayes — the min-alternate-count for candidate<br>calling (2, or 1 when calc_consensus_reads is active).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>candidate_calling::freebayes</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>fusion_activate</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">upstream config: fusion calling branch (fusion_calling.smk star_arriba meta wrapper: star_index / star_align / arriba / annotate_exons / convert_fusions / sort_arriba_calls / bcftools_concat_candidates).</p>
+<p class="ox-param-desc">upstream config: fusion calling branch (fusion_calling.smk star_arriba<br>meta wrapper: star_index / star_align / arriba / annotate_exons /<br>convert_fusions / sort_arriba_calls / bcftools_concat_candidates).</p>
 <details class="ox-param-usedby"><summary>used by 8 rules</summary>
 <div class="ox-param-rules"><code>fusion::annotate_exons</code> <code>fusion::arriba</code> <code>fusion::bcf_index_arriba</code> <code>fusion::bcftools_concat_candidates</code> <code>fusion::convert_fusions</code> <code>fusion::sort_arriba_calls</code> <code>fusion::star_align</code> <code>fusion::star_index</code></div>
 </details>
@@ -149,112 +149,112 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-varlociraptor
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>markduplicates_extra</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">upstream config: params/picard/MarkDuplicates + get_markduplicates_extra — extra MarkDuplicates arguments (upstream adds &quot;--TAG_DUPLICATE_SET_MEMBERS true&quot; when calc_consensus_reads is active; empty by default).</p>
+<p class="ox-param-desc">upstream config: params/picard/MarkDuplicates + get_markduplicates_extra —<br>extra MarkDuplicates arguments (upstream adds<br>&quot;--TAG_DUPLICATE_SET_MEMBERS true&quot; when calc_consensus_reads is active;<br>empty by default).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>mapping::mark_duplicates</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>mutational_burden_activate</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">upstream config: mutational_burden/activate + events (calculate_covered_coding_sites + estimate_mutational_burden; events are comma-joined, split to space-separated in the rule shells).</p>
+<p class="ox-param-desc">upstream config: mutational_burden/activate + events<br>(calculate_covered_coding_sites + estimate_mutational_burden; events are<br>comma-joined, split to space-separated in the rule shells).</p>
 <details class="ox-param-usedby"><summary>used by 6 rules</summary>
 <div class="ox-param-rules"><code>burden_signatures::calculate_covered_coding_sites</code> <code>burden_signatures::determine_coding_regions</code> <code>burden_signatures::estimate_mutational_burden_curve</code> <code>burden_signatures::estimate_mutational_burden_hist</code> <code>population::annotated_index</code> <code>population::gather_annotated_calls</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>mutational_burden_events</code><span class="ox-param-default">somatic_tumor_low,somatic_tumor_medium,somatic_tumor_high</span></div>
-<p class="ox-param-desc">upstream config: mutational_burden/activate + events (calculate_covered_coding_sites + estimate_mutational_burden; events are comma-joined, split to space-separated in the rule shells).</p>
+<p class="ox-param-desc">upstream config: mutational_burden/activate + events<br>(calculate_covered_coding_sites + estimate_mutational_burden; events are<br>comma-joined, split to space-separated in the rule shells).</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>burden_signatures::estimate_mutational_burden_curve</code> <code>burden_signatures::estimate_mutational_burden_hist</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>mutational_signatures_activate</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">upstream config: mutational_signatures/activate (create_mutational_context_file ... plot_mutational_signatures; upstream default events = [some_id], samples = [tumor], frozen in the module).</p>
+<p class="ox-param-desc">upstream config: mutational_signatures/activate<br>(create_mutational_context_file ... plot_mutational_signatures; upstream<br>default events = [some_id], samples = [tumor], frozen in the module).</p>
 <details class="ox-param-usedby"><summary>used by 8 rules</summary>
 <div class="ox-param-rules"><code>burden_signatures::annotate_descriptions</code> <code>burden_signatures::annotate_mutational_signatures</code> <code>burden_signatures::bcf_index_final</code> <code>burden_signatures::create_mutational_context_file</code> <code>burden_signatures::determine_coding_regions</code> <code>burden_signatures::download_cosmic_signatures</code> <code>burden_signatures::join_mutational_signatures</code> <code>burden_signatures::plot_mutational_signatures</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>plugins_activate</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">upstream config: plugins (download_cadd_scores_for_vep; download_revel and process_revel_scores are already ported in ref.oxoflow). cadd_build / cadd_version / cadd_variant_type are the upstream wildcards of the same rule with their upstream defaults.</p>
+<p class="ox-param-desc">upstream config: plugins (download_cadd_scores_for_vep; download_revel and<br>process_revel_scores are already ported in ref.oxoflow). cadd_build /<br>cadd_version / cadd_variant_type are the upstream wildcards of the same<br>rule with their upstream defaults.</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>plugins::download_cadd_scores_for_vep</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>population_db_activate</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">upstream config: population/db/activate + path/alias/fdr/events (rules clean_population_db / population_filter_variants / population_db_update).</p>
+<p class="ox-param-desc">upstream config: population/db/activate + path/alias/fdr/events<br>(rules clean_population_db / population_filter_variants / population_db_update).</p>
 <details class="ox-param-usedby"><summary>used by 7 rules</summary>
 <div class="ox-param-rules"><code>population::annotated_index</code> <code>population::bcf_index_cleaned_db</code> <code>population::bcf_index_population_filtered</code> <code>population::clean_population_db</code> <code>population::gather_annotated_calls</code> <code>population::population_db_update</code> <code>population::population_filter_variants</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>population_db_alias</code><span class="ox-param-default">tumor</span></div>
-<p class="ox-param-desc">upstream config: population/db/activate + path/alias/fdr/events (rules clean_population_db / population_filter_variants / population_db_update).</p>
+<p class="ox-param-desc">upstream config: population/db/activate + path/alias/fdr/events<br>(rules clean_population_db / population_filter_variants / population_db_update).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>population::population_filter_variants</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>population_db_events</code><span class="ox-param-default">somatic_tumor_high,somatic_tumor_medium</span></div>
-<p class="ox-param-desc">upstream config: population/db/activate + path/alias/fdr/events (rules clean_population_db / population_filter_variants / population_db_update).</p>
+<p class="ox-param-desc">upstream config: population/db/activate + path/alias/fdr/events<br>(rules clean_population_db / population_filter_variants / population_db_update).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>population::population_filter_variants</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>population_db_fdr</code><span class="ox-param-default">0.05</span></div>
-<p class="ox-param-desc">upstream config: population/db/activate + path/alias/fdr/events (rules clean_population_db / population_filter_variants / population_db_update).</p>
+<p class="ox-param-desc">upstream config: population/db/activate + path/alias/fdr/events<br>(rules clean_population_db / population_filter_variants / population_db_update).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>population::population_filter_variants</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>population_db_path</code><span class="ox-param-default">resources/population_db.variants.bcf</span></div>
-<p class="ox-param-desc">upstream config: population/db/activate + path/alias/fdr/events (rules clean_population_db / population_filter_variants / population_db_update).</p>
+<p class="ox-param-desc">upstream config: population/db/activate + path/alias/fdr/events<br>(rules clean_population_db / population_filter_variants / population_db_update).</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>population::clean_population_db</code> <code>population::population_db_update</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>primers_activate</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">upstream config: primers/trimming (rules assign_primers ... build_primer_regions). primers_fa1/primers_fa2 are the upstream primers/trimming/primers_fa{1,2} fasta files (empty upstream default = primers flow off); fa2 empty means single-end primer fasta.</p>
+<p class="ox-param-desc">upstream config: primers/trimming (rules assign_primers ... build_primer_regions).<br>primers_fa1/primers_fa2 are the upstream primers/trimming/primers_fa{1,2} fasta<br>files (empty upstream default = primers flow off); fa2 empty means single-end<br>primer fasta.</p>
 <details class="ox-param-usedby"><summary>used by 8 rules</summary>
 <div class="ox-param-rules"><code>mapping_bwa::bwa_index</code> <code>primers::assign_primers</code> <code>primers::build_primer_regions</code> <code>primers::filter_primerless_reads</code> <code>primers::filter_unmapped_primers</code> <code>primers::map_primers</code> <code>primers::primer_to_bed</code> <code>primers::trim_primers</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>primers_fa1</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">upstream config: primers/trimming (rules assign_primers ... build_primer_regions). primers_fa1/primers_fa2 are the upstream primers/trimming/primers_fa{1,2} fasta files (empty upstream default = primers flow off); fa2 empty means single-end primer fasta.</p>
+<p class="ox-param-desc">upstream config: primers/trimming (rules assign_primers ... build_primer_regions).<br>primers_fa1/primers_fa2 are the upstream primers/trimming/primers_fa{1,2} fasta<br>files (empty upstream default = primers flow off); fa2 empty means single-end<br>primer fasta.</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>primers::map_primers</code></div>
 </details>
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>primers_fa2</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">upstream config: primers/trimming (rules assign_primers ... build_primer_regions). primers_fa1/primers_fa2 are the upstream primers/trimming/primers_fa{1,2} fasta files (empty upstream default = primers flow off); fa2 empty means single-end primer fasta.</p>
+<p class="ox-param-desc">upstream config: primers/trimming (rules assign_primers ... build_primer_regions).<br>primers_fa1/primers_fa2 are the upstream primers/trimming/primers_fa{1,2} fasta<br>files (empty upstream default = primers flow off); fa2 empty means single-end<br>primer fasta.</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>reads_dir</code><span class="ox-param-default">test/fixtures/raw</span></div>
-<p class="ox-param-desc">Path to the raw paired-end FASTQs of the single sample (upstream config/units.tsv points at absolute /projects/... paths; the port reads from the repository fixtures instead).</p>
+<p class="ox-param-desc">Path to the raw paired-end FASTQs of the single sample (upstream<br>config/units.tsv points at absolute /projects/... paths; the port reads<br>from the repository fixtures instead).</p>
 <details class="ox-param-usedby"><summary>used by 7 rules</summary>
 <div class="ox-param-rules"><code>mapping::merge_trimmed_fastqs_r1</code> <code>mapping::merge_trimmed_fastqs_r2</code> <code>qc::fastqc_r1</code> <code>qc::fastqc_r2</code> <code>trimming::fastp_pe</code> <code>trimming::fastp_pipe</code> <code>trimming::fastp_se</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_ref_downloads</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Skip the ref:: download rules (genome, annotation, VEP cache/plugins, pangenome, REVEL, known variants — ~5 GB of public databases). Set to true when you have pre-placed the files at the resource paths the rules declare (see README &quot;Reference databases&quot;); the downloads are hardcoded upstream URLs and need unimpeded network access.</p>
+<p class="ox-param-desc">Skip the ref:: download rules (genome, annotation, VEP cache/plugins,<br>pangenome, REVEL, known variants — ~5 GB of public databases). Set to<br>true when you have pre-placed the files at the resource paths the rules<br>declare (see README &quot;Reference databases&quot;); the downloads are hardcoded<br>upstream URLs and need unimpeded network access.</p>
 <details class="ox-param-usedby"><summary>used by 7 rules</summary>
 <div class="ox-param-rules"><code>ref::download_revel</code> <code>ref::get_annotation</code> <code>ref::get_genome</code> <code>ref::get_known_variants</code> <code>ref::get_pangenome</code> <code>ref::get_vep_cache</code> <code>ref::get_vep_plugins</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>trimming_activate</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">upstream config: trimming (get_sra / fastp rules). The default path has no trimming configured — reads pass through mapping::merge_trimmed_fastqs.</p>
+<p class="ox-param-desc">upstream config: trimming (get_sra / fastp rules). The default path has no<br>trimming configured — reads pass through mapping::merge_trimmed_fastqs.</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>trimming::fastp_pe</code> <code>trimming::fastp_pipe</code> <code>trimming::fastp_se</code> <code>trimming::get_sra</code></div>
 </details>
@@ -273,7 +273,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 </div>
 
-The graph is derived at catalog-build time from `oxo-flow graph -f metro` and rendered with [nf-metro](https://github.com/seqeralabs/nf-metro) — rules are grouped into colored transit lines by analysis stage. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
+The graph is derived at catalog-build time from `oxo-flow graph -f metro` through the adaptive render ladder (`scripts/metro_tiers.py`): each workflow gets the finest metro tier that nf-metro renders while staying readable at site width — rule-level stations for smaller workflows, module-stage or module overview stations for dense ones. Colored transit lines group stations by analysis stage. Wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

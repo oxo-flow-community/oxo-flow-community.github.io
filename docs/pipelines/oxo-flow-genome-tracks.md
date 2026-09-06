@@ -103,7 +103,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-genome-tracks
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>env_export_enabled</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">export the built conda environments as results/genome_tracks/envs/*.yaml (upstream &#x27;env_export&#x27; runs in rule all; the port keeps it opt-in so the default graph is unchanged — the checked-in envs/*.yaml already document the pinned versions; see README &quot;Fidelity&quot;)</p>
+<p class="ox-param-desc">export the built conda environments as results/genome_tracks/envs/*.yaml<br>(upstream &#x27;env_export&#x27; runs in rule all; the port keeps it opt-in so the<br>default graph is unchanged — the checked-in envs/*.yaml already document<br>the pinned versions; see README &quot;Fidelity&quot;)</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>env_export_igv_reports</code> <code>env_export_pygenometracks</code> <code>env_export_sinto</code></div>
 </details>
@@ -138,21 +138,21 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-genome-tracks
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>igv_report_enabled</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">IGV report (igv-reports), deactivated upstream (commented out of rule all) — opt-in: set igv_report_enabled = true, then <code>-t igv_report</code>.</p>
+<p class="ox-param-desc">IGV report (igv-reports), deactivated upstream (commented out of rule all)<br>— opt-in: set igv_report_enabled = true, then <code>-t igv_report</code>.</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>igv_report</code> <code>make_bed</code></div>
 </details>
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>igv_report_memory</code><span class="ox-param-default">8000M</span></div>
-<p class="ox-param-desc">upstream&#x27;s dynamic <code>max(2 * input.size_mb, 8000)</code> memory is not expressible statically in oxo-flow — fixed at the upstream 8000 MB minimum</p>
+<p class="ox-param-desc">upstream&#x27;s dynamic <code>max(2 * input.size_mb, 8000)</code> memory is not expressible<br>statically in oxo-flow — fixed at the upstream 8000 MB minimum</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>plot_enabled</code><span class="ox-param-default">true</span></div>
-<p class="ox-param-desc">pair-level gtracks plots: needs gene-named bigWigs (upstream&#x27;s data layout); set false for the generic-named mini fixtures.</p>
+<p class="ox-param-desc">pair-level gtracks plots: needs gene-named bigWigs (upstream&#x27;s data<br>layout); set false for the generic-named mini fixtures.</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>plot_tracks</code></div>
 </details>
@@ -180,28 +180,28 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-genome-tracks
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>sc_bam_dir</code><span class="ox-param-default">test/fixtures/sc_bams</span></div>
-<p class="ox-param-desc">one aligned BAM per sc sample: {sc_bam_dir}/{sc_id}.bam (BAMs need a CB cell-barcode tag per read, see test/fixtures/make_sc_fixtures.py)</p>
+<p class="ox-param-desc">one aligned BAM per sc sample: {sc_bam_dir}/{sc_id}.bam (BAMs need a CB<br>cell-barcode tag per read, see test/fixtures/make_sc_fixtures.py)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>split_sc_bam</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>sc_enabled</code><span class="ox-param-default">true</span></div>
-<p class="ox-param-desc">Single-cell mode (upstream: any annotation &#x27;group&#x27; value ending in .tsv switches that sample to sinto barcode splitting). oxo-flow cannot discover groups from TSV contents at load time, so the sc samples, their BAM/metadata paths and the sc groups are declared explicitly. Set sc_enabled = false if you have no single-cell samples.</p>
+<p class="ox-param-desc">Single-cell mode (upstream: any annotation &#x27;group&#x27; value ending in .tsv<br>switches that sample to sinto barcode splitting). oxo-flow cannot discover<br>groups from TSV contents at load time, so the sc samples, their BAM/metadata<br>paths and the sc groups are declared explicitly. Set sc_enabled = false if<br>you have no single-cell samples.</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>coverage_sc</code> <code>merge_sc_bams</code> <code>split_sc_bam</code></div>
 </details>
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>sc_groups</code><span class="ox-param-default">g1,g2</span></div>
-<p class="ox-param-desc">unique group values of the sc metadata TSV col-2 (merged + sorted into samples_list above)</p>
+<p class="ox-param-desc">unique group values of the sc metadata TSV col-2 (merged + sorted into<br>samples_list above)</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>sc_metadata</code><span class="ox-param-default">test/fixtures/sc_metadata</span></div>
-<p class="ox-param-desc">one 2-column barcode TSV (barcode&lt;TAB&gt;group, no header) per sc sample: {sc_metadata}/{sc_id}.tsv — the group values of col 2 become the sc groups</p>
+<p class="ox-param-desc">one 2-column barcode TSV (barcode&lt;TAB&gt;group, no header) per sc sample:<br>{sc_metadata}/{sc_id}.tsv — the group values of col 2 become the sc groups</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>split_sc_bam</code></div>
 </details>
@@ -241,7 +241,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 </div>
 
-The graph is derived at catalog-build time from `oxo-flow graph -f metro` and rendered with [nf-metro](https://github.com/seqeralabs/nf-metro) — rules are grouped into colored transit lines by analysis stage. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
+The graph is derived at catalog-build time from `oxo-flow graph -f metro` through the adaptive render ladder (`scripts/metro_tiers.py`): each workflow gets the finest metro tier that nf-metro renders while staying readable at site width — rule-level stations for smaller workflows, module-stage or module overview stations for dense ones. Colored transit lines group stations by analysis stage. Wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

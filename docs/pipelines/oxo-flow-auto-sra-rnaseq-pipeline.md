@@ -80,14 +80,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipeline
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>bark</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Bark / feishu push notifications (upstream config.yaml keys). Consumed by the batch runner scripts/run_batch.py after each metadata file finishes (upstream run.py). Keep off unless the endpoints are configured.</p>
+<p class="ox-param-desc">Bark / feishu push notifications (upstream config.yaml keys). Consumed by<br>the batch runner scripts/run_batch.py after each metadata file finishes<br>(upstream run.py). Keep off unless the endpoints are configured.</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>bark_api</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Bark / feishu push notifications (upstream config.yaml keys). Consumed by the batch runner scripts/run_batch.py after each metadata file finishes (upstream run.py). Keep off unless the endpoints are configured.</p>
+<p class="ox-param-desc">Bark / feishu push notifications (upstream config.yaml keys). Consumed by<br>the batch runner scripts/run_batch.py after each metadata file finishes<br>(upstream run.py). Keep off unless the endpoints are configured.</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
@@ -101,14 +101,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipeline
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>feishu</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Bark / feishu push notifications (upstream config.yaml keys). Consumed by the batch runner scripts/run_batch.py after each metadata file finishes (upstream run.py). Keep off unless the endpoints are configured.</p>
+<p class="ox-param-desc">Bark / feishu push notifications (upstream config.yaml keys). Consumed by<br>the batch runner scripts/run_batch.py after each metadata file finishes<br>(upstream run.py). Keep off unless the endpoints are configured.</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>feishu_api</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Bark / feishu push notifications (upstream config.yaml keys). Consumed by the batch runner scripts/run_batch.py after each metadata file finishes (upstream run.py). Keep off unless the endpoints are configured.</p>
+<p class="ox-param-desc">Bark / feishu push notifications (upstream config.yaml keys). Consumed by<br>the batch runner scripts/run_batch.py after each metadata file finishes<br>(upstream run.py). Keep off unless the endpoints are configured.</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
@@ -122,42 +122,42 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipeline
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>mail</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Email notification (upstream onsuccess + onerror). Keep off unless SMTP is configured — the [workflow] on_error hook reuses these same keys.</p>
+<p class="ox-param-desc">Email notification (upstream onsuccess + onerror). Keep off unless SMTP<br>is configured — the [workflow] on_error hook reuses these same keys.</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>mail_to</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Email notification (upstream onsuccess + onerror). Keep off unless SMTP is configured — the [workflow] on_error hook reuses these same keys.</p>
+<p class="ox-param-desc">Email notification (upstream onsuccess + onerror). Keep off unless SMTP<br>is configured — the [workflow] on_error hook reuses these same keys.</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>metadata</code><span class="ox-param-default">test/fixtures/metadata/D21122_6sample.txt</span></div>
-<p class="ox-param-desc">Metadata TSV (upstream key metadata). Columns: Dataset GSE GSM gene method celline group group_name type platform SRR paired The repo default points at the bundled example dataset (upstream doc/D21122.txt).</p>
+<p class="ox-param-desc">Metadata TSV (upstream key metadata). Columns:<br>Dataset GSE GSM gene method celline group group_name type platform SRR paired<br>The repo default points at the bundled example dataset (upstream doc/D21122.txt).</p>
 <details class="ox-param-usedby"><summary>used by 7 rules</summary>
 <div class="ox-param-rules"><code>DGE_analysis</code> <code>combine_count</code> <code>get_sra</code> <code>merge_R1_data</code> <code>merge_R2_data</code> <code>merge_data</code> <code>sra_dump</code></div>
 </details>
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>sender</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Email notification (upstream onsuccess + onerror). Keep off unless SMTP is configured — the [workflow] on_error hook reuses these same keys.</p>
+<p class="ox-param-desc">Email notification (upstream onsuccess + onerror). Keep off unless SMTP<br>is configured — the [workflow] on_error hook reuses these same keys.</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>sender_password</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Email notification (upstream onsuccess + onerror). Keep off unless SMTP is configured — the [workflow] on_error hook reuses these same keys.</p>
+<p class="ox-param-desc">Email notification (upstream onsuccess + onerror). Keep off unless SMTP<br>is configured — the [workflow] on_error hook reuses these same keys.</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>sra_data_path</code><span class="ox-param-default">sra</span></div>
-<p class="ox-param-desc">Directory holding pre-downloaded .sra files, layout &lt;dir&gt;/&lt;SRR&gt;/&lt;SRR&gt;.sra (upstream key sra_data_path).</p>
+<p class="ox-param-desc">Directory holding pre-downloaded .sra files, layout &lt;dir&gt;/&lt;SRR&gt;/&lt;SRR&gt;.sra<br>(upstream key sra_data_path).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>get_sra</code></div>
 </details>
@@ -183,7 +183,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 </div>
 
-The graph is derived at catalog-build time from `oxo-flow graph -f metro` and rendered with [nf-metro](https://github.com/seqeralabs/nf-metro) — rules are grouped into colored transit lines by analysis stage. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
+The graph is derived at catalog-build time from `oxo-flow graph -f metro` through the adaptive render ladder (`scripts/metro_tiers.py`): each workflow gets the finest metro tier that nf-metro renders while staying readable at site width — rule-level stations for smaller workflows, module-stage or module overview stations for dense ones. Colored transit lines group stations by analysis stage. Wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

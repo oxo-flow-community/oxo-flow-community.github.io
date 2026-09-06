@@ -75,98 +75,98 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-eager
 <div class="ox-params">
 <div class="ox-param">
 <div class="ox-param-head"><code>angsd_fasta_arg</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>genotyping_angsd</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>angsd_glformat</code><span class="ox-param-default">4</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>genotyping_angsd</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>angsd_glmodel</code><span class="ox-param-default">1</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>genotyping_angsd</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>angsd_majorminor_arg</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>genotyping_angsd</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>anno_file</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>bedtools_coverage</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>anno_file_is_unsorted_neg</code><span class="ox-param-default">-sorted</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>bedtools_coverage</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>bam_input</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>convert_bam</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>bam_mapping_quality_threshold</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>samtools_filter_bowtie2</code> <code>samtools_filter_bwaaln</code> <code>samtools_filter_bwamem</code> <code>samtools_filter_circularmapper</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>bam_unmapped_type</code><span class="ox-param-default">discard</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 9 rules</summary>
 <div class="ox-param-rules"><code>kraken</code> <code>kraken_merge</code> <code>kraken_parse</code> <code>malt</code> <code>metagenomic_complexity_filter</code> <code>samtools_filter_bowtie2</code> <code>samtools_filter_bwaaln</code> <code>samtools_filter_bwamem</code> <code>samtools_filter_circularmapper</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>bamutils_clip_double_stranded_none_udg_left</code><span class="ox-param-default">1</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>bam_trim</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>bamutils_clip_double_stranded_none_udg_right</code><span class="ox-param-default">1</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>bam_trim</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>bamutils_softclip_arg</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>bam_trim</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>bcftools_stats_source</code><span class="ox-param-default">haplotypecaller</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>bcftools_stats</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>bt2_preset</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>bowtie2</code></div>
 </details>
@@ -201,21 +201,21 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-eager
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>circularextension</code><span class="ox-param-default">100</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>circulargenerator</code> <code>circularmapper</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>circularfilter_arg</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>circularmapper</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>circulartarget</code><span class="ox-param-default">chrMT</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>circulargenerator</code></div>
 </details>
@@ -320,77 +320,77 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-eager
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>freebayes_C</code><span class="ox-param-default">2</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>genotyping_freebayes</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>freebayes_g_arg</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>genotyping_freebayes</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>freebayes_p</code><span class="ox-param-default">1</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>genotyping_freebayes</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>gatk_call_conf</code><span class="ox-param-default">30</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>genotyping_hc</code> <code>genotyping_ug</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>gatk_downsample</code><span class="ox-param-default">250</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>genotyping_ug</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>gatk_hc_emitrefconf</code><span class="ox-param-default">NONE</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>genotyping_hc</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>gatk_hc_out_mode</code><span class="ox-param-default">EMIT_VARIANTS_ONLY</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>genotyping_hc</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>gatk_ploidy</code><span class="ox-param-default">2</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>genotyping_hc</code> <code>genotyping_ug</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>gatk_ug_defaultbasequalities_arg</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>genotyping_ug</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>gatk_ug_genotype_model</code><span class="ox-param-default">SNP</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>genotyping_ug</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>gatk_ug_out_mode</code><span class="ox-param-default">EMIT_VARIANTS_ONLY</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>genotyping_ug</code></div>
 </details>
@@ -411,28 +411,28 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-eager
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>hostremoval_input_fastq</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>hostremoval_input_fastq</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>hostremoval_mode</code><span class="ox-param-default">mapped</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>hostremoval_input_fastq</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>input_bam</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>convert_bam</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>kraken2_db</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>kraken</code></div>
 </details>
@@ -453,161 +453,161 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-eager
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>malt_alignment_mode</code><span class="ox-param-default">SemiGlobal</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>malt</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>malt_db</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>malt</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>malt_max_queries</code><span class="ox-param-default">100</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>malt</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>malt_memory_mode</code><span class="ox-param-default">load</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>malt</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>malt_min_support_mode</code><span class="ox-param-default">percent</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>malt</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>malt_min_support_percent</code><span class="ox-param-default">0.01</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>malt</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>malt_mode</code><span class="ox-param-default">BlastN</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>malt</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>malt_sam_output</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>malt</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>malt_top_percent</code><span class="ox-param-default">1</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>malt</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>maltextract_destackingoff</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>maltextract</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>maltextract_downsamplingoff</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>maltextract</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>maltextract_duplicateremovaloff</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>maltextract</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>maltextract_filter</code><span class="ox-param-default">def_anc</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>maltextract</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>maltextract_matches</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>maltextract</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>maltextract_megansummary</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>maltextract</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>maltextract_ncbifiles</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>maltextract</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>maltextract_percentidentity</code><span class="ox-param-default">85.0</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>maltextract</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>maltextract_taxon_list</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>maltextract</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>maltextract_topalignment</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>maltextract</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>maltextract_toppercent</code><span class="ox-param-default">0.01</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>maltextract</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>mapdamage_downsample_arg</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>mapdamage_calculation</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>mapdamage_singlestranded_arg</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>mapdamage_calculation</code> <code>mapdamage_rescaling</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>mapdamage_yaxis</code><span class="ox-param-default">0.25</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>mapdamage_calculation</code></div>
 </details>
@@ -628,28 +628,28 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-eager
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>metagenomic_complexity_entropy</code><span class="ox-param-default">0.3</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>metagenomic_complexity_filter</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>metagenomic_complexity_filter</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>kraken</code> <code>malt</code> <code>metagenomic_complexity_filter</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>metagenomic_min_support_reads</code><span class="ox-param-default">1</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>kraken_parse</code> <code>malt</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>metagenomic_tool</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 5 rules</summary>
 <div class="ox-param-rules"><code>kraken</code> <code>kraken_merge</code> <code>kraken_parse</code> <code>malt</code> <code>maltextract</code></div>
 </details>
@@ -663,49 +663,49 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-eager
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>min_allele_freq_het</code><span class="ox-param-default">0.2</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>multivcfanalyzer</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>min_allele_freq_hom</code><span class="ox-param-default">0.8</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>multivcfanalyzer</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>min_base_coverage</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>multivcfanalyzer</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>min_genotype_quality</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>multivcfanalyzer</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>mtnucratio_header</code><span class="ox-param-default">MT</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>mtnucratio</code></div>
 </details>
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>multivcf_samples</code><span class="ox-param-default">S1, S2</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>nuclear_contamination_header</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>nuclear_contamination</code></div>
 </details>
@@ -719,7 +719,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-eager
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>percent_identity</code><span class="ox-param-default">85</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>malt</code></div>
 </details>
@@ -768,77 +768,77 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-eager
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>pmdtools_mask_bed</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>mask_reference_for_pmdtools</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>pmdtools_max_reads</code><span class="ox-param-default">1000000</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>pmdtools</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>pmdtools_platypus_arg</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>pmdtools</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>pmdtools_range</code><span class="ox-param-default">10</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>pmdtools</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>pmdtools_reference_mask</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>mask_reference_for_pmdtools</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>pmdtools_threshold</code><span class="ox-param-default">3</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>pmdtools</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>pmdtools_treatment_arg</code><span class="ox-param-default">--UDGminus</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>pmdtools</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>post_ar_trim_front</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>post_ar_fastq_trimming</code></div>
 </details>
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>post_ar_trim_front2</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>post_ar_trim_tail</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>post_ar_fastq_trimming</code></div>
 </details>
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>post_ar_trim_tail2</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
@@ -901,63 +901,63 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-eager
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>reference_gff_annotations</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>multivcfanalyzer</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>reference_gff_exclude</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>multivcfanalyzer</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>rescale_length_3p_arg</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>mapdamage_rescaling</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>rescale_length_5p_arg</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>mapdamage_rescaling</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>rescale_seqlength</code><span class="ox-param-default">12</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>mapdamage_rescaling</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_bam_filtering</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 10 rules</summary>
 <div class="ox-param-rules"><code>kraken</code> <code>kraken_merge</code> <code>kraken_parse</code> <code>malt</code> <code>metagenomic_complexity_filter</code> <code>samtools_filter_bowtie2</code> <code>samtools_filter_bwaaln</code> <code>samtools_filter_bwamem</code> <code>samtools_filter_circularmapper</code> <code>samtools_flagstat_after_filter</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_bcftools_stats</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>bcftools_stats</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_bedtools_coverage</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>bedtools_coverage</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_endor_spy</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>endor_spy</code></div>
 </details>
@@ -971,77 +971,77 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-eager
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_maltextract</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>maltextract</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_mapdamage_rescaling</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>mapdamage_rescaling</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_metagenomic_screening</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>kraken</code> <code>kraken_merge</code> <code>kraken_parse</code> <code>malt</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_mtnucratio</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>mtnucratio</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_multivcfanalyzer</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>multivcfanalyzer</code> <code>picard_addorreplacereadgroups</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_nuclear_contamination</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>nuclear_contamination</code> <code>print_nuclear_contamination</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_pmdtools</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>mask_reference_for_pmdtools</code> <code>pmdtools</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_post_ar_trimming</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>post_ar_fastq_trimming</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_sexdeterrmine</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>sexdeterrmine</code> <code>sexdeterrmine_prep</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_trim_bam</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>bam_trim</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_vcf2genome</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>vcf2genome</code></div>
 </details>
@@ -1062,14 +1062,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-eager
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>sexdeterrmine_prep_s</code><span class="ox-param-default">1000000</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>sexdeterrmine_prep</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>sexdeterrmine_s</code><span class="ox-param-default">1000000</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>sexdeterrmine</code></div>
 </details>
@@ -1083,7 +1083,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-eager
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>single_stranded</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>maltextract</code></div>
 </details>
@@ -1146,7 +1146,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-eager
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>snp_eff_results</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>multivcfanalyzer</code></div>
 </details>
@@ -1160,35 +1160,35 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-eager
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>unzip_reference</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>unzip_reference</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>vcf2genome_minc</code><span class="ox-param-default">5</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>vcf2genome</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>vcf2genome_minfreq</code><span class="ox-param-default">0.5</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>vcf2genome</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>vcf2genome_minq</code><span class="ox-param-default">30</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>vcf2genome</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>write_allele_frequencies_arg</code><span class="ox-param-default">F</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural exclusions (lane/library merging, nf-core boilerplate).</p>
+<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>multivcfanalyzer</code></div>
 </details>
@@ -1207,7 +1207,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 </div>
 
-The graph is derived at catalog-build time from `oxo-flow graph -f metro` and rendered with [nf-metro](https://github.com/seqeralabs/nf-metro) — rules are grouped into colored transit lines by analysis stage. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
+The graph is derived at catalog-build time from `oxo-flow graph -f metro` through the adaptive render ladder (`scripts/metro_tiers.py`): each workflow gets the finest metro tier that nf-metro renders while staying readable at site width — rule-level stations for smaller workflows, module-stage or module overview stations for dense ones. Colored transit lines group stations by analysis stage. Wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

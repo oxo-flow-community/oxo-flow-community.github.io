@@ -72,14 +72,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-ampliseq
 <div class="ox-params">
 <div class="ox-param">
 <div class="ox-param-head"><code>FW_primer</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">--- primers (upstream default null renders literal &quot;null&quot; adapters; port uses empty strings — see README fidelity table) ---</p>
+<p class="ox-param-desc">--- primers (upstream default null renders literal &quot;null&quot; adapters;<br>port uses empty strings — see README fidelity table) ---</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>cutadapt</code> <code>qiime2_preptax</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>RV_primer</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">--- primers (upstream default null renders literal &quot;null&quot; adapters; port uses empty strings — see README fidelity table) ---</p>
+<p class="ox-param-desc">--- primers (upstream default null renders literal &quot;null&quot; adapters;<br>port uses empty strings — see README fidelity table) ---</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>cutadapt</code> <code>qiime2_preptax</code></div>
 </details>
@@ -135,14 +135,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-ampliseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>classifier</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">--- QIIME2 taxonomy classifier (upstream params.qiime_ref_taxonomy / params.classifier — off by default; DADA2 taxonomy is the default path). qiime_ref_taxonomy trains a Naive-Bayes classifier on the primer-extracted reference below; classifier is a path to a pre-trained .qza (skips training). ---</p>
+<p class="ox-param-desc">--- QIIME2 taxonomy classifier (upstream params.qiime_ref_taxonomy /<br>params.classifier — off by default; DADA2 taxonomy is the<br>default path). qiime_ref_taxonomy trains a Naive-Bayes<br>classifier on the primer-extracted reference below; classifier<br>is a path to a pre-trained .qza (skips training). ---</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>qiime2_classify</code> <code>qiime2_intax</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cut_its</code><span class="ox-param-default">none</span></div>
-<p class="ox-param-desc">truncation (truncLen=0) + a second cutadapt read-through pass removing revcomp primers</p>
+<p class="ox-param-desc">truncation (truncLen=0) + a second cutadapt<br>read-through pass removing revcomp primers</p>
 <details class="ox-param-usedby"><summary>used by 9 rules</summary>
 <div class="ox-param-rules"><code>dada2_taxonomy</code> <code>dada2_taxonomy_its</code> <code>filter_len_itsx</code> <code>itsx_cutasv</code> <code>itsxrust_cutasv</code> <code>qiime2_inasv</code> <code>qiime2_inasv_its</code> <code>qiime2_inseq</code> <code>qiime2_inseq_its</code></div>
 </details>
@@ -240,7 +240,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-ampliseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>illumina_pe_its</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">--- ITS branch (upstream params.illumina_pe_its / cut_its / its_partial / its_extractor — all default off -&gt; 16S path) ---</p>
+<p class="ox-param-desc">--- ITS branch (upstream params.illumina_pe_its / cut_its /<br>its_partial / its_extractor — all default off -&gt; 16S path) ---</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>cutadapt</code> <code>dada2_filtntrim</code> <code>trunclen_fw</code> <code>trunclen_rv</code></div>
 </details>
@@ -275,7 +275,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-ampliseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>merge_runs</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">--- multi-run merge (upstream DADA2_MERGE globs *.stats.tsv / *.ASVtable.rds when several --run_ids are given) ---</p>
+<p class="ox-param-desc">--- multi-run merge (upstream DADA2_MERGE globs *.stats.tsv /<br>*.ASVtable.rds when several --run_ids are given) ---</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>dada2_merge</code></div>
 </details>
@@ -317,14 +317,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-ampliseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>qiime_ref_taxonomy</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">--- QIIME2 taxonomy classifier (upstream params.qiime_ref_taxonomy / params.classifier — off by default; DADA2 taxonomy is the default path). qiime_ref_taxonomy trains a Naive-Bayes classifier on the primer-extracted reference below; classifier is a path to a pre-trained .qza (skips training). ---</p>
+<p class="ox-param-desc">--- QIIME2 taxonomy classifier (upstream params.qiime_ref_taxonomy /<br>params.classifier — off by default; DADA2 taxonomy is the<br>default path). qiime_ref_taxonomy trains a Naive-Bayes<br>classifier on the primer-extracted reference below; classifier<br>is a path to a pre-trained .qza (skips training). ---</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>qiime2_classify</code> <code>qiime2_intax</code> <code>qiime2_preptax</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>qiime_ref_taxonomy_urls</code><span class="ox-param-default">https://data.qiime2.org/2023.7/common/silva-138-99-seqs.qza,https://data.qiime2.org/2023.7/common/silva-138-99-tax.qza</span></div>
-<p class="ox-param-desc">--- QIIME2 taxonomy classifier (upstream params.qiime_ref_taxonomy / params.classifier — off by default; DADA2 taxonomy is the default path). qiime_ref_taxonomy trains a Naive-Bayes classifier on the primer-extracted reference below; classifier is a path to a pre-trained .qza (skips training). ---</p>
+<p class="ox-param-desc">--- QIIME2 taxonomy classifier (upstream params.qiime_ref_taxonomy /<br>params.classifier — off by default; DADA2 taxonomy is the<br>default path). qiime_ref_taxonomy trains a Naive-Bayes<br>classifier on the primer-extracted reference below; classifier<br>is a path to a pre-trained .qza (skips training). ---</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>qiime2_preptax</code></div>
 </details>
@@ -345,7 +345,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-ampliseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_qiime2</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">the four qiime2 rules run in the quay.io/qiime2/amplicon container (~20GB unpacked — needs ~25GB free disk for the pull; there is no conda qiime2 on common mirrors). Upstream runs qiime2 always; the port gates it (default false) so a fresh clone completes the DADA2 analysis without the container. Set true (with the disk) to enable.</p>
+<p class="ox-param-desc">the four qiime2 rules run in the quay.io/qiime2/amplicon container<br>(~20GB unpacked — needs ~25GB free disk for the pull; there is no<br>conda qiime2 on common mirrors). Upstream runs qiime2 always; the<br>port gates it (default false) so a fresh clone completes the DADA2<br>analysis without the container. Set true (with the disk) to enable.</p>
 <details class="ox-param-usedby"><summary>used by 22 rules</summary>
 <div class="ox-param-rules"><code>qiime2_alphararefaction</code> <code>qiime2_ancom</code> <code>qiime2_ancombc</code> <code>qiime2_ancombc2</code> <code>qiime2_barplot</code> <code>qiime2_classify</code> <code>qiime2_diversity_adonis</code> <code>qiime2_diversity_alpha</code> <code>qiime2_diversity_beta</code> <code>qiime2_diversity_betaord</code> <code>qiime2_diversity_core</code> <code>qiime2_diversity_tree</code> <code>qiime2_export_absolute</code> <code>qiime2_export_relasv</code> <code>qiime2_export_reltax</code> <code>qiime2_inasv</code> <code>qiime2_inasv_its</code> <code>qiime2_inseq</code> <code>qiime2_inseq_its</code> <code>qiime2_intax</code> <code>qiime2_metadata_categories</code> <code>qiime2_preptax</code></div>
 </details>
@@ -422,7 +422,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-ampliseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_qiime_downstream</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">--- QIIME2 downstream analyses beyond the taxa barplot (upstream params.skip_qiime_downstream default false; the port gates all of these on run_qiime2 as well) ---</p>
+<p class="ox-param-desc">--- QIIME2 downstream analyses beyond the taxa barplot (upstream<br>params.skip_qiime_downstream default false; the port gates all<br>of these on run_qiime2 as well) ---</p>
 <details class="ox-param-usedby"><summary>used by 14 rules</summary>
 <div class="ox-param-rules"><code>qiime2_alphararefaction</code> <code>qiime2_ancom</code> <code>qiime2_ancombc</code> <code>qiime2_ancombc2</code> <code>qiime2_diversity_adonis</code> <code>qiime2_diversity_alpha</code> <code>qiime2_diversity_beta</code> <code>qiime2_diversity_betaord</code> <code>qiime2_diversity_core</code> <code>qiime2_diversity_tree</code> <code>qiime2_export_absolute</code> <code>qiime2_export_relasv</code> <code>qiime2_export_reltax</code> <code>qiime2_metadata_categories</code></div>
 </details>
@@ -483,7 +483,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 </div>
 
-The graph is derived at catalog-build time from `oxo-flow graph -f metro` and rendered with [nf-metro](https://github.com/seqeralabs/nf-metro) — rules are grouped into colored transit lines by analysis stage. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
+The graph is derived at catalog-build time from `oxo-flow graph -f metro` through the adaptive render ladder (`scripts/metro_tiers.py`): each workflow gets the finest metro tier that nf-metro renders while staying readable at site width — rule-level stations for smaller workflows, module-stage or module overview stations for dense ones. Colored transit lines group stations by analysis stage. Wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

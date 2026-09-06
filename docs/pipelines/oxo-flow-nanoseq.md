@@ -79,28 +79,28 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-nanoseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>bam_suffix</code><span class="ox-param-default">.sorted.bam</span></div>
-<p class="ox-param-desc">-- Suffix appended to per-sample bam names wherever rules consume reads: &quot;.sorted.bam&quot; (alignment branch) or &quot;.bam&quot; (skip_alignment branch, user bams linked by bam_rename). Mirrors the upstream channel swap between BAM_SORT_INDEX_SAMTOOLS.out.sortbam and BAM_RENAME.out.bam.</p>
+<p class="ox-param-desc">-- Suffix appended to per-sample bam names wherever rules consume reads:<br>&quot;.sorted.bam&quot; (alignment branch) or &quot;.bam&quot; (skip_alignment branch,<br>user bams linked by bam_rename). Mirrors the upstream channel swap<br>between BAM_SORT_INDEX_SAMTOOLS.out.sortbam and BAM_RENAME.out.bam.</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>bambu</code> <code>nanopolish_index_eventalign</code> <code>stringtie2</code> <code>subread_featurecounts</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>barcode_kit</code><span class="ox-param-default">RBK001</span></div>
-<p class="ox-param-desc">-- Demultiplexing (upstream defaults) RBK001 matches the shipped barcoded fixture (qcat Auto-detection needs at least two distinct barcodes to guess the kit; the explicit kit makes the test path deterministic).</p>
+<p class="ox-param-desc">-- Demultiplexing (upstream defaults)<br>RBK001 matches the shipped barcoded fixture (qcat Auto-detection needs<br>at least two distinct barcodes to guess the kit; the explicit kit makes<br>the test path deterministic).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>qcat</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>call_variants</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">-- Variant calling (upstream default: off; also gated upstream on protocol == DNA). The three short-variant callers are mutually exclusive on variant_caller; structural callers on structural_variant_caller (upstream defaults: medaka / sniffles).</p>
+<p class="ox-param-desc">-- Variant calling (upstream default: off; also gated upstream on<br>protocol == DNA). The three short-variant callers are mutually<br>exclusive on variant_caller; structural callers on<br>structural_variant_caller (upstream defaults: medaka / sniffles).</p>
 <details class="ox-param-usedby"><summary>used by 17 rules</summary>
 <div class="ox-param-rules"><code>cutesv</code> <code>cutesv_sort_vcf</code> <code>cutesv_tabix_vcf</code> <code>deepvariant</code> <code>deepvariant_tabix_gvcf</code> <code>deepvariant_tabix_vcf</code> <code>medaka_bgzip_vcf</code> <code>medaka_tabix_vcf</code> <code>medaka_variant</code> <code>minimap2_align</code> <code>pepper_margin_deepvariant</code> <code>samtools_index</code> <code>samtools_sort</code> <code>samtools_sort_index</code> <code>sniffles</code> <code>sniffles_sort_vcf</code> <code>sniffles_tabix_vcf</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>deepvariant_gpu</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">-- Variant calling (upstream default: off; also gated upstream on protocol == DNA). The three short-variant callers are mutually exclusive on variant_caller; structural callers on structural_variant_caller (upstream defaults: medaka / sniffles).</p>
+<p class="ox-param-desc">-- Variant calling (upstream default: off; also gated upstream on<br>protocol == DNA). The three short-variant callers are mutually<br>exclusive on variant_caller; structural callers on<br>structural_variant_caller (upstream defaults: medaka / sniffles).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>pepper_margin_deepvariant</code></div>
 </details>
@@ -149,14 +149,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-nanoseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>nanolyse_fasta</code><span class="ox-param-default">test/fixtures/refs/lambda.fasta.gz</span></div>
-<p class="ox-param-desc">-- Raw read cleaning (upstream default: off). Upstream downloads the lambda genome when --nanolyse_fasta is unset (GET_NANOLYSE_FASTA); the port ships it as a checked-in fixture.</p>
+<p class="ox-param-desc">-- Raw read cleaning (upstream default: off). Upstream downloads the<br>lambda genome when --nanolyse_fasta is unset (GET_NANOLYSE_FASTA);<br>the port ships it as a checked-in fixture.</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>nanolyse</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>nanopolish_fast5</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">-- RNA modification analysis (upstream default: on, gated to protocol directRNA; the fast5 dir comes from the upstream samplesheet nanopolish_fast5 column — the port takes one dir for all samples)</p>
+<p class="ox-param-desc">-- RNA modification analysis (upstream default: on, gated to protocol<br>directRNA; the fast5 dir comes from the upstream samplesheet<br>nanopolish_fast5 column — the port takes one dir for all samples)</p>
 <details class="ox-param-usedby"><summary>used by 5 rules</summary>
 <div class="ox-param-rules"><code>m6anet_dataprep</code> <code>m6anet_inference</code> <code>nanopolish_index_eventalign</code> <code>xpore_dataprep</code> <code>xpore_diffmod</code></div>
 </details>
@@ -170,7 +170,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-nanoseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>phase_vcf</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">-- Variant calling (upstream default: off; also gated upstream on protocol == DNA). The three short-variant callers are mutually exclusive on variant_caller; structural callers on structural_variant_caller (upstream defaults: medaka / sniffles).</p>
+<p class="ox-param-desc">-- Variant calling (upstream default: off; also gated upstream on<br>protocol == DNA). The three short-variant callers are mutually<br>exclusive on variant_caller; structural callers on<br>structural_variant_caller (upstream defaults: medaka / sniffles).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>medaka_variant</code></div>
 </details>
@@ -184,49 +184,49 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-nanoseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>qcat_detect_middle</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">-- Demultiplexing (upstream defaults) RBK001 matches the shipped barcoded fixture (qcat Auto-detection needs at least two distinct barcodes to guess the kit; the explicit kit makes the test path deterministic).</p>
+<p class="ox-param-desc">-- Demultiplexing (upstream defaults)<br>RBK001 matches the shipped barcoded fixture (qcat Auto-detection needs<br>at least two distinct barcodes to guess the kit; the explicit kit makes<br>the test path deterministic).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>qcat</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>qcat_min_score</code><span class="ox-param-default">60</span></div>
-<p class="ox-param-desc">-- Demultiplexing (upstream defaults) RBK001 matches the shipped barcoded fixture (qcat Auto-detection needs at least two distinct barcodes to guess the kit; the explicit kit makes the test path deterministic).</p>
+<p class="ox-param-desc">-- Demultiplexing (upstream defaults)<br>RBK001 matches the shipped barcoded fixture (qcat Auto-detection needs<br>at least two distinct barcodes to guess the kit; the explicit kit makes<br>the test path deterministic).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>qcat</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>quantification_method</code><span class="ox-param-default">bambu</span></div>
-<p class="ox-param-desc">-- Quantification and differential analysis (upstream defaults: on, but gated upstream to protocol cDNA/directRNA — never on the DNA path)</p>
+<p class="ox-param-desc">-- Quantification and differential analysis (upstream defaults: on, but<br>gated upstream to protocol cDNA/directRNA — never on the DNA path)</p>
 <details class="ox-param-usedby"><summary>used by 8 rules</summary>
 <div class="ox-param-rules"><code>bambu</code> <code>deseq2</code> <code>deseq2_featurecounts</code> <code>dexseq</code> <code>dexseq_featurecounts</code> <code>stringtie2</code> <code>stringtie_merge</code> <code>subread_featurecounts</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>reference</code><span class="ox-param-default">test/fixtures/refs/genome.fa</span></div>
-<p class="ox-param-desc">-- Reference genome (collapses the samplesheet fasta column; the default path uses a single reference for all samples, as in the upstream test data)</p>
+<p class="ox-param-desc">-- Reference genome (collapses the samplesheet fasta column; the default<br>path uses a single reference for all samples, as in the upstream test data)</p>
 <details class="ox-param-usedby"><summary>used by 14 rules</summary>
 <div class="ox-param-rules"><code>bambu</code> <code>cutesv</code> <code>deepvariant</code> <code>get_chrom_sizes</code> <code>graphmap2_align</code> <code>graphmap2_index</code> <code>medaka_variant</code> <code>minimap2_index</code> <code>nanopolish_index_eventalign</code> <code>pepper_margin_deepvariant</code> <code>samtools_faidx</code> <code>samtools_stats</code> <code>stringtie2</code> <code>xpore_dataprep</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>reference_name</code><span class="ox-param-default">genome.fa</span></div>
-<p class="ox-param-desc">Basename of the reference; mirrors the upstream staged-file name so that indexes keep the upstream naming (genome.fa.mmi / genome.fa.sizes / genome.fa.fai)</p>
+<p class="ox-param-desc">Basename of the reference; mirrors the upstream staged-file name so that<br>indexes keep the upstream naming (genome.fa.mmi / genome.fa.sizes / genome.fa.fai)</p>
 <details class="ox-param-usedby"><summary>used by 10 rules</summary>
 <div class="ox-param-rules"><code>deepvariant</code> <code>get_chrom_sizes</code> <code>graphmap2_align</code> <code>graphmap2_index</code> <code>minimap2_align</code> <code>minimap2_index</code> <code>pepper_margin_deepvariant</code> <code>samtools_faidx</code> <code>ucsc_bed12tobigbed</code> <code>ucsc_bedgraphtobigwig</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_nanolyse</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">-- Raw read cleaning (upstream default: off). Upstream downloads the lambda genome when --nanolyse_fasta is unset (GET_NANOLYSE_FASTA); the port ships it as a checked-in fixture.</p>
+<p class="ox-param-desc">-- Raw read cleaning (upstream default: off). Upstream downloads the<br>lambda genome when --nanolyse_fasta is unset (GET_NANOLYSE_FASTA);<br>the port ships it as a checked-in fixture.</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>nanolyse</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>sample_bams</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">-- Pre-aligned BAM input (upstream: the samplesheet input_file column carrying .bam files, used only when --skip_alignment; the port takes a comma-separated list of bam paths, one per barcode in samples_list order, linked by the bam_rename rule)</p>
+<p class="ox-param-desc">-- Pre-aligned BAM input (upstream: the samplesheet input_file column<br>carrying .bam files, used only when --skip_alignment; the port takes a<br>comma-separated list of bam paths, one per barcode in samples_list<br>order, linked by the bam_rename rule)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>bam_rename</code></div>
 </details>
@@ -240,28 +240,28 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-nanoseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_bigbed</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">-- Visualisation (upstream defaults: bigwig/bigbed ON; bigbed is protocol-gated upstream to cDNA/directRNA and so never runs on the default DNA path)</p>
+<p class="ox-param-desc">-- Visualisation (upstream defaults: bigwig/bigbed ON; bigbed is<br>protocol-gated upstream to cDNA/directRNA and so never runs on the<br>default DNA path)</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>bedtools_bamtobed</code> <code>ucsc_bed12tobigbed</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_bigwig</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">-- Visualisation (upstream defaults: bigwig/bigbed ON; bigbed is protocol-gated upstream to cDNA/directRNA and so never runs on the default DNA path)</p>
+<p class="ox-param-desc">-- Visualisation (upstream defaults: bigwig/bigbed ON; bigbed is<br>protocol-gated upstream to cDNA/directRNA and so never runs on the<br>default DNA path)</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>bedtools_genomecov</code> <code>ucsc_bedgraphtobigwig</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_demultiplexing</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">-- Demultiplexing (upstream defaults) RBK001 matches the shipped barcoded fixture (qcat Auto-detection needs at least two distinct barcodes to guess the kit; the explicit kit makes the test path deterministic).</p>
+<p class="ox-param-desc">-- Demultiplexing (upstream defaults)<br>RBK001 matches the shipped barcoded fixture (qcat Auto-detection needs<br>at least two distinct barcodes to guess the kit; the explicit kit makes<br>the test path deterministic).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>qcat</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_differential_analysis</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">-- Quantification and differential analysis (upstream defaults: on, but gated upstream to protocol cDNA/directRNA — never on the DNA path)</p>
+<p class="ox-param-desc">-- Quantification and differential analysis (upstream defaults: on, but<br>gated upstream to protocol cDNA/directRNA — never on the DNA path)</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>deseq2</code> <code>deseq2_featurecounts</code> <code>dexseq</code> <code>dexseq_featurecounts</code></div>
 </details>
@@ -275,14 +275,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-nanoseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_m6anet</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">-- RNA modification analysis (upstream default: on, gated to protocol directRNA; the fast5 dir comes from the upstream samplesheet nanopolish_fast5 column — the port takes one dir for all samples)</p>
+<p class="ox-param-desc">-- RNA modification analysis (upstream default: on, gated to protocol<br>directRNA; the fast5 dir comes from the upstream samplesheet<br>nanopolish_fast5 column — the port takes one dir for all samples)</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>m6anet_dataprep</code> <code>m6anet_inference</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_modification_analysis</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">-- RNA modification analysis (upstream default: on, gated to protocol directRNA; the fast5 dir comes from the upstream samplesheet nanopolish_fast5 column — the port takes one dir for all samples)</p>
+<p class="ox-param-desc">-- RNA modification analysis (upstream default: on, gated to protocol<br>directRNA; the fast5 dir comes from the upstream samplesheet<br>nanopolish_fast5 column — the port takes one dir for all samples)</p>
 <details class="ox-param-usedby"><summary>used by 5 rules</summary>
 <div class="ox-param-rules"><code>m6anet_dataprep</code> <code>m6anet_inference</code> <code>nanopolish_index_eventalign</code> <code>xpore_dataprep</code> <code>xpore_diffmod</code></div>
 </details>
@@ -310,35 +310,35 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-nanoseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_quantification</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">-- Quantification and differential analysis (upstream defaults: on, but gated upstream to protocol cDNA/directRNA — never on the DNA path)</p>
+<p class="ox-param-desc">-- Quantification and differential analysis (upstream defaults: on, but<br>gated upstream to protocol cDNA/directRNA — never on the DNA path)</p>
 <details class="ox-param-usedby"><summary>used by 8 rules</summary>
 <div class="ox-param-rules"><code>bambu</code> <code>deseq2</code> <code>deseq2_featurecounts</code> <code>dexseq</code> <code>dexseq_featurecounts</code> <code>stringtie2</code> <code>stringtie_merge</code> <code>subread_featurecounts</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_sv</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">-- Variant calling (upstream default: off; also gated upstream on protocol == DNA). The three short-variant callers are mutually exclusive on variant_caller; structural callers on structural_variant_caller (upstream defaults: medaka / sniffles).</p>
+<p class="ox-param-desc">-- Variant calling (upstream default: off; also gated upstream on<br>protocol == DNA). The three short-variant callers are mutually<br>exclusive on variant_caller; structural callers on<br>structural_variant_caller (upstream defaults: medaka / sniffles).</p>
 <details class="ox-param-usedby"><summary>used by 6 rules</summary>
 <div class="ox-param-rules"><code>cutesv</code> <code>cutesv_sort_vcf</code> <code>cutesv_tabix_vcf</code> <code>sniffles</code> <code>sniffles_sort_vcf</code> <code>sniffles_tabix_vcf</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_vc</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">-- Variant calling (upstream default: off; also gated upstream on protocol == DNA). The three short-variant callers are mutually exclusive on variant_caller; structural callers on structural_variant_caller (upstream defaults: medaka / sniffles).</p>
+<p class="ox-param-desc">-- Variant calling (upstream default: off; also gated upstream on<br>protocol == DNA). The three short-variant callers are mutually<br>exclusive on variant_caller; structural callers on<br>structural_variant_caller (upstream defaults: medaka / sniffles).</p>
 <details class="ox-param-usedby"><summary>used by 7 rules</summary>
 <div class="ox-param-rules"><code>deepvariant</code> <code>deepvariant_tabix_gvcf</code> <code>deepvariant_tabix_vcf</code> <code>medaka_bgzip_vcf</code> <code>medaka_tabix_vcf</code> <code>medaka_variant</code> <code>pepper_margin_deepvariant</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_xpore</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">-- RNA modification analysis (upstream default: on, gated to protocol directRNA; the fast5 dir comes from the upstream samplesheet nanopolish_fast5 column — the port takes one dir for all samples)</p>
+<p class="ox-param-desc">-- RNA modification analysis (upstream default: on, gated to protocol<br>directRNA; the fast5 dir comes from the upstream samplesheet<br>nanopolish_fast5 column — the port takes one dir for all samples)</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>xpore_dataprep</code> <code>xpore_diffmod</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>split_mnps</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">-- Variant calling (upstream default: off; also gated upstream on protocol == DNA). The three short-variant callers are mutually exclusive on variant_caller; structural callers on structural_variant_caller (upstream defaults: medaka / sniffles).</p>
+<p class="ox-param-desc">-- Variant calling (upstream default: off; also gated upstream on<br>protocol == DNA). The three short-variant callers are mutually<br>exclusive on variant_caller; structural callers on<br>structural_variant_caller (upstream defaults: medaka / sniffles).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>medaka_variant</code></div>
 </details>
@@ -352,14 +352,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-nanoseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>structural_variant_caller</code><span class="ox-param-default">sniffles</span></div>
-<p class="ox-param-desc">-- Variant calling (upstream default: off; also gated upstream on protocol == DNA). The three short-variant callers are mutually exclusive on variant_caller; structural callers on structural_variant_caller (upstream defaults: medaka / sniffles).</p>
+<p class="ox-param-desc">-- Variant calling (upstream default: off; also gated upstream on<br>protocol == DNA). The three short-variant callers are mutually<br>exclusive on variant_caller; structural callers on<br>structural_variant_caller (upstream defaults: medaka / sniffles).</p>
 <details class="ox-param-usedby"><summary>used by 6 rules</summary>
 <div class="ox-param-rules"><code>cutesv</code> <code>cutesv_sort_vcf</code> <code>cutesv_tabix_vcf</code> <code>sniffles</code> <code>sniffles_sort_vcf</code> <code>sniffles_tabix_vcf</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>variant_caller</code><span class="ox-param-default">medaka</span></div>
-<p class="ox-param-desc">-- Variant calling (upstream default: off; also gated upstream on protocol == DNA). The three short-variant callers are mutually exclusive on variant_caller; structural callers on structural_variant_caller (upstream defaults: medaka / sniffles).</p>
+<p class="ox-param-desc">-- Variant calling (upstream default: off; also gated upstream on<br>protocol == DNA). The three short-variant callers are mutually<br>exclusive on variant_caller; structural callers on<br>structural_variant_caller (upstream defaults: medaka / sniffles).</p>
 <details class="ox-param-usedby"><summary>used by 7 rules</summary>
 <div class="ox-param-rules"><code>deepvariant</code> <code>deepvariant_tabix_gvcf</code> <code>deepvariant_tabix_vcf</code> <code>medaka_bgzip_vcf</code> <code>medaka_tabix_vcf</code> <code>medaka_variant</code> <code>pepper_margin_deepvariant</code></div>
 </details>
@@ -378,7 +378,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 </div>
 
-The graph is derived at catalog-build time from `oxo-flow graph -f metro` and rendered with [nf-metro](https://github.com/seqeralabs/nf-metro) — rules are grouped into colored transit lines by analysis stage. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
+The graph is derived at catalog-build time from `oxo-flow graph -f metro` through the adaptive render ladder (`scripts/metro_tiers.py`): each workflow gets the finest metro tier that nf-metro renders while staying readable at site width — rule-level stations for smaller workflows, module-stage or module overview stations for dense ones. Colored transit lines group stations by analysis stage. Wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

@@ -75,112 +75,112 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-viralrecon
 <div class="ox-params">
 <div class="ox-param">
 <div class="ox-param-head"><code>additional_annotation</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">--- Additional annotation (upstream params.additional_annotation; empty = off. A GFF/GTF to annotate the variants with in addition to the main reference annotation, run through snpEff + SnpSift + the variants long table. .gz files are gunzipped by build_snpeff_db_additional.) ---</p>
+<p class="ox-param-desc">--- Additional annotation (upstream params.additional_annotation; empty =<br>off. A GFF/GTF to annotate the variants with in addition to the main<br>reference annotation, run through snpEff + SnpSift + the variants long<br>table. .gz files are gunzipped by build_snpeff_db_additional.) ---</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>additional_annotation</code> <code>build_snpeff_db_additional</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>assemblers</code><span class="ox-param-default">spades</span></div>
-<p class="ox-param-desc">--- Assembly (upstream params.assemblers is a comma-separated list, e.g. &#x27;spades,unicycler&#x27;; the port&#x27;s when-language has no &#x27;in&#x27; operator, so every combination of the three assemblers is enumerated with explicit equality tests. Give the canonical lowercase form, commas with no spaces: &#x27;spades&#x27; | &#x27;unicycler&#x27; | &#x27;minia&#x27; | &#x27;spades,unicycler&#x27; | ... ) ---</p>
+<p class="ox-param-desc">--- Assembly (upstream params.assemblers is a comma-separated list, e.g.<br>&#x27;spades,unicycler&#x27;; the port&#x27;s when-language has no &#x27;in&#x27; operator, so<br>every combination of the three assemblers is enumerated with explicit<br>equality tests. Give the canonical lowercase form, commas with no<br>spaces: &#x27;spades&#x27; | &#x27;unicycler&#x27; | &#x27;minia&#x27; | &#x27;spades,unicycler&#x27; | ... ) ---</p>
 <details class="ox-param-usedby"><summary>used by 17 rules</summary>
 <div class="ox-param-rules"><code>abacas</code> <code>abacas_minia</code> <code>abacas_unicycler</code> <code>assemble_minia</code> <code>assemble_spades</code> <code>assemble_unicycler</code> <code>bandage</code> <code>bandage_unicycler</code> <code>blast_assembly</code> <code>blast_assembly_minia</code> <code>blast_assembly_unicycler</code> <code>plasmidid</code> <code>plasmidid_minia</code> <code>plasmidid_unicycler</code> <code>quast_assembly</code> <code>quast_assembly_minia</code> <code>quast_assembly_unicycler</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>consensus_caller</code><span class="ox-param-default">bcftools</span></div>
-<p class="ox-param-desc">--- Consensus caller (upstream params.consensus_caller; both the bcftools and ivar branches are ported as when-gated rules) ---</p>
+<p class="ox-param-desc">--- Consensus caller (upstream params.consensus_caller; both the bcftools<br>and ivar branches are ported as when-gated rules) ---</p>
 <details class="ox-param-usedby"><summary>used by 6 rules</summary>
 <div class="ox-param-rules"><code>consensus_call</code> <code>consensus_call_wgs</code> <code>consensus_filter</code> <code>consensus_filter_bcftools</code> <code>consensus_ivar</code> <code>consensus_ivar_wgs</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>fasta</code><span class="ox-param-default">reference/genome.fa</span></div>
-<p class="ox-param-desc">The port expects uncompressed files at these paths. Set the *_ends_gz keys to true to run the upstream GUNZIP_* steps first (outputs land at the same fixed reference/ paths).</p>
+<p class="ox-param-desc">The port expects uncompressed files at these paths. Set the *_ends_gz keys<br>to true to run the upstream GUNZIP_* steps first (outputs land at the same<br>fixed reference/ paths).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>gunzip_fasta</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>fasta_ends_gz</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">The port expects uncompressed files at these paths. Set the *_ends_gz keys to true to run the upstream GUNZIP_* steps first (outputs land at the same fixed reference/ paths).</p>
+<p class="ox-param-desc">The port expects uncompressed files at these paths. Set the *_ends_gz keys<br>to true to run the upstream GUNZIP_* steps first (outputs land at the same<br>fixed reference/ paths).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>gunzip_fasta</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>filter_duplicates</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">upstream params.filter_duplicates (default false) — passed to PICARD_MARKDUPLICATES as REMOVE_DUPLICATES=true when set</p>
+<p class="ox-param-desc">upstream params.filter_duplicates (default false) — passed to<br>PICARD_MARKDUPLICATES as REMOVE_DUPLICATES=true when set</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>markduplicates</code> <code>markduplicates_wgs</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>freyja_barcodes</code><span class="ox-param-default">test/fixtures/refs/freyja_barcodes.csv</span></div>
-<p class="ox-param-desc">--- Freyja (upstream --freyja_barcodes / --freyja_lineages. When either is left empty the gated rules freyja_update + freyja_demix_updated / freyja_boot_updated download and use the upstream DB instead.) ---</p>
+<p class="ox-param-desc">--- Freyja (upstream --freyja_barcodes / --freyja_lineages. When either is<br>left empty the gated rules freyja_update + freyja_demix_updated /<br>freyja_boot_updated download and use the upstream DB instead.) ---</p>
 <details class="ox-param-usedby"><summary>used by 5 rules</summary>
 <div class="ox-param-rules"><code>freyja_boot</code> <code>freyja_boot_updated</code> <code>freyja_demix</code> <code>freyja_demix_updated</code> <code>freyja_update</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>freyja_db_name</code><span class="ox-param-default">reference/freyja_db</span></div>
-<p class="ox-param-desc">upstream params.freyja_db_name — where FREYJA_UPDATE writes its download (upstream default &#x27;freyja_db&#x27;; the port points into reference/)</p>
+<p class="ox-param-desc">upstream params.freyja_db_name — where FREYJA_UPDATE writes its download<br>(upstream default &#x27;freyja_db&#x27;; the port points into reference/)</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>freyja_boot_updated</code> <code>freyja_demix_updated</code> <code>freyja_update</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>freyja_depthcutoff</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">freyja&#x27;s meta format is the curated_lineages JSON (buildLineageMap json.loads it — live: the CSV default died in freyja boot with JSONDecodeError); the CSV sibling is kept as the barcodes-side table</p>
+<p class="ox-param-desc">freyja&#x27;s meta format is the curated_lineages JSON (buildLineageMap<br>json.loads it — live: the CSV default died in freyja boot with<br>JSONDecodeError); the CSV sibling is kept as the barcodes-side table</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>freyja_boot</code> <code>freyja_boot_updated</code> <code>freyja_demix</code> <code>freyja_demix_updated</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>freyja_lineages</code><span class="ox-param-default">test/fixtures/refs/freyja_lineages.json</span></div>
-<p class="ox-param-desc">freyja&#x27;s meta format is the curated_lineages JSON (buildLineageMap json.loads it — live: the CSV default died in freyja boot with JSONDecodeError); the CSV sibling is kept as the barcodes-side table</p>
+<p class="ox-param-desc">freyja&#x27;s meta format is the curated_lineages JSON (buildLineageMap<br>json.loads it — live: the CSV default died in freyja boot with<br>JSONDecodeError); the CSV sibling is kept as the barcodes-side table</p>
 <details class="ox-param-usedby"><summary>used by 5 rules</summary>
 <div class="ox-param-rules"><code>freyja_boot</code> <code>freyja_boot_updated</code> <code>freyja_demix</code> <code>freyja_demix_updated</code> <code>freyja_update</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>freyja_repeats</code><span class="ox-param-default">100</span></div>
-<p class="ox-param-desc">freyja&#x27;s meta format is the curated_lineages JSON (buildLineageMap json.loads it — live: the CSV default died in freyja boot with JSONDecodeError); the CSV sibling is kept as the barcodes-side table</p>
+<p class="ox-param-desc">freyja&#x27;s meta format is the curated_lineages JSON (buildLineageMap<br>json.loads it — live: the CSV default died in freyja boot with<br>JSONDecodeError); the CSV sibling is kept as the barcodes-side table</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>freyja_boot</code> <code>freyja_boot_updated</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>gff</code><span class="ox-param-default">reference/genome.gff</span></div>
-<p class="ox-param-desc">The port expects uncompressed files at these paths. Set the *_ends_gz keys to true to run the upstream GUNZIP_* steps first (outputs land at the same fixed reference/ paths).</p>
+<p class="ox-param-desc">The port expects uncompressed files at these paths. Set the *_ends_gz keys<br>to true to run the upstream GUNZIP_* steps first (outputs land at the same<br>fixed reference/ paths).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>gunzip_gff</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>gff_ends_gz</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">The port expects uncompressed files at these paths. Set the *_ends_gz keys to true to run the upstream GUNZIP_* steps first (outputs land at the same fixed reference/ paths).</p>
+<p class="ox-param-desc">The port expects uncompressed files at these paths. Set the *_ends_gz keys<br>to true to run the upstream GUNZIP_* steps first (outputs land at the same<br>fixed reference/ paths).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>gunzip_gff</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>ivar_trim_noprimer</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">upstream params.min_mapped_reads — the per-sample channel DROP is a documented runtime-filter deviation (no dynamic DAG); the reporting half (fail_mapped_samples_mqc.tsv in the MultiQC data) is ported inside the multiqc rule</p>
+<p class="ox-param-desc">upstream params.min_mapped_reads — the per-sample channel DROP is a<br>documented runtime-filter deviation (no dynamic DAG); the reporting half<br>(fail_mapped_samples_mqc.tsv in the MultiQC data) is ported inside the<br>multiqc rule</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>ivar_trim</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>ivar_trim_offset</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">upstream params.min_mapped_reads — the per-sample channel DROP is a documented runtime-filter deviation (no dynamic DAG); the reporting half (fail_mapped_samples_mqc.tsv in the MultiQC data) is ported inside the multiqc rule</p>
+<p class="ox-param-desc">upstream params.min_mapped_reads — the per-sample channel DROP is a<br>documented runtime-filter deviation (no dynamic DAG); the reporting half<br>(fail_mapped_samples_mqc.tsv in the MultiQC data) is ported inside the<br>multiqc rule</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>ivar_trim</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>kraken2_assembly_host_filter</code><span class="ox-param-default">true</span></div>
-<p class="ox-param-desc">upstream params.kraken2_db_name — the library KRAKEN2_BUILD downloads when kraken2_db is left empty (gated rule kraken2_build)</p>
+<p class="ox-param-desc">upstream params.kraken2_db_name — the library KRAKEN2_BUILD downloads when<br>kraken2_db is left empty (gated rule kraken2_build)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>assembly_fastq</code></div>
 </details>
@@ -194,14 +194,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-viralrecon
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>kraken2_db_name</code><span class="ox-param-default">human</span></div>
-<p class="ox-param-desc">upstream params.kraken2_db_name — the library KRAKEN2_BUILD downloads when kraken2_db is left empty (gated rule kraken2_build)</p>
+<p class="ox-param-desc">upstream params.kraken2_db_name — the library KRAKEN2_BUILD downloads when<br>kraken2_db is left empty (gated rule kraken2_build)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>kraken2_build</code></div>
 </details>
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>kraken2_variants_host_filter</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">upstream params.kraken2_db_name — the library KRAKEN2_BUILD downloads when kraken2_db is left empty (gated rule kraken2_build)</p>
+<p class="ox-param-desc">upstream params.kraken2_db_name — the library KRAKEN2_BUILD downloads when<br>kraken2_db is left empty (gated rule kraken2_build)</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
@@ -215,7 +215,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-viralrecon
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>min_mapped_reads</code><span class="ox-param-default">1000</span></div>
-<p class="ox-param-desc">upstream params.min_mapped_reads — the per-sample channel DROP is a documented runtime-filter deviation (no dynamic DAG); the reporting half (fail_mapped_samples_mqc.tsv in the MultiQC data) is ported inside the multiqc rule</p>
+<p class="ox-param-desc">upstream params.min_mapped_reads — the per-sample channel DROP is a<br>documented runtime-filter deviation (no dynamic DAG); the reporting half<br>(fail_mapped_samples_mqc.tsv in the MultiQC data) is ported inside the<br>multiqc rule</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>multiqc</code></div>
 </details>
@@ -257,14 +257,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-viralrecon
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>out_dir</code><span class="ox-param-default">results</span></div>
-<p class="ox-param-desc">Directory holding raw/&lt;sample&gt;_R1.fastq.gz + raw/&lt;sample&gt;_R2.fastq.gz. The repo default ships the tiny test fixtures; point this at your data.</p>
+<p class="ox-param-desc">Directory holding raw/&lt;sample&gt;_R1.fastq.gz + raw/&lt;sample&gt;_R2.fastq.gz.<br>The repo default ships the tiny test fixtures; point this at your data.</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>fastqc_primers</code> <code>fastqc_raw</code> <code>fastqc_trim</code> <code>multiqc</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>pango_database</code><span class="ox-param-default">test/fixtures/refs/pangolin_db</span></div>
-<p class="ox-param-desc">--- Pangolin (upstream --pango_database; a directory. When left empty the gated rules pangolin_updatedata + pangolin_run_updated download the data directory instead, mirroring upstream PANGOLIN_UPDATEDATA.) ---</p>
+<p class="ox-param-desc">--- Pangolin (upstream --pango_database; a directory. When left empty the<br>gated rules pangolin_updatedata + pangolin_run_updated download the<br>data directory instead, mirroring upstream PANGOLIN_UPDATEDATA.) ---</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>pangolin</code> <code>pangolin_run_updated</code> <code>pangolin_updatedata</code></div>
 </details>
@@ -278,14 +278,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-viralrecon
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>primer_bed</code><span class="ox-param-default">reference/primers.bed</span></div>
-<p class="ox-param-desc">The port expects uncompressed files at these paths. Set the *_ends_gz keys to true to run the upstream GUNZIP_* steps first (outputs land at the same fixed reference/ paths).</p>
+<p class="ox-param-desc">The port expects uncompressed files at these paths. Set the *_ends_gz keys<br>to true to run the upstream GUNZIP_* steps first (outputs land at the same<br>fixed reference/ paths).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>gunzip_primer_bed</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>primer_bed_ends_gz</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">The port expects uncompressed files at these paths. Set the *_ends_gz keys to true to run the upstream GUNZIP_* steps first (outputs land at the same fixed reference/ paths).</p>
+<p class="ox-param-desc">The port expects uncompressed files at these paths. Set the *_ends_gz keys<br>to true to run the upstream GUNZIP_* steps first (outputs land at the same<br>fixed reference/ paths).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>gunzip_primer_bed</code></div>
 </details>
@@ -313,28 +313,28 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-viralrecon
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>raw_dir</code><span class="ox-param-default">test/fixtures/raw</span></div>
-<p class="ox-param-desc">Directory holding raw/&lt;sample&gt;_R1.fastq.gz + raw/&lt;sample&gt;_R2.fastq.gz. The repo default ships the tiny test fixtures; point this at your data.</p>
+<p class="ox-param-desc">Directory holding raw/&lt;sample&gt;_R1.fastq.gz + raw/&lt;sample&gt;_R2.fastq.gz.<br>The repo default ships the tiny test fixtures; point this at your data.</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>cat_fastq</code> <code>fastqc_raw</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>save_mpileup</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">upstream params.save_mpileup — when true, call_variants_ivar tees the samtools mpileup stream to variants/ivar/{sample}.mpileup (off by default, exactly like upstream; the port emits an empty placeholder when false so the declared output stays present)</p>
+<p class="ox-param-desc">upstream params.save_mpileup — when true, call_variants_ivar tees the<br>samtools mpileup stream to variants/ivar/{sample}.mpileup (off by<br>default, exactly like upstream; the port emits an empty placeholder when<br>false so the declared output stays present)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>call_variants_ivar</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>save_trimmed_fail</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">upstream params.save_trimmed_fail — when true, fastp keeps the reads that failed filtering (--failed_out + --unpaired1/2); off by default, exactly like upstream (empty placeholders when false)</p>
+<p class="ox-param-desc">upstream params.save_trimmed_fail — when true, fastp keeps the<br>reads that failed filtering (--failed_out + --unpaired1/2); off by<br>default, exactly like upstream (empty placeholders when false)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>fastp</code></div>
 </details>
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>save_unaligned</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">upstream params.save_unaligned — NOT ported as a gate: the Kraken2 unclassified reads feed the assembly branch (upstream channel wiring), so they always land in results/kraken2/ — the flag is effectively always on in the port (benign over-emission vs upstream&#x27;s default publish)</p>
+<p class="ox-param-desc">upstream params.save_unaligned — NOT ported as a gate: the Kraken2<br>unclassified reads feed the assembly branch (upstream channel wiring),<br>so they always land in results/kraken2/ — the flag is effectively always<br>on in the port (benign over-emission vs upstream&#x27;s default publish)</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
@@ -516,7 +516,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-viralrecon
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>spades_mode</code><span class="ox-param-default">rnaviral</span></div>
-<p class="ox-param-desc">--- Assembly (upstream params.assemblers is a comma-separated list, e.g. &#x27;spades,unicycler&#x27;; the port&#x27;s when-language has no &#x27;in&#x27; operator, so every combination of the three assemblers is enumerated with explicit equality tests. Give the canonical lowercase form, commas with no spaces: &#x27;spades&#x27; | &#x27;unicycler&#x27; | &#x27;minia&#x27; | &#x27;spades,unicycler&#x27; | ... ) ---</p>
+<p class="ox-param-desc">--- Assembly (upstream params.assemblers is a comma-separated list, e.g.<br>&#x27;spades,unicycler&#x27;; the port&#x27;s when-language has no &#x27;in&#x27; operator, so<br>every combination of the three assemblers is enumerated with explicit<br>equality tests. Give the canonical lowercase form, commas with no<br>spaces: &#x27;spades&#x27; | &#x27;unicycler&#x27; | &#x27;minia&#x27; | &#x27;spades,unicycler&#x27; | ... ) ---</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>assemble_spades</code></div>
 </details>
@@ -530,7 +530,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-viralrecon
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>variant_caller</code><span class="ox-param-default">ivar</span></div>
-<p class="ox-param-desc">--- Variant calling (upstream params.variant_caller defaults to &#x27;ivar&#x27; for the amplicon protocol and &#x27;bcftools&#x27; otherwise; both branches are ported as when-gated rules). The metagenomic branch auto-runs the bcftools caller regardless of this key — upstream derives variant_caller in nextflow.config (params.variant_caller = protocol == &#x27;metagenomic&#x27; ? &#x27;bcftools&#x27; : &#x27;ivar&#x27;), and the port mirrors that derivation in the wgs rules&#x27; when conditions, so a metagenomic run needs no extra --arg ---</p>
+<p class="ox-param-desc">--- Variant calling (upstream params.variant_caller defaults to &#x27;ivar&#x27; for<br>the amplicon protocol and &#x27;bcftools&#x27; otherwise; both branches are<br>ported as when-gated rules). The metagenomic branch auto-runs the<br>bcftools caller regardless of this key — upstream derives<br>variant_caller in nextflow.config (params.variant_caller = protocol ==<br>&#x27;metagenomic&#x27; ? &#x27;bcftools&#x27; : &#x27;ivar&#x27;), and the port mirrors that<br>derivation in the wgs rules&#x27; when conditions, so a metagenomic run<br>needs no extra --arg ---</p>
 <details class="ox-param-usedby"><summary>used by 10 rules</summary>
 <div class="ox-param-rules"><code>additional_annotation</code> <code>call_variants_bcftools</code> <code>call_variants_ivar</code> <code>consensus_filter</code> <code>consensus_filter_bcftools</code> <code>ivar_to_vcf</code> <code>norm_vcf_bcftools</code> <code>sort_vcf</code> <code>variants_long_table</code> <code>variants_long_table_bcftools</code></div>
 </details>
@@ -549,7 +549,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 </div>
 
-The graph is derived at catalog-build time from `oxo-flow graph -f metro` and rendered with [nf-metro](https://github.com/seqeralabs/nf-metro) — rules are grouped into colored transit lines by analysis stage. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
+The graph is derived at catalog-build time from `oxo-flow graph -f metro` through the adaptive render ladder (`scripts/metro_tiers.py`): each workflow gets the finest metro tier that nf-metro renders while staying readable at site width — rule-level stations for smaller workflows, module-stage or module overview stations for dense ones. Colored transit lines group stations by analysis stage. Wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

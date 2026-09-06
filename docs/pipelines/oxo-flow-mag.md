@@ -75,28 +75,28 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-mag
 <div class="ox-params">
 <div class="ox-param">
 <div class="ox-param-head"><code>adapterremoval_adapter1</code><span class="ox-param-default">AGATCGGAAGAGCACACGTCTGAACTCCAGTCACNNNNNNATCTCGTATGCCGTCTTCTGCTTG</span></div>
-<p class="ox-param-desc">Clipping (upstream params with the same defaults; --clip_tool selects the adapter trimmer, fastp is the upstream default)</p>
+<p class="ox-param-desc">Clipping (upstream params with the same defaults; --clip_tool selects the<br>adapter trimmer, fastp is the upstream default)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>adapterremoval_pe</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>adapterremoval_adapter2</code><span class="ox-param-default">AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT</span></div>
-<p class="ox-param-desc">Clipping (upstream params with the same defaults; --clip_tool selects the adapter trimmer, fastp is the upstream default)</p>
+<p class="ox-param-desc">Clipping (upstream params with the same defaults; --clip_tool selects the<br>adapter trimmer, fastp is the upstream default)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>adapterremoval_pe</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>adapterremoval_minquality</code><span class="ox-param-default">2</span></div>
-<p class="ox-param-desc">Clipping (upstream params with the same defaults; --clip_tool selects the adapter trimmer, fastp is the upstream default)</p>
+<p class="ox-param-desc">Clipping (upstream params with the same defaults; --clip_tool selects the<br>adapter trimmer, fastp is the upstream default)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>adapterremoval_pe</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>adapterremoval_trim_quality_stretch</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Clipping (upstream params with the same defaults; --clip_tool selects the adapter trimmer, fastp is the upstream default)</p>
+<p class="ox-param-desc">Clipping (upstream params with the same defaults; --clip_tool selects the<br>adapter trimmer, fastp is the upstream default)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>adapterremoval_pe</code></div>
 </details>
@@ -159,7 +159,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-mag
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>bin_max_size</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Bin size filtering (upstream --bin_min_size / --bin_max_size; defaults 0/null make the seqkit-based filter a no-op)</p>
+<p class="ox-param-desc">Bin size filtering (upstream --bin_min_size / --bin_max_size; defaults<br>0/null make the seqkit-based filter a no-op)</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
@@ -173,84 +173,84 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-mag
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>bin_min_size</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">Bin size filtering (upstream --bin_min_size / --bin_max_size; defaults 0/null make the seqkit-based filter a no-op)</p>
+<p class="ox-param-desc">Bin size filtering (upstream --bin_min_size / --bin_max_size; defaults<br>0/null make the seqkit-based filter a no-op)</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cat_allow_unofficial_lineages</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">CAT/BAT bin classification (upstream --cat_db; the CAT_prepare database is user-provided — CAT_pack download + prepare, or the archive/directory itself; db/ and tax/ directories are discovered inside it)</p>
+<p class="ox-param-desc">CAT/BAT bin classification (upstream --cat_db; the CAT_prepare database<br>is user-provided — CAT_pack download + prepare, or the archive/directory<br>itself; db/ and tax/ directories are discovered inside it)</p>
 <details class="ox-param-usedby"><summary>used by 24 rules</summary>
 <div class="ox-param-rules"><code>catpack_addnames_megahit_comebin</code> <code>catpack_addnames_megahit_concoct</code> <code>catpack_addnames_megahit_maxbin2</code> <code>catpack_addnames_megahit_metabat2</code> <code>catpack_addnames_megahit_metabinner</code> <code>catpack_addnames_megahit_semibin2</code> <code>catpack_addnames_spades_comebin</code> <code>catpack_addnames_spades_concoct</code> <code>catpack_addnames_spades_maxbin2</code> <code>catpack_addnames_spades_metabat2</code> <code>catpack_addnames_spades_metabinner</code> <code>catpack_addnames_spades_semibin2</code> <code>catpack_summarise_megahit_comebin</code> <code>catpack_summarise_megahit_concoct</code> <code>catpack_summarise_megahit_maxbin2</code> <code>catpack_summarise_megahit_metabat2</code> <code>catpack_summarise_megahit_metabinner</code> <code>catpack_summarise_megahit_semibin2</code> <code>catpack_summarise_spades_comebin</code> <code>catpack_summarise_spades_concoct</code> <code>catpack_summarise_spades_maxbin2</code> <code>catpack_summarise_spades_metabat2</code> <code>catpack_summarise_spades_metabinner</code> <code>catpack_summarise_spades_semibin2</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cat_db</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">CAT/BAT bin classification (upstream --cat_db; the CAT_prepare database is user-provided — CAT_pack download + prepare, or the archive/directory itself; db/ and tax/ directories are discovered inside it)</p>
+<p class="ox-param-desc">CAT/BAT bin classification (upstream --cat_db; the CAT_prepare database<br>is user-provided — CAT_pack download + prepare, or the archive/directory<br>itself; db/ and tax/ directories are discovered inside it)</p>
 <details class="ox-param-usedby"><summary>used by 38 rules</summary>
 <div class="ox-param-rules"><code>cat_db_preparation</code> <code>catpack_addnames_megahit_comebin</code> <code>catpack_addnames_megahit_concoct</code> <code>catpack_addnames_megahit_maxbin2</code> <code>catpack_addnames_megahit_metabat2</code> <code>catpack_addnames_megahit_metabinner</code> <code>catpack_addnames_megahit_semibin2</code> <code>catpack_addnames_spades_comebin</code> <code>catpack_addnames_spades_concoct</code> <code>catpack_addnames_spades_maxbin2</code> <code>catpack_addnames_spades_metabat2</code> <code>catpack_addnames_spades_metabinner</code> <code>catpack_addnames_spades_semibin2</code> <code>catpack_bat_summary</code> <code>catpack_bins_megahit_comebin</code> <code>catpack_bins_megahit_concoct</code> <code>catpack_bins_megahit_maxbin2</code> <code>catpack_bins_megahit_metabat2</code> <code>catpack_bins_megahit_metabinner</code> <code>catpack_bins_megahit_semibin2</code> <code>catpack_bins_spades_comebin</code> <code>catpack_bins_spades_concoct</code> <code>catpack_bins_spades_maxbin2</code> <code>catpack_bins_spades_metabat2</code> <code>catpack_bins_spades_metabinner</code> <code>catpack_bins_spades_semibin2</code> <code>catpack_summarise_megahit_comebin</code> <code>catpack_summarise_megahit_concoct</code> <code>catpack_summarise_megahit_maxbin2</code> <code>catpack_summarise_megahit_metabat2</code> <code>catpack_summarise_megahit_metabinner</code> <code>catpack_summarise_megahit_semibin2</code> <code>catpack_summarise_spades_comebin</code> <code>catpack_summarise_spades_concoct</code> <code>catpack_summarise_spades_maxbin2</code> <code>catpack_summarise_spades_metabat2</code> <code>catpack_summarise_spades_metabinner</code> <code>catpack_summarise_spades_semibin2</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>checkm2_db</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">CheckM2 bin QC (upstream --run_checkm2; the ~10GB .dmnd database is user-provided — checkm2 database --download; fails fast when empty)</p>
+<p class="ox-param-desc">CheckM2 bin QC (upstream --run_checkm2; the ~10GB .dmnd database is<br>user-provided — checkm2 database --download; fails fast when empty)</p>
 <details class="ox-param-usedby"><summary>used by 12 rules</summary>
 <div class="ox-param-rules"><code>checkm2_megahit_comebin</code> <code>checkm2_megahit_concoct</code> <code>checkm2_megahit_maxbin2</code> <code>checkm2_megahit_metabat2</code> <code>checkm2_megahit_metabinner</code> <code>checkm2_megahit_semibin2</code> <code>checkm2_spades_comebin</code> <code>checkm2_spades_concoct</code> <code>checkm2_spades_maxbin2</code> <code>checkm2_spades_metabat2</code> <code>checkm2_spades_metabinner</code> <code>checkm2_spades_semibin2</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>checkm_db</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">CheckM bin QC (upstream --run_checkm; the 1.1GB lineage database is downloaded at env creation and unpacked at run time — see README)</p>
+<p class="ox-param-desc">CheckM bin QC (upstream --run_checkm; the 1.1GB lineage database is<br>downloaded at env creation and unpacked at run time — see README)</p>
 <details class="ox-param-usedby"><summary>used by 24 rules</summary>
 <div class="ox-param-rules"><code>checkm_lineagewf_megahit_comebin</code> <code>checkm_lineagewf_megahit_concoct</code> <code>checkm_lineagewf_megahit_maxbin2</code> <code>checkm_lineagewf_megahit_metabat2</code> <code>checkm_lineagewf_megahit_metabinner</code> <code>checkm_lineagewf_megahit_semibin2</code> <code>checkm_lineagewf_spades_comebin</code> <code>checkm_lineagewf_spades_concoct</code> <code>checkm_lineagewf_spades_maxbin2</code> <code>checkm_lineagewf_spades_metabat2</code> <code>checkm_lineagewf_spades_metabinner</code> <code>checkm_lineagewf_spades_semibin2</code> <code>checkm_qa_megahit_comebin</code> <code>checkm_qa_megahit_concoct</code> <code>checkm_qa_megahit_maxbin2</code> <code>checkm_qa_megahit_metabat2</code> <code>checkm_qa_megahit_metabinner</code> <code>checkm_qa_megahit_semibin2</code> <code>checkm_qa_spades_comebin</code> <code>checkm_qa_spades_concoct</code> <code>checkm_qa_spades_maxbin2</code> <code>checkm_qa_spades_metabat2</code> <code>checkm_qa_spades_metabinner</code> <code>checkm_qa_spades_semibin2</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>clip_tool</code><span class="ox-param-default">fastp</span></div>
-<p class="ox-param-desc">Clipping (upstream params with the same defaults; --clip_tool selects the adapter trimmer, fastp is the upstream default)</p>
+<p class="ox-param-desc">Clipping (upstream params with the same defaults; --clip_tool selects the<br>adapter trimmer, fastp is the upstream default)</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>adapterremoval_pe</code> <code>fastp</code> <code>trimmomatic</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cohort_samples</code><span class="ox-param-default">S1 S2</span></div>
-<p class="ox-param-desc">Space-separated list of sample ids used by the binning-preparation bowtie2 alignment rules (binning_map_mode=&#x27;group&#x27;: every assembly is aligned against every sample&#x27;s reads). Keep in sync with the sample group below.</p>
+<p class="ox-param-desc">Space-separated list of sample ids used by the binning-preparation<br>bowtie2 alignment rules (binning_map_mode=&#x27;group&#x27;: every assembly is<br>aligned against every sample&#x27;s reads). Keep in sync with the sample<br>group below.</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>bowtie2_align_megahit</code> <code>bowtie2_align_spades</code> <code>semibin_megahit</code> <code>semibin_spades</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>fastp_cut_mean_quality</code><span class="ox-param-default">15</span></div>
-<p class="ox-param-desc">Clipping (upstream params with the same defaults; --clip_tool selects the adapter trimmer, fastp is the upstream default)</p>
+<p class="ox-param-desc">Clipping (upstream params with the same defaults; --clip_tool selects the<br>adapter trimmer, fastp is the upstream default)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>fastp</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>fastp_qualified_quality</code><span class="ox-param-default">15</span></div>
-<p class="ox-param-desc">Clipping (upstream params with the same defaults; --clip_tool selects the adapter trimmer, fastp is the upstream default)</p>
+<p class="ox-param-desc">Clipping (upstream params with the same defaults; --clip_tool selects the<br>adapter trimmer, fastp is the upstream default)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>fastp</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>fastp_trim_polyg</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Clipping (upstream params with the same defaults; --clip_tool selects the adapter trimmer, fastp is the upstream default)</p>
+<p class="ox-param-desc">Clipping (upstream params with the same defaults; --clip_tool selects the<br>adapter trimmer, fastp is the upstream default)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>fastp</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>genomad_db</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Virus identification (upstream --run_virus_identification; the geNomad database is user-provided — genomad download-database; fails fast when empty)</p>
+<p class="ox-param-desc">Virus identification (upstream --run_virus_identification; the geNomad<br>database is user-provided — genomad download-database; fails fast when empty)</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>genomad_db_preparation</code> <code>genomad_megahit</code> <code>genomad_spades</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>gtdb_db</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">GTDB-Tk database: local path to the release .tar.gz or an unpacked directory (upstream --gtdb_db, ~100GB). oxo-flow cannot download it mid-run (the prep rule only unpacks), so the default is empty and run_gtdbtk=true fails fast until a local path is set.</p>
+<p class="ox-param-desc">GTDB-Tk database: local path to the release .tar.gz or an unpacked<br>directory (upstream --gtdb_db, ~100GB). oxo-flow cannot download it<br>mid-run (the prep rule only unpacks), so the default is empty and<br>run_gtdbtk=true fails fast until a local path is set.</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>gtdbtk_db_preparation</code></div>
 </details>
@@ -306,42 +306,42 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-mag
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>gunc_db</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">GUNC contamination QC (upstream --run_gunc; the reference database is user-provided — gunc download_db; fails fast when empty)</p>
+<p class="ox-param-desc">GUNC contamination QC (upstream --run_gunc; the reference database is<br>user-provided — gunc download_db; fails fast when empty)</p>
 <details class="ox-param-usedby"><summary>used by 12 rules</summary>
 <div class="ox-param-rules"><code>gunc_megahit_comebin</code> <code>gunc_megahit_concoct</code> <code>gunc_megahit_maxbin2</code> <code>gunc_megahit_metabat2</code> <code>gunc_megahit_metabinner</code> <code>gunc_megahit_semibin2</code> <code>gunc_spades_comebin</code> <code>gunc_spades_concoct</code> <code>gunc_spades_maxbin2</code> <code>gunc_spades_metabat2</code> <code>gunc_spades_metabinner</code> <code>gunc_spades_semibin2</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>host_fasta</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Host read removal (upstream --host_fasta / --host_fasta_bowtie2index; the reference fasta is required, the prebuilt bowtie2 index is optional and skips the build rule)</p>
+<p class="ox-param-desc">Host read removal (upstream --host_fasta / --host_fasta_bowtie2index; the<br>reference fasta is required, the prebuilt bowtie2 index is optional and<br>skips the build rule)</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>host_removal_align</code> <code>host_removal_build</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>host_fasta_bowtie2index</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Host read removal (upstream --host_fasta / --host_fasta_bowtie2index; the reference fasta is required, the prebuilt bowtie2 index is optional and skips the build rule)</p>
+<p class="ox-param-desc">Host read removal (upstream --host_fasta / --host_fasta_bowtie2index; the<br>reference fasta is required, the prebuilt bowtie2 index is optional and<br>skips the build rule)</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>host_removal_align</code> <code>host_removal_build</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>host_removal_verysensitive</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Host read removal (upstream --host_fasta / --host_fasta_bowtie2index; the reference fasta is required, the prebuilt bowtie2 index is optional and skips the build rule)</p>
+<p class="ox-param-desc">Host read removal (upstream --host_fasta / --host_fasta_bowtie2index; the<br>reference fasta is required, the prebuilt bowtie2 index is optional and<br>skips the build rule)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>host_removal_align</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>input_dir</code><span class="ox-param-default">test/fixtures/raw</span></div>
-<p class="ox-param-desc">Input directory containing {sample}_R1.fastq.gz / {sample}_R2.fastq.gz paired-end read files (upstream --input samplesheet; single-end and multi-library lanes are not ported). The repo default ships tiny test fixtures; point this at your data.</p>
+<p class="ox-param-desc">Input directory containing {sample}_R1.fastq.gz / {sample}_R2.fastq.gz<br>paired-end read files (upstream --input samplesheet; single-end and<br>multi-library lanes are not ported). The repo default ships tiny test<br>fixtures; point this at your data.</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>adapterremoval_pe</code> <code>fastp</code> <code>fastqc_raw</code> <code>trimmomatic</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>max_unbinned_contigs</code><span class="ox-param-default">100</span></div>
-<p class="ox-param-desc">Bin size filtering (upstream --bin_min_size / --bin_max_size; defaults 0/null make the seqkit-based filter a no-op)</p>
+<p class="ox-param-desc">Bin size filtering (upstream --bin_min_size / --bin_max_size; defaults<br>0/null make the seqkit-based filter a no-op)</p>
 <details class="ox-param-usedby"><summary>used by 6 rules</summary>
 <div class="ox-param-rules"><code>split_fasta_maxbin2_megahit</code> <code>split_fasta_maxbin2_spades</code> <code>split_fasta_metabat2_megahit</code> <code>split_fasta_metabat2_spades</code> <code>split_fasta_metabinner_megahit</code> <code>split_fasta_metabinner_spades</code></div>
 </details>
@@ -355,28 +355,28 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-mag
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>min_contig_size</code><span class="ox-param-default">1500</span></div>
-<p class="ox-param-desc">Bin size filtering (upstream --bin_min_size / --bin_max_size; defaults 0/null make the seqkit-based filter a no-op)</p>
+<p class="ox-param-desc">Bin size filtering (upstream --bin_min_size / --bin_max_size; defaults<br>0/null make the seqkit-based filter a no-op)</p>
 <details class="ox-param-usedby"><summary>used by 18 rules</summary>
 <div class="ox-param-rules"><code>metabat2_megahit</code> <code>metabat2_spades</code> <code>metabinner_bins_megahit</code> <code>metabinner_bins_spades</code> <code>metabinner_kmer_megahit</code> <code>metabinner_kmer_spades</code> <code>metabinner_run_megahit</code> <code>metabinner_run_spades</code> <code>metabinner_tooshort_megahit</code> <code>metabinner_tooshort_spades</code> <code>semibin_megahit</code> <code>semibin_spades</code> <code>split_fasta_maxbin2_megahit</code> <code>split_fasta_maxbin2_spades</code> <code>split_fasta_metabat2_megahit</code> <code>split_fasta_metabat2_spades</code> <code>split_fasta_metabinner_megahit</code> <code>split_fasta_metabinner_spades</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>min_length_unbinned_contigs</code><span class="ox-param-default">1000000</span></div>
-<p class="ox-param-desc">Bin size filtering (upstream --bin_min_size / --bin_max_size; defaults 0/null make the seqkit-based filter a no-op)</p>
+<p class="ox-param-desc">Bin size filtering (upstream --bin_min_size / --bin_max_size; defaults<br>0/null make the seqkit-based filter a no-op)</p>
 <details class="ox-param-usedby"><summary>used by 6 rules</summary>
 <div class="ox-param-rules"><code>split_fasta_maxbin2_megahit</code> <code>split_fasta_maxbin2_spades</code> <code>split_fasta_metabat2_megahit</code> <code>split_fasta_metabat2_spades</code> <code>split_fasta_metabinner_megahit</code> <code>split_fasta_metabinner_spades</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>out_dir</code><span class="ox-param-default">results</span></div>
-<p class="ox-param-desc">Input directory containing {sample}_R1.fastq.gz / {sample}_R2.fastq.gz paired-end read files (upstream --input samplesheet; single-end and multi-library lanes are not ported). The repo default ships tiny test fixtures; point this at your data.</p>
+<p class="ox-param-desc">Input directory containing {sample}_R1.fastq.gz / {sample}_R2.fastq.gz<br>paired-end read files (upstream --input samplesheet; single-end and<br>multi-library lanes are not ported). The repo default ships tiny test<br>fixtures; point this at your data.</p>
 <details class="ox-param-usedby"><summary>used by 276 rules</summary>
 <div class="ox-param-rules"><code>adapterremoval_pe</code> <code>ale_megahit</code> <code>ale_spades</code> <code>bbnorm</code> <code>bin_summary</code> <code>bowtie2_align_megahit</code> <code>bowtie2_align_spades</code> <code>busco_megahit_comebin</code> <code>busco_megahit_concoct</code> <code>busco_megahit_maxbin2</code> <code>busco_megahit_metabat2</code> <code>busco_megahit_metabinner</code> <code>busco_megahit_semibin2</code> <code>busco_spades_comebin</code> <code>busco_spades_concoct</code> <code>busco_spades_maxbin2</code> <code>busco_spades_metabat2</code> <code>busco_spades_metabinner</code> <code>busco_spades_semibin2</code> <code>catpack_addnames_megahit_comebin</code> <code>catpack_addnames_megahit_concoct</code> <code>catpack_addnames_megahit_maxbin2</code> <code>catpack_addnames_megahit_metabat2</code> <code>catpack_addnames_megahit_metabinner</code> <code>catpack_addnames_megahit_semibin2</code> <code>catpack_addnames_spades_comebin</code> <code>catpack_addnames_spades_concoct</code> <code>catpack_addnames_spades_maxbin2</code> <code>catpack_addnames_spades_metabat2</code> <code>catpack_addnames_spades_metabinner</code> <code>catpack_addnames_spades_semibin2</code> <code>catpack_bat_summary</code> <code>catpack_bins_megahit_comebin</code> <code>catpack_bins_megahit_concoct</code> <code>catpack_bins_megahit_maxbin2</code> <code>catpack_bins_megahit_metabat2</code> <code>catpack_bins_megahit_metabinner</code> <code>catpack_bins_megahit_semibin2</code> <code>catpack_bins_spades_comebin</code> <code>catpack_bins_spades_concoct</code> <code>catpack_bins_spades_maxbin2</code> <code>catpack_bins_spades_metabat2</code> <code>catpack_bins_spades_metabinner</code> <code>catpack_bins_spades_semibin2</code> <code>catpack_summarise_megahit_comebin</code> <code>catpack_summarise_megahit_concoct</code> <code>catpack_summarise_megahit_maxbin2</code> <code>catpack_summarise_megahit_metabat2</code> <code>catpack_summarise_megahit_metabinner</code> <code>catpack_summarise_megahit_semibin2</code> <code>catpack_summarise_spades_comebin</code> <code>catpack_summarise_spades_concoct</code> <code>catpack_summarise_spades_maxbin2</code> <code>catpack_summarise_spades_metabat2</code> <code>catpack_summarise_spades_metabinner</code> <code>catpack_summarise_spades_semibin2</code> <code>checkm2_megahit_comebin</code> <code>checkm2_megahit_concoct</code> <code>checkm2_megahit_maxbin2</code> <code>checkm2_megahit_metabat2</code> <code>checkm2_megahit_metabinner</code> <code>checkm2_megahit_semibin2</code> <code>checkm2_spades_comebin</code> <code>checkm2_spades_concoct</code> <code>checkm2_spades_maxbin2</code> <code>checkm2_spades_metabat2</code> <code>checkm2_spades_metabinner</code> <code>checkm2_spades_semibin2</code> <code>checkm_lineagewf_megahit_comebin</code> <code>checkm_lineagewf_megahit_concoct</code> <code>checkm_lineagewf_megahit_maxbin2</code> <code>checkm_lineagewf_megahit_metabat2</code> <code>checkm_lineagewf_megahit_metabinner</code> <code>checkm_lineagewf_megahit_semibin2</code> <code>checkm_lineagewf_spades_comebin</code> <code>checkm_lineagewf_spades_concoct</code> <code>checkm_lineagewf_spades_maxbin2</code> <code>checkm_lineagewf_spades_metabat2</code> <code>checkm_lineagewf_spades_metabinner</code> <code>checkm_lineagewf_spades_semibin2</code> <code>checkm_qa_megahit_comebin</code> <code>checkm_qa_megahit_concoct</code> <code>checkm_qa_megahit_maxbin2</code> <code>checkm_qa_megahit_metabat2</code> <code>checkm_qa_megahit_metabinner</code> <code>checkm_qa_megahit_semibin2</code> <code>checkm_qa_spades_comebin</code> <code>checkm_qa_spades_concoct</code> <code>checkm_qa_spades_maxbin2</code> <code>checkm_qa_spades_metabat2</code> <code>checkm_qa_spades_metabinner</code> <code>checkm_qa_spades_semibin2</code> <code>comebin_megahit</code> <code>comebin_spades</code> <code>concat_busco</code> <code>concat_checkm2_tsv</code> <code>concat_checkm_tsv</code> <code>concat_gunc_checkm_tsv</code> <code>concat_gunc_tsv</code> <code>concat_quast</code> <code>concat_tiara_tsv</code> <code>concoct_extract_megahit</code> <code>concoct_extract_spades</code> <code>concoct_merge_megahit</code> <code>concoct_merge_spades</code> <code>dastool_dastool_megahit</code> <code>dastool_dastool_spades</code> <code>dastool_rename_post_megahit</code> <code>dastool_rename_post_spades</code> <code>dastool_rename_pre_megahit_comebin</code> <code>dastool_rename_pre_megahit_concoct</code> <code>dastool_rename_pre_megahit_maxbin2</code> <code>dastool_rename_pre_megahit_metabat2</code> <code>dastool_rename_pre_megahit_metabinner</code> <code>dastool_rename_pre_megahit_semibin2</code> <code>dastool_rename_pre_spades_comebin</code> <code>dastool_rename_pre_spades_concoct</code> <code>dastool_rename_pre_spades_maxbin2</code> <code>dastool_rename_pre_spades_metabat2</code> <code>dastool_rename_pre_spades_metabinner</code> <code>dastool_rename_pre_spades_semibin2</code> <code>depths_megahit</code> <code>depths_spades</code> <code>fastatocontig2bin_tiara_megahit_comebin_bins</code> <code>fastatocontig2bin_tiara_megahit_concoct_bins</code> <code>fastatocontig2bin_tiara_megahit_maxbin2_bins</code> <code>fastatocontig2bin_tiara_megahit_maxbin2_unbins</code> <code>fastatocontig2bin_tiara_megahit_metabat2_bins</code> <code>fastatocontig2bin_tiara_megahit_metabat2_unbins</code> <code>fastatocontig2bin_tiara_megahit_metabinner_bins</code> <code>fastatocontig2bin_tiara_megahit_metabinner_unbins</code> <code>fastatocontig2bin_tiara_megahit_semibin2_bins</code> <code>fastatocontig2bin_tiara_spades_comebin_bins</code> <code>fastatocontig2bin_tiara_spades_concoct_bins</code> <code>fastatocontig2bin_tiara_spades_maxbin2_bins</code> <code>fastatocontig2bin_tiara_spades_maxbin2_unbins</code> <code>fastatocontig2bin_tiara_spades_metabat2_bins</code> <code>fastatocontig2bin_tiara_spades_metabat2_unbins</code> <code>fastatocontig2bin_tiara_spades_metabinner_bins</code> <code>fastatocontig2bin_tiara_spades_metabinner_unbins</code> <code>fastatocontig2bin_tiara_spades_semibin2_bins</code> <code>fastp</code> <code>fastqc_raw</code> <code>fastqc_trimmed</code> <code>genomad_megahit</code> <code>genomad_spades</code> <code>gtdbtk_megahit_comebin</code> <code>gtdbtk_megahit_concoct</code> <code>gtdbtk_megahit_maxbin2</code> <code>gtdbtk_megahit_metabat2</code> <code>gtdbtk_megahit_metabinner</code> <code>gtdbtk_megahit_semibin2</code> <code>gtdbtk_spades_comebin</code> <code>gtdbtk_spades_concoct</code> <code>gtdbtk_spades_maxbin2</code> <code>gtdbtk_spades_metabat2</code> <code>gtdbtk_spades_metabinner</code> <code>gtdbtk_spades_semibin2</code> <code>gtdbtk_summary</code> <code>gunc_megahit_comebin</code> <code>gunc_megahit_concoct</code> <code>gunc_megahit_maxbin2</code> <code>gunc_megahit_metabat2</code> <code>gunc_megahit_metabinner</code> <code>gunc_megahit_semibin2</code> <code>gunc_mergecheckm_megahit_comebin</code> <code>gunc_mergecheckm_megahit_concoct</code> <code>gunc_mergecheckm_megahit_maxbin2</code> <code>gunc_mergecheckm_megahit_metabat2</code> <code>gunc_mergecheckm_megahit_metabinner</code> <code>gunc_mergecheckm_megahit_semibin2</code> <code>gunc_mergecheckm_spades_comebin</code> <code>gunc_mergecheckm_spades_concoct</code> <code>gunc_mergecheckm_spades_maxbin2</code> <code>gunc_mergecheckm_spades_metabat2</code> <code>gunc_mergecheckm_spades_metabinner</code> <code>gunc_mergecheckm_spades_semibin2</code> <code>gunc_spades_comebin</code> <code>gunc_spades_concoct</code> <code>gunc_spades_maxbin2</code> <code>gunc_spades_metabat2</code> <code>gunc_spades_metabinner</code> <code>gunc_spades_semibin2</code> <code>host_removal_align</code> <code>mag_depths_megahit_comebin</code> <code>mag_depths_megahit_concoct</code> <code>mag_depths_megahit_maxbin2</code> <code>mag_depths_megahit_metabat2</code> <code>mag_depths_megahit_metabinner</code> <code>mag_depths_megahit_semibin2</code> <code>mag_depths_spades_comebin</code> <code>mag_depths_spades_concoct</code> <code>mag_depths_spades_maxbin2</code> <code>mag_depths_spades_metabat2</code> <code>mag_depths_spades_metabinner</code> <code>mag_depths_spades_semibin2</code> <code>mag_depths_summary</code> <code>maxbin2_megahit</code> <code>maxbin2_spades</code> <code>megahit</code> <code>metabat2_megahit</code> <code>metabat2_spades</code> <code>metabinner_bins_megahit</code> <code>metabinner_bins_spades</code> <code>multiqc</code> <code>phix_align</code> <code>prodigal_megahit</code> <code>prodigal_spades</code> <code>prokka_megahit_comebin</code> <code>prokka_megahit_concoct</code> <code>prokka_megahit_maxbin2</code> <code>prokka_megahit_metabat2</code> <code>prokka_megahit_metabinner</code> <code>prokka_megahit_semibin2</code> <code>prokka_spades_comebin</code> <code>prokka_spades_concoct</code> <code>prokka_spades_maxbin2</code> <code>prokka_spades_metabat2</code> <code>prokka_spades_metabinner</code> <code>prokka_spades_semibin2</code> <code>quast_bins_megahit_comebin</code> <code>quast_bins_megahit_concoct</code> <code>quast_bins_megahit_maxbin2</code> <code>quast_bins_megahit_metabat2</code> <code>quast_bins_megahit_metabinner</code> <code>quast_bins_megahit_semibin2</code> <code>quast_bins_spades_comebin</code> <code>quast_bins_spades_concoct</code> <code>quast_bins_spades_maxbin2</code> <code>quast_bins_spades_metabat2</code> <code>quast_bins_spades_metabinner</code> <code>quast_bins_spades_semibin2</code> <code>quast_megahit</code> <code>quast_spades</code> <code>semibin_megahit</code> <code>semibin_spades</code> <code>seqkit_megahit_comebin</code> <code>seqkit_megahit_concoct</code> <code>seqkit_megahit_maxbin2</code> <code>seqkit_megahit_metabat2</code> <code>seqkit_megahit_metabinner</code> <code>seqkit_megahit_semibin</code> <code>seqkit_spades_comebin</code> <code>seqkit_spades_concoct</code> <code>seqkit_spades_maxbin2</code> <code>seqkit_spades_metabat2</code> <code>seqkit_spades_metabinner</code> <code>seqkit_spades_semibin</code> <code>spades</code> <code>split_fasta_maxbin2_megahit</code> <code>split_fasta_maxbin2_spades</code> <code>split_fasta_metabat2_megahit</code> <code>split_fasta_metabat2_spades</code> <code>split_fasta_metabinner_megahit</code> <code>split_fasta_metabinner_spades</code> <code>tiara_classify_megahit_comebin_bins</code> <code>tiara_classify_megahit_concoct_bins</code> <code>tiara_classify_megahit_maxbin2_bins</code> <code>tiara_classify_megahit_maxbin2_unbins</code> <code>tiara_classify_megahit_metabat2_bins</code> <code>tiara_classify_megahit_metabat2_unbins</code> <code>tiara_classify_megahit_metabinner_bins</code> <code>tiara_classify_megahit_metabinner_unbins</code> <code>tiara_classify_megahit_semibin2_bins</code> <code>tiara_classify_spades_comebin_bins</code> <code>tiara_classify_spades_concoct_bins</code> <code>tiara_classify_spades_maxbin2_bins</code> <code>tiara_classify_spades_maxbin2_unbins</code> <code>tiara_classify_spades_metabat2_bins</code> <code>tiara_classify_spades_metabat2_unbins</code> <code>tiara_classify_spades_metabinner_bins</code> <code>tiara_classify_spades_metabinner_unbins</code> <code>tiara_classify_spades_semibin2_bins</code> <code>tiara_tiara_megahit</code> <code>tiara_tiara_spades</code> <code>trimmomatic</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>phix_reference</code><span class="ox-param-default">assets/data/GCA_002596845.1_ASM259684v1_genomic.fna.gz</span></div>
-<p class="ox-param-desc">phiX reference (upstream --phix_reference default = projectDir/assets/data/GCA_002596845.1_ASM259684v1_genomic.fna.gz)</p>
+<p class="ox-param-desc">phiX reference (upstream --phix_reference default =<br>projectDir/assets/data/GCA_002596845.1_ASM259684v1_genomic.fna.gz)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>phix_build</code></div>
 </details>
@@ -397,7 +397,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-mag
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>reads_minlength</code><span class="ox-param-default">15</span></div>
-<p class="ox-param-desc">Clipping (upstream params with the same defaults; --clip_tool selects the adapter trimmer, fastp is the upstream default)</p>
+<p class="ox-param-desc">Clipping (upstream params with the same defaults; --clip_tool selects the<br>adapter trimmer, fastp is the upstream default)</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>adapterremoval_pe</code> <code>fastp</code></div>
 </details>
@@ -418,35 +418,35 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-mag
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_checkm</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">CheckM bin QC (upstream --run_checkm; the 1.1GB lineage database is downloaded at env creation and unpacked at run time — see README)</p>
+<p class="ox-param-desc">CheckM bin QC (upstream --run_checkm; the 1.1GB lineage database is<br>downloaded at env creation and unpacked at run time — see README)</p>
 <details class="ox-param-usedby"><summary>used by 38 rules</summary>
 <div class="ox-param-rules"><code>checkm_lineagewf_megahit_comebin</code> <code>checkm_lineagewf_megahit_concoct</code> <code>checkm_lineagewf_megahit_maxbin2</code> <code>checkm_lineagewf_megahit_metabat2</code> <code>checkm_lineagewf_megahit_metabinner</code> <code>checkm_lineagewf_megahit_semibin2</code> <code>checkm_lineagewf_spades_comebin</code> <code>checkm_lineagewf_spades_concoct</code> <code>checkm_lineagewf_spades_maxbin2</code> <code>checkm_lineagewf_spades_metabat2</code> <code>checkm_lineagewf_spades_metabinner</code> <code>checkm_lineagewf_spades_semibin2</code> <code>checkm_qa_megahit_comebin</code> <code>checkm_qa_megahit_concoct</code> <code>checkm_qa_megahit_maxbin2</code> <code>checkm_qa_megahit_metabat2</code> <code>checkm_qa_megahit_metabinner</code> <code>checkm_qa_megahit_semibin2</code> <code>checkm_qa_spades_comebin</code> <code>checkm_qa_spades_concoct</code> <code>checkm_qa_spades_maxbin2</code> <code>checkm_qa_spades_metabat2</code> <code>checkm_qa_spades_metabinner</code> <code>checkm_qa_spades_semibin2</code> <code>concat_checkm_tsv</code> <code>concat_gunc_checkm_tsv</code> <code>gunc_mergecheckm_megahit_comebin</code> <code>gunc_mergecheckm_megahit_concoct</code> <code>gunc_mergecheckm_megahit_maxbin2</code> <code>gunc_mergecheckm_megahit_metabat2</code> <code>gunc_mergecheckm_megahit_metabinner</code> <code>gunc_mergecheckm_megahit_semibin2</code> <code>gunc_mergecheckm_spades_comebin</code> <code>gunc_mergecheckm_spades_concoct</code> <code>gunc_mergecheckm_spades_maxbin2</code> <code>gunc_mergecheckm_spades_metabat2</code> <code>gunc_mergecheckm_spades_metabinner</code> <code>gunc_mergecheckm_spades_semibin2</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_checkm2</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">CheckM2 bin QC (upstream --run_checkm2; the ~10GB .dmnd database is user-provided — checkm2 database --download; fails fast when empty)</p>
+<p class="ox-param-desc">CheckM2 bin QC (upstream --run_checkm2; the ~10GB .dmnd database is<br>user-provided — checkm2 database --download; fails fast when empty)</p>
 <details class="ox-param-usedby"><summary>used by 13 rules</summary>
 <div class="ox-param-rules"><code>checkm2_megahit_comebin</code> <code>checkm2_megahit_concoct</code> <code>checkm2_megahit_maxbin2</code> <code>checkm2_megahit_metabat2</code> <code>checkm2_megahit_metabinner</code> <code>checkm2_megahit_semibin2</code> <code>checkm2_spades_comebin</code> <code>checkm2_spades_concoct</code> <code>checkm2_spades_maxbin2</code> <code>checkm2_spades_metabat2</code> <code>checkm2_spades_metabinner</code> <code>checkm2_spades_semibin2</code> <code>concat_checkm2_tsv</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_gtdbtk</code><span class="ox-param-default">true</span></div>
-<p class="ox-param-desc">GTDB-Tk gate: the ~100GB reference database is user-provided (see the README requirements); run_gtdbtk=false runs the full pipeline minus the GTDB-Tk classification (the documented live-test contract).</p>
+<p class="ox-param-desc">GTDB-Tk gate: the ~100GB reference database is user-provided (see the<br>README requirements); run_gtdbtk=false runs the full pipeline minus the<br>GTDB-Tk classification (the documented live-test contract).</p>
 <details class="ox-param-usedby"><summary>used by 14 rules</summary>
 <div class="ox-param-rules"><code>gtdbtk_db_preparation</code> <code>gtdbtk_megahit_comebin</code> <code>gtdbtk_megahit_concoct</code> <code>gtdbtk_megahit_maxbin2</code> <code>gtdbtk_megahit_metabat2</code> <code>gtdbtk_megahit_metabinner</code> <code>gtdbtk_megahit_semibin2</code> <code>gtdbtk_spades_comebin</code> <code>gtdbtk_spades_concoct</code> <code>gtdbtk_spades_maxbin2</code> <code>gtdbtk_spades_metabat2</code> <code>gtdbtk_spades_metabinner</code> <code>gtdbtk_spades_semibin2</code> <code>gtdbtk_summary</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_gunc</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">GUNC contamination QC (upstream --run_gunc; the reference database is user-provided — gunc download_db; fails fast when empty)</p>
+<p class="ox-param-desc">GUNC contamination QC (upstream --run_gunc; the reference database is<br>user-provided — gunc download_db; fails fast when empty)</p>
 <details class="ox-param-usedby"><summary>used by 26 rules</summary>
 <div class="ox-param-rules"><code>concat_gunc_checkm_tsv</code> <code>concat_gunc_tsv</code> <code>gunc_megahit_comebin</code> <code>gunc_megahit_concoct</code> <code>gunc_megahit_maxbin2</code> <code>gunc_megahit_metabat2</code> <code>gunc_megahit_metabinner</code> <code>gunc_megahit_semibin2</code> <code>gunc_mergecheckm_megahit_comebin</code> <code>gunc_mergecheckm_megahit_concoct</code> <code>gunc_mergecheckm_megahit_maxbin2</code> <code>gunc_mergecheckm_megahit_metabat2</code> <code>gunc_mergecheckm_megahit_metabinner</code> <code>gunc_mergecheckm_megahit_semibin2</code> <code>gunc_mergecheckm_spades_comebin</code> <code>gunc_mergecheckm_spades_concoct</code> <code>gunc_mergecheckm_spades_maxbin2</code> <code>gunc_mergecheckm_spades_metabat2</code> <code>gunc_mergecheckm_spades_metabinner</code> <code>gunc_mergecheckm_spades_semibin2</code> <code>gunc_spades_comebin</code> <code>gunc_spades_concoct</code> <code>gunc_spades_maxbin2</code> <code>gunc_spades_metabat2</code> <code>gunc_spades_metabinner</code> <code>gunc_spades_semibin2</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_virus_identification</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Virus identification (upstream --run_virus_identification; the geNomad database is user-provided — genomad download-database; fails fast when empty)</p>
+<p class="ox-param-desc">Virus identification (upstream --run_virus_identification; the geNomad<br>database is user-provided — genomad download-database; fails fast when empty)</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>genomad_db_preparation</code> <code>genomad_megahit</code> <code>genomad_spades</code></div>
 </details>
@@ -493,7 +493,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 </div>
 
-The graph is derived at catalog-build time from `oxo-flow graph -f metro` and rendered with [nf-metro](https://github.com/seqeralabs/nf-metro) — rules are grouped into colored transit lines by analysis stage. It shows the workflow at rule level: wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
+The graph is derived at catalog-build time from `oxo-flow graph -f metro` through the adaptive render ladder (`scripts/metro_tiers.py`): each workflow gets the finest metro tier that nf-metro renders while staying readable at site width — rule-level stations for smaller workflows, module-stage or module overview stations for dense ones. Colored transit lines group stations by analysis stage. Wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 
