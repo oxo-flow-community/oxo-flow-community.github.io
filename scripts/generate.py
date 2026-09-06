@@ -17,6 +17,7 @@ from __future__ import annotations
 import html
 import json
 import pathlib
+import re
 import sys
 
 from param_fallbacks import fallback_description
@@ -398,12 +399,19 @@ def dag_section(p: dict) -> list[str]:
         raise SystemExit(
             f"missing {svg.relative_to(ROOT)} for '{name}' — run scripts/regen-configs.py"
         )
+    # The map's stations name the workflow's own module namespaces; the
+    # caption's first sentence of the registry description reads the
+    # pipeline as a flow (fastp QC → alignment → callers → report), so
+    # both a newcomer and a designer who knows the pipeline can make
+    # sense of the figure without decoding file stems.
+    summary = re.split(r"(?<=[.!?])\s+", p.get("description", "").strip())[0]
+    caption = f"figure · {name} — {summary}"
     cards = [
         '<div class="ox-dag-card" markdown="1">',
         "",
         f"![{name} pipeline overview](../assets/dag/{name}.svg)",
         "",
-        f'<p class="ox-dag-caption">figure · {name} — pipeline overview (nf-metro transit map)</p>',
+        f'<p class="ox-dag-caption">{_esc(caption)}</p>',
         "",
         "</div>",
     ]

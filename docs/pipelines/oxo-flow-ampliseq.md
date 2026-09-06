@@ -479,7 +479,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 ![oxo-flow-ampliseq pipeline overview](../assets/dag/oxo-flow-ampliseq.svg)
 
-<p class="ox-dag-caption">figure · oxo-flow-ampliseq — pipeline overview (nf-metro transit map)</p>
+<p class="ox-dag-caption">figure · oxo-flow-ampliseq — Amplicon sequencing analysis (16S/ITS) that takes raw paired-end reads through FastQC quality control, cutadapt primer trimming (incl.</p>
 
 </div>
 

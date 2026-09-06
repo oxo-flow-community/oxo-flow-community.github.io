@@ -237,7 +237,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 ![oxo-flow-genome-tracks pipeline overview](../assets/dag/oxo-flow-genome-tracks.svg)
 
-<p class="ox-dag-caption">figure · oxo-flow-genome-tracks — pipeline overview (nf-metro transit map)</p>
+<p class="ox-dag-caption">figure · oxo-flow-genome-tracks — Merge BAM files per experimental group with samtools, compute normalized bigWig coverage with deepTools bamCoverage (RPGC by default), plot isoform-aware per-gene and per-region genome tracks with gtracks/pyGenomeTracks, and publish a UCSC genome browser track hub — end-to-end track generation for RNA-seq, ATAC-seq and other aligned BAM data, plus the single-cell branch (sinto per-cell-barcode splitting of sc BAMs into per-group BAMs), an opt-in IGV report of all merged BAMs over the annotated gene regions, and opt-in conda environment export rules (env_export_*, conda env export).</p>
 
 </div>
 

@@ -282,7 +282,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 ![oxo-flow-tcasia pipeline overview](../assets/dag/oxo-flow-tcasia.svg)
 
-<p class="ox-dag-caption">figure · oxo-flow-tcasia — pipeline overview (nf-metro transit map)</p>
+<p class="ox-dag-caption">figure · oxo-flow-tcasia — Paired-end RNA-seq from FASTQ to per-sample alternative-splicing calls: reads are trimmed with fastp, aligned with two-pass STAR and counted per gene with featureCounts; each sample&#x27;s splicing is then quantified independently with four callers — rMATS, MAJIQ (with Voila export), SUPPA2 (via Salmon transcript quantification) and SplAdder.</p>
 
 </div>
 

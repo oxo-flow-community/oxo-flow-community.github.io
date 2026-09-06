@@ -333,7 +333,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 ![oxo-flow-bgcflow pipeline overview](../assets/dag/oxo-flow-bgcflow.svg)
 
-<p class="ox-dag-caption">figure · oxo-flow-bgcflow — pipeline overview (nf-metro transit map)</p>
+<p class="ox-dag-caption">figure · oxo-flow-bgcflow — End-to-end biosynthetic gene cluster (BGC) analysis of user-provided bacterial genomes: prokka annotation, antiSMASH 7 secondary-metabolite mining with automated database setup, per-genome BGC counts and overview tables, GTDB taxonomy lookup, MIBiG reference table download, BigSCAPE-compatible comparison preparation (symlinks, taxonomy, dataset registry, visualization mapping), and conversion of all result tables into a parquet data warehouse — ready for downstream comparison and exploration.</p>
 
 </div>
 

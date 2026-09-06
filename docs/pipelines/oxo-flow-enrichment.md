@@ -686,7 +686,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 ![oxo-flow-enrichment pipeline overview](../assets/dag/oxo-flow-enrichment.svg)
 
-<p class="ox-dag-caption">figure · oxo-flow-enrichment — pipeline overview (nf-metro transit map)</p>
+<p class="ox-dag-caption">figure · oxo-flow-enrichment — Run a complete region set and gene set enrichment analysis on your own data: region overlap enrichment (LOLA), genomic region enrichment of annotated terms (rGREAT), region TFBS motif enrichment (pycisTarget), gene TFBS motif enrichment (RcisTarget), and gene over-representation analysis (ORA) and preranked GSEA (GSEApy).</p>
 
 </div>
 

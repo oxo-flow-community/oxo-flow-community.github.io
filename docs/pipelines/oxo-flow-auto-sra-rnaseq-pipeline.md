@@ -179,7 +179,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 ![oxo-flow-auto-sra-rnaseq-pipeline pipeline overview](../assets/dag/oxo-flow-auto-sra-rnaseq-pipeline.svg)
 
-<p class="ox-dag-caption">figure · oxo-flow-auto-sra-rnaseq-pipeline — pipeline overview (nf-metro transit map)</p>
+<p class="ox-dag-caption">figure · oxo-flow-auto-sra-rnaseq-pipeline — Automated RNA-seq analysis from locally downloaded SRA archives to differential expression results: verify and symlink .sra files, fasterq-dump conversion to FASTQ, read merging across multiple SRR runs per sample, fastp trimming, STAR alignment with gene counts, BAM indexing, BPM-normalized bigWig signal tracks, a merged count matrix, and DESeq2 differential analysis with ashr shrinkage.</p>
 
 </div>
 

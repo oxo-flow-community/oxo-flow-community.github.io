@@ -171,7 +171,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 ![oxo-flow-fetchngs pipeline overview](../assets/dag/oxo-flow-fetchngs.svg)
 
-<p class="ox-dag-caption">figure · oxo-flow-fetchngs — pipeline overview (nf-metro transit map)</p>
+<p class="ox-dag-caption">figure · oxo-flow-fetchngs — Fetch metadata and raw FastQ files from public sequence databases (SRA/ENA/DDBJ/GEO).</p>
 
 </div>
 

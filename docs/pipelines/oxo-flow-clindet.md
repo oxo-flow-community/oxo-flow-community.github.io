@@ -548,7 +548,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 ![oxo-flow-clindet pipeline overview](../assets/dag/oxo-flow-clindet.svg)
 
-<p class="ox-dag-caption">figure · oxo-flow-clindet — pipeline overview (nf-metro transit map)</p>
+<p class="ox-dag-caption">figure · oxo-flow-clindet — Port of zyllifeworld/clindet in its upstream single-Snakefile form: one entry file, config run_type (wes|wgs|rna) selects the rule tree, and paired vs tumor-only WES is derived PER PAIR from the sample sheet (a pair without a control runs the tumor-only tree — engine wildcard-scoped when predicates).</p>
 
 </div>
 
