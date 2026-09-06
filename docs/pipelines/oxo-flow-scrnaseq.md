@@ -450,6 +450,8 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 ## Workflow graph
 
+<details class="ox-flow-view">
+<summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 
 <img src="/assets/dag/oxo-flow-scrnaseq.svg?v=6f91dd3a86" alt="oxo-flow-scrnaseq pipeline overview" loading="lazy">
@@ -457,6 +459,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <p class="ox-dag-caption">figure · oxo-flow-scrnaseq — Single-cell RNA-seq analysis from raw FASTQ reads to a final MultiQC report, on all six upstream aligner branches of nf-core/scrnaseq 4.2.0: cellranger (default, count or multi with per-modality GEX/VDJ/Ab/BEAM/CRISPR/CMO via the metadata table), simpleaf (upstream default; index + quant + optional QCatch), kallisto/bustools (standard/lamanno/nac), STARsolo (incl.</p>
 
 </div>
+</details>
 
 <p class="ox-dag-note">Read: stations are rules (or module groups); a line is a data dependency; stations without any line are <em>off-track</em> inputs/terminal exports with no dataflow edge; separate groups of lines are independent chains (e.g. a quantifier reading raw reads while the alignment chain runs aside — live: tcasia salmon_quant). The map shows the template DAG; <code>oxo-flow graph --expanded</code> adds one node per sample instance.</p>
 

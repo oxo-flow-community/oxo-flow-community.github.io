@@ -175,6 +175,8 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 ## Workflow graph
 
+<details class="ox-flow-view">
+<summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 
 <img src="/assets/dag/oxo-flow-auto-sra-rnaseq-pipeline.svg?v=f1b0c20078" alt="oxo-flow-auto-sra-rnaseq-pipeline pipeline overview" loading="lazy">
@@ -182,6 +184,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <p class="ox-dag-caption">figure · oxo-flow-auto-sra-rnaseq-pipeline — Automated RNA-seq analysis from locally downloaded SRA archives to differential expression results: verify and symlink .sra files, fasterq-dump conversion to FASTQ, read merging across multiple SRR runs per sample, fastp trimming, STAR alignment with gene counts, BAM indexing, BPM-normalized bigWig signal tracks, a merged count matrix, and DESeq2 differential analysis with ashr shrinkage.</p>
 
 </div>
+</details>
 
 <p class="ox-dag-note">Read: stations are rules (or module groups); a line is a data dependency; stations without any line are <em>off-track</em> inputs/terminal exports with no dataflow edge; separate groups of lines are independent chains (e.g. a quantifier reading raw reads while the alignment chain runs aside — live: tcasia salmon_quant). The map shows the template DAG; <code>oxo-flow graph --expanded</code> adds one node per sample instance.</p>
 

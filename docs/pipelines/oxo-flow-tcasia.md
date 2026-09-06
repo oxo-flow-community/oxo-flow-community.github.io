@@ -278,6 +278,8 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 ## Workflow graph
 
+<details class="ox-flow-view">
+<summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 
 <img src="/assets/dag/oxo-flow-tcasia.svg?v=b8708157cf" alt="oxo-flow-tcasia pipeline overview" loading="lazy">
@@ -285,6 +287,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <p class="ox-dag-caption">figure · oxo-flow-tcasia — Paired-end RNA-seq from FASTQ to per-sample alternative-splicing calls: reads are trimmed with fastp, aligned with two-pass STAR and counted per gene with featureCounts; each sample&#x27;s splicing is then quantified independently with four callers — rMATS, MAJIQ (with Voila export), SUPPA2 (via Salmon transcript quantification) and SplAdder.</p>
 
 </div>
+</details>
 
 <p class="ox-dag-note">Read: stations are rules (or module groups); a line is a data dependency; stations without any line are <em>off-track</em> inputs/terminal exports with no dataflow edge; separate groups of lines are independent chains (e.g. a quantifier reading raw reads while the alignment chain runs aside — live: tcasia salmon_quant). The map shows the template DAG; <code>oxo-flow graph --expanded</code> adds one node per sample instance.</p>
 

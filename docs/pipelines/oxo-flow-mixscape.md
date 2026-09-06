@@ -236,6 +236,8 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 ## Workflow graph
 
+<details class="ox-flow-view">
+<summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 
 <img src="/assets/dag/oxo-flow-mixscape.svg?v=d435a0a077" alt="oxo-flow-mixscape pipeline overview" loading="lazy">
@@ -243,6 +245,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <p class="ox-dag-caption">figure · oxo-flow-mixscape — Pooled CRISPR perturbation analysis (scCRISPR-seq / CROP-seq / Perturb-seq) with Seurat Mixscape: per-cell perturbation signatures (CalcPerturbSig), perturbed vs.</p>
 
 </div>
+</details>
 
 <p class="ox-dag-note">Read: stations are rules (or module groups); a line is a data dependency; stations without any line are <em>off-track</em> inputs/terminal exports with no dataflow edge; separate groups of lines are independent chains (e.g. a quantifier reading raw reads while the alignment chain runs aside — live: tcasia salmon_quant). The map shows the template DAG; <code>oxo-flow graph --expanded</code> adds one node per sample instance.</p>
 

@@ -324,68 +324,82 @@ def module_stage_mmd(text: str) -> str:
 
 
 def subflow_view_mmd(text: str, sections_wanted: list[str]) -> str | None:
-    """Filter a rule-tier metro mmd to a set of module sections.
+    """Module-level map of a single-entry multi-omics workflow subset.
 
-    Used for "flow views" — small per-domain maps of a single-entry
-    multi-omics workflow (live: clindet's DNA WES/WGS/CNV/RNA views:
-    one main.oxoflow carries every omics flow as `[[include]]` modules,
-    and the overview map reads as one flat ribbon; group-typed mini maps
-    make the DNA/RNA split and the sub-flows directly legible).
+    One station PER MODULE SECTION (the sub-flow's own namespaces), edges
+    are the deduplicated inter-module dataflow edges INSIDE the set, each
+    labelled by the source module's dominant stage line. The result reads
+    like the nf-core idiom and stays legible at ten-ish stations — the
+    earlier rule-level version dragged 147 stations into a DNA view and
+    made sense to nobody.
 
-    `sections_wanted` matches section ids by prefix (the ids carry
-    assembled module names as the engine contracts cycles, so exact
-    matches break when a module interlinks differently). Stations in the
-    wanted sections are kept with their intra/subgraph edges; edges
-    crossing out of the view are dropped (the view is self-contained).
     Returns None when no section matches.
     """
     mmd = parse_mmd(text)
     wanted = []
     for sec in mmd["order"]:
+        bare = sec[2:] if sec.startswith("s_") else sec
         if any(
-            sec == w or sec.startswith(w) or sec == "s_" + w
+            sec == w or bare == w or bare.startswith(w)
             for w in sections_wanted if w
         ):
             wanted.append(sec)
     if not wanted:
         return None
     wanted_set = set(wanted)
-    node_sections_out = {
-        n: sec for n, sec in mmd["node_sections"].items() if sec in wanted_set
+    # dominant stage per section = first out-edge label of its stations
+    node_sec = {n: s for n, s in mmd["node_sections"].items() if s in wanted_set}
+    label_of = {
+        n: mmd["node_labels"].get(n, mmd["sections"][s]["title"])
+        for n, s in node_sec.items()
     }
-    line_decls = {
-        name: decl
-        for name, decl in mmd["line_decls"].items()
-        if any(lab == name for _s, _t, lab in mmd["edges"] if lab)
+    stage_of: dict[tuple[str, str], str] = {}
+    for s, _t, lab in mmd["edges"]:
+        if s in node_sec and lab:
+            stage_of.setdefault((node_sec[s], s), lab)
+    any_stage: dict[str, str] = {
+        s: l for s, _t, l in mmd["edges"] if s in node_sec and l
     }
-    out = ["graph LR"]
-    for name, (label, color) in line_decls.items():
-        if color:
-            out.append(f"    %%metro line: {name} | {label} | {color}")
-        else:
-            out.append(f"    %%metro line: {name} | {label}")
+    dom_stage: dict[str, str] = {}
     for sec in wanted:
-        title = mmd["sections"][sec]["title"]
-        members = [
-            n for n, s in node_sections_out.items() if s == sec
-        ]
-        out.append(f"    subgraph {sec} [{title}]")
-        for n in members:
-            out.append(
-                f'        {n}["{mmd["node_labels"].get(n, title)}"]'
-            )
-        out.append("    end")
-    # Intra-section edges stay inside their section (cross-section edges
-    # belong to the full map's layout and would need junctions the view
-    # does not carry).
+        first = None
+        for n in [n for n, s in node_sec.items() if s == sec]:
+            cand = stage_of.get((sec, n)) or any_stage.get(n)
+            if cand:
+                first = cand
+                break
+        dom_stage[sec] = first or "generic"
+    # dedupe cross-module edges within the set
+    seen = set()
+    out_edges = []
     for s, t, lab in mmd["edges"]:
-        if s not in node_sections_out or t not in node_sections_out:
+        if s not in node_sec or t not in node_sec:
             continue
-        if node_sections_out[s] != node_sections_out[t]:
+        a, b = node_sec[s], node_sec[t]
+        if a == b:
             continue
+        if (a, b) in seen:
+            continue
+        seen.add((a, b))
+        out_edges.append((a, b, dom_stage.get(a, lab)))
+    # station ids: sanitized section
+    import re as _re
+    def sid(sec: str) -> str:
+        return _re.sub(r"[^A-Za-z0-9_]", "_", sec)
+    lines_used = {lab for _s, _t, lab in out_edges if lab}
+    out = ["graph LR"]
+    for name, (label, color) in mmd["line_decls"].items():
+        if name in lines_used:
+            out.append(f"    %%metro line: {name} | {label} | {color}")
+    for sec in wanted:
+        out.append(
+            f'    {sid(sec)}["{mmd["sections"][sec]["title"]}"]'
+        )
+    for a, b, lab in out_edges:
         lpart = f"|{lab}|" if lab else ""
-        out.append(f"    {s} -->{lpart} {t}")
+        out.append(f"    {sid(a)} -->{lpart} {sid(b)}")
     return "\n".join(out) + "\n"
+
 
 
 def svg_aspect(svg: pathlib.Path) -> float | None:

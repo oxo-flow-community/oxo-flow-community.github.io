@@ -448,7 +448,23 @@ def dag_section(p: dict, configs: dict) -> list[str]:
     # sense of the figure without decoding file stems.
     summary = re.split(r"(?<=[.!?])\s+", p.get("description", "").strip())[0]
     caption = f"figure · {name} — {summary}"
-    cards = [
+    # PRIMARY ORDER: per-subflow module maps (the readable入口 for a
+    # multi-omics entry — DNA/RNA at ten stations each), then the full
+    # overview as a collapsed reference, then extra_workflows cards.
+    cards = []
+    for vid, vinfo in sorted((configs.get(name, {}).get("flow_views") or {}).items()):
+        svg_path = f"../assets/dag/{name}-{_esc(vid)}.svg"
+        cards += [
+            f'<details class="ox-flow-view" open>',
+            f'<summary>{_esc(vinfo.get("label", vid))}</summary>',
+            '<div class="ox-dag-card">',
+            _asset_img(svg_path, f"{name} {_esc(vid)} flow view"),
+            "</div>",
+            "</details>",
+        ]
+    cards += [
+        '<details class="ox-flow-view">',
+        '<summary>Overview — all modules</summary>',
         '<div class="ox-dag-card" markdown="1">',
         "",
         _asset_img(f"../assets/dag/{name}.svg", f"{name} pipeline overview"),
@@ -456,6 +472,7 @@ def dag_section(p: dict, configs: dict) -> list[str]:
         f'<p class="ox-dag-caption">{_esc(caption)}</p>',
         "",
         "</div>",
+        "</details>",
     ]
     for ew in p.get("extra_workflows") or []:
         svg_extra = OUT_PAGES.parent / "assets" / "dag" / f"{ew['dag']}.svg"
@@ -472,20 +489,6 @@ def dag_section(p: dict, configs: dict) -> list[str]:
             f'<p class="ox-dag-caption">figure · {name} — {ew["label"]} (nf-metro)</p>',
             "",
             "</div>",
-        ]
-    # Flow views: per-subflow self-contained mini maps of a multi-omics
-    # single-entry workflow (live: clindet's DNA and RNA groups). Native
-    # <details> collapse keeps the tall maps out of the page flow until a
-    # reader wants that sub-flow.
-    for vid, vinfo in sorted((configs.get(name, {}).get("flow_views") or {}).items()):
-        svg_path = f"../assets/dag/{name}-{_esc(vid)}.svg"
-        cards += [
-            f'<details class="ox-flow-view" open>',
-            f'<summary>{_esc(vinfo.get("label", vid))}</summary>',
-            '<div class="ox-dag-card">',
-            _asset_img(svg_path, f"{name} {_esc(vid)} flow view"),
-            "</div>",
-            "</details>",
         ]
     return [
         "",
