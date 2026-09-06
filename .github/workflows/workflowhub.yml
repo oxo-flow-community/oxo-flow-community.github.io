@@ -1,0 +1,100 @@
+name: workflowhub
+
+# Register new catalog pipelines on WorkflowHub (site issue #72).
+#
+# Trigger: a push to main that adds a pipeline to data/pipelines.json
+# (that is the only way a new pipeline enters the registry), or a manual
+# dispatch. The script is idempotent — data/workflowhub.json is the
+# mapping of already-registered names, so re-runs only POST the delta
+# (normally zero). Publishing + DOI minting stay OUT of CI on purpose:
+# DOIs are per-version and minted deliberately once per release.
+#
+# On registration it commits data/workflowhub.json back to main; the
+# human follow-up (DOI mint + pipelines.json Cite row + regen) is a
+# deliberate manual step.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "data/pipelines.json"
+      - "data/workflowhub.json"
+      - "scripts/register_workflowhub.py"
+      - ".github/workflows/workflowhub.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: workflowhub-registration
+  cancel-in-progress: false
+
+jobs:
+  register:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install rocrate requests
+
+      - name: Shallow-clone catalog pipeline repos
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/staging"
+          python3 - <<'EOF'
+          import json, pathlib, subprocess
+          staging = pathlib.Path("$RUNNER_TEMP/staging")
+          data = json.loads(pathlib.Path("data/pipelines.json").read_text())
+          for p in data:
+              subprocess.run(["git", "clone", "--quiet", "--depth", "1",
+                              p["repo_url"], str(staging / p["name"])],
+                             check=True)
+          print(f"cloned {len(data)} pipeline repos")
+          EOF
+
+      - name: Register unmapped pipelines (idempotent)
+        id: register
+        env:
+          WORKFLOWHUB_TOKEN: ${{ secrets.WORKFLOWHUB_TOKEN }}
+          STAGING: ${{ runner.temp }}/staging
+        run: |
+          set -euo pipefail
+          python3 scripts/register_workflowhub.py | tee workflowhub.log
+          if grep -q "skip .*no staged checkout" workflowhub.log; then
+            echo "::warning::some pipelines had no staged checkout (see log)"
+          fi
+          if grep -q "FAIL " workflowhub.log; then
+            echo "::error::some registrations failed after retries (see log)"
+            exit 1
+          fi
+          # nothing to commit when the mapping did not change
+          if git diff --quiet -- data/workflowhub.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit mapping update
+        if: steps.register.outputs.changed == 'true'
+        run: |
+          git config user.name "Shixiang Wang (王诗翔)"
+          git config user.email "wangshx@csu.edu.cn"
+          git add data/workflowhub.json
+          git commit -m "ci(workflowhub): register new pipeline(s) on WorkflowHub
+
+          Automated WorkflowHub registration for pipelines added to
+          data/pipelines.json; data/workflowhub.json records the new
+          entry ids. DOI minting + Cite row are deliberate manual steps.
+
+          Issue: #72
+
+          🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+          Co-Authored-By: Claude <noreply@anthropic.com>"
+          git push
