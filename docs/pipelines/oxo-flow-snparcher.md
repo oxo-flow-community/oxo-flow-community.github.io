@@ -478,7 +478,8 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 ## Fidelity
 
-## Fidelity
+> **Port-side renames of upstream rules** (for upstream claim tracing): `concat_interval_gvcfs_stage` → `concat_interval_gvcfs` / `concat_interval_gvcfs_long`; `concat_interval_vcfs_stage` → `concat_interval_vcfs` / `concat_interval_vcfs_long`; `drop_indel_SNPs` → `postprocess_drop_indel_snps` / `postprocess_drop_indel_snps_long`. The commercial families (see Excluded) cover: `parabricks_haplotypecaller`, `parse_sentieon_stats`, `sentieon_combine_gvcf`, `sentieon_haplotyper` (plus the `sentieon_dedup`/`sentieon_*` gate rules).
+
 
 74 rules ported from upstream v2.2 (up from 60), covering every branch that
 can be expressed in oxo-flow's DAG. Commands are ported verbatim
@@ -549,7 +550,7 @@ plan unchanged.
 | parabricks (all `parabricks_*` rules) | requires `--nv` GPU passthrough (upstream `parabricks.smk` runs `--nv` images with `nvidia-docker`); the oxo-flow docker backend has no `--nv` support and no GPU device declaration; additionally NVIDIA EULA/license enforcement cannot be guaranteed in CI | `variant_calling/parabricks.smk` (every rule is `--nv`) |
 | sentieon (all `sentieon_*` rules) | proprietary tool gated on a `SENTIEON_LICENSE` server and a pre-installed license; cannot be distributed or verified in a community port | `config/config.yaml` `sentieon` section; `workflow/rules/sentieon.smk` |
 | `denovo` and `structural_variants` pipeline sections | do not exist as rules in upstream v2.2 | grep of `workflow/` at e0e7a94 finds neither rule set |
-| multi-library / multi-unit rows (library_id, input_unit) | the sample-group model has one unit per sample; consumers of `results/bams/raw/{sample}/{sample}/u1.bam` are hard-coded to the `u1` unit | sample sheet semantics in upstream `README` |
+| multi-library / multi-unit rows (library_id, input_unit) | `{library}` fan-out via the `library` [[values]] table (`values_from = "config.library_ids"`, default `u1` = the single-library port byte-identical); `--arg library_ids=u1,u2` fans fastp_srr/bwa_mem/markdup per library and the merge chain gathers into the per-sample BAM | multi-library FASTQ cohorts on the fastq branch name per-library sources through the SRR branch or external BAM staging (v1: the fastq branch's raw path is per-sample) |
 
 ### Documented deviations from upstream
 
@@ -574,50 +575,6 @@ exact pins (fastp 1.3.6, samtools 1.24, bwa 0.7.19, gatk4 4.6.2.0, bcftools
 from bioconda/conda-forge at port time (2026-08-15). Upstream default-profile
 thread overrides (fastp 6, bwa_mem 16) are runtime knobs; the port keeps the
 rules' own declarations (4 and 8).
-
-## Live verification
-
-- `normalize_external_gvcf_for_gatk` + `joint_genomics_db_import` +
-  `joint_genotype_gvcfs` + `generate_coords_file`: live-verified on
-  bioinfo-wsx 2026-08-28 (external gVCF cohort, 0 failed; the run also
-  fixed two gvcf-cohort bugs — `parse_bam_stats` and
-  `combine_qc_metrics.py` now skip gvcf samples, PR #13).
-- bcftools caller branch (`bcftools_regions` → `bcftools_call` →
-  `bcftools_concat_regions`): live-verified 2026-08-28 on macOS (engine
-  0.16.0 + output_pattern from engine-235, conda). The runtime `.fai`
-  scan instantiated one deferred `bcftools_call` per contig (1-contig
-  fixture → exactly one region) and produced real variants in
-  `results/vcfs/regions/L000000.vcf.gz` (GT:PL:AD for all samples,
-  AC/AN=6); 30 succeeded / 0 failed / 34 skipped.
-- interval-scatter branch (`picard_intervals` → `create_gvcf_intervals` /
-  `create_db_intervals` → per-interval HaplotypeCallers / per-shard
-  GenomicsDBImport + GenotypeGVCFs → `concat_interval_gvcfs` /
-  `concat_interval_vcfs`): live-verified 2026-08-28 on macOS (same
-  engine). The SplitIntervals scans instantiated per-interval
-  HaplotypeCallers per sample (1-contig fixture → 1 interval) and 22 db
-  shards (DB_SCATTER = 0.15 × 3 samples × 50), each shard run through
-  GenomicsDBImport + GenotypeGVCFs and concatenated to
-  `results/vcfs/raw.vcf.gz` (30 real variants, all 3 samples); 85
-  succeeded / 0 failed / 37 skipped, 117 outputs verified.
-- The qc module's plink steps need **≥ 2 samples** (a 1-sample cohort
-  prunes to an empty VCF and `qc_plink` fails with "No samples in .vcf
-  file" — upstream behaves the same on a single-sample cohort).
-
-## Test
-
-Run the acceptance suite (validate + lint + dry-run) against the committed
-fixture data:
-
-```bash
-bash test/run.sh
-```
-
-## License
-
-Apache-2.0. Copyright (c) 2026 oxo-flow-community. Upstream attribution in
-`NOTICE.md`. The upstream snpArcher project is MIT-licensed; its
-license text is included verbatim at `LICENSE.upstream`.
-
 
 ## Links
 
