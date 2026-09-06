@@ -12,3 +12,21 @@
     <span class="ox-issue-label">Submit an issue</span>
   </a>
 {% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script>
+    // The button is appended OUTSIDE the header element by the block above;
+    // absolute positioning then anchors to <body> and lands left-top. Move
+    // it inside the header's inner bar, just before the GitHub source icon,
+    // so Material's own header layout positions it correctly.
+    document.addEventListener("DOMContentLoaded", function () {
+      var btn = document.querySelector(".ox-issue-btn");
+      var inner = document.querySelector(".md-header__inner");
+      var source = document.querySelector(".md-header__source");
+      if (btn && inner) {
+        inner.insertBefore(btn, source);
+      }
+    });
+  </script>
+{% endblock %}

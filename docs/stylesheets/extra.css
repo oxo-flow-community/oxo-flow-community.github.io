@@ -991,9 +991,8 @@ a.ox-cta:hover {
 
 /* ---- Submit-an-issue header button ---- */
 .ox-issue-btn {
-  position: absolute;
-  top: 0.62rem;
-  right: 3.4rem;
+  /* Lives inside .md-header__inner (moved there on load); no absolute
+     positioning — Material's flexbar lays it out next to the source icon. */
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
@@ -1006,6 +1005,7 @@ a.ox-cta:hover {
   font-size: 0.72rem;
   font-family: "JetBrains Mono", monospace;
   line-height: 1.6rem;
+  margin-right: 0.35rem;
 }
 .ox-issue-btn:hover {
   color: var(--brand) !important;
