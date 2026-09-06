@@ -63,7 +63,16 @@ def main():
         tier_info = cfg.get("graph") or {}
         stations = int(tier_info.get("stations", 0) or 0)
         aspect = w / h
-        aspect_ok = stations < SMALL_EXEMPT or MIN_ASPECT <= aspect <= MAX_ASPECT
+        # A 40+ station rule map is chosen by the ladder as the
+        # degenerate-overview fallback (a one/two-module workflow whose
+        # overview conveys nothing — live: unsupervised, 61 rules in one
+        # section); information beats the landscape gate there.
+        dense_fallback = stations >= 40 and aspect >= 0.70
+        aspect_ok = (
+            stations < SMALL_EXEMPT
+            or MIN_ASPECT <= aspect <= MAX_ASPECT
+            or dense_fallback
+        )
         ok = aspect_ok
         rows.append((name, ok, stations, round(aspect, 2), tier_info.get("tier"), ""))
         if not ok:

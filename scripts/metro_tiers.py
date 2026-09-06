@@ -54,6 +54,11 @@ MAX_RULE_STATIONS = 40
 # of meaning. 1.05 only rejects genuinely portrait maps.
 MIN_ASPECT = 1.05
 
+# Tool-granularity maps above this many stations fall through to the
+# overview tiers. Process stations ARE the nf-core reference scale
+# (~40-60), so the bound sits at the reference ceiling.
+MAX_PROCESS_STATIONS = 60
+
 
 # ---------------------------------------------------------------------------
 # mmd transforms
@@ -434,22 +439,49 @@ def render_ladder(
         )
         module_source = mod_mmd.read_text() if mod_graph.returncode == 0 else None
 
+        # The engine's process tier (graph --granularity process): rules
+        # chain-connected under one tool collapse into tool-named stations
+        # (the nf-core transit-map idiom, ~40-60 stations). A workflow with
+        # FEW modules (live: methylseq 61 rules/2 modules, nanoseq 52/3)
+        # gets a two-station module-stage map otherwise, losing its whole
+        # pipeline shape. Rendered at tool granularity it stays readable
+        # (methylseq: 46 tool stations) and the page keeps its info density.
+        proc_mmd = tmp / "process.mmd"
+        proc_graph = subprocess.run(
+            [
+                binary,
+                "graph",
+                "-f",
+                "metro",
+                "--granularity",
+                "process",
+                "-o",
+                str(proc_mmd),
+                str(workflow),
+            ],
+            capture_output=True,
+            text=True,
+        )
+        process_source = proc_mmd.read_text() if proc_graph.returncode == 0 else None
+
         tiers = [
             # Sections first: the module grouping is the nf-core transit
             # idiom and the off_track directive (engine-side) relieves the
             # routing pressure that previously forced the flat fallback
             # (live: 16-station genome-tracks renders sectioned at 1.2
             # aspect where flat is 0.74).
-            ("rule-sections", text, True),
-            ("rule-flat", flat_mmd(text), True),
-            ("module-stage", module_stage_mmd(text), False),
-            ("module", module_source, False),
+            ("rule-sections", text, True, None),  # always render: the degenerate-overview fallback needs it
+            ("rule-flat", flat_mmd(text), True, MAX_RULE_STATIONS),
+            ("rule-process", process_source, True, MAX_PROCESS_STATIONS),
+            ("module-stage", module_stage_mmd(text), False, None),
+            ("module", module_source, False, None),
         ]
         best = None  # (aspect, tier_svg_path, info) — the widest rendered tier
-        for tier, source, is_rule_level in tiers:
+        rule_sec = None  # rule-sections render, even beyond the station gate
+        for tier, source, is_rule_level, max_stations in tiers:
             if source is None:
                 continue
-            if is_rule_level and stations > MAX_RULE_STATIONS:
+            if max_stations is not None and station_count(parse_mmd(source)) > max_stations:
                 continue
             (tmp / f"{tier}.mmd").write_text(source)
             tier_svg = tmp / f"{tier}.svg"
@@ -458,15 +490,20 @@ def render_ladder(
                 last_err = err
                 continue
             aspect = svg_aspect(tier_svg)
-            tier_stations = (
-                stations if is_rule_level else station_count(parse_mmd(source))
-            )
+            tier_stations = station_count(parse_mmd(source))
             info = {
                 "tier": tier,
                 "stations": tier_stations,
                 "is_rule_level": is_rule_level,
                 "aspect": round(aspect, 2) if aspect else None,
             }
+            if tier == "rule-sections":
+                rule_sec = (aspect, tier_svg, info)
+                # Beyond the station gate the rule map stays a fallback
+                # only: as a regular pick it regressed the corpus
+                # (43-49-station rule maps were unreadable at card width).
+                if tier_stations > MAX_RULE_STATIONS:
+                    continue
             if best is None or aspect is None or aspect > best[0]:
                 best = (aspect if aspect is not None else 0.0, tier_svg, info)
             # Tiny maps are exempt from the landscape gate (mirroring
@@ -476,6 +513,15 @@ def render_ladder(
             if aspect is None or aspect >= MIN_ASPECT or tier_stations <= 5:
                 best_svg = tier_svg
                 break
+        if best is not None and best[2]["stations"] <= 3 and rule_sec is not None:
+            # Degenerate overview: one/two-module workflows (no module
+            # namespaces — live: unsupervised, 61 rules in a single
+            # section) demote to a 1-3-station map that conveys nothing.
+            # The rule-level figure is the only informative one: use it
+            # whenever it renders, regardless of its aspect — a portrait
+            # 61-station map (0.78) beats an empty 1-station overview.
+            if rule_sec[0] is not None:
+                best = rule_sec
         if best is None:
             return last_err, None
         # The chosen tier's render becomes the committed artifact.

@@ -2776,10 +2776,10 @@
       }
     ],
     "graph": {
-      "tier": "module-stage",
-      "stations": 4,
-      "is_rule_level": false,
-      "aspect": 1.23
+      "tier": "rule-process",
+      "stations": 37,
+      "is_rule_level": true,
+      "aspect": 3.66
     }
   },
   "oxo-flow-mag": {
@@ -4555,10 +4555,10 @@
       }
     ],
     "graph": {
-      "tier": "module-stage",
-      "stations": 7,
-      "is_rule_level": false,
-      "aspect": 2.11
+      "tier": "rule-process",
+      "stations": 49,
+      "is_rule_level": true,
+      "aspect": 4.37
     }
   },
   "oxo-flow-chipseq": {
@@ -5856,10 +5856,10 @@
       }
     ],
     "graph": {
-      "tier": "module-stage",
-      "stations": 7,
-      "is_rule_level": false,
-      "aspect": 1.51
+      "tier": "rule-process",
+      "stations": 37,
+      "is_rule_level": true,
+      "aspect": 2.51
     }
   },
   "oxo-flow-methylseq": {
@@ -6594,10 +6594,10 @@
       }
     ],
     "graph": {
-      "tier": "module-stage",
-      "stations": 2,
-      "is_rule_level": false,
-      "aspect": 1.45
+      "tier": "rule-process",
+      "stations": 46,
+      "is_rule_level": true,
+      "aspect": 2.98
     }
   },
   "oxo-flow-nanoseq": {
@@ -7187,10 +7187,10 @@
       }
     ],
     "graph": {
-      "tier": "module-stage",
-      "stations": 3,
-      "is_rule_level": false,
-      "aspect": 0.99
+      "tier": "rule-process",
+      "stations": 44,
+      "is_rule_level": true,
+      "aspect": 1.42
     }
   },
   "oxo-flow-viralrecon": {
@@ -11678,10 +11678,10 @@
       }
     ],
     "graph": {
-      "tier": "module-stage",
-      "stations": 8,
-      "is_rule_level": false,
-      "aspect": 1.55
+      "tier": "rule-process",
+      "stations": 42,
+      "is_rule_level": true,
+      "aspect": 1.6
     }
   },
   "oxo-flow-genome-tracks": {
@@ -13112,10 +13112,10 @@
       }
     ],
     "graph": {
-      "tier": "module-stage",
-      "stations": 1,
-      "is_rule_level": false,
-      "aspect": 0.97
+      "tier": "rule-sections",
+      "stations": 61,
+      "is_rule_level": true,
+      "aspect": 0.78
     }
   },
   "oxo-flow-circrna": {
