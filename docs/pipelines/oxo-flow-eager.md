@@ -1201,7 +1201,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 <div class="ox-dag-card" markdown="1">
 
-<img src="../assets/dag/oxo-flow-eager.svg?v=c986a79277" alt="oxo-flow-eager pipeline overview" loading="lazy">
+<img src="/assets/dag/oxo-flow-eager.svg?v=c986a79277" alt="oxo-flow-eager pipeline overview" loading="lazy">
 
 <p class="ox-dag-caption">figure · oxo-flow-eager — Ancient DNA (aDNA) analysis in one run: FastQC raw QC, optional fastp poly-G filtering (2-colour chemistry), AdapterRemoval adapter clipping and paired-end read merging, BWA aln mapping with ancient-DNA parameters, picard MarkDuplicates (or DeDup) deduplication, preseq library-complexity curves, DamageProfiler damage estimation, Qualimap BAM QC, optional pileupCaller genotyping with eigenstrat SNP coverage, optional metagenomic screening of the unmapped reads (bbduk entropy complexity filter, MALT or kraken2 classification with kraken_parse/kraken_merge tables, MaltExtract aDNA evaluation), and a final MultiQC report — every rule pinned to the nf-core/eager 2.5.3 tool versions in the upstream container (MALT 0.61 and HOPs 0.35 ship in the pinned nfcore/eager:2.5.3 image).</p>
 

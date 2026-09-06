@@ -452,7 +452,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 <div class="ox-dag-card" markdown="1">
 
-<img src="../assets/dag/oxo-flow-scrnaseq.svg?v=6f91dd3a86" alt="oxo-flow-scrnaseq pipeline overview" loading="lazy">
+<img src="/assets/dag/oxo-flow-scrnaseq.svg?v=6f91dd3a86" alt="oxo-flow-scrnaseq pipeline overview" loading="lazy">
 
 <p class="ox-dag-caption">figure · oxo-flow-scrnaseq — Single-cell RNA-seq analysis from raw FASTQ reads to a final MultiQC report, on all six upstream aligner branches of nf-core/scrnaseq 4.2.0: cellranger (default, count or multi with per-modality GEX/VDJ/Ab/BEAM/CRISPR/CMO via the metadata table), simpleaf (upstream default; index + quant + optional QCatch), kallisto/bustools (standard/lamanno/nac), STARsolo (incl.</p>
 

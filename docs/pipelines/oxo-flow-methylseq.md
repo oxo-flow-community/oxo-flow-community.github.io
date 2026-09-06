@@ -470,7 +470,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 <div class="ox-dag-card" markdown="1">
 
-<img src="../assets/dag/oxo-flow-methylseq.svg?v=239a780bf5" alt="oxo-flow-methylseq pipeline overview" loading="lazy">
+<img src="/assets/dag/oxo-flow-methylseq.svg?v=239a780bf5" alt="oxo-flow-methylseq pipeline overview" loading="lazy">
 
 <p class="ox-dag-caption">figure · oxo-flow-methylseq — Run end-to-end bisulfite methylation analysis (WGBS, and RRBS-compatible) of paired-end reads (default) and single-end reads (upstream single_end samplesheet column, via the engine metadata binding): FastQC quality control, TrimGalore adapter trimming, alignment to the bisulfite-converted reference genome with any of the four upstream aligners — Bismark bowtie2 (default), Bismark hisat2, bwameth (bwa-meth) or BWA-MEM — PCR-deduplication, samtools sort/index, methylation calls (bismark_methylation_extractor, MethylDackel on bwameth, rastair for TAPS), per-sample and project-wide Bismark HTML reports, optional QualiMap BamQC, preseq complexity estimates and targeted-sequencing (bedtools intersect + Picard HS metrics), and a final MultiQC report.</p>
 

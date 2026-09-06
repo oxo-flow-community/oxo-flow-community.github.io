@@ -546,7 +546,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 <div class="ox-dag-card" markdown="1">
 
-<img src="../assets/dag/oxo-flow-clindet.svg?v=1f8d780be4" alt="oxo-flow-clindet pipeline overview" loading="lazy">
+<img src="/assets/dag/oxo-flow-clindet.svg?v=1f8d780be4" alt="oxo-flow-clindet pipeline overview" loading="lazy">
 
 <p class="ox-dag-caption">figure · oxo-flow-clindet — Port of zyllifeworld/clindet in its upstream single-Snakefile form: one entry file, config run_type (wes|wgs|rna) selects the rule tree, and paired vs tumor-only WES is derived PER PAIR from the sample sheet (a pair without a control runs the tumor-only tree — engine wildcard-scoped when predicates).</p>
 
@@ -554,13 +554,13 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <details class="ox-flow-view" open>
 <summary>DNA — WES/WGS paired, germline, CNV, tumor-only unpaired</summary>
 <div class="ox-dag-card">
-<img src="../assets/dag/oxo-flow-clindet-dna.svg?v=a6dc5a7301" alt="oxo-flow-clindet dna flow view" loading="lazy">
+<img src="/assets/dag/oxo-flow-clindet-dna.svg?v=a6dc5a7301" alt="oxo-flow-clindet dna flow view" loading="lazy">
 </div>
 </details>
 <details class="ox-flow-view" open>
 <summary>RNA — fusion calling, unpaired SNV callers, isofox/quantifiers (run with -t)</summary>
 <div class="ox-dag-card">
-<img src="../assets/dag/oxo-flow-clindet-rna.svg?v=824ee96f8d" alt="oxo-flow-clindet rna flow view" loading="lazy">
+<img src="/assets/dag/oxo-flow-clindet-rna.svg?v=824ee96f8d" alt="oxo-flow-clindet rna flow view" loading="lazy">
 </div>
 </details>
 

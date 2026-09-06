@@ -66,12 +66,18 @@ def _asset_img(rel_path: str, alt: str) -> str:
     where a mtime query would differ and fail.
     """
     import hashlib
+    # MkDocs emits pages at /pipelines/<name>/ (directory URLs); a
+    # relative "../assets/…" src resolves to /pipelines/assets/… and 404s
+    # on GitHub Pages — EVERY page's graph was unreachable that way
+    # (confirmed by live 404s and a headless-Chrome capture). Use the
+    # site-root absolute path instead.
+    abs_path = "/" + rel_path[3:] if rel_path.startswith("../") else rel_path
     addr = pathlib.Path(ROOT) / "docs" / rel_path[3:]
     try:
         version = hashlib.sha1(addr.read_bytes()).hexdigest()[:10]
     except OSError:
         version = "0"
-    return f'<img src="{rel_path}?v={version}" alt="{alt}" loading="lazy">'
+    return f'<img src="{abs_path}?v={version}" alt="{alt}" loading="lazy">'
 
 
 def _graph_note() -> str:
