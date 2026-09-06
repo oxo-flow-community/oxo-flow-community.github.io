@@ -55,6 +55,38 @@ def load_configs() -> dict:
     return json.loads(CONFIGS.read_text())
 
 
+
+def _asset_img(rel_path: str, alt: str) -> str:
+    """<img> with a content-fingerprint query: mkdocs copies assets as-is,
+    browser caches them aggressively, and a re-render keeps the same
+    filename — so a reader with a warm cache keeps seeing the OLD map
+    even after a fix (live: clindet header looked 'unchanged'). The mtime
+    query busts that cache per regeneration.
+    """
+    addr = pathlib.Path(ROOT) / "docs" / rel_path[3:]
+    try:
+        version = int(addr.stat().st_mtime)
+    except OSError:
+        version = 0
+    return f'<img src="{rel_path}?v={version}" alt="{alt}" loading="lazy">'
+
+
+def _graph_note() -> str:
+    """One paragraph every workflow graph carries, so the drawn shapes
+    read correctly — off-track stations and independent chains are DAG
+    reality, not broken rendering."""
+    return (
+        '<p class="ox-dag-note">Read: stations are rules (or module'
+        ' groups); a line is a data dependency; stations without any line'
+        ' are <em>off-track</em> inputs/terminal exports with no dataflow'
+        ' edge; separate groups of lines are independent chains (e.g. a'
+        ' quantifier reading raw reads while the alignment chain runs'
+        ' aside — live: tcasia salmon_quant). The map shows the template'
+        ' DAG; <code>oxo-flow graph --expanded</code> adds one node per'
+        ' sample instance.</p>'
+    )
+
+
 def _esc(value) -> str:
     """HTML-escape a registry value for raw-HTML panel output."""
     return html.escape(str(value), quote=True)
@@ -410,7 +442,7 @@ def dag_section(p: dict, configs: dict) -> list[str]:
     cards = [
         '<div class="ox-dag-card" markdown="1">',
         "",
-        f"![{name} pipeline overview](../assets/dag/{name}.svg)",
+        _asset_img(f"../assets/dag/{name}.svg", f"{name} pipeline overview"),
         "",
         f'<p class="ox-dag-caption">{_esc(caption)}</p>',
         "",
@@ -426,7 +458,7 @@ def dag_section(p: dict, configs: dict) -> list[str]:
         cards += [
             '<div class="ox-dag-card" markdown="1">',
             "",
-            f"![{name} — {ew['label']}](../assets/dag/{ew['dag']}.svg)",
+            _asset_img(f"../assets/dag/{ew['dag']}.svg", f"{name} — {ew['label']}"),
             "",
             f'<p class="ox-dag-caption">figure · {name} — {ew["label"]} (nf-metro)</p>',
             "",
@@ -437,13 +469,12 @@ def dag_section(p: dict, configs: dict) -> list[str]:
     # <details> collapse keeps the tall maps out of the page flow until a
     # reader wants that sub-flow.
     for vid, vinfo in sorted((configs.get(name, {}).get("flow_views") or {}).items()):
+        svg_path = f"../assets/dag/{name}-{_esc(vid)}.svg"
         cards += [
-            f'<details class="ox-flow-view">',
+            f'<details class="ox-flow-view" open>',
             f'<summary>{_esc(vinfo.get("label", vid))}</summary>',
-            '<div class="ox-dag-card" markdown="1">',
-            "",
-            f'![{name} {_esc(vid)} flow view](../assets/dag/{name}-{_esc(vid)}.svg)',
-            "",
+            '<div class="ox-dag-card">',
+            _asset_img(svg_path, f"{name} {_esc(vid)} flow view"),
             "</div>",
             "</details>",
         ]
@@ -452,6 +483,8 @@ def dag_section(p: dict, configs: dict) -> list[str]:
         "## Workflow graph",
         "",
         *cards,
+        "",
+        _graph_note(),
         "",
         "The graph is derived at catalog-build time from "
         "`oxo-flow graph -f metro` through the adaptive render ladder "

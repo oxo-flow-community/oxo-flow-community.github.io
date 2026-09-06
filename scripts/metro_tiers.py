@@ -52,7 +52,7 @@ MAX_RULE_STATIONS = 40
 # clears the gate. 1.15 proved too strict — a fine 16-station map at
 # 1.144 (live: genome-tracks) was demoted to a 2-station overview empty
 # of meaning. 1.05 only rejects genuinely portrait maps.
-MIN_ASPECT = 1.05
+MIN_ASPECT = 0.75
 
 # Tool-granularity maps above this many stations fall through to the
 # overview tiers. Process stations ARE the nf-core reference scale
@@ -267,24 +267,46 @@ def module_stage_mmd(text: str) -> str:
     station_groups: dict[tuple, list] = defaultdict(list)
     for g in groups:
         station_groups[rep_of.get(g, g)].append(g)
-    # One station per section for the overview: distinct stage-groups of
-    # the same section (a cyclic-merged module like sarek's four-way
-    # "align + variant + analysis + trim", or stages that only connect
-    # inside the module, live: rnaseq's fastq_qc generic group) would emit
-    # several stations carrying the same long title — fold each section
-    # onto its first (main) group, which also keeps isolated groups off
-    # the map as phantom stations.
+    # Folding rule: distinct stage-groups of the SAME section that would
+    # repeat one long title collapse onto the section's first group. An
+    # SCC-MERGED section ("align + variant + analysis + trim", live:
+    # sarek) is exempt — its stage groups carry DIFFERENT stage names once
+    # titled per-stage, and folding them would lose three of the four
+    # flow shapes that loop inside the cyclic module.
+    merged_sections = {
+        rep[0]
+        for rep in station_groups
+        if " + " in sections.get(rep[0], {}).get("title", "")
+    }
     first_of_section: dict[str, tuple] = {}
     for rep in station_groups:
         first_of_section.setdefault(rep[0], rep)
+
+    def fold_key(rep: tuple) -> tuple:
+        if rep[0] in merged_sections:
+            return rep
+        return first_of_section[rep[0]]
+
     section_groups: dict[tuple, list] = defaultdict(list)
     for rep, gs in station_groups.items():
-        section_groups[first_of_section[rep[0]]].extend(gs)
+        section_groups[fold_key(rep)].extend(gs)
     station_groups = section_groups
     station_titles = {}
+    stage_display_names = {k: v[0] for k, v in mmd["line_decls"].items()}
     for rep, gs in station_groups.items():
         names = sorted({sections[g[0]]["title"] for g in gs})
-        station_titles[f"g_{rep[0]}_{rep[1]}"] = _join_compact(names)
+        merged_title = any(" + " in name for name in names)
+        title = _join_compact(names)
+        # A section that itself is an SCC-merged set of modules carries a
+        # "Alignment + Variant Calling + …" title; with several stage
+        # groups of the same section each station then repeats that long
+        # merged title (live: sarek — four stations all reading
+        # "Alignment + Variant Calling + Analysis + Read Trimming").
+        # Name those after the stage that drives them instead — four
+        # distinct stage stations read like the nf-core idiom.
+        if merged_title:
+            title = stage_display_names.get(rep[1], rep[1])
+        station_titles[f"g_{rep[0]}_{rep[1]}"] = title
 
     cedges: dict[tuple, Counter] = defaultdict(Counter)
     for gs, gt, lab in out_edges:
@@ -294,7 +316,7 @@ def module_stage_mmd(text: str) -> str:
             # stations the title map declares, or nf-metro renders the
             # undeclared endpoint as a bare `g_section_stage` station
             # (live: rnaseq showed "g_report_report" after the fold).
-            rs, rt = first_of_section.get(rs[0], rs), first_of_section.get(rt[0], rt)
+            rs, rt = fold_key(rs), fold_key(rt)
             if rs != rt:
                 cedges[(f"g_{rs[0]}_{rs[1]}", f"g_{rt[0]}_{rt[1]}")][lab] += 1
     final = [(s, t, c.most_common(1)[0][0]) for (s, t), c in sorted(cedges.items())]
@@ -388,9 +410,15 @@ def render_mmd(nf_metro: str, mmd: pathlib.Path, svg: pathlib.Path) -> str | Non
     and the ladder over-demoted to a 1-station overview. Rendering policy
     lives here, not in the engine.
     """
-    spacing = [] if station_count(parse_mmd(mmd.read_text())) < 15 else [
-        "--x-spacing", "130", "--y-spacing", "70",
-    ]
+    # Small maps keep the auto x-spacing but pin y=60: the auto track
+    # pitch leaves the off-track station stack (live: mixscape, 4
+    # off-track exports) overlapping labels. 60px separates them.
+    stations = station_count(parse_mmd(mmd.read_text()))
+    spacing = (
+        ["--y-spacing", "60"]
+        if stations < 15
+        else ["--x-spacing", "130", "--y-spacing", "70"]
+    )
     proc = subprocess.run(
         [nf_metro, "render", str(mmd), "-o", str(svg), "--theme", "light", *spacing],
         capture_output=True,

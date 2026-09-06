@@ -546,27 +546,25 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 <div class="ox-dag-card" markdown="1">
 
-![oxo-flow-clindet pipeline overview](../assets/dag/oxo-flow-clindet.svg)
+<img src="../assets/dag/oxo-flow-clindet.svg?v=1788705010" alt="oxo-flow-clindet pipeline overview" loading="lazy">
 
 <p class="ox-dag-caption">figure · oxo-flow-clindet — Port of zyllifeworld/clindet in its upstream single-Snakefile form: one entry file, config run_type (wes|wgs|rna) selects the rule tree, and paired vs tumor-only WES is derived PER PAIR from the sample sheet (a pair without a control runs the tumor-only tree — engine wildcard-scoped when predicates).</p>
 
 </div>
-<details class="ox-flow-view">
+<details class="ox-flow-view" open>
 <summary>DNA — WES/WGS paired, germline, CNV, tumor-only unpaired</summary>
-<div class="ox-dag-card" markdown="1">
-
-![oxo-flow-clindet dna flow view](../assets/dag/oxo-flow-clindet-dna.svg)
-
+<div class="ox-dag-card">
+<img src="../assets/dag/oxo-flow-clindet-dna.svg?v=1788705010" alt="oxo-flow-clindet dna flow view" loading="lazy">
 </div>
 </details>
-<details class="ox-flow-view">
+<details class="ox-flow-view" open>
 <summary>RNA — fusion calling, unpaired SNV callers, isofox/quantifiers (run with -t)</summary>
-<div class="ox-dag-card" markdown="1">
-
-![oxo-flow-clindet rna flow view](../assets/dag/oxo-flow-clindet-rna.svg)
-
+<div class="ox-dag-card">
+<img src="../assets/dag/oxo-flow-clindet-rna.svg?v=1788705011" alt="oxo-flow-clindet rna flow view" loading="lazy">
 </div>
 </details>
+
+<p class="ox-dag-note">Read: stations are rules (or module groups); a line is a data dependency; stations without any line are <em>off-track</em> inputs/terminal exports with no dataflow edge; separate groups of lines are independent chains (e.g. a quantifier reading raw reads while the alignment chain runs aside — live: tcasia salmon_quant). The map shows the template DAG; <code>oxo-flow graph --expanded</code> adds one node per sample instance.</p>
 
 The graph is derived at catalog-build time from `oxo-flow graph -f metro` through the adaptive render ladder (`scripts/metro_tiers.py`): each workflow gets the finest metro tier that nf-metro renders while staying readable at site width — rule-level stations for smaller workflows, module-stage or moduleoverview stations for dense ones. Colored transit lines group stations by analysis stage. Wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 

@@ -967,3 +967,24 @@ a.ox-cta:hover {
   font-size: 0.72rem;
   color: #b08968;
 }
+
+/* ---- Flow-view accordion ---- */
+.ox-flow-view { margin: 0.6rem 0 0.4rem; }
+.ox-flow-view summary {
+  cursor: pointer;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--brand);
+  padding: 0.35rem 0.1rem;
+}
+.ox-flow-view[open] .ox-dag-card {
+  max-height: 62vh;
+  overflow: auto;
+}
+.ox-dag-note {
+  font-size: 0.78rem;
+  color: var(--faint);
+  margin-top: 0.5rem;
+  line-height: 1.5;
+}
