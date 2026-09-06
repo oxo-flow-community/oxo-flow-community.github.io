@@ -3,7 +3,7 @@
      width="534" height="398" viewBox="0 0 534 398">
 <defs>
 </defs>
-<metadata id="diagram-manifest" data-schema-version="1.0"><![CDATA[{"groups":[{"color":"#D4A6C8","id":"input","label":"input"},{"color":"#86BCB6","id":"taxonomy","label":"taxonomy"},{"color":"#8CD17D","id":"bgc","label":"bgc"},{"color":"#8CD17D","id":"mibig","label":"mibig"},{"color":"#6E6E6E","id":"data_warehouse","label":"data-warehouse"}],"height":398,"match":{"flags":"i","target":"fqProcessName","type":"regex"},"nodes":[{"groups":["input"],"h":12.0,"id":"n0","label":"input","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":80.0,"y":120.0},{"groups":["taxonomy"],"h":12.0,"id":"n1","label":"taxonomy","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":80.0,"y":164.0},{"groups":["bgc","input","taxonomy"],"h":20.0,"id":"n2","label":"Annotation + antismash + bgc + Branches","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":351.5,"y":124.0},{"groups":["mibig"],"h":12.0,"id":"n3","label":"mibig","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":80.0,"y":212.0},{"groups":["bgc","mibig","taxonomy"],"h":20.0,"id":"n4","label":"data-warehouse","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":474.5,"y":168.0}],"regions":[],"title":"","version":"1.0","width":534}]]></metadata>
+<metadata id="diagram-manifest" data-schema-version="1.0"><![CDATA[{"groups":[{"color":"#F0E442","id":"input","label":"input"},{"color":"#0072B2","id":"taxonomy","label":"taxonomy"},{"color":"#8CD17D","id":"bgc","label":"bgc"},{"color":"#B6992D","id":"mibig","label":"mibig"},{"color":"#999999","id":"data_warehouse","label":"data-warehouse"}],"height":398,"match":{"flags":"i","target":"fqProcessName","type":"regex"},"nodes":[{"groups":["input"],"h":12.0,"id":"n0","label":"input","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":80.0,"y":120.0},{"groups":["taxonomy"],"h":12.0,"id":"n1","label":"taxonomy","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":80.0,"y":164.0},{"groups":["bgc","input","taxonomy"],"h":20.0,"id":"n2","label":"Annotation + antismash + bgc + Branches","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":351.5,"y":124.0},{"groups":["mibig"],"h":12.0,"id":"n3","label":"mibig","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":80.0,"y":212.0},{"groups":["bgc","mibig","taxonomy"],"h":20.0,"id":"n4","label":"data-warehouse","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":474.5,"y":168.0}],"regions":[],"title":"","version":"1.0","width":534}]]></metadata>
 <style>.nf-metro-title { fill: var(--nfm-map-title-color, #111111); }
 .nf-metro-station-label { fill: var(--nfm-map-label-color, #333333); }
 .nf-metro-section-box { fill: var(--nfm-map-section-fill, #ededed); stroke: var(--nfm-map-section-stroke, #e6e6e6); }
@@ -20,11 +20,11 @@
     .nf-metro-title { fill: #ffffff; }
 }
 </style>
-<path d="M80.0,212.0 L371.5,212.0 Q381.5,212.0,387.5,204.0 L405.5,180.0 Q411.5,172.0,421.5,172.0 L474.5,172.0" stroke="#8CD17D" stroke-width="3.0" fill="none" stroke-linecap="round" stroke-linejoin="round" class="metro-line-mibig" data-line-id="mibig" />
+<path d="M80.0,212.0 L371.5,212.0 Q381.5,212.0,387.5,204.0 L405.5,180.0 Q411.5,172.0,421.5,172.0 L474.5,172.0" stroke="#B6992D" stroke-width="3.0" fill="none" stroke-linecap="round" stroke-linejoin="round" class="metro-line-mibig" data-line-id="mibig" />
 <path d="M351.5,128.0 L371.5,128.0 Q381.5,128.0,387.5,136.0 L405.5,160.0 Q411.5,168.0,421.5,168.0 L474.5,168.0" stroke="#8CD17D" stroke-width="3.0" fill="none" stroke-linecap="round" stroke-linejoin="round" class="metro-line-bgc" data-line-id="bgc" />
-<path d="M80.0,164.0 L106.0,164.0 Q116.0,164.0,122.0,156.0 L140.0,132.0 Q146.0,124.0,156.0,124.0 L351.5,124.0" stroke="#86BCB6" stroke-width="3.0" fill="none" stroke-linecap="round" stroke-linejoin="round" class="metro-line-taxonomy" data-line-id="taxonomy" />
-<path d="M80.0,164.0 L474.5,164.0" stroke="#86BCB6" stroke-width="3.0" stroke-linecap="round" class="metro-line-taxonomy" data-line-id="taxonomy" />
-<path d="M80.0,120.0 L351.5,120.0" stroke="#D4A6C8" stroke-width="3.0" stroke-linecap="round" class="metro-line-input" data-line-id="input" />
+<path d="M80.0,164.0 L106.0,164.0 Q116.0,164.0,122.0,156.0 L140.0,132.0 Q146.0,124.0,156.0,124.0 L351.5,124.0" stroke="#0072B2" stroke-width="3.0" fill="none" stroke-linecap="round" stroke-linejoin="round" class="metro-line-taxonomy" data-line-id="taxonomy" />
+<path d="M80.0,164.0 L474.5,164.0" stroke="#0072B2" stroke-width="3.0" stroke-linecap="round" class="metro-line-taxonomy" data-line-id="taxonomy" />
+<path d="M80.0,120.0 L351.5,120.0" stroke="#F0E442" stroke-width="3.0" stroke-linecap="round" class="metro-line-input" data-line-id="input" />
 <g class="nf-metro-station-group" data-node-id="n0" data-node-cx="80.0" data-node-cy="120.0" data-node-r="6.0" data-node-groups="input" data-node-w="12.0" data-node-h="12.0" data-node-rx="6.0">
 <rect x="74.0" y="114.0" width="12.0" height="12.0" rx="6.0" ry="6.0" fill="#ffffff" stroke="#333333" stroke-width="2.0" class="nf-metro-station" data-station-id="n0" data-station-lines="input" data-station-label="input" />
 </g>
@@ -51,15 +51,15 @@
 <text x="474.5" y="183.0" font-size="14.0" fill="#ffffff" stroke="#ffffff" stroke-width="3.0" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="hanging">data-warehouse</text>
 <text x="474.5" y="183.0" font-size="14.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="hanging" data-station-id="n4" class="nf-metro-station-label">data-warehouse</text>
 <rect x="60.0" y="230.0" width="183.20000000000002" height="144.0" rx="6" ry="6" fill="rgba(255, 255, 255, 0.8)" class="nf-metro-legend-bg" />
-<path d="M72.0,254.0 L96.0,254.0" stroke="#D4A6C8" stroke-width="3.0" stroke-linecap="round" />
+<path d="M72.0,254.0 L96.0,254.0" stroke="#F0E442" stroke-width="3.0" stroke-linecap="round" />
 <text x="108.0" y="254.0" font-size="16.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" dy="0.3em" class="nf-metro-legend-text">input</text>
-<path d="M72.0,278.0 L96.0,278.0" stroke="#86BCB6" stroke-width="3.0" stroke-linecap="round" />
+<path d="M72.0,278.0 L96.0,278.0" stroke="#0072B2" stroke-width="3.0" stroke-linecap="round" />
 <text x="108.0" y="278.0" font-size="16.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" dy="0.3em" class="nf-metro-legend-text">taxonomy</text>
 <path d="M72.0,302.0 L96.0,302.0" stroke="#8CD17D" stroke-width="3.0" stroke-linecap="round" />
 <text x="108.0" y="302.0" font-size="16.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" dy="0.3em" class="nf-metro-legend-text">bgc</text>
-<path d="M72.0,326.0 L96.0,326.0" stroke="#8CD17D" stroke-width="3.0" stroke-linecap="round" />
+<path d="M72.0,326.0 L96.0,326.0" stroke="#B6992D" stroke-width="3.0" stroke-linecap="round" />
 <text x="108.0" y="326.0" font-size="16.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" dy="0.3em" class="nf-metro-legend-text">mibig</text>
-<path d="M72.0,350.0 L96.0,350.0" stroke="#6E6E6E" stroke-width="3.0" stroke-linecap="round" />
+<path d="M72.0,350.0 L96.0,350.0" stroke="#999999" stroke-width="3.0" stroke-linecap="round" />
 <text x="108.0" y="350.0" font-size="16.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" dy="0.3em" class="nf-metro-legend-text">data-warehouse</text>
 <text x="504.0" y="390.0" font-size="8" fill="rgba(150, 150, 150, 0.6)" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" text-anchor="end">created with nf-metro v1.1.0</text>
 </svg>

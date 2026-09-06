@@ -73,7 +73,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipeline
 <div class="ox-params">
 <div class="ox-param">
 <div class="ox-param-head"><code>GTF</code><span class="ox-param-default">/data/reference/genome/GRCh38/Homo_sapiens.GRCh38.95.sort.gtf</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">STAR index dir and GTF (upstream keys index / GTF).</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>align_and_count</code> <code>align_and_count_single</code></div>
 </details>
@@ -87,7 +87,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipeline
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>bark_api</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Bark / feishu push notifications (upstream config.yaml keys). Consumed by the batch runner scripts/run_batch.py after each metadata file finishes (upstream run.py). Keep off unless the endpoints are configured.</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
@@ -101,14 +101,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipeline
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>feishu</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Bark / feishu push notifications (upstream config.yaml keys). Consumed by the batch runner scripts/run_batch.py after each metadata file finishes (upstream run.py). Keep off unless the endpoints are configured.</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>feishu_api</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Bark / feishu push notifications (upstream config.yaml keys). Consumed by the batch runner scripts/run_batch.py after each metadata file finishes (upstream run.py). Keep off unless the endpoints are configured.</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
@@ -129,7 +129,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipeline
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>mail_to</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Email notification (upstream onsuccess + onerror). Keep off unless SMTP is configured — the [workflow] on_error hook reuses these same keys.</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
@@ -143,14 +143,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipeline
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>sender</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Email notification (upstream onsuccess + onerror). Keep off unless SMTP is configured — the [workflow] on_error hook reuses these same keys.</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>sender_password</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Email notification (upstream onsuccess + onerror). Keep off unless SMTP is configured — the [workflow] on_error hook reuses these same keys.</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>

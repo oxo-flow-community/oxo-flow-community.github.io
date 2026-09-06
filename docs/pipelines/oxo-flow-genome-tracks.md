@@ -75,28 +75,28 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-genome-tracks
 <div class="ox-params">
 <div class="ox-param">
 <div class="ox-param-head"><code>bamCoverage_parameters</code><span class="ox-param-default">-p max --binSize 10  --normalizeUsing RPGC --effectiveGenomeSize 2407883318</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">upstream config/config.yaml defaults, adapted paths</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>coverage</code> <code>coverage_sc</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>bam_dir</code><span class="ox-param-default">test/fixtures/bams</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">upstream config/config.yaml defaults, adapted paths</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>merge_bams</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>base_buffer</code><span class="ox-param-default">2000</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">upstream config/config.yaml defaults, adapted paths</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>annotate_genes</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>email</code><span class="ox-param-default">sreichl@cemm.at</span></div>
-<p class="ox-param-desc">Notification recipient for pipeline completion (upstream --email; empty = none) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">upstream config/config.yaml defaults, adapted paths</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>ucsc_hub</code></div>
 </details>
@@ -110,28 +110,28 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-genome-tracks
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>file_type</code><span class="ox-param-default">pdf</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">upstream config/config.yaml defaults, adapted paths</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>plot_tracks</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>gene_list</code><span class="ox-param-default">test/fixtures/genes.csv</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">upstream config/config.yaml defaults, adapted paths</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>annotate_genes</code> <code>gene_list_export</code> <code>plot_tracks</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>genome</code><span class="ox-param-default">mm10</span></div>
-<p class="ox-param-desc">Reference genome build name (upstream --genome, iGenomes key) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">upstream config/config.yaml defaults, adapted paths</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>igv_report</code> <code>ucsc_hub</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>genome_bed</code><span class="ox-param-default">test/fixtures/genome_bed/ref.bed.gz</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">upstream config/config.yaml defaults, adapted paths</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>annotate_genes</code> <code>plot_tracks</code></div>
 </details>
@@ -166,14 +166,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-genome-tracks
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>result_path</code><span class="ox-param-default">results</span></div>
-<p class="ox-param-desc">Output directory (upstream --outdir) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">upstream config/config.yaml defaults, adapted paths</p>
 <details class="ox-param-usedby"><summary>used by 16 rules</summary>
 <div class="ox-param-rules"><code>annot_export</code> <code>annotate_genes</code> <code>config_export</code> <code>coverage</code> <code>coverage_sc</code> <code>env_export_igv_reports</code> <code>env_export_pygenometracks</code> <code>env_export_sinto</code> <code>gene_list_export</code> <code>igv_report</code> <code>make_bed</code> <code>merge_bams</code> <code>merge_sc_bams</code> <code>plot_tracks</code> <code>split_sc_bam</code> <code>ucsc_hub</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>sample_annotation</code><span class="ox-param-default">test/fixtures/annotation.csv</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">upstream config/config.yaml defaults, adapted paths</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>annot_export</code></div>
 </details>
@@ -208,21 +208,21 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-genome-tracks
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>track_colors</code><span class="ox-param-default">untreated=#800080,treated=#00FFFF</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">upstream config/config.yaml defaults, adapted paths</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>plot_tracks</code> <code>ucsc_hub</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>width</code><span class="ox-param-default">20</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">upstream config/config.yaml defaults, adapted paths</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>plot_tracks</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>x_axis</code><span class="ox-param-default">bottom</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">upstream config/config.yaml defaults, adapted paths</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>plot_tracks</code></div>
 </details>

@@ -23,8 +23,8 @@ Rules:
 - tiers are tried in order; the first that renders wins;
 - rule-level tiers (1-2) are skipped when the workflow has more than
   MAX_RULE_STATIONS rules — publication maps stay readable (nf-core's
-  reference maps carry ~40-60 stations; ours are rule-level so the gate
-  is a little higher);
+  reference maps carry ~40-60 stations; ours are rule-level, so the gate
+  sits at the publication upper bound);
 - every tier is computed from the same engine export — no per-pipeline
   data, no hand-authored maps.
 """
@@ -38,8 +38,13 @@ import subprocess
 from collections import Counter, defaultdict
 
 # Rule-level maps above this many stations switch to the overview tiers —
-# mirroring the nf-core publication scale (~40-60 stations per map).
-MAX_RULE_STATIONS = 80
+# mirroring the nf-core publication scale (~40-60 stations per map). Our
+# rule-level stations are one per RULE whereas the published reference
+# maps are one per process/tool group, so a 43-station rule map is already
+# denser than a published 43-station reference — the gate sits at 40 and
+# dense pipelines land on the module-stage/module overview plans (visual
+# QA: atacseq at 43 rule stations was unreadable at site card width).
+MAX_RULE_STATIONS = 40
 
 # A rendered tier narrower than this (portrait-ish) falls through to the
 # next tier: site pages host horizontal figures, and nf-core's reference

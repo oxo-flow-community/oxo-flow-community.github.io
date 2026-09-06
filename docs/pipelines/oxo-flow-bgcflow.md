@@ -115,7 +115,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-bgcflow
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>gecco_version</code><span class="ox-param-default">0.9.10</span></div>
-<p class="ox-param-desc">Version pin for gecco <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>gecco</code></div>
 </details>
@@ -206,14 +206,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-bgcflow
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_amrfinderplus</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Enable amrfinderplus (upstream --run_amrfinderplus) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>amrfinder_gather</code> <code>amrfinderplus</code> <code>install_amrfinder</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_arts</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Enable arts (upstream --run_arts) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>arts</code></div>
 </details>
@@ -227,7 +227,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-bgcflow
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_bigscape</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Enable bigscape (upstream --run_bigscape) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>bigscape</code></div>
 </details>
@@ -241,14 +241,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-bgcflow
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_cblaster</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Enable cblaster (upstream --run_cblaster) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>cblaster_genome_db</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_checkm</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Enable checkm (upstream --run_checkm) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>checkm</code> <code>install_checkm</code></div>
 </details>
@@ -262,35 +262,35 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-bgcflow
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_eggnog</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Enable eggnog (upstream --run_eggnog) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>eggnog</code> <code>install_eggnog</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_fastani</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Enable fastani (upstream --run_fastani) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>fastani</code> <code>fastani_convert</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_gecco</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Enable gecco (upstream --run_gecco) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>gecco</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_gtdbtk</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Enable gtdbtk (upstream --run_gtdbtk) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>gtdbtk</code> <code>install_gtdbtk</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_mash</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Enable mash (upstream --run_mash) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>mash</code> <code>mash_convert</code></div>
 </details>
@@ -304,14 +304,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-bgcflow
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_roary</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Enable roary (upstream --run_roary) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>roary</code> <code>roary_out</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_seqfu</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Enable seqfu (upstream --run_seqfu) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>seqfu_combine</code> <code>seqfu_stats</code></div>
 </details>

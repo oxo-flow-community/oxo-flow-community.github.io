@@ -99,21 +99,21 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-tcasia
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>fastp_n_base_limit</code><span class="ox-param-default">5</span></div>
-<p class="ox-param-desc">fastp tool parameter (upstream --fastp_n_base_limit) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">fastp (upstream fastp.*)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>alignment::fastp_qc</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>fastp_qualified_quality_phred</code><span class="ox-param-default">20</span></div>
-<p class="ox-param-desc">fastp tool parameter (upstream --fastp_qualified_quality_phred) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">fastp (upstream fastp.*)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>alignment::fastp_qc</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>fastp_unqualified_percent_limit</code><span class="ox-param-default">40</span></div>
-<p class="ox-param-desc">fastp tool parameter (upstream --fastp_unqualified_percent_limit) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">fastp (upstream fastp.*)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>alignment::fastp_qc</code></div>
 </details>
@@ -155,7 +155,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-tcasia
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>read_len</code><span class="ox-param-default">150</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">salmon_index is auto-built below from the shipped transcripts.fa</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>as_calling::majiq_create_ini</code> <code>as_calling::rmats_run</code></div>
 </details>
@@ -190,7 +190,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-tcasia
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_majiq</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Enable majiq (upstream --run_majiq) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">MAJIQ requires the upstream academic license file — place it at test/fixtures/reference/majiq_license.lic (obtain from MAJIQ) and set run_majiq = true. Upstream fails hard without the license; the port gates the whole MAJIQ chain on this flag instead (documented in the README fidelity table).</p>
 <details class="ox-param-usedby"><summary>used by 5 rules</summary>
 <div class="ox-param-rules"><code>as_calling::majiq_build</code> <code>as_calling::majiq_create_ini</code> <code>as_calling::majiq_psi</code> <code>as_calling::voila_modulize</code> <code>as_calling::voila_tsv</code></div>
 </details>

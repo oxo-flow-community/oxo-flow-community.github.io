@@ -83,28 +83,28 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>bbsplit_fasta_list</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">bbsplit tool parameter (upstream --bbsplit_fasta_list) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">BBSplit genome filtering (upstream: --skip_bbsplit / --bbsplit_fasta_list / --save_bbsplit_reads; same defaults). bbsplit_fasta_list is a 2-column CSV (short_name,path_to_fasta) plus the primary genome in config.fasta.</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>fastq_qc::bbsplit_index</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>bbsplit_index</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Path to the prebuilt bbsplit index (built when empty) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">Non-default alignment branches (upstream: --aligner / --skip_alignment / --rsem_index / --hisat2_index / --salmon_index / --bbsplit_index / --sortmerna_index). Empty index keys are auto-built by when-gated builder rules in modules/alignment.oxoflow / quantification.oxoflow from the shipped fixtures when the branch is enabled (like star_index); a user-supplied path is symlinked in instead.</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>fastq_qc::bbsplit_index</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>bowtie2_index</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Path to the prebuilt bowtie2 index (built when empty) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">Non-default alignment branches (upstream: --aligner / --skip_alignment / --rsem_index / --hisat2_index / --salmon_index / --bbsplit_index / --sortmerna_index). Empty index keys are auto-built by when-gated builder rules in modules/alignment.oxoflow / quantification.oxoflow from the shipped fixtures when the branch is enabled (like star_index); a user-supplied path is symlinked in instead.</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>alignment::bowtie2_index</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>chrom_sizes</code><span class="ox-param-default">test/fixtures/reference/chrom_sizes.txt</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Reference artifacts (upstream: --fasta / --gtf / --gene_bed / --chrom_sizes / --transcript_fasta / STAR index). fasta and gtf are always inputs; the other three are inputs by default but are DERIVED from fasta+gtf when the key is empty (modules/prepare_genome.oxoflow mirrors upstream PREPARE_GENOME: gene_bed via ea-utils gtf2bed, chrom_sizes via samtools faidx, transcript_fasta via RSEM). The STAR index is an input (auto-built from the shipped fixture genome by the [[references]] builder below when SAindex is missing).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>prepare_genome::chrom_sizes</code></div>
 </details>
@@ -132,7 +132,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>featurecounts_feature_type</code><span class="ox-param-default">exon</span></div>
-<p class="ox-param-desc">featurecounts tool parameter (upstream --featurecounts_feature_type) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">featureCounts settings (upstream params with the same defaults).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>bam_qc::featurecounts</code></div>
 </details>
@@ -146,21 +146,21 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>gene_bed</code><span class="ox-param-default">test/fixtures/reference/gene.bed</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Reference artifacts (upstream: --fasta / --gtf / --gene_bed / --chrom_sizes / --transcript_fasta / STAR index). fasta and gtf are always inputs; the other three are inputs by default but are DERIVED from fasta+gtf when the key is empty (modules/prepare_genome.oxoflow mirrors upstream PREPARE_GENOME: gene_bed via ea-utils gtf2bed, chrom_sizes via samtools faidx, transcript_fasta via RSEM). The STAR index is an input (auto-built from the shipped fixture genome by the [[references]] builder below when SAindex is missing).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>prepare_genome::gene_bed</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>gtf</code><span class="ox-param-default">test/fixtures/reference/genes.gtf</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Reference artifacts (upstream: --fasta / --gtf / --gene_bed / --chrom_sizes / --transcript_fasta / STAR index). fasta and gtf are always inputs; the other three are inputs by default but are DERIVED from fasta+gtf when the key is empty (modules/prepare_genome.oxoflow mirrors upstream PREPARE_GENOME: gene_bed via ea-utils gtf2bed, chrom_sizes via samtools faidx, transcript_fasta via RSEM). The STAR index is an input (auto-built from the shipped fixture genome by the [[references]] builder below when SAindex is missing).</p>
 <details class="ox-param-usedby"><summary>used by 31 rules</summary>
 <div class="ox-param-rules"><code>alignment::hisat2_index</code> <code>alignment::hisat2_splicesites</code> <code>alignment::star_align</code> <code>alignment::star_align_bbsplit</code> <code>alignment::star_align_bowtie2</code> <code>alignment::star_align_rsem</code> <code>alignment::star_align_rsem_bbsplit</code> <code>alignment::star_align_rsem_bowtie2</code> <code>alignment::star_align_rsem_sortmerna</code> <code>alignment::star_align_sortmerna</code> <code>bam_qc::dupradar</code> <code>bam_qc::featurecounts</code> <code>bam_qc::qualimap_rnaseq</code> <code>prepare_genome::gene_bed</code> <code>prepare_genome::transcript_fasta</code> <code>quantification::kallisto_quant_pseudo</code> <code>quantification::kallisto_quant_pseudo_bbsplit</code> <code>quantification::kallisto_quant_pseudo_bowtie2</code> <code>quantification::kallisto_quant_pseudo_sortmerna</code> <code>quantification::rsem_index</code> <code>quantification::salmon_quant</code> <code>quantification::salmon_quant_bowtie2</code> <code>quantification::salmon_quant_pseudo</code> <code>quantification::salmon_quant_pseudo_bbsplit</code> <code>quantification::salmon_quant_pseudo_bowtie2</code> <code>quantification::salmon_quant_pseudo_sortmerna</code> <code>quantification::salmon_quant_umi</code> <code>quantification::stringtie</code> <code>quantification::tx2gene</code> <code>quantification::tx2gene_pseudo</code> <code>quantification::tx2gene_rsem</code></div>
 </details>
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>gtf_extra_attributes</code><span class="ox-param-default">gene_name</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">tximport gene attributes (upstream: --gtf_group_features / --gtf_extra_attributes; same defaults).</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
@@ -174,21 +174,21 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>hisat2_index</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Path to the prebuilt hisat2 index (built when empty) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">Non-default alignment branches (upstream: --aligner / --skip_alignment / --rsem_index / --hisat2_index / --salmon_index / --bbsplit_index / --sortmerna_index). Empty index keys are auto-built by when-gated builder rules in modules/alignment.oxoflow / quantification.oxoflow from the shipped fixtures when the branch is enabled (like star_index); a user-supplied path is symlinked in instead.</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>alignment::hisat2_index</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>kallisto_index</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Path to the prebuilt kallisto index (built when empty) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">Pseudo-alignment (upstream: --pseudo_aligner, &#x27;salmon&#x27; or &#x27;kallisto&#x27;; default null = alignment-mode Salmon only). Both aligners are ported; the index builders are when-gated on this key (salmon_index / kallisto_index short-circuit with a user-supplied path). pseudo_aligner_kmer_size is the upstream KALLISTO_INDEX -k default (31).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>quantification::kallisto_index</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>min_mapped_reads</code><span class="ox-param-default">5</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Thresholds (upstream params with the same defaults).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>multiqc_custom_content</code></div>
 </details>
@@ -216,7 +216,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>pseudo_aligner_kmer_size</code><span class="ox-param-default">31</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Pseudo-alignment (upstream: --pseudo_aligner, &#x27;salmon&#x27; or &#x27;kallisto&#x27;; default null = alignment-mode Salmon only). Both aligners are ported; the index builders are when-gated on this key (salmon_index / kallisto_index short-circuit with a user-supplied path). pseudo_aligner_kmer_size is the upstream KALLISTO_INDEX -k default (31).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>quantification::kallisto_index</code></div>
 </details>
@@ -237,28 +237,28 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>ribo_database_manifest</code><span class="ox-param-default">assets/rrna-db-defaults.txt</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Ribosomal RNA removal (upstream: --remove_ribo_rna / --ribo_removal_tool / --ribo_database_manifest / --save_non_ribo_reads; same defaults). The manifest is one fasta path per line; .gz entries are gunzipped before use.</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>fastq_qc::rrna_fastas_prepare</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>ribo_removal_tool</code><span class="ox-param-default">sortmerna</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Ribosomal RNA removal (upstream: --remove_ribo_rna / --ribo_removal_tool / --ribo_database_manifest / --save_non_ribo_reads; same defaults). The manifest is one fasta path per line; .gz entries are gunzipped before use.</p>
 <details class="ox-param-usedby"><summary>used by 25 rules</summary>
 <div class="ox-param-rules"><code>alignment::bowtie2_align_bowtie2</code> <code>alignment::bowtie2_align_sortmerna</code> <code>alignment::hisat2_align_bowtie2</code> <code>alignment::hisat2_align_sortmerna</code> <code>alignment::star_align_bowtie2</code> <code>alignment::star_align_rsem_bowtie2</code> <code>alignment::star_align_rsem_sortmerna</code> <code>alignment::star_align_sortmerna</code> <code>fastq_qc::bowtie2_align_rrna</code> <code>fastq_qc::bowtie2_align_rrna_bbsplit</code> <code>fastq_qc::bowtie2_rrna_index</code> <code>fastq_qc::fastqc_filtered_bowtie2</code> <code>fastq_qc::fastqc_filtered_sortmerna</code> <code>fastq_qc::fq_lint_rrna_bowtie2</code> <code>fastq_qc::fq_lint_rrna_sortmerna</code> <code>fastq_qc::rrna_fastas_prepare</code> <code>fastq_qc::samtools_fastq_rrna</code> <code>fastq_qc::samtools_view_rrna</code> <code>fastq_qc::sortmerna</code> <code>fastq_qc::sortmerna_bbsplit</code> <code>fastq_qc::sortmerna_index</code> <code>quantification::kallisto_quant_pseudo_bowtie2</code> <code>quantification::kallisto_quant_pseudo_sortmerna</code> <code>quantification::salmon_quant_pseudo_bowtie2</code> <code>quantification::salmon_quant_pseudo_sortmerna</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>rsem_index</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Path to the prebuilt rsem index (built when empty) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">Non-default alignment branches (upstream: --aligner / --skip_alignment / --rsem_index / --hisat2_index / --salmon_index / --bbsplit_index / --sortmerna_index). Empty index keys are auto-built by when-gated builder rules in modules/alignment.oxoflow / quantification.oxoflow from the shipped fixtures when the branch is enabled (like star_index); a user-supplied path is symlinked in instead.</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>quantification::rsem_index</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>salmon_index</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Path to the prebuilt salmon index (built when empty) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">Non-default alignment branches (upstream: --aligner / --skip_alignment / --rsem_index / --hisat2_index / --salmon_index / --bbsplit_index / --sortmerna_index). Empty index keys are auto-built by when-gated builder rules in modules/alignment.oxoflow / quantification.oxoflow from the shipped fixtures when the branch is enabled (like star_index); a user-supplied path is symlinked in instead.</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>quantification::salmon_index</code></div>
 </details>
@@ -272,21 +272,21 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>save_align_intermeds</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Publication controls (upstream: --save_trimmed / --save_align_intermeds). The port keeps trimmed FASTQs and intermediate BAMs at results/ paths regardless (they double as checkpoints); these keys are accepted for upstream parity and reserved for future use.</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>save_bbsplit_reads</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">BBSplit genome filtering (upstream: --skip_bbsplit / --bbsplit_fasta_list / --save_bbsplit_reads; same defaults). bbsplit_fasta_list is a 2-column CSV (short_name,path_to_fasta) plus the primary genome in config.fasta.</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>save_non_ribo_reads</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Ribosomal RNA removal (upstream: --remove_ribo_rna / --ribo_removal_tool / --ribo_database_manifest / --save_non_ribo_reads; same defaults). The manifest is one fasta path per line; .gz entries are gunzipped before use.</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
@@ -300,7 +300,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>save_umi_intermeds</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Empty = no --umi-separator flag (upstream default null).</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
@@ -321,7 +321,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_bigwig</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Skip bigwig (upstream --skip_bigwig) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">Skip options (upstream: --skip_fastqc / --skip_linting / --skip_trimming / --skip_markduplicates / --skip_qc / --skip_bigwig). Same defaults as upstream. NOTE: skip_trimming=true and skip_markduplicates=true break the downstream chain (trimmed reads / markdup BAM are inputs of later rules); unlike upstream there is no per-branch rewire, see README fidelity table.</p>
 <details class="ox-param-usedby"><summary>used by 10 rules</summary>
 <div class="ox-param-rules"><code>bigwig::bedclip_combined</code> <code>bigwig::bedclip_fw</code> <code>bigwig::bedclip_rev</code> <code>bigwig::bigwig_combined</code> <code>bigwig::bigwig_fw</code> <code>bigwig::bigwig_rev</code> <code>bigwig::genomecov_combined</code> <code>bigwig::genomecov_fw</code> <code>bigwig::genomecov_rev</code> <code>prepare_genome::chrom_sizes</code></div>
 </details>
@@ -342,28 +342,28 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_linting</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Skip linting (upstream --skip_linting) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">Skip options (upstream: --skip_fastqc / --skip_linting / --skip_trimming / --skip_markduplicates / --skip_qc / --skip_bigwig). Same defaults as upstream. NOTE: skip_trimming=true and skip_markduplicates=true break the downstream chain (trimmed reads / markdup BAM are inputs of later rules); unlike upstream there is no per-branch rewire, see README fidelity table.</p>
 <details class="ox-param-usedby"><summary>used by 5 rules</summary>
 <div class="ox-param-rules"><code>fastq_qc::fq_lint_bbsplit</code> <code>fastq_qc::fq_lint_raw</code> <code>fastq_qc::fq_lint_rrna_bowtie2</code> <code>fastq_qc::fq_lint_rrna_sortmerna</code> <code>fastq_qc::fq_lint_trimmed</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_markduplicates</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Skip markduplicates (upstream --skip_markduplicates) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">Skip options (upstream: --skip_fastqc / --skip_linting / --skip_trimming / --skip_markduplicates / --skip_qc / --skip_bigwig). Same defaults as upstream. NOTE: skip_trimming=true and skip_markduplicates=true break the downstream chain (trimmed reads / markdup BAM are inputs of later rules); unlike upstream there is no per-branch rewire, see README fidelity table.</p>
 <details class="ox-param-usedby"><summary>used by 5 rules</summary>
 <div class="ox-param-rules"><code>alignment::picard_markduplicates</code> <code>alignment::samtools_flagstat_markdup</code> <code>alignment::samtools_idxstats_markdup</code> <code>alignment::samtools_index_markdup</code> <code>alignment::samtools_stats_markdup</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_pseudo_alignment</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Skip pseudo alignment (upstream --skip_pseudo_alignment) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">Pseudo-alignment (upstream: --pseudo_aligner, &#x27;salmon&#x27; or &#x27;kallisto&#x27;; default null = alignment-mode Salmon only). Both aligners are ported; the index builders are when-gated on this key (salmon_index / kallisto_index short-circuit with a user-supplied path). pseudo_aligner_kmer_size is the upstream KALLISTO_INDEX -k default (31).</p>
 <details class="ox-param-usedby"><summary>used by 15 rules</summary>
 <div class="ox-param-rules"><code>prepare_genome::transcript_fasta</code> <code>quantification::deseq2_qc_pseudo</code> <code>quantification::kallisto_index</code> <code>quantification::kallisto_quant_pseudo</code> <code>quantification::kallisto_quant_pseudo_bbsplit</code> <code>quantification::kallisto_quant_pseudo_bowtie2</code> <code>quantification::kallisto_quant_pseudo_sortmerna</code> <code>quantification::salmon_index</code> <code>quantification::salmon_quant_pseudo</code> <code>quantification::salmon_quant_pseudo_bbsplit</code> <code>quantification::salmon_quant_pseudo_bowtie2</code> <code>quantification::salmon_quant_pseudo_sortmerna</code> <code>quantification::summarizedexperiment_pseudo</code> <code>quantification::tx2gene_pseudo</code> <code>quantification::tximport_pseudo</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_qc</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Skip qc (upstream --skip_qc) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">Skip options (upstream: --skip_fastqc / --skip_linting / --skip_trimming / --skip_markduplicates / --skip_qc / --skip_bigwig). Same defaults as upstream. NOTE: skip_trimming=true and skip_markduplicates=true break the downstream chain (trimmed reads / markdup BAM are inputs of later rules); unlike upstream there is no per-branch rewire, see README fidelity table.</p>
 <details class="ox-param-usedby"><summary>used by 16 rules</summary>
 <div class="ox-param-rules"><code>bam_qc::biotype_multiqc</code> <code>bam_qc::dupradar</code> <code>bam_qc::featurecounts</code> <code>bam_qc::qualimap_rnaseq</code> <code>bam_qc::rseqc_bam_stat</code> <code>bam_qc::rseqc_infer_experiment</code> <code>bam_qc::rseqc_inner_distance</code> <code>bam_qc::rseqc_junction_annotation</code> <code>bam_qc::rseqc_junction_saturation</code> <code>bam_qc::rseqc_read_distribution</code> <code>bam_qc::rseqc_read_duplication</code> <code>bam_qc::samtools_sort_qualimap</code> <code>prepare_genome::gene_bed</code> <code>quantification::deseq2_qc</code> <code>quantification::deseq2_qc_pseudo</code> <code>quantification::deseq2_qc_rsem</code></div>
 </details>
@@ -384,35 +384,35 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_trimming</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Skip trimming (upstream --skip_trimming) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">Skip options (upstream: --skip_fastqc / --skip_linting / --skip_trimming / --skip_markduplicates / --skip_qc / --skip_bigwig). Same defaults as upstream. NOTE: skip_trimming=true and skip_markduplicates=true break the downstream chain (trimmed reads / markdup BAM are inputs of later rules); unlike upstream there is no per-branch rewire, see README fidelity table.</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>fastq_qc::trimgalore</code> <code>fastq_qc::trimgalore_umi</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_umi_extract</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Skip umi extract (upstream --skip_umi_extract) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">UMI handling (upstream: --with_umi / --skip_umi_extract / --umi_dedup_tool / --umitools_* / --umi_discard_read / --save_umi_intermeds; same defaults).</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>fastq_qc::trimgalore</code> <code>fastq_qc::trimgalore_umi</code> <code>fastq_qc::umitools_extract_umis</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>sortmerna_index</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Path to the prebuilt sortmerna index (built when empty) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">Non-default alignment branches (upstream: --aligner / --skip_alignment / --rsem_index / --hisat2_index / --salmon_index / --bbsplit_index / --sortmerna_index). Empty index keys are auto-built by when-gated builder rules in modules/alignment.oxoflow / quantification.oxoflow from the shipped fixtures when the branch is enabled (like star_index); a user-supplied path is symlinked in instead.</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>fastq_qc::sortmerna_index</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>star_index</code><span class="ox-param-default">test/fixtures/reference/star_index</span></div>
-<p class="ox-param-desc">Path to the prebuilt star index (built when empty) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">Reference artifacts (upstream: --fasta / --gtf / --gene_bed / --chrom_sizes / --transcript_fasta / STAR index). fasta and gtf are always inputs; the other three are inputs by default but are DERIVED from fasta+gtf when the key is empty (modules/prepare_genome.oxoflow mirrors upstream PREPARE_GENOME: gene_bed via ea-utils gtf2bed, chrom_sizes via samtools faidx, transcript_fasta via RSEM). The STAR index is an input (auto-built from the shipped fixture genome by the [[references]] builder below when SAindex is missing).</p>
 <details class="ox-param-usedby"><summary>used by 8 rules</summary>
 <div class="ox-param-rules"><code>alignment::star_align</code> <code>alignment::star_align_bbsplit</code> <code>alignment::star_align_bowtie2</code> <code>alignment::star_align_rsem</code> <code>alignment::star_align_rsem_bbsplit</code> <code>alignment::star_align_rsem_bowtie2</code> <code>alignment::star_align_rsem_sortmerna</code> <code>alignment::star_align_sortmerna</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>stranded_threshold</code><span class="ox-param-default">0.8</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Thresholds (upstream params with the same defaults).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>multiqc_custom_content</code></div>
 </details>
@@ -426,42 +426,42 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>transcript_fasta</code><span class="ox-param-default">test/fixtures/reference/transcripts.fa</span></div>
-<p class="ox-param-desc">Path to the transcript reference FASTA <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">Reference artifacts (upstream: --fasta / --gtf / --gene_bed / --chrom_sizes / --transcript_fasta / STAR index). fasta and gtf are always inputs; the other three are inputs by default but are DERIVED from fasta+gtf when the key is empty (modules/prepare_genome.oxoflow mirrors upstream PREPARE_GENOME: gene_bed via ea-utils gtf2bed, chrom_sizes via samtools faidx, transcript_fasta via RSEM). The STAR index is an input (auto-built from the shipped fixture genome by the [[references]] builder below when SAindex is missing).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>prepare_genome::transcript_fasta</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>umi_dedup_tool</code><span class="ox-param-default">umitools</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">UMI handling (upstream: --with_umi / --skip_umi_extract / --umi_dedup_tool / --umitools_* / --umi_discard_read / --save_umi_intermeds; same defaults).</p>
 <details class="ox-param-usedby"><summary>used by 14 rules</summary>
 <div class="ox-param-rules"><code>alignment::bam_dedup_genome_umicollapse</code> <code>alignment::bam_dedup_genome_umitools</code> <code>alignment::bam_dedup_genome_umitools_primary</code> <code>alignment::bam_dedup_genome_umitools_primary_stats</code> <code>alignment::bam_dedup_genome_umitools_stats</code> <code>alignment::samtools_index_primary</code> <code>alignment::samtools_view_primary</code> <code>quantification::bam_dedup_transcriptome_umicollapse</code> <code>quantification::bam_dedup_transcriptome_umitools</code> <code>quantification::bam_dedup_transcriptome_umitools_primary</code> <code>quantification::bam_dedup_transcriptome_umitools_primary_stats</code> <code>quantification::bam_dedup_transcriptome_umitools_stats</code> <code>quantification::samtools_index_primary_transcriptome</code> <code>quantification::samtools_view_primary_transcriptome</code></div>
 </details>
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>umi_discard_read</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Empty = no --umi-separator flag (upstream default null).</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>umitools_dedup_primary_only</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">umitools tool parameter (upstream --umitools_dedup_primary_only) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">UMI handling (upstream: --with_umi / --skip_umi_extract / --umi_dedup_tool / --umitools_* / --umi_discard_read / --save_umi_intermeds; same defaults).</p>
 <details class="ox-param-usedby"><summary>used by 12 rules</summary>
 <div class="ox-param-rules"><code>alignment::bam_dedup_genome_umitools</code> <code>alignment::bam_dedup_genome_umitools_primary</code> <code>alignment::bam_dedup_genome_umitools_primary_stats</code> <code>alignment::bam_dedup_genome_umitools_stats</code> <code>alignment::samtools_index_primary</code> <code>alignment::samtools_view_primary</code> <code>quantification::bam_dedup_transcriptome_umitools</code> <code>quantification::bam_dedup_transcriptome_umitools_primary</code> <code>quantification::bam_dedup_transcriptome_umitools_primary_stats</code> <code>quantification::bam_dedup_transcriptome_umitools_stats</code> <code>quantification::samtools_index_primary_transcriptome</code> <code>quantification::samtools_view_primary_transcriptome</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>umitools_dedup_stats</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">umitools tool parameter (upstream --umitools_dedup_stats) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">UMI handling (upstream: --with_umi / --skip_umi_extract / --umi_dedup_tool / --umitools_* / --umi_discard_read / --save_umi_intermeds; same defaults).</p>
 <details class="ox-param-usedby"><summary>used by 8 rules</summary>
 <div class="ox-param-rules"><code>alignment::bam_dedup_genome_umitools</code> <code>alignment::bam_dedup_genome_umitools_primary</code> <code>alignment::bam_dedup_genome_umitools_primary_stats</code> <code>alignment::bam_dedup_genome_umitools_stats</code> <code>quantification::bam_dedup_transcriptome_umitools</code> <code>quantification::bam_dedup_transcriptome_umitools_primary</code> <code>quantification::bam_dedup_transcriptome_umitools_primary_stats</code> <code>quantification::bam_dedup_transcriptome_umitools_stats</code></div>
 </details>
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>umitools_grouping_method</code><span class="ox-param-default">directional</span></div>
-<p class="ox-param-desc">umitools tool parameter (upstream --umitools_grouping_method) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">UMI handling (upstream: --with_umi / --skip_umi_extract / --umi_dedup_tool / --umitools_* / --umi_discard_read / --save_umi_intermeds; same defaults).</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
@@ -475,7 +475,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>unstranded_threshold</code><span class="ox-param-default">0.1</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Thresholds (upstream params with the same defaults).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>multiqc_custom_content</code></div>
 </details>
