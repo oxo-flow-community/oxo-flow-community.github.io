@@ -346,7 +346,12 @@ def params_section(p: dict, config: list[dict] | None) -> list[str]:
             usedby_html = (
                 '<details class="ox-param-usedby">'
                 "<summary>not referenced by any rule</summary>\n"
-                '<div class="ox-param-rules">—</div>\n'
+                '<div class="ox-param-rules">'
+                "A ported upstream parameter kept for compatibility: no "
+                "rule reads this key (no <code>{config.*}</code> "
+                "placeholder in any input, output, or shell), so overriding "
+                "it has no effect on this workflow."
+                "</div>\n"
                 "</details>"
             )
         block_class = "ox-param ox-param-unused" if not used_by else "ox-param"
@@ -362,9 +367,13 @@ def params_section(p: dict, config: list[dict] | None) -> list[str]:
         "",
         "## Parameters",
         "",
-        '<p class="ox-param-usage">At run time override any parameter with '
+        '<p class="ox-param-usage">Parameters are consumed by rules through '
+        "<code>{config.key}</code> placeholders in inputs, outputs, and "
+        "shells. Set a value in the workflow's <code>[config]</code> "
+        "section (edit the file), or override at run time with "
         "<code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat "
-        "<code>-e</code> for multiple keys.</p>",
+        "<code>-e</code> for multiple keys. The list below names the rules "
+        "that read each key.</p>",
         '<div class="ox-params">',
         "\n".join(blocks),
         "</div>",

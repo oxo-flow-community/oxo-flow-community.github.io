@@ -71,6 +71,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-viralrecon
 
 ## Parameters
 
+<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. The list below names the rules that read each key.</p>
 <div class="ox-params">
 <div class="ox-param">
 <div class="ox-param-head"><code>additional_annotation</code><span class="ox-param-default"></span></div>
@@ -130,7 +131,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-viralrecon
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>freyja_depthcutoff</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">freyja tool parameter (upstream --freyja_depthcutoff) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>freyja_boot</code> <code>freyja_boot_updated</code> <code>freyja_demix</code> <code>freyja_demix_updated</code></div>
 </details>
@@ -144,7 +145,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-viralrecon
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>freyja_repeats</code><span class="ox-param-default">100</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">freyja tool parameter (upstream --freyja_repeats) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>freyja_boot</code> <code>freyja_boot_updated</code></div>
 </details>
@@ -165,21 +166,21 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-viralrecon
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>ivar_trim_noprimer</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">ivar tool parameter (upstream --ivar_trim_noprimer) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>ivar_trim</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>ivar_trim_offset</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">ivar tool parameter (upstream --ivar_trim_offset) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>ivar_trim</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>kraken2_assembly_host_filter</code><span class="ox-param-default">true</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">kraken2 tool parameter (upstream --kraken2_assembly_host_filter) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>assembly_fastq</code></div>
 </details>
@@ -198,11 +199,11 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-viralrecon
 <div class="ox-param-rules"><code>kraken2_build</code></div>
 </details>
 </div>
-<div class="ox-param">
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>kraken2_variants_host_filter</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">kraken2 tool parameter (upstream --kraken2_variants_host_filter) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">—</div>
+<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param">
@@ -214,7 +215,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-viralrecon
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>min_mapped_reads</code><span class="ox-param-default">1000</span></div>
-<p class="ox-param-desc">upstream params.min_mapped_reads — the per-sample channel DROP is a documented runtime-filter deviation (no engine runtime fn can read the mapped count out of a samtools flagstat); the reporting half (fail_mapped_samples_mqc.tsv in the MultiQC data) is ported inside the multiqc rule</p>
+<p class="ox-param-desc">upstream params.min_mapped_reads — the per-sample channel DROP is a documented runtime-filter deviation (no dynamic DAG); the reporting half (fail_mapped_samples_mqc.tsv in the MultiQC data) is ported inside the multiqc rule</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>multiqc</code></div>
 </details>
@@ -242,21 +243,21 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-viralrecon
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>nextclade_dataset_name</code><span class="ox-param-default">sars-cov-2</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">nextclade tool parameter (upstream --nextclade_dataset_name) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>get_nextclade_dataset</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>nextclade_dataset_tag</code><span class="ox-param-default">2024-10-17--16-48-48Z</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">nextclade tool parameter (upstream --nextclade_dataset_tag) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>get_nextclade_dataset</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>out_dir</code><span class="ox-param-default">results</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Output directory (upstream --outdir) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>fastqc_primers</code> <code>fastqc_raw</code> <code>fastqc_trim</code> <code>multiqc</code></div>
 </details>
@@ -331,74 +332,74 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-viralrecon
 <div class="ox-param-rules"><code>fastp</code></div>
 </details>
 </div>
-<div class="ox-param">
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>save_unaligned</code><span class="ox-param-default">false</span></div>
 <p class="ox-param-desc">upstream params.save_unaligned — NOT ported as a gate: the Kraken2 unclassified reads feed the assembly branch (upstream channel wiring), so they always land in results/kraken2/ — the flag is effectively always on in the port (benign over-emission vs upstream&#x27;s default publish)</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">—</div>
+<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_abacas</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip abacas (upstream --skip_abacas) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>abacas</code> <code>abacas_minia</code> <code>abacas_unicycler</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_assembly</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip assembly (upstream --skip_assembly) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 22 rules</summary>
 <div class="ox-param-rules"><code>abacas</code> <code>abacas_minia</code> <code>abacas_unicycler</code> <code>assemble_minia</code> <code>assemble_spades</code> <code>assemble_unicycler</code> <code>bandage</code> <code>bandage_unicycler</code> <code>blast_assembly</code> <code>blast_assembly_minia</code> <code>blast_assembly_unicycler</code> <code>cutadapt</code> <code>fastqc_primers</code> <code>get_primer_fasta</code> <code>make_blast_db</code> <code>plasmidid</code> <code>plasmidid_minia</code> <code>plasmidid_unicycler</code> <code>prepare_primer_fasta</code> <code>quast_assembly</code> <code>quast_assembly_minia</code> <code>quast_assembly_unicycler</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_assembly_quast</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip assembly quast (upstream --skip_assembly_quast) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>quast_assembly</code> <code>quast_assembly_minia</code> <code>quast_assembly_unicycler</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_bandage</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip bandage (upstream --skip_bandage) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>bandage</code> <code>bandage_unicycler</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_blast</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip blast (upstream --skip_blast) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>blast_assembly</code> <code>blast_assembly_minia</code> <code>blast_assembly_unicycler</code> <code>make_blast_db</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_consensus</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip consensus (upstream --skip_consensus) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 14 rules</summary>
 <div class="ox-param-rules"><code>consensus_call</code> <code>consensus_call_wgs</code> <code>consensus_filter</code> <code>consensus_filter_bcftools</code> <code>consensus_ivar</code> <code>consensus_ivar_wgs</code> <code>get_nextclade_dataset</code> <code>nextclade</code> <code>nextclade_clade_mqc</code> <code>pangolin</code> <code>pangolin_run_updated</code> <code>pangolin_updatedata</code> <code>plot_base_density</code> <code>quast_consensus</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_consensus_plots</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip consensus plots (upstream --skip_consensus_plots) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>plot_base_density</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_cutadapt</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip cutadapt (upstream --skip_cutadapt) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>cutadapt</code> <code>fastqc_primers</code> <code>get_primer_fasta</code> <code>prepare_primer_fasta</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_fastp</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 5 rules</summary>
-<div class="ox-param-rules"><code>align_bowtie2</code> <code>assembly_fastq</code> <code>fastp</code> <code>fastqc_trim</code> <code>kraken2</code></div>
+<p class="ox-param-desc">Skip fastp (upstream --skip_fastp) <span class="ox-param-inferred">inferred</span></p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>fastp</code> <code>fastqc_trim</code></div>
 </details>
 </div>
 <div class="ox-param">
@@ -410,121 +411,121 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-viralrecon
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_freyja</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip freyja (upstream --skip_freyja) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 7 rules</summary>
 <div class="ox-param-rules"><code>freyja_boot</code> <code>freyja_boot_updated</code> <code>freyja_demix</code> <code>freyja_demix_updated</code> <code>freyja_update</code> <code>freyja_variants</code> <code>freyja_variants_wgs</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_freyja_boot</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip freyja boot (upstream --skip_freyja_boot) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>freyja_boot</code> <code>freyja_boot_updated</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_ivar_trim</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip ivar trim (upstream --skip_ivar_trim) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>bam_sort_index_trimmed</code> <code>ivar_trim</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_kraken2</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip kraken2 (upstream --skip_kraken2) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>assembly_fastq</code> <code>kraken2</code> <code>kraken2_build</code> <code>untar_kraken2_db</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_markduplicates</code><span class="ox-param-default">true</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip markduplicates (upstream --skip_markduplicates) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>markduplicates</code> <code>markduplicates_wgs</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_mosdepth</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip mosdepth (upstream --skip_mosdepth) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 6 rules</summary>
 <div class="ox-param-rules"><code>collapse_primers</code> <code>mosdepth_amplicon</code> <code>mosdepth_genome</code> <code>mosdepth_genome_wgs</code> <code>plot_mosdepth_amplicon</code> <code>plot_mosdepth_genome</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_nextclade</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip nextclade (upstream --skip_nextclade) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>get_nextclade_dataset</code> <code>nextclade</code> <code>nextclade_clade_mqc</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_noninternal_primers</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip noninternal primers (upstream --skip_noninternal_primers) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>prepare_primer_fasta</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_pangolin</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip pangolin (upstream --skip_pangolin) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>pangolin</code> <code>pangolin_run_updated</code> <code>pangolin_updatedata</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_picard_metrics</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip picard metrics (upstream --skip_picard_metrics) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>picard_metrics</code> <code>picard_metrics_wgs</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_plasmidid</code><span class="ox-param-default">true</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip plasmidid (upstream --skip_plasmidid) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>plasmidid</code> <code>plasmidid_minia</code> <code>plasmidid_unicycler</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_snpeff</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip snpeff (upstream --skip_snpeff) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 5 rules</summary>
 <div class="ox-param-rules"><code>build_snpeff_db</code> <code>snpeff_ann</code> <code>snpsift_extract</code> <code>variants_long_table</code> <code>variants_long_table_bcftools</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_variants</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip variants (upstream --skip_variants) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 33 rules</summary>
 <div class="ox-param-rules"><code>align_bowtie2</code> <code>bam_sort_index</code> <code>bam_sort_index_trimmed</code> <code>build_bowtie2_index</code> <code>build_snpeff_db</code> <code>call_variants_bcftools</code> <code>call_variants_bcftools_wgs</code> <code>call_variants_ivar</code> <code>collapse_primers</code> <code>freyja_boot</code> <code>freyja_boot_updated</code> <code>freyja_demix</code> <code>freyja_demix_updated</code> <code>freyja_update</code> <code>freyja_variants</code> <code>freyja_variants_wgs</code> <code>ivar_to_vcf</code> <code>ivar_trim</code> <code>markduplicates</code> <code>markduplicates_wgs</code> <code>mosdepth_amplicon</code> <code>mosdepth_genome</code> <code>mosdepth_genome_wgs</code> <code>norm_vcf_bcftools</code> <code>picard_metrics</code> <code>picard_metrics_wgs</code> <code>plot_mosdepth_amplicon</code> <code>plot_mosdepth_genome</code> <code>snpeff_ann</code> <code>snpsift_extract</code> <code>sort_vcf</code> <code>variants_long_table</code> <code>variants_long_table_bcftools</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_variants_long_table</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip variants long table (upstream --skip_variants_long_table) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>variants_long_table</code> <code>variants_long_table_bcftools</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_variants_quast</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip variants quast (upstream --skip_variants_quast) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>quast_consensus</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>spades_mode</code><span class="ox-param-default">rnaviral</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">spades tool parameter (upstream --spades_mode) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>assemble_spades</code></div>
 </details>
 </div>
-<div class="ox-param">
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>threeprime_adapters</code><span class="ox-param-default">false</span></div>
 <p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">—</div>
+<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param">
@@ -536,7 +537,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-viralrecon
 </div>
 </div>
 
-Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
+Descriptions are the workflow's own `#` comments from its `[config]` section (and the `[config]` sections of its included modules), surfaced by `oxo-flow info` — no schema file to maintain.
 
 ## Workflow graph
 

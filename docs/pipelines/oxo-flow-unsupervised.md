@@ -66,6 +66,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-unsupervised
 
 ## Parameters
 
+<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. The list below names the rules that read each key.</p>
 <div class="ox-params">
 <div class="ox-param">
 <div class="ox-param-head"><code>clustree_categorical_label_option</code><span class="ox-param-default">majority</span></div>
@@ -165,11 +166,11 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-unsupervised
 <div class="ox-param-rules"><code>aggregate_clustering_results</code> <code>leiden_ModularityVertexPartition_NA</code> <code>leiden_RBConfigurationVertexPartition_0p5</code> <code>leiden_RBConfigurationVertexPartition_1</code> <code>leiden_RBConfigurationVertexPartition_1p5</code> <code>leiden_RBConfigurationVertexPartition_2</code> <code>leiden_RBConfigurationVertexPartition_4</code></div>
 </details>
 </div>
-<div class="ox-param">
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>mem_mb</code><span class="ox-param-default">32000</span></div>
 <p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">—</div>
+<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param">
@@ -209,7 +210,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-unsupervised
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>result_path</code><span class="ox-param-default">results</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Output directory (upstream --outdir) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 61 rules</summary>
 <div class="ox-param-rules"><code>aggregate_all_clustering_results</code> <code>aggregate_clustering_results</code> <code>aggregate_rank_internal</code> <code>annot_export</code> <code>clustree_analysis_custom</code> <code>clustree_analysis_default</code> <code>clustree_analysis_metadata</code> <code>densmap_embed_2d</code> <code>densmap_embed_3d</code> <code>distance_matrix_features_correlation</code> <code>distance_matrix_features_cosine</code> <code>distance_matrix_observations_correlation</code> <code>distance_matrix_observations_cosine</code> <code>env_export_ComplexHeatmap</code> <code>env_export_clusterCrit</code> <code>env_export_clustree</code> <code>env_export_ggplot</code> <code>env_export_plotly</code> <code>env_export_pymcdm</code> <code>env_export_umap_leiden</code> <code>leiden_ModularityVertexPartition_NA</code> <code>leiden_RBConfigurationVertexPartition_0p5</code> <code>leiden_RBConfigurationVertexPartition_1</code> <code>leiden_RBConfigurationVertexPartition_1p5</code> <code>leiden_RBConfigurationVertexPartition_2</code> <code>leiden_RBConfigurationVertexPartition_4</code> <code>pca</code> <code>plot_dimred_clustering_densmap</code> <code>plot_dimred_clustering_pca</code> <code>plot_dimred_clustering_umap</code> <code>plot_dimred_features_pca</code> <code>plot_dimred_features_umap</code> <code>plot_dimred_interactive_densmap_2d</code> <code>plot_dimred_interactive_densmap_3d</code> <code>plot_dimred_interactive_pca_2d</code> <code>plot_dimred_interactive_pca_3d</code> <code>plot_dimred_interactive_umap_2d</code> <code>plot_dimred_interactive_umap_3d</code> <code>plot_dimred_metadata_densmap</code> <code>plot_dimred_metadata_pca</code> <code>plot_dimred_metadata_umap</code> <code>plot_heatmap_correlation</code> <code>plot_heatmap_cosine</code> <code>plot_indices_external</code> <code>plot_indices_internal</code> <code>plot_pca_diagnostics</code> <code>plot_umap_connectivity_densmap</code> <code>plot_umap_connectivity_umap</code> <code>plot_umap_diagnostics_densmap</code> <code>plot_umap_diagnostics_umap</code> <code>prep_feature_plot</code> <code>umap_embed_2d</code> <code>umap_embed_3d</code> <code>umap_graph</code> <code>validation_external</code> <code>validation_internal_BIC</code> <code>validation_internal_C_index</code> <code>validation_internal_Calinski_Harabasz</code> <code>validation_internal_Davies_Bouldin</code> <code>validation_internal_Dunn</code> <code>validation_internal_Silhouette</code></div>
 </details>
@@ -235,32 +236,32 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-unsupervised
 <div class="ox-param-rules"><code>plot_dimred_clustering_densmap</code> <code>plot_dimred_clustering_pca</code> <code>plot_dimred_clustering_umap</code> <code>plot_dimred_features_pca</code> <code>plot_dimred_features_umap</code> <code>plot_dimred_interactive_densmap_2d</code> <code>plot_dimred_interactive_densmap_3d</code> <code>plot_dimred_interactive_pca_2d</code> <code>plot_dimred_interactive_pca_3d</code> <code>plot_dimred_interactive_umap_2d</code> <code>plot_dimred_interactive_umap_3d</code> <code>plot_dimred_metadata_densmap</code> <code>plot_dimred_metadata_pca</code> <code>plot_dimred_metadata_umap</code> <code>plot_pca_diagnostics</code></div>
 </details>
 </div>
-<div class="ox-param">
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>threads</code><span class="ox-param-default">2</span></div>
 <p class="ox-param-desc">RESOURCES (upstream config: mem/threads)</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">—</div>
+<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
-<div class="ox-param">
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>umap_connectivity</code><span class="ox-param-default">1</span></div>
 <p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">—</div>
+<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
-<div class="ox-param">
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>umap_densmap</code><span class="ox-param-default">1</span></div>
 <p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">—</div>
+<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
-<div class="ox-param">
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>umap_diagnostics</code><span class="ox-param-default">1</span></div>
 <p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">—</div>
+<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param">
@@ -286,7 +287,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-unsupervised
 </div>
 </div>
 
-Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
+Descriptions are the workflow's own `#` comments from its `[config]` section (and the `[config]` sections of its included modules), surfaced by `oxo-flow info` — no schema file to maintain.
 
 ## Workflow graph
 

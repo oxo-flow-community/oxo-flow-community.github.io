@@ -67,7 +67,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-atacseq
 
 ## Parameters
 
-<p class="ox-param-usage">At run time override any parameter with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys.</p>
+<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. The list below names the rules that read each key.</p>
 <div class="ox-params">
 <div class="ox-param">
 <div class="ox-param-head"><code>aligner</code><span class="ox-param-default">bwa</span></div>
@@ -92,7 +92,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-atacseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>broad_cutoff</code><span class="ox-param-default">0.1</span></div>
-<p class="ox-param-desc">Upstream default params (kept as config so CLI overrides work)</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>macs2_callpeak</code></div>
 </details>
@@ -127,14 +127,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-atacseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>fingerprint_bins</code><span class="ox-param-default">500000</span></div>
-<p class="ox-param-desc">Upstream default params (kept as config so CLI overrides work)</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>pe::plotfingerprint_pe</code> <code>plotfingerprint</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>fragment_size</code><span class="ox-param-default">200</span></div>
-<p class="ox-param-desc">Upstream default params (kept as config so CLI overrides work)</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>bedtools_genomecov</code> <code>plotfingerprint</code></div>
 </details>
@@ -155,9 +155,9 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-atacseq
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>keep_dups</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Upstream default params (kept as config so CLI overrides work)</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">—</div>
+<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param">
@@ -169,9 +169,9 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-atacseq
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>keep_multi_map</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Upstream default params (kept as config so CLI overrides work)</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">—</div>
+<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param">
@@ -197,9 +197,9 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-atacseq
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>min_trimmed_reads</code><span class="ox-param-default">10000</span></div>
-<p class="ox-param-desc">Upstream default params (kept as config so CLI overrides work)</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">—</div>
+<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param">
@@ -220,7 +220,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-atacseq
 <div class="ox-param-head"><code>narrow_peak</code><span class="ox-param-default">false</span></div>
 <p class="ox-param-desc">Upstream default params (kept as config so CLI overrides work)</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">—</div>
+<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param">
@@ -274,9 +274,9 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-atacseq
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>save_trimmed</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Upstream default params (kept as config so CLI overrides work)</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">—</div>
+<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param">
@@ -302,7 +302,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-atacseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_fastqc</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Upstream default params (kept as config so CLI overrides work)</p>
+<p class="ox-param-desc">Skip fastqc (upstream --skip_fastqc) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>fastqc</code> <code>pe::fastqc_pe</code></div>
 </details>
@@ -323,7 +323,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-atacseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_multiqc</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Upstream default params (kept as config so CLI overrides work)</p>
+<p class="ox-param-desc">Skip multiqc (upstream --skip_multiqc) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>multiqc</code> <code>pe::multiqc_pe</code></div>
 </details>
@@ -351,14 +351,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-atacseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_plot_fingerprint</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Upstream default params (kept as config so CLI overrides work)</p>
+<p class="ox-param-desc">Skip plot fingerprint (upstream --skip_plot_fingerprint) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>pe::plotfingerprint_pe</code> <code>plotfingerprint</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_plot_profile</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Upstream default params (kept as config so CLI overrides work)</p>
+<p class="ox-param-desc">Skip plot profile (upstream --skip_plot_profile) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>deeptools_plots</code></div>
 </details>
@@ -372,14 +372,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-atacseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_qc</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Upstream default params (kept as config so CLI overrides work)</p>
+<p class="ox-param-desc">Skip qc (upstream --skip_qc) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>fastqc</code> <code>pe::fastqc_pe</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_trimming</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Upstream default params (kept as config so CLI overrides work)</p>
+<p class="ox-param-desc">Skip trimming (upstream --skip_trimming) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>pe::trimgalore_pe</code> <code>trimgalore</code></div>
 </details>

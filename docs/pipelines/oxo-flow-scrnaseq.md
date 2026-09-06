@@ -71,7 +71,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-scrnaseq
 
 ## Parameters
 
-<p class="ox-param-usage">At run time override any parameter with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys.</p>
+<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. The list below names the rules that read each key.</p>
 <div class="ox-params">
 <div class="ox-param">
 <div class="ox-param-head"><code>aligner</code><span class="ox-param-default">cellranger</span></div>
@@ -147,14 +147,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-scrnaseq
 <div class="ox-param-head"><code>email</code><span class="ox-param-default"></span></div>
 <p class="ox-param-desc">completion notifications (nf-core PIPELINE_COMPLETION port): summary email on success (<code>email</code>), failure address (<code>email_on_fail</code>) and a webhook (<code>hook_url</code>). Empty = no notification, exactly like upstream&#x27;s empty email params. Consumed by the workflow-level on_complete / on_error hooks above (engine &gt;= 0.17.0); older engines ignore the hook keys and the run is untouched.</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">—</div>
+<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>email_on_fail</code><span class="ox-param-default"></span></div>
 <p class="ox-param-desc">failure-only recipient (upstream --email_on_fail; used when email is empty)</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">—</div>
+<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param">
@@ -245,7 +245,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-scrnaseq
 <div class="ox-param-head"><code>hook_url</code><span class="ox-param-default"></span></div>
 <p class="ox-param-desc">webhook URL for the on_complete / on_error notifications</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">—</div>
+<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param">
@@ -294,7 +294,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-scrnaseq
 <div class="ox-param-head"><code>out_dir</code><span class="ox-param-default">results</span></div>
 <p class="ox-param-desc">results directory (upstream --outdir)</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">—</div>
+<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param">

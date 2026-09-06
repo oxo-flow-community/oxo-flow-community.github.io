@@ -67,18 +67,18 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq-star-deseq2
 
 ## Parameters
 
-<p class="ox-param-usage">At run time override any parameter with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys.</p>
+<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. The list below names the rules that read each key.</p>
 <div class="ox-params">
 <div class="ox-param">
 <div class="ox-param-head"><code>annotation_gtf</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Local reference overrides: set to a local FASTA/GTF to skip the Ensembl download entirely (offline machines, tiny test runs). Empty = download (the upstream-faithful default). A tiny synthetic kit ships at test/fixtures/reference/ with matching reads in raw-synthetic/.</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>get_annotation</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>annotation_url</code><span class="ox-param-default">ftp://ftp.ensembl.org/pub/release-115/gtf/homo_sapiens/Homo_sapiens.GRCh38.115.gtf.gz</span></div>
-<p class="ox-param-desc">Local reference overrides: set to a local FASTA/GTF to skip the Ensembl download entirely (offline machines, tiny test runs). Empty = download (the upstream-faithful default). A tiny synthetic kit ships at test/fixtures/reference/ with matching reads in raw-synthetic/.</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>get_annotation</code></div>
 </details>
@@ -106,14 +106,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq-star-deseq2
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>contrast_levels</code><span class="ox-param-default">treated</span></div>
-<p class="ox-param-desc">Contrasts (upstream: diffexp.contrasts). One comma-joined entry per contrast: contrast id, its variable_of_interest, its level_of_interest. The base level comes from diffexp_base_levels.</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>deseq2</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>contrast_variables</code><span class="ox-param-default">treatment_1</span></div>
-<p class="ox-param-desc">Contrasts (upstream: diffexp.contrasts). One comma-joined entry per contrast: contrast id, its variable_of_interest, its level_of_interest. The base level comes from diffexp_base_levels.</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>deseq2</code></div>
 </details>
@@ -127,23 +127,23 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq-star-deseq2
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>diffexp_base_levels</code><span class="ox-param-default">untreated,untreated</span></div>
-<p class="ox-param-desc">Differential expression (upstream: diffexp.*). Comma-joined lists mirror the upstream nested tables; positions pair up (treatment_1 -&gt; untreated, treatment_2 -&gt; untreated).</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>deseq2</code> <code>deseq2_init</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>diffexp_batch_effects</code><span class="ox-param-default">jointly_handled</span></div>
-<p class="ox-param-desc">Differential expression (upstream: diffexp.*). Comma-joined lists mirror the upstream nested tables; positions pair up (treatment_1 -&gt; untreated, treatment_2 -&gt; untreated).</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>deseq2_init</code></div>
 </details>
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>diffexp_model</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Differential expression (upstream: diffexp.*). Comma-joined lists mirror the upstream nested tables; positions pair up (treatment_1 -&gt; untreated, treatment_2 -&gt; untreated).</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">—</div>
+<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param">
@@ -162,21 +162,21 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq-star-deseq2
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>fastp_adapters_se</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">fastp adapter args and extra args (upstream: per-unit columns fastp_adapters / fastp_extra in config/units.tsv, looked up per unit via the metadata binding — {meta.fastp_adapters} / {meta.fastp_extra} render per unit and these global keys are the per-unit defaults when a unit&#x27;s column is empty; equal the upstream defaults). fastp_adapters_se matches the upstream single-end default (&quot;&quot;).</p>
+<p class="ox-param-desc">fastp tool parameter (upstream --fastp_adapters_se) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>fastp_se</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>fastp_extra</code><span class="ox-param-default">--trim_poly_x --poly_x_min_len 7 --trim_poly_g --poly_g_min_len 7</span></div>
-<p class="ox-param-desc">fastp adapter args and extra args (upstream: per-unit columns fastp_adapters / fastp_extra in config/units.tsv, looked up per unit via the metadata binding — {meta.fastp_adapters} / {meta.fastp_extra} render per unit and these global keys are the per-unit defaults when a unit&#x27;s column is empty; equal the upstream defaults). fastp_adapters_se matches the upstream single-end default (&quot;&quot;).</p>
+<p class="ox-param-desc">fastp tool parameter (upstream --fastp_extra) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>fastp_pe</code> <code>fastp_se</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>genome_faidx_activate</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Activate the BWA index / samtools faidx rules. Upstream declares both but its default path never requests them (snakemake lazy evaluation); oxo-flow runs every rule in the file, so both are gated off unless activated.</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>genome_faidx</code></div>
 </details>
@@ -190,14 +190,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq-star-deseq2
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>genome_url</code><span class="ox-param-default">https://ftp.ensembl.org/pub/release-115/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz</span></div>
-<p class="ox-param-desc">Local reference overrides: set to a local FASTA/GTF to skip the Ensembl download entirely (offline machines, tiny test runs). Empty = download (the upstream-faithful default). A tiny synthetic kit ships at test/fixtures/reference/ with matching reads in raw-synthetic/.</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>get_genome</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>genome_url_toplevel</code><span class="ox-param-default">https://ftp.ensembl.org/pub/release-115/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.toplevel.fa.gz</span></div>
-<p class="ox-param-desc">Local reference overrides: set to a local FASTA/GTF to skip the Ensembl download entirely (offline machines, tiny test runs). Empty = download (the upstream-faithful default). A tiny synthetic kit ships at test/fixtures/reference/ with matching reads in raw-synthetic/.</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>get_genome</code></div>
 </details>
@@ -211,16 +211,16 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq-star-deseq2
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>pca_labels</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">PCA (upstream: pca.activate / pca.labels). pca_variables is the derived upstream list (variables_of_interest + batch_effects + labels), kept explicit here — keep it in sync with the diffexp keys below.</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">—</div>
+<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>pca_variables</code><span class="ox-param-default">treatment_1,treatment_2,jointly_handled</span></div>
-<p class="ox-param-desc">PCA (upstream: pca.activate / pca.labels). pca_variables is the derived upstream list (variables_of_interest + batch_effects + labels), kept explicit here — keep it in sync with the diffexp keys below.</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">—</div>
+<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param">
@@ -232,23 +232,23 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq-star-deseq2
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>ref_build</code><span class="ox-param-default">GRCh38</span></div>
-<p class="ox-param-desc">Reference (upstream: ref.species / ref.release / ref.build). The download URLs below are the Ensembl URLs the wrappers resolve for these values.</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">—</div>
+<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>ref_release</code><span class="ox-param-default">115</span></div>
-<p class="ox-param-desc">Reference (upstream: ref.species / ref.release / ref.build). The download URLs below are the Ensembl URLs the wrappers resolve for these values.</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">—</div>
+<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>ref_species</code><span class="ox-param-default">homo_sapiens</span></div>
 <p class="ox-param-desc">Reference (upstream: ref.species / ref.release / ref.build). The download URLs below are the Ensembl URLs the wrappers resolve for these values.</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">—</div>
+<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param">
@@ -267,7 +267,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq-star-deseq2
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>star_align_extra</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">STAR extra params (upstream: params.star.index / params.star.align).</p>
+<p class="ox-param-desc">star tool parameter (upstream --star_align_extra) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>star_align</code> <code>star_align_raw</code> <code>star_align_se</code> <code>star_align_se_raw</code></div>
 </details>
@@ -288,7 +288,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq-star-deseq2
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>units_file</code><span class="ox-param-default">config/units.tsv</span></div>
-<p class="ox-param-desc">Sample sheet (TSV: sample_name, condition, ...) and unit sheet (TSV: sample_name, unit_name, fq1, fq2, sra, fastp_adapters, fastp_extra, strandedness). Upstream: config[&quot;samples&quot;] / config[&quot;units&quot;]. The unit sheet&#x27;s first column is the composite unit key (&lt;sample&gt;-&lt;unit&gt;, the {sample} wildcard) and doubles as the [workflow] metadata_file table above; scripts/count-matrix.py reads the sample/unit/strandedness columns.</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>count_matrix</code></div>
 </details>

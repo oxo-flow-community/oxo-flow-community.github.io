@@ -72,6 +72,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-sarek
 
 ## Parameters
 
+<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. The list below names the rules that read each key.</p>
 <div class="ox-params">
 <div class="ox-param">
 <div class="ox-param-head"><code>aligner</code><span class="ox-param-default">bwa-mem</span></div>
@@ -83,8 +84,8 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-sarek
 <div class="ox-param">
 <div class="ox-param-head"><code>alignment_ext</code><span class="ox-param-default">cram</span></div>
 <p class="ox-param-desc">Alignment-file mode: &#x27;cram&#x27; (default) or &#x27;bam&#x27; (when save_output_as_bam=true). recal_index_ext must match the mode (&#x27;cram.crai&#x27; vs &#x27;bam.bai&#x27;).</p>
-<details class="ox-param-usedby"><summary>used by 27 rules</summary>
-<div class="ox-param-rules"><code>bcftools_mpileup_call</code> <code>bcftools_mpileup_ngscheckmate</code> <code>deepvariant</code> <code>freebayes</code> <code>gatk_applybqsr</code> <code>gatk_applybqsr_scatter</code> <code>gatk_baserecalibrator</code> <code>gatk_baserecalibrator_scatter</code> <code>gatk_getpileupsummaries_paired</code> <code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_gvcf</code> <code>gatk_haplotypecaller_gvcf_scatter</code> <code>gatk_haplotypecaller_scatter</code> <code>gatk_mutect2_paired</code> <code>gatk_mutect2_tumor_only</code> <code>manta_germline</code> <code>manta_somatic</code> <code>merge_index_samtools</code> <code>mosdepth_md</code> <code>mosdepth_recal</code> <code>samtools_index_recal</code> <code>samtools_reindex_bam</code> <code>samtools_stats_md</code> <code>samtools_stats_recal</code> <code>strelka_germline</code> <code>strelka_somatic</code> <code>tiddit_sv</code></div>
+<details class="ox-param-usedby"><summary>used by 22 rules</summary>
+<div class="ox-param-rules"><code>bcftools_mpileup_call</code> <code>bcftools_mpileup_ngscheckmate</code> <code>deepvariant</code> <code>freebayes</code> <code>gatk_applybqsr</code> <code>gatk_applybqsr_scatter</code> <code>gatk_baserecalibrator</code> <code>gatk_baserecalibrator_scatter</code> <code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_gvcf</code> <code>gatk_haplotypecaller_gvcf_scatter</code> <code>gatk_haplotypecaller_scatter</code> <code>manta_germline</code> <code>merge_index_samtools</code> <code>mosdepth_md</code> <code>mosdepth_recal</code> <code>samtools_index_recal</code> <code>samtools_reindex_bam</code> <code>samtools_stats_md</code> <code>samtools_stats_recal</code> <code>strelka_germline</code> <code>tiddit_sv</code></div>
 </details>
 </div>
 <div class="ox-param">
@@ -96,14 +97,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-sarek
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>bwa_index_dir</code><span class="ox-param-default">/data/references/GRCh38/Sequence/BWAIndex/</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">bwa tool parameter (upstream --bwa_index_dir) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>bwa_mem</code> <code>bwa_mem_split</code> <code>bwa_mem_umi</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>bwa_mem2_index_dir</code><span class="ox-param-default">/data/references/GRCh38/Sequence/BWAmem2Index/</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">bwa tool parameter (upstream --bwa_mem2_index_dir) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>bwa_mem2</code> <code>bwa_mem2_split</code></div>
 </details>
@@ -144,24 +145,10 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-sarek
 </details>
 </div>
 <div class="ox-param">
-<div class="ox-param-head"><code>call_manta_somatic</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>manta_somatic</code></div>
-</details>
-</div>
-<div class="ox-param">
 <div class="ox-param-head"><code>call_mpileup</code><span class="ox-param-default">false</span></div>
 <p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>used by 6 rules</summary>
 <div class="ox-param-rules"><code>bcftools_mpileup_call</code> <code>bcftools_stats_mpileup</code> <code>ensemblvep_vep_mpileup</code> <code>vcftools_filter_summary_mpileup</code> <code>vcftools_tstv_count_mpileup</code> <code>vcftools_tstv_qual_mpileup</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>call_mutect2</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Somatic variant calling (upstream tools &#x27;mutect2,strelka2,manta&#x27; on a tumor/normal samplesheet; the germline chain above runs for every sample including pair members). Pairs come from [workflow].pairs_file — the repo ships config/somatic_pairs.tsv (header-only = no somatic instances; fill it with pair_id/experiment/control rows, experiment=tumor, control=normal). Tumor-only: leave control empty in the sheet — Mutect2 runs tumor-only (Strelka2/Manta somatic are paired-only upstream and stay off for those pairs). PoN / gnomAD contamination panels are a separate resource step (contamination_estimation uses the tumor-normal pileups instead).</p>
-<details class="ox-param-usedby"><summary>used by 6 rules</summary>
-<div class="ox-param-rules"><code>gatk_calculatecontamination_paired</code> <code>gatk_filtermutectcalls_paired</code> <code>gatk_filtermutectcalls_tumor_only</code> <code>gatk_getpileupsummaries_paired</code> <code>gatk_mutect2_paired</code> <code>gatk_mutect2_tumor_only</code></div>
 </details>
 </div>
 <div class="ox-param">
@@ -172,31 +159,17 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-sarek
 </details>
 </div>
 <div class="ox-param">
-<div class="ox-param-head"><code>call_strelka_somatic</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>strelka_somatic</code></div>
-</details>
-</div>
-<div class="ox-param">
 <div class="ox-param-head"><code>call_tiddit</code><span class="ox-param-default">false</span></div>
 <p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>used by 7 rules</summary>
 <div class="ox-param-rules"><code>bcftools_stats_tiddit</code> <code>ensemblvep_vep_tiddit</code> <code>tabix_tiddit</code> <code>tiddit_sv</code> <code>vcftools_filter_summary_tiddit</code> <code>vcftools_tstv_count_tiddit</code> <code>vcftools_tstv_qual_tiddit</code></div>
 </details>
 </div>
-<div class="ox-param">
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>chromosomes</code><span class="ox-param-default">chr1, chr2, chr3, chr4, chr5, chr6, chr7, chr8, chr9, chr10, chr11, chr12, chr13, chr14, chr15, chr16, chr17, chr18, chr19, chr20, chr21, chr22, chrX, chrY, chrM</span></div>
 <p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">—</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>contamination_estimation</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">CalculateContamination: GetPileupSummaries + CalculateContamination on the pair, feeding FilterMutectCalls --contamination-table (upstream contamination_estimation; requires a paired sample).</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>gatk_calculatecontamination_paired</code> <code>gatk_getpileupsummaries_paired</code></div>
+<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param">
@@ -216,22 +189,22 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-sarek
 <div class="ox-param">
 <div class="ox-param-head"><code>dict</code><span class="ox-param-default">/data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.dict</span></div>
 <p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 24 rules</summary>
-<div class="ox-param-rules"><code>gatk_applybqsr</code> <code>gatk_applybqsr_scatter</code> <code>gatk_applyvqsr_indel</code> <code>gatk_applyvqsr_snp</code> <code>gatk_baserecalibrator</code> <code>gatk_baserecalibrator_scatter</code> <code>gatk_cnnscorevariants</code> <code>gatk_filtermutectcalls_paired</code> <code>gatk_filtermutectcalls_tumor_only</code> <code>gatk_filtervarianttranches</code> <code>gatk_genotypegvcfs</code> <code>gatk_genotypegvcfs_scatter</code> <code>gatk_getpileupsummaries_paired</code> <code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_gvcf</code> <code>gatk_haplotypecaller_gvcf_scatter</code> <code>gatk_haplotypecaller_scatter</code> <code>gatk_markduplicates</code> <code>gatk_markduplicates_bam</code> <code>gatk_mutect2_paired</code> <code>gatk_mutect2_tumor_only</code> <code>gatk_variantrecalibrator_indel</code> <code>gatk_variantrecalibrator_snp</code> <code>manta_germline</code></div>
+<details class="ox-param-usedby"><summary>used by 19 rules</summary>
+<div class="ox-param-rules"><code>gatk_applybqsr</code> <code>gatk_applybqsr_scatter</code> <code>gatk_applyvqsr_indel</code> <code>gatk_applyvqsr_snp</code> <code>gatk_baserecalibrator</code> <code>gatk_baserecalibrator_scatter</code> <code>gatk_cnnscorevariants</code> <code>gatk_filtervarianttranches</code> <code>gatk_genotypegvcfs</code> <code>gatk_genotypegvcfs_scatter</code> <code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_gvcf</code> <code>gatk_haplotypecaller_gvcf_scatter</code> <code>gatk_haplotypecaller_scatter</code> <code>gatk_markduplicates</code> <code>gatk_markduplicates_bam</code> <code>gatk_variantrecalibrator_indel</code> <code>gatk_variantrecalibrator_snp</code> <code>manta_germline</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>fasta</code><span class="ox-param-default">/data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.fasta</span></div>
 <p class="ox-param-desc">Reference data (user-provided; GRCh38 GATK bundle layout from upstream conf/igenomes.config, substituted at port time)</p>
-<details class="ox-param-usedby"><summary>used by 48 rules</summary>
-<div class="ox-param-rules"><code>bcftools_mpileup_call</code> <code>bcftools_mpileup_ngscheckmate</code> <code>bwa_index</code> <code>bwa_mem</code> <code>bwa_mem2</code> <code>bwa_mem2_split</code> <code>bwa_mem_split</code> <code>bwa_mem_umi</code> <code>bwamem2_index</code> <code>deepvariant</code> <code>freebayes</code> <code>gatk_applybqsr</code> <code>gatk_applybqsr_scatter</code> <code>gatk_applyvqsr_indel</code> <code>gatk_applyvqsr_snp</code> <code>gatk_baserecalibrator</code> <code>gatk_baserecalibrator_scatter</code> <code>gatk_cnnscorevariants</code> <code>gatk_createsequencedictionary</code> <code>gatk_filtermutectcalls_paired</code> <code>gatk_filtermutectcalls_tumor_only</code> <code>gatk_filtervarianttranches</code> <code>gatk_genotypegvcfs</code> <code>gatk_genotypegvcfs_scatter</code> <code>gatk_getpileupsummaries_paired</code> <code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_gvcf</code> <code>gatk_haplotypecaller_gvcf_scatter</code> <code>gatk_haplotypecaller_scatter</code> <code>gatk_markduplicates</code> <code>gatk_markduplicates_bam</code> <code>gatk_mutect2_paired</code> <code>gatk_mutect2_tumor_only</code> <code>gatk_variantrecalibrator_indel</code> <code>gatk_variantrecalibrator_snp</code> <code>manta_germline</code> <code>manta_somatic</code> <code>merge_index_samtools</code> <code>mosdepth_md</code> <code>mosdepth_recal</code> <code>ngscheckmate_ncm</code> <code>samtools_faidx</code> <code>samtools_reindex_bam</code> <code>samtools_stats_md</code> <code>samtools_stats_recal</code> <code>strelka_germline</code> <code>strelka_somatic</code> <code>tiddit_sv</code></div>
+<details class="ox-param-usedby"><summary>used by 41 rules</summary>
+<div class="ox-param-rules"><code>bcftools_mpileup_call</code> <code>bcftools_mpileup_ngscheckmate</code> <code>bwa_index</code> <code>bwa_mem</code> <code>bwa_mem2</code> <code>bwa_mem2_split</code> <code>bwa_mem_split</code> <code>bwa_mem_umi</code> <code>bwamem2_index</code> <code>deepvariant</code> <code>freebayes</code> <code>gatk_applybqsr</code> <code>gatk_applybqsr_scatter</code> <code>gatk_applyvqsr_indel</code> <code>gatk_applyvqsr_snp</code> <code>gatk_baserecalibrator</code> <code>gatk_baserecalibrator_scatter</code> <code>gatk_cnnscorevariants</code> <code>gatk_createsequencedictionary</code> <code>gatk_filtervarianttranches</code> <code>gatk_genotypegvcfs</code> <code>gatk_genotypegvcfs_scatter</code> <code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_gvcf</code> <code>gatk_haplotypecaller_gvcf_scatter</code> <code>gatk_haplotypecaller_scatter</code> <code>gatk_markduplicates</code> <code>gatk_markduplicates_bam</code> <code>gatk_variantrecalibrator_indel</code> <code>gatk_variantrecalibrator_snp</code> <code>manta_germline</code> <code>merge_index_samtools</code> <code>mosdepth_md</code> <code>mosdepth_recal</code> <code>ngscheckmate_ncm</code> <code>samtools_faidx</code> <code>samtools_reindex_bam</code> <code>samtools_stats_md</code> <code>samtools_stats_recal</code> <code>strelka_germline</code> <code>tiddit_sv</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>fasta_fai</code><span class="ox-param-default">/data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.fasta.fai</span></div>
 <p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 33 rules</summary>
-<div class="ox-param-rules"><code>create_intervals_bed</code> <code>deepvariant</code> <code>freebayes</code> <code>gatk_applybqsr</code> <code>gatk_applybqsr_scatter</code> <code>gatk_applyvqsr_indel</code> <code>gatk_applyvqsr_snp</code> <code>gatk_baserecalibrator</code> <code>gatk_baserecalibrator_scatter</code> <code>gatk_cnnscorevariants</code> <code>gatk_filtermutectcalls_paired</code> <code>gatk_filtermutectcalls_tumor_only</code> <code>gatk_filtervarianttranches</code> <code>gatk_genomicsdbimport</code> <code>gatk_genotypegvcfs</code> <code>gatk_genotypegvcfs_scatter</code> <code>gatk_getpileupsummaries_paired</code> <code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_gvcf</code> <code>gatk_haplotypecaller_gvcf_scatter</code> <code>gatk_haplotypecaller_scatter</code> <code>gatk_markduplicates</code> <code>gatk_markduplicates_bam</code> <code>gatk_mutect2_paired</code> <code>gatk_mutect2_tumor_only</code> <code>gatk_variantrecalibrator_indel</code> <code>gatk_variantrecalibrator_snp</code> <code>goleft_indexcov</code> <code>manta_germline</code> <code>manta_somatic</code> <code>strelka_germline</code> <code>strelka_somatic</code> <code>tiddit_sv</code></div>
+<details class="ox-param-usedby"><summary>used by 26 rules</summary>
+<div class="ox-param-rules"><code>create_intervals_bed</code> <code>deepvariant</code> <code>freebayes</code> <code>gatk_applybqsr</code> <code>gatk_applybqsr_scatter</code> <code>gatk_applyvqsr_indel</code> <code>gatk_applyvqsr_snp</code> <code>gatk_baserecalibrator</code> <code>gatk_baserecalibrator_scatter</code> <code>gatk_cnnscorevariants</code> <code>gatk_filtervarianttranches</code> <code>gatk_genomicsdbimport</code> <code>gatk_genotypegvcfs</code> <code>gatk_genotypegvcfs_scatter</code> <code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_gvcf</code> <code>gatk_haplotypecaller_gvcf_scatter</code> <code>gatk_haplotypecaller_scatter</code> <code>gatk_markduplicates</code> <code>gatk_markduplicates_bam</code> <code>gatk_variantrecalibrator_indel</code> <code>gatk_variantrecalibrator_snp</code> <code>goleft_indexcov</code> <code>manta_germline</code> <code>strelka_germline</code> <code>tiddit_sv</code></div>
 </details>
 </div>
 <div class="ox-param">
@@ -243,16 +216,16 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-sarek
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>gatk_pcr_indel_model</code><span class="ox-param-default">CONSERVATIVE</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">gatk tool parameter (upstream --gatk_pcr_indel_model) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_gvcf</code> <code>gatk_haplotypecaller_gvcf_scatter</code> <code>gatk_haplotypecaller_scatter</code></div>
 </details>
 </div>
-<div class="ox-param">
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>genome</code><span class="ox-param-default">GRCh38</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Reference genome build name (upstream --genome, iGenomes key) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">—</div>
+<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param">
@@ -334,9 +307,9 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-sarek
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>out_dir</code><span class="ox-param-default">results</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 116 rules</summary>
-<div class="ox-param-rules"><code>bam_merge_index_samtools</code> <code>bcftools_mpileup_call</code> <code>bcftools_mpileup_ngscheckmate</code> <code>bcftools_sort_freebayes</code> <code>bcftools_sort_joint</code> <code>bcftools_sort_joint_scatter</code> <code>bcftools_stats</code> <code>bcftools_stats_deepvariant</code> <code>bcftools_stats_freebayes</code> <code>bcftools_stats_joint</code> <code>bcftools_stats_manta</code> <code>bcftools_stats_mpileup</code> <code>bcftools_stats_strelka</code> <code>bcftools_stats_tiddit</code> <code>bwa_index</code> <code>bwa_mem</code> <code>bwa_mem2</code> <code>bwa_mem2_split</code> <code>bwa_mem_split</code> <code>bwa_mem_umi</code> <code>bwamem2_index</code> <code>create_intervals_bed</code> <code>deepvariant</code> <code>ensemblvep_vep</code> <code>ensemblvep_vep_deepvariant</code> <code>ensemblvep_vep_freebayes</code> <code>ensemblvep_vep_joint</code> <code>ensemblvep_vep_manta</code> <code>ensemblvep_vep_mpileup</code> <code>ensemblvep_vep_strelka</code> <code>ensemblvep_vep_tiddit</code> <code>fastp</code> <code>fastp_split</code> <code>fastp_umi</code> <code>fastqc</code> <code>fgbio_callmolecularconsensusreads</code> <code>fgbio_fastqtobam</code> <code>fgbio_groupreadsbyumi</code> <code>freebayes</code> <code>gatk_applybqsr</code> <code>gatk_applybqsr_scatter</code> <code>gatk_applyvqsr_indel</code> <code>gatk_applyvqsr_snp</code> <code>gatk_baserecalibrator</code> <code>gatk_baserecalibrator_scatter</code> <code>gatk_cnnscorevariants</code> <code>gatk_createsequencedictionary</code> <code>gatk_filtermutectcalls_paired</code> <code>gatk_filtermutectcalls_tumor_only</code> <code>gatk_filtervarianttranches</code> <code>gatk_gatherbqsrreports</code> <code>gatk_genomicsdbimport</code> <code>gatk_genomicsdbimport_scatter</code> <code>gatk_genotypegvcfs</code> <code>gatk_genotypegvcfs_scatter</code> <code>gatk_getpileupsummaries_paired</code> <code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_gvcf</code> <code>gatk_haplotypecaller_gvcf_scatter</code> <code>gatk_haplotypecaller_scatter</code> <code>gatk_markduplicates</code> <code>gatk_markduplicates_bam</code> <code>gatk_mergevcfs_joint</code> <code>gatk_mergevcfs_joint_scatter</code> <code>gatk_mergevcfs_scatter</code> <code>gatk_mutect2_paired</code> <code>gatk_mutect2_tumor_only</code> <code>gatk_variantrecalibrator_indel</code> <code>gatk_variantrecalibrator_snp</code> <code>goleft_indexcov</code> <code>manta_germline</code> <code>manta_somatic</code> <code>merge_index_samtools</code> <code>mosdepth_md</code> <code>mosdepth_recal</code> <code>multiqc</code> <code>ngscheckmate_ncm</code> <code>samtools_bam2fq_consensus</code> <code>samtools_bam2fq_umi</code> <code>samtools_faidx</code> <code>samtools_index_recal</code> <code>samtools_reindex_bam</code> <code>samtools_stats_md</code> <code>samtools_stats_recal</code> <code>strelka_germline</code> <code>strelka_somatic</code> <code>tabix_freebayes</code> <code>tabix_freebayes_filt</code> <code>tabix_interval</code> <code>tabix_tiddit</code> <code>tiddit_sv</code> <code>vcffilter_freebayes</code> <code>vcftools_filter_summary</code> <code>vcftools_filter_summary_deepvariant</code> <code>vcftools_filter_summary_freebayes</code> <code>vcftools_filter_summary_joint</code> <code>vcftools_filter_summary_manta</code> <code>vcftools_filter_summary_mpileup</code> <code>vcftools_filter_summary_strelka</code> <code>vcftools_filter_summary_tiddit</code> <code>vcftools_tstv_count</code> <code>vcftools_tstv_count_deepvariant</code> <code>vcftools_tstv_count_freebayes</code> <code>vcftools_tstv_count_joint</code> <code>vcftools_tstv_count_manta</code> <code>vcftools_tstv_count_mpileup</code> <code>vcftools_tstv_count_strelka</code> <code>vcftools_tstv_count_tiddit</code> <code>vcftools_tstv_qual</code> <code>vcftools_tstv_qual_deepvariant</code> <code>vcftools_tstv_qual_freebayes</code> <code>vcftools_tstv_qual_joint</code> <code>vcftools_tstv_qual_manta</code> <code>vcftools_tstv_qual_mpileup</code> <code>vcftools_tstv_qual_strelka</code> <code>vcftools_tstv_qual_tiddit</code></div>
+<p class="ox-param-desc">Output directory (upstream --outdir) <span class="ox-param-inferred">inferred</span></p>
+<details class="ox-param-usedby"><summary>used by 109 rules</summary>
+<div class="ox-param-rules"><code>bam_merge_index_samtools</code> <code>bcftools_mpileup_call</code> <code>bcftools_mpileup_ngscheckmate</code> <code>bcftools_sort_freebayes</code> <code>bcftools_sort_joint</code> <code>bcftools_sort_joint_scatter</code> <code>bcftools_stats</code> <code>bcftools_stats_deepvariant</code> <code>bcftools_stats_freebayes</code> <code>bcftools_stats_joint</code> <code>bcftools_stats_manta</code> <code>bcftools_stats_mpileup</code> <code>bcftools_stats_strelka</code> <code>bcftools_stats_tiddit</code> <code>bwa_index</code> <code>bwa_mem</code> <code>bwa_mem2</code> <code>bwa_mem2_split</code> <code>bwa_mem_split</code> <code>bwa_mem_umi</code> <code>bwamem2_index</code> <code>create_intervals_bed</code> <code>deepvariant</code> <code>ensemblvep_vep</code> <code>ensemblvep_vep_deepvariant</code> <code>ensemblvep_vep_freebayes</code> <code>ensemblvep_vep_joint</code> <code>ensemblvep_vep_manta</code> <code>ensemblvep_vep_mpileup</code> <code>ensemblvep_vep_strelka</code> <code>ensemblvep_vep_tiddit</code> <code>fastp</code> <code>fastp_split</code> <code>fastp_umi</code> <code>fastqc</code> <code>fgbio_callmolecularconsensusreads</code> <code>fgbio_fastqtobam</code> <code>fgbio_groupreadsbyumi</code> <code>freebayes</code> <code>gatk_applybqsr</code> <code>gatk_applybqsr_scatter</code> <code>gatk_applyvqsr_indel</code> <code>gatk_applyvqsr_snp</code> <code>gatk_baserecalibrator</code> <code>gatk_baserecalibrator_scatter</code> <code>gatk_cnnscorevariants</code> <code>gatk_createsequencedictionary</code> <code>gatk_filtervarianttranches</code> <code>gatk_gatherbqsrreports</code> <code>gatk_genomicsdbimport</code> <code>gatk_genomicsdbimport_scatter</code> <code>gatk_genotypegvcfs</code> <code>gatk_genotypegvcfs_scatter</code> <code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_gvcf</code> <code>gatk_haplotypecaller_gvcf_scatter</code> <code>gatk_haplotypecaller_scatter</code> <code>gatk_markduplicates</code> <code>gatk_markduplicates_bam</code> <code>gatk_mergevcfs_joint</code> <code>gatk_mergevcfs_joint_scatter</code> <code>gatk_mergevcfs_scatter</code> <code>gatk_variantrecalibrator_indel</code> <code>gatk_variantrecalibrator_snp</code> <code>goleft_indexcov</code> <code>manta_germline</code> <code>merge_index_samtools</code> <code>mosdepth_md</code> <code>mosdepth_recal</code> <code>multiqc</code> <code>ngscheckmate_ncm</code> <code>samtools_bam2fq_consensus</code> <code>samtools_bam2fq_umi</code> <code>samtools_faidx</code> <code>samtools_index_recal</code> <code>samtools_reindex_bam</code> <code>samtools_stats_md</code> <code>samtools_stats_recal</code> <code>strelka_germline</code> <code>tabix_freebayes</code> <code>tabix_freebayes_filt</code> <code>tabix_interval</code> <code>tabix_tiddit</code> <code>tiddit_sv</code> <code>vcffilter_freebayes</code> <code>vcftools_filter_summary</code> <code>vcftools_filter_summary_deepvariant</code> <code>vcftools_filter_summary_freebayes</code> <code>vcftools_filter_summary_joint</code> <code>vcftools_filter_summary_manta</code> <code>vcftools_filter_summary_mpileup</code> <code>vcftools_filter_summary_strelka</code> <code>vcftools_filter_summary_tiddit</code> <code>vcftools_tstv_count</code> <code>vcftools_tstv_count_deepvariant</code> <code>vcftools_tstv_count_freebayes</code> <code>vcftools_tstv_count_joint</code> <code>vcftools_tstv_count_manta</code> <code>vcftools_tstv_count_mpileup</code> <code>vcftools_tstv_count_strelka</code> <code>vcftools_tstv_count_tiddit</code> <code>vcftools_tstv_qual</code> <code>vcftools_tstv_qual_deepvariant</code> <code>vcftools_tstv_qual_freebayes</code> <code>vcftools_tstv_qual_joint</code> <code>vcftools_tstv_qual_manta</code> <code>vcftools_tstv_qual_mpileup</code> <code>vcftools_tstv_qual_strelka</code> <code>vcftools_tstv_qual_tiddit</code></div>
 </details>
 </div>
 <div class="ox-param">
@@ -381,51 +354,51 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-sarek
 <div class="ox-param-rules"><code>bwa_mem</code> <code>bwa_mem2</code> <code>bwa_mem2_split</code> <code>bwa_mem_split</code> <code>bwa_mem_umi</code></div>
 </details>
 </div>
-<div class="ox-param">
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>sex</code><span class="ox-param-default">XX</span></div>
 <p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">—</div>
+<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_bcftools</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip bcftools (upstream --skip_bcftools) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 8 rules</summary>
 <div class="ox-param-rules"><code>bcftools_stats</code> <code>bcftools_stats_deepvariant</code> <code>bcftools_stats_freebayes</code> <code>bcftools_stats_joint</code> <code>bcftools_stats_manta</code> <code>bcftools_stats_mpileup</code> <code>bcftools_stats_strelka</code> <code>bcftools_stats_tiddit</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_fastqc</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip fastqc (upstream --skip_fastqc) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>fastqc</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_mosdepth</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip mosdepth (upstream --skip_mosdepth) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>mosdepth_md</code> <code>mosdepth_recal</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_multiqc</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip multiqc (upstream --skip_multiqc) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>multiqc</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_samtools</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip samtools (upstream --skip_samtools) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>samtools_stats_md</code> <code>samtools_stats_recal</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_vcftools</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip vcftools (upstream --skip_vcftools) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 24 rules</summary>
 <div class="ox-param-rules"><code>vcftools_filter_summary</code> <code>vcftools_filter_summary_deepvariant</code> <code>vcftools_filter_summary_freebayes</code> <code>vcftools_filter_summary_joint</code> <code>vcftools_filter_summary_manta</code> <code>vcftools_filter_summary_mpileup</code> <code>vcftools_filter_summary_strelka</code> <code>vcftools_filter_summary_tiddit</code> <code>vcftools_tstv_count</code> <code>vcftools_tstv_count_deepvariant</code> <code>vcftools_tstv_count_freebayes</code> <code>vcftools_tstv_count_joint</code> <code>vcftools_tstv_count_manta</code> <code>vcftools_tstv_count_mpileup</code> <code>vcftools_tstv_count_strelka</code> <code>vcftools_tstv_count_tiddit</code> <code>vcftools_tstv_qual</code> <code>vcftools_tstv_qual_deepvariant</code> <code>vcftools_tstv_qual_freebayes</code> <code>vcftools_tstv_qual_joint</code> <code>vcftools_tstv_qual_manta</code> <code>vcftools_tstv_qual_mpileup</code> <code>vcftools_tstv_qual_strelka</code> <code>vcftools_tstv_qual_tiddit</code></div>
 </details>
@@ -444,11 +417,11 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-sarek
 <div class="ox-param-rules"><code>bam_merge_index_samtools</code> <code>bwa_mem</code> <code>bwa_mem2</code> <code>bwa_mem2_split</code> <code>bwa_mem_split</code> <code>fastp</code> <code>fastp_split</code> <code>fastp_umi</code></div>
 </details>
 </div>
-<div class="ox-param">
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>status</code><span class="ox-param-default">0</span></div>
 <p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">—</div>
+<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param">
@@ -474,7 +447,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-sarek
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>vep_cache_ready</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">vep tool parameter (upstream --vep_cache_ready) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 8 rules</summary>
 <div class="ox-param-rules"><code>ensemblvep_vep</code> <code>ensemblvep_vep_deepvariant</code> <code>ensemblvep_vep_freebayes</code> <code>ensemblvep_vep_joint</code> <code>ensemblvep_vep_manta</code> <code>ensemblvep_vep_mpileup</code> <code>ensemblvep_vep_strelka</code> <code>ensemblvep_vep_tiddit</code></div>
 </details>
@@ -488,21 +461,21 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-sarek
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>vep_dir_cache</code><span class="ox-param-default">/.vep</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">vep tool parameter (upstream --vep_dir_cache) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 8 rules</summary>
 <div class="ox-param-rules"><code>ensemblvep_vep</code> <code>ensemblvep_vep_deepvariant</code> <code>ensemblvep_vep_freebayes</code> <code>ensemblvep_vep_joint</code> <code>ensemblvep_vep_manta</code> <code>ensemblvep_vep_mpileup</code> <code>ensemblvep_vep_strelka</code> <code>ensemblvep_vep_tiddit</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>vep_genome</code><span class="ox-param-default">GRCh38</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">vep tool parameter (upstream --vep_genome) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 8 rules</summary>
 <div class="ox-param-rules"><code>ensemblvep_vep</code> <code>ensemblvep_vep_deepvariant</code> <code>ensemblvep_vep_freebayes</code> <code>ensemblvep_vep_joint</code> <code>ensemblvep_vep_manta</code> <code>ensemblvep_vep_mpileup</code> <code>ensemblvep_vep_strelka</code> <code>ensemblvep_vep_tiddit</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>vep_species</code><span class="ox-param-default">homo_sapiens</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">vep tool parameter (upstream --vep_species) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 8 rules</summary>
 <div class="ox-param-rules"><code>ensemblvep_vep</code> <code>ensemblvep_vep_deepvariant</code> <code>ensemblvep_vep_freebayes</code> <code>ensemblvep_vep_joint</code> <code>ensemblvep_vep_manta</code> <code>ensemblvep_vep_mpileup</code> <code>ensemblvep_vep_strelka</code> <code>ensemblvep_vep_tiddit</code></div>
 </details>
@@ -516,7 +489,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-sarek
 </div>
 </div>
 
-Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
+Descriptions are the workflow's own `#` comments from its `[config]` section (and the `[config]` sections of its included modules), surfaced by `oxo-flow info` — no schema file to maintain.
 
 ## Workflow graph
 
