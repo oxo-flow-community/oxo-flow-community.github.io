@@ -700,10 +700,23 @@ a.ox-cta:hover {
 
 .ox-detail-cols {
   display: grid;
-  grid-template-columns: 1.6fr 1fr;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
   gap: 1.2rem;
   align-items: start;
   margin: 0 0 1.4rem;
+  /* minmax(0, …) lets the columns shrink below their content's intrinsic
+     width — the default fr track sizes to min-content, and a long mono
+     command in the glance panel then pushes the grid past the article
+     column into the table-of-contents sidebar (live: ampliseq page's
+     "At a glance" overlapped the TOC). */
+}
+
+.ox-detail-cols > * {
+  min-width: 0;
+}
+
+.ox-glance .cmd {
+  overflow-wrap: anywhere;
 }
 
 .ox-detail-cols h1 {
