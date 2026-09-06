@@ -560,6 +560,7 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 - nanopore: nanopore sequencing branch (params.nanopore) — absent from the 2.18.0 codebase (grep-verified; only docs/usage.md mentions Nanopore re ITSxRust long reads)
 - syncom: synthetic community controls branch (params.syncom) — absent from the 2.18.0 codebase (grep-verified)
+- PIGZ_UNCOMPRESS / UNTAR — internal decompression details of the ported `qiime2_preptax` (qza download path) and of the excluded Kraken2 branch; not user-facing gaps
 
 ## Fidelity
 
