@@ -67,6 +67,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-mixscape
 
 ## Parameters
 
+<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. The list below names the rules that read each key.</p>
 <div class="ox-params">
 <div class="ox-param">
 <div class="ox-param-head"><code>annotation</code><span class="ox-param-default">test/fixtures/annotation.csv</span></div>
@@ -231,7 +232,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-mixscape
 </div>
 </div>
 
-Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
+Descriptions are the workflow's own `#` comments from its `[config]` section (and the `[config]` sections of its included modules), surfaced by `oxo-flow info` — no schema file to maintain.
 
 ## Workflow graph
 

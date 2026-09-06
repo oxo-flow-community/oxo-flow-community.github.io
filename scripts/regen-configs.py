@@ -17,14 +17,16 @@ network); regenerate locally whenever a staged workflow changes, then run
 generate.py and commit everything.
 
 Requirements: an oxo-flow binary ($OXO_FLOW, `oxo-flow` on PATH, or
-../bin/oxo-flow) and nf-metro. The repo-local `.regen-venv/` (nf-metro
-0.7.2, created once with `python3 -m venv .regen-venv && .regen-venv/bin/
-pip install "nf-metro==0.7.2"`) is preferred: nf-metro >= 1.0 aborts on
-dense graphs with CurveInvariantError (collinear overlays) where 0.7.2
-renders them. The engine must be >= 0.16.0 for the metro export, and must
-recognize every key the staged workflows use (workflows occasionally run
-ahead of the released engine — such pipelines are skipped with a warning
-so a partial regeneration never blocks the others).
+../bin/oxo-flow) and nf-metro 1.1.0. The repo-local `.regen-venv/`
+(created once with `python3 -m venv .regen-venv && .regen-venv/bin/
+pip install --index-url https://pypi.org/simple "nf-metro==1.1.0"`) is preferred. The render ladder in
+metro_tiers.py walks sectioned → flat → module-stage → module
+representations so every pipeline gets a publication-grade map despite
+nf-metro's strict routing invariants on dense graphs (site issue #16).
+The engine must be >= 0.16.0 for the metro export, and must recognize
+every key the staged workflows use (workflows occasionally run ahead of
+the released engine — such pipelines are skipped with a warning so a
+partial regeneration never blocks the others).
 Pipelines without a staged workflow file are skipped with a warning (their
 pages simply omit the Parameters and Workflow graph sections).
 """
@@ -38,7 +40,8 @@ import re
 import shutil
 import subprocess
 import sys
-import tempfile
+
+from metro_tiers import render_ladder
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 DATA = ROOT / "data" / "pipelines.json"
@@ -89,9 +92,9 @@ def require_engine(binary: str) -> None:
 
 
 def require_nf_metro() -> str:
-    """Repo-local venv (pinned 0.7.2) first, then PATH — with a version guard:
-    nf-metro >= 1.0 aborts on dense graphs (CurveInvariantError) that 0.7.2
-    renders, so a 1.x on PATH without the venv is a hard error."""
+    """Repo-local venv (pinned 1.1.0) first, then PATH — with a version
+    guard: the render ladder targets 1.1.0 routing semantics; the older
+    0.7.x line produces degenerate layouts on dense graphs."""
     venv = ROOT / ".regen-venv" / "bin" / "nf-metro"
     if venv.is_file():
         return str(venv)
@@ -100,16 +103,16 @@ def require_nf_metro() -> str:
         raise SystemExit(
             "nf-metro not found — run once:\n"
             "  python3 -m venv .regen-venv\n"
-            "  .regen-venv/bin/pip install \"nf-metro==0.7.2\""
+            "  .regen-venv/bin/pip install \"nf-metro==1.1.0\""
         )
     proc = subprocess.run([found, "--version"], capture_output=True, text=True)
     m = re.search(r"version\s+(\d+)\.(\d+)", proc.stdout)
-    if m and (int(m.group(1)), int(m.group(2))) >= (1, 0):
+    if m and (int(m.group(1)), int(m.group(2))) < (1, 1):
         raise SystemExit(
-            f"nf-metro {m.group(1)}.{m.group(2)} aborts on dense graphs "
-            "(CurveInvariantError) — install the pinned venv instead:\n"
+            f"nf-metro {m.group(1)}.{m.group(2)} produces degenerate layouts "
+            "on dense graphs — install the pinned 1.1.0 venv instead:\n"
             "  python3 -m venv .regen-venv\n"
-            "  .regen-venv/bin/pip install \"nf-metro==0.7.2\""
+            "  .regen-venv/bin/pip install \"nf-metro==1.1.0\""
         )
     return found
 
@@ -148,35 +151,19 @@ def derive(name: str, workflow: pathlib.Path, binary: str) -> tuple[list[dict] |
     return meta.get("config", []), None
 
 
-def render_dag(name: str, workflow: pathlib.Path, binary: str, nf_metro: str) -> str | None:
+def render_dag(
+    name: str, workflow: pathlib.Path, binary: str, nf_metro: str
+) -> tuple[str | None, dict | None]:
     """`oxo-flow graph -f metro` → nf-metro transit-map SVG, committed per pipeline.
 
-    Returns None on success, or the failure reason — callers skip the
-    pipeline with a warning so one broken workflow never blocks the rest.
+    Walks the adaptive tier ladder in metro_tiers.py so every pipeline
+    gets a publication-grade map. Returns (None, tier_info) on success —
+    the tier is recorded in configs.json so pages can label the map —
+    or (failure_reason, None); callers skip the pipeline with a warning
+    so one broken workflow never blocks the rest.
     """
     svg = DAG_DIR / f"{name}.svg"
-    with tempfile.TemporaryDirectory() as tmp:
-        mmd = pathlib.Path(tmp) / f"{name}.mmd"
-        graph = subprocess.run(
-            [binary, "graph", "-f", "metro", "-o", str(mmd), str(workflow)],
-            capture_output=True,
-            text=True,
-        )
-        if graph.returncode != 0:
-            cause = graph.stderr.strip().splitlines()[-1] if graph.stderr.strip() else "unknown"
-            return f"graph failed: {cause}"
-        render = subprocess.run(
-            [nf_metro, "render", str(mmd), "-o", str(svg), "--theme", "light"],
-            capture_output=True,
-            text=True,
-        )
-        if render.returncode != 0:
-            cause = render.stderr.strip().splitlines()[-1] if render.stderr.strip() else "unknown"
-            return f"nf-metro failed: {cause}"
-        # Light theme must not bake a dark `nf-metro-bg` rect (site issue #16).
-        if "nf-metro-bg" in svg.read_text():
-            return "nf-metro rendered a dark background — not light-theme clean"
-    return None
+    return render_ladder(name, workflow, binary, nf_metro, svg)
 
 
 def main() -> int:
@@ -212,19 +199,20 @@ def main() -> int:
             "workflow": str(workflow.relative_to(STAGING / name)),
             "config": config,
         }
-        dag_err = render_dag(name, workflow, binary, nf_metro)
+        dag_err, tier = render_dag(name, workflow, binary, nf_metro)
         if dag_err is not None:
             failures.append(f"{name}: {dag_err} — DAG kept as-is")
             print(f"warning: {failures[-1]}", file=sys.stderr)
         else:
             rendered += 1
+            configs[name]["graph"] = tier
         for ew in p.get("extra_workflows") or []:
             wf_path = STAGING / name / ew["workflow"]
             if not wf_path.is_file():
                 failures.append(f"{name}: extra workflow '{ew['workflow']}' missing in staging")
                 print(f"warning: {failures[-1]}", file=sys.stderr)
                 continue
-            ew_err = render_dag(ew["dag"], wf_path, binary, nf_metro)
+            ew_err, _tier = render_dag(ew["dag"], wf_path, binary, nf_metro)
             if ew_err is not None:
                 failures.append(f"{name}/{ew['dag']}: {ew_err} — DAG kept as-is")
                 print(f"warning: {failures[-1]}", file=sys.stderr)

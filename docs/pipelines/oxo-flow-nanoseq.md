@@ -68,6 +68,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-nanoseq
 
 ## Parameters
 
+<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. The list below names the rules that read each key.</p>
 <div class="ox-params">
 <div class="ox-param">
 <div class="ox-param-head"><code>aligner</code><span class="ox-param-default">minimap2</span></div>
@@ -99,7 +100,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-nanoseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>deepvariant_gpu</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">deepvariant tool parameter (upstream --deepvariant_gpu) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>pepper_margin_deepvariant</code></div>
 </details>
@@ -133,15 +134,8 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-nanoseq
 </details>
 </div>
 <div class="ox-param">
-<div class="ox-param-head"><code>jaffal_ref_dir</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>get_jaffal_ref</code> <code>jaffal_ref</code></div>
-</details>
-</div>
-<div class="ox-param">
 <div class="ox-param-head"><code>multiqc_config</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">MultiQC config path (upstream --multiqc_config) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>multiqc</code></div>
 </details>
@@ -155,14 +149,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-nanoseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>nanolyse_fasta</code><span class="ox-param-default">test/fixtures/refs/lambda.fasta.gz</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Path to the nanolyse reference FASTA <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>nanolyse</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>nanopolish_fast5</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">nanopolish tool parameter (upstream --nanopolish_fast5) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 5 rules</summary>
 <div class="ox-param-rules"><code>m6anet_dataprep</code> <code>m6anet_inference</code> <code>nanopolish_index_eventalign</code> <code>xpore_dataprep</code> <code>xpore_diffmod</code></div>
 </details>
@@ -170,8 +164,8 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-nanoseq
 <div class="ox-param">
 <div class="ox-param-head"><code>out_dir</code><span class="ox-param-default">results</span></div>
 <p class="ox-param-desc">-- Output directory (upstream: --outdir, default ./results)</p>
-<details class="ox-param-usedby"><summary>used by 54 rules</summary>
-<div class="ox-param-rules"><code>bam_rename</code> <code>bambu</code> <code>bedtools_bamtobed</code> <code>bedtools_genomecov</code> <code>cutesv</code> <code>cutesv_sort_vcf</code> <code>cutesv_tabix_vcf</code> <code>deepvariant</code> <code>deepvariant_tabix_gvcf</code> <code>deepvariant_tabix_vcf</code> <code>deseq2</code> <code>deseq2_featurecounts</code> <code>dexseq</code> <code>dexseq_featurecounts</code> <code>dumpsoftwareversions</code> <code>fastqc</code> <code>get_chrom_sizes</code> <code>get_jaffal_ref</code> <code>graphmap2_align</code> <code>graphmap2_index</code> <code>gtf2bed</code> <code>jaffal_ref</code> <code>m6anet_dataprep</code> <code>m6anet_inference</code> <code>medaka_bgzip_vcf</code> <code>medaka_tabix_vcf</code> <code>medaka_variant</code> <code>minimap2_align</code> <code>minimap2_index</code> <code>multiqc</code> <code>nanolyse</code> <code>nanoplot</code> <code>nanopolish_index_eventalign</code> <code>pepper_margin_deepvariant</code> <code>qcat</code> <code>samplesheet_check</code> <code>samtools_faidx</code> <code>samtools_flagstat</code> <code>samtools_idxstats</code> <code>samtools_index</code> <code>samtools_sort</code> <code>samtools_sort_index</code> <code>samtools_stats</code> <code>samtools_view</code> <code>sniffles</code> <code>sniffles_sort_vcf</code> <code>sniffles_tabix_vcf</code> <code>stringtie2</code> <code>stringtie_merge</code> <code>subread_featurecounts</code> <code>ucsc_bed12tobigbed</code> <code>ucsc_bedgraphtobigwig</code> <code>xpore_dataprep</code> <code>xpore_diffmod</code></div>
+<details class="ox-param-usedby"><summary>used by 52 rules</summary>
+<div class="ox-param-rules"><code>bam_rename</code> <code>bambu</code> <code>bedtools_bamtobed</code> <code>bedtools_genomecov</code> <code>cutesv</code> <code>cutesv_sort_vcf</code> <code>cutesv_tabix_vcf</code> <code>deepvariant</code> <code>deepvariant_tabix_gvcf</code> <code>deepvariant_tabix_vcf</code> <code>deseq2</code> <code>deseq2_featurecounts</code> <code>dexseq</code> <code>dexseq_featurecounts</code> <code>dumpsoftwareversions</code> <code>fastqc</code> <code>get_chrom_sizes</code> <code>graphmap2_align</code> <code>graphmap2_index</code> <code>gtf2bed</code> <code>m6anet_dataprep</code> <code>m6anet_inference</code> <code>medaka_bgzip_vcf</code> <code>medaka_tabix_vcf</code> <code>medaka_variant</code> <code>minimap2_align</code> <code>minimap2_index</code> <code>multiqc</code> <code>nanolyse</code> <code>nanoplot</code> <code>nanopolish_index_eventalign</code> <code>pepper_margin_deepvariant</code> <code>qcat</code> <code>samplesheet_check</code> <code>samtools_faidx</code> <code>samtools_flagstat</code> <code>samtools_idxstats</code> <code>samtools_index</code> <code>samtools_sort</code> <code>samtools_sort_index</code> <code>samtools_stats</code> <code>samtools_view</code> <code>sniffles</code> <code>sniffles_sort_vcf</code> <code>sniffles_tabix_vcf</code> <code>stringtie2</code> <code>stringtie_merge</code> <code>subread_featurecounts</code> <code>ucsc_bed12tobigbed</code> <code>ucsc_bedgraphtobigwig</code> <code>xpore_dataprep</code> <code>xpore_diffmod</code></div>
 </details>
 </div>
 <div class="ox-param">
@@ -184,20 +178,20 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-nanoseq
 <div class="ox-param">
 <div class="ox-param-head"><code>protocol</code><span class="ox-param-default">DNA</span></div>
 <p class="ox-param-desc">-- Protocol (upstream: --protocol; mandatory upstream, one of DNA/cDNA/directRNA)</p>
-<details class="ox-param-usedby"><summary>used by 34 rules</summary>
-<div class="ox-param-rules"><code>bambu</code> <code>bedtools_bamtobed</code> <code>cutesv</code> <code>cutesv_sort_vcf</code> <code>cutesv_tabix_vcf</code> <code>deepvariant</code> <code>deepvariant_tabix_gvcf</code> <code>deepvariant_tabix_vcf</code> <code>deseq2</code> <code>deseq2_featurecounts</code> <code>dexseq</code> <code>dexseq_featurecounts</code> <code>get_jaffal_ref</code> <code>graphmap2_align</code> <code>graphmap2_index</code> <code>jaffal_ref</code> <code>m6anet_dataprep</code> <code>m6anet_inference</code> <code>medaka_bgzip_vcf</code> <code>medaka_tabix_vcf</code> <code>medaka_variant</code> <code>minimap2_align</code> <code>minimap2_index</code> <code>nanopolish_index_eventalign</code> <code>pepper_margin_deepvariant</code> <code>sniffles</code> <code>sniffles_sort_vcf</code> <code>sniffles_tabix_vcf</code> <code>stringtie2</code> <code>stringtie_merge</code> <code>subread_featurecounts</code> <code>ucsc_bed12tobigbed</code> <code>xpore_dataprep</code> <code>xpore_diffmod</code></div>
+<details class="ox-param-usedby"><summary>used by 32 rules</summary>
+<div class="ox-param-rules"><code>bambu</code> <code>bedtools_bamtobed</code> <code>cutesv</code> <code>cutesv_sort_vcf</code> <code>cutesv_tabix_vcf</code> <code>deepvariant</code> <code>deepvariant_tabix_gvcf</code> <code>deepvariant_tabix_vcf</code> <code>deseq2</code> <code>deseq2_featurecounts</code> <code>dexseq</code> <code>dexseq_featurecounts</code> <code>graphmap2_align</code> <code>graphmap2_index</code> <code>m6anet_dataprep</code> <code>m6anet_inference</code> <code>medaka_bgzip_vcf</code> <code>medaka_tabix_vcf</code> <code>medaka_variant</code> <code>minimap2_align</code> <code>minimap2_index</code> <code>nanopolish_index_eventalign</code> <code>pepper_margin_deepvariant</code> <code>sniffles</code> <code>sniffles_sort_vcf</code> <code>sniffles_tabix_vcf</code> <code>stringtie2</code> <code>stringtie_merge</code> <code>subread_featurecounts</code> <code>ucsc_bed12tobigbed</code> <code>xpore_dataprep</code> <code>xpore_diffmod</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>qcat_detect_middle</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">qcat tool parameter (upstream --qcat_detect_middle) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>qcat</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>qcat_min_score</code><span class="ox-param-default">60</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">qcat tool parameter (upstream --qcat_min_score) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>qcat</code></div>
 </details>
@@ -239,14 +233,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-nanoseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_alignment</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip alignment (upstream --skip_alignment) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 18 rules</summary>
 <div class="ox-param-rules"><code>bam_rename</code> <code>bedtools_bamtobed</code> <code>bedtools_genomecov</code> <code>get_chrom_sizes</code> <code>graphmap2_align</code> <code>graphmap2_index</code> <code>minimap2_align</code> <code>minimap2_index</code> <code>samtools_faidx</code> <code>samtools_flagstat</code> <code>samtools_idxstats</code> <code>samtools_index</code> <code>samtools_sort</code> <code>samtools_sort_index</code> <code>samtools_stats</code> <code>samtools_view</code> <code>ucsc_bed12tobigbed</code> <code>ucsc_bedgraphtobigwig</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_bigbed</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip bigbed (upstream --skip_bigbed) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>bedtools_bamtobed</code> <code>ucsc_bed12tobigbed</code></div>
 </details>
@@ -260,35 +254,28 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-nanoseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_demultiplexing</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip demultiplexing (upstream --skip_demultiplexing) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>qcat</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_differential_analysis</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip differential analysis (upstream --skip_differential_analysis) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>deseq2</code> <code>deseq2_featurecounts</code> <code>dexseq</code> <code>dexseq_featurecounts</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_fastqc</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip fastqc (upstream --skip_fastqc) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>fastqc</code></div>
 </details>
 </div>
 <div class="ox-param">
-<div class="ox-param-head"><code>skip_fusion_analysis</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">-- RNA fusion analysis (upstream default: on, gated to protocol cDNA/directRNA; skip_fusion_analysis / jaffal_ref_dir). The reference bundle is auto-downloaded from figshare when jaffal_ref_dir is unset (upstream GET_JAFFAL_REF + UNTAR); a user-supplied path is untarred (.tar.gz/.tgz/.tar) or symlinked (directory) instead, A12-style.</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>get_jaffal_ref</code> <code>jaffal_ref</code></div>
-</details>
-</div>
-<div class="ox-param">
 <div class="ox-param-head"><code>skip_m6anet</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip m6anet (upstream --skip_m6anet) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>m6anet_dataprep</code> <code>m6anet_inference</code></div>
 </details>
@@ -302,14 +289,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-nanoseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_multiqc</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip multiqc (upstream --skip_multiqc) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>multiqc</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_nanoplot</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip nanoplot (upstream --skip_nanoplot) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>nanoplot</code></div>
 </details>
@@ -323,28 +310,28 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-nanoseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_quantification</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip quantification (upstream --skip_quantification) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 8 rules</summary>
 <div class="ox-param-rules"><code>bambu</code> <code>deseq2</code> <code>deseq2_featurecounts</code> <code>dexseq</code> <code>dexseq_featurecounts</code> <code>stringtie2</code> <code>stringtie_merge</code> <code>subread_featurecounts</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_sv</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip sv (upstream --skip_sv) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 6 rules</summary>
 <div class="ox-param-rules"><code>cutesv</code> <code>cutesv_sort_vcf</code> <code>cutesv_tabix_vcf</code> <code>sniffles</code> <code>sniffles_sort_vcf</code> <code>sniffles_tabix_vcf</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_vc</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip vc (upstream --skip_vc) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 7 rules</summary>
 <div class="ox-param-rules"><code>deepvariant</code> <code>deepvariant_tabix_gvcf</code> <code>deepvariant_tabix_vcf</code> <code>medaka_bgzip_vcf</code> <code>medaka_tabix_vcf</code> <code>medaka_variant</code> <code>pepper_margin_deepvariant</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_xpore</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip xpore (upstream --skip_xpore) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>xpore_dataprep</code> <code>xpore_diffmod</code></div>
 </details>
@@ -379,7 +366,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-nanoseq
 </div>
 </div>
 
-Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
+Descriptions are the workflow's own `#` comments from its `[config]` section (and the `[config]` sections of its included modules), surfaced by `oxo-flow info` — no schema file to maintain.
 
 ## Workflow graph
 

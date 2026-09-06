@@ -67,6 +67,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq-star-deseq2
 
 ## Parameters
 
+<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. The list below names the rules that read each key.</p>
 <div class="ox-params">
 <div class="ox-param">
 <div class="ox-param-head"><code>annotation_gtf</code><span class="ox-param-default"></span></div>
@@ -138,11 +139,11 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq-star-deseq2
 <div class="ox-param-rules"><code>deseq2_init</code></div>
 </details>
 </div>
-<div class="ox-param">
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>diffexp_model</code><span class="ox-param-default"></span></div>
 <p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">—</div>
+<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param">
@@ -161,14 +162,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq-star-deseq2
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>fastp_adapters_se</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">fastp tool parameter (upstream --fastp_adapters_se) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>fastp_se</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>fastp_extra</code><span class="ox-param-default">--trim_poly_x --poly_x_min_len 7 --trim_poly_g --poly_g_min_len 7</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">fastp tool parameter (upstream --fastp_extra) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>fastp_pe</code> <code>fastp_se</code></div>
 </details>
@@ -208,18 +209,18 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq-star-deseq2
 <div class="ox-param-rules"><code>pca_jointly_handled</code> <code>pca_treatment_1</code> <code>pca_treatment_2</code></div>
 </details>
 </div>
-<div class="ox-param">
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>pca_labels</code><span class="ox-param-default"></span></div>
 <p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">—</div>
+<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
-<div class="ox-param">
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>pca_variables</code><span class="ox-param-default">treatment_1,treatment_2,jointly_handled</span></div>
 <p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">—</div>
+<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param">
@@ -229,25 +230,25 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq-star-deseq2
 <div class="ox-param-rules"><code>fastp_pe</code> <code>fastp_se</code> <code>get_sra</code> <code>star_align_raw</code> <code>star_align_se_raw</code></div>
 </details>
 </div>
-<div class="ox-param">
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>ref_build</code><span class="ox-param-default">GRCh38</span></div>
 <p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">—</div>
+<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
-<div class="ox-param">
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>ref_release</code><span class="ox-param-default">115</span></div>
 <p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">—</div>
+<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
-<div class="ox-param">
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>ref_species</code><span class="ox-param-default">homo_sapiens</span></div>
 <p class="ox-param-desc">Reference (upstream: ref.species / ref.release / ref.build). The download URLs below are the Ensembl URLs the wrappers resolve for these values.</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">—</div>
+<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param">
@@ -266,7 +267,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq-star-deseq2
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>star_align_extra</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">star tool parameter (upstream --star_align_extra) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>star_align</code> <code>star_align_raw</code> <code>star_align_se</code> <code>star_align_se_raw</code></div>
 </details>
@@ -294,7 +295,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq-star-deseq2
 </div>
 </div>
 
-Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
+Descriptions are the workflow's own `#` comments from its `[config]` section (and the `[config]` sections of its included modules), surfaced by `oxo-flow info` — no schema file to maintain.
 
 ## Workflow graph
 

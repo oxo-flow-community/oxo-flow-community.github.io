@@ -3,17 +3,6 @@
     "workflow": "main.oxoflow",
     "config": [
       {
-        "default": "",
-        "key": "additional_fasta",
-        "used_by": [
-          "prepare_genome::fa_additional",
-          "prepare_genome::fa_gunzip",
-          "prepare_genome::gtf_additional",
-          "prepare_genome::gtf_pass"
-        ],
-        "value_type": "string"
-      },
-      {
         "default": "star_salmon",
         "description": "Aligner selector (upstream: --aligner). The port supports the upstream default 'star_salmon' plus the non-default branches (star_rsem, hisat2, bowtie2_salmon); all downstream results paths follow {config.out_dir}/{config.aligner}/... exactly like upstream's params.aligner-based publishDirs. bowtie2_salmon maps reads to the transcriptome with Bowtie2 and quantifies the orig_bam with Salmon (upstream ALIGN_BOWTIE2 -> QUANTIFY_BAM_SALMON).",
         "key": "aligner",
@@ -83,9 +72,6 @@
           "bigwig::genomecov_rev",
           "multiqc",
           "multiqc_custom_content",
-          "multiqc_pseudo",
-          "prepare_genome::gtf_filter",
-          "prepare_genome::gtf_filter_pass",
           "prepare_genome::transcript_fasta",
           "quantification::bam_dedup_transcriptome_umicollapse",
           "quantification::bam_dedup_transcriptome_umitools",
@@ -181,9 +167,24 @@
         "description": "Reference artifacts (upstream: --fasta / --gtf / --gene_bed / --chrom_sizes / --transcript_fasta / STAR index). fasta and gtf are always inputs; the other three are inputs by default but are DERIVED from fasta+gtf when the key is empty (modules/prepare_genome.oxoflow mirrors upstream PREPARE_GENOME: gene_bed via ea-utils gtf2bed, chrom_sizes via samtools faidx, transcript_fasta via RSEM). The STAR index is an input (auto-built from the shipped fixture genome by the [[references]] builder below when SAindex is missing).",
         "key": "fasta",
         "used_by": [
-          "prepare_genome::fa_additional",
-          "prepare_genome::fa_gunzip",
-          "prepare_genome::gtf_filter"
+          "alignment::hisat2_index",
+          "alignment::picard_markduplicates",
+          "alignment::samtools_sort",
+          "alignment::samtools_sort_bowtie2",
+          "alignment::samtools_sort_hisat2",
+          "alignment::samtools_stats_dedup",
+          "alignment::samtools_stats_markdup",
+          "alignment::samtools_stats_sorted",
+          "bam_qc::samtools_sort_qualimap",
+          "fastq_qc::bbsplit_index",
+          "prepare_genome::chrom_sizes",
+          "prepare_genome::transcript_fasta",
+          "quantification::bam_sort_transcriptome",
+          "quantification::bam_sort_transcriptome_bowtie2",
+          "quantification::rsem_index",
+          "quantification::salmon_index",
+          "quantification::samtools_sort_name_transcriptome",
+          "quantification::samtools_stats_transcriptome_dedup"
         ],
         "value_type": "string"
       },
@@ -200,20 +201,9 @@
         "description": "featureCounts settings (upstream params with the same defaults).",
         "key": "featurecounts_group_type",
         "used_by": [
-          "bam_qc::featurecounts",
-          "prepare_genome::gtf_additional"
+          "bam_qc::featurecounts"
         ],
         "value_type": "string"
-      },
-      {
-        "default": false,
-        "description": "gencode: GENCODE reference genomes use gene_type as the group feature and preprocess a provided transcript_fasta by stripping '|'-joined identifiers (upstream PREPROCESS_TRANSCRIPTS_FASTA_GENCODE: cut -d \"|\" -f1).",
-        "key": "gencode",
-        "used_by": [
-          "prepare_genome::gtf_additional",
-          "prepare_genome::transcript_fasta"
-        ],
-        "value_type": "bool"
       },
       {
         "default": "test/fixtures/reference/gene.bed",
@@ -224,20 +214,40 @@
         "value_type": "string"
       },
       {
-        "default": "",
-        "description": "PREPARE_GENOME reference chain (upstream subworkflows/local/prepare_genome): gtf / fasta may be gzipped (.gz); gff is converted to GTF with gffread; the GTF is filtered to genome sequences when skip_gtf_filter=false (the upstream gate: alignment or pseudo-alignment enabled, or no transcript_fasta); additional_fasta (optionally .gz) is concatenated onto the genome and its sequences appended to the GTF as transgenes with biotype featurecounts_group_type. Canonical artifacts under results/reference/ (gtf.processed.gtf, genome.fa) feed every downstream rule. Note: gtf_extra_attributes / gtf_group_features are tximport / featureCounts-only upstream -- they do not gate the filter.",
-        "key": "gff",
-        "used_by": [
-          "prepare_genome::gffread_gtf",
-          "prepare_genome::gtf_gunzip"
-        ],
-        "value_type": "string"
-      },
-      {
         "default": "test/fixtures/reference/genes.gtf",
         "key": "gtf",
         "used_by": [
-          "prepare_genome::gtf_gunzip"
+          "alignment::hisat2_index",
+          "alignment::hisat2_splicesites",
+          "alignment::star_align",
+          "alignment::star_align_bbsplit",
+          "alignment::star_align_bowtie2",
+          "alignment::star_align_rsem",
+          "alignment::star_align_rsem_bbsplit",
+          "alignment::star_align_rsem_bowtie2",
+          "alignment::star_align_rsem_sortmerna",
+          "alignment::star_align_sortmerna",
+          "bam_qc::dupradar",
+          "bam_qc::featurecounts",
+          "bam_qc::qualimap_rnaseq",
+          "prepare_genome::gene_bed",
+          "prepare_genome::transcript_fasta",
+          "quantification::kallisto_quant_pseudo",
+          "quantification::kallisto_quant_pseudo_bbsplit",
+          "quantification::kallisto_quant_pseudo_bowtie2",
+          "quantification::kallisto_quant_pseudo_sortmerna",
+          "quantification::rsem_index",
+          "quantification::salmon_quant",
+          "quantification::salmon_quant_bowtie2",
+          "quantification::salmon_quant_pseudo",
+          "quantification::salmon_quant_pseudo_bbsplit",
+          "quantification::salmon_quant_pseudo_bowtie2",
+          "quantification::salmon_quant_pseudo_sortmerna",
+          "quantification::salmon_quant_umi",
+          "quantification::stringtie",
+          "quantification::tx2gene",
+          "quantification::tx2gene_pseudo",
+          "quantification::tx2gene_rsem"
         ],
         "value_type": "string"
       },
@@ -283,9 +293,6 @@
         "description": "Thresholds (upstream params with the same defaults).",
         "key": "min_trimmed_reads",
         "used_by": [
-          "fastq_qc::fastqc_filtered_bbsplit",
-          "fastq_qc::fastqc_filtered_bowtie2",
-          "fastq_qc::fastqc_filtered_sortmerna",
           "multiqc_custom_content"
         ],
         "value_type": "int"
@@ -363,7 +370,6 @@
           "fastq_qc::bowtie2_align_rrna",
           "fastq_qc::bowtie2_align_rrna_bbsplit",
           "fastq_qc::bowtie2_rrna_index",
-          "fastq_qc::cat_reads",
           "fastq_qc::fastqc_filtered_bbsplit",
           "fastq_qc::fastqc_filtered_bowtie2",
           "fastq_qc::fastqc_filtered_sortmerna",
@@ -384,17 +390,8 @@
           "fastq_qc::umitools_extract_umis",
           "multiqc",
           "multiqc_custom_content",
-          "multiqc_pseudo",
           "prepare_genome::chrom_sizes",
-          "prepare_genome::fa_additional",
-          "prepare_genome::fa_gunzip",
           "prepare_genome::gene_bed",
-          "prepare_genome::gffread_gtf",
-          "prepare_genome::gtf_additional",
-          "prepare_genome::gtf_filter",
-          "prepare_genome::gtf_filter_pass",
-          "prepare_genome::gtf_gunzip",
-          "prepare_genome::gtf_pass",
           "prepare_genome::transcript_fasta",
           "quantification::bam_dedup_transcriptome_umicollapse",
           "quantification::bam_dedup_transcriptome_umitools",
@@ -449,9 +446,6 @@
         "key": "pseudo_aligner",
         "used_by": [
           "multiqc",
-          "multiqc_pseudo",
-          "prepare_genome::gtf_filter",
-          "prepare_genome::gtf_filter_pass",
           "prepare_genome::transcript_fasta",
           "quantification::deseq2_qc_pseudo",
           "quantification::kallisto_index",
@@ -483,7 +477,10 @@
         "description": "Input reads directory: reads_dir/<sample>_R1.fastq.gz + _R2.fastq.gz (paired-end). The repo default ships the tiny committed fixtures; point this at your data.",
         "key": "reads_dir",
         "used_by": [
-          "fastq_qc::cat_reads",
+          "fastq_qc::fastqc_raw",
+          "fastq_qc::fq_lint_raw",
+          "fastq_qc::trimgalore",
+          "fastq_qc::umitools_extract_umis",
           "multiqc_custom_content"
         ],
         "value_type": "string"
@@ -619,13 +616,6 @@
       },
       {
         "default": false,
-        "description": "CAT_FASTQ merged reads (upstream --save_merged_fastq): the merged FASTQs are always kept at results/read_merging/ (they double as checkpoints); the key is accepted for upstream parity, like save_trimmed.",
-        "key": "save_merged_fastq",
-        "used_by": [],
-        "value_type": "bool"
-      },
-      {
-        "default": false,
         "key": "save_non_ribo_reads",
         "used_by": [],
         "value_type": "bool"
@@ -645,7 +635,7 @@
       },
       {
         "default": false,
-        "description": "Non-default alignment branches (upstream: --aligner / --skip_alignment / --rsem_index / --hisat2_index / --salmon_index / --bbsplit_index / --sortmerna_index). Empty index keys are auto-built by when-gated builder rules in modules/alignment.oxoflow / quantification.oxoflow from the shipped fixtures when the branch is enabled (like star_index); a user-supplied path is untarred (.tar.gz/.tgz/.tar archives, like upstream UNTAR_*_INDEX) or symlinked (directories) in instead.",
+        "description": "Non-default alignment branches (upstream: --aligner / --skip_alignment / --rsem_index / --hisat2_index / --salmon_index / --bbsplit_index / --sortmerna_index). Empty index keys are auto-built by when-gated builder rules in modules/alignment.oxoflow / quantification.oxoflow from the shipped fixtures when the branch is enabled (like star_index); a user-supplied path is symlinked in instead.",
         "key": "skip_alignment",
         "used_by": [
           "alignment::bam_dedup_genome_umicollapse",
@@ -680,8 +670,6 @@
           "alignment::star_align_rsem_bowtie2",
           "alignment::star_align_rsem_sortmerna",
           "alignment::star_align_sortmerna",
-          "prepare_genome::gtf_filter",
-          "prepare_genome::gtf_filter_pass",
           "prepare_genome::transcript_fasta",
           "quantification::bam_dedup_transcriptome_umicollapse",
           "quantification::bam_dedup_transcriptome_umitools",
@@ -784,23 +772,6 @@
       },
       {
         "default": false,
-        "key": "skip_gtf_filter",
-        "used_by": [
-          "prepare_genome::gtf_filter",
-          "prepare_genome::gtf_filter_pass"
-        ],
-        "value_type": "bool"
-      },
-      {
-        "default": false,
-        "key": "skip_gtf_transcript_filter",
-        "used_by": [
-          "prepare_genome::gtf_filter"
-        ],
-        "value_type": "bool"
-      },
-      {
-        "default": false,
         "key": "skip_linting",
         "used_by": [
           "fastq_qc::fq_lint_bbsplit",
@@ -827,8 +798,6 @@
         "default": false,
         "key": "skip_pseudo_alignment",
         "used_by": [
-          "prepare_genome::gtf_filter",
-          "prepare_genome::gtf_filter_pass",
           "prepare_genome::transcript_fasta",
           "quantification::deseq2_qc_pseudo",
           "quantification::kallisto_index",
@@ -949,7 +918,7 @@
       },
       {
         "default": "unstranded",
-        "description": "Library strandedness. Upstream reads this per-sample from the samplesheet ('auto' supported); the port falls back to this pipeline-level value. Three explicit values are supported; 'auto' behaves like the fallback (resolved per rule). For per-sample strandedness, add a metadata_file with a 'strandedness' column ('forward' / 'reverse' / 'unstranded' / 'auto' / empty): each rule resolves the metadata value first and falls back to this key when the column is missing, empty or 'auto'. Consumers: featureCounts (-s), Qualimap (-p), dupRadar, salmon/kallisto/RSEM/StringTie library-type, HISAT2 --rna-strandness and the forward/reverse bigWig gates.",
+        "description": "Library strandedness. Upstream reads this per-sample from the samplesheet ('auto' supported); the port is pipeline-level and supports the three explicit values only. Used by featureCounts (-s), Qualimap (-p), dupRadar and the forward/reverse bigWig gates.",
         "key": "strandedness",
         "used_by": [
           "alignment::hisat2_align",
@@ -987,8 +956,6 @@
         "default": "test/fixtures/reference/transcripts.fa",
         "key": "transcript_fasta",
         "used_by": [
-          "prepare_genome::gtf_filter",
-          "prepare_genome::gtf_filter_pass",
           "prepare_genome::transcript_fasta"
         ],
         "value_type": "string"
@@ -1121,7 +1088,13 @@
         ],
         "value_type": "bool"
       }
-    ]
+    ],
+    "graph": {
+      "tier": "module-stage",
+      "stations": 11,
+      "is_rule_level": false,
+      "aspect": 1.65
+    }
   },
   "oxo-flow-sarek": {
     "workflow": "main.oxoflow",
@@ -1150,15 +1123,11 @@
           "gatk_applybqsr_scatter",
           "gatk_baserecalibrator",
           "gatk_baserecalibrator_scatter",
-          "gatk_getpileupsummaries_paired",
           "gatk_haplotypecaller",
           "gatk_haplotypecaller_gvcf",
           "gatk_haplotypecaller_gvcf_scatter",
           "gatk_haplotypecaller_scatter",
-          "gatk_mutect2_paired",
-          "gatk_mutect2_tumor_only",
           "manta_germline",
-          "manta_somatic",
           "merge_index_samtools",
           "mosdepth_md",
           "mosdepth_recal",
@@ -1167,7 +1136,6 @@
           "samtools_stats_md",
           "samtools_stats_recal",
           "strelka_germline",
-          "strelka_somatic",
           "tiddit_sv"
         ],
         "value_type": "string"
@@ -1292,14 +1260,6 @@
       },
       {
         "default": false,
-        "key": "call_manta_somatic",
-        "used_by": [
-          "manta_somatic"
-        ],
-        "value_type": "bool"
-      },
-      {
-        "default": false,
         "key": "call_mpileup",
         "used_by": [
           "bcftools_mpileup_call",
@@ -1313,20 +1273,6 @@
       },
       {
         "default": false,
-        "description": "Somatic variant calling (upstream tools 'mutect2,strelka2,manta' on a tumor/normal samplesheet; the germline chain above runs for every sample including pair members). Pairs come from [workflow].pairs_file \u2014 the repo ships config/somatic_pairs.tsv (header-only = no somatic instances; fill it with pair_id/experiment/control rows, experiment=tumor, control=normal). Tumor-only: leave control empty in the sheet \u2014 Mutect2 runs tumor-only (Strelka2/Manta somatic are paired-only upstream and stay off for those pairs). PoN / gnomAD contamination panels are a separate resource step (contamination_estimation uses the tumor-normal pileups instead).",
-        "key": "call_mutect2",
-        "used_by": [
-          "gatk_calculatecontamination_paired",
-          "gatk_filtermutectcalls_paired",
-          "gatk_filtermutectcalls_tumor_only",
-          "gatk_getpileupsummaries_paired",
-          "gatk_mutect2_paired",
-          "gatk_mutect2_tumor_only"
-        ],
-        "value_type": "bool"
-      },
-      {
-        "default": false,
         "key": "call_strelka",
         "used_by": [
           "bcftools_stats_strelka",
@@ -1335,14 +1281,6 @@
           "vcftools_filter_summary_strelka",
           "vcftools_tstv_count_strelka",
           "vcftools_tstv_qual_strelka"
-        ],
-        "value_type": "bool"
-      },
-      {
-        "default": false,
-        "key": "call_strelka_somatic",
-        "used_by": [
-          "strelka_somatic"
         ],
         "value_type": "bool"
       },
@@ -1393,16 +1331,6 @@
         "value_type": "array"
       },
       {
-        "default": false,
-        "description": "CalculateContamination: GetPileupSummaries + CalculateContamination on the pair, feeding FilterMutectCalls --contamination-table (upstream contamination_estimation; requires a paired sample).",
-        "key": "contamination_estimation",
-        "used_by": [
-          "gatk_calculatecontamination_paired",
-          "gatk_getpileupsummaries_paired"
-        ],
-        "value_type": "bool"
-      },
-      {
         "default": "/data/references/GRCh38/Annotation/GATKBundle/dbsnp_146.hg38.vcf.gz",
         "key": "dbsnp",
         "used_by": [
@@ -1449,20 +1377,15 @@
           "gatk_baserecalibrator",
           "gatk_baserecalibrator_scatter",
           "gatk_cnnscorevariants",
-          "gatk_filtermutectcalls_paired",
-          "gatk_filtermutectcalls_tumor_only",
           "gatk_filtervarianttranches",
           "gatk_genotypegvcfs",
           "gatk_genotypegvcfs_scatter",
-          "gatk_getpileupsummaries_paired",
           "gatk_haplotypecaller",
           "gatk_haplotypecaller_gvcf",
           "gatk_haplotypecaller_gvcf_scatter",
           "gatk_haplotypecaller_scatter",
           "gatk_markduplicates",
           "gatk_markduplicates_bam",
-          "gatk_mutect2_paired",
-          "gatk_mutect2_tumor_only",
           "gatk_variantrecalibrator_indel",
           "gatk_variantrecalibrator_snp",
           "manta_germline"
@@ -1493,24 +1416,18 @@
           "gatk_baserecalibrator_scatter",
           "gatk_cnnscorevariants",
           "gatk_createsequencedictionary",
-          "gatk_filtermutectcalls_paired",
-          "gatk_filtermutectcalls_tumor_only",
           "gatk_filtervarianttranches",
           "gatk_genotypegvcfs",
           "gatk_genotypegvcfs_scatter",
-          "gatk_getpileupsummaries_paired",
           "gatk_haplotypecaller",
           "gatk_haplotypecaller_gvcf",
           "gatk_haplotypecaller_gvcf_scatter",
           "gatk_haplotypecaller_scatter",
           "gatk_markduplicates",
           "gatk_markduplicates_bam",
-          "gatk_mutect2_paired",
-          "gatk_mutect2_tumor_only",
           "gatk_variantrecalibrator_indel",
           "gatk_variantrecalibrator_snp",
           "manta_germline",
-          "manta_somatic",
           "merge_index_samtools",
           "mosdepth_md",
           "mosdepth_recal",
@@ -1520,7 +1437,6 @@
           "samtools_stats_md",
           "samtools_stats_recal",
           "strelka_germline",
-          "strelka_somatic",
           "tiddit_sv"
         ],
         "value_type": "string"
@@ -1539,28 +1455,21 @@
           "gatk_baserecalibrator",
           "gatk_baserecalibrator_scatter",
           "gatk_cnnscorevariants",
-          "gatk_filtermutectcalls_paired",
-          "gatk_filtermutectcalls_tumor_only",
           "gatk_filtervarianttranches",
           "gatk_genomicsdbimport",
           "gatk_genotypegvcfs",
           "gatk_genotypegvcfs_scatter",
-          "gatk_getpileupsummaries_paired",
           "gatk_haplotypecaller",
           "gatk_haplotypecaller_gvcf",
           "gatk_haplotypecaller_gvcf_scatter",
           "gatk_haplotypecaller_scatter",
           "gatk_markduplicates",
           "gatk_markduplicates_bam",
-          "gatk_mutect2_paired",
-          "gatk_mutect2_tumor_only",
           "gatk_variantrecalibrator_indel",
           "gatk_variantrecalibrator_snp",
           "goleft_indexcov",
           "manta_germline",
-          "manta_somatic",
           "strelka_germline",
-          "strelka_somatic",
           "tiddit_sv"
         ],
         "value_type": "string"
@@ -1795,15 +1704,12 @@
           "gatk_baserecalibrator_scatter",
           "gatk_cnnscorevariants",
           "gatk_createsequencedictionary",
-          "gatk_filtermutectcalls_paired",
-          "gatk_filtermutectcalls_tumor_only",
           "gatk_filtervarianttranches",
           "gatk_gatherbqsrreports",
           "gatk_genomicsdbimport",
           "gatk_genomicsdbimport_scatter",
           "gatk_genotypegvcfs",
           "gatk_genotypegvcfs_scatter",
-          "gatk_getpileupsummaries_paired",
           "gatk_haplotypecaller",
           "gatk_haplotypecaller_gvcf",
           "gatk_haplotypecaller_gvcf_scatter",
@@ -1813,13 +1719,10 @@
           "gatk_mergevcfs_joint",
           "gatk_mergevcfs_joint_scatter",
           "gatk_mergevcfs_scatter",
-          "gatk_mutect2_paired",
-          "gatk_mutect2_tumor_only",
           "gatk_variantrecalibrator_indel",
           "gatk_variantrecalibrator_snp",
           "goleft_indexcov",
           "manta_germline",
-          "manta_somatic",
           "merge_index_samtools",
           "mosdepth_md",
           "mosdepth_recal",
@@ -1833,7 +1736,6 @@
           "samtools_stats_md",
           "samtools_stats_recal",
           "strelka_germline",
-          "strelka_somatic",
           "tabix_freebayes",
           "tabix_freebayes_filt",
           "tabix_interval",
@@ -2194,7 +2096,13 @@
         ],
         "value_type": "bool"
       }
-    ]
+    ],
+    "graph": {
+      "tier": "module-stage",
+      "stations": 7,
+      "is_rule_level": false,
+      "aspect": 1.25
+    }
   },
   "oxo-flow-scrnaseq": {
     "workflow": "main.oxoflow",
@@ -2353,6 +2261,7 @@
       },
       {
         "default": "",
+        "description": "failure-only recipient (upstream --email_on_fail; used when email is empty)",
         "key": "email_on_fail",
         "used_by": [],
         "value_type": "string"
@@ -2382,6 +2291,7 @@
       },
       {
         "default": true,
+        "description": "upstream --fasta gzipped flag (gunzipped by the prep rule)",
         "key": "fasta_gz",
         "used_by": [
           "gunzip_fasta"
@@ -2407,6 +2317,7 @@
       },
       {
         "default": "refs/refdata.gtf.gz",
+        "description": "annotation GTF (upstream --gtf; may be .gz)",
         "key": "gtf",
         "used_by": [
           "gunzip_gtf",
@@ -2416,6 +2327,7 @@
       },
       {
         "default": "refs/refdata_genes.gtf",
+        "description": "gene-level GTF for cellranger/count filtering (upstream filtered_gtf; the \"biotype = protein_coding\" filter)",
         "key": "gtf_filtered",
         "used_by": [
           "cellrangerarc_mkgtf",
@@ -2431,6 +2343,7 @@
       },
       {
         "default": true,
+        "description": "upstream --gtf gzipped flag (gunzipped by the prep rule)",
         "key": "gtf_gz",
         "used_by": [
           "gunzip_gtf"
@@ -2439,6 +2352,7 @@
       },
       {
         "default": "refs/refdata_genes.filtered.gtf",
+        "description": "cellranger mkgtf output (the filtered annotation)",
         "key": "gtf_mkgtf",
         "used_by": [
           "cellranger_mkgtf",
@@ -2458,6 +2372,7 @@
       },
       {
         "default": "refs/refdata.gtf",
+        "description": "gunzipped GTF (prep-rule output)",
         "key": "gtf_prepared",
         "used_by": [
           "gtf_gene_filter",
@@ -2476,6 +2391,7 @@
       },
       {
         "default": "refs/refdata_genes.source_fixed.gtf",
+        "description": "source-field-rewritten GTF (gtf_source_fix output)",
         "key": "gtf_source_fixed",
         "used_by": [
           "gtf_source_fix"
@@ -2484,6 +2400,7 @@
       },
       {
         "default": "",
+        "description": "webhook URL for the on_complete / on_error notifications",
         "key": "hook_url",
         "used_by": [],
         "value_type": "string"
@@ -2533,6 +2450,7 @@
       },
       {
         "default": "assets/multiqc_config.yml",
+        "description": "MultiQC config path (upstream --multiqc_config)",
         "key": "multiqc_config",
         "used_by": [
           "multiqc"
@@ -2551,6 +2469,7 @@
       },
       {
         "default": "results",
+        "description": "results directory (upstream --outdir)",
         "key": "out_dir",
         "used_by": [],
         "value_type": "string"
@@ -2587,6 +2506,7 @@
       },
       {
         "default": false,
+        "description": "upstream --remove_doublets: doublet removal for simpleaf",
         "key": "remove_doublets",
         "used_by": [
           "qcatch",
@@ -2639,6 +2559,7 @@
       },
       {
         "default": "cr-like",
+        "description": "upstream --simpleaf_umi_resolution (cr-like | paired | naive)",
         "key": "simpleaf_umi_resolution",
         "used_by": [
           "simpleaf_quant",
@@ -2648,6 +2569,7 @@
       },
       {
         "default": false,
+        "description": "upstream --skip_cellbender: skip ambient-RNA background removal",
         "key": "skip_cellbender",
         "used_by": [
           "anndata_barcodes",
@@ -2685,6 +2607,7 @@
       },
       {
         "default": false,
+        "description": "upstream --skip_multiqc",
         "key": "skip_multiqc",
         "used_by": [
           "multiqc",
@@ -2694,6 +2617,7 @@
       },
       {
         "default": false,
+        "description": "upstream --skip_qcatch: skip the qcatch QC step",
         "key": "skip_qcatch",
         "used_by": [
           "qcatch",
@@ -2753,6 +2677,7 @@
       },
       {
         "default": "refs/cellranger_reference",
+        "description": "cellranger reference dir (upstream --transcriptome): built by cellranger_mkref, or an existing index",
         "key": "transcriptome",
         "used_by": [
           "cellranger_count",
@@ -2785,7 +2710,13 @@
         ],
         "value_type": "string"
       }
-    ]
+    ],
+    "graph": {
+      "tier": "rule-sections",
+      "stations": 46,
+      "is_rule_level": true,
+      "aspect": 4.39
+    }
   },
   "oxo-flow-mag": {
     "workflow": "main.oxoflow",
@@ -2827,21 +2758,6 @@
         "description": "ALE (upstream --ale_per_base_output default false -> --metagenome --nout)",
         "key": "ale_per_base_output",
         "used_by": [],
-        "value_type": "bool"
-      },
-      {
-        "default": false,
-        "description": "Ancient DNA branch (upstream params.ancient_dna, default false): pydamage damage assessment on the binning-prep alignments, freebayes/bcftools consensus recall of the contigs, and a per-bin pydamage summary column in bin_summary.tsv. Off by default \u2014 every ancient_dna rule prunes at plan time and the default plan is byte-identical.",
-        "key": "ancient_dna",
-        "used_by": [
-          "ancient_consensus_megahit",
-          "ancient_consensus_spades",
-          "pydamage_analyze_megahit",
-          "pydamage_analyze_spades",
-          "pydamage_bins_summary",
-          "pydamage_filter_megahit",
-          "pydamage_filter_spades"
-        ],
         "value_type": "bool"
       },
       {
@@ -2995,26 +2911,6 @@
         "value_type": "bool"
       },
       {
-        "default": false,
-        "description": "Unbinned-contigs classification (upstream --cat_classify_unbinned, default false): a second CAT_pack bins pass over the SPLIT_FASTA unbinned chunks of every binner. Off by default \u2014 the binned-contigs column is the analysis surface, matching upstream.",
-        "key": "cat_classify_unbinned",
-        "used_by": [
-          "catpack_unbinned_megahit_comebin",
-          "catpack_unbinned_megahit_concoct",
-          "catpack_unbinned_megahit_maxbin2",
-          "catpack_unbinned_megahit_metabat2",
-          "catpack_unbinned_megahit_metabinner",
-          "catpack_unbinned_megahit_semibin2",
-          "catpack_unbinned_spades_comebin",
-          "catpack_unbinned_spades_concoct",
-          "catpack_unbinned_spades_maxbin2",
-          "catpack_unbinned_spades_metabat2",
-          "catpack_unbinned_spades_metabinner",
-          "catpack_unbinned_spades_semibin2"
-        ],
-        "value_type": "bool"
-      },
-      {
         "default": "",
         "description": "CAT/BAT bin classification (upstream --cat_db; the CAT_prepare database is user-provided \u2014 CAT_pack download + prepare, or the archive/directory itself; db/ and tax/ directories are discovered inside it)",
         "key": "cat_db",
@@ -3056,19 +2952,7 @@
           "catpack_summarise_spades_maxbin2",
           "catpack_summarise_spades_metabat2",
           "catpack_summarise_spades_metabinner",
-          "catpack_summarise_spades_semibin2",
-          "catpack_unbinned_megahit_comebin",
-          "catpack_unbinned_megahit_concoct",
-          "catpack_unbinned_megahit_maxbin2",
-          "catpack_unbinned_megahit_metabat2",
-          "catpack_unbinned_megahit_metabinner",
-          "catpack_unbinned_megahit_semibin2",
-          "catpack_unbinned_spades_comebin",
-          "catpack_unbinned_spades_concoct",
-          "catpack_unbinned_spades_maxbin2",
-          "catpack_unbinned_spades_metabat2",
-          "catpack_unbinned_spades_metabinner",
-          "catpack_unbinned_spades_semibin2"
+          "catpack_summarise_spades_semibin2"
         ],
         "value_type": "string"
       },
@@ -3129,8 +3013,6 @@
         "used_by": [
           "adapterremoval_pe",
           "fastp",
-          "fastp_sheet",
-          "fastp_single_sheet",
           "trimmomatic"
         ],
         "value_type": "string"
@@ -3141,9 +3023,7 @@
         "key": "cohort_samples",
         "used_by": [
           "bowtie2_align_megahit",
-          "bowtie2_align_megahit_sheet",
           "bowtie2_align_spades",
-          "bowtie2_align_spades_sheet",
           "semibin_megahit",
           "semibin_spades"
         ],
@@ -3153,9 +3033,7 @@
         "default": 15,
         "key": "fastp_cut_mean_quality",
         "used_by": [
-          "fastp",
-          "fastp_sheet",
-          "fastp_single_sheet"
+          "fastp"
         ],
         "value_type": "int"
       },
@@ -3163,9 +3041,7 @@
         "default": 15,
         "key": "fastp_qualified_quality",
         "used_by": [
-          "fastp",
-          "fastp_sheet",
-          "fastp_single_sheet"
+          "fastp"
         ],
         "value_type": "int"
       },
@@ -3173,9 +3049,7 @@
         "default": false,
         "key": "fastp_trim_polyg",
         "used_by": [
-          "fastp",
-          "fastp_sheet",
-          "fastp_single_sheet"
+          "fastp"
         ],
         "value_type": "bool"
       },
@@ -3365,33 +3239,6 @@
         "value_type": "string"
       },
       {
-        "default": "",
-        "description": "Long-read branch (upstream longreads subworkflows, off by default): config.long_reads points at ONE long-read FASTQ[.gz] (the common single-LR-library run shape); the platform follows config.long_reads_platform (--nano-raw|--nano-hq|--pacbio-raw| --pacbio-hifi, default --nano-raw) which also derives MetaMDBG's ont/hifi mode. Empty (default) prunes the whole longreads family at plan time.",
-        "key": "long_reads",
-        "used_by": [
-          "concoct_lr_flye",
-          "concoct_lr_metamdbg",
-          "flye_lr",
-          "maxbin2_lr_flye",
-          "maxbin2_lr_metamdbg",
-          "metabat2_lr_flye",
-          "metabat2_lr_metamdbg",
-          "metamdbg_lr",
-          "minimap2_align_lr_flye",
-          "minimap2_align_lr_metamdbg"
-        ],
-        "value_type": "string"
-      },
-      {
-        "default": "--nano-raw",
-        "key": "long_reads_platform",
-        "used_by": [
-          "flye_lr",
-          "metamdbg_lr"
-        ],
-        "value_type": "string"
-      },
-      {
         "default": 100,
         "key": "max_unbinned_contigs",
         "used_by": [
@@ -3461,9 +3308,7 @@
           "bbnorm",
           "bin_summary",
           "bowtie2_align_megahit",
-          "bowtie2_align_megahit_sheet",
           "bowtie2_align_spades",
-          "bowtie2_align_spades_sheet",
           "busco_megahit_comebin",
           "busco_megahit_concoct",
           "busco_megahit_maxbin2",
@@ -3513,18 +3358,6 @@
           "catpack_summarise_spades_metabat2",
           "catpack_summarise_spades_metabinner",
           "catpack_summarise_spades_semibin2",
-          "catpack_unbinned_megahit_comebin",
-          "catpack_unbinned_megahit_concoct",
-          "catpack_unbinned_megahit_maxbin2",
-          "catpack_unbinned_megahit_metabat2",
-          "catpack_unbinned_megahit_metabinner",
-          "catpack_unbinned_megahit_semibin2",
-          "catpack_unbinned_spades_comebin",
-          "catpack_unbinned_spades_concoct",
-          "catpack_unbinned_spades_maxbin2",
-          "catpack_unbinned_spades_metabat2",
-          "catpack_unbinned_spades_metabinner",
-          "catpack_unbinned_spades_semibin2",
           "checkm2_megahit_comebin",
           "checkm2_megahit_concoct",
           "checkm2_megahit_maxbin2",
@@ -3572,8 +3405,6 @@
           "concat_tiara_tsv",
           "concoct_extract_megahit",
           "concoct_extract_spades",
-          "concoct_lr_flye",
-          "concoct_lr_metamdbg",
           "concoct_merge_megahit",
           "concoct_merge_spades",
           "dastool_dastool_megahit",
@@ -3593,9 +3424,7 @@
           "dastool_rename_pre_spades_metabinner",
           "dastool_rename_pre_spades_semibin2",
           "depths_megahit",
-          "depths_megahit_sheet",
           "depths_spades",
-          "depths_spades_sheet",
           "fastatocontig2bin_tiara_megahit_comebin_bins",
           "fastatocontig2bin_tiara_megahit_concoct_bins",
           "fastatocontig2bin_tiara_megahit_maxbin2_bins",
@@ -3615,13 +3444,8 @@
           "fastatocontig2bin_tiara_spades_metabinner_unbins",
           "fastatocontig2bin_tiara_spades_semibin2_bins",
           "fastp",
-          "fastp_sheet",
-          "fastp_single_sheet",
           "fastqc_raw",
-          "fastqc_raw_sheet",
           "fastqc_trimmed",
-          "fastqc_trimmed_sheet",
-          "flye_lr",
           "genomad_megahit",
           "genomad_spades",
           "gtdbtk_megahit_comebin",
@@ -3675,23 +3499,15 @@
           "mag_depths_spades_metabinner",
           "mag_depths_spades_semibin2",
           "mag_depths_summary",
-          "maxbin2_lr_flye",
-          "maxbin2_lr_metamdbg",
           "maxbin2_megahit",
           "maxbin2_spades",
           "megahit",
-          "megahit_interleaved_sheet",
-          "megahit_single_sheet",
-          "metabat2_lr_flye",
-          "metabat2_lr_metamdbg",
           "metabat2_megahit",
           "metabat2_spades",
           "metabinner_bins_megahit",
           "metabinner_bins_spades",
-          "metamdbg_lr",
           "multiqc",
           "phix_align",
-          "phix_align_sheet",
           "prodigal_megahit",
           "prodigal_spades",
           "prokka_megahit_comebin",
@@ -3706,7 +3522,6 @@
           "prokka_spades_metabat2",
           "prokka_spades_metabinner",
           "prokka_spades_semibin2",
-          "pydamage_bins_summary",
           "quast_bins_megahit_comebin",
           "quast_bins_megahit_concoct",
           "quast_bins_megahit_maxbin2",
@@ -3736,7 +3551,6 @@
           "seqkit_spades_metabinner",
           "seqkit_spades_semibin",
           "spades",
-          "spades_interleaved_sheet",
           "split_fasta_maxbin2_megahit",
           "split_fasta_maxbin2_spades",
           "split_fasta_metabat2_megahit",
@@ -3794,99 +3608,9 @@
         "key": "reads_minlength",
         "used_by": [
           "adapterremoval_pe",
-          "fastp",
-          "fastp_sheet",
-          "fastp_single_sheet"
+          "fastp"
         ],
         "value_type": "int"
-      },
-      {
-        "default": "",
-        "description": "Sheet-mode input (off by default): when reads_sheet is set to a TSV path, it is loaded as [workflow].metadata_file (per-sample read paths + layout) and the paired-end {sample}_R1/_R2 rules are replaced by per-layout sheet rules (see modules/01_preprocessing.oxoflow / 02_assembly.oxoflow). Sheet columns: sample, reads_1, reads_2 (empty for single-end / interleaved), reads_layout (pe | single | interleaved). The sample set still comes from [[sample_groups]] below (the engine treats metadata_file as a lookup only) \u2014 point both at your sheet's samples, or pass --samples S1,S2,.... Empty (default) keeps the paired-end {sample}_R1/_R2 pattern untouched (byte-identical plan). Example sheet (test/fixtures/reads_sheet.tsv ships one): sample  short_reads_fastq1              short_reads_fastq2              short_reads_layout S1      test/fixtures/raw/S1_R1.fastq.gz test/fixtures/raw/S1_R2.fastq.gz pe SE1     test/fixtures/raw/S1_R1.fastq.gz                                 single IL1     test/fixtures/interleaved_IL1.fastq.gz                           interleaved",
-        "key": "reads_sheet",
-        "used_by": [
-          "ale_spades",
-          "bowtie2_align_megahit",
-          "bowtie2_align_megahit_sheet",
-          "bowtie2_align_spades",
-          "bowtie2_align_spades_sheet",
-          "bowtie2_build_spades",
-          "busco_spades_comebin",
-          "busco_spades_concoct",
-          "busco_spades_maxbin2",
-          "busco_spades_metabat2",
-          "busco_spades_metabinner",
-          "busco_spades_semibin2",
-          "comebin_spades",
-          "concoct_cutup_spades",
-          "concoct_extract_spades",
-          "concoct_merge_spades",
-          "concoct_spades",
-          "concoct_table_spades",
-          "convert_depths_spades",
-          "depths_megahit",
-          "depths_megahit_sheet",
-          "depths_spades",
-          "depths_spades_sheet",
-          "fastp",
-          "fastp_sheet",
-          "fastp_single_sheet",
-          "fastqc_raw",
-          "fastqc_raw_sheet",
-          "fastqc_trimmed",
-          "fastqc_trimmed_sheet",
-          "gtdbtk_spades_comebin",
-          "gtdbtk_spades_concoct",
-          "gtdbtk_spades_maxbin2",
-          "gtdbtk_spades_metabat2",
-          "gtdbtk_spades_metabinner",
-          "gtdbtk_spades_semibin2",
-          "gunzip_spades",
-          "mag_depths_spades_comebin",
-          "mag_depths_spades_concoct",
-          "mag_depths_spades_maxbin2",
-          "mag_depths_spades_metabat2",
-          "mag_depths_spades_metabinner",
-          "mag_depths_spades_semibin2",
-          "maxbin2_spades",
-          "megahit",
-          "megahit_interleaved_sheet",
-          "megahit_single_sheet",
-          "metabat2_spades",
-          "metabinner_bins_spades",
-          "metabinner_kmer_spades",
-          "metabinner_run_spades",
-          "metabinner_tooshort_spades",
-          "phix_align",
-          "phix_align_sheet",
-          "prodigal_spades",
-          "prokka_spades_comebin",
-          "prokka_spades_concoct",
-          "prokka_spades_maxbin2",
-          "prokka_spades_metabat2",
-          "prokka_spades_metabinner",
-          "prokka_spades_semibin2",
-          "quast_bins_spades_comebin",
-          "quast_bins_spades_concoct",
-          "quast_bins_spades_maxbin2",
-          "quast_bins_spades_metabat2",
-          "quast_bins_spades_metabinner",
-          "quast_bins_spades_semibin2",
-          "quast_spades",
-          "semibin_spades",
-          "seqkit_spades_comebin",
-          "seqkit_spades_concoct",
-          "seqkit_spades_maxbin2",
-          "seqkit_spades_metabat2",
-          "seqkit_spades_metabinner",
-          "seqkit_spades_semibin",
-          "spades",
-          "spades_interleaved_sheet",
-          "split_fasta_maxbin2_spades",
-          "split_fasta_metabat2_spades",
-          "split_fasta_metabinner_spades"
-        ],
-        "value_type": "string"
       },
       {
         "default": false,
@@ -4100,7 +3824,13 @@
         ],
         "value_type": "int"
       }
-    ]
+    ],
+    "graph": {
+      "tier": "module-stage",
+      "stations": 15,
+      "is_rule_level": false,
+      "aspect": 1.73
+    }
   },
   "oxo-flow-ampliseq": {
     "workflow": "main.oxoflow",
@@ -4111,8 +3841,7 @@
         "key": "FW_primer",
         "used_by": [
           "cutadapt",
-          "qiime2_preptax",
-          "sbdiexport"
+          "qiime2_preptax"
         ],
         "value_type": "string"
       },
@@ -4121,8 +3850,7 @@
         "key": "RV_primer",
         "used_by": [
           "cutadapt",
-          "qiime2_preptax",
-          "sbdiexport"
+          "qiime2_preptax"
         ],
         "value_type": "string"
       },
@@ -4208,9 +3936,7 @@
           "qiime2_inasv",
           "qiime2_inasv_its",
           "qiime2_inseq",
-          "qiime2_inseq_its",
-          "sbdiexportreannotate",
-          "summary_report"
+          "qiime2_inseq_its"
         ],
         "value_type": "string"
       },
@@ -4264,8 +3990,7 @@
         "key": "dada_min_boot",
         "used_by": [
           "dada2_taxonomy",
-          "dada2_taxonomy_its",
-          "summary_report"
+          "dada2_taxonomy_its"
         ],
         "value_type": "int"
       },
@@ -4278,33 +4003,26 @@
       {
         "default": "Lundin D, Andersson A. SBDI Sativa curated 16S GTDB database. FigShare. doi: 10.17044/scilifelab.14869077.v12",
         "key": "dada_ref_taxonomy_citation",
-        "used_by": [
-          "summary_report"
-        ],
+        "used_by": [],
         "value_type": "string"
       },
       {
         "default": "SBDI-GTDB-R11-RS232-1 (https://figshare.scilifelab.se/articles/dataset/SBDI_Sativa_curated_16S_GTDB_database/14869077/10)",
         "key": "dada_ref_taxonomy_dbversion",
-        "used_by": [
-          "sbdiexportreannotate"
-        ],
+        "used_by": [],
         "value_type": "string"
       },
       {
         "default": "SBDI-GTDB - Sativa curated 16S GTDB database - Release R11-RS232-1",
         "key": "dada_ref_taxonomy_title",
-        "used_by": [
-          "summary_report"
-        ],
+        "used_by": [],
         "value_type": "string"
       },
       {
         "default": "https://ndownloader.figshare.com/files/64711203,https://ndownloader.figshare.com/files/64711218",
         "key": "dada_ref_taxonomy_urls",
         "used_by": [
-          "download_taxonomy_db",
-          "summary_report"
+          "download_taxonomy_db"
         ],
         "value_type": "string"
       },
@@ -4362,8 +4080,7 @@
         "default": 2,
         "key": "max_ee",
         "used_by": [
-          "dada2_filtntrim",
-          "summary_report"
+          "dada2_filtntrim"
         ],
         "value_type": "int"
       },
@@ -4389,8 +4106,7 @@
         "description": "\"merge\" | \"consensus\" | \"concatenate\"",
         "key": "mergepairs_strategy",
         "used_by": [
-          "dada2_denoising",
-          "summary_report"
+          "dada2_denoising"
         ],
         "value_type": "string"
       },
@@ -4398,7 +4114,6 @@
         "default": "test/fixtures/metadata.tsv",
         "key": "metadata_file",
         "used_by": [
-          "phyloseq",
           "qiime2_alphararefaction",
           "qiime2_ancom",
           "qiime2_ancombc",
@@ -4409,10 +4124,7 @@
           "qiime2_diversity_beta",
           "qiime2_diversity_betaord",
           "qiime2_diversity_core",
-          "qiime2_metadata_categories",
-          "sbdiexport",
-          "summary_report",
-          "treesummarizedexperiment"
+          "qiime2_metadata_categories"
         ],
         "value_type": "string"
       },
@@ -4472,15 +4184,6 @@
         "value_type": "string"
       },
       {
-        "default": "test/fixtures/raw",
-        "description": "raw input dir: point at your real data directory (e.g. \"raw\") after cloning; the default ships the test fixtures so a fresh checkout dry-runs cleanly. Files are read as <raw_dir>/<sample>_R1/_R2.fastq.gz.",
-        "key": "raw_dir",
-        "used_by": [
-          "rename_raw_data_files"
-        ],
-        "value_type": "string"
-      },
-      {
         "default": "1",
         "description": "run / metadata",
         "key": "run_id",
@@ -4489,8 +4192,7 @@
           "dada2_err",
           "dada2_merge",
           "dada2_rmchimera",
-          "dada2_stats",
-          "summary_report"
+          "dada2_stats"
         ],
         "value_type": "string"
       },
@@ -4529,20 +4231,9 @@
         "description": "\"independent\" | \"pooled\" | \"pseudo\"",
         "key": "sample_inference",
         "used_by": [
-          "dada2_denoising",
-          "summary_report"
+          "dada2_denoising"
         ],
         "value_type": "string"
-      },
-      {
-        "default": false,
-        "description": "sbdiexport (upstream params.sbdiexport, default false)",
-        "key": "sbdiexport",
-        "used_by": [
-          "sbdiexport",
-          "sbdiexportreannotate"
-        ],
-        "value_type": "bool"
       },
       {
         "default": 100,
@@ -4591,13 +4282,8 @@
           "dada2_taxonomy_its",
           "download_taxonomy_db",
           "format_taxonomy",
-          "phyloseq",
           "qiime2_barplot",
-          "qiime2_intax",
-          "sbdiexport",
-          "sbdiexportreannotate",
-          "summary_report",
-          "treesummarizedexperiment"
+          "qiime2_intax"
         ],
         "value_type": "bool"
       },
@@ -4629,15 +4315,6 @@
         "key": "skip_multiqc",
         "used_by": [
           "multiqc"
-        ],
-        "value_type": "bool"
-      },
-      {
-        "default": true,
-        "description": "--- robjects + summary report (upstream params.skip_phyloseq / skip_tse / skip_report default to FALSE, i.e. the report and the R objects are produced on every upstream run; the port turns them OFF by default like the other optional branches \u2014 flip these to false to enable) ---",
-        "key": "skip_phyloseq",
-        "used_by": [
-          "phyloseq"
         ],
         "value_type": "bool"
       },
@@ -4677,14 +4354,6 @@
         "value_type": "bool"
       },
       {
-        "default": true,
-        "key": "skip_report",
-        "used_by": [
-          "summary_report"
-        ],
-        "value_type": "bool"
-      },
-      {
         "default": false,
         "key": "skip_taxonomy",
         "used_by": [
@@ -4692,7 +4361,6 @@
           "dada2_taxonomy_its",
           "download_taxonomy_db",
           "format_taxonomy",
-          "phyloseq",
           "qiime2_ancom",
           "qiime2_ancombc",
           "qiime2_ancombc2",
@@ -4702,19 +4370,7 @@
           "qiime2_export_relasv",
           "qiime2_export_reltax",
           "qiime2_intax",
-          "qiime2_preptax",
-          "sbdiexport",
-          "sbdiexportreannotate",
-          "summary_report",
-          "treesummarizedexperiment"
-        ],
-        "value_type": "bool"
-      },
-      {
-        "default": true,
-        "key": "skip_tse",
-        "used_by": [
-          "treesummarizedexperiment"
+          "qiime2_preptax"
         ],
         "value_type": "bool"
       },
@@ -4747,7 +4403,6 @@
         "description": "DADA2 filtering / denoising",
         "key": "trunc_qmin",
         "used_by": [
-          "summary_report",
           "trunclen_fw",
           "trunclen_rv"
         ],
@@ -4757,7 +4412,6 @@
         "default": 0.75,
         "key": "trunc_rmin",
         "used_by": [
-          "summary_report",
           "trunclen_fw",
           "trunclen_rv"
         ],
@@ -4767,12 +4421,17 @@
         "default": 2,
         "key": "truncq",
         "used_by": [
-          "dada2_filtntrim",
-          "summary_report"
+          "dada2_filtntrim"
         ],
         "value_type": "int"
       }
-    ]
+    ],
+    "graph": {
+      "tier": "rule-sections",
+      "stations": 49,
+      "is_rule_level": true,
+      "aspect": 5.33
+    }
   },
   "oxo-flow-chipseq": {
     "workflow": "main.oxoflow",
@@ -4789,8 +4448,7 @@
           "reference::bowtie2_index_build",
           "reference::bwa_index_build",
           "reference::chromap_index_build",
-          "reference::star_genomegenerate",
-          "report::multiqc_workflow_summary"
+          "reference::star_genomegenerate"
         ],
         "value_type": "string"
       },
@@ -4811,8 +4469,7 @@
           "report::igv",
           "report::igv_narrow",
           "report::multiqc",
-          "report::multiqc_narrow",
-          "report::multiqc_workflow_summary"
+          "report::multiqc_narrow"
         ],
         "value_type": "string"
       },
@@ -4821,8 +4478,7 @@
         "key": "blacklist",
         "used_by": [
           "filter::bamtools_filter",
-          "reference::blacklist_regions",
-          "report::multiqc_workflow_summary"
+          "reference::blacklist_regions"
         ],
         "value_type": "string"
       },
@@ -4830,8 +4486,7 @@
         "default": "",
         "key": "bowtie2_index",
         "used_by": [
-          "align::bowtie2_align",
-          "report::multiqc_workflow_summary"
+          "align::bowtie2_align"
         ],
         "value_type": "string"
       },
@@ -4839,8 +4494,7 @@
         "default": 0.1,
         "key": "broad_cutoff",
         "used_by": [
-          "peaks::macs3_callpeak",
-          "report::multiqc_workflow_summary"
+          "peaks::macs3_callpeak"
         ],
         "value_type": "float"
       },
@@ -4848,8 +4502,7 @@
         "default": "test/fixtures/references/bwa_index",
         "key": "bwa_index",
         "used_by": [
-          "align::bwa_mem",
-          "report::multiqc_workflow_summary"
+          "align::bwa_mem"
         ],
         "value_type": "string"
       },
@@ -4857,8 +4510,7 @@
         "default": 0,
         "key": "bwa_min_score",
         "used_by": [
-          "align::bwa_mem",
-          "report::multiqc_workflow_summary"
+          "align::bwa_mem"
         ],
         "value_type": "int"
       },
@@ -4867,7 +4519,6 @@
         "key": "chrom_sizes",
         "used_by": [
           "reference::blacklist_regions",
-          "report::multiqc_workflow_summary",
           "tracks::ucsc_bedgraphtobigwig"
         ],
         "value_type": "string"
@@ -4876,8 +4527,7 @@
         "default": "",
         "key": "chromap_index",
         "used_by": [
-          "align::chromap_align",
-          "report::multiqc_workflow_summary"
+          "align::chromap_align"
         ],
         "value_type": "string"
       },
@@ -4885,8 +4535,7 @@
         "default": 0,
         "key": "clip_r1",
         "used_by": [
-          "qc::trimgalore",
-          "report::multiqc_workflow_summary"
+          "qc::trimgalore"
         ],
         "value_type": "int"
       },
@@ -4894,8 +4543,7 @@
         "default": 0,
         "key": "clip_r2",
         "used_by": [
-          "qc::trimgalore",
-          "report::multiqc_workflow_summary"
+          "qc::trimgalore"
         ],
         "value_type": "int"
       },
@@ -4905,8 +4553,7 @@
         "used_by": [
           "align::markduplicates",
           "filter::picard_collectmultiplemetrics",
-          "reference::star_genomegenerate",
-          "report::multiqc_workflow_summary"
+          "reference::star_genomegenerate"
         ],
         "value_type": "string"
       },
@@ -4944,7 +4591,6 @@
           "report::igv_multi",
           "report::igv_narrow",
           "report::igv_narrow_multi",
-          "report::multiqc_workflow_summary",
           "tracks::khmer"
         ],
         "value_type": "string"
@@ -4953,7 +4599,6 @@
         "default": 500000,
         "key": "fingerprint_bins",
         "used_by": [
-          "report::multiqc_workflow_summary",
           "tracks::deeptools_plotfingerprint"
         ],
         "value_type": "int"
@@ -4961,16 +4606,13 @@
       {
         "default": 0,
         "key": "fragment_size",
-        "used_by": [
-          "report::multiqc_workflow_summary"
-        ],
+        "used_by": [],
         "value_type": "int"
       },
       {
         "default": "test/fixtures/references/gene.bed",
         "key": "gene_bed",
         "used_by": [
-          "report::multiqc_workflow_summary",
           "tracks::deeptools_computematrix"
         ],
         "value_type": "string"
@@ -4986,8 +4628,7 @@
           "peaks::homer_annotatepeaks",
           "peaks::homer_annotatepeaks_narrow",
           "reference::gtf2bed",
-          "reference::star_genomegenerate",
-          "report::multiqc_workflow_summary"
+          "reference::star_genomegenerate"
         ],
         "value_type": "string"
       },
@@ -5004,8 +4645,7 @@
         "default": false,
         "key": "keep_dups",
         "used_by": [
-          "filter::bamtools_filter",
-          "report::multiqc_workflow_summary"
+          "filter::bamtools_filter"
         ],
         "value_type": "bool"
       },
@@ -5013,27 +4653,16 @@
         "default": false,
         "key": "keep_multi_map",
         "used_by": [
-          "filter::bamtools_filter",
-          "report::multiqc_workflow_summary"
+          "filter::bamtools_filter"
         ],
         "value_type": "bool"
-      },
-      {
-        "default": "Lb",
-        "description": "Library fan-out dimension (issue #7): the aligner/sort/index/QC chain fans per {library} and Picard MergeSamFiles gathers every library into the per-pair mLb BAM (upstream library_id rows). Default \"Lb\" preserves the single-library port byte-for-byte; multi-library pairs: --arg library_ids=Lb,Lb2 (or a profile).",
-        "key": "library_ids",
-        "used_by": [
-          "report::multiqc_workflow_summary"
-        ],
-        "value_type": "string"
       },
       {
         "default": 0,
         "key": "macs_fdr",
         "used_by": [
           "peaks::macs3_callpeak",
-          "peaks::macs3_callpeak_narrow",
-          "report::multiqc_workflow_summary"
+          "peaks::macs3_callpeak_narrow"
         ],
         "value_type": "int"
       },
@@ -5044,7 +4673,6 @@
         "used_by": [
           "peaks::macs3_callpeak",
           "peaks::macs3_callpeak_narrow",
-          "report::multiqc_workflow_summary",
           "tracks::khmer"
         ],
         "value_type": "string"
@@ -5054,8 +4682,7 @@
         "key": "macs_pvalue",
         "used_by": [
           "peaks::macs3_callpeak",
-          "peaks::macs3_callpeak_narrow",
-          "report::multiqc_workflow_summary"
+          "peaks::macs3_callpeak_narrow"
         ],
         "value_type": "int"
       },
@@ -5123,8 +4750,7 @@
           "consensus::macs3_consensus",
           "consensus::macs3_consensus_multi",
           "consensus::macs3_consensus_narrow",
-          "consensus::macs3_consensus_narrow_multi",
-          "report::multiqc_workflow_summary"
+          "consensus::macs3_consensus_narrow_multi"
         ],
         "value_type": "int"
       },
@@ -5160,8 +4786,7 @@
           "report::multiqc",
           "report::multiqc_multi",
           "report::multiqc_narrow",
-          "report::multiqc_narrow_multi",
-          "report::multiqc_workflow_summary"
+          "report::multiqc_narrow_multi"
         ],
         "value_type": "bool"
       },
@@ -5188,8 +4813,7 @@
           "consensus::subread_featurecounts",
           "consensus::subread_featurecounts_multi",
           "consensus::subread_featurecounts_narrow",
-          "consensus::subread_featurecounts_narrow_multi",
-          "report::multiqc_workflow_summary"
+          "consensus::subread_featurecounts_narrow_multi"
         ],
         "value_type": "bool"
       },
@@ -5200,8 +4824,7 @@
           "report::multiqc",
           "report::multiqc_multi",
           "report::multiqc_narrow",
-          "report::multiqc_narrow_multi",
-          "report::multiqc_workflow_summary"
+          "report::multiqc_narrow_multi"
         ],
         "value_type": "string"
       },
@@ -5249,8 +4872,7 @@
           "report::multiqc",
           "report::multiqc_multi",
           "report::multiqc_narrow",
-          "report::multiqc_narrow_multi",
-          "report::multiqc_workflow_summary"
+          "report::multiqc_narrow_multi"
         ],
         "value_type": "bool"
       },
@@ -5271,8 +4893,7 @@
         "key": "raw_dir",
         "used_by": [
           "qc::fastqc",
-          "qc::trimgalore",
-          "report::multiqc_workflow_summary"
+          "qc::trimgalore"
         ],
         "value_type": "string"
       },
@@ -5280,7 +4901,6 @@
         "default": 75,
         "key": "read_length",
         "used_by": [
-          "report::multiqc_workflow_summary",
           "tracks::khmer"
         ],
         "value_type": "int"
@@ -5308,8 +4928,7 @@
           "consensus::subread_featurecounts",
           "consensus::subread_featurecounts_multi",
           "consensus::subread_featurecounts_narrow",
-          "consensus::subread_featurecounts_narrow_multi",
-          "report::multiqc_workflow_summary"
+          "consensus::subread_featurecounts_narrow_multi"
         ],
         "value_type": "bool"
       },
@@ -5318,8 +4937,7 @@
         "key": "save_macs_pileup",
         "used_by": [
           "peaks::macs3_callpeak",
-          "peaks::macs3_callpeak_narrow",
-          "report::multiqc_workflow_summary"
+          "peaks::macs3_callpeak_narrow"
         ],
         "value_type": "bool"
       },
@@ -5331,8 +4949,7 @@
           "align::bowtie2_align",
           "align::bwa_mem",
           "align::chromap_align",
-          "align::star_align",
-          "report::multiqc_workflow_summary"
+          "align::star_align"
         ],
         "value_type": "string"
       },
@@ -5359,8 +4976,7 @@
           "consensus::subread_featurecounts",
           "consensus::subread_featurecounts_multi",
           "consensus::subread_featurecounts_narrow",
-          "consensus::subread_featurecounts_narrow_multi",
-          "report::multiqc_workflow_summary"
+          "consensus::subread_featurecounts_narrow_multi"
         ],
         "value_type": "bool"
       },
@@ -5371,8 +4987,7 @@
           "consensus::deseq2_qc",
           "consensus::deseq2_qc_multi",
           "consensus::deseq2_qc_narrow",
-          "consensus::deseq2_qc_narrow_multi",
-          "report::multiqc_workflow_summary"
+          "consensus::deseq2_qc_narrow_multi"
         ],
         "value_type": "bool"
       },
@@ -5381,8 +4996,7 @@
         "description": "Step toggles (mirror the nf-core/chipseq params.skip_* / when gates)",
         "key": "skip_fastqc",
         "used_by": [
-          "qc::fastqc",
-          "report::multiqc_workflow_summary"
+          "qc::fastqc"
         ],
         "value_type": "bool"
       },
@@ -5393,8 +5007,7 @@
           "report::igv",
           "report::igv_multi",
           "report::igv_narrow",
-          "report::igv_narrow_multi",
-          "report::multiqc_workflow_summary"
+          "report::igv_narrow_multi"
         ],
         "value_type": "bool"
       },
@@ -5405,8 +5018,7 @@
           "report::multiqc",
           "report::multiqc_multi",
           "report::multiqc_narrow",
-          "report::multiqc_narrow_multi",
-          "report::multiqc_workflow_summary"
+          "report::multiqc_narrow_multi"
         ],
         "value_type": "bool"
       },
@@ -5427,8 +5039,7 @@
           "peaks::plot_homer_annotatepeaks",
           "peaks::plot_homer_annotatepeaks_narrow",
           "peaks::plot_macs3_qc",
-          "peaks::plot_macs3_qc_narrow",
-          "report::multiqc_workflow_summary"
+          "peaks::plot_macs3_qc_narrow"
         ],
         "value_type": "bool"
       },
@@ -5439,8 +5050,7 @@
           "peaks::plot_homer_annotatepeaks",
           "peaks::plot_homer_annotatepeaks_narrow",
           "peaks::plot_macs3_qc",
-          "peaks::plot_macs3_qc_narrow",
-          "report::multiqc_workflow_summary"
+          "peaks::plot_macs3_qc_narrow"
         ],
         "value_type": "bool"
       },
@@ -5448,8 +5058,7 @@
         "default": false,
         "key": "skip_picard_metrics",
         "used_by": [
-          "filter::picard_collectmultiplemetrics",
-          "report::multiqc_workflow_summary"
+          "filter::picard_collectmultiplemetrics"
         ],
         "value_type": "bool"
       },
@@ -5457,7 +5066,6 @@
         "default": false,
         "key": "skip_plot_fingerprint",
         "used_by": [
-          "report::multiqc_workflow_summary",
           "tracks::deeptools_plotfingerprint"
         ],
         "value_type": "bool"
@@ -5466,7 +5074,6 @@
         "default": false,
         "key": "skip_plot_profile",
         "used_by": [
-          "report::multiqc_workflow_summary",
           "tracks::deeptools_computematrix",
           "tracks::deeptools_plotheatmap",
           "tracks::deeptools_plotprofile"
@@ -5477,8 +5084,7 @@
         "default": false,
         "key": "skip_preseq",
         "used_by": [
-          "filter::preseq",
-          "report::multiqc_workflow_summary"
+          "filter::preseq"
         ],
         "value_type": "bool"
       },
@@ -5486,8 +5092,7 @@
         "default": false,
         "key": "skip_qc",
         "used_by": [
-          "qc::fastqc",
-          "report::multiqc_workflow_summary"
+          "qc::fastqc"
         ],
         "value_type": "bool"
       },
@@ -5496,8 +5101,7 @@
         "key": "skip_spp",
         "used_by": [
           "filter::multiqc_custom_phantompeakqualtools",
-          "filter::phantompeakqualtools",
-          "report::multiqc_workflow_summary"
+          "filter::phantompeakqualtools"
         ],
         "value_type": "bool"
       },
@@ -5505,8 +5109,7 @@
         "default": false,
         "key": "skip_trimming",
         "used_by": [
-          "qc::trimgalore",
-          "report::multiqc_workflow_summary"
+          "qc::trimgalore"
         ],
         "value_type": "bool"
       },
@@ -5514,8 +5117,7 @@
         "default": "",
         "key": "star_index",
         "used_by": [
-          "align::star_align",
-          "report::multiqc_workflow_summary"
+          "align::star_align"
         ],
         "value_type": "string"
       },
@@ -5523,8 +5125,7 @@
         "default": 0,
         "key": "three_prime_clip_r1",
         "used_by": [
-          "qc::trimgalore",
-          "report::multiqc_workflow_summary"
+          "qc::trimgalore"
         ],
         "value_type": "int"
       },
@@ -5532,8 +5133,7 @@
         "default": 0,
         "key": "three_prime_clip_r2",
         "used_by": [
-          "qc::trimgalore",
-          "report::multiqc_workflow_summary"
+          "qc::trimgalore"
         ],
         "value_type": "int"
       },
@@ -5541,12 +5141,17 @@
         "default": 0,
         "key": "trim_nextseq",
         "used_by": [
-          "qc::trimgalore",
-          "report::multiqc_workflow_summary"
+          "qc::trimgalore"
         ],
         "value_type": "int"
       }
-    ]
+    ],
+    "graph": {
+      "tier": "module",
+      "stations": 8,
+      "is_rule_level": false,
+      "aspect": 2.02
+    }
   },
   "oxo-flow-atacseq": {
     "workflow": "main.oxoflow",
@@ -6065,7 +5670,13 @@
         ],
         "value_type": "string"
       }
-    ]
+    ],
+    "graph": {
+      "tier": "rule-flat",
+      "stations": 43,
+      "is_rule_level": true,
+      "aspect": 2.09
+    }
   },
   "oxo-flow-methylseq": {
     "workflow": "main.oxoflow",
@@ -6760,7 +6371,13 @@
         ],
         "value_type": "bool"
       }
-    ]
+    ],
+    "graph": {
+      "tier": "rule-flat",
+      "stations": 61,
+      "is_rule_level": true,
+      "aspect": 1.57
+    }
   },
   "oxo-flow-nanoseq": {
     "workflow": "main.oxoflow",
@@ -6875,15 +6492,6 @@
       },
       {
         "default": "",
-        "key": "jaffal_ref_dir",
-        "used_by": [
-          "get_jaffal_ref",
-          "jaffal_ref"
-        ],
-        "value_type": "string"
-      },
-      {
-        "default": "",
         "key": "multiqc_config",
         "used_by": [
           "multiqc"
@@ -6941,11 +6549,9 @@
           "dumpsoftwareversions",
           "fastqc",
           "get_chrom_sizes",
-          "get_jaffal_ref",
           "graphmap2_align",
           "graphmap2_index",
           "gtf2bed",
-          "jaffal_ref",
           "m6anet_dataprep",
           "m6anet_inference",
           "medaka_bgzip_vcf",
@@ -7006,10 +6612,8 @@
           "deseq2_featurecounts",
           "dexseq",
           "dexseq_featurecounts",
-          "get_jaffal_ref",
           "graphmap2_align",
           "graphmap2_index",
-          "jaffal_ref",
           "m6anet_dataprep",
           "m6anet_inference",
           "medaka_bgzip_vcf",
@@ -7194,16 +6798,6 @@
       },
       {
         "default": false,
-        "description": "-- RNA fusion analysis (upstream default: on, gated to protocol cDNA/directRNA; skip_fusion_analysis / jaffal_ref_dir). The reference bundle is auto-downloaded from figshare when jaffal_ref_dir is unset (upstream GET_JAFFAL_REF + UNTAR); a user-supplied path is untarred (.tar.gz/.tgz/.tar) or symlinked (directory) instead, A12-style.",
-        "key": "skip_fusion_analysis",
-        "used_by": [
-          "get_jaffal_ref",
-          "jaffal_ref"
-        ],
-        "value_type": "bool"
-      },
-      {
-        "default": false,
         "key": "skip_m6anet",
         "used_by": [
           "m6anet_dataprep",
@@ -7345,7 +6939,13 @@
         ],
         "value_type": "string"
       }
-    ]
+    ],
+    "graph": {
+      "tier": "rule-sections",
+      "stations": 52,
+      "is_rule_level": true,
+      "aspect": 2.95
+    }
   },
   "oxo-flow-viralrecon": {
     "workflow": "main.oxoflow",
@@ -7561,7 +7161,7 @@
       },
       {
         "default": 1000,
-        "description": "upstream params.min_mapped_reads \u2014 the per-sample channel DROP is a documented runtime-filter deviation (no engine runtime fn can read the mapped count out of a samtools flagstat); the reporting half (fail_mapped_samples_mqc.tsv in the MultiQC data) is ported inside the multiqc rule",
+        "description": "upstream params.min_mapped_reads \u2014 the per-sample channel DROP is a documented runtime-filter deviation (no dynamic DAG); the reporting half (fail_mapped_samples_mqc.tsv in the MultiQC data) is ported inside the multiqc rule",
         "key": "min_mapped_reads",
         "used_by": [
           "multiqc"
@@ -7862,11 +7462,8 @@
         "default": false,
         "key": "skip_fastp",
         "used_by": [
-          "align_bowtie2",
-          "assembly_fastq",
           "fastp",
-          "fastqc_trim",
-          "kraken2"
+          "fastqc_trim"
         ],
         "value_type": "bool"
       },
@@ -8094,7 +7691,13 @@
         ],
         "value_type": "string"
       }
-    ]
+    ],
+    "graph": {
+      "tier": "module-stage",
+      "stations": 8,
+      "is_rule_level": false,
+      "aspect": 1.13
+    }
   },
   "oxo-flow-eager": {
     "workflow": "main.oxoflow",
@@ -8517,8 +8120,7 @@
         "default": false,
         "key": "hostremoval_input_fastq",
         "used_by": [
-          "hostremoval_input_fastq",
-          "hostremoval_input_fastq_bwamem"
+          "hostremoval_input_fastq"
         ],
         "value_type": "bool"
       },
@@ -8526,8 +8128,7 @@
         "default": "mapped",
         "key": "hostremoval_mode",
         "used_by": [
-          "hostremoval_input_fastq",
-          "hostremoval_input_fastq_bwamem"
+          "hostremoval_input_fastq"
         ],
         "value_type": "string"
       },
@@ -8760,8 +8361,6 @@
           "bwamem",
           "circulargenerator",
           "circularmapper",
-          "hostremoval_input_fastq",
-          "hostremoval_input_fastq_bwamem",
           "make_bt2_index",
           "samtools_filter_bowtie2",
           "samtools_filter_bwaaln",
@@ -9174,18 +8773,6 @@
       },
       {
         "default": false,
-        "description": "--- multi-lane input merging (gated; upstream auto-detects lanes from the TSV input mode, the port's directory model needs an explicit gate). When on, per-lane pairs named {sample}_L{lane}_R{1,2}.fastq.gz are merged into one pair per sample (results/lanemerging/) that feeds AdapterRemoval (and hostremoval_input_fastq); requires oxo-flow with input_groups support (>= 0.16.0, Traitome/oxo-flow#231). ---",
-        "key": "run_lanemerge",
-        "used_by": [
-          "fastqc",
-          "fastqc_lanemerged",
-          "lanemerge",
-          "lanemerge_r2"
-        ],
-        "value_type": "bool"
-      },
-      {
-        "default": false,
         "key": "run_maltextract",
         "used_by": [
           "maltextract"
@@ -9362,8 +8949,7 @@
         "key": "skip_fastqc",
         "used_by": [
           "fastqc",
-          "fastqc_after_clipping",
-          "fastqc_lanemerged"
+          "fastqc_after_clipping"
         ],
         "value_type": "bool"
       },
@@ -9444,7 +9030,13 @@
         ],
         "value_type": "string"
       }
-    ]
+    ],
+    "graph": {
+      "tier": "module",
+      "stations": 8,
+      "is_rule_level": false,
+      "aspect": 1.85
+    }
   },
   "oxo-flow-fetchngs": {
     "workflow": "main.oxoflow",
@@ -9594,7 +9186,13 @@
         ],
         "value_type": "bool"
       }
-    ]
+    ],
+    "graph": {
+      "tier": "rule-sections",
+      "stations": 16,
+      "is_rule_level": true,
+      "aspect": 3.6
+    }
   },
   "oxo-flow-rnaseq-star-deseq2": {
     "workflow": "main.oxoflow",
@@ -9881,7 +9479,13 @@
         ],
         "value_type": "string"
       }
-    ]
+    ],
+    "graph": {
+      "tier": "rule-flat",
+      "stations": 31,
+      "is_rule_level": true,
+      "aspect": 1.66
+    }
   },
   "oxo-flow-varlociraptor": {
     "workflow": "main.oxoflow",
@@ -9985,7 +9589,7 @@
       },
       {
         "default": false,
-        "description": "upstream config: fusion calling branch (fusion_calling.smk star_arriba meta wrapper: star_index / star_align / arriba / annotate_exons / convert_fusions / sort_arriba_calls / bcftools_concat_candidates). With a group whose `calling` metadata includes \"fusions\", the candidates continue into the varlociraptor calling flow (calling.smk get_candidate_calls \u2014 see modules/calling.oxoflow).",
+        "description": "upstream config: fusion calling branch (fusion_calling.smk star_arriba meta wrapper: star_index / star_align / arriba / annotate_exons / convert_fusions / sort_arriba_calls / bcftools_concat_candidates).",
         "key": "fusion_activate",
         "used_by": [
           "fusion::annotate_exons",
@@ -10177,23 +9781,6 @@
         "value_type": "bool"
       },
       {
-        "default": "",
-        "description": "upstream config: target_regions (regions.smk get_target_regions + candidate_calling.smk filter_offtarget_variants, see module headers). One BED path or a list of BED paths (all merged + chr-stripped by regions::get_target_regions); empty (default) = whole-genome calling exactly as today. Gate is len(config.target_regions) > 0, so \"\" and [] both disable. Note: CLI overrides are single-valued strings (--arg target_regions=path or --target-regions=path) \u2014 pass a list in main.oxoflow itself for multiple files.",
-        "key": "target_regions",
-        "used_by": [
-          "candidate_calling::bcf_index_candidate_delly",
-          "candidate_calling::bcf_index_candidate_freebayes",
-          "candidate_calling::filter_offtarget_variants_delly",
-          "candidate_calling::filter_offtarget_variants_freebayes",
-          "candidate_calling::scatter_candidates_delly",
-          "candidate_calling::scatter_candidates_freebayes",
-          "regions::filter_group_regions_covered",
-          "regions::filter_group_regions_expanded",
-          "regions::get_target_regions"
-        ],
-        "value_type": "string"
-      },
-      {
         "default": false,
         "description": "upstream config: trimming (get_sra / fastp rules). The default path has no trimming configured \u2014 reads pass through mapping::merge_trimmed_fastqs.",
         "key": "trimming_activate",
@@ -10205,7 +9792,13 @@
         ],
         "value_type": "bool"
       }
-    ]
+    ],
+    "graph": {
+      "tier": "module-stage",
+      "stations": 35,
+      "is_rule_level": false,
+      "aspect": 1.32
+    }
   },
   "oxo-flow-snparcher": {
     "workflow": "main.oxoflow",
@@ -10250,16 +9843,11 @@
           "mosdepth_external",
           "mosdepth_markdup",
           "postprocess_basic_filter",
-          "postprocess_basic_filter_long",
           "postprocess_drop_indel_snps",
-          "postprocess_drop_indel_snps_long",
           "postprocess_filter_individuals",
           "postprocess_strict_filter",
-          "postprocess_strict_filter_long",
           "postprocess_subset_indels",
-          "postprocess_subset_indels_long",
           "postprocess_subset_snps",
-          "postprocess_subset_snps_long",
           "postprocess_update_bed"
         ],
         "value_type": "bool"
@@ -10334,7 +9922,6 @@
         "key": "gatk_het_prior",
         "used_by": [
           "gatk_genotype_gvcfs_interval",
-          "gatk_genotype_gvcfs_interval_long",
           "joint_genotype_gvcfs"
         ],
         "value_type": "float"
@@ -10343,8 +9930,7 @@
         "default": false,
         "key": "generate_filtered_vcf",
         "used_by": [
-          "variant_filtration",
-          "variant_filtration_long"
+          "variant_filtration"
         ],
         "value_type": "bool"
       },
@@ -10377,24 +9963,17 @@
         "key": "intervals_enabled",
         "used_by": [
           "concat_interval_gvcfs",
-          "concat_interval_gvcfs_long",
           "concat_interval_vcfs",
-          "concat_interval_vcfs_long",
           "create_db_intervals",
           "create_gvcf_intervals",
           "filter_picard_intervals",
           "gatk_genomics_db_import_interval",
-          "gatk_genomics_db_import_interval_long",
           "gatk_genotype_gvcfs_interval",
-          "gatk_genotype_gvcfs_interval_long",
           "gatk_haplotypecaller",
           "gatk_haplotypecaller_external",
           "gatk_haplotypecaller_interval",
           "gatk_haplotypecaller_interval_external",
-          "gatk_haplotypecaller_interval_external_long",
-          "gatk_haplotypecaller_interval_long",
           "gatk_haplotypecaller_interval_markdup",
-          "gatk_haplotypecaller_interval_markdup_long",
           "gatk_haplotypecaller_markdup",
           "joint_genomics_db_import",
           "joint_genotype_gvcfs",
@@ -10432,65 +10011,16 @@
         "key": "joint_genotyping_enabled",
         "used_by": [
           "concat_interval_vcfs",
-          "concat_interval_vcfs_long",
           "create_db_intervals",
           "create_db_mapfile",
-          "create_db_mapfile_long",
           "gatk_genomics_db_import_interval",
-          "gatk_genomics_db_import_interval_long",
           "gatk_genotype_gvcfs_interval",
-          "gatk_genotype_gvcfs_interval_long",
           "glnexus_joint",
           "joint_genomics_db_import",
           "joint_genotype_gvcfs",
-          "variant_filtration",
-          "variant_filtration_long"
+          "variant_filtration"
         ],
         "value_type": "bool"
-      },
-      {
-        "default": "u1",
-        "description": "Library fan-out dimension (issue #18): comma-separated library/unit ids, consumed by the {library} [[values]]-keyed paths and the merge gathers. Default \"u1\" matches the single-library port exactly; multi-library cohorts: --arg library_ids=u1,u2 (see [[values]] comment above).",
-        "key": "library_ids",
-        "used_by": [],
-        "value_type": "string"
-      },
-      {
-        "default": "auto",
-        "description": "Long-contig (CSI) indexing mode: \"auto\" (default) decides from the reference .fai whether any contig exceeds the TBI limit of 2**29 - 1 (536,870,911) bp (upstream common.smk TBI_MAX_CONTIG_LENGTH / _resolve_long_contig_mode); true forces long-contig (CSI) mode, false forces short-contig (TBI) mode. Long-contig mode emits .csi indexes and keeps GATK consumers on plain VCFs (.idx); short mode is byte-identical to a run without this key.",
-        "key": "long_contig_mode",
-        "used_by": [
-          "concat_interval_gvcfs",
-          "concat_interval_gvcfs_long",
-          "concat_interval_vcfs",
-          "concat_interval_vcfs_long",
-          "create_db_mapfile",
-          "create_db_mapfile_long",
-          "gatk_genomics_db_import_interval",
-          "gatk_genomics_db_import_interval_long",
-          "gatk_genotype_gvcfs_interval",
-          "gatk_genotype_gvcfs_interval_long",
-          "gatk_haplotypecaller_interval",
-          "gatk_haplotypecaller_interval_external",
-          "gatk_haplotypecaller_interval_external_long",
-          "gatk_haplotypecaller_interval_long",
-          "gatk_haplotypecaller_interval_markdup",
-          "gatk_haplotypecaller_interval_markdup_long",
-          "postprocess_basic_filter",
-          "postprocess_basic_filter_long",
-          "postprocess_drop_indel_snps",
-          "postprocess_drop_indel_snps_long",
-          "postprocess_strict_filter",
-          "postprocess_strict_filter_long",
-          "postprocess_subset_indels",
-          "postprocess_subset_indels_long",
-          "postprocess_subset_snps",
-          "postprocess_subset_snps_long",
-          "resolve_long_contig_mode",
-          "variant_filtration",
-          "variant_filtration_long"
-        ],
-        "value_type": "string"
       },
       {
         "default": false,
@@ -10502,9 +10032,7 @@
           "deepvariant_call_markdup",
           "gatk_haplotypecaller",
           "gatk_haplotypecaller_interval",
-          "gatk_haplotypecaller_interval_long",
           "gatk_haplotypecaller_interval_markdup",
-          "gatk_haplotypecaller_interval_markdup_long",
           "gatk_haplotypecaller_markdup",
           "index_bam_csi",
           "index_bam_csi_markdup",
@@ -10521,16 +10049,11 @@
         "key": "modules_postprocess_enabled",
         "used_by": [
           "postprocess_basic_filter",
-          "postprocess_basic_filter_long",
           "postprocess_drop_indel_snps",
-          "postprocess_drop_indel_snps_long",
           "postprocess_filter_individuals",
           "postprocess_strict_filter",
-          "postprocess_strict_filter_long",
           "postprocess_subset_indels",
-          "postprocess_subset_indels_long",
           "postprocess_subset_snps",
-          "postprocess_subset_snps_long",
           "postprocess_update_bed"
         ],
         "value_type": "bool"
@@ -10561,10 +10084,7 @@
           "gatk_haplotypecaller_external",
           "gatk_haplotypecaller_interval",
           "gatk_haplotypecaller_interval_external",
-          "gatk_haplotypecaller_interval_external_long",
-          "gatk_haplotypecaller_interval_long",
           "gatk_haplotypecaller_interval_markdup",
-          "gatk_haplotypecaller_interval_markdup_long",
           "gatk_haplotypecaller_markdup"
         ],
         "value_type": "int"
@@ -10581,8 +10101,7 @@
         "default": "mtDNA,Y",
         "key": "postprocess_exclude_scaffolds",
         "used_by": [
-          "postprocess_strict_filter",
-          "postprocess_strict_filter_long"
+          "postprocess_strict_filter"
         ],
         "value_type": "string"
       },
@@ -10590,8 +10109,7 @@
         "default": 0.01,
         "key": "postprocess_maf",
         "used_by": [
-          "postprocess_strict_filter",
-          "postprocess_strict_filter_long"
+          "postprocess_strict_filter"
         ],
         "value_type": "float"
       },
@@ -10599,8 +10117,7 @@
         "default": 0.75,
         "key": "postprocess_missingness",
         "used_by": [
-          "postprocess_strict_filter",
-          "postprocess_strict_filter_long"
+          "postprocess_strict_filter"
         ],
         "value_type": "float"
       },
@@ -10665,17 +10182,12 @@
           "deepvariant_call_external",
           "deepvariant_call_markdup",
           "gatk_genomics_db_import_interval",
-          "gatk_genomics_db_import_interval_long",
           "gatk_genotype_gvcfs_interval",
-          "gatk_genotype_gvcfs_interval_long",
           "gatk_haplotypecaller",
           "gatk_haplotypecaller_external",
           "gatk_haplotypecaller_interval",
           "gatk_haplotypecaller_interval_external",
-          "gatk_haplotypecaller_interval_external_long",
-          "gatk_haplotypecaller_interval_long",
           "gatk_haplotypecaller_interval_markdup",
-          "gatk_haplotypecaller_interval_markdup_long",
           "gatk_haplotypecaller_markdup",
           "genmap_index",
           "index_reference",
@@ -10687,9 +10199,7 @@
           "qc_contig_map",
           "qc_prepare_plink_inputs",
           "qc_subsample_snps",
-          "resolve_long_contig_mode",
-          "variant_filtration",
-          "variant_filtration_long"
+          "variant_filtration"
         ],
         "value_type": "string"
       },
@@ -10717,40 +10227,37 @@
           "bcftools_concat_regions",
           "bcftools_regions",
           "concat_interval_gvcfs",
-          "concat_interval_gvcfs_long",
           "concat_interval_vcfs",
-          "concat_interval_vcfs_long",
           "create_db_intervals",
           "create_db_mapfile",
-          "create_db_mapfile_long",
           "create_gvcf_intervals",
           "deepvariant_call",
           "deepvariant_call_external",
           "deepvariant_call_markdup",
           "filter_picard_intervals",
           "gatk_genomics_db_import_interval",
-          "gatk_genomics_db_import_interval_long",
           "gatk_genotype_gvcfs_interval",
-          "gatk_genotype_gvcfs_interval_long",
           "gatk_haplotypecaller",
           "gatk_haplotypecaller_external",
           "gatk_haplotypecaller_interval",
           "gatk_haplotypecaller_interval_external",
-          "gatk_haplotypecaller_interval_external_long",
-          "gatk_haplotypecaller_interval_long",
           "gatk_haplotypecaller_interval_markdup",
-          "gatk_haplotypecaller_interval_markdup_long",
           "gatk_haplotypecaller_markdup",
           "glnexus_joint",
           "joint_genomics_db_import",
           "joint_genotype_gvcfs",
           "picard_intervals",
-          "variant_filtration",
-          "variant_filtration_long"
+          "variant_filtration"
         ],
         "value_type": "string"
       }
-    ]
+    ],
+    "graph": {
+      "tier": "module-stage",
+      "stations": 11,
+      "is_rule_level": false,
+      "aspect": 1.18
+    }
   },
   "oxo-flow-enrichment": {
     "workflow": "main.oxoflow",
@@ -10990,9 +10497,7 @@
         "key": "cn_ORA_GSEApy_adj_pvalue",
         "used_by": [
           "plot_enrichment_result_ORA_GSEApy_Azimuth_2023",
-          "plot_enrichment_result_ORA_GSEApy_Azimuth_2023_txt",
           "plot_enrichment_result_ORA_GSEApy_Reactome",
-          "plot_enrichment_result_ORA_GSEApy_Reactome_txt",
           "visualize_ORA_GSEApy_Azimuth_2023_ATAC",
           "visualize_ORA_GSEApy_Reactome_ATAC"
         ],
@@ -11003,9 +10508,7 @@
         "key": "cn_ORA_GSEApy_effect_size",
         "used_by": [
           "plot_enrichment_result_ORA_GSEApy_Azimuth_2023",
-          "plot_enrichment_result_ORA_GSEApy_Azimuth_2023_txt",
           "plot_enrichment_result_ORA_GSEApy_Reactome",
-          "plot_enrichment_result_ORA_GSEApy_Reactome_txt",
           "visualize_ORA_GSEApy_Azimuth_2023_ATAC",
           "visualize_ORA_GSEApy_Reactome_ATAC"
         ],
@@ -11016,9 +10519,7 @@
         "key": "cn_ORA_GSEApy_overlap",
         "used_by": [
           "plot_enrichment_result_ORA_GSEApy_Azimuth_2023",
-          "plot_enrichment_result_ORA_GSEApy_Azimuth_2023_txt",
-          "plot_enrichment_result_ORA_GSEApy_Reactome",
-          "plot_enrichment_result_ORA_GSEApy_Reactome_txt"
+          "plot_enrichment_result_ORA_GSEApy_Reactome"
         ],
         "value_type": "string"
       },
@@ -11027,9 +10528,7 @@
         "key": "cn_ORA_GSEApy_p_value",
         "used_by": [
           "plot_enrichment_result_ORA_GSEApy_Azimuth_2023",
-          "plot_enrichment_result_ORA_GSEApy_Azimuth_2023_txt",
-          "plot_enrichment_result_ORA_GSEApy_Reactome",
-          "plot_enrichment_result_ORA_GSEApy_Reactome_txt"
+          "plot_enrichment_result_ORA_GSEApy_Reactome"
         ],
         "value_type": "string"
       },
@@ -11038,9 +10537,7 @@
         "key": "cn_ORA_GSEApy_term",
         "used_by": [
           "plot_enrichment_result_ORA_GSEApy_Azimuth_2023",
-          "plot_enrichment_result_ORA_GSEApy_Azimuth_2023_txt",
           "plot_enrichment_result_ORA_GSEApy_Reactome",
-          "plot_enrichment_result_ORA_GSEApy_Reactome_txt",
           "visualize_ORA_GSEApy_Azimuth_2023_ATAC",
           "visualize_ORA_GSEApy_Reactome_ATAC"
         ],
@@ -11052,9 +10549,7 @@
         "key": "cn_ORA_GSEApy_top_n",
         "used_by": [
           "plot_enrichment_result_ORA_GSEApy_Azimuth_2023",
-          "plot_enrichment_result_ORA_GSEApy_Azimuth_2023_txt",
-          "plot_enrichment_result_ORA_GSEApy_Reactome",
-          "plot_enrichment_result_ORA_GSEApy_Reactome_txt"
+          "plot_enrichment_result_ORA_GSEApy_Reactome"
         ],
         "value_type": "int"
       },
@@ -11063,7 +10558,6 @@
         "key": "cn_RcisTarget_adj_pvalue",
         "used_by": [
           "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust",
-          "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust_txt",
           "visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC"
         ],
         "value_type": "string"
@@ -11074,7 +10568,6 @@
         "key": "cn_RcisTarget_effect_size",
         "used_by": [
           "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust",
-          "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust_txt",
           "visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC"
         ],
         "value_type": "string"
@@ -11083,8 +10576,7 @@
         "default": "nEnrGenes",
         "key": "cn_RcisTarget_overlap",
         "used_by": [
-          "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust",
-          "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust_txt"
+          "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust"
         ],
         "value_type": "string"
       },
@@ -11092,8 +10584,7 @@
         "default": "AUC",
         "key": "cn_RcisTarget_p_value",
         "used_by": [
-          "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust",
-          "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust_txt"
+          "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust"
         ],
         "value_type": "string"
       },
@@ -11103,7 +10594,6 @@
         "key": "cn_RcisTarget_term",
         "used_by": [
           "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust",
-          "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust_txt",
           "visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC"
         ],
         "value_type": "string"
@@ -11112,8 +10602,7 @@
         "default": 25,
         "key": "cn_RcisTarget_top_n",
         "used_by": [
-          "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust",
-          "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust_txt"
+          "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust"
         ],
         "value_type": "int"
       },
@@ -11367,9 +10856,7 @@
           "annot_export",
           "config_export",
           "gene_ORA_GSEApy_Azimuth_2023",
-          "gene_ORA_GSEApy_Azimuth_2023_txt",
           "gene_ORA_GSEApy_Reactome",
-          "gene_ORA_GSEApy_Reactome_txt",
           "gene_preranked_GSEApy_Azimuth_2023",
           "gene_preranked_GSEApy_Reactome",
           "prepare_databases_Azimuth_2023",
@@ -11473,8 +10960,7 @@
         "description": "aucMaxRank = factor * ncol(motifRankings)",
         "key": "rcistarget_aucMaxRank_factor",
         "used_by": [
-          "gene_motif_enrichment_analysis_RcisTarget",
-          "gene_motif_enrichment_analysis_RcisTarget_txt"
+          "gene_motif_enrichment_analysis_RcisTarget"
         ],
         "value_type": "float"
       },
@@ -11485,9 +10971,7 @@
         "used_by": [
           "aggregate_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC",
           "gene_motif_enrichment_analysis_RcisTarget",
-          "gene_motif_enrichment_analysis_RcisTarget_txt",
           "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust",
-          "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust_txt",
           "visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC"
         ],
         "value_type": "string"
@@ -11496,8 +10980,7 @@
         "default": 5000,
         "key": "rcistarget_geneErnMaxRank",
         "used_by": [
-          "gene_motif_enrichment_analysis_RcisTarget",
-          "gene_motif_enrichment_analysis_RcisTarget_txt"
+          "gene_motif_enrichment_analysis_RcisTarget"
         ],
         "value_type": "int"
       },
@@ -11506,8 +10989,7 @@
         "description": "alternatively exact but more intense: \"icistarget\"",
         "key": "rcistarget_geneErnMethod",
         "used_by": [
-          "gene_motif_enrichment_analysis_RcisTarget",
-          "gene_motif_enrichment_analysis_RcisTarget_txt"
+          "gene_motif_enrichment_analysis_RcisTarget"
         ],
         "value_type": "string"
       },
@@ -11516,8 +10998,7 @@
         "description": "upstream python lists; comma-joined so the rendered command stays a single token (values contain no commas)",
         "key": "rcistarget_motifAnnot_highConfCat",
         "used_by": [
-          "gene_motif_enrichment_analysis_RcisTarget",
-          "gene_motif_enrichment_analysis_RcisTarget_txt"
+          "gene_motif_enrichment_analysis_RcisTarget"
         ],
         "value_type": "string"
       },
@@ -11525,8 +11006,7 @@
         "default": "inferredBy_MotifSimilarity,inferredBy_MotifSimilarity_n_Orthology",
         "key": "rcistarget_motifAnnot_lowConfCat",
         "used_by": [
-          "gene_motif_enrichment_analysis_RcisTarget",
-          "gene_motif_enrichment_analysis_RcisTarget_txt"
+          "gene_motif_enrichment_analysis_RcisTarget"
         ],
         "value_type": "string"
       },
@@ -11537,9 +11017,7 @@
         "used_by": [
           "aggregate_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC",
           "gene_motif_enrichment_analysis_RcisTarget",
-          "gene_motif_enrichment_analysis_RcisTarget_txt",
           "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust",
-          "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust_txt",
           "visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC"
         ],
         "value_type": "string"
@@ -11548,8 +11026,7 @@
         "default": 3,
         "key": "rcistarget_nesThreshold",
         "used_by": [
-          "gene_motif_enrichment_analysis_RcisTarget",
-          "gene_motif_enrichment_analysis_RcisTarget_txt"
+          "gene_motif_enrichment_analysis_RcisTarget"
         ],
         "value_type": "int"
       },
@@ -11591,22 +11068,16 @@
           "annot_export",
           "config_export",
           "gene_ORA_GSEApy_Azimuth_2023",
-          "gene_ORA_GSEApy_Azimuth_2023_txt",
           "gene_ORA_GSEApy_Reactome",
-          "gene_ORA_GSEApy_Reactome_txt",
           "gene_motif_enrichment_analysis_RcisTarget",
-          "gene_motif_enrichment_analysis_RcisTarget_txt",
           "gene_preranked_GSEApy_Azimuth_2023",
           "gene_preranked_GSEApy_Reactome",
           "plot_enrichment_result_GREAT_Azimuth_2023",
           "plot_enrichment_result_GREAT_Reactome",
           "plot_enrichment_result_LOLA_LOLACore",
           "plot_enrichment_result_ORA_GSEApy_Azimuth_2023",
-          "plot_enrichment_result_ORA_GSEApy_Azimuth_2023_txt",
           "plot_enrichment_result_ORA_GSEApy_Reactome",
-          "plot_enrichment_result_ORA_GSEApy_Reactome_txt",
           "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust",
-          "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust_txt",
           "plot_enrichment_result_preranked_GSEApy_Azimuth_2023",
           "plot_enrichment_result_preranked_GSEApy_Reactome",
           "plot_enrichment_result_pycisTarget_hg38_screen_v10clust",
@@ -11672,37 +11143,14 @@
           "visualize_pycisTarget_hg38_screen_v10clust_ATAC"
         ],
         "value_type": "int"
-      },
-      {
-        "default": "",
-        "description": "name of the shared background gene list in txt_gene_set_dir",
-        "key": "txt_gene_set_background",
-        "used_by": [
-          "gene_ORA_GSEApy_Azimuth_2023_txt",
-          "gene_ORA_GSEApy_Reactome_txt",
-          "gene_motif_enrichment_analysis_RcisTarget_txt"
-        ],
-        "value_type": "string"
-      },
-      {
-        "default": "",
-        "description": "directory of the .txt gene lists and the shared background list",
-        "key": "txt_gene_set_dir",
-        "used_by": [
-          "gene_ORA_GSEApy_Azimuth_2023_txt",
-          "gene_ORA_GSEApy_Reactome_txt",
-          "gene_motif_enrichment_analysis_RcisTarget_txt"
-        ],
-        "value_type": "string"
-      },
-      {
-        "default": [],
-        "description": "raw gene lists the RcisTarget rules also fan out over, exactly as upstream; the default annotation has no .txt rows, so the keys default empty and the txt fan-out produces no plan entries (default plan unchanged). The shared background gene list follows the region-set convention (one background per dimension; upstream's per-row background_path is not expressible).",
-        "key": "txt_gene_sets",
-        "used_by": [],
-        "value_type": "array"
       }
-    ]
+    ],
+    "graph": {
+      "tier": "rule-sections",
+      "stations": 42,
+      "is_rule_level": true,
+      "aspect": 1.81
+    }
   },
   "oxo-flow-genome-tracks": {
     "workflow": "main.oxoflow",
@@ -11916,7 +11364,13 @@
         ],
         "value_type": "string"
       }
-    ]
+    ],
+    "graph": {
+      "tier": "rule-sections",
+      "stations": 16,
+      "is_rule_level": true,
+      "aspect": 1.2
+    }
   },
   "oxo-flow-mixscape": {
     "workflow": "main.oxoflow",
@@ -12153,7 +11607,13 @@
         ],
         "value_type": "string"
       }
-    ]
+    ],
+    "graph": {
+      "tier": "rule-sections",
+      "stations": 7,
+      "is_rule_level": true,
+      "aspect": 4.23
+    }
   },
   "oxo-flow-bgcflow": {
     "workflow": "main.oxoflow",
@@ -12173,7 +11633,6 @@
         "description": "antiSMASH (upstream rule_parameters.antismash + envs/antismash.yaml)",
         "key": "antismash_major",
         "used_by": [
-          "antismash",
           "antismash_v6",
           "write_dependency_versions"
         ],
@@ -12542,7 +12001,13 @@
         ],
         "value_type": "bool"
       }
-    ]
+    ],
+    "graph": {
+      "tier": "module",
+      "stations": 5,
+      "is_rule_level": false,
+      "aspect": 1.34
+    }
   },
   "oxo-flow-unsupervised": {
     "workflow": "main.oxoflow",
@@ -13057,7 +12522,13 @@
         ],
         "value_type": "int"
       }
-    ]
+    ],
+    "graph": {
+      "tier": "rule-sections",
+      "stations": 61,
+      "is_rule_level": true,
+      "aspect": 4.41
+    }
   },
   "oxo-flow-circrna": {
     "workflow": "circrna.oxoflow",
@@ -13071,7 +12542,13 @@
         ],
         "value_type": "string"
       }
-    ]
+    ],
+    "graph": {
+      "tier": "rule-sections",
+      "stations": 9,
+      "is_rule_level": true,
+      "aspect": 2.11
+    }
   },
   "oxo-flow-clindet": {
     "workflow": "main.oxoflow",
@@ -13289,10 +12766,7 @@
           "SV_delly_germ",
           "SV_delly_sample_tsv",
           "SV_delly_to_vcf",
-          "SV_sansa_anno_svaba",
-          "SV_sansa_annodelly",
           "SV_svaba",
-          "SV_svanno_svaba",
           "SplitNCigarReads",
           "TRUST4_TBCR",
           "all",
@@ -13370,8 +12844,6 @@
           "picard_flength_wgs_tumor",
           "plot_freec",
           "prep_multiqc_data",
-          "prep_multiqc_data_tumor_only",
-          "prep_multiqc_data_wgs",
           "recal_link_normal",
           "recal_link_tumor",
           "recal_link_tumor_unpaired",
@@ -13494,7 +12966,6 @@
           "M2_filter_unpaired",
           "M2_filter_unpaired_rna",
           "M2_filter_wgs",
-          "SV_svanno_svaba",
           "SplitNCigarReads",
           "apply_base_quality_recalibration_normal",
           "apply_base_quality_recalibration_tumor",
@@ -13649,10 +13120,7 @@
           "SV_delly_germ",
           "SV_delly_sample_tsv",
           "SV_delly_to_vcf",
-          "SV_sansa_anno_svaba",
-          "SV_sansa_annodelly",
           "SV_svaba",
-          "SV_svanno_svaba",
           "SplitNCigarReads",
           "TRUST4_TBCR",
           "all",
@@ -13730,8 +13198,6 @@
           "picard_flength_wgs_tumor",
           "plot_freec",
           "prep_multiqc_data",
-          "prep_multiqc_data_tumor_only",
-          "prep_multiqc_data_wgs",
           "recal_link_normal",
           "recal_link_tumor",
           "recal_link_tumor_unpaired",
@@ -13950,20 +13416,6 @@
         "value_type": "string"
       },
       {
-        "default": [
-          "freebayes",
-          "HaplotypeCaller",
-          "lofreq",
-          "Mutect2",
-          "vardict",
-          "varscan2"
-        ],
-        "description": "RNA SNV callers for the vcf2maf merge tail (upstream run_params.rna_caller_list in mini_test_data/rna/fusion/data/test_rna.yaml; matches the six unrolled vcf2maf_rna_* rules in rules/rna/60_vcf2maf_merge.oxoflow)",
-        "key": "rna_caller_list",
-        "used_by": [],
-        "value_type": "array"
-      },
-      {
         "default": "test/fixtures/reads/mini-T_RNA_R1.fq.gz",
         "description": "RNA (upstream wrapper/rna.smk; run_type = \"rna\"). Default stages: [arriba, call_mut]; quant/isofox rules run when explicitly targeted.",
         "key": "rna_fastq_r1",
@@ -14024,8 +13476,6 @@
           "combined_multiqc",
           "combined_multiqc_prep_multiqc_data",
           "prep_multiqc_data",
-          "prep_multiqc_data_tumor_only",
-          "prep_multiqc_data_wgs",
           "run_cancer_report"
         ],
         "value_type": "bool"
@@ -14062,10 +13512,7 @@
           "SV_delly_germ",
           "SV_delly_sample_tsv",
           "SV_delly_to_vcf",
-          "SV_sansa_anno_svaba",
-          "SV_sansa_annodelly",
           "SV_svaba",
-          "SV_svanno_svaba",
           "SplitNCigarReads",
           "TRUST4_TBCR",
           "all",
@@ -14143,8 +13590,6 @@
           "picard_flength_wgs_tumor",
           "plot_freec",
           "prep_multiqc_data",
-          "prep_multiqc_data_tumor_only",
-          "prep_multiqc_data_wgs",
           "recal_link_normal",
           "recal_link_tumor",
           "recal_link_tumor_unpaired",
@@ -14243,34 +13688,6 @@
         "value_type": "string"
       },
       {
-        "default": "sansa",
-        "key": "sansa_call",
-        "used_by": [
-          "SV_sansa_anno_svaba",
-          "SV_sansa_annodelly"
-        ],
-        "value_type": "string"
-      },
-      {
-        "default": "",
-        "description": "SV annotation branch (issue #7; upstream WGS SV rules gate on the sansa software config being present \u2014 absent upstream by default, so these are off by default and the port mirrors that with empty keys = zero instances). sansa_db/sansa_g: the sansa annotate -a database and -g gene-model inputs (upstream softwares.sansa[<genome_version>].{db,g}); sansa_call: the binary/invocation (upstream config[softwares][sansa][call]).",
-        "key": "sansa_db",
-        "used_by": [
-          "SV_sansa_anno_svaba",
-          "SV_sansa_annodelly"
-        ],
-        "value_type": "string"
-      },
-      {
-        "default": "",
-        "key": "sansa_g",
-        "used_by": [
-          "SV_sansa_anno_svaba",
-          "SV_sansa_annodelly"
-        ],
-        "value_type": "string"
-      },
-      {
         "default": "test/fixtures/cnv/sequenza_gc.wig",
         "key": "sequenza_gc_wiggle",
         "used_by": [
@@ -14300,15 +13717,6 @@
           "STAR_arriba_map",
           "STAR_isofox_map",
           "STAR_mut_map"
-        ],
-        "value_type": "string"
-      },
-      {
-        "default": "",
-        "description": "svanno: gatk SVAnnotate needs a protein-coding GTF (upstream resources[genome_version].GTF). Empty default = rule never runs.",
-        "key": "svanno_gtf",
-        "used_by": [
-          "SV_svanno_svaba"
         ],
         "value_type": "string"
       },
@@ -14547,7 +13955,13 @@
         ],
         "value_type": "string"
       }
-    ]
+    ],
+    "graph": {
+      "tier": "module",
+      "stations": 17,
+      "is_rule_level": false,
+      "aspect": 1.83
+    }
   },
   "oxo-flow-auto-sra-rnaseq-pipeline": {
     "workflow": "main.oxoflow",
@@ -14668,7 +14082,13 @@
         ],
         "value_type": "string"
       }
-    ]
+    ],
+    "graph": {
+      "tier": "rule-sections",
+      "stations": 13,
+      "is_rule_level": true,
+      "aspect": 1.98
+    }
   },
   "oxo-flow-tcasia": {
     "workflow": "main.oxoflow",
@@ -14953,6 +14373,12 @@
         ],
         "value_type": "int"
       }
-    ]
+    ],
+    "graph": {
+      "tier": "rule-sections",
+      "stations": 17,
+      "is_rule_level": true,
+      "aspect": 2.16
+    }
   }
 }

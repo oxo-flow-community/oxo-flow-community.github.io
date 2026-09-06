@@ -19,6 +19,8 @@ import json
 import pathlib
 import sys
 
+from param_fallbacks import fallback_description
+
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 DATA = ROOT / "data" / "pipelines.json"
 CONFIGS = ROOT / "data" / "configs.json"
@@ -317,7 +319,19 @@ def params_section(p: dict, config: list[dict] | None) -> list[str]:
     for record in config:
         key = record.get("key", "?")
         used_by = record.get("used_by", []) or []
-        description = _desc_html(record.get("description") or "—")
+        description = record.get("description")
+        inferred = False
+        if not description:
+            # Generic fallback for well-known key patterns the workflow
+            # does not comment on its own (see param_fallbacks.py) —
+            # marked as inferred so authors know a real comment wins.
+            description = fallback_description(key)
+            inferred = description is not None
+        description_html = _desc_html(description or "—")
+        if inferred:
+            description_html += (
+                ' <span class="ox-param-inferred">inferred</span>'
+            )
         if used_by:
             rules = " ".join(
                 f"<code>{html.escape(rule, quote=True)}</code>" for rule in used_by
@@ -332,14 +346,20 @@ def params_section(p: dict, config: list[dict] | None) -> list[str]:
             usedby_html = (
                 '<details class="ox-param-usedby">'
                 "<summary>not referenced by any rule</summary>\n"
-                '<div class="ox-param-rules">—</div>\n'
+                '<div class="ox-param-rules">'
+                "A ported upstream parameter kept for compatibility: no "
+                "rule reads this key (no <code>{config.*}</code> "
+                "placeholder in any input, output, or shell), so overriding "
+                "it has no effect on this workflow."
+                "</div>\n"
                 "</details>"
             )
+        block_class = "ox-param ox-param-unused" if not used_by else "ox-param"
         blocks.append(
-            f'<div class="ox-param">\n'
+            f'<div class="{block_class}">\n'
             f'<div class="ox-param-head"><code>{_esc(key)}</code>'
             f'<span class="ox-param-default">{_esc(fmt_default_plain(record.get("default")))}</span></div>\n'
-            f'<p class="ox-param-desc">{description}</p>\n'
+            f'<p class="ox-param-desc">{description_html}</p>\n'
             f"{usedby_html}\n"
             "</div>"
         )
@@ -347,12 +367,20 @@ def params_section(p: dict, config: list[dict] | None) -> list[str]:
         "",
         "## Parameters",
         "",
+        '<p class="ox-param-usage">Parameters are consumed by rules through '
+        "<code>{config.key}</code> placeholders in inputs, outputs, and "
+        "shells. Set a value in the workflow's <code>[config]</code> "
+        "section (edit the file), or override at run time with "
+        "<code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat "
+        "<code>-e</code> for multiple keys. The list below names the rules "
+        "that read each key.</p>",
         '<div class="ox-params">',
         "\n".join(blocks),
         "</div>",
         "",
         "Descriptions are the workflow's own `#` comments from its `[config]` "
-        "section, surfaced by `oxo-flow info` — no schema file to maintain.",
+        "section (and the `[config]` sections of its included modules), "
+        "surfaced by `oxo-flow info` — no schema file to maintain.",
     ]
 
 

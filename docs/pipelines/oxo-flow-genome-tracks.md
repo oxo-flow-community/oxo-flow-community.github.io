@@ -71,6 +71,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-genome-tracks
 
 ## Parameters
 
+<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. The list below names the rules that read each key.</p>
 <div class="ox-params">
 <div class="ox-param">
 <div class="ox-param-head"><code>bamCoverage_parameters</code><span class="ox-param-default">-p max --binSize 10  --normalizeUsing RPGC --effectiveGenomeSize 2407883318</span></div>
@@ -95,7 +96,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-genome-tracks
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>email</code><span class="ox-param-default">sreichl@cemm.at</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Notification recipient for pipeline completion (upstream --email; empty = none) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>ucsc_hub</code></div>
 </details>
@@ -123,7 +124,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-genome-tracks
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>genome</code><span class="ox-param-default">mm10</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Reference genome build name (upstream --genome, iGenomes key) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>igv_report</code> <code>ucsc_hub</code></div>
 </details>
@@ -142,11 +143,11 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-genome-tracks
 <div class="ox-param-rules"><code>igv_report</code> <code>make_bed</code></div>
 </details>
 </div>
-<div class="ox-param">
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>igv_report_memory</code><span class="ox-param-default">8000M</span></div>
 <p class="ox-param-desc">upstream&#x27;s dynamic <code>max(2 * input.size_mb, 8000)</code> memory is not expressible statically in oxo-flow — fixed at the upstream 8000 MB minimum</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">—</div>
+<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param">
@@ -165,7 +166,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-genome-tracks
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>result_path</code><span class="ox-param-default">results</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Output directory (upstream --outdir) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 16 rules</summary>
 <div class="ox-param-rules"><code>annot_export</code> <code>annotate_genes</code> <code>config_export</code> <code>coverage</code> <code>coverage_sc</code> <code>env_export_igv_reports</code> <code>env_export_pygenometracks</code> <code>env_export_sinto</code> <code>gene_list_export</code> <code>igv_report</code> <code>make_bed</code> <code>merge_bams</code> <code>merge_sc_bams</code> <code>plot_tracks</code> <code>split_sc_bam</code> <code>ucsc_hub</code></div>
 </details>
@@ -191,11 +192,11 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-genome-tracks
 <div class="ox-param-rules"><code>coverage_sc</code> <code>merge_sc_bams</code> <code>split_sc_bam</code></div>
 </details>
 </div>
-<div class="ox-param">
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>sc_groups</code><span class="ox-param-default">g1,g2</span></div>
 <p class="ox-param-desc">unique group values of the sc metadata TSV col-2 (merged + sorted into samples_list above)</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">—</div>
+<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
 </details>
 </div>
 <div class="ox-param">
@@ -228,7 +229,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-genome-tracks
 </div>
 </div>
 
-Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
+Descriptions are the workflow's own `#` comments from its `[config]` section (and the `[config]` sections of its included modules), surfaced by `oxo-flow info` — no schema file to maintain.
 
 ## Workflow graph
 

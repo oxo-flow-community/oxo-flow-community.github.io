@@ -68,6 +68,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-methylseq
 
 ## Parameters
 
+<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. The list below names the rules that read each key.</p>
 <div class="ox-params">
 <div class="ox-param">
 <div class="ox-param-head"><code>accel</code><span class="ox-param-default">false</span></div>
@@ -239,7 +240,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-methylseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>methyl_kit</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">methyl tool parameter (upstream --methyl_kit) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>methyldackel_extract_methylkit</code></div>
 </details>
@@ -302,7 +303,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-methylseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>out_dir</code><span class="ox-param-default">results</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Output directory (upstream --outdir) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 55 rules</summary>
 <div class="ox-param-rules"><code>bedtools_intersect</code> <code>bedtools_intersect_bwameth</code> <code>bedtools_intersect_bwameth_chg</code> <code>bedtools_intersect_bwameth_chh</code> <code>bismark_align</code> <code>bismark_align_se</code> <code>bismark_coverage2cytosine</code> <code>bismark_deduplicate</code> <code>bismark_deduplicate_se</code> <code>bismark_methylationextractor</code> <code>bismark_methylationextractor_se</code> <code>bismark_report</code> <code>bismark_report_se</code> <code>bismark_summary</code> <code>bwa_mem</code> <code>bwameth_align</code> <code>cat_fastq_r1</code> <code>cat_fastq_r2</code> <code>fastqc</code> <code>fastqc_se</code> <code>methyldackel_extract</code> <code>methyldackel_extract_allcontexts</code> <code>methyldackel_extract_methylkit</code> <code>methyldackel_mbias</code> <code>multiqc</code> <code>multiqc_bwamem</code> <code>multiqc_bwameth</code> <code>multiqc_versions</code> <code>picard_addorreplacereadgroups</code> <code>picard_bedtointervallist</code> <code>picard_collecthsmetrics</code> <code>picard_collecthsmetrics_alt</code> <code>picard_markduplicates</code> <code>picard_markduplicates_bwamem</code> <code>preseq_lcextrap</code> <code>preseq_lcextrap_alt</code> <code>qualimap_bamqc</code> <code>qualimap_bamqc_alt</code> <code>rastair_call_bwamem</code> <code>rastair_call_bwameth</code> <code>rastair_mbias_bwamem</code> <code>rastair_mbias_bwameth</code> <code>rastair_mbiasparser</code> <code>rastair_methylkit</code> <code>samtools_flagstat</code> <code>samtools_idxstats</code> <code>samtools_index</code> <code>samtools_index_alignment</code> <code>samtools_index_deduplicated</code> <code>samtools_index_deduplicated_bwamem</code> <code>samtools_sort</code> <code>samtools_sort_alignment</code> <code>samtools_stats</code> <code>trimgalore</code> <code>trimgalore_se</code></div>
 </details>
@@ -337,7 +338,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-methylseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_preseq</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Enable preseq (upstream --run_preseq) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 5 rules</summary>
 <div class="ox-param-rules"><code>multiqc</code> <code>multiqc_bwamem</code> <code>multiqc_bwameth</code> <code>preseq_lcextrap</code> <code>preseq_lcextrap_alt</code></div>
 </details>
@@ -351,7 +352,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-methylseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_targeted_sequencing</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Enable targeted sequencing (upstream --run_targeted_sequencing) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 10 rules</summary>
 <div class="ox-param-rules"><code>bedtools_intersect</code> <code>bedtools_intersect_bwameth</code> <code>bedtools_intersect_bwameth_chg</code> <code>bedtools_intersect_bwameth_chh</code> <code>multiqc</code> <code>multiqc_bwameth</code> <code>picard_bedtointervallist</code> <code>picard_collecthsmetrics</code> <code>picard_collecthsmetrics_alt</code> <code>picard_createsequencedictionary</code></div>
 </details>
@@ -372,7 +373,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-methylseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_deduplication</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip deduplication (upstream --skip_deduplication) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 9 rules</summary>
 <div class="ox-param-rules"><code>bismark_deduplicate</code> <code>bismark_deduplicate_se</code> <code>multiqc_bwamem</code> <code>multiqc_bwameth</code> <code>picard_addorreplacereadgroups</code> <code>picard_markduplicates</code> <code>picard_markduplicates_bwamem</code> <code>samtools_index_deduplicated</code> <code>samtools_index_deduplicated_bwamem</code></div>
 </details>
@@ -386,21 +387,21 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-methylseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_multiqc</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip multiqc (upstream --skip_multiqc) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>multiqc</code> <code>multiqc_bwamem</code> <code>multiqc_bwameth</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_trimming</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip trimming (upstream --skip_trimming) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>trimgalore</code> <code>trimgalore_se</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_trimming_presets</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip trimming presets (upstream --skip_trimming_presets) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>trimgalore</code> <code>trimgalore_se</code></div>
 </details>
@@ -463,7 +464,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-methylseq
 </div>
 </div>
 
-Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
+Descriptions are the workflow's own `#` comments from its `[config]` section (and the `[config]` sections of its included modules), surfaced by `oxo-flow info` — no schema file to maintain.
 
 ## Workflow graph
 
