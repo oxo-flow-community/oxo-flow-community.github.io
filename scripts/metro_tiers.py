@@ -14,8 +14,10 @@ coarse, structurally-safe representations:
                    trigger most collinear-overlay aborts);
   3. module-stage — one station per (module, stage): the overview
                    granularity nf-core publishes (tens of stations);
-  4. module      — one station per module, cyclic module interdependencies
-                   condensed by strongly-connected components.
+  4. module      — one station per module, from the engine's native
+                   `--granularity module` export (SCC contraction and
+                   dominant-stage coloring engine-side): the guaranteed
+                   fallback that renders for every workflow.
 
 Rules:
 - tiers are tried in order; the first that renders wins;
@@ -227,59 +229,6 @@ def module_stage_mmd(text: str) -> str:
     return _emit(mmd["line_decls"], station_titles, final)
 
 
-def module_mmd(text: str) -> str:
-    """One station per section; inter-section edges deduped and labeled with
-    the source section's dominant line; cyclic sections condensed (SCC)."""
-    mmd = parse_mmd(text)
-    sections, order, edges = mmd["sections"], mmd["order"], mmd["edges"]
-    node_sections = mmd["node_sections"]
-
-    sec_out_lines: dict[str, Counter] = {}
-    for s, _t, lab in edges:
-        if lab and s in node_sections:
-            sec_out_lines.setdefault(node_sections[s], Counter())[lab] += 1
-    sec_line = {
-        s: c.most_common(1)[0][0] if (c := sec_out_lines.get(s)) else None
-        for s in order
-    }
-
-    seen = set()
-    out_edges = []
-    for s, t, lab in edges:
-        ss, ds = node_sections.get(s), node_sections.get(t)
-        if not ss or not ds or ss == ds:
-            continue
-        label = sec_line[ss] or lab
-        key = (ss, ds, label)
-        if key in seen:
-            continue
-        seen.add(key)
-        out_edges.append((ss, ds, label))
-
-    rep_of = scc_of([(ss, ds, l) for ss, ds, l in out_edges], order)
-    merged: dict[str, list[str]] = {}
-    for s in order:
-        merged.setdefault(rep_of.get(s, s), []).append(sections[s]["title"])
-    station_titles = {rep: " + ".join(titles) for rep, titles in merged.items()}
-
-    mseen = set()
-    final = []
-    for ss, ds, lab in out_edges:
-        rs, rt = rep_of.get(ss, ss), rep_of.get(ds, ds)
-        if rs == rt:
-            continue
-        key = (rs, rt, lab)
-        if key in mseen:
-            continue
-        mseen.add(key)
-        final.append((rs, rt, lab))
-    return _emit(mmd["line_decls"], station_titles, final)
-
-
-# ---------------------------------------------------------------------------
-# rendering
-# ---------------------------------------------------------------------------
-
 def svg_aspect(svg: pathlib.Path) -> float | None:
     """viewBox width/height of a rendered map (None when unparsable)."""
     head = svg.read_text()[:4096]
@@ -337,6 +286,28 @@ def render_ladder(
         text = mmd.read_text()
         stations = station_count(parse_mmd(text))
 
+        # The engine's native module tier (graph --granularity module,
+        # engine >= 0.17.3) is the guaranteed fallback: one station per
+        # contracted section, renders for every workflow. Graceful skip
+        # on older engines keeps the ladder working mid-upgrade.
+        mod_mmd = tmp / "module.mmd"
+        mod_graph = subprocess.run(
+            [
+                binary,
+                "graph",
+                "-f",
+                "metro",
+                "--granularity",
+                "module",
+                "-o",
+                str(mod_mmd),
+                str(workflow),
+            ],
+            capture_output=True,
+            text=True,
+        )
+        module_source = mod_mmd.read_text() if mod_graph.returncode == 0 else None
+
         tiers = [
             # Sections first: the module grouping is the nf-core transit
             # idiom and the off_track directive (engine-side) relieves the
@@ -346,10 +317,12 @@ def render_ladder(
             ("rule-sections", text, True),
             ("rule-flat", flat_mmd(text), True),
             ("module-stage", module_stage_mmd(text), False),
-            ("module", module_mmd(text), False),
+            ("module", module_source, False),
         ]
         best = None  # (aspect, tier_svg_path, info) — the widest rendered tier
         for tier, source, is_rule_level in tiers:
+            if source is None:
+                continue
             if is_rule_level and stations > MAX_RULE_STATIONS:
                 continue
             (tmp / f"{tier}.mmd").write_text(source)
@@ -359,9 +332,12 @@ def render_ladder(
                 last_err = err
                 continue
             aspect = svg_aspect(tier_svg)
+            tier_stations = (
+                stations if is_rule_level else station_count(parse_mmd(source))
+            )
             info = {
                 "tier": tier,
-                "stations": stations,
+                "stations": tier_stations,
                 "is_rule_level": is_rule_level,
                 "aspect": round(aspect, 2) if aspect else None,
             }
