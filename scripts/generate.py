@@ -60,14 +60,17 @@ def _asset_img(rel_path: str, alt: str) -> str:
     """<img> with a content-fingerprint query: mkdocs copies assets as-is,
     browser caches them aggressively, and a re-render keeps the same
     filename — so a reader with a warm cache keeps seeing the OLD map
-    even after a fix (live: clindet header looked 'unchanged'). The mtime
-    query busts that cache per regeneration.
+    even after a fix (live: clindet header looked 'unchanged'). The
+    content hash busts that cache per regeneration AND stays
+    drift-gate-stable: the CI check regenerates pages in a fresh clone,
+    where a mtime query would differ and fail.
     """
+    import hashlib
     addr = pathlib.Path(ROOT) / "docs" / rel_path[3:]
     try:
-        version = int(addr.stat().st_mtime)
+        version = hashlib.sha1(addr.read_bytes()).hexdigest()[:10]
     except OSError:
-        version = 0
+        version = "0"
     return f'<img src="{rel_path}?v={version}" alt="{alt}" loading="lazy">'
 
 

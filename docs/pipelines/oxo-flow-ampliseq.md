@@ -477,7 +477,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 <div class="ox-dag-card" markdown="1">
 
-<img src="../assets/dag/oxo-flow-ampliseq.svg?v=1788704923" alt="oxo-flow-ampliseq pipeline overview" loading="lazy">
+<img src="../assets/dag/oxo-flow-ampliseq.svg?v=32164184af" alt="oxo-flow-ampliseq pipeline overview" loading="lazy">
 
 <p class="ox-dag-caption">figure · oxo-flow-ampliseq — Amplicon sequencing analysis (16S/ITS) that takes raw paired-end reads through FastQC quality control, cutadapt primer trimming (incl.</p>
 
