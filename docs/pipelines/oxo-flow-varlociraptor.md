@@ -13,7 +13,7 @@ title: "Small and structural variant calling with Varlociraptor"
 <div class="ox-glance">
 <div class="ox-glance-title">At a glance</div>
 <div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested</span></div>
-<div class="ox-kv"><span class="k">Rules</span><span class="v">159</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">165</span></div>
 <div class="ox-kv"><span class="k">Compute</span><span class="v">up to 64 CPUs / 32 GB per rule (freebayes candidates 48 threads; vg giraffe 64 threads)</span></div>
 <div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></span></div>
 <div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
@@ -22,6 +22,7 @@ title: "Small and structural variant calling with Varlociraptor"
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>v6.10.0</code></span></div>
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
+<div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2291.1"><code>10.48546/workflowhub.workflow.2291.1</code></a></span></div>
 <p class="cmd">$ oxo-flow run main.oxoflow</p>
 </div>
 </div>
@@ -134,7 +135,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-varlociraptor
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>fusion_activate</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">upstream config: fusion calling branch (fusion_calling.smk star_arriba meta wrapper: star_index / star_align / arriba / annotate_exons / convert_fusions / sort_arriba_calls / bcftools_concat_candidates).</p>
+<p class="ox-param-desc">upstream config: fusion calling branch (fusion_calling.smk star_arriba meta wrapper: star_index / star_align / arriba / annotate_exons / convert_fusions / sort_arriba_calls / bcftools_concat_candidates). With a group whose <code>calling</code> metadata includes &quot;fusions&quot;, the candidates continue into the varlociraptor calling flow (calling.smk get_candidate_calls — see modules/calling.oxoflow).</p>
 <details class="ox-param-usedby"><summary>used by 8 rules</summary>
 <div class="ox-param-rules"><code>fusion::annotate_exons</code> <code>fusion::arriba</code> <code>fusion::bcf_index_arriba</code> <code>fusion::bcftools_concat_candidates</code> <code>fusion::convert_fusions</code> <code>fusion::sort_arriba_calls</code> <code>fusion::star_align</code> <code>fusion::star_index</code></div>
 </details>
@@ -252,6 +253,13 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-varlociraptor
 </details>
 </div>
 <div class="ox-param">
+<div class="ox-param-head"><code>target_regions</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">upstream config: target_regions (regions.smk get_target_regions + candidate_calling.smk filter_offtarget_variants, see module headers). One BED path or a list of BED paths (all merged + chr-stripped by regions::get_target_regions); empty (default) = whole-genome calling exactly as today. Gate is len(config.target_regions) &gt; 0, so &quot;&quot; and [] both disable. Note: CLI overrides are single-valued strings (--arg target_regions=path or --target-regions=path) — pass a list in main.oxoflow itself for multiple files.</p>
+<details class="ox-param-usedby"><summary>used by 9 rules</summary>
+<div class="ox-param-rules"><code>candidate_calling::bcf_index_candidate_delly</code> <code>candidate_calling::bcf_index_candidate_freebayes</code> <code>candidate_calling::filter_offtarget_variants_delly</code> <code>candidate_calling::filter_offtarget_variants_freebayes</code> <code>candidate_calling::scatter_candidates_delly</code> <code>candidate_calling::scatter_candidates_freebayes</code> <code>regions::filter_group_regions_covered</code> <code>regions::filter_group_regions_expanded</code> <code>regions::get_target_regions</code></div>
+</details>
+</div>
+<div class="ox-param">
 <div class="ox-param-head"><code>trimming_activate</code><span class="ox-param-default">false</span></div>
 <p class="ox-param-desc">upstream config: trimming (get_sra / fastp rules). The default path has no trimming configured — reads pass through mapping::merge_trimmed_fastqs.</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
@@ -282,15 +290,26 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 - annotate_candidate_variants_delly
 - annotate_candidate_variants_freebayes
+- annotate_descriptions
+- annotate_dgidb
+- annotate_exons
+- annotate_mutational_signatures
 - annotate_variants
 - annotate_vcfs
+- annotated_index
 - apply_bqsr
+- apply_bqsr_consensus
+- arriba
+- assign_primers
+- bam_index_consensus
 - bam_index_dedup
 - bcf_index_arriba
 - bcf_index_candidate_delly
 - bcf_index_candidate_freebayes
+- bcf_index_cleaned_db
 - bcf_index_delly
 - bcf_index_fdr_BND
+- bcf_index_fdr_BND_fusions
 - bcf_index_fdr_DEL
 - bcf_index_fdr_DUP
 - bcf_index_fdr_INS
@@ -299,13 +318,29 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - bcf_index_fdr_REP
 - bcf_index_fdr_SNV
 - bcf_index_filtered
+- bcf_index_final
 - bcf_index_freebayes
+- bcf_index_fusions_callset
+- bcf_index_population_filtered
 - bcf_index_vep_annotated
 - bcftools_concat
+- bcftools_concat_candidates
 - bcftools_concat_fusions
 - bedtools_merge
+- build_primer_regions
 - build_sample_regions
+- bwa_index
+- calc_consensus_reads
+- calculate_covered_coding_sites
+- chm_eval
+- chm_eval_kit
+- chm_eval_sample
+- chm_namesort
+- chm_to_fastq
+- chromosome_map
+- clean_population_db
 - control_fdr_BND
+- control_fdr_BND_fusions
 - control_fdr_DEL
 - control_fdr_DUP
 - control_fdr_INS
@@ -313,13 +348,24 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - control_fdr_MNV
 - control_fdr_REP
 - control_fdr_SNV
+- convert_fusions
 - convert_phred_scores
+- convert_phred_scores_fusions
 - coverage_table
+- create_mutational_context_file
 - datavzrd_coverage
 - datavzrd_variants_calls
 - delly
+- determine_coding_regions
+- download_cadd_scores_for_vep
+- download_cosmic_signatures
 - download_delly_excluded_regions
 - download_revel
+- estimate_mutational_burden_curve
+- estimate_mutational_burden_hist
+- fastp_pe
+- fastp_pipe
+- fastp_se
 - fastqc_r1
 - fastqc_r2
 - filter_by_annotation
@@ -329,8 +375,13 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - filter_group_regions_expanded
 - filter_offtarget_variants_delly
 - filter_offtarget_variants_freebayes
+- filter_primerless_reads
+- filter_unmapped_primers
 - fix_delly_calls
 - freebayes
+- gather_annotated_calls
+- gather_annotated_calls_fusions
+- gather_benchmark_calls
 - gather_calls
 - genome_dict
 - genome_faidx
@@ -339,37 +390,60 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - get_known_variants
 - get_pangenome
 - get_reference_paths
+- get_sra
 - get_target_regions
 - get_vep_cache
 - get_vep_plugins
+- group_bcf_to_vcf_fusions
+- group_bcf_to_vcf_variants
+- group_vcf_to_maf_fusions
+- group_vcf_to_maf_variants
+- join_mutational_signatures
+- map_consensus_reads_pe
+- map_consensus_reads_se
+- map_primers
+- map_reads_bwa
 - map_reads_vg
 - mark_duplicates
 - merge_calls
+- merge_calls_fusions
+- merge_consensus_reads
 - merge_covered_group_regions
 - merge_expanded_group_regions
 - merge_trimmed_fastqs_r1
 - merge_trimmed_fastqs_r2
 - multiqc
 - pangenome_autoindex
+- plot_mutational_signatures
+- population_db_update
+- population_filter_variants
 - postprocess_vg_alignments
 - prepare_oncoprint
+- primer_to_bed
 - process_call_tables
 - process_revel_scores
 - recalibrate_base_qualities
+- recalibrate_base_qualities_consensus
 - remove_iupac_codes
+- rename_chromosomes
 - render_scenario
 - samtools_idxstats
 - samtools_stats
 - scatter_candidates_delly
 - scatter_candidates_freebayes
 - sort_alignments
+- sort_arriba_calls
 - sort_calls_arriba
 - sort_calls_delly
 - sort_calls_freebayes
+- sort_consensus_reads
+- star_align
+- star_index
 - tabix_noiupac
 - tabix_revel
 - tabix_variation
 - transform_gene_annotations
+- trim_primers
 - varlociraptor_alignment_properties
 - varlociraptor_call_arriba
 - varlociraptor_call_delly
@@ -381,8 +455,7 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- fusions FDR-control chain (filtering.smk) — the ported fusions branch ends at the fusions callset (calls/varlociraptor/{group}/{group}.fusions.0.bcf); the subsequent vartype FDR-control and fusions report steps stay out of scope (requires calling mode fusions + fusion_activate = true)
-- multi-file target_regions lists — the port freezes a single BED path (config target_regions); the merge step handles one file
+- fusions report and table exports (report.smk / table.smk fusions instances) — the ported fusions FDR-control chain (filtering.oxoflow) ends at the fdr-controlled/normal-probs callsets; the fusions vembrane table, oncoprints and report datasets need calling mode fusions + fusion_activate = true end-to-end data to verify
 
 ## Fidelity
 

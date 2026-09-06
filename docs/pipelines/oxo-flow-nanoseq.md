@@ -7,13 +7,13 @@ title: "Nanopore long-read: demultiplexing, QC and alignment"
 <div>
 <h1>Nanopore long-read: demultiplexing, QC and alignment</h1>
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
-<p>A nanopore long-read pipeline: samplesheet check, qcat barcode demultiplexing, NanoPlot + FastQC QC, minimap2 (or graphmap2) alignment, samtools view/sort/index, samtools stats/flagstat/idxstats, BigWig/BigBed tracks, NanoLyse contamination filtering, medaka/DeepVariant/PEPPER-Margin-DeepVariant short variant calling, Sniffles/cuteSV structural variant calling, bambu/StringTie2+featureCounts quantification with DESeq2/DEXSeq differential analysis, Nanopolish+xPore/m6anet RNA modification analysis, pre-aligned-BAM input, and a MultiQC report. The default path is the DNA protocol with all gated branches off by default (matching upstream). Every rule runs the upstream module&#x27;s exact pinned container image.</p>
+<p>A nanopore long-read pipeline: samplesheet check, qcat barcode demultiplexing, NanoPlot + FastQC QC, minimap2 (or graphmap2) alignment, samtools view/sort/index, samtools stats/flagstat/idxstats, BigWig/BigBed tracks, NanoLyse contamination filtering, medaka/DeepVariant/PEPPER-Margin-DeepVariant short variant calling, Sniffles/cuteSV structural variant calling, bambu/StringTie2+featureCounts quantification with DESeq2/DEXSeq differential analysis, Nanopolish+xPore/m6anet RNA modification analysis, JAFFA RNA fusion detection (cDNA/directRNA; reference bundle auto-downloaded from figshare or supplied via config.jaffal_ref_dir as a directory or tar.gz), pre-aligned-BAM input, and a MultiQC report. The default path is the DNA protocol with all gated branches off by default (matching upstream). Every rule runs the upstream module&#x27;s exact pinned container image.</p>
 </div>
 <div>
 <div class="ox-glance">
 <div class="ox-glance-title">At a glance</div>
 <div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested</span></div>
-<div class="ox-kv"><span class="k">Rules</span><span class="v">52</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">54</span></div>
 <div class="ox-kv"><span class="k">Compute</span><span class="v">up to 12 CPUs / 84 GB per rule (minimap2 index)</span></div>
 <div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></span></div>
 <div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
@@ -22,6 +22,7 @@ title: "Nanopore long-read: demultiplexing, QC and alignment"
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>3.1.0</code></span></div>
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
+<div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2286.1"><code>10.48546/workflowhub.workflow.2286.1</code></a></span></div>
 <p class="cmd">$ oxo-flow run main.oxoflow</p>
 </div>
 </div>
@@ -133,6 +134,13 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-nanoseq
 </details>
 </div>
 <div class="ox-param">
+<div class="ox-param-head"><code>jaffal_ref_dir</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>get_jaffal_ref</code> <code>jaffal_ref</code></div>
+</details>
+</div>
+<div class="ox-param">
 <div class="ox-param-head"><code>multiqc_config</code><span class="ox-param-default"></span></div>
 <p class="ox-param-desc">-- MultiQC options</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
@@ -163,8 +171,8 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-nanoseq
 <div class="ox-param">
 <div class="ox-param-head"><code>out_dir</code><span class="ox-param-default">results</span></div>
 <p class="ox-param-desc">-- Output directory (upstream: --outdir, default ./results)</p>
-<details class="ox-param-usedby"><summary>used by 52 rules</summary>
-<div class="ox-param-rules"><code>bam_rename</code> <code>bambu</code> <code>bedtools_bamtobed</code> <code>bedtools_genomecov</code> <code>cutesv</code> <code>cutesv_sort_vcf</code> <code>cutesv_tabix_vcf</code> <code>deepvariant</code> <code>deepvariant_tabix_gvcf</code> <code>deepvariant_tabix_vcf</code> <code>deseq2</code> <code>deseq2_featurecounts</code> <code>dexseq</code> <code>dexseq_featurecounts</code> <code>dumpsoftwareversions</code> <code>fastqc</code> <code>get_chrom_sizes</code> <code>graphmap2_align</code> <code>graphmap2_index</code> <code>gtf2bed</code> <code>m6anet_dataprep</code> <code>m6anet_inference</code> <code>medaka_bgzip_vcf</code> <code>medaka_tabix_vcf</code> <code>medaka_variant</code> <code>minimap2_align</code> <code>minimap2_index</code> <code>multiqc</code> <code>nanolyse</code> <code>nanoplot</code> <code>nanopolish_index_eventalign</code> <code>pepper_margin_deepvariant</code> <code>qcat</code> <code>samplesheet_check</code> <code>samtools_faidx</code> <code>samtools_flagstat</code> <code>samtools_idxstats</code> <code>samtools_index</code> <code>samtools_sort</code> <code>samtools_sort_index</code> <code>samtools_stats</code> <code>samtools_view</code> <code>sniffles</code> <code>sniffles_sort_vcf</code> <code>sniffles_tabix_vcf</code> <code>stringtie2</code> <code>stringtie_merge</code> <code>subread_featurecounts</code> <code>ucsc_bed12tobigbed</code> <code>ucsc_bedgraphtobigwig</code> <code>xpore_dataprep</code> <code>xpore_diffmod</code></div>
+<details class="ox-param-usedby"><summary>used by 54 rules</summary>
+<div class="ox-param-rules"><code>bam_rename</code> <code>bambu</code> <code>bedtools_bamtobed</code> <code>bedtools_genomecov</code> <code>cutesv</code> <code>cutesv_sort_vcf</code> <code>cutesv_tabix_vcf</code> <code>deepvariant</code> <code>deepvariant_tabix_gvcf</code> <code>deepvariant_tabix_vcf</code> <code>deseq2</code> <code>deseq2_featurecounts</code> <code>dexseq</code> <code>dexseq_featurecounts</code> <code>dumpsoftwareversions</code> <code>fastqc</code> <code>get_chrom_sizes</code> <code>get_jaffal_ref</code> <code>graphmap2_align</code> <code>graphmap2_index</code> <code>gtf2bed</code> <code>jaffal_ref</code> <code>m6anet_dataprep</code> <code>m6anet_inference</code> <code>medaka_bgzip_vcf</code> <code>medaka_tabix_vcf</code> <code>medaka_variant</code> <code>minimap2_align</code> <code>minimap2_index</code> <code>multiqc</code> <code>nanolyse</code> <code>nanoplot</code> <code>nanopolish_index_eventalign</code> <code>pepper_margin_deepvariant</code> <code>qcat</code> <code>samplesheet_check</code> <code>samtools_faidx</code> <code>samtools_flagstat</code> <code>samtools_idxstats</code> <code>samtools_index</code> <code>samtools_sort</code> <code>samtools_sort_index</code> <code>samtools_stats</code> <code>samtools_view</code> <code>sniffles</code> <code>sniffles_sort_vcf</code> <code>sniffles_tabix_vcf</code> <code>stringtie2</code> <code>stringtie_merge</code> <code>subread_featurecounts</code> <code>ucsc_bed12tobigbed</code> <code>ucsc_bedgraphtobigwig</code> <code>xpore_dataprep</code> <code>xpore_diffmod</code></div>
 </details>
 </div>
 <div class="ox-param">
@@ -177,8 +185,8 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-nanoseq
 <div class="ox-param">
 <div class="ox-param-head"><code>protocol</code><span class="ox-param-default">DNA</span></div>
 <p class="ox-param-desc">-- Protocol (upstream: --protocol; mandatory upstream, one of DNA/cDNA/directRNA)</p>
-<details class="ox-param-usedby"><summary>used by 32 rules</summary>
-<div class="ox-param-rules"><code>bambu</code> <code>bedtools_bamtobed</code> <code>cutesv</code> <code>cutesv_sort_vcf</code> <code>cutesv_tabix_vcf</code> <code>deepvariant</code> <code>deepvariant_tabix_gvcf</code> <code>deepvariant_tabix_vcf</code> <code>deseq2</code> <code>deseq2_featurecounts</code> <code>dexseq</code> <code>dexseq_featurecounts</code> <code>graphmap2_align</code> <code>graphmap2_index</code> <code>m6anet_dataprep</code> <code>m6anet_inference</code> <code>medaka_bgzip_vcf</code> <code>medaka_tabix_vcf</code> <code>medaka_variant</code> <code>minimap2_align</code> <code>minimap2_index</code> <code>nanopolish_index_eventalign</code> <code>pepper_margin_deepvariant</code> <code>sniffles</code> <code>sniffles_sort_vcf</code> <code>sniffles_tabix_vcf</code> <code>stringtie2</code> <code>stringtie_merge</code> <code>subread_featurecounts</code> <code>ucsc_bed12tobigbed</code> <code>xpore_dataprep</code> <code>xpore_diffmod</code></div>
+<details class="ox-param-usedby"><summary>used by 34 rules</summary>
+<div class="ox-param-rules"><code>bambu</code> <code>bedtools_bamtobed</code> <code>cutesv</code> <code>cutesv_sort_vcf</code> <code>cutesv_tabix_vcf</code> <code>deepvariant</code> <code>deepvariant_tabix_gvcf</code> <code>deepvariant_tabix_vcf</code> <code>deseq2</code> <code>deseq2_featurecounts</code> <code>dexseq</code> <code>dexseq_featurecounts</code> <code>get_jaffal_ref</code> <code>graphmap2_align</code> <code>graphmap2_index</code> <code>jaffal_ref</code> <code>m6anet_dataprep</code> <code>m6anet_inference</code> <code>medaka_bgzip_vcf</code> <code>medaka_tabix_vcf</code> <code>medaka_variant</code> <code>minimap2_align</code> <code>minimap2_index</code> <code>nanopolish_index_eventalign</code> <code>pepper_margin_deepvariant</code> <code>sniffles</code> <code>sniffles_sort_vcf</code> <code>sniffles_tabix_vcf</code> <code>stringtie2</code> <code>stringtie_merge</code> <code>subread_featurecounts</code> <code>ucsc_bed12tobigbed</code> <code>xpore_dataprep</code> <code>xpore_diffmod</code></div>
 </details>
 </div>
 <div class="ox-param">
@@ -270,6 +278,13 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-nanoseq
 <p class="ox-param-desc">-- QC (upstream defaults: all QC on)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>fastqc</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_fusion_analysis</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">-- RNA fusion analysis (upstream default: on, gated to protocol cDNA/directRNA; skip_fusion_analysis / jaffal_ref_dir). The reference bundle is auto-downloaded from figshare when jaffal_ref_dir is unset (upstream GET_JAFFAL_REF + UNTAR); a user-supplied path is untarred (.tar.gz/.tgz/.tar) or symlinked (directory) instead, A12-style.</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>get_jaffal_ref</code> <code>jaffal_ref</code></div>
 </details>
 </div>
 <div class="ox-param">
@@ -441,6 +456,10 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - jaffal_ref
 
 **Excluded**
+
+- none
+
+**Not applicable** (upstream-absent features, boilerplate, dead code, deliberate non-goals — see the excluded-key taxonomy in [Traitome/oxo-flow#267](https://github.com/Traitome/oxo-flow/issues/267))
 
 - note: committee scope mentions Dorado demultiplex + pycoQC QC; nanoseq 3.1.0 actually uses qcat + NanoPlot/FastQC — port follows the real source
 

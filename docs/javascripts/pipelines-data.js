@@ -16,12 +16,14 @@ window.OXO_PIPELINES = [
     "created": "2026-08-15",
     "domain": "transcriptomics",
     "tags": [
-      "rna-seq",
-      "star",
-      "salmon",
-      "transcriptomics",
+      "gene-expression",
+      "hisat2",
       "nf-core",
-      "gene-expression"
+      "rna-seq",
+      "rsem",
+      "salmon",
+      "star",
+      "transcriptomics"
     ],
     "scope": [
       "bam_dedup_genome_umicollapse",
@@ -85,6 +87,7 @@ window.OXO_PIPELINES = [
       "kallisto_quant_pseudo_sortmerna",
       "multiqc",
       "multiqc_custom_content",
+      "multiqc_pseudo",
       "picard_markduplicates",
       "qualimap_rnaseq",
       "rrna_fastas_prepare",
@@ -161,46 +164,54 @@ window.OXO_PIPELINES = [
       "umitools_prepareforrsem"
     ],
     "excluded": [
-      "PREPARE_GENOME `.tar.gz` reference bundles \u2014 bbsplit / sortmerna index archives; the GTF preprocessing chain itself (CUSTOM_GTFFILTER with the upstream filter_gtf_needed gate, gffread GFF->GTF, additional_fasta transgenes with biotype featurecounts_group_type / gene_type, GENCODE preprocessing, .gz references) is ported as gated prepare_genome::* builder rules with canonical results/reference/ artifacts",
-      "workflow_summary_mqc.yaml / methods_description_mqc.yaml \u2014 Nextflow-param-rendered MultiQC sections"
+      "PREPARE_GENOME `.tar.gz` reference bundles \u2014 bbsplit / sortmerna index archives (user-supplied `bbsplit_index` / `sortmerna_index` .tar.gz/.tgz/.tar archives are untarred into the canonical results/reference/ dir like upstream UNTAR_BBSPLIT_INDEX / UNTAR_SORTMERNA_INDEX; plain directories are symlinked; the GTF preprocessing chain itself (CUSTOM_GTFFILTER with the upstream filter_gtf_needed gate, gffread GFF->GTF, additional_fasta transgenes with biotype featurecounts_group_type / gene_type, GENCODE preprocessing, .gz references) is ported as gated prepare_genome::* builder rules with canonical results/reference/ artifacts)"
     ],
-    "rule_count": 257,
+    "rule_count": 145,
     "tools": [
-      "fastqc",
-      "trim-galore",
-      "fq",
-      "star",
-      "salmon",
-      "stringtie",
-      "python",
-      "samtools",
-      "htslib",
-      "gawk",
-      "picard",
-      "subread",
-      "rseqc",
-      "r-base",
-      "bioconductor-dupradar",
-      "qualimap",
+      "bbmap",
       "bedtools",
+      "bioconductor-biocparallel",
+      "bioconductor-complexheatmap",
+      "bioconductor-deseq2",
+      "bioconductor-dupradar",
+      "bioconductor-summarizedexperiment",
+      "bioconductor-tximeta",
+      "bioconductor-tximport",
+      "bowtie2",
+      "fastqc",
+      "fq",
+      "gawk",
+      "hisat2",
+      "htslib",
+      "kallisto",
+      "multiqc",
+      "perl",
+      "picard",
+      "pysam",
+      "python",
+      "qualimap",
+      "r-base",
+      "r-ggplot2",
+      "r-optparse",
+      "r-pheatmap",
+      "r-rcolorbrewer",
+      "rsem",
+      "rseqc",
+      "salmon",
+      "samtools",
+      "sortmerna",
+      "star",
+      "stringtie",
+      "subread",
+      "trim-galore",
       "ucsc-bedclip",
       "ucsc-bedgraphtobigwig",
-      "bioconductor-tximeta",
-      "bioconductor-summarizedexperiment",
-      "r-optparse",
-      "r-ggplot2",
-      "r-rcolorbrewer",
-      "r-pheatmap",
-      "bioconductor-deseq2",
-      "bioconductor-biocparallel",
-      "bioconductor-tximport",
-      "bioconductor-complexheatmap",
-      "multiqc",
-      "perl"
+      "umi_tools",
+      "umicollapse"
     ],
     "description": "End-to-end bulk RNA-seq analysis for paired-end reads: fq lint and FastQC raw-read QC, TrimGalore adapter/quality trimming (including the UMI-extraction path), STAR, HISAT2 and Bowtie2-transcriptome (bowtie2_salmon) alignment with the BBSplit / SortMeRNA / Bowtie2 rRNA-filtered read variants, Picard MarkDuplicates or UMI-tools / UMICollapse dedup (genome and transcriptome chains), Salmon quantification in alignment mode (STAR and Bowtie2 orig_bams, raw and UMI-prepared) and pseudo-alignment mode (Salmon or Kallisto), RSEM alignment-mode quantification with per-sample results and merged count tables, tximport-merged gene/transcript count tables with SummarizedExperiment R objects, StringTie reference-guided assembly and quantification, featureCounts gene counts with biotype tables, RSeQC / dupRadar / Qualimap QC, DESeq2 sample-level QC (PCA, sample distances, size factors) per quantification branch, strand-specific bigWig tracks, and one final MultiQC report with the nf-core/rnaseq custom content (fail_trimmed / fail_mapped tables, strandedness checks, software versions). A faithful port of the nf-core/rnaseq 3.26.0 default star_salmon path plus the star_rsem, hisat2, bowtie2_salmon, with_umi, salmon-pseudo and kallisto-pseudo branches \u2014 same tools, same versions, same commands.",
     "installation": {
-      "engine": "oxo-flow >= 0.12.0",
+      "engine": "oxo-flow >= 0.17.0",
       "toolchain": "conda envs \u2014 pinned (envs/*.yaml, versions pinned to the upstream nf-core/rnaseq 3.26.0 module environments; requires conda or mamba)",
       "requirements": [
         "paired-end FASTQ reads: reads_dir/<sample>_R1.fastq.gz + _R2.fastq.gz, cohort declared in [[sample_groups]]",
@@ -217,11 +228,17 @@ window.OXO_PIPELINES = [
     "repo_url": "https://github.com/oxo-flow-community/oxo-flow-rnaseq",
     "license": "Apache-2.0",
     "upstream_license": "MIT",
-    "fidelity_md": "Commands mirror the upstream modules byte-for-byte under default parameters\n(flag-for-flag, including upstream quirks such as `samtools stats` receiving\nthe `.bai` as a positional argument and RSeQC's stdout redirections). Upstream\nprocess labels are reproduced as `[rules.resources]`. Every tool is pinned to\nthe exact upstream conda version (see `envs/`).\n\nKnown, documented deviations:\n\n| # | upstream (3.26.0) | port | reason |\n|---|---|---|---|\n| 1 | Per-sample strandedness from the samplesheet (`auto` supported) | Ported via a `metadata_file` `strandedness` column: `forward` / `reverse` / `unstranded` resolve per sample, empty / `auto` / missing cells fall back to `config.strandedness`, bigWig FW/REV rules prune per sample at plan time | `auto` resolves to the pipeline-level value instead of a Salmon `--libType A` inference run; runs without a `metadata_file` keep the previous single-config behavior |\n| 2 | `PREPARE_GENOME` derives the reference artifacts (gene_bed via EAUTILS_GTF2BED, chrom_sizes via SAMTOOLS_FAIDX, transcript_fasta via RSEM_PREPAREREFERENCE) and builds the branch indexes (STAR / HISAT2 / RSEM / Salmon) | The artifact derivations are ported as `prepare_genome::gene_bed` / `chrom_sizes` / `transcript_fasta` builder rules (empty config key = derive from fasta + gtf like upstream; non-empty key = the user path is symlinked in); the index builders: STAR via the `[[references]]` builder, HISAT2 / RSEM / Salmon / Bowtie2 / Kallisto via when-gated builder rules | The GTF preprocessing chain is ported (CUSTOM_GTFFILTER with the upstream `filter_gtf_needed` gate, gffread GFF\u2192GTF, additional_fasta transgenes, GENCODE preprocessing, `.gz` references \u2014 see `modules/prepare_genome.oxoflow`); fasta and gtf remain required inputs; `.tar.gz` index bundles (bbsplit / sortmerna) stay excluded |\n| 3 | Non-default branches: `star_rsem`, `hisat2`, `bowtie2_salmon`, `--with_umi`, `--pseudo_aligner salmon`, `--pseudo_aligner kallisto` | Ported \u2014 see rows 16-27 for their deviations | RSEM runs in `--alignments` mode in every RSEM path, exactly like upstream (the nf-core `as_quantification` mode never existed in the rnaseq pipeline) |\n| 4 | SALMON_QUANT (alignment mode) + CUSTOM_TX2GENE + TXIMETA_TXIMPORT + SUMMARIZEDEXPERIMENT_* \u2014 the default-path quantification chain | Ported as `quantification::salmon_quant` / `tx2gene` / `tximport` / `summarizedexperiment` | The upstream 4-process chain is mirrored as 4 rules; tx2gene runs on the first sample's quant dir (upstream `.first()`); the SE process runs twice (gene + transcript) inside one rule with the upstream `--assay_names` values |\n| 5 | `min_trimmed_reads` gate drops failing samples from the downstream chain | Only the MultiQC fail_trimmed table is produced | The filter is data-dependent per-sample state (n of trimmed reads), not expressible as a static DAG |\n| 6 | `skip_trimming` / `skip_markduplicates` rewire the downstream inputs (QC runs on raw / sorted BAM) | `skip_trimming=true` / `skip_markduplicates=true` break the downstream chain (trimmed reads / markdup BAM are rule inputs) | oxo-flow inputs are static paths; use the defaults |\n| 7 | `save_trimmed` / `save_align_intermeds` control publication; intermediates live in workdir | Trimmed FASTQs and intermediate BAMs are always kept at `results/` paths (they double as run checkpoints) | oxo-flow re-executes from declared outputs |\n| 8 | RSeQC PDFs are published upstream: `*.pdf` outputs of RSEQC_JUNCTIONANNOTATION (`splicing_events_pie.pdf`, `splicing_junction_pie.pdf`), RSEQC_JUNCTIONSATURATION (`junctionSaturation_plot.pdf`), read_duplication and inner_distance \u2014 plus two zero-byte touch placeholders (`junction.pdf`, `events.pdf`) | The same PDFs are kept under `junction_annotation/pdf/`, `junction_saturation/pdf/`, `read_duplication/pdf/`, `inner_distance/pdf/` with `<id>.`-prefixed names (e.g. `<id>.junction_events.pdf`); the zero-byte `junction.pdf` / `events.pdf` touch placeholders are not produced | Layout only \u2014 the published artifact set is the same; the touch placeholders are upstream artifacts MultiQC ignores |\n| 9 | `BEDTOOLS_GENOMECOV_FW/REV` swap their prefixes between forward and reverse libraries | `genomecov_fw` always emits `<id>.forward` (strand `+`), `genomecov_rev` always `<id>.reverse` (strand `-`) | With pipeline-level strandedness both rules never run together; the published artifact set is identical |\n| 10 | `workflow_summary_mqc.yaml` and `methods_description_mqc.yaml` MultiQC sections (Nextflow-param rendered) | Not generated | Nextflow-specific param rendering |\n| 11 | Merged-mode software versions are runtime-collated from per-process `versions.yml` | Static `nf_core_rnaseq_software_mqc_versions.yml` pinned to the env versions | Tools are pinned in `envs/*.yaml`; there are no per-process version captures in oxo-flow |\n| 12 | `CUSTOM_MULTIQCCUSTOMBIOTYPE` supports `--max_biotypes` via `ext.args` | Fixed at the upstream default `100` | The upstream pipeline never sets it |\n| 13 | STRINGTIE_STRINGTIE (default path, runs on the markdup BAM with `-G gtf -e`) | Ported as `quantification::stringtie` (`--fr`/`--rf` from strandedness like upstream) | The `<id>.ballgown/` directory is moved into `results/` but is not declared as a rule output (upstream emits it) |\n| 14 | DESEQ2_QC (default path, runs on `salmon.merged.gene_counts_length_scaled.tsv` with `--id_col 1 --sample_suffix '' --count_col 3`, `--vst TRUE` by default) | Ported as `quantification::deseq2_qc` with the upstream header sed (label `star_salmon`); the port script is byte-identical to upstream `bin/deseq2_qc.r` and the three args equal the script's defaults (upstream `conf/modules/deseq2_qc.config` passes them explicitly) | Blind design (`design=~1`, as upstream), with the upstream sample-name group decomposition (Group1/Group2 coldata columns split on `_` when the sample names decompose consistently) live in the byte-identical script; the `star_salmon.*_mqc.tsv` tables are kept in `results/` (upstream feeds them to MultiQC without publishing). Like `skip_qc` for the other QC files, `skip_deseq2_qc=true` / `skip_quantification_merge=true` leave the MultiQC rule's DESeq2 inputs missing \u2014 use the defaults |\n| 15 | UMI extraction (`umitools`), BBSplit, SortMeRNA/Bowtie2 rRNA removal | Ported as when-gated rules (off by default, same gates as upstream: `with_umi` / `!skip_bbsplit` / `remove_ribo_rna` + `ribo_removal_tool`) | The four trimmed-read variants each feed the aligners, quantification and MultiQC exactly like upstream; `cat_fastq` multi-pair read merging is ported as `fastq_qc::cat_reads` (input_groups, single-pair samples pass through byte-identically) |\n| 16 | UMI transcriptome intermediates are unpublished Nextflow work-dir files (`{id}.bam`, `{id}.sorted.bam`, `{id}.filtered.bam` from `bam_dedup_umi`'s SAMTOOLS_SORT / UMITOOLS_PREPAREFORRSEM) | Stable canonical names: `{sample}.transcriptome.sorted.bam` \u2192 `{sample}.umi_dedup.transcriptome.sorted.bam` \u2192 `{sample}.umi_dedup.transcriptome.bam` \u2192 `{sample}.umi_dedup.transcriptome.filtered.bam` | oxo-flow has no work dirs; every intermediate is a declared output. Published names are unchanged upstream (logs, stats, prepared BAM) |\n| 17 | UMI dedup outputs are tool-specific upstream (`{prefix}.dedup.bam` from UMITOOLS_DEDUP, `{prefix}.UMICollapse.bam` from UMICOLLAPSE) | All four umitools variants and the umicollapse variant write the shared path `{sample}.markdup.sorted.bam` (exclusive when-gates; downstream rules resolve one path) | Duplicate-output exclusive-gate idiom \u2014 same published artifact set per config; the `.log` / `_UMICollapse.log` logs keep their tool-specific names |\n| 18 | Transcriptome-side BAM stats (`samtools_stats` for `{prefix}.umi_dedup.transcriptome.sorted.bam`) | Only the dedup-side stats are ported (`{aligner}/samtools_stats/{sample}.umi_dedup.transcriptome.sorted.bam.{stats,flagstat,idxstats}`); the coordinate-sorted index + sort-side stats are not | Sort-side stats and the index are unpublished upstream unless `--save_umi_intermeds`; dedup-side stats publish unconditionally. MultiQC excludes the transcriptome stats upstream too (`bam_dedup_umi` never mixes them into `multiqc_files`) \u2014 the port mirrors that |\n| 19 | `RSEM_PREPAREREFERENCE` emits `transcripts.fa` next to the index | The `rsem_index` builder does not emit it; the separate `prepare_genome::transcript_fasta` builder derives `reference/transcripts.fa` for the Salmon / bowtie2 / pseudo-alignment consumers (gated off the star_rsem branch) | Nothing in the RSEM chain consumes `transcripts.fa`; the align-mode RSEM input is the toTranscriptome BAM |\n| 20 | `STAR_ALIGN` passes no `--limitBAMsortRAM` | The port adds `--limitBAMsortRAM $(( effective_memory_mb * 1000000 ))` | Without it STAR's 50 GB default sort-RAM cap can fail on small hosts; the value is derived from the rule's memory like every other engine resource |\n| 21 | `HISAT2_EXTRACTSPLICESITES` names the splice-site file after the GTF (`{gtf.baseName}.splice_sites.txt`) | Fixed canonical path `reference/genes.splice_sites.txt` | The port's hisat2 index builder and align rules consume it; the align command's `--rna-strandness` is rendered via a shell branch (FR forward / RF reverse / omitted unstranded \u2014 same values as the upstream `meta.strandedness` branch) |\n| 22 | `SALMON_QUANT` (alignment mode) runs without `--no-version-check` | The port adds `--no-version-check` | Pre-existing port-wide deviation kept for consistency across all salmon quant rules (bam / umi / pseudo) |\n| 23 | RSEM tximport reads the flat per-sample `*.isoforms.results` files; `DESEQ2_QC_RSEM` passes `--id_col 1 --sample_suffix '' --count_col 3` via the rsem deseq2 config | `tx2gene_rsem` stages the first sample's `isoforms.results` into a flat dir (same first-sample semantics as the salmon tx2gene); `deseq2_qc_rsem` passes the three args explicitly | The args equal the port script defaults but are passed explicitly for parity; the flat staging preserves the upstream first-sample `.first()` semantics |\n| 24 | `bowtie2_salmon` aligner: `BOWTIE2_ALIGN` (sort_bam=false \u2192 `samtools view` keeps the query-grouped orig_bam) \u2192 `BAM_SORT_STATS_SAMTOOLS` \u2192 `QUANTIFY_BAM_SALMON` on the orig_bam; the BAM-chain prefix is hardcoded `salmon.merged` | Ported as `alignment::bowtie2_index` + `bowtie2_align` (+3 read-source variants) + `samtools_sort_bowtie2`; `quantification::salmon_quant_bowtie2` quantifies the orig_bam (`-t transcript_fasta -a orig_bam`); tx2gene/tximport/SE/DESeq2 share the star_salmon rules via widened when-gates | The upstream `salmon.merged` prefix quirk is preserved (quantify_bam_salmon.config hardcodes it for both aligners); the UMI transcriptome chain (`bam_sort_transcriptome_bowtie2` \u2192 dedup \u2192 `salmon_quant_umi`) mirrors the STAR chain; the MultiQC fail_mapped table keeps the hardcoded `STAR uniquely mapped reads (%)` header with the percent parsed from `{id}.bowtie2.log` (\"N% overall alignment rate\") \u2014 an upstream quirk of multiqc_rnaseq |\n| 25 | `kallisto` pseudo-aligner: `KALLISTO_INDEX` (`kallisto index -k 31 -i kallisto tx.fa`, process_medium) + `KALLISTO_QUANT` (process_high, `--gtf`, `--fr/--rf-stranded` from strandedness, `2> >(tee log)`) | Ported as `quantification::kallisto_index` + `kallisto_quant_pseudo` (+3 read-source variants) reusing the salmon pseudo branch's when gates; tx2gene/tximport/SE/DESeq2 pseudo rules are shared via widened when-gates with the tool label (`--quant-type`, MultiQC `KALLISTO DESeq2 ...` labels) | The port scripts (tx2gene.py / tximport.r) already handle kallisto (`abundance.tsv`, `dropInfReps=TRUE`); `-k` comes from `config.pseudo_aligner_kmer_size` (upstream default 31); extra_kallisto_quant_args stays at the upstream default (null) |\n| 26 | `KALLISTO_QUANT` logs: upstream publishes the work-dir `{prefix}.log` (the `.run_info.json` and `.log` copies are unpublished, saveAs null) and feeds MultiQC from the work dir | The port declares `{pseudo_aligner}/<id>/kallisto_quant.log` as a rule output and stages it into MultiQC as `<id>.kallisto_quant.log` | oxo-flow has no work dirs, so the log must be a declared output to reach MultiQC; the MultiQC kallisto module matches by content (\"[quant] finding pseudoalignments for the reads\"), so the per-sample rename is safe |\n| 27 | `DESEQ2_QC_PSEUDO` MultiQC labels come from `params.pseudo_aligner` (SALMON / KALLISTO) | The port derives the label from `config.pseudo_aligner` at render time (`tr [:lower:] [:upper:]`) | Config-derived label \u2014 same value as upstream's param-derived label |\n\n**Not ported (metadata `excluded`):**\n\nPer-sample `min_trimmed_reads` filtering (data-dependent per-sample state;\nonly the MultiQC fail_trimmed table is produced); `auto` strandedness\ninference without a metadata_file column (with the column, `auto` / empty\nvalues fall back to `config.strandedness` \u2014 no Salmon `--libType A`\ninference run); `.tar.gz` reference bundles for the bbsplit / sortmerna\nindexes (gtf, gff, fasta, additional_fasta and transcript_fasta accept plain\nor `.gz` paths like upstream); the Nextflow-param-rendered MultiQC sections\n(`workflow_summary_mqc.yaml` / `methods_description_mqc.yaml`).\n\n**Test fixtures** (reworked live, engine 0.15.0): 60 genes (DESeq2's dispersion fit needs gene support \u2014 4 genes x 6 samples still failed `estimateDispersionsFit`) spread 100x apart (contiguous aligners like bowtie2 collide on packed genes \u2014 live: 64% Picard duplicates, dupRadar density NaN); unique read fragments only (random draws over 400 bp exons collided massively \u2014 64% duplicates live, dupRadar bandwidth NaN); log-normal expression-weighted reads with PCR duplicates biased to high-expression genes (~5% overall, like real data \u2014 a uniform dup rate collapsed dupRadar's density bandwidth); FR-oriented mates with identical read names (`@S1_1` \u2014 forward-forward mates made STAR classify every pair as 'too short'). bowtie2_salmon live note (engine 0.15.0): under a contiguous aligner the ~30% spliced fixture reads map clipped and their positional collisions dominate dupRadar's density plot \u2014 `duprateExpDensPlot` dies with a NaN bandwidth (upstream script unchanged); alignment, Salmon quant and DESeq2 all pass; the dupRadar density plot needs real-library data.",
+    "fidelity_md": "Commands mirror the upstream modules byte-for-byte under default parameters\n(flag-for-flag, including upstream quirks such as `samtools stats` receiving\nthe `.bai` as a positional argument and RSeQC's stdout redirections). Upstream\nprocess labels are reproduced as `[rules.resources]`. Every tool is pinned to\nthe exact upstream conda version (see `envs/`).\n\nKnown, documented deviations:\n\n| # | upstream (3.26.0) | port | reason |\n|---|---|---|---|\n| 1 | Per-sample strandedness from the samplesheet (`auto` supported) | Ported via a `metadata_file` `strandedness` column: `forward` / `reverse` / `unstranded` resolve per sample, empty / `auto` / missing cells fall back to `config.strandedness`, bigWig FW/REV rules prune per sample at plan time | `auto` resolves to the pipeline-level value instead of a Salmon `--libType A` inference run; runs without a `metadata_file` keep the previous single-config behavior |\n| 2 | `PREPARE_GENOME` derives the reference artifacts (gene_bed via EAUTILS_GTF2BED, chrom_sizes via SAMTOOLS_FAIDX, transcript_fasta via RSEM_PREPAREREFERENCE) and builds the branch indexes (STAR / HISAT2 / RSEM / Salmon) | The artifact derivations are ported as `prepare_genome::gene_bed` / `chrom_sizes` / `transcript_fasta` builder rules (empty config key = derive from fasta + gtf like upstream; non-empty key = the user path is symlinked in); the index builders: STAR via the `[[references]]` builder, HISAT2 / RSEM / Salmon / Bowtie2 / Kallisto via when-gated builder rules | The GTF preprocessing chain is ported (CUSTOM_GTFFILTER with the upstream `filter_gtf_needed` gate, gffread GFF\u2192GTF, additional_fasta transgenes, GENCODE preprocessing, `.gz` references \u2014 see `modules/prepare_genome.oxoflow`); fasta and gtf remain required inputs; user-supplied `bbsplit_index` / `sortmerna_index` paths are staged into the canonical dir like upstream `UNTAR_BBSPLIT_INDEX` / `UNTAR_SORTMERNA_INDEX` (`.tar.gz`/`.tgz`/`.tar` archives untarred, directories symlinked) |\n| 3 | Non-default branches: `star_rsem`, `hisat2`, `bowtie2_salmon`, `--with_umi`, `--pseudo_aligner salmon`, `--pseudo_aligner kallisto` | Ported \u2014 see rows 16-27 for their deviations | RSEM runs in `--alignments` mode in every RSEM path, exactly like upstream (the nf-core `as_quantification` mode never existed in the rnaseq pipeline) |\n| 4 | SALMON_QUANT (alignment mode) + CUSTOM_TX2GENE + TXIMETA_TXIMPORT + SUMMARIZEDEXPERIMENT_* \u2014 the default-path quantification chain | Ported as `quantification::salmon_quant` / `tx2gene` / `tximport` / `summarizedexperiment` | The upstream 4-process chain is mirrored as 4 rules; tx2gene runs on the first sample's quant dir (upstream `.first()`); the SE process runs twice (gene + transcript) inside one rule with the upstream `--assay_names` values |\n| 5 | `min_trimmed_reads` gate drops failing samples from the downstream chain | The `fastqc_filtered_*` QC rules gate on the R2 trimmed-read count via `reads_count('{config.out_dir}/trimgalore/{sample}_trimmed_2_val_2.fq.gz') >= config.min_trimmed_reads` (matching the upstream drop filter `>=`); failing samples get their filtered-read QC skipped and the MultiQC fail_trimmed table is still produced | Requires oxo-flow >= 0.17.0. The port gates only the filtered-read QC steps \u2014 the upstream chain-wide per-sample drop (alignment, quantification and every other downstream step also excluded for failing samples) is data-dependent channel state and remains not ported; the fail_trimmed TSV keeps the upstream `n <= threshold` listing quirk (a sample exactly at the threshold passes the drop but is still listed) |\n| 6 | `skip_trimming` / `skip_markduplicates` rewire the downstream inputs (QC runs on raw / sorted BAM) | `skip_trimming=true` / `skip_markduplicates=true` break the downstream chain (trimmed reads / markdup BAM are rule inputs) | oxo-flow inputs are static paths; use the defaults |\n| 7 | `save_trimmed` / `save_align_intermeds` control publication; intermediates live in workdir | Trimmed FASTQs and intermediate BAMs are always kept at `results/` paths (they double as run checkpoints) | oxo-flow re-executes from declared outputs |\n| 8 | RSeQC PDFs are published upstream: `*.pdf` outputs of RSEQC_JUNCTIONANNOTATION (`splicing_events_pie.pdf`, `splicing_junction_pie.pdf`), RSEQC_JUNCTIONSATURATION (`junctionSaturation_plot.pdf`), read_duplication and inner_distance \u2014 plus two zero-byte touch placeholders (`junction.pdf`, `events.pdf`) | The same PDFs are kept under `junction_annotation/pdf/`, `junction_saturation/pdf/`, `read_duplication/pdf/`, `inner_distance/pdf/` with `<id>.`-prefixed names (e.g. `<id>.junction_events.pdf`); the zero-byte `junction.pdf` / `events.pdf` touch placeholders are not produced | Layout only \u2014 the published artifact set is the same; the touch placeholders are upstream artifacts MultiQC ignores |\n| 9 | `BEDTOOLS_GENOMECOV_FW/REV` swap their prefixes between forward and reverse libraries | `genomecov_fw` always emits `<id>.forward` (strand `+`), `genomecov_rev` always `<id>.reverse` (strand `-`) | With pipeline-level strandedness both rules never run together; the published artifact set is identical |\n| 10 | `workflow_summary_mqc.yaml` and `methods_description_mqc.yaml` MultiQC sections (Nextflow-param rendered) | Generated by `scripts/multiqc_custom_content.py` (`workflow_summary_mqc.yaml`, `methods_description_mqc.yaml`) | `paramsSummaryMap` runs only over params passed as `--config` CLI flags plus hardcoded port options (`strandedness`, `reads_dir`); Core group shows the engine version / command instead of Nextflow runtime info |\n| 11 | Merged-mode software versions are runtime-collated from per-process `versions.yml` | Static `nf_core_rnaseq_software_mqc_versions.yml` pinned to the env versions | Tools are pinned in `envs/*.yaml`; there are no per-process version captures in oxo-flow |\n| 12 | `CUSTOM_MULTIQCCUSTOMBIOTYPE` supports `--max_biotypes` via `ext.args` | Fixed at the upstream default `100` | The upstream pipeline never sets it |\n| 13 | STRINGTIE_STRINGTIE (default path, runs on the markdup BAM with `-G gtf -e`) | Ported as `quantification::stringtie` (`--fr`/`--rf` from strandedness like upstream) | The `<id>.ballgown/` directory is moved into `results/` but is not declared as a rule output (upstream emits it) |\n| 14 | DESEQ2_QC (default path, runs on `salmon.merged.gene_counts_length_scaled.tsv` with `--id_col 1 --sample_suffix '' --count_col 3`, `--vst TRUE` by default) | Ported as `quantification::deseq2_qc` with the upstream header sed (label `star_salmon`); the port script is byte-identical to upstream `bin/deseq2_qc.r` and the three args equal the script's defaults (upstream `conf/modules/deseq2_qc.config` passes them explicitly) | Blind design (`design=~1`, as upstream), with the upstream sample-name group decomposition (Group1/Group2 coldata columns split on `_` when the sample names decompose consistently) live in the byte-identical script; the `star_salmon.*_mqc.tsv` tables are kept in `results/` (upstream feeds them to MultiQC without publishing). Like `skip_qc` for the other QC files, `skip_deseq2_qc=true` / `skip_quantification_merge=true` leave the MultiQC rule's DESeq2 inputs missing \u2014 use the defaults |\n| 15 | UMI extraction (`umitools`), BBSplit, SortMeRNA/Bowtie2 rRNA removal | Ported as when-gated rules (off by default, same gates as upstream: `with_umi` / `!skip_bbsplit` / `remove_ribo_rna` + `ribo_removal_tool`) | The four trimmed-read variants each feed the aligners, quantification and MultiQC exactly like upstream; `cat_fastq` multi-pair read merging is ported as `fastq_qc::cat_reads` (input_groups, single-pair samples pass through byte-identically) |\n| 16 | UMI transcriptome intermediates are unpublished Nextflow work-dir files (`{id}.bam`, `{id}.sorted.bam`, `{id}.filtered.bam` from `bam_dedup_umi`'s SAMTOOLS_SORT / UMITOOLS_PREPAREFORRSEM) | Stable canonical names: `{sample}.transcriptome.sorted.bam` \u2192 `{sample}.umi_dedup.transcriptome.sorted.bam` \u2192 `{sample}.umi_dedup.transcriptome.bam` \u2192 `{sample}.umi_dedup.transcriptome.filtered.bam` | oxo-flow has no work dirs; every intermediate is a declared output. Published names are unchanged upstream (logs, stats, prepared BAM) |\n| 17 | UMI dedup outputs are tool-specific upstream (`{prefix}.dedup.bam` from UMITOOLS_DEDUP, `{prefix}.UMICollapse.bam` from UMICOLLAPSE) | All four umitools variants and the umicollapse variant write the shared path `{sample}.markdup.sorted.bam` (exclusive when-gates; downstream rules resolve one path) | Duplicate-output exclusive-gate idiom \u2014 same published artifact set per config; the `.log` / `_UMICollapse.log` logs keep their tool-specific names |\n| 18 | Transcriptome-side BAM stats (`samtools_stats` for `{prefix}.umi_dedup.transcriptome.sorted.bam`) | Only the dedup-side stats are ported (`{aligner}/samtools_stats/{sample}.umi_dedup.transcriptome.sorted.bam.{stats,flagstat,idxstats}`); the coordinate-sorted index + sort-side stats are not | Sort-side stats and the index are unpublished upstream unless `--save_umi_intermeds`; dedup-side stats publish unconditionally. MultiQC excludes the transcriptome stats upstream too (`bam_dedup_umi` never mixes them into `multiqc_files`) \u2014 the port mirrors that |\n| 19 | `RSEM_PREPAREREFERENCE` emits `transcripts.fa` next to the index | The `rsem_index` builder does not emit it; the separate `prepare_genome::transcript_fasta` builder derives `reference/transcripts.fa` for the Salmon / bowtie2 / pseudo-alignment consumers (gated off the star_rsem branch) | Nothing in the RSEM chain consumes `transcripts.fa`; the align-mode RSEM input is the toTranscriptome BAM |\n| 20 | `STAR_ALIGN` passes no `--limitBAMsortRAM` | The port adds `--limitBAMsortRAM $(( effective_memory_mb * 1000000 ))` | Without it STAR's 50 GB default sort-RAM cap can fail on small hosts; the value is derived from the rule's memory like every other engine resource |\n| 21 | `HISAT2_EXTRACTSPLICESITES` names the splice-site file after the GTF (`{gtf.baseName}.splice_sites.txt`) | Fixed canonical path `reference/genes.splice_sites.txt` | The port's hisat2 index builder and align rules consume it; the align command's `--rna-strandness` is rendered via a shell branch (FR forward / RF reverse / omitted unstranded \u2014 same values as the upstream `meta.strandedness` branch) |\n| 22 | `SALMON_QUANT` (alignment mode) runs without `--no-version-check` | The port adds `--no-version-check` | Pre-existing port-wide deviation kept for consistency across all salmon quant rules (bam / umi / pseudo) |\n| 23 | RSEM tximport reads the flat per-sample `*.isoforms.results` files; `DESEQ2_QC_RSEM` passes `--id_col 1 --sample_suffix '' --count_col 3` via the rsem deseq2 config | `tx2gene_rsem` stages the first sample's `isoforms.results` into a flat dir (same first-sample semantics as the salmon tx2gene); `deseq2_qc_rsem` passes the three args explicitly | The args equal the port script defaults but are passed explicitly for parity; the flat staging preserves the upstream first-sample `.first()` semantics |\n| 24 | `bowtie2_salmon` aligner: `BOWTIE2_ALIGN` (sort_bam=false \u2192 `samtools view` keeps the query-grouped orig_bam) \u2192 `BAM_SORT_STATS_SAMTOOLS` \u2192 `QUANTIFY_BAM_SALMON` on the orig_bam; the BAM-chain prefix is hardcoded `salmon.merged` | Ported as `alignment::bowtie2_index` + `bowtie2_align` (+3 read-source variants) + `samtools_sort_bowtie2`; `quantification::salmon_quant_bowtie2` quantifies the orig_bam (`-t transcript_fasta -a orig_bam`); tx2gene/tximport/SE/DESeq2 share the star_salmon rules via widened when-gates | The upstream `salmon.merged` prefix quirk is preserved (quantify_bam_salmon.config hardcodes it for both aligners); the UMI transcriptome chain (`bam_sort_transcriptome_bowtie2` \u2192 dedup \u2192 `salmon_quant_umi`) mirrors the STAR chain; the MultiQC fail_mapped table keeps the hardcoded `STAR uniquely mapped reads (%)` header with the percent parsed from `{id}.bowtie2.log` (\"N% overall alignment rate\") \u2014 an upstream quirk of multiqc_rnaseq |\n| 25 | `kallisto` pseudo-aligner: `KALLISTO_INDEX` (`kallisto index -k 31 -i kallisto tx.fa`, process_medium) + `KALLISTO_QUANT` (process_high, `--gtf`, `--fr/--rf-stranded` from strandedness, `2> >(tee log)`) | Ported as `quantification::kallisto_index` + `kallisto_quant_pseudo` (+3 read-source variants) reusing the salmon pseudo branch's when gates; tx2gene/tximport/SE/DESeq2 pseudo rules are shared via widened when-gates with the tool label (`--quant-type`, MultiQC `KALLISTO DESeq2 ...` labels) | The port scripts (tx2gene.py / tximport.r) already handle kallisto (`abundance.tsv`, `dropInfReps=TRUE`); `-k` comes from `config.pseudo_aligner_kmer_size` (upstream default 31); extra_kallisto_quant_args stays at the upstream default (null) |\n| 26 | `KALLISTO_QUANT` logs: upstream publishes the work-dir `{prefix}.log` (the `.run_info.json` and `.log` copies are unpublished, saveAs null) and feeds MultiQC from the work dir | The port declares `{pseudo_aligner}/<id>/kallisto_quant.log` as a rule output and stages it into MultiQC as `<id>.kallisto_quant.log` | oxo-flow has no work dirs, so the log must be a declared output to reach MultiQC; the MultiQC kallisto module matches by content (\"[quant] finding pseudoalignments for the reads\"), so the per-sample rename is safe |\n| 27 | `DESEQ2_QC_PSEUDO` MultiQC labels come from `params.pseudo_aligner` (SALMON / KALLISTO) | The port derives the label from `config.pseudo_aligner` at render time (`tr [:lower:] [:upper:]`) | Config-derived label \u2014 same value as upstream's param-derived label |\n\n## Not ported (metadata `excluded`)\n\nThe chain-wide per-sample `min_trimmed_reads` drop (alignment, quantification\nand all other downstream steps of failing samples remain scheduled; only the\n`fastqc_filtered_*` QC rules gate on the trimmed-read count via\n`reads_count(...) >= config.min_trimmed_reads`, requires oxo-flow >= 0.17.0);\n`auto` strandedness inference without a metadata_file column (with the column,\n`auto` / empty values fall back to `config.strandedness` \u2014 no Salmon\n`--libType A` inference run). User-supplied\n`bbsplit_index` / `sortmerna_index` bundles are staged like upstream\n(`.tar.gz`/`.tgz`/`.tar` archives untarred into the canonical dir, plain\ndirectories symlinked; gtf, gff, fasta, additional_fasta and\ntranscript_fasta accept plain or `.gz` paths).",
     "quickstart": "oxo-flow run main.oxoflow",
     "compute": "up to 12 CPUs / 72 GB per rule (STAR align)",
     "quickstart_note": "The default config ships with `test/fixtures/` so the plan previews with no data; a real run needs your reads plus the reference artifacts under Requirements (STAR index, GTF, transcriptome, gene BED, chrom.sizes). Preview first: `oxo-flow dry-run main.oxoflow --samples first:1`.",
-    "coverage": "default + kallisto/hisat2/star-rsem/salmon-pseudo/umi toggles live-verified on bioinfo-wsx (engine 0.15.0, conda) 2026-08-27; bowtie2_salmon core chain passes, dupRadar density plot documented as real-data-only"
+    "coverage": "default + kallisto/hisat2/star-rsem/salmon-pseudo/umi toggles live-verified on bioinfo-wsx (engine 0.15.0, conda) 2026-08-27; bowtie2_salmon core chain passes, dupRadar density plot documented as real-data-only",
+    "workflowhub": {
+      "id": 2278,
+      "url": "https://workflowhub.eu/workflows/2278",
+      "doi": "10.48546/workflowhub.workflow.2278.1",
+      "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2278.1"
+    }
   },
   {
     "name": "oxo-flow-sarek",
@@ -252,72 +269,123 @@ window.OXO_PIPELINES = [
       "nf-core"
     ],
     "scope": [
+      "bam_merge_index_samtools",
+      "bcftools_mpileup_call",
+      "bcftools_mpileup_ngscheckmate",
+      "bcftools_sort_freebayes",
+      "bcftools_sort_joint",
+      "bcftools_sort_joint_scatter",
+      "bcftools_stats",
+      "bcftools_stats_deepvariant",
+      "bcftools_stats_freebayes",
+      "bcftools_stats_joint",
+      "bcftools_stats_manta",
+      "bcftools_stats_mpileup",
+      "bcftools_stats_strelka",
+      "bcftools_stats_tiddit",
       "bwa_index",
-      "bwamem2_index",
-      "gatk_createsequencedictionary",
-      "samtools_faidx",
-      "fastqc",
-      "fastp",
-      "fastp_split",
-      "fgbio_fastqtobam",
-      "samtools_bam2fq_umi",
-      "bwa_mem_umi",
-      "fgbio_groupreadsbyumi",
-      "fgbio_callmolecularconsensusreads",
-      "samtools_bam2fq_consensus",
-      "fastp_umi",
       "bwa_mem",
       "bwa_mem2",
-      "bwa_mem_split",
       "bwa_mem2_split",
-      "bam_merge_index_samtools",
+      "bwa_mem_split",
+      "bwa_mem_umi",
+      "bwamem2_index",
+      "create_intervals_bed",
+      "deepvariant",
+      "ensemblvep_vep",
+      "ensemblvep_vep_deepvariant",
+      "ensemblvep_vep_freebayes",
+      "ensemblvep_vep_joint",
+      "ensemblvep_vep_manta",
+      "ensemblvep_vep_mpileup",
+      "ensemblvep_vep_strelka",
+      "ensemblvep_vep_tiddit",
+      "fastp",
+      "fastp_split",
+      "fastp_umi",
+      "fastqc",
+      "fgbio_callmolecularconsensusreads",
+      "fgbio_fastqtobam",
+      "fgbio_groupreadsbyumi",
+      "freebayes",
+      "gatk_applybqsr",
+      "gatk_applybqsr_scatter",
+      "gatk_applyvqsr_indel",
+      "gatk_applyvqsr_snp",
+      "gatk_baserecalibrator",
+      "gatk_baserecalibrator_scatter",
+      "gatk_calculatecontamination_paired",
+      "gatk_cnnscorevariants",
+      "gatk_createsequencedictionary",
+      "gatk_filtermutectcalls_paired",
+      "gatk_filtermutectcalls_tumor_only",
+      "gatk_filtervarianttranches",
+      "gatk_gatherbqsrreports",
+      "gatk_genomicsdbimport",
+      "gatk_genomicsdbimport_scatter",
+      "gatk_genotypegvcfs",
+      "gatk_genotypegvcfs_scatter",
+      "gatk_getpileupsummaries_paired",
+      "gatk_haplotypecaller",
+      "gatk_haplotypecaller_gvcf",
+      "gatk_haplotypecaller_gvcf_scatter",
+      "gatk_haplotypecaller_scatter",
       "gatk_markduplicates",
       "gatk_markduplicates_bam",
-      "mosdepth_md",
-      "samtools_stats_md",
-      "gatk_baserecalibrator",
-      "gatk_applybqsr",
-      "samtools_index_recal",
-      "mosdepth_recal",
-      "samtools_stats_recal",
-      "gatk_haplotypecaller",
-      "gatk_cnnscorevariants",
-      "gatk_filtervarianttranches",
-      "freebayes",
-      "bcftools_sort_freebayes",
-      "tabix_freebayes",
-      "vcffilter_freebayes",
-      "tabix_freebayes_filt",
-      "strelka_germline",
-      "manta_germline",
-      "bcftools_mpileup_call",
-      "tiddit_sv",
-      "tabix_tiddit",
-      "samtools_reindex_bam",
-      "goleft_indexcov",
-      "deepvariant",
-      "bcftools_mpileup_ngscheckmate",
-      "ngscheckmate_ncm",
-      "bcftools_stats",
-      "vcftools_tstv_count",
-      "vcftools_tstv_qual",
-      "vcftools_filter_summary",
-      "ensemblvep_vep",
-      "gatk_haplotypecaller_gvcf",
-      "gatk_genomicsdbimport",
-      "gatk_genotypegvcfs",
-      "bcftools_sort_joint",
       "gatk_mergevcfs_joint",
-      "gatk_variantrecalibrator_snp",
+      "gatk_mergevcfs_joint_scatter",
+      "gatk_mergevcfs_scatter",
+      "gatk_mutect2_paired",
+      "gatk_mutect2_tumor_only",
       "gatk_variantrecalibrator_indel",
-      "gatk_applyvqsr_snp",
-      "gatk_applyvqsr_indel",
-      "bcftools_stats_joint",
-      "vcftools_tstv_count_joint",
-      "vcftools_tstv_qual_joint",
+      "gatk_variantrecalibrator_snp",
+      "goleft_indexcov",
+      "manta_germline",
+      "manta_somatic",
+      "merge_index_samtools",
+      "mosdepth_md",
+      "mosdepth_recal",
+      "multiqc",
+      "ngscheckmate_ncm",
+      "samtools_bam2fq_consensus",
+      "samtools_bam2fq_umi",
+      "samtools_faidx",
+      "samtools_index_recal",
+      "samtools_reindex_bam",
+      "samtools_stats_md",
+      "samtools_stats_recal",
+      "strelka_germline",
+      "strelka_somatic",
+      "tabix_freebayes",
+      "tabix_freebayes_filt",
+      "tabix_interval",
+      "tabix_tiddit",
+      "tiddit_sv",
+      "vcffilter_freebayes",
+      "vcftools_filter_summary",
+      "vcftools_filter_summary_deepvariant",
+      "vcftools_filter_summary_freebayes",
       "vcftools_filter_summary_joint",
-      "ensemblvep_vep_joint",
-      "multiqc"
+      "vcftools_filter_summary_manta",
+      "vcftools_filter_summary_mpileup",
+      "vcftools_filter_summary_strelka",
+      "vcftools_filter_summary_tiddit",
+      "vcftools_tstv_count",
+      "vcftools_tstv_count_deepvariant",
+      "vcftools_tstv_count_freebayes",
+      "vcftools_tstv_count_joint",
+      "vcftools_tstv_count_manta",
+      "vcftools_tstv_count_mpileup",
+      "vcftools_tstv_count_strelka",
+      "vcftools_tstv_count_tiddit",
+      "vcftools_tstv_qual",
+      "vcftools_tstv_qual_deepvariant",
+      "vcftools_tstv_qual_freebayes",
+      "vcftools_tstv_qual_joint",
+      "vcftools_tstv_qual_manta",
+      "vcftools_tstv_qual_mpileup",
+      "vcftools_tstv_qual_strelka",
+      "vcftools_tstv_qual_tiddit"
     ],
     "excluded": [
       "Sentieon / Parabricks / DRAGMAP \u2014 commercial accelerators (licensed binaries), out of scope",
@@ -325,28 +393,29 @@ window.OXO_PIPELINES = [
     ],
     "rule_count": 117,
     "tools": [
-      "fastqc",
-      "fastp",
+      "bcftools",
       "bwa",
       "bwa-mem2",
-      "samtools",
-      "gatk",
-      "mosdepth",
+      "deepvariant",
+      "ensembl-vep",
+      "fastp",
+      "fastqc",
       "fgbio",
       "freebayes",
-      "strelka",
-      "manta",
-      "tiddit",
+      "gatk",
+      "gawk",
       "goleft",
-      "deepvariant",
+      "manta",
+      "mosdepth",
+      "multiqc",
       "ngscheckmate",
-      "bcftools",
-      "vcftools",
+      "samtools",
+      "strelka",
+      "tiddit",
       "vcflib",
-      "ensembl-vep",
-      "multiqc"
+      "vcftools"
     ],
-    "description": "GATK best-practice variant calling for whole-genome and whole-exome sequencing (WGS/WES), germline by default: FastQC quality control, fastp trimming and splitting, BWA-MEM (or BWA-MEM2) alignment, MarkDuplicates with CRAM or BAM output, base quality score recalibration (BQSR), single-sample HaplotypeCaller variant calling with CNN 1D scoring and tranche filtering, VEP annotation, per-sample VCF QC and a final MultiQC report. Optional ported branches (all gated off by default): reference preparation (BWA/BWAmem2 index, .dict, .fai), UMI-aware consensus calling (fgbio chain + fastp), fastp split-parts fan-out (split_parts=true: runtime-discovered per-part BWA-MEM/BWA-MEM2 alignment + BAM merge + index, no input cap), FreeBayes, Strelka2 germline, Manta germline, bcftools mpileup, TIDDIT SV, goleft indexcov, DeepVariant, NGSCheckMate sample-identity QC, and the joint-germline path (GVCF mode + GenomicsDBImport + GenotypeGVCFs + VQSR).",
+    "description": "GATK best-practice variant calling for whole-genome and whole-exome sequencing (WGS/WES), germline by default: FastQC quality control, fastp trimming and splitting, BWA-MEM (or BWA-MEM2) alignment, MarkDuplicates with CRAM or BAM output, base quality score recalibration (BQSR), single-sample HaplotypeCaller variant calling with CNN 1D scoring and tranche filtering, VEP annotation, per-sample VCF QC and a final MultiQC report. Optional ported branches (all gated off by default): reference preparation (BWA/BWAmem2 index, .dict, .fai), UMI-aware consensus calling (fgbio chain + fastp), fastp split-parts fan-out (split_parts=true: runtime-discovered per-part BWA-MEM/BWA-MEM2 alignment + BAM merge + index, no input cap), FreeBayes, Strelka2 germline, Manta germline, bcftools mpileup, TIDDIT SV, goleft indexcov, DeepVariant, NGSCheckMate sample-identity QC, the joint-germline path (GVCF mode + GenomicsDBImport + GenotypeGVCFs + VQSR), per-caller VCF QC + VEP annotation (upstream fan-out over every enabled caller), and the per-chromosome scatter/gather branch (scatter_gatk=true) that ports upstream interval preparation + GATK4_GATHERBQSRREPORTS / CRAM/BAM_MERGE_INDEX_SAMTOOLS / GATK4_MERGEVCFS with one job per chromosome.",
     "installation": {
       "engine": "oxo-flow >= 0.12.0",
       "toolchain": "containers (Docker) \u2014 pinned images",
@@ -369,7 +438,13 @@ window.OXO_PIPELINES = [
     "fidelity_md": "\nRows cover every upstream process/rule on the default main execution path plus\nevery ported optional branch (gated by config flags \u2014 all default-off).\n\"not ported\" rows carry a reason + evidence.\n\n| Upstream process/rule | oxo-flow rule | Tool (version) | Notes |\n|---|---|---|---|\n| FASTQC | `fastqc` | fastqc 0.12.1 | identical command |\n| FASTP | `fastp` | fastp 1.1.0 | upstream default trimming/splitting module (TrimGalore does not exist in 3.10.0 \u2014 `grep -ri trimgalore` over the upstream tree is empty; the `--trim_fastq_trimgalore` param was dropped in 3.10.0) |\n| BWA_MEM | `bwa_mem` | bwa 0.7.19 | upstream default aligner is `bwa-mem`, not `bwa-mem2`; read-group flags from sarek.nf; prefix `{meta.id}.{reads[0] token}` = `test.0001` under split_fastq; the same image also carries samtools 1.22.1 (used for `samtools sort`) |\n| BWA_MEM2 | `bwa_mem2` | bwa-mem2 2.2.1 | `aligner = \"bwa-mem2\"` (upstream `params.aligner`); same `-K 100000000 -Y -R` args as BWA_MEM; shares bwa_mem's output path \u2014 the two rules are mutually exclusive via `when`, all downstream rules are unchanged; index from `bwa_mem2_index_dir` |\n| GATK4_MARKDUPLICATES | `gatk_markduplicates` | gatk4 4.5.0.0 | default CRAM branch (`save_output_as_bam=false`) |\n| GATK4_MARKDUPLICATES (BAM branch) | `gatk_markduplicates_bam` | gatk4 4.5.0.0 | `save_output_as_bam = true`; `--CREATE_INDEX true`, no CRAM conversion; `.md.bai` renamed to `.md.bam.bai` (upstream BAM_MERGE_INDEX_SAMTOOLS); downstream rules read `{config.alignment_ext}` / `{config.recal_index_ext}` (set `\"bam\"` / `\"bam.bai\"` together) |\n| MOSDEPTH (post-MD) | `mosdepth_md` | mosdepth 0.3.14 | ext.prefix `{meta.id}.md`; WGS `--by 500` mode |\n| SAMTOOLS_STATS (post-MD) | `samtools_stats_md` | samtools 1.24 | ext.prefix `{meta.id}.md.{alignment_ext}`; 1.24 is the version in the `htslib_samtools` stats/index images (the BWA image carries 1.22.1) |\n| GATK4_BASERECALIBRATOR | `gatk_baserecalibrator` | gatk4 4.5.0.0 | known-sites = dbsnp + Mills gold standard + known indels (GRCh38); single whole-genome job by default; per-chromosome jobs under `scatter_gatk = true` (see the scatter/gather row) |\n| GATK4_APPLYBQSR | `gatk_applybqsr` | gatk4 4.5.0.0 | output CRAM per default (BAM in the `save_output_as_bam` branch); single whole-genome job by default; per-chromosome jobs under `scatter_gatk = true` (see the scatter/gather row) |\n| SAMTOOLS_INDEX (recal) | `samtools_index_recal` | samtools 1.24 | indexes the recalibrated alignment (`.crai` or `.bam.bai`) |\n| MOSDEPTH (recal) | `mosdepth_recal` | mosdepth 0.3.14 | ext.prefix `{meta.id}.recal` |\n| SAMTOOLS_STATS (recal) | `samtools_stats_recal` | samtools 1.24 | ext.prefix `{meta.id}.recal.{alignment_ext}` |\n| GATK4_HAPLOTYPECALLER | `gatk_haplotypecaller` | gatk4 4.5.0.0 | default `tools=haplotypecaller,vep` \u2192 `call_haplotypecaller=true`; single-sample mode (no `-ERC GVCF`), `--pcr-indel-model CONSERVATIVE`; gated off when `joint_germline = true` (upstream picks the GVCF branch); single whole-genome job by default; per-chromosome jobs under `scatter_gatk = true` (see the scatter/gather row) |\n| GATK4_CNNSCOREVARIANTS | `gatk_cnnscorevariants` | gatk4 4.5.0.0 | VCF_VARIANT_FILTERING_GATK part 1; CNN 1D scoring (module default `--tensor-type 1D`); upstream keeps the `{sample}.cnn.vcf.gz` intermediate unpublished \u2014 the port stores it under `results/variant_calling/cnnscorevariants/` for DAG handoff; skipped in joint mode (upstream: no filtering of the joint VCF) |\n| GATK4_FILTERVARIANTTRANCHES | `gatk_filtervarianttranches` | gatk4 4.5.0.0 | VCF_VARIANT_FILTERING_GATK part 2; ext.args `--info-key CNN_1D`, ext.prefix `{meta.id}.haplotypecaller`, known sites (dbsnp + 2 GRCh38 indel sets) passed as `--resource`; produces `{sample}.haplotypecaller.filtered.vcf.gz` |\n| BCFTOOLS_STATS | `bcftools_stats` | bcftools 1.23.1 | VCF_QC_BCFTOOLS_VCFTOOLS part 1; runs on the filtered VCF (prefix `{meta.id}.haplotypecaller.filtered`) |\n| VCFTOOLS_TSTV_COUNT | `vcftools_tstv_count` | vcftools 0.1.17 | VCF_QC_BCFTOOLS_VCFTOOLS part 2; runs on the filtered VCF |\n| VCFTOOLS_TSTV_QUAL | `vcftools_tstv_qual` | vcftools 0.1.17 | VCF_QC_BCFTOOLS_VCFTOOLS part 3; runs on the filtered VCF |\n| VCFTOOLS_SUMMARY | `vcftools_filter_summary` | vcftools 0.1.17 | VCF_QC_BCFTOOLS_VCFTOOLS part 4; runs on the filtered VCF |\n| ENSEMBLVEP_VEP | `ensemblvep_vep` | ensembl-vep 112.0 | annotates the filtered VCF (`{sample}.haplotypecaller.filtered_VEP.ann.vcf.gz`); **gated on `vep_cache_ready`** \u2014 upstream fails hard without the cache (bundled at `/.vep` via `--vep_cache`); set the flag after placing a cache at `vep_dir_cache`; `--cache_version 112` (matches the env binary \u2014 VEP caches are version-locked), GRCh38 |\n| PREPARE_GENOME (BWA_INDEX) | `bwa_index` | bwa 0.7.19 | `prepare_reference = true`; builds `results/reference/bwa/index.{amb,ann,bwt,pac,sa}` \u2014 fixed `index` prefix (upstream: fasta basename; irrelevant downstream, the BWA rules find the index by extension). Deviation: upstream does not publish the index unless `save_reference`; the port publishes it because oxo-flow outputs must be tracked |\n| PREPARE_GENOME (BWAMEM2_INDEX) | `bwamem2_index` | bwa-mem2 2.2.1 | same gating/prefix note; `results/reference/bwamem2/index.{0123,amb,ann,bwt.2bit.64,pac}` |\n| PREPARE_GENOME (GATK4_CREATESEQUENCEDICTIONARY) | `gatk_createsequencedictionary` | gatk4 4.5.0.0 | `--URI` is the fasta basename as upstream; GATK writes `<fasta-basename>.dict`, the port renames it to `reference.dict` for a fixed output path |\n| PREPARE_GENOME (SAMTOOLS_FAIDX) | `samtools_faidx` | samtools 1.24 | indexes a workdir copy of the fasta (the `{config.fasta}` path is treated as read-only); output `results/reference/fai/reference.fasta.fai` |\n| SAREK_UMI (FGBIO_FASTQTOBAM \u2192 SAMTOOLS_BAM2FQ \u2192 BWA_MEM \u2192 FGBIO_GROUPREADSBYUMI \u2192 FGBIO_CALLMOLECULARCONSENSUSREADS \u2192 BAM_CONVERT_SAMTOOLS \u2192 FASTP) | `fgbio_fastqtobam`, `samtools_bam2fq_umi`, `bwa_mem_umi`, `fgbio_groupreadsbyumi`, `fgbio_callmolecularconsensusreads`, `samtools_bam2fq_consensus`, `fastp_umi` | fgbio 3.1.2, bwa 0.7.19, samtools 1.24, fastp 1.1.0 | `umi_read_structure` set (e.g. `\"3M2S+T\"`); `fastp_umi` shares the fastp output paths so BWA-MEM downstream is untouched; GroupReadsByUmi histogram/metrics go to `reports/umi/`; see deviations for the BAM_CONVERT_SAMTOOLS collapse |\n| BAM_VARIANT_CALLING_FREEBAYES (FREEBAYES_GERMLINE, BCFTOOLS_SORT, TABIX_VC, VCFLIB_VCF_FILTER, TABIX_FILT) | `freebayes`, `bcftools_sort_freebayes`, `tabix_freebayes`, `vcffilter_freebayes`, `tabix_freebayes_filt` | freebayes 1.3.10, bcftools 1.23.1, vcflib 1.0.14 | `call_freebayes = true`; `--min-alternate-fraction 0.1 --min-mapping-quality 1`; QUAL filter threshold from `freebayes_filter` (30, upstream `params.freebayes_filter`); all four VCFs/TBI published to `variant_calling/freebayes/{sample}/` as upstream |\n| STRELKA_GERMLINE | `strelka_germline` | strelka 2.9.10 | `call_strelka = true`; ext.prefix `{meta.id}.strelka`; email-check disabled via the upstream `sed`; all six outputs (SNP/INDEL/variants \u00d7 vcf+tbi) published as upstream |\n| MANTA_GERMLINE | `manta_germline` | manta 1.6.0 | `call_manta = true`; ext.prefix `{meta.id}.manta`; only the `diploid_sv` pair is published \u2014 candidateSmallIndels/candidateSV stay in the workdir exactly as upstream |\n| BCFTOOLS_MPILEUP (germline) | `bcftools_mpileup_call` | bcftools 1.23.1 | `call_mpileup = true`; args `--output-type v --multiallelic-caller`, filter `count(GT==\"RR\")==0`; the module's own bcftools_stats file stays unpublished (as upstream) |\n| TIDDIT_SV + TABIX_BGZIP_TIDDIT_SV | `tiddit_sv`, `tabix_tiddit` | tiddit 3.9.5 | `call_tiddit = true`; `--skip_assembly` (upstream passes an empty bwa index channel for germline); `.ploidies.tab` published as upstream |\n| BAM_VARIANT_CALLING_INDEXCOV (SAMTOOLS_REINDEX_BAM + GOLEFT_INDEXCOV) | `samtools_reindex_bam`, `goleft_indexcov` | samtools 1.24, goleft 0.2.4 | WGS only (`!wes && call_indexcov`); per-sample header-only reindex with `-F 3844 -q 30` + `--write-index` over `/dev/null##idx##`; cohort run `--fai --directory indexcov` (no `--extranormalize` \u2014 inputs are BAMs, matching upstream's reindex path); bed.gz+tbi published to `variant_calling/indexcov/` |\n| RUNDEEPVARIANT | `deepvariant` | deepvariant 1.10.0 | `call_deepvariant = true`; `--model_type=WGS --sample_name {sample}`; vcf + g.vcf pairs published to `variant_calling/deepvariant/{sample}/` |\n| BAM_NGSCHECKMATE (BCFTOOLS_MPILEUP + NGSCHECKMATE_NCM) | `bcftools_mpileup_ngscheckmate`, `ngscheckmate_ncm` | bcftools 1.23.1, ngscheckmate 1.0.1 | `tools_ngscheckmate = true`; per-sample mpileup `--no-version --ploidy 1 -c` with `-T` SNP bed, reheader to `{sample}-{lane}`; cohort `NCM_REF=./reference.fasta ncm.py -d . -bed <bed> -O . -N ngscheckmate -V`; outputs published to `reports/ngscheckmate/` (live-verify: ncm.py's exact output filenames, see Test) |\n| Joint germline (GATK4_HAPLOTYPECALLER GVCF, GATK4_GENOMICSDBIMPORT, GATK4_GENOTYPEGVCFS, BCFTOOLS_SORT, GATK4_MERGEVCFS, GATK4_VARIANTRECALIBRATOR SNP+INDEL, GATK4_APPLYVQSR SNP+INDEL) | `gatk_haplotypecaller_gvcf`, `gatk_genomicsdbimport`, `gatk_genotypegvcfs`, `bcftools_sort_joint`, `gatk_mergevcfs_joint`, `gatk_variantrecalibrator_snp`, `gatk_variantrecalibrator_indel`, `gatk_applyvqsr_snp`, `gatk_applyvqsr_indel` | gatk4 4.5.0.0, bcftools 1.23.1 | `joint_germline = true`; VQSR resource labels from `conf/igenomes.config` GRCh38 (1000G omni2.5 SNP \u2192 `known_snps`, dbsnp; gatk+mills indels); upstream prefixes `joint_variant_calling_SNP/INDEL` (VQSR intermediates unpublished upstream \u2014 the port keeps them under `results/` for DAG handoff); final `joint_germline_recalibrated.vcf.gz`; one whole-genome interval from the fasta `.fai` by default, per-chromosome under `scatter_gatk = true` (see the scatter/gather row) |\n| Joint VCF QC + VEP | `bcftools_stats_joint`, `vcftools_tstv_count_joint`, `vcftools_tstv_qual_joint`, `vcftools_filter_summary_joint`, `ensemblvep_vep_joint` | bcftools 1.23.1, vcftools 0.1.17, ensembl-vep 112.0 | upstream runs VCF_QC + VEP on the joint VCF (`vcf_all`); the per-sample QC/VEP rules are gated off in joint mode and these cohort rules take over (prefix `joint_germline_recalibrated`) |\n| MULTIQC | `multiqc` | multiqc 1.35 | fan-in over all report producers (depends_on covers the gated branches \u2014 skipped rules auto-satisfy); scans the results dir with the upstream `assets/multiqc_config.yml` |\n| PREPARE_INTERVALS (BUILD_INTERVALS, CREATE_INTERVALS_BED, TABIX_BGZIPTABIX) + per-interval scatter/gather of BQSR / ApplyBQSR / HaplotypeCaller / joint GenotypeGVCFs (GATK4_GATHERBQSRREPORTS, CRAM/BAM_MERGE_INDEX_SAMTOOLS, GATK4_MERGEVCFS) | `create_intervals_bed`, `tabix_interval`, `gatk_baserecalibrator_scatter`, `gatk_gatherbqsrreports`, `gatk_applybqsr_scatter`, `merge_index_samtools`, `gatk_haplotypecaller_scatter`, `gatk_mergevcfs_scatter`, `gatk_haplotypecaller_gvcf_scatter`, `gatk_genomicsdbimport_scatter`, `gatk_genotypegvcfs_scatter`, `bcftools_sort_joint_scatter`, `gatk_mergevcfs_joint_scatter` | gawk 5.3.0, samtools 1.24, gatk4 4.5.0.0 | `scatter_gatk = true` (default off). Deviation: the engine's scatter fan-out takes a **static** value list, so intervals are one per chromosome (`config.chromosomes` \u2014 keep it in sync with the fasta `.fai`) instead of upstream's duration-binned windows (`nucleotides_per_second`); every downstream gather is exact and writes the same paths as the single-job branch, so results are identical \u2014 the branch adds per-contig parallelism, it does not change outputs. Needs live verification (see Test) |\n| fastp split parts (multi-part BWA_MEM + BAM_MERGE_INDEX_SAMTOOLS) | `fastp_split`, `bwa_mem_split`, `bwa_mem2_split`, `bam_merge_index_samtools` | fastp 1.1.0, bwa 0.7.19 / bwa-mem2, samtools 1.24 | `split_parts = true` (default off) \u2014 fastp's `--split_by_lines` parts are enumerated at runtime via the engine's `output_pattern` primitive (data-dependent part count, exactly like upstream's channel scan) and the per-part BWA_MEM/BWA_MEM2 + BAM_MERGE_INDEX_SAMTOOLS fan-out is reproduced: every part is aligned (`{sample}.NNNN.bam`, upstream prefix `{meta.id}.{token}`) and merged + indexed into `{sample}.sorted.bam` (upstream MERGE_BAM prefix `{meta.id}.sorted`) before MarkDuplicates \u2014 no input cap. Requires `mapped_bam = \"sorted\"`; not supported with `umi_read_structure`. See the deviation note below for the merge gating design. Requires the engine's `output_pattern` primitive (Traitome/oxo-flow#235) \u2014 unreleased as of v0.16.0, ships in the next engine release |\n| Somatic callers (Mutect2, somatic Strelka2/Manta, CNVkit, ASCAT, MSIsensor2/pro, SomaticSniper, VarDict, Control-FREEC, LoFreq, Varlociraptor) | \u2014 not ported | \u2014 | tumor/normal **pairs required**; the port's samplesheet is single-sample germline (`[[sample_groups]]`; the engine's `[[pairs]]` mechanism is a possible follow-up) |\n| Sentieon / Parabricks / DRAGMAP | \u2014 not ported | \u2014 | commercial accelerators (licensed binaries); out of scope |\n| VCF_QC + ENSEMBLVEP_VEP fan-out over the optional callers | `bcftools_stats_{freebayes,strelka,mpileup,deepvariant,manta,tiddit}`, `vcftools_tstv_count_{...}`, `vcftools_tstv_qual_{...}`, `vcftools_filter_summary_{...}`, `ensemblvep_vep_{...}` | bcftools 1.23.1, vcftools 0.1.17, ensembl-vep 112.0 | upstream runs VCF_QC + VEP on every caller VCF (`vcf_all`); the port now mirrors that: when `call_freebayes`/`call_strelka`/`call_mpileup`/`call_deepvariant`/`call_manta`/`call_tiddit` enables a caller, its VCF is QC'd (`reports/bcftools/<caller>/`, `reports/vcftools/<caller>/`) and annotated (`annotation/<caller>/`) with the same prefix conventions as the haplotypecaller rules; tiddit's uncompressed `.vcf` uses `--vcf` instead of `--gzvcf` (as upstream). All 30 rules are gated on their caller's flag (+ `skip_bcftools`/`skip_vcftools`/`annotate_vep`/`vep_cache_ready`) and feed the multiqc `depends_on`. Needs live verification (see Test) |\n\nDeviations (all documented, nothing silently dropped):\n\n- **fastp split parts \u2014 runtime-discovered fan-out (`split_parts = true`)**: the\n  engine has no fan-in/collection over runtime-discovered values (output_pattern\n  v1), so the per-sample merge is a plan-time rule whose shell waits for the\n  deterministic part count \u2014 fastp's parts are 1:1 with the part BAMs and\n  `fastp_split`'s final `mv` lands all parts at once \u2014 then runs\n  BAM_MERGE_INDEX_SAMTOOLS exactly once. A failed per-part alignment fails the\n  run (fail-fast cancels the waiting merge), so the wait cannot hang on a\n  healthy pipeline. `split_parts` is off by default and the default path is\n  unchanged: single part `0001.` -> `{sample}.0001.bam` (the upstream\n  `tokenize('.')[0]` behavior), so small/medium inputs never see the new\n  machinery. UMI consensus mode (`umi_read_structure`) is not supported with\n  `split_parts` \u2014 the two gates are mutually exclusive.\n- **scatter/gather is opt-in and uses per-chromosome intervals**: the\n  upstream per-interval fan-out (duration-binned windows) becomes\n  `scatter_gatk = true` in the port \u2014 one interval per chromosome (the\n  engine's scatter needs a static value list, so `config.chromosomes`\n  replaces upstream's `nucleotides_per_second` binning; both split a\n  whole-genome interval set, but per-chromosome granularity is coarser).\n  Off by default: BQSR, ApplyBQSR, HaplotypeCaller (and joint\n  GenotypeGVCFs) run as single whole-genome jobs (one interval from the\n  fasta `.fai` for the joint path). Every gather (GatherBQSRReports,\n  samtools merge+index, MergeVcfs) writes the same output paths in both\n  branches, so the branches are exchangeable without touching downstream\n  rules.\n- **BAM_CONVERT_SAMTOOLS collapse (UMI path)**: at this upstream commit the\n  four `samtools view` calls in `bam_convert_samtools` have no distinguishing\n  `-f/-F` flags anywhere in `conf/` (grep-verified), so the view \u2192 merge \u2192\n  collate \u2192 cat machinery emits four identical BAMs and **doubles the reads**\n  in the merged output. The port reproduces the functional intent with a\n  single `samtools collate -O | samtools fastq` instead.\n- **CNN-scored intermediate location**: upstream disables the\n  CNNSCOREVARIANTS publishDir (the `{sample}.cnn.vcf.gz` stays in the task\n  workdir); oxo-flow hands files between rules through `results/`, so the\n  port keeps it under `results/variant_calling/cnnscorevariants/` (same for\n  the joint VQSR intermediates, unpublished upstream).\n- **reference-prep outputs are published**: upstream leaves built\n  BWA/BWAmem2 indexes, `.dict` and `.fai` in the task workdir unless\n  `save_reference`; oxo-flow requires tracked outputs, so the port publishes\n  them under `results/reference/` \u2014 point `bwa_index_dir` /\n  `bwa_mem2_index_dir` / `fasta_fai` / `dict` at those paths to use them.\n- **single-lane model**: `meta.id` = `{sample}` from BWA-MEM onward\n  (upstream: `{sample}-{lane}`); preprocessing stage files keep the upstream\n  `{sample}-{lane}` prefix. Read-group IDs are `{sample}.{lane}` as upstream.\n- **Docker staging**: only the rule workdir is mounted, so reference files are\n  copied into the workdir under fixed local names (`reference.fasta`,\n  `reference.fasta.fai`, `reference.dict`) \u2014 same effect as Nextflow's\n  staging of the reference into the task directory.\n- **`known_indels`** is a TOML array (2 GRCh38 files); both it and\n  `known_indels_tbi` must be updated together when changing references.\n",
     "compute": "up to 24 CPUs / 36 GB per rule (BWA-MEM)",
     "quickstart_note": "Point the `[config]` fasta / bwa_index / dbsnp / known_indels paths at your GRCh38 bundle and place reads as `raw/<sample>_R1.fastq.gz` / `_R2.fastq.gz`; `oxo-flow dry-run main.oxoflow` previews the plan.",
-    "coverage": "default-path"
+    "coverage": "default-path",
+    "workflowhub": {
+      "id": 2279,
+      "url": "https://workflowhub.eu/workflows/2279",
+      "doi": "10.48546/workflowhub.workflow.2279.1",
+      "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2279.1"
+    }
   },
   {
     "name": "oxo-flow-scrnaseq",
@@ -496,7 +571,13 @@ window.OXO_PIPELINES = [
     "fidelity_md": "Rows cover every upstream process/subworkflow of nf-core/scrnaseq 4.2.0, on all\nsix aligner branches. Container image strings and conda pins are copied\nverbatim from the upstream modules (all pinned, no `latest`). Deviations from\nupstream mechanics are called out per row; one multi-lane data limitation\nremains and is listed at the bottom with evidence. `PIPELINE_COMPLETION` is\nported via workflow-level hooks (row below).\n\n**Live verification** (2026-08-26/27, tx-ubuntu, engine 0.15.0 + apptainer):\nfive configurations passed end-to-end \u2014 `aligner = cellranger`, `simpleaf`,\n`kallisto`, `star` (10X) and `star` with `protocol = dropseq`. The\n`cellrangerarc` branch is ported and validate/lint-clean but was not live-run\nin this wave. The `cellranger_multi` branch is ported and validate/lint/\ndry-run-clean with the expanded per-sample config.csv verified shell-level\n(see the [Cell Ranger multi mode](#cell-ranger-multi-mode) section); it needs\nthe `quay.io/nf-core/cellranger:10.0.0` container (present for `count`), so a\nlive run only needs the metadata table filled \u2014 queued for the next container\nwave.\n\n| Upstream process/rule | oxo-flow rule | Tool (version) | Notes |\n|---|---|---|---|\n| `PIPELINE_INITIALISATION` (samplesheet check) | sample source + `config.samplesheet` | \u2014 | Samplesheet (`sample, fastq_1, fastq_2, protocol, expected_cells`) maps to `[[sample_groups]]`; `expected_cells` column \u2192 `config.expected_cells`; per-sample `protocol` column is informational (chemistry comes from `--protocol`). Schema checks are enforced by the port's fixtures + README contract. |\n| `FASTQC` | `fastqc` | fastqc 0.12.1 | Identical command: `printf \u2026 \\| while read; ln -s` staging loop, `fastqc --quiet --threads N --memory <12G/N clamped 100-10000>`. Published under `results/fastqc/` (upstream default publishDir). `--memory` computed in-shell from the process_low 12G/2 cpus. |\n| `GUNZIP` (as `GUNZIP_FASTA`) | `gunzip_fasta` | gzip 1.13 | Identical command (`gzip -cd <fasta> > <out>`). Runs only when `config.fasta_gz` (upstream decides by `.endsWith('.gz')` at runtime \u2014 port uses an explicit flag, see Gotchas). |\n| `GUNZIP` (as `GUNZIP_GTF`) | `gunzip_gtf` | gzip 1.13 | Same as above for the GTF. |\n| `GTF_GENE_FILTER` | `gtf_gene_filter` | python 3.9 | Same bundled script `filter_gtf_for_genes_in_genome.py`, same flags (`--gtf --fasta -o`); output name `<fasta_stem>_genes.gtf` is `config.gtf_filtered`. |\n| `GAWK` (as `GTF_SOURCE_FIX`) | `gtf_source_fix` | gawk 5.3.1 | Same awk program (`FS=OFS=\"\\t\"`, source-field spaces\u2192underscores, output suffix `gtf`). Off by default, exactly like upstream (only fires for iGenomes entries flagged `gtf_source_has_spaces`). |\n| `CELLRANGER_MKGTF` | `cellranger_mkgtf` | cellranger 10.0.0 | Same command incl. the three `--attribute=gene_biotype:` filters. Runs only when `build_cellranger_index=true` (mirrors upstream `if (!cellranger_index)`). |\n| `CELLRANGER_MKREF` | `cellranger_mkref` | cellranger 10.0.0 | Same command (`--genome=\u2026 --fasta=\u2026 --genes=\u2026 --localcores --localmem --nthreads`). `--genome` is `config.transcriptome` (default `refs/cellranger_reference`) instead of a bare workdir name \u2014 same reference name, path relocated to the workflow tree. |\n| `CELLRANGER_COUNT` | `cellranger_count` | cellranger 10.0.0 | Same command: reads staged under Cell Ranger naming (`<sample>_S1_L001_R1/R2_001.fastq.gz`), `cellranger count --id <sample> --fastqs fastq_all --transcriptome \u2026 --localcores \u2026 --localmem \u2026 --chemistry <protocol> --create-bam <bool>` + `--expect-cells` when set. The outs tree is then relocated to `results/<aligner>/count/<sample>/outs/` (upstream publishDir `outdir/cellranger/count`). Skipped when `cellranger_multi = true` (the upstream aligner branches are exclusive). Multi-lane samples (several fastq pairs per sample) are not represented \u2014 one pair per sample. |\n| `CELLRANGER_MKVDJREF` | `cellranger_mkvdjref` | cellranger 10.0.0 | Same command (`cellranger mkvdjref --genome=\u2026 --fasta=\u2026 --genes=\u2026 --localcores \u2026 --localmem \u2026`). Runs only when `cellranger_multi = true` and no `cellranger_multi_vdj_reference` is set and `skip_cellrangermulti_vdjref = false` \u2014 mirrors the upstream `if (!cellranger_vdj_index && !params.skip_cellrangermulti_vdjref)` gate. Output at `refs/cellranger_vdj_reference/`. |\n| `CELLRANGER_MULTI` | `cellranger_multi` | cellranger 10.0.0 | Same module (`cellranger multi --id <sample> --csv=<config.csv> --localcores \u2026 --localmem \u2026`, `TENX_DISABLE_TELEMETRY` set): per-modality reads staged under `fastq_all/<modality>/` with Cell Ranger naming, config.csv assembled with `[gene-expression]` (reference/chemistry/create-bam), `[vdj]`, `[feature]` and `[libraries]` rows per present modality, `[samples]` when CMO FASTQs are present. outs tree relocated to `results/<aligner>/multi/<sample>/outs/` (upstream `outdir/cellranger/multi`; the port keeps `count/` and `multi/` disjoint instead of upstream's single `count/` dir). Upstream's per-sample, per-modality `groupTuple` + EMPTY-file injection is replaced by the metadata table \u2014 see the [Cell Ranger multi mode](#cell-ranger-multi-mode) section. |\n| `SIMPLEAF_INDEX` | `simpleaf_index` | simpleaf 0.19.5, piscem 0.12.2, alevin-fry 0.11.2, salmon 1.10.3 | Same command (`simpleaf set-paths` + `simpleaf index --threads \u2026 [--ref-seq <transcript_fasta> | --fasta \u2026 --gtf \u2026] -o simpleaf_index`; `ulimit -n 2048` and `ALEVIN_FRY_HOME` exported). Transcript-fasta mode requires `txp2gene`, mirroring upstream's assert. Output under `refs/simpleaf_index/`. |\n| `SIMPLEAF_QUANT` | `simpleaf_quant` | simpleaf 0.19.5, alevin-fry 0.11.2, piscem 0.12.2, salmon 1.10.3 | Same command (`simpleaf quant [--t2g-map \u2026] --chemistry <protocol-mapped> --index \u2026 --reads1/2 \u2026 --resolution cr-like --output simpleaf_quant --threads \u2026 --anndata-out --unfiltered-pl <whitelist>`; cell filtering hardcoded to `unfiltered-pl` upstream \u2192 input_type is always raw). Protocol\u2192chemistry mapping and per-protocol whitelist mirror `assets/protocols.json`. Output `results/<aligner>/<sample>/simpleaf_quant/af_quant/`. |\n| `QCATCH` | `qcatch` | qcatch 0.2.12 | Same command (`qcatch --input <af_quant dir> --output qcatch [--chemistry 10X_3p_v2/v3/v4] --save_filtered_h5ad --export_summary_table [--n_partitions] [--remove_doublets --visualize_doublets]`), same output renames (`QCatch_report.html` \u2192 `<sample>_qcatch_report.html`, `filtered_quants.h5ad` \u2192 `<sample>_filtered_quants.h5ad`, `summary_table.csv` \u2192 `<sample>_metrics_summary.csv`). Chemistry mapping for 10XV2-4 only, exactly like upstream. |\n| `KALLISTOBUSTOOLS_REF` | `kallistobustools_ref_standard`, `kallistobustools_ref_velocity` | kb-python 0.28.2 | Same commands: standard `kb ref -i \u2026 -g \u2026 -f1 cdna.fa --workflow standard`; non-standard workflows (`lamanno`/`nac`) add `-f2 intron.fa -c1 cdna_t2c.txt -c2 intron_t2c.txt --workflow <mode>`. Mutual exclusion is a `when` on `kb_workflow` (upstream picks the command by the same variable). Outputs under `refs/kallisto/`. |\n| `KALLISTOBUSTOOLS_COUNT` | `kallistobustools_count` | kb-python 0.28.2 | Same command (`kb count -t \u2026 -i \u2026 -g \u2026 [-c1 \u2026] [-c2 \u2026] -x <technology> --workflow <kb_workflow> --filter -o <sample>.count -m <memory.toGiga()-1>G reads`); technology mapping for 10XV1-4/DROPSEQ/SMARTSEQ mirrors upstream. Ext.args `--workflow \u2026 --filter` applied. Output `results/<aligner>/<sample>.count/`. |\n| `STAR_GENOMEGENERATE` | `star_genomegenerate` | star 2.7.11b, samtools 1.21, gawk 5.1.0 | Same command: `samtools faidx` + gawk SAindexNbases heuristic from the `.fai` (14 cap), `--runMode genomeGenerate --genomeDir \u2026 --genomeFastaFiles \u2026 --sjdbGTFfile \u2026 --runThreadN \u2026 --genomeSAindexNbases \u2026 --limitGenomeGenerateRAM <memory-100000000>`. Output under `refs/star_index/`. |\n| `STAR_GENOMEPARAMS_UPGRADE` | `star_genomeparams_upgrade` | gawk 5.3.1 | Same script: symlink the legacy index files, awk-rewrite `genomeParameters.txt` (versionGenome 20201 \u2192 2.7.4a, append genomeType/Full + genomeTransformType/None + genomeTransformVCF/-), move to `refs/star_index_upgraded/`. Fires only when `star_index` is set and `star_index_legacy=true` (upstream `isStarIndexLegacy`). |\n| `STAR_ALIGN` | `star_align` | star 2.7.10b | Same command: reads passed REVERSE first, `--readFilesCommand zcat --runDirPerm All_RWX --outWigType bedGraph --twopassMode Basic --outSAMtype BAM SortedByCoordinate --limitBAMsortRAM <memory bytes>`, `--soloCBwhitelist` with the same `.gz`\u2192uncompress handling (protocols without an upstream whitelist \u2014 dropseq/smartseq \u2014 get the literal `--soloCBwhitelist None`, STAR's required spelling for no whitelist; live-found: omitting the flag aborts with \"--soloCBwhitelist is not defined\"), `--soloType`/`--soloUMIlen` per protocol (10XV1/2\u219210, 10XV3/4\u219212, dropseq/smartseq\u2192none), `--soloCellFilter CellRanger2.2 <expected_cells> 0.99 10` when set, `--soloFeatures <star_feature>` (+Velocyto publish rename). Solo.out tsv/mtx files gzipped in-place before publish, exactly like upstream. Index selection: upgraded legacy > user `star_index` > built. |\n| `CELLRANGERARC_MKGTF` | `cellrangerarc_mkgtf` | cellranger-arc 2.0.2 | Same command as upstream (`cellranger-arc mkgtf` with the three biotype filters). Runs only when `build_cellranger_index=true`. |\n| `CELLRANGERARC_MKREF` | `cellrangerarc_mkref` | cellranger-arc 2.0.2 | Same flow: auto-generated mkref config json (`organism: \"refdata\"`, `genome: [\"<prefix>_reference\"]`, `input_fasta`, `input_gtf`) or user `cellrangerarc_config`, then `cellranger-arc mkref --config=config --nthreads \u2026`. Output at `refs/cellrangerarc_reference/` (the config's `genome` name; `cellrangerarc_reference` can point at an existing reference to skip building). |\n| `CELLRANGERARC_COUNT` | `cellrangerarc_count` | cellranger-arc 2.0.2 | Same flow: fastqs staged under `fastqs/`, 2-row `lib.csv` (Gene Expression / Chromatin Accessibility), `cellranger-arc count --id=<sample> --libraries=\u2026 --reference=\u2026 --localcores \u2026 --localmem \u2026 [--expect-cells]`, outs tree relocated to `results/<aligner>/count/<sample>/outs/`. Deviation: the upstream samplesheet's `sample_type`/`fastq_barcode` columns are replaced by a fixed file-naming contract \u2014 see the sample-data requirements. |\n| `MTX_TO_H5AD` | `mtx_to_h5ad_{raw,filtered,multi_raw,multi_filtered,simpleaf,kallisto_raw,kallisto_filtered,star_raw,star_filtered}` | scanpy 1.10.2 / pandas / anndata | Same template scripts per aligner (`mtx_to_h5ad_cellranger.py` \u2014 read_10x_h5, also used for cellrangerarc and the multi branch exactly like upstream's `(input_aligner in ['cellranger','cellrangerarc','cellrangermulti']) ? 'cellranger' : input_aligner`; `mtx_to_h5ad_simpleaf.py`; `mtx_to_h5ad_kallisto.py` with standard/lamanno/nac branches; `mtx_to_h5ad_star.py` incl. the Velocyto layer code, dead upstream, kept verbatim), one rule per aligner\u00d7input_type; the multi branch reads the per-sample count h5s from `per_sample_outs/<sample>/count/` (upstream `CELLRANGER_MULTI` emits the same files under `count/`). Raw/filtered gating mirrors the upstream channels: simpleaf emits only raw (upstream hardcodes `unfiltered-pl`); star/kallisto filtered conversions skip for protocols without a whitelist (dropseq/smartseq) \u2014 the upstream filtered dirs don't exist there. |\n| `CELLBENDER_REMOVEBACKGROUND` | `cellbender_removebackground` | cellbender 0.3.2 | Same command `TMPDIR=. cellbender remove-background --cpu-threads \u2026 --estimator-multiple-cpu --input \u2026 --output <sample>.h5` (no `--cuda`: GPU profile is out of scope). Full output file set moved to `results/<aligner>/<sample>/cellbender_removebackground/`. Skipped for `cellrangerarc`, exactly like upstream. |\n| `ANNDATA_BARCODES` | `anndata_barcodes` | anndata 0.11.4 / pandas | Same template script (barcode CSV \u2192 subset \u2192 write), same output name `<sample>_cellbender_filter_matrix.h5ad`. Skipped for `cellrangerarc` with the upstream subworkflow. |\n| `CONCAT_H5AD` | `concat_h5ad_filtered`, `concat_h5ad_cellbender_filter`, `concat_h5ad_raw` | scanpy 1.10.2 | Same template script (`ad.concat(label=\"sample\", merge=\"unique\", index_unique=\"_\")` + samplesheet join on `sample`). Upstream runs one process per input_type; the port has one rule per input_type. Gating mirrors the upstream channels: `filtered` skips for simpleaf (no filtered h5ads), star+dropseq and kallisto+dropseq (no filtered dirs), and smartseq (no whitelist); `raw` runs only when `skip_cellbender=true` or aligner=cellrangerarc (raw superseded by the CellBender-filtered h5ad otherwise). |\n| `ANNDATAR_CONVERT` | `anndatar_convert_{filtered,cellbender_filter,raw}` + `anndatar_convert_combined_{\u2026}` | anndataR 1.0.2, SeuratObject 5.5.0, SingleCellExperiment 1.32.0 | Same R template (read_h5ad \u2192 `as_Seurat()`/`as_SingleCellExperiment()` \u2192 saveRDS). Six rules: per sample and per combined h5ad, per input_type; type gating mirrors the concat rules. Upstream `dir.create(<sample>)` calls and versions.yml writing dropped (output dirs are pre-created by the engine; versions are recorded in `collect_versions`). |\n| `softwareVersionsToYAML` + `collectFile` | `collect_versions` | \u2014 | Writes the same file `results/pipeline_info/nf_core_scrnaseq_software_mqc_versions.yml` consumed by MultiQC. Content is the port's pinned versions (upstream collates live tool versions from a channel topic, which has no oxo-flow equivalent); since containers are pinned, the recorded versions equal the executed ones. Only the active aligner's block is emitted, like the upstream channel topic. |\n| `paramsSummaryMultiqc` + methods description | `workflow_summary`, `methods_description` | \u2014 | New default-ON rules producing the summary/methods MultiQC YAMLs from the copied-verbatim `assets/methods_description_template.yml` (the `${\u2026}` placeholders are filled at render time; upstream fills them from the Nextflow workflow object, which has no oxo-flow equivalent). They run in the default config, so a single-sample default dry-run plan (`oxo-flow dry-run main.oxoflow --samples first:1`, as exercised by test/run.sh) shows 21 rules executing (19 baseline + these 2); with the two bundled samples the plan shows 29 running instances \u2014 documented new default behavior. |\n| `MULTIQC` | `multiqc` | multiqc 1.34 | Same command (`multiqc --force [--title] --config <assets/multiqc_config.yml> .`) with inputs staged flat like the module's `stageAs '?/*'`; the input union covers the active aligner's web summaries/logs (FastQC + cellranger count web_summary + cellranger multi `multi/` web_summary + simpleaf quants.h5ad + STAR Log.final.out). Default `assets/multiqc_config.yml` copied verbatim from upstream. |\n| `PIPELINE_COMPLETION` (email/webhook) | workflow-level hooks (no rule) | sendmail / mail / curl | Same semantics, implemented as `[workflow] on_complete` / `on_error` hooks (engine \u2265 0.17.0; older engines ignore the hook keys, so released-engine runs are untouched). Success email goes to `config.email`; failure email to `config.email` when set, else `config.email_on_fail` (upstream completionEmail address selection); webhook POST (`succeeded=`/`failed=` counters) to `config.hook_url` on both paths. Email via `sendmail -t` when available, else `mail -s`; all three keys default empty \u2014 the default run never touches mail or network tools. Best-effort like upstream: a failing notification warns, never changes the run status. |\n\n**Not ported (with reasons):**\n\n| Upstream branch | Reason |\n|---|---|\n| `skip_cellranger_renaming` (multi-lane samples) | One fastq pair per sample is supported; the staging rename hard-codes lane `L001`. |\n\n**Other deliberate deviations** (documented per row above): FastQC is skipped\nfor `cellrangerarc` (five reads per sample cannot fit one static input\npattern; upstream runs it on all of them); the arc samplesheet columns are a\nfile-naming contract; `workflow_summary`/`methods_description` are new\ndefault-ON rules; simpleaf/star/kallisto accept one explicit `whitelist` path\ninstead of upstream's automatic per-protocol mapping; the cellranger multi\nbranch takes its per-modality fastq paths from the metadata table instead of\nupstream's `--cellranger_multi_sample_*` CLI flags (see below).\n\n## Cell Ranger multi mode\n\n`aligner = cellranger` runs `cellranger count` by default; setting\n`cellranger_multi = true` switches the cellranger branch to the upstream\n`aligner = cellrangermulti` mode \u2014 `cellranger multi` per sample, with the\nsame GEX reads plus any of VDJ, antibody, BEAM, CRISPR or CMO FASTQ pairs.\n`count` and `multi` are mutually exclusive (the `when` gates mirror the\nupstream aligner branch), and both converge on the same downstream h5ad\nchain, so `cellbender`/`concat`/`anndatar` need no changes.\n\n**Per-modality inputs via the metadata table.** Upstream feeds per-sample,\nper-modality fastq groups into the module with channel branching\n(`groupTuple` + EMPTY-file injection when a modality is absent) \u2014 a\nvariable-cardinality input set that a fixed rule signature cannot express.\nThe port's metadata binding (`[workflow] metadata_file`, engine \u2265 0.17.0)\nreplaces it: each sample's optional modality pairs live in one\n`<modality>_fastq_1` / `<modality>_fastq_2` column pair of\n`refs/cellranger_multi_metadata.tsv`, and an empty cell renders as `''` \u2014 the\nport's equivalent of the upstream EMPTY-file injection. The `cellranger_multi`\nrule reads those cells through `{meta.<modality>_fastq_1/2}` placeholders\n(expanded per sample at plan time) and builds the config.csv with only the\npresent modalities, so the variable-cardinality config is expressible in the\nshell with no engine follow-up.\n\n**Reference selection** mirrors the upstream channels:\n\n- GEX: `cellranger_multi_gex_reference` if set (upstream `--cellranger_index`),\n  else the built `{config.transcriptome}`.\n- VDJ: `cellranger_multi_vdj_reference` if set (upstream `--cellranger_vdj_index`),\n  else the `cellranger_mkvdjref`-built `refs/cellranger_vdj_reference/`\n  (skipped when `skip_cellrangermulti_vdjref = true`, same gate as upstream).\n- Feature barcoding: `cellranger_multi_fb_reference` (upstream `--fb_reference`),\n  **required when** antibody or CRISPR FASTQs are present \u2014 the rule fails\n  fast with upstream's message otherwise.\n- CMO: `cellranger_multi_barcodes` (upstream `--cellranger_multi_barcodes`),\n  **required when** CMO FASTQs are present.\n\nAll configured paths are existence-checked before `cellranger multi` starts;\nVDJ and GEX references are directory checks, the fb reference and barcodes\nare file checks.\n\n**Chemistry mapping** reuses the port's protocol\u2192chemistry table\n(`auto`\u2192`auto`, 10XV1-4\u2192SC3Pv1-4), with upstream's exact guard that only\ncellranger accepts `protocol = 'auto'`; unrecognized protocols pass through\nverbatim with a warning (upstream logs the same).\n\n**Outputs** land at `results/<aligner>/multi/<sample>/outs/` \u2014 the upstream\nmodule's `outs/` tree including `web_summary.html` and\n`per_sample_outs/<sample>/count/sample_{filtered,raw}_feature_bc_matrix.h5`,\nwhich feed the shared `mtx_to_h5ad_multi_{raw,filtered}` rules.\n\n**Verification status:** the branch is validate/lint-clean, and the expanded\nper-sample shells were exercised end-to-end against a `cellranger` stub that\nconsumes the generated config.csv and emits the declared outs tree \u2014 S1 with\nVDJ + antibody produced `[gene-expression]`/`[vdj]`/`[feature]` sections and\nthree `[libraries]` rows; S2 without them produced the GEX-only config. A\nlive run needs the same `quay.io/nf-core/cellranger:10.0.0` container the\n`count` branch already uses, so it only waits on a container-backed host with\nthe metadata table filled \u2014 queued for the next container wave.\n\n**Live-root-caused fixes** (engine 0.15.0, tx-ubuntu): tool-facing\nthreads/cores use `{effective_threads}` (rules declare 12/6 CPUs; a 4-core box\nwould oversubscribe); every container spec is quay.io-qualified (bare\n`biocontainers/...` resolves to Docker Hub, not the pinned quay.io registry);\ndirectory-moving rules `rm -rf` the engine-precreated output parent before\n`mv` (the parent exists, so `mv` would nest the tree inside itself); the STAR\nindex nbases heuristic truncates with `int()` and a 14 cap (the 52kb fixture\ngenome rounded up to 7 where STAR requires 6 \u2014 \"may cause seg-fault\"); the\nfixture GTF gives every gene two exons with an intron (single-exon\ntranscripts crash simpleaf's grangers intron pass: polars \"invalid series\ndtype: expected List, got null\"); the fixture genome is padded to ~52kb (STAR\ndouble-frees on the original 1.9 kb genome).",
     "compute": "up to 12 CPUs / 72 GB per rule (Cell Ranger)",
     "quickstart_note": "Needs Cell Ranger reference data and reads \u2014 see Requirements; preview with `oxo-flow dry-run main.oxoflow`.",
-    "coverage": "five live-verified configurations on tx-ubuntu (engine 0.15.0, apptainer) 2026-08-27: aligner=cellranger, simpleaf, kallisto, star (10X), star+dropseq; the cellrangerarc branch is ported and validate/lint-clean but was not live-run; the cellranger_multi branch is ported and validate/lint/dry-run-clean with the expanded per-sample config.csv verified shell-level (needs the same cellranger container the count branch uses \u2014 live run queued for the next container wave)"
+    "coverage": "five live-verified configurations on tx-ubuntu (engine 0.15.0, apptainer) 2026-08-27: aligner=cellranger, simpleaf, kallisto, star (10X), star+dropseq; the cellrangerarc branch is ported and validate/lint-clean but was not live-run; the cellranger_multi branch is ported and validate/lint/dry-run-clean with the expanded per-sample config.csv verified shell-level (needs the same cellranger container the count branch uses \u2014 live run queued for the next container wave)",
+    "workflowhub": {
+      "id": 2280,
+      "url": "https://workflowhub.eu/workflows/2280",
+      "doi": "10.48546/workflowhub.workflow.2280.1",
+      "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2280.1"
+    }
   },
   {
     "name": "oxo-flow-mag",
@@ -833,39 +914,10 @@ window.OXO_PIPELINES = [
       "tiara_classify_spades_semibin2_bins",
       "tiara_tiara_megahit",
       "tiara_tiara_spades",
-      "trimmomatic",
-      "fastp_sheet",
-      "fastp_single_sheet",
-      "fastqc_raw_sheet",
-      "fastqc_trimmed_sheet",
-      "megahit_interleaved_sheet",
-      "megahit_single_sheet",
-      "spades_interleaved_sheet",
-      "phix_align_sheet",
-      "bowtie2_align_megahit_sheet",
-      "bowtie2_align_spades_sheet",
-      "depths_megahit_sheet",
-      "depths_spades_sheet",
-      "catpack_unbinned_spades_metabat2",
-      "pydamage_analyze_spades",
-      "pydamage_analyze_megahit",
-      "ancient_consensus_spades",
-      "ancient_consensus_megahit",
-      "pydamage_bins_summary",
-      "flye_lr",
-      "metamdbg_lr",
-      "minimap2_align_lr_flye",
-      "minimap2_align_lr_metamdbg",
-      "metabat2_lr_flye",
-      "maxbin2_lr_flye",
-      "concoct_lr_flye"
+      "trimmomatic"
     ],
-    "excluded": [
-      "kaiju \u2014 taxonomic profiling with kaiju; not portable: the process is absent from upstream nf-core/mag 5.5.0 entirely (removed upstream), so there is no module script to translate",
-      "diamond \u2014 taxonomic profiling with diamond; same as kaiju: absent from upstream 5.5.0, no module script to translate",
-      "nf-core boilerplate files (pipeline_summary/methods_description) \u2014 not part of the analysis. Note: the versions.yml half is since covered by the engine-native export `oxo-flow report --versions-yml` (engine >= 0.17.0)"
-    ],
-    "rule_count": 311,
+    "excluded": [],
+    "rule_count": 352,
     "tools": [
       "adapterremoval",
       "ale",
@@ -927,7 +979,18 @@ window.OXO_PIPELINES = [
     "compute": "up to 12 CPUs / 140 GB per rule (defaults 1 thread / 6 GB)",
     "quickstart_note": "Download the GTDB-Tk database (~100 GB), set `config.gtdb_db`, then run \u2014 the default config otherwise points at committed test fixtures.",
     "coverage": "default-path",
-    "updated": "2026-09-04"
+    "updated": "2026-09-04",
+    "not_applicable": [
+      "kaiju \u2014 taxonomic profiling with kaiju; not portable: the process is absent from upstream nf-core/mag 5.5.0 entirely (removed upstream), so there is no module script to translate",
+      "diamond \u2014 taxonomic profiling with diamond; same as kaiju: absent from upstream 5.5.0, no module script to translate",
+      "nf-core boilerplate files (pipeline_summary/methods_description) \u2014 not part of the analysis. Note: the versions.yml half is since covered by the engine-native export `oxo-flow report --versions-yml` (engine >= 0.17.0)"
+    ],
+    "workflowhub": {
+      "id": 2281,
+      "url": "https://workflowhub.eu/workflows/2281",
+      "doi": "10.48546/workflowhub.workflow.2281.1",
+      "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2281.1"
+    }
   },
   {
     "name": "oxo-flow-ampliseq",
@@ -956,79 +1019,85 @@ window.OXO_PIPELINES = [
       "nf-core"
     ],
     "scope": [
-      "rename_raw_data_files",
-      "fastqc",
       "cutadapt",
       "cutadapt_summary",
       "cutadapt_summary_merge",
-      "dada2_quality_fw",
-      "dada2_quality_rv",
-      "trunclen_fw",
-      "trunclen_rv",
-      "dada2_filtntrim",
-      "dada2_quality_fw_preprocessed",
-      "dada2_quality_rv_preprocessed",
-      "dada2_err",
       "dada2_denoising",
+      "dada2_err",
+      "dada2_filtntrim",
+      "dada2_merge",
+      "dada2_quality_fw",
+      "dada2_quality_fw_preprocessed",
+      "dada2_quality_rv",
+      "dada2_quality_rv_preprocessed",
       "dada2_rmchimera",
       "dada2_stats",
-      "dada2_merge",
-      "merge_stats",
-      "itsx_cutasv",
-      "itsxrust_cutasv",
-      "filter_len_itsx",
-      "download_taxonomy_db",
-      "format_taxonomy",
       "dada2_taxonomy",
       "dada2_taxonomy_its",
-      "qiime2_inasv",
-      "qiime2_inseq",
-      "qiime2_inasv_its",
-      "qiime2_inseq_its",
-      "qiime2_intax",
-      "qiime2_barplot",
-      "qiime2_metadata_categories",
-      "qiime2_diversity_tree",
+      "download_taxonomy_db",
+      "fastqc",
+      "filter_len_itsx",
+      "format_taxonomy",
+      "itsx_cutasv",
+      "itsxrust_cutasv",
+      "merge_stats",
+      "multiqc",
+      "phyloseq",
+      "picrust",
       "qiime2_alphararefaction",
-      "qiime2_diversity_core",
-      "qiime2_diversity_alpha",
-      "qiime2_diversity_beta",
-      "qiime2_diversity_betaord",
-      "qiime2_diversity_adonis",
-      "qiime2_export_absolute",
-      "qiime2_export_relasv",
-      "qiime2_export_reltax",
       "qiime2_ancom",
       "qiime2_ancombc",
       "qiime2_ancombc2",
-      "qiime2_preptax",
+      "qiime2_barplot",
       "qiime2_classify",
-      "multiqc",
-      "picrust"
+      "qiime2_diversity_adonis",
+      "qiime2_diversity_alpha",
+      "qiime2_diversity_beta",
+      "qiime2_diversity_betaord",
+      "qiime2_diversity_core",
+      "qiime2_diversity_tree",
+      "qiime2_export_absolute",
+      "qiime2_export_relasv",
+      "qiime2_export_reltax",
+      "qiime2_inasv",
+      "qiime2_inasv_its",
+      "qiime2_inseq",
+      "qiime2_inseq_its",
+      "qiime2_intax",
+      "qiime2_metadata_categories",
+      "qiime2_preptax",
+      "rename_raw_data_files",
+      "sbdiexport",
+      "sbdiexportreannotate",
+      "summary_report",
+      "treesummarizedexperiment",
+      "trunclen_fw",
+      "trunclen_rv"
     ],
-    "excluded": [
-      "nanopore: nanopore sequencing branch (params.nanopore) \u2014 absent from the 2.18.0 codebase (grep-verified; only docs/usage.md mentions Nanopore re ITSxRust long reads)",
-      "syncom: synthetic community controls branch (params.syncom) \u2014 absent from the 2.18.0 codebase (grep-verified)"
-    ],
+    "excluded": [],
     "rule_count": 54,
     "tools": [
-      "fastqc",
-      "cutadapt",
-      "python",
-      "pandas",
-      "r-base",
-      "dada2",
-      "bioconductor-digest",
       "bioconductor-biostrings",
+      "bioconductor-digest",
+      "biocontainers",
+      "curl",
+      "cutadapt",
+      "dada2",
+      "fastqc",
       "itsx",
       "itsxrust",
-      "curl",
-      "biocontainers",
-      "qiime2",
+      "multiqc",
+      "pandas",
       "picrust2",
-      "multiqc"
+      "python",
+      "qiime2",
+      "r-base",
+      "r-phyloseq",
+      "r-rmarkdown",
+      "r-sbdiexport",
+      "r-treesummarizedexperiment"
     ],
-    "description": "Amplicon sequencing analysis (16S/ITS) that takes raw paired-end reads through FastQC quality control, cutadapt primer trimming (incl. the illumina_pe_its read-through pass), DADA2 denoising (quality profiles, filterAndTrim, learnErrors, denoise, chimera removal, read tracking, optional multi-run merge), taxonomy assignment against the SBDI-GTDB reference (or the ITS-cut length-filtered branch), a QIIME2 taxa barplot over sample metadata, optional QIIME2 downstream analyses (phylogenetic tree, alpha/beta diversity, abundance table exports, ANCOM/ANCOM-BC/ANCOM-BC2, classifier training/prediction), optional PICRUSt2 functional predictions, an overall summary table and a MultiQC report.",
+    "description": "Amplicon sequencing analysis (16S/ITS) that takes raw paired-end reads through FastQC quality control, cutadapt primer trimming (incl. the illumina_pe_its read-through pass), DADA2 denoising (quality profiles, filterAndTrim, learnErrors, denoise, chimera removal, read tracking, optional multi-run merge), taxonomy assignment against the SBDI-GTDB reference (or the ITS-cut length-filtered branch), a QIIME2 taxa barplot over sample metadata, optional QIIME2 downstream analyses (phylogenetic tree, alpha/beta diversity, abundance table exports, ANCOM/ANCOM-BC/ANCOM-BC2, classifier training/prediction), optional PICRUSt2 functional predictions, an overall summary table and a MultiQC report. Optional post-analysis branches cover the SBDI Sweden biodiversity submission export (event/dna/emof/asv-table/annotation tables), phyloseq and TreeSummarizedExperiment R objects, and an Rmd-based HTML summary report (results/summary_report/summary_report.html) that aggregates QC plots, DADA2 stats, taxonomy references and the optional branch artifacts into one self-contained document.",
     "installation": {
       "engine": "oxo-flow >= 0.17.0",
       "toolchain": "containers (Docker/Singularity) \u2014 pinned images",
@@ -1048,7 +1117,17 @@ window.OXO_PIPELINES = [
     "compute": "up to 10 CPUs / 20 GB per rule (DADA2 rules; qiime2_preptax/qiime2_classify 10c/20G, 24h limits); picrust 10 CPUs / 50 GB / 24h; QIIME2 rules need the qiime2 container (~20GB unpacked)",
     "quickstart_note": "Default config runs the DADA2 path (denoising, taxonomy against the auto-downloaded SBDI-GTDB reference, read-tracking summary, MultiQC); the QIIME2 (barplot + downstream diversity/ANCOM/classifier), ITS, multi-run and PICRUSt branches are opt-in toggles \u2014 see Fidelity. Preview with `oxo-flow dry-run main.oxoflow`.",
     "coverage": "default path live-verified (tx-ubuntu, 25/25 rules, exit 0, singularity; qiime2 via quay.io/qiime2/amplicon:2026.1); ITS, QIIME2 downstream, multi-run and PICRUSt branches ported \u2014 validate/lint/dry-run verified, not live-run this wave",
-    "updated": "2026-09-04"
+    "updated": "2026-09-04",
+    "not_applicable": [
+      "nanopore: nanopore sequencing branch (params.nanopore) \u2014 absent from the 2.18.0 codebase (grep-verified; only docs/usage.md mentions Nanopore re ITSxRust long reads)",
+      "syncom: synthetic community controls branch (params.syncom) \u2014 absent from the 2.18.0 codebase (grep-verified)"
+    ],
+    "workflowhub": {
+      "id": 2282,
+      "url": "https://workflowhub.eu/workflows/2282",
+      "doi": "10.48546/workflowhub.workflow.2282.1",
+      "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2282.1"
+    }
   },
   {
     "name": "oxo-flow-chipseq",
@@ -1137,6 +1216,7 @@ window.OXO_PIPELINES = [
       "multiqc_multi",
       "multiqc_narrow",
       "multiqc_narrow_multi",
+      "multiqc_workflow_summary",
       "phantompeakqualtools",
       "picard_collectmultiplemetrics",
       "plot_homer_annotatepeaks",
@@ -1159,13 +1239,8 @@ window.OXO_PIPELINES = [
       "trimgalore",
       "ucsc_bedgraphtobigwig"
     ],
-    "excluded": [
-      "UMITOOLS_EXTRACT / umi_extract \u2014 with_umi is hardcoded to false in chipseq.nf (dead branch at 2.1.0; the parameter does not exist in nextflow.config)",
-      "prepare_genome / samplesheet_check \u2014 compressed-reference gunzip/untar convenience, GFFREAD (GFF3 -> GTF) and samplesheet validation/staging (Nextflow plumbing; the port consumes pre-built plain reference files). The index/chrom-sizes generation steps are ported as gated rules: GTF2BED (make_gene_bed), GENOME_BLACKLIST_REGIONS (make_blacklist_regions), CUSTOM_GETCHROMSIZES (make_chrom_sizes), BWA_INDEX (make_bwa_index), BOWTIE2_BUILD (make_bowtie2_index), CHROMAP_INDEX (make_chromap_index) and STAR_GENOMEGENERATE (make_star_index)",
-      "save_reference / save_trimmed / save_unaligned publish branches \u2014 the port always keeps intermediates (behaves as save_align_intermeds=true); upstream 2.1.0 has no save_mapped / save_tracks params. save_macs_pileup is ported (conditional pileup .bdg publication in both macs3 rules)",
-      "multiqc pipeline summary / software versions sections \u2014 nf-core template paramsSummaryMap/softwareVersionsToYAML from Nextflow metadata; multiqc_data / multiqc_plots directory publication is ported. Note: the software-versions half (DUMP_SOFTWARE_VERSIONS) is since covered by the engine-native export `oxo-flow report --versions-yml` (engine >= 0.17.0); this item now refers only to the MultiQC paramsSummaryMap summary section"
-    ],
-    "rule_count": 83,
+    "excluded": [],
+    "rule_count": 84,
     "tools": [
       "fastqc",
       "trim-galore",
@@ -1214,7 +1289,18 @@ window.OXO_PIPELINES = [
     "compute": "up to 12 CPUs / 72 GB per rule (bwa_mem, bowtie2_align, star_align, trimgalore, star_genomegenerate); bowtie2_index_build 12 CPUs / 36 GB; most rules request 6 CPUs / 36 GB (chromap_align, chromap_index_build included)",
     "quickstart_note": "Runs the default path on the shipped fixtures \u2014 about 153 instances (212-rule DAG; 59 rules gated off). Multi-antibody runs: `oxo-flow run main.oxoflow --profile multi_antibody` (consensus chain once per antibody). Preview with `oxo-flow dry-run main.oxoflow`.",
     "coverage": "default-path",
-    "updated": "2026-09-04"
+    "updated": "2026-09-05",
+    "not_applicable": [
+      "UMITOOLS_EXTRACT / umi_extract \u2014 with_umi is hardcoded to false in chipseq.nf (dead branch at 2.1.0; the parameter does not exist in nextflow.config)",
+      "prepare_genome / samplesheet_check \u2014 compressed-reference gunzip/untar convenience, GFFREAD (GFF3 -> GTF) and samplesheet validation/staging (Nextflow plumbing; the port consumes pre-built plain reference files). The index/chrom-sizes generation steps are ported as gated rules: GTF2BED (make_gene_bed), GENOME_BLACKLIST_REGIONS (make_blacklist_regions), CUSTOM_GETCHROMSIZES (make_chrom_sizes), BWA_INDEX (make_bwa_index), BOWTIE2_BUILD (make_bowtie2_index), CHROMAP_INDEX (make_chromap_index) and STAR_GENOMEGENERATE (make_star_index)",
+      "save_reference / save_trimmed / save_unaligned publish branches \u2014 the port always keeps intermediates (behaves as save_align_intermeds=true); upstream 2.1.0 has no save_mapped / save_tracks params. save_macs_pileup is ported (conditional pileup .bdg publication in both macs3 rules)"
+    ],
+    "workflowhub": {
+      "id": 2283,
+      "url": "https://workflowhub.eu/workflows/2283",
+      "doi": "10.48546/workflowhub.workflow.2283.1",
+      "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2283.1"
+    }
   },
   {
     "name": "oxo-flow-atacseq",
@@ -1268,35 +1354,31 @@ window.OXO_PIPELINES = [
       "cons::macs2_consensus, cons::homer_annotatepeaks_consensus, cons::subread_featurecounts, cons::deseq2_qc (consensus peaks/DESeq2, when skip_consensus_peaks=false; needs >= 2 samples)",
       "merge_replicates (merged-replicate analysis, when skip_merge_replicates=false \u2014 replicate samples declared with the upstream _REP\\d+ suffix; folds per-replicate BAMs by base id via input_groups and feeds the merged BAM through the regular chain; see README 'Merged-replicate analysis')"
     ],
-    "excluded": [
-      "INPUT_CHECK (samplesheet_check) \u2014 pipeline plumbing; oxo-flow provides native [[sample_groups]] declaration + validate",
-      "DUMP_SOFTWARE_VERSIONS \u2014 pipeline plumbing; oxo-flow has native version/audit mechanisms",
-      "UMITOOLS_EXTRACT (umi branch) \u2014 dead code at 2.1.2: the workflow hardcodes with_umi=false so the branch can never fire",
-      "nucleosome_analysis / genrich \u2014 not present at tag 2.1.2 (checked workflows/, conf/, subworkflows/)"
-    ],
+    "excluded": [],
     "rule_count": 43,
     "tools": [
-      "fastqc",
-      "trim-galore",
-      "bwa",
-      "samtools",
-      "picard",
-      "bamtools",
-      "macs2",
-      "homer",
-      "bedtools",
-      "ucsc-bedgraphtobigwig",
-      "deeptools",
-      "multiqc",
-      "bowtie2",
-      "chromap",
-      "star",
-      "preseq",
       "ataqv",
+      "bamtools",
+      "bedtools",
+      "bowtie2",
+      "bwa",
+      "chromap",
+      "deeptools",
+      "deseq2",
+      "fastqc",
+      "homer",
+      "macs2",
+      "multiqc",
+      "picard",
+      "preseq",
+      "r",
+      "samtools",
+      "star",
       "subread",
-      "r"
+      "trim-galore",
+      "ucsc-bedgraphtobigwig"
     ],
-    "description": "ATAC-seq peak calling and QC: FastQC raw-read QC, Trim Galore adapter trimming, BWA-MEM alignment, Picard mark-duplicates, BAMTools filtering, MACS2 broad-peak calling, HOMER peak annotation, FRiP scoring, normalised bigWig tracks, deepTools QC plots and a combined MultiQC report. Default plan is the upstream single-end aligner=bwa main path (15 rules); when-gated branches port the paired-end path, Bowtie2/Chromap/STAR aligners, reference preparation, mitochondrial filtering, consensus peaks/DESeq2, preseq, Picard metrics, ataqv, IGV and R QC plots (27 further rules), and the merged-replicate analysis over `_REP\\d+` sample groups (43 total).",
+    "description": "ATAC-seq peak calling and QC: FastQC raw-read QC, Trim Galore adapter trimming, BWA-MEM alignment, Picard mark-duplicates, BAMTools filtering, MACS2 broad-peak calling, HOMER peak annotation, FRiP scoring, normalised bigWig tracks, deepTools QC plots and a combined MultiQC report. Default plan is the upstream single-end aligner=bwa main path (15 rules); when-gated branches port the paired-end path, Bowtie2/Chromap/STAR aligners, reference preparation, mitochondrial filtering, consensus peaks/DESeq2, preseq, Picard metrics, ataqv, IGV and R QC plots (27 further rules), and the merged-replicate analysis over _REP\\d+ sample groups (43 total).",
     "installation": {
       "engine": "oxo-flow >= 0.12.0 (the merged-replicate mode \u2014 `_REP\\d+` sample groups plus config.merged_samples \u2014 additionally requires oxo-flow with input_groups support, Traitome/oxo-flow#231; on released engines the gate is inert and the default path is unchanged)",
       "toolchain": "containers (Docker/Singularity) \u2014 pinned images for 40 of 43 rules, plus one pinned conda env (envs/picard-samtools.yaml) shared by the three picard rules (picard_mergesamfiles, picard_markduplicates, merge_replicates)",
@@ -1314,7 +1396,19 @@ window.OXO_PIPELINES = [
     "fidelity_md": "## Fidelity\n\nPorted with upstream defaults: `aligner=bwa`, single-end, `narrow_peak=false`\n(broad peaks), no control. One row per upstream process; steps not ported are\nlisted with reasons. `when`-gated rules carry the gate in the Notes column.\n\n| Upstream process | oxo-flow rule | Tool (version) | Notes |\n|---|---|---|---|\n| FASTQC | `fastqc` / `pe::fastqc_pe` | fastqc 0.11.9 | identical command (`--quiet --threads`); PE variant in the paired branch |\n| TRIMGALORE | `trimgalore` / `pe::trimgalore_pe` | trim-galore 0.6.7 | identical command (`--fastqc --cores 8 --gzip`); PE variant uses `--paired` + `_val_1/2` outputs |\n| FASTQ_FASTQC_UMITOOLS_TRIMGALORE (UMITOOLS_EXTRACT) | \u2014 | \u2014 | **not ported** \u2014 dead code at 2.1.2: the workflow hardcodes `with_umi=false`, the branch can never fire |\n| BWA_MEM | `bwa_mem` / `pe::bwa_mem_pe` | bwa 0.7.17, samtools 1.17 | identical (`-M -R '@RG...'`, secondary-alignment filter `-F 0x0100`), mulled container; PE variant merges read groups |\n| BOWTIE2_ALIGN | `alt::bowtie2_align` | bowtie2 2.5.1, samtools 1.17 | identical (end-to-end, `--very-sensitive`, `-k 4`, SAM\u2192BAM filter); when `aligner = \"bowtie2\"` |\n| CHROMAP_CHROMAP | `alt::chromap_align` | chromap 0.2.5, samtools 1.17 | identical (`-l 2000 --Tn5-shift --low-mem`); when `aligner = \"chromap\"` |\n| STAR_ALIGN | `alt::star_align` | star 2.6.1d | identical (EndToEnd, `--alignIntronMax 1`, unsorted BAM); when `aligner = \"star\"` |\n| BAM_SORT_STATS_SAMTOOLS (SAMTOOLS_SORT + SAMTOOLS_INDEX + SAMTOOLS_STATS + SAMTOOLS_FLAGSTAT + SAMTOOLS_IDXSTATS) | `samtools_sort_stats` / `pe::pe_name_sort_remove_orphans` | samtools 1.17 | identical commands, folded into one rule (same env); PE adds name sort \u2192 `bampe_rm_orphan.py --only_fr_pairs` \u2192 coordinate sort (upstream BAM_SORT_STATS_ORPHANS) |\n| PICARD_MERGESAMFILES_LIBRARY | `picard_mergesamfiles` / `pe::bwa_mem_pe` | picard 3.0.0 | upstream symlink branch for single-library samples replicated; multi-library merge (actual MergeSamFiles) not expressible \u2014 no library source in oxo-flow |\n| BAM_MARKDUPLICATES_PICARD (PICARD_MARKDUPLICATES + SAMTOOLS_INDEX + SAMTOOLS_STATS + SAMTOOLS_FLAGSTAT + SAMTOOLS_IDXSTATS) | `picard_markduplicates` | picard 3.0.0, samtools 1.17 | identical commands (`--ASSUME_SORTED --REMOVE_DUPLICATES false`, `XMX` heap sizing); combined conda env |\n| BAMTOOLS_FILTER + SAMTOOLS_INDEX + BAM_STATS_SAMTOOLS (SAMTOOLS_STATS + SAMTOOLS_FLAGSTAT + SAMTOOLS_IDXSTATS) | `bamtools_filter` / `pe::bamtools_filter_pe` | bamtools 2.5.2, samtools 1.17 | identical (`-F 0x004 -F 0x0400 -q 1`, optional `-L blacklist`, `assets/bamtools_filter_{se,pe}.json`); PE adds `-f 0x001 -F 0x0008` |\n| MACS2_CALLPEAK | `macs2_callpeak` | macs2 2.2.7.1 | identical (`--keep-dup all --nomodel --broad --broad-cutoff 0.1`, `gsize` from config, `--format BAM`) |\n| HOMER_ANNOTATEPEAKS | `homer_annotatepeaks` / `cons::homer_annotatepeaks_consensus` | homer 4.11 | identical (`-gid -gtf`); consensus variant annotates the consensus BED, when `skip_consensus_peaks = false` |\n| FRIP_SCORE | `frip_score` | bedtools 2.30.0, samtools 1.17 | identical (intersectBed `-f 0.20`, flagstat `mapped` fraction) |\n| BEDTOOLS_GENOMECOV | `bedtools_genomecov` / `pe::bedtools_genomecov_pe` | bedtools 2.30.0 | identical (`-bg -scale 1e6/reads -fs fragment_size`, sort); PE uses `-pc` instead of `-fs` (upstream) |\n| UCSC_BEDGRAPHTOBIGWIG | `ucsc_bedgraphtobigwig` | ucsc-bedgraphtobigwig 445 | identical |\n| BIGWIG_PLOT_DEEPTOOLS (COMPUTEMATRIX scale-regions + reference-point, PLOTPROFILE, PLOTHEATMAP) | `deeptools_plots` | deeptools 3.5.1 | identical args (regionBodyLength 1000, \u00b13000, `--missingDataAsZero --skipZeros --smartLabels`) |\n| MERGED_LIBRARY_DEEPTOOLS_PLOTFINGERPRINT | `plotfingerprint` / `pe::plotfingerprint_pe` | deeptools 3.5.1 | identical (`--extendReads fragment_size`); PE omits `--extendReads` (upstream) |\n| MULTIQC | `multiqc` / `pe::multiqc_pe` | multiqc 1.13 | upstream mechanism replicated: `multiqc_config.yml` staged in cwd, `multiqc -f .`; config `path_filters` adapted to this port's `results/` layout; PE adds the PE fastqc/trimgalore patterns |\n| BWA_INDEX | `ref::bwa_index` | bwa 0.7.17 | identical (`bwa index -p`); when `prepare_reference = true` (default false \u2014 port takes pre-built indexes) |\n| CUSTOM_GETCHROMSIZES / CUSTOM_GENOME_FASTA_INDEX (prepare_genome) | `ref::custom_getchromsizes` | samtools 1.16.1 | `samtools faidx` + `cut -f 1,2` into `config.chrom_sizes`; when `prepare_reference = true` |\n| GENOME_BLACKLIST_REGIONS (mitochondrial filtering) | `mito::genome_blacklist_regions` | bedtools 2.30.0 | sortBed/complementBed over `config.raw_blacklist`, then optional chrM drop (`config.mito_name`, `keep_mito`); when `mito_name`/`raw_blacklist` set; consumed via `-L` by `bamtools_filter` |\n| PRESEQ_LCEXTRAP | `qce::preseq_lcextrap` | preseq 3.1.2 | identical (`-verbose -bam -seed 1`; `-pe` when paired); when `skip_preseq = false` |\n| PICARD_COLLECTMULTIPLEMETRICS | `qce::picard_collectmultiplemetrics` | picard 3.0.0 | identical (5 metrics + PDFs into `picard_metrics/{,pdf}/`); when `skip_picard_metrics = false` |\n| GET_AUTOSOMES + ATAQV_ATAQV + ATAQV_MKARV | `qce::get_autosomes`, `qce::ataqv`, `qce::mkarv` | python 3.8.3, ataqv 1.3.1 | identical commands (`--ignore-read-groups`, mitochondrial-reference-name when `mito_name`; mkarv HTML index); when `skip_ataqv = false` |\n| PLOT_MACS2_QC / PLOT_HOMER_ANNOTATEPEAKS | `qce::plot_macs2_qc` / `qce::plot_homer_annotatepeaks` | mulled R image | scripts copied verbatim from upstream `bin/`; when `skip_peak_qc = false` |\n| MULTIQC_CUSTOM_PEAKS | `qce::multiqc_custom_peaks` | multiqc headers | identical count/FRiP TSVs (`assets/multiqc/` headers copied verbatim); when `multiqc_custom_peaks = true` (port-only switch; upstream always emits) |\n| IGV | `qce::igv` | python 3.8.3 | `igv_files_to_session.py` copied verbatim, `--path_prefix '../../'`; when `skip_igv = false`; merged-replicate bigWigs/peaks included when `config.merged_samples` names them |\n| MACS2_CONSENSUS_PEAKS | `cons::macs2_consensus` | mulled (macs2 + bedtools + R) | `sort + mergeBed -c 2,3,4,5,6,7,8,9 -o collapse...` \u2192 `macs2_merged_expand.py --min_replicates` \u2192 BED/SAF/UpSet plot (bin scripts verbatim); when `skip_consensus_peaks = false`, needs \u2265 2 samples |\n| SUBREAD_FEATURECOUNTS | `cons::subread_featurecounts` | subread 2.0.1 | identical (`-F SAF -O --fracOverlap 0.2 -s 0`, `-p` when paired); when `skip_consensus_peaks = false` |\n| DESEQ2_QC | `cons::deseq2_qc` | mulled (R + DESeq2) | `deseq2_qc.r` verbatim (`--id_col 1 --count_col 7`, `--vst TRUE` when `deseq2_vst`); when `skip_consensus_peaks = false` and `skip_deseq2_qc = false` |\n| PICARD_MERGESAMFILES / BAM_MARKDUPLICATES_PICARD / BAM_BEDGRAPH_BIGWIG_BEDTOOLS_UCSC / BAM_PEAKS_CALL_QC_ANNOTATE_MACS2_HOMER / BED_CONSENSUS_QUANTIFY_QC_BEDTOOLS_FEATURECOUNTS_DESEQ2 (aliased `MERGED_REPLICATE_*`) | `merge_replicates` + the same downstream rules | picard 3.0.0, samtools 1.17, macs2 2.2.7.1, homer 4.11, bedtools 2.30.0, deepTools 3.5.1 | **ported** via oxo-flow `input_groups`: `merge_replicates` folds per-replicate BAMs by base id (`_REP\\d+$` suffix) and writes the merged BAM to the canonical `{sample}.mLb.clN.sorted.bam` path; the regular chain then runs on merged AND per-replicate inputs (same commands as upstream). when `skip_merge_replicates = false` (default); see the repo README for semantics and deviations |\n| INPUT_CHECK (samplesheet_check) | \u2014 | \u2014 | **not ported** \u2014 pipeline plumbing; oxo-flow provides native `[[sample_groups]]` declaration + `validate` |\n| DUMP_SOFTWARE_VERSIONS | \u2014 | \u2014 | **not ported** \u2014 pipeline plumbing; oxo-flow has native version/audit mechanisms |\n\n### Known divergences\n\n- **Branches that upstream runs by default ship OFF here**: ataqv,\n  Picard metrics, IGV, consensus peaks/DESeq2 and the R QC plots all run on\n  the upstream default path; this port gates them behind\n  `skip_ataqv`/`skip_picard_metrics`/`skip_igv`/`skip_consensus_peaks`/\n  `skip_peak_qc` (default `true` = off) so the default plan stays the\n  minimal main path. `skip_preseq = true` matches the upstream default\n  (preseq is off there too). Enabling a branch is a single config flag.\n- **Reference inputs**: upstream builds/derives the reference from\n  `--genome` (iGenomes) at runtime; this port consumes pre-built files\n  (`reference`, `bwa_index` prefix, `gtf`, `gene_bed`, `tss_bed`,\n  `chrom_sizes`, optional `blacklist`). `prepare_reference = true` instead\n  generates the BWA index and chrom sizes from the FASTA (the fixture\n  already ships them, so the rules report up-to-date there).\n- **Alternative aligners are single-end only** (`when` adds\n  `!config.paired`): the paired branch is bwa-only, matching upstream's\n  paired alignment options. Misconfigurations (e.g. `paired=true` with\n  `aligner=\"star\"`) surface as validation warnings via missing inputs.\n- **PE requires `bwa_index` and produces `bwa/library/` outputs**: the\n  paired branch's `bwa_mem_pe` merges read groups (`-R '@RG\\tID:{sample}\\tSM:{sample}'`)\n  as upstream does; the default SE path keeps the original `@RG` handling.\n- **Broad peaks are hardcoded**: the port's `macs2_callpeak` and all\n  consumers use `--broad`; `narrow_peak = true` is honoured by\n  `macs2_callpeak` but the downstream rules in this port read\n  `*_peaks.broadPeak` only.\n- **MultiQC config**: `path_filters`/`module_order` were trimmed to the\n  ported steps; preseq/featureCounts/ataqv/DESeq2 sections appear when\n  their branches are enabled (the PE MultiQC adds the PE fastqc/trimgalore\n  logs). Report comment points at the upstream pipeline.\n- **`macs_gsize`**: upstream derives it from the read length keyed genome\n  block; the port exposes it as `config.macs_gsize` (default `2.7e9`, the\n  upstream GRCh37/38 @ 50 bp value).\n- **IGV session lists one merged `mLb_*` track set**: upstream separates\n  per-replicate and merged-replicate bigWigs/peaks into two IGV track sets\n  (`mLb_*` vs `mLb_clN_*`); this port's `igv` rule scans\n  `merged_library/{bigwig,macs2/broad_peak}` once, so merged and\n  per-replicate files land in the same set (the merged files are included\n  when `config.merged_samples` names them).\n- **featureCounts is unstranded**: `-s 0` is passed explicitly (the\n  upstream default); a `[SCI-FEATURECOUNTS-STRAND]` preflight hint may\n  appear for the gated rule \u2014 informational.\n- **`size_factors/` stays in the workdir**: upstream DESeq2_QC publishes\n  the `size_factors` directory; the port leaves it in the rule workdir\n  (not declared as an output) \u2014 documented, not lost.\n- **Consensus branch needs \u2265 2 samples**: upstream filters the peak\n  channel to `size() > 1`; with one sample the consensus rules would\n  produce degenerate output.",
     "compute": "up to 12 CPUs / 72 GB per rule",
     "quickstart_note": "Needs reference genome and peak-calling inputs \u2014 see Requirements.",
-    "coverage": "full-line: default single-end aligner=bwa path + 27 when-gated branch rules (paired-end, bowtie2/chromap/star aligners, reference prep, mito filter, consensus peaks/DESeq2, preseq/picard/ataqv/IGV/R QC) \u2014 14/14 gate live-tests PASS on bioinfo-wsx (2026-08-26, engine 0.14.1, fixture from generate_fixtures.py)"
+    "coverage": "full-line: default single-end aligner=bwa path + 27 when-gated branch rules (paired-end, bowtie2/chromap/star aligners, reference prep, mito filter, consensus peaks/DESeq2, preseq/picard/ataqv/IGV/R QC) \u2014 14/14 gate live-tests PASS on bioinfo-wsx (2026-08-26, engine 0.14.1, fixture from generate_fixtures.py)",
+    "not_applicable": [
+      "INPUT_CHECK (samplesheet_check) \u2014 pipeline plumbing; oxo-flow provides native [[sample_groups]] declaration + validate",
+      "DUMP_SOFTWARE_VERSIONS \u2014 pipeline plumbing; oxo-flow has native version/audit mechanisms",
+      "UMITOOLS_EXTRACT (umi branch) \u2014 dead code at 2.1.2: the workflow hardcodes with_umi=false so the branch can never fire",
+      "nucleosome_analysis / genrich \u2014 not present at tag 2.1.2 (checked workflows/, conf/, subworkflows/)"
+    ],
+    "workflowhub": {
+      "id": 2284,
+      "url": "https://workflowhub.eu/workflows/2284",
+      "doi": "10.48546/workflowhub.workflow.2284.1",
+      "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2284.1"
+    }
   },
   {
     "name": "oxo-flow-methylseq",
@@ -1447,7 +1541,13 @@ window.OXO_PIPELINES = [
     "fidelity_md": "| Upstream process/rule | oxo-flow rule | Tool (version) | Notes |\n|---|---|---|\n| CAT_FASTQ | `cat_fastq_r1` / `cat_fastq_r2` | coreutils 9.5 | ported via the engine's `input_groups` primitive (issue #227, oxo-flow >= 0.17.0): one instance per sample with >1 fastq pair, R1s and R2s concatenated into `results/fastq/<sample>_R{1,2}.fastq.gz`; single-pair samples pass through unchanged (downstream falls back to the raw pair). Upstream's single process is split into two rules (one per read); see deviations |\n--|\n| FASTQC | `fastqc` / `fastqc_se` | fastqc 0.12.1 | identical command; `--memory` derived from task resources. The `_se` variant runs the single-end chain (reads named `{sample}.fastq.gz`, outputs `{sample}_fastqc.*`) when `single_end_mode` is on |\n| TRIMGALORE | `trimgalore` / `trimgalore_se` | trim-galore 0.6.10, cutadapt 4.9, pigz 2.8 | identical command incl. library-preset clipping and `--cores` clamp. The `_se` variant is the upstream SE module: R1-side clipping only, `--cores cpus-3` clamped to [1, 8] |\n| BISMARK_GENOMEPREPARATION | `bismark_genomepreparation` | bismark 0.25.1, gzip 1.13 | `--bowtie2` (or `--hisat2` for bismark_hisat, `--slam` for slamseq); runs when no prebuilt index is supplied (upstream default) |\n| GUNZIP | (merged into the index-preparation shells) | gzip 1.13 | a gzipped reference FASTA is decompressed before index building, as in the upstream fasta_index_methylseq subworkflow |\n| UNTAR | `bismark_untar` | tar 1.34 | active only when a prebuilt `--bismark_index` archive is supplied; strips a single top-level directory, like upstream |\n| BISMARK_ALIGN | `bismark_align` / `bismark_align_se` | bismark 0.25.1 | identical flag order (pbat/non_directional/unmapped/score_min/local/minins/maxins/multicore); hisat2 splice sites via `known_splices` (see deviations). The `_se` variant drops `--minins`/`--maxins` (upstream `!meta.single_end` gate), keeps `--multicore` and the hisat2 rename |\n| BISMARK_DEDUPLICATE | `bismark_deduplicate` / `bismark_deduplicate_se` | bismark 0.25.1 | identical command (`-s` for single-end, `-p` paired-end); skipped with `skip_deduplication`/`rrbs` like upstream |\n| SAMTOOLS_SORT | `samtools_sort` | samtools 1.22.1, htslib 1.22.1 | upstream prefix `${sample}.deduplicated.sorted`; takes the SE deduplicated BAM when the sample is single-end |\n| SAMTOOLS_INDEX | `samtools_index` | samtools 1.22.1 | identical command |\n| BISMARK_METHYLATIONEXTRACTOR | `bismark_methylationextractor` / `bismark_methylationextractor_se` | bismark 0.25.1 | identical flag order on the **deduplicated** BAM; `--multicore`/`--buffer_size` derived from resources. The `_se` variant uses `-s` and drops `--no_overlap`/`--ignore_r2`/`--ignore_3prime_r2` (upstream `!meta.single_end` gate) |\n| BISMARK_COVERAGE2CYTOSINE | `bismark_coverage2cytosine` | bismark 0.25.1 | off by default; runs with `cytosine_report`/`nomeseq`; takes the SE coverage file when the sample is single-end |\n| BISMARK_REPORT | `bismark_report` / `bismark_report_se` | bismark 0.25.1 | bismark2report run with the four reports co-located, as in the upstream workdir; the `_se` variant feeds the `*_SE_report.txt` files |\n| BISMARK_SUMMARY | `bismark_summary` | bismark 0.25.1 | bismark2summary with upstream BAM-name arguments; per-sample SE/PE detection via a `[ -f ]` probe on the SE alignment report (no per-sample binding) |\n| BWAMETH_INDEX | `bwameth_index` | bwameth 0.2.9 | `bwameth.py index`, or `index-mem2` with `use_mem2`; index dir `refs/BwamethIndex` |\n| BWAMETH_ALIGN | `bwameth_align` | bwameth 0.2.9 | identical command (reference symlink re-created in the index dir, `samtools view -bhS`); one or two reads are passed positionally per sample (SE/PE from its metadata row) |\n| BWA_INDEX | `bwa_index` | bwa 0.7.19 | `bwa index -p`; upstream sizes memory dynamically (5.37x FASTA) \u2014 the port uses a fixed 4 threads/24G/24h budget (see deviations) |\n| BWA_MEM | `bwa_mem` | bwa 0.7.19, samtools 1.22.1 | upstream `sort_bam = true`: `bwa mem \\| samtools sort`; index prefix found by globbing `*.amb`; one or two reads passed positionally per sample (SE/PE) |\n| SAMTOOLS_INDEX_ALIGNMENTS | `samtools_index_alignment` | samtools 1.22.1 | index of the sorted alignment BAM (bwameth/bwamem) |\n| SAMTOOLS_FLAGSTAT | `samtools_flagstat` | samtools 1.22.1 | identical command |\n| SAMTOOLS_STATS | `samtools_stats` | samtools 1.22.1 | identical command |\n| SAMTOOLS_IDXSTATS | `samtools_idxstats` | samtools 1.22.1 | bwamem branch; `--threads cpus-1` as upstream |\n| PICARD_MARKDUPLICATES | `picard_markduplicates` / `picard_markduplicates_bwamem` | picard 3.4.0 | identical args (ASSUME_SORTED/REMOVE_DUPLICATES/LENIENT/PROGRAM_RECORD_ID null/TMP_DIR); -Xmx = 0.8 x memory |\n| PICARD_ADDORREPLACEREADGROUPS | `picard_addorreplacereadgroups` | picard 3.4.0 | identical args; upstream does not publish this BAM \u2014 the port declares it so the DAG can consume it |\n| SAMTOOLS_INDEX_DEDUPLICATED | `samtools_index_deduplicated` / `samtools_index_deduplicated_bwamem` | samtools 1.22.1 | index of the deduplicated BAM |\n| METHYLDACKEL_EXTRACT | `methyldackel_extract` (+ `_allcontexts`, `_methylkit`) | methyldackel 0.6.1 | same flags (CHG/CHH, mergeContext, ignoreFlags, minDepth, methylKit); the methylKit table and the all-contexts bedGraphs are separate gated rules (see deviations) |\n| METHYLDACKEL_MBIAS | `methyldackel_mbias` | methyldackel 0.6.1 | identical command |\n| RASTAIR_MBIAS | `rastair_mbias_bwameth` / `rastair_mbias_bwamem` | rastair 0.8.2 | active with `taps` on bwameth and always on bwamem, exactly like the upstream `if (params.taps \\|\\| aligner == 'bwamem')` |\n| RASTAIR_MBIASPARSER | `rastair_mbiasparser` | rastair 0.8.2, r-base 4.4.0 | plot_mbias.R + parse_mbias.R |\n| RASTAIR_CALL | `rastair_call_bwameth` / `rastair_call_bwamem` | rastair 0.8.2 | trim values flow from the mbiasparser CSV (see deviations) |\n| RASTAIR_METHYLKIT | `rastair_methylkit` | rastair 0.8.2 | `rastair_call_to_methylkit.sh \\| gzip` |\n| QUALIMAP_BAMQC | `qualimap_bamqc` / `qualimap_bamqc_alt` | qualimap 2.3 | `-p non-strand-specific`, `--gff` with `bamqc_regions_file`, `_JAVA_OPTIONS` tmpdir; `--collect-overlap-pairs` only for paired-end samples (upstream `!meta.single_end` gate) |\n| PRESEQ_LCEXTRAP | `preseq_lcextrap` / `preseq_lcextrap_alt` | preseq 3.2.0 | `-verbose -bam`, `-pe` only for paired-end samples (upstream `!meta.single_end` gate); the `*.command.log` is preseq's own stderr (see deviations) |\n| PICARD_CREATESEQUENCEDICTIONARY | `picard_createsequencedictionary` | picard 3.4.0 | runs only when `collecthsmetrics` is requested, like upstream |\n| PICARD_BEDTOINTERVALLIST | `picard_bedtointervallist` | picard 3.4.0 | output named `target_regions.intervallist` (fixed name; see deviations) |\n| BEDTOOLS_INTERSECT | `bedtools_intersect` (+ `_bwameth`, `_chg`, `_chh`) | bedtools 2.31.1 | prefix = the bedGraph basename, suffix `targeted.bedGraph`, as upstream; the bismark variant takes the SE bedGraph when the sample is single-end |\n| PICARD_COLLECTHSMETRICS | `picard_collecthsmetrics` / `picard_collecthsmetrics_alt` | picard 3.4.0 | same intervals for bait and target; excluded on the taps/bwamem branches, like the upstream rastair error |\n| SAMTOOLS_FAIDX | `samtools_faidx` | samtools 1.22.1, htslib 1.22.1, gzip 1.13 | stages the reference at `refs/FastaRef/reference.fa`; upstream gate (bwameth/bwamem/collecthsmetrics) reproduced |\n| MULTIQC | `multiqc` / `multiqc_bwameth` / `multiqc_bwamem` | multiqc 1.32 | one rule per aligner branch; same search space as upstream (fastqc zips, trimgalore logs, samtools stats/flagstat/idxstats, picard metrics + qualimap/preseq/HS extras), plus the single-end report names (`{sample}_fastqc.zip`, `{sample}.fastq.gz_trimming_report.txt`, `*_SE_report.txt`, ...) which are picked up exactly when present; the methyldackel/rastair outputs are not fed to MultiQC, exactly like upstream |\n| softwareVersionsToYAML + collectFile | `multiqc_versions` | \u2014 | upstream extracts versions at runtime; port pins the module versions statically |\n\nAdditional notes: single-end samples are supported via the engine's\nmetadata binding (`[workflow] metadata_file` + `{meta.endedness}`, gated on\n`config.single_end_mode`, oxo-flow >= 0.17.0); `--save_*` / `publish_dir_mode`\nparams are N/A (oxo-flow publishes every declared output); per-process\n`withName:` resource overrides are baked into `[rules.resources]` (upstream\nlabels process_single/low/medium/high + BISMARK_ALIGN 8d / DEDUPLICATE 2d /\nMETHYLATIONEXTRACTOR 1d time limits).",
     "compute": "up to 12 CPUs / 72 GB per rule (genome preparation, index builds, trimgalore, aligners, deduplicate, extractor)",
     "quickstart_note": "Needs reference genome and reads \u2014 see Requirements.",
-    "coverage": "full-line: default bismark (bowtie2) path live-verified end-to-end on reference data (2026-08-15); +40 when-gated branch rules (bismark_hisat/bwameth/bwamem aligners, TAPS-rastair, methyldackel, qualimap, preseq, targeted-sequencing, prebuilt-index untar) ported with upstream-default-off gates \u2014 per-key toggle matrix verified (validate + lint + dry-run per branch key) 2026-08-25; single-end (upstream single_end samplesheet column) ported via the engine metadata binding (metadata/samples.tsv + config.single_end_mode) and live-verified end-to-end on the SE fixture 2026-08-28; structural exclusion: CAT_FASTQ"
+    "coverage": "full-line: default bismark (bowtie2) path live-verified end-to-end on reference data (2026-08-15); +40 when-gated branch rules (bismark_hisat/bwameth/bwamem aligners, TAPS-rastair, methyldackel, qualimap, preseq, targeted-sequencing, prebuilt-index untar) ported with upstream-default-off gates \u2014 per-key toggle matrix verified (validate + lint + dry-run per branch key) 2026-08-25; single-end (upstream single_end samplesheet column) ported via the engine metadata binding (metadata/samples.tsv + config.single_end_mode) and live-verified end-to-end on the SE fixture 2026-08-28; structural exclusion: CAT_FASTQ",
+    "workflowhub": {
+      "id": 2285,
+      "url": "https://workflowhub.eu/workflows/2285",
+      "doi": "10.48546/workflowhub.workflow.2285.1",
+      "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2285.1"
+    }
   },
   {
     "name": "oxo-flow-nanoseq",
@@ -1530,41 +1630,42 @@ window.OXO_PIPELINES = [
       "get_jaffal_ref",
       "jaffal_ref"
     ],
-    "excluded": [
-      "note: committee scope mentions Dorado demultiplex + pycoQC QC; nanoseq 3.1.0 actually uses qcat + NanoPlot/FastQC \u2014 port follows the real source"
-    ],
-    "rule_count": 52,
+    "excluded": [],
+    "rule_count": 54,
     "tools": [
-      "python",
-      "qcat",
-      "nanoplot",
-      "fastqc",
-      "samtools",
-      "perl",
-      "minimap2",
-      "bedtools",
-      "ucsc-bedgraphtobigwig",
-      "multiqc",
-      "nanolyse",
-      "graphmap",
-      "sed",
-      "medaka",
-      "tabix",
-      "deepvariant",
-      "pepper-margin-deepvariant",
-      "sniffles",
-      "cutesv",
-      "bcftools",
       "bambu",
-      "stringtie",
-      "subread",
+      "bcftools",
+      "bedtools",
+      "curl",
+      "cutesv",
+      "deepvariant",
       "deseq2",
       "dexseq",
+      "fastqc",
+      "graphmap",
+      "jaffa",
+      "m6anet",
+      "medaka",
+      "minimap2",
+      "multiqc",
+      "nanolyse",
+      "nanoplot",
       "nanopolish",
-      "xpore",
-      "m6anet"
+      "pepper-margin-deepvariant",
+      "perl",
+      "python",
+      "qcat",
+      "samtools",
+      "sed",
+      "sniffles",
+      "stringtie",
+      "subread",
+      "tabix",
+      "ucsc-bedgraphtobigwig",
+      "ucsc-bedtobigbed",
+      "xpore"
     ],
-    "description": "A nanopore long-read pipeline: samplesheet check, qcat barcode demultiplexing, NanoPlot + FastQC QC, minimap2 (or graphmap2) alignment, samtools view/sort/index, samtools stats/flagstat/idxstats, BigWig/BigBed tracks, NanoLyse contamination filtering, medaka/DeepVariant/PEPPER-Margin-DeepVariant short variant calling, Sniffles/cuteSV structural variant calling, bambu/StringTie2+featureCounts quantification with DESeq2/DEXSeq differential analysis, Nanopolish+xPore/m6anet RNA modification analysis, pre-aligned-BAM input, and a MultiQC report. The default path is the DNA protocol with all gated branches off by default (matching upstream). Every rule runs the upstream module's exact pinned container image.",
+    "description": "A nanopore long-read pipeline: samplesheet check, qcat barcode demultiplexing, NanoPlot + FastQC QC, minimap2 (or graphmap2) alignment, samtools view/sort/index, samtools stats/flagstat/idxstats, BigWig/BigBed tracks, NanoLyse contamination filtering, medaka/DeepVariant/PEPPER-Margin-DeepVariant short variant calling, Sniffles/cuteSV structural variant calling, bambu/StringTie2+featureCounts quantification with DESeq2/DEXSeq differential analysis, Nanopolish+xPore/m6anet RNA modification analysis, JAFFA RNA fusion detection (cDNA/directRNA; reference bundle auto-downloaded from figshare or supplied via config.jaffal_ref_dir as a directory or tar.gz), pre-aligned-BAM input, and a MultiQC report. The default path is the DNA protocol with all gated branches off by default (matching upstream). Every rule runs the upstream module's exact pinned container image.",
     "installation": {
       "engine": "oxo-flow >= 0.12.0",
       "toolchain": "containers (Docker/Singularity) \u2014 pinned images",
@@ -1583,7 +1684,16 @@ window.OXO_PIPELINES = [
     "fidelity_md": "Port scope: the **default-parameters main execution path** (`protocol = DNA`, demultiplexing on, minimap2 aligner, all QC/bigwig/reporting on) plus **every gated branch** of the upstream workflow, ported as `when`-gated rules and all off by default (matching upstream). Commands mirror the upstream modules byte-for-byte under each branch's parameters; upstream Groovy `params.*` conditionals are reproduced as bash conditionals over the same config keys.\n\n### Default path (DNA, minimap2, demultiplexing on)\n\n| Upstream process/rule | oxo-flow rule | Tool (version) | Notes |\n|---|---|---|---|\n| SAMPLESHEET_CHECK | `samplesheet_check` | python 3.8.3 | identical command (`check_samplesheet.py`, `not_changed` path arg) |\n| QCAT | `qcat` | qcat 1.1.0 | identical command (`-f`, `-b`, `--kit`, `--min-score`, zcat preamble, gzip); runs once on `input_path`. Declared outputs are the ported barcode set `barcode01/02` (upstream emits `fastq/*.fastq.gz` dynamically) |\n| NANOPLOT | `nanoplot` | NanoPlot 1.41.0 | identical command (`-t N --fastq`); upstream publishes all samples' fixed-named `NanoPlot-report.html` into one dir (silently clobbering) \u2014 the port isolates each sample in `nanoplot/<barcode>/` |\n| FASTQC | `fastqc` | fastqc 0.11.9 | identical command incl. the symlink-rename preamble; per-sample `<barcode>_fastqc.{html,zip}` |\n| GET_CHROM_SIZES | `get_chrom_sizes` | samtools 1.13 | identical (`samtools faidx` + `cut -f 1,2`); upstream conda pin says samtools=1.10, container is 1.13 \u2014 port pins the container tag |\n| SAMTOOLS_FAIDX | `samtools_faidx` | samtools 1.16.1 | identical (`samtools faidx`); runs on a local copy of the reference like the upstream workdir staging |\n| GTF2BED | `gtf2bed` | perl 5.26.2 | identical (`gtf2bed <gtf> > <name>.bed`); **off on the default path** \u2014 upstream only runs it when the samplesheet carries a gtf column (`when = config.gtf != \"\"`) |\n| MINIMAP2_INDEX | `minimap2_index` | minimap2 2.17 | identical flags for default params (`-ax map-ont -t 12 -d <fasta>.mmi`); protocol/stranded/junction conditionals preserved |\n| MINIMAP2_ALIGN | `minimap2_align` | minimap2 2.17 | identical flags + `> <sample>.sam`; `--MD` conditional preserved (off by default) |\n| SAMTOOLS_VIEW_BAM | `samtools_view` | samtools 1.15.1 | identical (`view -b -h -O BAM -@ N -o`) |\n| SAMTOOLS_SORT | `samtools_sort` | samtools 1.16.1 | identical minus `-m 512M` capped per-thread sort buffer (added to prevent OOM on large BAMs) |\n| SAMTOOLS_INDEX | `samtools_index` | samtools 1.16.1 | identical (`index -@ N-1`) |\n| SAMTOOLS_STATS | `samtools_stats` | samtools 1.16.1 | identical (`stats --threads N --reference <fasta>`) |\n| SAMTOOLS_IDXSTATS | `samtools_idxstats` | samtools 1.16.1 | identical (`idxstats --threads N-1`) |\n| SAMTOOLS_FLAGSTAT | `samtools_flagstat` | samtools 1.16.1 | identical (`flagstat --threads N`) |\n| BEDTOOLS_GENOMECOV | `bedtools_genomecov` | bedtools 2.29.2 | identical (`genomecov -split -ibam -bg \\| bedtools sort`; upstream hardcodes `-split`) |\n| UCSC_BEDGRAPHTOBIGWIG | `ucsc_bedgraphtobigwig` | ucsc-bedgraphtobigwig 377 | identical (`bedGraphToBigWig <bedgraph> <sizes>`) |\n| CUSTOM_DUMPSOFTWAREVERSIONS | `dumpsoftwareversions` | python (multiqc 1.13 image) | upstream merges per-process `versions.yml` collected at run time; the port pins the same versions statically in `assets/versions.yml` (values = container tags) and runs the upstream merge script verbatim |\n| MULTIQC | `multiqc` | multiqc 1.11 | identical (`multiqc -f .` on a dir with config + report inputs); `--title`/`--config` conditionals preserved; output at `results/multiqc/minimap2/` matching the upstream publishDir path |\n\nDeviation (identity model, see also `main.oxoflow` header): upstream\ndemultiplexes the raw fastq into **barcode-named** files and then joins them\nonto samplesheet rows by barcode, so downstream artifacts are named\n`<group>_R<replicate>.bam` etc. oxo-flow has no channel join, so the port\nkeys all per-sample rules by the barcode itself \u2014 outputs are named\n`barcode01.sam`, `barcode01.bam`, `barcode01.bigWig`, ... while keeping every\ncommand and intermediate filename upstream-identical. The samplesheet\nfixture maps barcodes `01`/`02` exactly like the upstream test data.\n\n### Gated branches (all off by default, matching upstream defaults)\n\n| Upstream process/rule | oxo-flow rule | Tool (version) | Gate / notes |\n|---|---|---|---|\n| NANOLYSE | `nanolyse` | NanoLyse 1.2.0 | `run_nanolyse`; reference = checked-in `test/fixtures/refs/lambda.fasta.gz` (upstream downloads it via GET_NANOLYSE_FASTA) |\n| GRAPHMAP2_INDEX | `graphmap2_index` | graphmap 0.6.3 | `aligner == \"graphmap2\"`; `-x rnaseq`/`--gtf` conditionals preserved (non-DNA protocols) |\n| GRAPHMAP2_ALIGN | `graphmap2_align` | graphmap 0.6.3 | same gate; `--extcigar` |\n| SAMTOOLS_SORT_INDEX | `samtools_sort_index` | samtools 1.16.1 | `call_variants` \u2014 combined sort+index instead of the separate rules in the VC branch |\n| MEDAKA_VARIANT | `medaka_variant` | medaka 1.4.4 | `call_variants && protocol == DNA && !skip_vc && variant_caller == \"medaka\"`; `-d -f -i -o -t` + `split_mnps`/`phase_vcf` flags |\n| TABIX_BGZIP / TABIX_TABIX (as MEDAKA_BGZIP_VCF / MEDAKA_TABIX_VCF) | `medaka_bgzip_vcf` / `medaka_tabix_vcf` | tabix 1.11 | same gate |\n| DEEPVARIANT | `deepvariant` | google/deepvariant 1.4.0 | `variant_caller == \"deepvariant\"`; docker-only upstream; `--model_type WGS --num_shards=N` |\n| DEEPVARIANT_TABIX_VCF / DEEPVARIANT_TABIX_GVCF | `deepvariant_tabix_vcf` / `deepvariant_tabix_gvcf` | tabix 1.11 | same gate |\n| PEPPER_MARGIN_DEEPVARIANT | `pepper_margin_deepvariant` | kishwars/pepper_deepvariant r0.8 | `variant_caller == \"pepper_margin_deepvariant\"`; `-g` honored via `deepvariant_gpu` (CPU image pinned, see Deviations) |\n| SNIFFLES | `sniffles` | sniffles 1.0.12 | `call_variants && protocol == DNA && !skip_sv && structural_variant_caller == \"sniffles\"`; `-m -v -t` |\n| BCFTOOLS_SORT / TABIX_TABIX (as SNIFFLES_SORT_VCF / SNIFFLES_TABIX_VCF) | `sniffles_sort_vcf` / `sniffles_tabix_vcf` | bcftools 1.16 / tabix 1.11 | same gate |\n| CUTESV | `cutesv` | cutesv 1.0.12 | `structural_variant_caller == \"cutesv\"`; `cuteSV bam fasta vcf . --threads --sample --genotype` |\n| BCFTOOLS_SORT / TABIX_TABIX (as CUTESV_SORT_VCF / CUTESV_TABIX_VCF) | `cutesv_sort_vcf` / `cutesv_tabix_vcf` | bcftools 1.16 / tabix 1.11 | same gate |\n| BEDTOOLS_BAMBED | `bedtools_bamtobed` | bedtools 2.29.2 | `!skip_bigbed && protocol cDNA/directRNA` (upstream module `when` \u2014 never on the DNA path) |\n| UCSC_BED12TOBIGBED | `ucsc_bed12tobigbed` | ucsc-bedtobigbed 377 | same gate |\n| BAMBU | `bambu` | bioconductor-bambu 3.0.8 | `protocol != DNA && !skip_quantification && quantification_method == \"bambu\"`; gathers all sample BAMs via expand_inputs; upstream `bin/run_bambu.r` verbatim |\n| STRINGTIE2 | `stringtie2` | stringtie 2.1.4 | `quantification_method == \"stringtie2\"`; `-L -G <gtf> -o <s>.stringtie.gtf` |\n| STRINGTIE_MERGE | `stringtie_merge` | stringtie 2.2.1 | same gate; gathers per-sample assemblies, `-G` reference GTF conditional preserved |\n| SUBREAD_FEATURECOUNTS | `subread_featurecounts` | subread 2.0.1 | same gate; gene counts + transcript counts, `-L -O --primary --fraction` |\n| DESEQ2 | `deseq2` (bambu counts) / `deseq2_featurecounts` (featureCounts counts) | mulled-v2-8849acf3\u2026 (bioconductor-deseq2) | `!skip_differential_analysis`; mutually exclusive on `quantification_method`; upstream `bin/run_deseq2.r` verbatim; results under `results/bambu/deseq2/` (upstream publishDir quirk kept) |\n| DEXSEQ | `dexseq` (bambu counts) / `dexseq_featurecounts` (featureCounts counts) | docker.io/yuukiiwa/nanoseq:dexseq | same gates; upstream `bin/run_dexseq.r` verbatim |\n| NANOPOLISH_INDEX_EVENTALIGN | `nanopolish_index_eventalign` | nanopolish 0.13.2 | `protocol == directRNA && !skip_modification_analysis && nanopolish_fast5 != \"\"`; `nanopolish index -d <fast5>` + `eventalign --scale-events --signal-index` |\n| XPORE_DATAPREP | `xpore_dataprep` | xpore 2.1 | `!skip_xpore` (same branch gate); `--genome --gtf_or_gff --transcript_fasta` |\n| XPORE_DIFFMOD | `xpore_diffmod` | xpore 2.1 | same gate; upstream `bin/create_yml.py` verbatim |\n| M6ANET_DATAPREP | `m6anet_dataprep` | docker.io/yuukiiwa/m6anet:1.0 | `!skip_m6anet` (same branch gate) |\n| M6ANET_INFERENCE | `m6anet_inference` | docker.io/yuukiiwa/m6anet:1.0 | same gate; `--batch_size 512 --num_iterations 5 --device cpu` |\n| BAM_RENAME | `bam_rename` | sed 4.7.0 (shell-only container) | `skip_alignment && sample_bams != \"\"`; comma-separated `sample_bams` split via expand_inputs and linked to the barcode names, `[ ! -f ] && ln -s` like upstream |\n\nNot ported (remainder):\n\n| Upstream step | Reason |\n|---|---|\n| JAFFAL / GET_JAFFAL_REF / UNTAR (RNA fusion, `protocol` cDNA/directRNA) | not portable: the JAFFA reference bundle (`https://ndownloader.figshare.com/files/28168755`) redirects to a signed S3 URL that returns **HTTP 403** (verified 2026-08), is multi-GB, and embeds the `JAFFA_stages.groovy` script the module executes via `bpipe run` \u2014 the process cannot run without the bundle |\n| GET_TEST_DATA / GET_NANOLYSE_FASTA (upstream download processes) | GET_TEST_DATA is nf-core `-profile test` infrastructure (clones `nf-core/test-datasets`); GET_NANOLYSE_FASTA fetches the lambda genome whenever `run_nanolyse=true` without `--nanolyse_fasta` (any profile). Both are replaced by checked-in fixtures \u2014 the nanolyse reference ships as `test/fixtures/refs/lambda.fasta.gz` |\n| `-profile test*` configs, cluster/container profiles, Tower reporting, completion email | nf-core infrastructure, out of port scope |\n\nDeviations (see README): (1) NanoLyse cannot reassign the reads channel \u2014 filtered reads land in `results/nanolyse/`, the downstream chain keeps the demultiplexed reads; (2) graphmap2 outputs publish under `results/minimap2/` so the shared downstream chain needs no duplicate rules; (3) `bam_suffix` lets the quantification/modification rules target either naming scheme (alignment vs `skip_alignment`); (4) DESEQ2/DEXSEQ come as two rules per tool with the same output path, mutually exclusive on `quantification_method`; (5) `nanopolish_fast5` takes one directory, guarded by a `!= \"\"` gate; (6) pepper pins the CPU image (swap + `deepvariant_gpu = true` for GPU); (7) `-m 512M` caps the samtools sort buffer; (8) `assets/versions.yml` pins the default-path tool versions statically; (9) MultiQC cannot aggregate featureCounts `.summary` files (excluded from the report); (10) the samplesheet `is_transcripts` column is not ported (barcode-identity model; non-DNA default applies).\n\nLive verification (tx-ubuntu, oxo-flow 0.15.0): default path, call_variants (medaka), structural_variant_caller (sniffles/cutesv) and the nanolyse branch PASS; cDNA/directRNA quantification tool-execution verified (mini-fixture reads lie off the annotated region \u2014 documented).",
     "compute": "up to 12 CPUs / 84 GB per rule (minimap2 index)",
     "quickstart_note": "Default path is the DNA protocol with all gated branches off (matching upstream); `protocol=cDNA skip_bigwig=true` switches to the transcriptome path (see README).",
-    "coverage": "default DNA path + gated branches: NanoLyse, graphmap2, variant calling (medaka/deepvariant/pepper + sniffles/cutesv), BigBed, bambu/stringtie2 quantification + deseq2/dexseq, nanopolish/xpore/m6anet RNA modifications, pre-aligned BAM input. Live-verified on tx-ubuntu: default/call_variants/svcallers/nanolyse PASS; cDNA/directRNA quantification tool-execution verified (mini-fixture reads lie off the annotated region \u2014 documented)."
+    "coverage": "default DNA path + gated branches: NanoLyse, graphmap2, variant calling (medaka/deepvariant/pepper + sniffles/cutesv), BigBed, bambu/stringtie2 quantification + deseq2/dexseq, nanopolish/xpore/m6anet RNA modifications, pre-aligned BAM input. Live-verified on tx-ubuntu: default/call_variants/svcallers/nanolyse PASS; cDNA/directRNA quantification tool-execution verified (mini-fixture reads lie off the annotated region \u2014 documented).",
+    "not_applicable": [
+      "note: committee scope mentions Dorado demultiplex + pycoQC QC; nanoseq 3.1.0 actually uses qcat + NanoPlot/FastQC \u2014 port follows the real source"
+    ],
+    "workflowhub": {
+      "id": 2286,
+      "url": "https://workflowhub.eu/workflows/2286",
+      "doi": "10.48546/workflowhub.workflow.2286.1",
+      "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2286.1"
+    }
   },
   {
     "name": "oxo-flow-viralrecon",
@@ -1755,7 +1865,13 @@ window.OXO_PIPELINES = [
     "compute": "up to 12 CPUs / 72 GB per rule",
     "quickstart_note": "Needs a reference genome bundle \u2014 see Requirements; `--samples first:1` runs a single sample.",
     "coverage": "default amplicon path + 37 gated branch rules (84 total): bcftools variant caller, ivar consensus, metagenomic (wgs) protocol, alternative assemblers (any comma-separated spades/unicycler/minia combination), MarkDuplicates, plasmidID, kraken2/freyja/pangolin DB downloads, additional annotation, gz-reference gunzip steps \u2014 all dry-run-verified per branch; default plan unchanged",
-    "updated": "2026-09-04"
+    "updated": "2026-09-04",
+    "workflowhub": {
+      "id": 2287,
+      "url": "https://workflowhub.eu/workflows/2287",
+      "doi": "10.48546/workflowhub.workflow.2287.1",
+      "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2287.1"
+    }
   },
   {
     "name": "oxo-flow-eager",
@@ -1812,7 +1928,11 @@ window.OXO_PIPELINES = [
       "circularmapper",
       "convert_bam",
       "hostremoval_input_fastq",
-      "samtools_filter",
+      "hostremoval_input_fastq_bwamem",
+      "samtools_filter_bwaaln",
+      "samtools_filter_bwamem",
+      "samtools_filter_bowtie2",
+      "samtools_filter_circularmapper",
       "samtools_flagstat_after_filter",
       "endor_spy",
       "bedtools_coverage",
@@ -1844,11 +1964,9 @@ window.OXO_PIPELINES = [
     ],
     "excluded": [
       "library_merge / additional_library_merge: structural \u2014 upstream merges the per-LIBRARY BAMs of a sample (samtools merge of the per-library dedup / bam_trim BAMs, main.nf 1967 / 2320). The port's directory-input model has ONE library per sample (library = sample, lane = 0) and one BAM per sample at every stage, so there are no multi-library BAMs to merge; declaring each library as its own sample (or pre-merging) remains the workaround. lanemerge-style input_groups cannot express this either: it groups FILES of a pattern, and the port has no per-library file dimension",
-      "seqtype_merge: structural \u2014 upstream merges the per-seqtype mapped BAMs of mixed PE/SE libraries into one BAM per library (samtools merge, main.nf 1597); the port is pure-PE (directory input, sample = text before _R1/_R2) with one mapped BAM per sample, so there are no mixed-PE/SE BAMs to merge. Convert SE samples to PE or run SE-only samples separately",
-      "output_documentation: nf-core boilerplate docs process (markdown_to_html.py of static run docs); upstream runs it unconditionally, so porting it would change the default plan for zero analytical value",
-      "get_software_versions: nf-core boilerplate versions process (scrapes $workflow/$nextflow native variables into a versions.yml, which has no oxo-flow equivalent)"
+      "seqtype_merge: structural \u2014 upstream merges the per-seqtype mapped BAMs of mixed PE/SE libraries into one BAM per library (samtools merge, main.nf 1597); the port is pure-PE (directory input, sample = text before _R1/_R2) with one mapped BAM per sample, so there are no mixed-PE/SE BAMs to merge. Convert SE samples to PE or run SE-only samples separately"
     ],
-    "rule_count": 57,
+    "rule_count": 61,
     "tools": [
       "fastqc",
       "adapterremoval",
@@ -1894,7 +2012,17 @@ window.OXO_PIPELINES = [
     "fidelity_md": "Every upstream process of nf-core/eager 2.5.3 (63 total: 56 top-level\nprocesses plus 7 conditional/indented ones \u2014 `makeBWAIndex`,\n`makeBT2Index`, `unzip_reference`, `seqtype_merge`, `mtnucratio`,\n`nuclear_contamination`, `decomp_kraken`) is listed below.\nThe 17 processes on the default-parameters main path (directory input,\npaired-end, `mapper=bwaaln`, `dedupper=markduplicates`) are ported\nbyte-faithfully. The non-default branches are ported as `rules/branches.oxoflow`\n(each gated on its upstream param, off by default) \u2014 including the full\nmetagenomic screening chain (bbduk complexity filter, kraken, kraken_parse,\nkraken_merge, malt, maltextract; note the old \"needs the upstream's bundled\nMALT install (no conda package)\" exclusion reason was wrong \u2014 the upstream\n`environment.yml` pins `bioconda::malt=0.61` and `bioconda::hops=0.35`, so\nMALT and MaltExtract ship inside the pinned `nfcore/eager:2.5.3` container).\nThe multi-lane raw-level merges (`lanemerge`, `lanemerge_hostremoval_fastq`)\nare ported as a gated mode (`run_lanemerge`, off by default) built on the\n`input_groups` engine primitive (Traitome/oxo-flow#231, oxo-flow >= 0.16.0) \u2014\nsee the rows below. The remaining `not ported` rows are the BAM-level\nlibrary/seqtype channel merges (the port's model has one library per sample),\nthe unported BAM pass-through mode (`indexinputbam`), or nf-core boilerplate\n(`output_documentation`, `get_software_versions`).\n\n| Upstream process | oxo-flow rule | Tool (version) | Notes |\n|---|---|---|---|\n| unzip_reference | `unzip_reference` | pigz 2.6 | `gunzip -c` into the canonical reference path; `when = config.unzip_reference` (default false \u2014 pass a plain FASTA as before) |\n| makeFastaIndex | `make_fasta_index` | samtools 1.12 | `samtools faidx` verbatim. Port copies the input to `results/reference_genome/fasta_index/reference.fa` (canonical name; upstream publishes `<fasta-base>.fai` only when `--save_reference`) |\n| makeSeqDict | `make_seq_dict` | picard 2.26.0 | `picard -Xmx8192M CreateSequenceDictionary` verbatim; output named `reference.dict` (upstream `<fasta-base>.dict`) |\n| makeBWAIndex | `make_bwa_index` | bwa 0.7.17 | `cp` into `BWAIndex/` + `bwa index` verbatim; canonical file name `reference.fa` |\n| fastqc | `fastqc` | fastqc 0.11.9 | `fastqc -t N -q r1 r2` + rename `*_fastqc.zip` \u2192 `*_raw_fastqc.zip` verbatim (per-instance scoped rename; zips moved to `zips/` like the upstream publishDir saveAs) |\n| fastp | `fastp` | fastp 0.20.1 | Off by default, same as upstream (`complexity_filter_poly_g=false`). PE branch flags verbatim. **Upstream feeds fastp only the 2-colour-chemistry branch** (`ch_input_for_fastp.twocol`, main.nf lines 723-746): with the default `colour_chemistry=4` fastp runs on zero samples even when the flag is on. The port mirrors this gate (`when = complexity_filter_poly_g && colour_chemistry == 2`); use `colour_chemistry=2` to actually filter poly-G |\n| adapter_removal | `adapter_removal` | adapterremoval 2.3.2, adapterremovalfixprefix 0.0.5, pigz 2.6 | Default PE collapse branch verbatim: `--collapse --trimns --trimqualities`, cat of the 5 gz parts (`<base>.pe.collapsed.gz` etc. \u2014 the `.pe` basename AR writes, as upstream), `AdapterRemovalFixPrefix \\| pigz -p <cpus-1>`. The `cat` operands are explicit per-sample names (shared results dir; upstream globs the workdir). When fastp is enabled the input switches to the fastp outputs (upstream channel mix); the AR basename stays the default-path one (`{r1.baseName}_L0` with the `_R1` suffix as upstream derives it) |\n| fastqc_after_clipping | `fastqc_after_clipping` | fastqc 0.11.9 | Verbatim; zips to `zips/` |\n| bwa | `bwa_aln` | bwa 0.7.17, samtools 1.12 | Verbatim PE branch: `bwa aln -n/-l/-k/-o` (Oliva 2021 defaults), `bwa samse` with the eager `@RG` string, `samtools sort -@ <cpus-1>`, `samtools index`. `.sai` written into the mapping dir (upstream workdir-local) |\n| bwamem | `bwamem` | bwa 0.7.17, samtools 1.12 | `bwa mem -t N` + sort + index with the eager @RG string; `when = config.mapper == 'bwamem'` |\n| bowtie2 | `bowtie2` | bowtie2 2.4.4, samtools 1.12 | `bowtie2 -x reference -1/-2` + sort + index; `when = config.mapper == 'bowtie2'` |\n| makeBT2Index | `make_bt2_index` | bowtie2 2.4.4 | `bowtie2-build` into `results/reference_genome/bt2_index/`; `when = config.mapper == 'bowtie2'` |\n| circulargenerator | `circulargenerator` | circularmapper 1.93.5, bwa | `circulargenerator -e -i -s` + `bwa index` on the elongated fasta; `when = config.mapper == 'circularmapper'` |\n| circularmapper | `circularmapper` | bwa + circularmapper 1.93.5 | `bwa aln` on the elongated reference + `realignsamfile` + sort/index; `when = config.mapper == 'circularmapper'` |\n| convertBam | `convert_bam` | samtools 1.12, pigz | `samtools bam2fq | pigz`; `when = config.bam_input` (default false \u2014 the fixture is FASTQ) |\n| indexinputbam | \u2014 | samtools 1.12 | not ported \u2014 indexes the input BAM for upstream's BAM pass-through mode (`bam != 'NA' && !run_convertinputbam`, main.nf 657); the port's BAM-input mode routes through `convert_bam` (bam2fq) instead and nothing downstream consumes the input BAM directly, so no index is needed |\n| hostremoval_input_fastq | `hostremoval_input_fastq` | extract_map_reads.py (bundled) | PE branch verbatim (`-m`, `-of`/`-or`, `-t`); `when = config.hostremoval_input_fastq` |\n| samtools_flagstat | `samtools_flagstat` | samtools 1.12 | Verbatim: `samtools flagstat > {libraryid}_flagstat.stats` |\n| samtools_filter | `samtools_filter_{bwaaln,bwamem,bowtie2,circularmapper}` | samtools 1.12, pigz 2.6 | Four per-mapper rules sharing ONE output set; each is gated `when = config.run_bam_filtering && config.mapper == '<mapper>'` (mutually exclusive, so the released engine needs no any-mode semantics) and takes its mapper's mapped BAM as `BAM=\"{input[0]}\"` (`results/mapping/bwa/{sample}_PE.mapped.bam` / `results/mapping/bwa/{sample}.mapped.bam` / `results/mapping/bt2/{sample}.mapped.bam` / `results/mapping/circularmapper/{sample}.mapped.bam`). The shared body carries the minreadlength-0 branches selected by `bam_unmapped_type`: `discard` (`-F4 -q <thr>`, default) and `fastq` (upstream `-f4` / `-F4 -q` + `samtools fastq -tN \\| pigz -p <cpus-1>` + `rm`, the metagenomic-chain producer), both verbatim. The discard branch additionally writes an EMPTY `{sample}.unmapped.fastq.gz` placeholder \u2014 the engine requires every declared output to exist, and it is never consumed (the metagenomic rules are gated on `bam_unmapped_type == 'fastq'`). The `keep`/`bam`/`both` branches fail fast with a clear error; bwaaln variant live-verified on tx-ubuntu 2026-08-27 (run_bam_filtering=true, 15 succeeded / 0 failed) |\n| samtools_flagstat_after_filter | `samtools_flagstat_after_filter` | samtools 1.12 | `samtools flagstat` on the filtered BAM; `when = config.run_bam_filtering` |\n| picard_addorreplacereadgroups | `picard_addorreplacereadgroups` | picard 2.26.0, samtools | verbatim RG replacement for MultiVCFAnalyzer; `when = run_genotyping && genotyping_tool == 'ug' && run_multivcfanalyzer` |\n| markduplicates | `markduplicates` | picard 2.26.0, samtools 1.12 | Default dedupper. picard MarkDuplicates verbatim (`-Xmx4096M`, `REMOVE_DUPLICATES=TRUE AS=TRUE`, `VALIDATION_STRINGENCY=SILENT`) + `samtools index`. INPUT points at the mapped BAM directly instead of upstream's workdir-local `mv {bam} {libraryid}.bam` rename (the shared results dir must keep the mapped BAM for preseq/flagstat) |\n| dedup | `dedup` | dedup 0.12.8, samtools 1.12 | Alternative dedupper (off by default, `dedupper='dedup'`). Verbatim: `dedup -Xmx4g -i ... -o . -u`, `mv *.log dedup.log`, in-place `samtools sort`, index. Upstream's `mv {bam} {libraryid}.bam` becomes a `cp` (shared-results-dir equivalent, same effect) |\n| preseq | `preseq` | preseq 3.1.2 | Verbatim default branch: `preseq c_curve -s 1000 -o <base>.preseq -B <mapped bam>`. The `-H` (dedup mode) and `lc_extrap` branches are the alternate `preseq_mode`/`dedupper` combinations |\n| bedtools | `bedtools_coverage` | bedtools 2.30.0, pigz | verbatim genome.txt + `bedtools coverage` breadth/depth; `when = config.run_bedtools_coverage` |\n| damageprofiler | `damageprofiler` | damageprofiler 0.4.9 | Verbatim: `-Xmx4g -i <rmdup bam> -r <fasta> -l 100 -t 15 -o . -yaxis_damageplot 0.30`; output lands in `results/damageprofiler/<bam-basename>/` as upstream |\n| mapdamage_calculation | `mapdamage_calculation` | mapdamage2 2.2.1 | verbatim `mapDamage -i -r --ymax --no-stats`; `when = !skip_damage_calculation && damage_calculation_tool == 'mapdamage'` |\n| mapdamage_rescaling | `mapdamage_rescaling` | mapdamage2 2.2.1, samtools | verbatim `--rescale --rescale-out --seq-length` + index; `when = config.run_mapdamage_rescaling` |\n| mask_reference_for_pmdtools | `mask_reference_for_pmdtools` | bedtools 2.30.0 | `bedtools maskfasta`; `when = pmdtools_reference_mask && run_pmdtools` |\n| pmdtools | `pmdtools` | pmdtools 0.60, samtools | verbatim calmd|pmdtools filter + range chain incl. the 141 trap; `when = config.run_pmdtools` |\n| bam_trim | `bam_trim` | bamutil 1.0.15, samtools | `bam trimBam -L -R` (double-stranded none-UDG clip values) + sort/index; `when = config.run_trim_bam` |\n| post_ar_fastq_trimming | `post_ar_fastq_trimming` | fastp 0.20.1 | PE branch verbatim (`--trim_front1/2 --trim_tail1/2`); `when = config.run_post_ar_trimming` |\n| lanemerge | `lanemerge` + `lanemerge_r2` | cat (pigz 2.6) | ported as a gated mode (`run_lanemerge=true`, off by default): the two rules group each sample's lane-tagged pairs (`{sample}_L{lane}_R{1,2}.fastq.gz`) via `input_groups` (group_by = sample, keep = lane; Traitome/oxo-flow#231, oxo-flow >= 0.16.0) and `cat` the pair into one merged fastq (`results/lanemerging/{sample}_R{1,2}_lanemerged.fq.gz`) consumed by fastp / adapter_removal / hostremoval_input_fastq. Deviations: upstream merges the per-library collapsed fastqs AFTER AdapterRemoval (main.nf 1125) and only merges R2 when `single_end=false`; the port merges the raw per-lane pairs pre-clipping (the raw-level `lanemerge_hostremoval_fastq` semantics) and always merges R2 (the port is pure-PE). Samples without lane-tagged files are untouched; with the gate off (or on a released engine without `input_groups`) the default single-pair path is byte-identical, and a fail-fast `{input}` guard prevents silently empty merges. Merged-content E2E passed locally 2026-08-27 (byte-identical to the single-pair inputs); full container run queued for tx-ubuntu |\n| lanemerge_hostremoval_fastq | `hostremoval_input_fastq` (shell switch) | extract_map_reads.py (bundled) | ported as part of the gated mode: when `run_lanemerge=true` the rule feeds the merged pair from `results/lanemerging/` instead of the raw one \u2014 upstream's raw-level merge-into-hostremoval semantics (main.nf 1197). Without lane-tagged files the raw pair is used, exactly as before |\n| library_merge | \u2014 | samtools 1.12 | not ported \u2014 structural: upstream merges the per-LIBRARY dedup BAMs of a sample (`samtools merge`, main.nf 1967); the port's directory-input model has ONE library per sample (library = sample, lane = 0) and one BAM per sample at every stage, so there are no multi-library BAMs to merge. `input_groups` cannot express it either \u2014 it groups FILES of a pattern, and the port has no per-library file dimension. Declare each library as its own sample (or pre-merge) before running |\n| additional_library_merge | \u2014 | samtools 1.12 | not ported \u2014 structural: same constraint as `library_merge` (merges the per-library bam_trim BAMs, main.nf 2320); the port has one BAM per sample per stage |\n| seqtype_merge | \u2014 | samtools 1.12 | not ported \u2014 structural: upstream merges the per-seqtype mapped BAMs of mixed PE/SE libraries into one BAM per library (`samtools merge`, main.nf 1597); the port is pure-PE (sample = text before `_R1`/`_R2`) with one mapped BAM per sample, so there are no mixed-PE/SE BAMs to merge. Convert SE samples to PE or run SE-only samples separately |\n| qualimap | `qualimap` | qualimap 2.2.2d | Default path, ported: `qualimap bamqc -bam <rmdup bam> -nt 2 -outdir . -outformat \"HTML\" --java-mem-size=4G` verbatim; output lands in `results/qualimap/<bam-base>_bamqc/` as upstream |\n| genotyping_pileupcaller | `genotyping_pileupcaller` | samtools 1.12, sequencetools 1.5.2 | Off by default, same as upstream (`run_genotyping=false`). Verbatim: `samtools mpileup -B --ignore-RG -q 30 -Q 30 [-l <bed>] -f <fasta> <bams> \\| pileupCaller --randomHaploid --sampleNames <csv> [-f <snp>] -e pileupcaller.double` (single-instance fan-in; `-e` prefix `pileupcaller.double` = PE strandedness). `-l`/`-f` render only when `pileupcaller_bedfile`/`pileupcaller_snpfile` are set, exactly as upstream's dummy-file check (main.nf lines 2608-2609); without them the rule fails fast with upstream's error message \u2014 upstream exits 1 at workflow start (main.nf lines 74-78), the port's guard lives in the rule shell because oxo-flow has no params-validation stage |\n| genotyping_ug | `genotyping_ug` | gatk3 3.5, bgzip | verbatim RealignerTargetCreator \u2192 IndelRealigner \u2192 UnifiedGenotyper \u2192 bgzip; `when = run_genotyping && genotyping_tool == 'ug'` |\n| genotyping_hc | `genotyping_hc` | gatk4 4.2.0.0, bgzip | verbatim HaplotypeCaller flags + bgzip; `when = run_genotyping && genotyping_tool == 'hc'` |\n| genotyping_freebayes | `genotyping_freebayes` | freebayes 1.3.5, bgzip | verbatim `freebayes -f -p -C [-g]` + bgzip; `when = run_genotyping && genotyping_tool == 'freebayes'` |\n| genotyping_angsd | `genotyping_angsd` | angsd 0.935 | verbatim bam.filelist + `angsd -GL -doGlF`; `when = run_genotyping && genotyping_tool == 'angsd'` |\n| bcftools_stats | `bcftools_stats` | bcftools 1.12 | `bcftools stats <vcf.gz> -F <fasta>`; `when = config.run_bcftools_stats` (source VCF via `bcftools_stats_source`) |\n| eigenstrat_snp_coverage | `eigenstrat_snp_coverage` | eigenstratdatabasetools 1.0.2, python 3.9.4 | Off by default, same as upstream. Verbatim: `eigenstrat_snp_coverage -i pileupcaller.double >double_eigenstrat_coverage.txt` + `parse_snp_cov.py` (bundled upstream script, called via `python3 scripts/parse_snp_cov.py` \u2014 oxo-flow does not auto-add `bin/` to PATH) |\n| metagenomic_complexity_filter | `metagenomic_complexity_filter` | bbduk 38.92 | verbatim `bbduk.sh -Xmx<g>g in=... threads=N entropymask=f entropy=<entropy> out=<in>_lowcomplexityremoved.fq.gz 2> <in>_bbduk.stats` \u2014 the output keeps upstream's `${input}_lowcomplexityremoved.fq.gz` naming; `when = metagenomic_complexity_filter && run_bam_filtering && bam_unmapped_type == 'fastq'` (upstream validates the same combination at workflow start, main.nf 115-122) |\n| malt | `malt` | malt 0.61 | verbatim `malt-run -J-Xmx<g>g -t N -v -o . -d <db> [-a . -f SAM] -id -m -at -top <min-supp> -mq --memoryMode -i <all fastqs>` \u2014 one instance over ALL samples' unmapped reads (upstream `collect()`); reads the entropy-filtered fastqs when the complexity filter is on (upstream channel switch); `--database` is split into `malt_db` + `kraken2_db`; the percent/reads min-support exclusivity check (main.nf 129-134) is a shell guard; the per-input `.rma6` outputs are undeclared (no fixed template) \u2014 only `malt.log` is declared; NOT yet live-verified; `when = run_metagenomic_screening && run_bam_filtering && bam_unmapped_type == 'fastq' && metagenomic_tool == 'malt'` |\n| maltextract | `maltextract` | hops 0.35 | verbatim `MaltExtract -Xmx<g>g -t <taxon_list> -i <rma6s> -o results/ -r <ncbifiles> -p N -f -a --minPI <flags>` + `postprocessing.AMPS.r -r results/ -m -t N -n <taxon_list> -j`; requires `maltextract_taxon_list` + `maltextract_ncbifiles` (fail-fast guard); consumes the rma6s via glob with a DAG edge through `malt.log`; NOT yet live-verified; `when = run_maltextract && metagenomic_tool == 'malt'` (upstream verbatim) |\n| kraken | `kraken` | kraken2 2.1.2 | verbatim `kraken2 --db <db> --threads N --output <prefix>.kraken.out --report-minimizer-data --report <prefix>.kraken2_report <fastq>` + `cut -f1-3,6-8 > <prefix>.kreport`; reads the entropy-filtered fastq when the complexity filter is on (upstream channel switch); the output prefix is normalized to `{sample}.unmapped.fastq` in both branches (upstream prefixes by the input basename \u2014 see deviations); live-verified on tx-ubuntu 2026-08-27 (synthetic 2-taxon kraken2 DB built in-container via `kraken2-build --add-to-library` with `kraken:taxid|` headers; 14/14 injected alien reads classified as *Alienus syntheticus*, 18 succeeded / 0 failed); `when = run_metagenomic_screening && run_bam_filtering && bam_unmapped_type == 'fastq' && metagenomic_tool == 'kraken'` |\n| kraken_parse | `kraken_parse` | python 3.9.4 | verbatim `kraken_parse.py -c <min_support_reads> -or <read csv> -ok <kmer csv> <kreport>` (upstream script bundled in `scripts/`, called via `python3 scripts/kraken_parse.py` \u2014 oxo-flow does not auto-add `bin/` to PATH); gated on the same `when` as kraken (upstream no-ops the process via an empty channel); live-verified on tx-ubuntu 2026-08-27 (same run as kraken) |\n| kraken_merge | `kraken_merge` | python 3.9.4 | verbatim `merge_kraken_res.py -or kraken_read_count.csv -ok kraken_kmer_duplication.csv` (upstream script bundled in `scripts/`; it scans the working dir for the per-sample CSVs, which the fan-in gathers into one instance); gated on the same `when` as kraken; live-verified on tx-ubuntu 2026-08-27 (same run as kraken) |\n| decomp_kraken | `kraken` (folded in) | kraken2 2.1.2 | folded into the kraken shell: a `.tar.gz` `kraken2_db` is unpacked in place (`tar xzf`, `mkdir -p <db>`, `mv *.k2d <db>/`) \u2014 no when-expression can test a filename suffix (deviation, documented below) |\n| sexdeterrmine | `sexdeterrmine` | sexdeterrmine 1.1.2 | verbatim sexdeterrmine.py run; `when = config.run_sexdeterrmine` |\n| sexdeterrmine_prep | `sexdeterrmine_prep` | sexdeterrmine 1.1.2 | verbatim sexdeterrmine_prep.py; `when = config.run_sexdeterrmine` |\n| mtnucratio | `mtnucratio` | sequencetools 1.5.2 | verbatim `mtnucratio -Xmx`; `when = config.run_mtnucratio` |\n| nuclear_contamination | `nuclear_contamination` | angsd 0.935 (contaminationX) | verbatim contaminationX invocation; `when = config.run_nuclear_contamination` |\n| endorSpy | `endor_spy` | endorSpy | `endorS.py -o json -n <sample> <flagstat>`; `when = config.run_endor_spy` (upstream runs it unconditionally; the port gates it to keep the default path unchanged) |\n| print_nuclear_contamination | `print_nuclear_contamination` | grep | report row extraction; `when = config.run_nuclear_contamination` |\n| multivcfanalyzer | `multivcfanalyzer` | multivcfanalyzer 0.85.2, pigz | verbatim cohort run over all UG VCFs (expand_inputs over `multivcf_samples`); `when = run_genotyping && genotyping_tool == 'ug' && run_multivcfanalyzer` |\n| vcf2genome | `vcf2genome` | vcf2genome 0.91, pigz | verbatim consensus call incl. refMod/uncertainty fastas; `when = config.run_vcf2genome` |\n| multiqc | `multiqc` | multiqc 1.16 | `multiqc -f --config assets/multiqc_config.yaml .` (the upstream `--title/--filename` run-name flags are nf-core boilerplate and are dropped). Module files are staged into per-module subdirs mirroring the upstream multiqc process inputs; staging is guarded so skipped modules are simply absent. Report at `results/multiqc/multiqc_report.html` |\n| output_documentation | \u2014 | \u2014 | not ported \u2014 nf-core boilerplate docs process (markdown_to_html.py of static run docs); upstream runs it unconditionally, so porting it would change the default plan for zero analytical value |\n| get_software_versions | \u2014 | \u2014 | not ported \u2014 nf-core boilerplate versions process (scrapes `$workflow`/`$nextflow` native variables into a versions.yml; a versions.yml has no oxo-flow equivalent, and `scrape_software_versions.py` targets Nextflow env vars) |\n\nAdditional deviations from upstream (all on the default path):\n\n- The `publishDir` mechanism has no oxo-flow equivalent: outputs are written\n  directly at the `results/...` paths upstream publishes to (see\n  `output = [...]` in `main.oxoflow`); `publish_dir_mode`/`saveAs` are\n  folded into the shells where they rename files.\n- Reference files use the canonical name `reference.fa` (and\n  `reference.dict`) in `results/reference_genome/` instead of the input\n  fasta basename; all reference-consuming rules point at those copies.\n- Upstream labels are baked into per-rule `[rules.resources]`:\n  `sc_tiny` 1 cpu/1G/4h, `sc_small` 1/4G, `sc_medium` 1/8G, `mc_small`\n  2/4G, `mc_medium` 4/8G, plus the base-process default (1 cpu/7G/24h)\n  used by the undefined `mc_tiny` label (eigenstrat_snp_coverage).\n  JVM heaps are byte-identical (`-Xmx8192M`, `-Xmx4096M`, `-Xmx4g`,\n  `--java-mem-size=4G`).\n- Gated-mode deviations (`run_lanemerge=true`, off by default):\n  - upstream runs `lanemerge` on the per-library collapsed fastqs AFTER\n    AdapterRemoval (main.nf 1125, a small post-collapse cat of the `.pe`\n    pair); the port merges the raw per-lane pairs BEFORE clipping (the\n    `lanemerge_hostremoval_fastq` raw-level semantics, main.nf 1197) so\n    that clipping, mapping, dedup, damage and QC all run on the merged\n    pair exactly once. The lane-tagged naming (`{sample}_L{lane}_R{1,2}`)\n    is upstream's TSV input-mode style; upstream detects multi-lane from\n    the sample sheet, the port gates on `run_lanemerge` (auto-detection\n    from filenames is impossible for a when-expression). Only R1 was\n    upstream's documented lanemerge concern; the port merges R2 as well\n    (pure-PE, both ends must exist).\n  - `fastqc` runs on the merged pair in gated mode (twin rule\n    `fastqc_lanemerged` with an exclusive when-gate); upstream runs\n    FastQC on the per-lane input fastqs.\n  - samples with lane-tagged files mixed with default-named files in one\n    directory: lane-tagged samples flow through the merged path, the\n    others through the default path (shell existence-check switch in\n    fastp / adapter_removal / hostremoval_input_fastq).\n  - local E2E 2026-08-27 (dev engine, no container): merged pairs\n    byte-identical to the single-pair inputs (S1: 3635 reads, S2: 3602\n    reads, R1/R2 counts equal). Full container run queued for tx-ubuntu\n    (docker daemon unavailable on the authoring machine).\n- Metagenomic-chain deviations (`rules/branches.oxoflow` B32-B37, all off by\n  default):\n  - upstream's run-level validation (main.nf 115-137) becomes rule gates +\n    fail-fast shell guards (oxo-flow has no params-validation stage).\n  - `kraken_parse`/`kraken_merge` carry the same `when` as `kraken`\n    (upstream no-ops them via empty channels).\n  - `decomp_kraken` (`.tar.gz` kraken2 DB unpack) is folded into the\n    `kraken` shell \u2014 no when-expression can test a filename suffix.\n  - the kraken output prefix is normalized to `{sample}.unmapped.fastq`\n    in both filter branches (upstream prefixes by the input basename,\n    which differs when the complexity filter is on).\n  - MALT `.rma6` outputs are undeclared (per-input names, no fixed\n    template; `.sai` precedent); only `malt.log` is declared and\n    `maltextract` consumes the rma6s via glob with a DAG edge through\n    `malt.log`.\n  - upstream's single `--database` param is split into `malt_db` and\n    `kraken2_db`.\n  - each `samtools_filter_<mapper>` variant writes an empty `{sample}.unmapped.fastq.gz`\n    placeholder in discard mode (engine output-existence contract; never\n    consumed \u2014 the metagenomic rules are gated on `bam_unmapped_type == 'fastq'`).\n  - the kraken metagenomic chain (kraken/kraken_parse/kraken_merge) is\n    live-verified on tx-ubuntu 2026-08-27 with a synthetic 2-taxon\n    kraken2 DB (build recipe: `kraken2-build --add-to-library` with\n    `kraken:taxid|N|` sequence headers \u2014 a manual `seqid2taxid.map`\n    alone builds an EMPTY table, and the map must be sorted);\n    `bam_unmapped_type=fastq` + `run_bam_filtering` + \n    `run_metagenomic_screening` + `metagenomic_tool=kraken`, 18\n    succeeded / 0 failed. The MALT half (malt/maltextract) remains NOT\n    live-verified (needs a MALT index DB, not yet available on the test\n    server).\n- A `.gz`-compressed reference FASTA is not supported (upstream's\n  `unzip_reference` pigz pre-step is not ported): pass a plain FASTA.\n- Upstream's startup parameter validation (e.g. the pileupCaller\n  bed/snp exit-1 check, main.nf lines 74-78) has no oxo-flow\n  equivalent: the checks live as fail-fast guards at the top of the\n  affected rule shells (`genotyping_pileupcaller`), so an invalid\n  invocation fails when the rule runs rather than at workflow start.\n- Upstream `errorStrategy retry` (signals 143/137/104/134/139/140, max 3)\n  and the exit-1 retry on dedup/markduplicates/damageprofiler/qualimap are\n  not ported (oxo-flow has no signal-based retry); `preseq`'s\n  `errorStrategy 'ignore'` is likewise not ported.\n- The conditional `preserve5p`/`mergedonly` AR branches (both off by\n  default) are not ported; their config keys are kept with upstream\n  defaults.\n- `run_pmdtools`, `run_trim_bam`, `run_post_ar_trimming`,\n  `run_mapdamage_rescaling`, `run_bedtools_coverage`, `run_vcf2genome`,\n  `run_multivcfanalyzer`, `run_sexdeterrmine`, `run_mtnucratio`,\n  `run_nuclear_contamination`, `run_endorSpy`, `run_convertinputbam`,\n  `run_hostremoval` and the non-default mapper/dedupper/damage-tool/\n  genotyping-tool choices are all ported as the gated branch rules above\n  (the port's keys are `run_endor_spy`, `bam_input` and\n  `hostremoval_input_fastq` where the upstream names `run_endorSpy`,\n  `run_convertinputbam` and `hostremoval_input_fastq` differ);\n  `run_bam_filtering` (incl. the metagenomic screening chain under\n  `run_metagenomic_screening` with `metagenomic_tool` = `kraken`/`malt`) IS\n  ported. Default values are kept in `[config]` where a config key exists.",
     "compute": "up to 4 CPUs / 8 GB per rule (bwa_aln)",
     "quickstart_note": "Needs reference genome and reads \u2014 see Requirements.",
-    "coverage": "default-path + run_bam_filtering (bwaaln) branches live-verified on tx-ubuntu (eager docker 2.5.3); metagenomic chain (bam_unmapped_type=fastq, kraken, malt) validate/dry-run-tested \u2014 live-verification pending; lanemerge gated multi-lane mode (run_lanemerge=true): merged-content E2E passed locally 2026-08-27 (byte-identical to single-pair inputs), full container run queued for tx-ubuntu"
+    "coverage": "default-path + run_bam_filtering (bwaaln) branches live-verified on tx-ubuntu (eager docker 2.5.3); metagenomic chain (bam_unmapped_type=fastq, kraken, malt) validate/dry-run-tested \u2014 live-verification pending; lanemerge gated multi-lane mode (run_lanemerge=true): merged-content E2E passed locally 2026-08-27 (byte-identical to single-pair inputs), full container run queued for tx-ubuntu",
+    "not_applicable": [
+      "output_documentation: nf-core boilerplate docs process (markdown_to_html.py of static run docs); upstream runs it unconditionally, so porting it would change the default plan for zero analytical value",
+      "get_software_versions: nf-core boilerplate versions process (scrapes $workflow/$nextflow native variables into a versions.yml, which has no oxo-flow equivalent)"
+    ],
+    "workflowhub": {
+      "id": 2288,
+      "url": "https://workflowhub.eu/workflows/2288",
+      "doi": "10.48546/workflowhub.workflow.2288.1",
+      "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2288.1"
+    }
   },
   {
     "name": "oxo-flow-fetchngs",
@@ -1969,7 +2097,13 @@ window.OXO_PIPELINES = [
     "compute": "up to 2 CPUs / 12 GB per rule (download)",
     "quickstart_note": "Downloads public data by SRA/ENA accessions (network required) \u2014 configure your IDs first.",
     "coverage": "default-path",
-    "updated": "2026-09-04"
+    "updated": "2026-09-04",
+    "workflowhub": {
+      "id": 2289,
+      "url": "https://workflowhub.eu/workflows/2289",
+      "doi": "10.48546/workflowhub.workflow.2289.1",
+      "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2289.1"
+    }
   },
   {
     "name": "oxo-flow-rnaseq-star-deseq2",
@@ -2029,7 +2163,7 @@ window.OXO_PIPELINES = [
       "star_index"
     ],
     "excluded": [
-      "Snakemake report artifacts (workflow/report/*.rst) \u2014 jinja captions rendered by the sphinx-based snakemake --report machinery (report: directive + report() output annotations); no oxo-flow equivalent"
+      "Snakemake report artifacts \u2014 per-rule .rst captions (workflow/report/fastp.rst, pca.rst, diffexp.rst, ma.rst) ported as report = \"\u2026\" annotations on the 6 report()-wrapped rules (fastp_pe, fastp_se, 3x pca, deseq2), rendered by the engine rule-captions report section (needs oxo-flow >= 0.17.0; older engines ignore the key); the workflow-level report: directive (workflow/report/workflow.rst) and the sphinx-based snakemake --report HTML book (self-contained, figures embedded, categories/subcategories/labels) have no oxo-flow equivalent"
     ],
     "rule_count": 31,
     "tools": [
@@ -2068,7 +2202,13 @@ window.OXO_PIPELINES = [
     "fidelity_md": "Scope: the **default-parameters main execution path** (upstream `rule all`).\nRows cover every upstream rule; \"not ported\" rows carry a reason. Upstream\nrules use snakemake wrappers v7.2.0 (`bio/fastp`, `bio/star/*`,\n`bio/multiqc`, `bio/reference/ensembl-*`, `bio/samtools/faidx`,\n`bio/bwa/index`, `bio/sra-tools/fasterq-dump`) whose conda pins were carried\nover verbatim. Rules that upstream declares but never runs in the default\npath (get_sra, fastp_se, bwa_index, genome_faidx) and the alternate\ntrimming/SE wiring are ported as config-gated rules (see the `when`/flag\nnotes per row); they appear as `skip` in the default dry-run plan.\n\n| Upstream rule | oxo-flow rule | Tool (version) | Notes |\n|---|---|---|---|\n| get_genome | `get_genome` | curl (system) + Ensembl FTP/HTTPS | ensembl-sequence wrapper: primary_assembly URL with toplevel fallback; probe/fallback restructured into shell, HTTPS branch only (upstream also probes FTP) |\n| get_annotation | `get_annotation` | curl (system) + Ensembl FTP/HTTPS | ensembl-annotation wrapper, identical URL + `gzip -d` logic |\n| star_index | `star_index` | STAR 2.7.11b | star/index wrapper verbatim; tmpdir moved to `.oxo-flow/tmp/star_index` |\n| fastp_pe | `fastp_pe` | fastp 1.0.1 | fastp wrapper verbatim (extra + adapters + reads + trimmed + json + html ordering); upstream per-unit `fastp_adapters`/`fastp_extra` lookup() columns \u2192 per-unit `{meta.fastp_adapters}`/`{meta.fastp_extra}` from the units sheet (`config/units.tsv`), with the global `[config] fastp_adapters`/`fastp_extra` as per-unit defaults (empty column \u2192 global value, both equal upstream defaults) |\n| star_align | `star_align` (+ `star_align_raw`, `star_align_se`, `star_align_se_raw`) | STAR 2.7.11b | star/align wrapper verbatim: `--outSAMtype BAM SortedByCoordinate --quantMode GeneCounts --sjdbGTFfile \"<gtf>\"` in the upstream extra-string order, `--readFilesCommand gunzip -c`, `--outStd BAM_SortedByCoordinate` to the BAM, `cat` of ReadsPerGene/SJ/Logs out of the tmp prefix. Upstream's one rule takes trimmed or raw, one or two reads per sample (get_fq + units.tsv); engine rules have fixed input patterns, so the port makes the 2\u00d72 matrix explicit: PE-trimmed (default), PE-raw (`trimming_activate = false`), SE-trimmed, SE-raw \u2014 each gated so exactly one variant is active |\n| get_sra | `get_sra` | sra-tools 3.2.1 | fasterq-dump wrapper verbatim (`-x`, tmpdir via `mktemp -d`, log `logs/get-sra/{sample}.log`); per-unit auto-feed ported via the units sheet `sra` column: `{meta.sra}` routes each unit to its own accession, gated on `config.sra_accessions != ''` as the master switch (default empty \u2192 skip; upstream triggers per unit from the same column). Deviation: upstream writes uncompressed `sra/{accession}_1.fastq` and get_units_fastqs binds them as inputs; the port gzips into `<raw_dir>/<unit-key>_R{1,2}.fastq.gz` (the raw_dir naming convention) so the trimming/alignment rules consume the reads without per-unit input binding. On engines < 0.17.0 keep the default empty `sra_accessions` \u2014 the per-unit auto-feed requires the `{meta.*}` binding (oxo-flow >= 0.17.0) |\n| fastp_se | `fastp_se` | fastp 1.0.1 | fastp wrapper verbatim (single-end arg set: `--in1 --out1 --failed_out --json --html`); gated on `single_end && trimming_activate` (default off). Deviation: upstream writes the shared `{sample}-{unit}.json` for both SE and PE; the port names the SE report `{sample}_single.json` because two rules must not share an output file here |\n| rseqc_gtf2bed | `rseqc_gtf2bed` | gffutils 0.13 | gtf2bed.py ported to CLI args; `annotation.db` is `temp_output` (= upstream `temp()`) |\n| rseqc_junction_annotation | `rseqc_junction_annotation` | RSeQC 5.0.4 | `junction_annotation.py -q 255 -i <bam> -r <bed> -o <prefix>` verbatim |\n| rseqc_junction_saturation | `rseqc_junction_saturation` | RSeQC 5.0.4 | `junction_saturation.py -q 255 ...` verbatim |\n| rseqc_stat | `rseqc_stat` | RSeQC 5.0.4 | `bam_stat.py -i <bam> > <out> 2> <log>` verbatim |\n| rseqc_infer | `rseqc_infer` | RSeQC 5.0.4 | `infer_experiment.py -r <bed> -i <bam> > <out> 2> <log>` verbatim |\n| rseqc_innerdis | `rseqc_innerdis` | RSeQC 5.0.4 | `inner_distance.py -r <bed> -i <bam> -o <prefix>` verbatim |\n| rseqc_readdis | `rseqc_readdis` | RSeQC 5.0.4 | `read_distribution.py -r <bed> -i <bam>` verbatim |\n| rseqc_readdup | `rseqc_readdup` | RSeQC 5.0.4 | `read_duplication.py -i <bam> -o <prefix>` verbatim |\n| rseqc_readgc | `rseqc_readgc` | RSeQC 5.0.4 | `read_GC.py -i <bam> -o <prefix>` verbatim |\n| multiqc | `multiqc` | MultiQC 1.29 | multiqc wrapper verbatim: parent dirs of all inputs (incl. the junction-annotation log dir), `--no-data-dir --outdir results/qc --filename multiqc_report`. (In upstream's `rule all` \u2014 ported, not excluded.) |\n| count_matrix | `count_matrix` | pandas 2.3.2 | count-matrix.py logic identical (strandedness column pick 1/2/3, sample naming, `groupby(...).sum()` collapse of technical replicates); unit\u2192(sample, strandedness) mapping read from `config/units.tsv` instead of snakemake params |\n| gene_2_symbol | `gene_2_symbol_counts` / `gene_2_symbol_normcounts` / `gene_2_symbol_diffexp` | biomaRt 2.62.0, r-tidyverse 2.0.0 | upstream is one wildcard-generic rule over `{prefix}`; the port makes the three call sites explicit (oxo-flow has no arbitrary `{prefix}` wildcard). `{contrast}` variant scatters per contrast |\n| deseq2_init | `deseq2_init` | DESeq2 1.46.0 | deseq2-init.R logic identical (relevel base levels, batch-effect factors, default interaction model, `rowSums>1` filter, normalized counts); config values passed as CLI args |\n| pca | `pca_treatment_1` / `pca_treatment_2` / `pca_jointly_handled` | DESeq2 1.46.0 | plot-pca.R verbatim (`rlog(blind=FALSE)`, `plotPCA(intgroup=variable)`); one explicit rule per `pca_variables` entry (the engine's scatter does not substitute `{variable}` inside the script field), gated by `pca_activate` |\n| deseq2 | `deseq2` | DESeq2 1.46.0, r-ashr 2.2_63 | deseq2.R logic identical (list-form contrast = vof + level + base_level, ashr `lfcShrink`, `order(padj)`, MA plot); string-form contrasts ported via `contrast_exprs` (semicolon-joined R expressions parallel to `contrasts`, e.g. `list(c('a_vs_b', ...))`, evaluated `eval(parse(text = ...))` verbatim like upstream; entries must use single-quoted R strings and no semicolons); one instance per `contrasts` entry |\n| bwa_index | `bwa_index` | bwa 0.7.19 | bwa/index wrapper verbatim: `-b <size/10 MB, clamped to [10, 51200]>M -p resources/genome.fasta` (the wrapper's block-size formula, replicated with `wc -c` + shell arithmetic), outputs `resources/genome.fasta.{amb,ann,bwt,pac,sa}`; gated on `bwa_index_activate` (default off \u2014 upstream `rule all` never requests it; snakemake lazy evaluation vs oxo-flow runs every rule) |\n| genome_faidx | `genome_faidx` | samtools 1.22 | `samtools faidx` wrapper verbatim \u2192 `resources/genome.fasta.fai`; gated on `genome_faidx_activate` (same reasoning as bwa_index) |\n| report/ (`report/*.rst`) | not ported | \u2014 | Snakemake report artifacts: the `.rst` captions are jinja templates rendered by the sphinx-based `snakemake --report` machinery (`report:` directive + `report()` output annotations); no oxo-flow equivalent |\n| trimming.activate = False rewiring | `star_align_raw` / `star_align_se_raw` | STAR 2.7.11b | upstream then feeds raw reads to star_align; ported as explicit variants gated on `!trimming_activate` |\n| edger / kallisto / trimgalore | n/a | \u2014 | not present in upstream v3.1.1 (fastp is the trimmer, DESeq2 the DE tool) |\n\n**Port-level conventions** (config-shape deviations, commands unchanged):\nupstream wildcards are `(sample, unit)`; the port fans out over one composite\n`{sample}` = `<sample>-<unit>` (e.g. `A-lane1`), so output paths are\nbyte-identical to upstream (`results/trimmed/A-lane1/A-lane1_R1.fastq.gz`,\n`results/star/A-lane1/...`). Nested upstream config (`diffexp.*`, `ref.*`,\n`trimming.activate`, `pca.*`) is flattened into flat `[config]` keys with the\nsame defaults (see `main.oxoflow` header). The upstream `config/samples.tsv`\ndemo sheet ships with the port, extended with replicate units F/G/H so every\ntreatment combination has \u22652 samples (a DESeq2 run requirement): 8 samples\n(A\u2013H), 9 units (A-lane1, A-lane2, B\u2013H lane1). Raw reads live at\n`<raw_dir>/<unit-key>_R1.fastq.gz` / `_R2.fastq.gz` (`[config] raw_dir`\ndefaults to `test/fixtures/raw/`, which contains tiny real reads so the\ndry-run resolves every input; point it at your data, e.g. `raw_dir = \"raw\"`).\nUpstream demo-data FASTQ paths (`A.1.fq.gz` etc.) were renamed to this\nconvention \u2014 data-path substitution only. `config/units.tsv` keeps the\nupstream columns (`sample_name`, `unit_name`, `fq1`, `fq2`, `sra`,\n`strandedness`, `fastp_adapters`, `fastp_extra`) and adds a leading\n`unit_key` column holding the composite `{sample}` wildcard values\n(`A-lane1`, \u2026) \u2014 the sheet doubles as the workflow's metadata table\n(`[workflow] metadata_file`): `{meta.sra}`, `{meta.fastp_adapters}` and\n`{meta.fastp_extra}` resolve per unit, and an empty per-unit cell falls back\nto the global config defaults (upstream `lookup()` semantics).\n",
     "compute": "up to 24 CPUs per rule (star_align)",
     "quickstart_note": "Needs reference genome, annotation and reads \u2014 see Requirements.",
-    "coverage": "default-path"
+    "coverage": "default-path",
+    "workflowhub": {
+      "id": 2290,
+      "url": "https://workflowhub.eu/workflows/2290",
+      "doi": "10.48546/workflowhub.workflow.2290.1",
+      "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2290.1"
+    }
   },
   {
     "name": "oxo-flow-varlociraptor",
@@ -2098,15 +2238,26 @@ window.OXO_PIPELINES = [
     "scope": [
       "annotate_candidate_variants_delly",
       "annotate_candidate_variants_freebayes",
+      "annotate_descriptions",
+      "annotate_dgidb",
+      "annotate_exons",
+      "annotate_mutational_signatures",
       "annotate_variants",
       "annotate_vcfs",
+      "annotated_index",
       "apply_bqsr",
+      "apply_bqsr_consensus",
+      "arriba",
+      "assign_primers",
+      "bam_index_consensus",
       "bam_index_dedup",
       "bcf_index_arriba",
       "bcf_index_candidate_delly",
       "bcf_index_candidate_freebayes",
+      "bcf_index_cleaned_db",
       "bcf_index_delly",
       "bcf_index_fdr_BND",
+      "bcf_index_fdr_BND_fusions",
       "bcf_index_fdr_DEL",
       "bcf_index_fdr_DUP",
       "bcf_index_fdr_INS",
@@ -2115,13 +2266,29 @@ window.OXO_PIPELINES = [
       "bcf_index_fdr_REP",
       "bcf_index_fdr_SNV",
       "bcf_index_filtered",
+      "bcf_index_final",
       "bcf_index_freebayes",
+      "bcf_index_fusions_callset",
+      "bcf_index_population_filtered",
       "bcf_index_vep_annotated",
       "bcftools_concat",
+      "bcftools_concat_candidates",
       "bcftools_concat_fusions",
       "bedtools_merge",
+      "build_primer_regions",
       "build_sample_regions",
+      "bwa_index",
+      "calc_consensus_reads",
+      "calculate_covered_coding_sites",
+      "chm_eval",
+      "chm_eval_kit",
+      "chm_eval_sample",
+      "chm_namesort",
+      "chm_to_fastq",
+      "chromosome_map",
+      "clean_population_db",
       "control_fdr_BND",
+      "control_fdr_BND_fusions",
       "control_fdr_DEL",
       "control_fdr_DUP",
       "control_fdr_INS",
@@ -2129,13 +2296,24 @@ window.OXO_PIPELINES = [
       "control_fdr_MNV",
       "control_fdr_REP",
       "control_fdr_SNV",
+      "convert_fusions",
       "convert_phred_scores",
+      "convert_phred_scores_fusions",
       "coverage_table",
+      "create_mutational_context_file",
       "datavzrd_coverage",
       "datavzrd_variants_calls",
       "delly",
+      "determine_coding_regions",
+      "download_cadd_scores_for_vep",
+      "download_cosmic_signatures",
       "download_delly_excluded_regions",
       "download_revel",
+      "estimate_mutational_burden_curve",
+      "estimate_mutational_burden_hist",
+      "fastp_pe",
+      "fastp_pipe",
+      "fastp_se",
       "fastqc_r1",
       "fastqc_r2",
       "filter_by_annotation",
@@ -2145,8 +2323,13 @@ window.OXO_PIPELINES = [
       "filter_group_regions_expanded",
       "filter_offtarget_variants_delly",
       "filter_offtarget_variants_freebayes",
+      "filter_primerless_reads",
+      "filter_unmapped_primers",
       "fix_delly_calls",
       "freebayes",
+      "gather_annotated_calls",
+      "gather_annotated_calls_fusions",
+      "gather_benchmark_calls",
       "gather_calls",
       "genome_dict",
       "genome_faidx",
@@ -2155,37 +2338,60 @@ window.OXO_PIPELINES = [
       "get_known_variants",
       "get_pangenome",
       "get_reference_paths",
+      "get_sra",
       "get_target_regions",
       "get_vep_cache",
       "get_vep_plugins",
+      "group_bcf_to_vcf_fusions",
+      "group_bcf_to_vcf_variants",
+      "group_vcf_to_maf_fusions",
+      "group_vcf_to_maf_variants",
+      "join_mutational_signatures",
+      "map_consensus_reads_pe",
+      "map_consensus_reads_se",
+      "map_primers",
+      "map_reads_bwa",
       "map_reads_vg",
       "mark_duplicates",
       "merge_calls",
+      "merge_calls_fusions",
+      "merge_consensus_reads",
       "merge_covered_group_regions",
       "merge_expanded_group_regions",
       "merge_trimmed_fastqs_r1",
       "merge_trimmed_fastqs_r2",
       "multiqc",
       "pangenome_autoindex",
+      "plot_mutational_signatures",
+      "population_db_update",
+      "population_filter_variants",
       "postprocess_vg_alignments",
       "prepare_oncoprint",
+      "primer_to_bed",
       "process_call_tables",
       "process_revel_scores",
       "recalibrate_base_qualities",
+      "recalibrate_base_qualities_consensus",
       "remove_iupac_codes",
+      "rename_chromosomes",
       "render_scenario",
       "samtools_idxstats",
       "samtools_stats",
       "scatter_candidates_delly",
       "scatter_candidates_freebayes",
       "sort_alignments",
+      "sort_arriba_calls",
       "sort_calls_arriba",
       "sort_calls_delly",
       "sort_calls_freebayes",
+      "sort_consensus_reads",
+      "star_align",
+      "star_index",
       "tabix_noiupac",
       "tabix_revel",
       "tabix_variation",
       "transform_gene_annotations",
+      "trim_primers",
       "varlociraptor_alignment_properties",
       "varlociraptor_call_arriba",
       "varlociraptor_call_delly",
@@ -2196,20 +2402,23 @@ window.OXO_PIPELINES = [
       "vembrane_table"
     ],
     "excluded": [
-      "fusions FDR-control chain (filtering.smk) \u2014 the ported fusions branch ends at the fusions callset (calls/varlociraptor/{group}/{group}.fusions.0.bcf); the subsequent vartype FDR-control and fusions report steps stay out of scope (requires calling mode fusions + fusion_activate = true)",
-      "multi-file target_regions lists \u2014 the port freezes a single BED path (config target_regions); the merge step handles one file"
+      "fusions report and table exports (report.smk / table.smk fusions instances) \u2014 the ported fusions FDR-control chain (filtering.oxoflow) ends at the fdr-controlled/normal-probs callsets; the fusions vembrane table, oncoprints and report datasets need calling mode fusions + fusion_activate = true end-to-end data to verify"
     ],
-    "rule_count": 159,
+    "rule_count": 165,
     "tools": [
       "altair",
+      "arriba",
       "bcftools",
       "bedtools",
       "biopython",
+      "bwa",
       "curl",
       "datavzrd",
       "delly",
       "ensembl-vep",
+      "fastp",
       "fastqc",
+      "fgbio",
       "freebayes",
       "gatk4",
       "gawk",
@@ -2226,10 +2435,14 @@ window.OXO_PIPELINES = [
       "samtools",
       "scikit-learn",
       "sed",
+      "siglasso",
       "snpsift",
+      "sra-tools",
+      "star",
       "statsmodels",
       "unzip",
       "varlociraptor",
+      "vcf2maf",
       "vcflib",
       "vega-lite-cli",
       "vembrane",
@@ -2254,7 +2467,13 @@ window.OXO_PIPELINES = [
     "quickstart": "oxo-flow run main.oxoflow",
     "compute": "up to 64 CPUs / 32 GB per rule (freebayes candidates 48 threads; vg giraffe 64 threads)",
     "quickstart_note": "Needs reference data \u2014 see Requirements; preview with `oxo-flow dry-run main.oxoflow --samples first:1`.",
-    "coverage": "default path (pangenome mapping, freebayes+delly candidates, Varlociraptor calling, VEP, report) + 9 gated branch modules (47 rules): trimming (fastp/SRA), primers (fgbio/rs), MAF export, population DB, VEP plugins, bwa mapping, mutational burden+signatures, STAR/arriba fusions. Branch smoke live-verified on bioinfo-wsx (trimming/bwa/star_index); branches needing the full default-path outputs (maf/burden/population/signatures) are ported and dry-run-verified."
+    "coverage": "default path (pangenome mapping, freebayes+delly candidates, Varlociraptor calling, VEP, report) + 10 gated branch modules (60 rules): trimming (fastp/SRA), primers (fgbio/rs), MAF export, population DB, VEP plugins, bwa mapping, CHM benchmarking, mutational burden+signatures, consensus reads, STAR/arriba fusions. Branch smoke live-verified on bioinfo-wsx (trimming/bwa/star_index); branches needing the full default-path outputs (maf/burden/population/signatures) are ported and dry-run-verified.",
+    "workflowhub": {
+      "id": 2291,
+      "url": "https://workflowhub.eu/workflows/2291",
+      "doi": "10.48546/workflowhub.workflow.2291.1",
+      "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2291.1"
+    }
   },
   {
     "name": "oxo-flow-snparcher",
@@ -2375,9 +2594,7 @@ window.OXO_PIPELINES = [
     ],
     "excluded": [
       "parabricks \u2014 every rule runs with --nv GPU passthrough (workflow/rules/parabricks.smk); the oxo-flow docker backend has no --nv support, plus NVIDIA EULA/license cannot be enforced",
-      "sentieon \u2014 proprietary SENTIEON_LICENSE server gating (config/config.yaml sentieon section); cannot be distributed or verified",
-      "denovo \u2014 no such step in upstream v2.2",
-      "structural_variants \u2014 no such step in upstream v2.2"
+      "sentieon \u2014 proprietary SENTIEON_LICENSE server gating (config/config.yaml sentieon section); cannot be distributed or verified"
     ],
     "rule_count": 89,
     "tools": [
@@ -2401,7 +2618,7 @@ window.OXO_PIPELINES = [
       "r",
       "python"
     ],
-    "description": "Variant calling for non-model organisms: paired FASTQ reads (or SRA accessions, or external BAMs) are trimmed and filtered with fastp, aligned with BWA-MEM, optionally duplicate-marked with sambamba, and called to per-sample gVCFs with GATK HaplotypeCaller or DeepVariant (low-coverage defaults: -ploidy 2, --min-pruning 1). Optional upstream branches are gated by config keys: joint genotyping (GenomicsDBImport + GenotypeGVCFs, or GLnexus for DeepVariant), GATK hard variant filtration, callable-sites BED (mosdepth/clam coverage + genmap mappability), the postprocess module (clean SNP/indel call sets), the qc module (PLINK PCA/relatedness, ADMIXTURE, interactive dashboard), and a cohort QC metrics report. Two runtime-fan-out branches are ported with the engine's output_pattern primitive (oxo-flow >= 0.17): interval scatter (per-interval gVCF calling and per-shard joint genotyping) and the per-region bcftools caller; both default off.",
+    "description": "Variant calling for non-model organisms: paired FASTQ reads (or SRA accessions, or external BAMs) are trimmed and filtered with fastp, aligned with BWA-MEM, optionally duplicate-marked with sambamba, and called to per-sample gVCFs with GATK HaplotypeCaller or DeepVariant (low-coverage defaults: -ploidy 2, --min-pruning 1). Optional upstream branches are gated by config keys: joint genotyping (GenomicsDBImport + GenotypeGVCFs, or GLnexus for DeepVariant), GATK hard variant filtration, callable-sites BED (mosdepth/clam coverage + genmap mappability), the postprocess module (clean SNP/indel call sets), the qc module (PLINK PCA/relatedness, ADMIXTURE, interactive dashboard), and a cohort QC metrics report. Two runtime-fan-out branches are ported with the engine's output_pattern primitive (oxo-flow >= 0.17): interval scatter (per-interval gVCF calling and per-shard joint genotyping) and the per-region bcftools caller; both default off. Long-contig (CSI) VCF indexing is auto-selected when any reference contig exceeds the 512 Mb TBI limit (long_contig_mode config: auto/true/false), mirroring upstream's TBI_MAX_CONTIG_LENGTH decision; the postprocess module (basic/strict filtering, clean SNP/indel sets) follows the same CSI twin pattern.",
     "installation": {
       "engine": "oxo-flow >= 0.12.0 (interval-scatter and bcftools branches need output_pattern: >= 0.17)",
       "toolchain": "conda envs \u2014 pinned versions (fastp 1.3.6, bwa 0.7.19, samtools 1.24, gatk4 4.6.2.0, sambamba 1.0.1, sra-tools 3.2.1, mosdepth 0.3.3, vcftools 0.1.16, bcftools 1.23, plink2; conda-forge + bioconda); deepvariant branch needs a docker backend",
@@ -2419,7 +2636,17 @@ window.OXO_PIPELINES = [
     "fidelity_md": "## Fidelity\n\n74 rules ported from upstream v2.2 (up from 60), covering every branch that\ncan be expressed in oxo-flow's DAG. Commands are ported verbatim\n(same flags, same output paths); upstream's snakemake `{{...}}` shell escaping\nis unwrapped to literal braces, and snakemake `{params.*}`/`{resources.*}`\nreferences are resolved to their upstream values or to `{config.*}` keys.\nThe two runtime-fan-out branches (interval scatter, bcftools caller) are\nported with the engine's `output_pattern` primitive (issue #227 item 5,\nmerged in oxo-flow 0.17): a producer rule whose outputs are enumerated by a\nfilesystem scan after it completes, instantiating one downstream consumer per\ndiscovered value. These branches require an engine with `output_pattern`\nsupport; older engines ignore the key and the when-gates keep the default\nplan unchanged.\n\n| Upstream rule | oxo-flow rule | Tool (version) | Notes |\n|---|---|---|---|\n| `prepare_reference` (local branch) | `prepare_reference` | samtools 1.24 (bgzip) | identical command; url/accession branches not ported (config `reference_source` is a local path) |\n| `index_reference` | `index_reference` | samtools 1.24, bwa 0.7.19 | identical command (faidx + dict + bwa index) |\n| `fastp` | `fastp` / `fastp_srr` | fastp 1.3.6 | identical flags; `{sample}/{sample}/u1` fan-out for single-row sheets with empty `library_id`; SRA-downloaded reads via `fastp_srr` |\n| `download_sra` | `download_sra` | sra-tools 3.2.1, ffq, curl, pigz | identical prefetch\u2192fasterq-dump\u2192pigz flow with ffq/ENA fallback; fasterq-dump `--tmpdir` dropped (oxo-flow has no per-rule tmpdir) |\n| `bwa_mem` | `bwa_mem` | bwa 0.7.19, samtools 1.24 | identical command incl. read group `ID:{sample}.u1 SM:{sample} LB:{sample} PL:ILLUMINA`; raw BAM is temp like upstream |\n| `merge_library_bams` | `merge_library_bams` | samtools 1.24 | per-library merge, single input unit in the default path |\n| `merge_library_level_bams` | `merge_library_level_bams` | samtools 1.24 | no-markdup path (`results/bams/merged/{sample}.bam`) |\n| `markdup_library` / `merge_dedup_libraries` | `markdup_library` / `merge_dedup_libraries` | sambamba 1.0.1, samtools 1.24 | identical commands; gated on `mark_duplicates` (default `false`; upstream default `true` \u2014 see deviations below; per-sample override via the `metadata_file` `mark_duplicates` column) |\n| `index_bam_csi` | `index_bam_csi` / `index_bam_csi_markdup` / `index_bam_csi_external` | samtools 1.24 | identical (`samtools index -c`), one per BAM-producing branch |\n| `stage_external_bam` | `stage_external_bam` | \u2014 | external BAM inputs symlinked into `results/bams/input/` then run through the standard callers |\n| `normalize_external_gvcf_for_gatk` / `archive_gatk_gvcf` (gvcf input type) | `normalize_external_gvcf_for_gatk` | bcftools 1.23 | external gVCF inputs recompressed + tabix-indexed to `results/gvcfs/{sample}.g.vcf.gz` (upstream long-contig mode's archive command) and fed straight into joint genotyping; gVCF samples skip calling. Upstream short mode feeds the raw external path to the mapfile; the port normalizes so the uniform `results/gvcfs/{sample}.g.vcf.gz` pattern holds. Upstream refuses gvcf inputs with non-GATK callers; the port accepts them in the GLnexus path (normalized gVCFs are valid GLnexus input) \u2014 see deviations |\n| `gatk_haplotypecaller` (standard mode) | `gatk_haplotypecaller` / `_markdup` / `_external` | gatk4 4.6.2.0 | identical flags incl. `-ploidy 2 --emit-ref-confidence GVCF --min-pruning 1 --min-dangling-branch-length 1` (low-coverage defaults); `-Xmx7000m` = upstream default profile `mem_mb_reduced`; threads 1 as upstream |\n| `picard_intervals` (interval mode) | `picard_intervals` | picard 3.5.0 | identical `ScatterIntervalsByNs` call (`MAX_TO_MERGE=500`, `OUTPUT_TYPE=ACGT` = upstream `ScatterIntervalsByNs` block) |\n| `create_gvcf_intervals` (interval mode) | `create_gvcf_intervals` | gatk4 4.6.2.0 | upstream `intervals.smk:59` checkpoint: one `SplitIntervals --scatter-count N --subdivision-mode BALANCING_WITHOUT_INTERVAL_SUBDIVISION` per sample, then the per-interval file list is enumerated by the engine's `output_pattern` scan (see deviations) |\n| `gatk_haplotypecaller` (interval mode) | `gatk_haplotypecaller_interval` / `_markdup` / `_external` (short mode) + `_long` twins | gatk4 4.6.2.0 | deferred consumers, instantiated once per discovered interval; same flags as standard mode plus `-L {interval}` from the scattered list; long-contig mode writes plain `.vcf` (no `.gz`, no index) since GATK silently omits the index for `-O *.vcf.gz` on long contigs |\n| `concat_interval_gvcfs` | `concat_interval_gvcfs` | bcftools 1.23 | `bcftools concat -D -a` over the per-interval gVCFs + `bcftools sort` + `index -t`, one per sample |\n| `create_db_intervals` (interval mode) | `create_db_intervals` | gatk4 4.6.2.0, python | upstream `intervals.smk:89` checkpoint: `DB_SCATTER = db_scatter_factor \u00d7 samples \u00d7 num_gvcf_intervals` (computed from `{config.samples_list}`), `SplitIntervals --subdivision-mode INTERVAL_SUBDIVISION`, then `scripts/interval_list_tools.py split-db` re-shards to the per-shard interval/contig caps |\n| `gatk_genomics_db_import` (interval mode) | `gatk_genomics_db_import_interval` | gatk4 4.6.2.0 | deferred consumer, one import per db shard (`-L {db_interval}`, mapfile + `--merge-input-intervals` like the cohort rule) |\n| `gatk_genotype_gvcfs` (interval mode) | `gatk_genotype_gvcfs_interval` | gatk4 4.6.2.0 | deferred consumer, `gendb://` per-shard GenotypeGVCFs \u2192 `results/vcfs/intervals/L{db_interval}.vcf.gz` |\n| `concat_interval_vcfs` | `concat_interval_vcfs` / `concat_interval_vcfs_long` | bcftools 1.23 | `bcftools concat -D -a` + sort + index over the per-shard VCFs \u2192 `results/vcfs/raw.vcf.gz` (+ `.tbi` short mode, `.csi` long mode) |\n| `bcftools_regions` (bcftools caller) | `bcftools_regions` | bcftools 1.23 | upstream `bcftools.smk:13` checkpoint: enumerates reference contigs from the runtime `.fai` into per-contig marker files + `regions.tsv`; the file list is runtime-discovered via `output_pattern` |\n| `bcftools_call` (bcftools caller) | `bcftools_call` | bcftools 1.23 | deferred consumer, one mpileup+call per region (`-q/-Q/-d` from config, `-r \"$CONTIG\"`, `--ploidy`, `-v`); the cohort BAM list is resolved per sample with upstream's markdup \u2192 merged \u2192 external priority (see deviations) |\n| `bcftools_concatenate_vcfs` (bcftools caller) | `bcftools_concat_regions` | bcftools 1.23 | `bcftools concat -D -a` + sort + index over the per-region VCFs \u2192 `results/vcfs/raw.vcf.gz` |\n| `deepvariant_call` | `deepvariant_call` / `_markdup` / `_external` | google/deepvariant:1.10.0 (docker) | identical `/opt/deepvariant/bin/run_deepvariant` invocation; gated on `variant_tool = \"deepvariant\"` |\n| `create_db_mapfile` | `create_db_mapfile` | python (script) | identical logic, ported as `scripts/write_joint_gvcf_mapfile.py` |\n| `joint_genomics_db_import` | `joint_genomics_db_import` | gatk4 | identical GenomicsDBImport flow incl. `TILEDB_DISABLE_FILE_LOCKING` and `--merge-input-intervals` from `scripts/interval_list_tools.py` (merge threshold 50 = upstream `GENOMICSDB_MERGE_CONTIG_THRESHOLD`) |\n| `joint_genotype_gvcfs` | `joint_genotype_gvcfs` | gatk4 | identical (tar-extract \u2192 `gendb://` GenotypeGVCFs \u2192 `results/vcfs/raw.vcf.gz`); temp raw VCF like upstream |\n| `glnexus_joint` | `glnexus_joint` | glnexus, bcftools 1.23 | identical DeepVariant-config GLnexus join; `mem_gbytes` = `mem_mb_reduced/1024` rounded to 8, computed from the default profile (see deviations) |\n| `variant_filtration` | `variant_filtration` | gatk4, bcftools | identical RPRS/FS_SOR/MQ/QUAL hard filters, `--invalidate-previous-filters true`, then `bcftools index -f -t` |\n| long-contig (CSI) indexing \u2014 `_resolve_long_contig_mode` (common.smk) + `compress_interval_raw_vcf` (interval mode) + postprocess module `regions_to_index` | `resolve_long_contig_mode` + `*_long` twins (`gatk_haplotypecaller_interval_long`/`_markdup_long`/`_external_long`, `concat_interval_gvcfs_long`, `create_db_mapfile_long`, `gatk_genomics_db_import_interval_long`, `gatk_genotype_gvcfs_interval_long`, `concat_interval_vcfs_long`, `variant_filtration_long`, `postprocess_basic_filter_long`, `postprocess_strict_filter_long`, `postprocess_subset_indels_long`, `postprocess_subset_snps_long`, `postprocess_drop_indel_snps_long`) | bcftools 1.24, gatk4 4.6.2.0 | config `long_contig_mode` (\"auto\"/true/false) mirrors upstream `TBI_MAX_CONTIG_LENGTH = 2**29 - 1` auto-detection from the `.fai`; long mode emits `.csi` (`bcftools index -c`) and keeps GATK consumers on plain `.vcf` + `.idx`; the postprocess module follows the same twin pattern (`.csi` produced and consumed end-to-end); short mode is byte-identical to a run without the key (see deviations 3, 10, 13, 14) |\n| `collect_fastp_stats` | `collect_fastp_stats` | python (script) | identical logic, ported as `scripts/collect_fastp_stats.py` |\n| `bam_stats` | `bam_stats` / `_markdup` / `_external` | samtools 1.24 | identical (coverage + flagstat -O tsv); outputs temp like upstream |\n| `parse_bam_stats` | `parse_bam_stats` | python (script) | identical logic, ported as `scripts/parse_bam_stats.py` |\n| `combine_qc_metrics` | `combine_qc_metrics` | python (script) | identical report format; gather via `expand_inputs` |\n| `mosdepth` | `mosdepth` / `_markdup` / `_external` | mosdepth 0.3.3 | identical (`--d4 -t {threads}`), per BAM branch |\n| `clam_collect` | `clam_collect` | clam | identical (`clam collect -o depths.zarr`) |\n| `callable_coverage_thresholds` | `callable_coverage_thresholds` | python (script) | identical logic, ported verbatim as `scripts/callable_coverage_thresholds.py` |\n| `clam_loci` | `clam_loci` | clam | identical incl. per-sample mode and `-m/-M` from the thresholds TSV |\n| `coverage_bed` | `coverage_bed` | python, bedtools | identical logic, ported verbatim as `scripts/callable_zarr_to_bed.py` |\n| `genmap_index` | `genmap_index` | genmap | identical index-mode switching on decompressed FASTA size (skew \u2265 5 GB, sampled \u2265 2 GB) |\n| `genmap_mappability` | `genmap_mappability` | genmap | identical (`-K 150 -E 2 -bg -T`) |\n| `mappability_bed` | `mappability_bed` | awk, bedtools | identical score filter + `-d 100` merge |\n| `callable_sites_bed` | `callable_sites_bed` | bedtools | identical sort/merge of coverage + mappability BEDs |\n| postprocess module (`filter_individuals`, `basic_filter`, `update_bed`, `strict_filter`, `subset_snps`, `subset_indels`, `drop_indel_SNPs`) | `postprocess_filter_individuals` \u2026 `postprocess_drop_indel_snps` | bcftools 1.23, awk, bedtools, tabix | identical commands; `scripts/write_include_samples.py` for the sample list; AF upper bound computed as `1 - maf` (upstream `1-{params.maf}`) |\n| qc module (`contig_map`, `vcftools_individuals`, `subsample_snps`, `prepare_plink_inputs`, `copy_qc_report`, `plink`, `setup_admixture`, `admixture`, `generate_coords_file`, `qc_dashboard`) | `qc_contig_map` \u2026 `qc_dashboard` | vcftools 0.1.16, bcftools 1.23, plink2/plink, admixture, R | identical commands; logic ported to `scripts/contig_map.py`, `vcftools_individuals.py`, `prepare_plink_inputs.py`, `contigs4admixture.py`, `generate_coords.py`, `qc_dashboard_render.R`. `generate_coords_file` reads the optional `sample_metadata` CSV (lat/long) into `results/qc/coords.txt`, consumed by the dashboard's terrain-map panel when `qc_google_api_key` is set; without metadata it writes the empty placeholder (upstream's own else branch) so the panel just prints its placeholder text |\n| `setup` / `download_reads` / `map_samples` / `call_variants` / `qc_report` / `callable_sites` / `gvcfs` (Snakefile aggregation targets) | n/a | \u2014 | Snakemake target rules, no commands of their own |\n\n### Remaining exclusions\n\n| Item | Why excluded | Evidence |\n|---|---|---|\n| parabricks (all `parabricks_*` rules) | requires `--nv` GPU passthrough (upstream `parabricks.smk` runs `--nv` images with `nvidia-docker`); the oxo-flow docker backend has no `--nv` support and no GPU device declaration; additionally NVIDIA EULA/license enforcement cannot be guaranteed in CI | `variant_calling/parabricks.smk` (every rule is `--nv`) |\n| sentieon (all `sentieon_*` rules) | proprietary tool gated on a `SENTIEON_LICENSE` server and a pre-installed license; cannot be distributed or verified in a community port | `config/config.yaml` `sentieon` section; `workflow/rules/sentieon.smk` |\n| `denovo` and `structural_variants` pipeline sections | do not exist as rules in upstream v2.2 | grep of `workflow/` at e0e7a94 finds neither rule set |\n| multi-library / multi-unit rows (library_id, input_unit) | the sample-group model has one unit per sample; consumers of `results/bams/raw/{sample}/{sample}/u1.bam` are hard-coded to the `u1` unit | sample sheet semantics in upstream `README` |\n\n### Documented deviations from upstream\n\n1. **Default config differs from upstream**: upstream defaults `mark_duplicates: true`, `joint_genotyping: true`, `generate_filtered_vcf: true`, `callable_sites.enabled: true`; the port defaults all of these to `false` so its default plan is byte-identical to the previous 12-rule port. Flip the keys to get upstream's full pipeline.\n2. **postprocess/qc modules consume `results/vcfs/raw.vcf.gz`**, not upstream's `FINAL_VCF` (which is the hard-filtered VCF when `generate_filtered_vcf: true` and GATK is used). The modules were run on the raw joint VCF. The difference only matters when combining GATK + `generate_filtered_vcf` + a module, and reproduces upstream behavior for the DeepVariant path.\n3. **Postprocess module long-contig CSI mode**: upstream conditionally uses CSI indexes when contigs exceed 512 Mb (`regions_to_index`); the port's postprocess rules follow the calling side's `*_long` twin pattern \u2014 `postprocess_basic_filter_long`/`postprocess_strict_filter_long`/`postprocess_subset_indels_long`/`postprocess_subset_snps_long`/`postprocess_drop_indel_snps_long` emit `.csi` (`bcftools index -c`; `tabix -C` for the SNP-positions file) and consume the `.csi`-indexed upstream VCFs of the chain when `long_contig_mode` selects long mode. Short mode is unchanged (`.tbi` everywhere, byte-identical plans).\n4. **`glnexus_joint` memory**: upstream computes `mem_gbytes` from the default profile's `mem_mb_reduced`; the port inlines the resulting value 8 (with the same `if < 1 then 1` clamp).\n5. **QC-metrics and callable-sites branches with non-fastq input types**: `combine_qc_metrics` and the callable-sites `expand_inputs` reference `results/fastp/{sample}/{sample}/u1.json` / `results/callable_sites/depths/{sample}.*` for every sample, which only exist for fastq/srr (fastp stats) or BAM-bearing samples (depths). For bam/gvcf cohorts the expands fail at plan time. Use fastq/srr groups when combining QC metrics or computing callable sites.\n6. **`fasterq-dump --tmpdir` dropped** (no per-rule tmpdir in oxo-flow); SRA downloads use the current directory.\n7. **gvcf inputs are accepted on any caller**: upstream hard-fails gvcf inputs with non-GATK callers (bcftools/deepvariant/parabricks); the port normalizes them regardless, so the DeepVariant GLnexus path also accepts them. Normalized gVCFs are valid GLnexus input, so this is a relaxation, not a behavior change.\n8. **`coords.txt` is always produced in qc mode**: upstream only creates it when the metadata CSV actually has lat/long rows; the port writes the same file empty otherwise (upstream's own placeholder branch), so the dashboard's map panel shows its placeholder text instead of being absent.\n9. **Interval scatter runs one `SplitIntervals` per sample** (gVCF mode): upstream's `create_gvcf_intervals` checkpoint runs once for the whole cohort and downstream per-interval rules address the shared `results/intervals/{sample}/...` per-sample subdirectory; the engine's `output_pattern` gives each producer instance its own scan domain, so the port runs the split per sample (identical inputs \u2192 identical interval lists) and the per-interval HaplotypeCallers read `results/intervals/gvcf/{sample}/{interval}-scattered.interval_list`. Functionally equivalent, N \u00d7 the split work (N = samples); the per-sample scans are independent, so a scatter of 50 \u00d7 20 samples costs 20 short GATK calls instead of 1.\n10. **No standalone `compress_interval_raw_vcf` step**: upstream re-compresses the per-shard raw VCFs before concatenation; the port's `concat_interval_vcfs` consumes the per-shard VCFs directly (`bcftools concat -D -a` is format-agnostic) and `bcftools sort` normalizes coordinate order. The long-contig (CSI) side of that step IS ported (`concat_interval_vcfs_long` emits `raw.vcf.gz` + `.csi`; `archive_gatk_gvcf` is folded into `concat_interval_gvcfs_long`, which writes the GATK-consumable plain `.vcf` + `.idx` that upstream stages in `results/gvcfs/work/` and never emits a separate durable gz+csi archive \u2014 nothing consumes one in the port's interval chain).\n11. **`bcftools_call` resolves the per-sample final BAM in the shell** (upstream's `get_final_bam` markdup \u2192 merged \u2192 external priority) from `{config.samples_list}`, instead of a static input per branch; the declared `results/bams/{merged,markdup,input}/*.bam` glob inputs still order the calls behind every BAM-producing branch via DAG edges. A sample with no final BAM (e.g. gvcf-only cohorts) contributes nothing and the call proceeds with the remaining samples; an empty BAM list exits 0 with a log note (upstream's shell has the same degenerate-cohort behavior).\n12. **The interval and bcftools branches need an engine with `output_pattern`** (oxo-flow \u2265 0.17). On older engines the key is ignored and the fresh wildcards (`{interval}`, `{db_interval}`, `{region}`) stay unbound, so `validate`/`lint`/`dry-run` still pass (when-gates keep both branches off by default) but those branches must not be enabled there.\n13. **Long-contig mode gates on a side-effect flag file**: `resolve_long_contig_mode` writes a fixed-path flag (`results/reference/.long_contig.flag`) and every `*_long` rule is gated on it (`depends_on = [\"resolve_long_contig_mode\"]`); the short rules carry the negated gate. Engine gotcha: a `when` containing `wildcard.` is evaluated at PLAN time for DAG morphing, when the flag does not exist yet \u2014 a plan-level long rule would be dropped from the plan entirely. Plan-level long rules therefore avoid `wildcard.` in `when`: `concat_interval_gvcfs_long` gates on `{meta.input_type} != 'gvcf'` (baked per instance at expansion time, no `wildcard.` reference), so its `file_exists(...)` gate is evaluated at execution time. Rules instantiated at run time via `output_pattern` (per-interval HC long, db import long, genotype long) are unaffected. The `when` evaluator does not expand `{config.x}` inside `file_exists()`, hence the fixed flag path. Changing the reference or `long_contig_mode` between runs requires a fresh run directory (standard checkpoint semantics).\n14. **GATK cannot read `.csi`-indexed VCFs** (verified with GATK 4.6.2.0: VariantFiltration and GenomicsDBImport reject `.csi`, accepting `.tbi`/`.idx`; GATK also silently writes no index for `-O x.vcf.gz` on long contigs). Upstream's long-mode `variant_filtration` feeds `raw.vcf.gz` + `.csi` to GATK and fails; the port's `variant_filtration_long` converts to plain `.vcf` in-shell (`bcftools view -O v`), filters, and re-indexes with `bcftools index -f -c`. GenomicsDBImport reads the plain work gVCFs via GATK `.idx` (created by `gatk IndexFeatureFile` in `concat_interval_gvcfs_long`); GATK reads plain `.vcf` without any index for streaming tools, but db import strictly requires `.idx`. Memory: the port mirrors upstream's default GATK heap (`-Xmx7000m` = upstream profile `mem_mb_reduced: attempt * 7000`). A fully homozygous-reference interval over a contig at the CSI limit can exhaust this heap at gVCF finalization (GATK materializes the whole hom-ref block's depth array for `getMedianDP`; a 600 Mb hom-ref block peaks around 7.2 GB and dies with `OutOfMemoryError` at the default heap \u2014 verified live, upstream-inherited since upstream assigns whole contigs to intervals too, `BALANCING_WITHOUT_INTERVAL_SUBDIVISION`). Raise `-Xmx` in the two interval HaplotypeCaller rules (short and long) for such references. The postprocess module is bcftools-only, so its long mode needs no GATK workaround: the `*_long` twins produce and consume `.csi` directly. Two long-chain fixes on top of PR #17: `concat_interval_gvcfs_long` and `concat_interval_vcfs_long` stage bgzip-compressed, indexed copies of the plain per-interval gVCFs / per-shard VCFs in `results/{gvcfs,vcfs}/work/` before concatenating \u2014 `bcftools concat` cannot read the plain `.g.vcf`/`.vcf` files the long HaplotypeCaller and GenotypeGVCFs emit (GATK `.idx` convention). One long-chain fix on top of PR #17: `concat_interval_gvcfs_long` stages bgzip-compressed, indexed copies of the plain per-interval gVCFs in `results/gvcfs/work/` before concatenating \u2014 `bcftools concat` cannot read the plain `.g.vcf` files the long HaplotypeCaller emits.\n\nVersion pinning: upstream envs declare only `>=` ranges with no lockfile;\nexact pins (fastp 1.3.6, samtools 1.24, bwa 0.7.19, gatk4 4.6.2.0, bcftools\n1.23, sra-tools 3.2.1, mosdepth 0.3.3, vcftools 0.1.16, plink2) were resolved\nfrom bioconda/conda-forge at port time (2026-08-15). Upstream default-profile\nthread overrides (fastp 6, bwa_mem 16) are runtime knobs; the port keeps the\nrules' own declarations (4 and 8).\n\n## Live verification\n\n- `normalize_external_gvcf_for_gatk` + `joint_genomics_db_import` +\n  `joint_genotype_gvcfs` + `generate_coords_file`: live-verified on\n  bioinfo-wsx 2026-08-28 (external gVCF cohort, 0 failed; the run also\n  fixed two gvcf-cohort bugs \u2014 `parse_bam_stats` and\n  `combine_qc_metrics.py` now skip gvcf samples, PR #13).\n- bcftools caller branch (`bcftools_regions` \u2192 `bcftools_call` \u2192\n  `bcftools_concat_regions`): live-verified 2026-08-28 on macOS (engine\n  0.16.0 + output_pattern from engine-235, conda). The runtime `.fai`\n  scan instantiated one deferred `bcftools_call` per contig (1-contig\n  fixture \u2192 exactly one region) and produced real variants in\n  `results/vcfs/regions/L000000.vcf.gz` (GT:PL:AD for all samples,\n  AC/AN=6); 30 succeeded / 0 failed / 34 skipped.\n- interval-scatter branch (`picard_intervals` \u2192 `create_gvcf_intervals` /\n  `create_db_intervals` \u2192 per-interval HaplotypeCallers / per-shard\n  GenomicsDBImport + GenotypeGVCFs \u2192 `concat_interval_gvcfs` /\n  `concat_interval_vcfs`): live-verified 2026-08-28 on macOS (same\n  engine). The SplitIntervals scans instantiated per-interval\n  HaplotypeCallers per sample (1-contig fixture \u2192 1 interval) and 22 db\n  shards (DB_SCATTER = 0.15 \u00d7 3 samples \u00d7 50), each shard run through\n  GenomicsDBImport + GenotypeGVCFs and concatenated to\n  `results/vcfs/raw.vcf.gz` (30 real variants, all 3 samples); 85\n  succeeded / 0 failed / 37 skipped, 117 outputs verified.\n- The qc module's plink steps need **\u2265 2 samples** (a 1-sample cohort\n  prunes to an empty VCF and `qc_plink` fails with \"No samples in .vcf\n  file\" \u2014 upstream behaves the same on a single-sample cohort).\n\n## Test\n\nRun the acceptance suite (validate + lint + dry-run) against the committed\nfixture data:\n\n```bash\nbash test/run.sh\n```\n\n## License\n\nApache-2.0. Copyright (c) 2026 oxo-flow-community. Upstream attribution in\n`NOTICE.md`. The upstream snpArcher project is MIT-licensed; its\nlicense text is included verbatim at `LICENSE.upstream`.\n",
     "compute": "up to 8 CPUs / 8 GB per rule (bwa_mem)",
     "quickstart_note": "Set your reference genome as shown; preview with `oxo-flow dry-run main.oxoflow`.",
-    "coverage": "default + markdup/joint/callable/postprocess/qc branches \u2014 live-verified on bioinfo-wsx (engine 0.15.0, conda) 2026-08-26; external-gVCF joint genotyping + coords chain (normalize_external_gvcf_for_gatk \u2192 joint_genomics_db_import \u2192 joint_genotype_gvcfs \u2192 generate_coords_file) live-verified on bioinfo-wsx 2026-08-28 (0 failed); bcftools caller branch live-verified on macOS 2026-08-28 (1-contig fixture, real variants, 0 failed); interval-scatter branch live-verified on macOS 2026-08-28 live-verified 2026-08-28 on macOS"
+    "coverage": "default + markdup/joint/callable/postprocess/qc branches \u2014 live-verified on bioinfo-wsx (engine 0.15.0, conda) 2026-08-26; external-gVCF joint genotyping + coords chain (normalize_external_gvcf_for_gatk \u2192 joint_genomics_db_import \u2192 joint_genotype_gvcfs \u2192 generate_coords_file) live-verified on bioinfo-wsx 2026-08-28 (0 failed); bcftools caller branch live-verified on macOS 2026-08-28 (1-contig fixture, real variants, 0 failed); interval-scatter branch live-verified on macOS 2026-08-28 live-verified 2026-08-28 on macOS",
+    "not_applicable": [
+      "denovo \u2014 no such step in upstream v2.2",
+      "structural_variants \u2014 no such step in upstream v2.2"
+    ],
+    "workflowhub": {
+      "id": 2292,
+      "url": "https://workflowhub.eu/workflows/2292",
+      "doi": "10.48546/workflowhub.workflow.2292.1",
+      "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2292.1"
+    }
   },
   {
     "name": "oxo-flow-enrichment",
@@ -2461,7 +2688,9 @@ window.OXO_PIPELINES = [
       "annot_export",
       "config_export",
       "gene_ORA_GSEApy_Azimuth_2023",
+      "gene_ORA_GSEApy_Azimuth_2023_txt",
       "gene_ORA_GSEApy_Reactome",
+      "gene_ORA_GSEApy_Reactome_txt",
       "gene_motif_enrichment_analysis_RcisTarget",
       "gene_motif_enrichment_analysis_RcisTarget_txt",
       "gene_preranked_GSEApy_Azimuth_2023",
@@ -2470,7 +2699,9 @@ window.OXO_PIPELINES = [
       "plot_enrichment_result_GREAT_Reactome",
       "plot_enrichment_result_LOLA_LOLACore",
       "plot_enrichment_result_ORA_GSEApy_Azimuth_2023",
+      "plot_enrichment_result_ORA_GSEApy_Azimuth_2023_txt",
       "plot_enrichment_result_ORA_GSEApy_Reactome",
+      "plot_enrichment_result_ORA_GSEApy_Reactome_txt",
       "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust",
       "plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust_txt",
       "plot_enrichment_result_preranked_GSEApy_Azimuth_2023",
@@ -2496,8 +2727,7 @@ window.OXO_PIPELINES = [
     ],
     "excluded": [
       "env_export \u2014 conda env export requires the conda CLI inside the runtime environment and dumps the runtime env state, not the declared pins; exact pins are already declared in envs/*.yaml",
-      "report rendering \u2014 upstream wraps outputs in snakemake's report() (HTML report with .rst captions); oxo-flow has no report module, so config_export and annot_export are ported as plain rules (env_export is excluded separately above)",
-      "note: the anticipated names liftover/enrichr/gost/single_region_mode do not exist in v3.0.1 (Enrichr appears only as a commented-out reference in gene_ORA_GSEApy.py and a database-source comment in config.yaml)"
+      "report rendering \u2014 upstream renders an HTML report via snakemake's report() wrapping outputs with .rst captions, categories and labels; the captions half is ported as `report` annotations on all 23 wrapped rules (needs engine 0.17.0+, rendered by the rule-captions report section), while the artifact-catalog book form (self-contained HTML, figures embedded, categories/labels) has no oxo-flow equivalent and remains unported"
     ],
     "rule_count": 48,
     "tools": [
@@ -2539,7 +2769,16 @@ window.OXO_PIPELINES = [
     "fidelity_md": "| Upstream process/rule | oxo-flow rule | Tool (version) | Notes |\n|---|---|---|---|\n| prepare_databases | `prepare_databases_Azimuth_2023`, `prepare_databases_Reactome` | gseapy 1.1.3 | identical command; database fan-out baked as static blocks (2 default-path databases) |\n| region_enrichment_analysis_LOLA | `region_enrichment_analysis_LOLA` | bioconductor-lola 1.32.0 | identical command; database fan-out baked as static block (1 default-path database) |\n| region_enrichment_analysis_GREAT | `region_enrichment_analysis_GREAT_Azimuth_2023`, `region_enrichment_analysis_GREAT_Reactome` | bioconductor-rgreat 2.4.0 | identical command; upstream `great_parameters` nested dict flattened into `great_*` config keys |\n| region_gene_association_GREAT | `region_gene_association_GREAT` | bioconductor-rgreat 2.4.0 | identical command; uses the first database (Azimuth_2023) as upstream |\n| region_motif_enrichment_analysis_pycisTarget | `region_motif_enrichment_analysis_pycisTarget` | pycistarget 1.1 | command text verbatim (incl. upstream error-tolerance wrapper); threads=10 as upstream |\n| process_results_pycisTarget | `process_results_pycisTarget` | pycistarget 1.1 | identical command |\n| gene_motif_enrichment_analysis_RcisTarget | `gene_motif_enrichment_analysis_RcisTarget` (+ `_txt`) + plot/aggregate/visualize `*_RcisTarget_*` blocks | bioconductor-rcistarget 1.20.0 | identical command/logic; when-gated on the user-provided rankings feather + motif annotation (both `\"\"` by default); fans over region sets (via GREAT `genes.txt`) and `.txt` gene sets (`config.txt_gene_sets`; zero instances when the default-empty list is unset, so the default plan is unchanged); upstream also folds the `.txt`-set results into the group aggregate/visualize \u2014 the port's static per-group blocks cannot enumerate user-defined gene sets, so txt-set results stop at per-set plots |\n| gene_ORA_GSEApy | `gene_ORA_GSEApy_Azimuth_2023`, `gene_ORA_GSEApy_Reactome` | gseapy 1.1.3 | identical command; upstream genes_dict fan-out has zero default-path members, region-set fan-out kept |\n| gene_preranked_GSEApy | `gene_preranked_GSEApy_Azimuth_2023`, `gene_preranked_GSEApy_Reactome` | gseapy 1.1.3 | identical command |\n| plot_enrichment_result | `plot_enrichment_result_*` (9 blocks) | r-ggplot2 3.5.0, r-svglite 2.1.0 | identical command; upstream wildcard fan-out (tool \u00d7 db \u00d7 feature_set) baked as per-(tool,db) scatter blocks |\n| aggregate | `aggregate_*` (9 blocks) | pandas 1.1.4 / 1.5.3 | identical logic; upstream wildcards group/tool/db passed as CLI args |\n| visualize | `visualize_*` (9 blocks) | r-ggplot2 3.5.0, r-pheatmap 1.0.12 | identical command/logic; `cluster_summary` config key kept as upstream numeric flag |\n| config_export | `config_export` | \u2014 | upstream dumps the in-memory config dict; the port copies `config/config.yaml` (effective-config mirror) |\n| annot_export | `annot_export` | \u2014 | identical command |\n| env_export | not ported | \u2014 | `conda env export` needs the conda CLI inside the runtime env; exact pins are already declared in `envs/*.yaml` |\n| report rendering | not ported | \u2014 | oxo-flow has no report module; `config_export` / `annot_export` are ported as plain rules (`env_export` is excluded separately \u2014 see the row above) |\n\nScript ports: upstream scripts run inside snakemake's `snakemake@input/...`\nnamespace; the port passes the same values as positional CLI arguments\n(`scripts/*`), keeping every analysis step and output byte-identical.\n`utils.R` is copied verbatim. Fidelity conventions: `{config.a.b}` nested\naccess does not exist in oxo-flow \u2014 all upstream nested config dicts\n(`great_parameters`, `pycistarget_parameters`, `rcistarget_parameters`,\n`column_names`, `adjp_th`, caps) are flattened into prefixed top-level\nkeys; the pycisTarget `annotations_to_use` list is carried as a python-list\nliteral string, and the RcisTarget `motifAnnot_highConfCat` /\n`motifAnnot_lowConfCat` lists are comma-joined strings (values contain no\ncommas; split back to vectors inside the R script), so the rendered\ncommands are byte-identical to upstream.\n",
     "compute": "up to 10 CPUs / 32 GB per rule",
     "quickstart_note": "Needs ATAC peak / BAM inputs \u2014 see Requirements.",
-    "coverage": "default-path"
+    "coverage": "default-path",
+    "not_applicable": [
+      "note: the anticipated names liftover/enrichr/gost/single_region_mode do not exist in v3.0.1 (Enrichr appears only as a commented-out reference in gene_ORA_GSEApy.py and a database-source comment in config.yaml)"
+    ],
+    "workflowhub": {
+      "id": 2293,
+      "url": "https://workflowhub.eu/workflows/2293",
+      "doi": "10.48546/workflowhub.workflow.2293.1",
+      "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2293.1"
+    }
   },
   {
     "name": "oxo-flow-genome-tracks",
@@ -2620,7 +2859,13 @@ window.OXO_PIPELINES = [
     "fidelity_md": "| Upstream rule | oxo-flow rule | Tool (version) | Notes |\n|---|---|---|---|\n| `merge_bams` | `merge_bams` | samtools 1.19.2 | identical command (`samtools merge -@ N` + `samtools index -@ N -b`); the per-group BAM list comes from `{config.bam_dir}/{group}/*.bam` glob instead of the annotation CSV's `bam` column (which is still copied verbatim by `annot_export`); `threads: 4 \u00d7 config.threads` baked in as `threads = 4` |\n| `coverage` | `coverage` | deepTools 3.5.5 | identical command incl. `-p max --binSize 10 --normalizeUsing RPGC --effectiveGenomeSize 2407883318` default and `> {bw}.log 2>&1` redirect |\n| Snakefile load-time gene annotation (`parse_gene`/`parse_region`, `gene_annot_df`) | `annotate_genes` | python3 (stdlib) | new single-instance rule; same algorithm (BED scan, min start / max end across isoforms, `base_buffer` extension for genes, no buffer for `chr:start-end` regions, `genes_not_found.csv`, `:`\u2192`-` name replacement); upstream computes it in the Snakemake base env (numpy/pandas) \u2014 the port script uses only stdlib, so the upstream `global.yaml` env is not needed |\n| `plot_tracks` | `plot_tracks` | gtracks 1.12.6, pyGenomeTracks 3.8 | identical `gtracks` invocation (coordinates, `--genes`, optional `--max ymax`, `--gene-rows`/`--genes-height` = isoform count, `--x-axis`, `--width`, `--color-palette` with `#000000` default); per-gene fan-out uses `[[pairs]]` `pair_id` (oxo-flow has no gene wildcard source); `depends_on = [\"coverage\"]` added because `expand_inputs` input lists do not form DAG edges in oxo-flow 0.12.0 |\n| `ucsc_hub` | `ucsc_hub` | python3 (stdlib) | identical hub content (hub.txt, genomes.txt, trackDb.txt with hex\u2192RGB colors, `../{group}.bw` relative symlinks) ported from the Python run block to `scripts/ucsc_hub.py`; the per-group symlinks are side effects (outputs declared only for the three text files) |\n| `env_export` | `env_export_pygenometracks` / `env_export_sinto` / `env_export_igv_reports` | conda | upstream fans `{env}` over the three envs; oxo-flow cannot wildcard `[rules.environment]`, so one rule per env \u2014 identical `conda env export` shell, each rule exports its own activated env (the engine's `conda run -n <env>` wrapper + `conda env export` = the upstream semantics, verified live with conda 26.1.1). Upstream runs it in `rule all`; the port gates it on `env_export_enabled` (default off) so the default graph is unchanged \u2014 the checked-in `envs/*.yaml` serve the same reproducibility role. DRAFT (mechanics live-verified; the three real env builds not yet run) |\n| `config_export` | `config_export` | python3 (stdlib) | `json.dump(config)` equivalent: `scripts/export_config.py` dumps the workflow's `[config]` table |\n| `annot_export` | `annot_export` | cp | identical (`cp` of the annotation CSV) |\n| `gene_list_export` | `gene_list_export` | cp | identical (`cp` of the gene list CSV) |\n| `split_sc_bam` | `split_sc_bam` | sinto 0.10.0 | live-verified 2026-08-23 (tx-ubuntu, exit 0 \u2014 see the site audit): same `sinto filterbarcodes -b -c --outdir -p` command + upstream's touch-empty-bam fallback for groups absent in a sample (replaced by a header-only-BAM fallback for modern samtools); fan-out via `[[values]]` `sc_sample` \u00d7 `sc_group` (upstream derives them from the metadata TSVs at load time; oxo-flow declares them \u2014 keep `[[values]] sc_sample`/`sc_group` in sync with `sc_bam_dir`/`sc_metadata`/`sc_groups`); upstream's `{sample}` = BAM-path md5 is replaced by readable sc ids |\n| `merge_bams` (sc variant) | `merge_sc_bams` | samtools 1.19.2 | live-verified 2026-08-23: upstream switches `merge_bams` inputs per wildcard (sc groups read `sc_bams/`, bulk groups the annotation BAM column); oxo-flow cannot switch inputs per wildcard, so the sc variant is a separate rule writing the same `merged_bams/` namespace, gated on `sc_enabled` |\n| `coverage` (sc variant) | `coverage_sc` | deepTools 3.5.5 | live-verified 2026-08-23: same `bamCoverage` command as bulk `coverage`; sc groups' bigWigs join `plot_tracks`/`ucsc_hub` via `config.samples_list` |\n| `make_bed` | `make_bed` | awk | DRAFT: upstream projects `gene_annot_df` to `chr,start,end,name` in Python; the port uses an awk projection of `genes_annotated.tsv` (name,chr,start,end \u2192 BED4); gated on `igv_report_enabled` like the rule it feeds |\n| `igv_report` | `igv_report` | igv-reports 1.14.1 | DRAFT: **temporarily deactivated upstream** (commented out of `rule all` at v2.0.5), ported as opt-in (`igv_report_enabled = true` + `-t igv_report`); same `create_report --genome --tracks --output` + the upstream `Variants`\u2192`Genes and genomic regions` sed; track list = `config.samples_list` BAMs; memory fixed at the upstream 8000 MB minimum (oxo-flow resources are static) |\n| Snakemake `report()` wrappers | \u2014 | \u2014 | no equivalent in oxo-flow; the report artifacts are written as plain files |\n\nConfiguration mapping: upstream `config/config.yaml` keys became `[config]`\nkeys with upstream defaults, except `result_path` (placeholder path \u2192\n`results`), `mem`/`threads` (\u2192 per-rule `[rules.resources]`; upstream's\n`4 \u00d7 threads` for merge/coverage baked in as `threads = 4`), and\n`track_colors` (YAML dict \u2192 comma-joined `group=#hex` string with the same\n`#000000` default). New keys for the ported sc/IGV branches: `sc_enabled`,\n`sc_bam_dir`, `sc_metadata` (directory keys \u2014 oxo-flow rule inputs cannot\nindex comma-joined config lists), `sc_groups` (merged + sorted into\n`samples_list`), `igv_report_enabled`, `igv_report_memory` (documented mirror;\nthe rule's `memory` is the fixed upstream minimum), `env_export_enabled`\n(opt-in, default off \u2014 upstream runs `env_export` in `rule all`; the checked-in\n`envs/*.yaml` serve the same reproducibility role, so the port keeps the\ndefault graph unchanged). Group fan-out uses\n`[[sample_groups]]` (one `{sample}` per annotation group) + `[[values]]`\n`sc_sample` \u00d7 `sc_group`, gene fan-out uses `[[pairs]]`. Sample annotation,\ngene list, genome BED, metadata TSVs and BAM files must be kept in sync with\nthose tables and `config.bam_dir`; the annotation CSV itself remains the\ndocumentation record (`annot_export`).",
     "compute": "up to 4 CPUs / 4 GB per rule (opt-in igv_report: 8 GB)",
     "quickstart_note": "Lightweight; `--samples first:1` keeps the first run small.",
-    "coverage": "default-path"
+    "coverage": "default-path",
+    "workflowhub": {
+      "id": 2294,
+      "url": "https://workflowhub.eu/workflows/2294",
+      "doi": "10.48546/workflowhub.workflow.2294.1",
+      "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2294.1"
+    }
   },
   {
     "name": "oxo-flow-mixscape",
@@ -2654,12 +2899,7 @@ window.OXO_PIPELINES = [
       "config_export",
       "annot_export"
     ],
-    "excluded": [
-      "demultiplexing \u2014 verified at v2.0.3 (sha bcf72d5): no demultiplexing rule in the repo \u2014 the Snakefile includes only common/mixscape/visualize/envs_export (DAG rulegraph: 7 rules); upstream README \u00a7Resources delegates pre-processing to the separate epigen/scrnaseq_processing_seurat module",
-      "scdna \u2014 verified at v2.0.3 (sha bcf72d5): zero references anywhere in the repo; single-cell DNA is a different MrBiomics recipe domain, not a mixscape_seurat module",
-      "normalization \u2014 verified at v2.0.3 (sha bcf72d5): no QC/normalization/integration rule; the input contract is a processed Seurat object (upstream delegates processing to epigen/scrnaseq_processing_seurat). The in-script NormalizeData fallbacks inside mixscape.R/visualize.R ARE ported",
-      "differential_test \u2014 verified at v2.0.3 (sha bcf72d5): no DE rule; per-gene DE runs inside Seurat::RunMixscape (config min_de_genes/lfc_th, both ported); separate downstream DE module is epigen/dea_seurat"
-    ],
+    "excluded": [],
     "rule_count": 7,
     "tools": [
       "Seurat",
@@ -2692,7 +2932,19 @@ window.OXO_PIPELINES = [
     "fidelity_md": "\nDefault-parameters main execution path only. The upstream annotation CSV maps\neach sample name to the path of its processed Seurat object; the port reads\nthe same per-sample `.rds` inputs from `{config.data_dir}/{sample}.rds` and\nwrites all results under `{config.result_path}/mixscape_seurat/` with the\nupstream file names.\n\n| Upstream process/rule | oxo-flow rule | Tool (version) | Notes |\n|---|---|---|---|\n| `mixscape` | `mixscape` | Seurat 4.4.0 (r-seurat) | identical R script logic (CalcPerturbSig, RunMixscape, stats plots, ALL_* outputs); `snakemake@` I/O/config access replaced with CLI args. Threads 8 = upstream `8 * threads` (threads=1), mem 32000 MB. |\n| `lda` | `lda` | Seurat 4.4.0 (r-seurat) | identical R script logic (MixscapeLDA, RunUMAP, FILTERED_*/LDA_data outputs). |\n| `visualize` | `visualize` | Seurat 4.4.0 (r-seurat) | identical R script logic (PerturbScore, PosteriorProbability, optional `{Antibody_Capture}_expression` violin plots). The antibody-expression plot dir is produced by the script (same guard as upstream) but is not a declared rule output \u2014 oxo-flow cannot declare conditionally-enabled outputs. |\n| `env_export` | `env_export_mixscape`, `env_export_lda` | conda (user's install) | upstream's single rule with an `{env}` wildcard split into two explicit rules (environments cannot be wildcarded); `conda env export > {output}` verbatim. `conda` itself is unpinned, exactly as upstream. |\n| `config_export` | `config_export` | pyyaml 6.0.1 | upstream `run:` block (`yaml.dump(config)`) ported to `scripts/export_config.py`; runtime config values passed as CLI args. pyyaml pinned at port time (2026-08-15) \u2014 upstream relied on the unpinned Snakemake runtime env. |\n| `annot_export` | `annot_export` | \u2014 | `cp {input} {output}` verbatim. |\n| `all` (target) | \u2014 | \u2014 | not ported: oxo-flow's target is implicit (all rules are targets). |\n| demultiplexing | \u2014 | \u2014 | not ported: not present at v2.0.3 \u2014 the Snakefile includes only `common`/`mixscape`/`visualize`/`envs_export` (DAG: 7 rules); pre-processing lives in the separate [epigen/scrnaseq_processing_seurat](https://github.com/epigen/scrnaseq_processing_seurat) module (upstream README \u00a7Resources). |\n| scdna | \u2014 | \u2014 | not ported: not present at v2.0.3 (zero references in the repo); single-cell DNA is a separate MrBiomics recipe domain, not a mixscape_seurat module. |\n| normalization (QC/normalization/integration) | \u2014 | \u2014 | not ported: no QC/normalization/integration rule at v2.0.3; the input is a processed Seurat object (upstream delegates processing to `scrnaseq_processing_seurat`). The in-script `NormalizeData` fallbacks (`mixscape.R`, `visualize.R`) are ported. |\n| differential_test (perturbation DE) | \u2014 | \u2014 | not ported: no DE rule at v2.0.3; the per-gene DE runs inside `Seurat::RunMixscape` (`min_de_genes` / `lfc_th` config, both ported); the separate downstream DE module is [epigen/dea_seurat](https://github.com/epigen/dea_seurat). |\n\nOther deviations: (1) sample input paths come from the `{config.data_dir}`\nconvention instead of per-row CSV paths \u2014 the annotation CSV is retained as\nthe reproducibility artifact (copied by `annot_export`); (2) the upstream\nnested config keys (`CalcPerturbSig.*`, `RunMixscape.*`, `MixscapeLDA.npcs`,\n`Antibody_Capture`) are flattened in `[config]` \u2014 values identical; defaults\nidentical except `antibody_capture` (port default `\"\"` = disabled, because the\nbundled fixtures carry no CITE-seq assay; upstream default `\"AB\"` \u2014 set\n`antibody_capture = \"AB\"` for the upstream behavior); (3) `test/fixtures/*.rds` are tiny genuine Seurat objects generated\nwith Seurat 5.4.0 (local toolchain) for dry-run validation only \u2014 upstream\npins r-seurat 4.4.0; (4) the `snakemake@` object access in the R scripts is\nreplaced with positional CLI args (the ported scripts document the arg\norder); (5) a commented-out draft plotting block in upstream `mixscape.R`\nwas dropped.",
     "compute": "mixscape 8 CPUs / 32 GB; lda, visualize 1 CPU / 32 GB each; export rules 1 CPU / 1 GB",
     "quickstart_note": "Point `data_dir=` and `annotation=` at your inputs (see README); the shipped fixtures preview the plan.",
-    "coverage": "full-line"
+    "coverage": "full-line",
+    "not_applicable": [
+      "demultiplexing \u2014 verified at v2.0.3 (sha bcf72d5): no demultiplexing rule in the repo \u2014 the Snakefile includes only common/mixscape/visualize/envs_export (DAG rulegraph: 7 rules); upstream README \u00a7Resources delegates pre-processing to the separate epigen/scrnaseq_processing_seurat module",
+      "scdna \u2014 verified at v2.0.3 (sha bcf72d5): zero references anywhere in the repo; single-cell DNA is a different MrBiomics recipe domain, not a mixscape_seurat module",
+      "normalization \u2014 verified at v2.0.3 (sha bcf72d5): no QC/normalization/integration rule; the input contract is a processed Seurat object (upstream delegates processing to epigen/scrnaseq_processing_seurat). The in-script NormalizeData fallbacks inside mixscape.R/visualize.R ARE ported",
+      "differential_test \u2014 verified at v2.0.3 (sha bcf72d5): no DE rule; per-gene DE runs inside Seurat::RunMixscape (config min_de_genes/lfc_th, both ported); separate downstream DE module is epigen/dea_seurat"
+    ],
+    "workflowhub": {
+      "id": 2295,
+      "url": "https://workflowhub.eu/workflows/2295",
+      "doi": "10.48546/workflowhub.workflow.2295.1",
+      "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2295.1"
+    }
   },
   {
     "name": "oxo-flow-bgcflow",
@@ -2775,7 +3027,13 @@ window.OXO_PIPELINES = [
     "fidelity_md": "| Upstream rule | oxo-flow rule | Tool (version) | Notes |\n|---|---|---|---|\n| copy_custom_fasta | `copy_custom_fasta` | bash/coreutils | identical command |\n| gtdb_prep | `gtdb_prep` | python 3.9.18, requests 2.31.0 | identical command + wget/API fallback |\n| extract_meta_prokka | `extract_meta_prokka` | python 3.9.18, pandas 2.0.3 | identical command |\n| prokka | `prokka` | prokka 1.14.6 | identical command; `--cpus {threads}` (4) |\n| format_gbk | `format_gbk` | python 3.9.18, biopython 1.81 | identical command |\n| antismash_db_setup | `antismash_db_setup` | antiSMASH 7.1.0 | v7 branch, identical command |\n| antismash | `antismash` | antiSMASH 7.1.0 | v7 branch, identical command incl. reuse-result retry |\n| copy_antismash | `copy_antismash` | bash/coreutils | symlink loop, identical |\n| bgc_count | `bgc_count` | python 3.9.18, biopython 1.81 | identical command |\n| antismash_overview | `antismash_overview` | python 3.9.18 | identical command |\n| downstream_bgc_prep | `downstream_bgc_prep` | python 3.9.18, pandas 2.0.3 | identical command |\n| antismash_overview_gather | `antismash_overview_gather` | python 3.9.18, pandas 2.0.3 | identical command |\n| copy_log_changes | `copy_log_changes` | bash/coreutils | identical command |\n| antismash_summary | `antismash_summary` | python 3.9.18, pandas 2.0.3 | identical command |\n| fix_gtdb_taxonomy | `fix_gtdb_taxonomy` | python 3.9.18, pandas 2.0.3 | identical command |\n| get_mibig_table | `get_mibig_table` | python 3.9.18, pandas 2.0.3 | identical command |\n| copy_mibig_table | `copy_mibig_table` | bash/coreutils | identical command |\n| csv_to_parquet | `csv_to_parquet` | python 3.9.18, pandas 2.0.3, pyarrow 14.0.2 | identical command |\n| prokka_gbk | `prokka_gbk` | prokka 1.14.6 | `when = config.input_type == 'gbk'`; default copy_custom_fasta/prokka/format_gbk now gate on `'fna'` (upstream resolves the same producer overlap with input-function branching) |\n| antismash (v6 branch) | `antismash_v6` | antiSMASH 6.x | `when = config.antismash_major == '6'`, envs/antismash6.yaml (upstream antismash_v6.yaml verbatim) |\n| write_dependency_versions | `write_dependency_versions` | python 3.9.18, pyyaml 6.0.1 | `when = config.write_dependency_versions`; upstream get_dependencies.py ported as scripts/write_dependency_versions.py (metadata/dependency_versions.json, upstream output path) |\n| seqfu_stats / seqfu_combine | `seqfu_stats` / `seqfu_combine` | seqfu 1.20.3 | `when = config.run_seqfu`; combine gathers via expand_inputs |\n| mash / mash_convert | `mash` / `mash_convert` | mash 2.3 | `when = config.run_mash`; convert_triangular_matrix.py verbatim |\n| fastani / fastani_convert | `fastani` / `fastani_convert` | fastani 1.33 | `when = config.run_fastani` |\n| install_checkm / checkm / checkm_out | `install_checkm` / `checkm` | checkm-genome 1.2.2 | `when = config.run_checkm`; the 2015 CheckM DB download is the upstream install rule; checkm_out (report-table extraction via get_checkm_data.py) not ported |\n| install_gtdbtk / gtdbtk / gtdbtk_fna_fail / evaluate_gtdbtk_input | `install_gtdbtk` / `gtdbtk` | gtdbtk 2.4.0 | `when = config.run_gtdbtk`; the release package download is multi-GB (upstream install rule); the gtdbtk_fna_fail rule + evaluate_gtdbtk_input branching (fna-fail reroute) not ported |\n| prokka_db_setup / install_* rules | `install_checkm` / `install_gtdbtk` / `install_eggnog` | various | install rules for the off-by-default pipelines, same downloads as upstream |\n| bigscape / bigscape_no_mibig / copy_bigscape_zip / bigscape_to_cytoscape / copy_bigscape | `bigscape` | bigscape (conda) | `when = config.run_bigscape`; needs the pfam + MIBiG databases in resources/ (upstream install_bigscape step); bigscape_no_mibig / copy_bigscape_zip / bigscape_to_cytoscape / copy_bigscape (report-view variants) not ported \u2014 documented in the rule header |\n| bigslice / bigslice_prep | `bigslice` / `bigslice_prep` | bigslice (NBChub fork) | `when = config.run_bigslice`; models downloaded by install_bigslice (upstream env post-deploy equivalent); env pip-installs the NBChub fork @c0085de (original medema-group/bigslice discontinued) |\n| fetch_bigslice_db / query_bigslice / summarize_bigslice_query / annotate_bigfam_hits | `fetch_bigslice_db` / `query_bigslice` / `summarize_bigslice_query` / `annotate_bigfam_hits` | bigslice + python | `when = config.run_query_bigslice`; fetch_bigslice_db downloads the BiG-FAM full-run-result bundle (~18GB, bioinformatics.nl \u2014 verified alive 2026-08) |\n| automlst_wrapper / automlst_wrapper_out / prep_automlst_gbk / install_automlst_wrapper | `automlst_wrapper` / `automlst_wrapper_out` / `prep_automlst_gbk` / `install_automlst_wrapper` | automlst-simplified-wrapper 0.1.2 (python 2.7 env) | `when = config.run_automlst`; install downloads the release zip (not a git clone); scripts verbatim |\n| arts + 6 arts_* rules | `arts` | arts env (upstream pins) | `when = config.run_arts`; needs the ARTS reference bundle in resources/arts; arts_extract + the 5 arts_*_combine/final report rules not ported (arts_extract_all.py is shipped but no rule consumes it) |\n| roary / roary_out / roary_reassign_pangene_categories / eggnog_roary / eggnog_roary_result_copy / deeptfactor_roary / diamond_roary | `roary` / `roary_out` | roary 3.13.0 | `when = config.run_roary`; verbatim flags (-i 80 -g 80000 -e -n -r -v); the reassign / eggnog_roary / deeptfactor_roary / diamond_roary report rules not ported |\n| install_eggnog / eggnog | `install_eggnog` / `eggnog` | eggnog-mapper 2.1.6 | `when = config.run_eggnog`; DB download + create_dbs.py as upstream |\n| deeptfactor / deeptfactor_setup / deeptfactor_to_json / deeptfactor_summary | `deeptfactor` / `deeptfactor_setup` / `deeptfactor_to_json` / `deeptfactor_summary` | deeptfactor (bitbucket, ~23MB) | `when = config.run_deeptfactor`; setup git-clones the unpinned bitbucket repo (model bundle included \u2014 verified public 2026-08); env is upstream's python 3.6 + pytorch 1.10.2 pin |\n| cblaster_genome_db / cblaster_bgc_db | `cblaster_genome_db` | cblaster 1.3.18 | `when = config.run_cblaster`; verbatim makedb over prokka GBKs; cblaster_bgc_db (MIBiG-BGC database build) not ported |\n| gecco / antismash_sideload_gecco / gecco_aggregate | `gecco` | gecco 0.9.10 | `when = config.run_gecco`; verbatim gecco run --antismash-sideload; antismash_sideload_gecco + gecco_aggregate (report tables) not ported |\n| amrfinderplus / amrfinder_gather | `amrfinderplus` / `amrfinder_gather` | ncbi-amrfinderplus | `when = config.run_amrfinderplus`; verbatim flags; gather_amrfinder.py verbatim |\n| metabase_install / metabase_duckdb_plugin / build_warehouse | not ported | metabase/duckdb | metabase.smk + build-database.smk are not included in the main Snakefile and are only reachable outside the pipeline (wrapper CLI / manual) \u2014 no pipeline gate to mirror; the warehouse branch needs a live Metabase server + credentials |\n| ncbi_genome_download / extract_ncbi_information (+ patric meta rules) | `ncbi_genome_download` | ncbi-genome-download | `when = config.project_source == 'ncbi'`; deviation: bulk genus download via `--genera` (upstream fetches per-accession with `-A`); extract_ncbi_information / download_patric_tables / extract_patric_meta meta rules not ported |\n| patric_genome_download + patric meta rules | not ported | patric | per-sample source=patric; download endpoint ftp.patricbrc.org is dead (PATRIC decommissioned 2023, merged into BV-BRC; verified 550/connection-refused 2026-08) |\n| copy_custom_genbank / genbank_to_fna + genbank_to_faa / extract_meta_genbank / genbank_to_gff / copy_converted_gbk / summarize_converted_gbk | `copy_custom_genbank` / `genbank_to_fna` | python | gbk-input path (`input_type = 'gbk'`); genbank_to_fna reads the raw gbk directly (upstream uses input-function branching to avoid the producer overlap); the faa/gff/meta/summary extras not ported |\n| report rules (copy_readme, copy_template_notebook, mkdocs_*_report) | not ported | jupyter/mkdocs | separate `bgcflow build report` command, not in the main Snakefile |\n\n**Live-verified on bioinfo-wsx (oxo-flow 0.14.1, conda envs):** default path\n(S1/S2 mini fixtures) + tier-1 branches (seqfu/mash/fastani/roary) + tier-2\n(checkm/amrfinderplus); resource-gated, not live-run: gtdbtk/eggnog/gecco/\ncblaster/arts/bigscape/bigslice/automlst/deeptfactor (multi-GB DBs/downloads).",
     "compute": "up to 4 CPUs per rule (antiSMASH)",
     "quickstart_note": "Needs input genomes and the antiSMASH database \u2014 see Requirements.",
-    "coverage": "default-path + branch module (42 rules, gated off by default); default path + tier-1 (seqfu/mash/fastani/roary) + tier-2 (checkm/amrfinderplus) branches live-verified on bioinfo-wsx (engine 0.14.1)"
+    "coverage": "default-path + branch module (42 rules, gated off by default); default path + tier-1 (seqfu/mash/fastani/roary) + tier-2 (checkm/amrfinderplus) branches live-verified on bioinfo-wsx (engine 0.14.1)",
+    "workflowhub": {
+      "id": 2296,
+      "url": "https://workflowhub.eu/workflows/2296",
+      "doi": "10.48546/workflowhub.workflow.2296.1",
+      "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2296.1"
+    }
   },
   {
     "name": "oxo-flow-unsupervised",
@@ -2867,7 +3125,7 @@ window.OXO_PIPELINES = [
       "env_export_pymcdm"
     ],
     "excluded": [
-      "report/ generation \u2014 Snakemake `report(...)` wrapper metadata (captions, categories, labels) has no oxo-flow counterpart; all underlying rule outputs are produced, and `oxo-flow report` generates an execution report from the checkpoint (rule status/timings), not the Snakemake artifact-catalog book."
+      "report/ generation \u2014 Snakemake `report(...)` wrapper metadata is partially ported: the per-rule .rst captions (workflow/report/dimred_2d_features.rst, dimred_2d_metadata.rst, dimred_2d_clusterings.rst, pca_diagnostics.rst, umap_diagnostics.rst, umap_connectivity.rst, heatmap.rst, clustree.rst, cluster_validation.rst, software.rst, configs.rst) are carried as report = \"\u2026\" annotations on the 28 rules upstream wraps in report() (dimred/heatmap/clustree/indices plots, PCA/UMAP diagnostics and connectivity, 7 env_export snapshots, annot_export), rendered by the engine rule-captions report section (needs oxo-flow >= 0.17.0; older engines ignore the key). Still without an oxo-flow equivalent: the Snakemake artifact-catalog book itself (self-contained HTML with figures embedded, categories/subcategories/labels) and the workflow-level report: directive (workflow/report/workflow.rst); `oxo-flow report` generates an execution report from the checkpoint (rule status/timings). All underlying rule outputs are produced."
     ],
     "rule_count": 61,
     "tools": [
@@ -2908,7 +3166,7 @@ window.OXO_PIPELINES = [
     ],
     "description": "Unsupervised analysis of omics matrices: PCA, UMAP and densMAP embeddings (2D/3D), distance matrices, hierarchical clustering heatmaps, Leiden clustering across partition types and resolutions, clustree analysis, external and internal cluster validation with TOPSIS ranking, static and interactive visualizations, per-feature dimred scatter plots (when-gated), and resolved-environment snapshots. A verified port of the default-parameter path of epigen/unsupervised_analysis v4.0.2 (Snakemake); all 61 rules and tool versions are pinned to the upstream release.",
     "installation": {
-      "engine": "oxo-flow >= 0.12.0",
+      "engine": "oxo-flow >= 0.12.0 (the report = caption annotations on 28 rules require >= 0.17.0 \u2014 the rule-captions report section; older engines ignore the key)",
       "toolchain": "conda envs \u2014 pinned versions (7 environments under envs/, created by conda/mamba)",
       "requirements": [
         "per-sample omics matrix CSV and optional labels CSV ({config.data_dir}/{sample}_data.csv / _labels.csv), registered in config/annotation.csv; no reference genomes or index files needed (default fixtures: sklearn digits, 1797 samples x 64 features)",
@@ -2923,7 +3181,13 @@ window.OXO_PIPELINES = [
     "fidelity_md": "Upstream rules and how each is ported (61 ported rules; every analysis step\nof the default-parameter path is executed, none are stubbed):\n\n| Upstream rule | Port | Notes |\n|---|---|---|\n| `pca` | `pca` | same script; snakemake object replaced by CLI args |\n| `umap_graph` | `umap_graph` | knn-graph for the default metric/neighbors |\n| `umap_embed` | `umap_embed_2d`, `umap_embed_3d` | parameter-list fan-out (n_components 2/3) becomes explicit rules |\n| `densmap_embed` | `densmap_embed_2d`, `densmap_embed_3d` | same fan-out |\n| `distance_matrix` | `distance_matrix_{observations,features}_{correlation,cosine}` (4) | wildcard fan-out ({type} x {metric}) becomes explicit rules |\n| `prep_feature_plot` | `prep_feature_plot` | runs always (upstream always computes it) |\n| `leiden_cluster` | `leiden_RBConfigurationVertexPartition_{0.5,1,1.5,2,4}`, `leiden_ModularityVertexPartition_NA` (6) | partition_types x resolutions fan-out becomes explicit rules; graph always taken from the precomputed UMAP knn-graph |\n| `aggregate_clustering_results` | `aggregate_clustering_results` | upstream `run:` block ported to `scripts/aggregate_clustering.py` (input[0] metadata unused upstream, mirrored) |\n| `aggregate_all_clustering_results` | `aggregate_all_clustering_results` | `run:` block ported to `scripts/aggregate_all_clustering.py` |\n| `plot_dimred_features` | `plot_dimred_features_{pca,umap}` (2) | method fan-out (upstream appends \"features\" content only for PCA and UMAP); gated on `config.plot_dimred_features` \u2014 see porting note 7 |\n| `plot_dimred_metadata` | `plot_dimred_metadata_{pca,umap,densmap}` (3) | method fan-out; 2D only (upstream default n_components 2) |\n| `plot_dimred_clustering` | `plot_dimred_clustering_{pca,umap,densmap}` (3) | same |\n| `plot_pca_diagnostics` | `plot_pca_diagnostics` | variance/pairs/loadings/lollipop PNGs, mem 8000M |\n| `plot_umap_diagnostics` | `plot_umap_diagnostics_{umap,densmap}` (2) | mem 32000M (upstream) |\n| `plot_umap_connectivity` | `plot_umap_connectivity_{umap,densmap}` (2) | mem 16000M (upstream) |\n| `plot_dimred_interactive` | `plot_dimred_interactive_{pca,umap,densmap}_{2d,3d}` (6) | n_components fan-out; mem 8000M |\n| `plot_heatmap` | `plot_heatmap_{correlation,cosine}` (2) | metric fan-out; hclust method from default list |\n| `clustree_analysis` | `clustree_analysis_default`, `clustree_analysis_custom` (2) | content fan-out |\n| `clustree_analysis_metadata` | `clustree_analysis_metadata` | directory output of per-metadata PNGs |\n| `validation_external` | `validation_external` | all 6 indices (AMI, ARI, FMI, Homogeneity, Completeness, V) in one rule, 6 outputs |\n| `validation_internal` | `validation_internal_{Silhouette,Calinski_Harabasz,Dunn,C_index,Davies_Bouldin,BIC}` (6) | index fan-out; mem 2x (upstream) |\n| `aggregate_rank_internal` | `aggregate_rank_internal` | TOPSIS ranking of the 6 internal indices |\n| `plot_indices` | `plot_indices_external`, `plot_indices_internal` (2) | type fan-out; external = 6 heatmaps, internal = 1 ranked heatmap |\n| `annot_export` | `annot_export` | `cp {input} {output}` |\n| `env_export` (7) | `env_export_{umap_leiden,clusterCrit,clustree,ComplexHeatmap,ggplot,plotly,pymcdm}` (7) | resolved-env snapshot: oxo-flow runs each rule inside its pinned env via `conda run`, so `conda env export -p \"$CONDA_PREFIX\"` exports the ANALYSIS env (mamba fallback; mem 1000M like upstream) |\n| `config_export` | **not ported** | excluded \u2014 see the Excluded list above |\n| `report/` generation | **not ported** | excluded \u2014 see the Excluded list above |\n\n### Porting notes and deviations\n\n1. **Annotation mapping**: the upstream annotation CSV's `data`/`metadata`\n   columns become `{config.data_dir}/{sample}_data.csv` and\n   `{config.data_dir}/{sample}_labels.csv`; `samples_by_features` is a global\n   config key (upstream reads it per sample).\n2. **Parameter-list fan-out**: upstream wildcards over parameter lists\n   (UMAP/densMAP n_components, distance-matrix metric/type, Leiden\n   partition_type/resolution, heatmap metric, clustree content, internal\n   index) have no oxo-flow engine equivalent, so each default combination is\n   an explicit rule whose name and paths embed the combination. Changing a\n   listed parameter (e.g. adding a UMAP metric) requires adding rules.\n3. **Snakemake runtime object**: all scripts read their inputs/outputs/params\n   as CLI arguments instead of the `snakemake` global; the analysis code is\n   unchanged. R scripts share `scripts/args.R` for `--flag value` parsing.\n4. **Aggregation rules**: upstream `run:` blocks were ported to Python\n   scripts with identical logic.\n5. **Memory/threads**: upstream `mem: 32000` / `threads: 2` defaults become\n   `[defaults]`; per-rule overrides match upstream (pca diagnostics and\n   interactive plots 8000M, internal validation 2x).\n6. **Environment**: each rule pins the same conda environment as upstream\n   (7 environments, copied verbatim from `workflow/envs/`).\n7. **Boolean gate instead of list gate**: upstream runs `plot_dimred_features`\n   only when `len(features_to_plot) > 0`; the oxo-flow `when` evaluator\n   compares scalar config values (booleans, numbers, strings), not arrays, so\n   the port carries the gate on `config.plot_dimred_features` (default\n   `false`, matching the upstream default of an empty `features_to_plot`).\n   Enable it together with a non-empty `features_to_plot` \u2014 the plotting\n   script then uses the requested features, or falls back to the first 10\n   columns when the requested features are absent.\n",
     "compute": "up to 2 CPUs / 32 GB per rule",
     "quickstart_note": "Real sklearn `digits` data is committed under `test/fixtures/` \u2014 fully runnable out of the box.",
-    "coverage": "default-path"
+    "coverage": "default-path",
+    "workflowhub": {
+      "id": 2297,
+      "url": "https://workflowhub.eu/workflows/2297",
+      "doi": "10.48546/workflowhub.workflow.2297.1",
+      "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2297.1"
+    }
   },
   {
     "name": "oxo-flow-circrna",
@@ -2985,6 +3249,12 @@ window.OXO_PIPELINES = [
       "tag": "main",
       "sha": "c2cb904236d6da1aa7c60ef977b931ffb2f595e0",
       "license": "Apache-2.0"
+    },
+    "workflowhub": {
+      "id": 2298,
+      "url": "https://workflowhub.eu/workflows/2298",
+      "doi": "10.48546/workflowhub.workflow.2298.1",
+      "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2298.1"
     }
   },
   {
@@ -3045,13 +3315,11 @@ window.OXO_PIPELINES = [
       "CNV: purple/amber/cobalt/FACETS \u2014 HMF/Sanger custom containers (hmftools.sif, facets-suite image) + multi-GB hmf_pipeline_resources / snp-pileup PoN trees built via the upstream pull_zenodo run type; unpaired CNV (freec/purple) also not ported \u2014 the ported CNV gate is paired-only; the conda-portable subset freec/sequenza/exomedepth/ASCAT IS ported and live-verified",
       "CNV: SM_check / CNA_ABSOLUTE_GISTIC / CNA_Battenberg \u2014 marked 'for future development' upstream (workflow/WES/rules/rtm/paired/CNV.smk comment); ABSOLUTE/GISTIC2 are Broad tools without conda packages, Battenberg needs the cgpbattenberg sif + 1000G impute reference data",
       "SV: gridss/BRASS/linx/igcaller/jasmine \u2014 upstream custom sifs (gridss 2.13.2, brass634, linx, jasminesv) or hardcoded local software paths (/public/ClinicalExam/...) plus Sanger/HMF reference trees; delly/svaba/Manta ARE ported",
-      "sansa-annotation (SV_sansa_*) + svaba svanno \u2014 gated on an upstream sansa config absent from the mini test (svanno additionally needs the GTF, empty in the mini test)",
-      "telomerecat \u2014 marked 'departed' upstream (workflow/WGS/rules/mapping.smk)",
       "unpaired-mode callers beyond the seven portable ones (sage/deepvariant/pindel/octopus/UnifiedGeniTyper \u2014 custom containers) + WGS Battenberg/ecDNA/VirusScan (custom containers + resource trees)",
       "conpair contamination check \u2014 custom conpair_latest.sif container",
       "ASCATsc (feeds the BRASS input chain; HMF ASCATsc.R) + multi-lane entry variant (mapping_muliti.smk) \u2014 non-default-path variants"
     ],
-    "rule_count": 186,
+    "rule_count": 188,
     "tools": [
       "fastp",
       "bwa (>=0.7.18)",
@@ -3089,7 +3357,17 @@ window.OXO_PIPELINES = [
     "fidelity_md": "| Upstream process/rule | oxo-flow rule | Tool (version) | Notes |\n|---|---|---|---|\n| fastp (T/N) | `fastp_tumor_sample` / `fastp_normal_sample` | fastp | identical flags (`-w 8 -Q -c -L`) |\n| bam flagstat (T/N) | `bam_flagstat_tumor` / `bam_flagstat_normal` | samtools | identical command |\n| map_reads (T/N) | `map_reads_tumor` / `map_reads_normal` | bwa >=0.7.18, samtools | `bwa mem -MR` + `fixmate` + `sort` |\n| mark_duplicates (T/N) | `mark_duplicates_tumor` / `mark_duplicates_normal` | gatk4 4.6.2.0 (container) | `MarkDuplicates --CREATE_INDEX true`, `VALIDATION_STRINGENCY SILENT` |\n| recal_link (T/N) | `recal_link_tumor` / `recal_link_normal` | ln -s | `when = \"!config.recal_bqsr\"` (upstream mini-test default `recal_BQSR: False`) |\n| recalibrate_base_qualities (T/N) | `recalibrate_base_qualities_tumor` / `recalibrate_base_qualities_normal` | gatk4 (container) | `BaseRecalibrator --use-original-qualities`, known-sites = upstream varanno KNOWN_SITES1/2; `when = \"config.recal_bqsr\"` |\n| apply_base_quality_recalibration (T/N) | `apply_base_quality_recalibration_tumor` / `apply_base_quality_recalibration_normal` | gatk4 (container) | `ApplyBQSR -use-original-qualities` + `samtools index`; `when = \"config.recal_bqsr\"` |\n| bed_to_interval_list | `bed_to_interval_list` | gatk4 (container) | `BedToIntervalList --SORT true` |\n| picard_collect_wes (T/N) | `picard_collect_wes_tumor` / `picard_collect_wes_normal` | gatk4 (container) | `CollectHsMetrics` |\n| call_variants_HaplotypeCaller | `call_variants_HaplotypeCaller` | gatk4 (container) | identical `-A` annotation flags |\n| vardict_paired_mode | `vardict_paired_mode` | vardict-java 1.8.3 (container) | `vardict-java` + `testsomatic.R` + `var2vcf_paired.pl` |\n| vardict_filter_somatic | `vardict_filter_somatic` | bcftools >=1.22 | StrongSomatic/LikelySomatic + `SSF <= 0.05` |\n| varscan2 mpileup/call/processSomatic/filter | `varscan2_mpileup` \u2026 `merge_somatic` | varscan 2.4.6, samtools, bcftools | `--strand-filter 1`, `--output-vcf 1`, concat chain |\n| muse_call / muse_sump | `muse_call` / `muse_sump` | muse 2.1.2 (container) | `sump -E -n {threads} -D {dbsnp_gz}` |\n| mutect2 chain | `M2_ST`/`M2_SNC`/`M2_contam`/`mutect2`/`M2_filter` | gatk4 (container) | `-pon` only when `wes_pon` set (upstream hg38_chr21 has none) |\n| call_config_strelka | `call_config_strelka` | manta | `configManta.py --exome --callRegions` |\n| call_strelka_manta_germline | `call_strelka_manta_germline` | strelka2, manta | `configureStrelkaGermlineWorkflow` + `runWorkflow.py` |\n| merge_strelka_manta | `merge_strelka_manta` | bcftools | upstream `{params.indel}` bug fixed (single concat+sort) |\n| strelka somatic (via manta) | `call_strelka_somatic_manta` + `merge_strelka_somatic_manta` | strelka2, manta, bcftools | same pipeline on somatic config |\n| CM_cnv | `CM_cnv` | touch | empty tumour/normal CNV beds (upstream default) |\n| CM_call / CM_flag | `CM_call` / `CM_flag` | caveman 1.15.3 (container) | `-td 2 -nd 2 -seqType WGS -no-flagging`, flag with `-umv .`; `-ignore-file` fed a one-region bed on a contig absent from the reference (upstream passes `\"\"`, which caveman 1.15.3 rejects \u2014 same \"no ignore regions\" semantics); flagger gets real `-c`/`-v` configs from `test/fixtures/flag` (GRCh38 params verbatim, bed-based flags dropped \u2014 no chr21 flag data) plus empty `-b`/`-ab` dirs and `-t genomic` (upstream's `\"\"`/`\"\"`/`\"genome\"` are rejected by cgpFlagCaVEMan 1.15.3) |\n| CM_germ_flag | `CM_germ_flag` | bcftools | `-e 'DP<=30' -s LowDP --mode x` |\n| vcf_norm (per caller) | `vcf_norm_{Mutect2,vardict,varscan2,muse,HaplotypeCaller,germline_strelkamanta,germline_caveman}` | bcftools >=1.22 | verbatim per-caller FILTER rules incl. vardict contig-header branch |\n| loop_vcf2maf_paired | `vcf2maf_{Mutect2,vardict,varscan2,muse,HaplotypeCaller}` | vcf2maf 1.6.22, ensembl-vep 114.2 | verbatim tumor/normal IDs per `get_vcf_name`; gated on `vep_cache_ready` |\n| loop_vcf2maf_germ_paired | `vcf2maf_germ_strelkamanta` / `vcf2maf_germ_caveman` | vcf2maf 1.6.22 | TUMOUR/NORMAL for CaVEMan; gated on `vep_cache_ready` |\n| merge_loop (somatic) | `merge_paired_maf` | merge_maf.R (verbatim) | driven via scripts/smk.R shim |\n| merge_paired_vcf | `merge_paired_vcf` | merge_caller_vcfs.py (verbatim) + pysam | driven via scripts/smk.py shim; upstream mini-test default stage `call_mut_vcf` |\n| merge_loop_germline | `merge_paired_germ_maf` | merge_maf.R (verbatim) | |\n| make_region_bed_list + flag_mutation_pairead_maf | `make_region_bed_list` + `flag_mutation_pairead_maf` | flag_mutation_maf.R (verbatim) | empty bed_list = header-only TSV |\n| run_cancer_report | `run_cancer_report` | R >=4.4 (knitr, gpgr via post-deploy) | only MAF/panel/Rmd params; CNV/QC params unset (NULL) as in upstream default path |\n| combined_multiqc | `prep_multiqc_data` + `combined_multiqc_prep_multiqc_data` + `combined_multiqc` | multiqc | conpair/purple inputs out of scope |\n| freec_config / freec_call_paired / plot_freec | `freec_config` / `freec_call_paired` / `plot_freec` | Control-FREEC >=11.6, sambamba | verbatim `config_freec.py` + `config_exome.ini`; upstream runs freec in the facets-suite container, port uses bioconda control-freec; `when = \"config.cnv_enabled\"` |\n| sequenza bam2seqz/binning/call | `sequenza_bam2seqz` / `sequenza_seqz_binning` / `sequenza_call` | sequenza-utils, r-sequenza | upstream's referenced `scripts/sequenza.R` does not exist in the tree \u2014 port ships the standard extract\u2192fit\u2192results chain (`scripts/sequenza_call.R`) |\n| CNA_exomedepth | `CNA_exomedepth` | ExomeDepth (Bioc) | verbatim `ExomeDepth.R`; upstream counts over hardcoded exons.hg19 (dead `target.file` read) \u2014 port keeps that and adds a documented `use_target_bed` switch for the mini fixture |\n| CNA_ASCAT / ASCAT_EXTRACT_PURITYPLOIDY | `CNA_ASCAT` / `ASCAT_EXTRACT_PURITYPLOIDY` | ASCAT >=3.2, alleleCounter | verbatim `ASCAT.R` (+chroms/GC/rt from config \u2014 upstream hardcodes c(1:22)); `ascat_pp.R` verbatim |\n| WGS mapping/recal/QC | shared `00_common` rules | bwa/gatk4/picard | upstream WGS map_reads/markdup/BQSR/recal_link are identical to WES |\n| WGS callers (no exome restrictions) | `rules/91_wgs_callers.oxoflow` | gatk4/muse/varscan/vardict/strelka2/manta | no `--intervals`/`--callRegions`/`--exome`; Manta emits somaticSV; germline Strelka takes BOTH bams (WES: normal only); vardict regions from `vardict_wgs_bed` |\n| WGS picard_collect_wgs / picard_flength_wgs | `picard_collect_wgs_{tumor,normal}` / `picard_flength_wgs_{tumor,normal}` | picard | CollectWgsMetrics + CollectInsertSizeMetrics (telomerecat is \"departed\" upstream \u2014 not ported) |\n| SV_delly chain | `SV_delly` \u2192 `SV_delly_sample_tsv` \u2192 `SV_delly_filter_somatic` \u2192 `SV_delly_to_vcf` \u2192 `delly_filter` \u2192 `delly2bnd` | delly 1.7.2 (container), bcftools | verbatim; `delly2bnd.py` verbatim (upstream env lacks cyvcf2 \u2014 added to envs/clindet.yaml, upstream bug) |\n| SV_svaba | `SV_svaba` | svaba (container) | verbatim run; sansa/svanno annotation gates absent from the mini config \u2014 not ported |\n| Manta SV | `call_config_strelka` (WGS) | manta | `somaticSV.vcf.gz` from the WGS Manta run (upstream SV list entry 'Manta') |\n\n**Not ported** (upstream branches, verified at 582a9131): CNV purple/amber/cobalt/FACETS (custom hmftools.sif / facets-suite image + multi-GB hmf_pipeline_resources and snp-pileup PoN trees, pull_zenodo-built; unpaired CNV freec/purple likewise \u2014 the ported CNV gate is paired-only); CNV SM_check / CNA_ABSOLUTE_GISTIC / CNA_Battenberg (marked \"for future development\" upstream; ABSOLUTE/GISTIC2 have no conda packages, Battenberg needs the cgpbattenberg sif + 1000G impute data); SV gridss/BRASS/linx/igcaller/jasmine (custom sifs or hardcoded /public/ClinicalExam paths + Sanger/HMF reference trees \u2014 delly/svaba/Manta ARE ported); sansa-annotation + svaba svanno (sansa config absent from the mini test; svanno also needs the GTF, empty in the mini test); telomerecat (\"departed\" upstream); unpaired-mode callers beyond the seven portable ones (sage/deepvariant/pindel/octopus/UnifiedGeniTyper) + WGS Battenberg/ecDNA/VirusScan (custom containers + resource trees); conpair (custom conpair_latest.sif); ASCATsc (feeds the BRASS chain) + multi-lane entry variant (mapping_muliti.smk).",
     "compute": "up to 30 threads / 10 GB per rule",
     "quickstart_note": "Needs clinical sequencing inputs \u2014 see Requirements.",
-    "coverage": "single entry (upstream Snakefile form): run_type wes/wgs/rna; paired vs unpaired WES derived per pair from the sample sheet. Merged form live-verified on tx-ubuntu (PR #187 engine): wes (paired+tumor-only in one DAG), wgs (paired-only), rna (default stages). The vcf2maf/VEP chain was live-verified in the 4-entry era and runs identical commands here."
+    "coverage": "single entry (upstream Snakefile form): run_type wes/wgs/rna; paired vs unpaired WES derived per pair from the sample sheet. Merged form live-verified on tx-ubuntu (PR #187 engine): wes (paired+tumor-only in one DAG), wgs (paired-only), rna (default stages). The vcf2maf/VEP chain was live-verified in the 4-entry era and runs identical commands here.",
+    "not_applicable": [
+      "sansa-annotation (SV_sansa_*) + svaba svanno \u2014 gated on an upstream sansa config absent from the mini test (svanno additionally needs the GTF, empty in the mini test)",
+      "telomerecat \u2014 marked 'departed' upstream (workflow/WGS/rules/mapping.smk)"
+    ],
+    "workflowhub": {
+      "id": 2299,
+      "url": "https://workflowhub.eu/workflows/2299",
+      "doi": "10.48546/workflowhub.workflow.2299.1",
+      "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2299.1"
+    }
   },
   {
     "name": "oxo-flow-auto-sra-rnaseq-pipeline",
@@ -3107,30 +3385,36 @@ window.OXO_PIPELINES = [
     "created": "2026-08-15",
     "domain": "transcriptomics",
     "tags": [
-      "rna-seq",
-      "sra",
-      "fasterq-dump",
-      "fastp",
-      "star",
+      "bigwig",
       "deseq2",
       "differential-expression",
-      "bigwig"
+      "encode",
+      "fasterq-dump",
+      "fastp",
+      "rna-seq",
+      "sra",
+      "star"
     ],
     "scope": [
+      "DGE_analysis",
+      "Snakefile_ENCODE \u2014 main_encode.oxoflow entry point (8 rules: data_clean_pair/single, align_and_count/single, build_bam_index, bamtobw, combine_count, DGE_analysis; DESeq2_diff_encode.R verbatim)",
+      "align_and_count",
+      "align_and_count_single \u2014 single-end STAR",
+      "bamtobw",
+      "build_bam_index",
+      "combine_count",
+      "config.yaml bark/feishu flags \u2014 scripts/notify.py (feishu verbatim; bark fixed from upstream no-op)",
+      "data_clean_pair",
+      "data_clean_single \u2014 single-end fastp",
+      "data_conversion_pair",
+      "data_conversion_single \u2014 shared sra_dump rule (fasterq-dump derives output naming from the archive)",
       "get_sra",
-      "sra_dump (shared pair/single conversion)",
       "merge_R1_data",
       "merge_R2_data",
-      "merge_data (single-end)",
-      "data_clean_pair",
-      "data_clean_single",
-      "align_and_count",
-      "align_and_count_single",
-      "build_bam_index",
-      "bamtobw",
-      "combine_count",
-      "DGE_analysis",
-      "main_encode.oxoflow \u2014 ENCODE entry point (8 rules, pre-downloaded FASTQ inputs)"
+      "merge_data \u2014 single-end merge (scripts/merge_reads.py --read 0)",
+      "run.py \u2014 scripts/run_batch.py (metadata validation, SRA checks, --restart-times 3, finished/failed dirs, notifications)",
+      "scripts/update_json.py \u2014 copied byte-identical (external-orchestration tracker)",
+      "slurm/config.yaml \u2014 profiles/slurm.toml (oxo-flow [cluster], opt-in via --profile slurm)"
     ],
     "excluded": [],
     "rule_count": 13,
@@ -3145,7 +3429,7 @@ window.OXO_PIPELINES = [
       "r-ashr",
       "r-data.table"
     ],
-    "description": "Automated RNA-seq analysis from locally downloaded SRA archives to differential expression results: verify and symlink .sra files, fasterq-dump conversion to FASTQ, read merging across multiple SRR runs per sample, fastp trimming, STAR alignment with gene counts, BAM indexing, BPM-normalized bigWig signal tracks, a merged count matrix, and DESeq2 differential analysis with ashr shrinkage. Single-end and paired-end samples are routed by the metadata `paired` column through wildcard-scoped when-gates; a separate ENCODE entry point (main_encode.oxoflow) consumes pre-downloaded FASTQs. Every tool is pinned to an exact conda version for reproducibility.",
+    "description": "Automated RNA-seq analysis from locally downloaded SRA archives to differential expression results: verify and symlink .sra files, fasterq-dump conversion to FASTQ, read merging across multiple SRR runs per sample, fastp trimming, STAR alignment with gene counts, BAM indexing, BPM-normalized bigWig signal tracks, a merged count matrix, and DESeq2 differential analysis with ashr shrinkage. Every tool is pinned to an exact conda version for reproducibility. Paired- and single-end samples are routed per sample via metadata (sample-group metadata + wildcard-scoped when predicates), and a second entry point (main_encode.oxoflow) covers the upstream ENCODE execution path.",
     "installation": {
       "engine": "oxo-flow >= 0.15.0 (wildcard-scoped `when` predicates; the failure-email hook [workflow] on_error fires on >= 0.17.0 \u2014 older engines ignore the unknown key)",
       "toolchain": "conda envs \u2014 pinned",
@@ -3165,7 +3449,13 @@ window.OXO_PIPELINES = [
     "fidelity_md": "Scope: the **default-parameters main execution path** (upstream `rule all`) plus the ENCODE entry point and the batch/slurm tooling. Rows cover every upstream rule; \"not ported\" rows carry a reason.\n\n| Upstream rule | oxo-flow rule | Tool (version) | Notes |\n|---|---|---|---|\n| get_sra | `get_sra` | python 3.11 + pandas 3.0.5 | run: block ported to `scripts/get_sra.py` (identical symlink logic). Single-instance script rule (oxo-flow fans out over `{sample}`/`{pair_id}` only); iterates the same metadata SRR values. Splits multi-SRR values on `srr_separator` like the upstream merge input functions and run.py `check_sra_files` (upstream get_sra itself does not split \u2014 latent bug for multi-SRR rows). No declared outputs (per-SRR paths are dynamic). |\n| data_conversion_pair | `sra_dump` | sra-tools 3.1.1 | `fasterq-dump sra/<SRR> -O sra` identical per SRR, one rule instance per sample; `limit_dump` cap preserved: `[resource_groups] limit_dump = { max = 2 }` (upstream run.py `--resources limit_dump=2`). The `when = \"wildcard.paired == 'PAIRED'\"` gate routes it to paired samples. Script deps (python/pandas) join the download env \u2014 oxo-flow runs one environment per rule, upstream split input function (base env) and command (download env). |\n| data_conversion_single | `sra_dump` (same rule) | sra-tools 3.1.1 | Ported: fasterq-dump derives the output naming from the archive itself, so the two upstream rules collapse into one script rule (single-end archives produce `sra/{SRR}.fastq`; `scripts/dump_sra.py` verifies either output shape). Upstream needed two rules only because its DAG declared the output names statically. Per-sample routing via sample-group metadata (`paired = \"PAIRED\"/\"SINGLE\"`) + `when` gates. |\n| merge_R1_data | `merge_R1_data` | coreutils `cat` (via python script) | Input function `get_merged_input_data_R1` ported to `scripts/merge_reads.py --read 1`; identical `cat \u2026 > 00_raw_data/{sample}_R1.fq`. Gated to PAIRED samples. `limit_merge` cap preserved: 1 unit per rule + `[resource_groups] limit_merge = { max = 2 }` (upstream run.py `--resources limit_merge=2`). |\n| merge_R2_data | `merge_R2_data` | coreutils `cat` (via python script) | Same as above, `--read 2`. |\n| merge_data | `merge_data` | coreutils `cat` (via python script) | Ported single-end branch: `scripts/merge_reads.py --read 0` consumes `sra/{SRR}.fastq` and `cat`s to `00_raw_data/{sample}.fq`; gated to SINGLE samples; same `limit_merge` cap. `--read 0` fails fast on a PAIRED sample (metadata `paired` column), matching upstream run.py's validation. |\n| data_clean_pair | `data_clean_pair` | fastp 1.3.6 | Command byte-identical (`-w`, `-i/-I`, `-o/-O`, `-j log/{sample}.json`, `-h log/{sample}.html`, `&> log/{sample}_fastp.log`). Gated to PAIRED samples. Upstream does not pin fastp; resolved from bioconda on 2026-08-15. Threads 8 (upstream `fastp_threads` baked into `[rules.resources]`). |\n| data_clean_single | `data_clean_single` | fastp 1.3.6 | Ported single-end branch: same fastp flags minus `-I/-O` (`-i 00_raw_data/{sample}.fq -o 01_clean_data/{sample}.fq`), threads 8; gated to SINGLE samples. |\n| align_and_count | `align_and_count` | star 2.7.11b | Command byte-identical (flags, `--outFileNamePrefix`, `--limitBAMsortRAM $((10000 * 1000000))`, `--quantMode GeneCounts`, `--outTmpKeep None`, `mv \u2026_Log.final.out` to log). Threads 20 (upstream `star_threads` baked in); gated to PAIRED samples. The attempt-based memory escalation lambda (`10000` first attempt, `60000*(attempt-1)` after) is not expressible \u2014 the port pins the first-attempt value (`resources.memory = \"10G\"`). star bumped 2.7.1a \u2192 2.7.11b: the 2019-era binary stalls on modern hosts (live: 20h spin, zero progress). Single-end STAR is the separate `align_and_count_single` rule (same command, one `--readFilesIn` file, gated to SINGLE). |\n| build_bam_index | `build_bam_index` | samtools 1.22 | `samtools index -@ 4 {input}` identical. samtools 1.22 pinned (1.24's htslib conflicts with star 2.7.11b; combo live-verified). |\n| bamtobw | `bamtobw` | deeptools 3.5.6 | Command byte-identical (`-p 10 --binSize 50 --effectiveGenomeSize 2913022398 --normalizeUsing BPM -b \u2026 -o 04_bigwig/{sample}.bw`). Upstream does not pin deeptools; resolved from bioconda on 2026-08-15. |\n| combine_count | `combine_count` | python 3.11 + pandas 3.0.5 | run: block ported verbatim to `scripts/combine_count.py` (same merge order and column renaming); per-sample counts gathered via `expand_inputs` over the sample list. Adds a fail-fast check that `[config] db_id` matches the metadata file name (upstream derives DB_ID at load time). Upstream runs in the snakemake base env (`snakemake==8.16 pandas`); snakemake itself is not needed \u2014 oxo-flow is the orchestrator. |\n| DGE_analysis | `DGE_analysis` | R 4.3.2, DESeq2 1.42.0, ashr 2.2.63, data.table 1.17.8 | `scripts/DESeq2_diff.R` ported verbatim (design `~group`, contrast `treat`/`control`, `lfcShrink(type=\"ashr\")`, saves exprSet + metadata + diffResults to the .Rds path). Env pins from the upstream Dockerfile (r432 env); r-data.table 1.17.8 pinned (1.18.4 requires r-base >= 4.4 and cannot solve with the pinned r-base 4.3.2); python added for the on_success mail hook. |\n| onsuccess | `on_success` (DGE_analysis) | shell + smtplib | Upstream workflow-level `onsuccess` becomes the final rule's hook: `rm -rf 02_read_align` + conditional email via `scripts/send_mail.py` (port of `send_mail()`; the upstream `client.quit()` NameError on SMTP connection failure is fixed and notification failures exit 0 so they never fail a finished workflow). `mail` defaults to false, as upstream. |\n| onerror | `[workflow] on_error` | shell + smtplib | Ported: the upstream workflow-level `onerror` email becomes the engine's workflow-level failure hook \u2014 shell run once in the workflow root when the run reaches a terminal state with at least one failed rule, guarded by `mail` (default false = no-op, behavior unchanged). It sends subject \"snakemake run failed\" via the same `scripts/send_mail.py` as on_success, with the run counters (`{succeeded}`/`{failed}`/`{skipped}`), `{config.db_id}` and `{workdir}` in the body (the upstream body is the snakemake log; the engine log lives under `.oxo-flow/logs/`). Best-effort: a failed hook is a warning, never a run-status change, and notification failures exit 0. Fires on engine >= 0.17.0; older engines ignore the unknown `[workflow]` key. |\n| Snakefile_ENCODE | `main_encode.oxoflow` (8 rules) | fastp 1.3.6, star 2.7.11b, samtools 1.22, deeptools 3.5.6, R 4.3.2 | Ported entry point: ENCODE metadata columns (`R1_file_accession`/`R2_file_accession`/`runtype`), `scripts/DESeq2_diff_encode.R` copied verbatim, pre-downloaded FASTQ inputs. `get_raw_data` input function \u2192 `scripts/clean_encode.py` (byte-identical fastp command; pandas added to envs/preprocess.yaml for it). Two upstream latent bugs fixed (documented deviations): `data_clean_pair` IndexErrors on single-ended samples, and `align_and_count` declares fixed r1/r2 inputs \u2014 both split into paired/single rules gated by `runtype`. Upstream `use_download`/`download_path` is dead code (computed, never read) \u2014 dropped. |\n| run.py | `scripts/run_batch.py` | python 3.11 + pandas 3.0.5 | Batch runner ported: metadata validation and SRA checks verbatim; drives `oxo-flow run \u2026 metadata=\u2026 db_id=\u2026 -j N -r 3` per metadata file (upstream `--restart-times 3`); moves files to `finished/`/`failed/`; bark/feishu via notify.py; summary stats. `--cores` default 79 like upstream; `--profile` maps to upstream `--executor_profile_path`; `--unlock`/`--rerun-incomplete`/`--latency-wait` are native oxo-flow checkpoint semantics \u2014 nothing to do. |\n| slurm/config.yaml | `profiles/slurm.toml` ([cluster]) | \u2014 | Ported: `executor: slurm` \u2192 `backend = \"slurm\"`, `jobs: 100` \u2192 `max_submitted = 100`, `runtime=120` \u2192 `walltime = \"2h\"`. Upstream set-threads/set-resources live in the workflow's per-rule resources; the cluster-only align mem bump (64000) is not expressible in a profile, so the pinned 10G applies on the cluster too. Opt-in: `oxo-flow run main.oxoflow --profile slurm`. |\n| config.yaml bark/feishu | `scripts/notify.py` | python 3.11 | Notification helpers ported: `feishu_notification` verbatim from upstream `scripts/utilize.py`; `bark_notification` fixed \u2014 the upstream function is a silent no-op (assigns `base_url`, never sends), the port implements the intended GET `{api}/oxo-flow/{contents}`. Notification failures exit 1 but never change a run's outcome (run_batch.py). |\n| scripts/update_json.py | `scripts/update_json.py` (verbatim) | python 3.11 | Copied byte-identical \u2014 external-orchestration `file_dict.json` tracker; no caller in either workflow, same as upstream. |\n| pigz_threads config key | dropped | \u2014 | The upstream pigz pipe is commented out (merge rules use plain `cat`) \u2014 no behavior lost. |\n\n**Port-level conventions** (config-shape deviations, commands unchanged):\nupstream derives the sample list (GSM column), the per-sample SRR lists and\nDB_ID from the metadata TSV at load time; the port declares the samples in\n`[[sample_groups]]` (cohort = PAIRED, single = SINGLE), reads SRR lists in\nthe ported scripts, and takes DB_ID from `[config] db_id` \u2014 all three must\nmatch the metadata file (see the repo README Usage). Upstream\n`fastp_threads`/`star_threads` config keys are baked into\n`[rules.resources] threads` (oxo-flow resource numbers are literals).\nUpstream example metadata `doc/D21122.txt` (16 GSM samples, all PAIRED)\nships as the default fixture at test/fixtures/metadata/D21122.txt.",
     "compute": "up to 20 threads / 10 GB per rule (align_and_count)",
     "quickstart_note": "Downloads public data by accessions (network required); `--resume-failed` retries rules after transient download errors.",
-    "coverage": "full-line: paired default path + single-end branch \u2014 both live-verified on bioinfo-wsx (engine 0.15.0 with the wildcard-when fix #199): single-end 2v2 real-SRR run through DESeq2 PASS; ENCODE entry (main_encode.oxoflow) validate + dry-run verified \u2014 a live run needs pre-downloaded ENCODE FASTQs"
+    "coverage": "full-line: paired default path + single-end branch \u2014 both live-verified on bioinfo-wsx (engine 0.15.0 with the wildcard-when fix #199): single-end 2v2 real-SRR run through DESeq2 PASS; ENCODE entry (main_encode.oxoflow) validate + dry-run verified \u2014 a live run needs pre-downloaded ENCODE FASTQs",
+    "workflowhub": {
+      "id": 2300,
+      "url": "https://workflowhub.eu/workflows/2300",
+      "doi": "10.48546/workflowhub.workflow.2300.1",
+      "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2300.1"
+    }
   },
   {
     "name": "oxo-flow-tcasia",
@@ -3244,6 +3534,12 @@ window.OXO_PIPELINES = [
     "fidelity_md": "Scope: the **default-parameters main execution path** (upstream `rule all` of both Snakefiles). Rows cover every upstream rule; no \"not ported\" rows \u2014 the full default path is ported.\n\n| Upstream rule | oxo-flow rule | Tool (version) | Notes |\n|---|---|---|---|\n| fastp_qc | `alignment::fastp_qc` | fastp 0.23.4 | identical command; input layout from `[[sample_groups]]` + `reads_dir` instead of samples.tsv |\n| star_align | `alignment::star_align` | STAR 2.7.7a | identical command; `params.prefix` inlined; `--limitBAMsortRAM` differs \u2014 upstream hardcodes 39050942993 (~36 G), the port defaults `star_limit_bam_sort_ram = 0` \u2192 machine-effective memory |\n| sort_bam | `alignment::sort_bam` | samtools 1.15 | same sort; `-@ {effective_threads}` + `-m 512M` cap added (upstream `-@ 8` with sort's default 768 MB/thread buffer over-allocated the live box) |\n| index_bam | `alignment::index_bam` | samtools 1.15 | identical command |\n| featurecounts | `alignment::featurecounts` | subread 2.0.1 | identical command; upstream runs without a strandness flag (oxo-flow preflight warns \u2014 upstream behavior kept) |\n| salmon_quant | `as_calling::salmon_quant` | salmon 1.10.3 | identical command; `-l` from explicit `salmon_library_type` (upstream derives it from `strandness` in tcasia_config.py) |\n| select_suppa_fields | `as_calling::select_suppa_fields` | suppa 2.3 | identical command |\n| format_suppa_fields | `as_calling::format_suppa_fields` | suppa 2.3 | equivalent perl one-liner (anchored rewrite of the upstream regex; same output) |\n| suppa_run | `as_calling::suppa_run` | suppa 2.3 | identical command; output prefix inlined |\n| rmats_create_input | `as_calling::rmats_create_input` | rMATS 4.3.0 | identical command |\n| rmats_run | `as_calling::rmats_run` | rMATS 4.3.0 | identical command; `--od` directory declared as the rule output |\n| majiq_create_ini | `as_calling::majiq_create_ini` | MAJIQ 2.5 | identical printf; `bam_dir`/`bam_stem` params inlined |\n| majiq_build | `as_calling::majiq_build` | MAJIQ 2.5 | identical command |\n| majiq_psi | `as_calling::majiq_psi` | MAJIQ 2.5 | identical command |\n| voila_modulize | `as_calling::voila_modulize` | MAJIQ 2.5 (Voila) | identical command; `modulized/` directory declared as the rule output |\n| voila_tsv | `as_calling::voila_tsv` | MAJIQ 2.5 (Voila) | identical command |\n| spladder_run | `as_calling::spladder_run` | SplAdder 3.1.1 | identical command; output directory declared as the rule output |\n| rule all | \u2014 (DAG targets) | \u2014 | every output above is a default target of the single chained DAG |\n\n**Port-level conventions** (config-shape deviations, commands unchanged):\n- **Sample sheet**: upstream reads per-sample fastq paths from a TSV (`sample_id/fastq_1/fastq_2`); the port uses `[[sample_groups]]` plus the `reads_dir/{sample}_1.fastq.gz` / `{sample}_2.fastq.gz` layout.\n- **One workflow file, one DAG**: the two upstream Snakefiles (+ the four `rules/snakefile_*` fragments) are `modules/alignment.oxoflow` + `modules/as_calling.oxoflow`, included from `main.oxoflow`; the two `config.yml` files merge into one `[config]`. Upstream `01 output_dir/aligned` and `02 bam_dir` are the single key `aligned_dir`, making the alignment \u2192 AS-calling chain structural. Run one stage only with `-t alignment` / `-t as_calling`.\n- **Strandness-derived values are explicit config keys**: upstream computes `salmon_library_type` (`fr-firststrand\u2192ISR`, `fr-secondstrand\u2192ISF`, `fr-unstranded\u2192IU`) and `majiq_strandness` (`fr-firststrand\u2192reverse`, `fr-secondstrand\u2192forward`, `fr-unstranded\u2192none`) in `tcasia_config.py`; rMATS uses the `strandness` value directly (as upstream). Change `strandness` **and** the two derived keys together.\n- **Helper scripts not ported**: `scripts/validate_config.py` and `scripts/read_length.sh` are user-facing helpers; oxo-flow validates config/inputs natively.\n- **Threads only, no memory**: upstream declares threads per tool and no memory; the port mirrors that exactly.\n- **STAR BAM-sort RAM is machine-sized by default**: upstream hardcodes `--limitBAMsortRAM 39050942993` (~36 GB); the port adds `star_limit_bam_sort_ram` (default `0` = auto) and sizes the limit from `{effective_memory_mb}`, so STAR adapts to small boxes; set it to a byte count to pin an exact value.\n- **samtools sort buffer cap**: `sort_bam` runs `samtools sort -@ {effective_threads} -m 512M` instead of upstream's plain `-@ 8` \u2014 sort's default 768 MB/thread buffer over-allocated the live box.\n- **SUPPA2 field formatting regex**: `format_suppa_fields` applies the same transformation as the upstream one-liner with an anchored regex (`s/^\\|.*?\\|\\t//` instead of upstream's capture-and-delete); output is identical for the quant.sf-derived input shape.\n- **MAJIQ is license-gated**: upstream runs the 5-rule MAJIQ chain unconditionally and fails hard without the academic license file. The port gates the chain on `run_majiq` (default `false`): a fresh clone completes with rMATS + SUPPA2 + SplAdder; set `run_majiq = true` after placing the license at `majiq_license` (commands unchanged when enabled).\n- **MAJIQ env fixes**: upstream's own `pip majiq==2.5` installs from no index (PyPI/bioconda both lack majiq) \u2014 the port installs OncoHarmony-Network/majiq_academic@v2.5 (the TCASIA org's fork), with numpy=1.26 (the fork's Cython extensions break on numpy 2.x ABI) and setuptools=75.8.2 (voila's gunicorn imports pkg_resources, removed in setuptools 81+).",
     "compute": "up to 10 threads per rule (STAR / rMATS)",
     "quickstart_note": "Needs raw FASTQs and reference data \u2014 see Requirements.",
-    "coverage": "full-line"
+    "coverage": "full-line",
+    "workflowhub": {
+      "id": 2301,
+      "url": "https://workflowhub.eu/workflows/2301",
+      "doi": "10.48546/workflowhub.workflow.2301.1",
+      "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2301.1"
+    }
   }
 ];

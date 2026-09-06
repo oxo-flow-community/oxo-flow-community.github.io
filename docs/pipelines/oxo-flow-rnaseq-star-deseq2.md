@@ -22,6 +22,7 @@ title: "RNA-seq: STAR alignment, DESeq2 differential expression and QC"
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>v3.1.1</code></span></div>
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
+<div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2290.1"><code>10.48546/workflowhub.workflow.2290.1</code></a></span></div>
 <p class="cmd">$ oxo-flow run main.oxoflow</p>
 </div>
 </div>
@@ -348,7 +349,7 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- Snakemake report artifacts (workflow/report/*.rst) — jinja captions rendered by the sphinx-based snakemake --report machinery (report: directive + report() output annotations); no oxo-flow equivalent
+- Snakemake report artifacts — per-rule .rst captions (workflow/report/fastp.rst, pca.rst, diffexp.rst, ma.rst) ported as report = "…" annotations on the 6 report()-wrapped rules (fastp_pe, fastp_se, 3x pca, deseq2), rendered by the engine rule-captions report section (needs oxo-flow >= 0.17.0; older engines ignore the key); the workflow-level report: directive (workflow/report/workflow.rst) and the sphinx-based snakemake --report HTML book (self-contained, figures embedded, categories/subcategories/labels) have no oxo-flow equivalent
 
 ## Fidelity
 

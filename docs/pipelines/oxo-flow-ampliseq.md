@@ -7,7 +7,7 @@ title: "Amplicon sequencing (16S/ITS): DADA2 denoising, taxonomy assignment, QII
 <div>
 <h1>Amplicon sequencing (16S/ITS): DADA2 denoising, taxonomy assignment, QIIME2 diversity/ANCOM, PICRUSt, SBDI export, phyloseq/TSE objects and QC</h1>
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
-<p>Amplicon sequencing analysis (16S/ITS) that takes raw paired-end reads through FastQC quality control, cutadapt primer trimming (incl. the illumina_pe_its read-through pass), DADA2 denoising (quality profiles, filterAndTrim, learnErrors, denoise, chimera removal, read tracking, optional multi-run merge), taxonomy assignment against the SBDI-GTDB reference (or the ITS-cut length-filtered branch), a QIIME2 taxa barplot over sample metadata, optional QIIME2 downstream analyses (phylogenetic tree, alpha/beta diversity, abundance table exports, ANCOM/ANCOM-BC/ANCOM-BC2, classifier training/prediction), optional PICRUSt2 functional predictions, an overall summary table and a MultiQC report.</p>
+<p>Amplicon sequencing analysis (16S/ITS) that takes raw paired-end reads through FastQC quality control, cutadapt primer trimming (incl. the illumina_pe_its read-through pass), DADA2 denoising (quality profiles, filterAndTrim, learnErrors, denoise, chimera removal, read tracking, optional multi-run merge), taxonomy assignment against the SBDI-GTDB reference (or the ITS-cut length-filtered branch), a QIIME2 taxa barplot over sample metadata, optional QIIME2 downstream analyses (phylogenetic tree, alpha/beta diversity, abundance table exports, ANCOM/ANCOM-BC/ANCOM-BC2, classifier training/prediction), optional PICRUSt2 functional predictions, an overall summary table and a MultiQC report. Optional post-analysis branches cover the SBDI Sweden biodiversity submission export (event/dna/emof/asv-table/annotation tables), phyloseq and TreeSummarizedExperiment R objects, and an Rmd-based HTML summary report (results/summary_report/summary_report.html) that aggregates QC plots, DADA2 stats, taxonomy references and the optional branch artifacts into one self-contained document.</p>
 </div>
 <div>
 <div class="ox-glance">
@@ -22,6 +22,7 @@ title: "Amplicon sequencing (16S/ITS): DADA2 denoising, taxonomy assignment, QII
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>2.18.0</code></span></div>
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
+<div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2282.1"><code>10.48546/workflowhub.workflow.2282.1</code></a></span></div>
 <p class="cmd">$ oxo-flow run main.oxoflow</p>
 </div>
 </div>
@@ -67,20 +68,19 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-ampliseq
 
 ## Parameters
 
-<p class="ox-param-usage">At run time override any parameter with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys.</p>
 <div class="ox-params">
 <div class="ox-param">
 <div class="ox-param-head"><code>FW_primer</code><span class="ox-param-default"></span></div>
 <p class="ox-param-desc">--- primers (upstream default null renders literal &quot;null&quot; adapters; port uses empty strings — see README fidelity table) ---</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>cutadapt</code> <code>qiime2_preptax</code></div>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>cutadapt</code> <code>qiime2_preptax</code> <code>sbdiexport</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>RV_primer</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">--- primers (upstream default null renders literal &quot;null&quot; adapters; port uses empty strings — see README fidelity table) ---</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>cutadapt</code> <code>qiime2_preptax</code></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>cutadapt</code> <code>qiime2_preptax</code> <code>sbdiexport</code></div>
 </details>
 </div>
 <div class="ox-param">
@@ -134,7 +134,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-ampliseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>classifier</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">--- QIIME2 taxonomy classifier (upstream params.qiime_ref_taxonomy / params.classifier — off by default; DADA2 taxonomy is the default path). qiime_ref_taxonomy trains a Naive-Bayes classifier on the primer-extracted reference below; classifier is a path to a pre-trained .qza (skips training). ---</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>qiime2_classify</code> <code>qiime2_intax</code></div>
 </details>
@@ -142,13 +142,13 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-ampliseq
 <div class="ox-param">
 <div class="ox-param-head"><code>cut_its</code><span class="ox-param-default">none</span></div>
 <p class="ox-param-desc">truncation (truncLen=0) + a second cutadapt read-through pass removing revcomp primers</p>
-<details class="ox-param-usedby"><summary>used by 9 rules</summary>
-<div class="ox-param-rules"><code>dada2_taxonomy</code> <code>dada2_taxonomy_its</code> <code>filter_len_itsx</code> <code>itsx_cutasv</code> <code>itsxrust_cutasv</code> <code>qiime2_inasv</code> <code>qiime2_inasv_its</code> <code>qiime2_inseq</code> <code>qiime2_inseq_its</code></div>
+<details class="ox-param-usedby"><summary>used by 11 rules</summary>
+<div class="ox-param-rules"><code>dada2_taxonomy</code> <code>dada2_taxonomy_its</code> <code>filter_len_itsx</code> <code>itsx_cutasv</code> <code>itsxrust_cutasv</code> <code>qiime2_inasv</code> <code>qiime2_inasv_its</code> <code>qiime2_inseq</code> <code>qiime2_inseq_its</code> <code>sbdiexportreannotate</code> <code>summary_report</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cutadapt_max_error_rate</code><span class="ox-param-default">0.1</span></div>
-<p class="ox-param-desc">cutadapt</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>cutadapt</code></div>
 </details>
@@ -162,21 +162,21 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-ampliseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>dada_addspecies_allowmultiple</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">DADA2 taxonomy assignment</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>dada2_taxonomy</code> <code>dada2_taxonomy_its</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>dada_assign_chunksize</code><span class="ox-param-default">10000</span></div>
-<p class="ox-param-desc">DADA2 taxonomy assignment</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>dada2_taxonomy</code> <code>dada2_taxonomy_its</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>dada_assign_taxlevels</code><span class="ox-param-default">Domain,Kingdom,Phylum,Class,Order,Family,Genus,Species</span></div>
-<p class="ox-param-desc">DADA2 taxonomy assignment</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>dada2_taxonomy</code> <code>dada2_taxonomy_its</code></div>
 </details>
@@ -184,48 +184,48 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-ampliseq
 <div class="ox-param">
 <div class="ox-param-head"><code>dada_min_boot</code><span class="ox-param-default">50</span></div>
 <p class="ox-param-desc">DADA2 taxonomy assignment</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>dada2_taxonomy</code> <code>dada2_taxonomy_its</code></div>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>dada2_taxonomy</code> <code>dada2_taxonomy_its</code> <code>summary_report</code></div>
 </details>
 </div>
-<div class="ox-param ox-param-unused">
+<div class="ox-param">
 <div class="ox-param-head"><code>dada_ref_taxonomy</code><span class="ox-param-default">sbdi-gtdb=R11-RS232-1</span></div>
-<p class="ox-param-desc">DADA2 taxonomy assignment</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">—</div>
 </details>
 </div>
-<div class="ox-param ox-param-unused">
+<div class="ox-param">
 <div class="ox-param-head"><code>dada_ref_taxonomy_citation</code><span class="ox-param-default">Lundin D, Andersson A. SBDI Sativa curated 16S GTDB database. FigShare. doi: 10.17044/scilifelab.14869077.v12</span></div>
-<p class="ox-param-desc">DADA2 taxonomy assignment</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">—</div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>summary_report</code></div>
 </details>
 </div>
-<div class="ox-param ox-param-unused">
+<div class="ox-param">
 <div class="ox-param-head"><code>dada_ref_taxonomy_dbversion</code><span class="ox-param-default">SBDI-GTDB-R11-RS232-1 (https://figshare.scilifelab.se/articles/dataset/SBDI_Sativa_curated_16S_GTDB_database/14869077/10)</span></div>
-<p class="ox-param-desc">DADA2 taxonomy assignment</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">—</div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>sbdiexportreannotate</code></div>
 </details>
 </div>
-<div class="ox-param ox-param-unused">
+<div class="ox-param">
 <div class="ox-param-head"><code>dada_ref_taxonomy_title</code><span class="ox-param-default">SBDI-GTDB - Sativa curated 16S GTDB database - Release R11-RS232-1</span></div>
-<p class="ox-param-desc">DADA2 taxonomy assignment</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">—</div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>summary_report</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>dada_ref_taxonomy_urls</code><span class="ox-param-default">https://ndownloader.figshare.com/files/64711203,https://ndownloader.figshare.com/files/64711218</span></div>
-<p class="ox-param-desc">DADA2 taxonomy assignment</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>download_taxonomy_db</code></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>download_taxonomy_db</code> <code>summary_report</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>dada_taxonomy_rc</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">DADA2 taxonomy assignment</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>dada2_taxonomy</code> <code>dada2_taxonomy_its</code></div>
 </details>
@@ -260,14 +260,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-ampliseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>max_ee</code><span class="ox-param-default">2</span></div>
-<p class="ox-param-desc">DADA2 filtering / denoising</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>dada2_filtntrim</code></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>dada2_filtntrim</code> <code>summary_report</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>max_len</code><span class="ox-param-default">Inf</span></div>
-<p class="ox-param-desc">DADA2 filtering / denoising</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>dada2_filtntrim</code></div>
 </details>
@@ -282,20 +282,20 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-ampliseq
 <div class="ox-param">
 <div class="ox-param-head"><code>mergepairs_strategy</code><span class="ox-param-default">merge</span></div>
 <p class="ox-param-desc">&quot;merge&quot; | &quot;consensus&quot; | &quot;concatenate&quot;</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>dada2_denoising</code></div>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>dada2_denoising</code> <code>summary_report</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>metadata_file</code><span class="ox-param-default">test/fixtures/metadata.tsv</span></div>
-<p class="ox-param-desc">run / metadata</p>
-<details class="ox-param-usedby"><summary>used by 11 rules</summary>
-<div class="ox-param-rules"><code>qiime2_alphararefaction</code> <code>qiime2_ancom</code> <code>qiime2_ancombc</code> <code>qiime2_ancombc2</code> <code>qiime2_barplot</code> <code>qiime2_diversity_adonis</code> <code>qiime2_diversity_alpha</code> <code>qiime2_diversity_beta</code> <code>qiime2_diversity_betaord</code> <code>qiime2_diversity_core</code> <code>qiime2_metadata_categories</code></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 15 rules</summary>
+<div class="ox-param-rules"><code>phyloseq</code> <code>qiime2_alphararefaction</code> <code>qiime2_ancom</code> <code>qiime2_ancombc</code> <code>qiime2_ancombc2</code> <code>qiime2_barplot</code> <code>qiime2_diversity_adonis</code> <code>qiime2_diversity_alpha</code> <code>qiime2_diversity_beta</code> <code>qiime2_diversity_betaord</code> <code>qiime2_diversity_core</code> <code>qiime2_metadata_categories</code> <code>sbdiexport</code> <code>summary_report</code> <code>treesummarizedexperiment</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>min_len</code><span class="ox-param-default">50</span></div>
-<p class="ox-param-desc">DADA2 filtering / denoising</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>dada2_filtntrim</code></div>
 </details>
@@ -323,23 +323,30 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-ampliseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>qiime_ref_taxonomy_urls</code><span class="ox-param-default">https://data.qiime2.org/2023.7/common/silva-138-99-seqs.qza,https://data.qiime2.org/2023.7/common/silva-138-99-tax.qza</span></div>
-<p class="ox-param-desc">--- QIIME2 taxonomy classifier (upstream params.qiime_ref_taxonomy / params.classifier — off by default; DADA2 taxonomy is the default path). qiime_ref_taxonomy trains a Naive-Bayes classifier on the primer-extracted reference below; classifier is a path to a pre-trained .qza (skips training). ---</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>qiime2_preptax</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>quality_type</code><span class="ox-param-default">Auto</span></div>
-<p class="ox-param-desc">DADA2 filtering / denoising</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>dada2_denoising</code> <code>dada2_err</code> <code>dada2_filtntrim</code></div>
 </details>
 </div>
 <div class="ox-param">
+<div class="ox-param-head"><code>raw_dir</code><span class="ox-param-default">test/fixtures/raw</span></div>
+<p class="ox-param-desc">raw input dir: point at your real data directory (e.g. &quot;raw&quot;) after cloning; the default ships the test fixtures so a fresh checkout dry-runs cleanly. Files are read as &lt;raw_dir&gt;/&lt;sample&gt;_R1/_R2.fastq.gz.</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>rename_raw_data_files</code></div>
+</details>
+</div>
+<div class="ox-param">
 <div class="ox-param-head"><code>run_id</code><span class="ox-param-default">1</span></div>
 <p class="ox-param-desc">run / metadata</p>
-<details class="ox-param-usedby"><summary>used by 5 rules</summary>
-<div class="ox-param-rules"><code>dada2_denoising</code> <code>dada2_err</code> <code>dada2_merge</code> <code>dada2_rmchimera</code> <code>dada2_stats</code></div>
+<details class="ox-param-usedby"><summary>used by 6 rules</summary>
+<div class="ox-param-rules"><code>dada2_denoising</code> <code>dada2_err</code> <code>dada2_merge</code> <code>dada2_rmchimera</code> <code>dada2_stats</code> <code>summary_report</code></div>
 </details>
 </div>
 <div class="ox-param">
@@ -352,13 +359,20 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-ampliseq
 <div class="ox-param">
 <div class="ox-param-head"><code>sample_inference</code><span class="ox-param-default">independent</span></div>
 <p class="ox-param-desc">&quot;independent&quot; | &quot;pooled&quot; | &quot;pseudo&quot;</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>dada2_denoising</code></div>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>dada2_denoising</code> <code>summary_report</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>sbdiexport</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">sbdiexport (upstream params.sbdiexport, default false)</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>sbdiexport</code> <code>sbdiexportreannotate</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>seed</code><span class="ox-param-default">100</span></div>
-<p class="ox-param-desc">DADA2 filtering / denoising</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>dada2_denoising</code> <code>dada2_err</code> <code>dada2_taxonomy</code> <code>dada2_taxonomy_its</code></div>
 </details>
@@ -372,28 +386,28 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-ampliseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_alpha_rarefaction</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Skip alpha rarefaction (upstream --skip_alpha_rarefaction) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>qiime2_alphararefaction</code> <code>qiime2_diversity_tree</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_barplot</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">skip flags (upstream params.skip_*, all default false -&gt; full default path)</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>qiime2_barplot</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_dada_taxonomy</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">skip flags (upstream params.skip_*, all default false -&gt; full default path)</p>
-<details class="ox-param-usedby"><summary>used by 6 rules</summary>
-<div class="ox-param-rules"><code>dada2_taxonomy</code> <code>dada2_taxonomy_its</code> <code>download_taxonomy_db</code> <code>format_taxonomy</code> <code>qiime2_barplot</code> <code>qiime2_intax</code></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 11 rules</summary>
+<div class="ox-param-rules"><code>dada2_taxonomy</code> <code>dada2_taxonomy_its</code> <code>download_taxonomy_db</code> <code>format_taxonomy</code> <code>phyloseq</code> <code>qiime2_barplot</code> <code>qiime2_intax</code> <code>sbdiexport</code> <code>sbdiexportreannotate</code> <code>summary_report</code> <code>treesummarizedexperiment</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_diversity_indices</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Skip diversity indices (upstream --skip_diversity_indices) <span class="ox-param-inferred">inferred</span></p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>used by 7 rules</summary>
 <div class="ox-param-rules"><code>qiime2_diversity_adonis</code> <code>qiime2_diversity_alpha</code> <code>qiime2_diversity_beta</code> <code>qiime2_diversity_betaord</code> <code>qiime2_diversity_core</code> <code>qiime2_diversity_tree</code> <code>qiime2_metadata_categories</code></div>
 </details>
@@ -407,14 +421,21 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-ampliseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_multiqc</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">skip flags (upstream params.skip_*, all default false -&gt; full default path)</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>multiqc</code></div>
 </details>
 </div>
 <div class="ox-param">
+<div class="ox-param-head"><code>skip_phyloseq</code><span class="ox-param-default">true</span></div>
+<p class="ox-param-desc">--- robjects + summary report (upstream params.skip_phyloseq / skip_tse / skip_report default to FALSE, i.e. the report and the R objects are produced on every upstream run; the port turns them OFF by default like the other optional branches — flip these to false to enable) ---</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>phyloseq</code></div>
+</details>
+</div>
+<div class="ox-param">
 <div class="ox-param-head"><code>skip_qiime</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">skip flags (upstream params.skip_*, all default false -&gt; full default path)</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>used by 6 rules</summary>
 <div class="ox-param-rules"><code>qiime2_barplot</code> <code>qiime2_inasv</code> <code>qiime2_inasv_its</code> <code>qiime2_inseq</code> <code>qiime2_inseq_its</code> <code>qiime2_intax</code></div>
 </details>
@@ -427,10 +448,24 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-ampliseq
 </details>
 </div>
 <div class="ox-param">
+<div class="ox-param-head"><code>skip_report</code><span class="ox-param-default">true</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>summary_report</code></div>
+</details>
+</div>
+<div class="ox-param">
 <div class="ox-param-head"><code>skip_taxonomy</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">skip flags (upstream params.skip_*, all default false -&gt; full default path)</p>
-<details class="ox-param-usedby"><summary>used by 14 rules</summary>
-<div class="ox-param-rules"><code>dada2_taxonomy</code> <code>dada2_taxonomy_its</code> <code>download_taxonomy_db</code> <code>format_taxonomy</code> <code>qiime2_ancom</code> <code>qiime2_ancombc</code> <code>qiime2_ancombc2</code> <code>qiime2_barplot</code> <code>qiime2_classify</code> <code>qiime2_export_absolute</code> <code>qiime2_export_relasv</code> <code>qiime2_export_reltax</code> <code>qiime2_intax</code> <code>qiime2_preptax</code></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 19 rules</summary>
+<div class="ox-param-rules"><code>dada2_taxonomy</code> <code>dada2_taxonomy_its</code> <code>download_taxonomy_db</code> <code>format_taxonomy</code> <code>phyloseq</code> <code>qiime2_ancom</code> <code>qiime2_ancombc</code> <code>qiime2_ancombc2</code> <code>qiime2_barplot</code> <code>qiime2_classify</code> <code>qiime2_export_absolute</code> <code>qiime2_export_relasv</code> <code>qiime2_export_reltax</code> <code>qiime2_intax</code> <code>qiime2_preptax</code> <code>sbdiexport</code> <code>sbdiexportreannotate</code> <code>summary_report</code> <code>treesummarizedexperiment</code></div>
+</details>
+</div>
+<div class="ox-param">
+<div class="ox-param-head"><code>skip_tse</code><span class="ox-param-default">true</span></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 1 rules</summary>
+<div class="ox-param-rules"><code>treesummarizedexperiment</code></div>
 </details>
 </div>
 <div class="ox-param">
@@ -450,27 +485,27 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-ampliseq
 <div class="ox-param">
 <div class="ox-param-head"><code>trunc_qmin</code><span class="ox-param-default">25</span></div>
 <p class="ox-param-desc">DADA2 filtering / denoising</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>trunclen_fw</code> <code>trunclen_rv</code></div>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>summary_report</code> <code>trunclen_fw</code> <code>trunclen_rv</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>trunc_rmin</code><span class="ox-param-default">0.75</span></div>
-<p class="ox-param-desc">DADA2 filtering / denoising</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>trunclen_fw</code> <code>trunclen_rv</code></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 3 rules</summary>
+<div class="ox-param-rules"><code>summary_report</code> <code>trunclen_fw</code> <code>trunclen_rv</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>truncq</code><span class="ox-param-default">2</span></div>
-<p class="ox-param-desc">DADA2 filtering / denoising</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>dada2_filtntrim</code></div>
+<p class="ox-param-desc">—</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>dada2_filtntrim</code> <code>summary_report</code></div>
 </details>
 </div>
 </div>
 
-Descriptions are the workflow's own `#` comments from its `[config]` section (and the `[config]` sections of its included modules), surfaced by `oxo-flow info` — no schema file to maintain.
+Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
 
 ## Workflow graph
 
@@ -490,57 +525,66 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **In scope**
 
-- rename_raw_data_files
-- fastqc
 - cutadapt
 - cutadapt_summary
 - cutadapt_summary_merge
-- dada2_quality_fw
-- dada2_quality_rv
-- trunclen_fw
-- trunclen_rv
-- dada2_filtntrim
-- dada2_quality_fw_preprocessed
-- dada2_quality_rv_preprocessed
-- dada2_err
 - dada2_denoising
+- dada2_err
+- dada2_filtntrim
+- dada2_merge
+- dada2_quality_fw
+- dada2_quality_fw_preprocessed
+- dada2_quality_rv
+- dada2_quality_rv_preprocessed
 - dada2_rmchimera
 - dada2_stats
-- dada2_merge
-- merge_stats
-- itsx_cutasv
-- itsxrust_cutasv
-- filter_len_itsx
-- download_taxonomy_db
-- format_taxonomy
 - dada2_taxonomy
 - dada2_taxonomy_its
-- qiime2_inasv
-- qiime2_inseq
-- qiime2_inasv_its
-- qiime2_inseq_its
-- qiime2_intax
-- qiime2_barplot
-- qiime2_metadata_categories
-- qiime2_diversity_tree
+- download_taxonomy_db
+- fastqc
+- filter_len_itsx
+- format_taxonomy
+- itsx_cutasv
+- itsxrust_cutasv
+- merge_stats
+- multiqc
+- phyloseq
+- picrust
 - qiime2_alphararefaction
-- qiime2_diversity_core
-- qiime2_diversity_alpha
-- qiime2_diversity_beta
-- qiime2_diversity_betaord
-- qiime2_diversity_adonis
-- qiime2_export_absolute
-- qiime2_export_relasv
-- qiime2_export_reltax
 - qiime2_ancom
 - qiime2_ancombc
 - qiime2_ancombc2
-- qiime2_preptax
+- qiime2_barplot
 - qiime2_classify
-- multiqc
-- picrust
+- qiime2_diversity_adonis
+- qiime2_diversity_alpha
+- qiime2_diversity_beta
+- qiime2_diversity_betaord
+- qiime2_diversity_core
+- qiime2_diversity_tree
+- qiime2_export_absolute
+- qiime2_export_relasv
+- qiime2_export_reltax
+- qiime2_inasv
+- qiime2_inasv_its
+- qiime2_inseq
+- qiime2_inseq_its
+- qiime2_intax
+- qiime2_metadata_categories
+- qiime2_preptax
+- rename_raw_data_files
+- sbdiexport
+- sbdiexportreannotate
+- summary_report
+- treesummarizedexperiment
+- trunclen_fw
+- trunclen_rv
 
 **Excluded**
+
+- none
+
+**Not applicable** (upstream-absent features, boilerplate, dead code, deliberate non-goals — see the excluded-key taxonomy in [Traitome/oxo-flow#267](https://github.com/Traitome/oxo-flow/issues/267))
 
 - nanopore: nanopore sequencing branch (params.nanopore) — absent from the 2.18.0 codebase (grep-verified; only docs/usage.md mentions Nanopore re ITSxRust long reads)
 - syncom: synthetic community controls branch (params.syncom) — absent from the 2.18.0 codebase (grep-verified)

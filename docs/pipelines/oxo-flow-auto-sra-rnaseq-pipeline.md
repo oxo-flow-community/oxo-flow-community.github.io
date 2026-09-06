@@ -7,7 +7,7 @@ title: "SRA-powered RNA-seq: .sra archives to differential expression"
 <div>
 <h1>SRA-powered RNA-seq: .sra archives to differential expression</h1>
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
-<p>Automated RNA-seq analysis from locally downloaded SRA archives to differential expression results: verify and symlink .sra files, fasterq-dump conversion to FASTQ, read merging across multiple SRR runs per sample, fastp trimming, STAR alignment with gene counts, BAM indexing, BPM-normalized bigWig signal tracks, a merged count matrix, and DESeq2 differential analysis with ashr shrinkage. Single-end and paired-end samples are routed by the metadata <code>paired</code> column through wildcard-scoped when-gates; a separate ENCODE entry point (main_encode.oxoflow) consumes pre-downloaded FASTQs. Every tool is pinned to an exact conda version for reproducibility.</p>
+<p>Automated RNA-seq analysis from locally downloaded SRA archives to differential expression results: verify and symlink .sra files, fasterq-dump conversion to FASTQ, read merging across multiple SRR runs per sample, fastp trimming, STAR alignment with gene counts, BAM indexing, BPM-normalized bigWig signal tracks, a merged count matrix, and DESeq2 differential analysis with ashr shrinkage. Every tool is pinned to an exact conda version for reproducibility. Paired- and single-end samples are routed per sample via metadata (sample-group metadata + wildcard-scoped when predicates), and a second entry point (main_encode.oxoflow) covers the upstream ENCODE execution path.</p>
 </div>
 <div>
 <div class="ox-glance">
@@ -22,6 +22,7 @@ title: "SRA-powered RNA-seq: .sra archives to differential expression"
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>main</code></span></div>
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
+<div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2300.1"><code>10.48546/workflowhub.workflow.2300.1</code></a></span></div>
 <p class="cmd">$ oxo-flow run main.oxoflow</p>
 </div>
 </div>
@@ -68,25 +69,24 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipeline
 
 ## Parameters
 
-<p class="ox-param-usage">At run time override any parameter with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys.</p>
 <div class="ox-params">
 <div class="ox-param">
 <div class="ox-param-head"><code>GTF</code><span class="ox-param-default">/data/reference/genome/GRCh38/Homo_sapiens.GRCh38.95.sort.gtf</span></div>
-<p class="ox-param-desc">STAR index dir and GTF (upstream keys index / GTF).</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>align_and_count</code> <code>align_and_count_single</code></div>
 </details>
 </div>
-<div class="ox-param ox-param-unused">
+<div class="ox-param">
 <div class="ox-param-head"><code>bark</code><span class="ox-param-default">false</span></div>
 <p class="ox-param-desc">Bark / feishu push notifications (upstream config.yaml keys). Consumed by the batch runner scripts/run_batch.py after each metadata file finishes (upstream run.py). Keep off unless the endpoints are configured.</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">—</div>
 </details>
 </div>
-<div class="ox-param ox-param-unused">
+<div class="ox-param">
 <div class="ox-param-head"><code>bark_api</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Bark / feishu push notifications (upstream config.yaml keys). Consumed by the batch runner scripts/run_batch.py after each metadata file finishes (upstream run.py). Keep off unless the endpoints are configured.</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">—</div>
 </details>
@@ -98,16 +98,16 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipeline
 <div class="ox-param-rules"><code>DGE_analysis</code> <code>combine_count</code></div>
 </details>
 </div>
-<div class="ox-param ox-param-unused">
+<div class="ox-param">
 <div class="ox-param-head"><code>feishu</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Bark / feishu push notifications (upstream config.yaml keys). Consumed by the batch runner scripts/run_batch.py after each metadata file finishes (upstream run.py). Keep off unless the endpoints are configured.</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">—</div>
 </details>
 </div>
-<div class="ox-param ox-param-unused">
+<div class="ox-param">
 <div class="ox-param-head"><code>feishu_api</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Bark / feishu push notifications (upstream config.yaml keys). Consumed by the batch runner scripts/run_batch.py after each metadata file finishes (upstream run.py). Keep off unless the endpoints are configured.</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">—</div>
 </details>
@@ -119,16 +119,16 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipeline
 <div class="ox-param-rules"><code>align_and_count</code> <code>align_and_count_single</code></div>
 </details>
 </div>
-<div class="ox-param ox-param-unused">
+<div class="ox-param">
 <div class="ox-param-head"><code>mail</code><span class="ox-param-default">false</span></div>
 <p class="ox-param-desc">Email notification (upstream onsuccess + onerror). Keep off unless SMTP is configured — the [workflow] on_error hook reuses these same keys.</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">—</div>
 </details>
 </div>
-<div class="ox-param ox-param-unused">
+<div class="ox-param">
 <div class="ox-param-head"><code>mail_to</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Email notification (upstream onsuccess + onerror). Keep off unless SMTP is configured — the [workflow] on_error hook reuses these same keys.</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">—</div>
 </details>
@@ -140,16 +140,16 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipeline
 <div class="ox-param-rules"><code>DGE_analysis</code> <code>combine_count</code> <code>get_sra</code> <code>merge_R1_data</code> <code>merge_R2_data</code> <code>merge_data</code> <code>sra_dump</code></div>
 </details>
 </div>
-<div class="ox-param ox-param-unused">
+<div class="ox-param">
 <div class="ox-param-head"><code>sender</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Email notification (upstream onsuccess + onerror). Keep off unless SMTP is configured — the [workflow] on_error hook reuses these same keys.</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">—</div>
 </details>
 </div>
-<div class="ox-param ox-param-unused">
+<div class="ox-param">
 <div class="ox-param-head"><code>sender_password</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Email notification (upstream onsuccess + onerror). Keep off unless SMTP is configured — the [workflow] on_error hook reuses these same keys.</p>
+<p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">—</div>
 </details>
@@ -170,7 +170,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipeline
 </div>
 </div>
 
-Descriptions are the workflow's own `#` comments from its `[config]` section (and the `[config]` sections of its included modules), surfaced by `oxo-flow info` — no schema file to maintain.
+Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
 
 ## Workflow graph
 
@@ -190,20 +190,25 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **In scope**
 
+- DGE_analysis
+- Snakefile_ENCODE — main_encode.oxoflow entry point (8 rules: data_clean_pair/single, align_and_count/single, build_bam_index, bamtobw, combine_count, DGE_analysis; DESeq2_diff_encode.R verbatim)
+- align_and_count
+- align_and_count_single — single-end STAR
+- bamtobw
+- build_bam_index
+- combine_count
+- config.yaml bark/feishu flags — scripts/notify.py (feishu verbatim; bark fixed from upstream no-op)
+- data_clean_pair
+- data_clean_single — single-end fastp
+- data_conversion_pair
+- data_conversion_single — shared sra_dump rule (fasterq-dump derives output naming from the archive)
 - get_sra
-- sra_dump (shared pair/single conversion)
 - merge_R1_data
 - merge_R2_data
-- merge_data (single-end)
-- data_clean_pair
-- data_clean_single
-- align_and_count
-- align_and_count_single
-- build_bam_index
-- bamtobw
-- combine_count
-- DGE_analysis
-- main_encode.oxoflow — ENCODE entry point (8 rules, pre-downloaded FASTQ inputs)
+- merge_data — single-end merge (scripts/merge_reads.py --read 0)
+- run.py — scripts/run_batch.py (metadata validation, SRA checks, --restart-times 3, finished/failed dirs, notifications)
+- scripts/update_json.py — copied byte-identical (external-orchestration tracker)
+- slurm/config.yaml — profiles/slurm.toml (oxo-flow [cluster], opt-in via --profile slurm)
 
 **Excluded**
 
