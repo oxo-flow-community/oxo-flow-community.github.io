@@ -452,9 +452,9 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 <div class="ox-dag-card" markdown="1">
 
-![oxo-flow-scrnaseq rule-level DAG](../assets/dag/oxo-flow-scrnaseq.svg)
+![oxo-flow-scrnaseq pipeline overview](../assets/dag/oxo-flow-scrnaseq.svg)
 
-<p class="ox-dag-caption">figure · oxo-flow-scrnaseq — rule-level transit map (nf-metro)</p>
+<p class="ox-dag-caption">figure · oxo-flow-scrnaseq — pipeline overview (nf-metro transit map)</p>
 
 </div>
 

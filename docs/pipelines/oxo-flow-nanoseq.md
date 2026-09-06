@@ -372,9 +372,9 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 <div class="ox-dag-card" markdown="1">
 
-![oxo-flow-nanoseq rule-level DAG](../assets/dag/oxo-flow-nanoseq.svg)
+![oxo-flow-nanoseq pipeline overview](../assets/dag/oxo-flow-nanoseq.svg)
 
-<p class="ox-dag-caption">figure · oxo-flow-nanoseq — rule-level transit map (nf-metro)</p>
+<p class="ox-dag-caption">figure · oxo-flow-nanoseq — pipeline overview (nf-metro transit map)</p>
 
 </div>
 

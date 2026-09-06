@@ -357,9 +357,9 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 <div class="ox-dag-card" markdown="1">
 
-![oxo-flow-snparcher rule-level DAG](../assets/dag/oxo-flow-snparcher.svg)
+![oxo-flow-snparcher pipeline overview](../assets/dag/oxo-flow-snparcher.svg)
 
-<p class="ox-dag-caption">figure · oxo-flow-snparcher — rule-level transit map (nf-metro)</p>
+<p class="ox-dag-caption">figure · oxo-flow-snparcher — pipeline overview (nf-metro transit map)</p>
 
 </div>
 

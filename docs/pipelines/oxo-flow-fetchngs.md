@@ -169,9 +169,9 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 <div class="ox-dag-card" markdown="1">
 
-![oxo-flow-fetchngs rule-level DAG](../assets/dag/oxo-flow-fetchngs.svg)
+![oxo-flow-fetchngs pipeline overview](../assets/dag/oxo-flow-fetchngs.svg)
 
-<p class="ox-dag-caption">figure · oxo-flow-fetchngs — rule-level transit map (nf-metro)</p>
+<p class="ox-dag-caption">figure · oxo-flow-fetchngs — pipeline overview (nf-metro transit map)</p>
 
 </div>
 

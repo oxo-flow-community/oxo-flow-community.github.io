@@ -546,9 +546,9 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 <div class="ox-dag-card" markdown="1">
 
-![oxo-flow-clindet rule-level DAG](../assets/dag/oxo-flow-clindet.svg)
+![oxo-flow-clindet pipeline overview](../assets/dag/oxo-flow-clindet.svg)
 
-<p class="ox-dag-caption">figure · oxo-flow-clindet — rule-level transit map (nf-metro)</p>
+<p class="ox-dag-caption">figure · oxo-flow-clindet — pipeline overview (nf-metro transit map)</p>
 
 </div>
 

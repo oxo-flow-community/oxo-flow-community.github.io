@@ -238,9 +238,9 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 <div class="ox-dag-card" markdown="1">
 
-![oxo-flow-mixscape rule-level DAG](../assets/dag/oxo-flow-mixscape.svg)
+![oxo-flow-mixscape pipeline overview](../assets/dag/oxo-flow-mixscape.svg)
 
-<p class="ox-dag-caption">figure · oxo-flow-mixscape — rule-level transit map (nf-metro)</p>
+<p class="ox-dag-caption">figure · oxo-flow-mixscape — pipeline overview (nf-metro transit map)</p>
 
 </div>
 

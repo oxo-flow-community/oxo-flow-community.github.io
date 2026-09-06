@@ -543,9 +543,9 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 <div class="ox-dag-card" markdown="1">
 
-![oxo-flow-viralrecon rule-level DAG](../assets/dag/oxo-flow-viralrecon.svg)
+![oxo-flow-viralrecon pipeline overview](../assets/dag/oxo-flow-viralrecon.svg)
 
-<p class="ox-dag-caption">figure · oxo-flow-viralrecon — rule-level transit map (nf-metro)</p>
+<p class="ox-dag-caption">figure · oxo-flow-viralrecon — pipeline overview (nf-metro transit map)</p>
 
 </div>
 

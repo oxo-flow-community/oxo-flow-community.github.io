@@ -487,9 +487,9 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 <div class="ox-dag-card" markdown="1">
 
-![oxo-flow-mag rule-level DAG](../assets/dag/oxo-flow-mag.svg)
+![oxo-flow-mag pipeline overview](../assets/dag/oxo-flow-mag.svg)
 
-<p class="ox-dag-caption">figure · oxo-flow-mag — rule-level transit map (nf-metro)</p>
+<p class="ox-dag-caption">figure · oxo-flow-mag — pipeline overview (nf-metro transit map)</p>
 
 </div>
 

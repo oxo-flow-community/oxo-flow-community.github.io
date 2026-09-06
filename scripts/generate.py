@@ -385,9 +385,9 @@ def params_section(p: dict, config: list[dict] | None) -> list[str]:
 
 
 def dag_section(p: dict) -> list[str]:
-    """`## Workflow graph` — the static rule-level DAG SVG that
-    regen-configs.py renders from `oxo-flow graph -f metro` + nf-metro
-    (transit-map style)."""
+    """`## Workflow graph` — the ladder-chosen metro map SVG that
+    regen-configs.py renders via metro_tiers.py (rule-level to overview
+    tiers, nf-metro transit-map style)."""
     name = p["name"]
     svg = OUT_PAGES.parent / "assets" / "dag" / f"{name}.svg"
     if not svg.is_file():
@@ -397,9 +397,9 @@ def dag_section(p: dict) -> list[str]:
     cards = [
         '<div class="ox-dag-card" markdown="1">',
         "",
-        f"![{name} rule-level DAG](../assets/dag/{name}.svg)",
+        f"![{name} pipeline overview](../assets/dag/{name}.svg)",
         "",
-        f'<p class="ox-dag-caption">figure · {name} — rule-level transit map (nf-metro)</p>',
+        f'<p class="ox-dag-caption">figure · {name} — pipeline overview (nf-metro transit map)</p>',
         "",
         "</div>",
     ]

@@ -293,9 +293,9 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 <div class="ox-dag-card" markdown="1">
 
-![oxo-flow-unsupervised rule-level DAG](../assets/dag/oxo-flow-unsupervised.svg)
+![oxo-flow-unsupervised pipeline overview](../assets/dag/oxo-flow-unsupervised.svg)
 
-<p class="ox-dag-caption">figure · oxo-flow-unsupervised — rule-level transit map (nf-metro)</p>
+<p class="ox-dag-caption">figure · oxo-flow-unsupervised — pipeline overview (nf-metro transit map)</p>
 
 </div>
 

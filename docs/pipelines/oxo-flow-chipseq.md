@@ -495,9 +495,9 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 <div class="ox-dag-card" markdown="1">
 
-![oxo-flow-chipseq rule-level DAG](../assets/dag/oxo-flow-chipseq.svg)
+![oxo-flow-chipseq pipeline overview](../assets/dag/oxo-flow-chipseq.svg)
 
-<p class="ox-dag-caption">figure · oxo-flow-chipseq — rule-level transit map (nf-metro)</p>
+<p class="ox-dag-caption">figure · oxo-flow-chipseq — pipeline overview (nf-metro transit map)</p>
 
 </div>
 

@@ -470,9 +470,9 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 <div class="ox-dag-card" markdown="1">
 
-![oxo-flow-methylseq rule-level DAG](../assets/dag/oxo-flow-methylseq.svg)
+![oxo-flow-methylseq pipeline overview](../assets/dag/oxo-flow-methylseq.svg)
 
-<p class="ox-dag-caption">figure · oxo-flow-methylseq — rule-level transit map (nf-metro)</p>
+<p class="ox-dag-caption">figure · oxo-flow-methylseq — pipeline overview (nf-metro transit map)</p>
 
 </div>
 
