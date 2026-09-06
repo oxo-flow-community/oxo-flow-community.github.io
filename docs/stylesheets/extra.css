@@ -988,3 +988,39 @@ a.ox-cta:hover {
   margin-top: 0.5rem;
   line-height: 1.5;
 }
+
+/* ---- Submit-an-issue header button ---- */
+.ox-issue-btn {
+  position: absolute;
+  top: 0.62rem;
+  right: 3.4rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid var(--edge);
+  background: var(--panel);
+  color: var(--ink-2) !important;
+  text-decoration: none !important;
+  font-size: 0.72rem;
+  font-family: "JetBrains Mono", monospace;
+  line-height: 1.6rem;
+}
+.ox-issue-btn:hover {
+  color: var(--brand) !important;
+  border-color: var(--brand);
+  background: var(--brand-soft);
+}
+.ox-issue-btn svg {
+  fill: currentColor;
+  width: 0.95rem;
+  height: 0.95rem;
+}
+@media (max-width: 76.18em) {
+  .ox-issue-btn .ox-issue-label { display: none; }
+  .ox-issue-btn { right: 2.8rem; }
+}
+@media (max-width: 36em) {
+  .ox-issue-btn { right: 7.6rem; }
+}
