@@ -360,20 +360,65 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - copy_antismash
 - bgc_count
 - antismash_overview
+- fix_gtdb_taxonomy
 - downstream_bgc_prep
 - antismash_overview_gather
 - copy_log_changes
 - antismash_summary
-- fix_gtdb_taxonomy
 - get_mibig_table
 - copy_mibig_table
 - csv_to_parquet
+- seqfu_stats
+- seqfu_combine
+- mash
+- mash_convert
+- fastani
+- fastani_convert
+- install_checkm
+- checkm
+- install_gtdbtk
+- gtdbtk
+- install_amrfinder
+- amrfinderplus
+- amrfinder_gather
+- roary
+- roary_out
+- install_eggnog
+- eggnog
+- gecco
+- cblaster_genome_db
+- arts
+- bigscape
+- antismash_v6
+- prokka_gbk
+- copy_custom_genbank
+- genbank_to_fna
+- ncbi_genome_download
+- write_dependency_versions
+- install_bigslice
+- bigslice_prep
+- bigslice
+- fetch_bigslice_db
+- query_bigslice
+- summarize_bigslice_query
+- annotate_bigfam_hits
+- install_automlst_wrapper
+- prep_automlst_gbk
+- automlst_wrapper
+- automlst_wrapper_out
+- deeptfactor_setup
+- deeptfactor
+- deeptfactor_to_json
+- deeptfactor_summary
 
 **Excluded**
 
-- metabase_install / metabase_duckdb_plugin / build_warehouse — metabase.smk + build-database.smk are not included in the main Snakefile and are only reachable outside the pipeline (wrapper CLI / manual); no pipeline gate to mirror; the warehouse branch additionally needs a live Metabase server + credentials (the jar/plugin URLs themselves are alive, but the rules are unreachable from the default Snakefile path)
-- patric_genome_download / download_patric_tables / extract_patric_meta — download endpoint ftp.patricbrc.org is dead: PATRIC was decommissioned in 2023 (merged into BV-BRC); verified 550 / connection refused 2026-08
-- report rules (copy_readme, copy_template_notebook, mkdocs_py_report, mkdocs_rpy_report, copy_template_rnotebook) — separate 'bgcflow build report' entrypoint (wrapper CLI), not part of the main Snakefile default path
+- metabase_install / metabase_duckdb_plugin / build_warehouse — metabase.smk + build-database.smk are not in the main Snakefile; upstream runs them via its own entrypoint `workflow/Metabase` / `workflow/Database` (`snakemake --snakefile workflow/<Name>`), which has no oxo-flow port — note there is **no** wrapper CLI: `workflow/bgcflow/bgcflow/cli.py` is a console-script stub and the README's `bgcflow build report` is unimplemented; the warehouse branch additionally needs a live Metabase server + credentials
+- patric_genome_download / download_patric_tables / extract_patric_meta — download endpoint ftp.patricbrc.org is dead: PATRIC was decommissioned in 2023 (merged into BV-BRC); verified 550 / connection refused 2026-08-06
+- report rules (copy_readme, copy_template_notebook, mkdocs_py_report, mkdocs_rpy_report, copy_template_rnotebook) — upstream `report.smk` has no entrypoint include at all (the advertised `bgcflow build report` CLI is unimplemented upstream); no pipeline gate to mirror
+- Upstream subworkflow entrypoints with no oxo-flow coverage: PPanGGOLiN (`workflow/ppanggolin`, 26 rules incl. ppanggolin_roary), LsABGC (`workflow/lsabgc`, 5), Alleleome (`workflow/Alleleome`, 3), BGC comparison (`workflow/BGC`, 19: clinker / interproscan / mmseqs2 / getphylo / downstream_bgc_prep_selection), Database extras (6: antismash_json_extract / build_dna_sequences_table / build_regions_table / build_cdss_table / get_dbt_template / build_database) + antismash_db_duckdb — none reachable from the main Snakefile entrypoint, none ported
+- Main-path upstream rules without ported counterparts: create_diamond_db (rules/diamond.smk), mlst (rules/mlst.smk), refseq_masher (rules/refseq_masher.smk), get_project_metadata (rules/bgc_analytics.smk) — the port's 42 branches.oxoflow rules cover the documented gate-set, not these
+- Upstream rules acknowledged group-wise in the README fidelity table without ported counterparts: checkm_out, gtdbtk_fna_fail + evaluate_gtdbtk_input, prokka_db_setup, bigscape_no_mibig + bigscape_to_cytoscape + copy_bigscape (install_bigscape group), arts_extract + 7 arts_* combine/final rules (install pydude... group), roary_reassign_pangene_categories + eggnog_roary + eggnog_roary_result_copy + deeptfactor_roary + diamond_roary, cblaster_bgc_db, antismash_sideload_gecco + gecco_aggregate — see the README fidelity table for the full list
 
 ## Fidelity
 
@@ -417,16 +462,20 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 | cblaster_genome_db / cblaster_bgc_db | `cblaster_genome_db` | cblaster 1.3.18 | `when = config.run_cblaster`; verbatim makedb over prokka GBKs; cblaster_bgc_db (MIBiG-BGC database build) not ported |
 | gecco / antismash_sideload_gecco / gecco_aggregate | `gecco` | gecco 0.9.10 | `when = config.run_gecco`; verbatim gecco run --antismash-sideload; antismash_sideload_gecco + gecco_aggregate (report tables) not ported |
 | amrfinderplus / amrfinder_gather | `amrfinderplus` / `amrfinder_gather` | ncbi-amrfinderplus | `when = config.run_amrfinderplus`; verbatim flags; gather_amrfinder.py verbatim |
-| metabase_install / metabase_duckdb_plugin / build_warehouse | not ported | metabase/duckdb | metabase.smk + build-database.smk are not included in the main Snakefile and are only reachable outside the pipeline (wrapper CLI / manual) — no pipeline gate to mirror; the warehouse branch needs a live Metabase server + credentials |
+| create_diamond_db | not ported | diamond | rules/diamond.smk (main Snakefile include): concatenates prokka `.faa` + `diamond makedb`; no ported rule |
+| mlst | not ported | mlst | rules/mlst.smk (main Snakefile include): `mlst --csv` per genome; the port ships `automlst_wrapper` instead (different tool, gated) |
+| refseq_masher | not ported | refseq-masher | rules/refseq_masher.smk (main Snakefile include): `refseq_masher matches --top-n-results 10` |
+| get_project_metadata | not ported | peppy | rules/bgc_analytics.smk; the port only mentions it in a comment (`branches.oxoflow`) |
+| metabase_install / metabase_duckdb_plugin / build_warehouse | not ported | metabase/duckdb | metabase.smk + build-database.smk are not in the main Snakefile; upstream reaches them via its own entrypoint `workflow/Metabase` / `workflow/Database` (`snakemake --snakefile workflow/<Name>`) — no oxo-flow port of those entrypoints. There is no wrapper CLI: `workflow/bgcflow/bgcflow/cli.py` is a console-script stub and the advertised `bgcflow build report` is unimplemented; the warehouse branch additionally needs a live Metabase server + credentials |
 | ncbi_genome_download / extract_ncbi_information (+ patric meta rules) | `ncbi_genome_download` | ncbi-genome-download | `when = config.project_source == 'ncbi'`; deviation: bulk genus download via `--genera` (upstream fetches per-accession with `-A`); extract_ncbi_information / download_patric_tables / extract_patric_meta meta rules not ported |
 | patric_genome_download + patric meta rules | not ported | patric | per-sample source=patric; download endpoint ftp.patricbrc.org is dead (PATRIC decommissioned 2023, merged into BV-BRC; verified 550/connection-refused 2026-08) |
 | copy_custom_genbank / genbank_to_fna + genbank_to_faa / extract_meta_genbank / genbank_to_gff / copy_converted_gbk / summarize_converted_gbk | `copy_custom_genbank` / `genbank_to_fna` | python | gbk-input path (`input_type = 'gbk'`); genbank_to_fna reads the raw gbk directly (upstream uses input-function branching to avoid the producer overlap); the faa/gff/meta/summary extras not ported |
 | report rules (copy_readme, copy_template_notebook, mkdocs_*_report) | not ported | jupyter/mkdocs | separate `bgcflow build report` command, not in the main Snakefile |
 
-**Live-verified on bioinfo-wsx (oxo-flow 0.14.1, conda envs):** default path
-(S1/S2 mini fixtures) + tier-1 branches (seqfu/mash/fastani/roary) + tier-2
-(checkm/amrfinderplus); resource-gated, not live-run: gtdbtk/eggnog/gecco/
-cblaster/arts/bigscape/bigslice/automlst/deeptfactor (multi-GB DBs/downloads).
+Known deviations: the upstream `mlst`, `refseq_masher`, and `diamond` modules
+are unreachable in upstream's own default DAG (no pipeline gate or consumer
+wires them in) and are therefore not ported; `diamond` survives only inside
+the eggnog DB build (`create_dbs.py -m diamond`).
 
 ## Links
 

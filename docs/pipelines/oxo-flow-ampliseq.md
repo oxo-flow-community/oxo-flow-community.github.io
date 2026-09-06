@@ -496,64 +496,65 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **In scope**
 
+- rename_raw_data_files
+- fastqc
 - cutadapt
 - cutadapt_summary
 - cutadapt_summary_merge
-- dada2_denoising
-- dada2_err
-- dada2_filtntrim
-- dada2_merge
 - dada2_quality_fw
-- dada2_quality_fw_preprocessed
 - dada2_quality_rv
+- trunclen_fw
+- trunclen_rv
+- dada2_filtntrim
+- dada2_quality_fw_preprocessed
 - dada2_quality_rv_preprocessed
+- dada2_err
+- dada2_denoising
 - dada2_rmchimera
 - dada2_stats
-- dada2_taxonomy
-- dada2_taxonomy_its
-- download_taxonomy_db
-- fastqc
-- filter_len_itsx
-- format_taxonomy
+- dada2_merge
+- merge_stats
 - itsx_cutasv
 - itsxrust_cutasv
-- merge_stats
-- multiqc
-- phyloseq
-- picrust
-- qiime2_alphararefaction
-- qiime2_ancom
-- qiime2_ancombc
-- qiime2_ancombc2
+- filter_len_itsx
+- download_taxonomy_db
+- format_taxonomy
+- dada2_taxonomy
+- dada2_taxonomy_its
+- qiime2_inasv
+- qiime2_inseq
+- qiime2_inasv_its
+- qiime2_inseq_its
+- qiime2_intax
 - qiime2_barplot
-- qiime2_classify
-- qiime2_diversity_adonis
+- qiime2_metadata_categories
+- qiime2_diversity_tree
+- qiime2_alphararefaction
+- qiime2_diversity_core
 - qiime2_diversity_alpha
 - qiime2_diversity_beta
 - qiime2_diversity_betaord
-- qiime2_diversity_core
-- qiime2_diversity_tree
+- qiime2_diversity_adonis
 - qiime2_export_absolute
 - qiime2_export_relasv
 - qiime2_export_reltax
-- qiime2_inasv
-- qiime2_inasv_its
-- qiime2_inseq
-- qiime2_inseq_its
-- qiime2_intax
-- qiime2_metadata_categories
+- qiime2_ancom
+- qiime2_ancombc
+- qiime2_ancombc2
 - qiime2_preptax
-- rename_raw_data_files
+- qiime2_classify
+- multiqc
+- picrust
 - sbdiexport
 - sbdiexportreannotate
-- summary_report
+- phyloseq
 - treesummarizedexperiment
-- trunclen_fw
-- trunclen_rv
+- summary_report
 
 **Excluded**
 
-- none
+- PPLACE phylogenetic placement (clustalo / gappa / epa-ng / hmmer / mafft; upstream `fasta_newick_epang_gappa` + `fasta_hmmsearch_rank_fastas` + seqtk) — not ported; the port has no phylogeny branch (the tree arg is the upstream `none.tree` placeholder)
+- Kraken2 / VSEARCH / SIDLE / SINTax alternative classification — upstream `kraken2_taxonomy_wf`, vsearch (cluster + LCA taxonomy), `sidle_wf`, SINTax taxonomy chain — not ported; each needs its own reference-taxonomy download, env and fixtures
 
 **Not applicable** (upstream-absent features, boilerplate, dead code, deliberate non-goals — see the excluded-key taxonomy in [Traitome/oxo-flow#267](https://github.com/Traitome/oxo-flow/issues/267))
 
@@ -592,11 +593,11 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 | QIIME2_PREPTAX (incl. EXTRACT + TRAIN) | `qiime2_preptax` | qiime2 2026.4 | identical: downloads the `qiime_ref_taxonomy_urls` qza pair, `bin/taxref_reformat_qiime_silva138.sh`, imports, `extract-reads` with `FW_primer`/`RV_primer`, `fit-classifier-naive-bayes` → `intermediates/qiime2/classifier.qza` |
 | QIIME2_TAXONOMY (classify) | `qiime2_classify` | qiime2 2026.4 | identical `classify-sklearn --p-n-jobs` + tabulate + export to `results/qiime2/taxonomy/`; a user-supplied `classifier` is copied in-shell (skips training); in classifier mode the DADA2-taxonomy import (`qiime2_intax`) is gated off and the classifier taxonomy takes over the same `intermediates/qiime2/taxonomy.qza` path |
 | PICRUST | `picrust` | picrust2 2.6.3 | identical `picrust2_pipeline.py -t epa-ng --remove_intermediate --in_traits EC,KO` + `add_descriptions.py` ×3 (EC/KO/METACYC); the upstream source-message file (filename == message text) is written as `picrust_message.txt`; resource hint process_high + process_medium_memory = 10 cpus / 50G |
-| — (not ported) | — | — | nanopore branch (`params.nanopore` — absent from the 2.18.0 codebase, docs only), syncom controls (`params.syncom` — absent from the 2.18.0 codebase) |
+| — (not ported) | — | — | nanopore branch (`params.nanopore` — absent from the 2.18.0 codebase, docs only), syncom controls (`params.syncom` — absent from the 2.18.0 codebase); PPLACE phylogenetic placement (clustalo / gappa / epa-ng / hmmer / mafft via `fasta_newick_epang_gappa` + `fasta_hmmsearch_rank_fastas`/seqtk — no phylogeny branch, `none.tree` placeholder), Kraken2 taxonomy (`kraken2_taxonomy_wf`), VSEARCH cluster + LCA taxonomy, SIDLE long-read species identification, SINTax taxonomy — present upstream, not ported; each needs its own env / reference-taxonomy download / fixtures |
 | softwareVersionsToYAML + `versions.yml` collection (`pipeline_info/nf_core_ampliseq_software_mqc_versions.yml`, mixed into MultiQC inputs) | engine-native export: `oxo-flow report --versions-yml <file> main.oxoflow` | — | oxo-flow ≥ 0.17.0 exports an nf-core-style `versions.yml` derived statically from the workflow declarations: one entry per rule with the pinned container tag or conda env file + its sha256, plus a `references:` section fed by the workflow's `[[reference_db]]` blocks (SBDI-GTDB R11-RS232-1 here). Deviation: it is a standalone CI-diff artifact, not a per-process runtime capture — upstream records each tool's runtime version at execution time and mixes the collected file into MultiQC, while the export reflects the pinned versions in the definition (resolved runtime package versions depend on the execution environment). Per-rule `versions.yml` emission inside every command is deliberately not replicated (it would change every rule's command while the default plan stays byte-identical). |
-| MERGE_STATS_STD | `merge_stats` | r-base 4.0.3 | identical merge by `sample` |
+| MERGE_STATS_STD | `merge_stats` | r-base 4.2 (envs/dada2.yaml pin; upstream declares the Wave image bioconductor-dada2_r-base_r-digest_tbb, no visible pin) | identical merge by `sample` |
 | DB download (launcher) | `download_taxonomy_db` | curl | upstream downloads the reference DB in the Nextflow launcher (`file(url)`); the port makes it an explicit system-backend rule |
-| FORMAT_TAXONOMY | `format_taxonomy` | biocontainers 1.2.0 | verbatim `bin/taxref_reformat_sbdi-gtdb.sh`; runs in a scratch dir (the script globs `*`) |
+| FORMAT_TAXONOMY | `format_taxonomy` | nf-core/ubuntu 20.04 | verbatim `bin/taxref_reformat_sbdi-gtdb.sh`; runs in a scratch dir (the script globs `*`). Upstream declares the `biocontainers:v1.2.0_cv1` container but the port runs the script in `quay.io/nf-core/ubuntu:20.04` |
 | DADA2_TAXONOMY + DADA2_ADDSPECIES + collectFile | `dada2_taxonomy` | dada2 1.26.0 | **merged**: upstream splits `ASV_seqs.fasta` into 10000-sequence chunks (`splitFasta by: 10000`) and runs assignTaxonomy + addSpecies per chunk, then concatenates chunk tables with header + sorted rows (`collectFile keepHeader, skip 1, sort`). The port replicates chunking with `awk` + per-chunk `Rscript` calls + `head`/`tail -n +2 | sort` concatenation — same chunk files, same args, same outputs. addSpecies resource hint (1 cpu/50G) becomes rule-level 10 cpus/20G, 24h limit |
 | QIIME2_INASV | `qiime2_inasv` | qiime2 2026.4 | identical: biom convert + `tools import` `BIOMV210Format` |
 | QIIME2_INSEQ | `qiime2_inseq` | qiime2 2026.4 | identical `FeatureData[Sequence]` import |
@@ -605,11 +606,55 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 | MULTIQC | `multiqc` | multiqc 1.34 | identical command in a scratch dir (`multiqc` scans cwd `.`); verbatim `assets/multiqc_config.yml` |
 | SBDIEXPORT | `sbdiexport` | r-base + SBDI export scripts (sbdiexport 1.2.1) | identical `sbdiexport()` call (paired mode, `FW_primer`/`RV_primer`, dada2 taxmethod); writes `results/SBDI/{event,dna,emof,asv-table}.tsv` |
 | SBDIEXPORTREANNOTATE | `sbdiexportreannotate` | r-base + SBDI export scripts | identical re-annotation table (`annotation.tsv`); the barrnap-prediction arg is omitted (no barrnap branch in the port — the R script treats it as `NA`, same as upstream when no predictions exist) |
-| PHYLOSEQ | `phyloseq` | phyloseq 1.52.1 | identical inline R (`make_phyloseq` path); prefix literal `dada2`, tree arg = nonexistent `none.tree` (no phylogeny branch in the port — `file.exists` guard skips it, as upstream when no tree is staged) |
-| TREESUMMARIZEDEXPERIMENT | `treesummarizedexperiment` | TreeSummarizedExperiment 2.10.1 | identical inline R; referenceSeq slot filled from the taxonomy `sequence` column; same `none.tree` convention |
+| PHYLOSEQ | `phyloseq` | phyloseq 1.50.0 (upstream biocontainers/bioconductor-phyloseq:1.50.0--r44hdfd78af_0, env pin 1.50.0) | identical inline R (`make_phyloseq` path); prefix literal `dada2`, tree arg = nonexistent `none.tree` (no phylogeny branch in the port — `file.exists` guard skips it, as upstream when no tree is staged) |
+| TREESUMMARIZEDEXPERIMENT | `treesummarizedexperiment` | TreeSummarizedExperiment 2.10.0 (upstream biocontainers/bioconductor-treesummarizedexperiment:2.10.0--r43hdfd78af_0, env pin 2.10.0) | identical inline R; referenceSeq slot filled from the taxonomy `sequence` column; same `none.tree` convention |
 | SUMMARY_REPORT | `summary_report` | r-base 4.2 + rmarkdown | identical `rmarkdown::render` of `assets/report_template.Rmd` with the upstream params-list contract (params_list_named, all string values single-quoted); SBDI/phyloseq/TSE/ITS sections are `[ -f ]`-conditional in-shell (their artifacts are not declared inputs — see deviations); `mqc_plot`/picrust sections omitted (see deviations) |
 
+Other notes:
 
+- `params.FW_primer`/`RV_primer` default to `null` upstream, which renders
+  a literal `null` adapter into the cutadapt command; the port defaults
+  them to empty strings (`-g ""`/`-G ""` = no 5'/3' adapter trimming), the
+  behavior the upstream docs describe.
+- All skip flags map 1:1 to `params.skip_*` (default false = full path).
+  `skip_fastqc` requires `skip_multiqc` too — the MultiQC rule consumes the
+  FastQC zips. `skip_taxonomy`/`skip_dada_taxonomy` additionally gate the
+  QIIME2 taxonomy import and barplot, mirroring upstream's empty-taxonomy
+  channel handling.
+- `metadata_file` is a config key (default `test/fixtures/metadata.tsv`);
+  upstream takes it from the samplesheet.
+- The workflow declares an `[[reference_db]]` block for the SBDI-GTDB
+  taxonomy (R11-RS232-1), which the engine's versions.yml export
+  (`oxo-flow report --versions-yml <file> main.oxoflow`) surfaces in its
+  `references:` section; upstream records the equivalent in its
+  `workflow_manifest`/summary report instead.
+- Deviations: the QIIME2 rules pin the container at
+  `quay.io/qiime2/amplicon:2026.1` (upstream modules use `2026.4` — the
+  version the port was built and live-tested against); `skip_qiime_downstream`
+  scopes to the newly ported downstream rules (diversity, exports, ANCOM,
+  classifier) and does not turn off the taxonomy import/barplot;
+  data-dependent outputs (metadata categories, `tax_agglom_min`/`max`,
+  adonis formulas, `<2`-taxa WARNING branches) declare the file set for the
+  default fixture/parameters; PICRUSt always uses the DADA2 source
+  (upstream switches to the QIIME2-filtered table when `run_qiime2` +
+  abundance tables + a taxonomy are available — the port documents the
+  DADA2 basis in `results/picrust/picrust_message.txt`); the rarefaction
+  WARNING txt files (upstream `error_ignore` emits) are not declared as
+  rule outputs; the phyloseq/TSE/summary-report gates default to `true`
+  (i.e. off) while upstream runs them by default — flip
+  `skip_phyloseq`/`skip_tse`/`skip_report` to `false` to match upstream;
+  the summary report's optional sections (SBDI, phyloseq, TSE, ITS-cut) are
+  `[ -f ]`-conditional in-shell rather than declared inputs, so a cold run
+  with those gates enabled may race the report (re-run once the upstream
+  rules finish — the engine's staleness check re-triggers the report);
+  the summary report omits the upstream `mqc_plot` and picrust sections
+  (`mqc_plot` has no ported counterpart wiring; the upstream picrust
+  report section references a params list that is dead in 2.18.0);
+  the report's `workflow_manifest_version` is the constant `'2.18.0'`
+  and its taxonomy title is "Release R11-RS232-1" (upstream hardcodes the
+  typo "R10"); no barrnap branch exists in the port, so
+  `sbdiexportreannotate` omits the prediction-file arg (R treats it as
+  `NA`, the same path upstream takes when no predictions exist).
 
 ## Links
 

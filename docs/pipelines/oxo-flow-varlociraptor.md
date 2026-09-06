@@ -137,7 +137,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-varlociraptor
 <div class="ox-param-head"><code>fusion_activate</code><span class="ox-param-default">false</span></div>
 <p class="ox-param-desc">upstream config: fusion calling branch (fusion_calling.smk star_arriba<br>meta wrapper: star_index / star_align / arriba / annotate_exons /<br>convert_fusions / sort_arriba_calls / bcftools_concat_candidates).</p>
 <details class="ox-param-usedby"><summary>used by 8 rules</summary>
-<div class="ox-param-rules"><code>fusion::annotate_exons</code> <code>fusion::arriba</code> <code>fusion::bcf_index_arriba</code> <code>fusion::bcftools_concat_candidates</code> <code>fusion::convert_fusions</code> <code>fusion::sort_arriba_calls</code> <code>fusion::star_align</code> <code>fusion::star_index</code></div>
+<div class="ox-param-rules"><code>fusion::annotate_exons</code> <code>fusion::arriba</code> <code>fusion::bcf_index_arriba_candidates</code> <code>fusion::bcftools_concat_candidates</code> <code>fusion::convert_fusions</code> <code>fusion::sort_arriba_calls</code> <code>fusion::star_align</code> <code>fusion::star_index</code></div>
 </details>
 </div>
 <div class="ox-param">
@@ -288,26 +288,15 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 - annotate_candidate_variants_delly
 - annotate_candidate_variants_freebayes
-- annotate_descriptions
-- annotate_dgidb
-- annotate_exons
-- annotate_mutational_signatures
 - annotate_variants
 - annotate_vcfs
-- annotated_index
 - apply_bqsr
-- apply_bqsr_consensus
-- arriba
-- assign_primers
-- bam_index_consensus
 - bam_index_dedup
 - bcf_index_arriba
 - bcf_index_candidate_delly
 - bcf_index_candidate_freebayes
-- bcf_index_cleaned_db
 - bcf_index_delly
 - bcf_index_fdr_BND
-- bcf_index_fdr_BND_fusions
 - bcf_index_fdr_DEL
 - bcf_index_fdr_DUP
 - bcf_index_fdr_INS
@@ -316,27 +305,14 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - bcf_index_fdr_REP
 - bcf_index_fdr_SNV
 - bcf_index_filtered
-- bcf_index_final
 - bcf_index_freebayes
 - bcf_index_fusions_callset
-- bcf_index_population_filtered
 - bcf_index_vep_annotated
 - bcftools_concat
-- bcftools_concat_candidates
 - bcftools_concat_fusions
+- bcf_index_fdr_BND_fusions
 - bedtools_merge
-- build_primer_regions
 - build_sample_regions
-- bwa_index
-- calc_consensus_reads
-- calculate_covered_coding_sites
-- chm_eval
-- chm_eval_kit
-- chm_eval_sample
-- chm_namesort
-- chm_to_fastq
-- chromosome_map
-- clean_population_db
 - control_fdr_BND
 - control_fdr_BND_fusions
 - control_fdr_DEL
@@ -346,24 +322,14 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - control_fdr_MNV
 - control_fdr_REP
 - control_fdr_SNV
-- convert_fusions
 - convert_phred_scores
 - convert_phred_scores_fusions
 - coverage_table
-- create_mutational_context_file
 - datavzrd_coverage
 - datavzrd_variants_calls
 - delly
-- determine_coding_regions
-- download_cadd_scores_for_vep
-- download_cosmic_signatures
 - download_delly_excluded_regions
 - download_revel
-- estimate_mutational_burden_curve
-- estimate_mutational_burden_hist
-- fastp_pe
-- fastp_pipe
-- fastp_se
 - fastqc_r1
 - fastqc_r2
 - filter_by_annotation
@@ -373,14 +339,10 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - filter_group_regions_expanded
 - filter_offtarget_variants_delly
 - filter_offtarget_variants_freebayes
-- filter_primerless_reads
-- filter_unmapped_primers
 - fix_delly_calls
 - freebayes
-- gather_annotated_calls
-- gather_annotated_calls_fusions
-- gather_benchmark_calls
 - gather_calls
+- gather_annotated_calls_fusions
 - genome_dict
 - genome_faidx
 - get_annotation
@@ -388,60 +350,38 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - get_known_variants
 - get_pangenome
 - get_reference_paths
-- get_sra
 - get_target_regions
 - get_vep_cache
 - get_vep_plugins
-- group_bcf_to_vcf_fusions
-- group_bcf_to_vcf_variants
-- group_vcf_to_maf_fusions
-- group_vcf_to_maf_variants
-- join_mutational_signatures
-- map_consensus_reads_pe
-- map_consensus_reads_se
-- map_primers
-- map_reads_bwa
 - map_reads_vg
 - mark_duplicates
 - merge_calls
 - merge_calls_fusions
-- merge_consensus_reads
 - merge_covered_group_regions
 - merge_expanded_group_regions
 - merge_trimmed_fastqs_r1
 - merge_trimmed_fastqs_r2
 - multiqc
 - pangenome_autoindex
-- plot_mutational_signatures
-- population_db_update
-- population_filter_variants
 - postprocess_vg_alignments
 - prepare_oncoprint
-- primer_to_bed
 - process_call_tables
 - process_revel_scores
 - recalibrate_base_qualities
-- recalibrate_base_qualities_consensus
 - remove_iupac_codes
-- rename_chromosomes
 - render_scenario
 - samtools_idxstats
 - samtools_stats
 - scatter_candidates_delly
 - scatter_candidates_freebayes
 - sort_alignments
-- sort_arriba_calls
 - sort_calls_arriba
 - sort_calls_delly
 - sort_calls_freebayes
-- sort_consensus_reads
-- star_align
-- star_index
 - tabix_noiupac
 - tabix_revel
 - tabix_variation
 - transform_gene_annotations
-- trim_primers
 - varlociraptor_alignment_properties
 - varlociraptor_call_arriba
 - varlociraptor_call_delly
@@ -450,10 +390,73 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - varlociraptor_preprocess_delly
 - varlociraptor_preprocess_freebayes
 - vembrane_table
+- annotate_dgidb
+- gather_benchmark_calls
+- chm_eval_sample
+- chm_namesort
+- chm_to_fastq
+- chm_eval_kit
+- chromosome_map
+- rename_chromosomes
+- chm_eval
+- determine_coding_regions
+- bcf_index_final
+- calculate_covered_coding_sites
+- estimate_mutational_burden_curve
+- estimate_mutational_burden_hist
+- create_mutational_context_file
+- download_cosmic_signatures
+- annotate_mutational_signatures
+- join_mutational_signatures
+- annotate_descriptions
+- plot_mutational_signatures
+- calc_consensus_reads
+- map_consensus_reads_pe
+- map_consensus_reads_se
+- merge_consensus_reads
+- sort_consensus_reads
+- bam_index_consensus
+- recalibrate_base_qualities_consensus
+- apply_bqsr_consensus
+- star_index
+- star_align
+- arriba
+- annotate_exons
+- convert_fusions
+- sort_arriba_calls
+- bcftools_concat_candidates
+- group_bcf_to_vcf_variants
+- group_bcf_to_vcf_fusions
+- group_vcf_to_maf_variants
+- group_vcf_to_maf_fusions
+- bwa_index
+- map_reads_bwa
+- download_cadd_scores_for_vep
+- clean_population_db
+- gather_annotated_calls
+- annotated_index
+- bcf_index_cleaned_db
+- population_filter_variants
+- bcf_index_population_filtered
+- population_db_update
+- assign_primers
+- filter_primerless_reads
+- trim_primers
+- map_primers
+- filter_unmapped_primers
+- primer_to_bed
+- build_primer_regions
+- get_sra
+- fastp_pipe
+- fastp_se
+- fastp_pe
+- bcf_index_arriba_candidates
 
 **Excluded**
 
-- fusions report and table exports (report.smk / table.smk fusions instances) — the ported fusions FDR-control chain (filtering.oxoflow) ends at the fdr-controlled/normal-probs callsets; the fusions vembrane table, oncoprints and report datasets need calling mode fusions + fusion_activate = true end-to-end data to verify
+- fusions report and table exports (upstream datavzrd.smk: `datavzrd_fusion_calls` + `process_fusion_call_tables`; and the fusions instance of the single wildcard `vembrane_table` rule) — the ported fusions FDR-control chain (filtering.oxoflow) ends at the fdr-controlled/normal-probs callsets; the port's `vembrane_table` hardcodes the variants path, so the fusions table/report datasets are missing. `fusion_activate` is the port's config key (upstream gates on the `types: ["variants","fusions"]` list). Note: upstream has no fusions oncoprint output — `get_oncoprint_input` is variants-only, so nothing to port there
+- annotate_umis (upstream mapping.smk:77, UMI branch via umi_tools group; activates for samples with a non-empty `umi_read` column) and splitncigarreads (upstream mapping.smk:173, RNA-datatype branch in get_recalibrate_quality_input) — not ported; the port models DNA data with the default empty samples columns
+- upstream testcase.smk debug module (`gather_observations` + `testcase`: varlociraptor call --testcase-prefix/--testcase-locus mode, results/testcases/) — not ported. (The upstream `bcf_to_vcf_gz`, `vg2svg` and `only_alignment` tools have no consumers/producers in the upstream tree at the pinned tag — dead tools, intentionally not ported)
 
 ## Fidelity
 

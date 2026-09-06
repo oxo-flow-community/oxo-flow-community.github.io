@@ -650,10 +650,20 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - tximport_rsem
 - umitools_extract_umis
 - umitools_prepareforrsem
+- cat_reads
+- fa_additional
+- fa_gunzip
+- gffread_gtf
+- gtf_additional
+- gtf_filter
+- gtf_filter_pass
+- gtf_gunzip
+- gtf_pass
 
 **Excluded**
 
 - PREPARE_GENOME `.tar.gz` reference bundles — bbsplit / sortmerna index archives (user-supplied `bbsplit_index` / `sortmerna_index` .tar.gz/.tgz/.tar archives are untarred into the canonical results/reference/ dir like upstream UNTAR_BBSPLIT_INDEX / UNTAR_SORTMERNA_INDEX; plain directories are symlinked; the GTF preprocessing chain itself (CUSTOM_GTFFILTER with the upstream filter_gtf_needed gate, gffread GFF->GTF, additional_fasta transgenes with biotype featurecounts_group_type / gene_type, GENCODE preprocessing, .gz references) is ported as gated prepare_genome::* builder rules with canonical results/reference/ artifacts)
+- QC/quantify branches not ported: kraken2 + bracken (modules/nf-core/kraken2, bracket, krakentools — optional taxon QC), sylph + sylphtax (modules/nf-core/sylph, sylphtax — taxonomic profiling; upstream main.nf 730-737/555-601), fastp as trimmer (upstream --trimmer fastp variant), preseq (nf-core/preseq lcextrap subsampling), ribodetector as ribo_removal_tool (the port wires sortmerna/bowtie2 only — setting ribodetector silently leaves rRNA removal off; see the main.oxoflow config comment), rustqc (modules/nf-core/rustqc bam QC), parabricks / sentieon (accelerated alignment — commercial). All are upstream options that need their own envs (and GPU for the accelerators); the reference-prep bundle gap above stays upstream-equivalent
 
 ## Fidelity
 

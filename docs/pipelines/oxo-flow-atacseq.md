@@ -38,7 +38,7 @@ Needs reference genome and peak-calling inputs — see Requirements.
 
 ## Installation
 
-**Engine.** oxo-flow >= 0.12.0 (the merged-replicate mode — `_REP\d+` sample groups plus config.merged_samples — additionally requires oxo-flow with input_groups support, Traitome/oxo-flow#231; on released engines the gate is inert and the default path is unchanged)
+**Engine.** oxo-flow >= 0.12.0 (the merged-replicate mode — _REP\d+ sample groups plus config.merged_samples — additionally requires oxo-flow with input_groups support, Traitome/oxo-flow#231; on released engines the gate is inert and the default path is unchanged)
 
 **Toolchain.** containers (Docker/Singularity) — pinned images for 40 of 43 rules, plus one pinned conda env (envs/picard-samtools.yaml) shared by the three picard rules (picard_mergesamfiles, picard_markduplicates, merge_replicates)
 
@@ -47,7 +47,7 @@ Needs reference genome and peak-calling inputs — see Requirements.
 - reference data: genome FASTA with .fai, BWA index prefix (.amb/.ann/.bwt/.pac/.sa), chrom sizes file, GTF annotation, gene BED, TSS BED (optional blacklist BED); alt-aligner indexes for aligner=bowtie2/chromap/star
 - input: single-end <sample>.fastq.gz reads (default) or <sample>_1/2.fastq.gz (paired=true), declared in [[sample_groups]]; replicate groups use the upstream _REP\d+ suffix and feed config.merged_samples (see README)
 - compute: up to 12 CPUs / 72 GB per rule
-- runtime: Docker or Singularity for the 13 container rules on the default path (40 across all branches); conda/mamba for the two picard rules (picard_mergesamfiles, picard_markduplicates)
+- runtime: Docker or Singularity for the 40 container rules; conda/mamba for the three picard rules (picard_mergesamfiles, picard_markduplicates, merge_replicates)
 
 ```bash
 # 1. install oxo-flow (release binary, recommended)
@@ -432,6 +432,7 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - picard_mergesamfiles
 - picard_markduplicates
 - bamtools_filter
+- merge_replicates
 - macs2_callpeak
 - homer_annotatepeaks
 - frip_score
@@ -440,22 +441,40 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - deeptools_plots
 - plotfingerprint
 - multiqc
-- pe::fastqc_pe, pe::trimgalore_pe, pe::bwa_mem_pe, pe::bamtools_filter_pe, pe::pe_name_sort_remove_orphans, pe::bedtools_genomecov_pe, pe::plotfingerprint_pe, pe::multiqc_pe (paired-end branch, when config.paired)
-- alt::bowtie2_align, alt::chromap_align, alt::star_align (alternative aligners, when config.aligner != 'bwa'; SE only)
-- ref::bwa_index, ref::custom_getchromsizes (reference preparation, when config.prepare_reference)
-- mito::genome_blacklist_regions (mitochondrial filtering, when config.mito_name or config.raw_blacklist set)
-- qce::preseq_lcextrap (when skip_preseq=false)
-- qce::picard_collectmultiplemetrics (when skip_picard_metrics=false)
-- qce::get_autosomes, qce::ataqv, qce::mkarv (when skip_ataqv=false)
-- qce::plot_macs2_qc, qce::plot_homer_annotatepeaks (when skip_peak_qc=false)
-- qce::multiqc_custom_peaks (when multiqc_custom_peaks=true)
-- qce::igv (when skip_igv=false)
-- cons::macs2_consensus, cons::homer_annotatepeaks_consensus, cons::subread_featurecounts, cons::deseq2_qc (consensus peaks/DESeq2, when skip_consensus_peaks=false; needs >= 2 samples)
-- merge_replicates (merged-replicate analysis, when skip_merge_replicates=false — replicate samples declared with the upstream _REP\d+ suffix; folds per-replicate BAMs by base id via input_groups and feeds the merged BAM through the regular chain; see README 'Merged-replicate analysis')
+- bowtie2_align
+- chromap_align
+- star_align
+- macs2_consensus
+- homer_annotatepeaks_consensus
+- subread_featurecounts
+- deseq2_qc
+- genome_blacklist_regions
+- fastqc_pe
+- trimgalore_pe
+- bwa_mem_pe
+- bamtools_filter_pe
+- pe_name_sort_remove_orphans
+- bedtools_genomecov_pe
+- plotfingerprint_pe
+- multiqc_pe
+- preseq_lcextrap
+- picard_collectmultiplemetrics
+- get_autosomes
+- ataqv
+- mkarv
+- plot_macs2_qc
+- plot_homer_annotatepeaks
+- multiqc_custom_peaks
+- igv
+- bwa_index
+- custom_getchromsizes
 
 **Excluded**
 
-- none
+- GFFREAD (GFF3→GTF conversion, upstream prepare_genome) — not ported; the port requires a pre-built GTF (`config.gtf`)
+- GUNZIP of compressed reference/annotation files (upstream prepare_genome auto-decompresses `.gz` fasta/gtf/gff/bed/blacklist/tss) — not ported; reference files must be supplied uncompressed
+- UNTAR of prebuilt alignment-index tarballs (upstream prepare_genome accepts bwa/bowtie2/chromap/star index tarballs) — not ported; the port requires unpacked index files
+- KHMER_UNIQUEKMERS automatic `macs_gsize` estimation (upstream prepare_genome when `params.macs_gsize` is empty) — not ported; `config.macs_gsize` defaults to 2.7e9 (GRCh37/38 @ 50 bp) and must be set manually for other genomes
 
 **Not applicable** (upstream-absent features, boilerplate, dead code, deliberate non-goals — see the excluded-key taxonomy in [Traitome/oxo-flow#267](https://github.com/Traitome/oxo-flow/issues/267))
 
@@ -463,8 +482,6 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - DUMP_SOFTWARE_VERSIONS — pipeline plumbing; oxo-flow has native version/audit mechanisms
 - UMITOOLS_EXTRACT (umi branch) — dead code at 2.1.2: the workflow hardcodes with_umi=false so the branch can never fire
 - nucleosome_analysis / genrich — not present at tag 2.1.2 (checked workflows/, conf/, subworkflows/)
-
-## Fidelity
 
 ## Fidelity
 
@@ -494,20 +511,21 @@ listed with reasons. `when`-gated rules carry the gate in the Notes column.
 | MERGED_LIBRARY_DEEPTOOLS_PLOTFINGERPRINT | `plotfingerprint` / `pe::plotfingerprint_pe` | deeptools 3.5.1 | identical (`--extendReads fragment_size`); PE omits `--extendReads` (upstream) |
 | MULTIQC | `multiqc` / `pe::multiqc_pe` | multiqc 1.13 | upstream mechanism replicated: `multiqc_config.yml` staged in cwd, `multiqc -f .`; config `path_filters` adapted to this port's `results/` layout; PE adds the PE fastqc/trimgalore patterns |
 | BWA_INDEX | `ref::bwa_index` | bwa 0.7.17 | identical (`bwa index -p`); when `prepare_reference = true` (default false — port takes pre-built indexes) |
-| CUSTOM_GETCHROMSIZES / CUSTOM_GENOME_FASTA_INDEX (prepare_genome) | `ref::custom_getchromsizes` | samtools 1.16.1 | `samtools faidx` + `cut -f 1,2` into `config.chrom_sizes`; when `prepare_reference = true` |
+| CUSTOM_GETCHROMSIZES / CUSTOM_GENOME_FASTA_INDEX (prepare_genome) | `ref::custom_getchromsizes` | samtools 1.17 (envs/picard-samtools.yaml pin) | `samtools faidx` + `cut -f 1,2` into `config.chrom_sizes`; when `prepare_reference = true` |
 | GENOME_BLACKLIST_REGIONS (mitochondrial filtering) | `mito::genome_blacklist_regions` | bedtools 2.30.0 | sortBed/complementBed over `config.raw_blacklist`, then optional chrM drop (`config.mito_name`, `keep_mito`); when `mito_name`/`raw_blacklist` set; consumed via `-L` by `bamtools_filter` |
 | PRESEQ_LCEXTRAP | `qce::preseq_lcextrap` | preseq 3.1.2 | identical (`-verbose -bam -seed 1`; `-pe` when paired); when `skip_preseq = false` |
 | PICARD_COLLECTMULTIPLEMETRICS | `qce::picard_collectmultiplemetrics` | picard 3.0.0 | identical (5 metrics + PDFs into `picard_metrics/{,pdf}/`); when `skip_picard_metrics = false` |
 | GET_AUTOSOMES + ATAQV_ATAQV + ATAQV_MKARV | `qce::get_autosomes`, `qce::ataqv`, `qce::mkarv` | python 3.8.3, ataqv 1.3.1 | identical commands (`--ignore-read-groups`, mitochondrial-reference-name when `mito_name`; mkarv HTML index); when `skip_ataqv = false` |
 | PLOT_MACS2_QC / PLOT_HOMER_ANNOTATEPEAKS | `qce::plot_macs2_qc` / `qce::plot_homer_annotatepeaks` | mulled R image | scripts copied verbatim from upstream `bin/`; when `skip_peak_qc = false` |
 | MULTIQC_CUSTOM_PEAKS | `qce::multiqc_custom_peaks` | multiqc headers | identical count/FRiP TSVs (`assets/multiqc/` headers copied verbatim); when `multiqc_custom_peaks = true` (port-only switch; upstream always emits) |
-| IGV | `qce::igv` | python 3.8.3 | `igv_files_to_session.py` copied verbatim, `--path_prefix '../../'`; when `skip_igv = false`; merged-replicate bigWigs/peaks included when `config.merged_samples` names them |
+| IGV | `qce::igv` | python 3.8.3 | `igv_files_to_session.py` copied verbatim, `--path_prefix '../../'`; when `skip_igv = false`; per-library tracks only (no merged-replicate sets, see below) |
 | MACS2_CONSENSUS_PEAKS | `cons::macs2_consensus` | mulled (macs2 + bedtools + R) | `sort + mergeBed -c 2,3,4,5,6,7,8,9 -o collapse...` → `macs2_merged_expand.py --min_replicates` → BED/SAF/UpSet plot (bin scripts verbatim); when `skip_consensus_peaks = false`, needs ≥ 2 samples |
 | SUBREAD_FEATURECOUNTS | `cons::subread_featurecounts` | subread 2.0.1 | identical (`-F SAF -O --fracOverlap 0.2 -s 0`, `-p` when paired); when `skip_consensus_peaks = false` |
 | DESEQ2_QC | `cons::deseq2_qc` | mulled (R + DESeq2) | `deseq2_qc.r` verbatim (`--id_col 1 --count_col 7`, `--vst TRUE` when `deseq2_vst`); when `skip_consensus_peaks = false` and `skip_deseq2_qc = false` |
-| PICARD_MERGESAMFILES / BAM_MARKDUPLICATES_PICARD / BAM_BEDGRAPH_BIGWIG_BEDTOOLS_UCSC / BAM_PEAKS_CALL_QC_ANNOTATE_MACS2_HOMER / BED_CONSENSUS_QUANTIFY_QC_BEDTOOLS_FEATURECOUNTS_DESEQ2 (aliased `MERGED_REPLICATE_*`) | `merge_replicates` + the same downstream rules | picard 3.0.0, samtools 1.17, macs2 2.2.7.1, homer 4.11, bedtools 2.30.0, deepTools 3.5.1 | **ported** via oxo-flow `input_groups`: `merge_replicates` folds per-replicate BAMs by base id (`_REP\d+$` suffix) and writes the merged BAM to the canonical `{sample}.mLb.clN.sorted.bam` path; the regular chain then runs on merged AND per-replicate inputs (same commands as upstream). when `skip_merge_replicates = false` (default); see the repo README for semantics and deviations |
+| PICARD_MERGESAMFILES / BAM_MARKDUPLICATES_PICARD / BAM_BEDGRAPH_BIGWIG_BEDTOOLS_UCSC / BAM_PEAKS_CALL_QC_ANNOTATE_MACS2_HOMER / BED_CONSENSUS_QUANTIFY_QC_BEDTOOLS_FEATURECOUNTS_DESEQ2 (aliased `MERGED_REPLICATE_*`) | `merge_replicates` + the same downstream rules | picard 3.0.0, samtools 1.17, macs2 2.2.7.1, homer 4.11, bedtools 2.30.0, deepTools 3.5.1 | **ported** via oxo-flow `input_groups`: `merge_replicates` folds per-replicate BAMs by base id (`_REP\d+$` suffix) and writes the merged BAM to the canonical `{sample}.mLb.clN.sorted.bam` path; the regular chain then runs on merged AND per-replicate inputs (same commands as upstream). when `skip_merge_replicates = false` (default); see "Merged-replicate analysis" below for semantics and deviations |
 | INPUT_CHECK (samplesheet_check) | — | — | **not ported** — pipeline plumbing; oxo-flow provides native `[[sample_groups]]` declaration + `validate` |
 | DUMP_SOFTWARE_VERSIONS | — | — | **not ported** — pipeline plumbing; oxo-flow has native version/audit mechanisms |
+| PREPARE_GENOME: GFFREAD, GUNZIP, UNTAR, KHMER_UNIQUEKMERS | — | — | **not ported** — reference convenience layer; the port requires pre-built uncompressed GTF/BED/FASTA, unpacked index files and an explicit `macs_gsize` (upstream `prepare_genome.nf` auto-converts GFF3→GTF, decompresses `.gz`, unpacks index tarballs and estimates genome size via khmer) |
 
 ### Known divergences
 
@@ -524,13 +542,20 @@ listed with reasons. `when`-gated rules carry the gate in the Notes column.
   `chrom_sizes`, optional `blacklist`). `prepare_reference = true` instead
   generates the BWA index and chrom sizes from the FASTA (the fixture
   already ships them, so the rules report up-to-date there).
+- **ataqv and Picard metrics are SE-only**: both rules consume the
+  single-end filtered `mLb.clN` BAM; the paired-end variants (over the
+  `mLb.flT` orphan-removed BAM) are not ported — with `paired=true` the
+  rules are skipped even when their `skip_*` gates are off.
 - **Alternative aligners are single-end only** (`when` adds
   `!config.paired`): the paired branch is bwa-only, matching upstream's
   paired alignment options. Misconfigurations (e.g. `paired=true` with
   `aligner="star"`) surface as validation warnings via missing inputs.
 - **PE requires `bwa_index` and produces `bwa/library/` outputs**: the
-  paired branch's `bwa_mem_pe` merges read groups (`-R '@RG\tID:{sample}\tSM:{sample}'`)
-  as upstream does; the default SE path keeps the original `@RG` handling.
+  paired branch's `bwa_mem_pe` emits the full read group
+  (`-R '@RG\tID:{sample}\tSM:$SM\tPL:ILLUMINA\tLB:{sample}\tPU:1'`, where
+  `SM` strips a `_T[0-9]*` suffix from the sample) rather than upstream's
+  minimal `'@RG\tID:{sample}\tSM:{sample}'`; the default SE path keeps the
+  original `@RG` handling.
 - **Broad peaks are hardcoded**: the port's `macs2_callpeak` and all
   consumers use `--broad`; `narrow_peak = true` is honoured by
   `macs2_callpeak` but the downstream rules in this port read
@@ -540,8 +565,11 @@ listed with reasons. `when`-gated rules carry the gate in the Notes column.
   their branches are enabled (the PE MultiQC adds the PE fastqc/trimgalore
   logs). Report comment points at the upstream pipeline.
 - **`macs_gsize`**: upstream derives it from the read length keyed genome
-  block; the port exposes it as `config.macs_gsize` (default `2.7e9`, the
-  upstream GRCh37/38 @ 50 bp value).
+  block and auto-estimates via khmer when the value is empty; the port
+  exposes it as `config.macs_gsize` (default `2.7e9`, the upstream
+  GRCh37/38 @ 50 bp value — khmer auto-estimation is **not ported**, so
+  non-human genomes must set this explicitly or the MACS2 commands run
+  with the human genome size).
 - **IGV session lists one merged `mLb_*` track set**: upstream separates
   per-replicate and merged-replicate bigWigs/peaks into two IGV track sets
   (`mLb_*` vs `mLb_clN_*`); this port's `igv` rule scans
@@ -554,6 +582,21 @@ listed with reasons. `when`-gated rules carry the gate in the Notes column.
 - **`size_factors/` stays in the workdir**: upstream DESeq2_QC publishes
   the `size_factors` directory; the port leaves it in the rule workdir
   (not declared as an output) — documented, not lost.
+- **Legacy image pin**: `qce::multiqc_custom_peaks`
+  (`modules/qc_extra.oxoflow`) still pins the retired
+  `quay.io/nf-core/ubuntu:20.04` image (upstream's shell-only rule used a
+  plain ubuntu container). It is kept as-is for byte-identical default
+  behavior; the rule is gated off by default (`multiqc_custom_peaks =
+  false`).
+- **Dry-run prints benign `input ✗` lines on the default plan**:
+  `{sample}.mLb.clN.sorted.bam` is declared as an output of both
+  `bamtools_filter` (per-sample chain, runs) and `merge_replicates`
+  (merged-replicate chain, off with the default empty `merged_samples`),
+  so a dry-run with no files on disk reports that path unresolved for
+  20 instances (per-sample consumers such as `macs2_callpeak`,
+  `bedtools_genomecov`, `frip_score`, `plotfingerprint`, their transitive
+  bigWig/peak consumers, and gated-off `pe::`/`qce::` copies).
+  `oxo-flow dry-run` still exits 0; a real run resolves the files.
 - **Consensus branch needs ≥ 2 samples**: upstream filters the peak
   channel to `size() > 1`; with one sample the consensus rules would
   produce degenerate output.

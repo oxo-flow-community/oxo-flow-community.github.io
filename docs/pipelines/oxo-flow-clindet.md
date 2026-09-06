@@ -7,7 +7,7 @@ title: "Cancer genome & transcriptome analysis (WES/WGS/RNA, single entry): soma
 <div>
 <h1>Cancer genome &amp; transcriptome analysis (WES/WGS/RNA, single entry): somatic+germline+CNV+SV calling, MAF annotation, case report</h1>
 <div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
-<p>Port of zyllifeworld/clindet in its upstream single-Snakefile form: one entry file, config run_type (wes|wgs|rna) selects the rule tree, and paired vs tumor-only WES is derived PER PAIR from the sample sheet (a pair without a control runs the tumor-only tree — engine wildcard-scoped when predicates). 183 rules: somatic SNV (Mutect2, VarDict, VarScan2, MuSE, HaplotypeCaller) + germline (Strelka2+Manta, CaVEMan); tumor-only callers (Mutect2/HaplotypeCaller/varscan2/Strelka/vardict/lofreq/freebayes); CNV subset (Control-FREEC, Sequenza, ExomeDepth, ASCAT); WGS SV (delly chain incl. germ, svaba, Manta somaticSV); opt-in BQSR; vcf2maf/VEP MAF annotation, region flagging, cancer report, MultiQC; RNA fusion/expression (arriba/TRUST4/isofox). Live-verified per run type on tx-ubuntu.</p>
+<p>Port of zyllifeworld/clindet in its upstream single-Snakefile form: one entry file, config run_type (wes|wgs|rna) selects the rule tree, and paired vs tumor-only WES is derived PER PAIR from the sample sheet (a pair without a control runs the tumor-only tree — engine wildcard-scoped when predicates). 188 rules: somatic SNV (Mutect2, VarDict, VarScan2, MuSE, HaplotypeCaller) + germline (Strelka2+Manta, CaVEMan); tumor-only callers (Mutect2/HaplotypeCaller/varscan2/Strelka/vardict/lofreq/freebayes); CNV subset (Control-FREEC, Sequenza, ExomeDepth, ASCAT); WGS SV (delly chain incl. germ, svaba, Manta somaticSV); opt-in BQSR; vcf2maf/VEP MAF annotation, region flagging, cancer report, MultiQC; RNA fusion/expression (arriba/TRUST4/isofox). Live-verified per run type on tx-ubuntu.</p>
 </div>
 <div>
 <div class="ox-glance">
@@ -586,16 +586,20 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 **Excluded**
 
 - CNV: purple/amber/cobalt/FACETS — HMF/Sanger custom containers (hmftools.sif, facets-suite image) + multi-GB hmf_pipeline_resources / snp-pileup PoN trees built via the upstream pull_zenodo run type; unpaired CNV (freec/purple) also not ported — the ported CNV gate is paired-only; the conda-portable subset freec/sequenza/exomedepth/ASCAT IS ported and live-verified
-- CNV: SM_check / CNA_ABSOLUTE_GISTIC / CNA_Battenberg — marked 'for future development' upstream (workflow/WES/rules/rtm/paired/CNV.smk comment); ABSOLUTE/GISTIC2 are Broad tools without conda packages, Battenberg needs the cgpbattenberg sif + 1000G impute reference data
-- SV: gridss/BRASS/linx/igcaller/jasmine — upstream custom sifs (gridss 2.13.2, brass634, linx, jasminesv) or hardcoded local software paths (/public/ClinicalExam/...) plus Sanger/HMF reference trees; delly/svaba/Manta ARE ported
-- unpaired-mode callers beyond the seven portable ones (sage/deepvariant/pindel/octopus/UnifiedGeniTyper — custom containers) + WGS Battenberg/ecDNA/VirusScan (custom containers + resource trees)
+- CNV: SM_check / CNA_ABSOLUTE_GISTIC / CNA_Battenberg — marked 'for future development' upstream (workflow/WES/rules/rtm/paired/CNV.smk comment); ABSOLUTE/GISTIC2 are Broad tools without conda packages (same family: WGS ASCAT_GISTIC), Battenberg needs the cgpbattenberg sif + 1000G impute reference data
+- SV: gridss/BRASS/linx/igcaller/jasmine — upstream custom sifs (gridss 2.13.2, brass634, linx, jasminesv) or hardcoded local software paths (/public/ClinicalExam/...) plus Sanger/HMF reference trees (the merge chain continues into SV_merge_final — bcftools filter SUPP>=2); delly/svaba/Manta ARE ported
+- unpaired-mode callers beyond the seven portable ones (note: some of these tools do have paired variants upstream — pindel cgppindel PI_ggz, deepvariant WES/WGS SNV/DeepVariant.smk, sage — the exclusion covers their custom containers either way) (sage/deepvariant/pindel/octopus/UnifiedGeniTyper — custom containers) + WGS Battenberg/ecDNA/VirusScan (custom containers + resource trees)
 - conpair contamination check — custom conpair_latest.sif container
 - ASCATsc (feeds the BRASS input chain; HMF ASCATsc.R) + multi-lane entry variant (mapping_muliti.smk) — non-default-path variants
+- Mutect2 PoN build chain (upstream WGS SNV/Mutect2_pon.smk: pon_GB / pon_facetsCH / M2_CSPN / call_variants_pon) — not ported; the port consumes a configured `-pon` only and does not build PoN databases (facets inputs are excluded anyway)
+- CNV/SV/QC callers not ported: BIC-seq2 (WES bicseq2.smk + WGS bicseq.smk), esvee (WGS SV/esvee.smk), lumpy (WGS SV/lumpy.smk), sentieon WGS paired caller (WGS SNV/sentieon.smk; the RNA-side sentieon chain is already noted in the port), lancet2 (WES SNV/Lancet2.smk — off-default like the others), moalmanac + split_maf_snp_indel (common case_report.smk — downstream of the excluded facets/ASCAT CNV), orange + bamMetrics WGS report (report/orange.smk — downstream of purple/linx), ngs_bit QC (common qc.smk: 145), summary_softwares version grid (common summary_softwares.smk; the port substitutes conda env versions in MultiQC)
+- Reference-data/setup rule family (upstream setup/* download_* x19, build_b37_ref / build_hg38_ref / build_bwa_index / build_star_index / rsem_star_index etc.) — the README records the concept (reference-data utilities without a mini fixture, not ported); these rule names are not individually listed upstream-side documents — see the README setup note
 
 **Not applicable** (upstream-absent features, boilerplate, dead code, deliberate non-goals — see the excluded-key taxonomy in [Traitome/oxo-flow#267](https://github.com/Traitome/oxo-flow/issues/267))
 
 - sansa-annotation (SV_sansa_*) + svaba svanno — gated on an upstream sansa config absent from the mini test (svanno additionally needs the GTF, empty in the mini test)
 - telomerecat — marked 'departed' upstream (workflow/WGS/rules/mapping.smk)
+- WES rules/filtering.smk select_calls / hard_filter_calls / recalibrate_calls / merge_calls — upstream dead chain (the `results/genotyped/all.vcf.gz` input has no producer in the tree), so nothing to port
 
 ## Fidelity
 
@@ -640,10 +644,33 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 | WGS callers (no exome restrictions) | `rules/91_wgs_callers.oxoflow` | gatk4/muse/varscan/vardict/strelka2/manta | no `--intervals`/`--callRegions`/`--exome`; Manta emits somaticSV; germline Strelka takes BOTH bams (WES: normal only); vardict regions from `vardict_wgs_bed` |
 | WGS picard_collect_wgs / picard_flength_wgs | `picard_collect_wgs_{tumor,normal}` / `picard_flength_wgs_{tumor,normal}` | picard | CollectWgsMetrics + CollectInsertSizeMetrics (telomerecat is "departed" upstream — not ported) |
 | SV_delly chain | `SV_delly` → `SV_delly_sample_tsv` → `SV_delly_filter_somatic` → `SV_delly_to_vcf` → `delly_filter` → `delly2bnd` | delly 1.7.2 (container), bcftools | verbatim; `delly2bnd.py` verbatim (upstream env lacks cyvcf2 — added to envs/clindet.yaml, upstream bug) |
-| SV_svaba | `SV_svaba` | svaba (container) | verbatim run; sansa/svanno annotation gates absent from the mini config — not ported |
+| SV_svaba | `SV_svaba` | svaba (container) | verbatim run |
+| sansa-annotation (svaba + delly) | `SV_sansa_anno_svaba` / `SV_sansa_annodelly` | site-provided sansa binary (`sansa_call`) | gated on `sansa_db`/`sansa_g` being set (upstream gates on the sansa software config being present — absent upstream by default, so off by default here too; zero instances without the keys) |
+| svanno (gatk SVAnnotate) | `SV_svanno_svaba` | gatk4 (container) | gated on `svanno_gtf` (protein-coding GTF); zero instances without the key |
 | Manta SV | `call_config_strelka` (WGS) | manta | `somaticSV.vcf.gz` from the WGS Manta run (upstream SV list entry 'Manta') |
 
-**Not ported** (upstream branches, verified at 582a9131): CNV purple/amber/cobalt/FACETS (custom hmftools.sif / facets-suite image + multi-GB hmf_pipeline_resources and snp-pileup PoN trees, pull_zenodo-built; unpaired CNV freec/purple likewise — the ported CNV gate is paired-only); CNV SM_check / CNA_ABSOLUTE_GISTIC / CNA_Battenberg (marked "for future development" upstream; ABSOLUTE/GISTIC2 have no conda packages, Battenberg needs the cgpbattenberg sif + 1000G impute data); SV gridss/BRASS/linx/igcaller/jasmine (custom sifs or hardcoded /public/ClinicalExam paths + Sanger/HMF reference trees — delly/svaba/Manta ARE ported); sansa-annotation + svaba svanno (sansa config absent from the mini test; svanno also needs the GTF, empty in the mini test); telomerecat ("departed" upstream); unpaired-mode callers beyond the seven portable ones (sage/deepvariant/pindel/octopus/UnifiedGeniTyper) + WGS Battenberg/ecDNA/VirusScan (custom containers + resource trees); conpair (custom conpair_latest.sif); ASCATsc (feeds the BRASS chain) + multi-lane entry variant (mapping_muliti.smk).
+**Not ported** (upstream branches with reasons):
+- CNV purple/amber/cobalt: HMF tools run in the upstream's custom
+  hmftools.sif with the multi-GB hmf_pipeline_resources tree (built
+  locally upstream, `pull_zenodo` run type) — not a portable image;
+  dryclean has no rule file upstream (list-only).
+- CNV FACETS/facets-suite: custom facets-suite-dev.img + snp-pileup PoN
+  chain, requires compiling cnv_facets C++.
+- CNV CNA_ABSOLUTE_GISTIC / ASCAT_GISTIC: ABSOLUTE + GISTIC2 are Broad
+  tools without conda packages; SM_check / CNA_Battenberg are marked
+  "for future development" upstream (Battenberg needs cgpbattenberg371.sif
+  + 1000G impute reference data).
+- SV gridss/BRASS/linx/igv-caller/jasmine: custom containers (gridss2/
+  brass634/jasminesv sifs) + Sanger VAGrENT/BRASS and HMF resource trees.
+- WGS unpaired callers (sage/deepvariant/pindel/octopus/UnifiedGeniTyper)
+  and WGS Battenberg/ecDNA/VirusScan: custom containers + resource trees
+  as above.
+- conpair contamination check: custom conpair_latest.sif container.
+- unpaired CNV (upstream `rtm/unpaired/CNV.smk`: freec + purple): the
+  ported CNV branch is paired-only (upstream mini-test default
+  `somatic_cnv_list: [notrun]`).
+- non-human genomes: supported at config level (WBcel235/mm10 parity table
+  above) — the upstream rule set itself is species-agnostic.
 
 ## Links
 
