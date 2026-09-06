@@ -307,11 +307,17 @@ def render_mmd(nf_metro: str, mmd: pathlib.Path, svg: pathlib.Path) -> str | Non
     Spacing policy: 130/70 clears long station labels from the viewport
     edge (live: sarek's module-stage row labels were clipped on the left)
     and keeps the legend clear of the trunk; the auto-adaptive default
-    under-allocates there. Rendering policy lives here, not in the engine.
+    under-allocates there. Small maps (fewer than 15 stations) are better
+    with the auto spacing — the fixed 130/70 stretched a 7-station map
+    (mixscape) to a 0.98 portrait, which the aspect gate then rejected
+    and the ladder over-demoted to a 1-station overview. Rendering policy
+    lives here, not in the engine.
     """
+    spacing = [] if station_count(parse_mmd(mmd.read_text())) < 15 else [
+        "--x-spacing", "130", "--y-spacing", "70",
+    ]
     proc = subprocess.run(
-        [nf_metro, "render", str(mmd), "-o", str(svg), "--theme", "light",
-         "--x-spacing", "130", "--y-spacing", "70"],
+        [nf_metro, "render", str(mmd), "-o", str(svg), "--theme", "light", *spacing],
         capture_output=True,
         text=True,
     )
@@ -412,7 +418,11 @@ def render_ladder(
             }
             if best is None or aspect is None or aspect > best[0]:
                 best = (aspect if aspect is not None else 0.0, tier_svg, info)
-            if aspect is None or aspect >= MIN_ASPECT:
+            # Tiny maps are exempt from the landscape gate (mirroring
+            # qa-metro's SMALL_EXEMPT): a 3-station map at 0.99 aspect is
+            # fine; over-demoting it (live: nanoseq 3-station module-stage
+            # → 1-station overview) loses meaning for no layout gain.
+            if aspect is None or aspect >= MIN_ASPECT or tier_stations <= 5:
                 best_svg = tier_svg
                 break
         if best is None:

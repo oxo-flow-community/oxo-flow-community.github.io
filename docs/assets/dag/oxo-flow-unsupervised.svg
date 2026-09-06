@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-     width="250" height="222" viewBox="0 0 250 222">
+     width="140" height="144" viewBox="0 0 140 144">
 <defs>
 </defs>
-<metadata id="diagram-manifest" data-schema-version="1.0"><![CDATA[{"groups":[{"color":"#79706E","id":"generic","label":"Analysis"}],"height":222,"match":{"flags":"i","target":"fqProcessName","type":"regex"},"nodes":[{"groups":[],"h":12.0,"id":"n0","label":"Analysis","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":80.0,"y":120.0}],"regions":[],"title":"","version":"1.0","width":250}]]></metadata>
+<metadata id="diagram-manifest" data-schema-version="1.0"><![CDATA[{"groups":[],"height":144,"match":{"flags":"i","target":"fqProcessName","type":"regex"},"nodes":[{"groups":[],"h":12.0,"id":"g___main___generic","label":"Workflow","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":80.0,"y":120.0}],"regions":[],"title":"","version":"1.0","width":140}]]></metadata>
 <style>.nf-metro-title { fill: var(--nfm-map-title-color, #111111); }
 .nf-metro-station-label { fill: var(--nfm-map-label-color, #333333); }
 .nf-metro-section-box { fill: var(--nfm-map-section-fill, #ededed); stroke: var(--nfm-map-section-stroke, #e6e6e6); }
@@ -20,13 +20,10 @@
     .nf-metro-title { fill: #ffffff; }
 }
 </style>
-<g class="nf-metro-station-group" data-node-id="n0" data-node-cx="80.0" data-node-cy="120.0" data-node-r="6.0" data-node-groups="" data-node-w="12.0" data-node-h="12.0" data-node-rx="6.0">
-<rect x="74.0" y="114.0" width="12.0" height="12.0" rx="6.0" ry="6.0" fill="#ffffff" stroke="#333333" stroke-width="2.0" class="nf-metro-station" data-station-id="n0" data-station-lines="" data-station-label="Analysis" />
+<g class="nf-metro-station-group" data-node-id="g___main___generic" data-node-cx="80.0" data-node-cy="120.0" data-node-r="6.0" data-node-groups="" data-node-w="12.0" data-node-h="12.0" data-node-rx="6.0">
+<rect x="74.0" y="114.0" width="12.0" height="12.0" rx="6.0" ry="6.0" fill="#ffffff" stroke="#333333" stroke-width="2.0" class="nf-metro-station" data-station-id="g___main___generic" data-station-lines="" data-station-label="Workflow" />
 </g>
-<text x="80.0" y="131.0" font-size="14.0" fill="#ffffff" stroke="#ffffff" stroke-width="3.0" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="hanging">Analysis</text>
-<text x="80.0" y="131.0" font-size="14.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="hanging" data-station-id="n0" class="nf-metro-station-label">Analysis</text>
-<rect x="60.0" y="150.0" width="130.4" height="48.0" rx="6" ry="6" fill="rgba(255, 255, 255, 0.8)" class="nf-metro-legend-bg" />
-<path d="M72.0,174.0 L96.0,174.0" stroke="#79706E" stroke-width="3.0" stroke-linecap="round" />
-<text x="108.0" y="174.0" font-size="16.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" dy="0.3em" class="nf-metro-legend-text">Analysis</text>
-<text x="220.0" y="214.0" font-size="8" fill="rgba(150, 150, 150, 0.6)" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" text-anchor="end">created with nf-metro v1.1.0</text>
+<text x="80.0" y="131.0" font-size="14.0" fill="#ffffff" stroke="#ffffff" stroke-width="3.0" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="hanging">Workflow</text>
+<text x="80.0" y="131.0" font-size="14.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="hanging" data-station-id="g___main___generic" class="nf-metro-station-label">Workflow</text>
+<text x="110.0" y="136.0" font-size="8" fill="rgba(150, 150, 150, 0.6)" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" text-anchor="end">created with nf-metro v1.1.0</text>
 </svg>

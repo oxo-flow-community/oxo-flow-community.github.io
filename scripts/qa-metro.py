@@ -25,7 +25,7 @@ import xml.etree.ElementTree as ET
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 DAG = ROOT / "docs" / "assets" / "dag"
-MIN_ASPECT = 1.1
+MIN_ASPECT = 1.05
 # Wide maps (up to 6:1) are site-appropriate: the page hosts them
 # full-width and A3 landscape printing spans them; nf-core's published
 # maps run 1.6-3.2, and rule-level maps of 60-station workflows land
