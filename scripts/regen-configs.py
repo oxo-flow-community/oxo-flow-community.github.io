@@ -38,10 +38,13 @@ import os
 import pathlib
 import re
 import shutil
+import tempfile
 import subprocess
 import sys
 
-from metro_tiers import render_ladder
+from metro_tiers import (
+    render_ladder, subflow_view_mmd, render_mmd, parse_mmd, svg_aspect, station_count,
+)
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 DATA = ROOT / "data" / "pipelines.json"
@@ -166,6 +169,41 @@ def render_dag(
     return render_ladder(name, workflow, binary, nf_metro, svg)
 
 
+def render_flow_view(
+    name: str, view: dict, workflow: pathlib.Path, binary: str, nf_metro: str
+) -> tuple[str | None, dict | None]:
+    """Small per-subflow map: rule export filtered to `view["sections"]`.
+
+    One station per module, subgraph per section — a self-contained
+    mini map the page shows next to the overview so multi-omics entries
+    (DNA/RNA splits, live: clindet) read directly. View metadata is
+    recorded in configs.json for the page cards.
+    """
+    svg = DAG_DIR / f"{name}-{view['id']}.svg"
+    with tempfile.TemporaryDirectory() as tmp:
+        tmp = pathlib.Path(tmp)
+        rr = subprocess.run(
+            [binary, "graph", "-f", "metro", "-o", str(tmp / "rule.mmd"), str(workflow)],
+            capture_output=True, text=True,
+        )
+        if rr.returncode != 0:
+            return f"graph failed: {rr.stderr.strip().splitlines()[-1]}", None
+        view_mmd = subflow_view_mmd((tmp / "rule.mmd").read_text(), view["sections"])
+        if view_mmd is None:
+            return "no module section matched this view", None
+        m = tmp / "view.mmd"
+        m.write_text(view_mmd)
+        err = render_mmd(nf_metro, m, svg)
+        if err is not None:
+            return err, None
+        stations = station_count(parse_mmd(view_mmd))
+        return None, {
+            "label": view.get("label", view["id"]),
+            "stations": stations,
+            "aspect": round(svg_aspect(svg), 2),
+        }
+
+
 def main() -> int:
     pipelines = json.loads(DATA.read_text())
     binary = engine_binary()
@@ -218,6 +256,20 @@ def main() -> int:
                 print(f"warning: {failures[-1]}", file=sys.stderr)
             else:
                 rendered += 1
+        # Flow views: small per-subflow maps of a single-entry multi-omics
+        # workflow (live: clindet — one main.oxoflow with DNA and RNA
+        # module groups; the overview ribbon alone cannot tell them apart).
+        # Filtered from the engine rule export, self-contained section sets.
+        for view in p.get("flow_views") or []:
+            view_err, view_info = render_flow_view(
+                name, view, workflow, binary, nf_metro,
+            )
+            if view_err is not None:
+                failures.append(f"{name}/{view['id']}: {view_err} — view omitted")
+                print(f"warning: {failures[-1]}", file=sys.stderr)
+            else:
+                rendered += 1
+                (configs[name].setdefault("flow_views", {}))[view["id"]] = view_info
     OUT.write_text(json.dumps(configs, indent=2) + "\n")
     print(
         f"generated: {OUT.name} ({len(configs)}/{len(pipelines)} pipelines) "

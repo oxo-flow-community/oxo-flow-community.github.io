@@ -389,10 +389,11 @@ def params_section(p: dict, config: list[dict] | None) -> list[str]:
     ]
 
 
-def dag_section(p: dict) -> list[str]:
+def dag_section(p: dict, configs: dict) -> list[str]:
     """`## Workflow graph` — the ladder-chosen metro map SVG that
     regen-configs.py renders via metro_tiers.py (rule-level to overview
-    tiers, nf-metro transit-map style)."""
+    tiers, nf-metro transit-map style). Plus collapsible flow views
+    (per-subflow mini maps of a multi-omics single-entry workflow)."""
     name = p["name"]
     svg = OUT_PAGES.parent / "assets" / "dag" / f"{name}.svg"
     if not svg.is_file():
@@ -431,6 +432,21 @@ def dag_section(p: dict) -> list[str]:
             "",
             "</div>",
         ]
+    # Flow views: per-subflow self-contained mini maps of a multi-omics
+    # single-entry workflow (live: clindet's DNA and RNA groups). Native
+    # <details> collapse keeps the tall maps out of the page flow until a
+    # reader wants that sub-flow.
+    for vid, vinfo in sorted((configs.get(name, {}).get("flow_views") or {}).items()):
+        cards += [
+            f'<details class="ox-flow-view">',
+            f'<summary>{_esc(vinfo.get("label", vid))}</summary>',
+            '<div class="ox-dag-card" markdown="1">',
+            "",
+            f'![{name} {_esc(vid)} flow view](../assets/dag/{name}-{_esc(vid)}.svg)',
+            "",
+            "</div>",
+            "</details>",
+        ]
     return [
         "",
         "## Workflow graph",
@@ -441,7 +457,7 @@ def dag_section(p: dict) -> list[str]:
         "`oxo-flow graph -f metro` through the adaptive render ladder "
         "(`scripts/metro_tiers.py`): each workflow gets the finest metro "
         "tier that nf-metro renders while staying readable at site width — "
-        "rule-level stations for smaller workflows, module-stage or module "
+        "rule-level stations for smaller workflows, module-stage or module"
         "overview stations for dense ones. Colored transit lines group "
         "stations by analysis stage. Wildcard `{sample}` instances expand "
         "at run time when sample data is discovered (the runtime view is "
@@ -495,7 +511,7 @@ def make_page(p: dict, configs: dict) -> str:
     # Same signal as the Parameters table: a staged workflow existed at
     # regen time, so the DAG SVG must exist too (dag_section fails loudly).
     if p["name"] in configs:
-        parts += dag_section(p)
+        parts += dag_section(p, configs)
     if src:
         parts += [
             "",

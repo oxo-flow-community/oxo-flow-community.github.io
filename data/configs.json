@@ -14660,6 +14660,18 @@
       "stations": 17,
       "is_rule_level": false,
       "aspect": 1.18
+    },
+    "flow_views": {
+      "dna": {
+        "label": "DNA \u2014 WES/WGS paired, germline, CNV, tumor-only unpaired",
+        "stations": 59,
+        "aspect": 0.32
+      },
+      "rna": {
+        "label": "RNA \u2014 fusion calling, unpaired SNV callers, isofox/quantifiers (run with -t)",
+        "stations": 41,
+        "aspect": 0.48
+      }
     }
   },
   "oxo-flow-auto-sra-rnaseq-pipeline": {

@@ -3366,7 +3366,41 @@
       "url": "https://workflowhub.eu/workflows/2299",
       "doi": "10.48546/workflowhub.workflow.2299.1",
       "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2299.1"
-    }
+    },
+    "flow_views": [
+      {
+        "id": "dna",
+        "label": "DNA — WES/WGS paired, germline, CNV, tumor-only unpaired",
+        "sections": [
+          "00_common",
+          "10_somatic_callers",
+          "20_germline",
+          "21_caveman",
+          "30_vcf_norm",
+          "40_vcf2maf",
+          "50_merge",
+          "60_report",
+          "70_unpaired",
+          "80_cnv",
+          "90_wgs",
+          "91_wgs_callers",
+          "generic"
+        ]
+      },
+      {
+        "id": "rna",
+        "label": "RNA — fusion calling, unpaired SNV callers, isofox/quantifiers (run with -t)",
+        "sections": [
+          "00_qc",
+          "10_mapping",
+          "20_fusion",
+          "30_isofox",
+          "40_call_mut",
+          "50_snv",
+          "60_vcf2maf_merge"
+        ]
+      }
+    ]
   },
   {
     "name": "oxo-flow-auto-sra-rnaseq-pipeline",

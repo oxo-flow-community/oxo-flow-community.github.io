@@ -551,8 +551,24 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <p class="ox-dag-caption">figure · oxo-flow-clindet — Port of zyllifeworld/clindet in its upstream single-Snakefile form: one entry file, config run_type (wes|wgs|rna) selects the rule tree, and paired vs tumor-only WES is derived PER PAIR from the sample sheet (a pair without a control runs the tumor-only tree — engine wildcard-scoped when predicates).</p>
 
 </div>
+<details class="ox-flow-view">
+<summary>DNA — WES/WGS paired, germline, CNV, tumor-only unpaired</summary>
+<div class="ox-dag-card" markdown="1">
 
-The graph is derived at catalog-build time from `oxo-flow graph -f metro` through the adaptive render ladder (`scripts/metro_tiers.py`): each workflow gets the finest metro tier that nf-metro renders while staying readable at site width — rule-level stations for smaller workflows, module-stage or module overview stations for dense ones. Colored transit lines group stations by analysis stage. Wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
+![oxo-flow-clindet dna flow view](../assets/dag/oxo-flow-clindet-dna.svg)
+
+</div>
+</details>
+<details class="ox-flow-view">
+<summary>RNA — fusion calling, unpaired SNV callers, isofox/quantifiers (run with -t)</summary>
+<div class="ox-dag-card" markdown="1">
+
+![oxo-flow-clindet rna flow view](../assets/dag/oxo-flow-clindet-rna.svg)
+
+</div>
+</details>
+
+The graph is derived at catalog-build time from `oxo-flow graph -f metro` through the adaptive render ladder (`scripts/metro_tiers.py`): each workflow gets the finest metro tier that nf-metro renders while staying readable at site width — rule-level stations for smaller workflows, module-stage or moduleoverview stations for dense ones. Colored transit lines group stations by analysis stage. Wildcard `{sample}` instances expand at run time when sample data is discovered (the runtime view is `oxo-flow graph --expanded`).
 
 ## Scope
 

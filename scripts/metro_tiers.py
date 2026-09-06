@@ -71,6 +71,7 @@ def parse_mmd(text: str) -> dict:
     sections: dict[str, dict] = {}
     order: list[str] = []
     node_sections: dict[str, str] = {}
+    node_labels: dict[str, str] = {}
     edges: list[tuple[str, str, str | None]] = []
     current = None
     for raw in text.splitlines():
@@ -101,6 +102,9 @@ def parse_mmd(text: str) -> dict:
                 current = "__main__"
             sections[current]["nodes"].append(node)
             node_sections[node] = current
+            lm = re.search(r'\["(.*)"\]', line)
+            if lm:
+                node_labels[node] = lm.group(1)
         elif "-->" in line:
             m = re.match(r"^(\w+)\s*-->(?:\|([^|]*)\|)?\s*(\w+)", line)
             if m:
@@ -110,6 +114,7 @@ def parse_mmd(text: str) -> dict:
         "sections": sections,
         "order": order,
         "node_sections": node_sections,
+        "node_labels": node_labels,
         "edges": edges,
     }
 
@@ -294,6 +299,71 @@ def module_stage_mmd(text: str) -> str:
                 cedges[(f"g_{rs[0]}_{rs[1]}", f"g_{rt[0]}_{rt[1]}")][lab] += 1
     final = [(s, t, c.most_common(1)[0][0]) for (s, t), c in sorted(cedges.items())]
     return _emit(mmd["line_decls"], station_titles, final)
+
+
+def subflow_view_mmd(text: str, sections_wanted: list[str]) -> str | None:
+    """Filter a rule-tier metro mmd to a set of module sections.
+
+    Used for "flow views" — small per-domain maps of a single-entry
+    multi-omics workflow (live: clindet's DNA WES/WGS/CNV/RNA views:
+    one main.oxoflow carries every omics flow as `[[include]]` modules,
+    and the overview map reads as one flat ribbon; group-typed mini maps
+    make the DNA/RNA split and the sub-flows directly legible).
+
+    `sections_wanted` matches section ids by prefix (the ids carry
+    assembled module names as the engine contracts cycles, so exact
+    matches break when a module interlinks differently). Stations in the
+    wanted sections are kept with their intra/subgraph edges; edges
+    crossing out of the view are dropped (the view is self-contained).
+    Returns None when no section matches.
+    """
+    mmd = parse_mmd(text)
+    wanted = []
+    for sec in mmd["order"]:
+        if any(
+            sec == w or sec.startswith(w) or sec == "s_" + w
+            for w in sections_wanted if w
+        ):
+            wanted.append(sec)
+    if not wanted:
+        return None
+    wanted_set = set(wanted)
+    node_sections_out = {
+        n: sec for n, sec in mmd["node_sections"].items() if sec in wanted_set
+    }
+    line_decls = {
+        name: decl
+        for name, decl in mmd["line_decls"].items()
+        if any(lab == name for _s, _t, lab in mmd["edges"] if lab)
+    }
+    out = ["graph LR"]
+    for name, (label, color) in line_decls.items():
+        if color:
+            out.append(f"    %%metro line: {name} | {label} | {color}")
+        else:
+            out.append(f"    %%metro line: {name} | {label}")
+    for sec in wanted:
+        title = mmd["sections"][sec]["title"]
+        members = [
+            n for n, s in node_sections_out.items() if s == sec
+        ]
+        out.append(f"    subgraph {sec} [{title}]")
+        for n in members:
+            out.append(
+                f'        {n}["{mmd["node_labels"].get(n, title)}"]'
+            )
+        out.append("    end")
+    # Intra-section edges stay inside their section (cross-section edges
+    # belong to the full map's layout and would need junctions the view
+    # does not carry).
+    for s, t, lab in mmd["edges"]:
+        if s not in node_sections_out or t not in node_sections_out:
+            continue
+        if node_sections_out[s] != node_sections_out[t]:
+            continue
+        lpart = f"|{lab}|" if lab else ""
+        out.append(f"    {s} -->{lpart} {t}")
+    return "\n".join(out) + "\n"
 
 
 def svg_aspect(svg: pathlib.Path) -> float | None:
