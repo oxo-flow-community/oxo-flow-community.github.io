@@ -66,6 +66,7 @@ oxo-flow pull gh:WangLabCSU/oxo-flow-circrna
 
 ## Parameters
 
+<p class="ox-param-usage">At run time override any parameter with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys.</p>
 <div class="ox-params">
 <div class="ox-param">
 <div class="ox-param-head"><code>reference_dir</code><span class="ox-param-default">./reference</span></div>
@@ -76,7 +77,7 @@ oxo-flow pull gh:WangLabCSU/oxo-flow-circrna
 </div>
 </div>
 
-Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
+Descriptions are the workflow's own `#` comments from its `[config]` section (and the `[config]` sections of its included modules), surfaced by `oxo-flow info` — no schema file to maintain.
 
 ## Workflow graph
 

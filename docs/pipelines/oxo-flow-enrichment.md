@@ -71,24 +71,25 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-enrichment
 
 ## Parameters
 
+<p class="ox-param-usage">At run time override any parameter with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys.</p>
 <div class="ox-params">
 <div class="ox-param">
 <div class="ox-param-head"><code>adjp_cap</code><span class="ox-param-default">4</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">aggregate &amp; summarize (upstream top_terms_n / adjp_cap / or_cap / nes_cap / cluster_summary)</p>
 <details class="ox-param-usedby"><summary>used by 9 rules</summary>
 <div class="ox-param-rules"><code>visualize_GREAT_Azimuth_2023_ATAC</code> <code>visualize_GREAT_Reactome_ATAC</code> <code>visualize_LOLA_LOLACore_ATAC</code> <code>visualize_ORA_GSEApy_Azimuth_2023_ATAC</code> <code>visualize_ORA_GSEApy_Reactome_ATAC</code> <code>visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</code> <code>visualize_preranked_GSEApy_Azimuth_2023_RNA</code> <code>visualize_preranked_GSEApy_Reactome_RNA</code> <code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>adjp_th_GREAT</code><span class="ox-param-default">0.01</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">significance thresholds (upstream adjp_th)</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>region_enrichment_analysis_GREAT_Azimuth_2023</code> <code>region_enrichment_analysis_GREAT_Reactome</code> <code>visualize_GREAT_Azimuth_2023_ATAC</code> <code>visualize_GREAT_Reactome_ATAC</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>adjp_th_LOLA</code><span class="ox-param-default">0.01</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">significance thresholds (upstream adjp_th)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>visualize_LOLA_LOLACore_ATAC</code></div>
 </details>
@@ -102,33 +103,33 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-enrichment
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>adjp_th_RcisTarget</code><span class="ox-param-default">5</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">significance thresholds (upstream adjp_th)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>adjp_th_preranked_GSEApy</code><span class="ox-param-default">0.05</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">significance thresholds (upstream adjp_th)</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>visualize_preranked_GSEApy_Azimuth_2023_RNA</code> <code>visualize_preranked_GSEApy_Reactome_RNA</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>adjp_th_pycisTarget</code><span class="ox-param-default">5</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">significance thresholds (upstream adjp_th)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></div>
 </details>
 </div>
-<div class="ox-param">
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>all_region_sets</code><span class="ox-param-default">Bcell_open_regions, Ery_open_regions, all_regions</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">feature sets (derived from config/annotation.csv at port time)</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">—</div>
 </details>
 </div>
-<div class="ox-param">
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>annotation</code><span class="ox-param-default">config/annotation.csv</span></div>
 <p class="ox-param-desc">general</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
@@ -144,126 +145,126 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-enrichment
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cluster_summary</code><span class="ox-param-default">1</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">aggregate &amp; summarize (upstream top_terms_n / adjp_cap / or_cap / nes_cap / cluster_summary)</p>
 <details class="ox-param-usedby"><summary>used by 9 rules</summary>
 <div class="ox-param-rules"><code>visualize_GREAT_Azimuth_2023_ATAC</code> <code>visualize_GREAT_Reactome_ATAC</code> <code>visualize_LOLA_LOLACore_ATAC</code> <code>visualize_ORA_GSEApy_Azimuth_2023_ATAC</code> <code>visualize_ORA_GSEApy_Reactome_ATAC</code> <code>visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</code> <code>visualize_preranked_GSEApy_Azimuth_2023_RNA</code> <code>visualize_preranked_GSEApy_Reactome_RNA</code> <code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cn_GREAT_adj_pvalue</code><span class="ox-param-default">p_adjust_hyper</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
 <details class="ox-param-usedby"><summary>used by 6 rules</summary>
 <div class="ox-param-rules"><code>plot_enrichment_result_GREAT_Azimuth_2023</code> <code>plot_enrichment_result_GREAT_Reactome</code> <code>region_enrichment_analysis_GREAT_Azimuth_2023</code> <code>region_enrichment_analysis_GREAT_Reactome</code> <code>visualize_GREAT_Azimuth_2023_ATAC</code> <code>visualize_GREAT_Reactome_ATAC</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cn_GREAT_effect_size</code><span class="ox-param-default">fold_enrichment_hyper</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>plot_enrichment_result_GREAT_Azimuth_2023</code> <code>plot_enrichment_result_GREAT_Reactome</code> <code>visualize_GREAT_Azimuth_2023_ATAC</code> <code>visualize_GREAT_Reactome_ATAC</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cn_GREAT_overlap</code><span class="ox-param-default">observed_region_hits</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>plot_enrichment_result_GREAT_Azimuth_2023</code> <code>plot_enrichment_result_GREAT_Reactome</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cn_GREAT_p_value</code><span class="ox-param-default">p_value_hyper</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>plot_enrichment_result_GREAT_Azimuth_2023</code> <code>plot_enrichment_result_GREAT_Reactome</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cn_GREAT_term</code><span class="ox-param-default">description</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>plot_enrichment_result_GREAT_Azimuth_2023</code> <code>plot_enrichment_result_GREAT_Reactome</code> <code>visualize_GREAT_Azimuth_2023_ATAC</code> <code>visualize_GREAT_Reactome_ATAC</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cn_GREAT_top_n</code><span class="ox-param-default">25</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>plot_enrichment_result_GREAT_Azimuth_2023</code> <code>plot_enrichment_result_GREAT_Reactome</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cn_LOLA_adj_pvalue</code><span class="ox-param-default">qValue</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>plot_enrichment_result_LOLA_LOLACore</code> <code>visualize_LOLA_LOLACore_ATAC</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cn_LOLA_effect_size</code><span class="ox-param-default">oddsRatio</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>plot_enrichment_result_LOLA_LOLACore</code> <code>visualize_LOLA_LOLACore_ATAC</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cn_LOLA_overlap</code><span class="ox-param-default">support</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>plot_enrichment_result_LOLA_LOLACore</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cn_LOLA_p_value</code><span class="ox-param-default">pValue</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>plot_enrichment_result_LOLA_LOLACore</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cn_LOLA_term</code><span class="ox-param-default">description</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>plot_enrichment_result_LOLA_LOLACore</code> <code>visualize_LOLA_LOLACore_ATAC</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cn_LOLA_top_n</code><span class="ox-param-default">25</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>plot_enrichment_result_LOLA_LOLACore</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cn_ORA_GSEApy_adj_pvalue</code><span class="ox-param-default">Adjusted_P_value</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>plot_enrichment_result_ORA_GSEApy_Azimuth_2023</code> <code>plot_enrichment_result_ORA_GSEApy_Reactome</code> <code>visualize_ORA_GSEApy_Azimuth_2023_ATAC</code> <code>visualize_ORA_GSEApy_Reactome_ATAC</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cn_ORA_GSEApy_effect_size</code><span class="ox-param-default">Odds_Ratio</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>plot_enrichment_result_ORA_GSEApy_Azimuth_2023</code> <code>plot_enrichment_result_ORA_GSEApy_Reactome</code> <code>visualize_ORA_GSEApy_Azimuth_2023_ATAC</code> <code>visualize_ORA_GSEApy_Reactome_ATAC</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cn_ORA_GSEApy_overlap</code><span class="ox-param-default">Overlap</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>plot_enrichment_result_ORA_GSEApy_Azimuth_2023</code> <code>plot_enrichment_result_ORA_GSEApy_Reactome</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cn_ORA_GSEApy_p_value</code><span class="ox-param-default">P_value</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>plot_enrichment_result_ORA_GSEApy_Azimuth_2023</code> <code>plot_enrichment_result_ORA_GSEApy_Reactome</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cn_ORA_GSEApy_term</code><span class="ox-param-default">Term</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>plot_enrichment_result_ORA_GSEApy_Azimuth_2023</code> <code>plot_enrichment_result_ORA_GSEApy_Reactome</code> <code>visualize_ORA_GSEApy_Azimuth_2023_ATAC</code> <code>visualize_ORA_GSEApy_Reactome_ATAC</code></div>
 </details>
@@ -277,7 +278,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-enrichment
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cn_RcisTarget_adj_pvalue</code><span class="ox-param-default">NES</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust</code> <code>visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</code></div>
 </details>
@@ -298,7 +299,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-enrichment
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cn_RcisTarget_p_value</code><span class="ox-param-default">AUC</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust</code></div>
 </details>
@@ -312,91 +313,91 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-enrichment
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cn_RcisTarget_top_n</code><span class="ox-param-default">25</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cn_preranked_GSEApy_adj_pvalue</code><span class="ox-param-default">FDR_q_val</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>plot_enrichment_result_preranked_GSEApy_Azimuth_2023</code> <code>plot_enrichment_result_preranked_GSEApy_Reactome</code> <code>visualize_preranked_GSEApy_Azimuth_2023_RNA</code> <code>visualize_preranked_GSEApy_Reactome_RNA</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cn_preranked_GSEApy_effect_size</code><span class="ox-param-default">NES</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>plot_enrichment_result_preranked_GSEApy_Azimuth_2023</code> <code>plot_enrichment_result_preranked_GSEApy_Reactome</code> <code>visualize_preranked_GSEApy_Azimuth_2023_RNA</code> <code>visualize_preranked_GSEApy_Reactome_RNA</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cn_preranked_GSEApy_overlap</code><span class="ox-param-default">Tag</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>plot_enrichment_result_preranked_GSEApy_Azimuth_2023</code> <code>plot_enrichment_result_preranked_GSEApy_Reactome</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cn_preranked_GSEApy_p_value</code><span class="ox-param-default">NOM_p_val</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>plot_enrichment_result_preranked_GSEApy_Azimuth_2023</code> <code>plot_enrichment_result_preranked_GSEApy_Reactome</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cn_preranked_GSEApy_term</code><span class="ox-param-default">Term</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>plot_enrichment_result_preranked_GSEApy_Azimuth_2023</code> <code>plot_enrichment_result_preranked_GSEApy_Reactome</code> <code>visualize_preranked_GSEApy_Azimuth_2023_RNA</code> <code>visualize_preranked_GSEApy_Reactome_RNA</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cn_preranked_GSEApy_top_n</code><span class="ox-param-default">25</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>plot_enrichment_result_preranked_GSEApy_Azimuth_2023</code> <code>plot_enrichment_result_preranked_GSEApy_Reactome</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cn_pycisTarget_adj_pvalue</code><span class="ox-param-default">NES</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>plot_enrichment_result_pycisTarget_hg38_screen_v10clust</code> <code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cn_pycisTarget_effect_size</code><span class="ox-param-default">NES</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>plot_enrichment_result_pycisTarget_hg38_screen_v10clust</code> <code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cn_pycisTarget_overlap</code><span class="ox-param-default">Motif_hits</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>plot_enrichment_result_pycisTarget_hg38_screen_v10clust</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cn_pycisTarget_p_value</code><span class="ox-param-default">AUC</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>plot_enrichment_result_pycisTarget_hg38_screen_v10clust</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cn_pycisTarget_term</code><span class="ox-param-default">description</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>plot_enrichment_result_pycisTarget_hg38_screen_v10clust</code> <code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cn_pycisTarget_top_n</code><span class="ox-param-default">25</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>plot_enrichment_result_pycisTarget_hg38_screen_v10clust</code></div>
 </details>
@@ -410,42 +411,42 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-enrichment
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>db_Reactome</code><span class="ox-param-default">test/resources/enrichment_analysis/ReactomePathways.gmt</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">databases (upstream local_databases / lola_databases)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>prepare_databases_Reactome</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>genome</code><span class="ox-param-default">hg38</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">general</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>region_enrichment_analysis_GREAT_Azimuth_2023</code> <code>region_enrichment_analysis_GREAT_Reactome</code> <code>region_enrichment_analysis_LOLA</code> <code>region_gene_association_GREAT</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>great_basal_downstream</code><span class="ox-param-default">1000</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">GREAT parameters (upstream great_parameters)</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>region_enrichment_analysis_GREAT_Azimuth_2023</code> <code>region_enrichment_analysis_GREAT_Reactome</code> <code>region_gene_association_GREAT</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>great_basal_upstream</code><span class="ox-param-default">5000</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">GREAT parameters (upstream great_parameters)</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>region_enrichment_analysis_GREAT_Azimuth_2023</code> <code>region_enrichment_analysis_GREAT_Reactome</code> <code>region_gene_association_GREAT</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>great_extension</code><span class="ox-param-default">1000000</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">GREAT parameters (upstream great_parameters)</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>region_enrichment_analysis_GREAT_Azimuth_2023</code> <code>region_enrichment_analysis_GREAT_Reactome</code> <code>region_gene_association_GREAT</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>great_map_associated_regions</code><span class="ox-param-default">1</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">GREAT parameters (upstream great_parameters)</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>region_enrichment_analysis_GREAT_Azimuth_2023</code> <code>region_enrichment_analysis_GREAT_Reactome</code></div>
 </details>
@@ -459,28 +460,28 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-enrichment
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>great_mode</code><span class="ox-param-default">basalPlusExt</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">GREAT parameters (upstream great_parameters)</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>region_enrichment_analysis_GREAT_Azimuth_2023</code> <code>region_enrichment_analysis_GREAT_Reactome</code> <code>region_gene_association_GREAT</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>lola_db_LOLACore</code><span class="ox-param-default">test/resources/LOLACore/hg38</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">databases (upstream local_databases / lola_databases)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>region_enrichment_analysis_LOLA</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>nes_cap</code><span class="ox-param-default">5</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">aggregate &amp; summarize (upstream top_terms_n / adjp_cap / or_cap / nes_cap / cluster_summary)</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>visualize_preranked_GSEApy_Azimuth_2023_RNA</code> <code>visualize_preranked_GSEApy_Reactome_RNA</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>or_cap</code><span class="ox-param-default">5</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">aggregate &amp; summarize (upstream top_terms_n / adjp_cap / or_cap / nes_cap / cluster_summary)</p>
 <details class="ox-param-usedby"><summary>used by 7 rules</summary>
 <div class="ox-param-rules"><code>visualize_GREAT_Azimuth_2023_ATAC</code> <code>visualize_GREAT_Reactome_ATAC</code> <code>visualize_LOLA_LOLACore_ATAC</code> <code>visualize_ORA_GSEApy_Azimuth_2023_ATAC</code> <code>visualize_ORA_GSEApy_Reactome_ATAC</code> <code>visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</code> <code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></div>
 </details>
@@ -494,14 +495,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-enrichment
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>project_name</code><span class="ox-param-default">Corces_CellTypes</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">general</p>
 <details class="ox-param-usedby"><summary>used by 11 rules</summary>
 <div class="ox-param-rules"><code>annot_export</code> <code>config_export</code> <code>gene_ORA_GSEApy_Azimuth_2023</code> <code>gene_ORA_GSEApy_Reactome</code> <code>gene_preranked_GSEApy_Azimuth_2023</code> <code>gene_preranked_GSEApy_Reactome</code> <code>prepare_databases_Azimuth_2023</code> <code>prepare_databases_Reactome</code> <code>region_enrichment_analysis_GREAT_Azimuth_2023</code> <code>region_enrichment_analysis_GREAT_Reactome</code> <code>region_gene_association_GREAT</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>pycistarget_annotation_version</code><span class="ox-param-default">v10nr_clust</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">pycisTarget parameters (upstream pycistarget_parameters)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>region_motif_enrichment_analysis_pycisTarget</code></div>
 </details>
@@ -515,7 +516,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-enrichment
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>pycistarget_auc_threshold</code><span class="ox-param-default">0.005</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">pycisTarget parameters (upstream pycistarget_parameters)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>region_motif_enrichment_analysis_pycisTarget</code></div>
 </details>
@@ -543,7 +544,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-enrichment
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>pycistarget_nes_threshold</code><span class="ox-param-default">3</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">pycisTarget parameters (upstream pycistarget_parameters)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>region_motif_enrichment_analysis_pycisTarget</code></div>
 </details>
@@ -557,7 +558,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-enrichment
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>pycistarget_rank_threshold</code><span class="ox-param-default">0.05</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">pycisTarget parameters (upstream pycistarget_parameters)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>region_motif_enrichment_analysis_pycisTarget</code></div>
 </details>
@@ -585,7 +586,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-enrichment
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>rcistarget_geneErnMaxRank</code><span class="ox-param-default">5000</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">rcistarget tool parameter (upstream --rcistarget_geneErnMaxRank) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>gene_motif_enrichment_analysis_RcisTarget</code></div>
 </details>
@@ -606,7 +607,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-enrichment
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>rcistarget_motifAnnot_lowConfCat</code><span class="ox-param-default">inferredBy_MotifSimilarity,inferredBy_MotifSimilarity_n_Orthology</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">upstream python lists; comma-joined so the rendered command stays a single token (values contain no commas)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>gene_motif_enrichment_analysis_RcisTarget</code></div>
 </details>
@@ -620,7 +621,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-enrichment
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>rcistarget_nesThreshold</code><span class="ox-param-default">3</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">upstream python lists; comma-joined so the rendered command stays a single token (values contain no commas)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>gene_motif_enrichment_analysis_RcisTarget</code></div>
 </details>
@@ -632,16 +633,16 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-enrichment
 <div class="ox-param-rules"><code>region_enrichment_analysis_GREAT_Azimuth_2023</code> <code>region_enrichment_analysis_GREAT_Reactome</code> <code>region_enrichment_analysis_LOLA</code> <code>region_gene_association_GREAT</code> <code>region_motif_enrichment_analysis_pycisTarget</code></div>
 </details>
 </div>
-<div class="ox-param">
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>region_sets</code><span class="ox-param-default">Bcell_open_regions, Ery_open_regions</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">feature sets (derived from config/annotation.csv at port time)</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">—</div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>result_path</code><span class="ox-param-default">test/results/enrichment_analysis</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">general</p>
 <details class="ox-param-usedby"><summary>used by 40 rules</summary>
 <div class="ox-param-rules"><code>aggregate_GREAT_Azimuth_2023_ATAC</code> <code>aggregate_GREAT_Reactome_ATAC</code> <code>aggregate_LOLA_LOLACore_ATAC</code> <code>aggregate_ORA_GSEApy_Azimuth_2023_ATAC</code> <code>aggregate_ORA_GSEApy_Reactome_ATAC</code> <code>aggregate_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</code> <code>aggregate_preranked_GSEApy_Azimuth_2023_RNA</code> <code>aggregate_preranked_GSEApy_Reactome_RNA</code> <code>aggregate_pycisTarget_hg38_screen_v10clust_ATAC</code> <code>annot_export</code> <code>config_export</code> <code>gene_ORA_GSEApy_Azimuth_2023</code> <code>gene_ORA_GSEApy_Reactome</code> <code>gene_motif_enrichment_analysis_RcisTarget</code> <code>gene_preranked_GSEApy_Azimuth_2023</code> <code>gene_preranked_GSEApy_Reactome</code> <code>plot_enrichment_result_GREAT_Azimuth_2023</code> <code>plot_enrichment_result_GREAT_Reactome</code> <code>plot_enrichment_result_LOLA_LOLACore</code> <code>plot_enrichment_result_ORA_GSEApy_Azimuth_2023</code> <code>plot_enrichment_result_ORA_GSEApy_Reactome</code> <code>plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust</code> <code>plot_enrichment_result_preranked_GSEApy_Azimuth_2023</code> <code>plot_enrichment_result_preranked_GSEApy_Reactome</code> <code>plot_enrichment_result_pycisTarget_hg38_screen_v10clust</code> <code>process_results_pycisTarget</code> <code>region_enrichment_analysis_GREAT_Azimuth_2023</code> <code>region_enrichment_analysis_GREAT_Reactome</code> <code>region_enrichment_analysis_LOLA</code> <code>region_gene_association_GREAT</code> <code>region_motif_enrichment_analysis_pycisTarget</code> <code>visualize_GREAT_Azimuth_2023_ATAC</code> <code>visualize_GREAT_Reactome_ATAC</code> <code>visualize_LOLA_LOLACore_ATAC</code> <code>visualize_ORA_GSEApy_Azimuth_2023_ATAC</code> <code>visualize_ORA_GSEApy_Reactome_ATAC</code> <code>visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</code> <code>visualize_preranked_GSEApy_Azimuth_2023_RNA</code> <code>visualize_preranked_GSEApy_Reactome_RNA</code> <code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></div>
 </details>
@@ -653,7 +654,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-enrichment
 <div class="ox-param-rules"><code>gene_preranked_GSEApy_Azimuth_2023</code> <code>gene_preranked_GSEApy_Reactome</code></div>
 </details>
 </div>
-<div class="ox-param">
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>rnk_sets</code><span class="ox-param-default">Bcell_ranked, Ery_ranked</span></div>
 <p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
@@ -676,7 +677,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-enrichment
 </div>
 </div>
 
-Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
+Descriptions are the workflow's own `#` comments from its `[config]` section (and the `[config]` sections of its included modules), surfaced by `oxo-flow info` — no schema file to maintain.
 
 ## Workflow graph
 

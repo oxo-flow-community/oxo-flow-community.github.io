@@ -65,10 +65,11 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-unsupervised
 
 ## Parameters
 
+<p class="ox-param-usage">At run time override any parameter with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys.</p>
 <div class="ox-params">
 <div class="ox-param">
 <div class="ox-param-head"><code>clustree_categorical_label_option</code><span class="ox-param-default">majority</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">CLUSTREE</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>clustree_analysis_custom</code> <code>clustree_analysis_default</code> <code>clustree_analysis_metadata</code></div>
 </details>
@@ -82,21 +83,21 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-unsupervised
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>clustree_layout</code><span class="ox-param-default">tree</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">CLUSTREE</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>clustree_analysis_custom</code> <code>clustree_analysis_default</code> <code>clustree_analysis_metadata</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>clustree_numerical_aggregation_option</code><span class="ox-param-default">mean</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">CLUSTREE</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>clustree_analysis_custom</code> <code>clustree_analysis_default</code> <code>clustree_analysis_metadata</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>clustree_prop_filter</code><span class="ox-param-default">0.1</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">CLUSTREE</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>clustree_analysis_custom</code> <code>clustree_analysis_default</code> <code>clustree_analysis_metadata</code></div>
 </details>
@@ -110,14 +111,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-unsupervised
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>data_dir</code><span class="ox-param-default">test/fixtures</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">GENERAL</p>
 <details class="ox-param-usedby"><summary>used by 40 rules</summary>
 <div class="ox-param-rules"><code>aggregate_clustering_results</code> <code>clustree_analysis_custom</code> <code>clustree_analysis_default</code> <code>clustree_analysis_metadata</code> <code>densmap_embed_2d</code> <code>densmap_embed_3d</code> <code>distance_matrix_features_correlation</code> <code>distance_matrix_features_cosine</code> <code>distance_matrix_observations_correlation</code> <code>distance_matrix_observations_cosine</code> <code>leiden_ModularityVertexPartition_NA</code> <code>leiden_RBConfigurationVertexPartition_0p5</code> <code>leiden_RBConfigurationVertexPartition_1</code> <code>leiden_RBConfigurationVertexPartition_1p5</code> <code>leiden_RBConfigurationVertexPartition_2</code> <code>leiden_RBConfigurationVertexPartition_4</code> <code>pca</code> <code>plot_dimred_interactive_densmap_2d</code> <code>plot_dimred_interactive_densmap_3d</code> <code>plot_dimred_interactive_pca_2d</code> <code>plot_dimred_interactive_pca_3d</code> <code>plot_dimred_interactive_umap_2d</code> <code>plot_dimred_interactive_umap_3d</code> <code>plot_dimred_metadata_densmap</code> <code>plot_dimred_metadata_pca</code> <code>plot_dimred_metadata_umap</code> <code>plot_heatmap_correlation</code> <code>plot_heatmap_cosine</code> <code>plot_pca_diagnostics</code> <code>prep_feature_plot</code> <code>umap_embed_2d</code> <code>umap_embed_3d</code> <code>umap_graph</code> <code>validation_external</code> <code>validation_internal_BIC</code> <code>validation_internal_C_index</code> <code>validation_internal_Calinski_Harabasz</code> <code>validation_internal_Davies_Bouldin</code> <code>validation_internal_Dunn</code> <code>validation_internal_Silhouette</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>features_to_plot</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">METADATA</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>prep_feature_plot</code></div>
 </details>
@@ -131,14 +132,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-unsupervised
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>heatmap_n_features</code><span class="ox-param-default">0.5</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">HEATMAP (upstream heatmap: metrics [correlation, cosine] -&gt; 2 rules)</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>distance_matrix_features_correlation</code> <code>distance_matrix_features_cosine</code> <code>distance_matrix_observations_correlation</code> <code>distance_matrix_observations_cosine</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>heatmap_n_observations</code><span class="ox-param-default">1</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">HEATMAP (upstream heatmap: metrics [correlation, cosine] -&gt; 2 rules)</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>distance_matrix_features_correlation</code> <code>distance_matrix_features_cosine</code> <code>distance_matrix_observations_correlation</code> <code>distance_matrix_observations_cosine</code></div>
 </details>
@@ -146,27 +147,27 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-unsupervised
 <div class="ox-param">
 <div class="ox-param-head"><code>leiden_metric</code><span class="ox-param-default">euclidean</span></div>
 <p class="ox-param-desc">LEIDEN (upstream leiden: metric euclidean / n_neighbors 15 -&gt; 6 rules)</p>
-<details class="ox-param-usedby"><summary>used by 6 rules</summary>
-<div class="ox-param-rules"><code>leiden_ModularityVertexPartition_NA</code> <code>leiden_RBConfigurationVertexPartition_0p5</code> <code>leiden_RBConfigurationVertexPartition_1</code> <code>leiden_RBConfigurationVertexPartition_1p5</code> <code>leiden_RBConfigurationVertexPartition_2</code> <code>leiden_RBConfigurationVertexPartition_4</code></div>
+<details class="ox-param-usedby"><summary>used by 7 rules</summary>
+<div class="ox-param-rules"><code>aggregate_clustering_results</code> <code>leiden_ModularityVertexPartition_NA</code> <code>leiden_RBConfigurationVertexPartition_0p5</code> <code>leiden_RBConfigurationVertexPartition_1</code> <code>leiden_RBConfigurationVertexPartition_1p5</code> <code>leiden_RBConfigurationVertexPartition_2</code> <code>leiden_RBConfigurationVertexPartition_4</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>leiden_n_iterations</code><span class="ox-param-default">2</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">LEIDEN (upstream leiden: metric euclidean / n_neighbors 15 -&gt; 6 rules)</p>
 <details class="ox-param-usedby"><summary>used by 6 rules</summary>
 <div class="ox-param-rules"><code>leiden_ModularityVertexPartition_NA</code> <code>leiden_RBConfigurationVertexPartition_0p5</code> <code>leiden_RBConfigurationVertexPartition_1</code> <code>leiden_RBConfigurationVertexPartition_1p5</code> <code>leiden_RBConfigurationVertexPartition_2</code> <code>leiden_RBConfigurationVertexPartition_4</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>leiden_n_neighbors</code><span class="ox-param-default">15</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 6 rules</summary>
-<div class="ox-param-rules"><code>leiden_ModularityVertexPartition_NA</code> <code>leiden_RBConfigurationVertexPartition_0p5</code> <code>leiden_RBConfigurationVertexPartition_1</code> <code>leiden_RBConfigurationVertexPartition_1p5</code> <code>leiden_RBConfigurationVertexPartition_2</code> <code>leiden_RBConfigurationVertexPartition_4</code></div>
+<p class="ox-param-desc">LEIDEN (upstream leiden: metric euclidean / n_neighbors 15 -&gt; 6 rules)</p>
+<details class="ox-param-usedby"><summary>used by 7 rules</summary>
+<div class="ox-param-rules"><code>aggregate_clustering_results</code> <code>leiden_ModularityVertexPartition_NA</code> <code>leiden_RBConfigurationVertexPartition_0p5</code> <code>leiden_RBConfigurationVertexPartition_1</code> <code>leiden_RBConfigurationVertexPartition_1p5</code> <code>leiden_RBConfigurationVertexPartition_2</code> <code>leiden_RBConfigurationVertexPartition_4</code></div>
 </details>
 </div>
-<div class="ox-param">
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>mem_mb</code><span class="ox-param-default">32000</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">RESOURCES (upstream config: mem/threads)</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">—</div>
 </details>
@@ -180,7 +181,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-unsupervised
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>pca_n_components</code><span class="ox-param-default">0.9</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">PCA (upstream pca: svd_solver, n_components)</p>
 <details class="ox-param-usedby"><summary>used by 13 rules</summary>
 <div class="ox-param-rules"><code>pca</code> <code>plot_dimred_clustering_pca</code> <code>plot_dimred_features_pca</code> <code>plot_dimred_interactive_pca_2d</code> <code>plot_dimred_interactive_pca_3d</code> <code>plot_dimred_metadata_pca</code> <code>plot_pca_diagnostics</code> <code>validation_internal_BIC</code> <code>validation_internal_C_index</code> <code>validation_internal_Calinski_Harabasz</code> <code>validation_internal_Davies_Bouldin</code> <code>validation_internal_Dunn</code> <code>validation_internal_Silhouette</code></div>
 </details>
@@ -208,7 +209,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-unsupervised
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>result_path</code><span class="ox-param-default">results</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">GENERAL</p>
 <details class="ox-param-usedby"><summary>used by 61 rules</summary>
 <div class="ox-param-rules"><code>aggregate_all_clustering_results</code> <code>aggregate_clustering_results</code> <code>aggregate_rank_internal</code> <code>annot_export</code> <code>clustree_analysis_custom</code> <code>clustree_analysis_default</code> <code>clustree_analysis_metadata</code> <code>densmap_embed_2d</code> <code>densmap_embed_3d</code> <code>distance_matrix_features_correlation</code> <code>distance_matrix_features_cosine</code> <code>distance_matrix_observations_correlation</code> <code>distance_matrix_observations_cosine</code> <code>env_export_ComplexHeatmap</code> <code>env_export_clusterCrit</code> <code>env_export_clustree</code> <code>env_export_ggplot</code> <code>env_export_plotly</code> <code>env_export_pymcdm</code> <code>env_export_umap_leiden</code> <code>leiden_ModularityVertexPartition_NA</code> <code>leiden_RBConfigurationVertexPartition_0p5</code> <code>leiden_RBConfigurationVertexPartition_1</code> <code>leiden_RBConfigurationVertexPartition_1p5</code> <code>leiden_RBConfigurationVertexPartition_2</code> <code>leiden_RBConfigurationVertexPartition_4</code> <code>pca</code> <code>plot_dimred_clustering_densmap</code> <code>plot_dimred_clustering_pca</code> <code>plot_dimred_clustering_umap</code> <code>plot_dimred_features_pca</code> <code>plot_dimred_features_umap</code> <code>plot_dimred_interactive_densmap_2d</code> <code>plot_dimred_interactive_densmap_3d</code> <code>plot_dimred_interactive_pca_2d</code> <code>plot_dimred_interactive_pca_3d</code> <code>plot_dimred_interactive_umap_2d</code> <code>plot_dimred_interactive_umap_3d</code> <code>plot_dimred_metadata_densmap</code> <code>plot_dimred_metadata_pca</code> <code>plot_dimred_metadata_umap</code> <code>plot_heatmap_correlation</code> <code>plot_heatmap_cosine</code> <code>plot_indices_external</code> <code>plot_indices_internal</code> <code>plot_pca_diagnostics</code> <code>plot_umap_connectivity_densmap</code> <code>plot_umap_connectivity_umap</code> <code>plot_umap_diagnostics_densmap</code> <code>plot_umap_diagnostics_umap</code> <code>prep_feature_plot</code> <code>umap_embed_2d</code> <code>umap_embed_3d</code> <code>umap_graph</code> <code>validation_external</code> <code>validation_internal_BIC</code> <code>validation_internal_C_index</code> <code>validation_internal_Calinski_Harabasz</code> <code>validation_internal_Davies_Bouldin</code> <code>validation_internal_Dunn</code> <code>validation_internal_Silhouette</code></div>
 </details>
@@ -222,42 +223,42 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-unsupervised
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>scatterplot2d_alpha</code><span class="ox-param-default">1</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">VISUALIZATION</p>
 <details class="ox-param-usedby"><summary>used by 15 rules</summary>
 <div class="ox-param-rules"><code>plot_dimred_clustering_densmap</code> <code>plot_dimred_clustering_pca</code> <code>plot_dimred_clustering_umap</code> <code>plot_dimred_features_pca</code> <code>plot_dimred_features_umap</code> <code>plot_dimred_interactive_densmap_2d</code> <code>plot_dimred_interactive_densmap_3d</code> <code>plot_dimred_interactive_pca_2d</code> <code>plot_dimred_interactive_pca_3d</code> <code>plot_dimred_interactive_umap_2d</code> <code>plot_dimred_interactive_umap_3d</code> <code>plot_dimred_metadata_densmap</code> <code>plot_dimred_metadata_pca</code> <code>plot_dimred_metadata_umap</code> <code>plot_pca_diagnostics</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>scatterplot2d_size</code><span class="ox-param-default">1</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">VISUALIZATION</p>
 <details class="ox-param-usedby"><summary>used by 15 rules</summary>
 <div class="ox-param-rules"><code>plot_dimred_clustering_densmap</code> <code>plot_dimred_clustering_pca</code> <code>plot_dimred_clustering_umap</code> <code>plot_dimred_features_pca</code> <code>plot_dimred_features_umap</code> <code>plot_dimred_interactive_densmap_2d</code> <code>plot_dimred_interactive_densmap_3d</code> <code>plot_dimred_interactive_pca_2d</code> <code>plot_dimred_interactive_pca_3d</code> <code>plot_dimred_interactive_umap_2d</code> <code>plot_dimred_interactive_umap_3d</code> <code>plot_dimred_metadata_densmap</code> <code>plot_dimred_metadata_pca</code> <code>plot_dimred_metadata_umap</code> <code>plot_pca_diagnostics</code></div>
 </details>
 </div>
-<div class="ox-param">
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>threads</code><span class="ox-param-default">2</span></div>
 <p class="ox-param-desc">RESOURCES (upstream config: mem/threads)</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">—</div>
 </details>
 </div>
-<div class="ox-param">
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>umap_connectivity</code><span class="ox-param-default">1</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">UMAP &amp; densMAP (upstream umap: single default metric/neighbors/min_dist)</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">—</div>
 </details>
 </div>
-<div class="ox-param">
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>umap_densmap</code><span class="ox-param-default">1</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">UMAP &amp; densMAP (upstream umap: single default metric/neighbors/min_dist)</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">—</div>
 </details>
 </div>
-<div class="ox-param">
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>umap_diagnostics</code><span class="ox-param-default">1</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">UMAP &amp; densMAP (upstream umap: single default metric/neighbors/min_dist)</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">—</div>
 </details>
@@ -271,21 +272,21 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-unsupervised
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>umap_min_dist</code><span class="ox-param-default">0.1</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">UMAP &amp; densMAP (upstream umap: single default metric/neighbors/min_dist)</p>
 <details class="ox-param-usedby"><summary>used by 17 rules</summary>
 <div class="ox-param-rules"><code>densmap_embed_2d</code> <code>densmap_embed_3d</code> <code>plot_dimred_clustering_densmap</code> <code>plot_dimred_clustering_umap</code> <code>plot_dimred_features_umap</code> <code>plot_dimred_interactive_densmap_2d</code> <code>plot_dimred_interactive_densmap_3d</code> <code>plot_dimred_interactive_umap_2d</code> <code>plot_dimred_interactive_umap_3d</code> <code>plot_dimred_metadata_densmap</code> <code>plot_dimred_metadata_umap</code> <code>plot_umap_connectivity_densmap</code> <code>plot_umap_connectivity_umap</code> <code>plot_umap_diagnostics_densmap</code> <code>plot_umap_diagnostics_umap</code> <code>umap_embed_2d</code> <code>umap_embed_3d</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>umap_n_neighbors</code><span class="ox-param-default">15</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">UMAP &amp; densMAP (upstream umap: single default metric/neighbors/min_dist)</p>
 <details class="ox-param-usedby"><summary>used by 18 rules</summary>
 <div class="ox-param-rules"><code>densmap_embed_2d</code> <code>densmap_embed_3d</code> <code>plot_dimred_clustering_densmap</code> <code>plot_dimred_clustering_umap</code> <code>plot_dimred_features_umap</code> <code>plot_dimred_interactive_densmap_2d</code> <code>plot_dimred_interactive_densmap_3d</code> <code>plot_dimred_interactive_umap_2d</code> <code>plot_dimred_interactive_umap_3d</code> <code>plot_dimred_metadata_densmap</code> <code>plot_dimred_metadata_umap</code> <code>plot_umap_connectivity_densmap</code> <code>plot_umap_connectivity_umap</code> <code>plot_umap_diagnostics_densmap</code> <code>plot_umap_diagnostics_umap</code> <code>umap_embed_2d</code> <code>umap_embed_3d</code> <code>umap_graph</code></div>
 </details>
 </div>
 </div>
 
-Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
+Descriptions are the workflow's own `#` comments from its `[config]` section (and the `[config]` sections of its included modules), surfaced by `oxo-flow info` — no schema file to maintain.
 
 ## Workflow graph
 

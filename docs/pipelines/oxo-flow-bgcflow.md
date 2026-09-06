@@ -68,6 +68,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-bgcflow
 
 ## Parameters
 
+<p class="ox-param-usage">At run time override any parameter with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys.</p>
 <div class="ox-params">
 <div class="ox-param">
 <div class="ox-param-head"><code>antismash_db_path</code><span class="ox-param-default">resources/antismash_db</span></div>
@@ -113,7 +114,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-bgcflow
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>gecco_version</code><span class="ox-param-default">0.9.10</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>gecco</code></div>
 </details>
@@ -204,14 +205,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-bgcflow
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_amrfinderplus</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>amrfinder_gather</code> <code>amrfinderplus</code> <code>install_amrfinder</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_arts</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>arts</code></div>
 </details>
@@ -225,7 +226,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-bgcflow
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_bigscape</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>bigscape</code></div>
 </details>
@@ -239,14 +240,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-bgcflow
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_cblaster</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>cblaster_genome_db</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_checkm</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>checkm</code> <code>install_checkm</code></div>
 </details>
@@ -260,35 +261,35 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-bgcflow
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_eggnog</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>eggnog</code> <code>install_eggnog</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_fastani</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>fastani</code> <code>fastani_convert</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_gecco</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>gecco</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_gtdbtk</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>gtdbtk</code> <code>install_gtdbtk</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_mash</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>mash</code> <code>mash_convert</code></div>
 </details>
@@ -302,14 +303,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-bgcflow
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_roary</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>roary</code> <code>roary_out</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_seqfu</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>seqfu_combine</code> <code>seqfu_stats</code></div>
 </details>
@@ -323,7 +324,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-bgcflow
 </div>
 </div>
 
-Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
+Descriptions are the workflow's own `#` comments from its `[config]` section (and the `[config]` sections of its included modules), surfaced by `oxo-flow info` — no schema file to maintain.
 
 ## Workflow graph
 

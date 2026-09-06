@@ -70,12 +70,13 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-scrnaseq
 
 ## Parameters
 
+<p class="ox-param-usage">At run time override any parameter with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys.</p>
 <div class="ox-params">
 <div class="ox-param">
 <div class="ox-param-head"><code>aligner</code><span class="ox-param-default">cellranger</span></div>
 <p class="ox-param-desc">--aligner / --protocol. The port implements ALL upstream aligner branches: cellranger (default, matches upstream&#x27;s most-tested path), simpleaf (upstream default aligner), kallisto (kallisto/bustools), star (STARsolo) and cellrangerarc (multiome ATAC+GEX). Protocol values are mapped per aligner inside the alignment rules (upstream protocols.json); &#x27;auto&#x27; is only valid for cellranger/cellrangerarc, exactly like upstream.</p>
-<details class="ox-param-usedby"><summary>used by 40 rules</summary>
-<div class="ox-param-rules"><code>anndata_barcodes</code> <code>anndatar_convert_cellbender_filter</code> <code>anndatar_convert_combined_cellbender_filter</code> <code>anndatar_convert_combined_filtered</code> <code>anndatar_convert_combined_raw</code> <code>anndatar_convert_filtered</code> <code>anndatar_convert_raw</code> <code>cellbender_removebackground</code> <code>cellranger_count</code> <code>cellranger_mkgtf</code> <code>cellranger_mkref</code> <code>cellranger_mkvdjref</code> <code>cellranger_multi</code> <code>cellrangerarc_count</code> <code>cellrangerarc_mkgtf</code> <code>cellrangerarc_mkref</code> <code>collect_versions</code> <code>concat_h5ad_cellbender_filter</code> <code>concat_h5ad_filtered</code> <code>concat_h5ad_raw</code> <code>fastqc</code> <code>kallistobustools_count</code> <code>kallistobustools_ref_standard</code> <code>kallistobustools_ref_velocity</code> <code>mtx_to_h5ad_filtered</code> <code>mtx_to_h5ad_kallisto_filtered</code> <code>mtx_to_h5ad_kallisto_raw</code> <code>mtx_to_h5ad_multi_filtered</code> <code>mtx_to_h5ad_multi_raw</code> <code>mtx_to_h5ad_raw</code> <code>mtx_to_h5ad_simpleaf</code> <code>mtx_to_h5ad_star_filtered</code> <code>mtx_to_h5ad_star_raw</code> <code>qcatch</code> <code>simpleaf_index</code> <code>simpleaf_quant</code> <code>star_align</code> <code>star_genomegenerate</code> <code>star_genomeparams_upgrade</code> <code>workflow_summary</code></div>
+<details class="ox-param-usedby"><summary>used by 41 rules</summary>
+<div class="ox-param-rules"><code>anndata_barcodes</code> <code>anndatar_convert_cellbender_filter</code> <code>anndatar_convert_combined_cellbender_filter</code> <code>anndatar_convert_combined_filtered</code> <code>anndatar_convert_combined_raw</code> <code>anndatar_convert_filtered</code> <code>anndatar_convert_raw</code> <code>cellbender_removebackground</code> <code>cellranger_count</code> <code>cellranger_mkgtf</code> <code>cellranger_mkref</code> <code>cellranger_mkvdjref</code> <code>cellranger_multi</code> <code>cellrangerarc_count</code> <code>cellrangerarc_mkgtf</code> <code>cellrangerarc_mkref</code> <code>collect_versions</code> <code>concat_h5ad_cellbender_filter</code> <code>concat_h5ad_filtered</code> <code>concat_h5ad_raw</code> <code>fastqc</code> <code>kallistobustools_count</code> <code>kallistobustools_ref_standard</code> <code>kallistobustools_ref_velocity</code> <code>mtx_to_h5ad_filtered</code> <code>mtx_to_h5ad_kallisto_filtered</code> <code>mtx_to_h5ad_kallisto_raw</code> <code>mtx_to_h5ad_multi_filtered</code> <code>mtx_to_h5ad_multi_raw</code> <code>mtx_to_h5ad_raw</code> <code>mtx_to_h5ad_simpleaf</code> <code>mtx_to_h5ad_star_filtered</code> <code>mtx_to_h5ad_star_raw</code> <code>multiqc</code> <code>qcatch</code> <code>simpleaf_index</code> <code>simpleaf_quant</code> <code>star_align</code> <code>star_genomegenerate</code> <code>star_genomeparams_upgrade</code> <code>workflow_summary</code></div>
 </details>
 </div>
 <div class="ox-param">
@@ -141,16 +142,16 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-scrnaseq
 <div class="ox-param-rules"><code>cellrangerarc_count</code> <code>cellrangerarc_mkref</code></div>
 </details>
 </div>
-<div class="ox-param">
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>email</code><span class="ox-param-default"></span></div>
 <p class="ox-param-desc">completion notifications (nf-core PIPELINE_COMPLETION port): summary email on success (<code>email</code>), failure address (<code>email_on_fail</code>) and a webhook (<code>hook_url</code>). Empty = no notification, exactly like upstream&#x27;s empty email params. Consumed by the workflow-level on_complete / on_error hooks above (engine &gt;= 0.17.0); older engines ignore the hook keys and the run is untouched.</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">—</div>
 </details>
 </div>
-<div class="ox-param">
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>email_on_fail</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">failure-only recipient (upstream --email_on_fail; used when email is empty)</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">—</div>
 </details>
@@ -171,7 +172,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-scrnaseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>fasta_gz</code><span class="ox-param-default">true</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">upstream --fasta gzipped flag (gunzipped by the prep rule)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>gunzip_fasta</code></div>
 </details>
@@ -185,28 +186,28 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-scrnaseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>gtf</code><span class="ox-param-default">refs/refdata.gtf.gz</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">annotation GTF (upstream --gtf; may be .gz)</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>gunzip_gtf</code> <code>workflow_summary</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>gtf_filtered</code><span class="ox-param-default">refs/refdata_genes.gtf</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">gene-level GTF for cellranger/count filtering (upstream filtered_gtf; the &quot;biotype = protein_coding&quot; filter)</p>
 <details class="ox-param-usedby"><summary>used by 8 rules</summary>
 <div class="ox-param-rules"><code>cellrangerarc_mkgtf</code> <code>gtf_gene_filter</code> <code>gtf_source_fix</code> <code>kallistobustools_ref_standard</code> <code>kallistobustools_ref_velocity</code> <code>simpleaf_index</code> <code>star_align</code> <code>star_genomegenerate</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>gtf_gz</code><span class="ox-param-default">true</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">upstream --gtf gzipped flag (gunzipped by the prep rule)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>gunzip_gtf</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>gtf_mkgtf</code><span class="ox-param-default">refs/refdata_genes.filtered.gtf</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">cellranger mkgtf output (the filtered annotation)</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>cellranger_mkgtf</code> <code>cellranger_mkref</code> <code>cellranger_mkvdjref</code></div>
 </details>
@@ -220,7 +221,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-scrnaseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>gtf_prepared</code><span class="ox-param-default">refs/refdata.gtf</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">gunzipped GTF (prep-rule output)</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>gtf_gene_filter</code> <code>gunzip_gtf</code></div>
 </details>
@@ -234,14 +235,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-scrnaseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>gtf_source_fixed</code><span class="ox-param-default">refs/refdata_genes.source_fixed.gtf</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">source-field-rewritten GTF (gtf_source_fix output)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>gtf_source_fix</code></div>
 </details>
 </div>
-<div class="ox-param">
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>hook_url</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">webhook URL for the on_complete / on_error notifications</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">—</div>
 </details>
@@ -276,7 +277,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-scrnaseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>multiqc_config</code><span class="ox-param-default">assets/multiqc_config.yml</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">MultiQC config path (upstream --multiqc_config)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>multiqc</code></div>
 </details>
@@ -288,9 +289,9 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-scrnaseq
 <div class="ox-param-rules"><code>multiqc</code> <code>workflow_summary</code></div>
 </details>
 </div>
-<div class="ox-param">
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>out_dir</code><span class="ox-param-default">results</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">results directory (upstream --outdir)</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">—</div>
 </details>
@@ -311,7 +312,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-scrnaseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>remove_doublets</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">upstream --remove_doublets: doublet removal for simpleaf</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>qcatch</code> <code>workflow_summary</code></div>
 </details>
@@ -346,14 +347,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-scrnaseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>simpleaf_umi_resolution</code><span class="ox-param-default">cr-like</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">upstream --simpleaf_umi_resolution (cr-like | paired | naive)</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>simpleaf_quant</code> <code>workflow_summary</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_cellbender</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">upstream --skip_cellbender: skip ambient-RNA background removal</p>
 <details class="ox-param-usedby"><summary>used by 10 rules</summary>
 <div class="ox-param-rules"><code>anndata_barcodes</code> <code>anndatar_convert_cellbender_filter</code> <code>anndatar_convert_combined_cellbender_filter</code> <code>anndatar_convert_combined_raw</code> <code>anndatar_convert_raw</code> <code>cellbender_removebackground</code> <code>collect_versions</code> <code>concat_h5ad_cellbender_filter</code> <code>concat_h5ad_raw</code> <code>workflow_summary</code></div>
 </details>
@@ -374,14 +375,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-scrnaseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_multiqc</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">upstream --skip_multiqc</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>multiqc</code> <code>workflow_summary</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_qcatch</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">upstream --skip_qcatch: skip the qcatch QC step</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>qcatch</code> <code>workflow_summary</code></div>
 </details>
@@ -423,7 +424,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-scrnaseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>transcriptome</code><span class="ox-param-default">refs/cellranger_reference</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">cellranger reference dir (upstream --transcriptome): built by cellranger_mkref, or an existing index</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>cellranger_count</code> <code>cellranger_mkref</code> <code>cellranger_multi</code></div>
 </details>
@@ -444,7 +445,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-scrnaseq
 </div>
 </div>
 
-Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
+Descriptions are the workflow's own `#` comments from its `[config]` section (and the `[config]` sections of its included modules), surfaced by `oxo-flow info` — no schema file to maintain.
 
 ## Workflow graph
 

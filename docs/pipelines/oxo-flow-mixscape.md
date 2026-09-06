@@ -66,6 +66,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-mixscape
 
 ## Parameters
 
+<p class="ox-param-usage">At run time override any parameter with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys.</p>
 <div class="ox-params">
 <div class="ox-param">
 <div class="ox-param-head"><code>annotation</code><span class="ox-param-default">test/fixtures/annotation.csv</span></div>
@@ -90,7 +91,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-mixscape
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cps_split_by_col</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">CalcPerturbSig (upstream nested keys flattened; values identical)</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>config_export</code> <code>mixscape</code> <code>visualize</code></div>
 </details>
@@ -111,7 +112,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-mixscape
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>gene_col</code><span class="ox-param-default">KOcall</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">CalcPerturbSig (upstream nested keys flattened; values identical)</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>config_export</code> <code>lda</code> <code>mixscape</code> <code>visualize</code></div>
 </details>
@@ -139,7 +140,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-mixscape
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>lfc_th</code><span class="ox-param-default">0.1</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">RunMixscape (flattened)</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>config_export</code> <code>lda</code> <code>mixscape</code></div>
 </details>
@@ -153,42 +154,42 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-mixscape
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>min_cells</code><span class="ox-param-default">5</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">RunMixscape (flattened)</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>config_export</code> <code>mixscape</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>min_de_genes</code><span class="ox-param-default">5</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">RunMixscape (flattened)</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>config_export</code> <code>mixscape</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>mixscape_split_by_col</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">RunMixscape (flattened)</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>config_export</code> <code>mixscape</code> <code>visualize</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>n_neighbors</code><span class="ox-param-default">30</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">CalcPerturbSig (upstream nested keys flattened; values identical)</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>config_export</code> <code>mixscape</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>ndims</code><span class="ox-param-default">40</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">CalcPerturbSig (upstream nested keys flattened; values identical)</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>config_export</code> <code>mixscape</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>nt_term</code><span class="ox-param-default">NonTargeting</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">CalcPerturbSig (upstream nested keys flattened; values identical)</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>config_export</code> <code>lda</code> <code>mixscape</code> <code>visualize</code></div>
 </details>
@@ -202,7 +203,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-mixscape
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>prtb_type</code><span class="ox-param-default">KO</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">RunMixscape (flattened)</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>config_export</code> <code>lda</code> <code>mixscape</code> <code>visualize</code></div>
 </details>
@@ -230,7 +231,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-mixscape
 </div>
 </div>
 
-Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
+Descriptions are the workflow's own `#` comments from its `[config]` section (and the `[config]` sections of its included modules), surfaced by `oxo-flow info` — no schema file to maintain.
 
 ## Workflow graph
 

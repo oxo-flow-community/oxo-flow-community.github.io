@@ -68,12 +68,27 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipeline
 
 ## Parameters
 
+<p class="ox-param-usage">At run time override any parameter with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys.</p>
 <div class="ox-params">
 <div class="ox-param">
 <div class="ox-param-head"><code>GTF</code><span class="ox-param-default">/data/reference/genome/GRCh38/Homo_sapiens.GRCh38.95.sort.gtf</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>align_and_count</code></div>
+<p class="ox-param-desc">STAR index dir and GTF (upstream keys index / GTF).</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>align_and_count</code> <code>align_and_count_single</code></div>
+</details>
+</div>
+<div class="ox-param ox-param-unused">
+<div class="ox-param-head"><code>bark</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">Bark / feishu push notifications (upstream config.yaml keys). Consumed by the batch runner scripts/run_batch.py after each metadata file finishes (upstream run.py). Keep off unless the endpoints are configured.</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param ox-param-unused">
+<div class="ox-param-head"><code>bark_api</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">Bark / feishu push notifications (upstream config.yaml keys). Consumed by the batch runner scripts/run_batch.py after each metadata file finishes (upstream run.py). Keep off unless the endpoints are configured.</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
 </details>
 </div>
 <div class="ox-param">
@@ -83,44 +98,58 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipeline
 <div class="ox-param-rules"><code>DGE_analysis</code> <code>combine_count</code></div>
 </details>
 </div>
-<div class="ox-param">
-<div class="ox-param-head"><code>index</code><span class="ox-param-default">/data/reference/genome/GRCh38/STAR</span></div>
-<p class="ox-param-desc">STAR index dir and GTF (upstream keys index / GTF).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>align_and_count</code></div>
+<div class="ox-param ox-param-unused">
+<div class="ox-param-head"><code>feishu</code><span class="ox-param-default">false</span></div>
+<p class="ox-param-desc">Bark / feishu push notifications (upstream config.yaml keys). Consumed by the batch runner scripts/run_batch.py after each metadata file finishes (upstream run.py). Keep off unless the endpoints are configured.</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
+</details>
+</div>
+<div class="ox-param ox-param-unused">
+<div class="ox-param-head"><code>feishu_api</code><span class="ox-param-default"></span></div>
+<p class="ox-param-desc">Bark / feishu push notifications (upstream config.yaml keys). Consumed by the batch runner scripts/run_batch.py after each metadata file finishes (upstream run.py). Keep off unless the endpoints are configured.</p>
+<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
+<div class="ox-param-rules">—</div>
 </details>
 </div>
 <div class="ox-param">
+<div class="ox-param-head"><code>index</code><span class="ox-param-default">/data/reference/genome/GRCh38/STAR</span></div>
+<p class="ox-param-desc">STAR index dir and GTF (upstream keys index / GTF).</p>
+<details class="ox-param-usedby"><summary>used by 2 rules</summary>
+<div class="ox-param-rules"><code>align_and_count</code> <code>align_and_count_single</code></div>
+</details>
+</div>
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>mail</code><span class="ox-param-default">false</span></div>
 <p class="ox-param-desc">Email notification (upstream onsuccess + onerror). Keep off unless SMTP is configured — the [workflow] on_error hook reuses these same keys.</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">—</div>
 </details>
 </div>
-<div class="ox-param">
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>mail_to</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Email notification (upstream onsuccess + onerror). Keep off unless SMTP is configured — the [workflow] on_error hook reuses these same keys.</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">—</div>
 </details>
 </div>
 <div class="ox-param">
-<div class="ox-param-head"><code>metadata</code><span class="ox-param-default">test/fixtures/metadata/D21122.txt</span></div>
+<div class="ox-param-head"><code>metadata</code><span class="ox-param-default">test/fixtures/metadata/D21122_6sample.txt</span></div>
 <p class="ox-param-desc">Metadata TSV (upstream key metadata). Columns: Dataset GSE GSM gene method celline group group_name type platform SRR paired The repo default points at the bundled example dataset (upstream doc/D21122.txt).</p>
-<details class="ox-param-usedby"><summary>used by 6 rules</summary>
-<div class="ox-param-rules"><code>DGE_analysis</code> <code>combine_count</code> <code>data_conversion_pair</code> <code>get_sra</code> <code>merge_R1_data</code> <code>merge_R2_data</code></div>
+<details class="ox-param-usedby"><summary>used by 7 rules</summary>
+<div class="ox-param-rules"><code>DGE_analysis</code> <code>combine_count</code> <code>get_sra</code> <code>merge_R1_data</code> <code>merge_R2_data</code> <code>merge_data</code> <code>sra_dump</code></div>
 </details>
 </div>
-<div class="ox-param">
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>sender</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Email notification (upstream onsuccess + onerror). Keep off unless SMTP is configured — the [workflow] on_error hook reuses these same keys.</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">—</div>
 </details>
 </div>
-<div class="ox-param">
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>sender_password</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Email notification (upstream onsuccess + onerror). Keep off unless SMTP is configured — the [workflow] on_error hook reuses these same keys.</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">—</div>
 </details>
@@ -135,13 +164,13 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipeline
 <div class="ox-param">
 <div class="ox-param-head"><code>srr_separator</code><span class="ox-param-default">,</span></div>
 <p class="ox-param-desc">Separator joining multiple SRR runs per sample in the metadata SRR column.</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>data_conversion_pair</code> <code>get_sra</code> <code>merge_R1_data</code> <code>merge_R2_data</code></div>
+<details class="ox-param-usedby"><summary>used by 5 rules</summary>
+<div class="ox-param-rules"><code>get_sra</code> <code>merge_R1_data</code> <code>merge_R2_data</code> <code>merge_data</code> <code>sra_dump</code></div>
 </details>
 </div>
 </div>
 
-Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
+Descriptions are the workflow's own `#` comments from its `[config]` section (and the `[config]` sections of its included modules), surfaced by `oxo-flow info` — no schema file to maintain.
 
 ## Workflow graph
 

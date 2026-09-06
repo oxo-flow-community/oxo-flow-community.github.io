@@ -66,6 +66,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-tcasia
 
 ## Parameters
 
+<p class="ox-param-usage">At run time override any parameter with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys.</p>
 <div class="ox-params">
 <div class="ox-param">
 <div class="ox-param-head"><code>align_out_dir</code><span class="ox-param-default">results/alignment</span></div>
@@ -97,21 +98,21 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-tcasia
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>fastp_n_base_limit</code><span class="ox-param-default">5</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">fastp (upstream fastp.*)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>alignment::fastp_qc</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>fastp_qualified_quality_phred</code><span class="ox-param-default">20</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">fastp (upstream fastp.*)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>alignment::fastp_qc</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>fastp_unqualified_percent_limit</code><span class="ox-param-default">40</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">fastp (upstream fastp.*)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>alignment::fastp_qc</code></div>
 </details>
@@ -125,7 +126,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-tcasia
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>majiq_genome</code><span class="ox-param-default">hg38</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">majiq tool parameter (upstream --majiq_genome) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>as_calling::majiq_create_ini</code></div>
 </details>
@@ -139,7 +140,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-tcasia
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>majiq_minreads</code><span class="ox-param-default">10</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">majiq tool parameter (upstream --majiq_minreads) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>as_calling::majiq_build</code></div>
 </details>
@@ -153,7 +154,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-tcasia
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>read_len</code><span class="ox-param-default">150</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">salmon_index is auto-built below from the shipped transcripts.fa</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>as_calling::majiq_create_ini</code> <code>as_calling::rmats_run</code></div>
 </details>
@@ -188,7 +189,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-tcasia
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_majiq</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">MAJIQ requires the upstream academic license file — place it at test/fixtures/reference/majiq_license.lic (obtain from MAJIQ) and set run_majiq = true. Upstream fails hard without the license; the port gates the whole MAJIQ chain on this flag instead (documented in the README fidelity table).</p>
 <details class="ox-param-usedby"><summary>used by 5 rules</summary>
 <div class="ox-param-rules"><code>as_calling::majiq_build</code> <code>as_calling::majiq_create_ini</code> <code>as_calling::majiq_psi</code> <code>as_calling::voila_modulize</code> <code>as_calling::voila_tsv</code></div>
 </details>
@@ -209,21 +210,21 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-tcasia
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>spladder_confidence</code><span class="ox-param-default">3</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">spladder tool parameter (upstream --spladder_confidence) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>as_calling::spladder_run</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>spladder_event_types</code><span class="ox-param-default">exon_skip,intron_retention,alt_3prime,alt_5prime,mutex_exons</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">spladder tool parameter (upstream --spladder_event_types) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>as_calling::spladder_run</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>spladder_merge_strategy</code><span class="ox-param-default">single</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">spladder tool parameter (upstream --spladder_merge_strategy) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>as_calling::spladder_run</code></div>
 </details>
@@ -272,7 +273,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-tcasia
 </div>
 </div>
 
-Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
+Descriptions are the workflow's own `#` comments from its `[config]` section (and the `[config]` sections of its included modules), surfaced by `oxo-flow info` — no schema file to maintain.
 
 ## Workflow graph
 

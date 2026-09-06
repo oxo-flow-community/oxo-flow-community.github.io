@@ -66,85 +66,86 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-snparcher
 
 ## Parameters
 
+<p class="ox-param-usage">At run time override any parameter with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys.</p>
 <div class="ox-params">
 <div class="ox-param">
 <div class="ox-param-head"><code>bcftools_max_depth</code><span class="ox-param-default">250</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">bcftools tool parameter (upstream --bcftools_max_depth) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>bcftools_call</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>bcftools_min_baseq</code><span class="ox-param-default">20</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">bcftools tool parameter (upstream --bcftools_min_baseq) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>bcftools_call</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>bcftools_min_mapq</code><span class="ox-param-default">20</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">bcftools tool parameter (upstream --bcftools_min_mapq) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>bcftools_call</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>callable_sites_enabled</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">callable tool parameter (upstream --callable_sites_enabled) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 18 rules</summary>
 <div class="ox-param-rules"><code>callable_coverage_thresholds</code> <code>callable_sites_bed</code> <code>clam_collect</code> <code>clam_loci</code> <code>coverage_bed</code> <code>genmap_index</code> <code>genmap_mappability</code> <code>mappability_bed</code> <code>mosdepth</code> <code>mosdepth_external</code> <code>mosdepth_markdup</code> <code>postprocess_basic_filter</code> <code>postprocess_drop_indel_snps</code> <code>postprocess_filter_individuals</code> <code>postprocess_strict_filter</code> <code>postprocess_subset_indels</code> <code>postprocess_subset_snps</code> <code>postprocess_update_bed</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>callable_sites_fraction</code><span class="ox-param-default">1.0</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">callable tool parameter (upstream --callable_sites_fraction) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>coverage_bed</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>callable_sites_kmer</code><span class="ox-param-default">150</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">callable tool parameter (upstream --callable_sites_kmer) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>genmap_mappability</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>callable_sites_max_coverage</code><span class="ox-param-default">auto</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">callable tool parameter (upstream --callable_sites_max_coverage) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>callable_coverage_thresholds</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>callable_sites_merge_distance</code><span class="ox-param-default">100</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">callable tool parameter (upstream --callable_sites_merge_distance) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>coverage_bed</code> <code>mappability_bed</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>callable_sites_min_coverage</code><span class="ox-param-default">auto</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">callable tool parameter (upstream --callable_sites_min_coverage) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>callable_coverage_thresholds</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>callable_sites_min_score</code><span class="ox-param-default">1</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">callable tool parameter (upstream --callable_sites_min_score) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>mappability_bed</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>deepvariant_model_type</code><span class="ox-param-default">WGS</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">deepvariant tool parameter (upstream --deepvariant_model_type) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>deepvariant_call</code> <code>deepvariant_call_external</code> <code>deepvariant_call_markdup</code></div>
 </details>
 </div>
-<div class="ox-param">
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>expected_coverage</code><span class="ox-param-default">low</span></div>
 <p class="ox-param-desc">—</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
@@ -153,7 +154,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-snparcher
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>gatk_het_prior</code><span class="ox-param-default">0.005</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">gatk tool parameter (upstream --gatk_het_prior) <span class="ox-param-inferred">inferred</span></p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>gatk_genotype_gvcfs_interval</code> <code>joint_genotype_gvcfs</code></div>
 </details>
@@ -349,7 +350,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-snparcher
 </div>
 </div>
 
-Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
+Descriptions are the workflow's own `#` comments from its `[config]` section (and the `[config]` sections of its included modules), surfaced by `oxo-flow info` — no schema file to maintain.
 
 ## Workflow graph
 

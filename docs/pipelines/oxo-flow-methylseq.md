@@ -67,10 +67,11 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-methylseq
 
 ## Parameters
 
+<p class="ox-param-usage">At run time override any parameter with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys.</p>
 <div class="ox-params">
 <div class="ox-param">
 <div class="ox-param-head"><code>accel</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Library presets (upstream params with the same defaults).</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>trimgalore</code> <code>trimgalore_se</code></div>
 </details>
@@ -91,7 +92,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-methylseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>bamqc_regions_file</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Targeted-sequencing inputs (upstream: --target_regions_file / --bamqc_regions_file, default empty)</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>qualimap_bamqc</code> <code>qualimap_bamqc_alt</code></div>
 </details>
@@ -119,7 +120,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-methylseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>clip_r2</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Trimming options (upstream params with the same defaults)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>trimgalore</code></div>
 </details>
@@ -147,7 +148,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-methylseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>em_seq</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Library presets (upstream params with the same defaults).</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>bismark_align</code> <code>trimgalore</code> <code>trimgalore_se</code></div>
 </details>
@@ -161,35 +162,35 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-methylseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>ignore_3prime_r1</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">The port&#x27;s DAG consumes the merged (--comprehensive) methylation-call outputs, so the default differs from upstream (false): the per-strand split files would leave the declared outputs unmoved.</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>bismark_methylationextractor</code> <code>bismark_methylationextractor_se</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>ignore_3prime_r2</code><span class="ox-param-default">2</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">The port&#x27;s DAG consumes the merged (--comprehensive) methylation-call outputs, so the default differs from upstream (false): the per-strand split files would leave the declared outputs unmoved.</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>bismark_methylationextractor</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>ignore_flags</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Methyldackel options (upstream params with the same defaults, active on the bwameth branch when TAPS is off)</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>methyldackel_extract</code> <code>methyldackel_extract_allcontexts</code> <code>methyldackel_extract_methylkit</code> <code>methyldackel_mbias</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>ignore_r1</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">The port&#x27;s DAG consumes the merged (--comprehensive) methylation-call outputs, so the default differs from upstream (false): the per-strand split files would leave the declared outputs unmoved.</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>bismark_methylationextractor</code> <code>bismark_methylationextractor_se</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>ignore_r2</code><span class="ox-param-default">2</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">The port&#x27;s DAG consumes the merged (--comprehensive) methylation-call outputs, so the default differs from upstream (false): the per-strand split files would leave the declared outputs unmoved.</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>bismark_methylationextractor</code></div>
 </details>
@@ -203,56 +204,56 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-methylseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>length_trim</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Trimming options (upstream params with the same defaults)</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>trimgalore</code> <code>trimgalore_se</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>local_alignment</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">The port&#x27;s DAG consumes the merged (--comprehensive) methylation-call outputs, so the default differs from upstream (false): the per-strand split files would leave the declared outputs unmoved.</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>bismark_align</code> <code>bismark_align_se</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>maxins</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">The port&#x27;s DAG consumes the merged (--comprehensive) methylation-call outputs, so the default differs from upstream (false): the per-strand split files would leave the declared outputs unmoved.</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>bismark_align</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>merge_context</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Methyldackel options (upstream params with the same defaults, active on the bwameth branch when TAPS is off)</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>methyldackel_extract</code> <code>methyldackel_extract_allcontexts</code> <code>methyldackel_extract_methylkit</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>meth_cutoff</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">The port&#x27;s DAG consumes the merged (--comprehensive) methylation-call outputs, so the default differs from upstream (false): the per-strand split files would leave the declared outputs unmoved.</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>bismark_methylationextractor</code> <code>bismark_methylationextractor_se</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>methyl_kit</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Methyldackel options (upstream params with the same defaults, active on the bwameth branch when TAPS is off)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>methyldackel_extract_methylkit</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>min_depth</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Methyldackel options (upstream params with the same defaults, active on the bwameth branch when TAPS is off)</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>methyldackel_extract</code> <code>methyldackel_extract_allcontexts</code> <code>methyldackel_extract_methylkit</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>minins</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">The port&#x27;s DAG consumes the merged (--comprehensive) methylation-call outputs, so the default differs from upstream (false): the per-strand split files would leave the declared outputs unmoved.</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>bismark_align</code></div>
 </details>
@@ -266,49 +267,49 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-methylseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>nextseq_trim</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Trimming options (upstream params with the same defaults)</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>trimgalore</code> <code>trimgalore_se</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>no_overlap</code><span class="ox-param-default">true</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">The port&#x27;s DAG consumes the merged (--comprehensive) methylation-call outputs, so the default differs from upstream (false): the per-strand split files would leave the declared outputs unmoved.</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>bismark_methylationextractor</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>nomeseq</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Bismark options</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>bismark_coverage2cytosine</code> <code>bismark_methylationextractor</code> <code>bismark_methylationextractor_se</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>non_directional</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Library presets (upstream params with the same defaults).</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>bismark_align</code> <code>bismark_align_se</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>num_mismatches</code><span class="ox-param-default">0.6</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">The port&#x27;s DAG consumes the merged (--comprehensive) methylation-call outputs, so the default differs from upstream (false): the per-strand split files would leave the declared outputs unmoved.</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>bismark_align</code> <code>bismark_align_se</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>out_dir</code><span class="ox-param-default">results</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Input reads directory: raw/&lt;sample&gt;_R1.fastq.gz + _R2.fastq.gz (paired-end). The repo default ships the tiny test fixtures; point this at your data.</p>
 <details class="ox-param-usedby"><summary>used by 55 rules</summary>
 <div class="ox-param-rules"><code>bedtools_intersect</code> <code>bedtools_intersect_bwameth</code> <code>bedtools_intersect_bwameth_chg</code> <code>bedtools_intersect_bwameth_chh</code> <code>bismark_align</code> <code>bismark_align_se</code> <code>bismark_coverage2cytosine</code> <code>bismark_deduplicate</code> <code>bismark_deduplicate_se</code> <code>bismark_methylationextractor</code> <code>bismark_methylationextractor_se</code> <code>bismark_report</code> <code>bismark_report_se</code> <code>bismark_summary</code> <code>bwa_mem</code> <code>bwameth_align</code> <code>cat_fastq_r1</code> <code>cat_fastq_r2</code> <code>fastqc</code> <code>fastqc_se</code> <code>methyldackel_extract</code> <code>methyldackel_extract_allcontexts</code> <code>methyldackel_extract_methylkit</code> <code>methyldackel_mbias</code> <code>multiqc</code> <code>multiqc_bwamem</code> <code>multiqc_bwameth</code> <code>multiqc_versions</code> <code>picard_addorreplacereadgroups</code> <code>picard_bedtointervallist</code> <code>picard_collecthsmetrics</code> <code>picard_collecthsmetrics_alt</code> <code>picard_markduplicates</code> <code>picard_markduplicates_bwamem</code> <code>preseq_lcextrap</code> <code>preseq_lcextrap_alt</code> <code>qualimap_bamqc</code> <code>qualimap_bamqc_alt</code> <code>rastair_call_bwamem</code> <code>rastair_call_bwameth</code> <code>rastair_mbias_bwamem</code> <code>rastair_mbias_bwameth</code> <code>rastair_mbiasparser</code> <code>rastair_methylkit</code> <code>samtools_flagstat</code> <code>samtools_idxstats</code> <code>samtools_index</code> <code>samtools_index_alignment</code> <code>samtools_index_deduplicated</code> <code>samtools_index_deduplicated_bwamem</code> <code>samtools_sort</code> <code>samtools_sort_alignment</code> <code>samtools_stats</code> <code>trimgalore</code> <code>trimgalore_se</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>pbat</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Library presets (upstream params with the same defaults).</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>bismark_align</code> <code>bismark_align_se</code> <code>trimgalore</code> <code>trimgalore_se</code></div>
 </details>
@@ -316,13 +317,13 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-methylseq
 <div class="ox-param">
 <div class="ox-param-head"><code>raw_dir</code><span class="ox-param-default">test/fixtures/raw</span></div>
 <p class="ox-param-desc">Input reads directory: raw/&lt;sample&gt;_R1.fastq.gz + _R2.fastq.gz (paired-end). The repo default ships the tiny test fixtures; point this at your data.</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>fastqc</code> <code>fastqc_se</code> <code>trimgalore</code> <code>trimgalore_se</code></div>
+<details class="ox-param-usedby"><summary>used by 6 rules</summary>
+<div class="ox-param-rules"><code>cat_fastq_r1</code> <code>cat_fastq_r2</code> <code>fastqc</code> <code>fastqc_se</code> <code>trimgalore</code> <code>trimgalore_se</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>relax_mismatches</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">The port&#x27;s DAG consumes the merged (--comprehensive) methylation-call outputs, so the default differs from upstream (false): the per-strand split files would leave the declared outputs unmoved.</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>bismark_align</code> <code>bismark_align_se</code></div>
 </details>
@@ -336,7 +337,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-methylseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_preseq</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Optional QC branches (upstream params, all off by default)</p>
 <details class="ox-param-usedby"><summary>used by 5 rules</summary>
 <div class="ox-param-rules"><code>multiqc</code> <code>multiqc_bwamem</code> <code>multiqc_bwameth</code> <code>preseq_lcextrap</code> <code>preseq_lcextrap_alt</code></div>
 </details>
@@ -350,14 +351,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-methylseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>run_targeted_sequencing</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Optional QC branches (upstream params, all off by default)</p>
 <details class="ox-param-usedby"><summary>used by 10 rules</summary>
 <div class="ox-param-rules"><code>bedtools_intersect</code> <code>bedtools_intersect_bwameth</code> <code>bedtools_intersect_bwameth_chg</code> <code>bedtools_intersect_bwameth_chh</code> <code>multiqc</code> <code>multiqc_bwameth</code> <code>picard_bedtointervallist</code> <code>picard_collecthsmetrics</code> <code>picard_collecthsmetrics_alt</code> <code>picard_createsequencedictionary</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>single_cell</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Library presets (upstream params with the same defaults).</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>bismark_align</code> <code>bismark_align_se</code> <code>trimgalore</code> <code>trimgalore_se</code></div>
 </details>
@@ -371,7 +372,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-methylseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_deduplication</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip options (upstream: --skip_fastqc / --skip_trimming / --skip_deduplication / --skip_multiqc). Same defaults as upstream.</p>
 <details class="ox-param-usedby"><summary>used by 9 rules</summary>
 <div class="ox-param-rules"><code>bismark_deduplicate</code> <code>bismark_deduplicate_se</code> <code>multiqc_bwamem</code> <code>multiqc_bwameth</code> <code>picard_addorreplacereadgroups</code> <code>picard_markduplicates</code> <code>picard_markduplicates_bwamem</code> <code>samtools_index_deduplicated</code> <code>samtools_index_deduplicated_bwamem</code></div>
 </details>
@@ -385,28 +386,28 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-methylseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_multiqc</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip options (upstream: --skip_fastqc / --skip_trimming / --skip_deduplication / --skip_multiqc). Same defaults as upstream.</p>
 <details class="ox-param-usedby"><summary>used by 3 rules</summary>
 <div class="ox-param-rules"><code>multiqc</code> <code>multiqc_bwamem</code> <code>multiqc_bwameth</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_trimming</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Skip options (upstream: --skip_fastqc / --skip_trimming / --skip_deduplication / --skip_multiqc). Same defaults as upstream.</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>trimgalore</code> <code>trimgalore_se</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>skip_trimming_presets</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Trimming options (upstream params with the same defaults)</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>trimgalore</code> <code>trimgalore_se</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>slamseq</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Library presets (upstream params with the same defaults).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>bismark_genomepreparation</code></div>
 </details>
@@ -427,21 +428,21 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-methylseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>three_prime_clip_r1</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Trimming options (upstream params with the same defaults)</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>trimgalore</code> <code>trimgalore_se</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>three_prime_clip_r2</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Trimming options (upstream params with the same defaults)</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>trimgalore</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>unmapped</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">The port&#x27;s DAG consumes the merged (--comprehensive) methylation-call outputs, so the default differs from upstream (false): the per-strand split files would leave the declared outputs unmoved.</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>bismark_align</code> <code>bismark_align_se</code></div>
 </details>
@@ -455,14 +456,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-methylseq
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>zymo</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">Library presets (upstream params with the same defaults).</p>
 <details class="ox-param-usedby"><summary>used by 4 rules</summary>
 <div class="ox-param-rules"><code>bismark_align</code> <code>bismark_align_se</code> <code>trimgalore</code> <code>trimgalore_se</code></div>
 </details>
 </div>
 </div>
 
-Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
+Descriptions are the workflow's own `#` comments from its `[config]` section (and the `[config]` sections of its included modules), surfaced by `oxo-flow info` — no schema file to maintain.
 
 ## Workflow graph
 

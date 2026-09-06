@@ -67,6 +67,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-varlociraptor
 
 ## Parameters
 
+<p class="ox-param-usage">At run time override any parameter with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys.</p>
 <div class="ox-params">
 <div class="ox-param">
 <div class="ox-param-head"><code>annotation_selection</code><span class="ox-param-default">db_annotated</span></div>
@@ -91,21 +92,21 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-varlociraptor
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cadd_build</code><span class="ox-param-default">GRCh38</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">upstream config: plugins (download_cadd_scores_for_vep; download_revel and process_revel_scores are already ported in ref.oxoflow). cadd_build / cadd_version / cadd_variant_type are the upstream wildcards of the same rule with their upstream defaults.</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>plugins::download_cadd_scores_for_vep</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cadd_variant_type</code><span class="ox-param-default">snv</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">upstream config: plugins (download_cadd_scores_for_vep; download_revel and process_revel_scores are already ported in ref.oxoflow). cadd_build / cadd_version / cadd_variant_type are the upstream wildcards of the same rule with their upstream defaults.</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>plugins::download_cadd_scores_for_vep</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>cadd_version</code><span class="ox-param-default">v1.7</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">upstream config: plugins (download_cadd_scores_for_vep; download_revel and process_revel_scores are already ported in ref.oxoflow). cadd_build / cadd_version / cadd_variant_type are the upstream wildcards of the same rule with their upstream defaults.</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>plugins::download_cadd_scores_for_vep</code></div>
 </details>
@@ -161,7 +162,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-varlociraptor
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>mutational_burden_events</code><span class="ox-param-default">somatic_tumor_low,somatic_tumor_medium,somatic_tumor_high</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">upstream config: mutational_burden/activate + events (calculate_covered_coding_sites + estimate_mutational_burden; events are comma-joined, split to space-separated in the rule shells).</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>burden_signatures::estimate_mutational_burden_curve</code> <code>burden_signatures::estimate_mutational_burden_hist</code></div>
 </details>
@@ -189,28 +190,28 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-varlociraptor
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>population_db_alias</code><span class="ox-param-default">tumor</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">upstream config: population/db/activate + path/alias/fdr/events (rules clean_population_db / population_filter_variants / population_db_update).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>population::population_filter_variants</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>population_db_events</code><span class="ox-param-default">somatic_tumor_high,somatic_tumor_medium</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">upstream config: population/db/activate + path/alias/fdr/events (rules clean_population_db / population_filter_variants / population_db_update).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>population::population_filter_variants</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>population_db_fdr</code><span class="ox-param-default">0.05</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">upstream config: population/db/activate + path/alias/fdr/events (rules clean_population_db / population_filter_variants / population_db_update).</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>population::population_filter_variants</code></div>
 </details>
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>population_db_path</code><span class="ox-param-default">resources/population_db.variants.bcf</span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">upstream config: population/db/activate + path/alias/fdr/events (rules clean_population_db / population_filter_variants / population_db_update).</p>
 <details class="ox-param-usedby"><summary>used by 2 rules</summary>
 <div class="ox-param-rules"><code>population::clean_population_db</code> <code>population::population_db_update</code></div>
 </details>
@@ -224,14 +225,14 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-varlociraptor
 </div>
 <div class="ox-param">
 <div class="ox-param-head"><code>primers_fa1</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">upstream config: primers/trimming (rules assign_primers ... build_primer_regions). primers_fa1/primers_fa2 are the upstream primers/trimming/primers_fa{1,2} fasta files (empty upstream default = primers flow off); fa2 empty means single-end primer fasta.</p>
 <details class="ox-param-usedby"><summary>used by 1 rules</summary>
 <div class="ox-param-rules"><code>primers::map_primers</code></div>
 </details>
 </div>
-<div class="ox-param">
+<div class="ox-param ox-param-unused">
 <div class="ox-param-head"><code>primers_fa2</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">—</p>
+<p class="ox-param-desc">upstream config: primers/trimming (rules assign_primers ... build_primer_regions). primers_fa1/primers_fa2 are the upstream primers/trimming/primers_fa{1,2} fasta files (empty upstream default = primers flow off); fa2 empty means single-end primer fasta.</p>
 <details class="ox-param-usedby"><summary>not referenced by any rule</summary>
 <div class="ox-param-rules">—</div>
 </details>
@@ -259,7 +260,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-varlociraptor
 </div>
 </div>
 
-Descriptions are the workflow's own `#` comments from its `[config]` section, surfaced by `oxo-flow info` — no schema file to maintain.
+Descriptions are the workflow's own `#` comments from its `[config]` section (and the `[config]` sections of its included modules), surfaced by `oxo-flow info` — no schema file to maintain.
 
 ## Workflow graph
 
