@@ -329,7 +329,58 @@ def render_mmd(nf_metro: str, mmd: pathlib.Path, svg: pathlib.Path) -> str | Non
     # Light theme must not bake a dark `nf-metro-bg` rect (site issue #16).
     if "nf-metro-bg" in svg.read_text():
         return "nf-metro rendered a dark background — not light-theme clean"
+    pad_viewport_left(svg)
     return None
+
+
+def pad_viewport_left(svg: pathlib.Path) -> None:
+    """Widen a rendered SVG's viewBox so no station label clips at the edge.
+
+    nf-metro center-anchors station labels at the station x; a wide label
+    on the leftmost column extends past the viewBox and is silently
+    clipped (live: sarek's two-line merged title lost its first line).
+    Estimate each label's extent (14px font ≈ 7.2px/char) and grow the
+    left edge of the viewBox to fit the widest overflow, plus a 12px pad.
+    Every tier gets the same treatment so the fix is tier-agnostic.
+    """
+    text = svg.read_text()
+    m = re.search(r'viewBox="([\d.\- ]+)"', text)
+    if not m:
+        return
+    try:
+        x0, y0, w, h = [float(v) for v in m.group(1).replace(",", " ").split()]
+    except ValueError:
+        return
+    # Most-negative overflow: labels extend PAST the left edge (negative
+    # x-extent); max() over 0.0 would silently clip the measurement.
+    overflow = 0.0
+    for mm in re.finditer(r'<text\s([^>]*)>(.*?)</text>', text, re.S):
+        attrs, body = mm.group(1), mm.group(2)
+        if "data-station-id" not in attrs or "text-anchor=\"middle\"" not in attrs:
+            continue
+        xm = re.search(r'x="([\d.]+)"', attrs)
+        if not xm:
+            continue
+        x = float(xm.group(1))
+        # Multi-line labels are a <text> with several <tspan>s: estimate
+        # EVERY line (the widest line governs the overflow).
+        lines = re.findall(r'<tspan[^>]*>([^<]+)</tspan>', body) or [body]
+        for line in lines:
+            # 14px nf-metro font: ~8.2px per glyph in practice (Inter bold,
+            # letter spacing); under-estimating leaves a glyph clipped.
+            est = len(line.replace(" ", "")) * 8.2 + line.count(" ") * 4.0
+            candidate = x - est / 2
+            if candidate < overflow:
+                overflow = candidate
+    if overflow < 0:
+        new_x0 = x0 + overflow - 20
+        new_text = re.sub(
+            r'viewBox="[\d.\- ]+"',
+            f'viewBox="{new_x0:.0f} {y0:.0f} {w - (new_x0 - x0):.0f} {h:.0f}"',
+            text,
+            count=1,
+        )
+        svg.write_text(new_text)
 
 
 def render_ladder(

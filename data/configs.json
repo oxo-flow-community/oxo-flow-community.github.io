@@ -1130,7 +1130,7 @@
       "tier": "module-stage",
       "stations": 7,
       "is_rule_level": false,
-      "aspect": 1.88
+      "aspect": 1.93
     }
   },
   "oxo-flow-sarek": {
@@ -2165,7 +2165,7 @@
       "tier": "module-stage",
       "stations": 4,
       "is_rule_level": false,
-      "aspect": 1.26
+      "aspect": 1.4
     }
   },
   "oxo-flow-scrnaseq": {
@@ -6597,7 +6597,7 @@
       "tier": "module-stage",
       "stations": 2,
       "is_rule_level": false,
-      "aspect": 1.17
+      "aspect": 1.45
     }
   },
   "oxo-flow-nanoseq": {
@@ -7985,7 +7985,7 @@
       "tier": "module-stage",
       "stations": 4,
       "is_rule_level": false,
-      "aspect": 1.32
+      "aspect": 1.49
     }
   },
   "oxo-flow-eager": {

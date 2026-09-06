@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-     width="440" height="334" viewBox="0 0 440 334">
+     width="440" height="334" viewBox="-59 0 499 334">
 <defs>
 </defs>
 <metadata id="diagram-manifest" data-schema-version="1.0"><![CDATA[{"groups":[{"color":"#79706E","id":"generic","label":"Analysis"},{"color":"#72B7B2","id":"annotate","label":"Annotation"},{"color":"#4C78A8","id":"qc","label":"Read QC"},{"color":"#F58518","id":"trim","label":"Read Trimming"}],"height":334,"match":{"flags":"i","target":"fqProcessName","type":"regex"},"nodes":[{"groups":["generic","trim"],"h":24.0,"id":"g_generic_align_trim_variant_generic","label":"Analysis • Alignment\nRead Trimming • Variant Calling","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":80.0,"y":126.0},{"groups":["annotate","generic"],"h":16.0,"id":"g_annotate_annotate","label":"Annotation","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":279.5,"y":122.0},{"groups":["qc"],"h":12.0,"id":"g_qc_qc","label":"Read QC","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":80.0,"y":168.0},{"groups":["annotate","qc","trim"],"h":20.0,"id":"g_report_generic","label":"Reporting","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":380.0,"y":168.0}],"regions":[],"title":"","version":"1.0","width":440}]]></metadata>
