@@ -1220,72 +1220,74 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **In scope**
 
-- make_fasta_index
-- make_seq_dict
-- make_bwa_index
-- fastqc
-- fastqc_lanemerged
-- fastp
-- lanemerge
-- lanemerge_r2
 - adapter_removal
-- fastqc_after_clipping
-- bwa_aln
-- samtools_flagstat
-- markduplicates
-- dedup
-- preseq
-- damageprofiler
-- qualimap
-- genotyping_pileupcaller
-- eigenstrat_snp_coverage
-- multiqc
-- unzip_reference
-- bwamem
-- make_bt2_index
+- bam_trim
+- bcftools_stats
+- bedtools_coverage
 - bowtie2
+- bwa_aln
+- bwamem
 - circulargenerator
 - circularmapper
 - convert_bam
+- damageprofiler
+- dedup
+- eigenstrat_snp_coverage
+- endor_spy
+- fastp
+- fastqc
+- fastqc_after_clipping
+- fastqc_lanemerged
+- genotyping_angsd
+- genotyping_freebayes
+- genotyping_hc
+- genotyping_pileupcaller
+- genotyping_ug
 - hostremoval_input_fastq
 - hostremoval_input_fastq_bwamem
-- samtools_filter_bwaaln
-- samtools_filter_bwamem
-- samtools_filter_bowtie2
-- samtools_filter_circularmapper
-- samtools_flagstat_after_filter
-- endor_spy
-- bedtools_coverage
-- post_ar_fastq_trimming
-- bam_trim
-- picard_addorreplacereadgroups
-- genotyping_ug
-- genotyping_hc
-- genotyping_freebayes
-- genotyping_angsd
-- bcftools_stats
-- vcf2genome
-- multivcfanalyzer
-- sexdeterrmine_prep
-- sexdeterrmine
-- mtnucratio
-- nuclear_contamination
-- print_nuclear_contamination
-- mapdamage_calculation
-- mapdamage_rescaling
-- mask_reference_for_pmdtools
-- pmdtools
-- metagenomic_complexity_filter
 - kraken
-- kraken_parse
 - kraken_merge
+- kraken_parse
+- lanemerge
+- lanemerge_r2
+- make_bt2_index
+- make_bwa_index
+- make_fasta_index
+- make_seq_dict
 - malt
 - maltextract
+- mapdamage_calculation
+- mapdamage_rescaling
+- markduplicates
+- mask_reference_for_pmdtools
+- metagenomic_complexity_filter
+- mtnucratio
+- multiqc
+- multivcfanalyzer
+- nuclear_contamination
+- picard_addorreplacereadgroups
+- pmdtools
+- post_ar_fastq_trimming
+- preseq
+- print_nuclear_contamination
+- qualimap
+- samtools_filter_bowtie2
+- samtools_filter_bwaaln
+- samtools_filter_bwamem
+- samtools_filter_circularmapper
+- samtools_flagstat
+- samtools_flagstat_after_filter
+- sexdeterrmine
+- sexdeterrmine_prep
+- unzip_reference
+- vcf2genome
 
 **Excluded**
 
 - library_merge / additional_library_merge: structural — upstream merges the per-LIBRARY BAMs of a sample (samtools merge of the per-library dedup / bam_trim BAMs, main.nf 1967 / 2320). The port's directory-input model has ONE library per sample (library = sample, lane = 0) and one BAM per sample at every stage, so there are no multi-library BAMs to merge; declaring each library as its own sample (or pre-merging) remains the workaround. lanemerge-style input_groups cannot express this either: it groups FILES of a pattern, and the port has no per-library file dimension
 - seqtype_merge: structural — upstream merges the per-seqtype mapped BAMs of mixed PE/SE libraries into one BAM per library (samtools merge, main.nf 1597); the port is pure-PE (directory input, sample = text before _R1/_R2) with one mapped BAM per sample, so there are no mixed-PE/SE BAMs to merge. Convert SE samples to PE or run SE-only samples separately
+- convertBam (ported as `convert_bam` but a documented dead end: with `bam_input=true` the rule extracts FASTQ while downstream still runs on the fixture FASTQs — upstream wires convertBam into the preprocessing channels; wiring it needs optional-input semantics, Traitome/oxo-flow#200; see the README fidelity row)
+- indexinputbam — upstream indexes the input BAM for BAM pass-through mode (`bam != 'NA' && !run_convertinputbam`, main.nf 657); not ported (the port's BAM-input mode routes through `convert_bam`/bam2fq and nothing downstream consumes the input BAM directly)
 
 **Not applicable** (upstream-absent features, boilerplate, dead code, deliberate non-goals — see the excluded-key taxonomy in [Traitome/oxo-flow#267](https://github.com/Traitome/oxo-flow/issues/267))
 

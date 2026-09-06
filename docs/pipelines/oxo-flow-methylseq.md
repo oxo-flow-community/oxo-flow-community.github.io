@@ -553,14 +553,12 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- none
+- Parabricks fq2bammeth GPU alignment path (gpu profile; `PARABRICKS_FQ2BAMMETH` in fastq_align_dedup_bwameth + process_gpu accelerator) — not ported; the port runs bwameth on CPU only
 
 ## Fidelity
 
 | Upstream process/rule | oxo-flow rule | Tool (version) | Notes |
-|---|---|---|
-| CAT_FASTQ | `cat_fastq_r1` / `cat_fastq_r2` | coreutils 9.5 | ported via the engine's `input_groups` primitive (issue #227, oxo-flow >= 0.17.0): one instance per sample with >1 fastq pair, R1s and R2s concatenated into `results/fastq/<sample>_R{1,2}.fastq.gz`; single-pair samples pass through unchanged (downstream falls back to the raw pair). Upstream's single process is split into two rules (one per read); see deviations |
---|
+|---|---|---|---|
 | FASTQC | `fastqc` / `fastqc_se` | fastqc 0.12.1 | identical command; `--memory` derived from task resources. The `_se` variant runs the single-end chain (reads named `{sample}.fastq.gz`, outputs `{sample}_fastqc.*`) when `single_end_mode` is on |
 | TRIMGALORE | `trimgalore` / `trimgalore_se` | trim-galore 0.6.10, cutadapt 4.9, pigz 2.8 | identical command incl. library-preset clipping and `--cores` clamp. The `_se` variant is the upstream SE module: R1-side clipping only, `--cores cpus-3` clamped to [1, 8] |
 | BISMARK_GENOMEPREPARATION | `bismark_genomepreparation` | bismark 0.25.1, gzip 1.13 | `--bowtie2` (or `--hisat2` for bismark_hisat, `--slam` for slamseq); runs when no prebuilt index is supplied (upstream default) |
@@ -573,9 +571,9 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 | BISMARK_METHYLATIONEXTRACTOR | `bismark_methylationextractor` / `bismark_methylationextractor_se` | bismark 0.25.1 | identical flag order on the **deduplicated** BAM; `--multicore`/`--buffer_size` derived from resources. The `_se` variant uses `-s` and drops `--no_overlap`/`--ignore_r2`/`--ignore_3prime_r2` (upstream `!meta.single_end` gate) |
 | BISMARK_COVERAGE2CYTOSINE | `bismark_coverage2cytosine` | bismark 0.25.1 | off by default; runs with `cytosine_report`/`nomeseq`; takes the SE coverage file when the sample is single-end |
 | BISMARK_REPORT | `bismark_report` / `bismark_report_se` | bismark 0.25.1 | bismark2report run with the four reports co-located, as in the upstream workdir; the `_se` variant feeds the `*_SE_report.txt` files |
-| BISMARK_SUMMARY | `bismark_summary` | bismark 0.25.1 | bismark2summary with upstream BAM-name arguments; per-sample SE/PE detection via a `[ -f ]` probe on the SE alignment report (no per-sample binding) |
+| BISMARK_SUMMARY | `bismark_summary` | bismark 0.25.1 | bismark2summary with upstream BAM-name arguments; per-sample SE/PE detection via a `[ -f ]` probe on the SE alignment report (no per-sample binding; see deviations) |
 | BWAMETH_INDEX | `bwameth_index` | bwameth 0.2.9 | `bwameth.py index`, or `index-mem2` with `use_mem2`; index dir `refs/BwamethIndex` |
-| BWAMETH_ALIGN | `bwameth_align` | bwameth 0.2.9 | identical command (reference symlink re-created in the index dir, `samtools view -bhS`); one or two reads are passed positionally per sample (SE/PE from its metadata row) |
+| BWAMETH_ALIGN | `bwameth_align` | bwameth 0.2.9 | identical command (reference symlink re-created in the index dir, `samtools view -bhS`); one or two reads are passed positionally per sample (SE/PE from its metadata row — CPU-only exact command as upstream's non-GPU branch; the upstream GPU path (`params.aligner == "bwameth"` under the gpu profile → `PARABRICKS_FQ2BAMMETH`) is not ported, see Excluded |
 | BWA_INDEX | `bwa_index` | bwa 0.7.19 | `bwa index -p`; upstream sizes memory dynamically (5.37x FASTA) — the port uses a fixed 4 threads/24G/24h budget (see deviations) |
 | BWA_MEM | `bwa_mem` | bwa 0.7.19, samtools 1.22.1 | upstream `sort_bam = true`: `bwa mem \| samtools sort`; index prefix found by globbing `*.amb`; one or two reads passed positionally per sample (SE/PE) |
 | SAMTOOLS_INDEX_ALIGNMENTS | `samtools_index_alignment` | samtools 1.22.1 | index of the sorted alignment BAM (bwameth/bwamem) |
@@ -600,14 +598,98 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 | SAMTOOLS_FAIDX | `samtools_faidx` | samtools 1.22.1, htslib 1.22.1, gzip 1.13 | stages the reference at `refs/FastaRef/reference.fa`; upstream gate (bwameth/bwamem/collecthsmetrics) reproduced |
 | MULTIQC | `multiqc` / `multiqc_bwameth` / `multiqc_bwamem` | multiqc 1.32 | one rule per aligner branch; same search space as upstream (fastqc zips, trimgalore logs, samtools stats/flagstat/idxstats, picard metrics + qualimap/preseq/HS extras), plus the single-end report names (`{sample}_fastqc.zip`, `{sample}.fastq.gz_trimming_report.txt`, `*_SE_report.txt`, ...) which are picked up exactly when present; the methyldackel/rastair outputs are not fed to MultiQC, exactly like upstream |
 | softwareVersionsToYAML + collectFile | `multiqc_versions` | — | upstream extracts versions at runtime; port pins the module versions statically |
+| CAT_FASTQ | `cat_fastq_r1` / `cat_fastq_r2` | coreutils 9.5 | ported via the engine's `input_groups` primitive (issue #227, oxo-flow >= 0.17.0): one instance per sample with >1 fastq pair, R1s and R2s concatenated into `results/fastq/<sample>_R{1,2}.fastq.gz`; single-pair samples pass through unchanged (downstream falls back to the raw pair). Upstream's single process is split into two rules (one per read); see deviations |
 
 Additional notes: single-end samples are supported via the engine's
-metadata binding (`[workflow] metadata_file` + `{meta.endedness}`, gated on
-`config.single_end_mode`, oxo-flow >= 0.17.0); `--save_*` / `publish_dir_mode`
-params are N/A (oxo-flow publishes every declared output); per-process
-`withName:` resource overrides are baked into `[rules.resources]` (upstream
-labels process_single/low/medium/high + BISMARK_ALIGN 8d / DEDUPLICATE 2d /
+metadata binding (see Usage); `--save_*` / `publish_dir_mode` params are N/A
+(oxo-flow publishes every declared output); per-process `withName:` resource
+overrides are baked into `[rules.resources]` (upstream labels
+process_single/low/medium/high + BISMARK_ALIGN 8d / DEDUPLICATE 2d /
 METHYLATIONEXTRACTOR 1d time limits).
+
+### Documented deviations
+
+Each deviation is cosmetic or a mechanism swap — the effective commands and
+outputs match upstream:
+
+1. **bismark_hisat output names** — hisat2-mode alignments are renamed from
+   the upstream `_bismark_hisat2_` infix (bismark 0.24.x names, live-verified)
+   to the canonical `_bismark_bt2_` names so the shared downstream chain works
+   unchanged (cosmetic).
+2. **`--known-splicesite-infile`** — upstream passes
+   `<(...)` (process substitution); the port materializes the same
+   `hisat2_extract_splice_sites.py` output to a temp file (bash process
+   substitution does not survive variable expansion).
+3. **`--PROGRAM_RECORD_ID null`** — passed unquoted; the upstream quotes are
+   Groovy escaping and the effective value is the bare word `null`.
+4. **preseq `*.command.log`** — upstream copies the whole Nextflow task
+   stderr (`.command.err`); oxo-flow has no such file, so the port's log is
+   preseq's stderr (the informative part of the upstream log).
+5. **Canonical staging names** — the Bismark index dir always contains the
+   FASTA as `reference.fa`, the bwameth/bwamem/HS branches use
+   `refs/FastaRef/reference.fa` + `refs/RefDict/reference.dict`, and
+   `picard_bedtointervallist` writes `target_regions.intervallist` (upstream
+   uses the BED file's basename). Names differ; content and ordering do not.
+6. **Envs consolidated** — the upstream GUNZIP/UNTAR coreutils env is merged
+   into the tool envs (gzip added to `bismark_genomeprep`/`samtools_faidx`,
+   since the bioconda bismark 0.25.1 build does not depend on gzip), and the
+   four upstream rastair envs are consolidated into one
+   (`rastair=0.8.2=*_2` + `r-base=4.4.0`, the build that ships the R helper
+   scripts) for every rastair rule.
+7. **TAPS on the bismark aligners** — upstream builds no fasta index for
+   `taps && aligner =~ /bismark/`, so BAM_TAPS_CONVERSION silently produces
+   nothing there; the port replicates that (no bismark-family rastair rules)
+   instead of the upstream's silent no-op.
+8. **`bwa_index` resources** — upstream requests `5.37 x fasta.size()`
+   memory dynamically; the port uses a fixed 4 threads / 24G / 24h budget
+   (adequate for ~4GB genomes).
+9. **`skip_deduplication`/`rrbs` on the bwameth/bwamem branches** — upstream
+   passes the *alignment* BAM downstream when dedup is skipped; the port's
+   methyldackel/rastair/qualimap/preseq/HS-metrics rules consume the
+   deduplicated BAM, so those branches require deduplication. Upstream's
+   dedup-independent callers behave identically when dedup runs (the default).
+10. **MethylDackel `--methylKit`** — the tool emits only `*.methylKit` files
+    when the flag is given, so the port runs `methyldackel_extract_methylkit`
+    as a separate gated rule *in addition to* the bedGraph-producing run
+    (the upstream module emits both outputs from one invocation; oxo-flow
+    validates every declared output, so the split is required).
+11. **MultiQC per aligner** — one `multiqc` rule per aligner branch with the
+    branch's always-present files declared and the conditional extras
+    (qualimap dirs, preseq logs, HS metrics, picard metrics) symlinked
+    in-shell when they exist — the engine cannot declare conditional inputs.
+12. **CAT_FASTQ as two rules + a shell fallback** — upstream runs one
+    `CAT_FASTQ` process on `ch_samplesheet.multiple` and mixes its outputs
+    with `ch_samplesheet.single`. The port splits the merge into
+    `cat_fastq_r1` / `cat_fastq_r2` (the engine's `input_groups` allows one
+    pattern per rule — see the docs' "Input Groups" section), each
+    instantiating only for samples whose raw files carry a unit segment
+    (`<sample>_<unit>_R{1,2}.fastq.gz`), and the downstream
+    `fastqc`/`trimgalore` rules declare both the concatenated pair
+    (`optional = "any"`) and the raw pair, using the concatenated one when
+    it exists and the raw pair otherwise. Effective commands and outputs
+    match upstream (a sample named with a single unit is copied through —
+    `cat` of one file — which is the same content as the pass-through).
+    Needs oxo-flow >= 0.17.0; on older engines the `cat_fastq` rules fail
+    loudly instead of writing empty fastqs.
+13. **Single-end via engine metadata** — upstream decides `single_end` per
+    sample from the samplesheet (`fastq_2` absent); the port binds it with
+    the engine's metadata feature (`[workflow] metadata_file` +
+    `{meta.endedness}`, oxo-flow >= 0.17.0) instead of a samplesheet, gated
+    on `config.single_end_mode` (off by default — the default run is
+    unchanged). Paired-end rules carry a `{meta.endedness} != 'SE'` when-gate
+    (a sample without a metadata row renders `'' != 'SE'` and stays
+    paired-end) and six `*_se` variant rules reproduce the upstream SE
+    modules verbatim (`-s` extractor/dedup, no `--minins`/`--maxins`, no
+    `--collect-overlap-pairs`, no `-pe`, R1-side-only clipping, SE output
+    names). The engine bakes the metadata literals into the `when`
+    conditions and the per-sample shell selections at plan time.
+14. **Per-sample SE detection in cohort rules** — `bismark_summary` and
+    `multiqc` run once over the whole cohort (no per-sample binding), so
+    they cannot read `{meta.endedness}` per sample. `bismark_summary`
+    probes for each sample's SE alignment report with `[ -f ]` and picks the
+    SE or PE BAM names accordingly, and the multiqc search loops list the SE
+    report names, which are picked up exactly when present. Same effective
+    behavior as the upstream per-sample `meta.single_end` branching.
 
 ## Links
 

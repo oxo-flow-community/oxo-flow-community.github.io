@@ -649,7 +649,7 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- nanopore platform branch (ARTIC_GUPPYPLEX, ARTIC_MINION, NANOPLOT, PYCOQC, VCFLIB_VCFUNIQ, PREPARE_GENOME_NANOPORE) — upstream discovers per-barcode read directories (fastq_dir/barcode* + sequencing_summary, workflows/viralrecon.nf:693-920) with single-end meta flags, requires ONT reads basecalled by the commercial guppy_basecaller/guppy_barcoder, and no nanopore fixture exists; the port is paired-end Illumina filesystem discovery only (structural)
+- nanopore platform branch (ARTIC_GUPPYPLEX, ARTIC_MINION, NANOPLOT, PYCOQC, VCFLIB_VCFUNIQ, PREPARE_GENOME_NANOPORE) — upstream discovers per-barcode read directories (fastq_dir/barcode* + sequencing_summary, workflows/viralrecon.nf:693-920) with single-end meta flags, requires ONT reads basecalled by the commercial guppy_basecaller/guppy_barcoder, and no port-side nanopore fixture exists (upstream ships nanopore nf-tests: tests/test_nanopore.nf.test); the port is paired-end Illumina filesystem discovery only (structural)
 - channel-level runtime filters, partially adopted — the fastp empty-after-filtering drop IS ported as `reads_count('fastp/{sample}_1.fastp.fastq.gz') > 0` gates on the trimmed-reads consumers (kraken2, align_bowtie2, assembly_fastq; engine 0.17.0 `when` runtime functions). The remaining DROPS are documented deviations: the min_mapped_reads flagstat gate (a strict `>` on the mapped count parsed out of samtools flagstat text — no engine runtime fn can extract it, so only the reporting half is ported as fail_mapped_samples_mqc.tsv inside the multiqc rule) and the zero-variant-sample filters (ivar: `wc_lines(tsv) > 1` is expressible but the port deliberately keeps zero-variant samples flowing downstream with a placeholder-header VCF for live-fixture robustness; bcftools: the record count needs a regex over `bcftools stats` output — fail_mapped_reads_mqc.tsv reports fastp failures inside the multiqc rule)
 
 ## Fidelity
@@ -663,9 +663,9 @@ to it in this port:
 | FASTQC_RAW | `fastqc_raw` | same args; upstream input-rename step kept (reads symlinked to `{sample}_{1,2}.fastq.gz` before FastQC so output names match), then renamed into `results/fastqc/raw/` |
 | FASTP | `fastp` | `ext.args` baked in verbatim (cut_front/cut_tail/trim_poly_x/cut_mean_quality 30/...) + `--detect_adapter_for_pe`, `2>| >(tee log >&2)`; `save_trimmed_fail=true` adds upstream's `--failed_out {sample}.paired.fail.fastq.gz --unpaired1/2 {sample}_{1,2}.fail.fastq.gz` (off by default — empty placeholders) |
 | FASTQC_TRIM | `fastqc_trim` | same args; upstream input-rename step kept (trimmed reads symlinked to `{sample}_{1,2}.fastq.gz` before FastQC), then renamed into `results/fastqc/trim/` |
-| KRAKEN2_KRAKEN2 | `kraken2` | `--db` (local), `--report-zero-counts`, pigz of classified/unclassified pairs; gated on `skip_kraken2` |
+| KRAKEN2_KRAKEN2 | `kraken2` | `--db` (local), `--report-zero-counts`, pigz of classified/unclassified pairs; gated on `skip_kraken2` + the fastp empty-reads drop (`reads_count(...) > 0` when-gate) |
 | (channel wiring) | `assembly_fastq` | passthrough of fastp reads to `kraken2/{sample}.unclassified_*.fastq.gz` when host filtering is off — replaces upstream `ch_assembly_fastq = ch_variants_fastq`; see deviations |
-| BOWTIE2_ALIGN | `align_bowtie2` | index found by `find -L` on `*.rev.1.bt2[l]`, `--local --very-sensitive-local --seed 1`, unmapped-filtered `samtools view -F4`, log tee'd |
+| BOWTIE2_ALIGN | `align_bowtie2` | index found by `find -L` on `*.rev.1.bt2[l]`, `--local --very-sensitive-local --seed 1`, unmapped-filtered `samtools view -F4`, log tee'd; carries the fastp empty-reads drop when-gate |
 | IVAR_TRIM | `ivar_trim` | `-m 30 -q 20 -e` (noprimer-gated), optional `-x offset`, log captured; gated amplicon |
 | BAM_SORT_STATS_SAMTOOLS | `bam_sort_index_trimmed` | merged: `samtools cat` (single input, dropped) → sort → index → stats/flagstat/idxstats |
 | (align branch) | `bam_sort_index` | same merged trio for the untrimmed BAM |
@@ -764,9 +764,10 @@ Ported branches (all gated off by default, mirroring the upstream
 Still excluded (see metadata.json): the nanopore platform
 (ARTIC_GUPPYPLEX/ARTIC_MINION/NANOPLOT/PYCOQC/VCFLIB_VCFUNIQ — upstream
 wires per-barcode read channels with single-end meta flags, guppybasecaller
-is a commercial ONT tool and no nanopore fixture exists; structural) and the
-per-sample DROPS of the channel-level runtime filters (their reporting half
-is ported inside the multiqc rule — see deviations).
+is a commercial ONT tool and no port-side nanopore fixture exists (upstream ships its own nanopore nf-tests — tests/test_nanopore.nf.test, conf/test_full_nanopore.config); structural) and the
+remaining runtime-filter DROPS — the `min_mapped_reads` flagstat gate and the
+zero-variant-sample filters (their reporting half is ported inside the
+multiqc rule — see deviations).
 
 ### Documented deviations
 
@@ -786,18 +787,26 @@ approximation; none silently change results:
    operator. (Negative equality gates were rejected as incorrect:
    `!= 'spades'` would wrongly enable `minia` for
    `assemblers = 'spades,unicycler'`.)
-2. **The per-sample DROPS of the channel-level runtime filters are not
-   ported.** The upstream `process_trim_fastq` filter (drop samples with 0
-   reads after fastp), the `min_mapped_reads` flagstat gate before variant
-   calling and the zero-variant-sample filter run in Nextflow channel code,
-   not in a process — oxo-flow rules are all-or-nothing on their sample set,
-   so a sample cannot be dropped mid-DAG. The reporting half IS ported: the
-   multiqc rule regenerates upstream's custom-content TSVs
+2. **Runtime-filter DROPS are partially ported (engine 0.17.0 `when`
+   runtime functions).** The upstream fastp filter (drop samples with 0
+   reads after trimming, wrapped in `if (!params.skip_fastp)`) IS ported:
+   the consumers of the trimmed reads (`kraken2`, `align_bowtie2`,
+   `assembly_fastq`) carry a
+   `!config.skip_fastp && reads_count('fastp/{sample}_1.fastp.fastq.gz') > 0`
+   gate, matching upstream's per-sample channel drop with the same
+   short-circuit. The `min_mapped_reads` flagstat gate (a strict `>` on the
+   mapped count parsed out of samtools flagstat text) and the
+   zero-variant-sample filters still run in Nextflow channel code with no
+   engine equivalent — a sample cannot be dropped mid-DAG from a flagstat
+   regex or a `bcftools stats` record count. The reporting half IS ported:
+   the multiqc rule regenerates upstream's custom-content TSVs
    (`fail_mapped_reads_mqc.tsv` from the fastp JSONs, `fail_mapped_samples_mqc.tsv`
    from the Bowtie2 flagstats, same headers/rows as `multiqcTsvFromList`),
-   written only when samples fail. `min_mapped_reads` config now feeds that
+   written only when samples fail. `min_mapped_reads` config feeds that
    flagstat comparison. Placeholder artifacts (`: > {sample}.scaffolds.fa`
-   etc.) stand in where upstream would drop an empty assembly from the channel.
+   etc.) stand in where upstream would drop an empty assembly from the
+   channel; zero-variant samples keep flowing downstream with a
+   placeholder-header VCF (see `ivar_to_vcf`).
 3. **MarkDuplicates does not replace `ch_bam`.** Upstream
    `BAM_MARKDUPLICATES_PICARD` swaps `ch_bam` so mosdepth, picard metrics and
    variant calling all consume the marked BAM. The port publishes the marked
@@ -817,8 +826,9 @@ approximation; none silently change results:
    to the fastp reads (channel wiring) while Kraken2 still writes its
    unclassified FASTQs. The port models this with the `assembly_fastq`
    passthrough rule, which overwrites the `kraken2/` unclassified paths with
-   copies of the fastp reads (it runs after `kraken2` when both are active, so
-   the content is deterministic).
+   copies of the fastp reads; it carries `depends_on = ["kraken2"]` so the
+   overwrite is ordered (deterministic) whenever both rules are active, and
+   when `skip_kraken2=true` it is the sole producer of those paths.
 6. **`nextclade_clade_mqc.tsv`** is built by inline python instead of Nextflow
    channel code (same input CSVs, same output columns).
 7. **`min_contig_length` / `min_perc_contig_aligned`** are used directly in the

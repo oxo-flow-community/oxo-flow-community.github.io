@@ -38,7 +38,7 @@ Needs Cell Ranger reference data and reads — see Requirements; preview with `o
 
 ## Installation
 
-**Engine.** oxo-flow >= 0.12.0
+**Engine.** oxo-flow >= 0.13.1 ({effective_threads}/{effective_memory_mb} sizing, shipped in 0.13.1); cellranger_multi=true additionally requires >= 0.17.0 (per-sample {meta.*} metadata placeholders)
 
 **Toolchain.** containers (Docker/Singularity) — pinned images; conda alternatives in envs/ for non-Cell-Ranger rules (Cell Ranger rules are docker-only)
 
@@ -521,6 +521,10 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 **Excluded**
 
 - none
+
+**Not applicable** (upstream-absent features, boilerplate, dead code, deliberate non-goals — see the excluded-key taxonomy in [Traitome/oxo-flow#267](https://github.com/Traitome/oxo-flow/issues/267))
+
+- nf-core/gffread + gffread_transcriptome module is present in the upstream tree but unreachable: no include anywhere in workflows/ or subworkflows/ at 4.2.0 (only the modules.json dependency listing)
 
 ## Fidelity
 

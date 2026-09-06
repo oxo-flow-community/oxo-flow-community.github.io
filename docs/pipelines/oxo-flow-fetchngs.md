@@ -209,6 +209,10 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 - none
 
+**Not applicable** (upstream-absent features, boilerplate, dead code, deliberate non-goals — see the excluded-key taxonomy in [Traitome/oxo-flow#267](https://github.com/Traitome/oxo-flow/issues/267))
+
+- nf-core/untar module is present in the upstream tree but unreachable: no workflow/subworkflow includes it (only modules.json dependency listing + an unrelated sratools test tag)
+
 ## Fidelity
 
 | Upstream process/rule | oxo-flow rule | Tool (version) | Notes |
