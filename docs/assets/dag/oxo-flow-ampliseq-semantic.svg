@@ -1,167 +1,65 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-     width="2764" height="718" viewBox="-20 0 2804 718" style="color-scheme: light">
-<defs>
-</defs>
-<metadata id="diagram-manifest" data-schema-version="1.0"><![CDATA[{"groups":[{"color":"#79706E","id":"main","label":"Core pipeline"},{"color":"#54A24B","id":"dada2","label":"DADA2 detail"},{"color":"#F2A93B","id":"its","label":"ITS / ITSx"},{"color":"#4C78A8","id":"qii","label":"QIIME2 analyses"},{"color":"#F2CF5B","id":"report","label":"Reporting"}],"height":718,"match":{"flags":"i","target":"fqProcessName","type":"regex"},"nodes":[{"groups":["main"],"h":10.0,"id":"rename","label":"rename","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":80.0,"y":170.0},{"groups":["main","report"],"h":26.0,"id":"fastqc","label":"fastqc","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":294.0,"y":228.0},{"groups":["main","report"],"h":26.0,"id":"cutadapt","label":"cutadapt + summary","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":294.0,"y":428.0},{"groups":["main"],"h":10.0,"id":"DADA2__QC","label":"DADA2 QC","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":639.9,"y":220.0},{"groups":["main"],"h":10.0,"id":"DADA2__trimlen","label":"DADA2 trim len","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":759.9,"y":220.0},{"groups":["main"],"h":10.0,"id":"DADA2__filter","label":"DADA2 filter","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":879.9,"y":220.0},{"groups":["main"],"h":10.0,"id":"DADA2__err","label":"DADA2 err","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":999.9,"y":220.0},{"groups":["dada2","main"],"h":14.0,"id":"DADA2__denoise","label":"DADA2 denoise","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":1119.9,"y":222.0},{"groups":["main"],"h":10.0,"id":"DADA2__chimeras","label":"DADA2 chimeras","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":1351.1,"y":220.0},{"groups":["dada2","its","main","report"],"h":26.0,"id":"DADA2__merge","label":"DADA2 merge","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":1565.1,"y":228.0},{"groups":["dada2"],"h":10.0,"id":"DADA2__stats","label":"DADA2 stats","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":1351.1,"y":324.0},{"groups":["its","main","qii"],"h":22.0,"id":"QIIME2__cores","label":"QIIME2 runs","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":2361.5,"y":226.0},{"groups":["its","main","qii"],"h":22.0,"id":"taxonomy__assign","label":"taxonomy assign","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":2147.4,"y":226.0},{"groups":["main"],"h":10.0,"id":"taxonomy__DB","label":"taxonomy DB","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":80.0,"y":270.0},{"groups":["its"],"h":10.0,"id":"ITSx","label":"ITSx","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":1779.2,"y":478.0},{"groups":["its"],"h":10.0,"id":"ITSx__filter","label":"ITSx filter","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":1899.2,"y":478.0},{"groups":["qii"],"h":10.0,"id":"QIIME2__analyses","label":"QIIME2 steps","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":2481.5,"y":232.0},{"groups":["qii"],"h":10.0,"id":"QIIME2__plots","label":"QIIME2 exports","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":2704.1,"y":132.0},{"groups":["qii"],"h":10.0,"id":"QIIME2__comp","label":"QIIME2 tests","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":2704.1,"y":232.0},{"groups":["qii"],"h":10.0,"id":"QIIME2__diversity","label":"QIIME2 diver","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":2704.1,"y":382.0},{"groups":["report"],"h":10.0,"id":"MultiQC","label":"MultiQC","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":639.9,"y":536.0},{"groups":["report"],"h":10.0,"id":"picrust","label":"PICRUSt","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":1779.2,"y":286.0}],"regions":[],"title":"","version":"1.0","width":2764}]]></metadata>
-<style>.nf-metro-bg { fill: var(--nfm-map-bg, light-dark(#f5f5f5, #2b2b2b)); }
-.nf-metro-title { fill: var(--nfm-map-title-color, light-dark(#111111, #ffffff)); }
-.nf-metro-station-label { fill: var(--nfm-map-label-color, light-dark(#333333, #e0e0e0)); }
-.nf-metro-section-box { fill: var(--nfm-map-section-fill, light-dark(#ededed, #373737)); stroke: var(--nfm-map-section-stroke, light-dark(#e6e6e6, #595959)); }
-.nf-metro-section-label { fill: var(--nfm-map-section-label-color, light-dark(#666666, #c8c8c8)); }
-.nf-metro-group-label { fill: var(--nfm-map-section-label-color, light-dark(#666666, #c8c8c8)); }
-.nf-metro-group-underline { stroke: var(--nfm-map-section-label-color, light-dark(#666666, #c8c8c8)); }
-.nf-metro-legend-bg { fill: var(--nfm-map-legend-bg, light-dark(rgba(255, 255, 255, 0.8), rgba(0, 0, 0, 0.3))); }
-.nf-metro-legend-text { fill: var(--nfm-map-legend-text-color, light-dark(#333333, #e0e0e0)); }
-.nf-metro-marker-stroke { stroke: var(--nfm-map-marker-stroke, light-dark(#333333, #f0f0f0)); }
-.nf-metro-label-halo { fill: var(--nfm-map-bg, light-dark(#f5f5f5, #2b2b2b)); stroke: var(--nfm-map-bg, light-dark(#f5f5f5, #2b2b2b)); }</style>
-<rect x="0" y="0" width="2764" height="718" fill="#f5f5f5" class="nf-metro-bg" />
-<path d="M294.04999999999995,236.0 L540.0999999999999,236.0 Q550.0999999999999,236.0,551.09503719021,245.9503719020999 L579.1049628097899,526.0496280979002 Q580.0999999999999,536.0,590.0999999999999,536.0 L639.9499999999999,536.0" stroke="#F2CF5B" stroke-width="3.0" fill="none" stroke-linecap="round" stroke-linejoin="round" class="metro-line-report" data-line-id="report" />
-<path d="M294.04999999999995,436.0 L437.94999999999993,436.0 Q447.94999999999993,436.0,450.8234788556634,445.57826285221154 L475.0765211443365,526.4217371477885 Q477.94999999999993,536.0,487.94999999999993,536.0 L639.9499999999999,536.0" stroke="#F2CF5B" stroke-width="3.0" fill="none" stroke-linecap="round" stroke-linejoin="round" class="metro-line-report" data-line-id="report" />
-<path d="M1565.1499999999999,236.0 L1645.6513029401553,236.0 Q1655.6513029401553,236.0,1660.7962604944305,244.57492925712543 L1680.5063453858802,277.42507074287454 Q1685.6513029401553,286.0,1695.6513029401553,286.0 L1779.1999999999998,286.0" stroke="#F2CF5B" stroke-width="3.0" fill="none" stroke-linecap="round" stroke-linejoin="round" class="metro-line-report" data-line-id="report" />
-<path d="M2147.45,232.0 L2361.5,232.0" stroke="#4C78A8" stroke-width="3.0" stroke-linecap="round" class="metro-line-qii" data-line-id="qii" />
-<path d="M2361.5,232.0 L2481.5,232.0" stroke="#4C78A8" stroke-width="3.0" stroke-linecap="round" class="metro-line-qii" data-line-id="qii" />
-<path d="M2481.5,232.0 L2574.1,232.0 Q2584.1,232.0,2586.9734788556634,222.4217371477885 L2611.2265211443364,141.5782628522115 Q2614.1,132.0,2624.1,132.0 L2704.1,132.0" stroke="#4C78A8" stroke-width="3.0" fill="none" stroke-linecap="round" stroke-linejoin="round" class="metro-line-qii" data-line-id="qii" />
-<path d="M2481.5,232.0 L2704.1,232.0" stroke="#4C78A8" stroke-width="3.0" stroke-linecap="round" class="metro-line-qii" data-line-id="qii" />
-<path d="M2481.5,232.0 L2574.1,232.0 Q2584.1,232.0,2586.0611613513815,241.8058067569092 L2612.1388386486183,372.1941932430908 Q2614.1,382.0,2624.1,382.0 L2704.1,382.0" stroke="#4C78A8" stroke-width="3.0" fill="none" stroke-linecap="round" stroke-linejoin="round" class="metro-line-qii" data-line-id="qii" />
-<path d="M1565.1499999999999,228.0 L1652.7486970598443,228.0 Q1662.7486970598443,228.0,1663.9401492660286,237.92876838486922 L1691.55724485366,468.0712316151308 Q1692.7486970598443,478.0,1702.7486970598443,478.0 L1779.1999999999998,478.0" stroke="#F2A93B" stroke-width="3.0" fill="none" stroke-linecap="round" stroke-linejoin="round" class="metro-line-its" data-line-id="its" />
-<path d="M1779.1999999999998,478.0 L1899.1999999999998,478.0" stroke="#F2A93B" stroke-width="3.0" stroke-linecap="round" class="metro-line-its" data-line-id="its" />
-<path d="M1899.1999999999998,478.0 L1899.1999999999998,478.0 Q1909.1999999999998,478.0,1910.391452206184,468.0712316151308 L1938.0085477938155,237.92876838486922 Q1939.1999999999998,228.0,1949.1999999999998,228.0 L2147.45,228.0" stroke="#F2A93B" stroke-width="3.0" fill="none" stroke-linecap="round" stroke-linejoin="round" class="metro-line-its" data-line-id="its" />
-<path d="M1899.1999999999998,478.0 L1983.2499999999998,478.0 Q1993.2499999999998,478.0,1994.441452206184,468.0712316151308 L2022.0585477938155,237.92876838486922 Q2023.2499999999998,228.0,2033.2499999999998,228.0 L2361.5,228.0" stroke="#F2A93B" stroke-width="3.0" fill="none" stroke-linecap="round" stroke-linejoin="round" class="metro-line-its" data-line-id="its" />
-<path d="M1119.9499999999998,224.0 L1221.1,224.0 Q1231.1,224.0,1233.9734788556634,233.5782628522115 L1258.2265211443364,314.42173714778846 Q1261.1,324.0,1271.1,324.0 L1351.1,324.0" stroke="#54A24B" stroke-width="3.0" fill="none" stroke-linecap="round" stroke-linejoin="round" class="metro-line-dada2" data-line-id="dada2" />
-<path d="M1351.1,324.0 L1431.1,324.0 Q1441.1,324.0,1443.9734788556634,314.42173714778846 L1468.2265211443364,233.5782628522115 Q1471.1,224.0,1481.1,224.0 L1565.1499999999999,224.0" stroke="#54A24B" stroke-width="3.0" fill="none" stroke-linecap="round" stroke-linejoin="round" class="metro-line-dada2" data-line-id="dada2" />
-<path d="M80.0,170.0 L121.30000000000001,170.0 Q131.3,170.0,136.44495755427528,178.57492925712543 L156.15504244572475,211.42507074287457 Q161.3,220.0,171.3,220.0 L294.04999999999995,220.0" stroke="#79706E" stroke-width="3.0" fill="none" stroke-linecap="round" stroke-linejoin="round" class="metro-line-main" data-line-id="main" />
-<path d="M80.0,170.0 L121.30000000000001,170.0 Q131.3,170.0,132.4914522061843,179.92876838486922 L160.10854779381572,410.0712316151308 Q161.3,420.0,171.3,420.0 L294.04999999999995,420.0" stroke="#79706E" stroke-width="3.0" fill="none" stroke-linecap="round" stroke-linejoin="round" class="metro-line-main" data-line-id="main" />
-<path d="M294.04999999999995,420.0 L437.94999999999993,420.0 Q447.94999999999993,420.0,449.4334045293024,410.11063647131704 L476.4665954706975,229.88936352868296 Q477.94999999999993,220.0,487.94999999999993,220.0 L639.9499999999999,220.0" stroke="#79706E" stroke-width="3.0" fill="none" stroke-linecap="round" stroke-linejoin="round" class="metro-line-main" data-line-id="main" />
-<path d="M639.9499999999999,220.0 L759.9499999999999,220.0" stroke="#79706E" stroke-width="3.0" stroke-linecap="round" class="metro-line-main" data-line-id="main" />
-<path d="M759.9499999999999,220.0 L879.9499999999999,220.0" stroke="#79706E" stroke-width="3.0" stroke-linecap="round" class="metro-line-main" data-line-id="main" />
-<path d="M879.9499999999999,220.0 L999.9499999999999,220.0" stroke="#79706E" stroke-width="3.0" stroke-linecap="round" class="metro-line-main" data-line-id="main" />
-<path d="M999.9499999999999,220.0 L1119.9499999999998,220.0" stroke="#79706E" stroke-width="3.0" stroke-linecap="round" class="metro-line-main" data-line-id="main" />
-<path d="M1119.9499999999998,220.0 L1351.1,220.0" stroke="#79706E" stroke-width="3.0" stroke-linecap="round" class="metro-line-main" data-line-id="main" />
-<path d="M1351.1,220.0 L1565.1499999999999,220.0" stroke="#79706E" stroke-width="3.0" stroke-linecap="round" class="metro-line-main" data-line-id="main" />
-<path d="M1565.1499999999999,220.0 L2361.5,220.0" stroke="#79706E" stroke-width="3.0" stroke-linecap="round" class="metro-line-main" data-line-id="main" />
-<path d="M1565.1499999999999,220.0 L2147.45,220.0" stroke="#79706E" stroke-width="3.0" stroke-linecap="round" class="metro-line-main" data-line-id="main" />
-<path d="M80.0,270.0 L137.3,270.0 M149.3,270.0 L464.44999999999993,270.0 M476.44999999999993,270.0 L1979.1999999999998,270.0 Q1989.1999999999998,270.0,1994.344957554275,261.42507074287454 L2014.0550424457247,228.57492925712543 Q2019.1999999999998,220.0,2029.1999999999998,220.0 L2147.45,220.0" stroke="#79706E" stroke-width="3.0" fill="none" stroke-linecap="round" stroke-linejoin="round" class="metro-line-main" data-line-id="main" />
-<g class="nf-metro-station-group" data-node-id="rename" data-node-cx="80.0" data-node-cy="170.0" data-node-r="5.0" data-node-groups="main" data-node-w="10.0" data-node-h="10.0" data-node-rx="5.0">
-<rect x="75.0" y="165.0" width="10.0" height="10.0" rx="5.0" ry="5.0" fill="#ffffff" stroke="#333333" stroke-width="1.5" class="nf-metro-station" data-station-id="rename" data-station-lines="main" data-station-label="rename" />
-</g>
-<g class="nf-metro-station-group" data-node-id="fastqc" data-node-cx="294.0" data-node-cy="228.0" data-node-r="5.0" data-node-groups="main,report" data-node-w="10.0" data-node-h="26.0" data-node-rx="5.0">
-<rect x="289.04999999999995" y="215.0" width="10.0" height="26.0" rx="5.0" ry="5.0" fill="#ffffff" stroke="#333333" stroke-width="1.5" class="nf-metro-station" data-station-id="fastqc" data-station-lines="main,report" data-station-label="fastqc" />
-</g>
-<g class="nf-metro-station-group" data-node-id="cutadapt" data-node-cx="294.0" data-node-cy="428.0" data-node-r="5.0" data-node-groups="main,report" data-node-w="10.0" data-node-h="26.0" data-node-rx="5.0">
-<rect x="289.04999999999995" y="415.0" width="10.0" height="26.0" rx="5.0" ry="5.0" fill="#ffffff" stroke="#333333" stroke-width="1.5" class="nf-metro-station" data-station-id="cutadapt" data-station-lines="main,report" data-station-label="cutadapt + summary" />
-</g>
-<g class="nf-metro-station-group" data-node-id="DADA2__QC" data-node-cx="639.9" data-node-cy="220.0" data-node-r="5.0" data-node-groups="main" data-node-w="10.0" data-node-h="10.0" data-node-rx="5.0">
-<rect x="634.9499999999999" y="215.0" width="10.0" height="10.0" rx="5.0" ry="5.0" fill="#ffffff" stroke="#333333" stroke-width="1.5" class="nf-metro-station" data-station-id="DADA2__QC" data-station-lines="main" data-station-label="DADA2 QC" />
-</g>
-<g class="nf-metro-station-group" data-node-id="DADA2__trimlen" data-node-cx="759.9" data-node-cy="220.0" data-node-r="5.0" data-node-groups="main" data-node-w="10.0" data-node-h="10.0" data-node-rx="5.0">
-<rect x="754.9499999999999" y="215.0" width="10.0" height="10.0" rx="5.0" ry="5.0" fill="#ffffff" stroke="#333333" stroke-width="1.5" class="nf-metro-station" data-station-id="DADA2__trimlen" data-station-lines="main" data-station-label="DADA2 trim len" />
-</g>
-<g class="nf-metro-station-group" data-node-id="DADA2__filter" data-node-cx="879.9" data-node-cy="220.0" data-node-r="5.0" data-node-groups="main" data-node-w="10.0" data-node-h="10.0" data-node-rx="5.0">
-<rect x="874.9499999999999" y="215.0" width="10.0" height="10.0" rx="5.0" ry="5.0" fill="#ffffff" stroke="#333333" stroke-width="1.5" class="nf-metro-station" data-station-id="DADA2__filter" data-station-lines="main" data-station-label="DADA2 filter" />
-</g>
-<g class="nf-metro-station-group" data-node-id="DADA2__err" data-node-cx="999.9" data-node-cy="220.0" data-node-r="5.0" data-node-groups="main" data-node-w="10.0" data-node-h="10.0" data-node-rx="5.0">
-<rect x="994.9499999999999" y="215.0" width="10.0" height="10.0" rx="5.0" ry="5.0" fill="#ffffff" stroke="#333333" stroke-width="1.5" class="nf-metro-station" data-station-id="DADA2__err" data-station-lines="main" data-station-label="DADA2 err" />
-</g>
-<g class="nf-metro-station-group" data-node-id="DADA2__denoise" data-node-cx="1119.9" data-node-cy="222.0" data-node-r="5.0" data-node-groups="dada2,main" data-node-w="10.0" data-node-h="14.0" data-node-rx="5.0">
-<rect x="1114.9499999999998" y="215.0" width="10.0" height="14.0" rx="5.0" ry="5.0" fill="#ffffff" stroke="#333333" stroke-width="1.5" class="nf-metro-station" data-station-id="DADA2__denoise" data-station-lines="dada2,main" data-station-label="DADA2 denoise" />
-</g>
-<g class="nf-metro-station-group" data-node-id="DADA2__chimeras" data-node-cx="1351.1" data-node-cy="220.0" data-node-r="5.0" data-node-groups="main" data-node-w="10.0" data-node-h="10.0" data-node-rx="5.0">
-<rect x="1346.1" y="215.0" width="10.0" height="10.0" rx="5.0" ry="5.0" fill="#ffffff" stroke="#333333" stroke-width="1.5" class="nf-metro-station" data-station-id="DADA2__chimeras" data-station-lines="main" data-station-label="DADA2 chimeras" />
-</g>
-<g class="nf-metro-station-group" data-node-id="DADA2__merge" data-node-cx="1565.1" data-node-cy="228.0" data-node-r="5.0" data-node-groups="dada2,its,main,report" data-node-w="10.0" data-node-h="26.0" data-node-rx="5.0">
-<rect x="1560.1499999999999" y="215.0" width="10.0" height="26.0" rx="5.0" ry="5.0" fill="#ffffff" stroke="#333333" stroke-width="1.5" class="nf-metro-station" data-station-id="DADA2__merge" data-station-lines="dada2,its,main,report" data-station-label="DADA2 merge" />
-</g>
-<g class="nf-metro-station-group" data-node-id="DADA2__stats" data-node-cx="1351.1" data-node-cy="324.0" data-node-r="5.0" data-node-groups="dada2" data-node-w="10.0" data-node-h="10.0" data-node-rx="5.0">
-<rect x="1346.1" y="319.0" width="10.0" height="10.0" rx="5.0" ry="5.0" fill="#ffffff" stroke="#333333" stroke-width="1.5" class="nf-metro-station" data-station-id="DADA2__stats" data-station-lines="dada2" data-station-label="DADA2 stats" />
-</g>
-<g class="nf-metro-station-group" data-node-id="QIIME2__cores" data-node-cx="2361.5" data-node-cy="226.0" data-node-r="5.0" data-node-groups="its,main,qii" data-node-w="10.0" data-node-h="22.0" data-node-rx="5.0">
-<rect x="2356.5" y="215.0" width="10.0" height="22.0" rx="5.0" ry="5.0" fill="#ffffff" stroke="#333333" stroke-width="1.5" class="nf-metro-station" data-station-id="QIIME2__cores" data-station-lines="its,main,qii" data-station-label="QIIME2 runs" />
-</g>
-<g class="nf-metro-station-group" data-node-id="taxonomy__assign" data-node-cx="2147.4" data-node-cy="226.0" data-node-r="5.0" data-node-groups="its,main,qii" data-node-w="10.0" data-node-h="22.0" data-node-rx="5.0">
-<rect x="2142.45" y="215.0" width="10.0" height="22.0" rx="5.0" ry="5.0" fill="#ffffff" stroke="#333333" stroke-width="1.5" class="nf-metro-station" data-station-id="taxonomy__assign" data-station-lines="its,main,qii" data-station-label="taxonomy assign" />
-</g>
-<g class="nf-metro-station-group" data-node-id="taxonomy__DB" data-node-cx="80.0" data-node-cy="270.0" data-node-r="5.0" data-node-groups="main" data-node-w="10.0" data-node-h="10.0" data-node-rx="5.0">
-<rect x="75.0" y="265.0" width="10.0" height="10.0" rx="5.0" ry="5.0" fill="#ffffff" stroke="#333333" stroke-width="1.5" class="nf-metro-station" data-station-id="taxonomy__DB" data-station-lines="main" data-station-label="taxonomy DB" />
-</g>
-<g class="nf-metro-station-group" data-node-id="ITSx" data-node-cx="1779.2" data-node-cy="478.0" data-node-r="5.0" data-node-groups="its" data-node-w="10.0" data-node-h="10.0" data-node-rx="5.0">
-<rect x="1774.1999999999998" y="473.0" width="10.0" height="10.0" rx="5.0" ry="5.0" fill="#ffffff" stroke="#333333" stroke-width="1.5" class="nf-metro-station" data-station-id="ITSx" data-station-lines="its" data-station-label="ITSx" />
-</g>
-<g class="nf-metro-station-group" data-node-id="ITSx__filter" data-node-cx="1899.2" data-node-cy="478.0" data-node-r="5.0" data-node-groups="its" data-node-w="10.0" data-node-h="10.0" data-node-rx="5.0">
-<rect x="1894.1999999999998" y="473.0" width="10.0" height="10.0" rx="5.0" ry="5.0" fill="#ffffff" stroke="#333333" stroke-width="1.5" class="nf-metro-station" data-station-id="ITSx__filter" data-station-lines="its" data-station-label="ITSx filter" />
-</g>
-<g class="nf-metro-station-group" data-node-id="QIIME2__analyses" data-node-cx="2481.5" data-node-cy="232.0" data-node-r="5.0" data-node-groups="qii" data-node-w="10.0" data-node-h="10.0" data-node-rx="5.0">
-<rect x="2476.5" y="227.0" width="10.0" height="10.0" rx="5.0" ry="5.0" fill="#ffffff" stroke="#333333" stroke-width="1.5" class="nf-metro-station" data-station-id="QIIME2__analyses" data-station-lines="qii" data-station-label="QIIME2 steps" />
-</g>
-<g class="nf-metro-station-group" data-node-id="QIIME2__plots" data-node-cx="2704.1" data-node-cy="132.0" data-node-r="5.0" data-node-groups="qii" data-node-w="10.0" data-node-h="10.0" data-node-rx="5.0">
-<rect x="2699.1" y="127.0" width="10.0" height="10.0" rx="5.0" ry="5.0" fill="#ffffff" stroke="#333333" stroke-width="1.5" class="nf-metro-station" data-station-id="QIIME2__plots" data-station-lines="qii" data-station-label="QIIME2 exports" />
-</g>
-<g class="nf-metro-station-group" data-node-id="QIIME2__comp" data-node-cx="2704.1" data-node-cy="232.0" data-node-r="5.0" data-node-groups="qii" data-node-w="10.0" data-node-h="10.0" data-node-rx="5.0">
-<rect x="2699.1" y="227.0" width="10.0" height="10.0" rx="5.0" ry="5.0" fill="#ffffff" stroke="#333333" stroke-width="1.5" class="nf-metro-station" data-station-id="QIIME2__comp" data-station-lines="qii" data-station-label="QIIME2 tests" />
-</g>
-<g class="nf-metro-station-group" data-node-id="QIIME2__diversity" data-node-cx="2704.1" data-node-cy="382.0" data-node-r="5.0" data-node-groups="qii" data-node-w="10.0" data-node-h="10.0" data-node-rx="5.0">
-<rect x="2699.1" y="377.0" width="10.0" height="10.0" rx="5.0" ry="5.0" fill="#ffffff" stroke="#333333" stroke-width="1.5" class="nf-metro-station" data-station-id="QIIME2__diversity" data-station-lines="qii" data-station-label="QIIME2 diver" />
-</g>
-<g class="nf-metro-station-group" data-node-id="MultiQC" data-node-cx="639.9" data-node-cy="536.0" data-node-r="5.0" data-node-groups="report" data-node-w="10.0" data-node-h="10.0" data-node-rx="5.0">
-<rect x="634.9499999999999" y="531.0" width="10.0" height="10.0" rx="5.0" ry="5.0" fill="#ffffff" stroke="#333333" stroke-width="1.5" class="nf-metro-station" data-station-id="MultiQC" data-station-lines="report" data-station-label="MultiQC" />
-</g>
-<g class="nf-metro-station-group" data-node-id="picrust" data-node-cx="1779.2" data-node-cy="286.0" data-node-r="5.0" data-node-groups="report" data-node-w="10.0" data-node-h="10.0" data-node-rx="5.0">
-<rect x="1774.1999999999998" y="281.0" width="10.0" height="10.0" rx="5.0" ry="5.0" fill="#ffffff" stroke="#333333" stroke-width="1.5" class="nf-metro-station" data-station-id="picrust" data-station-lines="report" data-station-label="PICRUSt" />
-</g>
-<text x="80.0" y="159.0" font-size="24.7" fill="#f5f5f5" stroke="#f5f5f5" stroke-width="5.699999999999999" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="auto">rename</text>
-<text x="80.0" y="159.0" font-size="24.7" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="auto" data-station-id="rename" class="nf-metro-station-label">rename</text>
-<text x="80.0" y="281.0" font-size="24.7" fill="#f5f5f5" stroke="#f5f5f5" stroke-width="5.699999999999999" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="hanging">taxonomy DB</text>
-<text x="80.0" y="281.0" font-size="24.7" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="hanging" data-station-id="taxonomy__DB" class="nf-metro-station-label">taxonomy DB</text>
-<text x="294.04999999999995" y="206.0" font-size="24.7" fill="#f5f5f5" stroke="#f5f5f5" stroke-width="5.699999999999999" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="auto">fastqc</text>
-<text x="294.04999999999995" y="206.0" font-size="24.7" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="auto" data-station-id="fastqc" class="nf-metro-station-label">fastqc</text>
-<text x="294.04999999999995" y="450.0" font-size="24.7" fill="#f5f5f5" stroke="#f5f5f5" stroke-width="5.699999999999999" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="hanging">cutadapt + summary</text>
-<text x="294.04999999999995" y="450.0" font-size="24.7" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="hanging" data-station-id="cutadapt" class="nf-metro-station-label">cutadapt + summary</text>
-<text x="639.9499999999999" y="231.0" font-size="24.7" fill="#f5f5f5" stroke="#f5f5f5" stroke-width="5.699999999999999" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="hanging">DADA2 QC</text>
-<text x="639.9499999999999" y="231.0" font-size="24.7" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="hanging" data-station-id="DADA2__QC" class="nf-metro-station-label">DADA2 QC</text>
-<text x="639.9499999999999" y="547.0" font-size="24.7" fill="#f5f5f5" stroke="#f5f5f5" stroke-width="5.699999999999999" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="hanging">MultiQC</text>
-<text x="639.9499999999999" y="547.0" font-size="24.7" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="hanging" data-station-id="MultiQC" class="nf-metro-station-label">MultiQC</text>
-<text x="759.9499999999999" y="206.0" font-size="24.7" fill="#f5f5f5" stroke="#f5f5f5" stroke-width="5.699999999999999" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="auto">DADA2 trim len</text>
-<text x="759.9499999999999" y="206.0" font-size="24.7" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="auto" data-station-id="DADA2__trimlen" class="nf-metro-station-label">DADA2 trim len</text>
-<text x="879.9499999999999" y="231.0" font-size="24.7" fill="#f5f5f5" stroke="#f5f5f5" stroke-width="5.699999999999999" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="hanging">DADA2 filter</text>
-<text x="879.9499999999999" y="231.0" font-size="24.7" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="hanging" data-station-id="DADA2__filter" class="nf-metro-station-label">DADA2 filter</text>
-<text x="999.9499999999999" y="206.0" font-size="24.7" fill="#f5f5f5" stroke="#f5f5f5" stroke-width="5.699999999999999" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="auto">DADA2 err</text>
-<text x="999.9499999999999" y="206.0" font-size="24.7" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="auto" data-station-id="DADA2__err" class="nf-metro-station-label">DADA2 err</text>
-<text x="1119.9499999999998" y="235.0" font-size="24.7" fill="#f5f5f5" stroke="#f5f5f5" stroke-width="5.699999999999999" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="hanging">DADA2 denoise</text>
-<text x="1119.9499999999998" y="235.0" font-size="24.7" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="hanging" data-station-id="DADA2__denoise" class="nf-metro-station-label">DADA2 denoise</text>
-<text x="1351.1" y="206.0" font-size="24.7" fill="#f5f5f5" stroke="#f5f5f5" stroke-width="5.699999999999999" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="auto">DADA2 chimeras</text>
-<text x="1351.1" y="206.0" font-size="24.7" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="auto" data-station-id="DADA2__chimeras" class="nf-metro-station-label">DADA2 chimeras</text>
-<text x="1351.1" y="338.0" font-size="24.7" fill="#f5f5f5" stroke="#f5f5f5" stroke-width="5.699999999999999" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="hanging">DADA2 stats</text>
-<text x="1351.1" y="338.0" font-size="24.7" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="hanging" data-station-id="DADA2__stats" class="nf-metro-station-label">DADA2 stats</text>
-<text x="1565.1499999999999" y="247.0" font-size="24.7" fill="#f5f5f5" stroke="#f5f5f5" stroke-width="5.699999999999999" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="hanging">DADA2 merge</text>
-<text x="1565.1499999999999" y="247.0" font-size="24.7" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="hanging" data-station-id="DADA2__merge" class="nf-metro-station-label">DADA2 merge</text>
-<text x="1779.1999999999998" y="300.0" font-size="24.7" fill="#f5f5f5" stroke="#f5f5f5" stroke-width="5.699999999999999" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="hanging">PICRUSt</text>
-<text x="1779.1999999999998" y="300.0" font-size="24.7" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="hanging" data-station-id="picrust" class="nf-metro-station-label">PICRUSt</text>
-<text x="1779.1999999999998" y="464.0" font-size="24.7" fill="#f5f5f5" stroke="#f5f5f5" stroke-width="5.699999999999999" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="auto">ITSx</text>
-<text x="1779.1999999999998" y="464.0" font-size="24.7" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="auto" data-station-id="ITSx" class="nf-metro-station-label">ITSx</text>
-<text x="1899.1999999999998" y="489.0" font-size="24.7" fill="#f5f5f5" stroke="#f5f5f5" stroke-width="5.699999999999999" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="hanging">ITSx filter</text>
-<text x="1899.1999999999998" y="489.0" font-size="24.7" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="hanging" data-station-id="ITSx__filter" class="nf-metro-station-label">ITSx filter</text>
-<text x="2147.45" y="206.0" font-size="24.7" fill="#f5f5f5" stroke="#f5f5f5" stroke-width="5.699999999999999" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="auto">taxonomy assign</text>
-<text x="2147.45" y="206.0" font-size="24.7" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="auto" data-station-id="taxonomy__assign" class="nf-metro-station-label">taxonomy assign</text>
-<text x="2361.5" y="243.0" font-size="24.7" fill="#f5f5f5" stroke="#f5f5f5" stroke-width="5.699999999999999" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="hanging">QIIME2 runs</text>
-<text x="2361.5" y="243.0" font-size="24.7" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="hanging" data-station-id="QIIME2__cores" class="nf-metro-station-label">QIIME2 runs</text>
-<text x="2481.5" y="218.0" font-size="24.7" fill="#f5f5f5" stroke="#f5f5f5" stroke-width="5.699999999999999" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="auto">QIIME2 steps</text>
-<text x="2481.5" y="218.0" font-size="24.7" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="auto" data-station-id="QIIME2__analyses" class="nf-metro-station-label">QIIME2 steps</text>
-<text x="2704.1" y="143.0" font-size="24.7" fill="#f5f5f5" stroke="#f5f5f5" stroke-width="5.699999999999999" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="hanging">QIIME2 exports</text>
-<text x="2704.1" y="143.0" font-size="24.7" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="hanging" data-station-id="QIIME2__plots" class="nf-metro-station-label">QIIME2 exports</text>
-<text x="2704.1" y="243.0" font-size="24.7" fill="#f5f5f5" stroke="#f5f5f5" stroke-width="5.699999999999999" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="hanging">QIIME2 tests</text>
-<text x="2704.1" y="243.0" font-size="24.7" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="hanging" data-station-id="QIIME2__comp" class="nf-metro-station-label">QIIME2 tests</text>
-<text x="2704.1" y="393.0" font-size="24.7" fill="#f5f5f5" stroke="#f5f5f5" stroke-width="5.699999999999999" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="hanging">QIIME2 diver</text>
-<text x="2704.1" y="393.0" font-size="24.7" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="hanging" data-station-id="QIIME2__diversity" class="nf-metro-station-label">QIIME2 diver</text>
-<rect x="60.0" y="550.0" width="279.45000000000005" height="144.0" rx="6" ry="6" fill="rgba(255, 255, 255, 0.8)" class="nf-metro-legend-bg" />
-<path d="M72.0,574.0 L96.0,574.0" stroke="#79706E" stroke-width="3.0" stroke-linecap="round" />
-<text x="108.0" y="574.0" font-size="26.599999999999998" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" dy="0.3em" class="nf-metro-legend-text">Core pipeline</text>
-<path d="M72.0,598.0 L96.0,598.0" stroke="#54A24B" stroke-width="3.0" stroke-linecap="round" />
-<text x="108.0" y="598.0" font-size="26.599999999999998" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" dy="0.3em" class="nf-metro-legend-text">DADA2 detail</text>
-<path d="M72.0,622.0 L96.0,622.0" stroke="#F2A93B" stroke-width="3.0" stroke-linecap="round" />
-<text x="108.0" y="622.0" font-size="26.599999999999998" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" dy="0.3em" class="nf-metro-legend-text">ITS / ITSx</text>
-<path d="M72.0,646.0 L96.0,646.0" stroke="#4C78A8" stroke-width="3.0" stroke-linecap="round" />
-<text x="108.0" y="646.0" font-size="26.599999999999998" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" dy="0.3em" class="nf-metro-legend-text">QIIME2 analyses</text>
-<path d="M72.0,670.0 L96.0,670.0" stroke="#F2CF5B" stroke-width="3.0" stroke-linecap="round" />
-<text x="108.0" y="670.0" font-size="26.599999999999998" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" dy="0.3em" class="nf-metro-legend-text">Reporting</text>
-<text x="2734.0" y="710.0" font-size="8" fill="rgba(150, 150, 150, 0.6)" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" text-anchor="end">created with nf-metro v1.1.0</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="3198" height="1104" viewBox="-20 -20 3238 1144">
+<rect x="-30" y="-30" width="3278" height="1184" fill="#ffffff"/>
+<path d="M 70 86 L 260 86 L 450 86 L 645 86 L 912 86 L 1165 86 L 1375 86 L 1642 86 L 1923 86 L 2161 86 L 2399 86 L 2589 86 L 2842 86" fill="none" stroke="#79706E" stroke-width="7"/>
+<path d="M 1375 86 L 1375 76 Q 1445 76 1445 86" fill="none" stroke="#E8A33D" stroke-width="5"/>
+<path d="M 1923 86 L 1923 182 Q 2039 182 2039 210" fill="none" stroke="#E8A33D" stroke-width="5"/>
+<path d="M 2039 86 L 2039 244 Q 2109 244 2109 272" fill="none" stroke="#E8A33D" stroke-width="5"/>
+<path d="M 2589 86 L 2589 492 Q 2705 492 2705 520" fill="none" stroke="#E8A33D" stroke-width="5"/>
+<path d="M 2705 86 L 2705 554 Q 2775 554 2775 582" fill="none" stroke="#E8A33D" stroke-width="5"/>
+<path d="M 2705 86 L 2705 616 Q 2821 616 2821 644" fill="none" stroke="#E8A33D" stroke-width="5"/>
+<path d="M 2705 86 L 2705 678 Q 2775 678 2775 706" fill="none" stroke="#E8A33D" stroke-width="5"/>
+<path d="M 2399 86 L 2399 802 Q 2515 802 2515 830" fill="none" stroke="#E8A33D" stroke-width="5"/>
+<path d="M 260 86 L 260 802 Q 2515 802 2515 830" fill="none" stroke="#E8A33D" stroke-width="5"/>
+<path d="M 1923 86 L 1923 864 Q 2039 864 2039 892" fill="none" stroke="#E8A33D" stroke-width="5"/>
+<circle cx="70" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
+<text x="70" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">rename</text>
+<circle cx="260" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
+<text x="260" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">cutadapt</text>
+<circle cx="450" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
+<text x="450" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">DADA2__QC</text>
+<circle cx="645" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
+<text x="645" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">DADA2__trimlen</text>
+<circle cx="912" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
+<text x="912" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">DADA2__filter</text>
+<circle cx="1165" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
+<text x="1165" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">DADA2__err</text>
+<circle cx="1375" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
+<text x="1375" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">DADA2__denoise</text>
+<circle cx="1642" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
+<text x="1642" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">DADA2__chimeras</text>
+<circle cx="1923" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
+<text x="1923" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">DADA2__merge</text>
+<circle cx="2161" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
+<text x="2161" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">taxonomy__DB</text>
+<circle cx="2399" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
+<text x="2399" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">fastqc</text>
+<circle cx="2589" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
+<text x="2589" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">QIIME2__cores</text>
+<circle cx="2842" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
+<text x="2842" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">taxonomy__assign</text>
+<circle cx="1445" cy="86" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="1463" y="93" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">DADA2__stats</text>
+<circle cx="2039" cy="210" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="2057" y="217" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">ITSx</text>
+<circle cx="2109" cy="272" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="2127" y="279" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">ITSx__filter</text>
+<circle cx="2705" cy="520" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="2723" y="527" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">QIIME2__analyses</text>
+<circle cx="2775" cy="582" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="2793" y="589" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">QIIME2__plots</text>
+<circle cx="2821" cy="644" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="2839" y="651" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">QIIME2__comp</text>
+<circle cx="2775" cy="706" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="2793" y="713" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">QIIME2__diversity</text>
+<circle cx="2515" cy="830" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="2533" y="837" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">MultiQC</text>
+<circle cx="2515" cy="830" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="2533" y="837" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">MultiQC</text>
+<circle cx="2039" cy="892" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="2057" y="899" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">picrust</text>
+<rect x="40" y="986" width="332" height="112" rx="10" fill="#f8f8f8" stroke="#dddddd"/>
+<path d="M 54 1016 L 122 1016" stroke="#79706E" stroke-width="7"/>
+<text x="136" y="1023" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">Main pipeline</text>
+<path d="M 54 1060 L 122 1060" stroke="#E8A33D" stroke-width="5"/>
+<text x="136" y="1067" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">Assist routes</text>
 </svg>

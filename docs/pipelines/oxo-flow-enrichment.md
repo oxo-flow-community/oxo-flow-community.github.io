@@ -685,7 +685,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <details class="ox-flow-view">
 <summary>Exact rule DAG (multi-route truth — operational view)</summary>
 <div class="ox-dag-card ox-dag-card--wide">
-<a href="/assets/dag/oxo-flow-enrichment-rules.svg?v=8b3627be56" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-enrichment-rules.svg?v=8b3627be56" alt="oxo-flow-enrichment rule-level detail" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-enrichment-rules.svg?v=0055e95439" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-enrichment-rules.svg?v=0055e95439" alt="oxo-flow-enrichment rule-level detail" loading="lazy"></a>
 </div>
 </details>
 <details class="ox-flow-view" open>

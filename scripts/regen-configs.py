@@ -244,21 +244,24 @@ def render_semantic_map(name: str, nf_metro: str) -> dict | None:
     if not src.is_file():
         return None
     svg = ROOT / "docs" / "assets" / "dag" / f"{name}-semantic.svg"
-    proc = subprocess.run(
-        [nf_metro, "render", str(src), "-o", str(svg),
-         "--theme", "nfcore-light", "--mode", "light",
-         "--x-spacing", "120", "--y-spacing", "50"],
-        capture_output=True, text=True,
-    )
-    if proc.returncode != 0:
-        print(f"  - {name}: semantic render failed — {proc.stderr.strip().splitlines()[-1][:80]}")
-        return None
-    pad_viewport_left(svg)
+    # Author-drawn renderer: total layout control, one font/style
+    # everywhere (user: 所有语义版本都要模拟人工画，字体一致).
+    draw_module = sys.modules.get("semantic_draw")
+    if draw_module is None:
+        import importlib.util as _ilu
+        _spec = _ilu.spec_from_file_location("semantic_draw", ROOT / "scripts" / "semantic_draw.py")
+        draw_module = _ilu.module_from_spec(_spec)
+        _spec.loader.exec_module(draw_module)
+    drawn = draw_module.draw(name, src.read_text())
+    svg.write_text(drawn)
     import re
-    m = re.search(r'viewBox="([^"]*)"', svg.read_text())
-    w, h = float(m.group(1).split()[2]), float(m.group(1).split()[3])
+    m = re.search(r'viewBox="([^"]*)"', drawn)
+    try:
+        w, h = float(m.group(1).split()[2]), float(m.group(1).split()[3])
+    except (TypeError, IndexError, ValueError):
+        w, h = 1500.0, 700.0
     return {"file": f"{name}-semantic.svg", "aspect": round(w / h, 2),
-            "tier": tier, "primary": tier == "line"}
+            "tier": tier, "primary": tier == "line", "hand": True}
 
 
 
