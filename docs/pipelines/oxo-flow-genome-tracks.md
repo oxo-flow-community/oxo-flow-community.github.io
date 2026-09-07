@@ -6,7 +6,7 @@ title: "Genome browser tracks: coverage, gene plots and UCSC hub"
 <div class="ox-detail-cols">
 <div class="ox-detail-main">
 <h1>Genome browser tracks: coverage, gene plots and UCSC hub</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span><span class=ox-tag-sep></span><span class="ox-tag">epigenomics</span><span class="ox-tag">genome-tracks</span><span class="ox-tag">bigwig</span><span class="ox-tag">coverage</span><span class="ox-tag">visualization</span><span class="ox-tag">ucsc-hub</span><span class="ox-tag">deeptools</span><span class="ox-tag">pygenometracks</span><span class="ox-tag">snakemake</span><span class="ox-tag">single-cell</span><span class="ox-tag">sinto</span><span class="ox-tag">igv</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span><span class=ox-tag-sep></span><span class="ox-tag">epigenomics</span><span class="ox-tag">genome-tracks</span><span class="ox-tag">bigwig</span><span class="ox-tag">coverage</span><span class="ox-tag">visualization</span><span class="ox-tag">ucsc-hub</span><span class="ox-tag">deeptools</span><span class="ox-tag">pygenometracks</span><span class="ox-tag">snakemake</span><span class="ox-tag">single-cell</span><span class="ox-tag">sinto</span><span class="ox-tag">igv</span></div>
 <p class="ox-desc">Merge BAM files per experimental group with samtools, compute normalized bigWig coverage with deepTools bamCoverage (RPGC by default), plot isoform-aware per-gene and per-region genome tracks with gtracks/pyGenomeTracks, and publish a UCSC genome browser track hub — end-to-end track generation for RNA-seq, ATAC-seq and other aligned BAM data, plus the single-cell branch (sinto per-cell-barcode splitting of sc BAMs into per-group BAMs), an opt-in IGV report of all merged BAMs over the annotated gene regions, and opt-in conda environment export rules (env_export_*, conda env export).</p>
 <div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#run-it">▶ Run it</a><a class="ox-btn" href="https://github.com/oxo-flow-community/oxo-flow-genome-tracks" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow run main.oxoflow --samples first:1</code></div>
 </div>
@@ -17,7 +17,7 @@ title: "Genome browser tracks: coverage, gene plots and UCSC hub"
 <div class="ox-kv"><span class="k">Rules</span><span class="v">16</span></div>
 <div class="ox-kv"><span class="k">Compute</span><span class="v">up to 4 CPUs / 4 GB per rule (opt-in igv_report: 8 GB)</span></div>
 <div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></span></div>
-<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">Official port</span></div>
 <div class="ox-kv"><span class="k">Domain</span><span class="v">genomics</span></div>
 <div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/epigen/genome_tracks">epigen/genome_tracks</a></span></div>
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>v2.0.5</code></span></div>

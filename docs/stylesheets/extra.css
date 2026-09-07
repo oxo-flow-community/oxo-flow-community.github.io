@@ -438,6 +438,19 @@ a.ox-cta:hover {
   margin: 0;
 }
 
+/* Peak-compute badge lives on its own row so it can wrap freely */
+.ox-card .compute {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.66rem;
+  line-height: 1.35;
+  color: var(--muted);
+  background: var(--panel-2);
+  border-radius: 5px;
+  padding: 0.18rem 0.5rem;
+  align-self: flex-start;
+  white-space: normal;
+}
+
 .ox-card .meta {
   display: flex;
   flex-wrap: wrap;
@@ -1101,8 +1114,8 @@ a.ox-cta:hover {
   text-decoration: none;
 }
 .ox-btn--run {
-  color: #fff;
-  background: linear-gradient(135deg, var(--brand), #3d5cff);
+  color: var(--on-brand);
+  background: var(--grad);
   border-color: transparent;
 }
 .ox-btn--run:hover { filter: brightness(1.06); }
@@ -1177,6 +1190,16 @@ a.ox-cta:hover {
   color: var(--muted);
 }
 .ox-domain-name { text-transform: capitalize; }
+
+/* Domain groups: each group owns its own card grid */
+.ox-cards-group { margin: 0 0 2.2rem; }
+.ox-cards-group:last-child { margin-bottom: 1rem; }
+.ox-cards-group .ox-cards { margin: 0.8rem 0 0; }
+.tchip--more {
+  background: var(--panel);
+  border: 1px dashed var(--edge-strong);
+  color: var(--muted);
+}
 
 /* Grouped catalog grid headers (domain facets) */
 .ox-group {

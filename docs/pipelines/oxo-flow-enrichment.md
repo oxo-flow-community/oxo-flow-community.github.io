@@ -6,7 +6,7 @@ title: "Region set and gene set enrichment: LOLA, GREAT, pycisTarget and GSEA"
 <div class="ox-detail-cols">
 <div class="ox-detail-main">
 <h1>Region set and gene set enrichment: LOLA, GREAT, pycisTarget and GSEA</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span><span class=ox-tag-sep></span><span class="ox-tag">region-enrichment</span><span class="ox-tag">gene-set-enrichment</span><span class="ox-tag">LOLA</span><span class="ox-tag">GREAT</span><span class="ox-tag">pycisTarget</span><span class="ox-tag">RcisTarget</span><span class="ox-tag">GSEApy</span><span class="ox-tag">GSEA</span><span class="ox-tag">ORA</span><span class="ox-tag">snakemake</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span><span class=ox-tag-sep></span><span class="ox-tag">region-enrichment</span><span class="ox-tag">gene-set-enrichment</span><span class="ox-tag">LOLA</span><span class="ox-tag">GREAT</span><span class="ox-tag">pycisTarget</span><span class="ox-tag">RcisTarget</span><span class="ox-tag">GSEApy</span><span class="ox-tag">GSEA</span><span class="ox-tag">ORA</span><span class="ox-tag">snakemake</span></div>
 <p class="ox-desc">Run a complete region set and gene set enrichment analysis on your own data: region overlap enrichment (LOLA), genomic region enrichment of annotated terms (rGREAT), region TFBS motif enrichment (pycisTarget), gene TFBS motif enrichment (RcisTarget), and gene over-representation analysis (ORA) and preranked GSEA (GSEApy). Every tool applies its own multiple-test correction; the workflow produces per-set enrichment plots, per-group summary plots, and reproducibility exports (configs/ and envs/). Official port of epigen/enrichment_analysis v3.0.1 with tool versions and commands pinned to the source.</p>
 <div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#run-it">▶ Run it</a><a class="ox-btn" href="https://github.com/oxo-flow-community/oxo-flow-enrichment" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow run main.oxoflow</code></div>
 </div>
@@ -17,7 +17,7 @@ title: "Region set and gene set enrichment: LOLA, GREAT, pycisTarget and GSEA"
 <div class="ox-kv"><span class="k">Rules</span><span class="v">48</span></div>
 <div class="ox-kv"><span class="k">Compute</span><span class="v">up to 10 CPUs / 32 GB per rule</span></div>
 <div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></span></div>
-<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">Official port</span></div>
 <div class="ox-kv"><span class="k">Domain</span><span class="v">genomics</span></div>
 <div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/epigen/enrichment_analysis">epigen/enrichment_analysis</a></span></div>
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>v3.0.1</code></span></div>

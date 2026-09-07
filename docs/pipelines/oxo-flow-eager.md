@@ -6,7 +6,7 @@ title: "Ancient DNA (aDNA): QC, mapping, damage estimation and genotyping"
 <div class="ox-detail-cols">
 <div class="ox-detail-main">
 <h1>Ancient DNA (aDNA): QC, mapping, damage estimation and genotyping</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span><span class=ox-tag-sep></span><span class="ox-tag">ancient-dna</span><span class="ox-tag">adna</span><span class="ox-tag">bam</span><span class="ox-tag">mapping</span><span class="ox-tag">deduplication</span><span class="ox-tag">damage</span><span class="ox-tag">genotyping</span><span class="ox-tag">metagenomic</span><span class="ox-tag">nf-core</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span><span class=ox-tag-sep></span><span class="ox-tag">ancient-dna</span><span class="ox-tag">adna</span><span class="ox-tag">bam</span><span class="ox-tag">mapping</span><span class="ox-tag">deduplication</span><span class="ox-tag">damage</span><span class="ox-tag">genotyping</span><span class="ox-tag">metagenomic</span><span class="ox-tag">nf-core</span></div>
 <p class="ox-desc">Ancient DNA (aDNA) analysis in one run: FastQC raw QC, optional fastp poly-G filtering (2-colour chemistry), AdapterRemoval adapter clipping and paired-end read merging, BWA aln mapping with ancient-DNA parameters, picard MarkDuplicates (or DeDup) deduplication, preseq library-complexity curves, DamageProfiler damage estimation, Qualimap BAM QC, optional pileupCaller genotyping with eigenstrat SNP coverage, optional metagenomic screening of the unmapped reads (bbduk entropy complexity filter, MALT or kraken2 classification with kraken_parse/kraken_merge tables, MaltExtract aDNA evaluation), and a final MultiQC report — every rule pinned to the nf-core/eager 2.5.3 tool versions in the upstream container (MALT 0.61 and HOPs 0.35 ship in the pinned nfcore/eager:2.5.3 image).</p>
 <div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#run-it">▶ Run it</a><a class="ox-btn" href="https://github.com/oxo-flow-community/oxo-flow-eager" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow run main.oxoflow</code></div>
 </div>
@@ -17,7 +17,7 @@ title: "Ancient DNA (aDNA): QC, mapping, damage estimation and genotyping"
 <div class="ox-kv"><span class="k">Rules</span><span class="v">61</span></div>
 <div class="ox-kv"><span class="k">Compute</span><span class="v">up to 4 CPUs / 8 GB per rule (bwa_aln)</span></div>
 <div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></span></div>
-<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">Official port</span></div>
 <div class="ox-kv"><span class="k">Domain</span><span class="v">genomics</span></div>
 <div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/nf-core/eager">nf-core/eager</a></span></div>
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>2.5.3</code></span></div>

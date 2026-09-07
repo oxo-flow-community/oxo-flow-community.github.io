@@ -6,7 +6,7 @@ title: "Paired-end RNA-seq alignment and four-caller alternative-splicing analys
 <div class="ox-detail-cols">
 <div class="ox-detail-main">
 <h1>Paired-end RNA-seq alignment and four-caller alternative-splicing analysis</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · full-line</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span><span class=ox-tag-sep></span><span class="ox-tag">alternative-splicing</span><span class="ox-tag">rna-seq</span><span class="ox-tag">rmats</span><span class="ox-tag">majiq</span><span class="ox-tag">suppa2</span><span class="ox-tag">spladder</span><span class="ox-tag">star</span><span class="ox-tag">snakemake</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · full-line</span> <span class="ox-badge ox-badge--origin">Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span><span class=ox-tag-sep></span><span class="ox-tag">alternative-splicing</span><span class="ox-tag">rna-seq</span><span class="ox-tag">rmats</span><span class="ox-tag">majiq</span><span class="ox-tag">suppa2</span><span class="ox-tag">spladder</span><span class="ox-tag">star</span><span class="ox-tag">snakemake</span></div>
 <p class="ox-desc">Paired-end RNA-seq from FASTQ to per-sample alternative-splicing calls: reads are trimmed with fastp, aligned with two-pass STAR and counted per gene with featureCounts; each sample&#x27;s splicing is then quantified independently with four callers — rMATS, MAJIQ (with Voila export), SUPPA2 (via Salmon transcript quantification) and SplAdder. The alignment and AS-calling stages are one chained DAG (run one stage with -t alignment / -t as_calling).</p>
 <div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#run-it">▶ Run it</a><a class="ox-btn" href="https://github.com/oxo-flow-community/oxo-flow-tcasia" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow run main.oxoflow</code></div>
 </div>
@@ -17,7 +17,7 @@ title: "Paired-end RNA-seq alignment and four-caller alternative-splicing analys
 <div class="ox-kv"><span class="k">Rules</span><span class="v">17</span></div>
 <div class="ox-kv"><span class="k">Compute</span><span class="v">up to 10 threads per rule (STAR / rMATS)</span></div>
 <div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></span></div>
-<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">Official port</span></div>
 <div class="ox-kv"><span class="k">Domain</span><span class="v">transcriptomics</span></div>
 <div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/OncoHarmony-Network/TCASIA_pipeline">OncoHarmony-Network/TCASIA_pipeline</a></span></div>
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>main@06564ff1</code></span></div>

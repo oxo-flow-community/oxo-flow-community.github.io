@@ -6,7 +6,7 @@ title: "Biosynthetic gene cluster (BGC) genome mining: annotation, antiSMASH and
 <div class="ox-detail-cols">
 <div class="ox-detail-main">
 <h1>Biosynthetic gene cluster (BGC) genome mining: annotation, antiSMASH and data warehouse</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span><span class=ox-tag-sep></span><span class="ox-tag">bgc</span><span class="ox-tag">secondary-metabolites</span><span class="ox-tag">antismash</span><span class="ox-tag">genome-mining</span><span class="ox-tag">prokka</span><span class="ox-tag">gtdb</span><span class="ox-tag">mibig</span><span class="ox-tag">snakemake</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span><span class=ox-tag-sep></span><span class="ox-tag">bgc</span><span class="ox-tag">secondary-metabolites</span><span class="ox-tag">antismash</span><span class="ox-tag">genome-mining</span><span class="ox-tag">prokka</span><span class="ox-tag">gtdb</span><span class="ox-tag">mibig</span><span class="ox-tag">snakemake</span></div>
 <p class="ox-desc">End-to-end biosynthetic gene cluster (BGC) analysis of user-provided bacterial genomes: prokka annotation, antiSMASH 7 secondary-metabolite mining with automated database setup, per-genome BGC counts and overview tables, GTDB taxonomy lookup, MIBiG reference table download, BigSCAPE-compatible comparison preparation (symlinks, taxonomy, dataset registry, visualization mapping), and conversion of all result tables into a parquet data warehouse — ready for downstream comparison and exploration.</p>
 <div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#run-it">▶ Run it</a><a class="ox-btn" href="https://github.com/oxo-flow-community/oxo-flow-bgcflow" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow run main.oxoflow</code></div>
 </div>
@@ -17,7 +17,7 @@ title: "Biosynthetic gene cluster (BGC) genome mining: annotation, antiSMASH and
 <div class="ox-kv"><span class="k">Rules</span><span class="v">60</span></div>
 <div class="ox-kv"><span class="k">Compute</span><span class="v">up to 4 CPUs per rule (antiSMASH)</span></div>
 <div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></span></div>
-<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">Official port</span></div>
 <div class="ox-kv"><span class="k">Domain</span><span class="v">genome-mining</span></div>
 <div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/NBChub/bgcflow">NBChub/bgcflow</a></span></div>
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>v1.1.2</code></span></div>

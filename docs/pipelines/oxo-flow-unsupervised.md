@@ -6,7 +6,7 @@ title: "Unsupervised analysis of omics matrices: PCA, UMAP, clustering and valid
 <div class="ox-detail-cols">
 <div class="ox-detail-main">
 <h1>Unsupervised analysis of omics matrices: PCA, UMAP, clustering and validation</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span><span class=ox-tag-sep></span><span class="ox-tag">unsupervised-learning</span><span class="ox-tag">pca</span><span class="ox-tag">umap</span><span class="ox-tag">densmap</span><span class="ox-tag">leiden</span><span class="ox-tag">clustering</span><span class="ox-tag">cluster-validation</span><span class="ox-tag">heatmap</span><span class="ox-tag">snakemake</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span><span class=ox-tag-sep></span><span class="ox-tag">unsupervised-learning</span><span class="ox-tag">pca</span><span class="ox-tag">umap</span><span class="ox-tag">densmap</span><span class="ox-tag">leiden</span><span class="ox-tag">clustering</span><span class="ox-tag">cluster-validation</span><span class="ox-tag">heatmap</span><span class="ox-tag">snakemake</span></div>
 <p class="ox-desc">Unsupervised analysis of omics matrices: PCA, UMAP and densMAP embeddings (2D/3D), distance matrices, hierarchical clustering heatmaps, Leiden clustering across partition types and resolutions, clustree analysis, external and internal cluster validation with TOPSIS ranking, static and interactive visualizations, per-feature dimred scatter plots (when-gated), and resolved-environment snapshots. A verified port of the default-parameter path of epigen/unsupervised_analysis v4.0.2 (Snakemake); all 61 rules and tool versions are pinned to the upstream release.</p>
 <div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#run-it">▶ Run it</a><a class="ox-btn" href="https://github.com/oxo-flow-community/oxo-flow-unsupervised" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow run main.oxoflow</code></div>
 </div>
@@ -17,7 +17,7 @@ title: "Unsupervised analysis of omics matrices: PCA, UMAP, clustering and valid
 <div class="ox-kv"><span class="k">Rules</span><span class="v">61</span></div>
 <div class="ox-kv"><span class="k">Compute</span><span class="v">up to 2 CPUs / 32 GB per rule</span></div>
 <div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></span></div>
-<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">Official port</span></div>
 <div class="ox-kv"><span class="k">Domain</span><span class="v">other</span></div>
 <div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/epigen/unsupervised_analysis">epigen/unsupervised_analysis</a></span></div>
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>v4.0.2</code></span></div>

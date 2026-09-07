@@ -6,7 +6,7 @@ title: "Single-cell RNA-seq: alignment, quantification and QC"
 <div class="ox-detail-cols">
 <div class="ox-detail-main">
 <h1>Single-cell RNA-seq: alignment, quantification and QC</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span><span class=ox-tag-sep></span><span class="ox-tag">single-cell</span><span class="ox-tag">scrna-seq</span><span class="ox-tag">cellranger</span><span class="ox-tag">cellranger-arc</span><span class="ox-tag">simpleaf</span><span class="ox-tag">alevin-fry</span><span class="ox-tag">kallisto</span><span class="ox-tag">starsolo</span><span class="ox-tag">10x-genomics</span><span class="ox-tag">nf-core</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span><span class=ox-tag-sep></span><span class="ox-tag">single-cell</span><span class="ox-tag">scrna-seq</span><span class="ox-tag">cellranger</span><span class="ox-tag">cellranger-arc</span><span class="ox-tag">simpleaf</span><span class="ox-tag">alevin-fry</span><span class="ox-tag">kallisto</span><span class="ox-tag">starsolo</span><span class="ox-tag">10x-genomics</span><span class="ox-tag">nf-core</span></div>
 <p class="ox-desc">Single-cell RNA-seq analysis from raw FASTQ reads to a final MultiQC report, on all six upstream aligner branches of nf-core/scrnaseq 4.2.0: cellranger (default, count or multi with per-modality GEX/VDJ/Ab/BEAM/CRISPR/CMO via the metadata table), simpleaf (upstream default; index + quant + optional QCatch), kallisto/bustools (standard/lamanno/nac), STARsolo (incl. legacy iGenomes index upgrade), and cellrangerarc multiome ATAC+GEX. Shared downstream path: FastQC, mtx→h5ad conversion per aligner, CellBender ambient-RNA background removal (skipped for cellrangerarc, like upstream), sample-wise h5ad concatenation, optional Seurat/SingleCellExperiment export, workflow summary + methods description, MultiQC.</p>
 <div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#run-it">▶ Run it</a><a class="ox-btn" href="https://github.com/oxo-flow-community/oxo-flow-scrnaseq" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow run main.oxoflow</code></div>
 </div>
@@ -17,7 +17,7 @@ title: "Single-cell RNA-seq: alignment, quantification and QC"
 <div class="ox-kv"><span class="k">Rules</span><span class="v">46</span></div>
 <div class="ox-kv"><span class="k">Compute</span><span class="v">up to 12 CPUs / 72 GB per rule (Cell Ranger)</span></div>
 <div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></span></div>
-<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">Official port</span></div>
 <div class="ox-kv"><span class="k">Domain</span><span class="v">single-cell</span></div>
 <div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/nf-core/scrnaseq">nf-core/scrnaseq</a></span></div>
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>4.2.0</code></span></div>

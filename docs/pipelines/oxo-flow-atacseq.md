@@ -6,7 +6,7 @@ title: "ATAC-seq: peak calling and QC"
 <div class="ox-detail-cols">
 <div class="ox-detail-main">
 <h1>ATAC-seq: peak calling and QC</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span><span class=ox-tag-sep></span><span class="ox-tag">atac-seq</span><span class="ox-tag">peaks</span><span class="ox-tag">epigenomics</span><span class="ox-tag">single-end</span><span class="ox-tag">paired-end</span><span class="ox-tag">qc</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span><span class=ox-tag-sep></span><span class="ox-tag">atac-seq</span><span class="ox-tag">peaks</span><span class="ox-tag">epigenomics</span><span class="ox-tag">single-end</span><span class="ox-tag">paired-end</span><span class="ox-tag">qc</span></div>
 <p class="ox-desc">ATAC-seq peak calling and QC: FastQC raw-read QC, Trim Galore adapter trimming, BWA-MEM alignment, Picard mark-duplicates, BAMTools filtering, MACS2 broad-peak calling, HOMER peak annotation, FRiP scoring, normalised bigWig tracks, deepTools QC plots and a combined MultiQC report. Default plan is the upstream single-end aligner=bwa main path (15 rules); when-gated branches port the paired-end path, Bowtie2/Chromap/STAR aligners, reference preparation, mitochondrial filtering, consensus peaks/DESeq2, preseq, Picard metrics, ataqv, IGV and R QC plots (27 further rules), and the merged-replicate analysis over _REP\d+ sample groups (43 total).</p>
 <div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#run-it">▶ Run it</a><a class="ox-btn" href="https://github.com/oxo-flow-community/oxo-flow-atacseq" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow run main.oxoflow</code></div>
 </div>
@@ -17,7 +17,7 @@ title: "ATAC-seq: peak calling and QC"
 <div class="ox-kv"><span class="k">Rules</span><span class="v">43</span></div>
 <div class="ox-kv"><span class="k">Compute</span><span class="v">up to 12 CPUs / 72 GB per rule</span></div>
 <div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></span></div>
-<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">Official port</span></div>
 <div class="ox-kv"><span class="k">Domain</span><span class="v">epigenomics</span></div>
 <div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/nf-core/atacseq">nf-core/atacseq</a></span></div>
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>2.1.2</code></span></div>

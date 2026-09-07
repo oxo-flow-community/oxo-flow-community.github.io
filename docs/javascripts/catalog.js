@@ -31,12 +31,15 @@
         ? '<span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake</span>'
         : "";
     const cmd = p.quickstart || "oxo-flow run main.oxoflow";
-    // ox-badge--compute: long compute strings wrap instead of overflowing the card
+    // Compute badge on its own line — long strings never squeeze the tool chips
     const compute = p.compute
-      ? `<span class="ox-badge ox-badge--compute" title="Peak compute per rule">⚙ ${esc(p.compute)}</span>`
+      ? `<div class="compute">⚙ <span title="Peak compute per rule">${esc(p.compute)}</span></div>`
       : "";
-    const tools = (p.tools || []).slice(0, 3)
+    const tools = (p.tools || []);
+    const toolChips = tools.slice(0, 2)
       .map((t) => `<span class="tchip">${esc(t)}</span>`).join("");
+    const more = tools.length > 2
+      ? `<span class="tchip tchip--more">+${tools.length - 2}</span>` : "";
     const cls = p.rating === "live-verified" ? "ox-card live-card" : "ox-card";
     return `<article class="${cls}">
       <div class="row">
@@ -44,10 +47,11 @@
         <span class="ox-badge">${esc(p.domain)}</span>
       </div>
       <p class="title">${esc(p.title)}</p>
+      ${compute}
       <div class="meta">
         <span class="ox-badge">${Number(p.rule_count) || 0} rules</span>
-        ${compute}
-        ${tools}
+        ${toolChips}
+        ${more}
       </div>
       <div class="foot">
         ${star}
@@ -170,7 +174,9 @@
       const shown = P.filter(matches);
       const filtering = state.q.trim() || state.domains.size || state.origins.size || state.engines.size;
       if (!filtering) {
-        // Faceted browse: group the grid by domain with a header per group.
+        // Faceted browse: one stacked group per domain — #ox-all stops being
+        // a grid itself so each group owns its card grid (never half-width).
+        grid.classList.remove("ox-cards");
         const groups = new Map();
         shown.forEach((p) => {
           if (!groups.has(p.domain)) groups.set(p.domain, []);
@@ -179,11 +185,13 @@
         grid.innerHTML = [...groups.entries()]
           .sort((a, b) => a[0].localeCompare(b[0]))
           .map(([dom, items]) =>
+            `<div class="ox-cards-group">` +
             `<h3 class="ox-group">${esc(dom)}` +
             `<span class="ox-group-count">${items.length}</span></h3>` +
-            `<div class="ox-cards">${items.map(cardHTML).join("")}</div>`)
+            `<div class="ox-cards">${items.map(cardHTML).join("")}</div></div>`)
           .join("");
       } else {
+        grid.classList.add("ox-cards");
         grid.innerHTML = shown.map(cardHTML).join("");
       }
       empty.hidden = shown.length !== 0;

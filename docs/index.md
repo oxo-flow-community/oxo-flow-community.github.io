@@ -29,6 +29,14 @@ title: Curated workflows. Ready to run.
 </div>
 </div>
 
+## How to use this catalog {: .ox-display }
+
+<div class="ox-domains">
+<a class="ox-domain-pill" href="/about/curation/"><span class="ox-domain-ico">🎓</span><span class="ox-domain-name">Learn the ratings</span><span class="ox-domain-count">what ✔ ★ ☆ mean</span></a>
+<a class="ox-domain-pill" href="/about/selection/"><span class="ox-domain-ico">🧭</span><span class="ox-domain-name">Pick a workflow</span><span class="ox-domain-count">domain &amp; tool guide</span></a>
+<a class="ox-domain-pill" href="/about/porting/"><span class="ox-domain-ico">🔁</span><span class="ox-domain-name">Port one yourself</span><span class="ox-domain-count">step-by-step guide</span></a>
+</div>
+
 ## Browse by domain {: .ox-display }
 
 <div id="ox-domains" class="ox-domains"></div>

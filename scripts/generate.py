@@ -224,24 +224,21 @@ def rating_badge(rating: str, coverage: str = "") -> str:
     return f'<span class="ox-badge {cls}">{label}</span>'
 
 
-def badges(p: dict) -> str:
-    """Legacy badge row (kept for callers of badges())."""
-    return badge_row(p)
+# Shared classification labels (single source — DRY across the hero, the
+# glance panel and the catalog rendering in catalog.js).
+ORIGIN_TEXT = {"port": "Official port", "original": "Original",
+               "curated": "Community listing"}
+ENGINE_BADGE = {
+    "nextflow": '<span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span>',
+    "snakemake": '<span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span>',
+}
 
 
 def badge_row(p: dict) -> str:
     """Hero badge strip: evidence rating, origin, engine, subject tags."""
     star = rating_badge(p.get("rating", "community"), p.get("coverage", ""))
-    origin = {
-        "port": "⇄ Official port",
-        "original": "✦ Original",
-        "curated": "♺ Community listing",
-    }.get(p.get("origin"), "♺ Community listing")
-    eng = ""
-    if p.get("engine") == "nextflow":
-        eng = '<span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span>'
-    elif p.get("engine") == "snakemake":
-        eng = '<span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span>'
+    origin = ORIGIN_TEXT.get(p.get("origin"), ORIGIN_TEXT["curated"])
+    eng = ENGINE_BADGE.get(p.get("engine"), "")
     tags = "".join(
         f'<span class="ox-tag">{_esc(t)}</span>' for t in (p.get("tags") or [])
     )
@@ -274,15 +271,8 @@ def glance_panel(p: dict) -> str:
     coverage = p.get("coverage", "")
     if coverage in ("full-line", "default-path"):
         rating_text += f" · {coverage}"
-    origin = {
-        "port": "⇄ Official port",
-        "original": "✦ Original",
-        "curated": "♺ Community listing",
-    }.get(p.get("origin"), "♺ Community listing")
-    eng = {
-        "nextflow": '<span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span>',
-        "snakemake": '<span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span>',
-    }.get(p.get("engine"), "")
+    origin = ORIGIN_TEXT.get(p.get("origin"), ORIGIN_TEXT["curated"])
+    eng = ENGINE_BADGE.get(p.get("engine"), "")
     rows = [
         ("Rating", rating_text, "live"),
         ("Rules", str(p.get("rule_count", "—")), ""),

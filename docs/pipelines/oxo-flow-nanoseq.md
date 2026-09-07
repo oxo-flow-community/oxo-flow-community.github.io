@@ -6,7 +6,7 @@ title: "Nanopore long-read: demultiplexing, QC and alignment"
 <div class="ox-detail-cols">
 <div class="ox-detail-main">
 <h1>Nanopore long-read: demultiplexing, QC and alignment</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span><span class=ox-tag-sep></span><span class="ox-tag">nanopore</span><span class="ox-tag">long-read</span><span class="ox-tag">demultiplexing</span><span class="ox-tag">alignment</span><span class="ox-tag">qcat</span><span class="ox-tag">minimap2</span><span class="ox-tag">multiqc</span><span class="ox-tag">nf-core</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span><span class=ox-tag-sep></span><span class="ox-tag">nanopore</span><span class="ox-tag">long-read</span><span class="ox-tag">demultiplexing</span><span class="ox-tag">alignment</span><span class="ox-tag">qcat</span><span class="ox-tag">minimap2</span><span class="ox-tag">multiqc</span><span class="ox-tag">nf-core</span></div>
 <p class="ox-desc">A nanopore long-read pipeline: samplesheet check, qcat barcode demultiplexing, NanoPlot + FastQC QC, minimap2 (or graphmap2) alignment, samtools view/sort/index, samtools stats/flagstat/idxstats, BigWig/BigBed tracks, NanoLyse contamination filtering, medaka/DeepVariant/PEPPER-Margin-DeepVariant short variant calling, Sniffles/cuteSV structural variant calling, bambu/StringTie2+featureCounts quantification with DESeq2/DEXSeq differential analysis, Nanopolish+xPore/m6anet RNA modification analysis, JAFFA RNA fusion detection (cDNA/directRNA; reference bundle auto-downloaded from figshare or supplied via config.jaffal_ref_dir as a directory or tar.gz), pre-aligned-BAM input, and a MultiQC report. The default path is the DNA protocol with all gated branches off by default (matching upstream). Every rule runs the upstream module&#x27;s exact pinned container image.</p>
 <div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#run-it">▶ Run it</a><a class="ox-btn" href="https://github.com/oxo-flow-community/oxo-flow-nanoseq" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow run main.oxoflow</code></div>
 </div>
@@ -17,7 +17,7 @@ title: "Nanopore long-read: demultiplexing, QC and alignment"
 <div class="ox-kv"><span class="k">Rules</span><span class="v">54</span></div>
 <div class="ox-kv"><span class="k">Compute</span><span class="v">up to 12 CPUs / 84 GB per rule (minimap2 index)</span></div>
 <div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></span></div>
-<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">Official port</span></div>
 <div class="ox-kv"><span class="k">Domain</span><span class="v">genomics</span></div>
 <div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/nf-core/nanoseq">nf-core/nanoseq</a></span></div>
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>3.1.0</code></span></div>

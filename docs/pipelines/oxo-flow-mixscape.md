@@ -6,7 +6,7 @@ title: "Pooled CRISPR perturbation analysis with Seurat Mixscape"
 <div class="ox-detail-cols">
 <div class="ox-detail-main">
 <h1>Pooled CRISPR perturbation analysis with Seurat Mixscape</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · full-line</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span><span class=ox-tag-sep></span><span class="ox-tag">crispr</span><span class="ox-tag">scrna-seq</span><span class="ox-tag">mixscape</span><span class="ox-tag">perturbation</span><span class="ox-tag">seurat</span><span class="ox-tag">snakemake</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · full-line</span> <span class="ox-badge ox-badge--origin">Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span><span class=ox-tag-sep></span><span class="ox-tag">crispr</span><span class="ox-tag">scrna-seq</span><span class="ox-tag">mixscape</span><span class="ox-tag">perturbation</span><span class="ox-tag">seurat</span><span class="ox-tag">snakemake</span></div>
 <p class="ox-desc">Pooled CRISPR perturbation analysis (scCRISPR-seq / CROP-seq / Perturb-seq) with Seurat Mixscape: per-cell perturbation signatures (CalcPerturbSig), perturbed vs. non-perturbed classification (RunMixscape), LDA + UMAP projection of the perturbed subset, the full visualization suite (classification statistics, perturbation-score density, posterior-probability and optional antibody-expression violin plots), and reproducibility exports (exact conda envs, runtime config, annotation file). Input is one processed Seurat object per sample.</p>
 <div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#run-it">▶ Run it</a><a class="ox-btn" href="https://github.com/oxo-flow-community/oxo-flow-mixscape" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow run main.oxoflow</code></div>
 </div>
@@ -17,7 +17,7 @@ title: "Pooled CRISPR perturbation analysis with Seurat Mixscape"
 <div class="ox-kv"><span class="k">Rules</span><span class="v">7</span></div>
 <div class="ox-kv"><span class="k">Compute</span><span class="v">mixscape 8 CPUs / 32 GB; lda, visualize 1 CPU / 32 GB each; export rules 1 CPU / 1 GB</span></div>
 <div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></span></div>
-<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">Official port</span></div>
 <div class="ox-kv"><span class="k">Domain</span><span class="v">single-cell</span></div>
 <div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/epigen/mixscape_seurat">epigen/mixscape_seurat</a></span></div>
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>v2.0.3</code></span></div>

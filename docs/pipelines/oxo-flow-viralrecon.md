@@ -6,7 +6,7 @@ title: "Viral assembly and intrahost variant calling for Illumina amplicon data"
 <div class="ox-detail-cols">
 <div class="ox-detail-main">
 <h1>Viral assembly and intrahost variant calling for Illumina amplicon data</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span><span class=ox-tag-sep></span><span class="ox-tag">viral</span><span class="ox-tag">sars-cov-2</span><span class="ox-tag">amplicon</span><span class="ox-tag">metagenomic</span><span class="ox-tag">variant-calling</span><span class="ox-tag">assembly</span><span class="ox-tag">nf-core</span><span class="ox-tag">illumina</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span><span class=ox-tag-sep></span><span class="ox-tag">viral</span><span class="ox-tag">sars-cov-2</span><span class="ox-tag">amplicon</span><span class="ox-tag">metagenomic</span><span class="ox-tag">variant-calling</span><span class="ox-tag">assembly</span><span class="ox-tag">nf-core</span><span class="ox-tag">illumina</span></div>
 <p class="ox-desc">Turns paired-end Illumina reads into a complete viral genomics report: read QC and trimming (FastQC, fastp), host-sequence removal (Kraken2), alignment to a user-provided reference genome (Bowtie2), primer trimming for amplicon runs, intrahost variant calling and annotation (iVar or bcftools, snpEff/SnpSift), consensus building with low-coverage masking (bcftools or ivar), lineage assignment and deconvolution (Pangolin, Nextclade, Freyja), de novo assembly with QC (SPAdes, Unicycler, minia, Bandage, BLAST, QUAST, ABACAS, plasmidID), and a single MultiQC report. The amplicon + iVar path is the default; the bcftools caller, ivar consensus, metagenomic protocol, alternative assemblers (any comma-separated combination of spades/unicycler/minia in one run), MarkDuplicates, plasmidID, network-driven database updates and additional annotation are ported as gated branches off by default.</p>
 <div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#run-it">▶ Run it</a><a class="ox-btn" href="https://github.com/oxo-flow-community/oxo-flow-viralrecon" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow run main.oxoflow --samples first:1</code></div>
 </div>
@@ -17,7 +17,7 @@ title: "Viral assembly and intrahost variant calling for Illumina amplicon data"
 <div class="ox-kv"><span class="k">Rules</span><span class="v">84</span></div>
 <div class="ox-kv"><span class="k">Compute</span><span class="v">up to 12 CPUs / 72 GB per rule</span></div>
 <div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></span></div>
-<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">Official port</span></div>
 <div class="ox-kv"><span class="k">Domain</span><span class="v">genomics</span></div>
 <div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/nf-core/viralrecon">nf-core/viralrecon</a></span></div>
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>3.0.0</code></span></div>

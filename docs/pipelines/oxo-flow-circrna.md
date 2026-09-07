@@ -6,7 +6,7 @@ title: "circRNA detection: four callers with ensemble aggregation"
 <div class="ox-detail-cols">
 <div class="ox-detail-main">
 <h1>circRNA detection: four callers with ensemble aggregation</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · full-line</span> <span class="ox-badge ox-badge--origin">✦ Original</span> <span class=ox-tag-sep></span><span class="ox-tag">circrna</span><span class="ox-tag">ciriquant</span><span class="ox-tag">circexplorer2</span><span class="ox-tag">find-circ</span><span class="ox-tag">circrna-finder</span><span class="ox-tag">ensemble</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · full-line</span> <span class="ox-badge ox-badge--origin">Original</span> <span class=ox-tag-sep></span><span class="ox-tag">circrna</span><span class="ox-tag">ciriquant</span><span class="ox-tag">circexplorer2</span><span class="ox-tag">find-circ</span><span class="ox-tag">circrna-finder</span><span class="ox-tag">ensemble</span></div>
 <p class="ox-desc">Circular RNA detection with four independent callers (CIRIquant, CIRCexplorer2, find_circ, circRNA_finder) and ensemble aggregation of calls supported by at least two methods. Indexes and conda environments are built automatically on first run from a single reference_dir; samples are auto-discovered from raw/ with no CSV.</p>
 <div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#run-it">▶ Run it</a><a class="ox-btn" href="https://github.com/WangLabCSU/oxo-flow-circrna" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow run circrna.oxoflow -j 16</code></div>
 </div>
@@ -17,7 +17,7 @@ title: "circRNA detection: four callers with ensemble aggregation"
 <div class="ox-kv"><span class="k">Rules</span><span class="v">9</span></div>
 <div class="ox-kv"><span class="k">Compute</span><span class="v">up to 8 threads / 32 GB per rule</span></div>
 <div class="ox-kv"><span class="k">Engine</span><span class="v">—</span></div>
-<div class="ox-kv"><span class="k">Origin</span><span class="v">✦ Original</span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">Original</span></div>
 <div class="ox-kv"><span class="k">Domain</span><span class="v">transcriptomics (circRNA)</span></div>
 <div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/WangLabCSU/oxo-flow-circrna">WangLabCSU/oxo-flow-circrna</a></span></div>
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>main</code></span></div>

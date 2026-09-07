@@ -6,7 +6,7 @@ title: "SRA-powered RNA-seq: .sra archives to differential expression"
 <div class="ox-detail-cols">
 <div class="ox-detail-main">
 <h1>SRA-powered RNA-seq: .sra archives to differential expression</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span><span class=ox-tag-sep></span><span class="ox-tag">bigwig</span><span class="ox-tag">deseq2</span><span class="ox-tag">differential-expression</span><span class="ox-tag">encode</span><span class="ox-tag">fasterq-dump</span><span class="ox-tag">fastp</span><span class="ox-tag">rna-seq</span><span class="ox-tag">sra</span><span class="ox-tag">star</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span><span class=ox-tag-sep></span><span class="ox-tag">bigwig</span><span class="ox-tag">deseq2</span><span class="ox-tag">differential-expression</span><span class="ox-tag">encode</span><span class="ox-tag">fasterq-dump</span><span class="ox-tag">fastp</span><span class="ox-tag">rna-seq</span><span class="ox-tag">sra</span><span class="ox-tag">star</span></div>
 <p class="ox-desc">Automated RNA-seq analysis from locally downloaded SRA archives to differential expression results: verify and symlink .sra files, fasterq-dump conversion to FASTQ, read merging across multiple SRR runs per sample, fastp trimming, STAR alignment with gene counts, BAM indexing, BPM-normalized bigWig signal tracks, a merged count matrix, and DESeq2 differential analysis with ashr shrinkage. Every tool is pinned to an exact conda version for reproducibility. Paired- and single-end samples are routed per sample via metadata (sample-group metadata + wildcard-scoped when predicates), and a second entry point (main_encode.oxoflow) covers the upstream ENCODE execution path.</p>
 <div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#run-it">▶ Run it</a><a class="ox-btn" href="https://github.com/oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipeline" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow run main.oxoflow</code></div>
 </div>
@@ -17,7 +17,7 @@ title: "SRA-powered RNA-seq: .sra archives to differential expression"
 <div class="ox-kv"><span class="k">Rules</span><span class="v">13</span></div>
 <div class="ox-kv"><span class="k">Compute</span><span class="v">up to 20 threads / 10 GB per rule (align_and_count)</span></div>
 <div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></span></div>
-<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">Official port</span></div>
 <div class="ox-kv"><span class="k">Domain</span><span class="v">transcriptomics</span></div>
 <div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/xuzhougeng/auto_sra_rnaseq_pipeline">xuzhougeng/auto_sra_rnaseq_pipeline</a></span></div>
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>main</code></span></div>

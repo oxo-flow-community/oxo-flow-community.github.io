@@ -6,7 +6,7 @@ title: "Bisulfite methylation analysis: alignment, methylation calls and QC"
 <div class="ox-detail-cols">
 <div class="ox-detail-main">
 <h1>Bisulfite methylation analysis: alignment, methylation calls and QC</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span><span class=ox-tag-sep></span><span class="ox-tag">bisulfite-seq</span><span class="ox-tag">wgbs</span><span class="ox-tag">dna-methylation</span><span class="ox-tag">bismark</span><span class="ox-tag">bwameth</span><span class="ox-tag">bwamem</span><span class="ox-tag">taps</span><span class="ox-tag">nf-core</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span><span class=ox-tag-sep></span><span class="ox-tag">bisulfite-seq</span><span class="ox-tag">wgbs</span><span class="ox-tag">dna-methylation</span><span class="ox-tag">bismark</span><span class="ox-tag">bwameth</span><span class="ox-tag">bwamem</span><span class="ox-tag">taps</span><span class="ox-tag">nf-core</span></div>
 <p class="ox-desc">Run end-to-end bisulfite methylation analysis (WGBS, and RRBS-compatible) of paired-end reads (default) and single-end reads (upstream single_end samplesheet column, via the engine metadata binding): FastQC quality control, TrimGalore adapter trimming, alignment to the bisulfite-converted reference genome with any of the four upstream aligners — Bismark bowtie2 (default), Bismark hisat2, bwameth (bwa-meth) or BWA-MEM — PCR-deduplication, samtools sort/index, methylation calls (bismark_methylation_extractor, MethylDackel on bwameth, rastair for TAPS), per-sample and project-wide Bismark HTML reports, optional QualiMap BamQC, preseq complexity estimates and targeted-sequencing (bedtools intersect + Picard HS metrics), and a final MultiQC report. All optional branches are gated on the same config keys as the upstream params and off by default.</p>
 <div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#run-it">▶ Run it</a><a class="ox-btn" href="https://github.com/oxo-flow-community/oxo-flow-methylseq" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow run main.oxoflow</code></div>
 </div>
@@ -17,7 +17,7 @@ title: "Bisulfite methylation analysis: alignment, methylation calls and QC"
 <div class="ox-kv"><span class="k">Rules</span><span class="v">61</span></div>
 <div class="ox-kv"><span class="k">Compute</span><span class="v">up to 12 CPUs / 72 GB per rule (genome preparation, index builds, trimgalore, aligners, deduplicate, extractor)</span></div>
 <div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></span></div>
-<div class="ox-kv"><span class="k">Origin</span><span class="v">⇄ Official port</span></div>
+<div class="ox-kv"><span class="k">Origin</span><span class="v">Official port</span></div>
 <div class="ox-kv"><span class="k">Domain</span><span class="v">genomics</span></div>
 <div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/nf-core/methylseq">nf-core/methylseq</a></span></div>
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>4.2.0</code></span></div>
