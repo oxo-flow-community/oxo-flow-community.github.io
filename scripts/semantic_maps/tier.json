@@ -1,5 +1,5 @@
 {
   "oxo-flow-rnaseq-star-deseq2": "line",
   "oxo-flow-ampliseq": "line",
-  "oxo-flow-atacseq": "tree"
+  "oxo-flow-atacseq": "line"
 }

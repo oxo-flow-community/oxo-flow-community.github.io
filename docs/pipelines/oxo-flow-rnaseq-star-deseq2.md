@@ -336,7 +336,7 @@ The workflow has **31 rules / ? edges**; the semantic drawing shows **23 stops o
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card ox-dag-card--wide" markdown="1">
 
-<a href="/assets/dag/oxo-flow-rnaseq-star-deseq2.svg?v=b42a7db82a" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-rnaseq-star-deseq2.svg?v=b42a7db82a" alt="oxo-flow-rnaseq-star-deseq2 pipeline overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-rnaseq-star-deseq2.svg?v=7a827dba96" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-rnaseq-star-deseq2.svg?v=7a827dba96" alt="oxo-flow-rnaseq-star-deseq2 pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-rnaseq-star-deseq2 — End-to-end RNA-seq differential-expression analysis with STAR and DESeq2: Ensembl reference download, fastp trimming, STAR alignment with gene counts, RSeQC QC + MultiQC, count matrix with technical-replicate collapse, Ensembl biomaRt gene-symbol annotation, and DESeq2 (normalized counts, PCA plots, per-contrast results with ashr shrinkage and MA plots).</p>
 
