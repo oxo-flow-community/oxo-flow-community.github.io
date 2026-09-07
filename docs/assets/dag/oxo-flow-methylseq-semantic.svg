@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2028" height="1042" viewBox="-20 -20 2068 1082">
+<defs><marker id="arr" markerWidth="13" markerHeight="13" refX="10" refY="6.5" orient="auto"><path d="M0 0 L13 6.5 L0 13 z" fill="#79706E"/></marker><marker id="arru" markerWidth="13" markerHeight="13" refX="10" refY="6.5" orient="auto"><path d="M0 0 L13 6.5 L0 13 z" fill="#E8A33D"/></marker></defs>
+<rect x="-30" y="-30" width="2108" height="1122" fill="#ffffff"/>
+<text x="1818" y="-8" font-size="15" fill="#999999" font-family="JetBrains Mono, Menlo, monospace" text-anchor="end">condensed semantic view · edges subset-checked</text>
+<path d="M 70 86 L 260 86 L 450 86 L 703 86 L 1042 86 L 1511 86 L 1778 86" fill="none" stroke="#79706E" stroke-width="7" marker-mid="url(#arr)"/>
+<path d="M 70 86 L 70 188 Q 140 188 140 216" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 70 86 L 70 340 Q 226 340 226 368" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 70 86 L 70 416 Q 312 416 312 444" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 312 86 L 312 644 Q 382 644 382 672" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 70 86 L 70 568 Q 226 568 226 596" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 70 86 L 70 644 Q 382 644 382 672" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 226 86 L 226 720 Q 296 720 296 748" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 226 86 L 226 796 Q 382 796 382 824" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 226 86 L 226 872 Q 468 872 468 900" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 140 216 Q 140 112 1778 112 L 1778 86" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 226 596 Q 226 112 1778 112 L 1778 86" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 1918 860 Q 1918 112 1778 112 L 1778 86" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<circle cx="70" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
+<text x="70" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">input</text>
+<circle cx="260" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
+<text x="260" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">trim</text>
+<circle cx="450" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
+<text x="450" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">bismark_align</text>
+<circle cx="703" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
+<text x="703" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">bismark_deduplicate</text>
+<circle cx="1042" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
+<text x="1042" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">bismark_methylationextractor</text>
+<circle cx="1511" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
+<text x="1511" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">bismark_report</text>
+<circle cx="1778" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
+<text x="1778" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">multiqc</text>
+<circle cx="140" cy="216" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="158" y="223" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">qc</text>
+<circle cx="226" cy="368" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="244" y="375" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">align</text>
+<circle cx="312" cy="444" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="330" y="451" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">sort</text>
+<circle cx="382" cy="672" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="400" y="679" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">metrics</text>
+<circle cx="226" cy="596" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="244" y="603" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">methcall</text>
+<circle cx="382" cy="672" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="400" y="679" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">metrics</text>
+<circle cx="296" cy="748" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="314" y="755" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">bedtools</text>
+<circle cx="382" cy="824" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="400" y="831" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">coverage</text>
+<circle cx="468" cy="900" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="486" y="907" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">report</text>
+<rect x="40" y="924" width="332" height="112" rx="10" fill="#f8f8f8" stroke="#dddddd"/>
+<path d="M 54 954 L 122 954" stroke="#79706E" stroke-width="7"/>
+<text x="136" y="961" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">Main pipeline</text>
+<path d="M 54 998 L 122 998" stroke="#E8A33D" stroke-width="5"/>
+<text x="136" y="1005" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">Assist routes</text>
+</svg>

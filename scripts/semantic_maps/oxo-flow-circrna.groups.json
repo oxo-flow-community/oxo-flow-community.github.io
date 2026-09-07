@@ -1,0 +1,1 @@
+{"cleanables": ["fastp"], "callers": ["ciriquant", "circexplorer2", "find_circ", "circrna_finder"], "aggregate": ["aggregate", "aggregate_dataset"], "report": ["report", "multiqc"]}

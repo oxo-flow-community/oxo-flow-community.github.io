@@ -1,0 +1,23 @@
+## Semantic map - how to read it
+
+## Short names and groups (all are real rules)
+
+| Shown | Full rule name(s) |
+|---|---|
+| input | cat_fastq_r1, cat_fastq_r2 |
+| qc | fastqc, fastqc_se |
+| trim | trimgalore, trimgalore_se |
+| index | bismark_genomepreparation, bismark_untar, bwameth_index, bwa_index, samtools_faidx |
+| align | bismark_align, bismark_align_se, bwameth_align, bwa_mem |
+| bismark_dedup | bismark_deduplicate, bismark_deduplicate_se |
+| picard_dedup | picard_markduplicates, picard_addorreplacereadgroups, picard_markduplicates_bwamem, samtools_index_deduplicated, samtools_index_deduplicated_bwamem |
+| sort | samtools_sort, samtools_sort_alignment, samtools_index, samtools_index_alignment, samtools_flagstat, samtools_stats, samtools_idxstats |
+| methcall | bismark_methylationextractor, bismark_methylationextractor_se, methyldackel_extract, methyldackel_extract_allcontexts, methyldackel_extract_methylkit, methyldackel_mbias, rastair_mbias_bwameth, rastair_mbias_bwamem, rastair_mbiasparser, rastair_call_bwameth, rastair_call_bwamem, rastair_methylkit |
+| coverage | bismark_coverage2cytosine |
+| bedtools | bedtools_intersect, bedtools_intersect_bwameth, bedtools_intersect_bwameth_chg, bedtools_intersect_bwameth_chh |
+| report | bismark_report, bismark_report_se, bismark_summary |
+| metrics | qualimap_bamqc, qualimap_bamqc_alt, preseq_lcextrap, preseq_lcextrap_alt, picard_collecthsmetrics, picard_collecthsmetrics_alt, picard_createsequencedictionary, picard_bedtointervallist |
+| versions | multiqc_versions |
+| multiqc | multiqc, multiqc_bwameth, multiqc_bwamem |
+
+Every drawn edge is a real engine edge (subset check at generation).

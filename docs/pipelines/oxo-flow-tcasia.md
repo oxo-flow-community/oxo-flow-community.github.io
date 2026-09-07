@@ -278,6 +278,33 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 ## Workflow graph
 
+<details class="ox-flow-view">
+<summary>Semantic overview <span class="ox-badge ox-badge--sem">author-side</span></summary>
+<div class="ox-dag-card" markdown="1">
+
+<a href="/assets/dag/oxo-flow-tcasia-semantic.svg?v=2d536258e6" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-tcasia-semantic.svg?v=2d536258e6" alt="oxo-flow-tcasia semantic overview" loading="lazy"></a>
+
+<p class="ox-dag-caption">Semantic route drawing — every station is a real rule of this workflow, every edge a real data dependency of the engine DAG; groups and junction are the author-side condensation (details below).</p>
+
+</div>
+</details>
+<div class="ox-sem-notes" markdown="1">
+
+### How this semantic view abstracts the rule-level graph
+
+The workflow has **17 rules / ? edges**; the semantic drawing shows **23 stops on 5 route lines**: one **Main pipeline** line (grey-brown) carries the single shared story along the bottom trunk — all 4 alignment lanes merge at the hidden junction `_aligned` and the count/statistics chain runs on it; the coloured lines are the routes that feed or branch from it (blue Data acquisition, green PE alignment, orange SE alignment, yellow Reporting). Grouped stops: `star_align_raw` and `star_align_se_raw` ride their parent lane; the 8 `rseqc_*` checks appear as one `rseqc QC` stop (each check still a real rule — detail card below); the 3 PCA stops appear as `DESeq2 PCA`. Every drawn edge is a real edge of the engine DAG — the subset property is machine-verified at generation (incl. junction composition), nothing invented. Auxiliary terminals (`bwa_index`, `genome_faidx`) and the per-check QC fan-outs are elided here and shown in the rule-level detail card.
+
+### How to read this semantic map
+
+
+
+**Short-name mapping** — every label on the map, in full:
+
+<table class="ox-sem-map"><thead><tr><th>Shown</th><th>Full rule name(s)</th></tr></thead><tbody><tr><td><code>align</code></td><td><code>alignment::fastp_qc, alignment::star_align, alignment::sort_bam, alignment::index_bam</code></td></tr><tr><td><code>counts</code></td><td><code>alignment::featurecounts</code></td></tr><tr><td><code>suppa</code></td><td><code>as_calling::salmon_quant, as_calling::select_suppa_fields, as_calling::format_suppa_fields, as_calling::suppa_run</code></td></tr><tr><td><code>rmats</code></td><td><code>as_calling::rmats_create_input, as_calling::rmats_run</code></td></tr><tr><td><code>majiq</code></td><td><code>as_calling::majiq_create_ini, as_calling::majiq_build, as_calling::majiq_psi</code></td></tr><tr><td><code>voila</code></td><td><code>as_calling::voila_modulize, as_calling::voila_tsv</code></td></tr><tr><td><code>spladder</code></td><td><code>as_calling::spladder_run</code></td></tr></tbody></table>
+
+<a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Bgraph%5D+oxo-flow-tcasia+semantic+map+correction&body=Which station or edge looks wrong (paste the station/edge names)">Report a correction to this map</a>
+
+</div>
 <details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card ox-dag-card--wide" markdown="1">

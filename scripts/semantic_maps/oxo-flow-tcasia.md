@@ -1,0 +1,15 @@
+## Semantic map - how to read it
+
+## Short names and groups (all are real rules)
+
+| Shown | Full rule name(s) |
+|---|---|
+| align | alignment::fastp_qc, alignment::star_align, alignment::sort_bam, alignment::index_bam |
+| counts | alignment::featurecounts |
+| suppa | as_calling::salmon_quant, as_calling::select_suppa_fields, as_calling::format_suppa_fields, as_calling::suppa_run |
+| rmats | as_calling::rmats_create_input, as_calling::rmats_run |
+| majiq | as_calling::majiq_create_ini, as_calling::majiq_build, as_calling::majiq_psi |
+| voila | as_calling::voila_modulize, as_calling::voila_tsv |
+| spladder | as_calling::spladder_run |
+
+Every drawn edge is a real engine edge (subset check at generation).

@@ -1,0 +1,16 @@
+%%metro line: main | Main pipeline | #79706E
+%%metro line: side | Assist routes | #E8A33D
+%%metro font_scale: 1.9
+%%metro stroke_scale: 1.6
+%%metro legend: br
+
+graph LR
+    bam -->|main| cov
+    cov -->|main| plots
+    cov -->|side| hub
+    ann -->|side| plots
+    ann -->|side| igv
+    bam -->|side| igv
+    sc -->|side| igv
+    float -->|side| exports
+    float -->|side| envs

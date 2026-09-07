@@ -1,0 +1,20 @@
+## Semantic map - how to read it
+
+## Short names and groups (all are real rules)
+
+| Shown | Full rule name(s) |
+|---|---|
+| refs | gunzip_fasta, gunzip_gtf, gtf_gene_filter, gtf_source_fix |
+| cellranger | cellranger_mkgtf, cellranger_mkref, cellranger_count, cellranger_mkvdjref, cellranger_multi, cellrangerarc_mkgtf, cellrangerarc_mkref, cellrangerarc_count |
+| simpleaf | simpleaf_index, simpleaf_quant, qcatch |
+| kalbust | kallistobustools_ref_standard, kallistobustools_ref_velocity, kallistobustools_count |
+| star | star_genomegenerate, star_genomeparams_upgrade, star_align |
+| mtx | mtx_to_h5ad_raw, mtx_to_h5ad_filtered, mtx_to_h5ad_multi_raw, mtx_to_h5ad_multi_filtered, mtx_to_h5ad_simpleaf, mtx_to_h5ad_kallisto_raw, mtx_to_h5ad_kallisto_filtered, mtx_to_h5ad_star_raw, mtx_to_h5ad_star_filtered |
+| cellbender | cellbender_removebackground |
+| barcodes | anndata_barcodes |
+| concat | concat_h5ad_filtered, concat_h5ad_cellbender_filter, concat_h5ad_raw |
+| anndatr | anndatar_convert_filtered, anndatar_convert_cellbender_filter, anndatar_convert_raw, anndatar_convert_combined_filtered, anndatar_convert_combined_cellbender_filter, anndatar_convert_combined_raw |
+| qc | fastqc |
+| report | multiqc, collect_versions, workflow_summary, methods_description |
+
+Every drawn edge is a real engine edge (subset check at generation).

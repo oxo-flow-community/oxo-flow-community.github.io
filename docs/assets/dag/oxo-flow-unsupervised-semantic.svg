@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="944" height="1042" viewBox="-20 -20 984 1082">
+<defs><marker id="arr" markerWidth="13" markerHeight="13" refX="10" refY="6.5" orient="auto"><path d="M0 0 L13 6.5 L0 13 z" fill="#79706E"/></marker><marker id="arru" markerWidth="13" markerHeight="13" refX="10" refY="6.5" orient="auto"><path d="M0 0 L13 6.5 L0 13 z" fill="#E8A33D"/></marker></defs>
+<rect x="-30" y="-30" width="1024" height="1122" fill="#ffffff"/>
+<text x="734" y="-8" font-size="15" fill="#999999" font-family="JetBrains Mono, Menlo, monospace" text-anchor="end">condensed semantic view · edges subset-checked</text>
+<path d="M 70 86 L 260 86 L 484 86 L 694 86" fill="none" stroke="#79706E" stroke-width="7" marker-mid="url(#arr)"/>
+<path d="M 70 86 L 70 568 Q 140 568 140 596" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 70 86 L 70 264 Q 226 264 226 292" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 70 86 L 70 720 Q 312 720 312 748" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 70 86 L 70 416 Q 140 416 140 444" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 70 86 L 70 568 Q 140 568 140 596" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 260 86 L 260 568 Q 140 568 140 596" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 260 86 L 260 644 Q 330 644 330 672" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 260 86 L 260 720 Q 312 720 312 748" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<circle cx="70" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
+<text x="70" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">leiden</text>
+<circle cx="260" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
+<text x="260" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">cluster_agg</text>
+<circle cx="484" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
+<text x="484" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">validation</text>
+<circle cx="694" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
+<text x="694" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">indices</text>
+<circle cx="140" cy="596" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="158" y="603" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">plots</text>
+<circle cx="226" cy="292" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="244" y="299" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">diagnostics</text>
+<circle cx="312" cy="748" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="330" y="755" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">interactive</text>
+<circle cx="140" cy="444" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="158" y="451" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">heatmaps</text>
+<circle cx="140" cy="596" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="158" y="603" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">plots</text>
+<circle cx="140" cy="596" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="158" y="603" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">plots</text>
+<circle cx="330" cy="672" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="348" y="679" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">clustree</text>
+<circle cx="312" cy="748" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="330" y="755" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">interactive</text>
+<circle cx="302" cy="824" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="320" y="831" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">exports</text>
+<circle cx="130" cy="900" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="148" y="907" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">annot</text>
+<rect x="40" y="924" width="332" height="112" rx="10" fill="#f8f8f8" stroke="#dddddd"/>
+<path d="M 54 954 L 122 954" stroke="#79706E" stroke-width="7"/>
+<text x="136" y="961" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">Main pipeline</text>
+<path d="M 54 998 L 122 998" stroke="#E8A33D" stroke-width="5"/>
+<text x="136" y="1005" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">Assist routes</text>
+</svg>

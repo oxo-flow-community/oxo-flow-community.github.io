@@ -1,0 +1,15 @@
+%%metro line: main | Main pipeline | #79706E
+%%metro line: side | Assist routes | #E8A33D
+%%metro font_scale: 1.9
+%%metro stroke_scale: 1.6
+%%metro legend: br
+
+graph LR
+    fetch -->|main| merge
+    merge -->|main| clean
+    clean -->|main| align
+    align -->|main| counts
+    counts -->|main| dge
+    align -->|side| bam
+    align -->|side| bw
+    bam -->|side| bw

@@ -292,6 +292,33 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 ## Workflow graph
 
 <details class="ox-flow-view">
+<summary>Semantic overview <span class="ox-badge ox-badge--sem">author-side</span></summary>
+<div class="ox-dag-card" markdown="1">
+
+<a href="/assets/dag/oxo-flow-unsupervised-semantic.svg?v=d7b32cd87e" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-unsupervised-semantic.svg?v=d7b32cd87e" alt="oxo-flow-unsupervised semantic overview" loading="lazy"></a>
+
+<p class="ox-dag-caption">Semantic route drawing — every station is a real rule of this workflow, every edge a real data dependency of the engine DAG; groups and junction are the author-side condensation (details below).</p>
+
+</div>
+</details>
+<div class="ox-sem-notes" markdown="1">
+
+### How this semantic view abstracts the rule-level graph
+
+The workflow has **61 rules / ? edges**; the semantic drawing shows **23 stops on 5 route lines**: one **Main pipeline** line (grey-brown) carries the single shared story along the bottom trunk — all 4 alignment lanes merge at the hidden junction `_aligned` and the count/statistics chain runs on it; the coloured lines are the routes that feed or branch from it (blue Data acquisition, green PE alignment, orange SE alignment, yellow Reporting). Grouped stops: `star_align_raw` and `star_align_se_raw` ride their parent lane; the 8 `rseqc_*` checks appear as one `rseqc QC` stop (each check still a real rule — detail card below); the 3 PCA stops appear as `DESeq2 PCA`. Every drawn edge is a real edge of the engine DAG — the subset property is machine-verified at generation (incl. junction composition), nothing invented. Auxiliary terminals (`bwa_index`, `genome_faidx`) and the per-check QC fan-outs are elided here and shown in the rule-level detail card.
+
+### How to read this semantic map
+
+
+
+**Short-name mapping** — every label on the map, in full:
+
+<table class="ox-sem-map"><thead><tr><th>Shown</th><th>Full rule name(s)</th></tr></thead><tbody><tr><td><code>dimred</code></td><td><code>pca, umap_graph, umap_embed_2d, umap_embed_3d, densmap_embed_2d, densmap_embed_3d</code></td></tr><tr><td><code>distmat</code></td><td><code>distance_matrix_observations_correlation, distance_matrix_observations_cosine, distance_matrix_features_correlation, distance_matrix_features_cosine</code></td></tr><tr><td><code>prep</code></td><td><code>prep_feature_plot</code></td></tr><tr><td><code>leiden</code></td><td><code>leiden_RBConfigurationVertexPartition_0p5, leiden_RBConfigurationVertexPartition_1, leiden_RBConfigurationVertexPartition_1p5, leiden_RBConfigurationVertexPartition_2, leiden_RBConfigurationVertexPartition_4, leiden_ModularityVertexPartition_NA</code></td></tr><tr><td><code>cluster_agg</code></td><td><code>aggregate_clustering_results, aggregate_all_clustering_results</code></td></tr><tr><td><code>plots</code></td><td><code>plot_dimred_features_pca, plot_dimred_features_umap, plot_dimred_metadata_pca, plot_dimred_metadata_umap, plot_dimred_metadata_densmap, plot_dimred_clustering_pca, plot_dimred_clustering_umap, plot_dimred_clustering_densmap</code></td></tr><tr><td><code>diagnostics</code></td><td><code>plot_pca_diagnostics, plot_umap_diagnostics_umap, plot_umap_diagnostics_densmap, plot_umap_connectivity_umap, plot_umap_connectivity_densmap</code></td></tr><tr><td><code>interactive</code></td><td><code>plot_dimred_interactive_pca_2d, plot_dimred_interactive_pca_3d, plot_dimred_interactive_umap_2d, plot_dimred_interactive_umap_3d, plot_dimred_interactive_densmap_2d, plot_dimred_interactive_densmap_3d</code></td></tr><tr><td><code>heatmaps</code></td><td><code>plot_heatmap_correlation, plot_heatmap_cosine</code></td></tr><tr><td><code>clustree</code></td><td><code>clustree_analysis_default, clustree_analysis_custom, clustree_analysis_metadata</code></td></tr><tr><td><code>validation</code></td><td><code>validation_external, validation_internal_Silhouette, validation_internal_Calinski_Harabasz, validation_internal_Dunn, validation_internal_C_index, validation_internal_Davies_Bouldin, validation_internal_BIC</code></td></tr><tr><td><code>indices</code></td><td><code>aggregate_rank_internal, plot_indices_external, plot_indices_internal</code></td></tr><tr><td><code>exports</code></td><td><code>env_export_umap_leiden, env_export_clusterCrit, env_export_clustree, env_export_ComplexHeatmap, env_export_ggplot, env_export_plotly, env_export_pymcdm</code></td></tr><tr><td><code>annot</code></td><td><code>annot_export</code></td></tr></tbody></table>
+
+<a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Bgraph%5D+oxo-flow-unsupervised+semantic+map+correction&body=Which station or edge looks wrong (paste the station/edge names)">Report a correction to this map</a>
+
+</div>
+<details class="ox-flow-view">
 <summary>Exact rule DAG (multi-route truth — operational view)</summary>
 <div class="ox-dag-card ox-dag-card--wide">
 <a href="/assets/dag/oxo-flow-unsupervised-rules.svg?v=91b51a5f7f" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-unsupervised-rules.svg?v=91b51a5f7f" alt="oxo-flow-unsupervised rule-level detail" loading="lazy"></a>
@@ -301,7 +328,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card ox-dag-card--wide" markdown="1">
 
-<a href="/assets/dag/oxo-flow-unsupervised.svg?v=ae43c78710" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-unsupervised.svg?v=ae43c78710" alt="oxo-flow-unsupervised pipeline overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-unsupervised.svg?v=c6398f56b2" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-unsupervised.svg?v=c6398f56b2" alt="oxo-flow-unsupervised pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-unsupervised — Unsupervised analysis of omics matrices: PCA, UMAP and densMAP embeddings (2D/3D), distance matrices, hierarchical clustering heatmaps, Leiden clustering across partition types and resolutions, clustree analysis, external and internal cluster validation with TOPSIS ranking, static and interactive visualizations, per-feature dimred scatter plots (when-gated), and resolved-environment snapshots.</p>
 

@@ -2779,7 +2779,15 @@
       "tier": "module-stage",
       "stations": 4,
       "is_rule_level": false,
-      "aspect": 1.28
+      "aspect": 1.28,
+      "semantic": {
+        "file": "oxo-flow-scrnaseq-semantic.svg",
+        "aspect": 1.3,
+        "tier": "tree",
+        "primary": false,
+        "hand": true,
+        "stations": 23
+      }
     }
   },
   "oxo-flow-mag": {
@@ -6626,10 +6634,18 @@
       }
     ],
     "graph": {
-      "tier": "rule-flat",
+      "tier": "spine",
       "stations": 61,
-      "is_rule_level": true,
-      "aspect": 1.37
+      "is_rule_level": false,
+      "aspect": 0.96,
+      "semantic": {
+        "file": "oxo-flow-methylseq-semantic.svg",
+        "aspect": 1.91,
+        "tier": "tree",
+        "primary": false,
+        "hand": true,
+        "stations": 23
+      }
     }
   },
   "oxo-flow-nanoseq": {
@@ -7222,7 +7238,7 @@
       "tier": "spine",
       "stations": 52,
       "is_rule_level": false,
-      "aspect": 1.4,
+      "aspect": 1.16,
       "semantic": {
         "file": "oxo-flow-nanoseq-semantic.svg",
         "aspect": 1.11,
@@ -10003,7 +10019,7 @@
       "tier": "spine",
       "stations": 31,
       "is_rule_level": false,
-      "aspect": 2.79,
+      "aspect": 3.0,
       "semantic": {
         "file": "oxo-flow-rnaseq-star-deseq2-semantic.svg",
         "aspect": 3.06,
@@ -12002,7 +12018,15 @@
       "tier": "rule-sections",
       "stations": 16,
       "is_rule_level": true,
-      "aspect": 2.82
+      "aspect": 2.82,
+      "semantic": {
+        "file": "oxo-flow-genome-tracks-semantic.svg",
+        "aspect": 0.74,
+        "tier": "tree",
+        "primary": false,
+        "hand": true,
+        "stations": 23
+      }
     }
   },
   "oxo-flow-mixscape": {
@@ -12255,7 +12279,15 @@
       "tier": "rule-sections",
       "stations": 7,
       "is_rule_level": true,
-      "aspect": 4.98
+      "aspect": 4.98,
+      "semantic": {
+        "file": "oxo-flow-mixscape-semantic.svg",
+        "aspect": 0.55,
+        "tier": "tree",
+        "primary": false,
+        "hand": true,
+        "stations": 23
+      }
     }
   },
   "oxo-flow-bgcflow": {
@@ -12662,7 +12694,15 @@
       "tier": "module-stage",
       "stations": 5,
       "is_rule_level": false,
-      "aspect": 1.47
+      "aspect": 1.47,
+      "semantic": {
+        "file": "oxo-flow-bgcflow-semantic.svg",
+        "aspect": 0.77,
+        "tier": "tree",
+        "primary": false,
+        "hand": true,
+        "stations": 23
+      }
     }
   },
   "oxo-flow-unsupervised": {
@@ -13203,7 +13243,15 @@
       "tier": "spine",
       "stations": 61,
       "is_rule_level": false,
-      "aspect": 1.16
+      "aspect": 1.16,
+      "semantic": {
+        "file": "oxo-flow-unsupervised-semantic.svg",
+        "aspect": 0.91,
+        "tier": "tree",
+        "primary": false,
+        "hand": true,
+        "stations": 23
+      }
     }
   },
   "oxo-flow-circrna": {
@@ -13223,7 +13271,15 @@
       "tier": "module-stage",
       "stations": 4,
       "is_rule_level": false,
-      "aspect": 0.92
+      "aspect": 0.92,
+      "semantic": {
+        "file": "oxo-flow-circrna-semantic.svg",
+        "aspect": 0.95,
+        "tier": "line",
+        "primary": true,
+        "hand": true,
+        "stations": 23
+      }
     }
   },
   "oxo-flow-clindet": {
@@ -14893,7 +14949,15 @@
       "tier": "rule-sections",
       "stations": 13,
       "is_rule_level": true,
-      "aspect": 1.67
+      "aspect": 1.67,
+      "semantic": {
+        "file": "oxo-flow-auto-sra-rnaseq-pipeline-semantic.svg",
+        "aspect": 1.3,
+        "tier": "line",
+        "primary": true,
+        "hand": true,
+        "stations": 23
+      }
     }
   },
   "oxo-flow-tcasia": {
@@ -15189,7 +15253,15 @@
       "tier": "rule-sections",
       "stations": 17,
       "is_rule_level": true,
-      "aspect": 2.76
+      "aspect": 2.76,
+      "semantic": {
+        "file": "oxo-flow-tcasia-semantic.svg",
+        "aspect": 0.74,
+        "tier": "tree",
+        "primary": false,
+        "hand": true,
+        "stations": 23
+      }
     }
   }
 }
