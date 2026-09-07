@@ -10,10 +10,12 @@ graph LR
     sort+merge -->|main| markdup+filter
     markdup+filter -->|main| peaks
     peaks -->|main| annotate
-    annotate -->|main| cov+bigwig
-    cov+bigwig -->|main| plots
-    plots -->|main| fingerprint
-    fingerprint -->|main| multiqc
+    annotate -->|main| multiqc
+    markdup+filter -->|side| cov+bigwig
+    cov+bigwig -->|side| plots
+    plots -->|side| multiqc
+    markdup+filter -->|side| fingerprint
+    fingerprint -->|side| multiqc
     fastqc -->|side| multiqc
     trimgalore -->|side| alt_aligners
     alt_aligners -->|side| sort+merge
@@ -25,7 +27,5 @@ graph LR
     annotate -->|side| qce
     ref -->|side| qce
     ref -->|side| mito
-    markdup+filter -->|side| cov+bigwig
-    markdup+filter -->|side| fingerprint
     peaks -->|side| frip
     frip -->|side| qce

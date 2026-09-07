@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-     width="462" height="486" viewBox="-20 0 502 486" style="color-scheme: light">
+     width="462" height="360" viewBox="-20 0 502 360" style="color-scheme: light">
 <defs>
 </defs>
-<metadata id="diagram-manifest" data-schema-version="1.0"><![CDATA[{"groups":[{"color":"#79706E","id":"generic","label":"Analysis"},{"color":"#54A24B","id":"align","label":"Alignment"},{"color":"#B279A2","id":"variant","label":"Variant Calling"}],"height":486,"match":{"flags":"i","target":"fqProcessName","type":"regex"},"nodes":[{"groups":[],"h":10.0,"id":"s_00_qc","label":"QC","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":80.0,"y":264.0},{"groups":["align"],"h":10.0,"id":"s_10_mapping","label":"Alignment\nMapping","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":80.0,"y":196.0},{"groups":["align"],"h":10.0,"id":"s_20_fusion","label":"Fusion","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":223.2,"y":196.0},{"groups":[],"h":10.0,"id":"s_30_isofox","label":"Alignment\nIsofox","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":80.0,"y":336.0},{"groups":["align","generic"],"h":14.0,"id":"s_40_call_mut","label":"Call Mut","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":223.2,"y":122.0},{"groups":["generic","variant"],"h":18.0,"id":"s_50_snv","label":"Variant Calling\nSNV","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":312.7,"y":124.0},{"groups":["variant"],"h":10.0,"id":"s_60_vcf2maf_merge","label":"VCF2MAF","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":402.2,"y":200.0}],"regions":[],"title":"","version":"1.0","width":462}]]></metadata>
+<metadata id="diagram-manifest" data-schema-version="1.0"><![CDATA[{"groups":[{"color":"#79706E","id":"generic","label":"Analysis"},{"color":"#54A24B","id":"align","label":"Alignment"},{"color":"#B279A2","id":"variant","label":"Variant Calling"}],"height":360,"match":{"flags":"i","target":"fqProcessName","type":"regex"},"nodes":[{"groups":[],"h":10.0,"id":"s_00_qc","label":"QC","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":80.0,"y":264.0},{"groups":["align"],"h":10.0,"id":"s_10_mapping","label":"Alignment\nMapping","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":80.0,"y":196.0},{"groups":["align"],"h":10.0,"id":"s_20_fusion","label":"Fusion","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":223.2,"y":196.0},{"groups":[],"h":10.0,"id":"s_30_isofox","label":"Alignment\nIsofox","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":80.0,"y":336.0},{"groups":["align","generic"],"h":14.0,"id":"s_40_call_mut","label":"Call Mut","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":223.2,"y":122.0},{"groups":["generic","variant"],"h":18.0,"id":"s_50_snv","label":"Variant Calling\nSNV","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":312.7,"y":124.0},{"groups":["variant"],"h":10.0,"id":"s_60_vcf2maf_merge","label":"VCF2MAF","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":402.2,"y":200.0}],"regions":[],"title":"","version":"1.0","width":462}]]></metadata>
 <style>.nf-metro-bg { fill: var(--nfm-map-bg, light-dark(#f5f5f5, #2b2b2b)); }
 .nf-metro-title { fill: var(--nfm-map-title-color, light-dark(#111111, #ffffff)); }
 .nf-metro-station-label { fill: var(--nfm-map-label-color, light-dark(#333333, #e0e0e0)); }
@@ -15,7 +15,7 @@
 .nf-metro-legend-text { fill: var(--nfm-map-legend-text-color, light-dark(#333333, #e0e0e0)); }
 .nf-metro-marker-stroke { stroke: var(--nfm-map-marker-stroke, light-dark(#333333, #f0f0f0)); }
 .nf-metro-label-halo { fill: var(--nfm-map-bg, light-dark(#f5f5f5, #2b2b2b)); stroke: var(--nfm-map-bg, light-dark(#f5f5f5, #2b2b2b)); }</style>
-<rect x="0" y="0" width="462" height="486" fill="#f5f5f5" class="nf-metro-bg" />
+<rect x="0" y="0" width="462" height="360" fill="#f5f5f5" class="nf-metro-bg" />
 <path d="M312.7,128.0 L332.45,128.0 Q342.45,128.0,346.29615384615386,137.23076923076923 L368.6038461538461,190.76923076923077 Q372.45,200.0,382.45,200.0 L402.2,200.0" stroke="#B279A2" stroke-width="3.0" fill="none" stroke-linecap="round" stroke-linejoin="round" class="metro-line-variant" data-line-id="variant" />
 <path d="M80.0,196.0 L223.2,196.0" stroke="#54A24B" stroke-width="3.0" stroke-linecap="round" class="metro-line-align" data-line-id="align" />
 <path d="M80.0,196.0 L110.5,196.0 Q120.5,196.0,124.34615384615384,186.76923076923077 L146.65384615384616,133.23076923076923 Q150.5,124.0,160.5,124.0 L223.2,124.0" stroke="#54A24B" stroke-width="3.0" fill="none" stroke-linecap="round" stroke-linejoin="round" class="metro-line-align" data-line-id="align" />
@@ -58,12 +58,12 @@ SNV" />
 <text x="319.8" y="139.0" font-size="13.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="hanging" data-station-id="s_50_snv" class="nf-metro-station-label"><tspan x="319.8" dy="0em">Variant Calling</tspan><tspan x="319.8" dy="1.2em">SNV</tspan></text>
 <text x="402.2" y="214.0" font-size="13.0" fill="#f5f5f5" stroke="#f5f5f5" stroke-width="3.0" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="hanging">VCF2MAF</text>
 <text x="402.2" y="214.0" font-size="13.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="hanging" data-station-id="s_60_vcf2maf_merge" class="nf-metro-station-label">VCF2MAF</text>
-<rect x="60.0" y="366.0" width="175.5" height="96.0" rx="6" ry="6" fill="rgba(255, 255, 255, 0.8)" class="nf-metro-legend-bg" />
-<path d="M72.0,390.0 L96.0,390.0" stroke="#79706E" stroke-width="3.0" stroke-linecap="round" />
-<text x="108.0" y="390.0" font-size="14.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" dy="0.3em" class="nf-metro-legend-text">Analysis</text>
-<path d="M72.0,414.0 L96.0,414.0" stroke="#54A24B" stroke-width="3.0" stroke-linecap="round" />
-<text x="108.0" y="414.0" font-size="14.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" dy="0.3em" class="nf-metro-legend-text">Alignment</text>
-<path d="M72.0,438.0 L96.0,438.0" stroke="#B279A2" stroke-width="3.0" stroke-linecap="round" />
-<text x="108.0" y="438.0" font-size="14.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" dy="0.3em" class="nf-metro-legend-text">Variant Calling</text>
-<text x="432.0" y="478.0" font-size="8" fill="rgba(150, 150, 150, 0.6)" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" text-anchor="end">created with nf-metro v1.1.0</text>
+<rect x="216.7" y="230.0" width="175.5" height="96.0" rx="6" ry="6" fill="rgba(255, 255, 255, 0.8)" class="nf-metro-legend-bg" />
+<path d="M228.7,254.0 L252.7,254.0" stroke="#79706E" stroke-width="3.0" stroke-linecap="round" />
+<text x="264.7" y="254.0" font-size="14.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" dy="0.3em" class="nf-metro-legend-text">Analysis</text>
+<path d="M228.7,278.0 L252.7,278.0" stroke="#54A24B" stroke-width="3.0" stroke-linecap="round" />
+<text x="264.7" y="278.0" font-size="14.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" dy="0.3em" class="nf-metro-legend-text">Alignment</text>
+<path d="M228.7,302.0 L252.7,302.0" stroke="#B279A2" stroke-width="3.0" stroke-linecap="round" />
+<text x="264.7" y="302.0" font-size="14.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" dy="0.3em" class="nf-metro-legend-text">Variant Calling</text>
+<text x="432.0" y="352.0" font-size="8" fill="rgba(150, 150, 150, 0.6)" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" text-anchor="end">created with nf-metro v1.1.0</text>
 </svg>

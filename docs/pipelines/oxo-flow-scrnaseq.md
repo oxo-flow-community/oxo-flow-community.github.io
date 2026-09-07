@@ -453,7 +453,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <details class="ox-flow-view">
 <summary>Rule-level detail (exact DAG)</summary>
 <div class="ox-dag-card ox-dag-card--wide">
-<a href="/assets/dag/oxo-flow-scrnaseq-rules.svg?v=9d656f996e" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-scrnaseq-rules.svg?v=9d656f996e" alt="oxo-flow-scrnaseq rule-level detail" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-scrnaseq-rules.svg?v=e6223c00ab" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-scrnaseq-rules.svg?v=e6223c00ab" alt="oxo-flow-scrnaseq rule-level detail" loading="lazy"></a>
 </div>
 </details>
 <details class="ox-flow-view" open>

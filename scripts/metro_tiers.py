@@ -476,7 +476,8 @@ def render_mmd(nf_metro: str, mmd: pathlib.Path, svg: pathlib.Path,
         proc = subprocess.run(
             [
                 nf_metro, "render", str(mmd), "-o", str(svg),
-                "--theme", "nfcore-light", "--mode", "light", *spacing,
+                "--theme", "nfcore-light", "--mode", "light",
+                "--legend", "br", *spacing,
             ],
             capture_output=True,
             text=True,

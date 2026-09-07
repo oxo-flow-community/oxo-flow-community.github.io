@@ -496,7 +496,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <details class="ox-flow-view">
 <summary>Rule-level detail (exact DAG)</summary>
 <div class="ox-dag-card ox-dag-card--wide">
-<a href="/assets/dag/oxo-flow-chipseq-rules.svg?v=e7a2c22cdd" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-chipseq-rules.svg?v=e7a2c22cdd" alt="oxo-flow-chipseq rule-level detail" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-chipseq-rules.svg?v=d000bad0c9" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-chipseq-rules.svg?v=d000bad0c9" alt="oxo-flow-chipseq rule-level detail" loading="lazy"></a>
 </div>
 </details>
 <details class="ox-flow-view" open>

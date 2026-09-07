@@ -3931,7 +3931,7 @@
       "tier": "module-stage",
       "stations": 10,
       "is_rule_level": false,
-      "aspect": 1.49
+      "aspect": 1.83
     }
   },
   "oxo-flow-ampliseq": {
@@ -5869,7 +5869,7 @@
       "aspect": 1.51,
       "semantic": {
         "file": "oxo-flow-atacseq-semantic.svg",
-        "aspect": 1.18,
+        "aspect": 1.04,
         "tier": "line",
         "primary": true,
         "stations": 23
@@ -6608,10 +6608,10 @@
       }
     ],
     "graph": {
-      "tier": "rule-flat",
+      "tier": "spine",
       "stations": 61,
-      "is_rule_level": true,
-      "aspect": 1.32
+      "is_rule_level": false,
+      "aspect": 1.23
     }
   },
   "oxo-flow-nanoseq": {
@@ -7204,7 +7204,7 @@
       "tier": "spine",
       "stations": 52,
       "is_rule_level": false,
-      "aspect": 1.28
+      "aspect": 1.83
     }
   },
   "oxo-flow-viralrecon": {
@@ -9650,7 +9650,7 @@
       "tier": "rule-sections",
       "stations": 16,
       "is_rule_level": true,
-      "aspect": 3.21
+      "aspect": 7.36
     }
   },
   "oxo-flow-rnaseq-star-deseq2": {
@@ -9961,7 +9961,7 @@
       "tier": "spine",
       "stations": 31,
       "is_rule_level": false,
-      "aspect": 3.1,
+      "aspect": 3.61,
       "semantic": {
         "file": "oxo-flow-rnaseq-star-deseq2-semantic.svg",
         "aspect": 1.43,
@@ -12188,7 +12188,7 @@
       "tier": "rule-sections",
       "stations": 7,
       "is_rule_level": true,
-      "aspect": 3.85
+      "aspect": 4.98
     }
   },
   "oxo-flow-bgcflow": {
@@ -13136,7 +13136,7 @@
       "tier": "spine",
       "stations": 61,
       "is_rule_level": false,
-      "aspect": 1.29
+      "aspect": 1.1
     }
   },
   "oxo-flow-circrna": {
@@ -14686,12 +14686,12 @@
       "dna": {
         "label": "DNA \u2014 WES/WGS paired, germline, CNV, tumor-only unpaired",
         "stations": 10,
-        "aspect": 1.11
+        "aspect": 1.43
       },
       "rna": {
         "label": "RNA \u2014 fusion calling, unpaired SNV callers, isofox/quantifiers (run with -t)",
         "stations": 7,
-        "aspect": 1.03
+        "aspect": 1.39
       }
     }
   },
