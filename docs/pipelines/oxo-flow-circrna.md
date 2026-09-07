@@ -83,7 +83,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 ## Workflow graph
 
 <details class="ox-flow-view">
-<summary>Rule-level detail (exact DAG)</summary>
+<summary>Exact rule DAG (multi-route truth — operational view)</summary>
 <div class="ox-dag-card">
 <a href="/assets/dag/oxo-flow-circrna-rules.svg?v=9b291a99bf" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-circrna-rules.svg?v=9b291a99bf" alt="oxo-flow-circrna rule-level detail" loading="lazy"></a>
 </div>

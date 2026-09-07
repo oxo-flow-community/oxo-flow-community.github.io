@@ -579,7 +579,7 @@ def dag_section(p: dict, configs: dict) -> list[str]:
         rules_wide = " ox-dag-card--wide" if _intrinsic_width(rules_svg) > 1400 else ""
         cards += [
             '<details class="ox-flow-view">',
-            '<summary>Rule-level detail (exact DAG)</summary>',
+            '<summary>Exact rule DAG (multi-route truth — operational view)</summary>',
             f'<div class="ox-dag-card{rules_wide}">',
             _asset_img(f"../assets/dag/{name}-rules.svg", f"{name} rule-level detail"),
             "</div>",

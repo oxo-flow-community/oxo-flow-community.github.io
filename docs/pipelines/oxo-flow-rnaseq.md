@@ -494,7 +494,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 ## Workflow graph
 
 <details class="ox-flow-view">
-<summary>Rule-level detail (exact DAG)</summary>
+<summary>Exact rule DAG (multi-route truth — operational view)</summary>
 <div class="ox-dag-card ox-dag-card--wide">
 <a href="/assets/dag/oxo-flow-rnaseq-rules.svg?v=2ba4aea64a" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-rnaseq-rules.svg?v=2ba4aea64a" alt="oxo-flow-rnaseq rule-level detail" loading="lazy"></a>
 </div>

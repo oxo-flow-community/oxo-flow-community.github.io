@@ -503,7 +503,7 @@ One-thread pipeline (rename reads → QC → DADA2 denoising → taxonomy assign
 
 </div>
 <details class="ox-flow-view">
-<summary>Rule-level detail (exact DAG)</summary>
+<summary>Exact rule DAG (multi-route truth — operational view)</summary>
 <div class="ox-dag-card ox-dag-card--wide">
 <a href="/assets/dag/oxo-flow-ampliseq-rules.svg?v=ab829f5c0f" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-ampliseq-rules.svg?v=ab829f5c0f" alt="oxo-flow-ampliseq rule-level detail" loading="lazy"></a>
 </div>

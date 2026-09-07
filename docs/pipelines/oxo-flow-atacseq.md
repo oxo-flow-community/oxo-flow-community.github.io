@@ -432,7 +432,7 @@ Atac-seq can start from several inputs at once (trimmed reads, reference<br>inde
 
 </div>
 <details class="ox-flow-view">
-<summary>Rule-level detail (exact DAG)</summary>
+<summary>Exact rule DAG (multi-route truth — operational view)</summary>
 <div class="ox-dag-card ox-dag-card--wide">
 <a href="/assets/dag/oxo-flow-atacseq-rules.svg?v=ceae994d1e" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-atacseq-rules.svg?v=ceae994d1e" alt="oxo-flow-atacseq rule-level detail" loading="lazy"></a>
 </div>
