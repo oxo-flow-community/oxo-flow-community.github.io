@@ -220,6 +220,22 @@ def render_semantic_map(name: str, nf_metro: str) -> dict | None:
     with the fixed width-friendly geometry; return manifest info for
     configs.json or None when the workflow has no semantic map yet."""
     src = SEMANTIC_DIR / f"{name}.mmd"
+    hand = SEMANTIC_DIR / f"{name}.hand.svg"
+    if hand.is_file():
+        # Author-side hand-drawn SVG: mirrored straight into the assets (no
+        # nf-metro layout involved) — the total-layout-control option for
+        # hub topologies and reviewed maps (live: atacseq).
+        import shutil as _sh
+        svg = ROOT / "docs" / "assets" / "dag" / f"{name}-semantic.svg"
+        _sh.copyfile(hand, svg)
+        import re as _re
+        m = _re.search(r'viewBox="([^"]*)"', svg.read_text())
+        try:
+            _w, _h = float(m.group(1).split()[2]), float(m.group(1).split()[3])
+        except (TypeError, IndexError, ValueError):
+            _w, _h = 1500.0, 700.0
+        return {"file": f"{name}-semantic.svg", "aspect": round(_w / _h, 2),
+                "tier": tier, "primary": tier == "line", "hand": True}
     if not src.is_file():
         return None
     try:
