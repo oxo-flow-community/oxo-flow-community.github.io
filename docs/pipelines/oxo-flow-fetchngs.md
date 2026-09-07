@@ -4,10 +4,11 @@ title: "Fetching public sequencing data: FastQ download, metadata and sampleshee
 
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-fetchngs</span></div>
 <div class="ox-detail-cols">
-<div>
+<div class="ox-detail-main">
 <h1>Fetching public sequencing data: FastQ download, metadata and samplesheets</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
-<p>Fetch metadata and raw FastQ files from public sequence databases (SRA/ENA/DDBJ/GEO). Given a list of database identifiers — run accessions (SRR/ERR/DRR), experiments, studies, biosamples or GEO series — the pipeline retrieves the ENA run metadata, downloads the FastQ files over FTP, validates every download against its ENA md5 sum, and auto-creates a samplesheet plus sample id-mappings and a MultiQC mappings config, ready for downstream nf-core pipelines such as rnaseq, atacseq or taxprofiler.</p>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span><span class=ox-tag-sep></span><span class="ox-tag">sra</span><span class="ox-tag">ena</span><span class="ox-tag">ddbj</span><span class="ox-tag">geo</span><span class="ox-tag">fetch</span><span class="ox-tag">fastq-download</span><span class="ox-tag">samplesheet</span><span class="ox-tag">nf-core</span></div>
+<p class="ox-desc">Fetch metadata and raw FastQ files from public sequence databases (SRA/ENA/DDBJ/GEO). Given a list of database identifiers — run accessions (SRR/ERR/DRR), experiments, studies, biosamples or GEO series — the pipeline retrieves the ENA run metadata, downloads the FastQ files over FTP, validates every download against its ENA md5 sum, and auto-creates a samplesheet plus sample id-mappings and a MultiQC mappings config, ready for downstream nf-core pipelines such as rnaseq, atacseq or taxprofiler.</p>
+<div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#run-it">▶ Run it</a><a class="ox-btn" href="https://github.com/oxo-flow-community/oxo-flow-fetchngs" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow run main.oxoflow</code></div>
 </div>
 <div>
 <div class="ox-glance">
@@ -23,6 +24,7 @@ title: "Fetching public sequencing data: FastQ download, metadata and sampleshee
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2289.1"><code>10.48546/workflowhub.workflow.2289.1</code></a></span></div>
+<div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">python</span><span class="tchip">wget</span><span class="tchip">coreutils</span><span class="tchip">sra-tools</span><span class="tchip">pigz</span><span class="tchip">aspera-cli</span></div></div>
 <p class="cmd">$ oxo-flow run main.oxoflow</p>
 </div>
 </div>
@@ -171,19 +173,19 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
 <div class="ox-sem-text" markdown="1">
 
-**SRA 数据获取流水线**：只给一批 SRA/ENA/DDBJ 数据库编号（如 `SRR9984183`），它负责校验编号、拉取元数据、下载 FASTQ，并产出标准样本表（samplesheet）供下游 nf-core 类型流水线直接使用，最后附 MultiQC 配置。
+**SRA data fetch pipeline**: give it a list of SRA/ENA/DDBJ accessions (e.g. `SRR9984183`) and it validates them, fetches run metadata, downloads FASTQ through several backends, and emits a standard samplesheet ready for nf-core pipelines — plus a MultiQC config.
 
-**1. 输入校验** —— `ids` 样本组定义要获取的数据库编号；`check_ids` 用 SRA/ENA/DDBJ/GEO 的正则校验并去重，产出通过验证的编号清单，是其后元数据拉取的前置条件。
+**1. Input validation** — the `ids` sample group defines the accessions to fetch; `check_ids` validates them against the SRA/ENA/DDBJ/GEO accession patterns and deduplicates; everything downstream is gated on this list, and `sra_ids_to_runinfo` pulls the ENA run metadata (runinfo) for each validated id.
 
-**2. 元数据与下载清单** —— `sra_ids_to_runinfo` 逐一拉取 ENA 运行元数据（runinfo）；`sra_runinfo_to_ftp` 由元数据生成每个样本的 FTP 下载信息。
+**2. Download manifest** — `sra_runinfo_to_ftp` turns the metadata into one download manifest per sample; this is the common entry point of every download route.
 
-**3. FASTQ 下载** —— `sra_fastq_ftp` 按下载清单取回 FASTQ 文件（`skip_fastq_download` 可关掉下载只取元数据）。
+**3. FASTQ download (parallel tool backends)** — from the manifest the pipeline fans out several download routes: `sra_fastq_ftp` over FTP; `sra_prefetch` prefetches and `sra_fastq_sratools` converts to FASTQ; `sra_fastq_aspera` over Aspera; plus a fallback chain (`sra_prefetch_fallback` → `sra_fastq_sratools_fallback`, and `sra_fastq_ftp_aspera_fallback`) and a dbGaP-specific chain (`sra_prefetch_dbgap` → `sra_fastq_sratools_dbgap`). Which route actually runs depends on the data source and runtime conditions — the results converge into the same samplesheet generation step.
 
-**4. 样本表生成与汇总** —— `sra_to_samplesheet` 把元数据和 FASTQ 汇成下游所需的样本表；随后 `combine_samplesheets` 与 `combine_mappings` 分别合并所有样本的样本表和映射表（`nf_core_pipeline` 指定下游 nf-core 流水线时可为其定制行格式）。
+**4. Samplesheet assembly and aggregation** — `sra_to_samplesheet` consolidates metadata and all FASTQ routes into the downstream samplesheet; `combine_samplesheets` and `combine_mappings` then merge per-sample sheets and mappings (the `nf_core_pipeline` config can tailor row format for a specific downstream nf-core pipeline).
 
-**5. 质量汇总** —— `multiqc_mappings_config` 生成 MultiQC 配置，供下游的聚合报告使用。
+**5. Reporting** — after the mappings are combined, `multiqc_mappings_config` generates the MultiQC configuration used by the downstream aggregate report.
 
-*核实：文中每个步骤名都是 `main.oxoflow` 的真实规则（`oxo-flow validate` 可复核）；步骤顺序与规则依赖一致。*
+*Verified: every rule name above is a real rule of `main.oxoflow` (oxo-flow validate); the described order follows the actual rule dependencies.*
 
 <p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-fetchngs+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
 

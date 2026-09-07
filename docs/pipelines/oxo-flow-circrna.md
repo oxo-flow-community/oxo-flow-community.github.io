@@ -4,10 +4,11 @@ title: "circRNA detection: four callers with ensemble aggregation"
 
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-circrna</span></div>
 <div class="ox-detail-cols">
-<div>
+<div class="ox-detail-main">
 <h1>circRNA detection: four callers with ensemble aggregation</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · full-line</span> <span class="ox-badge ox-badge--origin">✦ Original</span> </div>
-<p>Circular RNA detection with four independent callers (CIRIquant, CIRCexplorer2, find_circ, circRNA_finder) and ensemble aggregation of calls supported by at least two methods. Indexes and conda environments are built automatically on first run from a single reference_dir; samples are auto-discovered from raw/ with no CSV.</p>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · full-line</span> <span class="ox-badge ox-badge--origin">✦ Original</span> <span class=ox-tag-sep></span><span class="ox-tag">circrna</span><span class="ox-tag">ciriquant</span><span class="ox-tag">circexplorer2</span><span class="ox-tag">find-circ</span><span class="ox-tag">circrna-finder</span><span class="ox-tag">ensemble</span></div>
+<p class="ox-desc">Circular RNA detection with four independent callers (CIRIquant, CIRCexplorer2, find_circ, circRNA_finder) and ensemble aggregation of calls supported by at least two methods. Indexes and conda environments are built automatically on first run from a single reference_dir; samples are auto-discovered from raw/ with no CSV.</p>
+<div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#run-it">▶ Run it</a><a class="ox-btn" href="https://github.com/WangLabCSU/oxo-flow-circrna" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow run circrna.oxoflow -j 16</code></div>
 </div>
 <div>
 <div class="ox-glance">
@@ -23,6 +24,7 @@ title: "circRNA detection: four callers with ensemble aggregation"
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2298.1"><code>10.48546/workflowhub.workflow.2298.1</code></a></span></div>
+<div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">fastp</span><span class="tchip">ciriquant</span><span class="tchip">circexplorer2</span><span class="tchip">find_circ</span><span class="tchip">circrna_finder</span><span class="tchip">r-base</span><span class="tchip">multiqc</span></div></div>
 <p class="cmd">$ oxo-flow run circrna.oxoflow -j 16</p>
 </div>
 </div>
@@ -86,18 +88,15 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
 <div class="ox-sem-text" markdown="1">
 
-## Semantic map - how to read it
+**circRNA detection pipeline**: given paired-end FASTQ reads and a reference genome, it trims and QC-checks the reads, detects circular RNAs with four complementary callers running in parallel, merges their calls, and delivers an across-sample circRNA table plus an HTML report.
 
-## Short names and groups (all are real rules)
+**1. Read QC and trimming** — `fastp` is the entry point: it trims adapters and low-quality tails from raw paired-end reads and emits trimmed FASTQ plus per-sample fastp JSON/HTML reports. `multiqc` consumes those JSONs and aggregates them into one MultiQC HTML report.
 
-| Shown | Full rule name(s) |
-|---|---|
-| cleanables | fastp |
-| callers | ciriquant, circexplorer2, find_circ, circrna_finder |
-| aggregate | aggregate, aggregate_dataset |
-| report | report, multiqc |
+**2. Parallel detection (four complementary callers)** — trimmed reads fan out to four independently running methods: `ciriquant` (CIRIquant, BWA/HISAT2 alignment-based), `circexplorer2` (CIRCexplorer2, BWA unmapped-junction based), `find_circ` (bowtie2 anchor based), and `circrna_finder` (circRNA_finder, STAR chimeric-read based). Each writes a per-sample BED of candidate circRNAs.
 
-Every drawn edge is a real engine edge.
+**3. Aggregation and reporting** — `aggregate` merges the four BEDs per sample, tolerating a missing caller (at least 2 of the 4 methods are required) and writing results/{sample}.aggr.txt. From the same aggregate two steps diverge in parallel: `aggregate_dataset` pools all per-sample aggregates into one dataset table, while `report` renders the circRNA HTML report.
+
+*Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described order follows the actual rule dependencies.*
 
 <p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-circrna+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
 

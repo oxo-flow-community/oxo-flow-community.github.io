@@ -4,10 +4,11 @@ title: "Cancer genome & transcriptome analysis (WES/WGS/RNA, single entry): soma
 
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-clindet</span></div>
 <div class="ox-detail-cols">
-<div>
+<div class="ox-detail-main">
 <h1>Cancer genome &amp; transcriptome analysis (WES/WGS/RNA, single entry): somatic+germline+CNV+SV calling, MAF annotation, case report</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
-<p>Port of zyllifeworld/clindet in its upstream single-Snakefile form: one entry file, config run_type (wes|wgs|rna) selects the rule tree, and paired vs tumor-only WES is derived PER PAIR from the sample sheet (a pair without a control runs the tumor-only tree — engine wildcard-scoped when predicates). 188 rules: somatic SNV (Mutect2, VarDict, VarScan2, MuSE, HaplotypeCaller) + germline (Strelka2+Manta, CaVEMan); tumor-only callers (Mutect2/HaplotypeCaller/varscan2/Strelka/vardict/lofreq/freebayes); CNV subset (Control-FREEC, Sequenza, ExomeDepth, ASCAT); WGS SV (delly chain incl. germ, svaba, Manta somaticSV); opt-in BQSR; vcf2maf/VEP MAF annotation, region flagging, cancer report, MultiQC; RNA fusion/expression (arriba/TRUST4/isofox). Live-verified per run type on tx-ubuntu.</p>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span><span class=ox-tag-sep></span><span class="ox-tag">wes</span><span class="ox-tag">wgs</span><span class="ox-tag">rna</span><span class="ox-tag">somatic</span><span class="ox-tag">germline</span><span class="ox-tag">cnv</span><span class="ox-tag">sv</span><span class="ox-tag">unpaired</span><span class="ox-tag">tumor-only</span><span class="ox-tag">maf</span><span class="ox-tag">vep</span><span class="ox-tag">vcf2maf</span><span class="ox-tag">mutect2</span><span class="ox-tag">vardict</span><span class="ox-tag">varscan2</span><span class="ox-tag">muse</span><span class="ox-tag">strelka2</span><span class="ox-tag">caveman</span><span class="ox-tag">delly</span><span class="ox-tag">svaba</span><span class="ox-tag">manta</span><span class="ox-tag">control-freec</span><span class="ox-tag">sequenza</span><span class="ox-tag">exomedepth</span><span class="ox-tag">ascat</span><span class="ox-tag">arriba</span><span class="ox-tag">trust4</span><span class="ox-tag">isofox</span><span class="ox-tag">bqsr</span></div>
+<p class="ox-desc">Port of zyllifeworld/clindet in its upstream single-Snakefile form: one entry file, config run_type (wes|wgs|rna) selects the rule tree, and paired vs tumor-only WES is derived PER PAIR from the sample sheet (a pair without a control runs the tumor-only tree — engine wildcard-scoped when predicates). 188 rules: somatic SNV (Mutect2, VarDict, VarScan2, MuSE, HaplotypeCaller) + germline (Strelka2+Manta, CaVEMan); tumor-only callers (Mutect2/HaplotypeCaller/varscan2/Strelka/vardict/lofreq/freebayes); CNV subset (Control-FREEC, Sequenza, ExomeDepth, ASCAT); WGS SV (delly chain incl. germ, svaba, Manta somaticSV); opt-in BQSR; vcf2maf/VEP MAF annotation, region flagging, cancer report, MultiQC; RNA fusion/expression (arriba/TRUST4/isofox). Live-verified per run type on tx-ubuntu.</p>
+<div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#run-it">▶ Run it</a><a class="ox-btn" href="https://github.com/WangLabCSU/oxo-flow-clindet" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow run main.oxoflow</code></div>
 </div>
 <div>
 <div class="ox-glance">
@@ -23,6 +24,7 @@ title: "Cancer genome & transcriptome analysis (WES/WGS/RNA, single entry): soma
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2299.1"><code>10.48546/workflowhub.workflow.2299.1</code></a></span></div>
+<div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">fastp</span><span class="tchip">bwa (&gt;=0.7.18)</span><span class="tchip">samtools</span><span class="tchip">gatk4 4.6.2.0 (container)</span><span class="tchip">bcftools &gt;=1.22</span><span class="tchip">bgzip</span><span class="tchip">tabix</span><span class="tchip">varscan 2.4.6</span></div></div>
 <p class="cmd">$ oxo-flow run main.oxoflow</p>
 </div>
 </div>
@@ -556,6 +558,36 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <div class="ox-dag-card">
 <a href="/assets/dag/oxo-flow-clindet-rna.svg?v=670647840a" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-clindet-rna.svg?v=670647840a" alt="oxo-flow-clindet rna flow view" loading="lazy"></a>
 <p class="ox-dag-note">Stations are the sub-flow's modules; a stage name above the module set tells what the module does. Unconnected stations are conditional or auxiliary modules without a dataflow edge on the template DAG (clindet: QC, Isofox).</p>
+</div>
+</details>
+<details class="ox-flow-view" open>
+<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
+<div class="ox-sem-text" markdown="1">
+
+**clindet pipeline**: one entry point (`wes`/`wgs` = DNA, `rna` = RNA) calling somatic, germline and tumor-only variants, copy-number, SV, fusion and QC analysis, ending in merged VCF/MAF, case report and MultiQC.
+
+**Shared inputs** — pairs split into tumor/normal: `fastp_tumor_sample`/`fastp_normal_sample` trim, BWA mem aligns (`map_reads_tumor`, `map_reads_normal`), `mark_duplicates_tumor`/`mark_duplicates_normal` deduplicate, and `recal_link_tumor`/`recal_link_normal` (or `recalibrate_base_qualities_tumor` → `apply_base_quality_recalibration_tumor`, BQSR on) feed DNA rules.
+
+**DNA module**
+
+1. **Sequencing quality** — `bam_flagstat_tumor`/`bam_flagstat_normal`; `bed_to_interval_list` feeds `picard_collect_wes_tumor`/`picard_collect_wes_normal` (WGS: `picard_collect_wgs_tumor`, `picard_flength_wgs_tumor`); `prep_multiqc_data` and WGS/tumor-only variants lead to `combined_multiqc_prep_multiqc_data` → `combined_multiqc`.
+
+2. **Somatic and germline calling** — `call_variants_HaplotypeCaller`, `vardict_paired_mode` → `vardict_filter_somatic`, `varscan2_mpileup` → `varscan2_call` → `varscan2_som_filter` → `varscan2_merge_somatic`, MuSE `muse_call` → `muse_sump`, Mutect2 (`mutect2`, `M2_ST`/`M2_SNC` → `M2_contam` → `M2_filter`), CaVEMan `CM_call` → `CM_flag`/`CM_germ_flag`; germline: `call_config_strelka` → `call_strelka_manta_germline`/`call_strelka_somatic_manta` → `merge_strelka_manta`/`merge_strelka_somatic_manta`; WGS reruns them on whole-genome data.
+
+3. **Tumor-only calling** — control-less pairs run `unpaired_mutect2_call` → `M2_filter_unpaired`, `unpaired_call_config_strelka` → `unpaired_call_strelka_manta` → `unpaired_strelka_filter`, `unpaired_vardict_single_mode` → `unpaired_filter_vardict`, `lofreq_somatic_unpaired` → `unpair_lofreq_filter`, `varscan2_mpileup_unpaired` → `varscan2_merge_unpaired` (via `varscan2_call_unpaired_snp`/indel twin), plus `unpaired_call_variants_HaplotypeCaller`/`unpaired_freebayes`; `merge_unpaired_vcf` → `all_unpaired`.
+
+4. **Normalization and outputs** — `vcf_norm_Mutect2`/`vcf_norm_vardict` and twins precede MAF conversion (`vcf2maf_Mutect2` and siblings); `merge_paired_vcf` → `all_vcf`; `merge_paired_maf` feeds `flag_mutation_pairead_maf` (`make_region_bed_list`) and `run_cancer_report`. CNV (`freec_config` → `freec_call_paired` → `plot_freec`; `sequenza_bam2seqz` → `sequenza_seqz_binning` → `sequenza_call`; `CNA_ASCAT` → `ASCAT_EXTRACT_PURITYPLOIDY`, `CNA_exomedepth`) fills `all_cnv`; WGS SVs (`SV_delly` → `SV_delly_filter_somatic` → `SV_delly_to_vcf` → `delly_filter` → `delly2bnd`, `SV_svaba` → `SV_sansa_anno_svaba`, Manta via `call_config_strelka_wgs`) fill `all_sv`.
+
+**RNA module**
+
+1. **QC, alignment, quant** — `fastp_trim`; `STAR_1_pass`, then `STAR_arriba_map`/`STAR_mut_map` re-align (plus `STAR_isofox_map` → `isofox_call`, `cal_exp_RSEM` → `RSEM_sort_genome`).
+2. **Fusion and immune receptors** — `arriba_fusion` → `arriba_draw` (plus RSEM BAM) and `TRUST4_TBCR`.
+3. **Mutation and MAF** — `link_bam` → `SplitNCigarReads` unlocks `mutect2_call` → `M2_filter_unpaired_rna`, `call_variants_HaplotypeCaller_rna`, `unpaired_freebayes_rna`, `unpaired_call_config_strelka_rna` → `unpaired_call_strelka_manta_rna` → `unpaired_strelka_filter_rna`, `lofreq_call_up` → `lofreq_norm_filter`, `unpaired_vardict_single_mode_rna` → `unpaired_filter_vardict_rna`, and the varscan2 RNA chain (`varscan2_mpileup_unpaired_rna` → SNP/indel calls → `varscan2_filter_snp` and the indel twin → `varscan2_merge_unpaired_rna`); each converts to MAF (`vcf2maf_rna_freebayes`, `vcf2maf_rna_Mutect2` and siblings).
+
+*Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described order follows the actual rule dependencies.*
+
+<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-clindet+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
+
 </div>
 </details>
 <details class="ox-flow-view">

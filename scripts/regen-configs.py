@@ -211,7 +211,8 @@ SEMANTIC_DIR = ROOT / "scripts" / "semantic_maps"
 
 # Non-rule tokens that legitimately appear in the walkthroughs (config vars,
 # sample-group names) — anything else must name a real rule of the workflow.
-SEM_TEXT_ALLOW = {"ids", "nf_core_pipeline", "skip_fastq_download", "input", "out_dir", "config"}
+SEM_TEXT_ALLOW = {"ids", "nf_core_pipeline", "skip_fastq_download", "input", "out_dir", "config",
+                  "wes", "wgs", "rna"}
 
 
 def check_sem_texts(pipelines: list[dict]) -> list[str]:
@@ -228,6 +229,24 @@ def check_sem_texts(pipelines: list[dict]) -> list[str]:
         if wf is None:
             continue
         rules = set(re.findall(r'^\s*name\s*=\s*"([^"]+)"', wf.read_text(), re.M))
+        # include fragments carry a `namespace = "..."` — the engine expands
+        # every module rule as `namespace::rule`, and texts may use either form.
+        wf_text = wf.read_text()
+        for inc in re.finditer(r'\[\[include\]\]\s*\n(.*?)(?=\n\s*\[\[|\Z)', wf_text, re.S):
+            inc_block = inc.group(1)
+            ipath_m = re.search(r'(?:path|file)\s*=\s*"([^"]+)"', inc_block)
+            ns_m = re.search(r'namespace\s*=\s*"([^"]*)"', inc_block)
+            if not ipath_m:
+                continue
+            ipath = wf.parent / ipath_m.group(1)
+            if not ipath.is_file():
+                continue
+            ns = ns_m.group(1) if ns_m else ""
+            block = ipath.read_text()
+            for rn in re.findall(r'^\s*name\s*=\s*"([^"]+)"', block, re.M):
+                rules.add(rn)
+                if ns:
+                    rules.add(f"{ns}::{rn}")
         text = sem.read_text(encoding="utf-8")
         for tok in re.findall(r'`([^`]+)`', text):
             for w in tok.replace("/", " ").split():

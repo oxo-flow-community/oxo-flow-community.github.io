@@ -4,10 +4,11 @@ title: "WGS/WES germline and somatic variant calling"
 
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-sarek</span></div>
 <div class="ox-detail-cols">
-<div>
+<div class="ox-detail-main">
 <h1>WGS/WES germline and somatic variant calling</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
-<p>GATK best-practice variant calling for whole-genome and whole-exome sequencing (WGS/WES), germline by default: FastQC quality control, fastp trimming and splitting, BWA-MEM (or BWA-MEM2) alignment, MarkDuplicates with CRAM or BAM output, base quality score recalibration (BQSR), single-sample HaplotypeCaller variant calling with CNN 1D scoring and tranche filtering, VEP annotation, per-sample VCF QC and a final MultiQC report. Optional ported branches (all gated off by default): reference preparation (BWA/BWAmem2 index, .dict, .fai), UMI-aware consensus calling (fgbio chain + fastp), fastp split-parts fan-out (split_parts=true: runtime-discovered per-part BWA-MEM/BWA-MEM2 alignment + BAM merge + index, no input cap), FreeBayes, Strelka2 germline, Manta germline, bcftools mpileup, TIDDIT SV (germline only; somatic mode + SVDB merge excluded), goleft indexcov, DeepVariant, NGSCheckMate sample-identity QC, the joint-germline path (GVCF mode + GenomicsDBImport + GenotypeGVCFs + VQSR), per-caller VCF QC + VEP annotation (upstream fan-out over every enabled caller), and the per-chromosome scatter/gather branch (scatter_gatk=true) that ports upstream interval preparation + GATK4_GATHERBQSRREPORTS / CRAM/BAM_MERGE_INDEX_SAMTOOLS / GATK4_MERGEVCFS with one job per chromosome.</p>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span><span class=ox-tag-sep></span><span class="ox-tag">wgs</span><span class="ox-tag">wes</span><span class="ox-tag">germline</span><span class="ox-tag">somatic</span><span class="ox-tag">variant-calling</span><span class="ox-tag">gatk</span><span class="ox-tag">bwa</span><span class="ox-tag">bwa-mem2</span><span class="ox-tag">vep</span><span class="ox-tag">umi</span><span class="ox-tag">nf-core</span></div>
+<p class="ox-desc">GATK best-practice variant calling for whole-genome and whole-exome sequencing (WGS/WES), germline by default: FastQC quality control, fastp trimming and splitting, BWA-MEM (or BWA-MEM2) alignment, MarkDuplicates with CRAM or BAM output, base quality score recalibration (BQSR), single-sample HaplotypeCaller variant calling with CNN 1D scoring and tranche filtering, VEP annotation, per-sample VCF QC and a final MultiQC report. Optional ported branches (all gated off by default): reference preparation (BWA/BWAmem2 index, .dict, .fai), UMI-aware consensus calling (fgbio chain + fastp), fastp split-parts fan-out (split_parts=true: runtime-discovered per-part BWA-MEM/BWA-MEM2 alignment + BAM merge + index, no input cap), FreeBayes, Strelka2 germline, Manta germline, bcftools mpileup, TIDDIT SV (germline only; somatic mode + SVDB merge excluded), goleft indexcov, DeepVariant, NGSCheckMate sample-identity QC, the joint-germline path (GVCF mode + GenomicsDBImport + GenotypeGVCFs + VQSR), per-caller VCF QC + VEP annotation (upstream fan-out over every enabled caller), and the per-chromosome scatter/gather branch (scatter_gatk=true) that ports upstream interval preparation + GATK4_GATHERBQSRREPORTS / CRAM/BAM_MERGE_INDEX_SAMTOOLS / GATK4_MERGEVCFS with one job per chromosome.</p>
+<div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#run-it">▶ Run it</a><a class="ox-btn" href="https://github.com/oxo-flow-community/oxo-flow-sarek" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow run main.oxoflow</code></div>
 </div>
 <div>
 <div class="ox-glance">
@@ -23,6 +24,7 @@ title: "WGS/WES germline and somatic variant calling"
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2279.1"><code>10.48546/workflowhub.workflow.2279.1</code></a></span></div>
+<div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">fastqc</span><span class="tchip">fastp</span><span class="tchip">bwa</span><span class="tchip">bwa-mem2</span><span class="tchip">samtools</span><span class="tchip">gatk</span><span class="tchip">mosdepth</span><span class="tchip">fgbio</span></div></div>
 <p class="cmd">$ oxo-flow run main.oxoflow</p>
 </div>
 </div>
@@ -498,26 +500,21 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
 <div class="ox-sem-text" markdown="1">
 
-## Semantic map - how to read it
+**oxo-flow-sarek pipeline**: WGS/WES germline variant calling from raw FASTQ to annotated VCFs and a MultiQC report — a community port of nf-core/sarek 3.10.0.
 
-## Short names and groups (all are real rules)
+**1. Reference preparation** — `bwa_index` or `bwamem2_index` builds the aligner index, `gatk_createsequencedictionary` the sequence dictionary, and `samtools_faidx` the FASTA index; all config-gated on the prepare_reference flag.
 
-| Shown | Full rule name(s) |
-|---|---|
-| prep | bwa_index, bwamem2_index, gatk_createsequencedictionary, samtools_faidx |
-| fq | fastqc |
-| trim | fastp, fastp_split |
-| umi | fgbio_fastqtobam, samtools_bam2fq_umi, bwa_mem_umi, fgbio_groupreadsbyumi, fgbio_callmolecularconsensusreads, samtools_bam2fq_consensus, fastp_umi |
-| aligners | bwa_mem, bwa_mem2, bwa_mem_split, bwa_mem2_split |
-| dedup | bam_merge_index_samtools, gatk_markduplicates, gatk_markduplicates_bam, mosdepth_md, samtools_stats_md |
-| bqsr | gatk_baserecalibrator, gatk_applybqsr, samtools_index_recal, mosdepth_recal, samtools_stats_recal, samtools_reindex_bam, goleft_indexcov |
-| scatter | create_intervals_bed, tabix_interval, gatk_baserecalibrator_scatter, gatk_gatherbqsrreports, gatk_applybqsr_scatter, merge_index_samtools |
-| callers | gatk_haplotypecaller, gatk_cnnscorevariants, gatk_filtervarianttranches, freebayes, bcftools_sort_freebayes, tabix_freebayes, vcffilter_freebayes, tabix_freebayes_filt, strelka_germline, manta_germline, bcftools_mpileup_call, tiddit_sv, tabix_tiddit, deepvariant, bcftools_mpileup_ngscheckmate, ngscheckmate_ncm, gatk_haplotypecaller_scatter, gatk_mergevcfs_scatter |
-| joint | gatk_haplotypecaller_gvcf, gatk_genomicsdbimport, gatk_genotypegvcfs, bcftools_sort_joint, gatk_mergevcfs_joint, gatk_variantrecalibrator_snp, gatk_variantrecalibrator_indel, gatk_applyvqsr_snp, gatk_applyvqsr_indel, gatk_haplotypecaller_gvcf_scatter, gatk_genomicsdbimport_scatter, gatk_genotypegvcfs_scatter, bcftools_sort_joint_scatter, gatk_mergevcfs_joint_scatter |
-| stats | bcftools_stats, vcftools_tstv_count, vcftools_tstv_qual, vcftools_filter_summary, ensemblvep_vep, bcftools_stats_freebayes, vcftools_tstv_count_freebayes, vcftools_tstv_qual_freebayes, vcftools_filter_summary_freebayes, ensemblvep_vep_freebayes, bcftools_stats_strelka, vcftools_tstv_count_strelka, vcftools_tstv_qual_strelka, vcftools_filter_summary_strelka, ensemblvep_vep_strelka, bcftools_stats_mpileup, vcftools_tstv_count_mpileup, vcftools_tstv_qual_mpileup, vcftools_filter_summary_mpileup, ensemblvep_vep_mpileup, bcftools_stats_deepvariant, vcftools_tstv_count_deepvariant, vcftools_tstv_qual_deepvariant, vcftools_filter_summary_deepvariant, ensemblvep_vep_deepvariant, bcftools_stats_manta, vcftools_tstv_count_manta, vcftools_tstv_qual_manta, vcftools_filter_summary_manta, ensemblvep_vep_manta, bcftools_stats_tiddit, vcftools_tstv_count_tiddit, vcftools_tstv_qual_tiddit, vcftools_filter_summary_tiddit, ensemblvep_vep_tiddit, bcftools_stats_joint, vcftools_tstv_count_joint, vcftools_tstv_qual_joint, vcftools_filter_summary_joint, ensemblvep_vep_joint |
-| report | multiqc |
+**2. Read QC and trimming** — `fastqc` screens raw reads; `fastp` trims and splits them (multipart alternative `fastp_split`). With UMI consensus preprocessing, a fgbio chain runs first: `fgbio_fastqtobam` → `samtools_bam2fq_umi` → `bwa_mem_umi` → `fgbio_groupreadsbyumi` → `fgbio_callmolecularconsensusreads` → `samtools_bam2fq_consensus` → `fastp_umi`.
 
-Every drawn edge is a real engine edge (subset check at generation).
+**3. Alignment (exclusive runtime routes)** — `fastp`, `fastp_split`, and `fastp_umi` feed the BWA-MEM and BWA-MEM2 aligners: `bwa_mem`/`bwa_mem2` single-part, or `bwa_mem_split`/`bwa_mem2_split` per split part, gathered by `bam_merge_index_samtools`. The aligned BAM is deduplicated by `gatk_markduplicates` (CRAM mode) or `gatk_markduplicates_bam` (BAM mode); the deduplicated file also feeds `mosdepth_md` and `samtools_stats_md`.
+
+**4. Base quality recalibration** — `gatk_baserecalibrator` builds the recalibration table and `gatk_applybqsr` applies it; `samtools_index_recal` indexes the recalibrated alignment (required upstream of `mosdepth_recal`), while `samtools_stats_recal` summarizes it.
+
+**5. Variant calling — parallel, config-gated** — all callers share the recalibrated alignment: default `gatk_haplotypecaller` → `gatk_cnnscorevariants` → `gatk_filtervarianttranches`; optional `freebayes` (→ `bcftools_sort_freebayes` → `tabix_freebayes`/`vcffilter_freebayes` → `tabix_freebayes_filt`), `strelka_germline`, `manta_germline`, `bcftools_mpileup_call`, `tiddit_sv` → `tabix_tiddit`, `deepvariant`; cohort checks via `samtools_reindex_bam` → `goleft_indexcov` and `bcftools_mpileup_ngscheckmate` → `ngscheckmate_ncm`. Joint germline instead chains `gatk_haplotypecaller_gvcf` → `gatk_genomicsdbimport` → `gatk_genotypegvcfs` → `bcftools_sort_joint` → `gatk_mergevcfs_joint` → `gatk_variantrecalibrator_snp`/`gatk_variantrecalibrator_indel` → `gatk_applyvqsr_snp` → `gatk_applyvqsr_indel`.
+
+**6. QC, annotation, and aggregate reporting** — each produced VCF fans out to per-caller `bcftools_stats`, `vcftools_tstv_count`, `vcftools_tstv_qual`, and `vcftools_filter_summary` QC plus an `ensemblvep_vep` annotation (e.g. `ensemblvep_vep_freebayes`, `ensemblvep_vep_joint`); with the scatter_gatk option enabled, `create_intervals_bed` → `tabix_interval` feed per-chromosome `gatk_applybqsr_scatter` and `gatk_haplotypecaller_scatter`, gathered back by `merge_index_samtools` and `gatk_mergevcfs_scatter`. Finally `multiqc` aggregates all reports.
+
+*Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described order follows the actual rule dependencies.*
 
 <p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-sarek+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
 

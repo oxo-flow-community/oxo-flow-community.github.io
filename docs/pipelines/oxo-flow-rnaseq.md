@@ -4,10 +4,11 @@ title: "RNA-seq: alignment, quantification and QC"
 
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-rnaseq</span></div>
 <div class="ox-detail-cols">
-<div>
+<div class="ox-detail-main">
 <h1>RNA-seq: alignment, quantification and QC</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
-<p>End-to-end bulk RNA-seq analysis for paired-end reads: fq lint and FastQC raw-read QC, TrimGalore adapter/quality trimming (including the UMI-extraction path), STAR, HISAT2 and Bowtie2-transcriptome (bowtie2_salmon) alignment with the BBSplit / SortMeRNA / Bowtie2 rRNA-filtered read variants, Picard MarkDuplicates or UMI-tools / UMICollapse dedup (genome and transcriptome chains), Salmon quantification in alignment mode (STAR and Bowtie2 orig_bams, raw and UMI-prepared) and pseudo-alignment mode (Salmon or Kallisto), RSEM alignment-mode quantification with per-sample results and merged count tables, tximport-merged gene/transcript count tables with SummarizedExperiment R objects, StringTie reference-guided assembly and quantification, featureCounts gene counts with biotype tables, RSeQC / dupRadar / Qualimap QC, DESeq2 sample-level QC (PCA, sample distances, size factors) per quantification branch, strand-specific bigWig tracks, and one final MultiQC report with the nf-core/rnaseq custom content (fail_trimmed / fail_mapped tables, strandedness checks, software versions). A faithful port of the nf-core/rnaseq 3.26.0 default star_salmon path plus the star_rsem, hisat2, bowtie2_salmon, with_umi, salmon-pseudo and kallisto-pseudo branches — same tools, same versions, same commands.</p>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span><span class=ox-tag-sep></span><span class="ox-tag">rna-seq</span><span class="ox-tag">star</span><span class="ox-tag">hisat2</span><span class="ox-tag">salmon</span><span class="ox-tag">rsem</span><span class="ox-tag">transcriptomics</span><span class="ox-tag">nf-core</span><span class="ox-tag">gene-expression</span></div>
+<p class="ox-desc">End-to-end bulk RNA-seq analysis for paired-end reads: fq lint and FastQC raw-read QC, TrimGalore adapter/quality trimming (including the UMI-extraction path), STAR, HISAT2 and Bowtie2-transcriptome (bowtie2_salmon) alignment with the BBSplit / SortMeRNA / Bowtie2 rRNA-filtered read variants, Picard MarkDuplicates or UMI-tools / UMICollapse dedup (genome and transcriptome chains), Salmon quantification in alignment mode (STAR and Bowtie2 orig_bams, raw and UMI-prepared) and pseudo-alignment mode (Salmon or Kallisto), RSEM alignment-mode quantification with per-sample results and merged count tables, tximport-merged gene/transcript count tables with SummarizedExperiment R objects, StringTie reference-guided assembly and quantification, featureCounts gene counts with biotype tables, RSeQC / dupRadar / Qualimap QC, DESeq2 sample-level QC (PCA, sample distances, size factors) per quantification branch, strand-specific bigWig tracks, and one final MultiQC report with the nf-core/rnaseq custom content (fail_trimmed / fail_mapped tables, strandedness checks, software versions). A faithful port of the nf-core/rnaseq 3.26.0 default star_salmon path plus the star_rsem, hisat2, bowtie2_salmon, with_umi, salmon-pseudo and kallisto-pseudo branches — same tools, same versions, same commands.</p>
+<div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#run-it">▶ Run it</a><a class="ox-btn" href="https://github.com/oxo-flow-community/oxo-flow-rnaseq" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow run main.oxoflow</code></div>
 </div>
 <div>
 <div class="ox-glance">
@@ -23,6 +24,7 @@ title: "RNA-seq: alignment, quantification and QC"
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2278.1"><code>10.48546/workflowhub.workflow.2278.1</code></a></span></div>
+<div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">fastqc</span><span class="tchip">trim-galore</span><span class="tchip">fq</span><span class="tchip">star</span><span class="tchip">hisat2</span><span class="tchip">salmon</span><span class="tchip">kallisto</span><span class="tchip">rsem</span></div></div>
 <p class="cmd">$ oxo-flow run main.oxoflow</p>
 </div>
 </div>
@@ -497,33 +499,23 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
 <div class="ox-sem-text" markdown="1">
 
-## Semantic map - how to read it
+**RNA-seq analysis pipeline** (oxo-flow port of nf-core/rnaseq): given raw reads plus a genome FASTA and GTF, it trims, aligns, marks duplicates, quantifies expression and runs BAM QC, all unified in a MultiQC report; config keys pick branches (aligner, skip_bbsplit, remove_ribo_rna, with_umi, pseudo_aligner), defaulting to star_salmon.
 
-## Short names and groups (all are real rules)
+**1. Reference preparation** — `prepare_genome::gene_bed`, `prepare_genome::chrom_sizes` and `prepare_genome::transcript_fasta` derive the gene BED, chromosome sizes and transcript FASTA from genome + GTF feeding RSeQC, the bigWig chain and Salmon/Kallisto/Bowtie2 steps.
 
-| Shown | Full rule name(s) |
-|---|---|
-| reads | fastq_qc::fq_lint_raw, fastq_qc::fastqc_raw, fastq_qc::umitools_extract_umis |
-| trim | fastq_qc::trimgalore, fastq_qc::trimgalore_umi, fastq_qc::fq_lint_trimmed |
-| rrna | fastq_qc::rrna_fastas_prepare, fastq_qc::sortmerna_index, fastq_qc::sortmerna, fastq_qc::sortmerna_bbsplit, fastq_qc::fq_lint_rrna_sortmerna, fastq_qc::bowtie2_rrna_index, fastq_qc::bowtie2_align_rrna, fastq_qc::bowtie2_align_rrna_bbsplit, fastq_qc::samtools_view_rrna, fastq_qc::samtools_fastq_rrna, fastq_qc::fq_lint_rrna_bowtie2, fastq_qc::fastqc_filtered_sortmerna, fastq_qc::fastqc_filtered_bowtie2 |
-| bbsplit | fastq_qc::bbsplit_index, fastq_qc::bbsplit, fastq_qc::fq_lint_bbsplit, fastq_qc::fastqc_filtered_bbsplit |
-| ref | prepare_genome::gene_bed, prepare_genome::chrom_sizes, prepare_genome::transcript_fasta |
-| star | alignment::star_align, alignment::star_align_bbsplit, alignment::star_align_sortmerna, alignment::star_align_bowtie2, alignment::star_align_rsem, alignment::star_align_rsem_bbsplit, alignment::star_align_rsem_sortmerna, alignment::star_align_rsem_bowtie2 |
-| hisat2 | alignment::hisat2_splicesites, alignment::hisat2_index, alignment::hisat2_align, alignment::hisat2_align_bbsplit, alignment::hisat2_align_sortmerna, alignment::hisat2_align_bowtie2 |
-| bowtie2 | alignment::bowtie2_index, alignment::bowtie2_align, alignment::bowtie2_align_bbsplit, alignment::bowtie2_align_sortmerna, alignment::bowtie2_align_bowtie2 |
-| sorted | alignment::samtools_sort_hisat2, alignment::samtools_sort_bowtie2, alignment::samtools_sort, alignment::samtools_index_sorted, alignment::samtools_stats_sorted, alignment::samtools_flagstat_sorted, alignment::samtools_idxstats_sorted |
-| dedup | alignment::picard_markduplicates, alignment::samtools_index_markdup, alignment::samtools_stats_markdup, alignment::samtools_flagstat_markdup, alignment::samtools_idxstats_markdup, alignment::samtools_view_primary, alignment::samtools_index_primary, alignment::samtools_index_dedup, alignment::samtools_stats_dedup, alignment::samtools_flagstat_dedup, alignment::samtools_idxstats_dedup |
-| umidups | alignment::bam_dedup_genome_umitools, alignment::bam_dedup_genome_umitools_primary, alignment::bam_dedup_genome_umitools_stats, alignment::bam_dedup_genome_umitools_primary_stats, alignment::bam_dedup_genome_umicollapse |
-| bamqc | bam_qc::featurecounts, bam_qc::biotype_multiqc, bam_qc::rseqc_bam_stat, bam_qc::rseqc_infer_experiment, bam_qc::rseqc_inner_distance, bam_qc::rseqc_junction_annotation, bam_qc::rseqc_junction_saturation, bam_qc::rseqc_read_distribution, bam_qc::rseqc_read_duplication, bam_qc::dupradar, bam_qc::samtools_sort_qualimap, bam_qc::qualimap_rnaseq |
-| bigwig | bigwig::genomecov_fw, bigwig::genomecov_rev, bigwig::genomecov_combined, bigwig::bedclip_fw, bigwig::bedclip_rev, bigwig::bedclip_combined, bigwig::bigwig_fw, bigwig::bigwig_rev, bigwig::bigwig_combined |
-| quants | quantification::salmon_quant, quantification::salmon_quant_bowtie2, quantification::stringtie, quantification::salmon_quant_umi, quantification::salmon_index, quantification::kallisto_index, quantification::kallisto_quant_pseudo, quantification::kallisto_quant_pseudo_bbsplit, quantification::kallisto_quant_pseudo_sortmerna, quantification::kallisto_quant_pseudo_bowtie2, quantification::salmon_quant_pseudo, quantification::salmon_quant_pseudo_bbsplit, quantification::salmon_quant_pseudo_sortmerna, quantification::salmon_quant_pseudo_bowtie2, quantification::rsem_index, quantification::rsem_calculateexpression, quantification::rsem_calculateexpression_umi, quantification::rsem_merge_counts |
-| txi | quantification::tx2gene, quantification::tximport, quantification::summarizedexperiment, quantification::tx2gene_rsem, quantification::tximport_rsem, quantification::summarizedexperiment_rsem, quantification::tx2gene_pseudo, quantification::tximport_pseudo, quantification::summarizedexperiment_pseudo |
-| deseq | quantification::deseq2_qc, quantification::deseq2_qc_rsem, quantification::deseq2_qc_pseudo |
-| transcriptome | quantification::bam_sort_transcriptome, quantification::bam_sort_transcriptome_bowtie2, quantification::samtools_view_primary_transcriptome, quantification::samtools_index_primary_transcriptome, quantification::bam_dedup_transcriptome_umitools, quantification::bam_dedup_transcriptome_umitools_primary, quantification::bam_dedup_transcriptome_umitools_stats, quantification::bam_dedup_transcriptome_umitools_primary_stats, quantification::bam_dedup_transcriptome_umicollapse, quantification::samtools_stats_transcriptome_dedup, quantification::samtools_flagstat_transcriptome_dedup, quantification::samtools_idxstats_transcriptome_dedup, quantification::samtools_sort_name_transcriptome, quantification::umitools_prepareforrsem |
-| report_custom | multiqc_custom_content |
-| report | multiqc |
+**2. Read QC and trimming** — `fastq_qc::fq_lint_raw` lints raw FASTQs and `fastq_qc::fastqc_raw` runs FastQC; `fastq_qc::trimgalore` trims adapters (internal FastQC) and `fastq_qc::fq_lint_trimmed` lints trimmed reads. In UMI mode `fastq_qc::umitools_extract_umis` runs first, feeding `fastq_qc::trimgalore_umi`.
 
-Every drawn edge is a real engine edge (subset check at generation).
+**3. Optional read filters** — trimmed reads may go to BBSplit (`fastq_qc::bbsplit_index` → `fastq_qc::bbsplit`) and rRNA removal — SortMeRNA (`fastq_qc::rrna_fastas_prepare` → `fastq_qc::sortmerna_index` → `fastq_qc::sortmerna`) or the Bowtie2 route (`fastq_qc::bowtie2_align_rrna` → `fastq_qc::samtools_view_rrna` → `fastq_qc::samtools_fastq_rrna`).
+
+**4. Alignment** — star_salmon (default) aligns trimmed reads with `alignment::star_align`; star_rsem picks `alignment::star_align_rsem`; HISAT2/Bowtie2 modes use `alignment::hisat2_align` / `alignment::bowtie2_align` after `alignment::hisat2_index` (`alignment::hisat2_splicesites`) and `alignment::bowtie2_index`. BAMs are sorted (`alignment::samtools_sort`, `alignment::samtools_sort_hisat2`, `alignment::samtools_sort_bowtie2`), indexed (`alignment::samtools_index_sorted`), statted (`alignment::samtools_stats_sorted`), and marked (`alignment::picard_markduplicates` → `alignment::samtools_index_markdup`); UMI mode uses `alignment::bam_dedup_genome_umitools` / `alignment::bam_dedup_genome_umicollapse`.
+
+**5. Quantification** — `quantification::salmon_quant` quantifies the STAR transcriptome BAM; `quantification::tx2gene` → `quantification::tximport` → `quantification::summarizedexperiment` merge to RDS objects; `quantification::stringtie` assembles reference transcripts. RSEM (`quantification::rsem_calculateexpression` → `quantification::rsem_merge_counts`) and pseudo-alignment (`quantification::salmon_quant_pseudo` / `quantification::kallisto_quant_pseudo`) routes mirror it, each ending in a DESeq2 QC (`quantification::deseq2_qc`, `quantification::deseq2_qc_rsem`, `quantification::deseq2_qc_pseudo`).
+
+**6. BAM QC and tracks** — `bam_qc::featurecounts` counts reads (`bam_qc::biotype_multiqc` table); the RSeQC suite (`bam_qc::rseqc_infer_experiment`, `bam_qc::rseqc_read_distribution`), `bam_qc::dupradar` and `bam_qc::samtools_sort_qualimap` → `bam_qc::qualimap_rnaseq` profile the BAM; `bigwig::genomecov_fw` / `bigwig::genomecov_rev` / `bigwig::genomecov_combined` become the `bigwig::bigwig_fw` / `bigwig::bigwig_rev` / `bigwig::bigwig_combined` tracks.
+
+**7. Reporting** — `multiqc_custom_content` builds fail_trimmed/fail_mapped tables and strand-check JSONs; `multiqc` aggregates everything into one report.
+
+*Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described order follows the actual rule dependencies.*
 
 <p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-rnaseq+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
 

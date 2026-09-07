@@ -60,12 +60,14 @@ markdown_extensions:
 nav:
   - Home: index.md
   - Pipelines: pipelines/index.md
-  - Curation & ratings: about/curation.md
-  - Selection: about/selection.md
-  - Porting guide: about/porting.md
-  - Contributing: about/contributing.md
-  - Live testing: about/live-testing.md
-  - Audits: about/audits/index.md
+  - Catalog:
+      - Curation & ratings: about/curation.md
+      - Selection: about/selection.md
+      - Porting guide: about/porting.md
+      - Live testing: about/live-testing.md
+  - Project:
+      - Contributing: about/contributing.md
+      - Audits: about/audits/index.md
 
 copyright: >-
   © 2026 <a href="https://github.com/oxo-flow-community">oxo-flow-community</a>

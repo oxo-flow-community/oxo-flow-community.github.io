@@ -4,10 +4,11 @@ title: "Nanopore long-read: demultiplexing, QC and alignment"
 
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-nanoseq</span></div>
 <div class="ox-detail-cols">
-<div>
+<div class="ox-detail-main">
 <h1>Nanopore long-read: demultiplexing, QC and alignment</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
-<p>A nanopore long-read pipeline: samplesheet check, qcat barcode demultiplexing, NanoPlot + FastQC QC, minimap2 (or graphmap2) alignment, samtools view/sort/index, samtools stats/flagstat/idxstats, BigWig/BigBed tracks, NanoLyse contamination filtering, medaka/DeepVariant/PEPPER-Margin-DeepVariant short variant calling, Sniffles/cuteSV structural variant calling, bambu/StringTie2+featureCounts quantification with DESeq2/DEXSeq differential analysis, Nanopolish+xPore/m6anet RNA modification analysis, JAFFA RNA fusion detection (cDNA/directRNA; reference bundle auto-downloaded from figshare or supplied via config.jaffal_ref_dir as a directory or tar.gz), pre-aligned-BAM input, and a MultiQC report. The default path is the DNA protocol with all gated branches off by default (matching upstream). Every rule runs the upstream module&#x27;s exact pinned container image.</p>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span><span class=ox-tag-sep></span><span class="ox-tag">nanopore</span><span class="ox-tag">long-read</span><span class="ox-tag">demultiplexing</span><span class="ox-tag">alignment</span><span class="ox-tag">qcat</span><span class="ox-tag">minimap2</span><span class="ox-tag">multiqc</span><span class="ox-tag">nf-core</span></div>
+<p class="ox-desc">A nanopore long-read pipeline: samplesheet check, qcat barcode demultiplexing, NanoPlot + FastQC QC, minimap2 (or graphmap2) alignment, samtools view/sort/index, samtools stats/flagstat/idxstats, BigWig/BigBed tracks, NanoLyse contamination filtering, medaka/DeepVariant/PEPPER-Margin-DeepVariant short variant calling, Sniffles/cuteSV structural variant calling, bambu/StringTie2+featureCounts quantification with DESeq2/DEXSeq differential analysis, Nanopolish+xPore/m6anet RNA modification analysis, JAFFA RNA fusion detection (cDNA/directRNA; reference bundle auto-downloaded from figshare or supplied via config.jaffal_ref_dir as a directory or tar.gz), pre-aligned-BAM input, and a MultiQC report. The default path is the DNA protocol with all gated branches off by default (matching upstream). Every rule runs the upstream module&#x27;s exact pinned container image.</p>
+<div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#run-it">▶ Run it</a><a class="ox-btn" href="https://github.com/oxo-flow-community/oxo-flow-nanoseq" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow run main.oxoflow</code></div>
 </div>
 <div>
 <div class="ox-glance">
@@ -23,6 +24,7 @@ title: "Nanopore long-read: demultiplexing, QC and alignment"
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2286.1"><code>10.48546/workflowhub.workflow.2286.1</code></a></span></div>
+<div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">bambu</span><span class="tchip">bcftools</span><span class="tchip">bedtools</span><span class="tchip">curl</span><span class="tchip">cutesv</span><span class="tchip">deepvariant</span><span class="tchip">deseq2</span><span class="tchip">dexseq</span></div></div>
 <p class="cmd">$ oxo-flow run main.oxoflow</p>
 </div>
 </div>
@@ -374,23 +376,29 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
 <div class="ox-sem-text" markdown="1">
 
-## Semantic map - how to read it
+**Nanopore sequencing pipeline** (nf-core/nanoseq port): given a raw Nanopore FASTQ and a reference genome, it demultiplexes, quality-checks, aligns, and aggregates a MultiQC report, with optional variant calling, transcript quantification, and RNA-modification analysis.
 
-## Short names and groups (all are real rules)
+**1. Input preparation** — `samplesheet_check` validates the samplesheet, then `qcat` demultiplexes the raw FASTQ; each detected barcode becomes the per-sample identity downstream.
 
-| Shown | Full rule name(s) |
-|---|---|
-| ref | samtools_faidx, get_chrom_sizes, gtf2bed, minimap2_index, graphmap2_index |
-| align | minimap2_align, graphmap2_align, samtools_view, samtools_sort, samtools_sort_index, samtools_index |
-| stats | samtools_stats, samtools_idxstats, samtools_flagstat |
-| tracks | bedtools_genomecov, ucsc_bedgraphtobigwig, bedtools_bamtobed, ucsc_bed12tobigbed |
-| variants | medaka_variant, medaka_bgzip_vcf, medaka_tabix_vcf, deepvariant, deepvariant_tabix_vcf, deepvariant_tabix_gvcf, pepper_margin_deepvariant, sniffles, sniffles_sort_vcf, sniffles_tabix_vcf, cutesv, cutesv_sort_vcf, cutesv_tabix_vcf |
-| transcript | stringtie2, stringtie_merge, subread_featurecounts, bambu, deseq2, dexseq, deseq2_featurecounts, dexseq_featurecounts |
-| methyl | nanopolish_index_eventalign, xpore_dataprep, xpore_diffmod, m6anet_dataprep, m6anet_inference |
-| qc | fastqc, dumpsoftwareversions, samplesheet_check, qcat, nanoplot, nanolyse, bam_rename |
-| multiqc | multiqc |
+**2. Reference prep** — `samtools_faidx` indexes the reference, `get_chrom_sizes` derives chromosome sizes from it, and `gtf2bed` converts a GTF annotation to BED12 when supplied.
 
-Every drawn edge is a real engine edge (subset check at generation).
+**3. Read QC** — `nanoplot` and `fastqc` run in parallel on demultiplexed reads, each skippable.
+
+**4. Alignment** — `minimap2_index` → `minimap2_align` maps reads; with aligner = graphmap2, `graphmap2_index` → `graphmap2_align` runs instead — the two routes are mutually exclusive.
+
+**5. BAM processing** — both routes converge into `samtools_view`, then `samtools_sort` → `samtools_index` (or the combined `samtools_sort_index` under variant calling); `samtools_stats`, `samtools_flagstat`, `samtools_idxstats` run on the sorted BAM.
+
+**6. Coverage tracks** — `bedtools_genomecov` converts the BAM to BEDGraph, `ucsc_bedgraphtobigwig` to BigWig; on cDNA/directRNA protocols `bedtools_bamtobed` → `ucsc_bed12tobigbed` adds BigBed tracks.
+
+**7. Variant calling (DNA, off by default)** — short callers are mutually exclusive: `medaka_variant` → `medaka_bgzip_vcf` → `medaka_tabix_vcf`, `deepvariant` → `deepvariant_tabix_vcf` + `deepvariant_tabix_gvcf`, or `pepper_margin_deepvariant`; structural ones: `sniffles` → `sniffles_sort_vcf` → `sniffles_tabix_vcf` or `cutesv` → `cutesv_sort_vcf` → `cutesv_tabix_vcf`.
+
+**8. Quantification (cDNA/directRNA)** — `bambu` counts transcripts in one step, or `stringtie2` → `stringtie_merge` → `subread_featurecounts`; the routes are mutually exclusive, and counts feed `deseq2`/`dexseq` (bambu) or `deseq2_featurecounts`/`dexseq_featurecounts` (featureCounts).
+
+**9. RNA modifications (directRNA)** — `nanopolish_index_eventalign` event-aligns reads; `xpore_dataprep` → `xpore_diffmod` and `m6anet_dataprep` → `m6anet_inference` fan out in parallel.
+
+**10. Reporting** — `dumpsoftwareversions` merges tool versions; `multiqc` aggregates the FastQC and samtools results into one report.
+
+*Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described order follows the actual rule dependencies.*
 
 <p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-nanoseq+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
 
@@ -406,7 +414,7 @@ Every drawn edge is a real engine edge (subset check at generation).
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card ox-dag-card--wide" markdown="1">
 
-<a href="/assets/dag/oxo-flow-nanoseq.svg?v=6014a28258" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-nanoseq.svg?v=6014a28258" alt="oxo-flow-nanoseq pipeline overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-nanoseq.svg?v=927944c649" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-nanoseq.svg?v=927944c649" alt="oxo-flow-nanoseq pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-nanoseq — A nanopore long-read pipeline: samplesheet check, qcat barcode demultiplexing, NanoPlot + FastQC QC, minimap2 (or graphmap2) alignment, samtools view/sort/index, samtools stats/flagstat/idxstats, BigWig/BigBed tracks, NanoLyse contamination filtering, medaka/DeepVariant/PEPPER-Margin-DeepVariant short variant calling, Sniffles/cuteSV structural variant calling, bambu/StringTie2+featureCounts quantification with DESeq2/DEXSeq differential analysis, Nanopolish+xPore/m6anet RNA modification analysis, JAFFA RNA fusion detection (cDNA/directRNA; reference bundle auto-downloaded from figshare or supplied via config.jaffal_ref_dir as a directory or tar.gz), pre-aligned-BAM input, and a MultiQC report.</p>
 

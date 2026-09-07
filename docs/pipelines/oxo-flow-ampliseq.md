@@ -4,10 +4,11 @@ title: "Amplicon sequencing (16S/ITS): DADA2 denoising, taxonomy assignment, QII
 
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-ampliseq</span></div>
 <div class="ox-detail-cols">
-<div>
+<div class="ox-detail-main">
 <h1>Amplicon sequencing (16S/ITS): DADA2 denoising, taxonomy assignment, QIIME2 diversity/ANCOM, PICRUSt, SBDI export, phyloseq/TSE objects and QC</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
-<p>Amplicon sequencing analysis (16S/ITS) that takes raw paired-end reads through FastQC quality control, cutadapt primer trimming (incl. the illumina_pe_its read-through pass), DADA2 denoising (quality profiles, filterAndTrim, learnErrors, denoise, chimera removal, read tracking, optional multi-run merge), taxonomy assignment against the SBDI-GTDB reference (or the ITS-cut length-filtered branch), a QIIME2 taxa barplot over sample metadata, optional QIIME2 downstream analyses (phylogenetic tree, alpha/beta diversity, abundance table exports, ANCOM/ANCOM-BC/ANCOM-BC2, classifier training/prediction), optional PICRUSt2 functional predictions, an overall summary table and a MultiQC report. Optional post-analysis branches cover the SBDI Sweden biodiversity submission export (event/dna/emof/asv-table/annotation tables), phyloseq and TreeSummarizedExperiment R objects, and an Rmd-based HTML summary report (results/summary_report/summary_report.html) that aggregates QC plots, DADA2 stats, taxonomy references and the optional branch artifacts into one self-contained document.</p>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span><span class=ox-tag-sep></span><span class="ox-tag">amplicon</span><span class="ox-tag">16s</span><span class="ox-tag">its</span><span class="ox-tag">dada2</span><span class="ox-tag">qiime2</span><span class="ox-tag">picrust</span><span class="ox-tag">sbdi</span><span class="ox-tag">phyloseq</span><span class="ox-tag">nf-core</span></div>
+<p class="ox-desc">Amplicon sequencing analysis (16S/ITS) that takes raw paired-end reads through FastQC quality control, cutadapt primer trimming (incl. the illumina_pe_its read-through pass), DADA2 denoising (quality profiles, filterAndTrim, learnErrors, denoise, chimera removal, read tracking, optional multi-run merge), taxonomy assignment against the SBDI-GTDB reference (or the ITS-cut length-filtered branch), a QIIME2 taxa barplot over sample metadata, optional QIIME2 downstream analyses (phylogenetic tree, alpha/beta diversity, abundance table exports, ANCOM/ANCOM-BC/ANCOM-BC2, classifier training/prediction), optional PICRUSt2 functional predictions, an overall summary table and a MultiQC report. Optional post-analysis branches cover the SBDI Sweden biodiversity submission export (event/dna/emof/asv-table/annotation tables), phyloseq and TreeSummarizedExperiment R objects, and an Rmd-based HTML summary report (results/summary_report/summary_report.html) that aggregates QC plots, DADA2 stats, taxonomy references and the optional branch artifacts into one self-contained document.</p>
+<div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#run-it">▶ Run it</a><a class="ox-btn" href="https://github.com/oxo-flow-community/oxo-flow-ampliseq" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow run main.oxoflow</code></div>
 </div>
 <div>
 <div class="ox-glance">
@@ -23,6 +24,7 @@ title: "Amplicon sequencing (16S/ITS): DADA2 denoising, taxonomy assignment, QII
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2282.1"><code>10.48546/workflowhub.workflow.2282.1</code></a></span></div>
+<div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">fastqc</span><span class="tchip">cutadapt</span><span class="tchip">python</span><span class="tchip">pandas</span><span class="tchip">r-base</span><span class="tchip">dada2</span><span class="tchip">bioconductor-digest</span><span class="tchip">bioconductor-biostrings</span></div></div>
 <p class="cmd">$ oxo-flow run main.oxoflow</p>
 </div>
 </div>
@@ -479,36 +481,23 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
 <div class="ox-sem-text" markdown="1">
 
-## Semantic map - how to read it
+**Amplicon sequencing pipeline** (16S/ITS): given raw paired-end reads, it renames, quality-checks, and trims them, denoises with DADA2 into ASVs, assigns taxonomy, and produces QIIME2 taxa barplots, diversity, and differential-abundance results.
 
-## Short names and groups (all are real rules)
+**1. Input preparation** — `rename_raw_data_files` gives samples consistent FASTQ names; `fastqc` checks the renamed reads while `cutadapt` trims primers.
 
-| Shown | Full rule name(s) |
-|---|---|
-| rename | rename_raw_data_files |
-| fastqc | fastqc |
-| cutadapt_+_summary | cutadapt, cutadapt_summary, cutadapt_summary_merge |
-| DADA2_QC | dada2_quality_fw, dada2_quality_rv |
-| DADA2_trim_len | trunclen_fw, trunclen_rv |
-| DADA2_filter__+QC_out | dada2_filtntrim, dada2_quality_fw_preprocessed, dada2_quality_rv_preprocessed |
-| DADA2_err | dada2_err |
-| DADA2_denoise | dada2_denoising |
-| DADA2_chimeras | dada2_rmchimera |
-| DADA2_stats | dada2_stats, merge_stats |
-| DADA2_merge | dada2_merge |
-| ITSx | itsx_cutasv, itsxrust_cutasv |
-| ITSx_filter | filter_len_itsx |
-| taxonomy_DB | download_taxonomy_db, format_taxonomy |
-| taxonomy_assign | dada2_taxonomy, dada2_taxonomy_its |
-| QIIME2_runs | qiime2_inasv, qiime2_inseq, qiime2_inasv_its, qiime2_inseq_its, qiime2_intax, qiime2_diversity_tree |
-| QIIME2_steps | qiime2_diversity_core, qiime2_classify, qiime2_alphararefaction, qiime2_metadata_categories, qiime2_preptax |
-| QIIME2_exports | qiime2_barplot, qiime2_export_absolute, qiime2_export_relasv, qiime2_export_reltax |
-| QIIME2_tests | qiime2_ancom, qiime2_ancombc, qiime2_ancombc2 |
-| QIIME2_diver | qiime2_diversity_alpha, qiime2_diversity_beta, qiime2_diversity_betaord, qiime2_diversity_adonis |
-| MultiQC | multiqc |
-| PICRUSt | picrust |
+**2. Trimming and truncation** — `cutadapt_summary` collects and `cutadapt_summary_merge` merges cutadapt trimming metrics. On trimmed reads, `dada2_quality_fw`/`dada2_quality_rv` quality profiles inform truncation lengths (`trunclen_fw`, `trunclen_rv`) applied by `dada2_filtntrim`.
 
-Every drawn edge is a real engine edge (subset check at generation).
+**3. DADA2 denoising** — `dada2_err` learns error models, `dada2_denoising` denoises and merges pairs, `dada2_rmchimera` removes bimeras; `dada2_stats` tracks reads per sample and `dada2_merge` publishes the ASV table, fasta, RDS.
+
+**4. ITS branch** — in ITS runs, `itsx_cutasv` and `itsxrust_cutasv` are alternative ITS extractors (runtime-conditional); both feed `filter_len_itsx`, length-filtering ITS-cut ASVs.
+
+**5. Taxonomy** — `download_taxonomy_db` fetches the SBDI-GTDB reference, `format_taxonomy` reformats it; `dada2_taxonomy` assigns 16S taxonomy while `dada2_taxonomy_its` maps taxonomy back to full ASVs.
+
+**6. QIIME2 analysis** — `qiime2_inasv`/`qiime2_inseq` import ASV tables and sequences, ITS via `qiime2_inasv_its`/`qiime2_inseq_its`, and taxonomy via `qiime2_intax`. Sequences feed `qiime2_diversity_tree` and `qiime2_classify`; `qiime2_diversity_core` precedes `qiime2_diversity_alpha`, `qiime2_diversity_beta`, `qiime2_diversity_betaord`; `qiime2_barplot` renders taxa barplots; exports (`qiime2_export_absolute`, `qiime2_export_relasv`, `qiime2_export_reltax`) and ANCOM tests (`qiime2_ancom`, `qiime2_ancombc`, `qiime2_ancombc2`, using `qiime2_metadata_categories`) complete the output.
+
+**7. Reporting** — `merge_stats` merges cutadapt and DADA2 statistics, `multiqc` aggregates FastQC and cutadapt reports, and `picrust` runs PICRUSt2 predictions from the ASV table.
+
+*Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described order follows the actual rule dependencies.*
 
 <p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-ampliseq+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
 

@@ -1,15 +1,13 @@
-## Semantic map - how to read it
+**snpArcher pipeline**: variant calling for non-model organisms — trims reads, aligns, calls per-sample gVCFs, and optionally joint-genotypes, filters, and runs population QC.
 
-## Short names and groups (all are real rules)
+**1. Reference preparation** — `prepare_reference` bgzip-compresses the reference FASTA; `index_reference` builds the samtools and BWA indexes nearly every later step consumes.
 
-| Shown | Full rule name(s) |
-|---|---|
-| refprep | prepare_reference, index_reference, picard_intervals, filter_picard_intervals, create_gvcf_intervals, create_db_intervals, create_db_mapfile |
-| reads | download_sra, fastp, fastp_srr, stage_external_bam |
-| align_dedup | bwa_mem, merge_library_bams, merge_library_level_bams, markdup_library, merge_dedup_libraries, index_bam_csi, index_bam_csi_markdup, index_bam_csi_external |
-| callers | postprocess_basic_filter, generate_coords_file, gatk_haplotypecaller_external, mappability_bed, deepvariant_call_markdup, postprocess_strict_filter, mosdepth_external, deepvariant_call_external, glnexus_joint, bam_stats, bam_stats_markdup, bcftools_regions, coverage_bed, genmap_mappability, normalize_external_gvcf_for_gatk, clam_loci, postprocess_drop_indel_snps, postprocess_update_bed, gatk_haplotypecaller_interval_external, gatk_haplotypecaller_markdup, postprocess_subset_snps, deepvariant_call, clam_collect, postprocess_subset_indels, gatk_haplotypecaller, parse_bam_stats, mosdepth_markdup, gatk_genotype_gvcfs_interval, variant_filtration, mosdepth, bcftools_concat_regions, gatk_haplotypecaller_interval_markdup, bam_stats_external, gatk_genomics_db_import_interval, callable_coverage_thresholds, callable_sites_bed, genmap_index, gatk_haplotypecaller_interval, postprocess_filter_individuals, bcftools_call |
-| db_import | joint_genomics_db_import, normalize_external_gvcf_for_gatk, create_db_intervals, concat_interval_gvcfs, gatk_genomics_db_import_interval, gatk_genotype_gvcfs_interval |
-| genotype | joint_genotype_gvcfs, concat_interval_vcfs, gatk_genomics_db_import_interval, gatk_genotype_gvcfs_interval, gatk_haplotypecaller_interval, gatk_haplotypecaller_interval_markdup, normalize_external_gvcf_for_gatk, gatk_haplotypecaller_interval_external, gatk_haplotypecaller_markdup, gatk_haplotypecaller, gatk_haplotypecaller_external |
-| qc | postprocess_drop_indel_snps, collect_fastp_stats, qc_vcftools_individuals, postprocess_basic_filter, qc_prepare_plink_inputs, qc_setup_admixture, qc_contig_map, qc_dashboard, postprocess_subset_indels, qc_plink, postprocess_update_bed, qc_admixture, combine_qc_metrics, qc_subsample_snps, postprocess_subset_snps, qc_copy_qc_report, postprocess_strict_filter, postprocess_filter_individuals |
+**2. Read trimming and alignment** — local FASTQ pairs are trimmed by `fastp`; SRA cohorts instead run `download_sra` -> `fastp_srr`. Both feed `bwa_mem`, then `merge_library_bams` merges per-library BAMs. The final BAM is `merge_library_level_bams` + `index_bam_csi` (default) or, with duplicate marking, `markdup_library` -> `merge_dedup_libraries` + `index_bam_csi_markdup`; external BAMs enter at `stage_external_bam` + `index_bam_csi_external`.
 
-Every drawn edge is a real engine edge (subset check at generation).
+**3. Per-sample variant calling** — `gatk_haplotypecaller` (with `gatk_haplotypecaller_markdup` and `gatk_haplotypecaller_external`) emits one gVCF per sample, as do the `deepvariant_call` variants. The bcftools route is `bcftools_regions` -> `bcftools_call` -> `bcftools_concat_regions`; GATK interval scatter runs `picard_intervals` -> `filter_picard_intervals` -> `create_gvcf_intervals` -> `gatk_haplotypecaller_interval` -> `concat_interval_gvcfs`. One route runs per cohort, chosen by configuration and input type.
+
+**4. Joint genotyping** — `create_db_mapfile` -> `joint_genomics_db_import` -> `joint_genotype_gvcfs` genotypes the cohort (interval mode: `create_db_intervals` -> `gatk_genomics_db_import_interval` -> `gatk_genotype_gvcfs_interval` -> `concat_interval_vcfs`); DeepVariant gVCFs instead go through `glnexus_joint`, and external gVCFs are normalized by `normalize_external_gvcf_for_gatk`. All routes converge on the joint raw VCF, which `variant_filtration` hard-filters when enabled.
+
+**5. QC, callable sites, and final modules** — `collect_fastp_stats` and `bam_stats` (with `bam_stats_markdup` and `bam_stats_external`) feed `parse_bam_stats` -> `combine_qc_metrics`; callable sites flow `mosdepth` -> `clam_collect`/`callable_coverage_thresholds` -> `clam_loci` -> `coverage_bed` and `genmap_index` -> `genmap_mappability` -> `mappability_bed`, merged by `callable_sites_bed`. The postprocess chain (`postprocess_basic_filter` -> `postprocess_strict_filter` -> `postprocess_subset_indels`/`postprocess_subset_snps` -> `postprocess_drop_indel_snps`) and the QC module (`qc_subsample_snps` -> `qc_prepare_plink_inputs` -> `qc_plink` -> `qc_setup_admixture` -> `qc_admixture`) converge on `qc_dashboard`.
+
+*Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described order follows the actual rule dependencies.*

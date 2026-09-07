@@ -4,10 +4,11 @@ title: "Region set and gene set enrichment: LOLA, GREAT, pycisTarget and GSEA"
 
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-enrichment</span></div>
 <div class="ox-detail-cols">
-<div>
+<div class="ox-detail-main">
 <h1>Region set and gene set enrichment: LOLA, GREAT, pycisTarget and GSEA</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
-<p>Run a complete region set and gene set enrichment analysis on your own data: region overlap enrichment (LOLA), genomic region enrichment of annotated terms (rGREAT), region TFBS motif enrichment (pycisTarget), gene TFBS motif enrichment (RcisTarget), and gene over-representation analysis (ORA) and preranked GSEA (GSEApy). Every tool applies its own multiple-test correction; the workflow produces per-set enrichment plots, per-group summary plots, and reproducibility exports (configs/ and envs/). Official port of epigen/enrichment_analysis v3.0.1 with tool versions and commands pinned to the source.</p>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span><span class=ox-tag-sep></span><span class="ox-tag">region-enrichment</span><span class="ox-tag">gene-set-enrichment</span><span class="ox-tag">LOLA</span><span class="ox-tag">GREAT</span><span class="ox-tag">pycisTarget</span><span class="ox-tag">RcisTarget</span><span class="ox-tag">GSEApy</span><span class="ox-tag">GSEA</span><span class="ox-tag">ORA</span><span class="ox-tag">snakemake</span></div>
+<p class="ox-desc">Run a complete region set and gene set enrichment analysis on your own data: region overlap enrichment (LOLA), genomic region enrichment of annotated terms (rGREAT), region TFBS motif enrichment (pycisTarget), gene TFBS motif enrichment (RcisTarget), and gene over-representation analysis (ORA) and preranked GSEA (GSEApy). Every tool applies its own multiple-test correction; the workflow produces per-set enrichment plots, per-group summary plots, and reproducibility exports (configs/ and envs/). Official port of epigen/enrichment_analysis v3.0.1 with tool versions and commands pinned to the source.</p>
+<div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#run-it">▶ Run it</a><a class="ox-btn" href="https://github.com/oxo-flow-community/oxo-flow-enrichment" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow run main.oxoflow</code></div>
 </div>
 <div>
 <div class="ox-glance">
@@ -23,6 +24,7 @@ title: "Region set and gene set enrichment: LOLA, GREAT, pycisTarget and GSEA"
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2293.1"><code>10.48546/workflowhub.workflow.2293.1</code></a></span></div>
+<div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">gseapy</span><span class="tchip">pandas</span><span class="tchip">pycistarget</span><span class="tchip">bioconductor-rcistarget</span><span class="tchip">bioconductor-lola</span><span class="tchip">bioconductor-rgreat</span><span class="tchip">r-base</span><span class="tchip">r-ggplot2</span></div></div>
 <p class="cmd">$ oxo-flow run main.oxoflow</p>
 </div>
 </div>
@@ -686,21 +688,19 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
 <div class="ox-sem-text" markdown="1">
 
-## Semantic map - how to read it
+**oxo-flow-enrichment pipeline**: given region-set BED files and ranked gene lists, it runs region-set and gene-set enrichment (LOLA, GREAT, pycisTarget, RcisTarget, GSEApy ORA and preranked GSEA) against curated databases, delivering per-feature-set plots, per-group summaries, and reproducibility exports.
 
-## Short names and groups (all are real rules)
+**1. Database preparation** — `prepare_databases_Azimuth_2023` converts the Azimuth_2023 JSON database to GMT, and `prepare_databases_Reactome` stages the Reactome pathway GMT; these two feed the GREAT, ORA, and preranked analyses below.
 
-| Shown | Full rule name(s) |
-|---|---|
-| dbs | prepare_databases_Azimuth_2023, prepare_databases_Reactome |
-| region | region_enrichment_analysis_GREAT_Azimuth_2023, region_enrichment_analysis_GREAT_Reactome, region_enrichment_analysis_LOLA, region_gene_association_GREAT |
-| motif | region_motif_enrichment_analysis_pycisTarget, process_results_pycisTarget, gene_motif_enrichment_analysis_RcisTarget |
-| gene | gene_ORA_GSEApy_Reactome, gene_preranked_GSEApy_Reactome, gene_preranked_GSEApy_Azimuth_2023, gene_ORA_GSEApy_Azimuth_2023 |
-| plots | plot_enrichment_result_LOLA_LOLACore, plot_enrichment_result_preranked_GSEApy_Azimuth_2023, plot_enrichment_result_ORA_GSEApy_Azimuth_2023, plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust, plot_enrichment_result_GREAT_Azimuth_2023, plot_enrichment_result_pycisTarget_hg38_screen_v10clust, plot_enrichment_result_ORA_GSEApy_Reactome, plot_enrichment_result_GREAT_Reactome, plot_enrichment_result_preranked_GSEApy_Reactome |
-| aggregate | aggregate_preranked_GSEApy_Reactome_RNA, aggregate_GREAT_Azimuth_2023_ATAC, aggregate_preranked_GSEApy_Azimuth_2023_RNA, aggregate_LOLA_LOLACore_ATAC, aggregate_pycisTarget_hg38_screen_v10clust_ATAC, aggregate_GREAT_Reactome_ATAC, aggregate_ORA_GSEApy_Azimuth_2023_ATAC, aggregate_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC, aggregate_ORA_GSEApy_Reactome_ATAC |
-| visualize | visualize_ORA_GSEApy_Reactome_ATAC, visualize_ORA_GSEApy_Azimuth_2023_ATAC, config_export, visualize_GREAT_Reactome_ATAC, annot_export, visualize_pycisTarget_hg38_screen_v10clust_ATAC, visualize_LOLA_LOLACore_ATAC, visualize_preranked_GSEApy_Azimuth_2023_RNA, visualize_GREAT_Azimuth_2023_ATAC, visualize_preranked_GSEApy_Reactome_RNA, visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC |
+**2. Region enrichment** — `region_enrichment_analysis_LOLA` tests each region set for overlap enrichment against the LOLACore database, while `region_enrichment_analysis_GREAT_Azimuth_2023` and `region_enrichment_analysis_GREAT_Reactome` run rGREAT against both prepared databases. `region_gene_association_GREAT` maps each region set to its associated genes.
 
-Every drawn edge is a real engine edge (subset check at generation).
+**3. Gene-level analyses** — the GREAT gene mapping feeds `gene_ORA_GSEApy_Azimuth_2023`, `gene_ORA_GSEApy_Reactome`, and the TFBS motif analysis `gene_motif_enrichment_analysis_RcisTarget`; separately, ranked gene lists feed `gene_preranked_GSEApy_Azimuth_2023` and `gene_preranked_GSEApy_Reactome` (RNA group). Region-side, `region_motif_enrichment_analysis_pycisTarget` runs TFBS motif enrichment and `process_results_pycisTarget` converts it to CSV tables; both motif branches are gated on provided databases.
+
+**4. Per-feature-set plots** — each result CSV is plotted by `plot_enrichment_result_LOLA_LOLACore`, `plot_enrichment_result_GREAT_Azimuth_2023`, `plot_enrichment_result_GREAT_Reactome`, `plot_enrichment_result_pycisTarget_hg38_screen_v10clust`, `plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust`, `plot_enrichment_result_ORA_GSEApy_Azimuth_2023`, `plot_enrichment_result_ORA_GSEApy_Reactome`, `plot_enrichment_result_preranked_GSEApy_Azimuth_2023`, or `plot_enrichment_result_preranked_GSEApy_Reactome`.
+
+**5. Group aggregation and visualization** — in parallel, results consolidate per group (ATAC vs RNA) via aggregate rules such as `aggregate_GREAT_Azimuth_2023_ATAC` and `aggregate_preranked_GSEApy_Reactome_RNA`, whose tables drive the matching summary plots (`visualize_GREAT_Azimuth_2023_ATAC`, `visualize_LOLA_LOLACore_ATAC`). Independent of the chain, `config_export` and `annot_export` copy the effective config and annotation into the results folder for reproducibility.
+
+*Verified: every rule name above is a real rule of `main.oxoflow` (oxo-flow validate); the described order follows the actual rule dependencies.*
 
 <p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-enrichment+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
 

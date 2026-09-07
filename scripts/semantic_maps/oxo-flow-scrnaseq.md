@@ -1,20 +1,13 @@
-## Semantic map - how to read it
+**Single-cell RNA-seq pipeline** (port of nf-core/scrnaseq): raw 10x-style FASTQs plus a reference genome and annotation go through one of several aligner routes into per-sample and combined matrices, cleaned of ambient RNA by CellBender.
 
-## Short names and groups (all are real rules)
+**1. Reference preparation** — `gunzip_fasta` and `gunzip_gtf` decompress the (optionally gzipped) genome and annotation; their outputs converge in `gtf_gene_filter`, which keeps only annotations present in the genome FASTA, followed by the opt-in `gtf_source_fix` rewriting for Cell Ranger.
 
-| Shown | Full rule name(s) |
-|---|---|
-| refs | gunzip_fasta, gunzip_gtf, gtf_gene_filter, gtf_source_fix |
-| cellranger | cellranger_mkgtf, cellranger_mkref, cellranger_count, cellranger_mkvdjref, cellranger_multi, cellrangerarc_mkgtf, cellrangerarc_mkref, cellrangerarc_count |
-| simpleaf | simpleaf_index, simpleaf_quant, qcatch |
-| kalbust | kallistobustools_ref_standard, kallistobustools_ref_velocity, kallistobustools_count |
-| star | star_genomegenerate, star_genomeparams_upgrade, star_align |
-| mtx | mtx_to_h5ad_raw, mtx_to_h5ad_filtered, mtx_to_h5ad_multi_raw, mtx_to_h5ad_multi_filtered, mtx_to_h5ad_simpleaf, mtx_to_h5ad_kallisto_raw, mtx_to_h5ad_kallisto_filtered, mtx_to_h5ad_star_raw, mtx_to_h5ad_star_filtered |
-| cellbender | cellbender_removebackground |
-| barcodes | anndata_barcodes |
-| concat | concat_h5ad_filtered, concat_h5ad_cellbender_filter, concat_h5ad_raw |
-| anndatr | anndatar_convert_filtered, anndatar_convert_cellbender_filter, anndatar_convert_raw, anndatar_convert_combined_filtered, anndatar_convert_combined_cellbender_filter, anndatar_convert_combined_raw |
-| qc | fastqc |
-| report | multiqc, collect_versions, workflow_summary, methods_description |
+**2. Indexing and quantification (one exclusive route per run)** — Cell Ranger: `cellranger_mkgtf` → `cellranger_mkref` → `cellranger_count`, or, when the multi branch is on, `cellranger_mkvdjref` → `cellranger_multi`; cellranger-arc: `cellrangerarc_mkgtf` → `cellrangerarc_mkref` → `cellrangerarc_count`; simpleaf: `simpleaf_index` → `simpleaf_quant` → `qcatch`; kallisto|bustools: `kallistobustools_ref_standard` or `kallistobustools_ref_velocity` → `kallistobustools_count`; STARsolo: `star_genomegenerate` (or the legacy-index `star_genomeparams_upgrade`) → `star_align`.
 
-Every drawn edge is a real engine edge (subset check at generation).
+**3. Matrix conversion** — whichever route ran, its raw and filtered outputs become per-sample h5ads: `mtx_to_h5ad_raw` and `mtx_to_h5ad_filtered` (Cell Ranger count, cellranger-arc), `mtx_to_h5ad_multi_raw` and `mtx_to_h5ad_multi_filtered`, `mtx_to_h5ad_simpleaf`, `mtx_to_h5ad_kallisto_raw` and `mtx_to_h5ad_kallisto_filtered`, `mtx_to_h5ad_star_raw` and `mtx_to_h5ad_star_filtered`.
+
+**4. CellBender, merge, R objects** — `cellbender_removebackground` strips ambient RNA from raw matrices (never for cellrangerarc); `anndata_barcodes` subsets them to the surviving barcodes; `concat_h5ad_filtered`, `concat_h5ad_cellbender_filter` and `concat_h5ad_raw` merge each input type across samples; the anndataR rules convert per-sample and combined h5ads to Seurat and SingleCellExperiment RDS.
+
+**5. Reporting** — `fastqc` reports (skipped for cellrangerarc), plus `collect_versions`, `workflow_summary` and `methods_description`, all feed `multiqc` for the final aggregate report.
+
+*Verified: every rule name above is a real rule of `main.oxoflow` (oxo-flow validate); the described order follows the actual rule dependencies.*

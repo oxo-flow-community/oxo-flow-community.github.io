@@ -4,10 +4,11 @@ title: "RNA-seq: STAR alignment, DESeq2 differential expression and QC"
 
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-rnaseq-star-deseq2</span></div>
 <div class="ox-detail-cols">
-<div>
+<div class="ox-detail-main">
 <h1>RNA-seq: STAR alignment, DESeq2 differential expression and QC</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
-<p>End-to-end RNA-seq differential-expression analysis with STAR and DESeq2: Ensembl reference download, fastp trimming, STAR alignment with gene counts, RSeQC QC + MultiQC, count matrix with technical-replicate collapse, Ensembl biomaRt gene-symbol annotation, and DESeq2 (normalized counts, PCA plots, per-contrast results with ashr shrinkage and MA plots). Every tool is pinned to an exact conda version for reproducibility. Per-unit upstream semantics are ported via the engine metadata binding: the units sheet doubles as the metadata table, so per-unit fastp_adapters/fastp_extra overrides and per-unit SRA accessions (the get_sra auto-feed) resolve per unit with the global config as fallback. Non-default upstream branches are config-gated and off by default: SRA download (get_sra), single-end mode (fastp_se + star_align_se), raw-read alignment (trimming_activate = false), bwa index and samtools faidx.</p>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span><span class=ox-tag-sep></span><span class="ox-tag">rna-seq</span><span class="ox-tag">differential-expression</span><span class="ox-tag">deseq2</span><span class="ox-tag">star</span><span class="ox-tag">fastp</span><span class="ox-tag">rseqc</span><span class="ox-tag">multiqc</span></div>
+<p class="ox-desc">End-to-end RNA-seq differential-expression analysis with STAR and DESeq2: Ensembl reference download, fastp trimming, STAR alignment with gene counts, RSeQC QC + MultiQC, count matrix with technical-replicate collapse, Ensembl biomaRt gene-symbol annotation, and DESeq2 (normalized counts, PCA plots, per-contrast results with ashr shrinkage and MA plots). Every tool is pinned to an exact conda version for reproducibility. Per-unit upstream semantics are ported via the engine metadata binding: the units sheet doubles as the metadata table, so per-unit fastp_adapters/fastp_extra overrides and per-unit SRA accessions (the get_sra auto-feed) resolve per unit with the global config as fallback. Non-default upstream branches are config-gated and off by default: SRA download (get_sra), single-end mode (fastp_se + star_align_se), raw-read alignment (trimming_activate = false), bwa index and samtools faidx.</p>
+<div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#run-it">▶ Run it</a><a class="ox-btn" href="https://github.com/oxo-flow-community/oxo-flow-rnaseq-star-deseq2" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow run main.oxoflow</code></div>
 </div>
 <div>
 <div class="ox-glance">
@@ -23,6 +24,7 @@ title: "RNA-seq: STAR alignment, DESeq2 differential expression and QC"
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2290.1"><code>10.48546/workflowhub.workflow.2290.1</code></a></span></div>
+<div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">star</span><span class="tchip">fastp</span><span class="tchip">rseqc</span><span class="tchip">gffutils</span><span class="tchip">pandas</span><span class="tchip">multiqc</span><span class="tchip">bioconductor-deseq2</span><span class="tchip">r-stringr</span></div></div>
 <p class="cmd">$ oxo-flow run main.oxoflow</p>
 </div>
 </div>
@@ -303,21 +305,21 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
 <div class="ox-sem-text" markdown="1">
 
-**RNA-seq 差异表达流水线**（STAR 比对 + DESeq2）：拿参考基因组和测序 reads，比对、计数，最终给出每基因的表达量和差异表达、PCA 等结果，全程配质量汇总。
+**RNA-seq differential-expression pipeline** (STAR alignment + DESeq2): given a reference genome and sequencing reads, it aligns, counts, and delivers per-gene expression, differential expression and PCA plots, with quality checks along the way.
 
-**1. 输入准备** —— 用 `get_genome` 拉取参考基因组、`get_annotation` 拉取基因注释（GTF），`get_sra` 拉取测序 reads。基因组除建比对索引外，还生成两个辅助产物：`bwa_index`（BWA 索引）和 `genome_faidx`（FASTA 索引）。
+**1. Inputs and reference prep** — `get_genome` fetches the reference genome and `get_annotation` the gene annotation (GTF), while `get_sra` fetches the sequencing reads. The genome also produces two auxiliary indexes: `bwa_index` (BWA index) and `genome_faidx` (FASTA index).
 
-**2. 建立 STAR 比对索引** —— `star_index` 用基因组和注释建索引，是后续所有比对步骤的公共输入。
+**2. STAR index** — `star_index` builds the alignment index from the genome + annotation; every alignment step below depends on it.
 
-**3. 读段质控 + 比对（平行 4 条路线）** —— 双端（PE）reads 先经 `fastp_pe` 质控，再由 `star_align` 比对；单端（SE）reads 经 `fastp_se` 后由 `star_align_se` 比对；此外还支持**跳过质控直接比对**的两条路线：`star_align_raw`（PE 原始 reads）和 `star_align_se_raw`（SE 原始 reads）。用户 runs 时可选择 PAIRED/SINGLE 之一，所以实际执行的是 4 条里的 1-2 条，其余按需存在。
+**3. Read QC + alignment (four parallel routes)** — paired-end (PE) reads are quality-trimmed by `fastp_pe` then aligned by `star_align`; single-end (SE) reads go through `fastp_se` and `star_align_se`. Two further routes align **raw, untrimmed** reads directly: `star_align_raw` (PE) and `star_align_se_raw` (SE). The run picks PE or SINGLE based on the sample configuration, so 1–2 of the 4 routes actually execute per run.
 
-**4. 比对结果汇聚** —— 4 条路线的 BAM 汇聚（引擎中的隐藏交汇点），一起喂给计数和质控。
+**4. Converged alignment outputs** — the four routes' BAMs converge into the analysis entry (a hidden junction in the engine), feeding counting and quality simultaneously.
 
-**5. 计数与差异分析** —— `count_matrix` 统计每基因的表达量矩阵，直接产出 `gene_2_symbol_counts`（基因名表达量），并进入 `deseq2_init` 做初始化；`deseq2_init` 分三路：`deseq2`（正式 DESeq2 分析，其结果经 `gene_2_symbol_diffexp` 转为差异表达表）、`gene_2_symbol_normcounts`（归一化表达量），以及 3 个 PCA 步骤 `pca_treatment_1`、`pca_treatment_2`、`pca_jointly_handled`。
+**5. Counting and differential analysis** — `count_matrix` builds the per-gene expression matrix; it directly produces `gene_2_symbol_counts` (gene-symbol counts) and enters `deseq2_init`. The init step fans out to `deseq2` (the DESeq2 analysis, exported as `gene_2_symbol_diffexp` differential-expression table), `gene_2_symbol_normcounts` (normalised counts), and three PCA rules (`pca_treatment_1`, `pca_treatment_2`, `pca_jointly_handled`).
 
-**6. 质量汇总** —— `rseqc_gtf2bed`（从注释生成 GTF/BED）连同比对 BAM 一起喂给 8 个 RSeQC 检查（`rseqc_junction_annotation`、`rseqc_junction_saturation`、`rseqc_stat`、`rseqc_infer`、`rseqc_innerdis`、`rseqc_readdis`、`rseqc_readdup`、`rseqc_readgc`）；`multiqc` 最后收集比对与 QC 结果出一份总报告。
+**6. Quality and aggregate reporting** — `rseqc_gtf2bed` converts the annotation to a BED the 8 RSeQC checks can read (`rseqc_junction_annotation`, `rseqc_junction_saturation`, `rseqc_stat`, `rseqc_infer`, `rseqc_innerdis`, `rseqc_readdis`, `rseqc_readdup`, `rseqc_readgc`); `multiqc` finally aggregates alignment and QC results into one report.
 
-*核实：文中的每个步骤名都是 `main.oxoflow` 的真实规则（`oxo-flow validate` 可复核）；描写的产物关系与规则依赖一致。*
+*Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described product relationships follow the actual rule dependencies.*
 
 <p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-rnaseq-star-deseq2+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
 
@@ -333,7 +335,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card ox-dag-card--wide" markdown="1">
 
-<a href="/assets/dag/oxo-flow-rnaseq-star-deseq2.svg?v=012ac5b7e4" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-rnaseq-star-deseq2.svg?v=012ac5b7e4" alt="oxo-flow-rnaseq-star-deseq2 pipeline overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-rnaseq-star-deseq2.svg?v=91496a574b" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-rnaseq-star-deseq2.svg?v=91496a574b" alt="oxo-flow-rnaseq-star-deseq2 pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-rnaseq-star-deseq2 — End-to-end RNA-seq differential-expression analysis with STAR and DESeq2: Ensembl reference download, fastp trimming, STAR alignment with gene counts, RSeQC QC + MultiQC, count matrix with technical-replicate collapse, Ensembl biomaRt gene-symbol annotation, and DESeq2 (normalized counts, PCA plots, per-contrast results with ashr shrinkage and MA plots).</p>
 

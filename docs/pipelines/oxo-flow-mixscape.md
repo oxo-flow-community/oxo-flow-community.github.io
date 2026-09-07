@@ -4,10 +4,11 @@ title: "Pooled CRISPR perturbation analysis with Seurat Mixscape"
 
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-mixscape</span></div>
 <div class="ox-detail-cols">
-<div>
+<div class="ox-detail-main">
 <h1>Pooled CRISPR perturbation analysis with Seurat Mixscape</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · full-line</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
-<p>Pooled CRISPR perturbation analysis (scCRISPR-seq / CROP-seq / Perturb-seq) with Seurat Mixscape: per-cell perturbation signatures (CalcPerturbSig), perturbed vs. non-perturbed classification (RunMixscape), LDA + UMAP projection of the perturbed subset, the full visualization suite (classification statistics, perturbation-score density, posterior-probability and optional antibody-expression violin plots), and reproducibility exports (exact conda envs, runtime config, annotation file). Input is one processed Seurat object per sample.</p>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · full-line</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span><span class=ox-tag-sep></span><span class="ox-tag">crispr</span><span class="ox-tag">scrna-seq</span><span class="ox-tag">mixscape</span><span class="ox-tag">perturbation</span><span class="ox-tag">seurat</span><span class="ox-tag">snakemake</span></div>
+<p class="ox-desc">Pooled CRISPR perturbation analysis (scCRISPR-seq / CROP-seq / Perturb-seq) with Seurat Mixscape: per-cell perturbation signatures (CalcPerturbSig), perturbed vs. non-perturbed classification (RunMixscape), LDA + UMAP projection of the perturbed subset, the full visualization suite (classification statistics, perturbation-score density, posterior-probability and optional antibody-expression violin plots), and reproducibility exports (exact conda envs, runtime config, annotation file). Input is one processed Seurat object per sample.</p>
+<div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#run-it">▶ Run it</a><a class="ox-btn" href="https://github.com/oxo-flow-community/oxo-flow-mixscape" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow run main.oxoflow</code></div>
 </div>
 <div>
 <div class="ox-glance">
@@ -23,6 +24,7 @@ title: "Pooled CRISPR perturbation analysis with Seurat Mixscape"
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2295.1"><code>10.48546/workflowhub.workflow.2295.1</code></a></span></div>
+<div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">Seurat</span><span class="tchip">seuratobject</span><span class="tchip">irlba</span><span class="tchip">matrix</span><span class="tchip">mixtools</span><span class="tchip">ggplot2</span><span class="tchip">scales</span><span class="tchip">patchwork</span></div></div>
 <p class="cmd">$ oxo-flow run main.oxoflow</p>
 </div>
 </div>
@@ -240,18 +242,17 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
 <div class="ox-sem-text" markdown="1">
 
-## Semantic map - how to read it
+**Pooled CRISPR perturbation pipeline** (Seurat Mixscape): given one processed Seurat object per sample of pooled CRISPR data (scCRISPR-seq / CROP-seq / Perturb-seq), it classifies perturbed cells and delivers perturbation signatures, LDA and UMAP projections, classification statistics, and reproducibility exports.
 
-## Short names and groups (all are real rules)
+**1. Input preparation** — the run reads a processed Seurat RDS object per sample (driven by the cohort sample group) plus the annotation CSV mapping gRNA calls to samples; every analysis rule expands over the per-sample wildcard.
 
-| Shown | Full rule name(s) |
-|---|---|
-| msp | mixscape |
-| viz | visualize |
-| lda | lda |
-| exports | env_export_mixscape, env_export_lda, config_export, annot_export |
+**2. Perturbation classification** — `mixscape` computes perturbation signatures with CalcPerturbSig, classifies perturbed cells with RunMixscape, and plots classification statistics. Its full object and metadata feed both downstream branches.
 
-Every drawn edge is a real engine edge (subset check at generation).
+**3. Downstream analysis (two parallel branches)** — the `mixscape` output has two independent consumers. `lda` runs MixscapeLDA on perturbed plus non-targeting cells and produces a 2-D UMAP projection with filtered object and data matrices; `visualize` plots perturbation-score densities, posterior-probability violins, and optional antibody expression. With no edge between them, each runs once classification completes.
+
+**4. Reproducibility exports (independent of the analysis)** — four standalone rules record how the run was made without consuming any analysis output: `annot_export` copies the annotation into the results, `config_export` writes the runtime configuration as YAML, and `env_export_mixscape` / `env_export_lda` export the exact conda environments behind each analysis stage (split from the upstream environment export because environments cannot be wildcarded).
+
+*Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described order follows the actual rule dependencies.*
 
 <p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-mixscape+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
 

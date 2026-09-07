@@ -4,10 +4,11 @@ title: "Ancient DNA (aDNA): QC, mapping, damage estimation and genotyping"
 
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-eager</span></div>
 <div class="ox-detail-cols">
-<div>
+<div class="ox-detail-main">
 <h1>Ancient DNA (aDNA): QC, mapping, damage estimation and genotyping</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
-<p>Ancient DNA (aDNA) analysis in one run: FastQC raw QC, optional fastp poly-G filtering (2-colour chemistry), AdapterRemoval adapter clipping and paired-end read merging, BWA aln mapping with ancient-DNA parameters, picard MarkDuplicates (or DeDup) deduplication, preseq library-complexity curves, DamageProfiler damage estimation, Qualimap BAM QC, optional pileupCaller genotyping with eigenstrat SNP coverage, optional metagenomic screening of the unmapped reads (bbduk entropy complexity filter, MALT or kraken2 classification with kraken_parse/kraken_merge tables, MaltExtract aDNA evaluation), and a final MultiQC report — every rule pinned to the nf-core/eager 2.5.3 tool versions in the upstream container (MALT 0.61 and HOPs 0.35 ship in the pinned nfcore/eager:2.5.3 image).</p>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span><span class=ox-tag-sep></span><span class="ox-tag">ancient-dna</span><span class="ox-tag">adna</span><span class="ox-tag">bam</span><span class="ox-tag">mapping</span><span class="ox-tag">deduplication</span><span class="ox-tag">damage</span><span class="ox-tag">genotyping</span><span class="ox-tag">metagenomic</span><span class="ox-tag">nf-core</span></div>
+<p class="ox-desc">Ancient DNA (aDNA) analysis in one run: FastQC raw QC, optional fastp poly-G filtering (2-colour chemistry), AdapterRemoval adapter clipping and paired-end read merging, BWA aln mapping with ancient-DNA parameters, picard MarkDuplicates (or DeDup) deduplication, preseq library-complexity curves, DamageProfiler damage estimation, Qualimap BAM QC, optional pileupCaller genotyping with eigenstrat SNP coverage, optional metagenomic screening of the unmapped reads (bbduk entropy complexity filter, MALT or kraken2 classification with kraken_parse/kraken_merge tables, MaltExtract aDNA evaluation), and a final MultiQC report — every rule pinned to the nf-core/eager 2.5.3 tool versions in the upstream container (MALT 0.61 and HOPs 0.35 ship in the pinned nfcore/eager:2.5.3 image).</p>
+<div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#run-it">▶ Run it</a><a class="ox-btn" href="https://github.com/oxo-flow-community/oxo-flow-eager" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow run main.oxoflow</code></div>
 </div>
 <div>
 <div class="ox-glance">
@@ -23,6 +24,7 @@ title: "Ancient DNA (aDNA): QC, mapping, damage estimation and genotyping"
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2288.1"><code>10.48546/workflowhub.workflow.2288.1</code></a></span></div>
+<div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">fastqc</span><span class="tchip">adapterremoval</span><span class="tchip">adapterremovalfixprefix</span><span class="tchip">bwa</span><span class="tchip">samtools</span><span class="tchip">picard</span><span class="tchip">dedup</span><span class="tchip">preseq</span></div></div>
 <p class="cmd">$ oxo-flow run main.oxoflow</p>
 </div>
 </div>
@@ -1203,22 +1205,23 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
 <div class="ox-sem-text" markdown="1">
 
-## Semantic map - how to read it
+**Ancient-DNA (aDNA) pipeline**: given a reference and raw reads, it clips adapters, maps and deduplicates, estimates damage, runs QC, and optionally genotypes or screens metagenomically — all feeding one MultiQC report.
 
-## Short names and groups (all are real rules)
+**1. Reference preparation** — `make_fasta_index`, `make_seq_dict` and `make_bwa_index` index the reference (conditional `unzip_reference` decompresses gzipped input first); branch builders `circulargenerator`, `sexdeterrmine_prep` and `mask_reference_for_pmdtools` draw from the same processed reference.
 
-| Shown | Full rule name(s) |
-|---|---|
-| refprep | make_bwa_index, make_fasta_index, make_seq_dict, unzip_reference, make_bt2_index, circulargenerator, mask_reference_for_pmdtools, sexdeterrmine_prep |
-| preprocess | fastp, adapter_removal, post_ar_fastq_trimming, fastqc_after_clipping, fastqc |
-| align | bwa_aln, bwamem, bowtie2, circularmapper, samtools_filter_bwaaln, samtools_filter_bwamem, samtools_filter_bowtie2, samtools_filter_circularmapper, samtools_flagstat_after_filter, convert_bam, bcftools_stats, hostremoval_input_fastq |
-| dedup | markduplicates, dedup, samtools_flagstat |
-| genotype | genotyping_pileupcaller, eigenstrat_snp_coverage, genotyping_ug, genotyping_hc, genotyping_freebayes, genotyping_angsd, vcf2genome, multivcfanalyzer |
-| ancient_damage | damageprofiler, qualimap, endor_spy, sexdeterrmine, mtnucratio, nuclear_contamination, print_nuclear_contamination, mapdamage_calculation, mapdamage_rescaling, pmdtools, bedtools_coverage, bam_trim, picard_addorreplacereadgroups, preseq |
-| metagenome | metagenomic_complexity_filter, kraken, kraken_parse, kraken_merge, malt, maltextract |
-| multiqc | multiqc |
+**2. Read QC and cleanup** — `fastqc` checks raw reads; `fastp` optionally filters poly-G; `adapter_removal` clips adapters and merges the ends, feeding `fastqc_after_clipping` and optional `post_ar_fastq_trimming`.
 
-Every drawn edge is a real engine edge (subset check at generation).
+**3. Mapping and deduplication** — `bwa_aln` maps the merged reads, `samtools_flagstat` reports stats, and either `markduplicates` or alternative `dedup` removes duplicates. When configured, `bwamem` (with optional `hostremoval_input_fastq`), `bowtie2` (with `make_bt2_index`) or `circularmapper` replaces `bwa_aln`.
+
+**4. Ancient-DNA analytics** — the mapped BAM feeds `preseq`; the deduplicated BAM feeds `damageprofiler` (with the indexed reference), `qualimap`, and optional `bedtools_coverage`, `bam_trim`, `picard_addorreplacereadgroups`, `mapdamage_calculation`, `mapdamage_rescaling`, `pmdtools`, `mtnucratio`, `sexdeterrmine`, `nuclear_contamination` → `print_nuclear_contamination`; `endor_spy` follows the flagstat stats.
+
+**5. Optional genotyping** — `genotyping_pileupcaller` → `eigenstrat_snp_coverage`; alternatively `genotyping_ug`, `genotyping_hc`, `genotyping_freebayes` or `genotyping_angsd`, with `vcf2genome` and `multivcfanalyzer` consuming the UnifiedGenotyper VCFs.
+
+**6. Optional metagenomics** — the four mapper filters (`samtools_filter_bwaaln`, `samtools_filter_bwamem`, `samtools_filter_bowtie2`, `samtools_filter_circularmapper`) feed `samtools_flagstat_after_filter`, and unmapped reads flow through `metagenomic_complexity_filter` into either `kraken` → `kraken_parse` → `kraken_merge` or `malt` → `maltextract`.
+
+**7. Reporting** — `multiqc` aggregates every route into one report.
+
+*Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described order follows the actual rule dependencies.*
 
 <p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-eager+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
 

@@ -4,10 +4,11 @@ title: "Viral assembly and intrahost variant calling for Illumina amplicon data"
 
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-viralrecon</span></div>
 <div class="ox-detail-cols">
-<div>
+<div class="ox-detail-main">
 <h1>Viral assembly and intrahost variant calling for Illumina amplicon data</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
-<p>Turns paired-end Illumina reads into a complete viral genomics report: read QC and trimming (FastQC, fastp), host-sequence removal (Kraken2), alignment to a user-provided reference genome (Bowtie2), primer trimming for amplicon runs, intrahost variant calling and annotation (iVar or bcftools, snpEff/SnpSift), consensus building with low-coverage masking (bcftools or ivar), lineage assignment and deconvolution (Pangolin, Nextclade, Freyja), de novo assembly with QC (SPAdes, Unicycler, minia, Bandage, BLAST, QUAST, ABACAS, plasmidID), and a single MultiQC report. The amplicon + iVar path is the default; the bcftools caller, ivar consensus, metagenomic protocol, alternative assemblers (any comma-separated combination of spades/unicycler/minia in one run), MarkDuplicates, plasmidID, network-driven database updates and additional annotation are ported as gated branches off by default.</p>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span><span class=ox-tag-sep></span><span class="ox-tag">viral</span><span class="ox-tag">sars-cov-2</span><span class="ox-tag">amplicon</span><span class="ox-tag">metagenomic</span><span class="ox-tag">variant-calling</span><span class="ox-tag">assembly</span><span class="ox-tag">nf-core</span><span class="ox-tag">illumina</span></div>
+<p class="ox-desc">Turns paired-end Illumina reads into a complete viral genomics report: read QC and trimming (FastQC, fastp), host-sequence removal (Kraken2), alignment to a user-provided reference genome (Bowtie2), primer trimming for amplicon runs, intrahost variant calling and annotation (iVar or bcftools, snpEff/SnpSift), consensus building with low-coverage masking (bcftools or ivar), lineage assignment and deconvolution (Pangolin, Nextclade, Freyja), de novo assembly with QC (SPAdes, Unicycler, minia, Bandage, BLAST, QUAST, ABACAS, plasmidID), and a single MultiQC report. The amplicon + iVar path is the default; the bcftools caller, ivar consensus, metagenomic protocol, alternative assemblers (any comma-separated combination of spades/unicycler/minia in one run), MarkDuplicates, plasmidID, network-driven database updates and additional annotation are ported as gated branches off by default.</p>
+<div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#run-it">▶ Run it</a><a class="ox-btn" href="https://github.com/oxo-flow-community/oxo-flow-viralrecon" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow run main.oxoflow --samples first:1</code></div>
 </div>
 <div>
 <div class="ox-glance">
@@ -23,6 +24,7 @@ title: "Viral assembly and intrahost variant calling for Illumina amplicon data"
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2287.1"><code>10.48546/workflowhub.workflow.2287.1</code></a></span></div>
+<div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">abacas</span><span class="tchip">bandage</span><span class="tchip">bcftools</span><span class="tchip">bedtools</span><span class="tchip">blast</span><span class="tchip">bowtie2</span><span class="tchip">cutadapt</span><span class="tchip">fastp</span></div></div>
 <p class="cmd">$ oxo-flow run main.oxoflow --samples first:1</p>
 </div>
 </div>
@@ -545,34 +547,21 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
 <div class="ox-sem-text" markdown="1">
 
-## Semantic map - how to read it
+**Viral genome reconstruction pipeline** (nf-core/viralrecon port): given Illumina amplicon reads plus a viral FASTA, GFF, and primer scheme, it trims, aligns, calls and annotates intrahost variants, calls consensus and lineages, assembles de novo, and reports it all in MultiQC.
 
-## Short names and groups (all are real rules)
+**1. Reference preparation** — `gunzip_fasta`, `gunzip_gff`, and `gunzip_primer_bed` uncompress gzipped references; `prepare_genome` indexes the FASTA while `build_bowtie2_index`, `build_snpeff_db`, `make_blast_db`, and `get_nextclade_dataset` build the alignment, snpEff, BLAST, and Nextclade databases. `collapse_primers` and `get_primer_fasta` prepare amplicon intervals and primer sequences; `untar_kraken2_db` or `kraken2_build` supplies the host database.
 
-| Shown | Full rule name(s) |
-|---|---|
-| ref | gunzip_fasta, gunzip_gff, gunzip_primer_bed, prepare_genome, untar_kraken2_db, kraken2_build, build_bowtie2_index, get_nextclade_dataset, make_blast_db, build_snpeff_db, build_snpeff_db_additional, collapse_primers, get_primer_fasta, prepare_primer_fasta |
-| reads | cat_fastq, fastqc_raw |
-| trim | fastp, fastqc_trim |
-| kraken | kraken2 |
-| align | align_bowtie2 |
-| bam | bam_sort_index, ivar_trim, bam_sort_index_trimmed |
-| dedup | markduplicates, markduplicates_wgs, picard_metrics, picard_metrics_wgs |
-| depth | mosdepth_genome, mosdepth_genome_wgs, plot_mosdepth_genome, mosdepth_amplicon, plot_mosdepth_amplicon |
-| freyja | freyja_variants, freyja_variants_wgs, freyja_demix, freyja_boot, freyja_update, freyja_demix_updated, freyja_boot_updated |
-| call | call_variants_ivar, call_variants_bcftools, call_variants_bcftools_wgs, ivar_to_vcf, norm_vcf_bcftools |
-| vcf | sort_vcf |
-| annot | snpeff_ann, snpsift_extract, additional_annotation |
-| consensus | consensus_filter, consensus_filter_bcftools, consensus_call, consensus_call_wgs, consensus_ivar, consensus_ivar_wgs |
-| clade | quast_consensus, pangolin, pangolin_updatedata, pangolin_run_updated, nextclade, plot_base_density, nextclade_clade_mqc |
-| tables | variants_long_table, variants_long_table_bcftools |
-| assembly | assembly_fastq |
-| cut | cutadapt, fastqc_primers |
-| assemblers | assemble_spades, assemble_unicycler, assemble_minia |
-| assemblyqc | bandage, blast_assembly, quast_assembly, abacas, plasmidid, bandage_unicycler, blast_assembly_unicycler, quast_assembly_unicycler, abacas_unicycler, plasmidid_unicycler, blast_assembly_minia, quast_assembly_minia, abacas_minia, plasmidid_minia |
-| report | multiqc |
+**2. Read QC and alignment** — `cat_fastq` concatenates per-sample reads, `fastp` trims them, and `fastqc_raw`/`fastqc_trim` check pre- and post-trim quality. `kraken2` strips host reads, `align_bowtie2` maps the trimmed reads, `bam_sort_index` sorts and indexes the BAM, and the amplicon branch's `ivar_trim` → `bam_sort_index_trimmed` removes primer sequences.
 
-Every drawn edge is a real engine edge (subset check at generation).
+**3. Coverage and lineage deconvolution** — `picard_metrics` collects alignment metrics, `mosdepth_genome` → `plot_mosdepth_genome` and `mosdepth_amplicon` → `plot_mosdepth_amplicon` plot coverage, and `freyja_variants` feeds `freyja_demix` and `freyja_boot`; if the database must be downloaded, `freyja_update` feeds `freyja_demix_updated`/`freyja_boot_updated` instead.
+
+**4. Variant calling, annotation, and consensus** — `call_variants_ivar` → `ivar_to_vcf` → `sort_vcf` is the amplicon default; the metagenomic `call_variants_bcftools` → `norm_vcf_bcftools` covers untrimmed runs. Both converge on `snpeff_ann` → `snpsift_extract`, and after `consensus_filter`/`consensus_filter_bcftools`, `consensus_call` (or `consensus_ivar`) emits the consensus feeding `quast_consensus`, `nextclade` → `nextclade_clade_mqc`, `pangolin`, and `plot_base_density`.
+
+**5. Variant long table and assembly** — `variants_long_table` and its bcftools counterpart `variants_long_table_bcftools` merge called variants, snpEff fields, and Pangolin lineages. In parallel, `cutadapt` primer-trims the host-stripped reads that `assemble_spades` (or `assemble_unicycler`, `assemble_minia`) scaffolds; each assembler branch adds BLAST, QUAST, and ABACAS rules (`blast_assembly`, `quast_assembly_minia`) plus Bandage and plasmidID.
+
+**6. Report aggregation** — `multiqc` collates quality, alignment, coverage, variant, and lineage metrics into one HTML report.
+
+*Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described order follows the actual rule dependencies.*
 
 <p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-viralrecon+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
 

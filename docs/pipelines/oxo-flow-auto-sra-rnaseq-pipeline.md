@@ -4,10 +4,11 @@ title: "SRA-powered RNA-seq: .sra archives to differential expression"
 
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-auto-sra-rnaseq-pipeline</span></div>
 <div class="ox-detail-cols">
-<div>
+<div class="ox-detail-main">
 <h1>SRA-powered RNA-seq: .sra archives to differential expression</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
-<p>Automated RNA-seq analysis from locally downloaded SRA archives to differential expression results: verify and symlink .sra files, fasterq-dump conversion to FASTQ, read merging across multiple SRR runs per sample, fastp trimming, STAR alignment with gene counts, BAM indexing, BPM-normalized bigWig signal tracks, a merged count matrix, and DESeq2 differential analysis with ashr shrinkage. Every tool is pinned to an exact conda version for reproducibility. Paired- and single-end samples are routed per sample via metadata (sample-group metadata + wildcard-scoped when predicates), and a second entry point (main_encode.oxoflow) covers the upstream ENCODE execution path.</p>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span><span class=ox-tag-sep></span><span class="ox-tag">bigwig</span><span class="ox-tag">deseq2</span><span class="ox-tag">differential-expression</span><span class="ox-tag">encode</span><span class="ox-tag">fasterq-dump</span><span class="ox-tag">fastp</span><span class="ox-tag">rna-seq</span><span class="ox-tag">sra</span><span class="ox-tag">star</span></div>
+<p class="ox-desc">Automated RNA-seq analysis from locally downloaded SRA archives to differential expression results: verify and symlink .sra files, fasterq-dump conversion to FASTQ, read merging across multiple SRR runs per sample, fastp trimming, STAR alignment with gene counts, BAM indexing, BPM-normalized bigWig signal tracks, a merged count matrix, and DESeq2 differential analysis with ashr shrinkage. Every tool is pinned to an exact conda version for reproducibility. Paired- and single-end samples are routed per sample via metadata (sample-group metadata + wildcard-scoped when predicates), and a second entry point (main_encode.oxoflow) covers the upstream ENCODE execution path.</p>
+<div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#run-it">▶ Run it</a><a class="ox-btn" href="https://github.com/oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipeline" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow run main.oxoflow</code></div>
 </div>
 <div>
 <div class="ox-glance">
@@ -23,6 +24,7 @@ title: "SRA-powered RNA-seq: .sra archives to differential expression"
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2300.1"><code>10.48546/workflowhub.workflow.2300.1</code></a></span></div>
+<div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">sra-tools</span><span class="tchip">fastp</span><span class="tchip">star</span><span class="tchip">samtools</span><span class="tchip">deeptools</span><span class="tchip">pandas</span><span class="tchip">bioconductor-deseq2</span><span class="tchip">r-ashr</span></div></div>
 <p class="cmd">$ oxo-flow run main.oxoflow</p>
 </div>
 </div>
@@ -179,22 +181,19 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
 <div class="ox-sem-text" markdown="1">
 
-## Semantic map - how to read it
+**SRA-powered RNA-seq pipeline**: given locally downloaded .sra archives and a metadata sheet, it converts archives to FASTQ, trims with fastp, aligns with STAR while counting per-gene reads, builds normalized bigWig signal tracks, and runs DESeq2 differential expression with ashr shrinkage.
 
-## Short names and groups (all are real rules)
+**1. Archive handoff** — `get_sra` verifies the locally downloaded archives and symlinks each into sra/<SRR>/<SRR>.sra; `sra_dump` converts every sample's archives to FASTQ with fasterq-dump.
 
-| Shown | Full rule name(s) |
-|---|---|
-| fetch | get_sra, sra_dump |
-| merge | merge_R1_data, merge_R2_data, merge_data |
-| clean | data_clean_pair, data_clean_single |
-| align | align_and_count, align_and_count_single |
-| bam | build_bam_index |
-| bw | bamtobw |
-| counts | combine_count |
-| dge | DGE_analysis |
+**2. Per-sample merge (PE vs SE route)** — from the dumped FASTQs, `merge_R1_data` and `merge_R2_data` concatenate all SRR runs of a sample into one R1/R2 pair, while `merge_data` concatenates the single-end reads instead; each sample takes one route according to its paired metadata.
 
-Every drawn edge is a real engine edge (subset check at generation).
+**3. Trim, align, count** — paired reads pass through `data_clean_pair` (fastp) into `align_and_count` (STAR with GeneCounts quanting, yielding a sorted BAM and a per-gene ReadsPerGene table); single-end reads go through `data_clean_single` and `align_and_count_single`. Only one of these routes runs per sample.
+
+**4. Index and signal tracks** — both alignment routes converge here: `build_bam_index` indexes each BAM with samtools, and `bamtobw` uses bamCoverage to emit BPM-normalized bigWig tracks from the BAM plus its index.
+
+**5. Count matrix and differential expression** — `combine_count` merges all per-sample ReadsPerGene tables into one count matrix; `DGE_analysis` runs DESeq2 with ashr shrinkage to output the final R object, then cleans up the alignment directory and optionally emails results.
+
+*Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described order follows the actual rule dependencies.*
 
 <p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-auto-sra-rnaseq-pipeline+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
 

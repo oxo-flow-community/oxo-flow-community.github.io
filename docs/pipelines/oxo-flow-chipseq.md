@@ -4,10 +4,11 @@ title: "ChIP-seq: peak calling, QC and differential analysis"
 
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-chipseq</span></div>
 <div class="ox-detail-cols">
-<div>
+<div class="ox-detail-main">
 <h1>ChIP-seq: peak calling, QC and differential analysis</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></div>
-<p>ChIP-seq peak calling, QC and differential analysis for paired-end reads: FastQC and Trim Galore read QC, BWA-MEM (default), Bowtie2, Chromap or STAR alignment, library merge and Picard mark-duplicates, BAMTools filtering against a blacklist with orphan-read removal, preseq and phantompeakqualtools library complexity QC, bigWig tracks and deepTools QC plots, MACS3 peak calling with input controls in broad (default) or narrow mode, HOMER peak annotation, FRiP scoring, consensus peaks across replicates (MACS3 merge, featureCounts quantification, DESeq2 QC), an IGV session and a MultiQC report. Optional multi-antibody mode (metadata_file + input_groups group_by meta.antibody) runs the consensus chain once per distinct antibody. Optional gated rules derive the gene-body BED from the GTF (GTF2BED), the blacklist-complement regions file, the chromosome sizes and FASTA index (CUSTOM_GETCHROMSIZES), and BWA / Bowtie2 / Chromap / STAR indexes from the reference FASTA.</p>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span><span class=ox-tag-sep></span><span class="ox-tag">chip-seq</span><span class="ox-tag">peaks</span><span class="ox-tag">epigenomics</span><span class="ox-tag">nf-core</span><span class="ox-tag">broad-peak</span><span class="ox-tag">narrow-peak</span><span class="ox-tag">consensus-peaks</span></div>
+<p class="ox-desc">ChIP-seq peak calling, QC and differential analysis for paired-end reads: FastQC and Trim Galore read QC, BWA-MEM (default), Bowtie2, Chromap or STAR alignment, library merge and Picard mark-duplicates, BAMTools filtering against a blacklist with orphan-read removal, preseq and phantompeakqualtools library complexity QC, bigWig tracks and deepTools QC plots, MACS3 peak calling with input controls in broad (default) or narrow mode, HOMER peak annotation, FRiP scoring, consensus peaks across replicates (MACS3 merge, featureCounts quantification, DESeq2 QC), an IGV session and a MultiQC report. Optional multi-antibody mode (metadata_file + input_groups group_by meta.antibody) runs the consensus chain once per distinct antibody. Optional gated rules derive the gene-body BED from the GTF (GTF2BED), the blacklist-complement regions file, the chromosome sizes and FASTA index (CUSTOM_GETCHROMSIZES), and BWA / Bowtie2 / Chromap / STAR indexes from the reference FASTA.</p>
+<div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#run-it">▶ Run it</a><a class="ox-btn" href="https://github.com/oxo-flow-community/oxo-flow-chipseq" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow run main.oxoflow</code></div>
 </div>
 <div>
 <div class="ox-glance">
@@ -23,6 +24,7 @@ title: "ChIP-seq: peak calling, QC and differential analysis"
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2283.1"><code>10.48546/workflowhub.workflow.2283.1</code></a></span></div>
+<div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">fastqc</span><span class="tchip">trim-galore</span><span class="tchip">bwa</span><span class="tchip">bowtie2</span><span class="tchip">chromap</span><span class="tchip">star</span><span class="tchip">samtools</span><span class="tchip">picard</span></div></div>
 <p class="cmd">$ oxo-flow run main.oxoflow</p>
 </div>
 </div>
@@ -497,26 +499,19 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
 <div class="ox-sem-text" markdown="1">
 
-## Semantic map - how to read it
+**ChIP-seq peak calling and differential analysis pipeline** (nf-core/chipseq port): given reads and a reference genome, it aligns, filters, deduplicates, calls broad or narrow peaks, quantifies the per-antibody consensus, and reports via MultiQC and IGV.
 
-## Short names and groups (all are real rules)
+**1. Read QC and reference prep** — `fastqc` reports raw-read quality; `trimgalore` trims adapters, feeding every aligner. Gated steps `gtf2bed`, `blacklist_regions`, `getchromsizes` prepare reference files; builders `bwa_index_build`, `bowtie2_index_build`, `chromap_index_build`, `star_genomegenerate` feed their own aligner.
 
-| Shown | Full rule name(s) |
-|---|---|
-| refs+aligners | reference::bwa_index_build, reference::star_genomegenerate, reference::bowtie2_index_build, reference::chromap_index_build, reference::blacklist_regions, reference::getchromsizes, reference::gtf2bed, align::bwa_mem, align::star_align, align::bowtie2_align, align::chromap_align |
-| sort+merge | align::sort_align, align::mergesamfiles |
-| markdup+filter | align::markduplicates, filter::bamtools_filter, filter::sort_filter, filter::sort_name, filter::bam_remove_orphans |
-| stats | align::index_align, align::stats_align, align::flagstat_align, align::idxstats_align, align::index_markdup, align::stats_markdup, align::flagstat_markdup, align::idxstats_markdup, filter::index_filter, filter::stats_filter, filter::flagstat_filter, filter::idxstats_filter |
-| peaks | peaks::macs3_callpeak, peaks::macs3_callpeak_narrow, peaks::multiqc_custom_peaks, peaks::multiqc_custom_peaks_narrow, peaks::plot_macs3_qc, peaks::plot_macs3_qc_narrow |
-| annotate | peaks::homer_annotatepeaks, peaks::homer_annotatepeaks_narrow, peaks::plot_homer_annotatepeaks, peaks::plot_homer_annotatepeaks_narrow |
-| frip | peaks::frip_score, peaks::frip_score_narrow |
-| tracks | tracks::bedtools_genomecov, tracks::ucsc_bedgraphtobigwig, tracks::deeptools_computematrix, tracks::deeptools_plotprofile, tracks::deeptools_plotfingerprint, tracks::deeptools_plotheatmap, tracks::khmer |
-| consensus | consensus::subread_featurecounts, consensus::subread_featurecounts_multi, consensus::homer_annotate_consensus_narrow, consensus::annotate_boolean_peaks_multi, consensus::annotate_boolean_peaks, consensus::macs3_consensus_narrow_multi, consensus::macs3_consensus_narrow, consensus::macs3_consensus, consensus::homer_annotate_consensus_narrow_multi, consensus::deseq2_qc, consensus::deseq2_qc_narrow, consensus::macs3_consensus_multi, consensus::homer_annotate_consensus, consensus::deseq2_qc_multi, consensus::annotate_boolean_peaks_narrow_multi, consensus::deseq2_qc_narrow_multi, consensus::subread_featurecounts_narrow_multi, consensus::annotate_boolean_peaks_narrow, consensus::homer_annotate_consensus_multi, consensus::subread_featurecounts_narrow |
-| QC | qc::fastqc, qc::trimgalore, filter::preseq, filter::picard_collectmultiplemetrics, filter::phantompeakqualtools, filter::multiqc_custom_phantompeakqualtools |
-| multiqc | report::multiqc, report::multiqc_narrow, report::multiqc_multi, report::multiqc_narrow_multi |
-| igv | report::igv, report::igv_narrow, report::igv_multi, report::igv_narrow_multi |
+**2. Alignment** — one of `bwa_mem`, `star_align`, `bowtie2_align`, `chromap_align` runs per sample; all converge into `sort_align`, fanning out to the `index_align`/`stats_align`/`flagstat_align`/`idxstats_align` quartet and `mergesamfiles`; Picard `markduplicates` follows.
 
-Every drawn edge is a real engine edge (subset check at generation).
+**3. Filtering and library QC** — `bamtools_filter` → `sort_name` → `bam_remove_orphans` → `sort_filter` → `index_filter`/`stats_filter`/`flagstat_filter`/`idxstats_filter`, while `preseq`, `picard_collectmultiplemetrics`, `phantompeakqualtools` → `multiqc_custom_phantompeakqualtools` run in parallel.
+
+**4. Tracks and peak calling** — `bedtools_genomecov` scales coverage, `ucsc_bedgraphtobigwig` makes bigWigs, `deeptools_computematrix` feeds `deeptools_plotprofile`/`deeptools_plotheatmap`, `deeptools_plotfingerprint` contrasts IP/control, `khmer` estimates genome size; `macs3_callpeak`/`macs3_callpeak_narrow` call peaks, with `frip_score`, `multiqc_custom_peaks`, `homer_annotatepeaks`, `plot_macs3_qc`, `plot_homer_annotatepeaks`.
+
+**5. Consensus, quantification and reporting** — `macs3_consensus` merges IP peaks into a per-antibody consensus feeding `homer_annotate_consensus` → `annotate_boolean_peaks` and `subread_featurecounts` → `deseq2_qc`; per-antibody siblings `macs3_consensus_multi`/`deseq2_qc_multi` run in multi-antibody mode. Finally `multiqc` aggregates QC and consensus into a report, and `igv` builds an IGV session over bigWigs and peaks.
+
+*Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described order follows the actual rule dependencies.*
 
 <p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-chipseq+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
 

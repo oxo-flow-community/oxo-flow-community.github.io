@@ -4,10 +4,11 @@ title: "Genome browser tracks: coverage, gene plots and UCSC hub"
 
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-genome-tracks</span></div>
 <div class="ox-detail-cols">
-<div>
+<div class="ox-detail-main">
 <h1>Genome browser tracks: coverage, gene plots and UCSC hub</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></div>
-<p>Merge BAM files per experimental group with samtools, compute normalized bigWig coverage with deepTools bamCoverage (RPGC by default), plot isoform-aware per-gene and per-region genome tracks with gtracks/pyGenomeTracks, and publish a UCSC genome browser track hub — end-to-end track generation for RNA-seq, ATAC-seq and other aligned BAM data, plus the single-cell branch (sinto per-cell-barcode splitting of sc BAMs into per-group BAMs), an opt-in IGV report of all merged BAMs over the annotated gene regions, and opt-in conda environment export rules (env_export_*, conda env export).</p>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">⇄ Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span><span class=ox-tag-sep></span><span class="ox-tag">epigenomics</span><span class="ox-tag">genome-tracks</span><span class="ox-tag">bigwig</span><span class="ox-tag">coverage</span><span class="ox-tag">visualization</span><span class="ox-tag">ucsc-hub</span><span class="ox-tag">deeptools</span><span class="ox-tag">pygenometracks</span><span class="ox-tag">snakemake</span><span class="ox-tag">single-cell</span><span class="ox-tag">sinto</span><span class="ox-tag">igv</span></div>
+<p class="ox-desc">Merge BAM files per experimental group with samtools, compute normalized bigWig coverage with deepTools bamCoverage (RPGC by default), plot isoform-aware per-gene and per-region genome tracks with gtracks/pyGenomeTracks, and publish a UCSC genome browser track hub — end-to-end track generation for RNA-seq, ATAC-seq and other aligned BAM data, plus the single-cell branch (sinto per-cell-barcode splitting of sc BAMs into per-group BAMs), an opt-in IGV report of all merged BAMs over the annotated gene regions, and opt-in conda environment export rules (env_export_*, conda env export).</p>
+<div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#run-it">▶ Run it</a><a class="ox-btn" href="https://github.com/oxo-flow-community/oxo-flow-genome-tracks" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow run main.oxoflow --samples first:1</code></div>
 </div>
 <div>
 <div class="ox-glance">
@@ -23,6 +24,7 @@ title: "Genome browser tracks: coverage, gene plots and UCSC hub"
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2294.1"><code>10.48546/workflowhub.workflow.2294.1</code></a></span></div>
+<div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">samtools</span><span class="tchip">deeptools</span><span class="tchip">pygenometracks</span><span class="tchip">gtracks</span><span class="tchip">sinto</span><span class="tchip">igv-reports</span></div></div>
 <p class="cmd">$ oxo-flow run main.oxoflow --samples first:1</p>
 </div>
 </div>
@@ -237,23 +239,19 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
 <div class="ox-sem-text" markdown="1">
 
-## Semantic map - how to read it
+**Genome browser track generation pipeline**: given aligned BAMs, it merges sample groups, computes bigWig coverage, and renders genomic track plots plus a UCSC genome browser hub — with an optional single-cell split path and an opt-in IGV report.
 
-## Short names and groups (all are real rules)
+**1. Inputs and documentation exports** — `annot_export`, `gene_list_export`, and `config_export` copy the sample annotation, gene list, and workflow config into the results configs dir; `annotate_genes` extracts gene coordinates, isoform counts, and y-max from the gene list and the genome BED.
 
-| Shown | Full rule name(s) |
-|---|---|
-| bam | merge_bams |
-| cov | coverage |
-| plots | plot_tracks |
-| hub | ucsc_hub |
-| ann | annotate_genes, make_bed |
-| igv | igv_report |
-| sc | split_sc_bam, merge_sc_bams, coverage_sc |
-| exports | annot_export, gene_list_export, config_export |
-| envs | env_export_pygenometracks, env_export_sinto, env_export_igv_reports |
+**2. Bulk coverage chain** — `merge_bams` merges the BAMs of each annotation group with samtools and indexes the merged BAM; `coverage` generates one bigWig per group with bamCoverage.
 
-Every drawn edge is a real engine edge (subset check at generation).
+**3. Single-cell chain (runtime-conditional)** — when sc_enabled is set, `split_sc_bam` splits each single-cell BAM into per-group BAMs by cell barcode (sinto filterbarcodes), `merge_sc_bams` merges those splits, and `coverage_sc` yields the bigWig per sc group. Both routes write bigWigs into the same directory, which the plots and hub read by group name.
+
+**4. Plotting and hub** — `plot_tracks` renders gene/region track plots via gtracks and `ucsc_hub` assembles the hub files; both run after `coverage`, and `annotate_genes` feeds the plot directly.
+
+**5. Opt-in reporting** — with igv_report_enabled set, `make_bed` projects the annotated genes to BED4, then `igv_report` builds the self-contained HTML report over the merged BAMs; `env_export_pygenometracks`, `env_export_sinto`, and `env_export_igv_reports` export pinned conda environments when enabled.
+
+*Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described order follows the actual rule dependencies.*
 
 <p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-genome-tracks+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
 

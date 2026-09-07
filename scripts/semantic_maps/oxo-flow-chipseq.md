@@ -1,6 +1,6 @@
 **ChIP-seq peak calling and differential analysis pipeline** (nf-core/chipseq port): given reads and a reference genome, it aligns, filters, deduplicates, calls broad or narrow peaks, quantifies the per-antibody consensus, and reports via MultiQC and IGV.
 
-**1. Read QC and reference prep** — `fastqc` reports raw-read quality; `trimgalore` trims adapters, feeding every aligner. Gated steps `gtf2bed`, `blacklist_regions`, `getchromsizes` and index builders `bwa_index_build`, `bowtie2_index_build`, `chromap_index_build`, `star_genomegenerate` feed their own aligner only.
+**1. Read QC and reference prep** — `fastqc` reports raw-read quality; `trimgalore` trims adapters, feeding every aligner. Gated steps `gtf2bed`, `blacklist_regions`, `getchromsizes` prepare reference files; builders `bwa_index_build`, `bowtie2_index_build`, `chromap_index_build`, `star_genomegenerate` feed their own aligner.
 
 **2. Alignment** — one of `bwa_mem`, `star_align`, `bowtie2_align`, `chromap_align` runs per sample; all converge into `sort_align`, fanning out to the `index_align`/`stats_align`/`flagstat_align`/`idxstats_align` quartet and `mergesamfiles`; Picard `markduplicates` follows.
 
