@@ -404,6 +404,29 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 ## Workflow graph
 
+<details class="ox-flow-view" open>
+<summary>Semantic overview <span class="ox-badge ox-badge--sem">author-side</span></summary>
+<div class="ox-dag-card" markdown="1">
+
+<a href="/assets/dag/oxo-flow-atacseq-semantic.svg?v=d60e0dfc13" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-atacseq-semantic.svg?v=d60e0dfc13" alt="oxo-flow-atacseq semantic overview" loading="lazy"></a>
+
+<p class="ox-dag-caption">Semantic route drawing — every station is a real rule of this workflow, every edge a real data dependency of the engine DAG; groups and junction are the author-side condensation (details below).</p>
+
+</div>
+</details>
+<div class="ox-sem-notes" markdown="1">
+
+### How this semantic view abstracts the rule-level graph
+
+The workflow has **7 rules / ? edges**; the semantic drawing shows **23 stops on 5 route lines**: one **Main pipeline** line (grey-brown) carries the single shared story along the bottom trunk — all 4 alignment lanes merge at the hidden junction `_aligned` and the count/statistics chain runs on it; the coloured lines are the routes that feed or branch from it (blue Data acquisition, green PE alignment, orange SE alignment, yellow Reporting). Grouped stops: `star_align_raw` and `star_align_se_raw` ride their parent lane; the 8 `rseqc_*` checks appear as one `rseqc QC` stop (each check still a real rule — detail card below); the 3 PCA stops appear as `DESeq2 PCA`. Every drawn edge is a real edge of the engine DAG — the subset property is machine-verified at generation (incl. junction composition), nothing invented. Auxiliary terminals (`bwa_index`, `genome_faidx`) and the per-check QC fan-outs are elided here and shown in the rule-level detail card.
+
+**Short-name mapping** — every label on the map, in full:
+
+<table class="ox-sem-map"><thead><tr><th>Shown</th><th>Full rule name(s)</th></tr></thead><tbody><tr><td><code>trimgalore</code></td><td><code>trimgalore</code></td></tr><tr><td><code>bwa_mem</code></td><td><code>bwa_mem</code></td></tr><tr><td><code>sort+merge</code></td><td><code>samtools_sort_stats, picard_mergesamfiles, merge_replicates</code></td></tr><tr><td><code>markdup+filter</code></td><td><code>picard_markduplicates, bamtools_filter</code></td></tr><tr><td><code>peaks</code></td><td><code>macs2_callpeak</code></td></tr><tr><td><code>annotate</code></td><td><code>homer_annotatepeaks</code></td></tr><tr><td><code>frip</code></td><td><code>frip_score</code></td></tr><tr><td><code>cov+bigwig</code></td><td><code>bedtools_genomecov, ucsc_bedgraphtobigwig</code></td></tr><tr><td><code>plots</code></td><td><code>deeptools_plots</code></td></tr><tr><td><code>fingerprint</code></td><td><code>plotfingerprint</code></td></tr><tr><td><code>alt_aligners</code></td><td><code>alt::bowtie2_align, alt::chromap_align, alt::star_align</code></td></tr><tr><td><code>ref</code></td><td><code>ref::bwa_index, ref::custom_getchromsizes</code></td></tr><tr><td><code>PE_track</code></td><td><code>pe::fastqc_pe, pe::trimgalore_pe, pe::bwa_mem_pe, pe::bamtools_filter_pe, pe::pe_name_sort_remove_orphans, pe::bedtools_genomecov_pe, pe::plotfingerprint_pe, pe::multiqc_pe</code></td></tr><tr><td><code>consensus</code></td><td><code>cons::macs2_consensus, cons::homer_annotatepeaks_consensus, cons::subread_featurecounts, cons::deseq2_qc</code></td></tr><tr><td><code>qce</code></td><td><code>qce::preseq_lcextrap, qce::picard_collectmultiplemetrics, qce::get_autosomes, qce::ataqv, qce::mkarv, qce::plot_macs2_qc, qce::plot_homer_annotatepeaks, qce::multiqc_custom_peaks, qce::igv</code></td></tr><tr><td><code>mito</code></td><td><code>mito::genome_blacklist_regions</code></td></tr><tr><td><code>multiqc</code></td><td><code>multiqc</code></td></tr><tr><td><code>fastqc</code></td><td><code>fastqc</code></td></tr></tbody></table>
+
+<a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Bgraph%5D+oxo-flow-atacseq+semantic+map+correction&body=Which station or edge looks wrong (paste the station/edge names)">Report a correction to this map</a>
+
+</div>
 <details class="ox-flow-view">
 <summary>Rule-level detail (exact DAG)</summary>
 <div class="ox-dag-card ox-dag-card--wide">

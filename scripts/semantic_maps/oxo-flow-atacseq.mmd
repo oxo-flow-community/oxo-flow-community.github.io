@@ -1,0 +1,32 @@
+%%metro line: main | Main pipeline | #79706E
+%%metro line: rep2 | PE track | #F2A93B
+%%metro line: alt | Alt aligners | #54A24B
+%%metro line: ref | References | #4C78A8
+%%metro line: rep | Reporting | #F2CF5B
+%%metro font_scale: 1.9
+%%metro stroke_scale: 1.6
+%%metro legend: br
+
+graph LR
+    trimgalore -->|main| bwa_mem
+    bwa_mem -->|main| sort+merge
+    sort+merge -->|main| markdup+filter
+    ref -->|ref| mito
+    markdup+filter -->|main| peaks
+    peaks -->|main| annotate
+    peaks -->|main| frip
+    frip -->|rep| qce
+    markdup+filter -->|main| cov+bigwig
+    cov+bigwig -->|main| plots
+    markdup+filter -->|main| fingerprint
+    peaks -->|rep| multiqc
+    fastqc -->|rep| multiqc
+    trimgalore -->|rep| multiqc
+    trimgalore -->|alt| alt_aligners
+    alt_aligners -->|alt| sort+merge
+    ref -->|ref| bwa_mem
+    ref -->|ref| markdup+filter
+    markdup+filter -->|pe| PE_track
+    peaks -->|main| consensus
+    ref -->|ref| qce
+    peaks -->|main| qce
