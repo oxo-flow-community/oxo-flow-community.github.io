@@ -14,7 +14,7 @@ title: "ChIP-seq: peak calling, QC and differential analysis"
 <div class="ox-glance">
 <div class="ox-glance-title">At a glance</div>
 <div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested · default-path</span></div>
-<div class="ox-kv"><span class="k">Rules</span><span class="v">84</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">83</span></div>
 <div class="ox-kv"><span class="k">Compute</span><span class="v">up to 12 CPUs / 72 GB per rule (bwa_mem, bowtie2_align, star_align, trimgalore, star_genomegenerate); bowtie2_index_build 12 CPUs / 36 GB; most rules request 6 CPUs / 36 GB (chromap_align, chromap_index_build included)</span></div>
 <div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></span></div>
 <div class="ox-kv"><span class="k">Origin</span><span class="v">Official port</span></div>

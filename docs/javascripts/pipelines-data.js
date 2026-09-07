@@ -176,7 +176,7 @@ window.OXO_PIPELINES = [
       "PREPARE_GENOME `.tar.gz` reference bundles \u2014 bbsplit / sortmerna index archives (user-supplied `bbsplit_index` / `sortmerna_index` .tar.gz/.tgz/.tar archives are untarred into the canonical results/reference/ dir like upstream UNTAR_BBSPLIT_INDEX / UNTAR_SORTMERNA_INDEX; plain directories are symlinked; the GTF preprocessing chain itself (CUSTOM_GTFFILTER with the upstream filter_gtf_needed gate, gffread GFF->GTF, additional_fasta transgenes with biotype featurecounts_group_type / gene_type, GENCODE preprocessing, .gz references) is ported as gated prepare_genome::* builder rules with canonical results/reference/ artifacts)",
       "QC/quantify branches not ported: kraken2 + bracken (modules/nf-core/kraken2, bracket, krakentools \u2014 optional taxon QC), sylph + sylphtax (modules/nf-core/sylph, sylphtax \u2014 taxonomic profiling; upstream main.nf 730-737/555-601), fastp as trimmer (upstream --trimmer fastp variant), preseq (nf-core/preseq lcextrap subsampling), ribodetector as ribo_removal_tool (the port wires sortmerna/bowtie2 only \u2014 setting ribodetector silently leaves rRNA removal off; see the main.oxoflow config comment), rustqc (modules/nf-core/rustqc bam QC), parabricks / sentieon (accelerated alignment \u2014 commercial). All are upstream options that need their own envs (and GPU for the accelerators); the reference-prep bundle gap above stays upstream-equivalent"
     ],
-    "rule_count": 145,
+    "rule_count": 135,
     "tools": [
       "fastqc",
       "trim-galore",
@@ -407,7 +407,7 @@ window.OXO_PIPELINES = [
       "Annotation beyond VEP: snpEff / SnpSift (modules/nf-core/snpeff + snpsift, upstream prepare_snpsift_databases / vcf_annotate_all) and the upstream merge / bcftools annotate (bcfann) options \u2014 not ported; the port annotates every caller VCF with VEP only",
       "Non-default I/O and prep paths not ported: gatk4spark Spark BQSR/ApplyBQSR/MarkDuplicates (modules/nf-core/gatk4spark; subworkflows bam_applybqsr_spark / bam_baserecalibrator_spark / bam_markduplicates_spark), bbsplit/bbmap genomic-contaminant split (fastq_preprocess_gatk), SPRING compressed FASTQ input (samplesheet_to_channel spring_1/spring_2; nf-core/spring), and untar-based reference download in prepare_genome (UNTAR_BBSPLIT_INDEX / UNTAR_CHR_DIR / UNTAR_MSISENSOR2_MODELS) \u2014 the port runs non-Spark GATK4, accepts raw FASTQ.gz, and requires user-provided reference files"
     ],
-    "rule_count": 117,
+    "rule_count": 109,
     "tools": [
       "fastqc",
       "fastp",
@@ -984,7 +984,7 @@ window.OXO_PIPELINES = [
       "seqtk mergepe multi-library lane merge (upstream preprocessing_shortread Run/Lane merging) \u2014 not ported; the port reads_sheet covers one stream per row (see README Multi-library lanes)",
       "BigMAG summary (generate_bigmag_file / prepare_bigmag_summary.py, upstream mag.nf PREPARE_BIGMAG_SUMMARY, default off) \u2014 not ported"
     ],
-    "rule_count": 352,
+    "rule_count": 311,
     "tools": [
       "adapterremoval",
       "ale",
@@ -1145,7 +1145,7 @@ window.OXO_PIPELINES = [
       "PPLACE phylogenetic placement (clustalo / gappa / epa-ng / hmmer / mafft; upstream `fasta_newick_epang_gappa` + `fasta_hmmsearch_rank_fastas` + seqtk) \u2014 not ported; the port has no phylogeny branch (the tree arg is the upstream `none.tree` placeholder)",
       "Kraken2 / VSEARCH / SIDLE / SINTax alternative classification \u2014 upstream `kraken2_taxonomy_wf`, vsearch (cluster + LCA taxonomy), `sidle_wf`, SINTax taxonomy chain \u2014 not ported; each needs its own reference-taxonomy download, env and fixtures"
     ],
-    "rule_count": 54,
+    "rule_count": 49,
     "tools": [
       "fastqc",
       "cutadapt",
@@ -1311,7 +1311,7 @@ window.OXO_PIPELINES = [
       "ucsc_bedgraphtobigwig"
     ],
     "excluded": [],
-    "rule_count": 84,
+    "rule_count": 83,
     "tools": [
       "fastqc",
       "trim-galore",
@@ -1725,7 +1725,7 @@ window.OXO_PIPELINES = [
       "jaffal_ref"
     ],
     "excluded": [],
-    "rule_count": 54,
+    "rule_count": 52,
     "tools": [
       "bambu",
       "bcftools",
@@ -2062,7 +2062,7 @@ window.OXO_PIPELINES = [
       "convertBam (ported as `convert_bam` but a documented dead end: with `bam_input=true` the rule extracts FASTQ while downstream still runs on the fixture FASTQs \u2014 upstream wires convertBam into the preprocessing channels; wiring it needs optional-input semantics, Traitome/oxo-flow#200; see the README fidelity row)",
       "indexinputbam \u2014 upstream indexes the input BAM for BAM pass-through mode (`bam != 'NA' && !run_convertinputbam`, main.nf 657); not ported (the port's BAM-input mode routes through `convert_bam`/bam2fq and nothing downstream consumes the input BAM directly)"
     ],
-    "rule_count": 61,
+    "rule_count": 57,
     "tools": [
       "fastqc",
       "adapterremoval",
@@ -2506,7 +2506,7 @@ window.OXO_PIPELINES = [
       "annotate_umis (upstream mapping.smk:77, UMI branch via umi_tools group; activates for samples with a non-empty `umi_read` column) and splitncigarreads (upstream mapping.smk:173, RNA-datatype branch in get_recalibrate_quality_input) \u2014 not ported; the port models DNA data with the default empty samples columns",
       "upstream testcase.smk debug module (`gather_observations` + `testcase`: varlociraptor call --testcase-prefix/--testcase-locus mode, results/testcases/) \u2014 not ported. (The upstream `bcf_to_vcf_gz`, `vg2svg` and `only_alignment` tools have no consumers/producers in the upstream tree at the pinned tag \u2014 dead tools, intentionally not ported)"
     ],
-    "rule_count": 165,
+    "rule_count": 149,
     "tools": [
       "altair",
       "arriba",
@@ -2698,7 +2698,7 @@ window.OXO_PIPELINES = [
       "parabricks \u2014 every rule runs with --nv GPU passthrough (workflow/rules/parabricks.smk); the oxo-flow docker backend has no --nv support, plus NVIDIA EULA/license cannot be enforced",
       "sentieon \u2014 proprietary SENTIEON_LICENSE server gating (config/config.yaml sentieon section); cannot be distributed or verified"
     ],
-    "rule_count": 89,
+    "rule_count": 74,
     "tools": [
       "fastp",
       "bwa",
@@ -2831,7 +2831,7 @@ window.OXO_PIPELINES = [
       "env_export \u2014 conda env export requires the conda CLI inside the runtime environment and dumps the runtime env state, not the declared pins; exact pins are already declared in envs/*.yaml",
       "report rendering \u2014 upstream renders an HTML report via snakemake's report() wrapping outputs with .rst captions, categories and labels; the captions half is ported as `report` annotations on all 23 wrapped rules (needs engine 0.17.0+, rendered by the rule-captions report section), while the artifact-catalog book form (self-contained HTML, figures embedded, categories/labels) has no oxo-flow equivalent and remains unported"
     ],
-    "rule_count": 48,
+    "rule_count": 42,
     "tools": [
       "gseapy",
       "pandas",
