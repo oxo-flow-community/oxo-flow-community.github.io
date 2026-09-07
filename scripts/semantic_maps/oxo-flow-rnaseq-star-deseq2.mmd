@@ -4,30 +4,44 @@
 %%metro line: se | SE alignment | #F2A93B
 %%metro line: report | Reporting | #F2CF5B
 
+%%metro font_scale: 1.3
+%%metro stroke_scale: 1.6
+%%metro label_angle: 45
+%%metro legend: br
+%%metro grid: Align | 0,0
+%%metro grid: Stats | 1,0
+%%metro grid: Report | 2,0
+
 graph LR
-    get_genome -->|ref| star_index
-    get_annotation -->|ref| star_index
-    get_genome -->|ref| bwa_index
-    get_genome -->|ref| genome_faidx
-    get_annotation -->|ref| rseqc_gtf2bed
-    get_sra -->|pe| fastp_pe
-    fastp_pe -->|pe| star_align
-    star_index -->|pe| star_align
-    get_sra -->|se| fastp_se
-    fastp_se -->|se| star_align_se
-    get_sra -->|se| star_align_se_raw
-    star_index -->|se| star_align_se
-    star_align -->|main| _aligned
-    star_align_raw -->|main| _aligned
-    star_align_se -->|main| _aligned
-    star_align_se_raw -->|main| _aligned
-    _aligned -->|main| count_matrix
-    _aligned -->|main| rseqc_QC
-    _aligned -->|main| multiqc
-    count_matrix -->|main| gene_2_symbol_counts
-    count_matrix -->|main| deseq2_init
-    deseq2_init -->|main| deseq2
-    deseq2_init -->|main| gene_2_symbol_normcounts
-    deseq2_init -->|main| DESeq2_PCA
-    deseq2 -->|main| gene_2_symbol_diffexp
-    rseqc_QC -->|report| multiqc
+    subgraph a [Align]
+            get_genome -->|ref| star_index
+            get_annotation -->|ref| star_index
+            get_genome -->|ref| bwa_index
+            get_genome -->|ref| genome_faidx
+            get_annotation -->|ref| rseqc_gtf2bed
+            get_sra -->|pe| fastp_pe
+            fastp_pe -->|pe| star_align
+            star_index -->|pe| star_align
+            get_sra -->|se| fastp_se
+            fastp_se -->|se| star_align_se
+            get_sra -->|se| star_align_se_raw
+            star_index -->|se| star_align_se
+            star_align -->|main| _aligned
+            star_align_raw -->|main| _aligned
+            star_align_se -->|main| _aligned
+            star_align_se_raw -->|main| _aligned
+            _aligned -->|main| rseqc_QC
+    end
+    subgraph s [Stats]
+            _aligned -->|main| count_matrix
+            count_matrix -->|main| gene_2_symbol_counts
+            count_matrix -->|main| deseq2_init
+            deseq2_init -->|main| deseq2
+            deseq2_init -->|main| gene_2_symbol_normcounts
+            deseq2_init -->|main| DESeq2_PCA
+            deseq2 -->|main| gene_2_symbol_diffexp
+    end
+    subgraph r [Report]
+            _aligned -->|main| multiqc
+            rseqc_QC -->|report| multiqc
+    end
