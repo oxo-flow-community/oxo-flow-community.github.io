@@ -80,11 +80,21 @@ the rating criteria, and how to get a workflow listed.
    records its rating, origin, tools, and pinned versions.
 2. **Read the notes.** Each workflow page documents installation, usage,
    scope, and — for ports — a per-rule fidelity table against the source.
-3. **Copy the command and run.**
+3. **Copy the command and run.** Each workflow page shows the exact command;
+   run it straight from the repository, or from a local clone:
 
     ```bash
-    oxo-flow run main.oxoflow
+    # straight from the repository — no clone or bundle needed
+    oxo-flow run oxo-flow-community/oxo-flow-rnaseq
+
+    # or clone a local copy first (pull keeps the gh: prefix)
+    oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq
+    oxo-flow run oxo-flow-rnaseq/main.oxoflow
     ```
+
+   For `run`, `owner/repository` shorthand works for any public GitHub
+   workflow — the `gh:` prefix is optional and `@ref` pins a tag
+   (`oxo-flow run gh:owner/repository@v1.0.0`).
 
 New to the engine? Start with the
 [oxo-flow documentation](https://github.com/Traitome/oxo-flow), then contribute
