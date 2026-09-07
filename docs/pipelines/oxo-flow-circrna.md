@@ -44,21 +44,16 @@ title: "circRNA detection: four callers with ensemble aggregation"
 </div>
 </details>
 
-
-<div class="ox-tryit">
-<div class="ox-tryit-title">⬡ Try it — clone &amp; run</div>
-<pre class="ox-tryit-cmd" data-copy="git clone https://github.com/oxo-flow-community/oxo-flow-circrna.git &amp;&amp; cd oxo-flow-circrna &amp;&amp; oxo-flow run circrna.oxoflow -j 16">git clone https://github.com/oxo-flow-community/oxo-flow-circrna.git
-cd oxo-flow-circrna
-oxo-flow run circrna.oxoflow -j 16</pre>
-<p class="ox-tryit-note">The repository ships test fixtures (e.g. <code>test/fixtures/generate_fixtures.py</code>, <code>test/fixtures/raw/SAMPLE01_1.fastq.gz</code>, <code>test/fixtures/raw/SAMPLE01_2.fastq.gz</code>, <code>test/fixtures/reference/CIRIquant.yml</code>) — point <code>input</code> at them or use the built-in sample group to <code>dry-run</code> first.</p>
-</div>
-
-
 ## Run it
 
 ```bash
-oxo-flow run circrna.oxoflow -j 16
+oxo-flow run gh:oxo-flow-community/oxo-flow-circrna -j 16
 ```
+
+Runs straight from the catalog — `oxo-flow` checks the repo out under `.oxo-flow/repos/oxo-flow-circrna` and keeps outputs/checkpoints in the current directory, no manual clone. Pin a revision with `gh:oxo-flow-community/oxo-flow-circrna@<branch-or-tag>`.
+
+Preview the plan first: `oxo-flow pull gh:oxo-flow-community/oxo-flow-circrna` fetches the repo, then `oxo-flow dry-run main.oxoflow`.
+
 
 Set `reference_dir` in `circrna.oxoflow` and place FASTQ pairs in `raw/`; indexes and environments build on first run.
 

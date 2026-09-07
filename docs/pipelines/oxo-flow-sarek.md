@@ -47,21 +47,16 @@ title: "WGS/WES germline and somatic variant calling"
 </div>
 </details>
 
-
-<div class="ox-tryit">
-<div class="ox-tryit-title">⬡ Try it — clone &amp; run</div>
-<pre class="ox-tryit-cmd" data-copy="git clone https://github.com/oxo-flow-community/oxo-flow-sarek.git &amp;&amp; cd oxo-flow-sarek &amp;&amp; oxo-flow run main.oxoflow">git clone https://github.com/oxo-flow-community/oxo-flow-sarek.git
-cd oxo-flow-sarek
-oxo-flow run main.oxoflow</pre>
-<p class="ox-tryit-note">The repository ships test fixtures (e.g. <code>test/fixtures/raw/test_R1.fastq.gz</code>, <code>test/fixtures/raw/test_R2.fastq.gz</code>, <code>test/run.sh</code>) — point <code>input</code> at them or use the built-in sample group to <code>dry-run</code> first.</p>
-</div>
-
-
 ## Run it
 
 ```bash
-oxo-flow run main.oxoflow
+oxo-flow run gh:oxo-flow-community/oxo-flow-sarek
 ```
+
+Runs straight from the catalog — `oxo-flow` checks the repo out under `.oxo-flow/repos/oxo-flow-sarek` and keeps outputs/checkpoints in the current directory, no manual clone. Pin a revision with `gh:oxo-flow-community/oxo-flow-sarek@<branch-or-tag>`.
+
+Preview the plan first: `oxo-flow pull gh:oxo-flow-community/oxo-flow-sarek` fetches the repo, then `oxo-flow dry-run main.oxoflow`.
+
 
 Point the `[config]` fasta / bwa_index / dbsnp / known_indels paths at your GRCh38 bundle and place reads as `raw/<sample>_R1.fastq.gz` / `_R2.fastq.gz`; `oxo-flow dry-run main.oxoflow` previews the plan.
 

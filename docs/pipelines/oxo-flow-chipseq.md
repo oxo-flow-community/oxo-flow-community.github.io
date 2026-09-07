@@ -46,21 +46,16 @@ title: "ChIP-seq: peak calling, QC and differential analysis"
 </div>
 </details>
 
-
-<div class="ox-tryit">
-<div class="ox-tryit-title">⬡ Try it — clone &amp; run</div>
-<pre class="ox-tryit-cmd" data-copy="git clone https://github.com/oxo-flow-community/oxo-flow-chipseq.git &amp;&amp; cd oxo-flow-chipseq &amp;&amp; oxo-flow run main.oxoflow">git clone https://github.com/oxo-flow-community/oxo-flow-chipseq.git
-cd oxo-flow-chipseq
-oxo-flow run main.oxoflow</pre>
-<p class="ox-tryit-note">The repository ships test fixtures (e.g. <code>test/fixtures/add_duplicates.py</code>, <code>test/fixtures/generate_fixtures.py</code>, <code>test/fixtures/raw/C1_REP1_R1.fastq.gz</code>, <code>test/fixtures/raw/C1_REP1_R2.fastq.gz</code>) — point <code>input</code> at them or use the built-in sample group to <code>dry-run</code> first.</p>
-</div>
-
-
 ## Run it
 
 ```bash
-oxo-flow run main.oxoflow
+oxo-flow run gh:oxo-flow-community/oxo-flow-chipseq
 ```
+
+Runs straight from the catalog — `oxo-flow` checks the repo out under `.oxo-flow/repos/oxo-flow-chipseq` and keeps outputs/checkpoints in the current directory, no manual clone. Pin a revision with `gh:oxo-flow-community/oxo-flow-chipseq@<branch-or-tag>`.
+
+Preview the plan first: `oxo-flow pull gh:oxo-flow-community/oxo-flow-chipseq` fetches the repo, then `oxo-flow dry-run main.oxoflow`.
+
 
 Runs the default path on the shipped fixtures — about 153 instances (212-rule DAG; 59 rules gated off). Multi-antibody runs: `oxo-flow run main.oxoflow --profile multi_antibody` (consensus chain once per antibody). Preview with `oxo-flow dry-run main.oxoflow`.
 

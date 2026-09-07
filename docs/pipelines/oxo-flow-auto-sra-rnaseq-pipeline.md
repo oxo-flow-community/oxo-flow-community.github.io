@@ -46,21 +46,16 @@ title: "SRA-powered RNA-seq: .sra archives to differential expression"
 </div>
 </details>
 
-
-<div class="ox-tryit">
-<div class="ox-tryit-title">⬡ Try it — clone &amp; run</div>
-<pre class="ox-tryit-cmd" data-copy="git clone https://github.com/oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipeline.git &amp;&amp; cd oxo-flow-auto-sra-rnaseq-pipeline &amp;&amp; oxo-flow run main.oxoflow">git clone https://github.com/oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipeline.git
-cd oxo-flow-auto-sra-rnaseq-pipeline
-oxo-flow run main.oxoflow</pre>
-<p class="ox-tryit-note">The repository ships test fixtures (e.g. <code>test/fixtures/metadata/D21122.txt</code>, <code>test/fixtures/metadata/D21122_6sample.txt</code>, <code>test/fixtures/metadata/D21122_single_example.txt</code>, <code>test/fixtures/metadata/ENCODE_example.txt</code>) — point <code>input</code> at them or use the built-in sample group to <code>dry-run</code> first.</p>
-</div>
-
-
 ## Run it
 
 ```bash
-oxo-flow run main.oxoflow
+oxo-flow run gh:oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipeline
 ```
+
+Runs straight from the catalog — `oxo-flow` checks the repo out under `.oxo-flow/repos/oxo-flow-auto-sra-rnaseq-pipeline` and keeps outputs/checkpoints in the current directory, no manual clone. Pin a revision with `gh:oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipeline@<branch-or-tag>`.
+
+Preview the plan first: `oxo-flow pull gh:oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipeline` fetches the repo, then `oxo-flow dry-run main.oxoflow`.
+
 
 Downloads public data by accessions (network required); `--resume-failed` retries rules after transient download errors.
 

@@ -46,21 +46,16 @@ title: "Genome browser tracks: coverage, gene plots and UCSC hub"
 </div>
 </details>
 
-
-<div class="ox-tryit">
-<div class="ox-tryit-title">⬡ Try it — clone &amp; run</div>
-<pre class="ox-tryit-cmd" data-copy="git clone https://github.com/oxo-flow-community/oxo-flow-genome-tracks.git &amp;&amp; cd oxo-flow-genome-tracks &amp;&amp; oxo-flow run main.oxoflow --samples first:1">git clone https://github.com/oxo-flow-community/oxo-flow-genome-tracks.git
-cd oxo-flow-genome-tracks
-oxo-flow run main.oxoflow --samples first:1</pre>
-<p class="ox-tryit-note">The repository ships test fixtures (e.g. <code>test/fixtures/annotation.csv</code>, <code>test/fixtures/bams/treated/T1.bam</code>, <code>test/fixtures/bams/untreated/S1.bam</code>, <code>test/fixtures/bams/untreated/S2.bam</code>) — point <code>input</code> at them or use the built-in sample group to <code>dry-run</code> first.</p>
-</div>
-
-
 ## Run it
 
 ```bash
-oxo-flow run main.oxoflow --samples first:1
+oxo-flow run gh:oxo-flow-community/oxo-flow-genome-tracks --samples first:1
 ```
+
+Runs straight from the catalog — `oxo-flow` checks the repo out under `.oxo-flow/repos/oxo-flow-genome-tracks` and keeps outputs/checkpoints in the current directory, no manual clone. Pin a revision with `gh:oxo-flow-community/oxo-flow-genome-tracks@<branch-or-tag>`.
+
+Preview the plan first: `oxo-flow pull gh:oxo-flow-community/oxo-flow-genome-tracks` fetches the repo, then `oxo-flow dry-run main.oxoflow`.
+
 
 Lightweight; `--samples first:1` keeps the first run small.
 

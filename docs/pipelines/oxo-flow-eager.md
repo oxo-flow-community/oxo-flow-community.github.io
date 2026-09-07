@@ -48,21 +48,16 @@ title: "Ancient DNA (aDNA): QC, mapping, damage estimation and genotyping"
 </div>
 </details>
 
-
-<div class="ox-tryit">
-<div class="ox-tryit-title">⬡ Try it — clone &amp; run</div>
-<pre class="ox-tryit-cmd" data-copy="git clone https://github.com/oxo-flow-community/oxo-flow-eager.git &amp;&amp; cd oxo-flow-eager &amp;&amp; oxo-flow run main.oxoflow">git clone https://github.com/oxo-flow-community/oxo-flow-eager.git
-cd oxo-flow-eager
-oxo-flow run main.oxoflow</pre>
-<p class="ox-tryit-note">The repository ships test fixtures (e.g. <code>test/fixtures/generate_fixtures.py</code>, <code>test/fixtures/groups.tsv</code>, <code>test/fixtures/raw/S1_R1.fastq.gz</code>, <code>test/fixtures/raw/S1_R2.fastq.gz</code>) — point <code>input</code> at them or use the built-in sample group to <code>dry-run</code> first.</p>
-</div>
-
-
 ## Run it
 
 ```bash
-oxo-flow run main.oxoflow
+oxo-flow run gh:oxo-flow-community/oxo-flow-eager
 ```
+
+Runs straight from the catalog — `oxo-flow` checks the repo out under `.oxo-flow/repos/oxo-flow-eager` and keeps outputs/checkpoints in the current directory, no manual clone. Pin a revision with `gh:oxo-flow-community/oxo-flow-eager@<branch-or-tag>`.
+
+Preview the plan first: `oxo-flow pull gh:oxo-flow-community/oxo-flow-eager` fetches the repo, then `oxo-flow dry-run main.oxoflow`.
+
 
 Needs reference genome and reads — see Requirements.
 

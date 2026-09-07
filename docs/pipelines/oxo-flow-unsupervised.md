@@ -47,21 +47,16 @@ title: "Unsupervised analysis of omics matrices: PCA, UMAP, clustering and valid
 </div>
 </details>
 
-
-<div class="ox-tryit">
-<div class="ox-tryit-title">⬡ Try it — clone &amp; run</div>
-<pre class="ox-tryit-cmd" data-copy="git clone https://github.com/oxo-flow-community/oxo-flow-unsupervised.git &amp;&amp; cd oxo-flow-unsupervised &amp;&amp; oxo-flow run main.oxoflow">git clone https://github.com/oxo-flow-community/oxo-flow-unsupervised.git
-cd oxo-flow-unsupervised
-oxo-flow run main.oxoflow</pre>
-<p class="ox-tryit-note">The repository ships test fixtures (e.g. <code>test/fixtures/digits_data.csv</code>, <code>test/fixtures/digits_labels.csv</code>, <code>test/run.sh</code>) — point <code>input</code> at them or use the built-in sample group to <code>dry-run</code> first.</p>
-</div>
-
-
 ## Run it
 
 ```bash
-oxo-flow run main.oxoflow
+oxo-flow run gh:oxo-flow-community/oxo-flow-unsupervised
 ```
+
+Runs straight from the catalog — `oxo-flow` checks the repo out under `.oxo-flow/repos/oxo-flow-unsupervised` and keeps outputs/checkpoints in the current directory, no manual clone. Pin a revision with `gh:oxo-flow-community/oxo-flow-unsupervised@<branch-or-tag>`.
+
+Preview the plan first: `oxo-flow pull gh:oxo-flow-community/oxo-flow-unsupervised` fetches the repo, then `oxo-flow dry-run main.oxoflow`.
+
 
 Real sklearn `digits` data is committed under `test/fixtures/` — fully runnable out of the box.
 

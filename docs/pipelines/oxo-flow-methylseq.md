@@ -46,21 +46,16 @@ title: "Bisulfite methylation analysis: alignment, methylation calls and QC"
 </div>
 </details>
 
-
-<div class="ox-tryit">
-<div class="ox-tryit-title">⬡ Try it — clone &amp; run</div>
-<pre class="ox-tryit-cmd" data-copy="git clone https://github.com/oxo-flow-community/oxo-flow-methylseq.git &amp;&amp; cd oxo-flow-methylseq &amp;&amp; oxo-flow run main.oxoflow">git clone https://github.com/oxo-flow-community/oxo-flow-methylseq.git
-cd oxo-flow-methylseq
-oxo-flow run main.oxoflow</pre>
-<p class="ox-tryit-note">The repository ships test fixtures (e.g. <code>test/fixtures/metaprobe/meta.tsv</code>, <code>test/fixtures/metaprobe/probe.oxoflow</code>, <code>test/fixtures/raw/S1_R1.fastq.gz</code>, <code>test/fixtures/raw/S1_R2.fastq.gz</code>) — point <code>input</code> at them or use the built-in sample group to <code>dry-run</code> first.</p>
-</div>
-
-
 ## Run it
 
 ```bash
-oxo-flow run main.oxoflow
+oxo-flow run gh:oxo-flow-community/oxo-flow-methylseq
 ```
+
+Runs straight from the catalog — `oxo-flow` checks the repo out under `.oxo-flow/repos/oxo-flow-methylseq` and keeps outputs/checkpoints in the current directory, no manual clone. Pin a revision with `gh:oxo-flow-community/oxo-flow-methylseq@<branch-or-tag>`.
+
+Preview the plan first: `oxo-flow pull gh:oxo-flow-community/oxo-flow-methylseq` fetches the repo, then `oxo-flow dry-run main.oxoflow`.
+
 
 Needs reference genome and reads — see Requirements.
 

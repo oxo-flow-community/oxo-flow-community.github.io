@@ -601,13 +601,10 @@ def make_page(p: dict, configs: dict) -> str:
         "",
         *semantic_card(p),
         "",
-        *try_data_section(p),
-        "",
         "## Run it" if "dry-run" not in p["quickstart"] else "## Preview the plan",
         "",
-        "```bash",
-        p["quickstart"],
-        "```",
+        run_cmd(p),
+        "",
     ]
     if p.get("quickstart_note"):
         parts += ["", p["quickstart_note"]]
@@ -687,53 +684,27 @@ def sem_to_html(md: str) -> str:
     return "\n".join(parts)
 
 
-def staging_repo(name: str):
-    """The pipeline repo that staging derived from (same priority as
-    regen-configs.workflow_file): .git-siblings first, then ./staging."""
-    for d in (ROOT.parent / "staging", ROOT.parent):
-        repo = d / name
-        if repo.is_dir():
-            return repo
-    return None
-
-
-def try_data_section(p: dict) -> list[str]:
-    """Learn-and-do: real commands to clone the repo and inspect its shipped
-    test-data path, plus the workflow's own quickstart. Empty when the repo
-    is not on disk (site stays hermetic)."""
-    repo = staging_repo(p["name"])
-    if repo is None:
-        return []
-    fixtures = sorted(
-        set(f.relative_to(repo).parts[0] and str(f.relative_to(repo)) for f in
-            list(repo.glob("test/**/*")) + list(repo.glob("test/**/*.*")) if f.is_file())
-    )[:4]
-    has_test = bool(fixtures)
-    head = (
-        '<div class="ox-tryit">\n'
-        '<div class="ox-tryit-title">⬡ Try it — clone &amp; run</div>\n'
-        '<pre class="ox-tryit-cmd" data-copy="git clone https://github.com/'
-        f'oxo-flow-community/{_esc(p["name"])}.git &amp;&amp; cd {_esc(p["name"])} '
-        f'&amp;&amp; {_esc(p["quickstart"])}">git clone https://github.com/'
-        f'oxo-flow-community/{_esc(p["name"])}.git\ncd {_esc(p["name"])}\n'
-        f'{_esc(p["quickstart"])}</pre>\n'
-    )
-    if has_test:
-        head += (
-            '<p class="ox-tryit-note">The repository ships test fixtures '
-            "(e.g. <code>" + "</code>, <code>".join(
-                _esc(f) for f in [x for x in fixtures if x.startswith("test/")]
-            ) + "</code>) — point <code>input</code> at them or use the "
-            "built-in sample group to <code>dry-run</code> first.</p>\n"
-        )
-    else:
-        head += (
-            '<p class="ox-tryit-note">Run <code>oxo-flow dry-run '
-            f'{"main.oxoflow" if (repo / "main.oxoflow").is_file() else "*.oxoflow"}'
-            "</code> to preview the plan; the README lists the input "
-            "requirements.</p>\n"
-        )
-    return ["", head + "</div>", ""]
+def run_cmd(p: dict) -> str:
+    """Run-it section: the engine executes a catalog repo directly —
+    `oxo-flow run gh:owner/repo[@ref]` checks the repo out under
+    .oxo-flow/repos/<name> and keeps outputs in the current directory."""
+    name = p["name"]
+    argtail = p.get("quickstart", "oxo-flow run main.oxoflow")[len("oxo-flow run"):].strip()
+    argtail = " ".join(t for t in argtail.split() if not t.endswith(".oxoflow"))
+    cmd = f"oxo-flow run gh:oxo-flow-community/{name}" + (f" {argtail}" if argtail else "")
+    return "\n".join([
+        "```bash",
+        cmd,
+        "```",
+        "",
+        f"Runs straight from the catalog — `oxo-flow` checks the repo out under "
+        f"`.oxo-flow/repos/{name}` and keeps outputs/checkpoints in the current "
+        "directory, no manual clone. Pin a revision with "
+        f"`gh:oxo-flow-community/{name}@<branch-or-tag>`.",
+        "",
+        "Preview the plan first: `oxo-flow pull gh:oxo-flow-community/" + name +
+        "` fetches the repo, then `oxo-flow dry-run main.oxoflow`.",
+    ])
 
 
 def semantic_card(p: dict) -> list[str]:

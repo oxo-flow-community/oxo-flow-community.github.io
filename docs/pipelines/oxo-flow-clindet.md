@@ -51,21 +51,16 @@ title: "Cancer genome & transcriptome analysis (WES/WGS/RNA, single entry): soma
 </div>
 </details>
 
-
-<div class="ox-tryit">
-<div class="ox-tryit-title">⬡ Try it — clone &amp; run</div>
-<pre class="ox-tryit-cmd" data-copy="git clone https://github.com/oxo-flow-community/oxo-flow-clindet.git &amp;&amp; cd oxo-flow-clindet &amp;&amp; oxo-flow run main.oxoflow">git clone https://github.com/oxo-flow-community/oxo-flow-clindet.git
-cd oxo-flow-clindet
-oxo-flow run main.oxoflow</pre>
-<p class="ox-tryit-note">The repository ships test fixtures (e.g. <code>test/extend_fixture_ref.py</code>, <code>test/fixtures/bed/exome_target_hg38_chr21.bed</code>, <code>test/fixtures/bed/exome_target_hg38_chr21.bed.gz</code>, <code>test/fixtures/cnv/ascat_alleles/21.txt</code>) — point <code>input</code> at them or use the built-in sample group to <code>dry-run</code> first.</p>
-</div>
-
-
 ## Run it
 
 ```bash
-oxo-flow run main.oxoflow
+oxo-flow run gh:oxo-flow-community/oxo-flow-clindet
 ```
+
+Runs straight from the catalog — `oxo-flow` checks the repo out under `.oxo-flow/repos/oxo-flow-clindet` and keeps outputs/checkpoints in the current directory, no manual clone. Pin a revision with `gh:oxo-flow-community/oxo-flow-clindet@<branch-or-tag>`.
+
+Preview the plan first: `oxo-flow pull gh:oxo-flow-community/oxo-flow-clindet` fetches the repo, then `oxo-flow dry-run main.oxoflow`.
+
 
 Needs clinical sequencing inputs — see Requirements.
 

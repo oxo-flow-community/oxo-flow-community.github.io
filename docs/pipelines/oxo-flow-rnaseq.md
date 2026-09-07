@@ -48,21 +48,16 @@ title: "RNA-seq: alignment, quantification and QC"
 </div>
 </details>
 
-
-<div class="ox-tryit">
-<div class="ox-tryit-title">⬡ Try it — clone &amp; run</div>
-<pre class="ox-tryit-cmd" data-copy="git clone https://github.com/oxo-flow-community/oxo-flow-rnaseq.git &amp;&amp; cd oxo-flow-rnaseq &amp;&amp; oxo-flow run main.oxoflow">git clone https://github.com/oxo-flow-community/oxo-flow-rnaseq.git
-cd oxo-flow-rnaseq
-oxo-flow run main.oxoflow</pre>
-<p class="ox-tryit-note">The repository ships test fixtures (e.g. <code>test/fixtures/generate_fixtures.py</code>, <code>test/fixtures/raw/S1_R1.fastq.gz</code>, <code>test/fixtures/raw/S1_R2.fastq.gz</code>, <code>test/fixtures/raw/S2_R1.fastq.gz</code>) — point <code>input</code> at them or use the built-in sample group to <code>dry-run</code> first.</p>
-</div>
-
-
 ## Run it
 
 ```bash
-oxo-flow run main.oxoflow
+oxo-flow run gh:oxo-flow-community/oxo-flow-rnaseq
 ```
+
+Runs straight from the catalog — `oxo-flow` checks the repo out under `.oxo-flow/repos/oxo-flow-rnaseq` and keeps outputs/checkpoints in the current directory, no manual clone. Pin a revision with `gh:oxo-flow-community/oxo-flow-rnaseq@<branch-or-tag>`.
+
+Preview the plan first: `oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq` fetches the repo, then `oxo-flow dry-run main.oxoflow`.
+
 
 The default config ships with `test/fixtures/` so the plan previews with no data; a real run needs your reads plus the reference artifacts under Requirements (STAR index, GTF, transcriptome, gene BED, chrom.sizes). Preview first: `oxo-flow dry-run main.oxoflow --samples first:1`.
 

@@ -45,21 +45,16 @@ title: "Pooled CRISPR perturbation analysis with Seurat Mixscape"
 </div>
 </details>
 
-
-<div class="ox-tryit">
-<div class="ox-tryit-title">⬡ Try it — clone &amp; run</div>
-<pre class="ox-tryit-cmd" data-copy="git clone https://github.com/oxo-flow-community/oxo-flow-mixscape.git &amp;&amp; cd oxo-flow-mixscape &amp;&amp; oxo-flow run main.oxoflow">git clone https://github.com/oxo-flow-community/oxo-flow-mixscape.git
-cd oxo-flow-mixscape
-oxo-flow run main.oxoflow</pre>
-<p class="ox-tryit-note">The repository ships test fixtures (e.g. <code>test/fixtures/annotation.csv</code>, <code>test/fixtures/data/S1.rds</code>, <code>test/fixtures/data/S2.rds</code>, <code>test/fixtures/make_fixtures.R</code>) — point <code>input</code> at them or use the built-in sample group to <code>dry-run</code> first.</p>
-</div>
-
-
 ## Run it
 
 ```bash
-oxo-flow run main.oxoflow
+oxo-flow run gh:oxo-flow-community/oxo-flow-mixscape
 ```
+
+Runs straight from the catalog — `oxo-flow` checks the repo out under `.oxo-flow/repos/oxo-flow-mixscape` and keeps outputs/checkpoints in the current directory, no manual clone. Pin a revision with `gh:oxo-flow-community/oxo-flow-mixscape@<branch-or-tag>`.
+
+Preview the plan first: `oxo-flow pull gh:oxo-flow-community/oxo-flow-mixscape` fetches the repo, then `oxo-flow dry-run main.oxoflow`.
+
 
 Point `data_dir=` and `annotation=` at your inputs (see README); the shipped fixtures preview the plan.
 

@@ -1019,12 +1019,22 @@ a.ox-cta:hover {
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 14%, transparent);
   text-decoration: none;
 }
-.ox-btn--run {
-  /* gradient's light end washed out white text (~2.7:1) — solid deep
-     brand ground instead; light: white on deep green, dark: deep on mint */
-  color: var(--on-brand);
-  background: var(--brand-deep);
+/* a.ox-btn--run (element + class) beats .md-typeset a (0-1-1 vs 1-1-1? no:
+   .md-typeset a is 0,1,1 — equal — so later in the file wins; a prefix
+   keeps it unambiguous either way). Explicit per-theme pairs:
+   light = white on deep green, dark = near-black on mint — both > 5:1. */
+.md-typeset a.ox-btn--run {
+  /* Material's .md-typeset a { color: var(--brand) } (0-1-1) ties our
+     specificity and lands after in cascade ordering — text rendered
+     brand-green-on-deep-green (≈1.1:1). !important is the one justified
+     exception: guaranteed pair, both themes > 5:1. */
+  color: #ffffff !important;
+  background: #0a5c47;
   border-color: transparent;
+}
+[data-md-color-scheme="slate"] .md-typeset a.ox-btn--run {
+  color: #052016 !important;
+  background: #2fbf92;
 }
 .ox-btn--run:hover { filter: brightness(1.06); }
 .ox-hero-cmd {
@@ -1208,11 +1218,15 @@ table.ox-params tbody td {
   border-bottom: 1px solid var(--panel-2);
   vertical-align: top;
   line-height: 1.45;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
+table.ox-params code { overflow-wrap: anywhere; }
 table.ox-params tbody tr:last-child td { border-bottom: none; }
 table.ox-params tr:hover td { background: var(--brand-soft); }
 .ox-p-k { white-space: nowrap; }
-.ox-p-d { white-space: nowrap; min-width: 8rem; }
+.ox-p-k code, .ox-p-d code { overflow-wrap: anywhere; }
+.ox-p-d { min-width: 6rem; }
 .ox-p-t { white-space: nowrap; }
 .ox-p-desc { min-width: 22ch; }
 .ox-p-desc .ox-param-usedby,
@@ -1246,49 +1260,4 @@ table.ox-params tr:hover td { background: var(--brand-soft); }
   .ox-p-desc { min-width: 0; }
 }
 
-/* ---- Try-it panel (learn-and-do) ---- */
-.ox-tryit {
-  margin: 0.4rem 0 1.6rem;
-  padding: 0.8rem 0.9rem 0.7rem;
-  background: var(--panel);
-  border: 1px solid var(--edge);
-  border-left: 3px solid var(--cyan);
-  border-radius: 10px;
-  box-shadow: var(--shadow);
-}
-.ox-tryit-title {
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--cyan);
-  margin-bottom: 0.5rem;
-}
-.ox-tryit-cmd {
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.78rem;
-  line-height: 1.55;
-  color: var(--ink);
-  background: var(--cmd-bg);
-  border: 1px solid var(--edge);
-  border-radius: 8px;
-  padding: 0.6rem 0.75rem;
-  margin: 0 0 0.5rem;
-  overflow-x: auto;
-  cursor: pointer;
-  white-space: pre-wrap;
-}
-.ox-tryit-cmd.copying::after,
-.ox-tryit-cmd.copied::after {
-  content: " ✓ copied";
-  color: var(--ok);
-  font-size: 0.72rem;
-  margin-left: 0.5rem;
-}
-.ox-tryit-note {
-  font-size: 0.78rem;
-  color: var(--ink-2);
-  line-height: 1.5;
-  margin: 0;
-}
-.ox-tryit-note code { font-size: 0.72rem; }
+

@@ -46,21 +46,16 @@ title: "Region set and gene set enrichment: LOLA, GREAT, pycisTarget and GSEA"
 </div>
 </details>
 
-
-<div class="ox-tryit">
-<div class="ox-tryit-title">⬡ Try it — clone &amp; run</div>
-<pre class="ox-tryit-cmd" data-copy="git clone https://github.com/oxo-flow-community/oxo-flow-enrichment.git &amp;&amp; cd oxo-flow-enrichment &amp;&amp; oxo-flow run main.oxoflow">git clone https://github.com/oxo-flow-community/oxo-flow-enrichment.git
-cd oxo-flow-enrichment
-oxo-flow run main.oxoflow</pre>
-<p class="ox-tryit-note">The repository ships test fixtures (e.g. <code>test/data/CorcesATAC/Bcell_open_regions.bed</code>, <code>test/data/CorcesATAC/Ery_open_regions.bed</code>, <code>test/data/CorcesATAC/all_regions.bed</code>, <code>test/data/CorcesRNA/Bcell_ranked.csv</code>) — point <code>input</code> at them or use the built-in sample group to <code>dry-run</code> first.</p>
-</div>
-
-
 ## Run it
 
 ```bash
-oxo-flow run main.oxoflow
+oxo-flow run gh:oxo-flow-community/oxo-flow-enrichment
 ```
+
+Runs straight from the catalog — `oxo-flow` checks the repo out under `.oxo-flow/repos/oxo-flow-enrichment` and keeps outputs/checkpoints in the current directory, no manual clone. Pin a revision with `gh:oxo-flow-community/oxo-flow-enrichment@<branch-or-tag>`.
+
+Preview the plan first: `oxo-flow pull gh:oxo-flow-community/oxo-flow-enrichment` fetches the repo, then `oxo-flow dry-run main.oxoflow`.
+
 
 Needs ATAC peak / BAM inputs — see Requirements.
 

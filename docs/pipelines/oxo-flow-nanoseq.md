@@ -51,21 +51,16 @@ title: "Nanopore long-read: demultiplexing, QC and alignment"
 </div>
 </details>
 
-
-<div class="ox-tryit">
-<div class="ox-tryit-title">⬡ Try it — clone &amp; run</div>
-<pre class="ox-tryit-cmd" data-copy="git clone https://github.com/oxo-flow-community/oxo-flow-nanoseq.git &amp;&amp; cd oxo-flow-nanoseq &amp;&amp; oxo-flow run main.oxoflow">git clone https://github.com/oxo-flow-community/oxo-flow-nanoseq.git
-cd oxo-flow-nanoseq
-oxo-flow run main.oxoflow</pre>
-<p class="ox-tryit-note">The repository ships test fixtures (e.g. <code>test/fixtures/generate_fixtures.py</code>, <code>test/fixtures/raw/sample.fastq.gz</code>, <code>test/fixtures/refs/genome.fa</code>, <code>test/fixtures/refs/lambda.fasta.gz</code>) — point <code>input</code> at them or use the built-in sample group to <code>dry-run</code> first.</p>
-</div>
-
-
 ## Run it
 
 ```bash
-oxo-flow run main.oxoflow
+oxo-flow run gh:oxo-flow-community/oxo-flow-nanoseq
 ```
+
+Runs straight from the catalog — `oxo-flow` checks the repo out under `.oxo-flow/repos/oxo-flow-nanoseq` and keeps outputs/checkpoints in the current directory, no manual clone. Pin a revision with `gh:oxo-flow-community/oxo-flow-nanoseq@<branch-or-tag>`.
+
+Preview the plan first: `oxo-flow pull gh:oxo-flow-community/oxo-flow-nanoseq` fetches the repo, then `oxo-flow dry-run main.oxoflow`.
+
 
 Default path is the DNA protocol with all gated branches off (matching upstream); `protocol=cDNA skip_bigwig=true` switches to the transcriptome path (see README).
 

@@ -46,21 +46,16 @@ title: "Paired-end RNA-seq alignment and four-caller alternative-splicing analys
 </div>
 </details>
 
-
-<div class="ox-tryit">
-<div class="ox-tryit-title">⬡ Try it — clone &amp; run</div>
-<pre class="ox-tryit-cmd" data-copy="git clone https://github.com/oxo-flow-community/oxo-flow-tcasia.git &amp;&amp; cd oxo-flow-tcasia &amp;&amp; oxo-flow run main.oxoflow">git clone https://github.com/oxo-flow-community/oxo-flow-tcasia.git
-cd oxo-flow-tcasia
-oxo-flow run main.oxoflow</pre>
-<p class="ox-tryit-note">The repository ships test fixtures (e.g. <code>test/fixtures/raw/sample_01_1.fastq.gz</code>, <code>test/fixtures/raw/sample_01_2.fastq.gz</code>, <code>test/fixtures/raw/sample_02_1.fastq.gz</code>, <code>test/fixtures/raw/sample_02_2.fastq.gz</code>) — point <code>input</code> at them or use the built-in sample group to <code>dry-run</code> first.</p>
-</div>
-
-
 ## Run it
 
 ```bash
-oxo-flow run main.oxoflow
+oxo-flow run gh:oxo-flow-community/oxo-flow-tcasia
 ```
+
+Runs straight from the catalog — `oxo-flow` checks the repo out under `.oxo-flow/repos/oxo-flow-tcasia` and keeps outputs/checkpoints in the current directory, no manual clone. Pin a revision with `gh:oxo-flow-community/oxo-flow-tcasia@<branch-or-tag>`.
+
+Preview the plan first: `oxo-flow pull gh:oxo-flow-community/oxo-flow-tcasia` fetches the repo, then `oxo-flow dry-run main.oxoflow`.
+
 
 Needs raw FASTQs and reference data — see Requirements.
 

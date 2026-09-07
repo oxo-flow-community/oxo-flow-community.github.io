@@ -46,21 +46,16 @@ title: "Variant calling for non-model organisms: trimming, alignment, per-sample
 </div>
 </details>
 
-
-<div class="ox-tryit">
-<div class="ox-tryit-title">⬡ Try it — clone &amp; run</div>
-<pre class="ox-tryit-cmd" data-copy="git clone https://github.com/oxo-flow-community/oxo-flow-snparcher.git &amp;&amp; cd oxo-flow-snparcher &amp;&amp; oxo-flow run main.oxoflow reference_source=/path/to/genome.fa.gz">git clone https://github.com/oxo-flow-community/oxo-flow-snparcher.git
-cd oxo-flow-snparcher
-oxo-flow run main.oxoflow reference_source=/path/to/genome.fa.gz</pre>
-<p class="ox-tryit-note">The repository ships test fixtures (e.g. <code>test/fixtures/raw/sample1_1.fastq.gz</code>, <code>test/fixtures/raw/sample1_2.fastq.gz</code>, <code>test/fixtures/raw/sample2_1.fastq.gz</code>, <code>test/fixtures/raw/sample2_2.fastq.gz</code>) — point <code>input</code> at them or use the built-in sample group to <code>dry-run</code> first.</p>
-</div>
-
-
 ## Run it
 
 ```bash
-oxo-flow run main.oxoflow reference_source=/path/to/genome.fa.gz
+oxo-flow run gh:oxo-flow-community/oxo-flow-snparcher reference_source=/path/to/genome.fa.gz
 ```
+
+Runs straight from the catalog — `oxo-flow` checks the repo out under `.oxo-flow/repos/oxo-flow-snparcher` and keeps outputs/checkpoints in the current directory, no manual clone. Pin a revision with `gh:oxo-flow-community/oxo-flow-snparcher@<branch-or-tag>`.
+
+Preview the plan first: `oxo-flow pull gh:oxo-flow-community/oxo-flow-snparcher` fetches the repo, then `oxo-flow dry-run main.oxoflow`.
+
 
 Set your reference genome as shown; preview with `oxo-flow dry-run main.oxoflow`.
 

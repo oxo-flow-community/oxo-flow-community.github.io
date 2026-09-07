@@ -46,7 +46,8 @@
       : p.engine === "snakemake"
         ? '<span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake</span>'
         : "";
-    const cmd = p.quickstart || "oxo-flow run main.oxoflow";
+    // Catalog cards show the fetch-to-runs path: pull the repo, run from it
+    const cmd = `oxo-flow pull gh:oxo-flow-community/${esc(p.name)}`;
     // Compute badge on its own line — long strings never squeeze the tool chips
     const compute = p.compute
       ? `<div class="compute">⚙ <span title="Peak compute per rule">${esc(p.compute)}</span></div>`
