@@ -515,14 +515,17 @@ def dag_section(p: dict, configs: dict) -> list[str]:
             "### How this semantic view abstracts the rule-level graph",
             "",
             f"The workflow has **{info.get('stations', '?')} rules / {info.get('edges', '?') or '?'} edges**; "
-            f"the semantic drawing shows **{semantic.get('stations', '?')} stops** — grouped stations "
-            f"(e.g. `star_align_raw` rides its `star_align` lane; the 8 `rseqc_*` checks appear as one "
-            f"`rseqc QC` stop; the 3 PCA stops appear as `DESeq2 PCA`) and `_aligned` is a hidden "
-            f"junction (join point, shown without a label), its 4 in-edges and 2 out-edges are all real "
-            f"DAG edges. Every edge of this map is verified to be a real edge of the exact DAG "
-            f"(subset check at generation time); anything condensed is listed in the rule-level detail "
-            f"card below. Not shown here: auxiliary terminals (`bwa_index`, `genome_faidx`) and the "
-            f"individual per-check QC fan-outs.",
+            f"the semantic drawing shows **{semantic.get('stations', '?')} stops on 5 route lines**: "
+            f"one **Main pipeline** line (grey-brown) carries the single shared story along the bottom "
+            f"trunk — all 4 alignment lanes merge at the hidden junction `_aligned` and the count/"
+            f"statistics chain runs on it; the coloured lines are the routes that feed or branch from it "
+            f"(blue Data acquisition, green PE alignment, orange SE alignment, yellow Reporting). Grouped "
+            f"stops: `star_align_raw` and `star_align_se_raw` ride their parent lane; the 8 `rseqc_*` "
+            f"checks appear as one `rseqc QC` stop (each check still a real rule — detail card below); "
+            f"the 3 PCA stops appear as `DESeq2 PCA`. Every drawn edge is a real edge of the engine DAG — "
+            f"the subset property is machine-verified at generation (incl. junction composition), nothing "
+            f"invented. Auxiliary terminals (`bwa_index`, `genome_faidx`) and the per-check QC fan-outs "
+            f"are elided here and shown in the rule-level detail card.",
             "",
             f'<a class="ox-issue-mini" href="https://github.com/oxo-flow-community/'
             f'oxo-flow-community.github.io/issues/new?title=%5Bgraph%5D+{_esc(name)}+semantic+map+'

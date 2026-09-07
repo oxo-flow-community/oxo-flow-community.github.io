@@ -1,41 +1,33 @@
-%%metro title: oxo-flow-rnaseq-star-deseq2 — author-side semantic map
-%%metro subtitle: condensed route drawing; every station & edge is a REAL rule/edge of the engine DAG (subset machine-checked)
-%%metro legend: br
-%%metro line: analysis | Data acquisition | #4C78A8
-%%metro line: trim | Read trimming | #F2A93B
-%%metro line: alignment | Alignment | #54A24B
-%%metro line: reporting | Reporting | #F2CF5B
+%%metro line: main | Main pipeline | #79706E
+%%metro line: ref | Data acquisition | #4C78A8
+%%metro line: pe | PE alignment | #54A24B
+%%metro line: se | SE alignment | #F2A93B
+%%metro line: report | Reporting | #F2CF5B
 
 graph LR
-    get_genome -->|analysis| star_index
-    get_annotation -->|analysis| star_index
-    get_sra -->|analysis| fastp_pe
-    get_sra -->|analysis| fastp_se
-    fastp_pe -->|trim| star_align
-    get_sra -->|trim| star_align_raw
-    fastp_se -->|trim| star_align_se
-    get_sra -->|trim| star_align_se_raw
-    star_index -->|alignment| star_align
-    star_index -->|alignment| star_align_raw
-    star_index -->|alignment| star_align_se
-    star_index -->|alignment| star_align_se_raw
-    get_annotation -->|alignment| star_align
-    get_annotation -->|alignment| star_align_raw
-    get_annotation -->|alignment| star_align_se
-    get_annotation -->|alignment| star_align_se_raw
-    star_align -->|alignment| _aligned
-    star_align_raw -->|alignment| _aligned
-    star_align_se -->|alignment| _aligned
-    star_align_se_raw -->|alignment| _aligned
-    _aligned -->|alignment| count_matrix
-    _aligned -->|reporting| rseqc_QC
-    count_matrix -->|reporting| gene_2_symbol_counts
-    count_matrix -->|reporting| deseq2_init
-    deseq2_init -->|reporting| deseq2
-    deseq2_init -->|reporting| gene_2_symbol_normcounts
-    deseq2_init -->|reporting| DESeq2_PCA
-    deseq2 -->|reporting| gene_2_symbol_diffexp
-    get_annotation -->|alignment| rseqc_gtf2bed
-    rseqc_QC -->|reporting| multiqc
-    get_genome -->|analysis| bwa_index
-    get_genome -->|analysis| genome_faidx
+    get_genome -->|ref| star_index
+    get_annotation -->|ref| star_index
+    get_genome -->|ref| bwa_index
+    get_genome -->|ref| genome_faidx
+    get_annotation -->|ref| rseqc_gtf2bed
+    get_sra -->|pe| fastp_pe
+    fastp_pe -->|pe| star_align
+    star_index -->|pe| star_align
+    get_sra -->|se| fastp_se
+    fastp_se -->|se| star_align_se
+    get_sra -->|se| star_align_se_raw
+    star_index -->|se| star_align_se
+    star_align -->|main| _aligned
+    star_align_raw -->|main| _aligned
+    star_align_se -->|main| _aligned
+    star_align_se_raw -->|main| _aligned
+    _aligned -->|main| count_matrix
+    _aligned -->|main| rseqc_QC
+    _aligned -->|main| multiqc
+    count_matrix -->|main| gene_2_symbol_counts
+    count_matrix -->|main| deseq2_init
+    deseq2_init -->|main| deseq2
+    deseq2_init -->|main| gene_2_symbol_normcounts
+    deseq2_init -->|main| DESeq2_PCA
+    deseq2 -->|main| gene_2_symbol_diffexp
+    rseqc_QC -->|report| multiqc
