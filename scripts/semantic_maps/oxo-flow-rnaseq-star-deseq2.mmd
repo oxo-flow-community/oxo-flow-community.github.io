@@ -20,6 +20,8 @@ graph LR
     get_sra["SRA"] -->|se| fastp_se["fastp\nSE"]
     fastp_se["fastp\nSE"] -->|se| star_align_se["STAR\nSE"]
     get_sra["SRA"] -->|se| star_align_se_raw["STAR\nSE raw"]
+    get_sra["SRA"] -->|pe| star_align_raw["STAR\nPE raw"]
+
     star_index["STAR\nindex"] -->|se| star_align_se["STAR\nSE"]
     star_align["STAR\nPE"] -->|main| _aligned["_aligned"]
     star_align_raw["STAR\nPE raw"] -->|main| _aligned["_aligned"]

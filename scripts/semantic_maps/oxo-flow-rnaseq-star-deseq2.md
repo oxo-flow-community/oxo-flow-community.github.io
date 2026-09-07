@@ -24,3 +24,13 @@
 The `_aligned` junction is a hidden routing point: all four STAR alignment
 lanes converge there, and its in- and out-edges are exactly the real DAG
 edges of those lanes.
+
+## Path-level aggregation (edges elided on the map, all real in the DAG)
+
+- annot feeds all four STAR lanes directly; the map aggregates this to
+  `annot → STAR index` (the reference-prep route the lanes share).
+- STAR index feeds the two raw-read lanes; shown via the shared index hop.
+- rseqc gtf2bed feeds 5 of the 8 rseqc QC checks (junction/infer/innerdis/
+  readdis-related checks); kept as the rseqc QC group, per-check edges are
+  visible in the rule-level detail card.
+- get_sra → STAR PE raw is the raw-read entry for the PE raw lane (added).
