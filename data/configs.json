@@ -4562,6 +4562,8 @@
       "semantic": {
         "file": "oxo-flow-ampliseq-semantic.svg",
         "aspect": 3.91,
+        "tier": "line",
+        "primary": true,
         "stations": 23
       }
     }
@@ -5867,7 +5869,9 @@
       "aspect": 1.51,
       "semantic": {
         "file": "oxo-flow-atacseq-semantic.svg",
-        "aspect": 1.12,
+        "aspect": 1.13,
+        "tier": "tree",
+        "primary": false,
         "stations": 23
       }
     }
@@ -9957,10 +9961,12 @@
       "tier": "spine",
       "stations": 31,
       "is_rule_level": false,
-      "aspect": 3.29,
+      "aspect": 3.55,
       "semantic": {
         "file": "oxo-flow-rnaseq-star-deseq2-semantic.svg",
         "aspect": 1.43,
+        "tier": "line",
+        "primary": true,
         "stations": 23
       }
     }
@@ -13130,7 +13136,7 @@
       "tier": "spine",
       "stations": 61,
       "is_rule_level": false,
-      "aspect": 1.02
+      "aspect": 1.05
     }
   },
   "oxo-flow-circrna": {

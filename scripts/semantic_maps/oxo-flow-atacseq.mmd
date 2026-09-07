@@ -1,5 +1,5 @@
 %%metro line: main | Main pipeline | #79706E
-%%metro line: rep2 | PE track | #F2A93B
+%%metro line: pe | PE track | #F2A93B
 %%metro line: alt | Alt aligners | #54A24B
 %%metro line: ref | References | #4C78A8
 %%metro line: rep | Reporting | #F2CF5B
@@ -11,15 +11,13 @@ graph LR
     trimgalore -->|main| bwa_mem
     bwa_mem -->|main| sort+merge
     sort+merge -->|main| markdup+filter
-    ref -->|ref| mito
     markdup+filter -->|main| peaks
     peaks -->|main| annotate
     peaks -->|main| frip
-    frip -->|rep| qce
+    frip -->|main| qce
     markdup+filter -->|main| cov+bigwig
     cov+bigwig -->|main| plots
     markdup+filter -->|main| fingerprint
-    peaks -->|rep| multiqc
     fastqc -->|rep| multiqc
     trimgalore -->|rep| multiqc
     trimgalore -->|alt| alt_aligners
@@ -30,3 +28,4 @@ graph LR
     peaks -->|main| consensus
     ref -->|ref| qce
     peaks -->|main| qce
+    ref -->|ref| mito

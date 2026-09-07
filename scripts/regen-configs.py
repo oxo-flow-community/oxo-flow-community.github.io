@@ -222,6 +222,11 @@ def render_semantic_map(name: str, nf_metro: str) -> dict | None:
     src = SEMANTIC_DIR / f"{name}.mmd"
     if not src.is_file():
         return None
+    try:
+        tiers = json.loads((SEMANTIC_DIR / "tier.json").read_text())
+    except OSError:
+        tiers = {}
+    tier = tiers.get(name, "tree")  # default: hubbed topologies get module primary
     svg = ROOT / "docs" / "assets" / "dag" / f"{name}-semantic.svg"
     proc = subprocess.run(
         [nf_metro, "render", str(src), "-o", str(svg),
@@ -236,7 +241,8 @@ def render_semantic_map(name: str, nf_metro: str) -> dict | None:
     import re
     m = re.search(r'viewBox="([^"]*)"', svg.read_text())
     w, h = float(m.group(1).split()[2]), float(m.group(1).split()[3])
-    return {"file": f"{name}-semantic.svg", "aspect": round(w / h, 2)}
+    return {"file": f"{name}-semantic.svg", "aspect": round(w / h, 2),
+            "tier": tier, "primary": tier == "line"}
 
 
 

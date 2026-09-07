@@ -1,0 +1,5 @@
+{
+  "oxo-flow-rnaseq-star-deseq2": "line",
+  "oxo-flow-ampliseq": "line",
+  "oxo-flow-atacseq": "tree"
+}

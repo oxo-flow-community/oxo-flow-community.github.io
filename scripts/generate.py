@@ -513,8 +513,10 @@ def dag_section(p: dict, configs: dict) -> list[str]:
         # grouped stations, hidden junction) — every shown station is a real
         # rule and every shown edge a real DAG edge (subset is machine-checked
         # by scripts/semantic_maps/<name>.mmd layout time).
+        sem_primary = bool(semantic.get("primary", True))
+        sem_open = " open" if sem_primary else ""
         cards += [
-            '<details class="ox-flow-view" open>',
+            f'<details class="ox-flow-view"{sem_open}>',
             '<summary>Semantic overview <span class="ox-badge ox-badge--sem">author-side</span></summary>',
             '<div class="ox-dag-card" markdown="1">',
             "",
@@ -570,7 +572,8 @@ def dag_section(p: dict, configs: dict) -> list[str]:
     # rule-level primaries), collapsed behind the open flow views on
     # multi-omics entries.
     has_views = bool(configs.get(name, {}).get("flow_views"))
-    open_mark = " open" if primary_is_rule or not has_views else ""
+    sem_primary_now = bool((info.get("semantic") or {}).get("primary", True))
+    open_mark = " open" if primary_is_rule or not has_views or not sem_primary_now else ""
     wide = " ox-dag-card--wide" if _intrinsic_width(svg) > 1400 else ""
     cards += [
         f'<details class="ox-flow-view"{open_mark}>',
