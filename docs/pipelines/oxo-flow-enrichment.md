@@ -30,6 +30,22 @@ title: "Region set and gene set enrichment: LOLA, GREAT, pycisTarget and GSEA"
 </div>
 </div>
 
+<nav class="ox-tabs" aria-label="Page sections"><a href="#semantic-overview">Introduction</a><a href="#run-it">Usage</a><a href="#parameters">Parameters</a><a href="#workflow-graph">Workflow graph</a><a href="#scope">Scope</a><a href="#fidelity">Fidelity</a></nav>
+
+<details class="ox-flow-view" open id="semantic-overview">
+<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
+<div class="ox-sem-text">
+<p><strong>oxo-flow-enrichment pipeline</strong>: given region-set BED files and ranked gene lists, it runs region-set and gene-set enrichment (LOLA, GREAT, pycisTarget, RcisTarget, GSEApy ORA and preranked GSEA) against curated databases, delivering per-feature-set plots, per-group summaries, and reproducibility exports.</p>
+<p><strong>1. Database preparation</strong> — <code>prepare_databases_Azimuth_2023</code> converts the Azimuth_2023 JSON database to GMT, and <code>prepare_databases_Reactome</code> stages the Reactome pathway GMT; these two feed the GREAT, ORA, and preranked analyses below.</p>
+<p><strong>2. Region enrichment</strong> — <code>region_enrichment_analysis_LOLA</code> tests each region set for overlap enrichment against the LOLACore database, while <code>region_enrichment_analysis_GREAT_Azimuth_2023</code> and <code>region_enrichment_analysis_GREAT_Reactome</code> run rGREAT against both prepared databases. <code>region_gene_association_GREAT</code> maps each region set to its associated genes.</p>
+<p><strong>3. Gene-level analyses</strong> — the GREAT gene mapping feeds <code>gene_ORA_GSEApy_Azimuth_2023</code>, <code>gene_ORA_GSEApy_Reactome</code>, and the TFBS motif analysis <code>gene_motif_enrichment_analysis_RcisTarget</code>; separately, ranked gene lists feed <code>gene_preranked_GSEApy_Azimuth_2023</code> and <code>gene_preranked_GSEApy_Reactome</code> (RNA group). Region-side, <code>region_motif_enrichment_analysis_pycisTarget</code> runs TFBS motif enrichment and <code>process_results_pycisTarget</code> converts it to CSV tables; both motif branches are gated on provided databases.</p>
+<p><strong>4. Per-feature-set plots</strong> — each result CSV is plotted by <code>plot_enrichment_result_LOLA_LOLACore</code>, <code>plot_enrichment_result_GREAT_Azimuth_2023</code>, <code>plot_enrichment_result_GREAT_Reactome</code>, <code>plot_enrichment_result_pycisTarget_hg38_screen_v10clust</code>, <code>plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust</code>, <code>plot_enrichment_result_ORA_GSEApy_Azimuth_2023</code>, <code>plot_enrichment_result_ORA_GSEApy_Reactome</code>, <code>plot_enrichment_result_preranked_GSEApy_Azimuth_2023</code>, or <code>plot_enrichment_result_preranked_GSEApy_Reactome</code>.</p>
+<p><strong>5. Group aggregation and visualization</strong> — in parallel, results consolidate per group (ATAC vs RNA) via aggregate rules such as <code>aggregate_GREAT_Azimuth_2023_ATAC</code> and <code>aggregate_preranked_GSEApy_Reactome_RNA</code>, whose tables drive the matching summary plots (<code>visualize_GREAT_Azimuth_2023_ATAC</code>, <code>visualize_LOLA_LOLACore_ATAC</code>). Independent of the chain, <code>config_export</code> and <code>annot_export</code> copy the effective config and annotation into the results folder for reproducibility.</p>
+<p><em>Verified: every rule name above is a real rule of <code>main.oxoflow</code> (oxo-flow validate); the described order follows the actual rule dependencies.</em></p>
+<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-enrichment+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
+</div>
+</details>
+
 ## Run it
 
 ```bash
@@ -684,28 +700,6 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 ## Workflow graph
 
-<details class="ox-flow-view" open>
-<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
-<div class="ox-sem-text" markdown="1">
-
-**oxo-flow-enrichment pipeline**: given region-set BED files and ranked gene lists, it runs region-set and gene-set enrichment (LOLA, GREAT, pycisTarget, RcisTarget, GSEApy ORA and preranked GSEA) against curated databases, delivering per-feature-set plots, per-group summaries, and reproducibility exports.
-
-**1. Database preparation** — `prepare_databases_Azimuth_2023` converts the Azimuth_2023 JSON database to GMT, and `prepare_databases_Reactome` stages the Reactome pathway GMT; these two feed the GREAT, ORA, and preranked analyses below.
-
-**2. Region enrichment** — `region_enrichment_analysis_LOLA` tests each region set for overlap enrichment against the LOLACore database, while `region_enrichment_analysis_GREAT_Azimuth_2023` and `region_enrichment_analysis_GREAT_Reactome` run rGREAT against both prepared databases. `region_gene_association_GREAT` maps each region set to its associated genes.
-
-**3. Gene-level analyses** — the GREAT gene mapping feeds `gene_ORA_GSEApy_Azimuth_2023`, `gene_ORA_GSEApy_Reactome`, and the TFBS motif analysis `gene_motif_enrichment_analysis_RcisTarget`; separately, ranked gene lists feed `gene_preranked_GSEApy_Azimuth_2023` and `gene_preranked_GSEApy_Reactome` (RNA group). Region-side, `region_motif_enrichment_analysis_pycisTarget` runs TFBS motif enrichment and `process_results_pycisTarget` converts it to CSV tables; both motif branches are gated on provided databases.
-
-**4. Per-feature-set plots** — each result CSV is plotted by `plot_enrichment_result_LOLA_LOLACore`, `plot_enrichment_result_GREAT_Azimuth_2023`, `plot_enrichment_result_GREAT_Reactome`, `plot_enrichment_result_pycisTarget_hg38_screen_v10clust`, `plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust`, `plot_enrichment_result_ORA_GSEApy_Azimuth_2023`, `plot_enrichment_result_ORA_GSEApy_Reactome`, `plot_enrichment_result_preranked_GSEApy_Azimuth_2023`, or `plot_enrichment_result_preranked_GSEApy_Reactome`.
-
-**5. Group aggregation and visualization** — in parallel, results consolidate per group (ATAC vs RNA) via aggregate rules such as `aggregate_GREAT_Azimuth_2023_ATAC` and `aggregate_preranked_GSEApy_Reactome_RNA`, whose tables drive the matching summary plots (`visualize_GREAT_Azimuth_2023_ATAC`, `visualize_LOLA_LOLACore_ATAC`). Independent of the chain, `config_export` and `annot_export` copy the effective config and annotation into the results folder for reproducibility.
-
-*Verified: every rule name above is a real rule of `main.oxoflow` (oxo-flow validate); the described order follows the actual rule dependencies.*
-
-<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-enrichment+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
-
-</div>
-</details>
 <details class="ox-flow-view">
 <summary>Exact rule DAG (multi-route truth — operational view)</summary>
 <div class="ox-dag-card ox-dag-card--wide">

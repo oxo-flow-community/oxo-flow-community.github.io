@@ -1114,8 +1114,10 @@ a.ox-cta:hover {
   text-decoration: none;
 }
 .ox-btn--run {
+  /* gradient's light end washed out white text (~2.7:1) — solid deep
+     brand ground instead; light: white on deep green, dark: deep on mint */
   color: var(--on-brand);
-  background: var(--grad);
+  background: var(--brand-deep);
   border-color: transparent;
 }
 .ox-btn--run:hover { filter: brightness(1.06); }
@@ -1239,4 +1241,36 @@ a.ox-cta:hover {
   background: var(--panel-2);
   border-radius: 999px;
   padding: 0.02rem 0.4rem;
+}
+
+/* ---- Pipeline sub-navigation (genomeqc-style section tabs) ---- */
+.ox-tabs {
+  display: flex;
+  gap: 0.3rem;
+  margin: 0 0 1.4rem;
+  padding: 0.45rem 0.1rem;
+  border-bottom: 1px solid var(--edge);
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+.ox-tabs a {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.72rem;
+  color: var(--muted);
+  padding: 0.3rem 0.62rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+.ox-tabs a:first-child {
+  color: var(--brand);
+  background: var(--brand-soft);
+  border-color: color-mix(in srgb, var(--brand) 30%, transparent);
+}
+.ox-tabs a:hover {
+  color: var(--brand);
+  background: var(--brand-soft);
+  border-color: color-mix(in srgb, var(--brand) 30%, transparent);
+  text-decoration: none;
 }

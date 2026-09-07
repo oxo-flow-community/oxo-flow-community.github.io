@@ -30,6 +30,23 @@ title: "Unsupervised analysis of omics matrices: PCA, UMAP, clustering and valid
 </div>
 </div>
 
+<nav class="ox-tabs" aria-label="Page sections"><a href="#semantic-overview">Introduction</a><a href="#run-it">Usage</a><a href="#parameters">Parameters</a><a href="#workflow-graph">Workflow graph</a><a href="#scope">Scope</a><a href="#fidelity">Fidelity</a></nav>
+
+<details class="ox-flow-view" open id="semantic-overview">
+<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
+<div class="ox-sem-text">
+<p><strong>Unsupervised analysis pipeline</strong>: given a sample-by-features matrix and its annotations, it explores the data through PCA, UMAP/densMAP embeddings, Leiden clustering, clustree trees, hierarchical clustering heatmaps, and cluster validation — delivered as static and interactive plots.</p>
+<p><strong>1. Dimensionality reduction</strong> — <code>pca</code> computes the PCA of the sample matrix and <code>umap_graph</code> builds the kNN graph; everything downstream builds on these roots.</p>
+<p><strong>2. Embedding fan-out</strong> — <code>umap_graph</code> feeds four parallel embeddings: <code>umap_embed_2d</code>, <code>umap_embed_3d</code>, <code>densmap_embed_2d</code>, <code>densmap_embed_3d</code>.</p>
+<p><strong>3. Leiden clustering fan-out</strong> — six configurations run in parallel (<code>leiden_RBConfigurationVertexPartition_0p5</code>, <code>leiden_RBConfigurationVertexPartition_1</code>, <code>leiden_RBConfigurationVertexPartition_1p5</code>, <code>leiden_RBConfigurationVertexPartition_2</code>, <code>leiden_RBConfigurationVertexPartition_4</code>, <code>leiden_ModularityVertexPartition_NA</code>), converge into <code>aggregate_clustering_results</code>, then merge into one table via <code>aggregate_all_clustering_results</code> — the source for every clustering-colored plot and validation.</p>
+<p><strong>4. Clustered heatmaps</strong> — <code>distance_matrix_observations_correlation</code>, <code>distance_matrix_features_correlation</code>, <code>distance_matrix_observations_cosine</code>, <code>distance_matrix_features_cosine</code> converge pairwise into <code>plot_heatmap_correlation</code> and <code>plot_heatmap_cosine</code>; each heatmap needs both matrices.</p>
+<p><strong>5. Validation and clustree</strong> — <code>validation_external</code> and six internal indices (<code>validation_internal_Silhouette</code>, <code>validation_internal_Calinski_Harabasz</code>, <code>validation_internal_Dunn</code>, <code>validation_internal_C_index</code>, <code>validation_internal_Davies_Bouldin</code>, <code>validation_internal_BIC</code>), each combining the aggregated clusterings with <code>pca</code>, converge into <code>aggregate_rank_internal</code> (TOPSIS ranking), rendered by <code>plot_indices_external</code> and <code>plot_indices_internal</code>; <code>clustree_analysis_default</code>, <code>clustree_analysis_custom</code>, and <code>clustree_analysis_metadata</code> render clustree trees.</p>
+<p><strong>6. Scatter and diagnostic plots</strong> — clustering and metadata scatter plots per embedding (<code>plot_dimred_metadata_pca</code>, <code>plot_dimred_clustering_pca</code>, and the umap/densmap equivalents); feature plots and interactive HTML (<code>plot_dimred_features_pca</code>, <code>plot_dimred_interactive_pca_2d</code>) additionally merge <code>prep_feature_plot</code>; <code>plot_pca_diagnostics</code>, <code>plot_umap_diagnostics_umap</code>, <code>plot_umap_connectivity_umap</code> and their densmap counterparts wrap up the reporting.</p>
+<p><em>Verified: every rule name above is a real rule of <code>main.oxoflow</code> (oxo-flow validate); the described order follows the actual rule dependencies.</em></p>
+<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-unsupervised+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
+</div>
+</details>
+
 ## Run it
 
 ```bash
@@ -293,30 +310,6 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 ## Workflow graph
 
-<details class="ox-flow-view" open>
-<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
-<div class="ox-sem-text" markdown="1">
-
-**Unsupervised analysis pipeline**: given a sample-by-features matrix and its annotations, it explores the data through PCA, UMAP/densMAP embeddings, Leiden clustering, clustree trees, hierarchical clustering heatmaps, and cluster validation — delivered as static and interactive plots.
-
-**1. Dimensionality reduction** — `pca` computes the PCA of the sample matrix and `umap_graph` builds the kNN graph; everything downstream builds on these roots.
-
-**2. Embedding fan-out** — `umap_graph` feeds four parallel embeddings: `umap_embed_2d`, `umap_embed_3d`, `densmap_embed_2d`, `densmap_embed_3d`.
-
-**3. Leiden clustering fan-out** — six configurations run in parallel (`leiden_RBConfigurationVertexPartition_0p5`, `leiden_RBConfigurationVertexPartition_1`, `leiden_RBConfigurationVertexPartition_1p5`, `leiden_RBConfigurationVertexPartition_2`, `leiden_RBConfigurationVertexPartition_4`, `leiden_ModularityVertexPartition_NA`), converge into `aggregate_clustering_results`, then merge into one table via `aggregate_all_clustering_results` — the source for every clustering-colored plot and validation.
-
-**4. Clustered heatmaps** — `distance_matrix_observations_correlation`, `distance_matrix_features_correlation`, `distance_matrix_observations_cosine`, `distance_matrix_features_cosine` converge pairwise into `plot_heatmap_correlation` and `plot_heatmap_cosine`; each heatmap needs both matrices.
-
-**5. Validation and clustree** — `validation_external` and six internal indices (`validation_internal_Silhouette`, `validation_internal_Calinski_Harabasz`, `validation_internal_Dunn`, `validation_internal_C_index`, `validation_internal_Davies_Bouldin`, `validation_internal_BIC`), each combining the aggregated clusterings with `pca`, converge into `aggregate_rank_internal` (TOPSIS ranking), rendered by `plot_indices_external` and `plot_indices_internal`; `clustree_analysis_default`, `clustree_analysis_custom`, and `clustree_analysis_metadata` render clustree trees.
-
-**6. Scatter and diagnostic plots** — clustering and metadata scatter plots per embedding (`plot_dimred_metadata_pca`, `plot_dimred_clustering_pca`, and the umap/densmap equivalents); feature plots and interactive HTML (`plot_dimred_features_pca`, `plot_dimred_interactive_pca_2d`) additionally merge `prep_feature_plot`; `plot_pca_diagnostics`, `plot_umap_diagnostics_umap`, `plot_umap_connectivity_umap` and their densmap counterparts wrap up the reporting.
-
-*Verified: every rule name above is a real rule of `main.oxoflow` (oxo-flow validate); the described order follows the actual rule dependencies.*
-
-<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-unsupervised+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
-
-</div>
-</details>
 <details class="ox-flow-view">
 <summary>Exact rule DAG (multi-route truth — operational view)</summary>
 <div class="ox-dag-card ox-dag-card--wide">
@@ -327,7 +320,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card ox-dag-card--wide" markdown="1">
 
-<a href="/assets/dag/oxo-flow-unsupervised.svg?v=0fb776e521" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-unsupervised.svg?v=0fb776e521" alt="oxo-flow-unsupervised pipeline overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-unsupervised.svg?v=036d6a2d2d" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-unsupervised.svg?v=036d6a2d2d" alt="oxo-flow-unsupervised pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-unsupervised — Unsupervised analysis of omics matrices: PCA, UMAP and densMAP embeddings (2D/3D), distance matrices, hierarchical clustering heatmaps, Leiden clustering across partition types and resolutions, clustree analysis, external and internal cluster validation with TOPSIS ranking, static and interactive visualizations, per-feature dimred scatter plots (when-gated), and resolved-environment snapshots.</p>
 

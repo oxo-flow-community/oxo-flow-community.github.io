@@ -30,6 +30,23 @@ title: "Small and structural variant calling with Varlociraptor"
 </div>
 </div>
 
+<nav class="ox-tabs" aria-label="Page sections"><a href="#semantic-overview">Introduction</a><a href="#run-it">Usage</a><a href="#parameters">Parameters</a><a href="#workflow-graph">Workflow graph</a><a href="#scope">Scope</a><a href="#fidelity">Fidelity</a></nav>
+
+<details class="ox-flow-view" open id="semantic-overview">
+<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
+<div class="ox-sem-text">
+<p><strong>VarLociRaptor small-and-structural variant calling</strong>: one tumor sample's reads are pangenome-mapped, candidates called with freebayes and delly, re-filtered by Varlociraptor scenario, FDR-controlled per event type, and delivered as annotated calls plus interactive reports.</p>
+<p><strong>1. Reference and read preparation</strong> — <code>get_genome</code>/<code>get_annotation</code> fetch the genome and annotation, feeding genome indexes (<code>genome_faidx</code>, <code>genome_dict</code>), the pangenome (<code>get_pangenome</code> → <code>pangenome_autoindex</code> → <code>get_reference_paths</code>), VEP cache/plugins (<code>get_vep_cache</code>, <code>get_vep_plugins</code>) and REVEL scores (<code>download_revel</code> → <code>process_revel_scores</code> → <code>tabix_revel</code>). Reads enter alignment through merged trimmed FASTQs (<code>merge_trimmed_fastqs_r1</code>/<code>merge_trimmed_fastqs_r2</code>), with <code>fastp_pe</code>/<code>fastp_se</code>/<code>fastp_pipe</code> trimming optional.</p>
+<p><strong>2. Alignment, BQSR and QC</strong> — <code>map_reads_vg</code> aligns to the pangenome, then <code>postprocess_vg_alignments</code> → <code>sort_alignments</code> → <code>mark_duplicates</code> → <code>bam_index_dedup</code> → <code>recalibrate_base_qualities</code> → <code>apply_bqsr</code> yields the calibrated BAM; <code>multiqc</code> gathers <code>fastqc_r1</code>/<code>fastqc_r2</code>, <code>samtools_stats</code>/<code>samtools_idxstats</code>. A gated consensus branch (<code>calc_consensus_reads</code> → <code>map_consensus_reads_pe</code>/<code>map_consensus_reads_se</code> → <code>apply_bqsr_consensus</code>) reconverges downstream.</p>
+<p><strong>3. Regions and primers</strong> — <code>build_sample_regions</code> computes per-base coverage; <code>merge_expanded_group_regions</code> → <code>filter_group_regions_expanded</code> and <code>merge_covered_group_regions</code> → <code>filter_group_regions_covered</code> restrict candidate calling. The primer chain (<code>map_primers</code> → <code>filter_unmapped_primers</code> → <code>primer_to_bed</code> → <code>build_primer_regions</code> → <code>assign_primers</code> → <code>filter_primerless_reads</code> → <code>trim_primers</code>) filters reads by primer.</p>
+<p><strong>4. Candidates and Varlociraptor</strong> — <code>freebayes</code>/<code>delly</code> call candidates (<code>delly</code> also uses <code>download_delly_excluded_regions</code>); <code>fix_delly_calls</code> cleans delly output; <code>scatter_candidates_freebayes</code>/<code>scatter_candidates_delly</code> split callsets for <code>annotate_candidate_variants_freebayes</code>/<code>annotate_candidate_variants_delly</code> (VEP) and <code>filter_candidates_by_annotation_freebayes</code>/<code>filter_candidates_by_annotation_delly</code>. After <code>varlociraptor_alignment_properties</code>, the <code>varlociraptor_preprocess_freebayes</code>/<code>varlociraptor_preprocess_delly</code> observations feed <code>varlociraptor_call_freebayes</code>/<code>varlociraptor_call_delly</code> under the <code>render_scenario</code> scenario, converging at <code>bcftools_concat</code>.</p>
+<p><strong>5. Annotation, FDR control and reporting</strong> — <code>bcftools_concat</code> output is VEP-annotated (<code>annotate_variants</code> → <code>bcf_index_vep_annotated</code> → <code>annotate_vcfs</code>, optional <code>annotate_dgidb</code>); after <code>filter_by_annotation</code> and <code>gather_calls</code>, per-type FDR control (<code>control_fdr_SNV</code>, <code>control_fdr_INS</code>, <code>control_fdr_DEL</code>, <code>control_fdr_MNV</code>, <code>control_fdr_BND</code>, <code>control_fdr_INV</code>, <code>control_fdr_DUP</code>, <code>control_fdr_REP</code>) leads to <code>merge_calls</code> → <code>convert_phred_scores</code> → <code>vembrane_table</code> → <code>process_call_tables</code>, alongside <code>prepare_oncoprint</code> → <code>datavzrd_variants_calls</code> and <code>bedtools_merge</code> → <code>coverage_table</code> → <code>datavzrd_coverage</code>.</p>
+<p><strong>6. Gated branches</strong> — population-DB filtering (<code>gather_annotated_calls</code>, <code>population_filter_variants</code>), MAF export (<code>group_bcf_to_vcf_variants</code>, <code>group_vcf_to_maf_variants</code>), COSMIC signatures (<code>create_mutational_context_file</code>, <code>annotate_mutational_signatures</code>, <code>plot_mutational_signatures</code>), fusion calling (<code>star_index</code>, <code>star_align</code>, <code>arriba</code>, <code>sort_arriba_calls</code>) and CHM benchmarking (<code>chm_eval</code>).</p>
+<p><em>Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described order follows the actual rule dependencies.</em></p>
+<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-varlociraptor+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
+</div>
+</details>
+
 ## Run it
 
 ```bash
@@ -267,30 +284,6 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 ## Workflow graph
 
-<details class="ox-flow-view" open>
-<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
-<div class="ox-sem-text" markdown="1">
-
-**VarLociRaptor small-and-structural variant calling**: one tumor sample's reads are pangenome-mapped, candidates called with freebayes and delly, re-filtered by Varlociraptor scenario, FDR-controlled per event type, and delivered as annotated calls plus interactive reports.
-
-**1. Reference and read preparation** — `get_genome`/`get_annotation` fetch the genome and annotation, feeding genome indexes (`genome_faidx`, `genome_dict`), the pangenome (`get_pangenome` → `pangenome_autoindex` → `get_reference_paths`), VEP cache/plugins (`get_vep_cache`, `get_vep_plugins`) and REVEL scores (`download_revel` → `process_revel_scores` → `tabix_revel`). Reads enter alignment through merged trimmed FASTQs (`merge_trimmed_fastqs_r1`/`merge_trimmed_fastqs_r2`), with `fastp_pe`/`fastp_se`/`fastp_pipe` trimming optional.
-
-**2. Alignment, BQSR and QC** — `map_reads_vg` aligns to the pangenome, then `postprocess_vg_alignments` → `sort_alignments` → `mark_duplicates` → `bam_index_dedup` → `recalibrate_base_qualities` → `apply_bqsr` yields the calibrated BAM; `multiqc` gathers `fastqc_r1`/`fastqc_r2`, `samtools_stats`/`samtools_idxstats`. A gated consensus branch (`calc_consensus_reads` → `map_consensus_reads_pe`/`map_consensus_reads_se` → `apply_bqsr_consensus`) reconverges downstream.
-
-**3. Regions and primers** — `build_sample_regions` computes per-base coverage; `merge_expanded_group_regions` → `filter_group_regions_expanded` and `merge_covered_group_regions` → `filter_group_regions_covered` restrict candidate calling. The primer chain (`map_primers` → `filter_unmapped_primers` → `primer_to_bed` → `build_primer_regions` → `assign_primers` → `filter_primerless_reads` → `trim_primers`) filters reads by primer.
-
-**4. Candidates and Varlociraptor** — `freebayes`/`delly` call candidates (`delly` also uses `download_delly_excluded_regions`); `fix_delly_calls` cleans delly output; `scatter_candidates_freebayes`/`scatter_candidates_delly` split callsets for `annotate_candidate_variants_freebayes`/`annotate_candidate_variants_delly` (VEP) and `filter_candidates_by_annotation_freebayes`/`filter_candidates_by_annotation_delly`. After `varlociraptor_alignment_properties`, the `varlociraptor_preprocess_freebayes`/`varlociraptor_preprocess_delly` observations feed `varlociraptor_call_freebayes`/`varlociraptor_call_delly` under the `render_scenario` scenario, converging at `bcftools_concat`.
-
-**5. Annotation, FDR control and reporting** — `bcftools_concat` output is VEP-annotated (`annotate_variants` → `bcf_index_vep_annotated` → `annotate_vcfs`, optional `annotate_dgidb`); after `filter_by_annotation` and `gather_calls`, per-type FDR control (`control_fdr_SNV`, `control_fdr_INS`, `control_fdr_DEL`, `control_fdr_MNV`, `control_fdr_BND`, `control_fdr_INV`, `control_fdr_DUP`, `control_fdr_REP`) leads to `merge_calls` → `convert_phred_scores` → `vembrane_table` → `process_call_tables`, alongside `prepare_oncoprint` → `datavzrd_variants_calls` and `bedtools_merge` → `coverage_table` → `datavzrd_coverage`.
-
-**6. Gated branches** — population-DB filtering (`gather_annotated_calls`, `population_filter_variants`), MAF export (`group_bcf_to_vcf_variants`, `group_vcf_to_maf_variants`), COSMIC signatures (`create_mutational_context_file`, `annotate_mutational_signatures`, `plot_mutational_signatures`), fusion calling (`star_index`, `star_align`, `arriba`, `sort_arriba_calls`) and CHM benchmarking (`chm_eval`).
-
-*Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described order follows the actual rule dependencies.*
-
-<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-varlociraptor+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
-
-</div>
-</details>
 <details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card ox-dag-card--wide" markdown="1">

@@ -30,6 +30,20 @@ title: "circRNA detection: four callers with ensemble aggregation"
 </div>
 </div>
 
+<nav class="ox-tabs" aria-label="Page sections"><a href="#semantic-overview">Introduction</a><a href="#run-it">Usage</a><a href="#parameters">Parameters</a><a href="#workflow-graph">Workflow graph</a><a href="#scope">Scope</a></nav>
+
+<details class="ox-flow-view" open id="semantic-overview">
+<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
+<div class="ox-sem-text">
+<p><strong>circRNA detection pipeline</strong>: given paired-end FASTQ reads and a reference genome, it trims and QC-checks the reads, detects circular RNAs with four complementary callers running in parallel, merges their calls, and delivers an across-sample circRNA table plus an HTML report.</p>
+<p><strong>1. Read QC and trimming</strong> — <code>fastp</code> is the entry point: it trims adapters and low-quality tails from raw paired-end reads and emits trimmed FASTQ plus per-sample fastp JSON/HTML reports. <code>multiqc</code> consumes those JSONs and aggregates them into one MultiQC HTML report.</p>
+<p><strong>2. Parallel detection (four complementary callers)</strong> — trimmed reads fan out to four independently running methods: <code>ciriquant</code> (CIRIquant, BWA/HISAT2 alignment-based), <code>circexplorer2</code> (CIRCexplorer2, BWA unmapped-junction based), <code>find_circ</code> (bowtie2 anchor based), and <code>circrna_finder</code> (circRNA_finder, STAR chimeric-read based). Each writes a per-sample BED of candidate circRNAs.</p>
+<p><strong>3. Aggregation and reporting</strong> — <code>aggregate</code> merges the four BEDs per sample, tolerating a missing caller (at least 2 of the 4 methods are required) and writing results/{sample}.aggr.txt. From the same aggregate two steps diverge in parallel: <code>aggregate_dataset</code> pools all per-sample aggregates into one dataset table, while <code>report</code> renders the circRNA HTML report.</p>
+<p><em>Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described order follows the actual rule dependencies.</em></p>
+<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-circrna+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
+</div>
+</details>
+
 ## Run it
 
 ```bash
@@ -84,24 +98,6 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 ## Workflow graph
 
-<details class="ox-flow-view" open>
-<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
-<div class="ox-sem-text" markdown="1">
-
-**circRNA detection pipeline**: given paired-end FASTQ reads and a reference genome, it trims and QC-checks the reads, detects circular RNAs with four complementary callers running in parallel, merges their calls, and delivers an across-sample circRNA table plus an HTML report.
-
-**1. Read QC and trimming** — `fastp` is the entry point: it trims adapters and low-quality tails from raw paired-end reads and emits trimmed FASTQ plus per-sample fastp JSON/HTML reports. `multiqc` consumes those JSONs and aggregates them into one MultiQC HTML report.
-
-**2. Parallel detection (four complementary callers)** — trimmed reads fan out to four independently running methods: `ciriquant` (CIRIquant, BWA/HISAT2 alignment-based), `circexplorer2` (CIRCexplorer2, BWA unmapped-junction based), `find_circ` (bowtie2 anchor based), and `circrna_finder` (circRNA_finder, STAR chimeric-read based). Each writes a per-sample BED of candidate circRNAs.
-
-**3. Aggregation and reporting** — `aggregate` merges the four BEDs per sample, tolerating a missing caller (at least 2 of the 4 methods are required) and writing results/{sample}.aggr.txt. From the same aggregate two steps diverge in parallel: `aggregate_dataset` pools all per-sample aggregates into one dataset table, while `report` renders the circRNA HTML report.
-
-*Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described order follows the actual rule dependencies.*
-
-<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-circrna+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
-
-</div>
-</details>
 <details class="ox-flow-view">
 <summary>Exact rule DAG (multi-route truth — operational view)</summary>
 <div class="ox-dag-card">

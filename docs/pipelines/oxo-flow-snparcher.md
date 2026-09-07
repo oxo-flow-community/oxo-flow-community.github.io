@@ -30,6 +30,22 @@ title: "Variant calling for non-model organisms: trimming, alignment, per-sample
 </div>
 </div>
 
+<nav class="ox-tabs" aria-label="Page sections"><a href="#semantic-overview">Introduction</a><a href="#run-it">Usage</a><a href="#parameters">Parameters</a><a href="#workflow-graph">Workflow graph</a><a href="#scope">Scope</a><a href="#fidelity">Fidelity</a></nav>
+
+<details class="ox-flow-view" open id="semantic-overview">
+<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
+<div class="ox-sem-text">
+<p><strong>snpArcher pipeline</strong>: variant calling for non-model organisms — trims reads, aligns, calls per-sample gVCFs, and optionally joint-genotypes, filters, and runs population QC.</p>
+<p><strong>1. Reference preparation</strong> — <code>prepare_reference</code> bgzip-compresses the reference FASTA; <code>index_reference</code> builds the samtools and BWA indexes nearly every later step consumes.</p>
+<p><strong>2. Read trimming and alignment</strong> — local FASTQ pairs are trimmed by <code>fastp</code>; SRA cohorts instead run <code>download_sra</code> -&gt; <code>fastp_srr</code>. Both feed <code>bwa_mem</code>, then <code>merge_library_bams</code> merges per-library BAMs. The final BAM is <code>merge_library_level_bams</code> + <code>index_bam_csi</code> (default) or, with duplicate marking, <code>markdup_library</code> -&gt; <code>merge_dedup_libraries</code> + <code>index_bam_csi_markdup</code>; external BAMs enter at <code>stage_external_bam</code> + <code>index_bam_csi_external</code>.</p>
+<p><strong>3. Per-sample variant calling</strong> — <code>gatk_haplotypecaller</code> (with <code>gatk_haplotypecaller_markdup</code> and <code>gatk_haplotypecaller_external</code>) emits one gVCF per sample, as do the <code>deepvariant_call</code> variants. The bcftools route is <code>bcftools_regions</code> -&gt; <code>bcftools_call</code> -&gt; <code>bcftools_concat_regions</code>; GATK interval scatter runs <code>picard_intervals</code> -&gt; <code>filter_picard_intervals</code> -&gt; <code>create_gvcf_intervals</code> -&gt; <code>gatk_haplotypecaller_interval</code> -&gt; <code>concat_interval_gvcfs</code>. One route runs per cohort, chosen by configuration and input type.</p>
+<p><strong>4. Joint genotyping</strong> — <code>create_db_mapfile</code> -&gt; <code>joint_genomics_db_import</code> -&gt; <code>joint_genotype_gvcfs</code> genotypes the cohort (interval mode: <code>create_db_intervals</code> -&gt; <code>gatk_genomics_db_import_interval</code> -&gt; <code>gatk_genotype_gvcfs_interval</code> -&gt; <code>concat_interval_vcfs</code>); DeepVariant gVCFs instead go through <code>glnexus_joint</code>, and external gVCFs are normalized by <code>normalize_external_gvcf_for_gatk</code>. All routes converge on the joint raw VCF, which <code>variant_filtration</code> hard-filters when enabled.</p>
+<p><strong>5. QC, callable sites, and final modules</strong> — <code>collect_fastp_stats</code> and <code>bam_stats</code> (with <code>bam_stats_markdup</code> and <code>bam_stats_external</code>) feed <code>parse_bam_stats</code> -&gt; <code>combine_qc_metrics</code>; callable sites flow <code>mosdepth</code> -&gt; <code>clam_collect</code>/<code>callable_coverage_thresholds</code> -&gt; <code>clam_loci</code> -&gt; <code>coverage_bed</code> and <code>genmap_index</code> -&gt; <code>genmap_mappability</code> -&gt; <code>mappability_bed</code>, merged by <code>callable_sites_bed</code>. The postprocess chain (<code>postprocess_basic_filter</code> -&gt; <code>postprocess_strict_filter</code> -&gt; <code>postprocess_subset_indels</code>/<code>postprocess_subset_snps</code> -&gt; <code>postprocess_drop_indel_snps</code>) and the QC module (<code>qc_subsample_snps</code> -&gt; <code>qc_prepare_plink_inputs</code> -&gt; <code>qc_plink</code> -&gt; <code>qc_setup_admixture</code> -&gt; <code>qc_admixture</code>) converge on <code>qc_dashboard</code>.</p>
+<p><em>Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described order follows the actual rule dependencies.</em></p>
+<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-snparcher+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
+</div>
+</details>
+
 ## Run it
 
 ```bash
@@ -357,28 +373,6 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 ## Workflow graph
 
-<details class="ox-flow-view" open>
-<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
-<div class="ox-sem-text" markdown="1">
-
-**snpArcher pipeline**: variant calling for non-model organisms — trims reads, aligns, calls per-sample gVCFs, and optionally joint-genotypes, filters, and runs population QC.
-
-**1. Reference preparation** — `prepare_reference` bgzip-compresses the reference FASTA; `index_reference` builds the samtools and BWA indexes nearly every later step consumes.
-
-**2. Read trimming and alignment** — local FASTQ pairs are trimmed by `fastp`; SRA cohorts instead run `download_sra` -> `fastp_srr`. Both feed `bwa_mem`, then `merge_library_bams` merges per-library BAMs. The final BAM is `merge_library_level_bams` + `index_bam_csi` (default) or, with duplicate marking, `markdup_library` -> `merge_dedup_libraries` + `index_bam_csi_markdup`; external BAMs enter at `stage_external_bam` + `index_bam_csi_external`.
-
-**3. Per-sample variant calling** — `gatk_haplotypecaller` (with `gatk_haplotypecaller_markdup` and `gatk_haplotypecaller_external`) emits one gVCF per sample, as do the `deepvariant_call` variants. The bcftools route is `bcftools_regions` -> `bcftools_call` -> `bcftools_concat_regions`; GATK interval scatter runs `picard_intervals` -> `filter_picard_intervals` -> `create_gvcf_intervals` -> `gatk_haplotypecaller_interval` -> `concat_interval_gvcfs`. One route runs per cohort, chosen by configuration and input type.
-
-**4. Joint genotyping** — `create_db_mapfile` -> `joint_genomics_db_import` -> `joint_genotype_gvcfs` genotypes the cohort (interval mode: `create_db_intervals` -> `gatk_genomics_db_import_interval` -> `gatk_genotype_gvcfs_interval` -> `concat_interval_vcfs`); DeepVariant gVCFs instead go through `glnexus_joint`, and external gVCFs are normalized by `normalize_external_gvcf_for_gatk`. All routes converge on the joint raw VCF, which `variant_filtration` hard-filters when enabled.
-
-**5. QC, callable sites, and final modules** — `collect_fastp_stats` and `bam_stats` (with `bam_stats_markdup` and `bam_stats_external`) feed `parse_bam_stats` -> `combine_qc_metrics`; callable sites flow `mosdepth` -> `clam_collect`/`callable_coverage_thresholds` -> `clam_loci` -> `coverage_bed` and `genmap_index` -> `genmap_mappability` -> `mappability_bed`, merged by `callable_sites_bed`. The postprocess chain (`postprocess_basic_filter` -> `postprocess_strict_filter` -> `postprocess_subset_indels`/`postprocess_subset_snps` -> `postprocess_drop_indel_snps`) and the QC module (`qc_subsample_snps` -> `qc_prepare_plink_inputs` -> `qc_plink` -> `qc_setup_admixture` -> `qc_admixture`) converge on `qc_dashboard`.
-
-*Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described order follows the actual rule dependencies.*
-
-<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-snparcher+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
-
-</div>
-</details>
 <details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">

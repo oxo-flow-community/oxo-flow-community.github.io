@@ -30,6 +30,22 @@ title: "SRA-powered RNA-seq: .sra archives to differential expression"
 </div>
 </div>
 
+<nav class="ox-tabs" aria-label="Page sections"><a href="#semantic-overview">Introduction</a><a href="#run-it">Usage</a><a href="#parameters">Parameters</a><a href="#workflow-graph">Workflow graph</a><a href="#scope">Scope</a><a href="#fidelity">Fidelity</a></nav>
+
+<details class="ox-flow-view" open id="semantic-overview">
+<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
+<div class="ox-sem-text">
+<p><strong>SRA-powered RNA-seq pipeline</strong>: given locally downloaded .sra archives and a metadata sheet, it converts archives to FASTQ, trims with fastp, aligns with STAR while counting per-gene reads, builds normalized bigWig signal tracks, and runs DESeq2 differential expression with ashr shrinkage.</p>
+<p><strong>1. Archive handoff</strong> — <code>get_sra</code> verifies the locally downloaded archives and symlinks each into sra/&lt;SRR&gt;/&lt;SRR&gt;.sra; <code>sra_dump</code> converts every sample's archives to FASTQ with fasterq-dump.</p>
+<p><strong>2. Per-sample merge (PE vs SE route)</strong> — from the dumped FASTQs, <code>merge_R1_data</code> and <code>merge_R2_data</code> concatenate all SRR runs of a sample into one R1/R2 pair, while <code>merge_data</code> concatenates the single-end reads instead; each sample takes one route according to its paired metadata.</p>
+<p><strong>3. Trim, align, count</strong> — paired reads pass through <code>data_clean_pair</code> (fastp) into <code>align_and_count</code> (STAR with GeneCounts quanting, yielding a sorted BAM and a per-gene ReadsPerGene table); single-end reads go through <code>data_clean_single</code> and <code>align_and_count_single</code>. Only one of these routes runs per sample.</p>
+<p><strong>4. Index and signal tracks</strong> — both alignment routes converge here: <code>build_bam_index</code> indexes each BAM with samtools, and <code>bamtobw</code> uses bamCoverage to emit BPM-normalized bigWig tracks from the BAM plus its index.</p>
+<p><strong>5. Count matrix and differential expression</strong> — <code>combine_count</code> merges all per-sample ReadsPerGene tables into one count matrix; <code>DGE_analysis</code> runs DESeq2 with ashr shrinkage to output the final R object, then cleans up the alignment directory and optionally emails results.</p>
+<p><em>Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described order follows the actual rule dependencies.</em></p>
+<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-auto-sra-rnaseq-pipeline+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
+</div>
+</details>
+
 ## Run it
 
 ```bash
@@ -177,28 +193,6 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 ## Workflow graph
 
-<details class="ox-flow-view" open>
-<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
-<div class="ox-sem-text" markdown="1">
-
-**SRA-powered RNA-seq pipeline**: given locally downloaded .sra archives and a metadata sheet, it converts archives to FASTQ, trims with fastp, aligns with STAR while counting per-gene reads, builds normalized bigWig signal tracks, and runs DESeq2 differential expression with ashr shrinkage.
-
-**1. Archive handoff** — `get_sra` verifies the locally downloaded archives and symlinks each into sra/<SRR>/<SRR>.sra; `sra_dump` converts every sample's archives to FASTQ with fasterq-dump.
-
-**2. Per-sample merge (PE vs SE route)** — from the dumped FASTQs, `merge_R1_data` and `merge_R2_data` concatenate all SRR runs of a sample into one R1/R2 pair, while `merge_data` concatenates the single-end reads instead; each sample takes one route according to its paired metadata.
-
-**3. Trim, align, count** — paired reads pass through `data_clean_pair` (fastp) into `align_and_count` (STAR with GeneCounts quanting, yielding a sorted BAM and a per-gene ReadsPerGene table); single-end reads go through `data_clean_single` and `align_and_count_single`. Only one of these routes runs per sample.
-
-**4. Index and signal tracks** — both alignment routes converge here: `build_bam_index` indexes each BAM with samtools, and `bamtobw` uses bamCoverage to emit BPM-normalized bigWig tracks from the BAM plus its index.
-
-**5. Count matrix and differential expression** — `combine_count` merges all per-sample ReadsPerGene tables into one count matrix; `DGE_analysis` runs DESeq2 with ashr shrinkage to output the final R object, then cleans up the alignment directory and optionally emails results.
-
-*Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described order follows the actual rule dependencies.*
-
-<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-auto-sra-rnaseq-pipeline+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
-
-</div>
-</details>
 <details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">

@@ -30,6 +30,22 @@ title: "Single-cell RNA-seq: alignment, quantification and QC"
 </div>
 </div>
 
+<nav class="ox-tabs" aria-label="Page sections"><a href="#semantic-overview">Introduction</a><a href="#run-it">Usage</a><a href="#parameters">Parameters</a><a href="#workflow-graph">Workflow graph</a><a href="#scope">Scope</a><a href="#fidelity">Fidelity</a></nav>
+
+<details class="ox-flow-view" open id="semantic-overview">
+<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
+<div class="ox-sem-text">
+<p><strong>Single-cell RNA-seq pipeline</strong> (port of nf-core/scrnaseq): raw 10x-style FASTQs plus a reference genome and annotation go through one of several aligner routes into per-sample and combined matrices, cleaned of ambient RNA by CellBender.</p>
+<p><strong>1. Reference preparation</strong> — <code>gunzip_fasta</code> and <code>gunzip_gtf</code> decompress the (optionally gzipped) genome and annotation; their outputs converge in <code>gtf_gene_filter</code>, which keeps only annotations present in the genome FASTA, followed by the opt-in <code>gtf_source_fix</code> rewriting for Cell Ranger.</p>
+<p><strong>2. Indexing and quantification (one exclusive route per run)</strong> — Cell Ranger: <code>cellranger_mkgtf</code> → <code>cellranger_mkref</code> → <code>cellranger_count</code>, or, when the multi branch is on, <code>cellranger_mkvdjref</code> → <code>cellranger_multi</code>; cellranger-arc: <code>cellrangerarc_mkgtf</code> → <code>cellrangerarc_mkref</code> → <code>cellrangerarc_count</code>; simpleaf: <code>simpleaf_index</code> → <code>simpleaf_quant</code> → <code>qcatch</code>; kallisto|bustools: <code>kallistobustools_ref_standard</code> or <code>kallistobustools_ref_velocity</code> → <code>kallistobustools_count</code>; STARsolo: <code>star_genomegenerate</code> (or the legacy-index <code>star_genomeparams_upgrade</code>) → <code>star_align</code>.</p>
+<p><strong>3. Matrix conversion</strong> — whichever route ran, its raw and filtered outputs become per-sample h5ads: <code>mtx_to_h5ad_raw</code> and <code>mtx_to_h5ad_filtered</code> (Cell Ranger count, cellranger-arc), <code>mtx_to_h5ad_multi_raw</code> and <code>mtx_to_h5ad_multi_filtered</code>, <code>mtx_to_h5ad_simpleaf</code>, <code>mtx_to_h5ad_kallisto_raw</code> and <code>mtx_to_h5ad_kallisto_filtered</code>, <code>mtx_to_h5ad_star_raw</code> and <code>mtx_to_h5ad_star_filtered</code>.</p>
+<p><strong>4. CellBender, merge, R objects</strong> — <code>cellbender_removebackground</code> strips ambient RNA from raw matrices (never for cellrangerarc); <code>anndata_barcodes</code> subsets them to the surviving barcodes; <code>concat_h5ad_filtered</code>, <code>concat_h5ad_cellbender_filter</code> and <code>concat_h5ad_raw</code> merge each input type across samples; the anndataR rules convert per-sample and combined h5ads to Seurat and SingleCellExperiment RDS.</p>
+<p><strong>5. Reporting</strong> — <code>fastqc</code> reports (skipped for cellrangerarc), plus <code>collect_versions</code>, <code>workflow_summary</code> and <code>methods_description</code>, all feed <code>multiqc</code> for the final aggregate report.</p>
+<p><em>Verified: every rule name above is a real rule of <code>main.oxoflow</code> (oxo-flow validate); the described order follows the actual rule dependencies.</em></p>
+<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-scrnaseq+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
+</div>
+</details>
+
 ## Run it
 
 ```bash
@@ -452,32 +468,10 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 ## Workflow graph
 
-<details class="ox-flow-view" open>
-<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
-<div class="ox-sem-text" markdown="1">
-
-**Single-cell RNA-seq pipeline** (port of nf-core/scrnaseq): raw 10x-style FASTQs plus a reference genome and annotation go through one of several aligner routes into per-sample and combined matrices, cleaned of ambient RNA by CellBender.
-
-**1. Reference preparation** — `gunzip_fasta` and `gunzip_gtf` decompress the (optionally gzipped) genome and annotation; their outputs converge in `gtf_gene_filter`, which keeps only annotations present in the genome FASTA, followed by the opt-in `gtf_source_fix` rewriting for Cell Ranger.
-
-**2. Indexing and quantification (one exclusive route per run)** — Cell Ranger: `cellranger_mkgtf` → `cellranger_mkref` → `cellranger_count`, or, when the multi branch is on, `cellranger_mkvdjref` → `cellranger_multi`; cellranger-arc: `cellrangerarc_mkgtf` → `cellrangerarc_mkref` → `cellrangerarc_count`; simpleaf: `simpleaf_index` → `simpleaf_quant` → `qcatch`; kallisto|bustools: `kallistobustools_ref_standard` or `kallistobustools_ref_velocity` → `kallistobustools_count`; STARsolo: `star_genomegenerate` (or the legacy-index `star_genomeparams_upgrade`) → `star_align`.
-
-**3. Matrix conversion** — whichever route ran, its raw and filtered outputs become per-sample h5ads: `mtx_to_h5ad_raw` and `mtx_to_h5ad_filtered` (Cell Ranger count, cellranger-arc), `mtx_to_h5ad_multi_raw` and `mtx_to_h5ad_multi_filtered`, `mtx_to_h5ad_simpleaf`, `mtx_to_h5ad_kallisto_raw` and `mtx_to_h5ad_kallisto_filtered`, `mtx_to_h5ad_star_raw` and `mtx_to_h5ad_star_filtered`.
-
-**4. CellBender, merge, R objects** — `cellbender_removebackground` strips ambient RNA from raw matrices (never for cellrangerarc); `anndata_barcodes` subsets them to the surviving barcodes; `concat_h5ad_filtered`, `concat_h5ad_cellbender_filter` and `concat_h5ad_raw` merge each input type across samples; the anndataR rules convert per-sample and combined h5ads to Seurat and SingleCellExperiment RDS.
-
-**5. Reporting** — `fastqc` reports (skipped for cellrangerarc), plus `collect_versions`, `workflow_summary` and `methods_description`, all feed `multiqc` for the final aggregate report.
-
-*Verified: every rule name above is a real rule of `main.oxoflow` (oxo-flow validate); the described order follows the actual rule dependencies.*
-
-<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-scrnaseq+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
-
-</div>
-</details>
 <details class="ox-flow-view">
 <summary>Exact rule DAG (multi-route truth — operational view)</summary>
 <div class="ox-dag-card ox-dag-card--wide">
-<a href="/assets/dag/oxo-flow-scrnaseq-rules.svg?v=e8d438a5ab" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-scrnaseq-rules.svg?v=e8d438a5ab" alt="oxo-flow-scrnaseq rule-level detail" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-scrnaseq-rules.svg?v=e6223c00ab" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-scrnaseq-rules.svg?v=e6223c00ab" alt="oxo-flow-scrnaseq rule-level detail" loading="lazy"></a>
 </div>
 </details>
 <details class="ox-flow-view" open>

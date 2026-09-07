@@ -30,6 +30,24 @@ title: "ATAC-seq: peak calling and QC"
 </div>
 </div>
 
+<nav class="ox-tabs" aria-label="Page sections"><a href="#semantic-overview">Introduction</a><a href="#run-it">Usage</a><a href="#parameters">Parameters</a><a href="#workflow-graph">Workflow graph</a><a href="#scope">Scope</a><a href="#fidelity">Fidelity</a></nav>
+
+<details class="ox-flow-view" open id="semantic-overview">
+<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
+<div class="ox-sem-text">
+<p><strong>ATAC-seq peak calling and QC pipeline</strong> (BWA-MEM + MACS2): given a reference genome and FASTQ reads, it trims adapters, aligns, deduplicates, calls peaks, annotates them, and aggregates all QC into a MultiQC report — a port of nf-core/atacseq 2.1.2.</p>
+<p><strong>1. Input QC and trimming</strong> — <code>fastqc</code> reports raw-read quality; <code>trimgalore</code> trims adapters and re-runs FastQC, feeding every alignment route.</p>
+<p><strong>2. Alignment</strong> — single-end reads are aligned by <code>bwa_mem</code> against <code>ref::bwa_index</code>, or by one runtime-selected alternative (<code>alt::bowtie2_align</code>, <code>alt::chromap_align</code>, <code>alt::star_align</code>); paired-end reads take <code>pe::trimgalore_pe</code> → <code>pe::bwa_mem_pe</code>. All routes converge on <code>samtools_sort_stats</code>.</p>
+<p><strong>3. Merge, deduplicate, filter</strong> — <code>picard_mergesamfiles</code> and <code>picard_markduplicates</code> consolidate libraries and mark duplicates (paired reads re-enter via <code>pe::bamtools_filter_pe</code> → <code>pe::pe_name_sort_remove_orphans</code>); <code>bamtools_filter</code> drops unmapped, secondary, and low-quality reads, and, when replicate samples are declared, <code>merge_replicates</code> merges the per-replicate filtered BAMs per sample.</p>
+<p><strong>4. Peaks, annotation, FRiP</strong> — <code>macs2_callpeak</code> calls broad peaks; <code>homer_annotatepeaks</code> annotates them, while <code>frip_score</code> measures the fraction of reads in peaks.</p>
+<p><strong>5. Tracks and enrichment plots</strong> — <code>bedtools_genomecov</code> writes a million-read-normalized bedGraph (<code>pe::bedtools_genomecov_pe</code> paired-end); <code>ucsc_bedgraphtobigwig</code> converts it to bigWig for <code>deeptools_plots</code>, and <code>plotfingerprint</code> (<code>pe::plotfingerprint_pe</code>) plots coverage fingerprints.</p>
+<p><strong>6. Consensus peaks (gated)</strong> — <code>cons::macs2_consensus</code> merges peak sets into a consensus BED, annotated by <code>cons::homer_annotatepeaks_consensus</code> and quantified by <code>cons::subread_featurecounts</code>; <code>cons::deseq2_qc</code> runs DESeq2 QC.</p>
+<p><strong>7. Extra QC and reports (gated)</strong> — optional branches add <code>qce::preseq_lcextrap</code>, <code>qce::picard_collectmultiplemetrics</code>, ATAQV (<code>qce::ataqv</code> on <code>qce::get_autosomes</code>, indexed by <code>qce::mkarv</code>), peak QC (<code>qce::plot_macs2_qc</code>, <code>qce::plot_homer_annotatepeaks</code>, <code>qce::multiqc_custom_peaks</code>) and <code>qce::igv</code>; <code>multiqc</code> (single-end) or <code>pe::multiqc_pe</code> (paired-end) aggregates the run.</p>
+<p><em>Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described order follows the actual rule dependencies.</em></p>
+<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-atacseq+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
+</div>
+</details>
+
 ## Run it
 
 ```bash
@@ -406,32 +424,6 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 ## Workflow graph
 
-<details class="ox-flow-view" open>
-<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
-<div class="ox-sem-text" markdown="1">
-
-**ATAC-seq peak calling and QC pipeline** (BWA-MEM + MACS2): given a reference genome and FASTQ reads, it trims adapters, aligns, deduplicates, calls peaks, annotates them, and aggregates all QC into a MultiQC report — a port of nf-core/atacseq 2.1.2.
-
-**1. Input QC and trimming** — `fastqc` reports raw-read quality; `trimgalore` trims adapters and re-runs FastQC, feeding every alignment route.
-
-**2. Alignment** — single-end reads are aligned by `bwa_mem` against `ref::bwa_index`, or by one runtime-selected alternative (`alt::bowtie2_align`, `alt::chromap_align`, `alt::star_align`); paired-end reads take `pe::trimgalore_pe` → `pe::bwa_mem_pe`. All routes converge on `samtools_sort_stats`.
-
-**3. Merge, deduplicate, filter** — `picard_mergesamfiles` and `picard_markduplicates` consolidate libraries and mark duplicates (paired reads re-enter via `pe::bamtools_filter_pe` → `pe::pe_name_sort_remove_orphans`); `bamtools_filter` drops unmapped, secondary, and low-quality reads, and, when replicate samples are declared, `merge_replicates` merges the per-replicate filtered BAMs per sample.
-
-**4. Peaks, annotation, FRiP** — `macs2_callpeak` calls broad peaks; `homer_annotatepeaks` annotates them, while `frip_score` measures the fraction of reads in peaks.
-
-**5. Tracks and enrichment plots** — `bedtools_genomecov` writes a million-read-normalized bedGraph (`pe::bedtools_genomecov_pe` paired-end); `ucsc_bedgraphtobigwig` converts it to bigWig for `deeptools_plots`, and `plotfingerprint` (`pe::plotfingerprint_pe`) plots coverage fingerprints.
-
-**6. Consensus peaks (gated)** — `cons::macs2_consensus` merges peak sets into a consensus BED, annotated by `cons::homer_annotatepeaks_consensus` and quantified by `cons::subread_featurecounts`; `cons::deseq2_qc` runs DESeq2 QC.
-
-**7. Extra QC and reports (gated)** — optional branches add `qce::preseq_lcextrap`, `qce::picard_collectmultiplemetrics`, ATAQV (`qce::ataqv` on `qce::get_autosomes`, indexed by `qce::mkarv`), peak QC (`qce::plot_macs2_qc`, `qce::plot_homer_annotatepeaks`, `qce::multiqc_custom_peaks`) and `qce::igv`; `multiqc` (single-end) or `pe::multiqc_pe` (paired-end) aggregates the run.
-
-*Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described order follows the actual rule dependencies.*
-
-<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-atacseq+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
-
-</div>
-</details>
 <details class="ox-flow-view">
 <summary>Exact rule DAG (multi-route truth — operational view)</summary>
 <div class="ox-dag-card ox-dag-card--wide">

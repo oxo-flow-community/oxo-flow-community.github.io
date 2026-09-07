@@ -30,6 +30,23 @@ title: "Metagenome assembly, binning and taxonomic classification"
 </div>
 </div>
 
+<nav class="ox-tabs" aria-label="Page sections"><a href="#semantic-overview">Introduction</a><a href="#run-it">Usage</a><a href="#parameters">Parameters</a><a href="#workflow-graph">Workflow graph</a><a href="#scope">Scope</a><a href="#fidelity">Fidelity</a></nav>
+
+<details class="ox-flow-view" open id="semantic-overview">
+<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
+<div class="ox-sem-text">
+<p><strong>Metagenome assembly and binning pipeline</strong>: given paired-end metagenomic reads, it trims them, removes host and phiX contamination, assembles with SPAdES or MEGAHIT, bins with six tools, quality-checks and classifies them, and delivers a MultiQC report.</p>
+<p><strong>1. Read QC and trimming</strong> — <code>fastqc_raw</code> screens raw reads while one of three clip tools trims them (<code>fastp</code> by default, <code>adapterremoval_pe</code> or <code>trimmomatic</code>). Reads pass <code>host_removal_build</code> → <code>host_removal_align</code> with a host reference, and <code>phix_build</code> → <code>phix_align</code>; <code>fastqc_trimmed</code> re-reports the reads, <code>bbnorm</code> can normalize coverage, and <code>spades</code> and <code>megahit</code> each assemble the cleaned reads.</p>
+<p><strong>2. Assembly checks</strong> — <code>gunzip_spades</code> unpacks the scaffolds; <code>quast_spades</code> scores the assembly and <code>prodigal_spades</code> predicts its proteins, each with a MEGAHIT twin; <code>genomad_spades</code>/<code>genomad_megahit</code> identify viruses when enabled.</p>
+<p><strong>3. Mapping and binning</strong> — <code>bowtie2_build_spades</code> indexes each assembly; <code>bowtie2_align_spades</code> maps every cohort sample's reads, and <code>depths_spades</code> → <code>convert_depths_spades</code> compute binning depths. Six binner families then cluster the contigs: <code>metabat2_spades</code>, <code>maxbin2_spades</code>, <code>comebin_spades</code>, <code>semibin_spades</code>, the CONCOCT chain <code>concoct_cutup_spades</code> → <code>concoct_table_spades</code> → <code>concoct_spades</code> → <code>concoct_merge_spades</code> → <code>concoct_extract_spades</code>, and the MetaBinner chain (<code>metabinner_kmer_spades</code> → <code>metabinner_run_spades</code> → <code>metabinner_bins_spades</code>). <code>split_fasta_metabat2_spades</code> chunks unbinned contigs and <code>seqkit_spades_metabat2</code> records bin length stats.</p>
+<p><strong>4. Bin QC</strong> — <code>ale_spades</code>/<code>ale_megahit</code> evaluate each assembly against mapped reads. Per binner–assembler pair, <code>busco_spades_metabat2</code>, <code>quast_bins_spades_metabat2</code> and <code>mag_depths_spades_metabat2</code> assess the bins; optional checks: <code>checkm_lineagewf_spades_metabat2</code> → <code>checkm_qa_spades_metabat2</code>, <code>checkm2_spades_metabat2</code>, and <code>gunc_spades_metabat2</code> → <code>gunc_mergecheckm_spades_metabat2</code>. <code>concat_busco</code>, <code>concat_quast</code> and <code>mag_depths_summary</code> merge the per-pair tables.</p>
+<p><strong>5. Classification and annotation</strong> — <code>gtdbtk_db_preparation</code> prepares the database; <code>gtdbtk_spades_metabat2</code> and its per-binner siblings classify bins, <code>gtdbtk_summary</code> merges results and <code>prokka_spades_metabat2</code> annotates genes. Optional, config-gated extras: DAS Tool refinement (<code>dastool_dastool_spades</code>), Tiara domain classification (<code>tiara_tiara_spades</code> → <code>tiara_classify_spades_metabat2_bins</code>), CAT/BAT (<code>cat_db_preparation</code> → <code>catpack_bins_spades_metabat2</code> → <code>catpack_addnames_spades_metabat2</code> → <code>catpack_summarise_spades_metabat2</code>, plus <code>catpack_bat_summary</code>).</p>
+<p><strong>6. Summary</strong> — <code>bin_summary</code> merges the QC and taxonomy tables; <code>multiqc</code> reports them all.</p>
+<p><em>Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described order follows the actual rule dependencies.</em></p>
+<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-mag+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
+</div>
+</details>
+
 ## Run it
 
 ```bash
@@ -487,30 +504,6 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 ## Workflow graph
 
-<details class="ox-flow-view" open>
-<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
-<div class="ox-sem-text" markdown="1">
-
-**Metagenome assembly and binning pipeline**: given paired-end metagenomic reads, it trims them, removes host and phiX contamination, assembles with SPAdES or MEGAHIT, bins with six tools, quality-checks and classifies them, and delivers a MultiQC report.
-
-**1. Read QC and trimming** — `fastqc_raw` screens raw reads while one of three clip tools trims them (`fastp` by default, `adapterremoval_pe` or `trimmomatic`). Reads pass `host_removal_build` → `host_removal_align` with a host reference, and `phix_build` → `phix_align`; `fastqc_trimmed` re-reports the reads, `bbnorm` can normalize coverage, and `spades` and `megahit` each assemble the cleaned reads.
-
-**2. Assembly checks** — `gunzip_spades` unpacks the scaffolds; `quast_spades` scores the assembly and `prodigal_spades` predicts its proteins, each with a MEGAHIT twin; `genomad_spades`/`genomad_megahit` identify viruses when enabled.
-
-**3. Mapping and binning** — `bowtie2_build_spades` indexes each assembly; `bowtie2_align_spades` maps every cohort sample's reads, and `depths_spades` → `convert_depths_spades` compute binning depths. Six binner families then cluster the contigs: `metabat2_spades`, `maxbin2_spades`, `comebin_spades`, `semibin_spades`, the CONCOCT chain `concoct_cutup_spades` → `concoct_table_spades` → `concoct_spades` → `concoct_merge_spades` → `concoct_extract_spades`, and the MetaBinner chain (`metabinner_kmer_spades` → `metabinner_run_spades` → `metabinner_bins_spades`). `split_fasta_metabat2_spades` chunks unbinned contigs and `seqkit_spades_metabat2` records bin length stats.
-
-**4. Bin QC** — `ale_spades`/`ale_megahit` evaluate each assembly against mapped reads. Per binner–assembler pair, `busco_spades_metabat2`, `quast_bins_spades_metabat2` and `mag_depths_spades_metabat2` assess the bins; optional checks: `checkm_lineagewf_spades_metabat2` → `checkm_qa_spades_metabat2`, `checkm2_spades_metabat2`, and `gunc_spades_metabat2` → `gunc_mergecheckm_spades_metabat2`. `concat_busco`, `concat_quast` and `mag_depths_summary` merge the per-pair tables.
-
-**5. Classification and annotation** — `gtdbtk_db_preparation` prepares the database; `gtdbtk_spades_metabat2` and its per-binner siblings classify bins, `gtdbtk_summary` merges results and `prokka_spades_metabat2` annotates genes. Optional, config-gated extras: DAS Tool refinement (`dastool_dastool_spades`), Tiara domain classification (`tiara_tiara_spades` → `tiara_classify_spades_metabat2_bins`), CAT/BAT (`cat_db_preparation` → `catpack_bins_spades_metabat2` → `catpack_addnames_spades_metabat2` → `catpack_summarise_spades_metabat2`, plus `catpack_bat_summary`).
-
-**6. Summary** — `bin_summary` merges the QC and taxonomy tables; `multiqc` reports them all.
-
-*Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described order follows the actual rule dependencies.*
-
-<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-mag+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
-
-</div>
-</details>
 <details class="ox-flow-view">
 <summary>Exact rule DAG (multi-route truth — operational view)</summary>
 <div class="ox-dag-card ox-dag-card--wide">

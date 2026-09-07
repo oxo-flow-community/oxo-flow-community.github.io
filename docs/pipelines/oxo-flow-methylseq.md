@@ -30,6 +30,22 @@ title: "Bisulfite methylation analysis: alignment, methylation calls and QC"
 </div>
 </div>
 
+<nav class="ox-tabs" aria-label="Page sections"><a href="#semantic-overview">Introduction</a><a href="#run-it">Usage</a><a href="#parameters">Parameters</a><a href="#workflow-graph">Workflow graph</a><a href="#scope">Scope</a><a href="#fidelity">Fidelity</a></nav>
+
+<details class="ox-flow-view" open id="semantic-overview">
+<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
+<div class="ox-sem-text">
+<p><strong>Bisulfite-seq methylation pipeline</strong>: given a reference genome and raw reads, it aligns with Bismark, bwameth, or BWA-MEM, extracts per-context methylation calls, and reports conversion rates, targeted-region coverage, and a MultiQC summary.</p>
+<p><strong>1. Reference and read prep</strong> — <code>bismark_genomepreparation</code> builds the Bismark bisulfite index (or <code>bismark_untar</code> unpacks a prebuilt one); <code>bwameth_index</code> and <code>bwa_index</code> build alternative indexes, <code>samtools_faidx</code> indexes the reference; <code>cat_fastq_r1</code> and <code>cat_fastq_r2</code> concatenate multi-pair fastqs, then <code>fastqc</code>/<code>fastqc_se</code> and <code>trimgalore</code>/<code>trimgalore_se</code> QC and trim.</p>
+<p><strong>2. Alignment (parallel routes)</strong> — trimmed reads feed <code>bismark_align</code> (paired-end), <code>bismark_align_se</code>, <code>bwameth_align</code>, or <code>bwa_mem</code>, depending on the aligner and sample configuration.</p>
+<p><strong>3. Deduplication</strong> — the Bismark routes deduplicate with <code>bismark_deduplicate</code>/<code>bismark_deduplicate_se</code> and sort and index (<code>samtools_sort</code> → <code>samtools_index</code>). The other branches sort with <code>samtools_sort_alignment</code> (feeding <code>samtools_index_alignment</code>, <code>samtools_flagstat</code>, <code>samtools_stats</code>, <code>samtools_idxstats</code>) and deduplicate with Picard: <code>picard_markduplicates</code> → <code>samtools_index_deduplicated</code>, or <code>picard_addorreplacereadgroups</code> → <code>picard_markduplicates_bwamem</code> → <code>samtools_index_deduplicated_bwamem</code>.</p>
+<p><strong>4. Methylation extraction</strong> — <code>bismark_methylationextractor</code>/<code>bismark_methylationextractor_se</code> emit per-context calls and bedGraphs feeding <code>bismark_coverage2cytosine</code> and <code>bedtools_intersect</code>. The deduplicated bwameth alignment is extracted with MethylDackel (<code>methyldackel_extract</code>, <code>methyldackel_extract_allcontexts</code>, <code>methyldackel_extract_methylkit</code>, <code>methyldackel_mbias</code>) and filtered by <code>bedtools_intersect_bwameth</code>, <code>bedtools_intersect_bwameth_chg</code>, and <code>bedtools_intersect_bwameth_chh</code>; the rastair TAPS route chains <code>rastair_mbias_bwameth</code> or <code>rastair_mbias_bwamem</code> → <code>rastair_mbiasparser</code> → <code>rastair_call_bwameth</code>/<code>rastair_call_bwamem</code> → <code>rastair_methylkit</code>.</p>
+<p><strong>5. Quality and reporting</strong> — <code>bismark_report</code>/<code>bismark_report_se</code> build per-sample reports and <code>bismark_summary</code> the project summary; <code>qualimap_bamqc</code> and <code>preseq_lcextrap</code> assess Bismark BAMs (<code>qualimap_bamqc_alt</code>/<code>preseq_lcextrap_alt</code> serve the other branches); <code>picard_createsequencedictionary</code> → <code>picard_bedtointervallist</code> feeds <code>picard_collecthsmetrics</code>/<code>picard_collecthsmetrics_alt</code>; finally <code>multiqc_versions</code>, FastQC/TrimGalore results, and branch reports converge into <code>multiqc</code>, <code>multiqc_bwameth</code>, or <code>multiqc_bwamem</code>.</p>
+<p><em>Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described order follows the actual rule dependencies.</em></p>
+<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-methylseq+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
+</div>
+</details>
+
 ## Run it
 
 ```bash
@@ -470,33 +486,17 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 ## Workflow graph
 
-<details class="ox-flow-view" open>
-<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
-<div class="ox-sem-text" markdown="1">
-
-**Bisulfite-seq methylation pipeline**: given a reference genome and raw reads, it aligns with Bismark, bwameth, or BWA-MEM, extracts per-context methylation calls, and reports conversion rates, targeted-region coverage, and a MultiQC summary.
-
-**1. Reference and read prep** — `bismark_genomepreparation` builds the Bismark bisulfite index (or `bismark_untar` unpacks a prebuilt one); `bwameth_index` and `bwa_index` build alternative indexes, `samtools_faidx` indexes the reference; `cat_fastq_r1` and `cat_fastq_r2` concatenate multi-pair fastqs, then `fastqc`/`fastqc_se` and `trimgalore`/`trimgalore_se` QC and trim.
-
-**2. Alignment (parallel routes)** — trimmed reads feed `bismark_align` (paired-end), `bismark_align_se`, `bwameth_align`, or `bwa_mem`, depending on the aligner and sample configuration.
-
-**3. Deduplication** — the Bismark routes deduplicate with `bismark_deduplicate`/`bismark_deduplicate_se` and sort and index (`samtools_sort` → `samtools_index`). The other branches sort with `samtools_sort_alignment` (feeding `samtools_index_alignment`, `samtools_flagstat`, `samtools_stats`, `samtools_idxstats`) and deduplicate with Picard: `picard_markduplicates` → `samtools_index_deduplicated`, or `picard_addorreplacereadgroups` → `picard_markduplicates_bwamem` → `samtools_index_deduplicated_bwamem`.
-
-**4. Methylation extraction** — `bismark_methylationextractor`/`bismark_methylationextractor_se` emit per-context calls and bedGraphs feeding `bismark_coverage2cytosine` and `bedtools_intersect`. The deduplicated bwameth alignment is extracted with MethylDackel (`methyldackel_extract`, `methyldackel_extract_allcontexts`, `methyldackel_extract_methylkit`, `methyldackel_mbias`) and filtered by `bedtools_intersect_bwameth`, `bedtools_intersect_bwameth_chg`, and `bedtools_intersect_bwameth_chh`; the rastair TAPS route chains `rastair_mbias_bwameth` or `rastair_mbias_bwamem` → `rastair_mbiasparser` → `rastair_call_bwameth`/`rastair_call_bwamem` → `rastair_methylkit`.
-
-**5. Quality and reporting** — `bismark_report`/`bismark_report_se` build per-sample reports and `bismark_summary` the project summary; `qualimap_bamqc` and `preseq_lcextrap` assess Bismark BAMs (`qualimap_bamqc_alt`/`preseq_lcextrap_alt` serve the other branches); `picard_createsequencedictionary` → `picard_bedtointervallist` feeds `picard_collecthsmetrics`/`picard_collecthsmetrics_alt`; finally `multiqc_versions`, FastQC/TrimGalore results, and branch reports converge into `multiqc`, `multiqc_bwameth`, or `multiqc_bwamem`.
-
-*Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described order follows the actual rule dependencies.*
-
-<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-methylseq+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
-
+<details class="ox-flow-view">
+<summary>Exact rule DAG (multi-route truth — operational view)</summary>
+<div class="ox-dag-card ox-dag-card--wide">
+<a href="/assets/dag/oxo-flow-methylseq-rules.svg?v=d12f150830" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-methylseq-rules.svg?v=d12f150830" alt="oxo-flow-methylseq rule-level detail" loading="lazy"></a>
 </div>
 </details>
 <details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card ox-dag-card--wide" markdown="1">
 
-<a href="/assets/dag/oxo-flow-methylseq.svg?v=d12f150830" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-methylseq.svg?v=d12f150830" alt="oxo-flow-methylseq pipeline overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-methylseq.svg?v=d9b4f579cb" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-methylseq.svg?v=d9b4f579cb" alt="oxo-flow-methylseq pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-methylseq — Run end-to-end bisulfite methylation analysis (WGBS, and RRBS-compatible) of paired-end reads (default) and single-end reads (upstream single_end samplesheet column, via the engine metadata binding): FastQC quality control, TrimGalore adapter trimming, alignment to the bisulfite-converted reference genome with any of the four upstream aligners — Bismark bowtie2 (default), Bismark hisat2, bwameth (bwa-meth) or BWA-MEM — PCR-deduplication, samtools sort/index, methylation calls (bismark_methylation_extractor, MethylDackel on bwameth, rastair for TAPS), per-sample and project-wide Bismark HTML reports, optional QualiMap BamQC, preseq complexity estimates and targeted-sequencing (bedtools intersect + Picard HS metrics), and a final MultiQC report.</p>
 

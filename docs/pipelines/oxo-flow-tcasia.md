@@ -30,6 +30,22 @@ title: "Paired-end RNA-seq alignment and four-caller alternative-splicing analys
 </div>
 </div>
 
+<nav class="ox-tabs" aria-label="Page sections"><a href="#semantic-overview">Introduction</a><a href="#run-it">Usage</a><a href="#parameters">Parameters</a><a href="#workflow-graph">Workflow graph</a><a href="#scope">Scope</a><a href="#fidelity">Fidelity</a></nav>
+
+<details class="ox-flow-view" open id="semantic-overview">
+<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
+<div class="ox-sem-text">
+<p><strong>TCASIA alternative-splicing pipeline</strong>: given paired-end RNA-seq reads and a reference genome, it quality-filters and aligns them, then quantifies alternative splicing with four callers — rMATS, MAJIQ, SUPPA2 and SplAdder — each producing per-event PSI output.</p>
+<p><strong>1. Input QC and alignment</strong> — <code>alignment::fastp_qc</code> trims and quality-filters the paired reads; <code>alignment::star_align</code> runs the two-pass STAR alignment with gene counts; <code>alignment::sort_bam</code> coordinate-sorts the BAM. From that sorted BAM, <code>alignment::index_bam</code> builds the BAI index and <code>alignment::featurecounts</code> counts reads per gene — and the same sorted BAM feeds every alternative-splicing caller downstream.</p>
+<p><strong>2. SUPPA2 track (from raw reads, runs in parallel)</strong> — <code>as_calling::salmon_quant</code> quantifies transcripts directly from raw FASTQ; <code>as_calling::select_suppa_fields</code> extracts the isoform TPM column; <code>as_calling::format_suppa_fields</code> strips the transcript prefix; <code>as_calling::suppa_run</code> computes per-event PSI.</p>
+<p><strong>3. rMATS</strong> — <code>as_calling::rmats_create_input</code> writes the single-BAM input list, then <code>as_calling::rmats_run</code> computes PSI values per sample.</p>
+<p><strong>4. MAJIQ (gated on the run_majiq flag; the academic license is required)</strong> — <code>as_calling::majiq_create_ini</code> writes the build configuration, <code>as_calling::majiq_build</code> builds the splice graph, <code>as_calling::majiq_psi</code> quantifies PSI per local splicing variation; then both <code>as_calling::voila_modulize</code> (Voilà modules) and <code>as_calling::voila_tsv</code> (TSV table) consume the splice graph and PSI outputs.</p>
+<p><strong>5. SplAdder</strong> — <code>as_calling::spladder_run</code> detects alternative-splicing events directly from the sorted BAM.</p>
+<p><em>Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described order follows the actual rule dependencies.</em></p>
+<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-tcasia+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
+</div>
+</details>
+
 ## Run it
 
 ```bash
@@ -280,28 +296,6 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 ## Workflow graph
 
-<details class="ox-flow-view" open>
-<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
-<div class="ox-sem-text" markdown="1">
-
-**TCASIA alternative-splicing pipeline**: given paired-end RNA-seq reads and a reference genome, it quality-filters and aligns them, then quantifies alternative splicing with four callers — rMATS, MAJIQ, SUPPA2 and SplAdder — each producing per-event PSI output.
-
-**1. Input QC and alignment** — `alignment::fastp_qc` trims and quality-filters the paired reads; `alignment::star_align` runs the two-pass STAR alignment with gene counts; `alignment::sort_bam` coordinate-sorts the BAM. From that sorted BAM, `alignment::index_bam` builds the BAI index and `alignment::featurecounts` counts reads per gene — and the same sorted BAM feeds every alternative-splicing caller downstream.
-
-**2. SUPPA2 track (from raw reads, runs in parallel)** — `as_calling::salmon_quant` quantifies transcripts directly from raw FASTQ; `as_calling::select_suppa_fields` extracts the isoform TPM column; `as_calling::format_suppa_fields` strips the transcript prefix; `as_calling::suppa_run` computes per-event PSI.
-
-**3. rMATS** — `as_calling::rmats_create_input` writes the single-BAM input list, then `as_calling::rmats_run` computes PSI values per sample.
-
-**4. MAJIQ (gated on the run_majiq flag; the academic license is required)** — `as_calling::majiq_create_ini` writes the build configuration, `as_calling::majiq_build` builds the splice graph, `as_calling::majiq_psi` quantifies PSI per local splicing variation; then both `as_calling::voila_modulize` (Voilà modules) and `as_calling::voila_tsv` (TSV table) consume the splice graph and PSI outputs.
-
-**5. SplAdder** — `as_calling::spladder_run` detects alternative-splicing events directly from the sorted BAM.
-
-*Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described order follows the actual rule dependencies.*
-
-<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-tcasia+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
-
-</div>
-</details>
 <details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card ox-dag-card--wide" markdown="1">

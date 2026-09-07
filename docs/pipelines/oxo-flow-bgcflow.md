@@ -30,6 +30,22 @@ title: "Biosynthetic gene cluster (BGC) genome mining: annotation, antiSMASH and
 </div>
 </div>
 
+<nav class="ox-tabs" aria-label="Page sections"><a href="#semantic-overview">Introduction</a><a href="#run-it">Usage</a><a href="#parameters">Parameters</a><a href="#workflow-graph">Workflow graph</a><a href="#scope">Scope</a><a href="#fidelity">Fidelity</a></nav>
+
+<details class="ox-flow-view" open id="semantic-overview">
+<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
+<div class="ox-sem-text">
+<p><strong>BGCflow pipeline</strong>: given assembled genomes, it annotates them with prokka, detects biosynthetic gene clusters with antiSMASH, and assembles comparison datasets, project summary tables, and a parquet data warehouse.</p>
+<p><strong>1. Genome input and metadata</strong> — <code>copy_custom_fasta</code> stages user FASTA files (<code>genbank_to_fna</code> covers the genbank route); <code>extract_meta_prokka</code> pulls organism metadata and <code>gtdb_prep</code> fetches GTDB taxonomy per genome. Optional branches run in parallel: <code>seqfu_stats</code> → <code>seqfu_combine</code>, <code>mash</code> → <code>mash_convert</code>, <code>fastani</code> → <code>fastani_convert</code>, <code>install_checkm</code> → <code>checkm</code>, and <code>gtdbtk</code>.</p>
+<p><strong>2. Annotation</strong> — <code>prokka</code> annotates (<code>prokka_gbk</code> takes genbank input), and <code>format_gbk</code> stamps BGCflow metadata comments onto the prokka genbank. Analyses off prokka: <code>install_amrfinder</code> → <code>amrfinderplus</code> → <code>amrfinder_gather</code>, <code>roary</code> → <code>roary_out</code>, <code>install_eggnog</code> → <code>eggnog</code>, <code>deeptfactor_setup</code> → <code>deeptfactor</code> → <code>deeptfactor_to_json</code> → <code>deeptfactor_summary</code>; <code>gecco</code>, <code>cblaster_genome_db</code>, and <code>prep_automlst_gbk</code> → <code>automlst_wrapper</code> → <code>automlst_wrapper_out</code> read the formatted genbank.</p>
+<p><strong>3. antiSMASH mining</strong> — <code>antismash_db_setup</code> prepares the reference databases; <code>antismash</code> (v7; <code>antismash_v6</code> for the v6 branch) then detects clusters and fans out to <code>copy_antismash</code>, <code>bgc_count</code>, <code>antismash_overview</code>, and the optional <code>arts</code> screen, plus the <code>bigscape</code> branch.</p>
+<p><strong>4. Comparison preparation and summary</strong> — <code>fix_gtdb_taxonomy</code> merges the per-genome taxonomy into a table feeding <code>downstream_bgc_prep</code>, staging BGC folders for optional <code>bigslice_prep</code> → <code>bigslice</code> (via <code>install_bigslice</code>); a separate BiG-FAM chain runs <code>fetch_bigslice_db</code> → <code>query_bigslice</code> → <code>summarize_bigslice_query</code> → <code>annotate_bigfam_hits</code>. <code>antismash_overview_gather</code>, <code>copy_log_changes</code>, and <code>bgc_count</code> converge in <code>antismash_summary</code>.</p>
+<p><strong>5. Data warehouse</strong> — <code>get_mibig_table</code> fetches the MIBiG reference set and <code>copy_mibig_table</code> copies it into the project tables; the antiSMASH summary, MIBiG table, and GTDB taxonomy converge into <code>csv_to_parquet</code>.</p>
+<p><em>Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described order follows the actual rule dependencies.</em></p>
+<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-bgcflow+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
+</div>
+</details>
+
 ## Run it
 
 ```bash
@@ -331,28 +347,6 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 ## Workflow graph
 
-<details class="ox-flow-view" open>
-<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
-<div class="ox-sem-text" markdown="1">
-
-**BGCflow pipeline**: given assembled genomes, it annotates them with prokka, detects biosynthetic gene clusters with antiSMASH, and assembles comparison datasets, project summary tables, and a parquet data warehouse.
-
-**1. Genome input and metadata** — `copy_custom_fasta` stages user FASTA files (`genbank_to_fna` covers the genbank route); `extract_meta_prokka` pulls organism metadata and `gtdb_prep` fetches GTDB taxonomy per genome. Optional branches run in parallel: `seqfu_stats` → `seqfu_combine`, `mash` → `mash_convert`, `fastani` → `fastani_convert`, `install_checkm` → `checkm`, and `gtdbtk`.
-
-**2. Annotation** — `prokka` annotates (`prokka_gbk` takes genbank input), and `format_gbk` stamps BGCflow metadata comments onto the prokka genbank. Analyses off prokka: `install_amrfinder` → `amrfinderplus` → `amrfinder_gather`, `roary` → `roary_out`, `install_eggnog` → `eggnog`, `deeptfactor_setup` → `deeptfactor` → `deeptfactor_to_json` → `deeptfactor_summary`; `gecco`, `cblaster_genome_db`, and `prep_automlst_gbk` → `automlst_wrapper` → `automlst_wrapper_out` read the formatted genbank.
-
-**3. antiSMASH mining** — `antismash_db_setup` prepares the reference databases; `antismash` (v7; `antismash_v6` for the v6 branch) then detects clusters and fans out to `copy_antismash`, `bgc_count`, `antismash_overview`, and the optional `arts` screen, plus the `bigscape` branch.
-
-**4. Comparison preparation and summary** — `fix_gtdb_taxonomy` merges the per-genome taxonomy into a table feeding `downstream_bgc_prep`, staging BGC folders for optional `bigslice_prep` → `bigslice` (via `install_bigslice`); a separate BiG-FAM chain runs `fetch_bigslice_db` → `query_bigslice` → `summarize_bigslice_query` → `annotate_bigfam_hits`. `antismash_overview_gather`, `copy_log_changes`, and `bgc_count` converge in `antismash_summary`.
-
-**5. Data warehouse** — `get_mibig_table` fetches the MIBiG reference set and `copy_mibig_table` copies it into the project tables; the antiSMASH summary, MIBiG table, and GTDB taxonomy converge into `csv_to_parquet`.
-
-*Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described order follows the actual rule dependencies.*
-
-<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-bgcflow+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
-
-</div>
-</details>
 <details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">

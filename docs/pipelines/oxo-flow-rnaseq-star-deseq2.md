@@ -30,6 +30,23 @@ title: "RNA-seq: STAR alignment, DESeq2 differential expression and QC"
 </div>
 </div>
 
+<nav class="ox-tabs" aria-label="Page sections"><a href="#semantic-overview">Introduction</a><a href="#run-it">Usage</a><a href="#parameters">Parameters</a><a href="#workflow-graph">Workflow graph</a><a href="#scope">Scope</a><a href="#fidelity">Fidelity</a></nav>
+
+<details class="ox-flow-view" open id="semantic-overview">
+<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
+<div class="ox-sem-text">
+<p><strong>RNA-seq differential-expression pipeline</strong> (STAR alignment + DESeq2): given a reference genome and sequencing reads, it aligns, counts, and delivers per-gene expression, differential expression and PCA plots, with quality checks along the way.</p>
+<p><strong>1. Inputs and reference prep</strong> — <code>get_genome</code> fetches the reference genome and <code>get_annotation</code> the gene annotation (GTF), while <code>get_sra</code> fetches the sequencing reads. The genome also produces two auxiliary indexes: <code>bwa_index</code> (BWA index) and <code>genome_faidx</code> (FASTA index).</p>
+<p><strong>2. STAR index</strong> — <code>star_index</code> builds the alignment index from the genome + annotation; every alignment step below depends on it.</p>
+<p><strong>3. Read QC + alignment (four parallel routes)</strong> — paired-end (PE) reads are quality-trimmed by <code>fastp_pe</code> then aligned by <code>star_align</code>; single-end (SE) reads go through <code>fastp_se</code> and <code>star_align_se</code>. Two further routes align <strong>raw, untrimmed</strong> reads directly: <code>star_align_raw</code> (PE) and <code>star_align_se_raw</code> (SE). The run picks PE or SINGLE based on the sample configuration, so 1–2 of the 4 routes actually execute per run.</p>
+<p><strong>4. Converged alignment outputs</strong> — the four routes' BAMs converge into the analysis entry (a hidden junction in the engine), feeding counting and quality simultaneously.</p>
+<p><strong>5. Counting and differential analysis</strong> — <code>count_matrix</code> builds the per-gene expression matrix; it directly produces <code>gene_2_symbol_counts</code> (gene-symbol counts) and enters <code>deseq2_init</code>. The init step fans out to <code>deseq2</code> (the DESeq2 analysis, exported as <code>gene_2_symbol_diffexp</code> differential-expression table), <code>gene_2_symbol_normcounts</code> (normalised counts), and three PCA rules (<code>pca_treatment_1</code>, <code>pca_treatment_2</code>, <code>pca_jointly_handled</code>).</p>
+<p><strong>6. Quality and aggregate reporting</strong> — <code>rseqc_gtf2bed</code> converts the annotation to a BED the 8 RSeQC checks can read (<code>rseqc_junction_annotation</code>, <code>rseqc_junction_saturation</code>, <code>rseqc_stat</code>, <code>rseqc_infer</code>, <code>rseqc_innerdis</code>, <code>rseqc_readdis</code>, <code>rseqc_readdup</code>, <code>rseqc_readgc</code>); <code>multiqc</code> finally aggregates alignment and QC results into one report.</p>
+<p><em>Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described product relationships follow the actual rule dependencies.</em></p>
+<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-rnaseq-star-deseq2+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
+</div>
+</details>
+
 ## Run it
 
 ```bash
@@ -302,40 +319,10 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 ## Workflow graph
 
 <details class="ox-flow-view" open>
-<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
-<div class="ox-sem-text" markdown="1">
-
-**RNA-seq differential-expression pipeline** (STAR alignment + DESeq2): given a reference genome and sequencing reads, it aligns, counts, and delivers per-gene expression, differential expression and PCA plots, with quality checks along the way.
-
-**1. Inputs and reference prep** — `get_genome` fetches the reference genome and `get_annotation` the gene annotation (GTF), while `get_sra` fetches the sequencing reads. The genome also produces two auxiliary indexes: `bwa_index` (BWA index) and `genome_faidx` (FASTA index).
-
-**2. STAR index** — `star_index` builds the alignment index from the genome + annotation; every alignment step below depends on it.
-
-**3. Read QC + alignment (four parallel routes)** — paired-end (PE) reads are quality-trimmed by `fastp_pe` then aligned by `star_align`; single-end (SE) reads go through `fastp_se` and `star_align_se`. Two further routes align **raw, untrimmed** reads directly: `star_align_raw` (PE) and `star_align_se_raw` (SE). The run picks PE or SINGLE based on the sample configuration, so 1–2 of the 4 routes actually execute per run.
-
-**4. Converged alignment outputs** — the four routes' BAMs converge into the analysis entry (a hidden junction in the engine), feeding counting and quality simultaneously.
-
-**5. Counting and differential analysis** — `count_matrix` builds the per-gene expression matrix; it directly produces `gene_2_symbol_counts` (gene-symbol counts) and enters `deseq2_init`. The init step fans out to `deseq2` (the DESeq2 analysis, exported as `gene_2_symbol_diffexp` differential-expression table), `gene_2_symbol_normcounts` (normalised counts), and three PCA rules (`pca_treatment_1`, `pca_treatment_2`, `pca_jointly_handled`).
-
-**6. Quality and aggregate reporting** — `rseqc_gtf2bed` converts the annotation to a BED the 8 RSeQC checks can read (`rseqc_junction_annotation`, `rseqc_junction_saturation`, `rseqc_stat`, `rseqc_infer`, `rseqc_innerdis`, `rseqc_readdis`, `rseqc_readdup`, `rseqc_readgc`); `multiqc` finally aggregates alignment and QC results into one report.
-
-*Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described product relationships follow the actual rule dependencies.*
-
-<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-rnaseq-star-deseq2+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
-
-</div>
-</details>
-<details class="ox-flow-view">
-<summary>Exact rule DAG (multi-route truth — operational view)</summary>
-<div class="ox-dag-card ox-dag-card--wide">
-<a href="/assets/dag/oxo-flow-rnaseq-star-deseq2-rules.svg?v=f0013b68ba" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-rnaseq-star-deseq2-rules.svg?v=f0013b68ba" alt="oxo-flow-rnaseq-star-deseq2 rule-level detail" loading="lazy"></a>
-</div>
-</details>
-<details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card ox-dag-card--wide" markdown="1">
 
-<a href="/assets/dag/oxo-flow-rnaseq-star-deseq2.svg?v=91496a574b" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-rnaseq-star-deseq2.svg?v=91496a574b" alt="oxo-flow-rnaseq-star-deseq2 pipeline overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-rnaseq-star-deseq2.svg?v=f0013b68ba" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-rnaseq-star-deseq2.svg?v=f0013b68ba" alt="oxo-flow-rnaseq-star-deseq2 pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-rnaseq-star-deseq2 — End-to-end RNA-seq differential-expression analysis with STAR and DESeq2: Ensembl reference download, fastp trimming, STAR alignment with gene counts, RSeQC QC + MultiQC, count matrix with technical-replicate collapse, Ensembl biomaRt gene-symbol annotation, and DESeq2 (normalized counts, PCA plots, per-contrast results with ashr shrinkage and MA plots).</p>
 

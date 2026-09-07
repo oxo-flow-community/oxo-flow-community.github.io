@@ -30,6 +30,23 @@ title: "WGS/WES germline and somatic variant calling"
 </div>
 </div>
 
+<nav class="ox-tabs" aria-label="Page sections"><a href="#semantic-overview">Introduction</a><a href="#run-it">Usage</a><a href="#parameters">Parameters</a><a href="#workflow-graph">Workflow graph</a><a href="#scope">Scope</a><a href="#fidelity">Fidelity</a></nav>
+
+<details class="ox-flow-view" open id="semantic-overview">
+<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
+<div class="ox-sem-text">
+<p><strong>oxo-flow-sarek pipeline</strong>: WGS/WES germline variant calling from raw FASTQ to annotated VCFs and a MultiQC report — a community port of nf-core/sarek 3.10.0.</p>
+<p><strong>1. Reference preparation</strong> — <code>bwa_index</code> or <code>bwamem2_index</code> builds the aligner index, <code>gatk_createsequencedictionary</code> the sequence dictionary, and <code>samtools_faidx</code> the FASTA index; all config-gated on the prepare_reference flag.</p>
+<p><strong>2. Read QC and trimming</strong> — <code>fastqc</code> screens raw reads; <code>fastp</code> trims and splits them (multipart alternative <code>fastp_split</code>). With UMI consensus preprocessing, a fgbio chain runs first: <code>fgbio_fastqtobam</code> → <code>samtools_bam2fq_umi</code> → <code>bwa_mem_umi</code> → <code>fgbio_groupreadsbyumi</code> → <code>fgbio_callmolecularconsensusreads</code> → <code>samtools_bam2fq_consensus</code> → <code>fastp_umi</code>.</p>
+<p><strong>3. Alignment (exclusive runtime routes)</strong> — <code>fastp</code>, <code>fastp_split</code>, and <code>fastp_umi</code> feed the BWA-MEM and BWA-MEM2 aligners: <code>bwa_mem</code>/<code>bwa_mem2</code> single-part, or <code>bwa_mem_split</code>/<code>bwa_mem2_split</code> per split part, gathered by <code>bam_merge_index_samtools</code>. The aligned BAM is deduplicated by <code>gatk_markduplicates</code> (CRAM mode) or <code>gatk_markduplicates_bam</code> (BAM mode); the deduplicated file also feeds <code>mosdepth_md</code> and <code>samtools_stats_md</code>.</p>
+<p><strong>4. Base quality recalibration</strong> — <code>gatk_baserecalibrator</code> builds the recalibration table and <code>gatk_applybqsr</code> applies it; <code>samtools_index_recal</code> indexes the recalibrated alignment (required upstream of <code>mosdepth_recal</code>), while <code>samtools_stats_recal</code> summarizes it.</p>
+<p><strong>5. Variant calling — parallel, config-gated</strong> — all callers share the recalibrated alignment: default <code>gatk_haplotypecaller</code> → <code>gatk_cnnscorevariants</code> → <code>gatk_filtervarianttranches</code>; optional <code>freebayes</code> (→ <code>bcftools_sort_freebayes</code> → <code>tabix_freebayes</code>/<code>vcffilter_freebayes</code> → <code>tabix_freebayes_filt</code>), <code>strelka_germline</code>, <code>manta_germline</code>, <code>bcftools_mpileup_call</code>, <code>tiddit_sv</code> → <code>tabix_tiddit</code>, <code>deepvariant</code>; cohort checks via <code>samtools_reindex_bam</code> → <code>goleft_indexcov</code> and <code>bcftools_mpileup_ngscheckmate</code> → <code>ngscheckmate_ncm</code>. Joint germline instead chains <code>gatk_haplotypecaller_gvcf</code> → <code>gatk_genomicsdbimport</code> → <code>gatk_genotypegvcfs</code> → <code>bcftools_sort_joint</code> → <code>gatk_mergevcfs_joint</code> → <code>gatk_variantrecalibrator_snp</code>/<code>gatk_variantrecalibrator_indel</code> → <code>gatk_applyvqsr_snp</code> → <code>gatk_applyvqsr_indel</code>.</p>
+<p><strong>6. QC, annotation, and aggregate reporting</strong> — each produced VCF fans out to per-caller <code>bcftools_stats</code>, <code>vcftools_tstv_count</code>, <code>vcftools_tstv_qual</code>, and <code>vcftools_filter_summary</code> QC plus an <code>ensemblvep_vep</code> annotation (e.g. <code>ensemblvep_vep_freebayes</code>, <code>ensemblvep_vep_joint</code>); with the scatter_gatk option enabled, <code>create_intervals_bed</code> → <code>tabix_interval</code> feed per-chromosome <code>gatk_applybqsr_scatter</code> and <code>gatk_haplotypecaller_scatter</code>, gathered back by <code>merge_index_samtools</code> and <code>gatk_mergevcfs_scatter</code>. Finally <code>multiqc</code> aggregates all reports.</p>
+<p><em>Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described order follows the actual rule dependencies.</em></p>
+<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-sarek+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
+</div>
+</details>
+
 ## Run it
 
 ```bash
@@ -496,30 +513,6 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 ## Workflow graph
 
-<details class="ox-flow-view" open>
-<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
-<div class="ox-sem-text" markdown="1">
-
-**oxo-flow-sarek pipeline**: WGS/WES germline variant calling from raw FASTQ to annotated VCFs and a MultiQC report — a community port of nf-core/sarek 3.10.0.
-
-**1. Reference preparation** — `bwa_index` or `bwamem2_index` builds the aligner index, `gatk_createsequencedictionary` the sequence dictionary, and `samtools_faidx` the FASTA index; all config-gated on the prepare_reference flag.
-
-**2. Read QC and trimming** — `fastqc` screens raw reads; `fastp` trims and splits them (multipart alternative `fastp_split`). With UMI consensus preprocessing, a fgbio chain runs first: `fgbio_fastqtobam` → `samtools_bam2fq_umi` → `bwa_mem_umi` → `fgbio_groupreadsbyumi` → `fgbio_callmolecularconsensusreads` → `samtools_bam2fq_consensus` → `fastp_umi`.
-
-**3. Alignment (exclusive runtime routes)** — `fastp`, `fastp_split`, and `fastp_umi` feed the BWA-MEM and BWA-MEM2 aligners: `bwa_mem`/`bwa_mem2` single-part, or `bwa_mem_split`/`bwa_mem2_split` per split part, gathered by `bam_merge_index_samtools`. The aligned BAM is deduplicated by `gatk_markduplicates` (CRAM mode) or `gatk_markduplicates_bam` (BAM mode); the deduplicated file also feeds `mosdepth_md` and `samtools_stats_md`.
-
-**4. Base quality recalibration** — `gatk_baserecalibrator` builds the recalibration table and `gatk_applybqsr` applies it; `samtools_index_recal` indexes the recalibrated alignment (required upstream of `mosdepth_recal`), while `samtools_stats_recal` summarizes it.
-
-**5. Variant calling — parallel, config-gated** — all callers share the recalibrated alignment: default `gatk_haplotypecaller` → `gatk_cnnscorevariants` → `gatk_filtervarianttranches`; optional `freebayes` (→ `bcftools_sort_freebayes` → `tabix_freebayes`/`vcffilter_freebayes` → `tabix_freebayes_filt`), `strelka_germline`, `manta_germline`, `bcftools_mpileup_call`, `tiddit_sv` → `tabix_tiddit`, `deepvariant`; cohort checks via `samtools_reindex_bam` → `goleft_indexcov` and `bcftools_mpileup_ngscheckmate` → `ngscheckmate_ncm`. Joint germline instead chains `gatk_haplotypecaller_gvcf` → `gatk_genomicsdbimport` → `gatk_genotypegvcfs` → `bcftools_sort_joint` → `gatk_mergevcfs_joint` → `gatk_variantrecalibrator_snp`/`gatk_variantrecalibrator_indel` → `gatk_applyvqsr_snp` → `gatk_applyvqsr_indel`.
-
-**6. QC, annotation, and aggregate reporting** — each produced VCF fans out to per-caller `bcftools_stats`, `vcftools_tstv_count`, `vcftools_tstv_qual`, and `vcftools_filter_summary` QC plus an `ensemblvep_vep` annotation (e.g. `ensemblvep_vep_freebayes`, `ensemblvep_vep_joint`); with the scatter_gatk option enabled, `create_intervals_bed` → `tabix_interval` feed per-chromosome `gatk_applybqsr_scatter` and `gatk_haplotypecaller_scatter`, gathered back by `merge_index_samtools` and `gatk_mergevcfs_scatter`. Finally `multiqc` aggregates all reports.
-
-*Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described order follows the actual rule dependencies.*
-
-<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-sarek+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
-
-</div>
-</details>
 <details class="ox-flow-view">
 <summary>Exact rule DAG (multi-route truth — operational view)</summary>
 <div class="ox-dag-card ox-dag-card--wide">

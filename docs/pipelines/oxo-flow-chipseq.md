@@ -30,6 +30,22 @@ title: "ChIP-seq: peak calling, QC and differential analysis"
 </div>
 </div>
 
+<nav class="ox-tabs" aria-label="Page sections"><a href="#semantic-overview">Introduction</a><a href="#run-it">Usage</a><a href="#parameters">Parameters</a><a href="#workflow-graph">Workflow graph</a><a href="#scope">Scope</a><a href="#fidelity">Fidelity</a></nav>
+
+<details class="ox-flow-view" open id="semantic-overview">
+<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
+<div class="ox-sem-text">
+<p><strong>ChIP-seq peak calling and differential analysis pipeline</strong> (nf-core/chipseq port): given reads and a reference genome, it aligns, filters, deduplicates, calls broad or narrow peaks, quantifies the per-antibody consensus, and reports via MultiQC and IGV.</p>
+<p><strong>1. Read QC and reference prep</strong> — <code>fastqc</code> reports raw-read quality; <code>trimgalore</code> trims adapters, feeding every aligner. Gated steps <code>gtf2bed</code>, <code>blacklist_regions</code>, <code>getchromsizes</code> prepare reference files; builders <code>bwa_index_build</code>, <code>bowtie2_index_build</code>, <code>chromap_index_build</code>, <code>star_genomegenerate</code> feed their own aligner.</p>
+<p><strong>2. Alignment</strong> — one of <code>bwa_mem</code>, <code>star_align</code>, <code>bowtie2_align</code>, <code>chromap_align</code> runs per sample; all converge into <code>sort_align</code>, fanning out to the <code>index_align</code>/<code>stats_align</code>/<code>flagstat_align</code>/<code>idxstats_align</code> quartet and <code>mergesamfiles</code>; Picard <code>markduplicates</code> follows.</p>
+<p><strong>3. Filtering and library QC</strong> — <code>bamtools_filter</code> → <code>sort_name</code> → <code>bam_remove_orphans</code> → <code>sort_filter</code> → <code>index_filter</code>/<code>stats_filter</code>/<code>flagstat_filter</code>/<code>idxstats_filter</code>, while <code>preseq</code>, <code>picard_collectmultiplemetrics</code>, <code>phantompeakqualtools</code> → <code>multiqc_custom_phantompeakqualtools</code> run in parallel.</p>
+<p><strong>4. Tracks and peak calling</strong> — <code>bedtools_genomecov</code> scales coverage, <code>ucsc_bedgraphtobigwig</code> makes bigWigs, <code>deeptools_computematrix</code> feeds <code>deeptools_plotprofile</code>/<code>deeptools_plotheatmap</code>, <code>deeptools_plotfingerprint</code> contrasts IP/control, <code>khmer</code> estimates genome size; <code>macs3_callpeak</code>/<code>macs3_callpeak_narrow</code> call peaks, with <code>frip_score</code>, <code>multiqc_custom_peaks</code>, <code>homer_annotatepeaks</code>, <code>plot_macs3_qc</code>, <code>plot_homer_annotatepeaks</code>.</p>
+<p><strong>5. Consensus, quantification and reporting</strong> — <code>macs3_consensus</code> merges IP peaks into a per-antibody consensus feeding <code>homer_annotate_consensus</code> → <code>annotate_boolean_peaks</code> and <code>subread_featurecounts</code> → <code>deseq2_qc</code>; per-antibody siblings <code>macs3_consensus_multi</code>/<code>deseq2_qc_multi</code> run in multi-antibody mode. Finally <code>multiqc</code> aggregates QC and consensus into a report, and <code>igv</code> builds an IGV session over bigWigs and peaks.</p>
+<p><em>Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described order follows the actual rule dependencies.</em></p>
+<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-chipseq+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
+</div>
+</details>
+
 ## Run it
 
 ```bash
@@ -495,28 +511,6 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 ## Workflow graph
 
-<details class="ox-flow-view" open>
-<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
-<div class="ox-sem-text" markdown="1">
-
-**ChIP-seq peak calling and differential analysis pipeline** (nf-core/chipseq port): given reads and a reference genome, it aligns, filters, deduplicates, calls broad or narrow peaks, quantifies the per-antibody consensus, and reports via MultiQC and IGV.
-
-**1. Read QC and reference prep** — `fastqc` reports raw-read quality; `trimgalore` trims adapters, feeding every aligner. Gated steps `gtf2bed`, `blacklist_regions`, `getchromsizes` prepare reference files; builders `bwa_index_build`, `bowtie2_index_build`, `chromap_index_build`, `star_genomegenerate` feed their own aligner.
-
-**2. Alignment** — one of `bwa_mem`, `star_align`, `bowtie2_align`, `chromap_align` runs per sample; all converge into `sort_align`, fanning out to the `index_align`/`stats_align`/`flagstat_align`/`idxstats_align` quartet and `mergesamfiles`; Picard `markduplicates` follows.
-
-**3. Filtering and library QC** — `bamtools_filter` → `sort_name` → `bam_remove_orphans` → `sort_filter` → `index_filter`/`stats_filter`/`flagstat_filter`/`idxstats_filter`, while `preseq`, `picard_collectmultiplemetrics`, `phantompeakqualtools` → `multiqc_custom_phantompeakqualtools` run in parallel.
-
-**4. Tracks and peak calling** — `bedtools_genomecov` scales coverage, `ucsc_bedgraphtobigwig` makes bigWigs, `deeptools_computematrix` feeds `deeptools_plotprofile`/`deeptools_plotheatmap`, `deeptools_plotfingerprint` contrasts IP/control, `khmer` estimates genome size; `macs3_callpeak`/`macs3_callpeak_narrow` call peaks, with `frip_score`, `multiqc_custom_peaks`, `homer_annotatepeaks`, `plot_macs3_qc`, `plot_homer_annotatepeaks`.
-
-**5. Consensus, quantification and reporting** — `macs3_consensus` merges IP peaks into a per-antibody consensus feeding `homer_annotate_consensus` → `annotate_boolean_peaks` and `subread_featurecounts` → `deseq2_qc`; per-antibody siblings `macs3_consensus_multi`/`deseq2_qc_multi` run in multi-antibody mode. Finally `multiqc` aggregates QC and consensus into a report, and `igv` builds an IGV session over bigWigs and peaks.
-
-*Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described order follows the actual rule dependencies.*
-
-<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-chipseq+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
-
-</div>
-</details>
 <details class="ox-flow-view">
 <summary>Exact rule DAG (multi-route truth — operational view)</summary>
 <div class="ox-dag-card ox-dag-card--wide">

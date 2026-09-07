@@ -30,6 +30,22 @@ title: "Fetching public sequencing data: FastQ download, metadata and sampleshee
 </div>
 </div>
 
+<nav class="ox-tabs" aria-label="Page sections"><a href="#semantic-overview">Introduction</a><a href="#run-it">Usage</a><a href="#parameters">Parameters</a><a href="#workflow-graph">Workflow graph</a><a href="#scope">Scope</a><a href="#fidelity">Fidelity</a></nav>
+
+<details class="ox-flow-view" open id="semantic-overview">
+<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
+<div class="ox-sem-text">
+<p><strong>SRA data fetch pipeline</strong>: give it a list of SRA/ENA/DDBJ accessions (e.g. <code>SRR9984183</code>) and it validates them, fetches run metadata, downloads FASTQ through several backends, and emits a standard samplesheet ready for nf-core pipelines — plus a MultiQC config.</p>
+<p><strong>1. Input validation</strong> — the <code>ids</code> sample group defines the accessions to fetch; <code>check_ids</code> validates them against the SRA/ENA/DDBJ/GEO accession patterns and deduplicates; everything downstream is gated on this list, and <code>sra_ids_to_runinfo</code> pulls the ENA run metadata (runinfo) for each validated id.</p>
+<p><strong>2. Download manifest</strong> — <code>sra_runinfo_to_ftp</code> turns the metadata into one download manifest per sample; this is the common entry point of every download route.</p>
+<p><strong>3. FASTQ download (parallel tool backends)</strong> — from the manifest the pipeline fans out several download routes: <code>sra_fastq_ftp</code> over FTP; <code>sra_prefetch</code> prefetches and <code>sra_fastq_sratools</code> converts to FASTQ; <code>sra_fastq_aspera</code> over Aspera; plus a fallback chain (<code>sra_prefetch_fallback</code> → <code>sra_fastq_sratools_fallback</code>, and <code>sra_fastq_ftp_aspera_fallback</code>) and a dbGaP-specific chain (<code>sra_prefetch_dbgap</code> → <code>sra_fastq_sratools_dbgap</code>). Which route actually runs depends on the data source and runtime conditions — the results converge into the same samplesheet generation step.</p>
+<p><strong>4. Samplesheet assembly and aggregation</strong> — <code>sra_to_samplesheet</code> consolidates metadata and all FASTQ routes into the downstream samplesheet; <code>combine_samplesheets</code> and <code>combine_mappings</code> then merge per-sample sheets and mappings (the <code>nf_core_pipeline</code> config can tailor row format for a specific downstream nf-core pipeline).</p>
+<p><strong>5. Reporting</strong> — after the mappings are combined, <code>multiqc_mappings_config</code> generates the MultiQC configuration used by the downstream aggregate report.</p>
+<p><em>Verified: every rule name above is a real rule of <code>main.oxoflow</code> (oxo-flow validate); the described order follows the actual rule dependencies.</em></p>
+<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-fetchngs+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
+</div>
+</details>
+
 ## Run it
 
 ```bash
@@ -169,28 +185,6 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 ## Workflow graph
 
-<details class="ox-flow-view" open>
-<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
-<div class="ox-sem-text" markdown="1">
-
-**SRA data fetch pipeline**: give it a list of SRA/ENA/DDBJ accessions (e.g. `SRR9984183`) and it validates them, fetches run metadata, downloads FASTQ through several backends, and emits a standard samplesheet ready for nf-core pipelines — plus a MultiQC config.
-
-**1. Input validation** — the `ids` sample group defines the accessions to fetch; `check_ids` validates them against the SRA/ENA/DDBJ/GEO accession patterns and deduplicates; everything downstream is gated on this list, and `sra_ids_to_runinfo` pulls the ENA run metadata (runinfo) for each validated id.
-
-**2. Download manifest** — `sra_runinfo_to_ftp` turns the metadata into one download manifest per sample; this is the common entry point of every download route.
-
-**3. FASTQ download (parallel tool backends)** — from the manifest the pipeline fans out several download routes: `sra_fastq_ftp` over FTP; `sra_prefetch` prefetches and `sra_fastq_sratools` converts to FASTQ; `sra_fastq_aspera` over Aspera; plus a fallback chain (`sra_prefetch_fallback` → `sra_fastq_sratools_fallback`, and `sra_fastq_ftp_aspera_fallback`) and a dbGaP-specific chain (`sra_prefetch_dbgap` → `sra_fastq_sratools_dbgap`). Which route actually runs depends on the data source and runtime conditions — the results converge into the same samplesheet generation step.
-
-**4. Samplesheet assembly and aggregation** — `sra_to_samplesheet` consolidates metadata and all FASTQ routes into the downstream samplesheet; `combine_samplesheets` and `combine_mappings` then merge per-sample sheets and mappings (the `nf_core_pipeline` config can tailor row format for a specific downstream nf-core pipeline).
-
-**5. Reporting** — after the mappings are combined, `multiqc_mappings_config` generates the MultiQC configuration used by the downstream aggregate report.
-
-*Verified: every rule name above is a real rule of `main.oxoflow` (oxo-flow validate); the described order follows the actual rule dependencies.*
-
-<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-fetchngs+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
-
-</div>
-</details>
 <details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card ox-dag-card--wide" markdown="1">

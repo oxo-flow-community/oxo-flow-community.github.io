@@ -30,6 +30,22 @@ title: "Genome browser tracks: coverage, gene plots and UCSC hub"
 </div>
 </div>
 
+<nav class="ox-tabs" aria-label="Page sections"><a href="#semantic-overview">Introduction</a><a href="#run-it">Usage</a><a href="#parameters">Parameters</a><a href="#workflow-graph">Workflow graph</a><a href="#scope">Scope</a><a href="#fidelity">Fidelity</a></nav>
+
+<details class="ox-flow-view" open id="semantic-overview">
+<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
+<div class="ox-sem-text">
+<p><strong>Genome browser track generation pipeline</strong>: given aligned BAMs, it merges sample groups, computes bigWig coverage, and renders genomic track plots plus a UCSC genome browser hub — with an optional single-cell split path and an opt-in IGV report.</p>
+<p><strong>1. Inputs and documentation exports</strong> — <code>annot_export</code>, <code>gene_list_export</code>, and <code>config_export</code> copy the sample annotation, gene list, and workflow config into the results configs dir; <code>annotate_genes</code> extracts gene coordinates, isoform counts, and y-max from the gene list and the genome BED.</p>
+<p><strong>2. Bulk coverage chain</strong> — <code>merge_bams</code> merges the BAMs of each annotation group with samtools and indexes the merged BAM; <code>coverage</code> generates one bigWig per group with bamCoverage.</p>
+<p><strong>3. Single-cell chain (runtime-conditional)</strong> — when sc_enabled is set, <code>split_sc_bam</code> splits each single-cell BAM into per-group BAMs by cell barcode (sinto filterbarcodes), <code>merge_sc_bams</code> merges those splits, and <code>coverage_sc</code> yields the bigWig per sc group. Both routes write bigWigs into the same directory, which the plots and hub read by group name.</p>
+<p><strong>4. Plotting and hub</strong> — <code>plot_tracks</code> renders gene/region track plots via gtracks and <code>ucsc_hub</code> assembles the hub files; both run after <code>coverage</code>, and <code>annotate_genes</code> feeds the plot directly.</p>
+<p><strong>5. Opt-in reporting</strong> — with igv_report_enabled set, <code>make_bed</code> projects the annotated genes to BED4, then <code>igv_report</code> builds the self-contained HTML report over the merged BAMs; <code>env_export_pygenometracks</code>, <code>env_export_sinto</code>, and <code>env_export_igv_reports</code> export pinned conda environments when enabled.</p>
+<p><em>Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described order follows the actual rule dependencies.</em></p>
+<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-genome-tracks+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
+</div>
+</details>
+
 ## Run it
 
 ```bash
@@ -235,28 +251,6 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 ## Workflow graph
 
-<details class="ox-flow-view" open>
-<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
-<div class="ox-sem-text" markdown="1">
-
-**Genome browser track generation pipeline**: given aligned BAMs, it merges sample groups, computes bigWig coverage, and renders genomic track plots plus a UCSC genome browser hub — with an optional single-cell split path and an opt-in IGV report.
-
-**1. Inputs and documentation exports** — `annot_export`, `gene_list_export`, and `config_export` copy the sample annotation, gene list, and workflow config into the results configs dir; `annotate_genes` extracts gene coordinates, isoform counts, and y-max from the gene list and the genome BED.
-
-**2. Bulk coverage chain** — `merge_bams` merges the BAMs of each annotation group with samtools and indexes the merged BAM; `coverage` generates one bigWig per group with bamCoverage.
-
-**3. Single-cell chain (runtime-conditional)** — when sc_enabled is set, `split_sc_bam` splits each single-cell BAM into per-group BAMs by cell barcode (sinto filterbarcodes), `merge_sc_bams` merges those splits, and `coverage_sc` yields the bigWig per sc group. Both routes write bigWigs into the same directory, which the plots and hub read by group name.
-
-**4. Plotting and hub** — `plot_tracks` renders gene/region track plots via gtracks and `ucsc_hub` assembles the hub files; both run after `coverage`, and `annotate_genes` feeds the plot directly.
-
-**5. Opt-in reporting** — with igv_report_enabled set, `make_bed` projects the annotated genes to BED4, then `igv_report` builds the self-contained HTML report over the merged BAMs; `env_export_pygenometracks`, `env_export_sinto`, and `env_export_igv_reports` export pinned conda environments when enabled.
-
-*Verified: every rule name above is a real rule of main.oxoflow (oxo-flow validate); the described order follows the actual rule dependencies.*
-
-<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-genome-tracks+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
-
-</div>
-</details>
 <details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card ox-dag-card--wide" markdown="1">

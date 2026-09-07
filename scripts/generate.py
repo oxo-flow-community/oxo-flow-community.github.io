@@ -503,29 +503,6 @@ def dag_section(p: dict, configs: dict) -> list[str]:
     # picture would appear twice — the detail card is omitted then.
     info = configs.get(name, {}).get("graph") or {}
     primary_is_rule = bool(info.get("is_rule_level"))
-    # LLM-authored plain-language semantic overview (scripts/semantic_maps/
-    # <name>.md): a text-only "semantic preview" of the pipeline — every
-    # step is named with its real rule, nothing invented; rendered as
-    # markdown, updated by editing the .md file (no figure re-generation).
-    sem_doc = pathlib.Path(ROOT) / "scripts" / "semantic_maps" / f"{name}.md"
-    if sem_doc.is_file():
-        sem_text = sem_doc.read_text(encoding="utf-8").strip()
-        cards += [
-            '<details class="ox-flow-view" open>',
-            '<summary>Semantic overview — plain-language walkthrough '
-            '<span class="ox-badge ox-badge--sem">text</span></summary>',
-            '<div class="ox-sem-text" markdown="1">',
-            "",
-            sem_text,
-            "",
-            f'<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/'
-            f'oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+{_esc(name)}+semantic+text+'
-            f'correction&body=Which step or rule name looks wrong (paste the step/rule names)">'
-            f'Report a correction to this overview</a></p>',
-            "",
-            "</div>",
-            "</details>",
-        ]
     rules_svg = OUT_PAGES.parent / "assets" / "dag" / f"{name}-rules.svg"
     if rules_svg.is_file() and not primary_is_rule:
         rules_wide = " ox-dag-card--wide" if _intrinsic_width(rules_svg) > 1400 else ""
@@ -623,6 +600,10 @@ def make_page(p: dict, configs: dict) -> str:
         "</div>",
         "</div>",
         "",
+        section_tabs(p, bool(src), bool(fidelity)),
+        "",
+        *semantic_card(p),
+        "",
         "## Run it" if "dry-run" not in p["quickstart"] else "## Preview the plan",
         "",
         "```bash",
@@ -685,6 +666,67 @@ def make_page(p: dict, configs: dict) -> str:
             "repository's NOTICE for full attribution.",
         ]
     return "\n".join(parts) + "\n"
+
+
+def sem_to_html(md: str) -> str:
+    """Tiny renderer for the semantic-overview text (markdown subset:
+    paragraphs, **bold**, `code`, *emphasis*) — the card sits inside a raw
+    HTML <details> block where mkdocs' inline markdown would not run."""
+    import html as _html
+    parts = []
+    for para in md.split("\n\n"):
+        p = para.strip()
+        if not p:
+            continue
+        p = _html.escape(p, quote=False)
+        p = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", p)
+        p = re.sub(r"`([^`]+)`", r"<code>\1</code>", p)
+        m = re.fullmatch(r"\*(.+)\*", p)
+        if m:
+            p = f"<em>{m.group(1)}</em>"
+        parts.append(f"<p>{p}</p>")
+    return "\n".join(parts)
+
+
+def semantic_card(p: dict) -> list[str]:
+    """LLM-authored plain-language semantic overview (scripts/semantic_maps/
+    <name>.md) — the page's Introduction body, right under the hero: every
+    step is named with its real rule, nothing invented; rendered as
+    markdown, updated by editing the .md file (no figure re-generation)."""
+    sem_doc = pathlib.Path(ROOT) / "scripts" / "semantic_maps" / f"{p['name']}.md"
+    if not sem_doc.is_file():
+        return []
+    sem_text = sem_doc.read_text(encoding="utf-8").strip()
+    return [
+        '<details class="ox-flow-view" open id="semantic-overview">',
+        '<summary>Semantic overview — plain-language walkthrough '
+        '<span class="ox-badge ox-badge--sem">text</span></summary>',
+        '<div class="ox-sem-text">',
+        sem_to_html(sem_text),
+        f'<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/'
+        f'oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+{_esc(p["name"])}+semantic+text+'
+        f'correction&body=Which step or rule name looks wrong (paste the step/rule names)">'
+        f'Report a correction to this overview</a></p>',
+        "</div>",
+        "</details>",
+    ]
+
+
+def section_tabs(p: dict, has_scope: bool, has_fidelity: bool) -> str:
+    """genomeqc-style pipeline sub-navigation: sticky anchor tabs for the
+    page's own sections (Introduction → Usage → Parameters → …)."""
+    anchors = [
+        ("#semantic-overview", "Introduction"),
+        ("#preview-the-plan" if "dry-run" in p["quickstart"] else "#run-it", "Usage"),
+        ("#parameters", "Parameters"),
+        ("#workflow-graph", "Workflow graph"),
+    ]
+    if has_scope:
+        anchors.append(("#scope", "Scope"))
+    if has_fidelity:
+        anchors.append(("#fidelity", "Fidelity"))
+    items = "".join(f'<a href="{h}">{t}</a>' for h, t in anchors)
+    return f'<nav class="ox-tabs" aria-label="Page sections">{items}</nav>'
 
 
 def main() -> int:
