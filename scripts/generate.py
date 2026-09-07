@@ -491,6 +491,7 @@ def dag_section(p: dict, configs: dict) -> list[str]:
     info = configs.get(name, {}).get("graph") or {}
     primary_is_rule = bool(info.get("is_rule_level"))
     semantic = info.get("semantic") or {}
+    _sem_doc = pathlib.Path(ROOT) / "scripts" / "semantic_maps" / f"{name}.md"
     # Short-name -> full-rule mapping table (scripts/semantic_maps/<name>.md)
     _sem_howto = ""
     if _sem_doc.is_file():
