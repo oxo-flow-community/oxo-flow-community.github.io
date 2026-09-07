@@ -497,14 +497,14 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <details class="ox-flow-view">
 <summary>Rule-level detail (exact DAG)</summary>
 <div class="ox-dag-card ox-dag-card--wide">
-<img src="/assets/dag/oxo-flow-sarek-rules.svg?v=b6f09ad42b" alt="oxo-flow-sarek rule-level detail" loading="lazy">
+<a href="/assets/dag/oxo-flow-sarek-rules.svg?v=b6f09ad42b" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-sarek-rules.svg?v=b6f09ad42b" alt="oxo-flow-sarek rule-level detail" loading="lazy"></a>
 </div>
 </details>
 <details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 
-<img src="/assets/dag/oxo-flow-sarek.svg?v=2df904bf16" alt="oxo-flow-sarek pipeline overview" loading="lazy">
+<a href="/assets/dag/oxo-flow-sarek.svg?v=2df904bf16" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-sarek.svg?v=2df904bf16" alt="oxo-flow-sarek pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-sarek — GATK best-practice variant calling for whole-genome and whole-exome sequencing (WGS/WES), germline by default: FastQC quality control, fastp trimming and splitting, BWA-MEM (or BWA-MEM2) alignment, MarkDuplicates with CRAM or BAM output, base quality score recalibration (BQSR), single-sample HaplotypeCaller variant calling with CNN 1D scoring and tranche filtering, VEP annotation, per-sample VCF QC and a final MultiQC report.</p>
 

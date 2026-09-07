@@ -1006,10 +1006,13 @@ a.ox-cta:hover {
 @media (max-width: 76.18em) {
   .ox-issue-link { display: none; }
 }
-/* Wide maps: keep intrinsic size and let the card scroll horizontally;
-   the 62vh vertical cap already applies via .ox-flow-view[open]. */
+/* Wide maps: fit the whole figure into the card viewport (the
+   62vh cap already applies via .ox-flow-view[open]) and let a click
+   open the native-resolution SVG for zooming. */
 .ox-dag-card--wide img {
-  max-width: none;
+  max-width: 100%;
+  max-height: 56vh;
   width: auto;
-  margin-left: 0;
+  height: auto;
+  margin: 0 auto;
 }

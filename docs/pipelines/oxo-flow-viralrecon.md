@@ -544,14 +544,14 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <details class="ox-flow-view">
 <summary>Rule-level detail (exact DAG)</summary>
 <div class="ox-dag-card ox-dag-card--wide">
-<img src="/assets/dag/oxo-flow-viralrecon-rules.svg?v=7012af587b" alt="oxo-flow-viralrecon rule-level detail" loading="lazy">
+<a href="/assets/dag/oxo-flow-viralrecon-rules.svg?v=7012af587b" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-viralrecon-rules.svg?v=7012af587b" alt="oxo-flow-viralrecon rule-level detail" loading="lazy"></a>
 </div>
 </details>
 <details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 
-<img src="/assets/dag/oxo-flow-viralrecon.svg?v=04c206cb25" alt="oxo-flow-viralrecon pipeline overview" loading="lazy">
+<a href="/assets/dag/oxo-flow-viralrecon.svg?v=04c206cb25" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-viralrecon.svg?v=04c206cb25" alt="oxo-flow-viralrecon pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-viralrecon — Turns paired-end Illumina reads into a complete viral genomics report: read QC and trimming (FastQC, fastp), host-sequence removal (Kraken2), alignment to a user-provided reference genome (Bowtie2), primer trimming for amplicon runs, intrahost variant calling and annotation (iVar or bcftools, snpEff/SnpSift), consensus building with low-coverage masking (bcftools or ivar), lineage assignment and deconvolution (Pangolin, Nextclade, Freyja), de novo assembly with QC (SPAdes, Unicycler, minia, Bandage, BLAST, QUAST, ABACAS, plasmidID), and a single MultiQC report.</p>
 

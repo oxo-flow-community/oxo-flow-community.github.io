@@ -77,7 +77,12 @@ def _asset_img(rel_path: str, alt: str) -> str:
         version = hashlib.sha1(addr.read_bytes()).hexdigest()[:10]
     except OSError:
         version = "0"
-    return f'<img src="{abs_path}?v={version}" alt="{alt}" loading="lazy">'
+    href = abs_path + f"?v={version}"
+    return (
+        f'<a href="{href}" target="_blank" rel="noopener" '
+        f'title="Open at native resolution">'
+        f'<img src="{href}" alt="{alt}" loading="lazy"></a>'
+    )
 
 
 def _graph_note() -> str:

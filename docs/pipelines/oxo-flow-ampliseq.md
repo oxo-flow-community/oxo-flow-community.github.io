@@ -478,14 +478,14 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <details class="ox-flow-view">
 <summary>Rule-level detail (exact DAG)</summary>
 <div class="ox-dag-card ox-dag-card--wide">
-<img src="/assets/dag/oxo-flow-ampliseq-rules.svg?v=ab829f5c0f" alt="oxo-flow-ampliseq rule-level detail" loading="lazy">
+<a href="/assets/dag/oxo-flow-ampliseq-rules.svg?v=ab829f5c0f" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-ampliseq-rules.svg?v=ab829f5c0f" alt="oxo-flow-ampliseq rule-level detail" loading="lazy"></a>
 </div>
 </details>
 <details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 
-<img src="/assets/dag/oxo-flow-ampliseq.svg?v=9d7eac4cf3" alt="oxo-flow-ampliseq pipeline overview" loading="lazy">
+<a href="/assets/dag/oxo-flow-ampliseq.svg?v=9d7eac4cf3" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-ampliseq.svg?v=9d7eac4cf3" alt="oxo-flow-ampliseq pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-ampliseq — Amplicon sequencing analysis (16S/ITS) that takes raw paired-end reads through FastQC quality control, cutadapt primer trimming (incl.</p>
 
