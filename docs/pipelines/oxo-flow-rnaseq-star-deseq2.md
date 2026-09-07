@@ -300,10 +300,35 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 ## Workflow graph
 
 <details class="ox-flow-view" open>
+<summary>Semantic overview <span class="ox-badge ox-badge--sem">author-side</span></summary>
+<div class="ox-dag-card" markdown="1">
+
+<a href="/assets/dag/oxo-flow-rnaseq-star-deseq2-semantic.svg?v=d5627459c0" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-rnaseq-star-deseq2-semantic.svg?v=d5627459c0" alt="oxo-flow-rnaseq-star-deseq2 semantic overview" loading="lazy"></a>
+
+<p class="ox-dag-caption">Semantic route drawing — every station is a real rule of this workflow, every edge a real data dependency of the engine DAG; groups and junction are the author-side condensation (details below).</p>
+
+</div>
+</details>
+<div class="ox-sem-notes" markdown="1">
+
+### How this semantic view abstracts the rule-level graph
+
+The workflow has **31 rules / ? edges**; the semantic drawing shows **23 stops** — grouped stations (e.g. `star_align_raw` rides its `star_align` lane; the 8 `rseqc_*` checks appear as one `rseqc QC` stop; the 3 PCA stops appear as `DESeq2 PCA`) and `_aligned` is a hidden junction (join point, shown without a label), its 4 in-edges and 2 out-edges are all real DAG edges. Every edge of this map is verified to be a real edge of the exact DAG (subset check at generation time); anything condensed is listed in the rule-level detail card below. Not shown here: auxiliary terminals (`bwa_index`, `genome_faidx`) and the individual per-check QC fan-outs.
+
+<a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Bgraph%5D+oxo-flow-rnaseq-star-deseq2+semantic+map+correction&body=Which station or edge looks wrong (paste the station/edge names)">Report a correction to this map</a>
+
+</div>
+<details class="ox-flow-view">
+<summary>Rule-level detail (exact DAG)</summary>
+<div class="ox-dag-card ox-dag-card--wide">
+<a href="/assets/dag/oxo-flow-rnaseq-star-deseq2-rules.svg?v=cf22bd8a0f" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-rnaseq-star-deseq2-rules.svg?v=cf22bd8a0f" alt="oxo-flow-rnaseq-star-deseq2 rule-level detail" loading="lazy"></a>
+</div>
+</details>
+<details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card ox-dag-card--wide" markdown="1">
 
-<a href="/assets/dag/oxo-flow-rnaseq-star-deseq2.svg?v=cf22bd8a0f" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-rnaseq-star-deseq2.svg?v=cf22bd8a0f" alt="oxo-flow-rnaseq-star-deseq2 pipeline overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-rnaseq-star-deseq2.svg?v=642d241c9b" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-rnaseq-star-deseq2.svg?v=642d241c9b" alt="oxo-flow-rnaseq-star-deseq2 pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-rnaseq-star-deseq2 — End-to-end RNA-seq differential-expression analysis with STAR and DESeq2: Ensembl reference download, fastp trimming, STAR alignment with gene counts, RSeQC QC + MultiQC, count matrix with technical-replicate collapse, Ensembl biomaRt gene-symbol annotation, and DESeq2 (normalized counts, PCA plots, per-contrast results with ashr shrinkage and MA plots).</p>
 

@@ -1019,3 +1019,28 @@ a.ox-cta:hover {
   height: auto;
   margin: 0 auto;
 }
+/* Semantic overview notes block + correction link */
+.ox-sem-notes {
+  margin: 0.2rem 0 1.2rem;
+  padding: 0.9rem 1rem;
+  border-left: 3px solid var(--nfm-line--report, #F2CF5B);
+  background: var(--md-default-bg-color--subtle, rgba(0,0,0,0.03));
+  font-size: 0.78rem;
+}
+.ox-issue-mini {
+  display: inline-block;
+  margin-top: 0.6rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.72rem;
+  border: 1px solid var(--edge);
+  padding: 0.25rem 0.6rem;
+  border-radius: 3px;
+}
+.ox-badge--sem {
+  background: #F2CF5B;
+  color: #4a400c;
+  padding: 0.1rem 0.45rem;
+  border-radius: 8px;
+  font-size: 0.6em;
+  vertical-align: middle;
+}

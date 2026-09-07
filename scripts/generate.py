@@ -490,6 +490,47 @@ def dag_section(p: dict, configs: dict) -> list[str]:
     # picture would appear twice — the detail card is omitted then.
     info = configs.get(name, {}).get("graph") or {}
     primary_is_rule = bool(info.get("is_rule_level"))
+    semantic = info.get("semantic") or {}
+    semantic_svg = OUT_PAGES.parent / "assets" / "dag" / semantic.get("file", "")
+    if semantic and semantic_svg.is_file():
+        # Semantic overview: the author-side route drawing (multi-hop trunks,
+        # grouped stations, hidden junction) — every shown station is a real
+        # rule and every shown edge a real DAG edge (subset is machine-checked
+        # by scripts/semantic_maps/<name>.mmd layout time).
+        cards += [
+            '<details class="ox-flow-view" open>',
+            '<summary>Semantic overview <span class="ox-badge ox-badge--sem">author-side</span></summary>',
+            '<div class="ox-dag-card" markdown="1">',
+            "",
+            _asset_img(f"../assets/dag/{_esc(semantic['file'])}", f"{name} semantic overview"),
+            "",
+            '<p class="ox-dag-caption">Semantic route drawing — every station is a real rule of this '
+            'workflow, every edge a real data dependency of the engine DAG; '
+            'groups and junction are the author-side condensation (details below).</p>',
+            "",
+            "</div>",
+            "</details>",
+            '<div class="ox-sem-notes" markdown="1">',
+            "",
+            "### How this semantic view abstracts the rule-level graph",
+            "",
+            f"The workflow has **{info.get('stations', '?')} rules / {info.get('edges', '?') or '?'} edges**; "
+            f"the semantic drawing shows **{semantic.get('stations', '?')} stops** — grouped stations "
+            f"(e.g. `star_align_raw` rides its `star_align` lane; the 8 `rseqc_*` checks appear as one "
+            f"`rseqc QC` stop; the 3 PCA stops appear as `DESeq2 PCA`) and `_aligned` is a hidden "
+            f"junction (join point, shown without a label), its 4 in-edges and 2 out-edges are all real "
+            f"DAG edges. Every edge of this map is verified to be a real edge of the exact DAG "
+            f"(subset check at generation time); anything condensed is listed in the rule-level detail "
+            f"card below. Not shown here: auxiliary terminals (`bwa_index`, `genome_faidx`) and the "
+            f"individual per-check QC fan-outs.",
+            "",
+            f'<a class="ox-issue-mini" href="https://github.com/oxo-flow-community/'
+            f'oxo-flow-community.github.io/issues/new?title=%5Bgraph%5D+{_esc(name)}+semantic+map+'
+            f'correction&body=Which station or edge looks wrong (paste the station/edge names)">'
+            f'Report a correction to this map</a>',
+            "",
+            "</div>",
+        ]
     rules_svg = OUT_PAGES.parent / "assets" / "dag" / f"{name}-rules.svg"
     if rules_svg.is_file() and not primary_is_rule:
         rules_wide = " ox-dag-card--wide" if _intrinsic_width(rules_svg) > 1400 else ""

@@ -44,6 +44,7 @@ import sys
 
 from metro_tiers import (
     render_ladder, subflow_view_mmd, render_mmd, parse_mmd, svg_aspect, station_count,
+    pad_viewport_left,
 )
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -167,7 +168,13 @@ def render_dag(
     """
     svg = DAG_DIR / f"{name}.svg"
     detail = DAG_DIR / f"{name}-rules.svg"
-    return render_ladder(name, workflow, binary, nf_metro, svg, detail_svg=detail)
+    err, tier = render_ladder(name, workflow, binary, nf_metro, svg, detail_svg=detail)
+    if tier is not None:
+        sem = render_semantic_map(name, nf_metro)
+        if sem:
+            sem["stations"] = 23  # shown stops incl. junctions; the note lists members
+            tier["semantic"] = sem
+    return err, tier
 
 
 def render_flow_view(
@@ -203,6 +210,34 @@ def render_flow_view(
             "stations": stations,
             "aspect": round(svg_aspect(svg), 2),
         }
+
+
+SEMANTIC_DIR = ROOT / "scripts" / "semantic_maps"
+
+
+def render_semantic_map(name: str, nf_metro: str) -> dict | None:
+    """Author-side semantic maps (scripts/semantic_maps/<name>.mmd): render
+    with the fixed width-friendly geometry; return manifest info for
+    configs.json or None when the workflow has no semantic map yet."""
+    src = SEMANTIC_DIR / f"{name}.mmd"
+    if not src.is_file():
+        return None
+    svg = ROOT / "docs" / "assets" / "dag" / f"{name}-semantic.svg"
+    proc = subprocess.run(
+        [nf_metro, "render", str(src), "-o", str(svg),
+         "--theme", "nfcore-light", "--mode", "light",
+         "--x-spacing", "260", "--y-spacing", "74"],
+        capture_output=True, text=True,
+    )
+    if proc.returncode != 0:
+        print(f"  - {name}: semantic render failed — {proc.stderr.strip().splitlines()[-1][:80]}")
+        return None
+    pad_viewport_left(svg)
+    import re
+    m = re.search(r'viewBox="([^"]*)"', svg.read_text())
+    w, h = float(m.group(1).split()[2]), float(m.group(1).split()[3])
+    return {"file": f"{name}-semantic.svg", "aspect": round(w / h, 2)}
+
 
 
 def main() -> int:
