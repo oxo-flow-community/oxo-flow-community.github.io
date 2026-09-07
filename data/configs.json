@@ -1130,7 +1130,7 @@
       "tier": "module-stage",
       "stations": 7,
       "is_rule_level": false,
-      "aspect": 1.69
+      "aspect": 1.56
     }
   },
   "oxo-flow-sarek": {
@@ -2165,7 +2165,7 @@
       "tier": "module-stage",
       "stations": 4,
       "is_rule_level": false,
-      "aspect": 1.52
+      "aspect": 1.76
     }
   },
   "oxo-flow-scrnaseq": {
@@ -3931,7 +3931,7 @@
       "tier": "module-stage",
       "stations": 10,
       "is_rule_level": false,
-      "aspect": 1.8
+      "aspect": 1.49
     }
   },
   "oxo-flow-ampliseq": {
@@ -4558,7 +4558,7 @@
       "tier": "module-stage",
       "stations": 7,
       "is_rule_level": false,
-      "aspect": 1.91
+      "aspect": 2.41
     }
   },
   "oxo-flow-chipseq": {
@@ -5321,7 +5321,7 @@
       "tier": "module-stage",
       "stations": 8,
       "is_rule_level": false,
-      "aspect": 2.25
+      "aspect": 2.35
     }
   },
   "oxo-flow-atacseq": {
@@ -7187,10 +7187,10 @@
       }
     ],
     "graph": {
-      "tier": "rule-sections",
+      "tier": "rule-flat",
       "stations": 52,
       "is_rule_level": true,
-      "aspect": 1.77
+      "aspect": 0.89
     }
   },
   "oxo-flow-viralrecon": {
@@ -7985,7 +7985,7 @@
       "tier": "module-stage",
       "stations": 4,
       "is_rule_level": false,
-      "aspect": 1.69
+      "aspect": 1.95
     }
   },
   "oxo-flow-eager": {
@@ -9474,7 +9474,7 @@
       "tier": "module-stage",
       "stations": 8,
       "is_rule_level": false,
-      "aspect": 1.51
+      "aspect": 1.88
     }
   },
   "oxo-flow-fetchngs": {
@@ -9947,7 +9947,7 @@
       "tier": "rule-flat",
       "stations": 31,
       "is_rule_level": true,
-      "aspect": 1.07
+      "aspect": 1.04
     }
   },
   "oxo-flow-varlociraptor": {
@@ -10270,7 +10270,7 @@
       "tier": "module-stage",
       "stations": 18,
       "is_rule_level": false,
-      "aspect": 1.83
+      "aspect": 1.82
     }
   },
   "oxo-flow-snparcher": {
@@ -11914,7 +11914,7 @@
       "tier": "rule-sections",
       "stations": 16,
       "is_rule_level": true,
-      "aspect": 1.18
+      "aspect": 1.27
     }
   },
   "oxo-flow-mixscape": {
@@ -12574,7 +12574,7 @@
       "tier": "module-stage",
       "stations": 5,
       "is_rule_level": false,
-      "aspect": 1.31
+      "aspect": 1.39
     }
   },
   "oxo-flow-unsupervised": {
@@ -14659,13 +14659,13 @@
       "tier": "module-stage",
       "stations": 17,
       "is_rule_level": false,
-      "aspect": 1.02
+      "aspect": 1.11
     },
     "flow_views": {
       "dna": {
         "label": "DNA \u2014 WES/WGS paired, germline, CNV, tumor-only unpaired",
         "stations": 10,
-        "aspect": 1.13
+        "aspect": 1.11
       },
       "rna": {
         "label": "RNA \u2014 fusion calling, unpaired SNV callers, isofox/quantifiers (run with -t)",
@@ -15101,7 +15101,7 @@
       "tier": "rule-sections",
       "stations": 17,
       "is_rule_level": true,
-      "aspect": 2.45
+      "aspect": 2.76
     }
   }
 }
