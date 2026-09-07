@@ -10,7 +10,7 @@ graph LR
     phix -->|main| assemblers
     assemblers -->|main| binners
     binners -->|main| bins_qc
-    bins_qc -->|main| report
-    report -->|main| taxonomy
+    bins_qc -->|main| taxonomy
+    taxonomy -->|main| report
     phix -->|side| bins_qc
     assemblers -->|side| bins_qc

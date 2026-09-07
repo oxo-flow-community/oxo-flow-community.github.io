@@ -6650,10 +6650,10 @@
       }
     ],
     "graph": {
-      "tier": "rule-flat",
+      "tier": "spine",
       "stations": 61,
-      "is_rule_level": true,
-      "aspect": 1.37,
+      "is_rule_level": false,
+      "aspect": 0.94,
       "semantic": {
         "file": "oxo-flow-methylseq-semantic.svg",
         "aspect": 1.91,
@@ -7254,7 +7254,7 @@
       "tier": "spine",
       "stations": 52,
       "is_rule_level": false,
-      "aspect": 1.17,
+      "aspect": 1.4,
       "semantic": {
         "file": "oxo-flow-nanoseq-semantic.svg",
         "aspect": 1.11,
@@ -10043,7 +10043,7 @@
       "tier": "spine",
       "stations": 31,
       "is_rule_level": false,
-      "aspect": 3.22,
+      "aspect": 3.28,
       "semantic": {
         "file": "oxo-flow-rnaseq-star-deseq2-semantic.svg",
         "aspect": 3.06,
@@ -13267,7 +13267,7 @@
       "tier": "spine",
       "stations": 61,
       "is_rule_level": false,
-      "aspect": 1.01,
+      "aspect": 1.2,
       "semantic": {
         "file": "oxo-flow-unsupervised-semantic.svg",
         "aspect": 0.91,

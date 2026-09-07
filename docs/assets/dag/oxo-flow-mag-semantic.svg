@@ -18,9 +18,9 @@
 <circle cx="1088" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
 <text x="1088" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">bins_qc</text>
 <circle cx="1278" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
-<text x="1278" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">report</text>
+<text x="1278" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">taxonomy</text>
 <circle cx="1468" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
-<text x="1468" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">taxonomy</text>
+<text x="1468" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">report</text>
 <rect x="40" y="848" width="332" height="112" rx="10" fill="#f8f8f8" stroke="#dddddd"/>
 <path d="M 54 878 L 122 878" stroke="#79706E" stroke-width="7"/>
 <text x="136" y="885" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">Main pipeline</text>
