@@ -11,3 +11,9 @@ graph LR
     sra_to_samplesheet -->|main| combine_samplesheets
     sra_to_samplesheet -->|main| combine_mappings
     combine_mappings -->|main| multiqc_mappings_config
+    sra_runinfo_to_ftp -->|side| down_ftp_prefetch
+    sra_runinfo_to_ftp -->|side| down_fallbacks
+    sra_runinfo_to_ftp -->|side| down_dbgap
+    down_ftp_prefetch -->|side| sra_to_samplesheet
+    down_fallbacks -->|side| sra_to_samplesheet
+    down_dbgap -->|side| sra_to_samplesheet
