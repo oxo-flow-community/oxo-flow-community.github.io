@@ -6594,10 +6594,10 @@
       }
     ],
     "graph": {
-      "tier": "rule-flat",
+      "tier": "spine",
       "stations": 61,
-      "is_rule_level": true,
-      "aspect": 1.32
+      "is_rule_level": false,
+      "aspect": 1.64
     }
   },
   "oxo-flow-nanoseq": {
@@ -9944,10 +9944,10 @@
       }
     ],
     "graph": {
-      "tier": "rule-flat",
+      "tier": "spine",
       "stations": 31,
-      "is_rule_level": true,
-      "aspect": 2.14
+      "is_rule_level": false,
+      "aspect": 3.24
     }
   },
   "oxo-flow-varlociraptor": {
@@ -13112,10 +13112,10 @@
       }
     ],
     "graph": {
-      "tier": "rule-sections",
+      "tier": "spine",
       "stations": 61,
-      "is_rule_level": true,
-      "aspect": 1.0
+      "is_rule_level": false,
+      "aspect": 0.89
     }
   },
   "oxo-flow-circrna": {

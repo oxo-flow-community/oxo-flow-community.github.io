@@ -580,6 +580,184 @@ def pad_viewport_left(svg: pathlib.Path) -> None:
         svg.write_text(new_text)
 
 
+def spine_mmd(text: str, max_per_line: int = 4) -> str:
+    """Condensed main-flow mmd: one trunk per stage line + off-track wings.
+
+    A full 31-station all-edges DAG makes nf-metro fold columns and bundle
+    long same-line jumps into parallel cable strands; no renderer option
+    merges into the single-thick-trunk nf-core published look (nf-metro
+    issue #1952). nf-core maps avoid it by drawing one condensed chain per
+    line. This view does the same: per line keep the endpoints plus the
+    highest-degree stops (trunk), chain them on the line label, and list
+    the rest as `%%metro off_track` — every station still defined, derived
+    branches honestly visible in the off-track band.
+    """
+    mmd = parse_mmd(text)
+    deg: dict[str, int] = {}
+    line_of: dict[str, str] = {}
+    for a, b, label in mmd["edges"]:
+        ln = label or "generic"
+        deg[a] = deg.get(a, 0) + 1
+        deg[b] = deg.get(b, 0) + 1
+        line_of.setdefault(a, ln)
+        line_of.setdefault(b, ln)
+    for st in mmd["node_labels"]:
+        line_of.setdefault(st, "generic")
+    members: dict[str, list[str]] = {}
+    for st, ln in line_of.items():
+        members.setdefault(ln, []).append(st)
+    def _key(st: str):
+        return int(st) if st.isdigit() else 9999 + hash(st) % 1000
+    decls = list(mmd["line_decls"])
+    out = []
+    for raw in text.splitlines():
+        if raw.strip().startswith("%%metro line:"):
+            out.append(raw)
+    trunks: dict[str, list[str]] = {}
+    offs: list[str] = []
+    for ln in decls:
+        mem = sorted(members.get(ln, []), key=_key)
+        if not mem:
+            continue
+        local = [mem[0], mem[-1]]
+        for st in sorted(mem, key=lambda s: deg.get(s, 0), reverse=True):
+            if len(local) >= max_per_line:
+                break
+            if st not in local:
+                local.append(st)
+        trunk = [m for m in mem if m in local]
+        trunks[ln] = trunk
+        offs += [m for m in mem if m not in trunk]
+    # off_track directive must precede graph LR
+    if offs:
+        out.append("%%metro off_track: " + ", ".join(offs))
+    out.append("")
+    out.append("graph LR")
+    for st in mmd["node_labels"]:
+        lab = mmd["node_labels"][st]
+        out.append(f'    {st}["{lab.replace(chr(34), "")}"]')
+    for ln in decls:
+        trunk = trunks.get(ln, [])
+        for i in range(len(trunk) - 1):
+            out.append(f'    {trunk[i]} -->|{ln}| {trunk[i + 1]}')
+    # cross-line trunk connections (source line label), deduped
+    seen: set[tuple[str, str]] = set()
+    for a, b, label in mmd["edges"]:
+        ln = label or "generic"
+        if a in trunks.get(ln, []) and b in sum(trunks.values(), []) and line_of.get(a) != line_of.get(b):
+            if (a, b) not in seen:
+                seen.add((a, b))
+                out.append(f'    {a} -->|{ln}| {b}')
+    out.append("")
+    return "\n".join(out)
+
+
+def spine_mmd(text: str, max_per_line: int = 6) -> str:
+    """Condensed main-flow mmd: trunk per stage line + branch stops attached.
+
+    A full all-edges DAG (31+ stations) makes nf-metro fold columns and
+    bundle long same-line jumps into parallel cable strands; no renderer
+    option merges into the published single-thick-trunk nf-core look
+    (nf-metro issue #1952; open). nf-core maps avoid it because their
+    mmd is already one chain per line.
+
+    This view condenses faithfully:
+    - per stage line keep the endpoints + the K highest-degree stops as
+      the trunk (chained on the line label);
+    - every remaining station whose nearest partner sits on some trunk is
+      ATTACHED to that partner with one edge of its own line label — the
+      branch/multiplier structure stays visible as short off-shoots;
+    - only stations fully off-trunk fall off as `%%metro off_track`.
+    The page labels the figure "condensed main flow"; the rule-level
+    detail card still shows the exact DAG.
+    """
+    mmd = parse_mmd(text)
+    deg: dict[str, int] = {}
+    line_of: dict[str, str] = {}
+    for a, b, label in mmd["edges"]:
+        ln = label or "generic"
+        deg[a] = deg.get(a, 0) + 1
+        deg[b] = deg.get(b, 0) + 1
+        line_of.setdefault(a, ln)
+        line_of.setdefault(b, ln)
+    for st in mmd["node_labels"]:
+        line_of.setdefault(st, "generic")
+    members: dict[str, list[str]] = {}
+    for st, ln in line_of.items():
+        members.setdefault(ln, []).append(st)
+    def _key(st: str):
+        return int(st) if st.isdigit() else 9999 + hash(st) % 1000
+    decls = list(mmd["line_decls"])
+    out = [raw for raw in text.splitlines() if raw.strip().startswith("%%metro line:")]
+    trunks: dict[str, list[str]] = {}
+    for ln in decls:
+        mem = sorted(members.get(ln, []), key=_key)
+        if not mem:
+            continue
+        local = [mem[0], mem[-1]]
+        for st in sorted(mem, key=lambda s: deg.get(s, 0), reverse=True):
+            if len(local) >= max_per_line:
+                break
+            if st not in local:
+                local.append(st)
+        trunks[ln] = [m for m in mem if m in local]
+    trunk_set = set(sum(trunks.values(), []))
+    # branch attach: rank candidate partners by degree; single edge per
+    # branch. Two-hop fallback: a station whose nearest partner is itself a
+    # branch attaches through it (chains), so only true orphans (no partner
+    # connected at all) end up behind `%%metro off_track`.
+    # Branch attach reproduces ONLY original edges (direction preserved;
+    # the DAG is acyclic, so no cycle can appear) where the partner is
+    # already reachable. Two-hop fallback chains branches through branches.
+    attach: list[tuple[str, str, str]] = []
+    pending = [st for st in mmd["node_labels"] if st not in trunk_set]
+    reachable: set[str] = set(trunk_set)
+    while pending:
+        progressed = False
+        still: list[str] = []
+        for st in pending:
+            candidates = []
+            for a, b, ln in mmd["edges"]:
+                if a == st and b in reachable:
+                    candidates.append((b, ln, (st, b)))
+                elif b == st and a in reachable:
+                    candidates.append((a, ln, (a, st)))
+            if candidates:
+                pt, ln, direction = max(candidates, key=lambda x: deg.get(x[0], 0))
+                attach.append((*direction, ln))
+                reachable.add(st)
+                progressed = True
+            else:
+                still.append(st)
+        pending = still
+        if not progressed:
+            break
+    offs = pending
+    out.append(("%%metro off_track: " + ", ".join(offs)) if offs else "")
+    out.append("")
+    out.append("graph LR")
+    for st in mmd["node_labels"]:
+        lab = mmd["node_labels"][st]
+        out.append(f'    {st}["{lab.replace(chr(34), "")}"]')
+    for ln in decls:
+        trunk = trunks.get(ln, [])
+        for i in range(len(trunk) - 1):
+            out.append(f'    {trunk[i]} -->|{ln}| {trunk[i + 1]}')
+    seen: set[tuple[str, str]] = set()
+    for a, b, ln in attach:
+        if (a, b) not in seen:
+            seen.add((a, b))
+            out.append(f'    {a} -->|{ln}| {b}')
+    for a, b, label in mmd["edges"]:
+        ln = label or "generic"
+        if a in trunk_set and b in trunk_set and line_of.get(a) != line_of.get(b):
+            if (a, b) not in seen:
+                seen.add((a, b))
+                out.append(f'    {a} -->|{ln}| {b}')
+    out.append("")
+    return "\n".join(out)
+
+
 def render_ladder(
     name: str,
     workflow: pathlib.Path,
@@ -716,6 +894,37 @@ def render_ladder(
         # simplicity, exactly the trade the unified rule documents.
         if best is not None and best[2]["stations"] <= 3 and detail is not None:
             best = detail
+        # Rule-level primaries at 26+ stations read as column-folded cables
+        # (nf-metro bundles long same-line jumps; issue 1952, no renderer
+        # merge). Promote the condensed SPINE view as the primary figure
+        # (one trunk per stage line + attached branches, aspect ~3:1) and
+        # keep the exact DAG as the rule-level detail.
+        if (
+            best is not None
+            and best[2].get("is_rule_level")
+            and best[2]["stations"] >= 26
+        ):
+            spine = spine_mmd(text)
+            (tmp / "spine.mmd").write_text(spine)
+            spine_svg = tmp / "spine.svg"
+            # Fixed, crowd-verified geometry (x=160 y=55) — the adaptive
+            # ladder attempts 130/70 first, which this spine fails on.
+            proc = subprocess.run(
+                [nf_metro, "render", str(tmp / "spine.mmd"), "-o", str(spine_svg),
+                 "--theme", "nfcore-light", "--mode", "light",
+                 "--x-spacing", "160", "--y-spacing", "55"],
+                capture_output=True, text=True,
+            )
+            err = (proc.stderr.strip().splitlines()[-1] if proc.returncode != 0 else None)
+            if err is None:
+                pad_viewport_left(spine_svg)
+                best = (0.0, spine_svg, {
+                    "tier": "spine",
+                    "stations": station_count(parse_mmd(spine)),
+                    "is_rule_level": False,
+                    "aspect": round(svg_aspect(spine_svg), 2),
+                })
+
         if best is None:
             return last_err, None
         # The chosen tier's render becomes the committed artifact.
