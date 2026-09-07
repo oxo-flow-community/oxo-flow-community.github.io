@@ -997,6 +997,9 @@ a.ox-cta:hover {
   line-height: 1;
   color: var(--muted);
   text-decoration: none;
+  /* Clear air from the search box (big bordered rectangle); the GitHub
+     icon behind it already carries the tighter rhythm on the right. */
+  margin-left: 0.8rem;
   margin-right: 0.3rem;
 }
 .ox-issue-link:hover {
