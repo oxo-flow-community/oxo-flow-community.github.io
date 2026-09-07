@@ -6629,7 +6629,7 @@
       "tier": "spine",
       "stations": 61,
       "is_rule_level": false,
-      "aspect": 1.31
+      "aspect": 1.49
     }
   },
   "oxo-flow-nanoseq": {
@@ -7222,7 +7222,7 @@
       "tier": "spine",
       "stations": 52,
       "is_rule_level": false,
-      "aspect": 1.57,
+      "aspect": 1.08,
       "semantic": {
         "file": "oxo-flow-nanoseq-semantic.svg",
         "aspect": 1.11,
@@ -10003,7 +10003,7 @@
       "tier": "spine",
       "stations": 31,
       "is_rule_level": false,
-      "aspect": 2.8,
+      "aspect": 3.6,
       "semantic": {
         "file": "oxo-flow-rnaseq-star-deseq2-semantic.svg",
         "aspect": 3.06,
@@ -13203,7 +13203,7 @@
       "tier": "spine",
       "stations": 61,
       "is_rule_level": false,
-      "aspect": 1.0
+      "aspect": 1.2
     }
   },
   "oxo-flow-circrna": {

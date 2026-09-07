@@ -11,12 +11,12 @@
 <circle cx="860" cy="86" r="7" fill="#79706E"/>
 <path d="M 70 86 L 70 134 Q 140 134 140 162" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
 <path d="M 70 86 L 70 134 Q 140 134 140 162" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
-<path d="M 70 86 L 70 210 Q 140 210 140 238" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
-<path d="M 70 86 L 70 286 Q 186 286 186 314" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
-<path d="M 70 86 L 70 362 Q 140 362 140 390" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
-<path d="M 70 86 L 70 438 Q 186 438 186 466" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 70 86 L 70 210 Q 312 210 312 238" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 70 86 L 70 286 Q 140 286 140 314" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 70 86 L 70 362 Q 226 362 226 390" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 70 86 L 70 438 Q 312 438 312 466" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
 <path d="M 70 86 L 70 666 Q 140 666 140 694" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
-<path d="M 186 466 Q 186 112 70 112 L 70 86" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 312 466 Q 312 112 70 112 L 70 86" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
 <path d="M 140 162 Q 140 112 70 112 L 70 86" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
 <path d="M 140 694 Q 140 112 547 112 L 547 86" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
 <path d="M 3625 1012 Q 3625 112 800 112 L 800 86" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
@@ -52,14 +52,14 @@
 <text x="158" y="169" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">star_index</text>
 <circle cx="140" cy="162" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
 <text x="158" y="169" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">star_index</text>
-<circle cx="140" cy="238" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
-<text x="158" y="245" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">bwa_index</text>
-<circle cx="186" cy="314" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
-<text x="204" y="321" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">genome_faidx</text>
-<circle cx="140" cy="390" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
-<text x="158" y="397" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">rseqc_gtf2bed</text>
-<circle cx="186" cy="466" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
-<text x="204" y="473" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">fastp_pe</text>
+<circle cx="312" cy="238" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="330" y="245" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">bwa_index</text>
+<circle cx="140" cy="314" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="158" y="321" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">genome_faidx</text>
+<circle cx="226" cy="390" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="244" y="397" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">rseqc_gtf2bed</text>
+<circle cx="312" cy="466" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="330" y="473" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">fastp_pe</text>
 <circle cx="140" cy="694" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
 <text x="158" y="701" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">fastp_se</text>
 <rect x="40" y="1076" width="332" height="112" rx="10" fill="#f8f8f8" stroke="#dddddd"/>

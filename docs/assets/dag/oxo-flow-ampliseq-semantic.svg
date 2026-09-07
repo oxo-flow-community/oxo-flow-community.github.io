@@ -3,18 +3,18 @@
 <rect x="-30" y="-30" width="3278" height="1350" fill="#ffffff"/>
 <path d="M 70 86 L 260 86 L 450 86 L 645 86 L 912 86 L 1165 86 L 1375 86 L 1642 86 L 1923 86 L 2161 86 L 2399 86 L 2589 86 L 2842 86" fill="none" stroke="#79706E" stroke-width="7" marker-mid="url(#arr)"/>
 <path d="M 1375 86 L 1375 76 Q 1445 76 1445 86" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
-<path d="M 1923 86 L 1923 210 Q 2039 210 2039 238" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
-<path d="M 2039 86 L 2039 286 Q 2109 286 2109 314" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
-<path d="M 2589 86 L 2589 590 Q 2705 590 2705 618" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
-<path d="M 2705 86 L 2705 666 Q 2775 666 2775 694" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
-<path d="M 2705 86 L 2705 742 Q 2821 742 2821 770" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
-<path d="M 2705 86 L 2705 818 Q 2775 818 2775 846" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
-<path d="M 2399 86 L 2399 970 Q 2515 970 2515 998" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
-<path d="M 260 86 L 260 970 Q 2515 970 2515 998" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
-<path d="M 1923 86 L 1923 1046 Q 2039 1046 2039 1074" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 1923 86 L 1923 210 Q 2079 210 2079 238" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 2079 86 L 2079 286 Q 2321 286 2321 314" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 2589 86 L 2589 590 Q 2659 590 2659 618" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 2659 86 L 2659 666 Q 2815 666 2815 694" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 2659 86 L 2659 742 Q 2901 742 2901 770" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 2659 86 L 2659 818 Q 2729 818 2729 846" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 2399 86 L 2399 970 Q 2555 970 2555 998" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 260 86 L 260 970 Q 2555 970 2555 998" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 1923 86 L 1923 1046 Q 1993 1046 1993 1074" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
 <path d="M 1445 86 Q 1445 96 1923 96 L 1923 86" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
-<path d="M 2109 314 Q 2109 112 2842 112 L 2842 86" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
-<path d="M 2109 314 Q 2109 112 2589 112 L 2589 86" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 2321 314 Q 2321 112 2842 112 L 2842 86" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 2321 314 Q 2321 112 2589 112 L 2589 86" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
 <circle cx="70" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
 <text x="70" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">rename</text>
 <circle cx="260" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
@@ -43,24 +43,24 @@
 <text x="2842" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">taxonomy__assign</text>
 <circle cx="1445" cy="86" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
 <text x="1463" y="93" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">DADA2__stats</text>
-<circle cx="2039" cy="238" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
-<text x="2057" y="245" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">ITSx</text>
-<circle cx="2109" cy="314" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
-<text x="2127" y="321" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">ITSx__filter</text>
-<circle cx="2705" cy="618" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
-<text x="2723" y="625" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">QIIME2__analyses</text>
-<circle cx="2775" cy="694" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
-<text x="2793" y="701" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">QIIME2__plots</text>
-<circle cx="2821" cy="770" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
-<text x="2839" y="777" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">QIIME2__comp</text>
-<circle cx="2775" cy="846" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
-<text x="2793" y="853" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">QIIME2__diversity</text>
-<circle cx="2515" cy="998" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
-<text x="2533" y="1005" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">MultiQC</text>
-<circle cx="2515" cy="998" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
-<text x="2533" y="1005" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">MultiQC</text>
-<circle cx="2039" cy="1074" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
-<text x="2057" y="1081" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">picrust</text>
+<circle cx="2079" cy="238" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="2097" y="245" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">ITSx</text>
+<circle cx="2321" cy="314" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="2339" y="321" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">ITSx__filter</text>
+<circle cx="2659" cy="618" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="2677" y="625" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">QIIME2__analyses</text>
+<circle cx="2815" cy="694" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="2833" y="701" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">QIIME2__plots</text>
+<circle cx="2901" cy="770" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="2919" y="777" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">QIIME2__comp</text>
+<circle cx="2729" cy="846" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="2747" y="853" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">QIIME2__diversity</text>
+<circle cx="2555" cy="998" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="2573" y="1005" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">MultiQC</text>
+<circle cx="2555" cy="998" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="2573" y="1005" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">MultiQC</text>
+<circle cx="1993" cy="1074" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="2011" y="1081" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">picrust</text>
 <rect x="40" y="1152" width="332" height="112" rx="10" fill="#f8f8f8" stroke="#dddddd"/>
 <path d="M 54 1182 L 122 1182" stroke="#79706E" stroke-width="7"/>
 <text x="136" y="1189" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">Main pipeline</text>

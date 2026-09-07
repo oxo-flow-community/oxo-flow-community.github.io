@@ -73,6 +73,12 @@ def draw(name: str, mmd: str) -> str:
         positions[s] = x
         x += max(STEP, widths[s] + 66)
     total_w = x + 60
+    # assist labels extend right of their nodes — extend canvas past them
+    ext = 0
+    for (b, _parent) in branches:
+        if b in positions:
+            ext = max(ext, positions[b] + int(0.72 * FONT * len(b)) + 40)
+    total_w = max(total_w, ext)
     rows: dict[str, int] = {}
     for k, (a, b) in enumerate(assist):
         if not b.startswith('_'):
@@ -94,7 +100,7 @@ def draw(name: str, mmd: str) -> str:
 
     for k, (b, parent) in enumerate(branches):
         if b not in positions:
-            positions[b] = (px(parent) if parent != 'float' else 60) + 70 + (k % 2) * 46
+            positions[b] = (px(parent) if parent != 'float' else 60) + 70 + (k % 3) * 86
     # main rail path
     pts = [(px(s), RAIL_Y) for s in chain]
     d = 'M ' + ' L '.join(f'{x} {y}' for x, y in pts)
