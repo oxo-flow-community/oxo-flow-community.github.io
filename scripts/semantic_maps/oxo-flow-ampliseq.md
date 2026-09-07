@@ -1,3 +1,11 @@
+## Semantic map - how to read it
+
+One-thread pipeline (rename reads → QC → DADA2 denoising → taxonomy assignment
+→ QIIME2 ecological analyses → reports) with three flanks: ITSx/ITS reads
+(orange), QIIME2 analysis families (blue), report collectors (yellow).
+Group edges: drawn when at least one member-to-member real edge exists;
+every hop machine-verified. Per-rule detail below.
+
 ## Short names and groups used on this map (all are real rules)
 
 | Shown | Full rule name(s) |

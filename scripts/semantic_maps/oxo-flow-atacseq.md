@@ -1,3 +1,14 @@
+## Semantic map — how to read it
+
+Atac-seq can start from several inputs at once (trimmed reads, reference
+index/prep, PE replicates) and ends in two collector hubs (the report
+collection vs the QC/metrics suite) — the route drawing below the module
+overview keeps the hub structure exact while the Overview card gives the
+compact module-level story. Main pipeline (grey): reads → align → sort +
+merge → dedup → peak calling → annotation → QC/bigwig → reports.
+Coloured routes: orange PE track, green alt aligners, blue references,
+yellow reporting.
+
 ## Short names and groups on this map (all are real rules)
 
 | Shown | Full rule name(s) |
@@ -21,8 +32,5 @@
 | multiqc | multiqc |
 | fastqc | fastqc |
 
-Read: grey Main line = reads → align → peaks/QC → reports; green Alt
-aligners (3 aligners reach the same sort station); blue References
-(index/prefix) feed both alignment and post-processing; orange PE track
-and yellow Reporting are the multiplexing/QC flanks. Every drawn edge is
-a real engine edge (subset check at generation).
+(Every drawn edge is a real engine edge; subset checks run at generation.
+No invented connections.)

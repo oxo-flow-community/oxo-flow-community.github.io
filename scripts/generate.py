@@ -492,8 +492,21 @@ def dag_section(p: dict, configs: dict) -> list[str]:
     primary_is_rule = bool(info.get("is_rule_level"))
     semantic = info.get("semantic") or {}
     # Short-name -> full-rule mapping table (scripts/semantic_maps/<name>.md)
+    _sem_howto = ""
+    if _sem_doc.is_file():
+        _lines = _sem_doc.read_text(encoding="utf-8").splitlines()
+        # take the "## Semantic map - how to read it" section body
+        try:
+            _idx = next(i for i, l in enumerate(_lines) if l.startswith("## Semantic"))
+            _howto = []
+            for _l in _lines[_idx + 1:]:
+                if _l.startswith("## "):
+                    break
+                _howto.append(_l)
+            _sem_howto = "<br>".join(re.sub(r"^[# ]+", "", x) for x in _howto if x.strip())
+        except StopIteration:
+            _sem_howto = ""
     table = ""
-    _sem_doc = pathlib.Path(ROOT) / "scripts" / "semantic_maps" / f"{name}.md"
     if _sem_doc.is_file():
         rows = []
         for _line in _sem_doc.read_text(encoding="utf-8").splitlines():
@@ -544,6 +557,10 @@ def dag_section(p: dict, configs: dict) -> list[str]:
             f"the subset property is machine-verified at generation (incl. junction composition), nothing "
             f"invented. Auxiliary terminals (`bwa_index`, `genome_faidx`) and the per-check QC fan-outs "
             f"are elided here and shown in the rule-level detail card.",
+            "",
+            "### How to read this semantic map",
+            "",
+            f"{_sem_howto}",
             "",
             f"**Short-name mapping** — every label on the map, in full:",
             "",
