@@ -194,7 +194,7 @@ def render_flow_view(
             return "no module section matched this view", None
         m = tmp / "view.mmd"
         m.write_text(view_mmd)
-        err = render_mmd(nf_metro, m, svg)
+        err = render_mmd(nf_metro, m, svg, y_spacing=72)
         if err is not None:
             return err, None
         stations = station_count(parse_mmd(view_mmd))

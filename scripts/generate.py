@@ -459,6 +459,10 @@ def dag_section(p: dict, configs: dict) -> list[str]:
             f'<summary>{_esc(vinfo.get("label", vid))}</summary>',
             '<div class="ox-dag-card">',
             _asset_img(svg_path, f"{name} {_esc(vid)} flow view"),
+            "<p class=\"ox-dag-note\">Stations are the sub-flow's modules; "
+            "a stage name above the module set tells what the module does. "
+            'Unconnected stations are conditional or auxiliary modules '
+            'without a dataflow edge on the template DAG (clindet: QC, Isofox).</p>',
             "</div>",
             "</details>",
         ]

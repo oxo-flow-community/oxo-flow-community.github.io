@@ -547,13 +547,15 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <details class="ox-flow-view" open>
 <summary>DNA — WES/WGS paired, germline, CNV, tumor-only unpaired</summary>
 <div class="ox-dag-card">
-<img src="/assets/dag/oxo-flow-clindet-dna.svg?v=9328d9d1bb" alt="oxo-flow-clindet dna flow view" loading="lazy">
+<img src="/assets/dag/oxo-flow-clindet-dna.svg?v=16ca91625e" alt="oxo-flow-clindet dna flow view" loading="lazy">
+<p class="ox-dag-note">Stations are the sub-flow's modules; a stage name above the module set tells what the module does. Unconnected stations are conditional or auxiliary modules without a dataflow edge on the template DAG (clindet: QC, Isofox).</p>
 </div>
 </details>
 <details class="ox-flow-view" open>
 <summary>RNA — fusion calling, unpaired SNV callers, isofox/quantifiers (run with -t)</summary>
 <div class="ox-dag-card">
-<img src="/assets/dag/oxo-flow-clindet-rna.svg?v=16a95dde77" alt="oxo-flow-clindet rna flow view" loading="lazy">
+<img src="/assets/dag/oxo-flow-clindet-rna.svg?v=3a8c6eea64" alt="oxo-flow-clindet rna flow view" loading="lazy">
+<p class="ox-dag-note">Stations are the sub-flow's modules; a stage name above the module set tells what the module does. Unconnected stations are conditional or auxiliary modules without a dataflow edge on the template DAG (clindet: QC, Isofox).</p>
 </div>
 </details>
 <details class="ox-flow-view">

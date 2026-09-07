@@ -101,3 +101,22 @@ never regenerates these artifacts itself (the catalog stays hermetic): PR
 checks run the drift gate and `mkdocs build --strict`, and the deploy
 workflow additionally spot-checks three representative repositories against
 the release engine before publishing.
+
+### Reader levels and how the maps serve them
+
+The catalog adopts one reading model per figure group (site-wide), so the
+"one point = one rule on one page, one point = one module on the next"
+confusion never appears:
+
+- **Bioinformatics newcomer** reads the FIRST line of a station label —
+  the *analysis stage* ("Read Trimming", "Variant Calling") — and the
+  colored lines as stage tracks; the module set on the second line is
+  detail they can ignore.
+- **Expert** reads the second line (module set: "Somatic · Germline ·
+  WGS Callers") and the off-track stations (conditional or auxiliary
+  inputs/exports), then opens "Rule-level detail (exact DAG)" for the
+  full rule graph.
+- **UI/design** keeps the figure area contract: no station label wider
+  than two wrapped lines, the legend pinned to the card surface, and the
+  primary figure always at module/module-stage granularity with
+  rule-level figures behind a collapsed card.

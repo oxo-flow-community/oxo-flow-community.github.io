@@ -391,10 +391,29 @@ def subflow_view_mmd(text: str, sections_wanted: list[str]) -> str | None:
     for name, (label, color) in mmd["line_decls"].items():
         if name in lines_used:
             out.append(f"    %%metro line: {name} | {label} | {color}")
+    stage_labels = {k: v[0] for k, v in mmd["line_decls"].items()}
     for sec in wanted:
-        out.append(
-            f'    {sid(sec)}["{mmd["sections"][sec]["title"]}"]'
-        )
+        title = mmd["sections"][sec]["title"]
+        # TWO-LINE station label: line one = what the module DOES (stage);
+        # line two = the module set (short names). A merged section title
+        # ("Somatic Callers + Germline + WGS Callers", 52 chars) was the
+        # single-line wreck that made the DNA view unreadable; stage-first
+        # reads like the published nf-core idiom for every reader level.
+        mods = []
+        for part in title.split(" + "):
+            words = part.split()
+            if words and len(part) <= 12 and len(words) <= 2:
+                mods.append(part)          # "VCF Norm", "Call Mut": keep
+            else:
+                mods.append(words[0] if words else part)
+        mods_short = " · ".join(mods)
+        if len(mods_short) > 42:
+            mods_short = " · ".join(mods[:2]) + " …"
+        stage_label = stage_labels.get(dom_stage.get(sec, "generic"))
+        if stage_label and stage_label not in ("Analysis",):
+            out.append(f'    {sid(sec)}["{stage_label}\\n{mods_short}"]')
+        else:
+            out.append(f'    {sid(sec)}["{mods_short}"]')
     for a, b, lab in out_edges:
         lpart = f"|{lab}|" if lab else ""
         out.append(f"    {sid(a)} -->{lpart} {sid(b)}")
@@ -412,7 +431,8 @@ def svg_aspect(svg: pathlib.Path) -> float | None:
     return w / h if h else None
 
 
-def render_mmd(nf_metro: str, mmd: pathlib.Path, svg: pathlib.Path) -> str | None:
+def render_mmd(nf_metro: str, mmd: pathlib.Path, svg: pathlib.Path,
+                 y_spacing: int | None = None) -> str | None:
     """nf-metro render → svg; None on success, failure cause otherwise.
 
     Spacing policy: 130/70 clears long station labels from the viewport
@@ -427,9 +447,12 @@ def render_mmd(nf_metro: str, mmd: pathlib.Path, svg: pathlib.Path) -> str | Non
     # Small maps keep the auto x-spacing but pin y=60: the auto track
     # pitch leaves the off-track station stack (live: mixscape, 4
     # off-track exports) overlapping labels. 60px separates them.
+    # Flow views request a taller pitch (y_page=72) so the two-line
+    # station labels do not touch neighbouring stations.
     stations = station_count(parse_mmd(mmd.read_text()))
+    pitch = y_spacing if y_spacing is not None else 60
     spacing = (
-        ["--y-spacing", "60"]
+        ["--y-spacing", str(pitch)]
         if stations < 15
         else ["--x-spacing", "130", "--y-spacing", "70"]
     )
