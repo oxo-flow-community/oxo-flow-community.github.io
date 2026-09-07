@@ -219,6 +219,11 @@ def render_semantic_map(name: str, nf_metro: str) -> dict | None:
     """Author-side semantic maps (scripts/semantic_maps/<name>.mmd): render
     with the fixed width-friendly geometry; return manifest info for
     configs.json or None when the workflow has no semantic map yet."""
+    try:
+        tiers = json.loads((SEMANTIC_DIR / "tier.json").read_text())
+    except OSError:
+        tiers = {}
+    tier = tiers.get(name, "tree")  # default: hubbed topologies get module primary
     src = SEMANTIC_DIR / f"{name}.mmd"
     hand = SEMANTIC_DIR / f"{name}.hand.svg"
     if hand.is_file():
@@ -238,11 +243,6 @@ def render_semantic_map(name: str, nf_metro: str) -> dict | None:
                 "tier": tier, "primary": tier == "line", "hand": True}
     if not src.is_file():
         return None
-    try:
-        tiers = json.loads((SEMANTIC_DIR / "tier.json").read_text())
-    except OSError:
-        tiers = {}
-    tier = tiers.get(name, "tree")  # default: hubbed topologies get module primary
     svg = ROOT / "docs" / "assets" / "dag" / f"{name}-semantic.svg"
     proc = subprocess.run(
         [nf_metro, "render", str(src), "-o", str(svg),
