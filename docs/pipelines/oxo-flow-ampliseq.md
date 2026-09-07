@@ -478,7 +478,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <details class="ox-flow-view">
 <summary>Rule-level detail (exact DAG)</summary>
 <div class="ox-dag-card">
-<img src="/assets/dag/oxo-flow-ampliseq-rules.svg?v=ea316fce98" alt="oxo-flow-ampliseq rule-level detail" loading="lazy">
+<img src="/assets/dag/oxo-flow-ampliseq-rules.svg?v=0af2605021" alt="oxo-flow-ampliseq rule-level detail" loading="lazy">
 </div>
 </details>
 <details class="ox-flow-view">

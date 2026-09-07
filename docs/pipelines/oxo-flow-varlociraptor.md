@@ -137,7 +137,7 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-varlociraptor
 <div class="ox-param-head"><code>fusion_activate</code><span class="ox-param-default">false</span></div>
 <p class="ox-param-desc">upstream config: fusion calling branch (fusion_calling.smk star_arriba<br>meta wrapper: star_index / star_align / arriba / annotate_exons /<br>convert_fusions / sort_arriba_calls / bcftools_concat_candidates).</p>
 <details class="ox-param-usedby"><summary>used by 8 rules</summary>
-<div class="ox-param-rules"><code>fusion::annotate_exons</code> <code>fusion::arriba</code> <code>fusion::bcf_index_arriba_candidates</code> <code>fusion::bcftools_concat_candidates</code> <code>fusion::convert_fusions</code> <code>fusion::sort_arriba_calls</code> <code>fusion::star_align</code> <code>fusion::star_index</code></div>
+<div class="ox-param-rules"><code>fusion::annotate_exons</code> <code>fusion::arriba</code> <code>fusion::bcf_index_arriba</code> <code>fusion::bcftools_concat_candidates</code> <code>fusion::convert_fusions</code> <code>fusion::sort_arriba_calls</code> <code>fusion::star_align</code> <code>fusion::star_index</code></div>
 </details>
 </div>
 <div class="ox-param">
