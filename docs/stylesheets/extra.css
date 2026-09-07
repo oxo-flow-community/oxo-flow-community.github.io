@@ -105,8 +105,8 @@
   --md-code-bg-color: var(--code-bg);
   --md-footer-bg-color: var(--bg);
   --md-footer-bg-color--dark: var(--bg);
-  --md-footer-fg-color: var(--muted);
-  --md-footer-fg-color--light: var(--faint);
+  --md-footer-fg-color: var(--ink-2);
+  --md-footer-fg-color--light: var(--muted);
   --md-shadow-z1: var(--shadow);
 }
 
@@ -181,10 +181,12 @@ html {
   color: var(--ink);
 }
 
-.md-tabs,
+.md-tabs { background: var(--bg); }
+
 .md-footer {
-  background: var(--bg);
-  color: var(--muted);
+  /* light theme: panel white, no murky grey ground — easier on the eyes */
+  background: var(--panel);
+  color: var(--ink-2);
   border-top: 1px solid var(--edge);
 }
 
