@@ -6653,7 +6653,7 @@
       "tier": "spine",
       "stations": 61,
       "is_rule_level": false,
-      "aspect": 0.94,
+      "aspect": 1.39,
       "semantic": {
         "file": "oxo-flow-methylseq-semantic.svg",
         "aspect": 1.91,
@@ -7251,10 +7251,10 @@
       }
     ],
     "graph": {
-      "tier": "spine",
+      "tier": "rule-flat",
       "stations": 52,
-      "is_rule_level": false,
-      "aspect": 1.4,
+      "is_rule_level": true,
+      "aspect": 2.12,
       "semantic": {
         "file": "oxo-flow-nanoseq-semantic.svg",
         "aspect": 1.11,
@@ -10043,7 +10043,7 @@
       "tier": "spine",
       "stations": 31,
       "is_rule_level": false,
-      "aspect": 3.28,
+      "aspect": 3.33,
       "semantic": {
         "file": "oxo-flow-rnaseq-star-deseq2-semantic.svg",
         "aspect": 3.06,
