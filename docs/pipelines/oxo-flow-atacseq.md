@@ -414,7 +414,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 
-<a href="/assets/dag/oxo-flow-atacseq.svg?v=6bc43f1ecb" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-atacseq.svg?v=6bc43f1ecb" alt="oxo-flow-atacseq pipeline overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-atacseq.svg?v=1d43bd0965" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-atacseq.svg?v=1d43bd0965" alt="oxo-flow-atacseq pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-atacseq — ATAC-seq peak calling and QC: FastQC raw-read QC, Trim Galore adapter trimming, BWA-MEM alignment, Picard mark-duplicates, BAMTools filtering, MACS2 broad-peak calling, HOMER peak annotation, FRiP scoring, normalised bigWig tracks, deepTools QC plots and a combined MultiQC report.</p>
 

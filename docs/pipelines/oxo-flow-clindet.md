@@ -561,14 +561,14 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <details class="ox-flow-view">
 <summary>Rule-level detail (exact DAG)</summary>
 <div class="ox-dag-card ox-dag-card--wide">
-<a href="/assets/dag/oxo-flow-clindet-rules.svg?v=2f330e6afa" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-clindet-rules.svg?v=2f330e6afa" alt="oxo-flow-clindet rule-level detail" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-clindet-rules.svg?v=2758227016" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-clindet-rules.svg?v=2758227016" alt="oxo-flow-clindet rule-level detail" loading="lazy"></a>
 </div>
 </details>
 <details class="ox-flow-view">
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card ox-dag-card--wide" markdown="1">
 
-<a href="/assets/dag/oxo-flow-clindet.svg?v=d058d847eb" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-clindet.svg?v=d058d847eb" alt="oxo-flow-clindet pipeline overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-clindet.svg?v=74a2c40ac5" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-clindet.svg?v=74a2c40ac5" alt="oxo-flow-clindet pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-clindet — Port of zyllifeworld/clindet in its upstream single-Snakefile form: one entry file, config run_type (wes|wgs|rna) selects the rule tree, and paired vs tumor-only WES is derived PER PAIR from the sample sheet (a pair without a control runs the tumor-only tree — engine wildcard-scoped when predicates).</p>
 
