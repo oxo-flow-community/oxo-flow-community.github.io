@@ -4561,7 +4561,7 @@
       "aspect": 2.41,
       "semantic": {
         "file": "oxo-flow-ampliseq-semantic.svg",
-        "aspect": 4.07,
+        "aspect": 3.91,
         "stations": 23
       }
     }
@@ -6599,10 +6599,10 @@
       }
     ],
     "graph": {
-      "tier": "spine",
+      "tier": "rule-flat",
       "stations": 61,
-      "is_rule_level": false,
-      "aspect": 1.16
+      "is_rule_level": true,
+      "aspect": 1.32
     }
   },
   "oxo-flow-nanoseq": {
@@ -7195,7 +7195,7 @@
       "tier": "spine",
       "stations": 52,
       "is_rule_level": false,
-      "aspect": 1.16
+      "aspect": 1.74
     }
   },
   "oxo-flow-viralrecon": {
@@ -9952,7 +9952,7 @@
       "tier": "spine",
       "stations": 31,
       "is_rule_level": false,
-      "aspect": 3.17,
+      "aspect": 2.6,
       "semantic": {
         "file": "oxo-flow-rnaseq-star-deseq2-semantic.svg",
         "aspect": 1.43,
@@ -13125,7 +13125,7 @@
       "tier": "spine",
       "stations": 61,
       "is_rule_level": false,
-      "aspect": 1.15
+      "aspect": 1.06
     }
   },
   "oxo-flow-circrna": {
