@@ -18,5 +18,8 @@
   "oxo-flow-scrnaseq": "tree",
   "oxo-flow-methylseq": "tree",
   "oxo-flow-unsupervised": "tree",
-  "oxo-flow-circrna": "line"
+  "oxo-flow-circrna": "line",
+  "oxo-flow-sarek": "tree",
+  "oxo-flow-viralrecon": "tree",
+  "oxo-flow-rnaseq": "tree"
 }

@@ -328,7 +328,7 @@ The workflow has **61 rules / ? edges**; the semantic drawing shows **23 stops o
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card ox-dag-card--wide" markdown="1">
 
-<a href="/assets/dag/oxo-flow-unsupervised.svg?v=c6398f56b2" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-unsupervised.svg?v=c6398f56b2" alt="oxo-flow-unsupervised pipeline overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-unsupervised.svg?v=f50a085d9d" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-unsupervised.svg?v=f50a085d9d" alt="oxo-flow-unsupervised pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-unsupervised — Unsupervised analysis of omics matrices: PCA, UMAP and densMAP embeddings (2D/3D), distance matrices, hierarchical clustering heatmaps, Leiden clustering across partition types and resolutions, clustree analysis, external and internal cluster validation with TOPSIS ranking, static and interactive visualizations, per-feature dimred scatter plots (when-gated), and resolved-environment snapshots.</p>
 

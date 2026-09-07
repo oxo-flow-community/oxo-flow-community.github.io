@@ -1,0 +1,27 @@
+## Semantic map - how to read it
+
+## Short names and groups (all are real rules)
+
+| Shown | Full rule name(s) |
+|---|---|
+| reads | fastq_qc::fq_lint_raw, fastq_qc::fastqc_raw, fastq_qc::umitools_extract_umis |
+| trim | fastq_qc::trimgalore, fastq_qc::trimgalore_umi, fastq_qc::fq_lint_trimmed |
+| rrna | fastq_qc::rrna_fastas_prepare, fastq_qc::sortmerna_index, fastq_qc::sortmerna, fastq_qc::sortmerna_bbsplit, fastq_qc::fq_lint_rrna_sortmerna, fastq_qc::bowtie2_rrna_index, fastq_qc::bowtie2_align_rrna, fastq_qc::bowtie2_align_rrna_bbsplit, fastq_qc::samtools_view_rrna, fastq_qc::samtools_fastq_rrna, fastq_qc::fq_lint_rrna_bowtie2, fastq_qc::fastqc_filtered_sortmerna, fastq_qc::fastqc_filtered_bowtie2 |
+| bbsplit | fastq_qc::bbsplit_index, fastq_qc::bbsplit, fastq_qc::fq_lint_bbsplit, fastq_qc::fastqc_filtered_bbsplit |
+| ref | prepare_genome::gene_bed, prepare_genome::chrom_sizes, prepare_genome::transcript_fasta |
+| star | alignment::star_align, alignment::star_align_bbsplit, alignment::star_align_sortmerna, alignment::star_align_bowtie2, alignment::star_align_rsem, alignment::star_align_rsem_bbsplit, alignment::star_align_rsem_sortmerna, alignment::star_align_rsem_bowtie2 |
+| hisat2 | alignment::hisat2_splicesites, alignment::hisat2_index, alignment::hisat2_align, alignment::hisat2_align_bbsplit, alignment::hisat2_align_sortmerna, alignment::hisat2_align_bowtie2 |
+| bowtie2 | alignment::bowtie2_index, alignment::bowtie2_align, alignment::bowtie2_align_bbsplit, alignment::bowtie2_align_sortmerna, alignment::bowtie2_align_bowtie2 |
+| sorted | alignment::samtools_sort_hisat2, alignment::samtools_sort_bowtie2, alignment::samtools_sort, alignment::samtools_index_sorted, alignment::samtools_stats_sorted, alignment::samtools_flagstat_sorted, alignment::samtools_idxstats_sorted |
+| dedup | alignment::picard_markduplicates, alignment::samtools_index_markdup, alignment::samtools_stats_markdup, alignment::samtools_flagstat_markdup, alignment::samtools_idxstats_markdup, alignment::samtools_view_primary, alignment::samtools_index_primary, alignment::samtools_index_dedup, alignment::samtools_stats_dedup, alignment::samtools_flagstat_dedup, alignment::samtools_idxstats_dedup |
+| umidups | alignment::bam_dedup_genome_umitools, alignment::bam_dedup_genome_umitools_primary, alignment::bam_dedup_genome_umitools_stats, alignment::bam_dedup_genome_umitools_primary_stats, alignment::bam_dedup_genome_umicollapse |
+| bamqc | bam_qc::featurecounts, bam_qc::biotype_multiqc, bam_qc::rseqc_bam_stat, bam_qc::rseqc_infer_experiment, bam_qc::rseqc_inner_distance, bam_qc::rseqc_junction_annotation, bam_qc::rseqc_junction_saturation, bam_qc::rseqc_read_distribution, bam_qc::rseqc_read_duplication, bam_qc::dupradar, bam_qc::samtools_sort_qualimap, bam_qc::qualimap_rnaseq |
+| bigwig | bigwig::genomecov_fw, bigwig::genomecov_rev, bigwig::genomecov_combined, bigwig::bedclip_fw, bigwig::bedclip_rev, bigwig::bedclip_combined, bigwig::bigwig_fw, bigwig::bigwig_rev, bigwig::bigwig_combined |
+| quants | quantification::salmon_quant, quantification::salmon_quant_bowtie2, quantification::stringtie, quantification::salmon_quant_umi, quantification::salmon_index, quantification::kallisto_index, quantification::kallisto_quant_pseudo, quantification::kallisto_quant_pseudo_bbsplit, quantification::kallisto_quant_pseudo_sortmerna, quantification::kallisto_quant_pseudo_bowtie2, quantification::salmon_quant_pseudo, quantification::salmon_quant_pseudo_bbsplit, quantification::salmon_quant_pseudo_sortmerna, quantification::salmon_quant_pseudo_bowtie2, quantification::rsem_index, quantification::rsem_calculateexpression, quantification::rsem_calculateexpression_umi, quantification::rsem_merge_counts |
+| txi | quantification::tx2gene, quantification::tximport, quantification::summarizedexperiment, quantification::tx2gene_rsem, quantification::tximport_rsem, quantification::summarizedexperiment_rsem, quantification::tx2gene_pseudo, quantification::tximport_pseudo, quantification::summarizedexperiment_pseudo |
+| deseq | quantification::deseq2_qc, quantification::deseq2_qc_rsem, quantification::deseq2_qc_pseudo |
+| transcriptome | quantification::bam_sort_transcriptome, quantification::bam_sort_transcriptome_bowtie2, quantification::samtools_view_primary_transcriptome, quantification::samtools_index_primary_transcriptome, quantification::bam_dedup_transcriptome_umitools, quantification::bam_dedup_transcriptome_umitools_primary, quantification::bam_dedup_transcriptome_umitools_stats, quantification::bam_dedup_transcriptome_umitools_primary_stats, quantification::bam_dedup_transcriptome_umicollapse, quantification::samtools_stats_transcriptome_dedup, quantification::samtools_flagstat_transcriptome_dedup, quantification::samtools_idxstats_transcriptome_dedup, quantification::samtools_sort_name_transcriptome, quantification::umitools_prepareforrsem |
+| report_custom | multiqc_custom_content |
+| report | multiqc |
+
+Every drawn edge is a real engine edge (subset check at generation).

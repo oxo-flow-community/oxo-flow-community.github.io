@@ -1,0 +1,32 @@
+%%metro line: main | Main pipeline | #79706E
+%%metro line: side | Assist routes | #E8A33D
+%%metro font_scale: 1.9
+%%metro stroke_scale: 1.6
+%%metro legend: br
+
+graph LR
+    float -->|main| reads
+    reads -->|main| trim
+    trim -->|main| align
+    align -->|main| bam
+    bam -->|main| dedup
+    bam -->|main| call
+    call -->|main| vcf
+    vcf -->|main| annot
+    annot -->|main| report
+    float -->|side| ref
+    ref -->|side| align
+    annot -->|side| tables
+    vcf -->|side| consensus
+    consensus -->|side| clade
+    clade -->|side| report
+    trim -->|side| kraken
+    kraken -->|side| cut
+    trim -->|side| assembly
+    assembly -->|side| cut
+    cut -->|side| assemblers
+    assemblers -->|side| assemblyqc
+    assemblyqc -->|side| report
+    bam -->|side| depth
+    bam -->|side| freyja
+    freyja -->|side| report

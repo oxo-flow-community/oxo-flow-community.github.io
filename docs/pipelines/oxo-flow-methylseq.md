@@ -495,17 +495,11 @@ The workflow has **61 rules / ? edges**; the semantic drawing shows **23 stops o
 <a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Bgraph%5D+oxo-flow-methylseq+semantic+map+correction&body=Which station or edge looks wrong (paste the station/edge names)">Report a correction to this map</a>
 
 </div>
-<details class="ox-flow-view">
-<summary>Exact rule DAG (multi-route truth — operational view)</summary>
-<div class="ox-dag-card ox-dag-card--wide">
-<a href="/assets/dag/oxo-flow-methylseq-rules.svg?v=d12f150830" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-methylseq-rules.svg?v=d12f150830" alt="oxo-flow-methylseq rule-level detail" loading="lazy"></a>
-</div>
-</details>
 <details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card ox-dag-card--wide" markdown="1">
 
-<a href="/assets/dag/oxo-flow-methylseq.svg?v=77e805e30f" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-methylseq.svg?v=77e805e30f" alt="oxo-flow-methylseq pipeline overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-methylseq.svg?v=d12f150830" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-methylseq.svg?v=d12f150830" alt="oxo-flow-methylseq pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-methylseq — Run end-to-end bisulfite methylation analysis (WGBS, and RRBS-compatible) of paired-end reads (default) and single-end reads (upstream single_end samplesheet column, via the engine metadata binding): FastQC quality control, TrimGalore adapter trimming, alignment to the bisulfite-converted reference genome with any of the four upstream aligners — Bismark bowtie2 (default), Bismark hisat2, bwameth (bwa-meth) or BWA-MEM — PCR-deduplication, samtools sort/index, methylation calls (bismark_methylation_extractor, MethylDackel on bwameth, rastair for TAPS), per-sample and project-wide Bismark HTML reports, optional QualiMap BamQC, preseq complexity estimates and targeted-sequencing (bedtools intersect + Picard HS metrics), and a final MultiQC report.</p>
 

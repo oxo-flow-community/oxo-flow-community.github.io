@@ -1130,7 +1130,15 @@
       "tier": "module-stage",
       "stations": 7,
       "is_rule_level": false,
-      "aspect": 1.56
+      "aspect": 1.56,
+      "semantic": {
+        "file": "oxo-flow-rnaseq-semantic.svg",
+        "aspect": 1.4,
+        "tier": "tree",
+        "primary": false,
+        "hand": true,
+        "stations": 23
+      }
     }
   },
   "oxo-flow-sarek": {
@@ -2165,7 +2173,15 @@
       "tier": "module-stage",
       "stations": 4,
       "is_rule_level": false,
-      "aspect": 2.25
+      "aspect": 2.25,
+      "semantic": {
+        "file": "oxo-flow-sarek-semantic.svg",
+        "aspect": 1.49,
+        "tier": "tree",
+        "primary": false,
+        "hand": true,
+        "stations": 23
+      }
     }
   },
   "oxo-flow-scrnaseq": {
@@ -6634,10 +6650,10 @@
       }
     ],
     "graph": {
-      "tier": "spine",
+      "tier": "rule-flat",
       "stations": 61,
-      "is_rule_level": false,
-      "aspect": 0.96,
+      "is_rule_level": true,
+      "aspect": 1.37,
       "semantic": {
         "file": "oxo-flow-methylseq-semantic.svg",
         "aspect": 1.91,
@@ -7238,7 +7254,7 @@
       "tier": "spine",
       "stations": 52,
       "is_rule_level": false,
-      "aspect": 1.16,
+      "aspect": 1.17,
       "semantic": {
         "file": "oxo-flow-nanoseq-semantic.svg",
         "aspect": 1.11,
@@ -8041,7 +8057,15 @@
       "tier": "module-stage",
       "stations": 4,
       "is_rule_level": false,
-      "aspect": 2.25
+      "aspect": 2.25,
+      "semantic": {
+        "file": "oxo-flow-viralrecon-semantic.svg",
+        "aspect": 1.49,
+        "tier": "tree",
+        "primary": false,
+        "hand": true,
+        "stations": 23
+      }
     }
   },
   "oxo-flow-eager": {
@@ -10019,7 +10043,7 @@
       "tier": "spine",
       "stations": 31,
       "is_rule_level": false,
-      "aspect": 3.0,
+      "aspect": 3.22,
       "semantic": {
         "file": "oxo-flow-rnaseq-star-deseq2-semantic.svg",
         "aspect": 3.06,
@@ -13243,7 +13267,7 @@
       "tier": "spine",
       "stations": 61,
       "is_rule_level": false,
-      "aspect": 1.16,
+      "aspect": 1.01,
       "semantic": {
         "file": "oxo-flow-unsupervised-semantic.svg",
         "aspect": 0.91,
