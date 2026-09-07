@@ -1,7 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1718" height="966" viewBox="-20 -20 1758 1006">
-<defs><marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#79706E"/></marker><marker id="arru" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#E8A33D"/></marker></defs>
+<defs><marker id="arr" markerWidth="13" markerHeight="13" refX="10" refY="6.5" orient="auto"><path d="M0 0 L13 6.5 L0 13 z" fill="#79706E"/></marker><marker id="arru" markerWidth="13" markerHeight="13" refX="10" refY="6.5" orient="auto"><path d="M0 0 L13 6.5 L0 13 z" fill="#E8A33D"/></marker></defs>
 <rect x="-30" y="-30" width="1798" height="1046" fill="#ffffff"/>
+<text x="1508" y="-8" font-size="15" fill="#999999" font-family="JetBrains Mono, Menlo, monospace" text-anchor="end">condensed semantic view · edges subset-checked</text>
 <path d="M 70 86 L 260 86 L 498 86 L 688 86 L 898 86 L 1088 86 L 1278 86 L 1468 86" fill="none" stroke="#79706E" stroke-width="7" marker-mid="url(#arr)"/>
+<path d="M 498 86 L 498 126 Q 498 148 1088 148 L 1088 126 L 1088 86" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 688 86 L 688 126 Q 688 148 1088 148 L 1088 126 L 1088 86" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
 <circle cx="70" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
 <text x="70" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">trim</text>
 <circle cx="260" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>

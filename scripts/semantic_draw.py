@@ -87,16 +87,17 @@ def draw(name: str, mmd: str) -> str:
     total_h = RAIL_Y + max(n_assist, len(branches) + 1) * ROW + 120
 
     svg = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{total_w}" height="{total_h}" viewBox="-20 -20 {total_w + 40} {total_h + 40}">']
-    svg.append('<defs><marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">'
-               '<path d="M0 0 L9 4.5 L0 9 z" fill="#79706E"/></marker>'
-               '<marker id="arru" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">'
-               '<path d="M0 0 L9 4.5 L0 9 z" fill="#E8A33D"/></marker></defs>')
+    svg.append('<defs><marker id="arr" markerWidth="13" markerHeight="13" refX="10" refY="6.5" orient="auto">'
+               '<path d="M0 0 L13 6.5 L0 13 z" fill="#79706E"/></marker>'
+               '<marker id="arru" markerWidth="13" markerHeight="13" refX="10" refY="6.5" orient="auto">'
+               '<path d="M0 0 L13 6.5 L0 13 z" fill="#E8A33D"/></marker></defs>')
     svg.append(f'<rect x="-30" y="-30" width="{total_w + 80}" height="{total_h + 80}" fill="#ffffff"/>')
+    svg.append(f'<text x="{total_w - 210}" y="-8" font-size="15" fill="#999999" font-family="{MONO}" text-anchor="end">condensed semantic view · edges subset-checked</text>')
 
     def px(n):
         return positions.get(n, 70)
     def py(n):
-        return RAIL_Y + rows.get(n, 1) * ROW
+        return RAIL_Y + 130 + rows.get(n, 0) * ROW
 
     for k, (b, parent) in enumerate(branches):
         if b not in positions:
@@ -124,6 +125,14 @@ def draw(name: str, mmd: str) -> str:
         if parent == 'float':
             continue
         draw_branch(px(parent), RAIL_Y, px(b) if b in positions else total_w - 110, py(b))
+    for (a, b) in [(x, y) for x, l, y in hops if l != 'main' and y in chain and x in chain]:
+        # both on the rail: short under-rail merge (down, right, back up)
+        ax, bx, by = px(a), px(b), RAIL_Y
+        drop = RAIL_Y + 40
+        r = 22
+        d2 = (f'M {ax} {by} L {ax} {drop} Q {ax} {drop + r} {bx} {drop + r} '
+              f'L {bx} {by + 40} L {bx} {by}')
+        svg.append(f'<path d="{d2}" fill="none" stroke="{ASSIST}" stroke-width="5" marker-end="url(#arru)"/>')
     for (a, b) in [(x, y) for x, l, y in hops if l != 'main' and y in chain and x not in chain]:
         # merge hop: from source branch station up into the rail at b
         ax = px(a) if a in positions else total_w - 110

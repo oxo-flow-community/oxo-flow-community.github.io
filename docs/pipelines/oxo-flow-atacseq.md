@@ -422,7 +422,7 @@ The workflow has **7 rules / ? edges**; the semantic drawing shows **23 stops on
 
 ### How to read this semantic map
 
-Atac-seq can start from several inputs at once (trimmed reads, reference<br>index/prep, PE replicates) and ends in two collector hubs (the report<br>collection vs the QC/metrics suite) — the route drawing below the module<br>overview keeps the hub structure exact while the Overview card gives the<br>compact module-level story. Main pipeline (grey): reads → align → sort +<br>merge → dedup → peak calling → annotation → QC/bigwig → reports.<br>Coloured routes: orange PE track, green alt aligners, blue references,<br>yellow reporting.
+
 
 **Short-name mapping** — every label on the map, in full:
 

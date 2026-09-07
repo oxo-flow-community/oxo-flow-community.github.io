@@ -9,28 +9,28 @@
 
 graph LR
     rename[rename] -->|main| fastqc[fastqc]
-    rename -->|main| cutadapt[cutadapt + summary]
-    cutadapt -->|main| DADA2__QC[DADA2 QC]
-    DADA2__QC -->|main| DADA2__trimlen[DADA2 trim len]
-    DADA2__trimlen -->|main| DADA2__filter[DADA2 filter]
-    DADA2__filter -->|main| DADA2__err[DADA2 err]
-    DADA2__err -->|main| DADA2__denoise[DADA2 denoise]
-    DADA2__denoise -->|main| DADA2__chimeras[DADA2 chimeras]
-    DADA2__chimeras -->|main| DADA2__merge[DADA2 merge]
-    DADA2__denoise -->|dada2| DADA2__stats[DADA2 stats]
+    rename -->|main| cutadapt
+    cutadapt -->|main| DADA2__QC
+    DADA2__QC -->|main| DADA2__trimlen
+    DADA2__trimlen -->|main| DADA2__filter
+    DADA2__filter -->|main| DADA2__err
+    DADA2__err -->|main| DADA2__denoise
+    DADA2__denoise -->|main| DADA2__chimeras
+    DADA2__chimeras -->|main| DADA2__merge
+    DADA2__denoise -->|dada2| DADA2__stats
     DADA2__stats -->|dada2| DADA2__merge
-    DADA2__merge -->|main| QIIME2__cores[QIIME2 runs]
-    DADA2__merge -->|main| taxonomy__assign[taxonomy assign]
+    DADA2__merge -->|main| QIIME2__cores
+    DADA2__merge -->|main| taxonomy__assign
     taxonomy__DB[taxonomy DB] -->|main| taxonomy__assign
-    DADA2__merge -->|its| ITSx[ITSx]
-    ITSx -->|its| ITSx__filter[ITSx filter]
+    DADA2__merge -->|its| ITSx
+    ITSx -->|its| ITSx__filter
     ITSx__filter -->|its| taxonomy__assign
     ITSx__filter -->|its| QIIME2__cores
     taxonomy__assign -->|qii| QIIME2__cores
-    QIIME2__cores -->|qii| QIIME2__analyses[QIIME2 steps]
-    QIIME2__analyses -->|qii| QIIME2__plots[QIIME2 exports]
-    QIIME2__analyses -->|qii| QIIME2__comp[QIIME2 tests]
-    QIIME2__analyses -->|qii| QIIME2__diversity[QIIME2 diver]
+    QIIME2__cores -->|qii| QIIME2__analyses
+    QIIME2__analyses -->|qii| QIIME2__plots
+    QIIME2__analyses -->|qii| QIIME2__comp
+    QIIME2__analyses -->|qii| QIIME2__diversity
     fastqc -->|report| MultiQC
     cutadapt -->|report| MultiQC
-    DADA2__merge -->|report| picrust[PICRUSt]
+    DADA2__merge -->|report| picrust

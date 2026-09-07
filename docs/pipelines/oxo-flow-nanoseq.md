@@ -374,7 +374,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <summary>Semantic overview <span class="ox-badge ox-badge--sem">author-side</span></summary>
 <div class="ox-dag-card" markdown="1">
 
-<a href="/assets/dag/oxo-flow-nanoseq-semantic.svg?v=903d7e3e57" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-nanoseq-semantic.svg?v=903d7e3e57" alt="oxo-flow-nanoseq semantic overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-nanoseq-semantic.svg?v=f3301ace0d" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-nanoseq-semantic.svg?v=f3301ace0d" alt="oxo-flow-nanoseq semantic overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">Semantic route drawing — every station is a real rule of this workflow, every edge a real data dependency of the engine DAG; groups and junction are the author-side condensation (details below).</p>
 
@@ -407,7 +407,7 @@ The workflow has **52 rules / ? edges**; the semantic drawing shows **23 stops o
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card ox-dag-card--wide" markdown="1">
 
-<a href="/assets/dag/oxo-flow-nanoseq.svg?v=d2780d90a0" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-nanoseq.svg?v=d2780d90a0" alt="oxo-flow-nanoseq pipeline overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-nanoseq.svg?v=15c0756eab" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-nanoseq.svg?v=15c0756eab" alt="oxo-flow-nanoseq pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-nanoseq — A nanopore long-read pipeline: samplesheet check, qcat barcode demultiplexing, NanoPlot + FastQC QC, minimap2 (or graphmap2) alignment, samtools view/sort/index, samtools stats/flagstat/idxstats, BigWig/BigBed tracks, NanoLyse contamination filtering, medaka/DeepVariant/PEPPER-Margin-DeepVariant short variant calling, Sniffles/cuteSV structural variant calling, bambu/StringTie2+featureCounts quantification with DESeq2/DEXSeq differential analysis, Nanopolish+xPore/m6anet RNA modification analysis, JAFFA RNA fusion detection (cDNA/directRNA; reference bundle auto-downloaded from figshare or supplied via config.jaffal_ref_dir as a directory or tar.gz), pre-aligned-BAM input, and a MultiQC report.</p>
 

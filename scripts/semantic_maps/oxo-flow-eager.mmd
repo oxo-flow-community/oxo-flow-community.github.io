@@ -10,7 +10,7 @@ graph LR
     dedup -->|main| multiqc
     dedup -->|side| genotype
     genotype -->|side| multiqc
-    dedup -->|side| ancient damage
+    dedup -->|side| ancient
     ancient damage -->|side| multiqc
     align -->|side| metagenome
     metagenome -->|side| multiqc

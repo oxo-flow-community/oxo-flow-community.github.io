@@ -171,7 +171,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <summary>Semantic overview <span class="ox-badge ox-badge--sem">author-side</span></summary>
 <div class="ox-dag-card" markdown="1">
 
-<a href="/assets/dag/oxo-flow-fetchngs-semantic.svg?v=51d4c81d6a" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-fetchngs-semantic.svg?v=51d4c81d6a" alt="oxo-flow-fetchngs semantic overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-fetchngs-semantic.svg?v=7da7972baf" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-fetchngs-semantic.svg?v=7da7972baf" alt="oxo-flow-fetchngs semantic overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">Semantic route drawing — every station is a real rule of this workflow, every edge a real data dependency of the engine DAG; groups and junction are the author-side condensation (details below).</p>
 
@@ -189,7 +189,7 @@ The workflow has **16 rules / ? edges**; the semantic drawing shows **23 stops o
 
 **Short-name mapping** — every label on the map, in full:
 
-<table class="ox-sem-map"><thead><tr><th>Shown</th><th>Full rule name(s)</th></tr></thead><tbody><tr><td><code>down-ftp/prefetch</code></td><td><code>sra_fastq_ftp, sra_prefetch, sra_fastq_sratools, sra_fastq_aspera</code></td></tr><tr><td><code>down-fallbacks</code></td><td><code>sra_prefetch_fallback, sra_fastq_sratools_fallback, sra_fastq_ftp_aspera_fallback</code></td></tr><tr><td><code>down-dbgap</code></td><td><code>sra_prefetch_dbgap, sra_fastq_sratools_dbgap</code></td></tr></tbody></table>
+<table class="ox-sem-map"><thead><tr><th>Shown</th><th>Full rule name(s)</th></tr></thead><tbody><tr><td><code>down_ftp_prefetch</code></td><td><code>sra_fastq_ftp, sra_prefetch, sra_fastq_sratools, sra_fastq_aspera</code></td></tr><tr><td><code>down_fallbacks</code></td><td><code>sra_prefetch_fallback, sra_fastq_sratools_fallback, sra_fastq_ftp_aspera_fallback</code></td></tr><tr><td><code>down_dbgap</code></td><td><code>sra_prefetch_dbgap, sra_fastq_sratools_dbgap</code></td></tr></tbody></table>
 
 <a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Bgraph%5D+oxo-flow-fetchngs+semantic+map+correction&body=Which station or edge looks wrong (paste the station/edge names)">Report a correction to this map</a>
 

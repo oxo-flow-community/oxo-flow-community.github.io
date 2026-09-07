@@ -497,7 +497,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <summary>Semantic overview <span class="ox-badge ox-badge--sem">author-side</span></summary>
 <div class="ox-dag-card" markdown="1">
 
-<a href="/assets/dag/oxo-flow-chipseq-semantic.svg?v=1647bcd897" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-chipseq-semantic.svg?v=1647bcd897" alt="oxo-flow-chipseq semantic overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-chipseq-semantic.svg?v=0e533801df" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-chipseq-semantic.svg?v=0e533801df" alt="oxo-flow-chipseq semantic overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">Semantic route drawing — every station is a real rule of this workflow, every edge a real data dependency of the engine DAG; groups and junction are the author-side condensation (details below).</p>
 
