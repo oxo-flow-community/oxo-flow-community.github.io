@@ -1024,3 +1024,10 @@ a.ox-cta:hover {
 @media (max-width: 36em) {
   .ox-issue-btn { right: 7.6rem; }
 }
+/* Wide maps: keep intrinsic size and let the card scroll horizontally;
+   the 62vh vertical cap already applies via .ox-flow-view[open]. */
+.ox-dag-card--wide img {
+  max-width: none;
+  width: auto;
+  margin-left: 0;
+}

@@ -487,15 +487,15 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 <details class="ox-flow-view">
 <summary>Rule-level detail (exact DAG)</summary>
-<div class="ox-dag-card">
-<img src="/assets/dag/oxo-flow-mag-rules.svg?v=841857ad69" alt="oxo-flow-mag rule-level detail" loading="lazy">
+<div class="ox-dag-card ox-dag-card--wide">
+<img src="/assets/dag/oxo-flow-mag-rules.svg?v=2de5a88219" alt="oxo-flow-mag rule-level detail" loading="lazy">
 </div>
 </details>
 <details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 
-<img src="/assets/dag/oxo-flow-mag.svg?v=c66cdd9f81" alt="oxo-flow-mag pipeline overview" loading="lazy">
+<img src="/assets/dag/oxo-flow-mag.svg?v=0acb23adcf" alt="oxo-flow-mag pipeline overview" loading="lazy">
 
 <p class="ox-dag-caption">figure · oxo-flow-mag — Turn paired-end metagenomic reads into quality-checked, taxonomically classified draft genomes: FastQC and fastp QC with phiX removal, SPAdes and MEGAHIT assembly, QUAST and Prodigal assessment, bowtie2 mapping, binning with six binners (MetaBAT2, MaxBin2, CONCOCT, COMEBin, MetaBinner, SemiBin2), BUSCO bin QC, GTDB-Tk classification with a combined summary, PROKKA annotation, ALE evaluation and a final MultiQC report.</p>
 

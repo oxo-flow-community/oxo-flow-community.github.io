@@ -430,6 +430,18 @@ def params_section(p: dict, config: list[dict] | None) -> list[str]:
     ]
 
 
+
+def _intrinsic_width(svg_path) -> float:
+    """viewBox width of a committed DAG svg (for wide-card layout)."""
+    try:
+        m = re.search(r'viewBox="[\d.\- ]+"', svg_path.read_text(encoding="utf-8"))
+        if not m:
+            return 0.0
+        return float(m.group(0).split('"')[1].split()[2])
+    except OSError:
+        return 0.0
+
+
 def dag_section(p: dict, configs: dict) -> list[str]:
     """`## Workflow graph` — the ladder-chosen metro map SVG that
     regen-configs.py renders via metro_tiers.py (rule-level to overview
@@ -475,10 +487,11 @@ def dag_section(p: dict, configs: dict) -> list[str]:
     primary_is_rule = bool(info.get("is_rule_level"))
     rules_svg = OUT_PAGES.parent / "assets" / "dag" / f"{name}-rules.svg"
     if rules_svg.is_file() and not primary_is_rule:
+        rules_wide = " ox-dag-card--wide" if _intrinsic_width(rules_svg) > 1400 else ""
         cards += [
             '<details class="ox-flow-view">',
             '<summary>Rule-level detail (exact DAG)</summary>',
-            '<div class="ox-dag-card">',
+            f'<div class="ox-dag-card{rules_wide}">',
             _asset_img(f"../assets/dag/{name}-rules.svg", f"{name} rule-level detail"),
             "</div>",
             "</details>",
@@ -489,10 +502,11 @@ def dag_section(p: dict, configs: dict) -> list[str]:
     # multi-omics entries.
     has_views = bool(configs.get(name, {}).get("flow_views"))
     open_mark = " open" if primary_is_rule or not has_views else ""
+    wide = " ox-dag-card--wide" if _intrinsic_width(svg) > 1400 else ""
     cards += [
         f'<details class="ox-flow-view"{open_mark}>',
         '<summary>Overview — all modules</summary>',
-        '<div class="ox-dag-card" markdown="1">',
+        f'<div class="ox-dag-card{wide}" markdown="1">',
         "",
         _asset_img(f"../assets/dag/{name}.svg", f"{name} pipeline overview"),
         "",

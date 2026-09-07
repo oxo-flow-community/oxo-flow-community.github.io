@@ -6597,7 +6597,7 @@
       "tier": "rule-flat",
       "stations": 61,
       "is_rule_level": true,
-      "aspect": 0.94
+      "aspect": 1.32
     }
   },
   "oxo-flow-nanoseq": {
@@ -7190,7 +7190,7 @@
       "tier": "rule-flat",
       "stations": 52,
       "is_rule_level": true,
-      "aspect": 0.89
+      "aspect": 2.02
     }
   },
   "oxo-flow-viralrecon": {
@@ -9947,7 +9947,7 @@
       "tier": "rule-flat",
       "stations": 31,
       "is_rule_level": true,
-      "aspect": 1.04
+      "aspect": 2.14
     }
   },
   "oxo-flow-varlociraptor": {
@@ -10270,7 +10270,7 @@
       "tier": "module-stage",
       "stations": 18,
       "is_rule_level": false,
-      "aspect": 1.82
+      "aspect": 3.08
     }
   },
   "oxo-flow-snparcher": {
@@ -11914,7 +11914,7 @@
       "tier": "rule-sections",
       "stations": 16,
       "is_rule_level": true,
-      "aspect": 1.27
+      "aspect": 2.82
     }
   },
   "oxo-flow-mixscape": {
@@ -13115,7 +13115,7 @@
       "tier": "rule-sections",
       "stations": 61,
       "is_rule_level": true,
-      "aspect": 0.79
+      "aspect": 1.0
     }
   },
   "oxo-flow-circrna": {
@@ -14659,7 +14659,7 @@
       "tier": "module-stage",
       "stations": 17,
       "is_rule_level": false,
-      "aspect": 1.11
+      "aspect": 1.93
     },
     "flow_views": {
       "dna": {

@@ -495,15 +495,15 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 <details class="ox-flow-view">
 <summary>Rule-level detail (exact DAG)</summary>
-<div class="ox-dag-card">
-<img src="/assets/dag/oxo-flow-chipseq-rules.svg?v=1c07ca0d8d" alt="oxo-flow-chipseq rule-level detail" loading="lazy">
+<div class="ox-dag-card ox-dag-card--wide">
+<img src="/assets/dag/oxo-flow-chipseq-rules.svg?v=e7a2c22cdd" alt="oxo-flow-chipseq rule-level detail" loading="lazy">
 </div>
 </details>
 <details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 
-<img src="/assets/dag/oxo-flow-chipseq.svg?v=24f15434e6" alt="oxo-flow-chipseq pipeline overview" loading="lazy">
+<img src="/assets/dag/oxo-flow-chipseq.svg?v=fe6759ff5f" alt="oxo-flow-chipseq pipeline overview" loading="lazy">
 
 <p class="ox-dag-caption">figure · oxo-flow-chipseq — ChIP-seq peak calling, QC and differential analysis for paired-end reads: FastQC and Trim Galore read QC, BWA-MEM (default), Bowtie2, Chromap or STAR alignment, library merge and Picard mark-duplicates, BAMTools filtering against a blacklist with orphan-read removal, preseq and phantompeakqualtools library complexity QC, bigWig tracks and deepTools QC plots, MACS3 peak calling with input controls in broad (default) or narrow mode, HOMER peak annotation, FRiP scoring, consensus peaks across replicates (MACS3 merge, featureCounts quantification, DESeq2 QC), an IGV session and a MultiQC report.</p>
 

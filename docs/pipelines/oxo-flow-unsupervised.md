@@ -293,9 +293,9 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 <details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
-<div class="ox-dag-card" markdown="1">
+<div class="ox-dag-card ox-dag-card--wide" markdown="1">
 
-<img src="/assets/dag/oxo-flow-unsupervised.svg?v=3689e7e1ef" alt="oxo-flow-unsupervised pipeline overview" loading="lazy">
+<img src="/assets/dag/oxo-flow-unsupervised.svg?v=c2737198b1" alt="oxo-flow-unsupervised pipeline overview" loading="lazy">
 
 <p class="ox-dag-caption">figure · oxo-flow-unsupervised — Unsupervised analysis of omics matrices: PCA, UMAP and densMAP embeddings (2D/3D), distance matrices, hierarchical clustering heatmaps, Leiden clustering across partition types and resolutions, clustree analysis, external and internal cluster validation with TOPSIS ranking, static and interactive visualizations, per-feature dimred scatter plots (when-gated), and resolved-environment snapshots.</p>
 

@@ -85,14 +85,14 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <details class="ox-flow-view">
 <summary>Rule-level detail (exact DAG)</summary>
 <div class="ox-dag-card">
-<img src="/assets/dag/oxo-flow-circrna-rules.svg?v=ed15c6fb98" alt="oxo-flow-circrna rule-level detail" loading="lazy">
+<img src="/assets/dag/oxo-flow-circrna-rules.svg?v=1b393afe1a" alt="oxo-flow-circrna rule-level detail" loading="lazy">
 </div>
 </details>
 <details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 
-<img src="/assets/dag/oxo-flow-circrna.svg?v=9af7552624" alt="oxo-flow-circrna pipeline overview" loading="lazy">
+<img src="/assets/dag/oxo-flow-circrna.svg?v=a360e1848c" alt="oxo-flow-circrna pipeline overview" loading="lazy">
 
 <p class="ox-dag-caption">figure · oxo-flow-circrna — Circular RNA detection with four independent callers (CIRIquant, CIRCexplorer2, find_circ, circRNA_finder) and ensemble aggregation of calls supported by at least two methods.</p>
 

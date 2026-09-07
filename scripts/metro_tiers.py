@@ -449,28 +449,68 @@ def render_mmd(nf_metro: str, mmd: pathlib.Path, svg: pathlib.Path,
     # off-track exports) overlapping labels. 60px separates them.
     # Flow views request a taller pitch (y_page=72) so the two-line
     # station labels do not touch neighbouring stations.
+    #
+    # Maps of 15+ stations get an ADAPTIVE aspect: the fixed 130/70 left
+    # dense maps near-square (live: rnaseq-star 1.02) — vertical spaghetti
+    # that a page card shrinks into an unreadable block. Reads like a
+    # spread of lines and stations: target ~3:1, widen the x pitch until
+    # the render lands in [2.4, 3.6] (or the attempt budget is spent, then
+    # keep the widest).
     stations = station_count(parse_mmd(mmd.read_text()))
     pitch = y_spacing if y_spacing is not None else 60
-    spacing = (
-        ["--y-spacing", str(pitch)]
-        if stations < 15
-        else ["--x-spacing", "130", "--y-spacing", "70"]
-    )
-    proc = subprocess.run(
-        [nf_metro, "render", str(mmd), "-o", str(svg), "--theme", "light", *spacing],
-        capture_output=True,
-        text=True,
-    )
-    if proc.returncode != 0:
-        cause = proc.stderr.strip().splitlines()[-1] if proc.stderr.strip() else "unknown"
-        return f"nf-metro failed: {cause}"
-    if not svg.is_file() or svg.stat().st_size == 0:
-        return "nf-metro produced no output"
-    # Light theme must not bake a dark `nf-metro-bg` rect (site issue #16).
-    if "nf-metro-bg" in svg.read_text():
-        return "nf-metro rendered a dark background — not light-theme clean"
-    pad_viewport_left(svg)
-    return None
+    if stations < 15:
+        attempts = [["--y-spacing", str(pitch)]]
+    else:
+        attempts = [
+            ["--x-spacing", "130", "--y-spacing", "70"],
+            ["--x-spacing", "240", "--y-spacing", "70"],
+            ["--x-spacing", "380", "--y-spacing", "70"],
+        ]
+
+    def _render(spacing: list[str]) -> str | None:
+        # nfcore-light is the published nf-core map style (thick line
+        # trunk, the look public nf-core metro maps are known for); the
+        # bare `light` theme is a thin-line custom variant that renders
+        # busy maps as wire spaghetti. --mode light keeps the light
+        # palette baked (no dark `nf-metro-bg`).
+        proc = subprocess.run(
+            [
+                nf_metro, "render", str(mmd), "-o", str(svg),
+                "--theme", "nfcore-light", "--mode", "light", *spacing,
+            ],
+            capture_output=True,
+            text=True,
+        )
+        if proc.returncode != 0:
+            cause = proc.stderr.strip().splitlines()[-1] if proc.stderr.strip() else "unknown"
+            return f"nf-metro failed: {cause}"
+        if not svg.is_file() or svg.stat().st_size == 0:
+            return "nf-metro produced no output"
+        # The old probe rejected any `nf-metro-bg` presence; 1.1.0 emits the
+        # bg as a CSS `light-dark()` class (theme-adaptive, fine). Only a
+        # BAKED dark rect (`fill="#2b2b2b"` / `#1e1e1e`-family) or a
+        # dark-hardcoded --nfm-map-bg custom property is a real regression.
+        text = svg.read_text()
+        # Only a dark BACKGROUND RECT (the nf-metro-bg element itself)
+        # is the regression; text/strokes legitimately use #333.
+        if re.search(
+            r"<rect[^>]*class=\"nf-metro-bg\"[^>]*fill=\"#(?:1[0-9a-fA-F]{5}|2[0-9a-fA-F]{5}|3[0-3][0-9a-fA-F]{4})\"",
+            text,
+        ):
+            return "nf-metro rendered a dark background — not light-theme clean"
+        pad_viewport_left(svg)
+        return None
+
+    best_err = None
+    for i, spacing in enumerate(attempts):
+        err = _render(spacing)
+        if err is not None:
+            best_err = err
+            continue
+        aspect = svg_aspect(svg)
+        if i == len(attempts) - 1 or aspect is not None and 2.4 <= aspect <= 3.6:
+            return None
+    return best_err
 
 
 def pad_viewport_left(svg: pathlib.Path) -> None:
