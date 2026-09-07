@@ -166,7 +166,8 @@ def render_dag(
     so one broken workflow never blocks the rest.
     """
     svg = DAG_DIR / f"{name}.svg"
-    return render_ladder(name, workflow, binary, nf_metro, svg)
+    detail = DAG_DIR / f"{name}-rules.svg"
+    return render_ladder(name, workflow, binary, nf_metro, svg, detail_svg=detail)
 
 
 def render_flow_view(

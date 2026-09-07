@@ -168,6 +168,12 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 ## Workflow graph
 
 <details class="ox-flow-view">
+<summary>Rule-level detail (exact DAG)</summary>
+<div class="ox-dag-card">
+<img src="/assets/dag/oxo-flow-fetchngs-rules.svg?v=645ca29b39" alt="oxo-flow-fetchngs rule-level detail" loading="lazy">
+</div>
+</details>
+<details class="ox-flow-view">
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 

@@ -506,6 +506,7 @@ def render_ladder(
     binary: str,
     nf_metro: str,
     svg: pathlib.Path,
+    detail_svg: pathlib.Path | None = None,
 ) -> tuple[str | None, dict | None]:
     """Export the engine's canonical metro mmd and walk the tier ladder.
 
@@ -576,24 +577,27 @@ def render_ladder(
         )
         process_source = proc_mmd.read_text() if proc_graph.returncode == 0 else None
 
+        # TWO-TIER output — every page reads the same way:
+        #   overview  = module-stage (module·stage idiom) or module when
+        #               module-stage does not render — one station per
+        #               module on EVERY page, so "a point = a module" is
+        #               site-wide constant ("展示水平统一");
+        #   detail    = rule-level figure (<name>-rules.svg), the exact
+        #               graph of every rule, behind a collapsed card.
+        # The old "pick the finest tier that renders" logic made
+        # neighboring pages show rules, tools or modules with no common
+        # reading model — the system problem this replaces.
         tiers = [
-            # Sections first: the module grouping is the nf-core transit
-            # idiom and the off_track directive (engine-side) relieves the
-            # routing pressure that previously forced the flat fallback
-            # (live: 16-station genome-tracks renders sectioned at 1.2
-            # aspect where flat is 0.74).
-            ("rule-sections", text, True, None),  # always render: the degenerate-overview fallback needs it
-            ("rule-flat", flat_mmd(text), True, MAX_RULE_STATIONS),
-            ("rule-process", process_source, True, MAX_PROCESS_STATIONS),
+            ("rule-sections", text, True, None),
+            ("rule-flat", flat_mmd(text), True, None),
             ("module-stage", module_stage_mmd(text), False, None),
             ("module", module_source, False, None),
         ]
-        best = None  # (aspect, tier_svg_path, info) — the widest rendered tier
-        rule_sec = None  # rule-sections render, even beyond the station gate
+        best = None      # (aspect, tier_svg_path, info) — the OVERVIEW
+        detail = None    # (aspect, tier_svg_path, info) — rule-level figure
+        last_err = None
         for tier, source, is_rule_level, max_stations in tiers:
             if source is None:
-                continue
-            if max_stations is not None and station_count(parse_mmd(source)) > max_stations:
                 continue
             (tmp / f"{tier}.mmd").write_text(source)
             tier_svg = tmp / f"{tier}.svg"
@@ -609,31 +613,28 @@ def render_ladder(
                 "is_rule_level": is_rule_level,
                 "aspect": round(aspect, 2) if aspect else None,
             }
-            if tier == "rule-sections":
-                rule_sec = (aspect, tier_svg, info)
-                # Beyond the station gate the rule map stays a fallback
-                # only: as a regular pick it regressed the corpus
-                # (43-49-station rule maps were unreadable at card width).
-                if tier_stations > MAX_RULE_STATIONS:
-                    continue
+            if tier in ("rule-sections", "rule-flat"):
+                if detail is None:
+                    detail = (aspect if aspect is not None else 0.0, tier_svg, info)
+                continue
             if best is None or aspect is None or aspect > best[0]:
                 best = (aspect if aspect is not None else 0.0, tier_svg, info)
             # Tiny maps are exempt from the landscape gate (mirroring
             # qa-metro's SMALL_EXEMPT): a 3-station map at 0.99 aspect is
-            # fine; over-demoting it (live: nanoseq 3-station module-stage
-            # → 1-station overview) loses meaning for no layout gain.
+            # fine; over-demoting it loses meaning for no layout gain.
             if aspect is None or aspect >= MIN_ASPECT or tier_stations <= 5:
                 best_svg = tier_svg
                 break
-        if best is not None and best[2]["stations"] <= 3 and rule_sec is not None:
-            # Degenerate overview: one/two-module workflows (no module
-            # namespaces — live: unsupervised, 61 rules in a single
-            # section) demote to a 1-3-station map that conveys nothing.
-            # The rule-level figure is the only informative one: use it
-            # whenever it renders, regardless of its aspect — a portrait
-            # 61-station map (0.78) beats an empty 1-station overview.
-            if rule_sec[0] is not None:
-                best = rule_sec
+        # Rule-level detail figure (informational, no readability gate —
+        # it sits behind a collapsed card where size is irrelevant).
+        if detail is not None and detail_svg is not None:
+            shutil.copyfile(detail[1], detail_svg)
+        # Degenerate overview (a one/two-module workflow whose overview
+        # conveys nothing, live: unsupervised/methylseq) uses the rule
+        # detail as the primary figure instead — information over
+        # simplicity, exactly the trade the unified rule documents.
+        if best is not None and best[2]["stations"] <= 2 and detail is not None:
+            best = detail
         if best is None:
             return last_err, None
         # The chosen tier's render becomes the committed artifact.

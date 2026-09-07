@@ -462,6 +462,19 @@ def dag_section(p: dict, configs: dict) -> list[str]:
             "</div>",
             "</details>",
         ]
+    # Rule-level detail (where it renders): the exact graph of every
+    # rule, collapsed by default — the primary figure follows one reading
+    # model, the deep-dive is one click away.
+    rules_svg = OUT_PAGES.parent / "assets" / "dag" / f"{name}-rules.svg"
+    if rules_svg.is_file():
+        cards += [
+            '<details class="ox-flow-view">',
+            '<summary>Rule-level detail (exact DAG)</summary>',
+            '<div class="ox-dag-card">',
+            _asset_img(f"../assets/dag/{name}-rules.svg", f"{name} rule-level detail"),
+            "</div>",
+            "</details>",
+        ]
     cards += [
         '<details class="ox-flow-view">',
         '<summary>Overview — all modules</summary>',

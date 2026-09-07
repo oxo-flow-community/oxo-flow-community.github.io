@@ -495,6 +495,12 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 ## Workflow graph
 
 <details class="ox-flow-view">
+<summary>Rule-level detail (exact DAG)</summary>
+<div class="ox-dag-card">
+<img src="/assets/dag/oxo-flow-sarek-rules.svg?v=660217b327" alt="oxo-flow-sarek rule-level detail" loading="lazy">
+</div>
+</details>
+<details class="ox-flow-view">
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 

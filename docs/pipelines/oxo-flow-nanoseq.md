@@ -371,10 +371,16 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 ## Workflow graph
 
 <details class="ox-flow-view">
+<summary>Rule-level detail (exact DAG)</summary>
+<div class="ox-dag-card">
+<img src="/assets/dag/oxo-flow-nanoseq-rules.svg?v=84adc2ce8d" alt="oxo-flow-nanoseq rule-level detail" loading="lazy">
+</div>
+</details>
+<details class="ox-flow-view">
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 
-<img src="/assets/dag/oxo-flow-nanoseq.svg?v=7993fbe1b0" alt="oxo-flow-nanoseq pipeline overview" loading="lazy">
+<img src="/assets/dag/oxo-flow-nanoseq.svg?v=1eab38d79f" alt="oxo-flow-nanoseq pipeline overview" loading="lazy">
 
 <p class="ox-dag-caption">figure · oxo-flow-nanoseq — A nanopore long-read pipeline: samplesheet check, qcat barcode demultiplexing, NanoPlot + FastQC QC, minimap2 (or graphmap2) alignment, samtools view/sort/index, samtools stats/flagstat/idxstats, BigWig/BigBed tracks, NanoLyse contamination filtering, medaka/DeepVariant/PEPPER-Margin-DeepVariant short variant calling, Sniffles/cuteSV structural variant calling, bambu/StringTie2+featureCounts quantification with DESeq2/DEXSeq differential analysis, Nanopolish+xPore/m6anet RNA modification analysis, JAFFA RNA fusion detection (cDNA/directRNA; reference bundle auto-downloaded from figshare or supplied via config.jaffal_ref_dir as a directory or tar.gz), pre-aligned-BAM input, and a MultiQC report.</p>
 

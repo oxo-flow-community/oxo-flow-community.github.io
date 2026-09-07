@@ -300,10 +300,16 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 ## Workflow graph
 
 <details class="ox-flow-view">
+<summary>Rule-level detail (exact DAG)</summary>
+<div class="ox-dag-card">
+<img src="/assets/dag/oxo-flow-rnaseq-star-deseq2-rules.svg?v=57fe9aff4b" alt="oxo-flow-rnaseq-star-deseq2 rule-level detail" loading="lazy">
+</div>
+</details>
+<details class="ox-flow-view">
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 
-<img src="/assets/dag/oxo-flow-rnaseq-star-deseq2.svg?v=57fe9aff4b" alt="oxo-flow-rnaseq-star-deseq2 pipeline overview" loading="lazy">
+<img src="/assets/dag/oxo-flow-rnaseq-star-deseq2.svg?v=139c1590a1" alt="oxo-flow-rnaseq-star-deseq2 pipeline overview" loading="lazy">
 
 <p class="ox-dag-caption">figure · oxo-flow-rnaseq-star-deseq2 — End-to-end RNA-seq differential-expression analysis with STAR and DESeq2: Ensembl reference download, fastp trimming, STAR alignment with gene counts, RSeQC QC + MultiQC, count matrix with technical-replicate collapse, Ensembl biomaRt gene-symbol annotation, and DESeq2 (normalized counts, PCA plots, per-contrast results with ashr shrinkage and MA plots).</p>
 
