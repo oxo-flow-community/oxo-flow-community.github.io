@@ -170,14 +170,14 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <details class="ox-flow-view">
 <summary>Rule-level detail (exact DAG)</summary>
 <div class="ox-dag-card">
-<img src="/assets/dag/oxo-flow-fetchngs-rules.svg?v=645ca29b39" alt="oxo-flow-fetchngs rule-level detail" loading="lazy">
+<img src="/assets/dag/oxo-flow-fetchngs-rules.svg?v=45e5ce54aa" alt="oxo-flow-fetchngs rule-level detail" loading="lazy">
 </div>
 </details>
 <details class="ox-flow-view">
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 
-<img src="/assets/dag/oxo-flow-fetchngs.svg?v=645ca29b39" alt="oxo-flow-fetchngs pipeline overview" loading="lazy">
+<img src="/assets/dag/oxo-flow-fetchngs.svg?v=45e5ce54aa" alt="oxo-flow-fetchngs pipeline overview" loading="lazy">
 
 <p class="ox-dag-caption">figure · oxo-flow-fetchngs — Fetch metadata and raw FastQ files from public sequence databases (SRA/ENA/DDBJ/GEO).</p>
 

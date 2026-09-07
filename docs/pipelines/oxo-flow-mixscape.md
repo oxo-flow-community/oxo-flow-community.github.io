@@ -239,14 +239,14 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <details class="ox-flow-view">
 <summary>Rule-level detail (exact DAG)</summary>
 <div class="ox-dag-card">
-<img src="/assets/dag/oxo-flow-mixscape-rules.svg?v=d435a0a077" alt="oxo-flow-mixscape rule-level detail" loading="lazy">
+<img src="/assets/dag/oxo-flow-mixscape-rules.svg?v=0c418877b9" alt="oxo-flow-mixscape rule-level detail" loading="lazy">
 </div>
 </details>
 <details class="ox-flow-view">
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 
-<img src="/assets/dag/oxo-flow-mixscape.svg?v=d435a0a077" alt="oxo-flow-mixscape pipeline overview" loading="lazy">
+<img src="/assets/dag/oxo-flow-mixscape.svg?v=0c418877b9" alt="oxo-flow-mixscape pipeline overview" loading="lazy">
 
 <p class="ox-dag-caption">figure · oxo-flow-mixscape — Pooled CRISPR perturbation analysis (scCRISPR-seq / CROP-seq / Perturb-seq) with Seurat Mixscape: per-cell perturbation signatures (CalcPerturbSig), perturbed vs.</p>
 

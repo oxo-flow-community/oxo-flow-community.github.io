@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-     width="259" height="282" viewBox="0 0 259 282">
+     width="259" height="282" viewBox="-20 0 299 282">
 <defs>
 </defs>
 <metadata id="diagram-manifest" data-schema-version="1.0"><![CDATA[{"groups":[{"color":"#54A24B","id":"align","label":"Alignment"}],"height":282,"match":{"flags":"i","target":"fqProcessName","type":"regex"},"nodes":[{"groups":["align"],"h":12.0,"id":"g_generic_align_generic","label":"Analysis\nAnalysis · Alignment","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":80.0,"y":120.0},{"groups":["align"],"h":12.0,"id":"g_report_report","label":"Reporting","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":140.0,"y":120.0},{"groups":[],"h":12.0,"id":"g_quantify_quantify","label":"Quantification","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":80.0,"y":180.0}],"regions":[],"title":"","version":"1.0","width":259}]]></metadata>

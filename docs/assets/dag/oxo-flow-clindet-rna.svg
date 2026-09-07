@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-     width="462" height="486" viewBox="0 0 462 486">
+     width="462" height="486" viewBox="-20 0 502 486">
 <defs>
 </defs>
 <metadata id="diagram-manifest" data-schema-version="1.0"><![CDATA[{"groups":[{"color":"#79706E","id":"generic","label":"Analysis"},{"color":"#54A24B","id":"align","label":"Alignment"},{"color":"#B279A2","id":"variant","label":"Variant Calling"}],"height":486,"match":{"flags":"i","target":"fqProcessName","type":"regex"},"nodes":[{"groups":[],"h":12.0,"id":"s_00_qc","label":"QC","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":80.0,"y":264.0},{"groups":["align"],"h":12.0,"id":"s_10_mapping","label":"Alignment\nMapping","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":80.0,"y":196.0},{"groups":["align"],"h":12.0,"id":"s_20_fusion","label":"Fusion","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":223.2,"y":196.0},{"groups":[],"h":12.0,"id":"s_30_isofox","label":"Alignment\nIsofox","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":80.0,"y":336.0},{"groups":["align","generic"],"h":16.0,"id":"s_40_call_mut","label":"Call Mut","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":223.2,"y":122.0},{"groups":["generic","variant"],"h":20.0,"id":"s_50_snv","label":"Variant Calling\nSNV","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":312.7,"y":124.0},{"groups":["variant"],"h":12.0,"id":"s_60_vcf2maf_merge","label":"VCF2MAF","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":402.2,"y":200.0}],"regions":[],"title":"","version":"1.0","width":462}]]></metadata>

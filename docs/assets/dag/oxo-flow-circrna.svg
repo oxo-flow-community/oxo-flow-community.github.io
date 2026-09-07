@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-     width="320" height="390" viewBox="0 0 320 390">
+     width="320" height="390" viewBox="-20 0 360 390">
 <defs>
 </defs>
 <metadata id="diagram-manifest" data-schema-version="1.0"><![CDATA[{"groups":[{"color":"#F58518","id":"trim","label":"Read Trimming"},{"color":"#E45756","id":"quantify","label":"Quantification"},{"color":"#79706E","id":"generic","label":"Analysis"}],"height":390,"match":{"flags":"i","target":"fqProcessName","type":"regex"},"nodes":[{"groups":["trim"],"h":12.0,"id":"g_qc_trim","label":"QC","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":80.0,"y":120.0},{"groups":["quantify","trim"],"h":16.0,"id":"g_callers_quantify","label":"Callers","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":140.0,"y":122.0},{"groups":["generic","quantify"],"h":16.0,"id":"g_aggregation_generic","label":"Aggregation","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":200.0,"y":186.0},{"groups":["generic"],"h":12.0,"id":"g_report_generic","label":"Reporting","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":260.0,"y":248.0}],"regions":[],"title":"","version":"1.0","width":320}]]></metadata>

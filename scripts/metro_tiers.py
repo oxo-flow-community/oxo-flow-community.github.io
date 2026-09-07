@@ -493,7 +493,8 @@ def pad_viewport_left(svg: pathlib.Path) -> None:
         return
     # Most-negative overflow: labels extend PAST the left edge (negative
     # x-extent); max() over 0.0 would silently clip the measurement.
-    overflow = 0.0
+    overflow = 0.0   # most-negative: left overhang
+    overflow_r = 0.0 # most-positive: right overhang
     for mm in re.finditer(r'<text\s([^>]*)>(.*?)</text>', text, re.S):
         attrs, body = mm.group(1), mm.group(2)
         if "data-station-id" not in attrs or "text-anchor=\"middle\"" not in attrs:
@@ -512,11 +513,27 @@ def pad_viewport_left(svg: pathlib.Path) -> None:
             candidate = x - est / 2
             if candidate < overflow:
                 overflow = candidate
+            candidate_r = x + est / 2 - (x0 + w)
+            if candidate_r > overflow_r:
+                overflow_r = candidate_r
+    margin = 20.0
+    new_x0 = x0
+    new_w = w
     if overflow < 0:
-        new_x0 = x0 + overflow - 20
+        new_x0 = x0 + overflow - margin
+        new_w = w - (new_x0 - x0)
+    if overflow_r > 0:
+        new_w += overflow_r + margin
+    # Uniform canvas margin: router line endpoints brush the edge by a few
+    # pixels on dense detail maps (live: clindet/mag/viralrecon rules) —
+    # keep a guaranteed 20px lead on BOTH sides whether or not text overflows.
+    if new_x0 > x0 - margin:
+        new_x0 = x0 - margin
+        new_w = max(new_w, w + 2 * margin)
+    if new_x0 != x0 or new_w != w:
         new_text = re.sub(
             r'viewBox="[\d.\- ]+"',
-            f'viewBox="{new_x0:.0f} {y0:.0f} {w - (new_x0 - x0):.0f} {h:.0f}"',
+            f'viewBox="{new_x0:.0f} {y0:.0f} {new_w:.0f} {h:.0f}"',
             text,
             count=1,
         )
