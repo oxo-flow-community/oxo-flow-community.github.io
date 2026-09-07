@@ -450,37 +450,39 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 ## Workflow graph
 
-<details class="ox-flow-view">
-<summary>Semantic overview <span class="ox-badge ox-badge--sem">author-side</span></summary>
-<div class="ox-dag-card" markdown="1">
+<details class="ox-flow-view" open>
+<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
+<div class="ox-sem-text" markdown="1">
 
-<a href="/assets/dag/oxo-flow-scrnaseq-semantic.svg?v=42a6d51a77" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-scrnaseq-semantic.svg?v=42a6d51a77" alt="oxo-flow-scrnaseq semantic overview" loading="lazy"></a>
+## Semantic map - how to read it
 
-<p class="ox-dag-caption">Semantic route drawing — every station is a real rule of this workflow, every edge a real data dependency of the engine DAG; groups and junction are the author-side condensation (details below).</p>
+## Short names and groups (all are real rules)
+
+| Shown | Full rule name(s) |
+|---|---|
+| refs | gunzip_fasta, gunzip_gtf, gtf_gene_filter, gtf_source_fix |
+| cellranger | cellranger_mkgtf, cellranger_mkref, cellranger_count, cellranger_mkvdjref, cellranger_multi, cellrangerarc_mkgtf, cellrangerarc_mkref, cellrangerarc_count |
+| simpleaf | simpleaf_index, simpleaf_quant, qcatch |
+| kalbust | kallistobustools_ref_standard, kallistobustools_ref_velocity, kallistobustools_count |
+| star | star_genomegenerate, star_genomeparams_upgrade, star_align |
+| mtx | mtx_to_h5ad_raw, mtx_to_h5ad_filtered, mtx_to_h5ad_multi_raw, mtx_to_h5ad_multi_filtered, mtx_to_h5ad_simpleaf, mtx_to_h5ad_kallisto_raw, mtx_to_h5ad_kallisto_filtered, mtx_to_h5ad_star_raw, mtx_to_h5ad_star_filtered |
+| cellbender | cellbender_removebackground |
+| barcodes | anndata_barcodes |
+| concat | concat_h5ad_filtered, concat_h5ad_cellbender_filter, concat_h5ad_raw |
+| anndatr | anndatar_convert_filtered, anndatar_convert_cellbender_filter, anndatar_convert_raw, anndatar_convert_combined_filtered, anndatar_convert_combined_cellbender_filter, anndatar_convert_combined_raw |
+| qc | fastqc |
+| report | multiqc, collect_versions, workflow_summary, methods_description |
+
+Every drawn edge is a real engine edge (subset check at generation).
+
+<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-scrnaseq+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
 
 </div>
 </details>
-<div class="ox-sem-notes" markdown="1">
-
-### How this semantic view abstracts the rule-level graph
-
-The workflow has **4 rules / ? edges**; the semantic drawing shows **23 stops on 5 route lines**: one **Main pipeline** line (grey-brown) carries the single shared story along the bottom trunk — all 4 alignment lanes merge at the hidden junction `_aligned` and the count/statistics chain runs on it; the coloured lines are the routes that feed or branch from it (blue Data acquisition, green PE alignment, orange SE alignment, yellow Reporting). Grouped stops: `star_align_raw` and `star_align_se_raw` ride their parent lane; the 8 `rseqc_*` checks appear as one `rseqc QC` stop (each check still a real rule — detail card below); the 3 PCA stops appear as `DESeq2 PCA`. Every drawn edge is a real edge of the engine DAG — the subset property is machine-verified at generation (incl. junction composition), nothing invented. Auxiliary terminals (`bwa_index`, `genome_faidx`) and the per-check QC fan-outs are elided here and shown in the rule-level detail card.
-
-### How to read this semantic map
-
-
-
-**Short-name mapping** — every label on the map, in full:
-
-<table class="ox-sem-map"><thead><tr><th>Shown</th><th>Full rule name(s)</th></tr></thead><tbody><tr><td><code>refs</code></td><td><code>gunzip_fasta, gunzip_gtf, gtf_gene_filter, gtf_source_fix</code></td></tr><tr><td><code>cellranger</code></td><td><code>cellranger_mkgtf, cellranger_mkref, cellranger_count, cellranger_mkvdjref, cellranger_multi, cellrangerarc_mkgtf, cellrangerarc_mkref, cellrangerarc_count</code></td></tr><tr><td><code>simpleaf</code></td><td><code>simpleaf_index, simpleaf_quant, qcatch</code></td></tr><tr><td><code>kalbust</code></td><td><code>kallistobustools_ref_standard, kallistobustools_ref_velocity, kallistobustools_count</code></td></tr><tr><td><code>star</code></td><td><code>star_genomegenerate, star_genomeparams_upgrade, star_align</code></td></tr><tr><td><code>mtx</code></td><td><code>mtx_to_h5ad_raw, mtx_to_h5ad_filtered, mtx_to_h5ad_multi_raw, mtx_to_h5ad_multi_filtered, mtx_to_h5ad_simpleaf, mtx_to_h5ad_kallisto_raw, mtx_to_h5ad_kallisto_filtered, mtx_to_h5ad_star_raw, mtx_to_h5ad_star_filtered</code></td></tr><tr><td><code>cellbender</code></td><td><code>cellbender_removebackground</code></td></tr><tr><td><code>barcodes</code></td><td><code>anndata_barcodes</code></td></tr><tr><td><code>concat</code></td><td><code>concat_h5ad_filtered, concat_h5ad_cellbender_filter, concat_h5ad_raw</code></td></tr><tr><td><code>anndatr</code></td><td><code>anndatar_convert_filtered, anndatar_convert_cellbender_filter, anndatar_convert_raw, anndatar_convert_combined_filtered, anndatar_convert_combined_cellbender_filter, anndatar_convert_combined_raw</code></td></tr><tr><td><code>qc</code></td><td><code>fastqc</code></td></tr><tr><td><code>report</code></td><td><code>multiqc, collect_versions, workflow_summary, methods_description</code></td></tr></tbody></table>
-
-<a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Bgraph%5D+oxo-flow-scrnaseq+semantic+map+correction&body=Which station or edge looks wrong (paste the station/edge names)">Report a correction to this map</a>
-
-</div>
 <details class="ox-flow-view">
 <summary>Exact rule DAG (multi-route truth — operational view)</summary>
 <div class="ox-dag-card ox-dag-card--wide">
-<a href="/assets/dag/oxo-flow-scrnaseq-rules.svg?v=e8d438a5ab" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-scrnaseq-rules.svg?v=e8d438a5ab" alt="oxo-flow-scrnaseq rule-level detail" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-scrnaseq-rules.svg?v=adf075b91e" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-scrnaseq-rules.svg?v=adf075b91e" alt="oxo-flow-scrnaseq rule-level detail" loading="lazy"></a>
 </div>
 </details>
 <details class="ox-flow-view" open>

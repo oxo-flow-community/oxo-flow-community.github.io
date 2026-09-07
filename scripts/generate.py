@@ -225,6 +225,12 @@ def rating_badge(rating: str, coverage: str = "") -> str:
 
 
 def badges(p: dict) -> str:
+    """Legacy badge row (kept for callers of badges())."""
+    return badge_row(p)
+
+
+def badge_row(p: dict) -> str:
+    """Hero badge strip: evidence rating, origin, engine, subject tags."""
     star = rating_badge(p.get("rating", "community"), p.get("coverage", ""))
     origin = {
         "port": "⇄ Official port",
@@ -236,7 +242,20 @@ def badges(p: dict) -> str:
         eng = '<span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span>'
     elif p.get("engine") == "snakemake":
         eng = '<span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span>'
-    return f'<div class="ox-page-badges">{star} <span class="ox-badge ox-badge--origin">{origin}</span> {eng}</div>'
+    tags = "".join(
+        f'<span class="ox-tag">{_esc(t)}</span>' for t in (p.get("tags") or [])
+    )
+    return (f'<div class="ox-page-badges">{star} <span class="ox-badge ox-badge--origin">{origin}</span> '
+            f'{eng}{("<span class=ox-tag-sep></span>" + tags) if tags else ""}</div>')
+
+
+def hero_cta(p: dict, anchor: str) -> str:
+    """Hero call-to-action: run command + repository button."""
+    cmd = _esc(p.get("quickstart") or "oxo-flow run main.oxoflow")
+    repo = _esc(p.get("repo_url", ""))
+    return (f'<div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#{anchor}">▶ Run it</a>'
+            f'<a class="ox-btn" href="{repo}" rel="noopener">GitHub ↗</a>'
+            f'<code class="ox-hero-cmd">$ {cmd}</code></div>')
 
 
 def glance_panel(p: dict) -> str:
@@ -292,10 +311,14 @@ def glance_panel(p: dict) -> str:
         f'<span class="v{(" " + cls) if cls else ""}">{v}</span></div>'
         for k, v, cls in rows
     )
+    chips = "".join(
+        f'<span class="tchip">{_esc(t)}</span>' for t in (p.get("tools") or [])[:8]
+    )
     return (
         '<div class="ox-glance">\n'
         '<div class="ox-glance-title">At a glance</div>\n'
         f"{kv}\n"
+        f'<div class="ox-glance-tools"><span class="k">Tools</span><div class="chips">{chips}</div></div>\n'
         f'<p class="cmd">$ {_esc(p["quickstart"])}</p>\n'
         "</div>"
     )
@@ -490,89 +513,28 @@ def dag_section(p: dict, configs: dict) -> list[str]:
     # picture would appear twice — the detail card is omitted then.
     info = configs.get(name, {}).get("graph") or {}
     primary_is_rule = bool(info.get("is_rule_level"))
-    semantic = info.get("semantic") or {}
-    _sem_doc = pathlib.Path(ROOT) / "scripts" / "semantic_maps" / f"{name}.md"
-    # Short-name -> full-rule mapping table (scripts/semantic_maps/<name>.md)
-    _sem_howto = ""
-    if _sem_doc.is_file():
-        _lines = _sem_doc.read_text(encoding="utf-8").splitlines()
-        # take the "## Semantic map - how to read it" section body
-        try:
-            _idx = next(i for i, l in enumerate(_lines) if l.startswith("## Semantic"))
-            _howto = []
-            for _l in _lines[_idx + 1:]:
-                if _l.startswith("## "):
-                    break
-                _howto.append(_l)
-            _sem_howto = "<br>".join(re.sub(r"^[# ]+", "", x) for x in _howto if x.strip())
-        except StopIteration:
-            _sem_howto = ""
-    table = ""
-    if _sem_doc.is_file():
-        rows = []
-        for _line in _sem_doc.read_text(encoding="utf-8").splitlines():
-            if _line.startswith("| ") and "Shown" not in _line and "---" not in _line:
-                cells = [c.strip() for c in _line.strip("|").split("|")]
-                if len(cells) == 2 and cells[0] and cells[1]:
-                    rows.append(cells)
-        table = ('<table class="ox-sem-map"><thead><tr><th>Shown</th>'
-                 '<th>Full rule name(s)</th></tr></thead><tbody>')
-        table += "".join(
-            f"<tr><td><code>{r[0]}</code></td><td><code>{r[1]}</code></td></tr>"
-            for r in rows
-        ) + "</tbody></table>"
-    semantic_svg = OUT_PAGES.parent / "assets" / "dag" / semantic.get("file", "")
-    if semantic and semantic_svg.is_file():
-        # Semantic overview: the author-side route drawing (multi-hop trunks,
-        # grouped stations, hidden junction) — every shown station is a real
-        # rule and every shown edge a real DAG edge (subset is machine-checked
-        # by scripts/semantic_maps/<name>.mmd layout time).
-        sem_primary = bool(semantic.get("primary", True))
-        sem_open = " open" if sem_primary else ""
+    # LLM-authored plain-language semantic overview (scripts/semantic_maps/
+    # <name>.md): a text-only "semantic preview" of the pipeline — every
+    # step is named with its real rule, nothing invented; rendered as
+    # markdown, updated by editing the .md file (no figure re-generation).
+    sem_doc = pathlib.Path(ROOT) / "scripts" / "semantic_maps" / f"{name}.md"
+    if sem_doc.is_file():
+        sem_text = sem_doc.read_text(encoding="utf-8").strip()
         cards += [
-            f'<details class="ox-flow-view"{sem_open}>',
-            '<summary>Semantic overview <span class="ox-badge ox-badge--sem">author-side</span></summary>',
-            '<div class="ox-dag-card" markdown="1">',
+            '<details class="ox-flow-view" open>',
+            '<summary>Semantic overview — plain-language walkthrough '
+            '<span class="ox-badge ox-badge--sem">text</span></summary>',
+            '<div class="ox-sem-text" markdown="1">',
             "",
-            _asset_img(f"../assets/dag/{_esc(semantic['file'])}", f"{name} semantic overview"),
+            sem_text,
             "",
-            '<p class="ox-dag-caption">Semantic route drawing — every station is a real rule of this '
-            'workflow, every edge a real data dependency of the engine DAG; '
-            'groups and junction are the author-side condensation (details below).</p>',
+            f'<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/'
+            f'oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+{_esc(name)}+semantic+text+'
+            f'correction&body=Which step or rule name looks wrong (paste the step/rule names)">'
+            f'Report a correction to this overview</a></p>',
             "",
             "</div>",
             "</details>",
-            '<div class="ox-sem-notes" markdown="1">',
-            "",
-            "### How this semantic view abstracts the rule-level graph",
-            "",
-            f"The workflow has **{info.get('stations', '?')} rules / {info.get('edges', '?') or '?'} edges**; "
-            f"the semantic drawing shows **{semantic.get('stations', '?')} stops on 5 route lines**: "
-            f"one **Main pipeline** line (grey-brown) carries the single shared story along the bottom "
-            f"trunk — all 4 alignment lanes merge at the hidden junction `_aligned` and the count/"
-            f"statistics chain runs on it; the coloured lines are the routes that feed or branch from it "
-            f"(blue Data acquisition, green PE alignment, orange SE alignment, yellow Reporting). Grouped "
-            f"stops: `star_align_raw` and `star_align_se_raw` ride their parent lane; the 8 `rseqc_*` "
-            f"checks appear as one `rseqc QC` stop (each check still a real rule — detail card below); "
-            f"the 3 PCA stops appear as `DESeq2 PCA`. Every drawn edge is a real edge of the engine DAG — "
-            f"the subset property is machine-verified at generation (incl. junction composition), nothing "
-            f"invented. Auxiliary terminals (`bwa_index`, `genome_faidx`) and the per-check QC fan-outs "
-            f"are elided here and shown in the rule-level detail card.",
-            "",
-            "### How to read this semantic map",
-            "",
-            f"{_sem_howto}",
-            "",
-            f"**Short-name mapping** — every label on the map, in full:",
-            "",
-            f'{table}',
-            "",
-            f'<a class="ox-issue-mini" href="https://github.com/oxo-flow-community/'
-            f'oxo-flow-community.github.io/issues/new?title=%5Bgraph%5D+{_esc(name)}+semantic+map+'
-            f'correction&body=Which station or edge looks wrong (paste the station/edge names)">'
-            f'Report a correction to this map</a>',
-            "",
-            "</div>",
         ]
     rules_svg = OUT_PAGES.parent / "assets" / "dag" / f"{name}-rules.svg"
     if rules_svg.is_file() and not primary_is_rule:
@@ -590,8 +552,7 @@ def dag_section(p: dict, configs: dict) -> list[str]:
     # rule-level primaries), collapsed behind the open flow views on
     # multi-omics entries.
     has_views = bool(configs.get(name, {}).get("flow_views"))
-    sem_primary_now = bool((info.get("semantic") or {}).get("primary", True))
-    open_mark = " open" if primary_is_rule or not has_views or not sem_primary_now else ""
+    open_mark = " open" if primary_is_rule or not has_views else ""
     wide = " ox-dag-card--wide" if _intrinsic_width(svg) > 1400 else ""
     cards += [
         f'<details class="ox-flow-view"{open_mark}>',
@@ -661,10 +622,11 @@ def make_page(p: dict, configs: dict) -> str:
         # grid/columns (live-finding 2026-09-05 — markdown="1" nesting
         # shreds nested raw HTML into code blocks).
         '<div class="ox-detail-cols">',
-        "<div>",
+        "<div class=\"ox-detail-main\">",
         f"<h1>{_esc(p['title'])}</h1>",
-        badges(p),
-        f"<p>{_desc_html(p.get('description', ''))}</p>",
+        badge_row(p),
+        f"<p class=\"ox-desc\">{_desc_html(p.get('description', ''))}</p>",
+        hero_cta(p, "preview-the-plan" if "dry-run" in p["quickstart"] else "run-it"),
         "</div>",
         "<div>",
         glance_panel(p),

@@ -88,6 +88,29 @@
     items.forEach((p) => el.insertAdjacentHTML("beforeend", cardHTML(p)));
   }
 
+  // Modern landing "browse by domain" pills -> faceted catalog entry.
+  function renderDomains() {
+    const el = document.getElementById("ox-domains");
+    if (!el) return;
+    const by = new Map();
+    P.forEach((p) => {
+      if (!by.has(p.domain)) by.set(p.domain, []);
+      by.get(p.domain).push(p);
+    });
+    const ICONS = {
+      genomics: "🧬", metagenomics: "🔬", "rna-seq": "🧫", "single-cell": "🦠",
+      "molecular-biology": "🧪", "cytogenetics": "📎", "proteomics": "🧂",
+      epigenetics: "🧿", "oncogenomics": "🎯",
+    };
+    el.innerHTML = [...by.entries()]
+      .sort((a, b) => b[1].length - a[1].length)
+      .map(([dom, items]) =>
+        `<a class="ox-domain-pill" href="/pipelines/?domain=${encodeURIComponent(dom)}">` +
+        `<span class="ox-domain-ico">${ICONS[dom] || "▦"}</span><span class="ox-domain-name">${esc(dom)}</span>` +
+        `<span class="ox-domain-count">${items.length}</span></a>`)
+      .join("");
+  }
+
   function renderCatalog() {
     const search = document.getElementById("ox-search");
     const chips = document.getElementById("ox-chips");
@@ -97,16 +120,25 @@
     if (!search || !grid) return;
 
     const state = { q: "", domains: new Set(), origins: new Set(), engines: new Set() };
+    // Pre-select a domain facet from the landing pages: /pipelines?domain=x
+    const pre = new URLSearchParams(location.search).get("domain");
+    if (pre) state.domains.add(pre);
     const domains = [...new Set(P.map((p) => p.domain))].sort();
     const origins = [...new Set(P.map((p) => p.origin || "curated"))].sort();
     const engines = [...new Set(P.map((p) => p.engine).filter(Boolean))].sort();
 
-    function chip(label, key, values) {
+    function chip(label, key, values, count) {
       const b = document.createElement("button");
       b.type = "button";
       b.className = "ox-chip";
       b.textContent = label;
-      b.setAttribute("aria-pressed", "false");
+      if (count !== undefined) {
+        const c = document.createElement("span");
+        c.className = "ox-chip-count";
+        c.textContent = count;
+        b.appendChild(c);
+      }
+      b.setAttribute("aria-pressed", values.has(key) ? "true" : "false");
       b.addEventListener("click", () => {
         if (values.has(key)) { values.delete(key); b.setAttribute("aria-pressed", "false"); }
         else { values.add(key); b.setAttribute("aria-pressed", "true"); }
@@ -116,9 +148,12 @@
     }
 
     const ORIGIN_LABEL = { port: "official ports", original: "originals", curated: "community" };
-    domains.forEach((d) => chips.appendChild(chip(d, d, state.domains)));
-    origins.forEach((o) => chips.appendChild(chip(ORIGIN_LABEL[o] || o, o, state.origins)));
-    engines.forEach((e) => chips.appendChild(chip(e === "nextflow" ? "nf-core ports" : "snakemake ports", e, state.engines)));
+    domains.forEach((d) => chips.appendChild(chip(d, d, state.domains,
+      P.filter((p) => p.domain === d).length)));
+    origins.forEach((o) => chips.appendChild(chip(ORIGIN_LABEL[o] || o, o, state.origins,
+      P.filter((p) => (p.origin || "curated") === o).length)));
+    engines.forEach((e) => chips.appendChild(chip(e === "nextflow" ? "nf-core ports" : "snakemake ports", e, state.engines,
+      P.filter((p) => p.engine === e).length)));
 
     function matches(p) {
       const hay = [p.name, p.title, p.domain, ...(p.tags || []), ...(p.tools || [])]
@@ -133,7 +168,24 @@
 
     function apply() {
       const shown = P.filter(matches);
-      grid.innerHTML = shown.map(cardHTML).join("");
+      const filtering = state.q.trim() || state.domains.size || state.origins.size || state.engines.size;
+      if (!filtering) {
+        // Faceted browse: group the grid by domain with a header per group.
+        const groups = new Map();
+        shown.forEach((p) => {
+          if (!groups.has(p.domain)) groups.set(p.domain, []);
+          groups.get(p.domain).push(p);
+        });
+        grid.innerHTML = [...groups.entries()]
+          .sort((a, b) => a[0].localeCompare(b[0]))
+          .map(([dom, items]) =>
+            `<h3 class="ox-group">${esc(dom)}` +
+            `<span class="ox-group-count">${items.length}</span></h3>` +
+            `<div class="ox-cards">${items.map(cardHTML).join("")}</div>`)
+          .join("");
+      } else {
+        grid.innerHTML = shown.map(cardHTML).join("");
+      }
       empty.hidden = shown.length !== 0;
       count.textContent = shown.length === P.length
         ? `${P.length} workflows`
@@ -146,9 +198,9 @@
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", () => {
-      renderStats(); renderFeatured(); renderCatalog();
+      renderStats(); renderFeatured(); renderDomains(); renderCatalog();
     });
   } else {
-    renderStats(); renderFeatured(); renderCatalog();
+    renderStats(); renderFeatured(); renderDomains(); renderCatalog();
   }
 })();

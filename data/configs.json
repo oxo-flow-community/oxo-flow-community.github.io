@@ -1130,15 +1130,7 @@
       "tier": "module-stage",
       "stations": 7,
       "is_rule_level": false,
-      "aspect": 1.56,
-      "semantic": {
-        "file": "oxo-flow-rnaseq-semantic.svg",
-        "aspect": 1.4,
-        "tier": "tree",
-        "primary": false,
-        "hand": true,
-        "stations": 23
-      }
+      "aspect": 1.56
     }
   },
   "oxo-flow-sarek": {
@@ -2173,15 +2165,7 @@
       "tier": "module-stage",
       "stations": 4,
       "is_rule_level": false,
-      "aspect": 2.25,
-      "semantic": {
-        "file": "oxo-flow-sarek-semantic.svg",
-        "aspect": 1.49,
-        "tier": "tree",
-        "primary": false,
-        "hand": true,
-        "stations": 23
-      }
+      "aspect": 2.25
     }
   },
   "oxo-flow-scrnaseq": {
@@ -2795,15 +2779,7 @@
       "tier": "module-stage",
       "stations": 4,
       "is_rule_level": false,
-      "aspect": 1.28,
-      "semantic": {
-        "file": "oxo-flow-scrnaseq-semantic.svg",
-        "aspect": 1.3,
-        "tier": "tree",
-        "primary": false,
-        "hand": true,
-        "stations": 23
-      }
+      "aspect": 1.28
     }
   },
   "oxo-flow-mag": {
@@ -3955,15 +3931,7 @@
       "tier": "module-stage",
       "stations": 10,
       "is_rule_level": false,
-      "aspect": 1.83,
-      "semantic": {
-        "file": "oxo-flow-mag-semantic.svg",
-        "aspect": 1.75,
-        "tier": "tree",
-        "primary": false,
-        "hand": true,
-        "stations": 23
-      }
+      "aspect": 1.83
     }
   },
   "oxo-flow-ampliseq": {
@@ -4590,15 +4558,7 @@
       "tier": "module-stage",
       "stations": 7,
       "is_rule_level": false,
-      "aspect": 2.6,
-      "semantic": {
-        "file": "oxo-flow-ampliseq-semantic.svg",
-        "aspect": 2.47,
-        "tier": "line",
-        "primary": true,
-        "hand": true,
-        "stations": 23
-      }
+      "aspect": 2.6
     }
   },
   "oxo-flow-chipseq": {
@@ -5361,15 +5321,7 @@
       "tier": "module-stage",
       "stations": 8,
       "is_rule_level": false,
-      "aspect": 2.35,
-      "semantic": {
-        "file": "oxo-flow-chipseq-semantic.svg",
-        "aspect": 1.46,
-        "tier": "tree",
-        "primary": false,
-        "hand": true,
-        "stations": 23
-      }
+      "aspect": 2.35
     }
   },
   "oxo-flow-atacseq": {
@@ -5907,15 +5859,7 @@
       "tier": "module-stage",
       "stations": 7,
       "is_rule_level": false,
-      "aspect": 1.51,
-      "semantic": {
-        "file": "oxo-flow-atacseq-semantic.svg",
-        "aspect": 2.0,
-        "tier": "line",
-        "primary": true,
-        "hand": true,
-        "stations": 23
-      }
+      "aspect": 1.51
     }
   },
   "oxo-flow-methylseq": {
@@ -6650,18 +6594,10 @@
       }
     ],
     "graph": {
-      "tier": "rule-flat",
+      "tier": "spine",
       "stations": 61,
-      "is_rule_level": true,
-      "aspect": 1.37,
-      "semantic": {
-        "file": "oxo-flow-methylseq-semantic.svg",
-        "aspect": 1.91,
-        "tier": "tree",
-        "primary": false,
-        "hand": true,
-        "stations": 23
-      }
+      "is_rule_level": false,
+      "aspect": 1.3
     }
   },
   "oxo-flow-nanoseq": {
@@ -7251,18 +7187,10 @@
       }
     ],
     "graph": {
-      "tier": "rule-flat",
+      "tier": "spine",
       "stations": 52,
-      "is_rule_level": true,
-      "aspect": 2.12,
-      "semantic": {
-        "file": "oxo-flow-nanoseq-semantic.svg",
-        "aspect": 1.11,
-        "tier": "tree",
-        "primary": false,
-        "hand": true,
-        "stations": 23
-      }
+      "is_rule_level": false,
+      "aspect": 1.37
     }
   },
   "oxo-flow-viralrecon": {
@@ -8057,15 +7985,7 @@
       "tier": "module-stage",
       "stations": 4,
       "is_rule_level": false,
-      "aspect": 2.25,
-      "semantic": {
-        "file": "oxo-flow-viralrecon-semantic.svg",
-        "aspect": 1.49,
-        "tier": "tree",
-        "primary": false,
-        "hand": true,
-        "stations": 23
-      }
+      "aspect": 2.25
     }
   },
   "oxo-flow-eager": {
@@ -9554,15 +9474,7 @@
       "tier": "module-stage",
       "stations": 8,
       "is_rule_level": false,
-      "aspect": 2.08,
-      "semantic": {
-        "file": "oxo-flow-eager-semantic.svg",
-        "aspect": 0.94,
-        "tier": "tree",
-        "primary": false,
-        "hand": true,
-        "stations": 23
-      }
+      "aspect": 2.08
     }
   },
   "oxo-flow-fetchngs": {
@@ -9724,15 +9636,7 @@
       "tier": "rule-sections",
       "stations": 16,
       "is_rule_level": true,
-      "aspect": 3.97,
-      "semantic": {
-        "file": "oxo-flow-fetchngs-semantic.svg",
-        "aspect": 2.37,
-        "tier": "line",
-        "primary": true,
-        "hand": true,
-        "stations": 23
-      }
+      "aspect": 3.97
     }
   },
   "oxo-flow-rnaseq-star-deseq2": {
@@ -10043,15 +9947,7 @@
       "tier": "spine",
       "stations": 31,
       "is_rule_level": false,
-      "aspect": 4.09,
-      "semantic": {
-        "file": "oxo-flow-rnaseq-star-deseq2-semantic.svg",
-        "aspect": 3.06,
-        "tier": "line",
-        "primary": true,
-        "hand": true,
-        "stations": 23
-      }
+      "aspect": 3.17
     }
   },
   "oxo-flow-varlociraptor": {
@@ -10374,15 +10270,7 @@
       "tier": "module-stage",
       "stations": 18,
       "is_rule_level": false,
-      "aspect": 3.09,
-      "semantic": {
-        "file": "oxo-flow-varlociraptor-semantic.svg",
-        "aspect": 1.51,
-        "tier": "line",
-        "primary": true,
-        "hand": true,
-        "stations": 23
-      }
+      "aspect": 3.09
     }
   },
   "oxo-flow-snparcher": {
@@ -10841,15 +10729,7 @@
       "tier": "module-stage",
       "stations": 7,
       "is_rule_level": false,
-      "aspect": 1.84,
-      "semantic": {
-        "file": "oxo-flow-snparcher-semantic.svg",
-        "aspect": 1.34,
-        "tier": "tree",
-        "primary": false,
-        "hand": true,
-        "stations": 23
-      }
+      "aspect": 1.84
     }
   },
   "oxo-flow-enrichment": {
@@ -11801,15 +11681,7 @@
       "tier": "module-stage",
       "stations": 8,
       "is_rule_level": false,
-      "aspect": 1.45,
-      "semantic": {
-        "file": "oxo-flow-enrichment-semantic.svg",
-        "aspect": 0.93,
-        "tier": "line",
-        "primary": true,
-        "hand": true,
-        "stations": 23
-      }
+      "aspect": 1.45
     }
   },
   "oxo-flow-genome-tracks": {
@@ -12042,15 +11914,7 @@
       "tier": "rule-sections",
       "stations": 16,
       "is_rule_level": true,
-      "aspect": 2.82,
-      "semantic": {
-        "file": "oxo-flow-genome-tracks-semantic.svg",
-        "aspect": 0.74,
-        "tier": "tree",
-        "primary": false,
-        "hand": true,
-        "stations": 23
-      }
+      "aspect": 2.82
     }
   },
   "oxo-flow-mixscape": {
@@ -12303,15 +12167,7 @@
       "tier": "rule-sections",
       "stations": 7,
       "is_rule_level": true,
-      "aspect": 4.98,
-      "semantic": {
-        "file": "oxo-flow-mixscape-semantic.svg",
-        "aspect": 0.55,
-        "tier": "tree",
-        "primary": false,
-        "hand": true,
-        "stations": 23
-      }
+      "aspect": 4.98
     }
   },
   "oxo-flow-bgcflow": {
@@ -12718,15 +12574,7 @@
       "tier": "module-stage",
       "stations": 5,
       "is_rule_level": false,
-      "aspect": 1.47,
-      "semantic": {
-        "file": "oxo-flow-bgcflow-semantic.svg",
-        "aspect": 0.77,
-        "tier": "tree",
-        "primary": false,
-        "hand": true,
-        "stations": 23
-      }
+      "aspect": 1.47
     }
   },
   "oxo-flow-unsupervised": {
@@ -13267,15 +13115,7 @@
       "tier": "spine",
       "stations": 61,
       "is_rule_level": false,
-      "aspect": 1.4,
-      "semantic": {
-        "file": "oxo-flow-unsupervised-semantic.svg",
-        "aspect": 0.91,
-        "tier": "tree",
-        "primary": false,
-        "hand": true,
-        "stations": 23
-      }
+      "aspect": 1.13
     }
   },
   "oxo-flow-circrna": {
@@ -13295,15 +13135,7 @@
       "tier": "module-stage",
       "stations": 4,
       "is_rule_level": false,
-      "aspect": 0.92,
-      "semantic": {
-        "file": "oxo-flow-circrna-semantic.svg",
-        "aspect": 0.95,
-        "tier": "line",
-        "primary": true,
-        "hand": true,
-        "stations": 23
-      }
+      "aspect": 0.92
     }
   },
   "oxo-flow-clindet": {
@@ -14973,15 +14805,7 @@
       "tier": "rule-sections",
       "stations": 13,
       "is_rule_level": true,
-      "aspect": 1.67,
-      "semantic": {
-        "file": "oxo-flow-auto-sra-rnaseq-pipeline-semantic.svg",
-        "aspect": 1.3,
-        "tier": "line",
-        "primary": true,
-        "hand": true,
-        "stations": 23
-      }
+      "aspect": 1.67
     }
   },
   "oxo-flow-tcasia": {
@@ -15277,15 +15101,7 @@
       "tier": "rule-sections",
       "stations": 17,
       "is_rule_level": true,
-      "aspect": 2.76,
-      "semantic": {
-        "file": "oxo-flow-tcasia-semantic.svg",
-        "aspect": 0.74,
-        "tier": "tree",
-        "primary": false,
-        "hand": true,
-        "stations": 23
-      }
+      "aspect": 2.76
     }
   }
 }

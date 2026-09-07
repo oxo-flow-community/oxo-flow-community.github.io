@@ -1199,33 +1199,31 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 ## Workflow graph
 
-<details class="ox-flow-view">
-<summary>Semantic overview <span class="ox-badge ox-badge--sem">author-side</span></summary>
-<div class="ox-dag-card" markdown="1">
+<details class="ox-flow-view" open>
+<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
+<div class="ox-sem-text" markdown="1">
 
-<a href="/assets/dag/oxo-flow-eager-semantic.svg?v=ce780c3084" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-eager-semantic.svg?v=ce780c3084" alt="oxo-flow-eager semantic overview" loading="lazy"></a>
+## Semantic map - how to read it
 
-<p class="ox-dag-caption">Semantic route drawing — every station is a real rule of this workflow, every edge a real data dependency of the engine DAG; groups and junction are the author-side condensation (details below).</p>
+## Short names and groups (all are real rules)
+
+| Shown | Full rule name(s) |
+|---|---|
+| refprep | make_bwa_index, make_fasta_index, make_seq_dict, unzip_reference, make_bt2_index, circulargenerator, mask_reference_for_pmdtools, sexdeterrmine_prep |
+| preprocess | fastp, adapter_removal, post_ar_fastq_trimming, fastqc_after_clipping, fastqc |
+| align | bwa_aln, bwamem, bowtie2, circularmapper, samtools_filter_bwaaln, samtools_filter_bwamem, samtools_filter_bowtie2, samtools_filter_circularmapper, samtools_flagstat_after_filter, convert_bam, bcftools_stats, hostremoval_input_fastq |
+| dedup | markduplicates, dedup, samtools_flagstat |
+| genotype | genotyping_pileupcaller, eigenstrat_snp_coverage, genotyping_ug, genotyping_hc, genotyping_freebayes, genotyping_angsd, vcf2genome, multivcfanalyzer |
+| ancient_damage | damageprofiler, qualimap, endor_spy, sexdeterrmine, mtnucratio, nuclear_contamination, print_nuclear_contamination, mapdamage_calculation, mapdamage_rescaling, pmdtools, bedtools_coverage, bam_trim, picard_addorreplacereadgroups, preseq |
+| metagenome | metagenomic_complexity_filter, kraken, kraken_parse, kraken_merge, malt, maltextract |
+| multiqc | multiqc |
+
+Every drawn edge is a real engine edge (subset check at generation).
+
+<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-eager+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
 
 </div>
 </details>
-<div class="ox-sem-notes" markdown="1">
-
-### How this semantic view abstracts the rule-level graph
-
-The workflow has **8 rules / ? edges**; the semantic drawing shows **23 stops on 5 route lines**: one **Main pipeline** line (grey-brown) carries the single shared story along the bottom trunk — all 4 alignment lanes merge at the hidden junction `_aligned` and the count/statistics chain runs on it; the coloured lines are the routes that feed or branch from it (blue Data acquisition, green PE alignment, orange SE alignment, yellow Reporting). Grouped stops: `star_align_raw` and `star_align_se_raw` ride their parent lane; the 8 `rseqc_*` checks appear as one `rseqc QC` stop (each check still a real rule — detail card below); the 3 PCA stops appear as `DESeq2 PCA`. Every drawn edge is a real edge of the engine DAG — the subset property is machine-verified at generation (incl. junction composition), nothing invented. Auxiliary terminals (`bwa_index`, `genome_faidx`) and the per-check QC fan-outs are elided here and shown in the rule-level detail card.
-
-### How to read this semantic map
-
-
-
-**Short-name mapping** — every label on the map, in full:
-
-<table class="ox-sem-map"><thead><tr><th>Shown</th><th>Full rule name(s)</th></tr></thead><tbody><tr><td><code>refprep</code></td><td><code>make_bwa_index, make_fasta_index, make_seq_dict, unzip_reference, make_bt2_index, circulargenerator, mask_reference_for_pmdtools, sexdeterrmine_prep</code></td></tr><tr><td><code>preprocess</code></td><td><code>fastp, adapter_removal, post_ar_fastq_trimming, fastqc_after_clipping, fastqc</code></td></tr><tr><td><code>align</code></td><td><code>bwa_aln, bwamem, bowtie2, circularmapper, samtools_filter_bwaaln, samtools_filter_bwamem, samtools_filter_bowtie2, samtools_filter_circularmapper, samtools_flagstat_after_filter, convert_bam, bcftools_stats, hostremoval_input_fastq</code></td></tr><tr><td><code>dedup</code></td><td><code>markduplicates, dedup, samtools_flagstat</code></td></tr><tr><td><code>genotype</code></td><td><code>genotyping_pileupcaller, eigenstrat_snp_coverage, genotyping_ug, genotyping_hc, genotyping_freebayes, genotyping_angsd, vcf2genome, multivcfanalyzer</code></td></tr><tr><td><code>ancient_damage</code></td><td><code>damageprofiler, qualimap, endor_spy, sexdeterrmine, mtnucratio, nuclear_contamination, print_nuclear_contamination, mapdamage_calculation, mapdamage_rescaling, pmdtools, bedtools_coverage, bam_trim, picard_addorreplacereadgroups, preseq</code></td></tr><tr><td><code>metagenome</code></td><td><code>metagenomic_complexity_filter, kraken, kraken_parse, kraken_merge, malt, maltextract</code></td></tr><tr><td><code>multiqc</code></td><td><code>multiqc</code></td></tr></tbody></table>
-
-<a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Bgraph%5D+oxo-flow-eager+semantic+map+correction&body=Which station or edge looks wrong (paste the station/edge names)">Report a correction to this map</a>
-
-</div>
 <details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">

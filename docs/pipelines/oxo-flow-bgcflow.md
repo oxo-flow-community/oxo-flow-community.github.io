@@ -329,33 +329,39 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 ## Workflow graph
 
-<details class="ox-flow-view">
-<summary>Semantic overview <span class="ox-badge ox-badge--sem">author-side</span></summary>
-<div class="ox-dag-card" markdown="1">
+<details class="ox-flow-view" open>
+<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
+<div class="ox-sem-text" markdown="1">
 
-<a href="/assets/dag/oxo-flow-bgcflow-semantic.svg?v=84b7ac2911" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-bgcflow-semantic.svg?v=84b7ac2911" alt="oxo-flow-bgcflow semantic overview" loading="lazy"></a>
+## Semantic map - how to read it
 
-<p class="ox-dag-caption">Semantic route drawing — every station is a real rule of this workflow, every edge a real data dependency of the engine DAG; groups and junction are the author-side condensation (details below).</p>
+## Short names and groups (all are real rules)
+
+| Shown | Full rule name(s) |
+|---|---|
+| genome | copy_custom_fasta, genbank_to_fna, copy_custom_genbank, ncbi_genome_download |
+| prokka | extract_meta_prokka, prokka, format_gbk, prokka_gbk |
+| antismash | antismash_db_setup, antismash, antismash_v6, copy_antismash |
+| summarize | bgc_count, antismash_overview, downstream_bgc_prep, antismash_overview_gather, copy_log_changes, antismash_summary |
+| report | get_mibig_table, copy_mibig_table, csv_to_parquet |
+| taxo | gtdb_prep, install_gtdbtk, gtdbtk, fix_gtdb_taxonomy |
+| qc | seqfu_stats, seqfu_combine, mash, mash_convert, fastani, fastani_convert |
+| checkm | install_checkm, checkm |
+| amr | install_amrfinder, amrfinderplus, amrfinder_gather |
+| roary | roary, roary_out |
+| eggnog | install_eggnog, eggnog |
+| bgc_alt | gecco, cblaster_genome_db, arts, bigscape |
+| bigslice | install_bigslice, bigslice_prep, bigslice, fetch_bigslice_db, query_bigslice, summarize_bigslice_query, annotate_bigfam_hits |
+| automlst | install_automlst_wrapper, prep_automlst_gbk, automlst_wrapper, automlst_wrapper_out |
+| deeptfactor | deeptfactor_setup, deeptfactor, deeptfactor_to_json, deeptfactor_summary |
+| versions | write_dependency_versions |
+
+Every drawn edge is a real engine edge (subset check at generation).
+
+<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-bgcflow+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
 
 </div>
 </details>
-<div class="ox-sem-notes" markdown="1">
-
-### How this semantic view abstracts the rule-level graph
-
-The workflow has **5 rules / ? edges**; the semantic drawing shows **23 stops on 5 route lines**: one **Main pipeline** line (grey-brown) carries the single shared story along the bottom trunk — all 4 alignment lanes merge at the hidden junction `_aligned` and the count/statistics chain runs on it; the coloured lines are the routes that feed or branch from it (blue Data acquisition, green PE alignment, orange SE alignment, yellow Reporting). Grouped stops: `star_align_raw` and `star_align_se_raw` ride their parent lane; the 8 `rseqc_*` checks appear as one `rseqc QC` stop (each check still a real rule — detail card below); the 3 PCA stops appear as `DESeq2 PCA`. Every drawn edge is a real edge of the engine DAG — the subset property is machine-verified at generation (incl. junction composition), nothing invented. Auxiliary terminals (`bwa_index`, `genome_faidx`) and the per-check QC fan-outs are elided here and shown in the rule-level detail card.
-
-### How to read this semantic map
-
-
-
-**Short-name mapping** — every label on the map, in full:
-
-<table class="ox-sem-map"><thead><tr><th>Shown</th><th>Full rule name(s)</th></tr></thead><tbody><tr><td><code>genome</code></td><td><code>copy_custom_fasta, genbank_to_fna, copy_custom_genbank, ncbi_genome_download</code></td></tr><tr><td><code>prokka</code></td><td><code>extract_meta_prokka, prokka, format_gbk, prokka_gbk</code></td></tr><tr><td><code>antismash</code></td><td><code>antismash_db_setup, antismash, antismash_v6, copy_antismash</code></td></tr><tr><td><code>summarize</code></td><td><code>bgc_count, antismash_overview, downstream_bgc_prep, antismash_overview_gather, copy_log_changes, antismash_summary</code></td></tr><tr><td><code>report</code></td><td><code>get_mibig_table, copy_mibig_table, csv_to_parquet</code></td></tr><tr><td><code>taxo</code></td><td><code>gtdb_prep, install_gtdbtk, gtdbtk, fix_gtdb_taxonomy</code></td></tr><tr><td><code>qc</code></td><td><code>seqfu_stats, seqfu_combine, mash, mash_convert, fastani, fastani_convert</code></td></tr><tr><td><code>checkm</code></td><td><code>install_checkm, checkm</code></td></tr><tr><td><code>amr</code></td><td><code>install_amrfinder, amrfinderplus, amrfinder_gather</code></td></tr><tr><td><code>roary</code></td><td><code>roary, roary_out</code></td></tr><tr><td><code>eggnog</code></td><td><code>install_eggnog, eggnog</code></td></tr><tr><td><code>bgc_alt</code></td><td><code>gecco, cblaster_genome_db, arts, bigscape</code></td></tr><tr><td><code>bigslice</code></td><td><code>install_bigslice, bigslice_prep, bigslice, fetch_bigslice_db, query_bigslice, summarize_bigslice_query, annotate_bigfam_hits</code></td></tr><tr><td><code>automlst</code></td><td><code>install_automlst_wrapper, prep_automlst_gbk, automlst_wrapper, automlst_wrapper_out</code></td></tr><tr><td><code>deeptfactor</code></td><td><code>deeptfactor_setup, deeptfactor, deeptfactor_to_json, deeptfactor_summary</code></td></tr><tr><td><code>versions</code></td><td><code>write_dependency_versions</code></td></tr></tbody></table>
-
-<a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Bgraph%5D+oxo-flow-bgcflow+semantic+map+correction&body=Which station or edge looks wrong (paste the station/edge names)">Report a correction to this map</a>
-
-</div>
 <details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">

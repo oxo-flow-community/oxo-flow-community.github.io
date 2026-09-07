@@ -168,32 +168,27 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 ## Workflow graph
 
 <details class="ox-flow-view" open>
-<summary>Semantic overview <span class="ox-badge ox-badge--sem">author-side</span></summary>
-<div class="ox-dag-card" markdown="1">
+<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
+<div class="ox-sem-text" markdown="1">
 
-<a href="/assets/dag/oxo-flow-fetchngs-semantic.svg?v=7da7972baf" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-fetchngs-semantic.svg?v=7da7972baf" alt="oxo-flow-fetchngs semantic overview" loading="lazy"></a>
+**SRA 数据获取流水线**：只给一批 SRA/ENA/DDBJ 数据库编号（如 `SRR9984183`），它负责校验编号、拉取元数据、下载 FASTQ，并产出标准样本表（samplesheet）供下游 nf-core 类型流水线直接使用，最后附 MultiQC 配置。
 
-<p class="ox-dag-caption">Semantic route drawing — every station is a real rule of this workflow, every edge a real data dependency of the engine DAG; groups and junction are the author-side condensation (details below).</p>
+**1. 输入校验** —— `ids` 样本组定义要获取的数据库编号；`check_ids` 用 SRA/ENA/DDBJ/GEO 的正则校验并去重，产出通过验证的编号清单，是其后元数据拉取的前置条件。
+
+**2. 元数据与下载清单** —— `sra_ids_to_runinfo` 逐一拉取 ENA 运行元数据（runinfo）；`sra_runinfo_to_ftp` 由元数据生成每个样本的 FTP 下载信息。
+
+**3. FASTQ 下载** —— `sra_fastq_ftp` 按下载清单取回 FASTQ 文件（`skip_fastq_download` 可关掉下载只取元数据）。
+
+**4. 样本表生成与汇总** —— `sra_to_samplesheet` 把元数据和 FASTQ 汇成下游所需的样本表；随后 `combine_samplesheets` 与 `combine_mappings` 分别合并所有样本的样本表和映射表（`nf_core_pipeline` 指定下游 nf-core 流水线时可为其定制行格式）。
+
+**5. 质量汇总** —— `multiqc_mappings_config` 生成 MultiQC 配置，供下游的聚合报告使用。
+
+*核实：文中每个步骤名都是 `main.oxoflow` 的真实规则（`oxo-flow validate` 可复核）；步骤顺序与规则依赖一致。*
+
+<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-fetchngs+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
 
 </div>
 </details>
-<div class="ox-sem-notes" markdown="1">
-
-### How this semantic view abstracts the rule-level graph
-
-The workflow has **16 rules / ? edges**; the semantic drawing shows **23 stops on 5 route lines**: one **Main pipeline** line (grey-brown) carries the single shared story along the bottom trunk — all 4 alignment lanes merge at the hidden junction `_aligned` and the count/statistics chain runs on it; the coloured lines are the routes that feed or branch from it (blue Data acquisition, green PE alignment, orange SE alignment, yellow Reporting). Grouped stops: `star_align_raw` and `star_align_se_raw` ride their parent lane; the 8 `rseqc_*` checks appear as one `rseqc QC` stop (each check still a real rule — detail card below); the 3 PCA stops appear as `DESeq2 PCA`. Every drawn edge is a real edge of the engine DAG — the subset property is machine-verified at generation (incl. junction composition), nothing invented. Auxiliary terminals (`bwa_index`, `genome_faidx`) and the per-check QC fan-outs are elided here and shown in the rule-level detail card.
-
-### How to read this semantic map
-
-
-
-**Short-name mapping** — every label on the map, in full:
-
-<table class="ox-sem-map"><thead><tr><th>Shown</th><th>Full rule name(s)</th></tr></thead><tbody><tr><td><code>down_ftp_prefetch</code></td><td><code>sra_fastq_ftp, sra_prefetch, sra_fastq_sratools, sra_fastq_aspera</code></td></tr><tr><td><code>down_fallbacks</code></td><td><code>sra_prefetch_fallback, sra_fastq_sratools_fallback, sra_fastq_ftp_aspera_fallback</code></td></tr><tr><td><code>down_dbgap</code></td><td><code>sra_prefetch_dbgap, sra_fastq_sratools_dbgap</code></td></tr></tbody></table>
-
-<a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Bgraph%5D+oxo-flow-fetchngs+semantic+map+correction&body=Which station or edge looks wrong (paste the station/edge names)">Report a correction to this map</a>
-
-</div>
 <details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card ox-dag-card--wide" markdown="1">

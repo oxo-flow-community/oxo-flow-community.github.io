@@ -355,33 +355,30 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 ## Workflow graph
 
-<details class="ox-flow-view">
-<summary>Semantic overview <span class="ox-badge ox-badge--sem">author-side</span></summary>
-<div class="ox-dag-card" markdown="1">
+<details class="ox-flow-view" open>
+<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
+<div class="ox-sem-text" markdown="1">
 
-<a href="/assets/dag/oxo-flow-snparcher-semantic.svg?v=1cce1a1898" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-snparcher-semantic.svg?v=1cce1a1898" alt="oxo-flow-snparcher semantic overview" loading="lazy"></a>
+## Semantic map - how to read it
 
-<p class="ox-dag-caption">Semantic route drawing — every station is a real rule of this workflow, every edge a real data dependency of the engine DAG; groups and junction are the author-side condensation (details below).</p>
+## Short names and groups (all are real rules)
+
+| Shown | Full rule name(s) |
+|---|---|
+| refprep | prepare_reference, index_reference, picard_intervals, filter_picard_intervals, create_gvcf_intervals, create_db_intervals, create_db_mapfile |
+| reads | download_sra, fastp, fastp_srr, stage_external_bam |
+| align_dedup | bwa_mem, merge_library_bams, merge_library_level_bams, markdup_library, merge_dedup_libraries, index_bam_csi, index_bam_csi_markdup, index_bam_csi_external |
+| callers | postprocess_basic_filter, generate_coords_file, gatk_haplotypecaller_external, mappability_bed, deepvariant_call_markdup, postprocess_strict_filter, mosdepth_external, deepvariant_call_external, glnexus_joint, bam_stats, bam_stats_markdup, bcftools_regions, coverage_bed, genmap_mappability, normalize_external_gvcf_for_gatk, clam_loci, postprocess_drop_indel_snps, postprocess_update_bed, gatk_haplotypecaller_interval_external, gatk_haplotypecaller_markdup, postprocess_subset_snps, deepvariant_call, clam_collect, postprocess_subset_indels, gatk_haplotypecaller, parse_bam_stats, mosdepth_markdup, gatk_genotype_gvcfs_interval, variant_filtration, mosdepth, bcftools_concat_regions, gatk_haplotypecaller_interval_markdup, bam_stats_external, gatk_genomics_db_import_interval, callable_coverage_thresholds, callable_sites_bed, genmap_index, gatk_haplotypecaller_interval, postprocess_filter_individuals, bcftools_call |
+| db_import | joint_genomics_db_import, normalize_external_gvcf_for_gatk, create_db_intervals, concat_interval_gvcfs, gatk_genomics_db_import_interval, gatk_genotype_gvcfs_interval |
+| genotype | joint_genotype_gvcfs, concat_interval_vcfs, gatk_genomics_db_import_interval, gatk_genotype_gvcfs_interval, gatk_haplotypecaller_interval, gatk_haplotypecaller_interval_markdup, normalize_external_gvcf_for_gatk, gatk_haplotypecaller_interval_external, gatk_haplotypecaller_markdup, gatk_haplotypecaller, gatk_haplotypecaller_external |
+| qc | postprocess_drop_indel_snps, collect_fastp_stats, qc_vcftools_individuals, postprocess_basic_filter, qc_prepare_plink_inputs, qc_setup_admixture, qc_contig_map, qc_dashboard, postprocess_subset_indels, qc_plink, postprocess_update_bed, qc_admixture, combine_qc_metrics, qc_subsample_snps, postprocess_subset_snps, qc_copy_qc_report, postprocess_strict_filter, postprocess_filter_individuals |
+
+Every drawn edge is a real engine edge (subset check at generation).
+
+<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-snparcher+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
 
 </div>
 </details>
-<div class="ox-sem-notes" markdown="1">
-
-### How this semantic view abstracts the rule-level graph
-
-The workflow has **7 rules / ? edges**; the semantic drawing shows **23 stops on 5 route lines**: one **Main pipeline** line (grey-brown) carries the single shared story along the bottom trunk — all 4 alignment lanes merge at the hidden junction `_aligned` and the count/statistics chain runs on it; the coloured lines are the routes that feed or branch from it (blue Data acquisition, green PE alignment, orange SE alignment, yellow Reporting). Grouped stops: `star_align_raw` and `star_align_se_raw` ride their parent lane; the 8 `rseqc_*` checks appear as one `rseqc QC` stop (each check still a real rule — detail card below); the 3 PCA stops appear as `DESeq2 PCA`. Every drawn edge is a real edge of the engine DAG — the subset property is machine-verified at generation (incl. junction composition), nothing invented. Auxiliary terminals (`bwa_index`, `genome_faidx`) and the per-check QC fan-outs are elided here and shown in the rule-level detail card.
-
-### How to read this semantic map
-
-
-
-**Short-name mapping** — every label on the map, in full:
-
-<table class="ox-sem-map"><thead><tr><th>Shown</th><th>Full rule name(s)</th></tr></thead><tbody><tr><td><code>refprep</code></td><td><code>prepare_reference, index_reference, picard_intervals, filter_picard_intervals, create_gvcf_intervals, create_db_intervals, create_db_mapfile</code></td></tr><tr><td><code>reads</code></td><td><code>download_sra, fastp, fastp_srr, stage_external_bam</code></td></tr><tr><td><code>align_dedup</code></td><td><code>bwa_mem, merge_library_bams, merge_library_level_bams, markdup_library, merge_dedup_libraries, index_bam_csi, index_bam_csi_markdup, index_bam_csi_external</code></td></tr><tr><td><code>callers</code></td><td><code>postprocess_basic_filter, generate_coords_file, gatk_haplotypecaller_external, mappability_bed, deepvariant_call_markdup, postprocess_strict_filter, mosdepth_external, deepvariant_call_external, glnexus_joint, bam_stats, bam_stats_markdup, bcftools_regions, coverage_bed, genmap_mappability, normalize_external_gvcf_for_gatk, clam_loci, postprocess_drop_indel_snps, postprocess_update_bed, gatk_haplotypecaller_interval_external, gatk_haplotypecaller_markdup, postprocess_subset_snps, deepvariant_call, clam_collect, postprocess_subset_indels, gatk_haplotypecaller, parse_bam_stats, mosdepth_markdup, gatk_genotype_gvcfs_interval, variant_filtration, mosdepth, bcftools_concat_regions, gatk_haplotypecaller_interval_markdup, bam_stats_external, gatk_genomics_db_import_interval, callable_coverage_thresholds, callable_sites_bed, genmap_index, gatk_haplotypecaller_interval, postprocess_filter_individuals, bcftools_call</code></td></tr><tr><td><code>db_import</code></td><td><code>joint_genomics_db_import, normalize_external_gvcf_for_gatk, create_db_intervals, concat_interval_gvcfs, gatk_genomics_db_import_interval, gatk_genotype_gvcfs_interval</code></td></tr><tr><td><code>genotype</code></td><td><code>joint_genotype_gvcfs, concat_interval_vcfs, gatk_genomics_db_import_interval, gatk_genotype_gvcfs_interval, gatk_haplotypecaller_interval, gatk_haplotypecaller_interval_markdup, normalize_external_gvcf_for_gatk, gatk_haplotypecaller_interval_external, gatk_haplotypecaller_markdup, gatk_haplotypecaller, gatk_haplotypecaller_external</code></td></tr><tr><td><code>qc</code></td><td><code>postprocess_drop_indel_snps, collect_fastp_stats, qc_vcftools_individuals, postprocess_basic_filter, qc_prepare_plink_inputs, qc_setup_admixture, qc_contig_map, qc_dashboard, postprocess_subset_indels, qc_plink, postprocess_update_bed, qc_admixture, combine_qc_metrics, qc_subsample_snps, postprocess_subset_snps, qc_copy_qc_report, postprocess_strict_filter, postprocess_filter_individuals</code></td></tr></tbody></table>
-
-<a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Bgraph%5D+oxo-flow-snparcher+semantic+map+correction&body=Which station or edge looks wrong (paste the station/edge names)">Report a correction to this map</a>
-
-</div>
 <details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">

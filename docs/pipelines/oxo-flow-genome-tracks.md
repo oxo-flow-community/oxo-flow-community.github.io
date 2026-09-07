@@ -233,33 +233,32 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 ## Workflow graph
 
-<details class="ox-flow-view">
-<summary>Semantic overview <span class="ox-badge ox-badge--sem">author-side</span></summary>
-<div class="ox-dag-card" markdown="1">
+<details class="ox-flow-view" open>
+<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
+<div class="ox-sem-text" markdown="1">
 
-<a href="/assets/dag/oxo-flow-genome-tracks-semantic.svg?v=aaac5541a3" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-genome-tracks-semantic.svg?v=aaac5541a3" alt="oxo-flow-genome-tracks semantic overview" loading="lazy"></a>
+## Semantic map - how to read it
 
-<p class="ox-dag-caption">Semantic route drawing — every station is a real rule of this workflow, every edge a real data dependency of the engine DAG; groups and junction are the author-side condensation (details below).</p>
+## Short names and groups (all are real rules)
+
+| Shown | Full rule name(s) |
+|---|---|
+| bam | merge_bams |
+| cov | coverage |
+| plots | plot_tracks |
+| hub | ucsc_hub |
+| ann | annotate_genes, make_bed |
+| igv | igv_report |
+| sc | split_sc_bam, merge_sc_bams, coverage_sc |
+| exports | annot_export, gene_list_export, config_export |
+| envs | env_export_pygenometracks, env_export_sinto, env_export_igv_reports |
+
+Every drawn edge is a real engine edge (subset check at generation).
+
+<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-genome-tracks+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
 
 </div>
 </details>
-<div class="ox-sem-notes" markdown="1">
-
-### How this semantic view abstracts the rule-level graph
-
-The workflow has **16 rules / ? edges**; the semantic drawing shows **23 stops on 5 route lines**: one **Main pipeline** line (grey-brown) carries the single shared story along the bottom trunk — all 4 alignment lanes merge at the hidden junction `_aligned` and the count/statistics chain runs on it; the coloured lines are the routes that feed or branch from it (blue Data acquisition, green PE alignment, orange SE alignment, yellow Reporting). Grouped stops: `star_align_raw` and `star_align_se_raw` ride their parent lane; the 8 `rseqc_*` checks appear as one `rseqc QC` stop (each check still a real rule — detail card below); the 3 PCA stops appear as `DESeq2 PCA`. Every drawn edge is a real edge of the engine DAG — the subset property is machine-verified at generation (incl. junction composition), nothing invented. Auxiliary terminals (`bwa_index`, `genome_faidx`) and the per-check QC fan-outs are elided here and shown in the rule-level detail card.
-
-### How to read this semantic map
-
-
-
-**Short-name mapping** — every label on the map, in full:
-
-<table class="ox-sem-map"><thead><tr><th>Shown</th><th>Full rule name(s)</th></tr></thead><tbody><tr><td><code>bam</code></td><td><code>merge_bams</code></td></tr><tr><td><code>cov</code></td><td><code>coverage</code></td></tr><tr><td><code>plots</code></td><td><code>plot_tracks</code></td></tr><tr><td><code>hub</code></td><td><code>ucsc_hub</code></td></tr><tr><td><code>ann</code></td><td><code>annotate_genes, make_bed</code></td></tr><tr><td><code>igv</code></td><td><code>igv_report</code></td></tr><tr><td><code>sc</code></td><td><code>split_sc_bam, merge_sc_bams, coverage_sc</code></td></tr><tr><td><code>exports</code></td><td><code>annot_export, gene_list_export, config_export</code></td></tr><tr><td><code>envs</code></td><td><code>env_export_pygenometracks, env_export_sinto, env_export_igv_reports</code></td></tr></tbody></table>
-
-<a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Bgraph%5D+oxo-flow-genome-tracks+semantic+map+correction&body=Which station or edge looks wrong (paste the station/edge names)">Report a correction to this map</a>
-
-</div>
 <details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card ox-dag-card--wide" markdown="1">

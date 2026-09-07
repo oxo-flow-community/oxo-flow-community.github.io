@@ -169,11 +169,6 @@ def render_dag(
     svg = DAG_DIR / f"{name}.svg"
     detail = DAG_DIR / f"{name}-rules.svg"
     err, tier = render_ladder(name, workflow, binary, nf_metro, svg, detail_svg=detail)
-    if tier is not None:
-        sem = render_semantic_map(name, nf_metro)
-        if sem:
-            sem["stations"] = 23  # shown stops incl. junctions; the note lists members
-            tier["semantic"] = sem
     return err, tier
 
 
@@ -214,55 +209,35 @@ def render_flow_view(
 
 SEMANTIC_DIR = ROOT / "scripts" / "semantic_maps"
 
+# Non-rule tokens that legitimately appear in the walkthroughs (config vars,
+# sample-group names) — anything else must name a real rule of the workflow.
+SEM_TEXT_ALLOW = {"ids", "nf_core_pipeline", "skip_fastq_download", "input", "out_dir", "config"}
 
-def render_semantic_map(name: str, nf_metro: str) -> dict | None:
-    """Author-side semantic maps (scripts/semantic_maps/<name>.mmd): render
-    with the fixed width-friendly geometry; return manifest info for
-    configs.json or None when the workflow has no semantic map yet."""
-    try:
-        tiers = json.loads((SEMANTIC_DIR / "tier.json").read_text())
-    except OSError:
-        tiers = {}
-    tier = tiers.get(name, "tree")  # default: hubbed topologies get module primary
-    src = SEMANTIC_DIR / f"{name}.mmd"
-    hand = SEMANTIC_DIR / f"{name}.hand.svg"
-    if hand.is_file():
-        # Author-side hand-drawn SVG: mirrored straight into the assets (no
-        # nf-metro layout involved) — the total-layout-control option for
-        # hub topologies and reviewed maps (live: atacseq).
-        import shutil as _sh
-        svg = ROOT / "docs" / "assets" / "dag" / f"{name}-semantic.svg"
-        _sh.copyfile(hand, svg)
-        import re as _re
-        m = _re.search(r'viewBox="([^"]*)"', svg.read_text())
-        try:
-            _w, _h = float(m.group(1).split()[2]), float(m.group(1).split()[3])
-        except (TypeError, IndexError, ValueError):
-            _w, _h = 1500.0, 700.0
-        return {"file": f"{name}-semantic.svg", "aspect": round(_w / _h, 2),
-                "tier": tier, "primary": tier == "line", "hand": True}
-    if not src.is_file():
-        return None
-    svg = ROOT / "docs" / "assets" / "dag" / f"{name}-semantic.svg"
-    # Author-drawn renderer: total layout control, one font/style
-    # everywhere (user: 所有语义版本都要模拟人工画，字体一致).
-    draw_module = sys.modules.get("semantic_draw")
-    if draw_module is None:
-        import importlib.util as _ilu
-        _spec = _ilu.spec_from_file_location("semantic_draw", ROOT / "scripts" / "semantic_draw.py")
-        draw_module = _ilu.module_from_spec(_spec)
-        _spec.loader.exec_module(draw_module)
-    drawn = draw_module.draw(name, src.read_text())
-    svg.write_text(drawn)
-    import re
-    m = re.search(r'viewBox="([^"]*)"', drawn)
-    try:
-        w, h = float(m.group(1).split()[2]), float(m.group(1).split()[3])
-    except (TypeError, IndexError, ValueError):
-        w, h = 1500.0, 700.0
-    return {"file": f"{name}-semantic.svg", "aspect": round(w / h, 2),
-            "tier": tier, "primary": tier == "line", "hand": True}
 
+def check_sem_texts(pipelines: list[dict]) -> list[str]:
+    """Gate: every `code` token inside the LLM-authored semantic overviews
+    (scripts/semantic_maps/<name>.md) must name a real rule of the staged
+    workflow — no invented step names, no drift from the engine graph."""
+    bad = []
+    for p in pipelines:
+        name = p["name"]
+        sem = SEMANTIC_DIR / f"{name}.md"
+        if not sem.is_file():
+            continue
+        wf = workflow_file(name)
+        if wf is None:
+            continue
+        rules = set(re.findall(r'^\s*name\s*=\s*"([^"]+)"', wf.read_text(), re.M))
+        text = sem.read_text(encoding="utf-8")
+        for tok in re.findall(r'`([^`]+)`', text):
+            for w in tok.replace("/", " ").split():
+                w = w.strip()
+                if not re.fullmatch(r"[a-z][a-z0-9_:]*", w):
+                    continue        # filenames, UPPER-case ids, accessions, …
+                if w in rules or w in SEM_TEXT_ALLOW:
+                    continue
+                bad.append(f"{name}: token `{w}` is not a real rule name")
+    return bad
 
 
 def main() -> int:
@@ -336,6 +311,12 @@ def main() -> int:
         f"generated: {OUT.name} ({len(configs)}/{len(pipelines)} pipelines) "
         f"+ {rendered} DAG SVGs in {DAG_DIR.relative_to(ROOT)}/"
     )
+    bad = check_sem_texts(pipelines)
+    if bad:
+        print("semantic-overview name check FAILED (every `code` token must be a real rule):",
+              file=sys.stderr)
+        for b in bad:
+            print(f"  - {b}", file=sys.stderr)
     if failures:
         print(f"skipped {len(failures)} item(s) — kept their committed artifacts:",
               file=sys.stderr)

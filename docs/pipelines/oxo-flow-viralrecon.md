@@ -541,33 +541,43 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 ## Workflow graph
 
-<details class="ox-flow-view">
-<summary>Semantic overview <span class="ox-badge ox-badge--sem">author-side</span></summary>
-<div class="ox-dag-card" markdown="1">
+<details class="ox-flow-view" open>
+<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
+<div class="ox-sem-text" markdown="1">
 
-<a href="/assets/dag/oxo-flow-viralrecon-semantic.svg?v=954d5e2221" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-viralrecon-semantic.svg?v=954d5e2221" alt="oxo-flow-viralrecon semantic overview" loading="lazy"></a>
+## Semantic map - how to read it
 
-<p class="ox-dag-caption">Semantic route drawing — every station is a real rule of this workflow, every edge a real data dependency of the engine DAG; groups and junction are the author-side condensation (details below).</p>
+## Short names and groups (all are real rules)
+
+| Shown | Full rule name(s) |
+|---|---|
+| ref | gunzip_fasta, gunzip_gff, gunzip_primer_bed, prepare_genome, untar_kraken2_db, kraken2_build, build_bowtie2_index, get_nextclade_dataset, make_blast_db, build_snpeff_db, build_snpeff_db_additional, collapse_primers, get_primer_fasta, prepare_primer_fasta |
+| reads | cat_fastq, fastqc_raw |
+| trim | fastp, fastqc_trim |
+| kraken | kraken2 |
+| align | align_bowtie2 |
+| bam | bam_sort_index, ivar_trim, bam_sort_index_trimmed |
+| dedup | markduplicates, markduplicates_wgs, picard_metrics, picard_metrics_wgs |
+| depth | mosdepth_genome, mosdepth_genome_wgs, plot_mosdepth_genome, mosdepth_amplicon, plot_mosdepth_amplicon |
+| freyja | freyja_variants, freyja_variants_wgs, freyja_demix, freyja_boot, freyja_update, freyja_demix_updated, freyja_boot_updated |
+| call | call_variants_ivar, call_variants_bcftools, call_variants_bcftools_wgs, ivar_to_vcf, norm_vcf_bcftools |
+| vcf | sort_vcf |
+| annot | snpeff_ann, snpsift_extract, additional_annotation |
+| consensus | consensus_filter, consensus_filter_bcftools, consensus_call, consensus_call_wgs, consensus_ivar, consensus_ivar_wgs |
+| clade | quast_consensus, pangolin, pangolin_updatedata, pangolin_run_updated, nextclade, plot_base_density, nextclade_clade_mqc |
+| tables | variants_long_table, variants_long_table_bcftools |
+| assembly | assembly_fastq |
+| cut | cutadapt, fastqc_primers |
+| assemblers | assemble_spades, assemble_unicycler, assemble_minia |
+| assemblyqc | bandage, blast_assembly, quast_assembly, abacas, plasmidid, bandage_unicycler, blast_assembly_unicycler, quast_assembly_unicycler, abacas_unicycler, plasmidid_unicycler, blast_assembly_minia, quast_assembly_minia, abacas_minia, plasmidid_minia |
+| report | multiqc |
+
+Every drawn edge is a real engine edge (subset check at generation).
+
+<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-viralrecon+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
 
 </div>
 </details>
-<div class="ox-sem-notes" markdown="1">
-
-### How this semantic view abstracts the rule-level graph
-
-The workflow has **4 rules / ? edges**; the semantic drawing shows **23 stops on 5 route lines**: one **Main pipeline** line (grey-brown) carries the single shared story along the bottom trunk — all 4 alignment lanes merge at the hidden junction `_aligned` and the count/statistics chain runs on it; the coloured lines are the routes that feed or branch from it (blue Data acquisition, green PE alignment, orange SE alignment, yellow Reporting). Grouped stops: `star_align_raw` and `star_align_se_raw` ride their parent lane; the 8 `rseqc_*` checks appear as one `rseqc QC` stop (each check still a real rule — detail card below); the 3 PCA stops appear as `DESeq2 PCA`. Every drawn edge is a real edge of the engine DAG — the subset property is machine-verified at generation (incl. junction composition), nothing invented. Auxiliary terminals (`bwa_index`, `genome_faidx`) and the per-check QC fan-outs are elided here and shown in the rule-level detail card.
-
-### How to read this semantic map
-
-
-
-**Short-name mapping** — every label on the map, in full:
-
-<table class="ox-sem-map"><thead><tr><th>Shown</th><th>Full rule name(s)</th></tr></thead><tbody><tr><td><code>ref</code></td><td><code>gunzip_fasta, gunzip_gff, gunzip_primer_bed, prepare_genome, untar_kraken2_db, kraken2_build, build_bowtie2_index, get_nextclade_dataset, make_blast_db, build_snpeff_db, build_snpeff_db_additional, collapse_primers, get_primer_fasta, prepare_primer_fasta</code></td></tr><tr><td><code>reads</code></td><td><code>cat_fastq, fastqc_raw</code></td></tr><tr><td><code>trim</code></td><td><code>fastp, fastqc_trim</code></td></tr><tr><td><code>kraken</code></td><td><code>kraken2</code></td></tr><tr><td><code>align</code></td><td><code>align_bowtie2</code></td></tr><tr><td><code>bam</code></td><td><code>bam_sort_index, ivar_trim, bam_sort_index_trimmed</code></td></tr><tr><td><code>dedup</code></td><td><code>markduplicates, markduplicates_wgs, picard_metrics, picard_metrics_wgs</code></td></tr><tr><td><code>depth</code></td><td><code>mosdepth_genome, mosdepth_genome_wgs, plot_mosdepth_genome, mosdepth_amplicon, plot_mosdepth_amplicon</code></td></tr><tr><td><code>freyja</code></td><td><code>freyja_variants, freyja_variants_wgs, freyja_demix, freyja_boot, freyja_update, freyja_demix_updated, freyja_boot_updated</code></td></tr><tr><td><code>call</code></td><td><code>call_variants_ivar, call_variants_bcftools, call_variants_bcftools_wgs, ivar_to_vcf, norm_vcf_bcftools</code></td></tr><tr><td><code>vcf</code></td><td><code>sort_vcf</code></td></tr><tr><td><code>annot</code></td><td><code>snpeff_ann, snpsift_extract, additional_annotation</code></td></tr><tr><td><code>consensus</code></td><td><code>consensus_filter, consensus_filter_bcftools, consensus_call, consensus_call_wgs, consensus_ivar, consensus_ivar_wgs</code></td></tr><tr><td><code>clade</code></td><td><code>quast_consensus, pangolin, pangolin_updatedata, pangolin_run_updated, nextclade, plot_base_density, nextclade_clade_mqc</code></td></tr><tr><td><code>tables</code></td><td><code>variants_long_table, variants_long_table_bcftools</code></td></tr><tr><td><code>assembly</code></td><td><code>assembly_fastq</code></td></tr><tr><td><code>cut</code></td><td><code>cutadapt, fastqc_primers</code></td></tr><tr><td><code>assemblers</code></td><td><code>assemble_spades, assemble_unicycler, assemble_minia</code></td></tr><tr><td><code>assemblyqc</code></td><td><code>bandage, blast_assembly, quast_assembly, abacas, plasmidid, bandage_unicycler, blast_assembly_unicycler, quast_assembly_unicycler, abacas_unicycler, plasmidid_unicycler, blast_assembly_minia, quast_assembly_minia, abacas_minia, plasmidid_minia</code></td></tr><tr><td><code>report</code></td><td><code>multiqc</code></td></tr></tbody></table>
-
-<a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Bgraph%5D+oxo-flow-viralrecon+semantic+map+correction&body=Which station or edge looks wrong (paste the station/edge names)">Report a correction to this map</a>
-
-</div>
 <details class="ox-flow-view">
 <summary>Exact rule DAG (multi-route truth — operational view)</summary>
 <div class="ox-dag-card ox-dag-card--wide">

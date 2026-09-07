@@ -494,33 +494,35 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 ## Workflow graph
 
-<details class="ox-flow-view">
-<summary>Semantic overview <span class="ox-badge ox-badge--sem">author-side</span></summary>
-<div class="ox-dag-card" markdown="1">
+<details class="ox-flow-view" open>
+<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
+<div class="ox-sem-text" markdown="1">
 
-<a href="/assets/dag/oxo-flow-sarek-semantic.svg?v=93b5d932bd" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-sarek-semantic.svg?v=93b5d932bd" alt="oxo-flow-sarek semantic overview" loading="lazy"></a>
+## Semantic map - how to read it
 
-<p class="ox-dag-caption">Semantic route drawing — every station is a real rule of this workflow, every edge a real data dependency of the engine DAG; groups and junction are the author-side condensation (details below).</p>
+## Short names and groups (all are real rules)
+
+| Shown | Full rule name(s) |
+|---|---|
+| prep | bwa_index, bwamem2_index, gatk_createsequencedictionary, samtools_faidx |
+| fq | fastqc |
+| trim | fastp, fastp_split |
+| umi | fgbio_fastqtobam, samtools_bam2fq_umi, bwa_mem_umi, fgbio_groupreadsbyumi, fgbio_callmolecularconsensusreads, samtools_bam2fq_consensus, fastp_umi |
+| aligners | bwa_mem, bwa_mem2, bwa_mem_split, bwa_mem2_split |
+| dedup | bam_merge_index_samtools, gatk_markduplicates, gatk_markduplicates_bam, mosdepth_md, samtools_stats_md |
+| bqsr | gatk_baserecalibrator, gatk_applybqsr, samtools_index_recal, mosdepth_recal, samtools_stats_recal, samtools_reindex_bam, goleft_indexcov |
+| scatter | create_intervals_bed, tabix_interval, gatk_baserecalibrator_scatter, gatk_gatherbqsrreports, gatk_applybqsr_scatter, merge_index_samtools |
+| callers | gatk_haplotypecaller, gatk_cnnscorevariants, gatk_filtervarianttranches, freebayes, bcftools_sort_freebayes, tabix_freebayes, vcffilter_freebayes, tabix_freebayes_filt, strelka_germline, manta_germline, bcftools_mpileup_call, tiddit_sv, tabix_tiddit, deepvariant, bcftools_mpileup_ngscheckmate, ngscheckmate_ncm, gatk_haplotypecaller_scatter, gatk_mergevcfs_scatter |
+| joint | gatk_haplotypecaller_gvcf, gatk_genomicsdbimport, gatk_genotypegvcfs, bcftools_sort_joint, gatk_mergevcfs_joint, gatk_variantrecalibrator_snp, gatk_variantrecalibrator_indel, gatk_applyvqsr_snp, gatk_applyvqsr_indel, gatk_haplotypecaller_gvcf_scatter, gatk_genomicsdbimport_scatter, gatk_genotypegvcfs_scatter, bcftools_sort_joint_scatter, gatk_mergevcfs_joint_scatter |
+| stats | bcftools_stats, vcftools_tstv_count, vcftools_tstv_qual, vcftools_filter_summary, ensemblvep_vep, bcftools_stats_freebayes, vcftools_tstv_count_freebayes, vcftools_tstv_qual_freebayes, vcftools_filter_summary_freebayes, ensemblvep_vep_freebayes, bcftools_stats_strelka, vcftools_tstv_count_strelka, vcftools_tstv_qual_strelka, vcftools_filter_summary_strelka, ensemblvep_vep_strelka, bcftools_stats_mpileup, vcftools_tstv_count_mpileup, vcftools_tstv_qual_mpileup, vcftools_filter_summary_mpileup, ensemblvep_vep_mpileup, bcftools_stats_deepvariant, vcftools_tstv_count_deepvariant, vcftools_tstv_qual_deepvariant, vcftools_filter_summary_deepvariant, ensemblvep_vep_deepvariant, bcftools_stats_manta, vcftools_tstv_count_manta, vcftools_tstv_qual_manta, vcftools_filter_summary_manta, ensemblvep_vep_manta, bcftools_stats_tiddit, vcftools_tstv_count_tiddit, vcftools_tstv_qual_tiddit, vcftools_filter_summary_tiddit, ensemblvep_vep_tiddit, bcftools_stats_joint, vcftools_tstv_count_joint, vcftools_tstv_qual_joint, vcftools_filter_summary_joint, ensemblvep_vep_joint |
+| report | multiqc |
+
+Every drawn edge is a real engine edge (subset check at generation).
+
+<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-sarek+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
 
 </div>
 </details>
-<div class="ox-sem-notes" markdown="1">
-
-### How this semantic view abstracts the rule-level graph
-
-The workflow has **4 rules / ? edges**; the semantic drawing shows **23 stops on 5 route lines**: one **Main pipeline** line (grey-brown) carries the single shared story along the bottom trunk — all 4 alignment lanes merge at the hidden junction `_aligned` and the count/statistics chain runs on it; the coloured lines are the routes that feed or branch from it (blue Data acquisition, green PE alignment, orange SE alignment, yellow Reporting). Grouped stops: `star_align_raw` and `star_align_se_raw` ride their parent lane; the 8 `rseqc_*` checks appear as one `rseqc QC` stop (each check still a real rule — detail card below); the 3 PCA stops appear as `DESeq2 PCA`. Every drawn edge is a real edge of the engine DAG — the subset property is machine-verified at generation (incl. junction composition), nothing invented. Auxiliary terminals (`bwa_index`, `genome_faidx`) and the per-check QC fan-outs are elided here and shown in the rule-level detail card.
-
-### How to read this semantic map
-
-
-
-**Short-name mapping** — every label on the map, in full:
-
-<table class="ox-sem-map"><thead><tr><th>Shown</th><th>Full rule name(s)</th></tr></thead><tbody><tr><td><code>prep</code></td><td><code>bwa_index, bwamem2_index, gatk_createsequencedictionary, samtools_faidx</code></td></tr><tr><td><code>fq</code></td><td><code>fastqc</code></td></tr><tr><td><code>trim</code></td><td><code>fastp, fastp_split</code></td></tr><tr><td><code>umi</code></td><td><code>fgbio_fastqtobam, samtools_bam2fq_umi, bwa_mem_umi, fgbio_groupreadsbyumi, fgbio_callmolecularconsensusreads, samtools_bam2fq_consensus, fastp_umi</code></td></tr><tr><td><code>aligners</code></td><td><code>bwa_mem, bwa_mem2, bwa_mem_split, bwa_mem2_split</code></td></tr><tr><td><code>dedup</code></td><td><code>bam_merge_index_samtools, gatk_markduplicates, gatk_markduplicates_bam, mosdepth_md, samtools_stats_md</code></td></tr><tr><td><code>bqsr</code></td><td><code>gatk_baserecalibrator, gatk_applybqsr, samtools_index_recal, mosdepth_recal, samtools_stats_recal, samtools_reindex_bam, goleft_indexcov</code></td></tr><tr><td><code>scatter</code></td><td><code>create_intervals_bed, tabix_interval, gatk_baserecalibrator_scatter, gatk_gatherbqsrreports, gatk_applybqsr_scatter, merge_index_samtools</code></td></tr><tr><td><code>callers</code></td><td><code>gatk_haplotypecaller, gatk_cnnscorevariants, gatk_filtervarianttranches, freebayes, bcftools_sort_freebayes, tabix_freebayes, vcffilter_freebayes, tabix_freebayes_filt, strelka_germline, manta_germline, bcftools_mpileup_call, tiddit_sv, tabix_tiddit, deepvariant, bcftools_mpileup_ngscheckmate, ngscheckmate_ncm, gatk_haplotypecaller_scatter, gatk_mergevcfs_scatter</code></td></tr><tr><td><code>joint</code></td><td><code>gatk_haplotypecaller_gvcf, gatk_genomicsdbimport, gatk_genotypegvcfs, bcftools_sort_joint, gatk_mergevcfs_joint, gatk_variantrecalibrator_snp, gatk_variantrecalibrator_indel, gatk_applyvqsr_snp, gatk_applyvqsr_indel, gatk_haplotypecaller_gvcf_scatter, gatk_genomicsdbimport_scatter, gatk_genotypegvcfs_scatter, bcftools_sort_joint_scatter, gatk_mergevcfs_joint_scatter</code></td></tr><tr><td><code>stats</code></td><td><code>bcftools_stats, vcftools_tstv_count, vcftools_tstv_qual, vcftools_filter_summary, ensemblvep_vep, bcftools_stats_freebayes, vcftools_tstv_count_freebayes, vcftools_tstv_qual_freebayes, vcftools_filter_summary_freebayes, ensemblvep_vep_freebayes, bcftools_stats_strelka, vcftools_tstv_count_strelka, vcftools_tstv_qual_strelka, vcftools_filter_summary_strelka, ensemblvep_vep_strelka, bcftools_stats_mpileup, vcftools_tstv_count_mpileup, vcftools_tstv_qual_mpileup, vcftools_filter_summary_mpileup, ensemblvep_vep_mpileup, bcftools_stats_deepvariant, vcftools_tstv_count_deepvariant, vcftools_tstv_qual_deepvariant, vcftools_filter_summary_deepvariant, ensemblvep_vep_deepvariant, bcftools_stats_manta, vcftools_tstv_count_manta, vcftools_tstv_qual_manta, vcftools_filter_summary_manta, ensemblvep_vep_manta, bcftools_stats_tiddit, vcftools_tstv_count_tiddit, vcftools_tstv_qual_tiddit, vcftools_filter_summary_tiddit, ensemblvep_vep_tiddit, bcftools_stats_joint, vcftools_tstv_count_joint, vcftools_tstv_qual_joint, vcftools_filter_summary_joint, ensemblvep_vep_joint</code></td></tr><tr><td><code>report</code></td><td><code>multiqc</code></td></tr></tbody></table>
-
-<a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Bgraph%5D+oxo-flow-sarek+semantic+map+correction&body=Which station or edge looks wrong (paste the station/edge names)">Report a correction to this map</a>
-
-</div>
 <details class="ox-flow-view">
 <summary>Exact rule DAG (multi-route truth — operational view)</summary>
 <div class="ox-dag-card ox-dag-card--wide">

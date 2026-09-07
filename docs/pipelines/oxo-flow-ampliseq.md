@@ -476,32 +476,44 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 ## Workflow graph
 
 <details class="ox-flow-view" open>
-<summary>Semantic overview <span class="ox-badge ox-badge--sem">author-side</span></summary>
-<div class="ox-dag-card" markdown="1">
+<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
+<div class="ox-sem-text" markdown="1">
 
-<a href="/assets/dag/oxo-flow-ampliseq-semantic.svg?v=1b1e2ab796" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-ampliseq-semantic.svg?v=1b1e2ab796" alt="oxo-flow-ampliseq semantic overview" loading="lazy"></a>
+## Semantic map - how to read it
 
-<p class="ox-dag-caption">Semantic route drawing — every station is a real rule of this workflow, every edge a real data dependency of the engine DAG; groups and junction are the author-side condensation (details below).</p>
+## Short names and groups (all are real rules)
+
+| Shown | Full rule name(s) |
+|---|---|
+| rename | rename_raw_data_files |
+| fastqc | fastqc |
+| cutadapt_+_summary | cutadapt, cutadapt_summary, cutadapt_summary_merge |
+| DADA2_QC | dada2_quality_fw, dada2_quality_rv |
+| DADA2_trim_len | trunclen_fw, trunclen_rv |
+| DADA2_filter__+QC_out | dada2_filtntrim, dada2_quality_fw_preprocessed, dada2_quality_rv_preprocessed |
+| DADA2_err | dada2_err |
+| DADA2_denoise | dada2_denoising |
+| DADA2_chimeras | dada2_rmchimera |
+| DADA2_stats | dada2_stats, merge_stats |
+| DADA2_merge | dada2_merge |
+| ITSx | itsx_cutasv, itsxrust_cutasv |
+| ITSx_filter | filter_len_itsx |
+| taxonomy_DB | download_taxonomy_db, format_taxonomy |
+| taxonomy_assign | dada2_taxonomy, dada2_taxonomy_its |
+| QIIME2_runs | qiime2_inasv, qiime2_inseq, qiime2_inasv_its, qiime2_inseq_its, qiime2_intax, qiime2_diversity_tree |
+| QIIME2_steps | qiime2_diversity_core, qiime2_classify, qiime2_alphararefaction, qiime2_metadata_categories, qiime2_preptax |
+| QIIME2_exports | qiime2_barplot, qiime2_export_absolute, qiime2_export_relasv, qiime2_export_reltax |
+| QIIME2_tests | qiime2_ancom, qiime2_ancombc, qiime2_ancombc2 |
+| QIIME2_diver | qiime2_diversity_alpha, qiime2_diversity_beta, qiime2_diversity_betaord, qiime2_diversity_adonis |
+| MultiQC | multiqc |
+| PICRUSt | picrust |
+
+Every drawn edge is a real engine edge (subset check at generation).
+
+<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-ampliseq+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
 
 </div>
 </details>
-<div class="ox-sem-notes" markdown="1">
-
-### How this semantic view abstracts the rule-level graph
-
-The workflow has **7 rules / ? edges**; the semantic drawing shows **23 stops on 5 route lines**: one **Main pipeline** line (grey-brown) carries the single shared story along the bottom trunk — all 4 alignment lanes merge at the hidden junction `_aligned` and the count/statistics chain runs on it; the coloured lines are the routes that feed or branch from it (blue Data acquisition, green PE alignment, orange SE alignment, yellow Reporting). Grouped stops: `star_align_raw` and `star_align_se_raw` ride their parent lane; the 8 `rseqc_*` checks appear as one `rseqc QC` stop (each check still a real rule — detail card below); the 3 PCA stops appear as `DESeq2 PCA`. Every drawn edge is a real edge of the engine DAG — the subset property is machine-verified at generation (incl. junction composition), nothing invented. Auxiliary terminals (`bwa_index`, `genome_faidx`) and the per-check QC fan-outs are elided here and shown in the rule-level detail card.
-
-### How to read this semantic map
-
-
-
-**Short-name mapping** — every label on the map, in full:
-
-<table class="ox-sem-map"><thead><tr><th>Shown</th><th>Full rule name(s)</th></tr></thead><tbody><tr><td><code>rename</code></td><td><code>rename_raw_data_files</code></td></tr><tr><td><code>fastqc</code></td><td><code>fastqc</code></td></tr><tr><td><code>cutadapt_+_summary</code></td><td><code>cutadapt, cutadapt_summary, cutadapt_summary_merge</code></td></tr><tr><td><code>DADA2_QC</code></td><td><code>dada2_quality_fw, dada2_quality_rv</code></td></tr><tr><td><code>DADA2_trim_len</code></td><td><code>trunclen_fw, trunclen_rv</code></td></tr><tr><td><code>DADA2_filter__+QC_out</code></td><td><code>dada2_filtntrim, dada2_quality_fw_preprocessed, dada2_quality_rv_preprocessed</code></td></tr><tr><td><code>DADA2_err</code></td><td><code>dada2_err</code></td></tr><tr><td><code>DADA2_denoise</code></td><td><code>dada2_denoising</code></td></tr><tr><td><code>DADA2_chimeras</code></td><td><code>dada2_rmchimera</code></td></tr><tr><td><code>DADA2_stats</code></td><td><code>dada2_stats, merge_stats</code></td></tr><tr><td><code>DADA2_merge</code></td><td><code>dada2_merge</code></td></tr><tr><td><code>ITSx</code></td><td><code>itsx_cutasv, itsxrust_cutasv</code></td></tr><tr><td><code>ITSx_filter</code></td><td><code>filter_len_itsx</code></td></tr><tr><td><code>taxonomy_DB</code></td><td><code>download_taxonomy_db, format_taxonomy</code></td></tr><tr><td><code>taxonomy_assign</code></td><td><code>dada2_taxonomy, dada2_taxonomy_its</code></td></tr><tr><td><code>QIIME2_runs</code></td><td><code>qiime2_inasv, qiime2_inseq, qiime2_inasv_its, qiime2_inseq_its, qiime2_intax, qiime2_diversity_tree</code></td></tr><tr><td><code>QIIME2_steps</code></td><td><code>qiime2_diversity_core, qiime2_classify, qiime2_alphararefaction, qiime2_metadata_categories, qiime2_preptax</code></td></tr><tr><td><code>QIIME2_exports</code></td><td><code>qiime2_barplot, qiime2_export_absolute, qiime2_export_relasv, qiime2_export_reltax</code></td></tr><tr><td><code>QIIME2_tests</code></td><td><code>qiime2_ancom, qiime2_ancombc, qiime2_ancombc2</code></td></tr><tr><td><code>QIIME2_diver</code></td><td><code>qiime2_diversity_alpha, qiime2_diversity_beta, qiime2_diversity_betaord, qiime2_diversity_adonis</code></td></tr><tr><td><code>MultiQC</code></td><td><code>multiqc</code></td></tr><tr><td><code>PICRUSt</code></td><td><code>picrust</code></td></tr></tbody></table>
-
-<a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Bgraph%5D+oxo-flow-ampliseq+semantic+map+correction&body=Which station or edge looks wrong (paste the station/edge names)">Report a correction to this map</a>
-
-</div>
 <details class="ox-flow-view">
 <summary>Exact rule DAG (multi-route truth — operational view)</summary>
 <div class="ox-dag-card ox-dag-card--wide">

@@ -683,32 +683,29 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 ## Workflow graph
 
 <details class="ox-flow-view" open>
-<summary>Semantic overview <span class="ox-badge ox-badge--sem">author-side</span></summary>
-<div class="ox-dag-card" markdown="1">
+<summary>Semantic overview — plain-language walkthrough <span class="ox-badge ox-badge--sem">text</span></summary>
+<div class="ox-sem-text" markdown="1">
 
-<a href="/assets/dag/oxo-flow-enrichment-semantic.svg?v=6da338db8a" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-enrichment-semantic.svg?v=6da338db8a" alt="oxo-flow-enrichment semantic overview" loading="lazy"></a>
+## Semantic map - how to read it
 
-<p class="ox-dag-caption">Semantic route drawing — every station is a real rule of this workflow, every edge a real data dependency of the engine DAG; groups and junction are the author-side condensation (details below).</p>
+## Short names and groups (all are real rules)
+
+| Shown | Full rule name(s) |
+|---|---|
+| dbs | prepare_databases_Azimuth_2023, prepare_databases_Reactome |
+| region | region_enrichment_analysis_GREAT_Azimuth_2023, region_enrichment_analysis_GREAT_Reactome, region_enrichment_analysis_LOLA, region_gene_association_GREAT |
+| motif | region_motif_enrichment_analysis_pycisTarget, process_results_pycisTarget, gene_motif_enrichment_analysis_RcisTarget |
+| gene | gene_ORA_GSEApy_Reactome, gene_preranked_GSEApy_Reactome, gene_preranked_GSEApy_Azimuth_2023, gene_ORA_GSEApy_Azimuth_2023 |
+| plots | plot_enrichment_result_LOLA_LOLACore, plot_enrichment_result_preranked_GSEApy_Azimuth_2023, plot_enrichment_result_ORA_GSEApy_Azimuth_2023, plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust, plot_enrichment_result_GREAT_Azimuth_2023, plot_enrichment_result_pycisTarget_hg38_screen_v10clust, plot_enrichment_result_ORA_GSEApy_Reactome, plot_enrichment_result_GREAT_Reactome, plot_enrichment_result_preranked_GSEApy_Reactome |
+| aggregate | aggregate_preranked_GSEApy_Reactome_RNA, aggregate_GREAT_Azimuth_2023_ATAC, aggregate_preranked_GSEApy_Azimuth_2023_RNA, aggregate_LOLA_LOLACore_ATAC, aggregate_pycisTarget_hg38_screen_v10clust_ATAC, aggregate_GREAT_Reactome_ATAC, aggregate_ORA_GSEApy_Azimuth_2023_ATAC, aggregate_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC, aggregate_ORA_GSEApy_Reactome_ATAC |
+| visualize | visualize_ORA_GSEApy_Reactome_ATAC, visualize_ORA_GSEApy_Azimuth_2023_ATAC, config_export, visualize_GREAT_Reactome_ATAC, annot_export, visualize_pycisTarget_hg38_screen_v10clust_ATAC, visualize_LOLA_LOLACore_ATAC, visualize_preranked_GSEApy_Azimuth_2023_RNA, visualize_GREAT_Azimuth_2023_ATAC, visualize_preranked_GSEApy_Reactome_RNA, visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC |
+
+Every drawn edge is a real engine edge (subset check at generation).
+
+<p class="ox-sem-line"><a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Boverview%5D+oxo-flow-enrichment+semantic+text+correction&body=Which step or rule name looks wrong (paste the step/rule names)">Report a correction to this overview</a></p>
 
 </div>
 </details>
-<div class="ox-sem-notes" markdown="1">
-
-### How this semantic view abstracts the rule-level graph
-
-The workflow has **8 rules / ? edges**; the semantic drawing shows **23 stops on 5 route lines**: one **Main pipeline** line (grey-brown) carries the single shared story along the bottom trunk — all 4 alignment lanes merge at the hidden junction `_aligned` and the count/statistics chain runs on it; the coloured lines are the routes that feed or branch from it (blue Data acquisition, green PE alignment, orange SE alignment, yellow Reporting). Grouped stops: `star_align_raw` and `star_align_se_raw` ride their parent lane; the 8 `rseqc_*` checks appear as one `rseqc QC` stop (each check still a real rule — detail card below); the 3 PCA stops appear as `DESeq2 PCA`. Every drawn edge is a real edge of the engine DAG — the subset property is machine-verified at generation (incl. junction composition), nothing invented. Auxiliary terminals (`bwa_index`, `genome_faidx`) and the per-check QC fan-outs are elided here and shown in the rule-level detail card.
-
-### How to read this semantic map
-
-
-
-**Short-name mapping** — every label on the map, in full:
-
-<table class="ox-sem-map"><thead><tr><th>Shown</th><th>Full rule name(s)</th></tr></thead><tbody><tr><td><code>dbs</code></td><td><code>prepare_databases_Azimuth_2023, prepare_databases_Reactome</code></td></tr><tr><td><code>region</code></td><td><code>region_enrichment_analysis_GREAT_Azimuth_2023, region_enrichment_analysis_GREAT_Reactome, region_enrichment_analysis_LOLA, region_gene_association_GREAT</code></td></tr><tr><td><code>motif</code></td><td><code>region_motif_enrichment_analysis_pycisTarget, process_results_pycisTarget, gene_motif_enrichment_analysis_RcisTarget</code></td></tr><tr><td><code>gene</code></td><td><code>gene_ORA_GSEApy_Reactome, gene_preranked_GSEApy_Reactome, gene_preranked_GSEApy_Azimuth_2023, gene_ORA_GSEApy_Azimuth_2023</code></td></tr><tr><td><code>plots</code></td><td><code>plot_enrichment_result_LOLA_LOLACore, plot_enrichment_result_preranked_GSEApy_Azimuth_2023, plot_enrichment_result_ORA_GSEApy_Azimuth_2023, plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust, plot_enrichment_result_GREAT_Azimuth_2023, plot_enrichment_result_pycisTarget_hg38_screen_v10clust, plot_enrichment_result_ORA_GSEApy_Reactome, plot_enrichment_result_GREAT_Reactome, plot_enrichment_result_preranked_GSEApy_Reactome</code></td></tr><tr><td><code>aggregate</code></td><td><code>aggregate_preranked_GSEApy_Reactome_RNA, aggregate_GREAT_Azimuth_2023_ATAC, aggregate_preranked_GSEApy_Azimuth_2023_RNA, aggregate_LOLA_LOLACore_ATAC, aggregate_pycisTarget_hg38_screen_v10clust_ATAC, aggregate_GREAT_Reactome_ATAC, aggregate_ORA_GSEApy_Azimuth_2023_ATAC, aggregate_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC, aggregate_ORA_GSEApy_Reactome_ATAC</code></td></tr><tr><td><code>visualize</code></td><td><code>visualize_ORA_GSEApy_Reactome_ATAC, visualize_ORA_GSEApy_Azimuth_2023_ATAC, config_export, visualize_GREAT_Reactome_ATAC, annot_export, visualize_pycisTarget_hg38_screen_v10clust_ATAC, visualize_LOLA_LOLACore_ATAC, visualize_preranked_GSEApy_Azimuth_2023_RNA, visualize_GREAT_Azimuth_2023_ATAC, visualize_preranked_GSEApy_Reactome_RNA, visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</code></td></tr></tbody></table>
-
-<a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Bgraph%5D+oxo-flow-enrichment+semantic+map+correction&body=Which station or edge looks wrong (paste the station/edge names)">Report a correction to this map</a>
-
-</div>
 <details class="ox-flow-view">
 <summary>Exact rule DAG (multi-route truth — operational view)</summary>
 <div class="ox-dag-card ox-dag-card--wide">
