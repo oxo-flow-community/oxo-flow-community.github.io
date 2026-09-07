@@ -513,10 +513,11 @@ def render_mmd(nf_metro: str, mmd: pathlib.Path, svg: pathlib.Path,
             # bottom-right legend blows a wide single-line map past the
             # landscape band (live: fetchngs 7.36) — re-render with the
             # legend under the figure (keeps the pad and audit intact).
+            tight = ["--x-spacing", "120", "--y-spacing", "44"]
             subprocess.run(
                 [nf_metro, "render", str(mmd), "-o", str(svg),
                  "--theme", "nfcore-light", "--mode", "light",
-                 "--legend", "bottom", *spacing],
+                 "--legend", "bottom", *tight],
                 capture_output=True, text=True,
             )
             pad_viewport_left(svg)
