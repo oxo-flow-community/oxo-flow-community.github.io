@@ -11,6 +11,9 @@
 <path d="M 2399 86 L 2399 802 Q 2515 802 2515 830" fill="none" stroke="#E8A33D" stroke-width="5"/>
 <path d="M 260 86 L 260 802 Q 2515 802 2515 830" fill="none" stroke="#E8A33D" stroke-width="5"/>
 <path d="M 1923 86 L 1923 864 Q 2039 864 2039 892" fill="none" stroke="#E8A33D" stroke-width="5"/>
+<path d="M 1445 86 Q 1445 96 1923 96 L 1923 86" fill="none" stroke="#E8A33D" stroke-width="5"/>
+<path d="M 2109 272 Q 2109 112 2842 112 L 2842 86" fill="none" stroke="#E8A33D" stroke-width="5"/>
+<path d="M 2109 272 Q 2109 112 2589 112 L 2589 86" fill="none" stroke="#E8A33D" stroke-width="5"/>
 <circle cx="70" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
 <text x="70" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">rename</text>
 <circle cx="260" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>

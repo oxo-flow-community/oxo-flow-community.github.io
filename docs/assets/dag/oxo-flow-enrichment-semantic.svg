@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="856" viewBox="-20 -20 940 896">
+<rect x="-30" y="-30" width="980" height="936" fill="#ffffff"/>
+<path d="M 70 86 L 260 86 L 450 86 L 645 86" fill="none" stroke="#79706E" stroke-width="7"/>
+<path d="M 260 86 L 260 76 Q 330 76 330 86" fill="none" stroke="#E8A33D" stroke-width="5"/>
+<path d="M 330 86 L 330 306 Q 446 306 446 334" fill="none" stroke="#E8A33D" stroke-width="5"/>
+<path d="M 260 86 L 260 182 Q 330 182 330 210" fill="none" stroke="#E8A33D" stroke-width="5"/>
+<path d="M 330 86 L 330 306 Q 446 306 446 334" fill="none" stroke="#E8A33D" stroke-width="5"/>
+<path d="M 260 86 L 260 306 Q 446 306 446 334" fill="none" stroke="#E8A33D" stroke-width="5"/>
+<circle cx="70" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
+<text x="70" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">dbs</text>
+<circle cx="260" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
+<text x="260" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">region</text>
+<circle cx="450" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
+<text x="450" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">aggregate</text>
+<circle cx="645" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
+<text x="645" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">visualize</text>
+<circle cx="330" cy="86" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="348" y="93" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">motif</text>
+<circle cx="446" cy="334" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="464" y="341" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">plots</text>
+<circle cx="330" cy="210" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="348" y="217" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">gene</text>
+<circle cx="446" cy="334" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="464" y="341" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">plots</text>
+<circle cx="446" cy="334" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="464" y="341" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">plots</text>
+<rect x="40" y="738" width="332" height="112" rx="10" fill="#f8f8f8" stroke="#dddddd"/>
+<path d="M 54 768 L 122 768" stroke="#79706E" stroke-width="7"/>
+<text x="136" y="775" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">Main pipeline</text>
+<path d="M 54 812 L 122 812" stroke="#E8A33D" stroke-width="5"/>
+<text x="136" y="819" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">Assist routes</text>
+</svg>

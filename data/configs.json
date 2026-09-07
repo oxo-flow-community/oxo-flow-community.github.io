@@ -5329,7 +5329,15 @@
       "tier": "module-stage",
       "stations": 8,
       "is_rule_level": false,
-      "aspect": 2.35
+      "aspect": 2.35,
+      "semantic": {
+        "file": "oxo-flow-chipseq-semantic.svg",
+        "aspect": 1.57,
+        "tier": "tree",
+        "primary": false,
+        "hand": true,
+        "stations": 23
+      }
     }
   },
   "oxo-flow-atacseq": {
@@ -7206,7 +7214,7 @@
       "tier": "spine",
       "stations": 52,
       "is_rule_level": false,
-      "aspect": 0.91
+      "aspect": 1.09
     }
   },
   "oxo-flow-viralrecon": {
@@ -9490,7 +9498,15 @@
       "tier": "module-stage",
       "stations": 8,
       "is_rule_level": false,
-      "aspect": 2.08
+      "aspect": 2.08,
+      "semantic": {
+        "file": "oxo-flow-eager-semantic.svg",
+        "aspect": 2.14,
+        "tier": "tree",
+        "primary": false,
+        "hand": true,
+        "stations": 23
+      }
     }
   },
   "oxo-flow-fetchngs": {
@@ -9652,7 +9668,15 @@
       "tier": "rule-sections",
       "stations": 16,
       "is_rule_level": true,
-      "aspect": 3.97
+      "aspect": 3.97,
+      "semantic": {
+        "file": "oxo-flow-fetchngs-semantic.svg",
+        "aspect": 2.66,
+        "tier": "line",
+        "primary": true,
+        "hand": true,
+        "stations": 23
+      }
     }
   },
   "oxo-flow-rnaseq-star-deseq2": {
@@ -9963,7 +9987,7 @@
       "tier": "spine",
       "stations": 31,
       "is_rule_level": false,
-      "aspect": 3.25,
+      "aspect": 3.7,
       "semantic": {
         "file": "oxo-flow-rnaseq-star-deseq2-semantic.svg",
         "aspect": 3.49,
@@ -11705,7 +11729,15 @@
       "tier": "module-stage",
       "stations": 8,
       "is_rule_level": false,
-      "aspect": 1.45
+      "aspect": 1.45,
+      "semantic": {
+        "file": "oxo-flow-enrichment-semantic.svg",
+        "aspect": 1.05,
+        "tier": "line",
+        "primary": true,
+        "hand": true,
+        "stations": 23
+      }
     }
   },
   "oxo-flow-genome-tracks": {
@@ -13139,7 +13171,7 @@
       "tier": "spine",
       "stations": 61,
       "is_rule_level": false,
-      "aspect": 1.13
+      "aspect": 0.92
     }
   },
   "oxo-flow-circrna": {

@@ -103,12 +103,23 @@ def draw(name: str, mmd: str) -> str:
             continue
         jx = px(feeds[-1]) + 60 if feeds[-1] in positions else total_w - 110
         svg.append(f'<circle cx="{jx}" cy="{RAIL_Y}" r="7" fill="#79706E"/>')
-    # branch ladder
-    for (b, parent) in branches:
-        ax, ay = px(parent), RAIL_Y
-        bx, by = px(b) if b in positions else total_w - 110, py(b)
+    # branch ladder (branches whose target is off the chain) + MERGE hops:
+    # an assist hop whose target IS on the chain is drawn as a ladder bump
+    # that rejoins the rail (down, right, back up) — the real converge.
+    def draw_branch(ax, ay, bx, by):
         r = min(28, max(10, by - ay - 20))
         d2 = f'M {ax} {ay} L {ax} {by - r} Q {bx} {by - r} {bx} {by}'
+        svg.append(f'<path d="{d2}" fill="none" stroke="{ASSIST}" stroke-width="5"/>')
+    for (b, parent) in branches:
+        draw_branch(px(parent), RAIL_Y, px(b) if b in positions else total_w - 110, py(b))
+    for (a, b) in [(x, y) for x, l, y in hops if l != 'main' and y in chain and x not in chain]:
+        # merge hop: from source branch station up into the rail at b
+        ax = px(a) if a in positions else total_w - 110
+        bx = px(b)
+        ay = py(a) if a in rows else RAIL_Y + len(rows) * ROW + 90
+        by = RAIL_Y
+        r = min(26, max(10, ay - by - 20))
+        d2 = f'M {ax} {ay} Q {ax} {by + r} {bx} {by + r} L {bx} {by}'
         svg.append(f'<path d="{d2}" fill="none" stroke="{ASSIST}" stroke-width="5"/>')
     # stations
     for s in chain:

@@ -1,0 +1,22 @@
+%%metro line: main | Main pipeline | #79706E
+%%metro line: side | Assist routes | #E8A33D
+%%metro font_scale: 1.9
+%%metro stroke_scale: 1.6
+%%metro legend: br
+
+graph LR
+    fastp -->|main| preprocess
+    preprocess -->|main| align
+    align -->|main| dedup
+    dedup -->|main| genotype
+    genotype -->|main| multiqc
+    dedup -->|main| ancient
+    ancient -->|main| multiqc
+    align -->|main| metagenome
+    metagenome -->|main| multiqc
+    refprep -->|main| align
+    align -->|side| multiqc
+    dedup -->|side| multiqc
+    refprep -->|side| multiqc
+    refprep -->|side| ancient
+    metagenome -->|side| multiqc

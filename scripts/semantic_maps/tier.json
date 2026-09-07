@@ -1,5 +1,9 @@
 {
   "oxo-flow-rnaseq-star-deseq2": "line",
   "oxo-flow-ampliseq": "line",
-  "oxo-flow-atacseq": "line"
+  "oxo-flow-atacseq": "line",
+  "oxo-flow-fetchngs": "line",
+  "oxo-flow-chipseq": "tree",
+  "oxo-flow-eager": "tree",
+  "oxo-flow-enrichment": "line"
 }

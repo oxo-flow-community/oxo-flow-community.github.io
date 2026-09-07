@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2347" height="856" viewBox="-20 -20 2387 896">
+<rect x="-30" y="-30" width="2427" height="936" fill="#ffffff"/>
+<path d="M 70 86 L 265 86 L 590 86 L 915 86 L 1240 86 L 1536 86 L 1890 86" fill="none" stroke="#79706E" stroke-width="7"/>
+<path d="M 590 86 L 590 76 Q 660 76 660 86" fill="none" stroke="#E8A33D" stroke-width="5"/>
+<path d="M 660 86 Q 660 96 915 96 L 915 86" fill="none" stroke="#E8A33D" stroke-width="5"/>
+<circle cx="70" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
+<text x="70" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">check_ids</text>
+<circle cx="265" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
+<text x="265" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">sra_ids_to_runinfo</text>
+<circle cx="590" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
+<text x="590" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">sra_runinfo_to_ftp</text>
+<circle cx="915" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
+<text x="915" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">sra_to_samplesheet</text>
+<circle cx="1240" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
+<text x="1240" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">combine_mappings</text>
+<circle cx="1536" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
+<text x="1536" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">combine_samplesheets</text>
+<circle cx="1890" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
+<text x="1890" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">multiqc_mappings_config</text>
+<circle cx="660" cy="86" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="678" y="93" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">downloaders</text>
+<rect x="40" y="738" width="332" height="112" rx="10" fill="#f8f8f8" stroke="#dddddd"/>
+<path d="M 54 768 L 122 768" stroke="#79706E" stroke-width="7"/>
+<text x="136" y="775" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">Main pipeline</text>
+<path d="M 54 812 L 122 812" stroke="#E8A33D" stroke-width="5"/>
+<text x="136" y="819" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">Assist routes</text>
+</svg>
