@@ -692,7 +692,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 
-<img src="/assets/dag/oxo-flow-enrichment.svg?v=76b668520b" alt="oxo-flow-enrichment pipeline overview" loading="lazy">
+<img src="/assets/dag/oxo-flow-enrichment.svg?v=a1d15567d8" alt="oxo-flow-enrichment pipeline overview" loading="lazy">
 
 <p class="ox-dag-caption">figure · oxo-flow-enrichment — Run a complete region set and gene set enrichment analysis on your own data: region overlap enrichment (LOLA), genomic region enrichment of annotated terms (rGREAT), region TFBS motif enrichment (pycisTarget), gene TFBS motif enrichment (RcisTarget), and gene over-representation analysis (ORA) and preranked GSEA (GSEApy).</p>
 

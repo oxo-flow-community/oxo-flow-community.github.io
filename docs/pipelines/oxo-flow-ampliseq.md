@@ -478,14 +478,14 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <details class="ox-flow-view">
 <summary>Rule-level detail (exact DAG)</summary>
 <div class="ox-dag-card">
-<img src="/assets/dag/oxo-flow-ampliseq-rules.svg?v=bed0618405" alt="oxo-flow-ampliseq rule-level detail" loading="lazy">
+<img src="/assets/dag/oxo-flow-ampliseq-rules.svg?v=ab829f5c0f" alt="oxo-flow-ampliseq rule-level detail" loading="lazy">
 </div>
 </details>
 <details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 
-<img src="/assets/dag/oxo-flow-ampliseq.svg?v=fac8541034" alt="oxo-flow-ampliseq pipeline overview" loading="lazy">
+<img src="/assets/dag/oxo-flow-ampliseq.svg?v=0d1dfdd0c7" alt="oxo-flow-ampliseq pipeline overview" loading="lazy">
 
 <p class="ox-dag-caption">figure · oxo-flow-ampliseq — Amplicon sequencing analysis (16S/ITS) that takes raw paired-end reads through FastQC quality control, cutadapt primer trimming (incl.</p>
 

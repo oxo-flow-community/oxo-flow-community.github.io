@@ -547,7 +547,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <details class="ox-flow-view" open>
 <summary>DNA — WES/WGS paired, germline, CNV, tumor-only unpaired</summary>
 <div class="ox-dag-card">
-<img src="/assets/dag/oxo-flow-clindet-dna.svg?v=483e02f51d" alt="oxo-flow-clindet dna flow view" loading="lazy">
+<img src="/assets/dag/oxo-flow-clindet-dna.svg?v=3609811036" alt="oxo-flow-clindet dna flow view" loading="lazy">
 <p class="ox-dag-note">Stations are the sub-flow's modules; a stage name above the module set tells what the module does. Unconnected stations are conditional or auxiliary modules without a dataflow edge on the template DAG (clindet: QC, Isofox).</p>
 </div>
 </details>
@@ -561,14 +561,14 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <details class="ox-flow-view">
 <summary>Rule-level detail (exact DAG)</summary>
 <div class="ox-dag-card">
-<img src="/assets/dag/oxo-flow-clindet-rules.svg?v=59fac59466" alt="oxo-flow-clindet rule-level detail" loading="lazy">
+<img src="/assets/dag/oxo-flow-clindet-rules.svg?v=31b3d6d9a5" alt="oxo-flow-clindet rule-level detail" loading="lazy">
 </div>
 </details>
 <details class="ox-flow-view">
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 
-<img src="/assets/dag/oxo-flow-clindet.svg?v=1c5ab15ff1" alt="oxo-flow-clindet pipeline overview" loading="lazy">
+<img src="/assets/dag/oxo-flow-clindet.svg?v=8b89a30721" alt="oxo-flow-clindet pipeline overview" loading="lazy">
 
 <p class="ox-dag-caption">figure · oxo-flow-clindet — Port of zyllifeworld/clindet in its upstream single-Snakefile form: one entry file, config run_type (wes|wgs|rna) selects the rule tree, and paired vs tumor-only WES is derived PER PAIR from the sample sheet (a pair without a control runs the tumor-only tree — engine wildcard-scoped when predicates).</p>
 

@@ -504,7 +504,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 
-<img src="/assets/dag/oxo-flow-sarek.svg?v=38f9d64f2f" alt="oxo-flow-sarek pipeline overview" loading="lazy">
+<img src="/assets/dag/oxo-flow-sarek.svg?v=1d17cacbf2" alt="oxo-flow-sarek pipeline overview" loading="lazy">
 
 <p class="ox-dag-caption">figure · oxo-flow-sarek — GATK best-practice variant calling for whole-genome and whole-exome sequencing (WGS/WES), germline by default: FastQC quality control, fastp trimming and splitting, BWA-MEM (or BWA-MEM2) alignment, MarkDuplicates with CRAM or BAM output, base quality score recalibration (BQSR), single-sample HaplotypeCaller variant calling with CNN 1D scoring and tranche filtering, VEP annotation, per-sample VCF QC and a final MultiQC report.</p>
 

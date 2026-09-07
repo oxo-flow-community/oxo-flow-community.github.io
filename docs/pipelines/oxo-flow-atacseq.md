@@ -407,14 +407,14 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <details class="ox-flow-view">
 <summary>Rule-level detail (exact DAG)</summary>
 <div class="ox-dag-card">
-<img src="/assets/dag/oxo-flow-atacseq-rules.svg?v=a1bea01d96" alt="oxo-flow-atacseq rule-level detail" loading="lazy">
+<img src="/assets/dag/oxo-flow-atacseq-rules.svg?v=99c9bf3035" alt="oxo-flow-atacseq rule-level detail" loading="lazy">
 </div>
 </details>
 <details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 
-<img src="/assets/dag/oxo-flow-atacseq.svg?v=89a62c8bd1" alt="oxo-flow-atacseq pipeline overview" loading="lazy">
+<img src="/assets/dag/oxo-flow-atacseq.svg?v=d2212546f6" alt="oxo-flow-atacseq pipeline overview" loading="lazy">
 
 <p class="ox-dag-caption">figure · oxo-flow-atacseq — ATAC-seq peak calling and QC: FastQC raw-read QC, Trim Galore adapter trimming, BWA-MEM alignment, Picard mark-duplicates, BAMTools filtering, MACS2 broad-peak calling, HOMER peak annotation, FRiP scoring, normalised bigWig tracks, deepTools QC plots and a combined MultiQC report.</p>
 
