@@ -1044,3 +1044,6 @@ a.ox-cta:hover {
   font-size: 0.6em;
   vertical-align: middle;
 }
+
+table.ox-sem-map { font-size: 0.72rem; margin: 0.4rem 0 0.9rem; }
+table.ox-sem-map td, table.ox-sem-map th { padding: 0.18rem 0.5rem; }

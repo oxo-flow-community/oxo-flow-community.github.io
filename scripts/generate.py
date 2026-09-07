@@ -491,6 +491,22 @@ def dag_section(p: dict, configs: dict) -> list[str]:
     info = configs.get(name, {}).get("graph") or {}
     primary_is_rule = bool(info.get("is_rule_level"))
     semantic = info.get("semantic") or {}
+    # Short-name -> full-rule mapping table (scripts/semantic_maps/<name>.md)
+    table = ""
+    _sem_doc = pathlib.Path(ROOT) / "scripts" / "semantic_maps" / f"{name}.md"
+    if _sem_doc.is_file():
+        rows = []
+        for _line in _sem_doc.read_text(encoding="utf-8").splitlines():
+            if _line.startswith("| ") and "Shown" not in _line and "---" not in _line:
+                cells = [c.strip() for c in _line.strip("|").split("|")]
+                if len(cells) == 2 and cells[0] and cells[1]:
+                    rows.append(cells)
+        table = ('<table class="ox-sem-map"><thead><tr><th>Shown</th>'
+                 '<th>Full rule name(s)</th></tr></thead><tbody>')
+        table += "".join(
+            f"<tr><td><code>{r[0]}</code></td><td><code>{r[1]}</code></td></tr>"
+            for r in rows
+        ) + "</tbody></table>"
     semantic_svg = OUT_PAGES.parent / "assets" / "dag" / semantic.get("file", "")
     if semantic and semantic_svg.is_file():
         # Semantic overview: the author-side route drawing (multi-hop trunks,
@@ -526,6 +542,10 @@ def dag_section(p: dict, configs: dict) -> list[str]:
             f"the subset property is machine-verified at generation (incl. junction composition), nothing "
             f"invented. Auxiliary terminals (`bwa_index`, `genome_faidx`) and the per-check QC fan-outs "
             f"are elided here and shown in the rule-level detail card.",
+            "",
+            f"**Short-name mapping** — every label on the map, in full:",
+            "",
+            f'{table}',
             "",
             f'<a class="ox-issue-mini" href="https://github.com/oxo-flow-community/'
             f'oxo-flow-community.github.io/issues/new?title=%5Bgraph%5D+{_esc(name)}+semantic+map+'
