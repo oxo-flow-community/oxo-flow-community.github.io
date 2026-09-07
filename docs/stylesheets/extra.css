@@ -736,7 +736,7 @@ a.ox-cta:hover {
 
 .ox-detail-cols {
   display: grid;
-  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1.6fr) minmax(min(240px, 42%), 1fr);
   gap: 1.2rem;
   align-items: start;
   margin: 0 0 1.4rem;
@@ -749,10 +749,6 @@ a.ox-cta:hover {
 
 .ox-detail-cols > * {
   min-width: 0;
-}
-
-.ox-glance .cmd {
-  overflow-wrap: anywhere;
 }
 
 .ox-detail-cols h1 {
@@ -774,6 +770,19 @@ a.ox-cta:hover {
   border-radius: 10px;
   padding: 0.75rem 0.9rem;
   box-shadow: var(--shadow);
+  /* generic overflow protection: every cell wraps/breaks, nothing in the
+     panel can push the two-column grid into the TOC column (live:
+     ampliseq long compute note) */
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+.ox-kv { min-width: 0; }
+.ox-kv .v {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  min-width: 0;
+  flex: 1 1 auto;
 }
 
 .ox-glance-title {
@@ -797,7 +806,7 @@ a.ox-cta:hover {
 
 .ox-kv:last-of-type { border-bottom: none; }
 
-.ox-kv .k { color: var(--faint); }
+.ox-kv .k { color: var(--faint); white-space: nowrap; flex: 0 0 auto; }
 
 .ox-kv .v {
   font-weight: 600;

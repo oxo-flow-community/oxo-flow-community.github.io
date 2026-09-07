@@ -15,7 +15,7 @@ title: "Pooled CRISPR perturbation analysis with Seurat Mixscape"
 <div class="ox-glance-title">At a glance</div>
 <div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested · full-line</span></div>
 <div class="ox-kv"><span class="k">Rules</span><span class="v">7</span></div>
-<div class="ox-kv"><span class="k">Compute</span><span class="v">mixscape 8 CPUs / 32 GB; lda, visualize 1 CPU / 32 GB each; export rules 1 CPU / 1 GB</span></div>
+<div class="ox-kv"><span class="k">Compute</span><span class="v"><span title="mixscape 8 CPUs / 32 GB; lda, visualize 1 CPU / 32 GB each; export rules 1 CPU / 1 GB">mixscape 8 CPUs / 32 GB; lda, visualize 1 CPU / 32 GB each; e…</span></span></div>
 <div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></span></div>
 <div class="ox-kv"><span class="k">Origin</span><span class="v">Official port</span></div>
 <div class="ox-kv"><span class="k">Domain</span><span class="v">single-cell</span></div>

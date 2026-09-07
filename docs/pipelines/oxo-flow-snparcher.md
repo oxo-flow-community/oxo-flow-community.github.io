@@ -15,7 +15,7 @@ title: "Variant calling for non-model organisms: trimming, alignment, per-sample
 <div class="ox-glance-title">At a glance</div>
 <div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested</span></div>
 <div class="ox-kv"><span class="k">Rules</span><span class="v">74</span></div>
-<div class="ox-kv"><span class="k">Compute</span><span class="v">up to 8 CPUs / 8 GB per rule (bwa_mem)</span></div>
+<div class="ox-kv"><span class="k">Compute</span><span class="v"><span title="up to 8 CPUs / 8 GB per rule (bwa_mem)">up to 8 CPUs / 8 GB per rule (bwa_mem)</span></span></div>
 <div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></span></div>
 <div class="ox-kv"><span class="k">Origin</span><span class="v">Official port</span></div>
 <div class="ox-kv"><span class="k">Domain</span><span class="v">genomics</span></div>

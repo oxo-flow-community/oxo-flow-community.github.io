@@ -15,7 +15,7 @@ title: "RNA-seq: alignment, quantification and QC"
 <div class="ox-glance-title">At a glance</div>
 <div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested</span></div>
 <div class="ox-kv"><span class="k">Rules</span><span class="v">135</span></div>
-<div class="ox-kv"><span class="k">Compute</span><span class="v">up to 12 CPUs / 72 GB per rule (STAR align)</span></div>
+<div class="ox-kv"><span class="k">Compute</span><span class="v"><span title="up to 12 CPUs / 72 GB per rule (STAR align)">up to 12 CPUs / 72 GB per rule (STAR align)</span></span></div>
 <div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></span></div>
 <div class="ox-kv"><span class="k">Origin</span><span class="v">Official port</span></div>
 <div class="ox-kv"><span class="k">Domain</span><span class="v">transcriptomics</span></div>

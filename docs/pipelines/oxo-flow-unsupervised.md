@@ -15,7 +15,7 @@ title: "Unsupervised analysis of omics matrices: PCA, UMAP, clustering and valid
 <div class="ox-glance-title">At a glance</div>
 <div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested · default-path</span></div>
 <div class="ox-kv"><span class="k">Rules</span><span class="v">61</span></div>
-<div class="ox-kv"><span class="k">Compute</span><span class="v">up to 2 CPUs / 32 GB per rule</span></div>
+<div class="ox-kv"><span class="k">Compute</span><span class="v"><span title="up to 2 CPUs / 32 GB per rule">up to 2 CPUs / 32 GB per rule</span></span></div>
 <div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></span></div>
 <div class="ox-kv"><span class="k">Origin</span><span class="v">Official port</span></div>
 <div class="ox-kv"><span class="k">Domain</span><span class="v">other</span></div>

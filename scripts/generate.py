@@ -201,6 +201,18 @@ def emit_js(pipelines: list[dict]) -> None:
     )
 
 
+def compute_summary(value):
+    """At-a-glance Compute cell: short summary, full string as tooltip —
+    the verbose per-rule breakdown stays in Requirements. Long compute
+    notes (live: ampliseq 5-line multi-tool spec) must never push the
+    grid into the TOC column."""
+    if not value:
+        return "—"
+    text = str(value).replace("\n", " ")
+    short = text if len(text) <= 64 else text[:61].rstrip() + "…"
+    return f'<span title="{_esc(text)}">{_esc(short)}</span>'
+
+
 def rating_badge(rating: str, coverage: str = "") -> str:
     """Issue #3: evidence tiers — live-tested > dry-run verified > community.
 
@@ -276,7 +288,7 @@ def glance_panel(p: dict) -> str:
     rows = [
         ("Rating", rating_text, "live"),
         ("Rules", str(p.get("rule_count", "—")), ""),
-        ("Compute", p.get("compute", "—"), ""),
+        ("Compute", compute_summary(p.get("compute")), ""),
         ("Engine", eng or "—", ""),
         ("Origin", origin, ""),
         ("Domain", p.get("domain", ""), ""),
