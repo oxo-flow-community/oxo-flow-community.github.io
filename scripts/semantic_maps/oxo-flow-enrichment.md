@@ -1,6 +1,5 @@
 ## Semantic map - how to read it
 
-
 ## Short names and groups (all are real rules)
 
 | Shown | Full rule name(s) |
@@ -12,6 +11,5 @@
 | plots | plot_enrichment_result_LOLA_LOLACore, plot_enrichment_result_preranked_GSEApy_Azimuth_2023, plot_enrichment_result_ORA_GSEApy_Azimuth_2023, plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust, plot_enrichment_result_GREAT_Azimuth_2023, plot_enrichment_result_pycisTarget_hg38_screen_v10clust, plot_enrichment_result_ORA_GSEApy_Reactome, plot_enrichment_result_GREAT_Reactome, plot_enrichment_result_preranked_GSEApy_Reactome |
 | aggregate | aggregate_preranked_GSEApy_Reactome_RNA, aggregate_GREAT_Azimuth_2023_ATAC, aggregate_preranked_GSEApy_Azimuth_2023_RNA, aggregate_LOLA_LOLACore_ATAC, aggregate_pycisTarget_hg38_screen_v10clust_ATAC, aggregate_GREAT_Reactome_ATAC, aggregate_ORA_GSEApy_Azimuth_2023_ATAC, aggregate_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC, aggregate_ORA_GSEApy_Reactome_ATAC |
 | visualize | visualize_ORA_GSEApy_Reactome_ATAC, visualize_ORA_GSEApy_Azimuth_2023_ATAC, config_export, visualize_GREAT_Reactome_ATAC, annot_export, visualize_pycisTarget_hg38_screen_v10clust_ATAC, visualize_LOLA_LOLACore_ATAC, visualize_preranked_GSEApy_Azimuth_2023_RNA, visualize_GREAT_Azimuth_2023_ATAC, visualize_preranked_GSEApy_Reactome_RNA, visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC |
-
 
 Every drawn edge is a real engine edge (subset check at generation).

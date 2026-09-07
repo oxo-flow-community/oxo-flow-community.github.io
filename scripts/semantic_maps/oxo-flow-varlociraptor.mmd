@@ -1,0 +1,14 @@
+%%metro line: main | Main pipeline | #79706E
+%%metro line: side | Assist routes | #E8A33D
+%%metro font_scale: 1.9
+%%metro stroke_scale: 1.6
+%%metro legend: br
+
+graph LR
+    ref -->|main| mapping
+    mapping -->|main| qc
+    mapping -->|main| regions
+    regions -->|main| candidates
+    candidates -->|main| calling
+    calling -->|main| report
+    float -->|side| benchmark

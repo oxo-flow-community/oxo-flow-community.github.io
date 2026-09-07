@@ -1,6 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="3735" height="1042" viewBox="-20 -20 3775 1082">
-<rect x="-30" y="-30" width="3815" height="1122" fill="#ffffff"/>
-<path d="M 70 86 L 280 86 L 547 86 L 800 86 L 1110 86 L 1300 86 L 1538 86 L 1762 86 L 1952 86 L 2142 86 L 2332 86 L 2686 86 L 3097 86 L 3307 86" fill="none" stroke="#79706E" stroke-width="7"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="3735" height="1194" viewBox="-20 -20 3775 1234">
+<defs><marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#79706E"/></marker><marker id="arru" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#E8A33D"/></marker></defs>
+<rect x="-30" y="-30" width="3815" height="1274" fill="#ffffff"/>
+<path d="M 70 86 L 280 86 L 547 86 L 800 86 L 1110 86 L 1300 86 L 1538 86 L 1762 86 L 1952 86 L 2142 86 L 2332 86 L 2686 86 L 3097 86 L 3307 86" fill="none" stroke="#79706E" stroke-width="7" marker-mid="url(#arr)"/>
 <circle cx="860" cy="86" r="7" fill="#79706E"/>
 <circle cx="860" cy="86" r="7" fill="#79706E"/>
 <circle cx="860" cy="86" r="7" fill="#79706E"/>
@@ -8,19 +9,19 @@
 <circle cx="860" cy="86" r="7" fill="#79706E"/>
 <circle cx="860" cy="86" r="7" fill="#79706E"/>
 <circle cx="860" cy="86" r="7" fill="#79706E"/>
-<path d="M 70 86 L 70 120 Q 140 120 140 148" fill="none" stroke="#E8A33D" stroke-width="5"/>
-<path d="M 70 86 L 70 120 Q 140 120 140 148" fill="none" stroke="#E8A33D" stroke-width="5"/>
-<path d="M 70 86 L 70 182 Q 140 182 140 210" fill="none" stroke="#E8A33D" stroke-width="5"/>
-<path d="M 70 86 L 70 244 Q 186 244 186 272" fill="none" stroke="#E8A33D" stroke-width="5"/>
-<path d="M 70 86 L 70 306 Q 140 306 140 334" fill="none" stroke="#E8A33D" stroke-width="5"/>
-<path d="M 70 86 L 70 368 Q 186 368 186 396" fill="none" stroke="#E8A33D" stroke-width="5"/>
-<path d="M 70 86 L 70 554 Q 140 554 140 582" fill="none" stroke="#E8A33D" stroke-width="5"/>
-<path d="M 186 396 Q 186 112 70 112 L 70 86" fill="none" stroke="#E8A33D" stroke-width="5"/>
-<path d="M 140 148 Q 140 112 70 112 L 70 86" fill="none" stroke="#E8A33D" stroke-width="5"/>
-<path d="M 140 582 Q 140 112 547 112 L 547 86" fill="none" stroke="#E8A33D" stroke-width="5"/>
-<path d="M 3625 858 Q 3625 112 800 112 L 800 86" fill="none" stroke="#E8A33D" stroke-width="5"/>
-<path d="M 3625 858 Q 3625 112 280 112 L 280 86" fill="none" stroke="#E8A33D" stroke-width="5"/>
-<path d="M 140 148 Q 140 112 547 112 L 547 86" fill="none" stroke="#E8A33D" stroke-width="5"/>
+<path d="M 70 86 L 70 134 Q 140 134 140 162" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 70 86 L 70 134 Q 140 134 140 162" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 70 86 L 70 210 Q 140 210 140 238" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 70 86 L 70 286 Q 186 286 186 314" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 70 86 L 70 362 Q 140 362 140 390" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 70 86 L 70 438 Q 186 438 186 466" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 70 86 L 70 666 Q 140 666 140 694" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 186 466 Q 186 112 70 112 L 70 86" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 140 162 Q 140 112 70 112 L 70 86" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 140 694 Q 140 112 547 112 L 547 86" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 3625 1012 Q 3625 112 800 112 L 800 86" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 3625 1012 Q 3625 112 280 112 L 280 86" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
+<path d="M 140 162 Q 140 112 547 112 L 547 86" fill="none" stroke="#E8A33D" stroke-width="5" marker-end="url(#arru)"/>
 <circle cx="70" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
 <text x="70" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">star_align</text>
 <circle cx="280" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
@@ -47,23 +48,23 @@
 <text x="3097" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">DESeq2_PCA</text>
 <circle cx="3307" cy="86" r="8" fill="#ffffff" stroke="#79706E" stroke-width="3"/>
 <text x="3307" y="60" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">gene_2_symbol_diffexp</text>
-<circle cx="140" cy="148" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
-<text x="158" y="155" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">star_index</text>
-<circle cx="140" cy="148" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
-<text x="158" y="155" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">star_index</text>
-<circle cx="140" cy="210" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
-<text x="158" y="217" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">bwa_index</text>
-<circle cx="186" cy="272" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
-<text x="204" y="279" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">genome_faidx</text>
-<circle cx="140" cy="334" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
-<text x="158" y="341" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">rseqc_gtf2bed</text>
-<circle cx="186" cy="396" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
-<text x="204" y="403" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">fastp_pe</text>
-<circle cx="140" cy="582" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
-<text x="158" y="589" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">fastp_se</text>
-<rect x="40" y="924" width="332" height="112" rx="10" fill="#f8f8f8" stroke="#dddddd"/>
-<path d="M 54 954 L 122 954" stroke="#79706E" stroke-width="7"/>
-<text x="136" y="961" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">Main pipeline</text>
-<path d="M 54 998 L 122 998" stroke="#E8A33D" stroke-width="5"/>
-<text x="136" y="1005" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">Assist routes</text>
+<circle cx="140" cy="162" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="158" y="169" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">star_index</text>
+<circle cx="140" cy="162" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="158" y="169" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">star_index</text>
+<circle cx="140" cy="238" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="158" y="245" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">bwa_index</text>
+<circle cx="186" cy="314" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="204" y="321" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">genome_faidx</text>
+<circle cx="140" cy="390" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="158" y="397" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">rseqc_gtf2bed</text>
+<circle cx="186" cy="466" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="204" y="473" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">fastp_pe</text>
+<circle cx="140" cy="694" r="8" fill="#ffffff" stroke="#E8A33D" stroke-width="3"/>
+<text x="158" y="701" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">fastp_se</text>
+<rect x="40" y="1076" width="332" height="112" rx="10" fill="#f8f8f8" stroke="#dddddd"/>
+<path d="M 54 1106 L 122 1106" stroke="#79706E" stroke-width="7"/>
+<text x="136" y="1113" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">Main pipeline</text>
+<path d="M 54 1150 L 122 1150" stroke="#E8A33D" stroke-width="5"/>
+<text x="136" y="1157" font-size="20" fill="#333333" font-family="JetBrains Mono, Menlo, monospace">Assist routes</text>
 </svg>

@@ -21,7 +21,7 @@ ASSIST = "#E8A33D"
 FONT = 20
 RAIL_Y = 86
 STEP = 190
-ROW = 62
+ROW = 76
 
 
 def parse_hops(mmd: str) -> list[tuple[str, str, str]]:
@@ -78,9 +78,13 @@ def draw(name: str, mmd: str) -> str:
         if not b.startswith('_'):
             rows[b] = k
     n_assist = max(10, len(rows) + 2)
-    total_h = RAIL_Y + n_assist * ROW + 150
+    total_h = RAIL_Y + max(n_assist, len(branches) + 1) * ROW + 120
 
     svg = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{total_w}" height="{total_h}" viewBox="-20 -20 {total_w + 40} {total_h + 40}">']
+    svg.append('<defs><marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">'
+               '<path d="M0 0 L9 4.5 L0 9 z" fill="#79706E"/></marker>'
+               '<marker id="arru" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">'
+               '<path d="M0 0 L9 4.5 L0 9 z" fill="#E8A33D"/></marker></defs>')
     svg.append(f'<rect x="-30" y="-30" width="{total_w + 80}" height="{total_h + 80}" fill="#ffffff"/>')
 
     def px(n):
@@ -90,11 +94,11 @@ def draw(name: str, mmd: str) -> str:
 
     for k, (b, parent) in enumerate(branches):
         if b not in positions:
-            positions[b] = px(parent) + 70 + (k % 2) * 46
+            positions[b] = (px(parent) if parent != 'float' else 60) + 70 + (k % 2) * 46
     # main rail path
     pts = [(px(s), RAIL_Y) for s in chain]
     d = 'M ' + ' L '.join(f'{x} {y}' for x, y in pts)
-    svg.append(f'<path d="{d}" fill="none" stroke="{MAIN}" stroke-width="7"/>')
+    svg.append(f'<path d="{d}" fill="none" stroke="{MAIN}" stroke-width="7" marker-mid="url(#arr)"/>')
     # junction dots on rail (hidden collectors, e.g. _aligned): right after the
     # last main stop that feeds them
     for j in juncts:
@@ -109,8 +113,10 @@ def draw(name: str, mmd: str) -> str:
     def draw_branch(ax, ay, bx, by):
         r = min(28, max(10, by - ay - 20))
         d2 = f'M {ax} {ay} L {ax} {by - r} Q {bx} {by - r} {bx} {by}'
-        svg.append(f'<path d="{d2}" fill="none" stroke="{ASSIST}" stroke-width="5"/>')
+        svg.append(f'<path d="{d2}" fill="none" stroke="{ASSIST}" stroke-width="5" marker-end="url(#arru)"/>')
     for (b, parent) in branches:
+        if parent == 'float':
+            continue
         draw_branch(px(parent), RAIL_Y, px(b) if b in positions else total_w - 110, py(b))
     for (a, b) in [(x, y) for x, l, y in hops if l != 'main' and y in chain and x not in chain]:
         # merge hop: from source branch station up into the rail at b
@@ -120,7 +126,7 @@ def draw(name: str, mmd: str) -> str:
         by = RAIL_Y
         r = min(26, max(10, ay - by - 20))
         d2 = f'M {ax} {ay} Q {ax} {by + r} {bx} {by + r} L {bx} {by}'
-        svg.append(f'<path d="{d2}" fill="none" stroke="{ASSIST}" stroke-width="5"/>')
+        svg.append(f'<path d="{d2}" fill="none" stroke="{ASSIST}" stroke-width="5" marker-end="url(#arru)"/>')
     # stations
     for s in chain:
         if s.startswith('_'):

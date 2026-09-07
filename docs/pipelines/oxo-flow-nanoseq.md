@@ -371,6 +371,33 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 ## Workflow graph
 
 <details class="ox-flow-view">
+<summary>Semantic overview <span class="ox-badge ox-badge--sem">author-side</span></summary>
+<div class="ox-dag-card" markdown="1">
+
+<a href="/assets/dag/oxo-flow-nanoseq-semantic.svg?v=903d7e3e57" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-nanoseq-semantic.svg?v=903d7e3e57" alt="oxo-flow-nanoseq semantic overview" loading="lazy"></a>
+
+<p class="ox-dag-caption">Semantic route drawing — every station is a real rule of this workflow, every edge a real data dependency of the engine DAG; groups and junction are the author-side condensation (details below).</p>
+
+</div>
+</details>
+<div class="ox-sem-notes" markdown="1">
+
+### How this semantic view abstracts the rule-level graph
+
+The workflow has **52 rules / ? edges**; the semantic drawing shows **23 stops on 5 route lines**: one **Main pipeline** line (grey-brown) carries the single shared story along the bottom trunk — all 4 alignment lanes merge at the hidden junction `_aligned` and the count/statistics chain runs on it; the coloured lines are the routes that feed or branch from it (blue Data acquisition, green PE alignment, orange SE alignment, yellow Reporting). Grouped stops: `star_align_raw` and `star_align_se_raw` ride their parent lane; the 8 `rseqc_*` checks appear as one `rseqc QC` stop (each check still a real rule — detail card below); the 3 PCA stops appear as `DESeq2 PCA`. Every drawn edge is a real edge of the engine DAG — the subset property is machine-verified at generation (incl. junction composition), nothing invented. Auxiliary terminals (`bwa_index`, `genome_faidx`) and the per-check QC fan-outs are elided here and shown in the rule-level detail card.
+
+### How to read this semantic map
+
+
+
+**Short-name mapping** — every label on the map, in full:
+
+<table class="ox-sem-map"><thead><tr><th>Shown</th><th>Full rule name(s)</th></tr></thead><tbody><tr><td><code>ref</code></td><td><code>samtools_faidx, get_chrom_sizes, gtf2bed, minimap2_index, graphmap2_index</code></td></tr><tr><td><code>align</code></td><td><code>minimap2_align, graphmap2_align, samtools_view, samtools_sort, samtools_sort_index, samtools_index</code></td></tr><tr><td><code>stats</code></td><td><code>samtools_stats, samtools_idxstats, samtools_flagstat</code></td></tr><tr><td><code>tracks</code></td><td><code>bedtools_genomecov, ucsc_bedgraphtobigwig, bedtools_bamtobed, ucsc_bed12tobigbed</code></td></tr><tr><td><code>variants</code></td><td><code>medaka_variant, medaka_bgzip_vcf, medaka_tabix_vcf, deepvariant, deepvariant_tabix_vcf, deepvariant_tabix_gvcf, pepper_margin_deepvariant, sniffles, sniffles_sort_vcf, sniffles_tabix_vcf, cutesv, cutesv_sort_vcf, cutesv_tabix_vcf</code></td></tr><tr><td><code>transcript</code></td><td><code>stringtie2, stringtie_merge, subread_featurecounts, bambu, deseq2, dexseq, deseq2_featurecounts, dexseq_featurecounts</code></td></tr><tr><td><code>methyl</code></td><td><code>nanopolish_index_eventalign, xpore_dataprep, xpore_diffmod, m6anet_dataprep, m6anet_inference</code></td></tr><tr><td><code>qc</code></td><td><code>fastqc, dumpsoftwareversions, samplesheet_check, qcat, nanoplot, nanolyse, bam_rename</code></td></tr><tr><td><code>multiqc</code></td><td><code>multiqc</code></td></tr></tbody></table>
+
+<a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Bgraph%5D+oxo-flow-nanoseq+semantic+map+correction&body=Which station or edge looks wrong (paste the station/edge names)">Report a correction to this map</a>
+
+</div>
+<details class="ox-flow-view">
 <summary>Exact rule DAG (multi-route truth — operational view)</summary>
 <div class="ox-dag-card ox-dag-card--wide">
 <a href="/assets/dag/oxo-flow-nanoseq-rules.svg?v=72a3eb250c" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-nanoseq-rules.svg?v=72a3eb250c" alt="oxo-flow-nanoseq rule-level detail" loading="lazy"></a>
@@ -380,7 +407,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card ox-dag-card--wide" markdown="1">
 
-<a href="/assets/dag/oxo-flow-nanoseq.svg?v=e5369a259e" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-nanoseq.svg?v=e5369a259e" alt="oxo-flow-nanoseq pipeline overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-nanoseq.svg?v=d2780d90a0" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-nanoseq.svg?v=d2780d90a0" alt="oxo-flow-nanoseq pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-nanoseq — A nanopore long-read pipeline: samplesheet check, qcat barcode demultiplexing, NanoPlot + FastQC QC, minimap2 (or graphmap2) alignment, samtools view/sort/index, samtools stats/flagstat/idxstats, BigWig/BigBed tracks, NanoLyse contamination filtering, medaka/DeepVariant/PEPPER-Margin-DeepVariant short variant calling, Sniffles/cuteSV structural variant calling, bambu/StringTie2+featureCounts quantification with DESeq2/DEXSeq differential analysis, Nanopolish+xPore/m6anet RNA modification analysis, JAFFA RNA fusion detection (cDNA/directRNA; reference bundle auto-downloaded from figshare or supplied via config.jaffal_ref_dir as a directory or tar.gz), pre-aligned-BAM input, and a MultiQC report.</p>
 

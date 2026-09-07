@@ -1,0 +1,15 @@
+%%metro line: main | Main pipeline | #79706E
+%%metro line: side | Assist routes | #E8A33D
+%%metro font_scale: 1.9
+%%metro stroke_scale: 1.6
+%%metro legend: br
+
+graph LR
+    ref -->|main| align
+    align -->|main| stats
+    stats -->|main| multiqc
+    qc -->|main| multiqc
+    align -->|side| tracks
+    align -->|side| variants
+    float -->|side| transcript
+    float -->|side| methyl

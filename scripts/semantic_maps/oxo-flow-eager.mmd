@@ -5,18 +5,16 @@
 %%metro legend: br
 
 graph LR
-    fastp -->|main| preprocess
     preprocess -->|main| align
     align -->|main| dedup
-    dedup -->|main| genotype
-    genotype -->|main| multiqc
-    dedup -->|main| ancient
-    ancient -->|main| multiqc
-    align -->|main| metagenome
-    metagenome -->|main| multiqc
-    refprep -->|main| align
+    dedup -->|main| multiqc
+    dedup -->|side| genotype
+    genotype -->|side| multiqc
+    dedup -->|side| ancient damage
+    ancient damage -->|side| multiqc
+    align -->|side| metagenome
+    metagenome -->|side| multiqc
+    refprep -->|side| align
+    align -->|side| dedup
     align -->|side| multiqc
     dedup -->|side| multiqc
-    refprep -->|side| multiqc
-    refprep -->|side| ancient
-    metagenome -->|side| multiqc

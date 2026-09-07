@@ -5,5 +5,9 @@
   "oxo-flow-fetchngs": "line",
   "oxo-flow-chipseq": "tree",
   "oxo-flow-eager": "tree",
-  "oxo-flow-enrichment": "line"
+  "oxo-flow-enrichment": "line",
+  "oxo-flow-mag": "tree",
+  "oxo-flow-nanoseq": "tree",
+  "oxo-flow-snparcher": "tree",
+  "oxo-flow-varlociraptor": "line"
 }

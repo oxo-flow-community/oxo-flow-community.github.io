@@ -5,8 +5,8 @@
 %%metro legend: br
 
 graph LR
-    qc::trimgalore -->|main| refs
-    refs -->|main| sort+merge
+    qc::trimgalore -->|main| refs+aligners
+    refs+aligners -->|main| sort+merge
     sort+merge -->|main| markdup+filter
     markdup+filter -->|main| peaks
     peaks -->|main| annotate
@@ -18,8 +18,8 @@ graph LR
     peaks -->|side| frip
     peaks -->|side| consensus
     consensus -->|side| multiqc
-    markdup+filter -->|side| qcq
-    qcq -->|side| multiqc
+    markdup+filter -->|side| QC
+    QC -->|side| multiqc
     peaks -->|side| igv
     tracks -->|side| igv
     markdup+filter -->|side| multiqc
