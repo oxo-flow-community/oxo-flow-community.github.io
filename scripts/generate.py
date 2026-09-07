@@ -466,11 +466,15 @@ def dag_section(p: dict, configs: dict) -> list[str]:
             "</div>",
             "</details>",
         ]
-    # Rule-level detail (where it renders): the exact graph of every
-    # rule, collapsed by default — the primary figure follows one reading
-    # model, the deep-dive is one click away.
+    # Rule-level detail (where it renders and where the primary figure is
+    # NOT itself rule-level): the exact graph of every rule, collapsed by
+    # default. When the ladder promoted the rule-level figure to be the
+    # primary (a degenerate multi-module workflow, live: nanoseq) the same
+    # picture would appear twice — the detail card is omitted then.
+    info = configs.get(name, {}).get("graph") or {}
+    primary_is_rule = bool(info.get("is_rule_level"))
     rules_svg = OUT_PAGES.parent / "assets" / "dag" / f"{name}-rules.svg"
-    if rules_svg.is_file():
+    if rules_svg.is_file() and not primary_is_rule:
         cards += [
             '<details class="ox-flow-view">',
             '<summary>Rule-level detail (exact DAG)</summary>',
@@ -479,8 +483,14 @@ def dag_section(p: dict, configs: dict) -> list[str]:
             "</div>",
             "</details>",
         ]
+    # The overview card is the reading anchor: default-open when it is the
+    # page's only primary figure (single-workflow pages and degenerate
+    # rule-level primaries), collapsed behind the open flow views on
+    # multi-omics entries.
+    has_views = bool(configs.get(name, {}).get("flow_views"))
+    open_mark = " open" if primary_is_rule or not has_views else ""
     cards += [
-        '<details class="ox-flow-view">',
+        f'<details class="ox-flow-view"{open_mark}>',
         '<summary>Overview — all modules</summary>',
         '<div class="ox-dag-card" markdown="1">',
         "",

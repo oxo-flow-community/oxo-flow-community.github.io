@@ -499,7 +499,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <img src="/assets/dag/oxo-flow-chipseq-rules.svg?v=1c07ca0d8d" alt="oxo-flow-chipseq rule-level detail" loading="lazy">
 </div>
 </details>
-<details class="ox-flow-view">
+<details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 

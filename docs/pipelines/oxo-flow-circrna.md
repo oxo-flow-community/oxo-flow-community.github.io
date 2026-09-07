@@ -88,7 +88,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <img src="/assets/dag/oxo-flow-circrna-rules.svg?v=ed15c6fb98" alt="oxo-flow-circrna rule-level detail" loading="lazy">
 </div>
 </details>
-<details class="ox-flow-view">
+<details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 

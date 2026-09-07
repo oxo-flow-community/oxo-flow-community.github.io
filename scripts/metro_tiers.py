@@ -669,11 +669,12 @@ def render_ladder(
         # it sits behind a collapsed card where size is irrelevant).
         if detail is not None and detail_svg is not None:
             shutil.copyfile(detail[1], detail_svg)
-        # Degenerate overview (a one/two-module workflow whose overview
-        # conveys nothing, live: unsupervised/methylseq) uses the rule
-        # detail as the primary figure instead — information over
+        # Degenerate overview (a one-to-three-station workflow whose
+        # overview conveys nothing: live unsupervised/methylseq at ≤2,
+        # nanoseq at 3 with its quant chain outside the flow) uses the
+        # rule detail as the primary figure instead — information over
         # simplicity, exactly the trade the unified rule documents.
-        if best is not None and best[2]["stations"] <= 2 and detail is not None:
+        if best is not None and best[2]["stations"] <= 3 and detail is not None:
             best = detail
         if best is None:
             return last_err, None

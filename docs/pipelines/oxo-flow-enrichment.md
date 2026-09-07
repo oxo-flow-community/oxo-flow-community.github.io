@@ -688,7 +688,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <img src="/assets/dag/oxo-flow-enrichment-rules.svg?v=480467ced6" alt="oxo-flow-enrichment rule-level detail" loading="lazy">
 </div>
 </details>
-<details class="ox-flow-view">
+<details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 

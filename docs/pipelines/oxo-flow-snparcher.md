@@ -355,11 +355,11 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 ## Workflow graph
 
-<details class="ox-flow-view">
+<details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 
-<img src="/assets/dag/oxo-flow-snparcher.svg?v=85155c9e3e" alt="oxo-flow-snparcher pipeline overview" loading="lazy">
+<img src="/assets/dag/oxo-flow-snparcher.svg?v=8fc78e1e6b" alt="oxo-flow-snparcher pipeline overview" loading="lazy">
 
 <p class="ox-dag-caption">figure · oxo-flow-snparcher — Variant calling for non-model organisms: paired FASTQ reads (or SRA accessions, or external BAMs) are trimmed and filtered with fastp, aligned with BWA-MEM, optionally duplicate-marked with sambamba, and called to per-sample gVCFs with GATK HaplotypeCaller or DeepVariant (low-coverage defaults: -ploidy 2, --min-pruning 1).</p>
 
