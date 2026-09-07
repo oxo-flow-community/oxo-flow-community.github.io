@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-     width="259" height="366" viewBox="0 0 259 366">
+     width="259" height="282" viewBox="0 0 259 282">
 <defs>
 </defs>
-<metadata id="diagram-manifest" data-schema-version="1.0"><![CDATA[{"groups":[{"color":"#79706E","id":"generic","label":"Analysis"},{"color":"#54A24B","id":"align","label":"Alignment"}],"height":366,"match":{"flags":"i","target":"fqProcessName","type":"regex"},"nodes":[{"groups":["generic"],"h":12.0,"id":"g_generic_align_generic","label":"Analysis","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":80.0,"y":120.0},{"groups":["align"],"h":12.0,"id":"g_generic_align_align","label":"Alignment","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":80.0,"y":184.0},{"groups":["align","generic"],"h":16.0,"id":"g_report_report","label":"Reporting","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":180.5,"y":122.0},{"groups":[],"h":12.0,"id":"g_quantify_quantify","label":"Quantification","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":80.0,"y":240.0}],"regions":[],"title":"","version":"1.0","width":259}]]></metadata>
+<metadata id="diagram-manifest" data-schema-version="1.0"><![CDATA[{"groups":[{"color":"#54A24B","id":"align","label":"Alignment"}],"height":282,"match":{"flags":"i","target":"fqProcessName","type":"regex"},"nodes":[{"groups":["align"],"h":12.0,"id":"g_generic_align_generic","label":"Analysis\nAnalysis · Alignment","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":80.0,"y":120.0},{"groups":["align"],"h":12.0,"id":"g_report_report","label":"Reporting","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":140.0,"y":120.0},{"groups":[],"h":12.0,"id":"g_quantify_quantify","label":"Quantification","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":80.0,"y":180.0}],"regions":[],"title":"","version":"1.0","width":259}]]></metadata>
 <style>.nf-metro-title { fill: var(--nfm-map-title-color, #111111); }
 .nf-metro-station-label { fill: var(--nfm-map-label-color, #333333); }
 .nf-metro-section-box { fill: var(--nfm-map-section-fill, #ededed); stroke: var(--nfm-map-section-stroke, #e6e6e6); }
@@ -20,32 +20,25 @@
     .nf-metro-title { fill: #ffffff; }
 }
 </style>
-<path d="M80.0,184.0 L100.0,184.0 Q110.0,184.0,114.47213595499957,175.05572809000085 L135.52786404500043,132.94427190999915 Q140.0,124.0,150.0,124.0 L180.5,124.0" stroke="#54A24B" stroke-width="3.0" fill="none" stroke-linecap="round" stroke-linejoin="round" class="metro-line-align" data-line-id="align" />
-<path d="M80.0,120.0 L180.5,120.0" stroke="#79706E" stroke-width="3.0" stroke-linecap="round" class="metro-line-generic" data-line-id="generic" />
-<g class="nf-metro-station-group" data-node-id="g_generic_align_generic" data-node-cx="80.0" data-node-cy="120.0" data-node-r="6.0" data-node-groups="generic" data-node-w="12.0" data-node-h="12.0" data-node-rx="6.0">
-<rect x="74.0" y="114.0" width="12.0" height="12.0" rx="6.0" ry="6.0" fill="#ffffff" stroke="#333333" stroke-width="2.0" class="nf-metro-station" data-station-id="g_generic_align_generic" data-station-lines="generic" data-station-label="Analysis" />
+<path d="M80.0,120.0 L140.0,120.0" stroke="#54A24B" stroke-width="3.0" stroke-linecap="round" class="metro-line-align" data-line-id="align" />
+<g class="nf-metro-station-group" data-node-id="g_generic_align_generic" data-node-cx="80.0" data-node-cy="120.0" data-node-r="6.0" data-node-groups="align" data-node-w="12.0" data-node-h="12.0" data-node-rx="6.0">
+<rect x="74.0" y="114.0" width="12.0" height="12.0" rx="6.0" ry="6.0" fill="#ffffff" stroke="#333333" stroke-width="2.0" class="nf-metro-station" data-station-id="g_generic_align_generic" data-station-lines="align" data-station-label="Analysis
+Analysis · Alignment" />
 </g>
-<g class="nf-metro-station-group" data-node-id="g_generic_align_align" data-node-cx="80.0" data-node-cy="184.0" data-node-r="6.0" data-node-groups="align" data-node-w="12.0" data-node-h="12.0" data-node-rx="6.0">
-<rect x="74.0" y="178.0" width="12.0" height="12.0" rx="6.0" ry="6.0" fill="#ffffff" stroke="#333333" stroke-width="2.0" class="nf-metro-station" data-station-id="g_generic_align_align" data-station-lines="align" data-station-label="Alignment" />
+<g class="nf-metro-station-group" data-node-id="g_report_report" data-node-cx="140.0" data-node-cy="120.0" data-node-r="6.0" data-node-groups="align" data-node-w="12.0" data-node-h="12.0" data-node-rx="6.0">
+<rect x="134.0" y="114.0" width="12.0" height="12.0" rx="6.0" ry="6.0" fill="#ffffff" stroke="#333333" stroke-width="2.0" class="nf-metro-station" data-station-id="g_report_report" data-station-lines="align" data-station-label="Reporting" />
 </g>
-<g class="nf-metro-station-group" data-node-id="g_report_report" data-node-cx="180.5" data-node-cy="122.0" data-node-r="6.0" data-node-groups="align,generic" data-node-w="12.0" data-node-h="16.0" data-node-rx="6.0">
-<rect x="174.5" y="114.0" width="12.0" height="16.0" rx="6.0" ry="6.0" fill="#ffffff" stroke="#333333" stroke-width="2.0" class="nf-metro-station" data-station-id="g_report_report" data-station-lines="align,generic" data-station-label="Reporting" />
+<g class="nf-metro-station-group" data-node-id="g_quantify_quantify" data-node-cx="80.0" data-node-cy="180.0" data-node-r="6.0" data-node-groups="" data-node-w="12.0" data-node-h="12.0" data-node-rx="6.0">
+<rect x="74.0" y="174.0" width="12.0" height="12.0" rx="6.0" ry="6.0" fill="#ffffff" stroke="#333333" stroke-width="2.0" class="nf-metro-station" data-station-id="g_quantify_quantify" data-station-lines="" data-station-label="Quantification" />
 </g>
-<g class="nf-metro-station-group" data-node-id="g_quantify_quantify" data-node-cx="80.0" data-node-cy="240.0" data-node-r="6.0" data-node-groups="" data-node-w="12.0" data-node-h="12.0" data-node-rx="6.0">
-<rect x="74.0" y="234.0" width="12.0" height="12.0" rx="6.0" ry="6.0" fill="#ffffff" stroke="#333333" stroke-width="2.0" class="nf-metro-station" data-station-id="g_quantify_quantify" data-station-lines="" data-station-label="Quantification" />
-</g>
-<text x="80.0" y="131.0" font-size="14.0" fill="#ffffff" stroke="#ffffff" stroke-width="3.0" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="hanging">Analysis</text>
-<text x="80.0" y="131.0" font-size="14.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="hanging" data-station-id="g_generic_align_generic" class="nf-metro-station-label">Analysis</text>
-<text x="80.0" y="195.0" font-size="14.0" fill="#ffffff" stroke="#ffffff" stroke-width="3.0" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="hanging">Alignment</text>
-<text x="80.0" y="195.0" font-size="14.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="hanging" data-station-id="g_generic_align_align" class="nf-metro-station-label">Alignment</text>
-<text x="80.0" y="251.0" font-size="14.0" fill="#ffffff" stroke="#ffffff" stroke-width="3.0" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="hanging">Quantification</text>
-<text x="80.0" y="251.0" font-size="14.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="hanging" data-station-id="g_quantify_quantify" class="nf-metro-station-label">Quantification</text>
-<text x="180.5" y="106.0" font-size="14.0" fill="#ffffff" stroke="#ffffff" stroke-width="3.0" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="auto">Reporting</text>
-<text x="180.5" y="106.0" font-size="14.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="auto" data-station-id="g_report_report" class="nf-metro-station-label">Reporting</text>
-<rect x="60.0" y="270.0" width="139.2" height="72.0" rx="6" ry="6" fill="rgba(255, 255, 255, 0.8)" class="nf-metro-legend-bg" />
-<path d="M72.0,294.0 L96.0,294.0" stroke="#79706E" stroke-width="3.0" stroke-linecap="round" />
-<text x="108.0" y="294.0" font-size="16.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" dy="0.3em" class="nf-metro-legend-text">Analysis</text>
-<path d="M72.0,318.0 L96.0,318.0" stroke="#54A24B" stroke-width="3.0" stroke-linecap="round" />
-<text x="108.0" y="318.0" font-size="16.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" dy="0.3em" class="nf-metro-legend-text">Alignment</text>
-<text x="229.0" y="358.0" font-size="8" fill="rgba(150, 150, 150, 0.6)" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" text-anchor="end">created with nf-metro v1.1.0</text>
+<text x="80.0" y="131.0" font-size="14.0" fill="#ffffff" stroke="#ffffff" stroke-width="3.0" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="hanging"><tspan x="80.0" dy="0em">Analysis</tspan><tspan x="80.0" dy="1.2em">Analysis · Alignment</tspan></text>
+<text x="80.0" y="131.0" font-size="14.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="hanging" data-station-id="g_generic_align_generic" class="nf-metro-station-label"><tspan x="80.0" dy="0em">Analysis</tspan><tspan x="80.0" dy="1.2em">Analysis · Alignment</tspan></text>
+<text x="80.0" y="191.0" font-size="14.0" fill="#ffffff" stroke="#ffffff" stroke-width="3.0" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="hanging">Quantification</text>
+<text x="80.0" y="191.0" font-size="14.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="hanging" data-station-id="g_quantify_quantify" class="nf-metro-station-label">Quantification</text>
+<text x="140.0" y="106.0" font-size="14.0" fill="#ffffff" stroke="#ffffff" stroke-width="3.0" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="auto">Reporting</text>
+<text x="140.0" y="106.0" font-size="14.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="auto" data-station-id="g_report_report" class="nf-metro-station-label">Reporting</text>
+<rect x="60.0" y="210.0" width="139.2" height="48.0" rx="6" ry="6" fill="rgba(255, 255, 255, 0.8)" class="nf-metro-legend-bg" />
+<path d="M72.0,234.0 L96.0,234.0" stroke="#54A24B" stroke-width="3.0" stroke-linecap="round" />
+<text x="108.0" y="234.0" font-size="16.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" dy="0.3em" class="nf-metro-legend-text">Alignment</text>
+<text x="229.0" y="274.0" font-size="8" fill="rgba(150, 150, 150, 0.6)" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" text-anchor="end">created with nf-metro v1.1.0</text>
 </svg>
