@@ -25,7 +25,7 @@ title: "RNA-seq: STAR alignment, DESeq2 differential expression and QC"
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2290.1"><code>10.48546/workflowhub.workflow.2290.1</code></a></span></div>
 <div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">star</span><span class="tchip">fastp</span><span class="tchip">rseqc</span><span class="tchip">gffutils</span><span class="tchip">pandas</span><span class="tchip">multiqc</span><span class="tchip">bioconductor-deseq2</span><span class="tchip">r-stringr</span></div></div>
-<p class="cmd">$ oxo-flow run main.oxoflow</p>
+<p class="cmd">$ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq-star-deseq2</p>
 </div>
 </div>
 </div>

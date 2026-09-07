@@ -309,7 +309,7 @@ def glance_panel(p: dict) -> str:
         '<div class="ox-glance-title">At a glance</div>\n'
         f"{kv}\n"
         f'<div class="ox-glance-tools"><span class="k">Tools</span><div class="chips">{chips}</div></div>\n'
-        f'<p class="cmd">$ {_esc(p["quickstart"])}</p>\n'
+        f'<p class="cmd">$ oxo-flow pull gh:oxo-flow-community/{_esc(p["name"])}</p>\n'
         "</div>"
     )
 

@@ -25,7 +25,7 @@ title: "Unsupervised analysis of omics matrices: PCA, UMAP, clustering and valid
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2297.1"><code>10.48546/workflowhub.workflow.2297.1</code></a></span></div>
 <div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">igraph</span><span class="tchip">leidenalg</span><span class="tchip">scikit-learn</span><span class="tchip">python</span><span class="tchip">pandas</span><span class="tchip">scipy</span><span class="tchip">numpy</span><span class="tchip">pynndescent</span></div></div>
-<p class="cmd">$ oxo-flow run main.oxoflow</p>
+<p class="cmd">$ oxo-flow pull gh:oxo-flow-community/oxo-flow-unsupervised</p>
 </div>
 </div>
 </div>

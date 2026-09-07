@@ -25,7 +25,7 @@ title: "Single-cell RNA-seq: alignment, quantification and QC"
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2280.1"><code>10.48546/workflowhub.workflow.2280.1</code></a></span></div>
 <div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">cellranger</span><span class="tchip">cellranger-arc</span><span class="tchip">simpleaf</span><span class="tchip">alevin-fry</span><span class="tchip">piscem</span><span class="tchip">salmon</span><span class="tchip">qcatch</span><span class="tchip">kallisto-bustools</span></div></div>
-<p class="cmd">$ oxo-flow run main.oxoflow</p>
+<p class="cmd">$ oxo-flow pull gh:oxo-flow-community/oxo-flow-scrnaseq</p>
 </div>
 </div>
 </div>

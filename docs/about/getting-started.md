@@ -36,7 +36,17 @@ expression and QC** ([oxo-flow-rnaseq-star-deseq2](../../pipelines/oxo-flow-rnas
 a full RNA-seq differential-expression pipeline with built-in test data and
 a live-tested rating.
 
-## 3. Clone and preview
+## 3. Preview — or run straight from GitHub
+
+You can skip cloning entirely — the engine fetches the repo itself:
+
+```bash
+oxo-flow run gh:oxo-flow-community/oxo-flow-rnaseq-star-deseq2
+```
+
+It checks the repo out under `.oxo-flow/repos/<name>` and keeps outputs in
+your current directory. When you want to inspect first, clone for real and
+preview:
 
 ```bash
 git clone https://github.com/oxo-flow-community/oxo-flow-rnaseq-star-deseq2.git

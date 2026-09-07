@@ -25,7 +25,7 @@ title: "Variant calling for non-model organisms: trimming, alignment, per-sample
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2292.1"><code>10.48546/workflowhub.workflow.2292.1</code></a></span></div>
 <div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">fastp</span><span class="tchip">bwa</span><span class="tchip">samtools</span><span class="tchip">gatk4</span><span class="tchip">picard</span><span class="tchip">sambamba</span><span class="tchip">sra-tools</span><span class="tchip">deepvariant</span></div></div>
-<p class="cmd">$ oxo-flow run main.oxoflow reference_source=/path/to/genome.fa.gz</p>
+<p class="cmd">$ oxo-flow pull gh:oxo-flow-community/oxo-flow-snparcher</p>
 </div>
 </div>
 </div>

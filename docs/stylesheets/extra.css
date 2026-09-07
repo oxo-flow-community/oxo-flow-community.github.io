@@ -103,8 +103,10 @@
   --md-typeset-a-color: var(--brand);
   --md-accent-fg-color: var(--brand);
   --md-code-bg-color: var(--code-bg);
-  --md-footer-bg-color: var(--bg);
-  --md-footer-bg-color--dark: var(--bg);
+  /* footer follows the panel surface (white in light, card in dark) — the
+     grey page ground made the small print hard to read (user feedback) */
+  --md-footer-bg-color: var(--panel);
+  --md-footer-bg-color--dark: var(--panel);
   --md-footer-fg-color: var(--ink-2);
   --md-footer-fg-color--light: var(--muted);
   --md-shadow-z1: var(--shadow);
@@ -184,10 +186,29 @@ html {
 .md-tabs { background: var(--bg); }
 
 .md-footer {
-  /* light theme: panel white, no murky grey ground — easier on the eyes */
-  background: var(--panel);
-  color: var(--ink-2);
+  /* Material v2 ships a near-black footer ground in light mode — override
+     per theme (panel white in light, card in dark), text as ink. Hard
+     overrides because v2 theme shades the old --md-footer-* tokens. */
+  background-color: var(--panel) !important;
+  color: var(--ink-2) !important;
   border-top: 1px solid var(--edge);
+}
+.md-footer .md-copyright,
+.md-footer .md-copyright__highlight { color: var(--ink-2); }
+.md-footer .md-copyright__highlight a,
+.md-footer .md-typeset a {
+  color: var(--brand) !important;
+}
+[data-md-color-scheme="slate"] .md-footer {
+  background-color: var(--panel) !important;
+}
+/* the grey band is .md-footer-meta (v2 uses --md-footer-bg-color--dark) */
+.md-footer-meta {
+  background-color: var(--panel) !important;
+}
+[data-md-color-scheme="slate"] .md-footer .md-copyright,
+[data-md-color-scheme="slate"] .md-footer .md-copyright__highlight {
+  color: var(--muted);
 }
 
 .md-footer {

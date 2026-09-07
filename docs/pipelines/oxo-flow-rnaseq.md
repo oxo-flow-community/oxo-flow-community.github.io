@@ -25,7 +25,7 @@ title: "RNA-seq: alignment, quantification and QC"
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2278.1"><code>10.48546/workflowhub.workflow.2278.1</code></a></span></div>
 <div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">fastqc</span><span class="tchip">trim-galore</span><span class="tchip">fq</span><span class="tchip">star</span><span class="tchip">hisat2</span><span class="tchip">salmon</span><span class="tchip">kallisto</span><span class="tchip">rsem</span></div></div>
-<p class="cmd">$ oxo-flow run main.oxoflow</p>
+<p class="cmd">$ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq</p>
 </div>
 </div>
 </div>

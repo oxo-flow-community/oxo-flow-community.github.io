@@ -25,7 +25,7 @@ title: "Genome browser tracks: coverage, gene plots and UCSC hub"
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2294.1"><code>10.48546/workflowhub.workflow.2294.1</code></a></span></div>
 <div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">samtools</span><span class="tchip">deeptools</span><span class="tchip">pygenometracks</span><span class="tchip">gtracks</span><span class="tchip">sinto</span><span class="tchip">igv-reports</span></div></div>
-<p class="cmd">$ oxo-flow run main.oxoflow --samples first:1</p>
+<p class="cmd">$ oxo-flow pull gh:oxo-flow-community/oxo-flow-genome-tracks</p>
 </div>
 </div>
 </div>

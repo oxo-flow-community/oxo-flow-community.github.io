@@ -25,7 +25,7 @@ title: "SRA-powered RNA-seq: .sra archives to differential expression"
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2300.1"><code>10.48546/workflowhub.workflow.2300.1</code></a></span></div>
 <div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">sra-tools</span><span class="tchip">fastp</span><span class="tchip">star</span><span class="tchip">samtools</span><span class="tchip">deeptools</span><span class="tchip">pandas</span><span class="tchip">bioconductor-deseq2</span><span class="tchip">r-ashr</span></div></div>
-<p class="cmd">$ oxo-flow run main.oxoflow</p>
+<p class="cmd">$ oxo-flow pull gh:oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipeline</p>
 </div>
 </div>
 </div>
