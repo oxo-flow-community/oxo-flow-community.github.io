@@ -6,7 +6,6 @@
 
 %%metro font_scale: 1.9
 %%metro stroke_scale: 1.6
-%%metro label_angle: 45
 %%metro legend: br
 
 graph LR
@@ -16,16 +15,16 @@ graph LR
     get_genome["genome"] -->|ref| genome_faidx["faidx"]
     get_annotation["annot"] -->|ref| rseqc_gtf2bed["rseqc\ngtf2bed"]
     get_sra["SRA"] -->|pe| fastp_pe["fastp\nPE"]
-    fastp_pe["fastp\nPE"] -->|pe| star_align["STAR\nalign"]
-    star_index["STAR\nindex"] -->|pe| star_align["STAR\nalign"]
+    fastp_pe["fastp\nPE"] -->|pe| star_align["STAR\nPE"]
+    star_index["STAR\nindex"] -->|pe| star_align["STAR\nPE"]
     get_sra["SRA"] -->|se| fastp_se["fastp\nSE"]
-    fastp_se["fastp\nSE"] -->|se| star_align_se["STAR\nse"]
-    get_sra["SRA"] -->|se| star_align_se_raw["STAR\nse.raw"]
-    star_index["STAR\nindex"] -->|se| star_align_se["STAR\nse"]
-    star_align["STAR\nalign"] -->|main| _aligned["_aligned"]
-    star_align_raw["STAR\nraw"] -->|main| _aligned["_aligned"]
-    star_align_se["STAR\nse"] -->|main| _aligned["_aligned"]
-    star_align_se_raw["STAR\nse.raw"] -->|main| _aligned["_aligned"]
+    fastp_se["fastp\nSE"] -->|se| star_align_se["STAR\nSE"]
+    get_sra["SRA"] -->|se| star_align_se_raw["STAR\nSE raw"]
+    star_index["STAR\nindex"] -->|se| star_align_se["STAR\nSE"]
+    star_align["STAR\nPE"] -->|main| _aligned["_aligned"]
+    star_align_raw["STAR\nPE raw"] -->|main| _aligned["_aligned"]
+    star_align_se["STAR\nSE"] -->|main| _aligned["_aligned"]
+    star_align_se_raw["STAR\nSE raw"] -->|main| _aligned["_aligned"]
     _aligned["_aligned"] -->|main| count_matrix["counts"]
     _aligned["_aligned"] -->|main| rseqc_QC["rseqc\nQC"]
     _aligned["_aligned"] -->|main| multiqc["MultiQC"]

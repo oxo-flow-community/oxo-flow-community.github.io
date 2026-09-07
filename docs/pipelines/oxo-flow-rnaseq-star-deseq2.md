@@ -303,7 +303,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <summary>Semantic overview <span class="ox-badge ox-badge--sem">author-side</span></summary>
 <div class="ox-dag-card" markdown="1">
 
-<a href="/assets/dag/oxo-flow-rnaseq-star-deseq2-semantic.svg?v=58d0f1691b" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-rnaseq-star-deseq2-semantic.svg?v=58d0f1691b" alt="oxo-flow-rnaseq-star-deseq2 semantic overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-rnaseq-star-deseq2-semantic.svg?v=f0a73d375f" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-rnaseq-star-deseq2-semantic.svg?v=f0a73d375f" alt="oxo-flow-rnaseq-star-deseq2 semantic overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">Semantic route drawing — every station is a real rule of this workflow, every edge a real data dependency of the engine DAG; groups and junction are the author-side condensation (details below).</p>
 
@@ -317,22 +317,16 @@ The workflow has **31 rules / ? edges**; the semantic drawing shows **23 stops o
 
 **Short-name mapping** — every label on the map, in full:
 
-<table class="ox-sem-map"><thead><tr><th>Shown</th><th>Full rule name(s)</th></tr></thead><tbody><tr><td><code>genome</code></td><td><code>get_genome</code></td></tr><tr><td><code>annot</code></td><td><code>get_annotation</code></td></tr><tr><td><code>SRA</code></td><td><code>get_sra</code></td></tr><tr><td><code>STAR index</code></td><td><code>star_index</code></td></tr><tr><td><code>BWA index</code></td><td><code>bwa_index</code></td></tr><tr><td><code>faidx</code></td><td><code>genome_faidx</code></td></tr><tr><td><code>fastp PE / fastp SE</code></td><td><code>fastp_pe / fastp_se</code></td></tr><tr><td><code>STAR align</code></td><td><code>star_align</code></td></tr><tr><td><code>STAR raw</code></td><td><code>star_align_raw</code></td></tr><tr><td><code>STAR se</code></td><td><code>star_align_se</code></td></tr><tr><td><code>STAR se raw</code></td><td><code>star_align_se_raw</code></td></tr><tr><td><code>rseqc gtf2bed</code></td><td><code>rseqc_gtf2bed</code></td></tr><tr><td><code>rseqc QC</code></td><td><code>rseqc_junction_annotation, rseqc_junction_saturation, rseqc_stat, rseqc_infer, rseqc_innerdis, rseqc_readdis, rseqc_readdup, rseqc_readgc</code></td></tr><tr><td><code>counts</code></td><td><code>count_matrix</code></td></tr><tr><td><code>DESeq2 init / DESeq2</code></td><td><code>deseq2_init / deseq2</code></td></tr><tr><td><code>gene2 counts / norm / diffexp</code></td><td><code>gene_2_symbol_counts / gene_2_symbol_normcounts / gene_2_symbol_diffexp</code></td></tr><tr><td><code>PCA</code></td><td><code>pca_treatment_1, pca_treatment_2, pca_jointly_handled</code></td></tr><tr><td><code>MultiQC</code></td><td><code>multiqc</code></td></tr></tbody></table>
+<table class="ox-sem-map"><thead><tr><th>Shown</th><th>Full rule name(s)</th></tr></thead><tbody><tr><td><code>genome</code></td><td><code>get_genome</code></td></tr><tr><td><code>annot</code></td><td><code>get_annotation</code></td></tr><tr><td><code>SRA</code></td><td><code>get_sra</code></td></tr><tr><td><code>STAR index</code></td><td><code>star_index</code></td></tr><tr><td><code>BWA index</code></td><td><code>bwa_index</code></td></tr><tr><td><code>faidx</code></td><td><code>genome_faidx</code></td></tr><tr><td><code>fastp PE / fastp SE</code></td><td><code>fastp_pe / fastp_se</code></td></tr><tr><td><code>STAR PE</code></td><td><code>star_align (paired-end trimmed alignment)</code></td></tr><tr><td><code>STAR PE raw</code></td><td><code>star_align_raw (paired-end raw-read alignment)</code></td></tr><tr><td><code>STAR SE</code></td><td><code>star_align_se (single-end trimmed alignment)</code></td></tr><tr><td><code>STAR SE raw</code></td><td><code>star_align_se_raw (single-end raw-read alignment)</code></td></tr><tr><td><code>rseqc gtf2bed</code></td><td><code>rseqc_gtf2bed</code></td></tr><tr><td><code>rseqc QC</code></td><td><code>rseqc_junction_annotation, rseqc_junction_saturation, rseqc_stat, rseqc_infer, rseqc_innerdis, rseqc_readdis, rseqc_readdup, rseqc_readgc</code></td></tr><tr><td><code>counts</code></td><td><code>count_matrix</code></td></tr><tr><td><code>DESeq2 init / DESeq2</code></td><td><code>deseq2_init / deseq2</code></td></tr><tr><td><code>gene2 counts / norm / diffexp</code></td><td><code>gene_2_symbol_counts / gene_2_symbol_normcounts / gene_2_symbol_diffexp</code></td></tr><tr><td><code>PCA</code></td><td><code>pca_treatment_1, pca_treatment_2, pca_jointly_handled</code></td></tr><tr><td><code>MultiQC</code></td><td><code>multiqc</code></td></tr></tbody></table>
 
 <a class="ox-issue-mini" href="https://github.com/oxo-flow-community/oxo-flow-community.github.io/issues/new?title=%5Bgraph%5D+oxo-flow-rnaseq-star-deseq2+semantic+map+correction&body=Which station or edge looks wrong (paste the station/edge names)">Report a correction to this map</a>
 
 </div>
-<details class="ox-flow-view">
-<summary>Rule-level detail (exact DAG)</summary>
-<div class="ox-dag-card ox-dag-card--wide">
-<a href="/assets/dag/oxo-flow-rnaseq-star-deseq2-rules.svg?v=cf22bd8a0f" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-rnaseq-star-deseq2-rules.svg?v=cf22bd8a0f" alt="oxo-flow-rnaseq-star-deseq2 rule-level detail" loading="lazy"></a>
-</div>
-</details>
 <details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card ox-dag-card--wide" markdown="1">
 
-<a href="/assets/dag/oxo-flow-rnaseq-star-deseq2.svg?v=50afaafd05" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-rnaseq-star-deseq2.svg?v=50afaafd05" alt="oxo-flow-rnaseq-star-deseq2 pipeline overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-rnaseq-star-deseq2.svg?v=cf22bd8a0f" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-rnaseq-star-deseq2.svg?v=cf22bd8a0f" alt="oxo-flow-rnaseq-star-deseq2 pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-rnaseq-star-deseq2 — End-to-end RNA-seq differential-expression analysis with STAR and DESeq2: Ensembl reference download, fastp trimming, STAR alignment with gene counts, RSeQC QC + MultiQC, count matrix with technical-replicate collapse, Ensembl biomaRt gene-symbol annotation, and DESeq2 (normalized counts, PCA plots, per-contrast results with ashr shrinkage and MA plots).</p>
 

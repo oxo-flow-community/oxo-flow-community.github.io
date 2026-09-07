@@ -9,10 +9,10 @@
 | BWA index | bwa_index |
 | faidx | genome_faidx |
 | fastp PE / fastp SE | fastp_pe / fastp_se |
-| STAR align | star_align |
-| STAR raw | star_align_raw |
-| STAR se | star_align_se |
-| STAR se raw | star_align_se_raw |
+| STAR PE | star_align (paired-end trimmed alignment) |
+| STAR PE raw | star_align_raw (paired-end raw-read alignment) |
+| STAR SE | star_align_se (single-end trimmed alignment) |
+| STAR SE raw | star_align_se_raw (single-end raw-read alignment) |
 | rseqc gtf2bed | rseqc_gtf2bed |
 | rseqc QC | rseqc_junction_annotation, rseqc_junction_saturation, rseqc_stat, rseqc_infer, rseqc_innerdis, rseqc_readdis, rseqc_readdup, rseqc_readgc |
 | counts | count_matrix |
@@ -20,3 +20,7 @@
 | gene2 counts / norm / diffexp | gene_2_symbol_counts / gene_2_symbol_normcounts / gene_2_symbol_diffexp |
 | PCA | pca_treatment_1, pca_treatment_2, pca_jointly_handled |
 | MultiQC | multiqc |
+
+The `_aligned` junction is a hidden routing point: all four STAR alignment
+lanes converge there, and its in- and out-edges are exactly the real DAG
+edges of those lanes.

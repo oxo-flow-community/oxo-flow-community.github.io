@@ -226,7 +226,7 @@ def render_semantic_map(name: str, nf_metro: str) -> dict | None:
     proc = subprocess.run(
         [nf_metro, "render", str(src), "-o", str(svg),
          "--theme", "nfcore-light", "--mode", "light",
-         "--x-spacing", "90", "--y-spacing", "56"],
+         "--x-spacing", "140", "--y-spacing", "52"],
         capture_output=True, text=True,
     )
     if proc.returncode != 0:
