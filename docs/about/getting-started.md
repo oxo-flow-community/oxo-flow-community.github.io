@@ -32,7 +32,7 @@ oxo-flow --help
 Every card's **Semantic overview** on the workflow page tells you what the
 pipeline does *before* you run it, in plain language — each step named with
 its real rule. Start with **RNA-seq: STAR alignment, DESeq2 differential
-expression and QC** ([oxo-flow-rnaseq-star-deseq2](../../pipelines/oxo-flow-rnaseq-star-deseq2/)):
+expression and QC** ([oxo-flow-rnaseq-star-deseq2](../pipelines/oxo-flow-rnaseq-star-deseq2/)):
 a full RNA-seq differential-expression pipeline with built-in test data and
 a live-tested rating.
 

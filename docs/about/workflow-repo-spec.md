@@ -3,7 +3,7 @@
 Every catalog repository must follow the same structure so the catalog,
 the website and the live-testing harness stay consistent. The site
 generator checks the essentials at build time (see
-[`check_sem_texts` in scripts/regen-configs.py](../scripts/regen-configs.py));
+[`check_sem_texts` in scripts/regen-configs.py](https://github.com/oxo-flow-community/oxo-flow-community.github.io/blob/main/scripts/regen-configs.py));
 this page is the contract.
 
 ## Repository layout

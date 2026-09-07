@@ -69,7 +69,33 @@ nav:
       - Live testing: about/live-testing.md
   - Project:
       - Contributing: about/contributing.md
-      - Audits: about/audits/index.md
+      - Audits:
+          - 2026 08 Campaign Summary: about/audits/2026-08-campaign-summary.md
+          - Ampliseq (2026 08): about/audits/ampliseq-2026-08.md
+          - Atacseq (2026 08): about/audits/atacseq-2026-08.md
+          - Auto Sra (2026 08): about/audits/auto-sra-2026-08.md
+          - Bgcflow (2026 08): about/audits/bgcflow-2026-08.md
+          - Chipseq (2026 08): about/audits/chipseq-2026-08.md
+          - Circrna (2026 08): about/audits/circrna-2026-08.md
+          - Clindet (2026 08): about/audits/clindet-2026-08.md
+          - Eager (2026 08): about/audits/eager-2026-08.md
+          - Enrichment (2026 08): about/audits/enrichment-2026-08.md
+          - Fetchngs (2026 08): about/audits/fetchngs-2026-08.md
+          - Genome Tracks (2026 08): about/audits/genome-tracks-2026-08.md
+          - Overview: about/audits/index.md
+          - Mag (2026 08): about/audits/mag-2026-08.md
+          - Methylseq (2026 08): about/audits/methylseq-2026-08.md
+          - Mixscape (2026 08): about/audits/mixscape-2026-08.md
+          - Nanoseq (2026 08): about/audits/nanoseq-2026-08.md
+          - Rnaseq (2026 08): about/audits/rnaseq-2026-08.md
+          - Rnaseq Star Deseq2 (2026 08): about/audits/rnaseq-star-deseq2-2026-08.md
+          - Sarek (2026 08): about/audits/sarek-2026-08.md
+          - Scrnaseq (2026 08): about/audits/scrnaseq-2026-08.md
+          - Snparcher (2026 08): about/audits/snparcher-2026-08.md
+          - Tcasia (2026 08): about/audits/tcasia-2026-08.md
+          - Unsupervised (2026 08): about/audits/unsupervised-2026-08.md
+          - Varlociraptor (2026 08): about/audits/varlociraptor-2026-08.md
+          - Viralrecon (2026 08): about/audits/viralrecon-2026-08.md
 
 copyright: >-
   © 2026 <a href="https://github.com/oxo-flow-community">oxo-flow-community</a>
