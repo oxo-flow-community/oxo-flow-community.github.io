@@ -48,6 +48,16 @@ title: "Amplicon sequencing (16S/ITS): DADA2 denoising, taxonomy assignment, QII
 </div>
 </details>
 
+
+<div class="ox-tryit">
+<div class="ox-tryit-title">⬡ Try it — clone &amp; run</div>
+<pre class="ox-tryit-cmd" data-copy="git clone https://github.com/oxo-flow-community/oxo-flow-ampliseq.git &amp;&amp; cd oxo-flow-ampliseq &amp;&amp; oxo-flow run main.oxoflow">git clone https://github.com/oxo-flow-community/oxo-flow-ampliseq.git
+cd oxo-flow-ampliseq
+oxo-flow run main.oxoflow</pre>
+<p class="ox-tryit-note">The repository ships test fixtures (e.g. <code>test/fixtures/generate_fixtures.py</code>, <code>test/fixtures/groups.tsv</code>, <code>test/fixtures/metadata.tsv</code>, <code>test/fixtures/raw/S1_R1.fastq.gz</code>) — point <code>input</code> at them or use the built-in sample group to <code>dry-run</code> first.</p>
+</div>
+
+
 ## Run it
 
 ```bash
@@ -88,408 +98,354 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-ampliseq
 
 ## Parameters
 
-<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. The list below names the rules that read each key.</p>
-<div class="ox-params">
-<div class="ox-param">
-<div class="ox-param-head"><code>FW_primer</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">--- primers (upstream default null renders literal &quot;null&quot; adapters;<br>port uses empty strings — see README fidelity table) ---</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>cutadapt</code> <code>qiime2_preptax</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>RV_primer</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">--- primers (upstream default null renders literal &quot;null&quot; adapters;<br>port uses empty strings — see README fidelity table) ---</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>cutadapt</code> <code>qiime2_preptax</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>ancom</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>qiime2_ancom</code> <code>qiime2_metadata_categories</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>ancombc</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>qiime2_ancombc</code> <code>qiime2_metadata_categories</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>ancombc2</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>qiime2_ancombc2</code> <code>qiime2_metadata_categories</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>ancombc2_formula</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>qiime2_ancombc2</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>ancombc_effect_size</code><span class="ox-param-default">1</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>qiime2_ancombc</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>ancombc_formula</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">comma-separated formulas</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>qiime2_ancombc</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>ancombc_significance</code><span class="ox-param-default">0.05</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>qiime2_ancombc</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>classifier</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">--- QIIME2 taxonomy classifier (upstream params.qiime_ref_taxonomy /<br>params.classifier — off by default; DADA2 taxonomy is the<br>default path). qiime_ref_taxonomy trains a Naive-Bayes<br>classifier on the primer-extracted reference below; classifier<br>is a path to a pre-trained .qza (skips training). ---</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>qiime2_classify</code> <code>qiime2_intax</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cut_its</code><span class="ox-param-default">none</span></div>
-<p class="ox-param-desc">truncation (truncLen=0) + a second cutadapt<br>read-through pass removing revcomp primers</p>
-<details class="ox-param-usedby"><summary>used by 9 rules</summary>
-<div class="ox-param-rules"><code>dada2_taxonomy</code> <code>dada2_taxonomy_its</code> <code>filter_len_itsx</code> <code>itsx_cutasv</code> <code>itsxrust_cutasv</code> <code>qiime2_inasv</code> <code>qiime2_inasv_its</code> <code>qiime2_inseq</code> <code>qiime2_inseq_its</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cutadapt_max_error_rate</code><span class="ox-param-default">0.1</span></div>
-<p class="ox-param-desc">cutadapt</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>cutadapt</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cutadapt_min_overlap</code><span class="ox-param-default">3</span></div>
-<p class="ox-param-desc">cutadapt</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>cutadapt</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>dada_addspecies_allowmultiple</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">DADA2 taxonomy assignment</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>dada2_taxonomy</code> <code>dada2_taxonomy_its</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>dada_assign_chunksize</code><span class="ox-param-default">10000</span></div>
-<p class="ox-param-desc">DADA2 taxonomy assignment</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>dada2_taxonomy</code> <code>dada2_taxonomy_its</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>dada_assign_taxlevels</code><span class="ox-param-default">Domain,Kingdom,Phylum,Class,Order,Family,Genus,Species</span></div>
-<p class="ox-param-desc">DADA2 taxonomy assignment</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>dada2_taxonomy</code> <code>dada2_taxonomy_its</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>dada_min_boot</code><span class="ox-param-default">50</span></div>
-<p class="ox-param-desc">DADA2 taxonomy assignment</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>dada2_taxonomy</code> <code>dada2_taxonomy_its</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>dada_ref_taxonomy</code><span class="ox-param-default">sbdi-gtdb=R11-RS232-1</span></div>
-<p class="ox-param-desc">DADA2 taxonomy assignment</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>dada_ref_taxonomy_citation</code><span class="ox-param-default">Lundin D, Andersson A. SBDI Sativa curated 16S GTDB database. FigShare. doi: 10.17044/scilifelab.14869077.v12</span></div>
-<p class="ox-param-desc">DADA2 taxonomy assignment</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>dada_ref_taxonomy_dbversion</code><span class="ox-param-default">SBDI-GTDB-R11-RS232-1 (https://figshare.scilifelab.se/articles/dataset/SBDI_Sativa_curated_16S_GTDB_database/14869077/10)</span></div>
-<p class="ox-param-desc">DADA2 taxonomy assignment</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>dada_ref_taxonomy_title</code><span class="ox-param-default">SBDI-GTDB - Sativa curated 16S GTDB database - Release R11-RS232-1</span></div>
-<p class="ox-param-desc">DADA2 taxonomy assignment</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>dada_ref_taxonomy_urls</code><span class="ox-param-default">https://ndownloader.figshare.com/files/64711203,https://ndownloader.figshare.com/files/64711218</span></div>
-<p class="ox-param-desc">DADA2 taxonomy assignment</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>download_taxonomy_db</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>dada_taxonomy_rc</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">DADA2 taxonomy assignment</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>dada2_taxonomy</code> <code>dada2_taxonomy_its</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>diversity_rarefaction_depth</code><span class="ox-param-default">500</span></div>
-<p class="ox-param-desc">floor for core-metrics depth</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>qiime2_diversity_core</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>illumina_pe_its</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">--- ITS branch (upstream params.illumina_pe_its / cut_its /<br>its_partial / its_extractor — all default off -&gt; 16S path) ---</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>cutadapt</code> <code>dada2_filtntrim</code> <code>trunclen_fw</code> <code>trunclen_rv</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>its_extractor</code><span class="ox-param-default">itsx</span></div>
-<p class="ox-param-desc">&quot;itsx&quot; | &quot;itsxrust&quot;</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>itsx_cutasv</code> <code>itsxrust_cutasv</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>its_partial</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">keep partial ITS hits (ITSx --partial N)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>itsx_cutasv</code> <code>itsxrust_cutasv</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>max_ee</code><span class="ox-param-default">2</span></div>
-<p class="ox-param-desc">DADA2 filtering / denoising</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>dada2_filtntrim</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>max_len</code><span class="ox-param-default">Inf</span></div>
-<p class="ox-param-desc">DADA2 filtering / denoising</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>dada2_filtntrim</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>merge_runs</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">--- multi-run merge (upstream DADA2_MERGE globs *.stats.tsv /<br>*.ASVtable.rds when several --run_ids are given) ---</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>dada2_merge</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>mergepairs_strategy</code><span class="ox-param-default">merge</span></div>
-<p class="ox-param-desc">&quot;merge&quot; | &quot;consensus&quot; | &quot;concatenate&quot;</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>dada2_denoising</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>metadata_file</code><span class="ox-param-default">test/fixtures/metadata.tsv</span></div>
-<p class="ox-param-desc">run / metadata</p>
-<details class="ox-param-usedby"><summary>used by 11 rules</summary>
-<div class="ox-param-rules"><code>qiime2_alphararefaction</code> <code>qiime2_ancom</code> <code>qiime2_ancombc</code> <code>qiime2_ancombc2</code> <code>qiime2_barplot</code> <code>qiime2_diversity_adonis</code> <code>qiime2_diversity_alpha</code> <code>qiime2_diversity_beta</code> <code>qiime2_diversity_betaord</code> <code>qiime2_diversity_core</code> <code>qiime2_metadata_categories</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>min_len</code><span class="ox-param-default">50</span></div>
-<p class="ox-param-desc">DADA2 filtering / denoising</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>dada2_filtntrim</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>picrust</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">picrust (upstream params.picrust, default false)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>picrust</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>qiime_adonis_formula</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">comma-separated, e.g. &quot;group&quot;</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>qiime2_diversity_adonis</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>qiime_ref_taxonomy</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">--- QIIME2 taxonomy classifier (upstream params.qiime_ref_taxonomy /<br>params.classifier — off by default; DADA2 taxonomy is the<br>default path). qiime_ref_taxonomy trains a Naive-Bayes<br>classifier on the primer-extracted reference below; classifier<br>is a path to a pre-trained .qza (skips training). ---</p>
-<details class="ox-param-usedby"><summary>used by 3 rules</summary>
-<div class="ox-param-rules"><code>qiime2_classify</code> <code>qiime2_intax</code> <code>qiime2_preptax</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>qiime_ref_taxonomy_urls</code><span class="ox-param-default">https://data.qiime2.org/2023.7/common/silva-138-99-seqs.qza,https://data.qiime2.org/2023.7/common/silva-138-99-tax.qza</span></div>
-<p class="ox-param-desc">--- QIIME2 taxonomy classifier (upstream params.qiime_ref_taxonomy /<br>params.classifier — off by default; DADA2 taxonomy is the<br>default path). qiime_ref_taxonomy trains a Naive-Bayes<br>classifier on the primer-extracted reference below; classifier<br>is a path to a pre-trained .qza (skips training). ---</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>qiime2_preptax</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>quality_type</code><span class="ox-param-default">Auto</span></div>
-<p class="ox-param-desc">DADA2 filtering / denoising</p>
-<details class="ox-param-usedby"><summary>used by 3 rules</summary>
-<div class="ox-param-rules"><code>dada2_denoising</code> <code>dada2_err</code> <code>dada2_filtntrim</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>run_id</code><span class="ox-param-default">1</span></div>
-<p class="ox-param-desc">run / metadata</p>
-<details class="ox-param-usedby"><summary>used by 5 rules</summary>
-<div class="ox-param-rules"><code>dada2_denoising</code> <code>dada2_err</code> <code>dada2_merge</code> <code>dada2_rmchimera</code> <code>dada2_stats</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>run_qiime2</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">the four qiime2 rules run in the quay.io/qiime2/amplicon container<br>(~20GB unpacked — needs ~25GB free disk for the pull; there is no<br>conda qiime2 on common mirrors). Upstream runs qiime2 always; the<br>port gates it (default false) so a fresh clone completes the DADA2<br>analysis without the container. Set true (with the disk) to enable.</p>
-<details class="ox-param-usedby"><summary>used by 22 rules</summary>
-<div class="ox-param-rules"><code>qiime2_alphararefaction</code> <code>qiime2_ancom</code> <code>qiime2_ancombc</code> <code>qiime2_ancombc2</code> <code>qiime2_barplot</code> <code>qiime2_classify</code> <code>qiime2_diversity_adonis</code> <code>qiime2_diversity_alpha</code> <code>qiime2_diversity_beta</code> <code>qiime2_diversity_betaord</code> <code>qiime2_diversity_core</code> <code>qiime2_diversity_tree</code> <code>qiime2_export_absolute</code> <code>qiime2_export_relasv</code> <code>qiime2_export_reltax</code> <code>qiime2_inasv</code> <code>qiime2_inasv_its</code> <code>qiime2_inseq</code> <code>qiime2_inseq_its</code> <code>qiime2_intax</code> <code>qiime2_metadata_categories</code> <code>qiime2_preptax</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>sample_inference</code><span class="ox-param-default">independent</span></div>
-<p class="ox-param-desc">&quot;independent&quot; | &quot;pooled&quot; | &quot;pseudo&quot;</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>dada2_denoising</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>seed</code><span class="ox-param-default">100</span></div>
-<p class="ox-param-desc">DADA2 filtering / denoising</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>dada2_denoising</code> <code>dada2_err</code> <code>dada2_taxonomy</code> <code>dada2_taxonomy_its</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_abundance_tables</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">feature-table exports (abs/rel)</p>
-<details class="ox-param-usedby"><summary>used by 3 rules</summary>
-<div class="ox-param-rules"><code>qiime2_export_absolute</code> <code>qiime2_export_relasv</code> <code>qiime2_export_reltax</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_alpha_rarefaction</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Skip alpha rarefaction (upstream --skip_alpha_rarefaction) <span class="ox-param-inferred">inferred</span></p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>qiime2_alphararefaction</code> <code>qiime2_diversity_tree</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_barplot</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">skip flags (upstream params.skip_*, all default false -&gt; full default path)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>qiime2_barplot</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_dada_taxonomy</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">skip flags (upstream params.skip_*, all default false -&gt; full default path)</p>
-<details class="ox-param-usedby"><summary>used by 6 rules</summary>
-<div class="ox-param-rules"><code>dada2_taxonomy</code> <code>dada2_taxonomy_its</code> <code>download_taxonomy_db</code> <code>format_taxonomy</code> <code>qiime2_barplot</code> <code>qiime2_intax</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_diversity_indices</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Skip diversity indices (upstream --skip_diversity_indices) <span class="ox-param-inferred">inferred</span></p>
-<details class="ox-param-usedby"><summary>used by 7 rules</summary>
-<div class="ox-param-rules"><code>qiime2_diversity_adonis</code> <code>qiime2_diversity_alpha</code> <code>qiime2_diversity_beta</code> <code>qiime2_diversity_betaord</code> <code>qiime2_diversity_core</code> <code>qiime2_diversity_tree</code> <code>qiime2_metadata_categories</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_fastqc</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">skip flags (upstream params.skip_*, all default false -&gt; full default path)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>fastqc</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_multiqc</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">skip flags (upstream params.skip_*, all default false -&gt; full default path)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>multiqc</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_qiime</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">skip flags (upstream params.skip_*, all default false -&gt; full default path)</p>
-<details class="ox-param-usedby"><summary>used by 6 rules</summary>
-<div class="ox-param-rules"><code>qiime2_barplot</code> <code>qiime2_inasv</code> <code>qiime2_inasv_its</code> <code>qiime2_inseq</code> <code>qiime2_inseq_its</code> <code>qiime2_intax</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_qiime_downstream</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">--- QIIME2 downstream analyses beyond the taxa barplot (upstream<br>params.skip_qiime_downstream default false; the port gates all<br>of these on run_qiime2 as well) ---</p>
-<details class="ox-param-usedby"><summary>used by 14 rules</summary>
-<div class="ox-param-rules"><code>qiime2_alphararefaction</code> <code>qiime2_ancom</code> <code>qiime2_ancombc</code> <code>qiime2_ancombc2</code> <code>qiime2_diversity_adonis</code> <code>qiime2_diversity_alpha</code> <code>qiime2_diversity_beta</code> <code>qiime2_diversity_betaord</code> <code>qiime2_diversity_core</code> <code>qiime2_diversity_tree</code> <code>qiime2_export_absolute</code> <code>qiime2_export_relasv</code> <code>qiime2_export_reltax</code> <code>qiime2_metadata_categories</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_taxonomy</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">skip flags (upstream params.skip_*, all default false -&gt; full default path)</p>
-<details class="ox-param-usedby"><summary>used by 14 rules</summary>
-<div class="ox-param-rules"><code>dada2_taxonomy</code> <code>dada2_taxonomy_its</code> <code>download_taxonomy_db</code> <code>format_taxonomy</code> <code>qiime2_ancom</code> <code>qiime2_ancombc</code> <code>qiime2_ancombc2</code> <code>qiime2_barplot</code> <code>qiime2_classify</code> <code>qiime2_export_absolute</code> <code>qiime2_export_relasv</code> <code>qiime2_export_reltax</code> <code>qiime2_intax</code> <code>qiime2_preptax</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>tax_agglom_max</code><span class="ox-param-default">6</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 5 rules</summary>
-<div class="ox-param-rules"><code>qiime2_ancom</code> <code>qiime2_ancombc</code> <code>qiime2_ancombc2</code> <code>qiime2_export_absolute</code> <code>qiime2_export_reltax</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>tax_agglom_min</code><span class="ox-param-default">2</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 5 rules</summary>
-<div class="ox-param-rules"><code>qiime2_ancom</code> <code>qiime2_ancombc</code> <code>qiime2_ancombc2</code> <code>qiime2_export_absolute</code> <code>qiime2_export_reltax</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>trunc_qmin</code><span class="ox-param-default">25</span></div>
-<p class="ox-param-desc">DADA2 filtering / denoising</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>trunclen_fw</code> <code>trunclen_rv</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>trunc_rmin</code><span class="ox-param-default">0.75</span></div>
-<p class="ox-param-desc">DADA2 filtering / denoising</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>trunclen_fw</code> <code>trunclen_rv</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>truncq</code><span class="ox-param-default">2</span></div>
-<p class="ox-param-desc">DADA2 filtering / denoising</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>dada2_filtntrim</code></div>
-</details>
-</div>
-</div>
+<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. Copy a row to paste the key directly. Click any parameter name to copy <code>key = value</code>; clicking <code>default</code> copies just the value.</p>
+<table class="ox-params">
+<thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+<tbody>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy FW_primer = value" data-copy="FW_primer = ">FW_primer</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">--- primers (upstream default null renders literal &quot;null&quot; adapters;<br>port uses empty strings — see README fidelity table) ---<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy RV_primer = value" data-copy="RV_primer = ">RV_primer</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">--- primers (upstream default null renders literal &quot;null&quot; adapters;<br>port uses empty strings — see README fidelity table) ---<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ancom = value" data-copy="ancom = false">ancom</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ancombc = value" data-copy="ancombc = false">ancombc</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ancombc2 = value" data-copy="ancombc2 = false">ancombc2</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ancombc2_formula = value" data-copy="ancombc2_formula = ">ancombc2_formula</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ancombc_effect_size = value" data-copy="ancombc_effect_size = 1">ancombc_effect_size</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>1</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ancombc_formula = value" data-copy="ancombc_formula = ">ancombc_formula</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">comma-separated formulas<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ancombc_significance = value" data-copy="ancombc_significance = 0.05">ancombc_significance</button></td>
+<td class="ox-p-t"><code>float</code></td>
+<td class="ox-p-d"><code>0.05</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy classifier = value" data-copy="classifier = ">classifier</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">--- QIIME2 taxonomy classifier (upstream params.qiime_ref_taxonomy /<br>params.classifier — off by default; DADA2 taxonomy is the<br>default path). qiime_ref_taxonomy trains a Naive-Bayes<br>classifier on the primer-extracted reference below; classifier<br>is a path to a pre-trained .qza (skips training). ---<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cut_its = value" data-copy="cut_its = none">cut_its</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>none</code></td>
+<td class="ox-p-desc">truncation (truncLen=0) + a second cutadapt<br>read-through pass removing revcomp primers<br><span class="ox-param-usedby">used by <code>9</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cutadapt_max_error_rate = value" data-copy="cutadapt_max_error_rate = 0.1">cutadapt_max_error_rate</button></td>
+<td class="ox-p-t"><code>float</code></td>
+<td class="ox-p-d"><code>0.1</code></td>
+<td class="ox-p-desc">cutadapt<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cutadapt_min_overlap = value" data-copy="cutadapt_min_overlap = 3">cutadapt_min_overlap</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>3</code></td>
+<td class="ox-p-desc">cutadapt<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dada_addspecies_allowmultiple = value" data-copy="dada_addspecies_allowmultiple = false">dada_addspecies_allowmultiple</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">DADA2 taxonomy assignment<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dada_assign_chunksize = value" data-copy="dada_assign_chunksize = 10000">dada_assign_chunksize</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>10000</code></td>
+<td class="ox-p-desc">DADA2 taxonomy assignment<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dada_assign_taxlevels = value" data-copy="dada_assign_taxlevels = Domain,Kingdom,Phylum,Class,Order,Family,Genus,Species">dada_assign_taxlevels</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>Domain,Kingdom,Phylum,Class,Order,Family,Genus,Species</code></td>
+<td class="ox-p-desc">DADA2 taxonomy assignment<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dada_min_boot = value" data-copy="dada_min_boot = 50">dada_min_boot</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>50</code></td>
+<td class="ox-p-desc">DADA2 taxonomy assignment<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dada_ref_taxonomy = value" data-copy="dada_ref_taxonomy = sbdi-gtdb=R11-RS232-1">dada_ref_taxonomy</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>sbdi-gtdb=R11-RS232-1</code></td>
+<td class="ox-p-desc">DADA2 taxonomy assignment<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dada_ref_taxonomy_citation = value" data-copy="dada_ref_taxonomy_citation = Lundin D, Andersson A. SBDI Sativa curated 16S GTDB database. FigShare. doi: 10.17044/scilifelab.14869077.v12">dada_ref_taxonomy_citation</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>Lundin D, Andersson A. SBDI Sativa curated 16S GTDB database. FigShare. doi: 10.17044/scilifelab.14869077.v12</code></td>
+<td class="ox-p-desc">DADA2 taxonomy assignment<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dada_ref_taxonomy_dbversion = value" data-copy="dada_ref_taxonomy_dbversion = SBDI-GTDB-R11-RS232-1 (https://figshare.scilifelab.se/articles/dataset/SBDI_Sativa_curated_16S_GTDB_database/14869077/10)">dada_ref_taxonomy_dbversion</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>SBDI-GTDB-R11-RS232-1 (https://figshare.scilifelab.se/articles/dataset/SBDI_Sativa_curated_16S_GTDB_database/14869077/10)</code></td>
+<td class="ox-p-desc">DADA2 taxonomy assignment<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dada_ref_taxonomy_title = value" data-copy="dada_ref_taxonomy_title = SBDI-GTDB - Sativa curated 16S GTDB database - Release R11-RS232-1">dada_ref_taxonomy_title</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>SBDI-GTDB - Sativa curated 16S GTDB database - Release R11-RS232-1</code></td>
+<td class="ox-p-desc">DADA2 taxonomy assignment<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dada_ref_taxonomy_urls = value" data-copy="dada_ref_taxonomy_urls = https://ndownloader.figshare.com/files/64711203,https://ndownloader.figshare.com/files/64711218">dada_ref_taxonomy_urls</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>https://ndownloader.figshare.com/files/64711203,https://ndownloader.figshare.com/files/64711218</code></td>
+<td class="ox-p-desc">DADA2 taxonomy assignment<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dada_taxonomy_rc = value" data-copy="dada_taxonomy_rc = false">dada_taxonomy_rc</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">DADA2 taxonomy assignment<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy diversity_rarefaction_depth = value" data-copy="diversity_rarefaction_depth = 500">diversity_rarefaction_depth</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>500</code></td>
+<td class="ox-p-desc">floor for core-metrics depth<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy illumina_pe_its = value" data-copy="illumina_pe_its = false">illumina_pe_its</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">--- ITS branch (upstream params.illumina_pe_its / cut_its /<br>its_partial / its_extractor — all default off -&gt; 16S path) ---<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy its_extractor = value" data-copy="its_extractor = itsx">its_extractor</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>itsx</code></td>
+<td class="ox-p-desc">&quot;itsx&quot; | &quot;itsxrust&quot;<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy its_partial = value" data-copy="its_partial = 0">its_partial</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>0</code></td>
+<td class="ox-p-desc">keep partial ITS hits (ITSx --partial N)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy max_ee = value" data-copy="max_ee = 2">max_ee</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>2</code></td>
+<td class="ox-p-desc">DADA2 filtering / denoising<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy max_len = value" data-copy="max_len = Inf">max_len</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>Inf</code></td>
+<td class="ox-p-desc">DADA2 filtering / denoising<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy merge_runs = value" data-copy="merge_runs = false">merge_runs</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">--- multi-run merge (upstream DADA2_MERGE globs *.stats.tsv /<br>*.ASVtable.rds when several --run_ids are given) ---<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mergepairs_strategy = value" data-copy="mergepairs_strategy = merge">mergepairs_strategy</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>merge</code></td>
+<td class="ox-p-desc">&quot;merge&quot; | &quot;consensus&quot; | &quot;concatenate&quot;<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy metadata_file = value" data-copy="metadata_file = test/fixtures/metadata.tsv">metadata_file</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/metadata.tsv</code></td>
+<td class="ox-p-desc">run / metadata<br><span class="ox-param-usedby">used by <code>11</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy min_len = value" data-copy="min_len = 50">min_len</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>50</code></td>
+<td class="ox-p-desc">DADA2 filtering / denoising<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy picrust = value" data-copy="picrust = false">picrust</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">picrust (upstream params.picrust, default false)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy qiime_adonis_formula = value" data-copy="qiime_adonis_formula = ">qiime_adonis_formula</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">comma-separated, e.g. &quot;group&quot;<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy qiime_ref_taxonomy = value" data-copy="qiime_ref_taxonomy = ">qiime_ref_taxonomy</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">--- QIIME2 taxonomy classifier (upstream params.qiime_ref_taxonomy /<br>params.classifier — off by default; DADA2 taxonomy is the<br>default path). qiime_ref_taxonomy trains a Naive-Bayes<br>classifier on the primer-extracted reference below; classifier<br>is a path to a pre-trained .qza (skips training). ---<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy qiime_ref_taxonomy_urls = value" data-copy="qiime_ref_taxonomy_urls = https://data.qiime2.org/2023.7/common/silva-138-99-seqs.qza,https://data.qiime2.org/2023.7/common/silva-138-99-tax.qza">qiime_ref_taxonomy_urls</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>https://data.qiime2.org/2023.7/common/silva-138-99-seqs.qza,https://data.qiime2.org/2023.7/common/silva-138-99-tax.qza</code></td>
+<td class="ox-p-desc">--- QIIME2 taxonomy classifier (upstream params.qiime_ref_taxonomy /<br>params.classifier — off by default; DADA2 taxonomy is the<br>default path). qiime_ref_taxonomy trains a Naive-Bayes<br>classifier on the primer-extracted reference below; classifier<br>is a path to a pre-trained .qza (skips training). ---<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy quality_type = value" data-copy="quality_type = Auto">quality_type</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>Auto</code></td>
+<td class="ox-p-desc">DADA2 filtering / denoising<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_id = value" data-copy="run_id = 1">run_id</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>1</code></td>
+<td class="ox-p-desc">run / metadata<br><span class="ox-param-usedby">used by <code>5</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_qiime2 = value" data-copy="run_qiime2 = false">run_qiime2</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">the four qiime2 rules run in the quay.io/qiime2/amplicon container<br>(~20GB unpacked — needs ~25GB free disk for the pull; there is no<br>conda qiime2 on common mirrors). Upstream runs qiime2 always; the<br>port gates it (default false) so a fresh clone completes the DADA2<br>analysis without the container. Set true (with the disk) to enable.<br><span class="ox-param-usedby">used by <code>22</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sample_inference = value" data-copy="sample_inference = independent">sample_inference</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>independent</code></td>
+<td class="ox-p-desc">&quot;independent&quot; | &quot;pooled&quot; | &quot;pseudo&quot;<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy seed = value" data-copy="seed = 100">seed</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>100</code></td>
+<td class="ox-p-desc">DADA2 filtering / denoising<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_abundance_tables = value" data-copy="skip_abundance_tables = false">skip_abundance_tables</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">feature-table exports (abs/rel)<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_alpha_rarefaction = value" data-copy="skip_alpha_rarefaction = false">skip_alpha_rarefaction</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Skip alpha rarefaction (upstream --skip_alpha_rarefaction) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_barplot = value" data-copy="skip_barplot = false">skip_barplot</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">skip flags (upstream params.skip_*, all default false -&gt; full default path)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_dada_taxonomy = value" data-copy="skip_dada_taxonomy = false">skip_dada_taxonomy</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">skip flags (upstream params.skip_*, all default false -&gt; full default path)<br><span class="ox-param-usedby">used by <code>6</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_diversity_indices = value" data-copy="skip_diversity_indices = false">skip_diversity_indices</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Skip diversity indices (upstream --skip_diversity_indices) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>7</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_fastqc = value" data-copy="skip_fastqc = false">skip_fastqc</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">skip flags (upstream params.skip_*, all default false -&gt; full default path)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_multiqc = value" data-copy="skip_multiqc = false">skip_multiqc</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">skip flags (upstream params.skip_*, all default false -&gt; full default path)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_qiime = value" data-copy="skip_qiime = false">skip_qiime</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">skip flags (upstream params.skip_*, all default false -&gt; full default path)<br><span class="ox-param-usedby">used by <code>6</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_qiime_downstream = value" data-copy="skip_qiime_downstream = false">skip_qiime_downstream</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">--- QIIME2 downstream analyses beyond the taxa barplot (upstream<br>params.skip_qiime_downstream default false; the port gates all<br>of these on run_qiime2 as well) ---<br><span class="ox-param-usedby">used by <code>14</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_taxonomy = value" data-copy="skip_taxonomy = false">skip_taxonomy</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">skip flags (upstream params.skip_*, all default false -&gt; full default path)<br><span class="ox-param-usedby">used by <code>14</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy tax_agglom_max = value" data-copy="tax_agglom_max = 6">tax_agglom_max</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>6</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>5</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy tax_agglom_min = value" data-copy="tax_agglom_min = 2">tax_agglom_min</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>2</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>5</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy trunc_qmin = value" data-copy="trunc_qmin = 25">trunc_qmin</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>25</code></td>
+<td class="ox-p-desc">DADA2 filtering / denoising<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy trunc_rmin = value" data-copy="trunc_rmin = 0.75">trunc_rmin</button></td>
+<td class="ox-p-t"><code>float</code></td>
+<td class="ox-p-d"><code>0.75</code></td>
+<td class="ox-p-desc">DADA2 filtering / denoising<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy truncq = value" data-copy="truncq = 2">truncq</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>2</code></td>
+<td class="ox-p-desc">DADA2 filtering / denoising<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+</tbody>
+</table>
 
 Descriptions are the workflow's own `#` comments from its `[config]` section (and the `[config]` sections of its included modules), surfaced by `oxo-flow info` — no schema file to maintain.
 

@@ -47,6 +47,16 @@ title: "Small and structural variant calling with Varlociraptor"
 </div>
 </details>
 
+
+<div class="ox-tryit">
+<div class="ox-tryit-title">⬡ Try it — clone &amp; run</div>
+<pre class="ox-tryit-cmd" data-copy="git clone https://github.com/oxo-flow-community/oxo-flow-varlociraptor.git &amp;&amp; cd oxo-flow-varlociraptor &amp;&amp; oxo-flow run main.oxoflow">git clone https://github.com/oxo-flow-community/oxo-flow-varlociraptor.git
+cd oxo-flow-varlociraptor
+oxo-flow run main.oxoflow</pre>
+<p class="ox-tryit-note">The repository ships test fixtures (e.g. <code>test/fixtures/raw/SRR702070_1.fastq.gz</code>, <code>test/fixtures/raw/SRR702070_2.fastq.gz</code>, <code>test/generate_fixture.py</code>, <code>test/run.sh</code>) — point <code>input</code> at them or use the built-in sample group to <code>dry-run</code> first.</p>
+</div>
+
+
 ## Run it
 
 ```bash
@@ -87,198 +97,174 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-varlociraptor
 
 ## Parameters
 
-<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. The list below names the rules that read each key.</p>
-<div class="ox-params">
-<div class="ox-param">
-<div class="ox-param-head"><code>annotation_selection</code><span class="ox-param-default">db_annotated</span></div>
-<p class="ox-param-desc">The annotated-callset selection for gather_annotated_calls (upstream<br>get_final_selected_annotation): &quot;db_annotated&quot; (annotations/vcfs active,<br>the default), &quot;dgidb_annotated&quot; when dgidb is activated, or &quot;vep_annotated&quot;<br>when annotations/vcfs is deactivated.</p>
-<details class="ox-param-usedby"><summary>used by 3 rules</summary>
-<div class="ox-param-rules"><code>filtering::filter_by_annotation</code> <code>population::annotated_index</code> <code>population::gather_annotated_calls</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>benchmarking_activate</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">upstream config: benchmarking (Snakefile rule benchmark / benchmarking.smk;<br>the full CHM-eval flow is ported, except the chm sample group vertical<br>slice (see module header)).</p>
-<details class="ox-param-usedby"><summary>used by 8 rules</summary>
-<div class="ox-param-rules"><code>benchmarking::chm_eval</code> <code>benchmarking::chm_eval_kit</code> <code>benchmarking::chm_eval_sample</code> <code>benchmarking::chm_namesort</code> <code>benchmarking::chm_to_fastq</code> <code>benchmarking::chromosome_map</code> <code>benchmarking::gather_benchmark_calls</code> <code>benchmarking::rename_chromosomes</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>bwa_align_activate</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">upstream config: linear-reference (bwa) aligner branch of mapping.smk<br>(map_reads_bwa + ref.smk bwa_index). The default path aligns with vg<br>giraffe to the pangenome (ref/pangenome/activate = true upstream).</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>mapping_bwa::bwa_index</code> <code>mapping_bwa::map_reads_bwa</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cadd_build</code><span class="ox-param-default">GRCh38</span></div>
-<p class="ox-param-desc">upstream config: plugins (download_cadd_scores_for_vep; download_revel and<br>process_revel_scores are already ported in ref.oxoflow). cadd_build /<br>cadd_version / cadd_variant_type are the upstream wildcards of the same<br>rule with their upstream defaults.</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>plugins::download_cadd_scores_for_vep</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cadd_variant_type</code><span class="ox-param-default">snv</span></div>
-<p class="ox-param-desc">upstream config: plugins (download_cadd_scores_for_vep; download_revel and<br>process_revel_scores are already ported in ref.oxoflow). cadd_build /<br>cadd_version / cadd_variant_type are the upstream wildcards of the same<br>rule with their upstream defaults.</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>plugins::download_cadd_scores_for_vep</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cadd_version</code><span class="ox-param-default">v1.7</span></div>
-<p class="ox-param-desc">upstream config: plugins (download_cadd_scores_for_vep; download_revel and<br>process_revel_scores are already ported in ref.oxoflow). cadd_build /<br>cadd_version / cadd_variant_type are the upstream wildcards of the same<br>rule with their upstream defaults.</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>plugins::download_cadd_scores_for_vep</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>consensus_activate</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">upstream config: calc_consensus_reads/activate (consensus.oxoflow: rbt<br>collapse-reads-to-fragments + re-mapping to the linear bwa reference).<br>Activating it also needs the bwa reference index (bwa_align_activate or<br>primers_activate builds it) and, upstream-faithful,<br>markduplicates_extra = &quot;--TAG_DUPLICATE_SET_MEMBERS true&quot; and<br>freebayes_min_alternate_count = 1 (see those keys below).</p>
-<details class="ox-param-usedby"><summary>used by 10 rules</summary>
-<div class="ox-param-rules"><code>consensus::apply_bqsr_consensus</code> <code>consensus::bam_index_consensus</code> <code>consensus::calc_consensus_reads</code> <code>consensus::map_consensus_reads_pe</code> <code>consensus::map_consensus_reads_se</code> <code>consensus::merge_consensus_reads</code> <code>consensus::recalibrate_base_qualities_consensus</code> <code>consensus::sort_consensus_reads</code> <code>mapping::apply_bqsr</code> <code>mapping::recalibrate_base_qualities</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>dgidb_activate</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">upstream config: annotations/dgidb (annotate_dgidb; datasources = [DrugBank]).<br>Activating dgidb changes which annotated callset the final-calls chain<br>consumes upstream (get_final_selected_annotation): set annotation_selection<br>below to &quot;dgidb_annotated&quot; together with this key.</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>annotation::annotate_dgidb</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>freebayes_min_alternate_count</code><span class="ox-param-default">2</span></div>
-<p class="ox-param-desc">upstream config: params/freebayes — the min-alternate-count for candidate<br>calling (2, or 1 when calc_consensus_reads is active).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>candidate_calling::freebayes</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>fusion_activate</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">upstream config: fusion calling branch (fusion_calling.smk star_arriba<br>meta wrapper: star_index / star_align / arriba / annotate_exons /<br>convert_fusions / sort_arriba_calls / bcftools_concat_candidates).</p>
-<details class="ox-param-usedby"><summary>used by 8 rules</summary>
-<div class="ox-param-rules"><code>fusion::annotate_exons</code> <code>fusion::arriba</code> <code>fusion::bcf_index_arriba</code> <code>fusion::bcftools_concat_candidates</code> <code>fusion::convert_fusions</code> <code>fusion::sort_arriba_calls</code> <code>fusion::star_align</code> <code>fusion::star_index</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>maf_activate</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">upstream config: maf/activate (group_bcf_to_vcf + group_vcf_to_maf).</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>maf::group_bcf_to_vcf_fusions</code> <code>maf::group_bcf_to_vcf_variants</code> <code>maf::group_vcf_to_maf_fusions</code> <code>maf::group_vcf_to_maf_variants</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>markduplicates_extra</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">upstream config: params/picard/MarkDuplicates + get_markduplicates_extra —<br>extra MarkDuplicates arguments (upstream adds<br>&quot;--TAG_DUPLICATE_SET_MEMBERS true&quot; when calc_consensus_reads is active;<br>empty by default).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>mapping::mark_duplicates</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>mutational_burden_activate</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">upstream config: mutational_burden/activate + events<br>(calculate_covered_coding_sites + estimate_mutational_burden; events are<br>comma-joined, split to space-separated in the rule shells).</p>
-<details class="ox-param-usedby"><summary>used by 6 rules</summary>
-<div class="ox-param-rules"><code>burden_signatures::calculate_covered_coding_sites</code> <code>burden_signatures::determine_coding_regions</code> <code>burden_signatures::estimate_mutational_burden_curve</code> <code>burden_signatures::estimate_mutational_burden_hist</code> <code>population::annotated_index</code> <code>population::gather_annotated_calls</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>mutational_burden_events</code><span class="ox-param-default">somatic_tumor_low,somatic_tumor_medium,somatic_tumor_high</span></div>
-<p class="ox-param-desc">upstream config: mutational_burden/activate + events<br>(calculate_covered_coding_sites + estimate_mutational_burden; events are<br>comma-joined, split to space-separated in the rule shells).</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>burden_signatures::estimate_mutational_burden_curve</code> <code>burden_signatures::estimate_mutational_burden_hist</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>mutational_signatures_activate</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">upstream config: mutational_signatures/activate<br>(create_mutational_context_file ... plot_mutational_signatures; upstream<br>default events = [some_id], samples = [tumor], frozen in the module).</p>
-<details class="ox-param-usedby"><summary>used by 8 rules</summary>
-<div class="ox-param-rules"><code>burden_signatures::annotate_descriptions</code> <code>burden_signatures::annotate_mutational_signatures</code> <code>burden_signatures::bcf_index_final</code> <code>burden_signatures::create_mutational_context_file</code> <code>burden_signatures::determine_coding_regions</code> <code>burden_signatures::download_cosmic_signatures</code> <code>burden_signatures::join_mutational_signatures</code> <code>burden_signatures::plot_mutational_signatures</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>plugins_activate</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">upstream config: plugins (download_cadd_scores_for_vep; download_revel and<br>process_revel_scores are already ported in ref.oxoflow). cadd_build /<br>cadd_version / cadd_variant_type are the upstream wildcards of the same<br>rule with their upstream defaults.</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>plugins::download_cadd_scores_for_vep</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>population_db_activate</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">upstream config: population/db/activate + path/alias/fdr/events<br>(rules clean_population_db / population_filter_variants / population_db_update).</p>
-<details class="ox-param-usedby"><summary>used by 7 rules</summary>
-<div class="ox-param-rules"><code>population::annotated_index</code> <code>population::bcf_index_cleaned_db</code> <code>population::bcf_index_population_filtered</code> <code>population::clean_population_db</code> <code>population::gather_annotated_calls</code> <code>population::population_db_update</code> <code>population::population_filter_variants</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>population_db_alias</code><span class="ox-param-default">tumor</span></div>
-<p class="ox-param-desc">upstream config: population/db/activate + path/alias/fdr/events<br>(rules clean_population_db / population_filter_variants / population_db_update).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>population::population_filter_variants</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>population_db_events</code><span class="ox-param-default">somatic_tumor_high,somatic_tumor_medium</span></div>
-<p class="ox-param-desc">upstream config: population/db/activate + path/alias/fdr/events<br>(rules clean_population_db / population_filter_variants / population_db_update).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>population::population_filter_variants</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>population_db_fdr</code><span class="ox-param-default">0.05</span></div>
-<p class="ox-param-desc">upstream config: population/db/activate + path/alias/fdr/events<br>(rules clean_population_db / population_filter_variants / population_db_update).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>population::population_filter_variants</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>population_db_path</code><span class="ox-param-default">resources/population_db.variants.bcf</span></div>
-<p class="ox-param-desc">upstream config: population/db/activate + path/alias/fdr/events<br>(rules clean_population_db / population_filter_variants / population_db_update).</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>population::clean_population_db</code> <code>population::population_db_update</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>primers_activate</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">upstream config: primers/trimming (rules assign_primers ... build_primer_regions).<br>primers_fa1/primers_fa2 are the upstream primers/trimming/primers_fa{1,2} fasta<br>files (empty upstream default = primers flow off); fa2 empty means single-end<br>primer fasta.</p>
-<details class="ox-param-usedby"><summary>used by 8 rules</summary>
-<div class="ox-param-rules"><code>mapping_bwa::bwa_index</code> <code>primers::assign_primers</code> <code>primers::build_primer_regions</code> <code>primers::filter_primerless_reads</code> <code>primers::filter_unmapped_primers</code> <code>primers::map_primers</code> <code>primers::primer_to_bed</code> <code>primers::trim_primers</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>primers_fa1</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">upstream config: primers/trimming (rules assign_primers ... build_primer_regions).<br>primers_fa1/primers_fa2 are the upstream primers/trimming/primers_fa{1,2} fasta<br>files (empty upstream default = primers flow off); fa2 empty means single-end<br>primer fasta.</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>primers::map_primers</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>primers_fa2</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">upstream config: primers/trimming (rules assign_primers ... build_primer_regions).<br>primers_fa1/primers_fa2 are the upstream primers/trimming/primers_fa{1,2} fasta<br>files (empty upstream default = primers flow off); fa2 empty means single-end<br>primer fasta.</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>reads_dir</code><span class="ox-param-default">test/fixtures/raw</span></div>
-<p class="ox-param-desc">Path to the raw paired-end FASTQs of the single sample (upstream<br>config/units.tsv points at absolute /projects/... paths; the port reads<br>from the repository fixtures instead).</p>
-<details class="ox-param-usedby"><summary>used by 7 rules</summary>
-<div class="ox-param-rules"><code>mapping::merge_trimmed_fastqs_r1</code> <code>mapping::merge_trimmed_fastqs_r2</code> <code>qc::fastqc_r1</code> <code>qc::fastqc_r2</code> <code>trimming::fastp_pe</code> <code>trimming::fastp_pipe</code> <code>trimming::fastp_se</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_ref_downloads</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Skip the ref:: download rules (genome, annotation, VEP cache/plugins,<br>pangenome, REVEL, known variants — ~5 GB of public databases). Set to<br>true when you have pre-placed the files at the resource paths the rules<br>declare (see README &quot;Reference databases&quot;); the downloads are hardcoded<br>upstream URLs and need unimpeded network access.</p>
-<details class="ox-param-usedby"><summary>used by 7 rules</summary>
-<div class="ox-param-rules"><code>ref::download_revel</code> <code>ref::get_annotation</code> <code>ref::get_genome</code> <code>ref::get_known_variants</code> <code>ref::get_pangenome</code> <code>ref::get_vep_cache</code> <code>ref::get_vep_plugins</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>trimming_activate</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">upstream config: trimming (get_sra / fastp rules). The default path has no<br>trimming configured — reads pass through mapping::merge_trimmed_fastqs.</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>trimming::fastp_pe</code> <code>trimming::fastp_pipe</code> <code>trimming::fastp_se</code> <code>trimming::get_sra</code></div>
-</details>
-</div>
-</div>
+<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. Copy a row to paste the key directly. Click any parameter name to copy <code>key = value</code>; clicking <code>default</code> copies just the value.</p>
+<table class="ox-params">
+<thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+<tbody>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy annotation_selection = value" data-copy="annotation_selection = db_annotated">annotation_selection</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>db_annotated</code></td>
+<td class="ox-p-desc">The annotated-callset selection for gather_annotated_calls (upstream<br>get_final_selected_annotation): &quot;db_annotated&quot; (annotations/vcfs active,<br>the default), &quot;dgidb_annotated&quot; when dgidb is activated, or &quot;vep_annotated&quot;<br>when annotations/vcfs is deactivated.<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy benchmarking_activate = value" data-copy="benchmarking_activate = false">benchmarking_activate</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">upstream config: benchmarking (Snakefile rule benchmark / benchmarking.smk;<br>the full CHM-eval flow is ported, except the chm sample group vertical<br>slice (see module header)).<br><span class="ox-param-usedby">used by <code>8</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bwa_align_activate = value" data-copy="bwa_align_activate = false">bwa_align_activate</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">upstream config: linear-reference (bwa) aligner branch of mapping.smk<br>(map_reads_bwa + ref.smk bwa_index). The default path aligns with vg<br>giraffe to the pangenome (ref/pangenome/activate = true upstream).<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cadd_build = value" data-copy="cadd_build = GRCh38">cadd_build</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>GRCh38</code></td>
+<td class="ox-p-desc">upstream config: plugins (download_cadd_scores_for_vep; download_revel and<br>process_revel_scores are already ported in ref.oxoflow). cadd_build /<br>cadd_version / cadd_variant_type are the upstream wildcards of the same<br>rule with their upstream defaults.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cadd_variant_type = value" data-copy="cadd_variant_type = snv">cadd_variant_type</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>snv</code></td>
+<td class="ox-p-desc">upstream config: plugins (download_cadd_scores_for_vep; download_revel and<br>process_revel_scores are already ported in ref.oxoflow). cadd_build /<br>cadd_version / cadd_variant_type are the upstream wildcards of the same<br>rule with their upstream defaults.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cadd_version = value" data-copy="cadd_version = v1.7">cadd_version</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>v1.7</code></td>
+<td class="ox-p-desc">upstream config: plugins (download_cadd_scores_for_vep; download_revel and<br>process_revel_scores are already ported in ref.oxoflow). cadd_build /<br>cadd_version / cadd_variant_type are the upstream wildcards of the same<br>rule with their upstream defaults.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy consensus_activate = value" data-copy="consensus_activate = false">consensus_activate</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">upstream config: calc_consensus_reads/activate (consensus.oxoflow: rbt<br>collapse-reads-to-fragments + re-mapping to the linear bwa reference).<br>Activating it also needs the bwa reference index (bwa_align_activate or<br>primers_activate builds it) and, upstream-faithful,<br>markduplicates_extra = &quot;--TAG_DUPLICATE_SET_MEMBERS true&quot; and<br>freebayes_min_alternate_count = 1 (see those keys below).<br><span class="ox-param-usedby">used by <code>10</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dgidb_activate = value" data-copy="dgidb_activate = false">dgidb_activate</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">upstream config: annotations/dgidb (annotate_dgidb; datasources = [DrugBank]).<br>Activating dgidb changes which annotated callset the final-calls chain<br>consumes upstream (get_final_selected_annotation): set annotation_selection<br>below to &quot;dgidb_annotated&quot; together with this key.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy freebayes_min_alternate_count = value" data-copy="freebayes_min_alternate_count = 2">freebayes_min_alternate_count</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>2</code></td>
+<td class="ox-p-desc">upstream config: params/freebayes — the min-alternate-count for candidate<br>calling (2, or 1 when calc_consensus_reads is active).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fusion_activate = value" data-copy="fusion_activate = false">fusion_activate</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">upstream config: fusion calling branch (fusion_calling.smk star_arriba<br>meta wrapper: star_index / star_align / arriba / annotate_exons /<br>convert_fusions / sort_arriba_calls / bcftools_concat_candidates).<br><span class="ox-param-usedby">used by <code>8</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy maf_activate = value" data-copy="maf_activate = false">maf_activate</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">upstream config: maf/activate (group_bcf_to_vcf + group_vcf_to_maf).<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy markduplicates_extra = value" data-copy="markduplicates_extra = ">markduplicates_extra</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">upstream config: params/picard/MarkDuplicates + get_markduplicates_extra —<br>extra MarkDuplicates arguments (upstream adds<br>&quot;--TAG_DUPLICATE_SET_MEMBERS true&quot; when calc_consensus_reads is active;<br>empty by default).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mutational_burden_activate = value" data-copy="mutational_burden_activate = false">mutational_burden_activate</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">upstream config: mutational_burden/activate + events<br>(calculate_covered_coding_sites + estimate_mutational_burden; events are<br>comma-joined, split to space-separated in the rule shells).<br><span class="ox-param-usedby">used by <code>6</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mutational_burden_events = value" data-copy="mutational_burden_events = somatic_tumor_low,somatic_tumor_medium,somatic_tumor_high">mutational_burden_events</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>somatic_tumor_low,somatic_tumor_medium,somatic_tumor_high</code></td>
+<td class="ox-p-desc">upstream config: mutational_burden/activate + events<br>(calculate_covered_coding_sites + estimate_mutational_burden; events are<br>comma-joined, split to space-separated in the rule shells).<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mutational_signatures_activate = value" data-copy="mutational_signatures_activate = false">mutational_signatures_activate</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">upstream config: mutational_signatures/activate<br>(create_mutational_context_file ... plot_mutational_signatures; upstream<br>default events = [some_id], samples = [tumor], frozen in the module).<br><span class="ox-param-usedby">used by <code>8</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy plugins_activate = value" data-copy="plugins_activate = false">plugins_activate</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">upstream config: plugins (download_cadd_scores_for_vep; download_revel and<br>process_revel_scores are already ported in ref.oxoflow). cadd_build /<br>cadd_version / cadd_variant_type are the upstream wildcards of the same<br>rule with their upstream defaults.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy population_db_activate = value" data-copy="population_db_activate = false">population_db_activate</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">upstream config: population/db/activate + path/alias/fdr/events<br>(rules clean_population_db / population_filter_variants / population_db_update).<br><span class="ox-param-usedby">used by <code>7</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy population_db_alias = value" data-copy="population_db_alias = tumor">population_db_alias</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>tumor</code></td>
+<td class="ox-p-desc">upstream config: population/db/activate + path/alias/fdr/events<br>(rules clean_population_db / population_filter_variants / population_db_update).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy population_db_events = value" data-copy="population_db_events = somatic_tumor_high,somatic_tumor_medium">population_db_events</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>somatic_tumor_high,somatic_tumor_medium</code></td>
+<td class="ox-p-desc">upstream config: population/db/activate + path/alias/fdr/events<br>(rules clean_population_db / population_filter_variants / population_db_update).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy population_db_fdr = value" data-copy="population_db_fdr = 0.05">population_db_fdr</button></td>
+<td class="ox-p-t"><code>float</code></td>
+<td class="ox-p-d"><code>0.05</code></td>
+<td class="ox-p-desc">upstream config: population/db/activate + path/alias/fdr/events<br>(rules clean_population_db / population_filter_variants / population_db_update).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy population_db_path = value" data-copy="population_db_path = resources/population_db.variants.bcf">population_db_path</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>resources/population_db.variants.bcf</code></td>
+<td class="ox-p-desc">upstream config: population/db/activate + path/alias/fdr/events<br>(rules clean_population_db / population_filter_variants / population_db_update).<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy primers_activate = value" data-copy="primers_activate = false">primers_activate</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">upstream config: primers/trimming (rules assign_primers ... build_primer_regions).<br>primers_fa1/primers_fa2 are the upstream primers/trimming/primers_fa{1,2} fasta<br>files (empty upstream default = primers flow off); fa2 empty means single-end<br>primer fasta.<br><span class="ox-param-usedby">used by <code>8</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy primers_fa1 = value" data-copy="primers_fa1 = ">primers_fa1</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">upstream config: primers/trimming (rules assign_primers ... build_primer_regions).<br>primers_fa1/primers_fa2 are the upstream primers/trimming/primers_fa{1,2} fasta<br>files (empty upstream default = primers flow off); fa2 empty means single-end<br>primer fasta.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy primers_fa2 = value" data-copy="primers_fa2 = ">primers_fa2</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">upstream config: primers/trimming (rules assign_primers ... build_primer_regions).<br>primers_fa1/primers_fa2 are the upstream primers/trimming/primers_fa{1,2} fasta<br>files (empty upstream default = primers flow off); fa2 empty means single-end<br>primer fasta.<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy reads_dir = value" data-copy="reads_dir = test/fixtures/raw">reads_dir</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/raw</code></td>
+<td class="ox-p-desc">Path to the raw paired-end FASTQs of the single sample (upstream<br>config/units.tsv points at absolute /projects/... paths; the port reads<br>from the repository fixtures instead).<br><span class="ox-param-usedby">used by <code>7</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_ref_downloads = value" data-copy="skip_ref_downloads = false">skip_ref_downloads</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Skip the ref:: download rules (genome, annotation, VEP cache/plugins,<br>pangenome, REVEL, known variants — ~5 GB of public databases). Set to<br>true when you have pre-placed the files at the resource paths the rules<br>declare (see README &quot;Reference databases&quot;); the downloads are hardcoded<br>upstream URLs and need unimpeded network access.<br><span class="ox-param-usedby">used by <code>7</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy trimming_activate = value" data-copy="trimming_activate = false">trimming_activate</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">upstream config: trimming (get_sra / fastp rules). The default path has no<br>trimming configured — reads pass through mapping::merge_trimmed_fastqs.<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+</tbody>
+</table>
 
 Descriptions are the workflow's own `#` comments from its `[config]` section (and the `[config]` sections of its included modules), surfaced by `oxo-flow info` — no schema file to maintain.
 

@@ -46,6 +46,16 @@ title: "ChIP-seq: peak calling, QC and differential analysis"
 </div>
 </details>
 
+
+<div class="ox-tryit">
+<div class="ox-tryit-title">⬡ Try it — clone &amp; run</div>
+<pre class="ox-tryit-cmd" data-copy="git clone https://github.com/oxo-flow-community/oxo-flow-chipseq.git &amp;&amp; cd oxo-flow-chipseq &amp;&amp; oxo-flow run main.oxoflow">git clone https://github.com/oxo-flow-community/oxo-flow-chipseq.git
+cd oxo-flow-chipseq
+oxo-flow run main.oxoflow</pre>
+<p class="ox-tryit-note">The repository ships test fixtures (e.g. <code>test/fixtures/add_duplicates.py</code>, <code>test/fixtures/generate_fixtures.py</code>, <code>test/fixtures/raw/C1_REP1_R1.fastq.gz</code>, <code>test/fixtures/raw/C1_REP1_R2.fastq.gz</code>) — point <code>input</code> at them or use the built-in sample group to <code>dry-run</code> first.</p>
+</div>
+
+
 ## Run it
 
 ```bash
@@ -90,422 +100,366 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-chipseq
 
 ## Parameters
 
-<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. The list below names the rules that read each key.</p>
-<div class="ox-params">
-<div class="ox-param">
-<div class="ox-param-head"><code>aligner</code><span class="ox-param-default">bwa</span></div>
-<p class="ox-param-desc">Alignment / filtering. aligner selects the read aligner: &#x27;bwa&#x27; (the nf-core<br>default), &#x27;bowtie2&#x27;, &#x27;chromap&#x27; or &#x27;star&#x27;. Each mode takes a pre-built index<br>(bwa_index directory / bowtie2_index directory / chromap_index file /<br>star_index directory, e.g. from the upstream iGenomes bundle) — or derives<br>it from the reference FASTA with the gated builders below, mirroring the<br>upstream PREPARE_GENOME index branches (make_bwa_index / make_bowtie2_index<br>/ make_chromap_index / make_star_index; point the corresponding index<br>config at the generated results/... path in that case).</p>
-<details class="ox-param-usedby"><summary>used by 8 rules</summary>
-<div class="ox-param-rules"><code>align::bowtie2_align</code> <code>align::bwa_mem</code> <code>align::chromap_align</code> <code>align::star_align</code> <code>reference::bowtie2_index_build</code> <code>reference::bwa_index_build</code> <code>reference::chromap_index_build</code> <code>reference::star_genomegenerate</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>antibody</code><span class="ox-param-default">H3K4me3</span></div>
-<p class="ox-param-desc">Sample metadata. pair_ids MUST be kept in sync with [[pairs]] (the oxo-flow<br>analogue of the nf-core samplesheet meta.id column). ip_ids lists the samples<br>that get peak calling — upstream only runs MACS3 for samples that have a<br>control; the port mirrors this with per-pair rules whose {control} input is<br>empty for control-only samples and skipped via <code>optional = true</code>.</p>
-<details class="ox-param-usedby"><summary>used by 14 rules</summary>
-<div class="ox-param-rules"><code>consensus::annotate_boolean_peaks</code> <code>consensus::annotate_boolean_peaks_narrow</code> <code>consensus::deseq2_qc</code> <code>consensus::deseq2_qc_narrow</code> <code>consensus::homer_annotate_consensus</code> <code>consensus::homer_annotate_consensus_narrow</code> <code>consensus::macs3_consensus</code> <code>consensus::macs3_consensus_narrow</code> <code>consensus::subread_featurecounts</code> <code>consensus::subread_featurecounts_narrow</code> <code>report::igv</code> <code>report::igv_narrow</code> <code>report::multiqc</code> <code>report::multiqc_narrow</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>blacklist</code><span class="ox-param-default">test/fixtures/references/blacklist.bed</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>filter::bamtools_filter</code> <code>reference::blacklist_regions</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>bowtie2_index</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Alignment / filtering. aligner selects the read aligner: &#x27;bwa&#x27; (the nf-core<br>default), &#x27;bowtie2&#x27;, &#x27;chromap&#x27; or &#x27;star&#x27;. Each mode takes a pre-built index<br>(bwa_index directory / bowtie2_index directory / chromap_index file /<br>star_index directory, e.g. from the upstream iGenomes bundle) — or derives<br>it from the reference FASTA with the gated builders below, mirroring the<br>upstream PREPARE_GENOME index branches (make_bwa_index / make_bowtie2_index<br>/ make_chromap_index / make_star_index; point the corresponding index<br>config at the generated results/... path in that case).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>align::bowtie2_align</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>broad_cutoff</code><span class="ox-param-default">0.1</span></div>
-<p class="ox-param-desc">Peaks — broad mode is the nf-core default (narrow_peak = false); setting<br>narrow_peak = true switches the whole peak chain (MACS3 narrowPeak calling,<br>FRiP/annotation/QC, consensus, IGV and MultiQC) to the upstream narrow_peak<br>layout.</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>peaks::macs3_callpeak</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>bwa_index</code><span class="ox-param-default">test/fixtures/references/bwa_index</span></div>
-<p class="ox-param-desc">Path to the prebuilt bwa index (built when empty) <span class="ox-param-inferred">inferred</span></p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>align::bwa_mem</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>bwa_min_score</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">Alignment / filtering. aligner selects the read aligner: &#x27;bwa&#x27; (the nf-core<br>default), &#x27;bowtie2&#x27;, &#x27;chromap&#x27; or &#x27;star&#x27;. Each mode takes a pre-built index<br>(bwa_index directory / bowtie2_index directory / chromap_index file /<br>star_index directory, e.g. from the upstream iGenomes bundle) — or derives<br>it from the reference FASTA with the gated builders below, mirroring the<br>upstream PREPARE_GENOME index branches (make_bwa_index / make_bowtie2_index<br>/ make_chromap_index / make_star_index; point the corresponding index<br>config at the generated results/... path in that case).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>align::bwa_mem</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>chrom_sizes</code><span class="ox-param-default">test/fixtures/references/chrom.sizes</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>reference::blacklist_regions</code> <code>tracks::ucsc_bedgraphtobigwig</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>chromap_index</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Alignment / filtering. aligner selects the read aligner: &#x27;bwa&#x27; (the nf-core<br>default), &#x27;bowtie2&#x27;, &#x27;chromap&#x27; or &#x27;star&#x27;. Each mode takes a pre-built index<br>(bwa_index directory / bowtie2_index directory / chromap_index file /<br>star_index directory, e.g. from the upstream iGenomes bundle) — or derives<br>it from the reference FASTA with the gated builders below, mirroring the<br>upstream PREPARE_GENOME index branches (make_bwa_index / make_bowtie2_index<br>/ make_chromap_index / make_star_index; point the corresponding index<br>config at the generated results/... path in that case).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>align::chromap_align</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>clip_r1</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">Read group / trimming</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>qc::trimgalore</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>clip_r2</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">Read group / trimming</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>qc::trimgalore</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>fai</code><span class="ox-param-default">test/fixtures/references/genome.fa.fai</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 3 rules</summary>
-<div class="ox-param-rules"><code>align::markduplicates</code> <code>filter::picard_collectmultiplemetrics</code> <code>reference::star_genomegenerate</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>fasta</code><span class="ox-param-default">test/fixtures/references/genome.fa</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 31 rules</summary>
-<div class="ox-param-rules"><code>align::bowtie2_align</code> <code>align::bwa_mem</code> <code>align::chromap_align</code> <code>align::index_align</code> <code>align::index_markdup</code> <code>align::markduplicates</code> <code>align::mergesamfiles</code> <code>align::sort_align</code> <code>align::stats_align</code> <code>align::stats_markdup</code> <code>consensus::homer_annotate_consensus</code> <code>consensus::homer_annotate_consensus_multi</code> <code>consensus::homer_annotate_consensus_narrow</code> <code>consensus::homer_annotate_consensus_narrow_multi</code> <code>filter::index_filter</code> <code>filter::picard_collectmultiplemetrics</code> <code>filter::sort_filter</code> <code>filter::sort_name</code> <code>filter::stats_filter</code> <code>peaks::homer_annotatepeaks</code> <code>peaks::homer_annotatepeaks_narrow</code> <code>reference::bowtie2_index_build</code> <code>reference::bwa_index_build</code> <code>reference::chromap_index_build</code> <code>reference::getchromsizes</code> <code>reference::star_genomegenerate</code> <code>report::igv</code> <code>report::igv_multi</code> <code>report::igv_narrow</code> <code>report::igv_narrow_multi</code> <code>tracks::khmer</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>fingerprint_bins</code><span class="ox-param-default">500000</span></div>
-<p class="ox-param-desc">Peaks — broad mode is the nf-core default (narrow_peak = false); setting<br>narrow_peak = true switches the whole peak chain (MACS3 narrowPeak calling,<br>FRiP/annotation/QC, consensus, IGV and MultiQC) to the upstream narrow_peak<br>layout.</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>tracks::deeptools_plotfingerprint</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>fragment_size</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">Peaks — broad mode is the nf-core default (narrow_peak = false); setting<br>narrow_peak = true switches the whole peak chain (MACS3 narrowPeak calling,<br>FRiP/annotation/QC, consensus, IGV and MultiQC) to the upstream narrow_peak<br>layout.</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>gene_bed</code><span class="ox-param-default">test/fixtures/references/gene.bed</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>tracks::deeptools_computematrix</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>gtf</code><span class="ox-param-default">test/fixtures/references/genome.gtf</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 8 rules</summary>
-<div class="ox-param-rules"><code>consensus::homer_annotate_consensus</code> <code>consensus::homer_annotate_consensus_multi</code> <code>consensus::homer_annotate_consensus_narrow</code> <code>consensus::homer_annotate_consensus_narrow_multi</code> <code>peaks::homer_annotatepeaks</code> <code>peaks::homer_annotatepeaks_narrow</code> <code>reference::gtf2bed</code> <code>reference::star_genomegenerate</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>ip_ids</code><span class="ox-param-default">S1_REP1, S1_REP2</span></div>
-<p class="ox-param-desc">Sample metadata. pair_ids MUST be kept in sync with [[pairs]] (the oxo-flow<br>analogue of the nf-core samplesheet meta.id column). ip_ids lists the samples<br>that get peak calling — upstream only runs MACS3 for samples that have a<br>control; the port mirrors this with per-pair rules whose {control} input is<br>empty for control-only samples and skipped via <code>optional = true</code>.</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>keep_dups</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Alignment / filtering. aligner selects the read aligner: &#x27;bwa&#x27; (the nf-core<br>default), &#x27;bowtie2&#x27;, &#x27;chromap&#x27; or &#x27;star&#x27;. Each mode takes a pre-built index<br>(bwa_index directory / bowtie2_index directory / chromap_index file /<br>star_index directory, e.g. from the upstream iGenomes bundle) — or derives<br>it from the reference FASTA with the gated builders below, mirroring the<br>upstream PREPARE_GENOME index branches (make_bwa_index / make_bowtie2_index<br>/ make_chromap_index / make_star_index; point the corresponding index<br>config at the generated results/... path in that case).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>filter::bamtools_filter</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>keep_multi_map</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Alignment / filtering. aligner selects the read aligner: &#x27;bwa&#x27; (the nf-core<br>default), &#x27;bowtie2&#x27;, &#x27;chromap&#x27; or &#x27;star&#x27;. Each mode takes a pre-built index<br>(bwa_index directory / bowtie2_index directory / chromap_index file /<br>star_index directory, e.g. from the upstream iGenomes bundle) — or derives<br>it from the reference FASTA with the gated builders below, mirroring the<br>upstream PREPARE_GENOME index branches (make_bwa_index / make_bowtie2_index<br>/ make_chromap_index / make_star_index; point the corresponding index<br>config at the generated results/... path in that case).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>filter::bamtools_filter</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>macs_fdr</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">Peaks — broad mode is the nf-core default (narrow_peak = false); setting<br>narrow_peak = true switches the whole peak chain (MACS3 narrowPeak calling,<br>FRiP/annotation/QC, consensus, IGV and MultiQC) to the upstream narrow_peak<br>layout.</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>peaks::macs3_callpeak</code> <code>peaks::macs3_callpeak_narrow</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>macs_gsize</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">MACS3 genome size. Empty string = derive from read length via khmer<br>(faithful to the upstream default).</p>
-<details class="ox-param-usedby"><summary>used by 3 rules</summary>
-<div class="ox-param-rules"><code>peaks::macs3_callpeak</code> <code>peaks::macs3_callpeak_narrow</code> <code>tracks::khmer</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>macs_pvalue</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">Peaks — broad mode is the nf-core default (narrow_peak = false); setting<br>narrow_peak = true switches the whole peak chain (MACS3 narrowPeak calling,<br>FRiP/annotation/QC, consensus, IGV and MultiQC) to the upstream narrow_peak<br>layout.</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>peaks::macs3_callpeak</code> <code>peaks::macs3_callpeak_narrow</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>make_blacklist_regions</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Reference preparation — ports of the upstream PREPARE_GENOME steps that can<br>run on the port&#x27;s plain reference files (all off by default). When enabled,<br>point the corresponding input above at the generated file, e.g.<br>gene_bed = &quot;results/genome/gene.bed&quot; with make_gene_bed = true;<br>chrom_sizes = &quot;results/genome/chrom.sizes&quot; and<br>fai = &quot;results/genome/genome.fa.fai&quot; with make_chrom_sizes = true;<br>bwa_index = &quot;results/bwa/index&quot; with make_bwa_index = true;<br>bowtie2_index = &quot;results/bowtie2/index&quot; with make_bowtie2_index = true;<br>chromap_index = &quot;results/chromap/index/genome.index&quot; with<br>make_chromap_index = true.</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>reference::blacklist_regions</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>make_bowtie2_index</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Reference preparation — ports of the upstream PREPARE_GENOME steps that can<br>run on the port&#x27;s plain reference files (all off by default). When enabled,<br>point the corresponding input above at the generated file, e.g.<br>gene_bed = &quot;results/genome/gene.bed&quot; with make_gene_bed = true;<br>chrom_sizes = &quot;results/genome/chrom.sizes&quot; and<br>fai = &quot;results/genome/genome.fa.fai&quot; with make_chrom_sizes = true;<br>bwa_index = &quot;results/bwa/index&quot; with make_bwa_index = true;<br>bowtie2_index = &quot;results/bowtie2/index&quot; with make_bowtie2_index = true;<br>chromap_index = &quot;results/chromap/index/genome.index&quot; with<br>make_chromap_index = true.</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>reference::bowtie2_index_build</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>make_bwa_index</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Reference preparation — ports of the upstream PREPARE_GENOME steps that can<br>run on the port&#x27;s plain reference files (all off by default). When enabled,<br>point the corresponding input above at the generated file, e.g.<br>gene_bed = &quot;results/genome/gene.bed&quot; with make_gene_bed = true;<br>chrom_sizes = &quot;results/genome/chrom.sizes&quot; and<br>fai = &quot;results/genome/genome.fa.fai&quot; with make_chrom_sizes = true;<br>bwa_index = &quot;results/bwa/index&quot; with make_bwa_index = true;<br>bowtie2_index = &quot;results/bowtie2/index&quot; with make_bowtie2_index = true;<br>chromap_index = &quot;results/chromap/index/genome.index&quot; with<br>make_chromap_index = true.</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>reference::bwa_index_build</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>make_chrom_sizes</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Reference preparation — ports of the upstream PREPARE_GENOME steps that can<br>run on the port&#x27;s plain reference files (all off by default). When enabled,<br>point the corresponding input above at the generated file, e.g.<br>gene_bed = &quot;results/genome/gene.bed&quot; with make_gene_bed = true;<br>chrom_sizes = &quot;results/genome/chrom.sizes&quot; and<br>fai = &quot;results/genome/genome.fa.fai&quot; with make_chrom_sizes = true;<br>bwa_index = &quot;results/bwa/index&quot; with make_bwa_index = true;<br>bowtie2_index = &quot;results/bowtie2/index&quot; with make_bowtie2_index = true;<br>chromap_index = &quot;results/chromap/index/genome.index&quot; with<br>make_chromap_index = true.</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>reference::getchromsizes</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>make_chromap_index</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Reference preparation — ports of the upstream PREPARE_GENOME steps that can<br>run on the port&#x27;s plain reference files (all off by default). When enabled,<br>point the corresponding input above at the generated file, e.g.<br>gene_bed = &quot;results/genome/gene.bed&quot; with make_gene_bed = true;<br>chrom_sizes = &quot;results/genome/chrom.sizes&quot; and<br>fai = &quot;results/genome/genome.fa.fai&quot; with make_chrom_sizes = true;<br>bwa_index = &quot;results/bwa/index&quot; with make_bwa_index = true;<br>bowtie2_index = &quot;results/bowtie2/index&quot; with make_bowtie2_index = true;<br>chromap_index = &quot;results/chromap/index/genome.index&quot; with<br>make_chromap_index = true.</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>reference::chromap_index_build</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>make_gene_bed</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Reference preparation — ports of the upstream PREPARE_GENOME steps that can<br>run on the port&#x27;s plain reference files (all off by default). When enabled,<br>point the corresponding input above at the generated file, e.g.<br>gene_bed = &quot;results/genome/gene.bed&quot; with make_gene_bed = true;<br>chrom_sizes = &quot;results/genome/chrom.sizes&quot; and<br>fai = &quot;results/genome/genome.fa.fai&quot; with make_chrom_sizes = true;<br>bwa_index = &quot;results/bwa/index&quot; with make_bwa_index = true;<br>bowtie2_index = &quot;results/bowtie2/index&quot; with make_bowtie2_index = true;<br>chromap_index = &quot;results/chromap/index/genome.index&quot; with<br>make_chromap_index = true.</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>reference::gtf2bed</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>make_star_index</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Alignment / filtering. aligner selects the read aligner: &#x27;bwa&#x27; (the nf-core<br>default), &#x27;bowtie2&#x27;, &#x27;chromap&#x27; or &#x27;star&#x27;. Each mode takes a pre-built index<br>(bwa_index directory / bowtie2_index directory / chromap_index file /<br>star_index directory, e.g. from the upstream iGenomes bundle) — or derives<br>it from the reference FASTA with the gated builders below, mirroring the<br>upstream PREPARE_GENOME index branches (make_bwa_index / make_bowtie2_index<br>/ make_chromap_index / make_star_index; point the corresponding index<br>config at the generated results/... path in that case).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>reference::star_genomegenerate</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>min_reps_consensus</code><span class="ox-param-default">1</span></div>
-<p class="ox-param-desc">Sample metadata. pair_ids MUST be kept in sync with [[pairs]] (the oxo-flow<br>analogue of the nf-core samplesheet meta.id column). ip_ids lists the samples<br>that get peak calling — upstream only runs MACS3 for samples that have a<br>control; the port mirrors this with per-pair rules whose {control} input is<br>empty for control-only samples and skipped via <code>optional = true</code>.</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>consensus::macs3_consensus</code> <code>consensus::macs3_consensus_multi</code> <code>consensus::macs3_consensus_narrow</code> <code>consensus::macs3_consensus_narrow_multi</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>multi_antibody</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Multi-antibody consensus: when true, the consensus chain (MACS3<br>consensus, HOMER annotation, boolean annotation, featureCounts,<br>DESeq2 QC) runs ONCE PER DISTINCT ANTIBODY over that antibody&#x27;s IP<br>samples, mirroring the upstream groupTuple(by: antibody) grouping —<br>the antibody values come from the metadata_file&#x27;s <code>antibody</code> column<br>(empty cells = control/input samples, excluded from consensus).<br>Requires metadata_file to be set; pair_ids/ip_ids must list ALL<br>samples (all antibodies&#x27; replicates + their controls). The<br>multi_antibody = true profile (profiles/multi_antibody.toml) switches<br>the shipped test data to the two-antibody fixture set.</p>
-<details class="ox-param-usedby"><summary>used by 28 rules</summary>
-<div class="ox-param-rules"><code>consensus::annotate_boolean_peaks</code> <code>consensus::annotate_boolean_peaks_multi</code> <code>consensus::annotate_boolean_peaks_narrow</code> <code>consensus::annotate_boolean_peaks_narrow_multi</code> <code>consensus::deseq2_qc</code> <code>consensus::deseq2_qc_multi</code> <code>consensus::deseq2_qc_narrow</code> <code>consensus::deseq2_qc_narrow_multi</code> <code>consensus::homer_annotate_consensus</code> <code>consensus::homer_annotate_consensus_multi</code> <code>consensus::homer_annotate_consensus_narrow</code> <code>consensus::homer_annotate_consensus_narrow_multi</code> <code>consensus::macs3_consensus</code> <code>consensus::macs3_consensus_multi</code> <code>consensus::macs3_consensus_narrow</code> <code>consensus::macs3_consensus_narrow_multi</code> <code>consensus::subread_featurecounts</code> <code>consensus::subread_featurecounts_multi</code> <code>consensus::subread_featurecounts_narrow</code> <code>consensus::subread_featurecounts_narrow_multi</code> <code>report::igv</code> <code>report::igv_multi</code> <code>report::igv_narrow</code> <code>report::igv_narrow_multi</code> <code>report::multiqc</code> <code>report::multiqc_multi</code> <code>report::multiqc_narrow</code> <code>report::multiqc_narrow_multi</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>multiple_groups</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Sample metadata. pair_ids MUST be kept in sync with [[pairs]] (the oxo-flow<br>analogue of the nf-core samplesheet meta.id column). ip_ids lists the samples<br>that get peak calling — upstream only runs MACS3 for samples that have a<br>control; the port mirrors this with per-pair rules whose {control} input is<br>empty for control-only samples and skipped via <code>optional = true</code>.</p>
-<details class="ox-param-usedby"><summary>used by 20 rules</summary>
-<div class="ox-param-rules"><code>consensus::annotate_boolean_peaks</code> <code>consensus::annotate_boolean_peaks_multi</code> <code>consensus::annotate_boolean_peaks_narrow</code> <code>consensus::annotate_boolean_peaks_narrow_multi</code> <code>consensus::deseq2_qc</code> <code>consensus::deseq2_qc_multi</code> <code>consensus::deseq2_qc_narrow</code> <code>consensus::deseq2_qc_narrow_multi</code> <code>consensus::homer_annotate_consensus</code> <code>consensus::homer_annotate_consensus_multi</code> <code>consensus::homer_annotate_consensus_narrow</code> <code>consensus::homer_annotate_consensus_narrow_multi</code> <code>consensus::macs3_consensus</code> <code>consensus::macs3_consensus_multi</code> <code>consensus::macs3_consensus_narrow</code> <code>consensus::macs3_consensus_narrow_multi</code> <code>consensus::subread_featurecounts</code> <code>consensus::subread_featurecounts_multi</code> <code>consensus::subread_featurecounts_narrow</code> <code>consensus::subread_featurecounts_narrow_multi</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>multiqc_title</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Peaks — broad mode is the nf-core default (narrow_peak = false); setting<br>narrow_peak = true switches the whole peak chain (MACS3 narrowPeak calling,<br>FRiP/annotation/QC, consensus, IGV and MultiQC) to the upstream narrow_peak<br>layout.</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>report::multiqc</code> <code>report::multiqc_multi</code> <code>report::multiqc_narrow</code> <code>report::multiqc_narrow_multi</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>narrow_peak</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Peaks — broad mode is the nf-core default (narrow_peak = false); setting<br>narrow_peak = true switches the whole peak chain (MACS3 narrowPeak calling,<br>FRiP/annotation/QC, consensus, IGV and MultiQC) to the upstream narrow_peak<br>layout.</p>
-<details class="ox-param-usedby"><summary>used by 40 rules</summary>
-<div class="ox-param-rules"><code>consensus::annotate_boolean_peaks</code> <code>consensus::annotate_boolean_peaks_multi</code> <code>consensus::annotate_boolean_peaks_narrow</code> <code>consensus::annotate_boolean_peaks_narrow_multi</code> <code>consensus::deseq2_qc</code> <code>consensus::deseq2_qc_multi</code> <code>consensus::deseq2_qc_narrow</code> <code>consensus::deseq2_qc_narrow_multi</code> <code>consensus::homer_annotate_consensus</code> <code>consensus::homer_annotate_consensus_multi</code> <code>consensus::homer_annotate_consensus_narrow</code> <code>consensus::homer_annotate_consensus_narrow_multi</code> <code>consensus::macs3_consensus</code> <code>consensus::macs3_consensus_multi</code> <code>consensus::macs3_consensus_narrow</code> <code>consensus::macs3_consensus_narrow_multi</code> <code>consensus::subread_featurecounts</code> <code>consensus::subread_featurecounts_multi</code> <code>consensus::subread_featurecounts_narrow</code> <code>consensus::subread_featurecounts_narrow_multi</code> <code>peaks::frip_score</code> <code>peaks::frip_score_narrow</code> <code>peaks::homer_annotatepeaks</code> <code>peaks::homer_annotatepeaks_narrow</code> <code>peaks::macs3_callpeak</code> <code>peaks::macs3_callpeak_narrow</code> <code>peaks::multiqc_custom_peaks</code> <code>peaks::multiqc_custom_peaks_narrow</code> <code>peaks::plot_homer_annotatepeaks</code> <code>peaks::plot_homer_annotatepeaks_narrow</code> <code>peaks::plot_macs3_qc</code> <code>peaks::plot_macs3_qc_narrow</code> <code>report::igv</code> <code>report::igv_multi</code> <code>report::igv_narrow</code> <code>report::igv_narrow_multi</code> <code>report::multiqc</code> <code>report::multiqc_multi</code> <code>report::multiqc_narrow</code> <code>report::multiqc_narrow_multi</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>pair_ids</code><span class="ox-param-default">S1_REP1, S1_REP2, C1_REP1, C1_REP2</span></div>
-<p class="ox-param-desc">Sample metadata. pair_ids MUST be kept in sync with [[pairs]] (the oxo-flow<br>analogue of the nf-core samplesheet meta.id column). ip_ids lists the samples<br>that get peak calling — upstream only runs MACS3 for samples that have a<br>control; the port mirrors this with per-pair rules whose {control} input is<br>empty for control-only samples and skipped via <code>optional = true</code>.</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>raw_dir</code><span class="ox-param-default">test/fixtures/raw</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>qc::fastqc</code> <code>qc::trimgalore</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>read_length</code><span class="ox-param-default">75</span></div>
-<p class="ox-param-desc">MACS3 genome size. Empty string = derive from read length via khmer<br>(faithful to the upstream default).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>tracks::khmer</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>replicates_exist</code><span class="ox-param-default">true</span></div>
-<p class="ox-param-desc">Sample metadata. pair_ids MUST be kept in sync with [[pairs]] (the oxo-flow<br>analogue of the nf-core samplesheet meta.id column). ip_ids lists the samples<br>that get peak calling — upstream only runs MACS3 for samples that have a<br>control; the port mirrors this with per-pair rules whose {control} input is<br>empty for control-only samples and skipped via <code>optional = true</code>.</p>
-<details class="ox-param-usedby"><summary>used by 20 rules</summary>
-<div class="ox-param-rules"><code>consensus::annotate_boolean_peaks</code> <code>consensus::annotate_boolean_peaks_multi</code> <code>consensus::annotate_boolean_peaks_narrow</code> <code>consensus::annotate_boolean_peaks_narrow_multi</code> <code>consensus::deseq2_qc</code> <code>consensus::deseq2_qc_multi</code> <code>consensus::deseq2_qc_narrow</code> <code>consensus::deseq2_qc_narrow_multi</code> <code>consensus::homer_annotate_consensus</code> <code>consensus::homer_annotate_consensus_multi</code> <code>consensus::homer_annotate_consensus_narrow</code> <code>consensus::homer_annotate_consensus_narrow_multi</code> <code>consensus::macs3_consensus</code> <code>consensus::macs3_consensus_multi</code> <code>consensus::macs3_consensus_narrow</code> <code>consensus::macs3_consensus_narrow_multi</code> <code>consensus::subread_featurecounts</code> <code>consensus::subread_featurecounts_multi</code> <code>consensus::subread_featurecounts_narrow</code> <code>consensus::subread_featurecounts_narrow_multi</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>save_macs_pileup</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Peaks — broad mode is the nf-core default (narrow_peak = false); setting<br>narrow_peak = true switches the whole peak chain (MACS3 narrowPeak calling,<br>FRiP/annotation/QC, consensus, IGV and MultiQC) to the upstream narrow_peak<br>layout.</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>peaks::macs3_callpeak</code> <code>peaks::macs3_callpeak_narrow</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>seq_center</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Read group / trimming</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>align::bowtie2_align</code> <code>align::bwa_mem</code> <code>align::chromap_align</code> <code>align::star_align</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_consensus_peaks</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Step toggles (mirror the nf-core/chipseq params.skip_* / when gates)</p>
-<details class="ox-param-usedby"><summary>used by 20 rules</summary>
-<div class="ox-param-rules"><code>consensus::annotate_boolean_peaks</code> <code>consensus::annotate_boolean_peaks_multi</code> <code>consensus::annotate_boolean_peaks_narrow</code> <code>consensus::annotate_boolean_peaks_narrow_multi</code> <code>consensus::deseq2_qc</code> <code>consensus::deseq2_qc_multi</code> <code>consensus::deseq2_qc_narrow</code> <code>consensus::deseq2_qc_narrow_multi</code> <code>consensus::homer_annotate_consensus</code> <code>consensus::homer_annotate_consensus_multi</code> <code>consensus::homer_annotate_consensus_narrow</code> <code>consensus::homer_annotate_consensus_narrow_multi</code> <code>consensus::macs3_consensus</code> <code>consensus::macs3_consensus_multi</code> <code>consensus::macs3_consensus_narrow</code> <code>consensus::macs3_consensus_narrow_multi</code> <code>consensus::subread_featurecounts</code> <code>consensus::subread_featurecounts_multi</code> <code>consensus::subread_featurecounts_narrow</code> <code>consensus::subread_featurecounts_narrow_multi</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_deseq2_qc</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Step toggles (mirror the nf-core/chipseq params.skip_* / when gates)</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>consensus::deseq2_qc</code> <code>consensus::deseq2_qc_multi</code> <code>consensus::deseq2_qc_narrow</code> <code>consensus::deseq2_qc_narrow_multi</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_fastqc</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Step toggles (mirror the nf-core/chipseq params.skip_* / when gates)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>qc::fastqc</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_igv</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Step toggles (mirror the nf-core/chipseq params.skip_* / when gates)</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>report::igv</code> <code>report::igv_multi</code> <code>report::igv_narrow</code> <code>report::igv_narrow_multi</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_multiqc</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Step toggles (mirror the nf-core/chipseq params.skip_* / when gates)</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>report::multiqc</code> <code>report::multiqc_multi</code> <code>report::multiqc_narrow</code> <code>report::multiqc_narrow_multi</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_peak_annotation</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Step toggles (mirror the nf-core/chipseq params.skip_* / when gates)</p>
-<details class="ox-param-usedby"><summary>used by 14 rules</summary>
-<div class="ox-param-rules"><code>consensus::annotate_boolean_peaks</code> <code>consensus::annotate_boolean_peaks_multi</code> <code>consensus::annotate_boolean_peaks_narrow</code> <code>consensus::annotate_boolean_peaks_narrow_multi</code> <code>consensus::homer_annotate_consensus</code> <code>consensus::homer_annotate_consensus_multi</code> <code>consensus::homer_annotate_consensus_narrow</code> <code>consensus::homer_annotate_consensus_narrow_multi</code> <code>peaks::homer_annotatepeaks</code> <code>peaks::homer_annotatepeaks_narrow</code> <code>peaks::plot_homer_annotatepeaks</code> <code>peaks::plot_homer_annotatepeaks_narrow</code> <code>peaks::plot_macs3_qc</code> <code>peaks::plot_macs3_qc_narrow</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_peak_qc</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Step toggles (mirror the nf-core/chipseq params.skip_* / when gates)</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>peaks::plot_homer_annotatepeaks</code> <code>peaks::plot_homer_annotatepeaks_narrow</code> <code>peaks::plot_macs3_qc</code> <code>peaks::plot_macs3_qc_narrow</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_picard_metrics</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Step toggles (mirror the nf-core/chipseq params.skip_* / when gates)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>filter::picard_collectmultiplemetrics</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_plot_fingerprint</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Step toggles (mirror the nf-core/chipseq params.skip_* / when gates)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>tracks::deeptools_plotfingerprint</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_plot_profile</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Step toggles (mirror the nf-core/chipseq params.skip_* / when gates)</p>
-<details class="ox-param-usedby"><summary>used by 3 rules</summary>
-<div class="ox-param-rules"><code>tracks::deeptools_computematrix</code> <code>tracks::deeptools_plotheatmap</code> <code>tracks::deeptools_plotprofile</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_preseq</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Step toggles (mirror the nf-core/chipseq params.skip_* / when gates)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>filter::preseq</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_qc</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Step toggles (mirror the nf-core/chipseq params.skip_* / when gates)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>qc::fastqc</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_spp</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Step toggles (mirror the nf-core/chipseq params.skip_* / when gates)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>filter::multiqc_custom_phantompeakqualtools</code> <code>filter::phantompeakqualtools</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_trimming</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Step toggles (mirror the nf-core/chipseq params.skip_* / when gates)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>qc::trimgalore</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>star_index</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Alignment / filtering. aligner selects the read aligner: &#x27;bwa&#x27; (the nf-core<br>default), &#x27;bowtie2&#x27;, &#x27;chromap&#x27; or &#x27;star&#x27;. Each mode takes a pre-built index<br>(bwa_index directory / bowtie2_index directory / chromap_index file /<br>star_index directory, e.g. from the upstream iGenomes bundle) — or derives<br>it from the reference FASTA with the gated builders below, mirroring the<br>upstream PREPARE_GENOME index branches (make_bwa_index / make_bowtie2_index<br>/ make_chromap_index / make_star_index; point the corresponding index<br>config at the generated results/... path in that case).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>align::star_align</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>three_prime_clip_r1</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">Read group / trimming</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>qc::trimgalore</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>three_prime_clip_r2</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">Read group / trimming</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>qc::trimgalore</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>trim_nextseq</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">Read group / trimming</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>qc::trimgalore</code></div>
-</details>
-</div>
-</div>
+<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. Copy a row to paste the key directly. Click any parameter name to copy <code>key = value</code>; clicking <code>default</code> copies just the value.</p>
+<table class="ox-params">
+<thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+<tbody>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy aligner = value" data-copy="aligner = bwa">aligner</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>bwa</code></td>
+<td class="ox-p-desc">Alignment / filtering. aligner selects the read aligner: &#x27;bwa&#x27; (the nf-core<br>default), &#x27;bowtie2&#x27;, &#x27;chromap&#x27; or &#x27;star&#x27;. Each mode takes a pre-built index<br>(bwa_index directory / bowtie2_index directory / chromap_index file /<br>star_index directory, e.g. from the upstream iGenomes bundle) — or derives<br>it from the reference FASTA with the gated builders below, mirroring the<br>upstream PREPARE_GENOME index branches (make_bwa_index / make_bowtie2_index<br>/ make_chromap_index / make_star_index; point the corresponding index<br>config at the generated results/... path in that case).<br><span class="ox-param-usedby">used by <code>8</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy antibody = value" data-copy="antibody = H3K4me3">antibody</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>H3K4me3</code></td>
+<td class="ox-p-desc">Sample metadata. pair_ids MUST be kept in sync with [[pairs]] (the oxo-flow<br>analogue of the nf-core samplesheet meta.id column). ip_ids lists the samples<br>that get peak calling — upstream only runs MACS3 for samples that have a<br>control; the port mirrors this with per-pair rules whose {control} input is<br>empty for control-only samples and skipped via <code>optional = true</code>.<br><span class="ox-param-usedby">used by <code>14</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy blacklist = value" data-copy="blacklist = test/fixtures/references/blacklist.bed">blacklist</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/references/blacklist.bed</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bowtie2_index = value" data-copy="bowtie2_index = ">bowtie2_index</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">Alignment / filtering. aligner selects the read aligner: &#x27;bwa&#x27; (the nf-core<br>default), &#x27;bowtie2&#x27;, &#x27;chromap&#x27; or &#x27;star&#x27;. Each mode takes a pre-built index<br>(bwa_index directory / bowtie2_index directory / chromap_index file /<br>star_index directory, e.g. from the upstream iGenomes bundle) — or derives<br>it from the reference FASTA with the gated builders below, mirroring the<br>upstream PREPARE_GENOME index branches (make_bwa_index / make_bowtie2_index<br>/ make_chromap_index / make_star_index; point the corresponding index<br>config at the generated results/... path in that case).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy broad_cutoff = value" data-copy="broad_cutoff = 0.1">broad_cutoff</button></td>
+<td class="ox-p-t"><code>float</code></td>
+<td class="ox-p-d"><code>0.1</code></td>
+<td class="ox-p-desc">Peaks — broad mode is the nf-core default (narrow_peak = false); setting<br>narrow_peak = true switches the whole peak chain (MACS3 narrowPeak calling,<br>FRiP/annotation/QC, consensus, IGV and MultiQC) to the upstream narrow_peak<br>layout.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bwa_index = value" data-copy="bwa_index = test/fixtures/references/bwa_index">bwa_index</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/references/bwa_index</code></td>
+<td class="ox-p-desc">Path to the prebuilt bwa index (built when empty) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bwa_min_score = value" data-copy="bwa_min_score = 0">bwa_min_score</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>0</code></td>
+<td class="ox-p-desc">Alignment / filtering. aligner selects the read aligner: &#x27;bwa&#x27; (the nf-core<br>default), &#x27;bowtie2&#x27;, &#x27;chromap&#x27; or &#x27;star&#x27;. Each mode takes a pre-built index<br>(bwa_index directory / bowtie2_index directory / chromap_index file /<br>star_index directory, e.g. from the upstream iGenomes bundle) — or derives<br>it from the reference FASTA with the gated builders below, mirroring the<br>upstream PREPARE_GENOME index branches (make_bwa_index / make_bowtie2_index<br>/ make_chromap_index / make_star_index; point the corresponding index<br>config at the generated results/... path in that case).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy chrom_sizes = value" data-copy="chrom_sizes = test/fixtures/references/chrom.sizes">chrom_sizes</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/references/chrom.sizes</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy chromap_index = value" data-copy="chromap_index = ">chromap_index</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">Alignment / filtering. aligner selects the read aligner: &#x27;bwa&#x27; (the nf-core<br>default), &#x27;bowtie2&#x27;, &#x27;chromap&#x27; or &#x27;star&#x27;. Each mode takes a pre-built index<br>(bwa_index directory / bowtie2_index directory / chromap_index file /<br>star_index directory, e.g. from the upstream iGenomes bundle) — or derives<br>it from the reference FASTA with the gated builders below, mirroring the<br>upstream PREPARE_GENOME index branches (make_bwa_index / make_bowtie2_index<br>/ make_chromap_index / make_star_index; point the corresponding index<br>config at the generated results/... path in that case).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy clip_r1 = value" data-copy="clip_r1 = 0">clip_r1</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>0</code></td>
+<td class="ox-p-desc">Read group / trimming<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy clip_r2 = value" data-copy="clip_r2 = 0">clip_r2</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>0</code></td>
+<td class="ox-p-desc">Read group / trimming<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fai = value" data-copy="fai = test/fixtures/references/genome.fa.fai">fai</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/references/genome.fa.fai</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fasta = value" data-copy="fasta = test/fixtures/references/genome.fa">fasta</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/references/genome.fa</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>31</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fingerprint_bins = value" data-copy="fingerprint_bins = 500000">fingerprint_bins</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>500000</code></td>
+<td class="ox-p-desc">Peaks — broad mode is the nf-core default (narrow_peak = false); setting<br>narrow_peak = true switches the whole peak chain (MACS3 narrowPeak calling,<br>FRiP/annotation/QC, consensus, IGV and MultiQC) to the upstream narrow_peak<br>layout.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fragment_size = value" data-copy="fragment_size = 0">fragment_size</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>0</code></td>
+<td class="ox-p-desc">Peaks — broad mode is the nf-core default (narrow_peak = false); setting<br>narrow_peak = true switches the whole peak chain (MACS3 narrowPeak calling,<br>FRiP/annotation/QC, consensus, IGV and MultiQC) to the upstream narrow_peak<br>layout.<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gene_bed = value" data-copy="gene_bed = test/fixtures/references/gene.bed">gene_bed</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/references/gene.bed</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtf = value" data-copy="gtf = test/fixtures/references/genome.gtf">gtf</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/references/genome.gtf</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>8</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ip_ids = value" data-copy="ip_ids = S1_REP1, S1_REP2">ip_ids</button></td>
+<td class="ox-p-t"><code>array</code></td>
+<td class="ox-p-d"><code>S1_REP1, S1_REP2</code></td>
+<td class="ox-p-desc">Sample metadata. pair_ids MUST be kept in sync with [[pairs]] (the oxo-flow<br>analogue of the nf-core samplesheet meta.id column). ip_ids lists the samples<br>that get peak calling — upstream only runs MACS3 for samples that have a<br>control; the port mirrors this with per-pair rules whose {control} input is<br>empty for control-only samples and skipped via <code>optional = true</code>.<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy keep_dups = value" data-copy="keep_dups = false">keep_dups</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Alignment / filtering. aligner selects the read aligner: &#x27;bwa&#x27; (the nf-core<br>default), &#x27;bowtie2&#x27;, &#x27;chromap&#x27; or &#x27;star&#x27;. Each mode takes a pre-built index<br>(bwa_index directory / bowtie2_index directory / chromap_index file /<br>star_index directory, e.g. from the upstream iGenomes bundle) — or derives<br>it from the reference FASTA with the gated builders below, mirroring the<br>upstream PREPARE_GENOME index branches (make_bwa_index / make_bowtie2_index<br>/ make_chromap_index / make_star_index; point the corresponding index<br>config at the generated results/... path in that case).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy keep_multi_map = value" data-copy="keep_multi_map = false">keep_multi_map</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Alignment / filtering. aligner selects the read aligner: &#x27;bwa&#x27; (the nf-core<br>default), &#x27;bowtie2&#x27;, &#x27;chromap&#x27; or &#x27;star&#x27;. Each mode takes a pre-built index<br>(bwa_index directory / bowtie2_index directory / chromap_index file /<br>star_index directory, e.g. from the upstream iGenomes bundle) — or derives<br>it from the reference FASTA with the gated builders below, mirroring the<br>upstream PREPARE_GENOME index branches (make_bwa_index / make_bowtie2_index<br>/ make_chromap_index / make_star_index; point the corresponding index<br>config at the generated results/... path in that case).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy macs_fdr = value" data-copy="macs_fdr = 0">macs_fdr</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>0</code></td>
+<td class="ox-p-desc">Peaks — broad mode is the nf-core default (narrow_peak = false); setting<br>narrow_peak = true switches the whole peak chain (MACS3 narrowPeak calling,<br>FRiP/annotation/QC, consensus, IGV and MultiQC) to the upstream narrow_peak<br>layout.<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy macs_gsize = value" data-copy="macs_gsize = ">macs_gsize</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">MACS3 genome size. Empty string = derive from read length via khmer<br>(faithful to the upstream default).<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy macs_pvalue = value" data-copy="macs_pvalue = 0">macs_pvalue</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>0</code></td>
+<td class="ox-p-desc">Peaks — broad mode is the nf-core default (narrow_peak = false); setting<br>narrow_peak = true switches the whole peak chain (MACS3 narrowPeak calling,<br>FRiP/annotation/QC, consensus, IGV and MultiQC) to the upstream narrow_peak<br>layout.<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy make_blacklist_regions = value" data-copy="make_blacklist_regions = false">make_blacklist_regions</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Reference preparation — ports of the upstream PREPARE_GENOME steps that can<br>run on the port&#x27;s plain reference files (all off by default). When enabled,<br>point the corresponding input above at the generated file, e.g.<br>gene_bed = &quot;results/genome/gene.bed&quot; with make_gene_bed = true;<br>chrom_sizes = &quot;results/genome/chrom.sizes&quot; and<br>fai = &quot;results/genome/genome.fa.fai&quot; with make_chrom_sizes = true;<br>bwa_index = &quot;results/bwa/index&quot; with make_bwa_index = true;<br>bowtie2_index = &quot;results/bowtie2/index&quot; with make_bowtie2_index = true;<br>chromap_index = &quot;results/chromap/index/genome.index&quot; with<br>make_chromap_index = true.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy make_bowtie2_index = value" data-copy="make_bowtie2_index = false">make_bowtie2_index</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Reference preparation — ports of the upstream PREPARE_GENOME steps that can<br>run on the port&#x27;s plain reference files (all off by default). When enabled,<br>point the corresponding input above at the generated file, e.g.<br>gene_bed = &quot;results/genome/gene.bed&quot; with make_gene_bed = true;<br>chrom_sizes = &quot;results/genome/chrom.sizes&quot; and<br>fai = &quot;results/genome/genome.fa.fai&quot; with make_chrom_sizes = true;<br>bwa_index = &quot;results/bwa/index&quot; with make_bwa_index = true;<br>bowtie2_index = &quot;results/bowtie2/index&quot; with make_bowtie2_index = true;<br>chromap_index = &quot;results/chromap/index/genome.index&quot; with<br>make_chromap_index = true.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy make_bwa_index = value" data-copy="make_bwa_index = false">make_bwa_index</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Reference preparation — ports of the upstream PREPARE_GENOME steps that can<br>run on the port&#x27;s plain reference files (all off by default). When enabled,<br>point the corresponding input above at the generated file, e.g.<br>gene_bed = &quot;results/genome/gene.bed&quot; with make_gene_bed = true;<br>chrom_sizes = &quot;results/genome/chrom.sizes&quot; and<br>fai = &quot;results/genome/genome.fa.fai&quot; with make_chrom_sizes = true;<br>bwa_index = &quot;results/bwa/index&quot; with make_bwa_index = true;<br>bowtie2_index = &quot;results/bowtie2/index&quot; with make_bowtie2_index = true;<br>chromap_index = &quot;results/chromap/index/genome.index&quot; with<br>make_chromap_index = true.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy make_chrom_sizes = value" data-copy="make_chrom_sizes = false">make_chrom_sizes</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Reference preparation — ports of the upstream PREPARE_GENOME steps that can<br>run on the port&#x27;s plain reference files (all off by default). When enabled,<br>point the corresponding input above at the generated file, e.g.<br>gene_bed = &quot;results/genome/gene.bed&quot; with make_gene_bed = true;<br>chrom_sizes = &quot;results/genome/chrom.sizes&quot; and<br>fai = &quot;results/genome/genome.fa.fai&quot; with make_chrom_sizes = true;<br>bwa_index = &quot;results/bwa/index&quot; with make_bwa_index = true;<br>bowtie2_index = &quot;results/bowtie2/index&quot; with make_bowtie2_index = true;<br>chromap_index = &quot;results/chromap/index/genome.index&quot; with<br>make_chromap_index = true.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy make_chromap_index = value" data-copy="make_chromap_index = false">make_chromap_index</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Reference preparation — ports of the upstream PREPARE_GENOME steps that can<br>run on the port&#x27;s plain reference files (all off by default). When enabled,<br>point the corresponding input above at the generated file, e.g.<br>gene_bed = &quot;results/genome/gene.bed&quot; with make_gene_bed = true;<br>chrom_sizes = &quot;results/genome/chrom.sizes&quot; and<br>fai = &quot;results/genome/genome.fa.fai&quot; with make_chrom_sizes = true;<br>bwa_index = &quot;results/bwa/index&quot; with make_bwa_index = true;<br>bowtie2_index = &quot;results/bowtie2/index&quot; with make_bowtie2_index = true;<br>chromap_index = &quot;results/chromap/index/genome.index&quot; with<br>make_chromap_index = true.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy make_gene_bed = value" data-copy="make_gene_bed = false">make_gene_bed</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Reference preparation — ports of the upstream PREPARE_GENOME steps that can<br>run on the port&#x27;s plain reference files (all off by default). When enabled,<br>point the corresponding input above at the generated file, e.g.<br>gene_bed = &quot;results/genome/gene.bed&quot; with make_gene_bed = true;<br>chrom_sizes = &quot;results/genome/chrom.sizes&quot; and<br>fai = &quot;results/genome/genome.fa.fai&quot; with make_chrom_sizes = true;<br>bwa_index = &quot;results/bwa/index&quot; with make_bwa_index = true;<br>bowtie2_index = &quot;results/bowtie2/index&quot; with make_bowtie2_index = true;<br>chromap_index = &quot;results/chromap/index/genome.index&quot; with<br>make_chromap_index = true.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy make_star_index = value" data-copy="make_star_index = false">make_star_index</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Alignment / filtering. aligner selects the read aligner: &#x27;bwa&#x27; (the nf-core<br>default), &#x27;bowtie2&#x27;, &#x27;chromap&#x27; or &#x27;star&#x27;. Each mode takes a pre-built index<br>(bwa_index directory / bowtie2_index directory / chromap_index file /<br>star_index directory, e.g. from the upstream iGenomes bundle) — or derives<br>it from the reference FASTA with the gated builders below, mirroring the<br>upstream PREPARE_GENOME index branches (make_bwa_index / make_bowtie2_index<br>/ make_chromap_index / make_star_index; point the corresponding index<br>config at the generated results/... path in that case).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy min_reps_consensus = value" data-copy="min_reps_consensus = 1">min_reps_consensus</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>1</code></td>
+<td class="ox-p-desc">Sample metadata. pair_ids MUST be kept in sync with [[pairs]] (the oxo-flow<br>analogue of the nf-core samplesheet meta.id column). ip_ids lists the samples<br>that get peak calling — upstream only runs MACS3 for samples that have a<br>control; the port mirrors this with per-pair rules whose {control} input is<br>empty for control-only samples and skipped via <code>optional = true</code>.<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy multi_antibody = value" data-copy="multi_antibody = false">multi_antibody</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Multi-antibody consensus: when true, the consensus chain (MACS3<br>consensus, HOMER annotation, boolean annotation, featureCounts,<br>DESeq2 QC) runs ONCE PER DISTINCT ANTIBODY over that antibody&#x27;s IP<br>samples, mirroring the upstream groupTuple(by: antibody) grouping —<br>the antibody values come from the metadata_file&#x27;s <code>antibody</code> column<br>(empty cells = control/input samples, excluded from consensus).<br>Requires metadata_file to be set; pair_ids/ip_ids must list ALL<br>samples (all antibodies&#x27; replicates + their controls). The<br>multi_antibody = true profile (profiles/multi_antibody.toml) switches<br>the shipped test data to the two-antibody fixture set.<br><span class="ox-param-usedby">used by <code>28</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy multiple_groups = value" data-copy="multiple_groups = false">multiple_groups</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Sample metadata. pair_ids MUST be kept in sync with [[pairs]] (the oxo-flow<br>analogue of the nf-core samplesheet meta.id column). ip_ids lists the samples<br>that get peak calling — upstream only runs MACS3 for samples that have a<br>control; the port mirrors this with per-pair rules whose {control} input is<br>empty for control-only samples and skipped via <code>optional = true</code>.<br><span class="ox-param-usedby">used by <code>20</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy multiqc_title = value" data-copy="multiqc_title = ">multiqc_title</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">Peaks — broad mode is the nf-core default (narrow_peak = false); setting<br>narrow_peak = true switches the whole peak chain (MACS3 narrowPeak calling,<br>FRiP/annotation/QC, consensus, IGV and MultiQC) to the upstream narrow_peak<br>layout.<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy narrow_peak = value" data-copy="narrow_peak = false">narrow_peak</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Peaks — broad mode is the nf-core default (narrow_peak = false); setting<br>narrow_peak = true switches the whole peak chain (MACS3 narrowPeak calling,<br>FRiP/annotation/QC, consensus, IGV and MultiQC) to the upstream narrow_peak<br>layout.<br><span class="ox-param-usedby">used by <code>40</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pair_ids = value" data-copy="pair_ids = S1_REP1, S1_REP2, C1_REP1, C1_REP2">pair_ids</button></td>
+<td class="ox-p-t"><code>array</code></td>
+<td class="ox-p-d"><code>S1_REP1, S1_REP2, C1_REP1, C1_REP2</code></td>
+<td class="ox-p-desc">Sample metadata. pair_ids MUST be kept in sync with [[pairs]] (the oxo-flow<br>analogue of the nf-core samplesheet meta.id column). ip_ids lists the samples<br>that get peak calling — upstream only runs MACS3 for samples that have a<br>control; the port mirrors this with per-pair rules whose {control} input is<br>empty for control-only samples and skipped via <code>optional = true</code>.<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy raw_dir = value" data-copy="raw_dir = test/fixtures/raw">raw_dir</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/raw</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy read_length = value" data-copy="read_length = 75">read_length</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>75</code></td>
+<td class="ox-p-desc">MACS3 genome size. Empty string = derive from read length via khmer<br>(faithful to the upstream default).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy replicates_exist = value" data-copy="replicates_exist = true">replicates_exist</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>true</code></td>
+<td class="ox-p-desc">Sample metadata. pair_ids MUST be kept in sync with [[pairs]] (the oxo-flow<br>analogue of the nf-core samplesheet meta.id column). ip_ids lists the samples<br>that get peak calling — upstream only runs MACS3 for samples that have a<br>control; the port mirrors this with per-pair rules whose {control} input is<br>empty for control-only samples and skipped via <code>optional = true</code>.<br><span class="ox-param-usedby">used by <code>20</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy save_macs_pileup = value" data-copy="save_macs_pileup = false">save_macs_pileup</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Peaks — broad mode is the nf-core default (narrow_peak = false); setting<br>narrow_peak = true switches the whole peak chain (MACS3 narrowPeak calling,<br>FRiP/annotation/QC, consensus, IGV and MultiQC) to the upstream narrow_peak<br>layout.<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy seq_center = value" data-copy="seq_center = ">seq_center</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">Read group / trimming<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_consensus_peaks = value" data-copy="skip_consensus_peaks = false">skip_consensus_peaks</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Step toggles (mirror the nf-core/chipseq params.skip_* / when gates)<br><span class="ox-param-usedby">used by <code>20</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_deseq2_qc = value" data-copy="skip_deseq2_qc = false">skip_deseq2_qc</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Step toggles (mirror the nf-core/chipseq params.skip_* / when gates)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_fastqc = value" data-copy="skip_fastqc = false">skip_fastqc</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Step toggles (mirror the nf-core/chipseq params.skip_* / when gates)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_igv = value" data-copy="skip_igv = false">skip_igv</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Step toggles (mirror the nf-core/chipseq params.skip_* / when gates)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_multiqc = value" data-copy="skip_multiqc = false">skip_multiqc</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Step toggles (mirror the nf-core/chipseq params.skip_* / when gates)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_peak_annotation = value" data-copy="skip_peak_annotation = false">skip_peak_annotation</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Step toggles (mirror the nf-core/chipseq params.skip_* / when gates)<br><span class="ox-param-usedby">used by <code>14</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_peak_qc = value" data-copy="skip_peak_qc = false">skip_peak_qc</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Step toggles (mirror the nf-core/chipseq params.skip_* / when gates)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_picard_metrics = value" data-copy="skip_picard_metrics = false">skip_picard_metrics</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Step toggles (mirror the nf-core/chipseq params.skip_* / when gates)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_plot_fingerprint = value" data-copy="skip_plot_fingerprint = false">skip_plot_fingerprint</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Step toggles (mirror the nf-core/chipseq params.skip_* / when gates)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_plot_profile = value" data-copy="skip_plot_profile = false">skip_plot_profile</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Step toggles (mirror the nf-core/chipseq params.skip_* / when gates)<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_preseq = value" data-copy="skip_preseq = false">skip_preseq</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Step toggles (mirror the nf-core/chipseq params.skip_* / when gates)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_qc = value" data-copy="skip_qc = false">skip_qc</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Step toggles (mirror the nf-core/chipseq params.skip_* / when gates)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_spp = value" data-copy="skip_spp = false">skip_spp</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Step toggles (mirror the nf-core/chipseq params.skip_* / when gates)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_trimming = value" data-copy="skip_trimming = false">skip_trimming</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Step toggles (mirror the nf-core/chipseq params.skip_* / when gates)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy star_index = value" data-copy="star_index = ">star_index</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">Alignment / filtering. aligner selects the read aligner: &#x27;bwa&#x27; (the nf-core<br>default), &#x27;bowtie2&#x27;, &#x27;chromap&#x27; or &#x27;star&#x27;. Each mode takes a pre-built index<br>(bwa_index directory / bowtie2_index directory / chromap_index file /<br>star_index directory, e.g. from the upstream iGenomes bundle) — or derives<br>it from the reference FASTA with the gated builders below, mirroring the<br>upstream PREPARE_GENOME index branches (make_bwa_index / make_bowtie2_index<br>/ make_chromap_index / make_star_index; point the corresponding index<br>config at the generated results/... path in that case).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy three_prime_clip_r1 = value" data-copy="three_prime_clip_r1 = 0">three_prime_clip_r1</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>0</code></td>
+<td class="ox-p-desc">Read group / trimming<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy three_prime_clip_r2 = value" data-copy="three_prime_clip_r2 = 0">three_prime_clip_r2</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>0</code></td>
+<td class="ox-p-desc">Read group / trimming<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy trim_nextseq = value" data-copy="trim_nextseq = 0">trim_nextseq</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>0</code></td>
+<td class="ox-p-desc">Read group / trimming<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+</tbody>
+</table>
 
 Descriptions are the workflow's own `#` comments from its `[config]` section (and the `[config]` sections of its included modules), surfaced by `oxo-flow info` — no schema file to maintain.
 

@@ -46,6 +46,16 @@ title: "Genome browser tracks: coverage, gene plots and UCSC hub"
 </div>
 </details>
 
+
+<div class="ox-tryit">
+<div class="ox-tryit-title">⬡ Try it — clone &amp; run</div>
+<pre class="ox-tryit-cmd" data-copy="git clone https://github.com/oxo-flow-community/oxo-flow-genome-tracks.git &amp;&amp; cd oxo-flow-genome-tracks &amp;&amp; oxo-flow run main.oxoflow --samples first:1">git clone https://github.com/oxo-flow-community/oxo-flow-genome-tracks.git
+cd oxo-flow-genome-tracks
+oxo-flow run main.oxoflow --samples first:1</pre>
+<p class="ox-tryit-note">The repository ships test fixtures (e.g. <code>test/fixtures/annotation.csv</code>, <code>test/fixtures/bams/treated/T1.bam</code>, <code>test/fixtures/bams/untreated/S1.bam</code>, <code>test/fixtures/bams/untreated/S2.bam</code>) — point <code>input</code> at them or use the built-in sample group to <code>dry-run</code> first.</p>
+</div>
+
+
 ## Run it
 
 ```bash
@@ -89,163 +99,144 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-genome-tracks
 
 ## Parameters
 
-<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. The list below names the rules that read each key.</p>
-<div class="ox-params">
-<div class="ox-param">
-<div class="ox-param-head"><code>bamCoverage_parameters</code><span class="ox-param-default">-p max --binSize 10  --normalizeUsing RPGC --effectiveGenomeSize 2407883318</span></div>
-<p class="ox-param-desc">upstream config/config.yaml defaults, adapted paths</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>coverage</code> <code>coverage_sc</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>bam_dir</code><span class="ox-param-default">test/fixtures/bams</span></div>
-<p class="ox-param-desc">upstream config/config.yaml defaults, adapted paths</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>merge_bams</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>base_buffer</code><span class="ox-param-default">2000</span></div>
-<p class="ox-param-desc">upstream config/config.yaml defaults, adapted paths</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>annotate_genes</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>email</code><span class="ox-param-default">sreichl@cemm.at</span></div>
-<p class="ox-param-desc">upstream config/config.yaml defaults, adapted paths</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>ucsc_hub</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>env_export_enabled</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">export the built conda environments as results/genome_tracks/envs/*.yaml<br>(upstream &#x27;env_export&#x27; runs in rule all; the port keeps it opt-in so the<br>default graph is unchanged — the checked-in envs/*.yaml already document<br>the pinned versions; see README &quot;Fidelity&quot;)</p>
-<details class="ox-param-usedby"><summary>used by 3 rules</summary>
-<div class="ox-param-rules"><code>env_export_igv_reports</code> <code>env_export_pygenometracks</code> <code>env_export_sinto</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>file_type</code><span class="ox-param-default">pdf</span></div>
-<p class="ox-param-desc">upstream config/config.yaml defaults, adapted paths</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>plot_tracks</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>gene_list</code><span class="ox-param-default">test/fixtures/genes.csv</span></div>
-<p class="ox-param-desc">upstream config/config.yaml defaults, adapted paths</p>
-<details class="ox-param-usedby"><summary>used by 3 rules</summary>
-<div class="ox-param-rules"><code>annotate_genes</code> <code>gene_list_export</code> <code>plot_tracks</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>genome</code><span class="ox-param-default">mm10</span></div>
-<p class="ox-param-desc">upstream config/config.yaml defaults, adapted paths</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>igv_report</code> <code>ucsc_hub</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>genome_bed</code><span class="ox-param-default">test/fixtures/genome_bed/ref.bed.gz</span></div>
-<p class="ox-param-desc">upstream config/config.yaml defaults, adapted paths</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>annotate_genes</code> <code>plot_tracks</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>igv_report_enabled</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">IGV report (igv-reports), deactivated upstream (commented out of rule all)<br>— opt-in: set igv_report_enabled = true, then <code>-t igv_report</code>.</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>igv_report</code> <code>make_bed</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>igv_report_memory</code><span class="ox-param-default">8000M</span></div>
-<p class="ox-param-desc">upstream&#x27;s dynamic <code>max(2 * input.size_mb, 8000)</code> memory is not expressible<br>statically in oxo-flow — fixed at the upstream 8000 MB minimum</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>plot_enabled</code><span class="ox-param-default">true</span></div>
-<p class="ox-param-desc">pair-level gtracks plots: needs gene-named bigWigs (upstream&#x27;s data<br>layout); set false for the generic-named mini fixtures.</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>plot_tracks</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>project_name</code><span class="ox-param-default">myData</span></div>
-<p class="ox-param-desc">upstream config/config.yaml defaults, adapted paths</p>
-<details class="ox-param-usedby"><summary>used by 3 rules</summary>
-<div class="ox-param-rules"><code>annot_export</code> <code>config_export</code> <code>ucsc_hub</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>result_path</code><span class="ox-param-default">results</span></div>
-<p class="ox-param-desc">upstream config/config.yaml defaults, adapted paths</p>
-<details class="ox-param-usedby"><summary>used by 16 rules</summary>
-<div class="ox-param-rules"><code>annot_export</code> <code>annotate_genes</code> <code>config_export</code> <code>coverage</code> <code>coverage_sc</code> <code>env_export_igv_reports</code> <code>env_export_pygenometracks</code> <code>env_export_sinto</code> <code>gene_list_export</code> <code>igv_report</code> <code>make_bed</code> <code>merge_bams</code> <code>merge_sc_bams</code> <code>plot_tracks</code> <code>split_sc_bam</code> <code>ucsc_hub</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>sample_annotation</code><span class="ox-param-default">test/fixtures/annotation.csv</span></div>
-<p class="ox-param-desc">upstream config/config.yaml defaults, adapted paths</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>annot_export</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>sc_bam_dir</code><span class="ox-param-default">test/fixtures/sc_bams</span></div>
-<p class="ox-param-desc">one aligned BAM per sc sample: {sc_bam_dir}/{sc_id}.bam (BAMs need a CB<br>cell-barcode tag per read, see test/fixtures/make_sc_fixtures.py)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>split_sc_bam</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>sc_enabled</code><span class="ox-param-default">true</span></div>
-<p class="ox-param-desc">Single-cell mode (upstream: any annotation &#x27;group&#x27; value ending in .tsv<br>switches that sample to sinto barcode splitting). oxo-flow cannot discover<br>groups from TSV contents at load time, so the sc samples, their BAM/metadata<br>paths and the sc groups are declared explicitly. Set sc_enabled = false if<br>you have no single-cell samples.</p>
-<details class="ox-param-usedby"><summary>used by 3 rules</summary>
-<div class="ox-param-rules"><code>coverage_sc</code> <code>merge_sc_bams</code> <code>split_sc_bam</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>sc_groups</code><span class="ox-param-default">g1,g2</span></div>
-<p class="ox-param-desc">unique group values of the sc metadata TSV col-2 (merged + sorted into<br>samples_list above)</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>sc_metadata</code><span class="ox-param-default">test/fixtures/sc_metadata</span></div>
-<p class="ox-param-desc">one 2-column barcode TSV (barcode&lt;TAB&gt;group, no header) per sc sample:<br>{sc_metadata}/{sc_id}.tsv — the group values of col 2 become the sc groups</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>split_sc_bam</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>track_colors</code><span class="ox-param-default">untreated=#800080,treated=#00FFFF</span></div>
-<p class="ox-param-desc">upstream config/config.yaml defaults, adapted paths</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>plot_tracks</code> <code>ucsc_hub</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>width</code><span class="ox-param-default">20</span></div>
-<p class="ox-param-desc">upstream config/config.yaml defaults, adapted paths</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>plot_tracks</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>x_axis</code><span class="ox-param-default">bottom</span></div>
-<p class="ox-param-desc">upstream config/config.yaml defaults, adapted paths</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>plot_tracks</code></div>
-</details>
-</div>
-</div>
+<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. Copy a row to paste the key directly. Click any parameter name to copy <code>key = value</code>; clicking <code>default</code> copies just the value.</p>
+<table class="ox-params">
+<thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+<tbody>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bamCoverage_parameters = value" data-copy="bamCoverage_parameters = -p max --binSize 10  --normalizeUsing RPGC --effectiveGenomeSize 2407883318">bamCoverage_parameters</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>-p max --binSize 10  --normalizeUsing RPGC --effectiveGenomeSize 2407883318</code></td>
+<td class="ox-p-desc">upstream config/config.yaml defaults, adapted paths<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bam_dir = value" data-copy="bam_dir = test/fixtures/bams">bam_dir</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/bams</code></td>
+<td class="ox-p-desc">upstream config/config.yaml defaults, adapted paths<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy base_buffer = value" data-copy="base_buffer = 2000">base_buffer</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>2000</code></td>
+<td class="ox-p-desc">upstream config/config.yaml defaults, adapted paths<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy email = value" data-copy="email = sreichl@cemm.at">email</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>sreichl@cemm.at</code></td>
+<td class="ox-p-desc">upstream config/config.yaml defaults, adapted paths<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy env_export_enabled = value" data-copy="env_export_enabled = false">env_export_enabled</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">export the built conda environments as results/genome_tracks/envs/*.yaml<br>(upstream &#x27;env_export&#x27; runs in rule all; the port keeps it opt-in so the<br>default graph is unchanged — the checked-in envs/*.yaml already document<br>the pinned versions; see README &quot;Fidelity&quot;)<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy file_type = value" data-copy="file_type = pdf">file_type</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>pdf</code></td>
+<td class="ox-p-desc">upstream config/config.yaml defaults, adapted paths<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gene_list = value" data-copy="gene_list = test/fixtures/genes.csv">gene_list</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/genes.csv</code></td>
+<td class="ox-p-desc">upstream config/config.yaml defaults, adapted paths<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy genome = value" data-copy="genome = mm10">genome</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>mm10</code></td>
+<td class="ox-p-desc">upstream config/config.yaml defaults, adapted paths<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy genome_bed = value" data-copy="genome_bed = test/fixtures/genome_bed/ref.bed.gz">genome_bed</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/genome_bed/ref.bed.gz</code></td>
+<td class="ox-p-desc">upstream config/config.yaml defaults, adapted paths<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy igv_report_enabled = value" data-copy="igv_report_enabled = false">igv_report_enabled</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">IGV report (igv-reports), deactivated upstream (commented out of rule all)<br>— opt-in: set igv_report_enabled = true, then <code>-t igv_report</code>.<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy igv_report_memory = value" data-copy="igv_report_memory = 8000M">igv_report_memory</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>8000M</code></td>
+<td class="ox-p-desc">upstream&#x27;s dynamic <code>max(2 * input.size_mb, 8000)</code> memory is not expressible<br>statically in oxo-flow — fixed at the upstream 8000 MB minimum<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy plot_enabled = value" data-copy="plot_enabled = true">plot_enabled</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>true</code></td>
+<td class="ox-p-desc">pair-level gtracks plots: needs gene-named bigWigs (upstream&#x27;s data<br>layout); set false for the generic-named mini fixtures.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy project_name = value" data-copy="project_name = myData">project_name</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>myData</code></td>
+<td class="ox-p-desc">upstream config/config.yaml defaults, adapted paths<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy result_path = value" data-copy="result_path = results">result_path</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>results</code></td>
+<td class="ox-p-desc">upstream config/config.yaml defaults, adapted paths<br><span class="ox-param-usedby">used by <code>16</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sample_annotation = value" data-copy="sample_annotation = test/fixtures/annotation.csv">sample_annotation</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/annotation.csv</code></td>
+<td class="ox-p-desc">upstream config/config.yaml defaults, adapted paths<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sc_bam_dir = value" data-copy="sc_bam_dir = test/fixtures/sc_bams">sc_bam_dir</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/sc_bams</code></td>
+<td class="ox-p-desc">one aligned BAM per sc sample: {sc_bam_dir}/{sc_id}.bam (BAMs need a CB<br>cell-barcode tag per read, see test/fixtures/make_sc_fixtures.py)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sc_enabled = value" data-copy="sc_enabled = true">sc_enabled</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>true</code></td>
+<td class="ox-p-desc">Single-cell mode (upstream: any annotation &#x27;group&#x27; value ending in .tsv<br>switches that sample to sinto barcode splitting). oxo-flow cannot discover<br>groups from TSV contents at load time, so the sc samples, their BAM/metadata<br>paths and the sc groups are declared explicitly. Set sc_enabled = false if<br>you have no single-cell samples.<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sc_groups = value" data-copy="sc_groups = g1,g2">sc_groups</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>g1,g2</code></td>
+<td class="ox-p-desc">unique group values of the sc metadata TSV col-2 (merged + sorted into<br>samples_list above)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sc_metadata = value" data-copy="sc_metadata = test/fixtures/sc_metadata">sc_metadata</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/sc_metadata</code></td>
+<td class="ox-p-desc">one 2-column barcode TSV (barcode&lt;TAB&gt;group, no header) per sc sample:<br>{sc_metadata}/{sc_id}.tsv — the group values of col 2 become the sc groups<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy track_colors = value" data-copy="track_colors = untreated=#800080,treated=#00FFFF">track_colors</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>untreated=#800080,treated=#00FFFF</code></td>
+<td class="ox-p-desc">upstream config/config.yaml defaults, adapted paths<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy width = value" data-copy="width = 20">width</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>20</code></td>
+<td class="ox-p-desc">upstream config/config.yaml defaults, adapted paths<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy x_axis = value" data-copy="x_axis = bottom">x_axis</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>bottom</code></td>
+<td class="ox-p-desc">upstream config/config.yaml defaults, adapted paths<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+</tbody>
+</table>
 
 Descriptions are the workflow's own `#` comments from its `[config]` section (and the `[config]` sections of its included modules), surfaced by `oxo-flow info` — no schema file to maintain.
 

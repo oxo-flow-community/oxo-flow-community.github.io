@@ -46,6 +46,16 @@ title: "Biosynthetic gene cluster (BGC) genome mining: annotation, antiSMASH and
 </div>
 </details>
 
+
+<div class="ox-tryit">
+<div class="ox-tryit-title">⬡ Try it — clone &amp; run</div>
+<pre class="ox-tryit-cmd" data-copy="git clone https://github.com/oxo-flow-community/oxo-flow-bgcflow.git &amp;&amp; cd oxo-flow-bgcflow &amp;&amp; oxo-flow run main.oxoflow">git clone https://github.com/oxo-flow-community/oxo-flow-bgcflow.git
+cd oxo-flow-bgcflow
+oxo-flow run main.oxoflow</pre>
+<p class="ox-tryit-note">The repository ships test fixtures (e.g. <code>test/fixtures/raw/fasta/S1.fna</code>, <code>test/fixtures/raw/fasta/S2.fna</code>, <code>test/run.sh</code>) — point <code>input</code> at them or use the built-in sample group to <code>dry-run</code> first.</p>
+</div>
+
+
 ## Run it
 
 ```bash
@@ -87,261 +97,228 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-bgcflow
 
 ## Parameters
 
-<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. The list below names the rules that read each key.</p>
-<div class="ox-params">
-<div class="ox-param">
-<div class="ox-param-head"><code>antismash_db_path</code><span class="ox-param-default">resources/antismash_db</span></div>
-<p class="ox-param-desc">upstream resources_path.antismash_db</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>antismash</code> <code>antismash_db_setup</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>antismash_major</code><span class="ox-param-default">7</span></div>
-<p class="ox-param-desc">antiSMASH (upstream rule_parameters.antismash + envs/antismash.yaml)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>antismash_v6</code> <code>write_dependency_versions</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>antismash_taxon</code><span class="ox-param-default">bacteria</span></div>
-<p class="ox-param-desc">upstream env var BGCFLOW_ANTISMASH_MODE</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>antismash</code> <code>antismash_v6</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>antismash_version</code><span class="ox-param-default">7.1.0</span></div>
-<p class="ox-param-desc">matches envs/antismash.yaml bioconda::antismash=7.1.0</p>
-<details class="ox-param-usedby"><summary>used by 17 rules</summary>
-<div class="ox-param-rules"><code>annotate_bigfam_hits</code> <code>antismash</code> <code>antismash_overview</code> <code>antismash_overview_gather</code> <code>antismash_summary</code> <code>antismash_v6</code> <code>arts</code> <code>bgc_count</code> <code>bigscape</code> <code>bigslice</code> <code>bigslice_prep</code> <code>copy_antismash</code> <code>copy_log_changes</code> <code>csv_to_parquet</code> <code>downstream_bgc_prep</code> <code>query_bigslice</code> <code>summarize_bigslice_query</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>bgc_dataset</code><span class="ox-param-default">data/interim/bgcs/datasets.tsv</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>downstream_bgc_prep</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>bgcflow_version</code><span class="ox-param-default">1.1.2</span></div>
-<p class="ox-param-desc">BGCflow housekeeping</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>format_gbk</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>gecco_version</code><span class="ox-param-default">0.9.10</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>gecco</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>gtdb_api_base</code><span class="ox-param-default">https://gtdb-api.ecogenomic.org</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>gtdb_prep</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>gtdb_offline</code><span class="ox-param-default">False</span></div>
-<p class="ox-param-desc">upstream: use_gtdb_api False -&gt; offline mode</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>gtdb_prep</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>gtdb_release</code><span class="ox-param-default">220.0</span></div>
-<p class="ox-param-desc">GTDB taxonomy (upstream rule_parameters.install_gtdbtk + use_gtdb_api)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>gtdb_prep</code> <code>install_gtdbtk</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>gtdb_release_major</code><span class="ox-param-default">220</span></div>
-<p class="ox-param-desc">GTDB release major version (upstream: release.split(&#x27;.&#x27;)[0])</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>gtdb_prep</code> <code>install_gtdbtk</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>gtdb_release_version</code><span class="ox-param-default">r220</span></div>
-<p class="ox-param-desc">GTDB release id (e.g. r214, r220)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>install_gtdbtk</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>gtdb_tax_paths</code><span class="ox-param-default">[]</span></div>
-<p class="ox-param-desc">upstream GTDB_PATHS: space-separated user gtdb-tax tsv(s)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>gtdb_prep</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>input_type</code><span class="ox-param-default">fna</span></div>
-<p class="ox-param-desc">upstream get_input_location(): fna | gbk</p>
-<details class="ox-param-usedby"><summary>used by 6 rules</summary>
-<div class="ox-param-rules"><code>copy_custom_fasta</code> <code>copy_custom_genbank</code> <code>format_gbk</code> <code>genbank_to_fna</code> <code>prokka</code> <code>prokka_gbk</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>mibig_version</code><span class="ox-param-default">3.1</span></div>
-<p class="ox-param-desc">MIBiG JSON release used by get_mibig_table</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>get_mibig_table</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>ncbi_genera</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>ncbi_genome_download</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>project</code><span class="ox-param-default">genomes</span></div>
-<p class="ox-param-desc">Project / input genomes (upstream: config.yaml <code>projects</code> + data/raw/fasta)</p>
-<details class="ox-param-usedby"><summary>used by 29 rules</summary>
-<div class="ox-param-rules"><code>amrfinder_gather</code> <code>annotate_bigfam_hits</code> <code>antismash_overview_gather</code> <code>antismash_summary</code> <code>automlst_wrapper</code> <code>automlst_wrapper_out</code> <code>bigscape</code> <code>bigslice</code> <code>bigslice_prep</code> <code>cblaster_genome_db</code> <code>checkm</code> <code>copy_log_changes</code> <code>copy_mibig_table</code> <code>csv_to_parquet</code> <code>deeptfactor_summary</code> <code>downstream_bgc_prep</code> <code>fastani</code> <code>fastani_convert</code> <code>fix_gtdb_taxonomy</code> <code>gtdbtk</code> <code>mash</code> <code>mash_convert</code> <code>prep_automlst_gbk</code> <code>query_bigslice</code> <code>roary</code> <code>roary_out</code> <code>seqfu_combine</code> <code>summarize_bigslice_query</code> <code>write_dependency_versions</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>project_source</code><span class="ox-param-default">custom</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>ncbi_genome_download</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>raw_dir</code><span class="ox-param-default">test/fixtures/raw</span></div>
-<p class="ox-param-desc">directory containing fasta/&lt;genome_id&gt;.fna</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>copy_custom_fasta</code> <code>copy_custom_genbank</code> <code>genbank_to_fna</code> <code>prokka_gbk</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>run_amrfinderplus</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
-<details class="ox-param-usedby"><summary>used by 3 rules</summary>
-<div class="ox-param-rules"><code>amrfinder_gather</code> <code>amrfinderplus</code> <code>install_amrfinder</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>run_arts</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>arts</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>run_automlst</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">upstream pipelines.automlst-wrapper</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>automlst_wrapper</code> <code>automlst_wrapper_out</code> <code>install_automlst_wrapper</code> <code>prep_automlst_gbk</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>run_bigscape</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>bigscape</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>run_bigslice</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">upstream pipelines.bigslice</p>
-<details class="ox-param-usedby"><summary>used by 3 rules</summary>
-<div class="ox-param-rules"><code>bigslice</code> <code>bigslice_prep</code> <code>install_bigslice</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>run_cblaster</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>cblaster_genome_db</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>run_checkm</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>checkm</code> <code>install_checkm</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>run_deeptfactor</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">upstream pipelines.deeptfactor</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>deeptfactor</code> <code>deeptfactor_setup</code> <code>deeptfactor_summary</code> <code>deeptfactor_to_json</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>run_eggnog</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>eggnog</code> <code>install_eggnog</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>run_fastani</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>fastani</code> <code>fastani_convert</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>run_gecco</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>gecco</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>run_gtdbtk</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>gtdbtk</code> <code>install_gtdbtk</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>run_mash</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>mash</code> <code>mash_convert</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>run_query_bigslice</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">upstream pipelines.query-bigslice (needs the 18GB BiG-FAM bundle)</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>annotate_bigfam_hits</code> <code>fetch_bigslice_db</code> <code>query_bigslice</code> <code>summarize_bigslice_query</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>run_roary</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>roary</code> <code>roary_out</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>run_seqfu</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>seqfu_combine</code> <code>seqfu_stats</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>write_dependency_versions</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>write_dependency_versions</code></div>
-</details>
-</div>
-</div>
+<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. Copy a row to paste the key directly. Click any parameter name to copy <code>key = value</code>; clicking <code>default</code> copies just the value.</p>
+<table class="ox-params">
+<thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+<tbody>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy antismash_db_path = value" data-copy="antismash_db_path = resources/antismash_db">antismash_db_path</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>resources/antismash_db</code></td>
+<td class="ox-p-desc">upstream resources_path.antismash_db<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy antismash_major = value" data-copy="antismash_major = 7">antismash_major</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>7</code></td>
+<td class="ox-p-desc">antiSMASH (upstream rule_parameters.antismash + envs/antismash.yaml)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy antismash_taxon = value" data-copy="antismash_taxon = bacteria">antismash_taxon</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>bacteria</code></td>
+<td class="ox-p-desc">upstream env var BGCFLOW_ANTISMASH_MODE<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy antismash_version = value" data-copy="antismash_version = 7.1.0">antismash_version</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>7.1.0</code></td>
+<td class="ox-p-desc">matches envs/antismash.yaml bioconda::antismash=7.1.0<br><span class="ox-param-usedby">used by <code>17</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bgc_dataset = value" data-copy="bgc_dataset = data/interim/bgcs/datasets.tsv">bgc_dataset</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>data/interim/bgcs/datasets.tsv</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bgcflow_version = value" data-copy="bgcflow_version = 1.1.2">bgcflow_version</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>1.1.2</code></td>
+<td class="ox-p-desc">BGCflow housekeeping<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gecco_version = value" data-copy="gecco_version = 0.9.10">gecco_version</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>0.9.10</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtdb_api_base = value" data-copy="gtdb_api_base = https://gtdb-api.ecogenomic.org">gtdb_api_base</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>https://gtdb-api.ecogenomic.org</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtdb_offline = value" data-copy="gtdb_offline = False">gtdb_offline</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>False</code></td>
+<td class="ox-p-desc">upstream: use_gtdb_api False -&gt; offline mode<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtdb_release = value" data-copy="gtdb_release = 220.0">gtdb_release</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>220.0</code></td>
+<td class="ox-p-desc">GTDB taxonomy (upstream rule_parameters.install_gtdbtk + use_gtdb_api)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtdb_release_major = value" data-copy="gtdb_release_major = 220">gtdb_release_major</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>220</code></td>
+<td class="ox-p-desc">GTDB release major version (upstream: release.split(&#x27;.&#x27;)[0])<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtdb_release_version = value" data-copy="gtdb_release_version = r220">gtdb_release_version</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>r220</code></td>
+<td class="ox-p-desc">GTDB release id (e.g. r214, r220)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtdb_tax_paths = value" data-copy="gtdb_tax_paths = []">gtdb_tax_paths</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>[]</code></td>
+<td class="ox-p-desc">upstream GTDB_PATHS: space-separated user gtdb-tax tsv(s)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy input_type = value" data-copy="input_type = fna">input_type</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>fna</code></td>
+<td class="ox-p-desc">upstream get_input_location(): fna | gbk<br><span class="ox-param-usedby">used by <code>6</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mibig_version = value" data-copy="mibig_version = 3.1">mibig_version</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>3.1</code></td>
+<td class="ox-p-desc">MIBiG JSON release used by get_mibig_table<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ncbi_genera = value" data-copy="ncbi_genera = ">ncbi_genera</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy project = value" data-copy="project = genomes">project</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>genomes</code></td>
+<td class="ox-p-desc">Project / input genomes (upstream: config.yaml <code>projects</code> + data/raw/fasta)<br><span class="ox-param-usedby">used by <code>29</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy project_source = value" data-copy="project_source = custom">project_source</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>custom</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy raw_dir = value" data-copy="raw_dir = test/fixtures/raw">raw_dir</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/raw</code></td>
+<td class="ox-p-desc">directory containing fasta/&lt;genome_id&gt;.fna<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_amrfinderplus = value" data-copy="run_amrfinderplus = false">run_amrfinderplus</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_arts = value" data-copy="run_arts = false">run_arts</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_automlst = value" data-copy="run_automlst = false">run_automlst</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">upstream pipelines.automlst-wrapper<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_bigscape = value" data-copy="run_bigscape = false">run_bigscape</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_bigslice = value" data-copy="run_bigslice = false">run_bigslice</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">upstream pipelines.bigslice<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_cblaster = value" data-copy="run_cblaster = false">run_cblaster</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_checkm = value" data-copy="run_checkm = false">run_checkm</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_deeptfactor = value" data-copy="run_deeptfactor = false">run_deeptfactor</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">upstream pipelines.deeptfactor<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_eggnog = value" data-copy="run_eggnog = false">run_eggnog</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_fastani = value" data-copy="run_fastani = false">run_fastani</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_gecco = value" data-copy="run_gecco = false">run_gecco</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_gtdbtk = value" data-copy="run_gtdbtk = false">run_gtdbtk</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_mash = value" data-copy="run_mash = false">run_mash</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_query_bigslice = value" data-copy="run_query_bigslice = false">run_query_bigslice</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">upstream pipelines.query-bigslice (needs the 18GB BiG-FAM bundle)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_roary = value" data-copy="run_roary = false">run_roary</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_seqfu = value" data-copy="run_seqfu = false">run_seqfu</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow; samples_list is the engine-injected sample ids<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy write_dependency_versions = value" data-copy="write_dependency_versions = false">write_dependency_versions</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+</tbody>
+</table>
 
 Descriptions are the workflow's own `#` comments from its `[config]` section (and the `[config]` sections of its included modules), surfaced by `oxo-flow info` — no schema file to maintain.
 

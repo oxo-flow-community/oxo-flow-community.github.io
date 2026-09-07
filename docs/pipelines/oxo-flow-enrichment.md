@@ -46,6 +46,16 @@ title: "Region set and gene set enrichment: LOLA, GREAT, pycisTarget and GSEA"
 </div>
 </details>
 
+
+<div class="ox-tryit">
+<div class="ox-tryit-title">⬡ Try it — clone &amp; run</div>
+<pre class="ox-tryit-cmd" data-copy="git clone https://github.com/oxo-flow-community/oxo-flow-enrichment.git &amp;&amp; cd oxo-flow-enrichment &amp;&amp; oxo-flow run main.oxoflow">git clone https://github.com/oxo-flow-community/oxo-flow-enrichment.git
+cd oxo-flow-enrichment
+oxo-flow run main.oxoflow</pre>
+<p class="ox-tryit-note">The repository ships test fixtures (e.g. <code>test/data/CorcesATAC/Bcell_open_regions.bed</code>, <code>test/data/CorcesATAC/Ery_open_regions.bed</code>, <code>test/data/CorcesATAC/all_regions.bed</code>, <code>test/data/CorcesRNA/Bcell_ranked.csv</code>) — point <code>input</code> at them or use the built-in sample group to <code>dry-run</code> first.</p>
+</div>
+
+
 ## Run it
 
 ```bash
@@ -90,611 +100,528 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-enrichment
 
 ## Parameters
 
-<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. The list below names the rules that read each key.</p>
-<div class="ox-params">
-<div class="ox-param">
-<div class="ox-param-head"><code>adjp_cap</code><span class="ox-param-default">4</span></div>
-<p class="ox-param-desc">aggregate &amp; summarize (upstream top_terms_n / adjp_cap / or_cap / nes_cap / cluster_summary)</p>
-<details class="ox-param-usedby"><summary>used by 9 rules</summary>
-<div class="ox-param-rules"><code>visualize_GREAT_Azimuth_2023_ATAC</code> <code>visualize_GREAT_Reactome_ATAC</code> <code>visualize_LOLA_LOLACore_ATAC</code> <code>visualize_ORA_GSEApy_Azimuth_2023_ATAC</code> <code>visualize_ORA_GSEApy_Reactome_ATAC</code> <code>visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</code> <code>visualize_preranked_GSEApy_Azimuth_2023_RNA</code> <code>visualize_preranked_GSEApy_Reactome_RNA</code> <code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>adjp_th_GREAT</code><span class="ox-param-default">0.01</span></div>
-<p class="ox-param-desc">significance thresholds (upstream adjp_th)</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>region_enrichment_analysis_GREAT_Azimuth_2023</code> <code>region_enrichment_analysis_GREAT_Reactome</code> <code>visualize_GREAT_Azimuth_2023_ATAC</code> <code>visualize_GREAT_Reactome_ATAC</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>adjp_th_LOLA</code><span class="ox-param-default">0.01</span></div>
-<p class="ox-param-desc">significance thresholds (upstream adjp_th)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>visualize_LOLA_LOLACore_ATAC</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>adjp_th_ORA_GSEApy</code><span class="ox-param-default">0.05</span></div>
-<p class="ox-param-desc">significance thresholds (upstream adjp_th)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>visualize_ORA_GSEApy_Azimuth_2023_ATAC</code> <code>visualize_ORA_GSEApy_Reactome_ATAC</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>adjp_th_RcisTarget</code><span class="ox-param-default">5</span></div>
-<p class="ox-param-desc">significance thresholds (upstream adjp_th)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>adjp_th_preranked_GSEApy</code><span class="ox-param-default">0.05</span></div>
-<p class="ox-param-desc">significance thresholds (upstream adjp_th)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>visualize_preranked_GSEApy_Azimuth_2023_RNA</code> <code>visualize_preranked_GSEApy_Reactome_RNA</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>adjp_th_pycisTarget</code><span class="ox-param-default">5</span></div>
-<p class="ox-param-desc">significance thresholds (upstream adjp_th)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>all_region_sets</code><span class="ox-param-default">Bcell_open_regions, Ery_open_regions, all_regions</span></div>
-<p class="ox-param-desc">feature sets (derived from config/annotation.csv at port time)</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>annotation</code><span class="ox-param-default">config/annotation.csv</span></div>
-<p class="ox-param-desc">general</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>background_name</code><span class="ox-param-default">all_regions</span></div>
-<p class="ox-param-desc">upstream annotation background_name (all region sets)</p>
-<details class="ox-param-usedby"><summary>used by 6 rules</summary>
-<div class="ox-param-rules"><code>gene_ORA_GSEApy_Azimuth_2023</code> <code>gene_ORA_GSEApy_Reactome</code> <code>gene_motif_enrichment_analysis_RcisTarget</code> <code>region_enrichment_analysis_GREAT_Azimuth_2023</code> <code>region_enrichment_analysis_GREAT_Reactome</code> <code>region_enrichment_analysis_LOLA</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cluster_summary</code><span class="ox-param-default">1</span></div>
-<p class="ox-param-desc">aggregate &amp; summarize (upstream top_terms_n / adjp_cap / or_cap / nes_cap / cluster_summary)</p>
-<details class="ox-param-usedby"><summary>used by 9 rules</summary>
-<div class="ox-param-rules"><code>visualize_GREAT_Azimuth_2023_ATAC</code> <code>visualize_GREAT_Reactome_ATAC</code> <code>visualize_LOLA_LOLACore_ATAC</code> <code>visualize_ORA_GSEApy_Azimuth_2023_ATAC</code> <code>visualize_ORA_GSEApy_Reactome_ATAC</code> <code>visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</code> <code>visualize_preranked_GSEApy_Azimuth_2023_RNA</code> <code>visualize_preranked_GSEApy_Reactome_RNA</code> <code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cn_GREAT_adj_pvalue</code><span class="ox-param-default">p_adjust_hyper</span></div>
-<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
-<details class="ox-param-usedby"><summary>used by 6 rules</summary>
-<div class="ox-param-rules"><code>plot_enrichment_result_GREAT_Azimuth_2023</code> <code>plot_enrichment_result_GREAT_Reactome</code> <code>region_enrichment_analysis_GREAT_Azimuth_2023</code> <code>region_enrichment_analysis_GREAT_Reactome</code> <code>visualize_GREAT_Azimuth_2023_ATAC</code> <code>visualize_GREAT_Reactome_ATAC</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cn_GREAT_effect_size</code><span class="ox-param-default">fold_enrichment_hyper</span></div>
-<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>plot_enrichment_result_GREAT_Azimuth_2023</code> <code>plot_enrichment_result_GREAT_Reactome</code> <code>visualize_GREAT_Azimuth_2023_ATAC</code> <code>visualize_GREAT_Reactome_ATAC</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cn_GREAT_overlap</code><span class="ox-param-default">observed_region_hits</span></div>
-<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>plot_enrichment_result_GREAT_Azimuth_2023</code> <code>plot_enrichment_result_GREAT_Reactome</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cn_GREAT_p_value</code><span class="ox-param-default">p_value_hyper</span></div>
-<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>plot_enrichment_result_GREAT_Azimuth_2023</code> <code>plot_enrichment_result_GREAT_Reactome</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cn_GREAT_term</code><span class="ox-param-default">description</span></div>
-<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>plot_enrichment_result_GREAT_Azimuth_2023</code> <code>plot_enrichment_result_GREAT_Reactome</code> <code>visualize_GREAT_Azimuth_2023_ATAC</code> <code>visualize_GREAT_Reactome_ATAC</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cn_GREAT_top_n</code><span class="ox-param-default">25</span></div>
-<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>plot_enrichment_result_GREAT_Azimuth_2023</code> <code>plot_enrichment_result_GREAT_Reactome</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cn_LOLA_adj_pvalue</code><span class="ox-param-default">qValue</span></div>
-<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>plot_enrichment_result_LOLA_LOLACore</code> <code>visualize_LOLA_LOLACore_ATAC</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cn_LOLA_effect_size</code><span class="ox-param-default">oddsRatio</span></div>
-<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>plot_enrichment_result_LOLA_LOLACore</code> <code>visualize_LOLA_LOLACore_ATAC</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cn_LOLA_overlap</code><span class="ox-param-default">support</span></div>
-<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>plot_enrichment_result_LOLA_LOLACore</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cn_LOLA_p_value</code><span class="ox-param-default">pValue</span></div>
-<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>plot_enrichment_result_LOLA_LOLACore</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cn_LOLA_term</code><span class="ox-param-default">description</span></div>
-<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>plot_enrichment_result_LOLA_LOLACore</code> <code>visualize_LOLA_LOLACore_ATAC</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cn_LOLA_top_n</code><span class="ox-param-default">25</span></div>
-<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>plot_enrichment_result_LOLA_LOLACore</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cn_ORA_GSEApy_adj_pvalue</code><span class="ox-param-default">Adjusted_P_value</span></div>
-<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>plot_enrichment_result_ORA_GSEApy_Azimuth_2023</code> <code>plot_enrichment_result_ORA_GSEApy_Reactome</code> <code>visualize_ORA_GSEApy_Azimuth_2023_ATAC</code> <code>visualize_ORA_GSEApy_Reactome_ATAC</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cn_ORA_GSEApy_effect_size</code><span class="ox-param-default">Odds_Ratio</span></div>
-<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>plot_enrichment_result_ORA_GSEApy_Azimuth_2023</code> <code>plot_enrichment_result_ORA_GSEApy_Reactome</code> <code>visualize_ORA_GSEApy_Azimuth_2023_ATAC</code> <code>visualize_ORA_GSEApy_Reactome_ATAC</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cn_ORA_GSEApy_overlap</code><span class="ox-param-default">Overlap</span></div>
-<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>plot_enrichment_result_ORA_GSEApy_Azimuth_2023</code> <code>plot_enrichment_result_ORA_GSEApy_Reactome</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cn_ORA_GSEApy_p_value</code><span class="ox-param-default">P_value</span></div>
-<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>plot_enrichment_result_ORA_GSEApy_Azimuth_2023</code> <code>plot_enrichment_result_ORA_GSEApy_Reactome</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cn_ORA_GSEApy_term</code><span class="ox-param-default">Term</span></div>
-<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>plot_enrichment_result_ORA_GSEApy_Azimuth_2023</code> <code>plot_enrichment_result_ORA_GSEApy_Reactome</code> <code>visualize_ORA_GSEApy_Azimuth_2023_ATAC</code> <code>visualize_ORA_GSEApy_Reactome_ATAC</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cn_ORA_GSEApy_top_n</code><span class="ox-param-default">25</span></div>
-<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>plot_enrichment_result_ORA_GSEApy_Azimuth_2023</code> <code>plot_enrichment_result_ORA_GSEApy_Reactome</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cn_RcisTarget_adj_pvalue</code><span class="ox-param-default">NES</span></div>
-<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust</code> <code>visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cn_RcisTarget_effect_size</code><span class="ox-param-default">NES</span></div>
-<p class="ox-param-desc">NES combines significance and effect size</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust</code> <code>visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cn_RcisTarget_overlap</code><span class="ox-param-default">nEnrGenes</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cn_RcisTarget_p_value</code><span class="ox-param-default">AUC</span></div>
-<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cn_RcisTarget_term</code><span class="ox-param-default">description</span></div>
-<p class="ox-param-desc">motif name + highConfCat TFs</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust</code> <code>visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cn_RcisTarget_top_n</code><span class="ox-param-default">25</span></div>
-<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cn_preranked_GSEApy_adj_pvalue</code><span class="ox-param-default">FDR_q_val</span></div>
-<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>plot_enrichment_result_preranked_GSEApy_Azimuth_2023</code> <code>plot_enrichment_result_preranked_GSEApy_Reactome</code> <code>visualize_preranked_GSEApy_Azimuth_2023_RNA</code> <code>visualize_preranked_GSEApy_Reactome_RNA</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cn_preranked_GSEApy_effect_size</code><span class="ox-param-default">NES</span></div>
-<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>plot_enrichment_result_preranked_GSEApy_Azimuth_2023</code> <code>plot_enrichment_result_preranked_GSEApy_Reactome</code> <code>visualize_preranked_GSEApy_Azimuth_2023_RNA</code> <code>visualize_preranked_GSEApy_Reactome_RNA</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cn_preranked_GSEApy_overlap</code><span class="ox-param-default">Tag</span></div>
-<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>plot_enrichment_result_preranked_GSEApy_Azimuth_2023</code> <code>plot_enrichment_result_preranked_GSEApy_Reactome</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cn_preranked_GSEApy_p_value</code><span class="ox-param-default">NOM_p_val</span></div>
-<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>plot_enrichment_result_preranked_GSEApy_Azimuth_2023</code> <code>plot_enrichment_result_preranked_GSEApy_Reactome</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cn_preranked_GSEApy_term</code><span class="ox-param-default">Term</span></div>
-<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>plot_enrichment_result_preranked_GSEApy_Azimuth_2023</code> <code>plot_enrichment_result_preranked_GSEApy_Reactome</code> <code>visualize_preranked_GSEApy_Azimuth_2023_RNA</code> <code>visualize_preranked_GSEApy_Reactome_RNA</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cn_preranked_GSEApy_top_n</code><span class="ox-param-default">25</span></div>
-<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>plot_enrichment_result_preranked_GSEApy_Azimuth_2023</code> <code>plot_enrichment_result_preranked_GSEApy_Reactome</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cn_pycisTarget_adj_pvalue</code><span class="ox-param-default">NES</span></div>
-<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>plot_enrichment_result_pycisTarget_hg38_screen_v10clust</code> <code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cn_pycisTarget_effect_size</code><span class="ox-param-default">NES</span></div>
-<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>plot_enrichment_result_pycisTarget_hg38_screen_v10clust</code> <code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cn_pycisTarget_overlap</code><span class="ox-param-default">Motif_hits</span></div>
-<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>plot_enrichment_result_pycisTarget_hg38_screen_v10clust</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cn_pycisTarget_p_value</code><span class="ox-param-default">AUC</span></div>
-<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>plot_enrichment_result_pycisTarget_hg38_screen_v10clust</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cn_pycisTarget_term</code><span class="ox-param-default">description</span></div>
-<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>plot_enrichment_result_pycisTarget_hg38_screen_v10clust</code> <code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cn_pycisTarget_top_n</code><span class="ox-param-default">25</span></div>
-<p class="ox-param-desc">tool-specific column names (upstream column_names)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>plot_enrichment_result_pycisTarget_hg38_screen_v10clust</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>db_Azimuth_2023</code><span class="ox-param-default">test/resources/enrichment_analysis/Azimuth_2023.json</span></div>
-<p class="ox-param-desc">databases (upstream local_databases / lola_databases)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>prepare_databases_Azimuth_2023</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>db_Reactome</code><span class="ox-param-default">test/resources/enrichment_analysis/ReactomePathways.gmt</span></div>
-<p class="ox-param-desc">databases (upstream local_databases / lola_databases)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>prepare_databases_Reactome</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>genome</code><span class="ox-param-default">hg38</span></div>
-<p class="ox-param-desc">general</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>region_enrichment_analysis_GREAT_Azimuth_2023</code> <code>region_enrichment_analysis_GREAT_Reactome</code> <code>region_enrichment_analysis_LOLA</code> <code>region_gene_association_GREAT</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>great_basal_downstream</code><span class="ox-param-default">1000</span></div>
-<p class="ox-param-desc">GREAT parameters (upstream great_parameters)</p>
-<details class="ox-param-usedby"><summary>used by 3 rules</summary>
-<div class="ox-param-rules"><code>region_enrichment_analysis_GREAT_Azimuth_2023</code> <code>region_enrichment_analysis_GREAT_Reactome</code> <code>region_gene_association_GREAT</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>great_basal_upstream</code><span class="ox-param-default">5000</span></div>
-<p class="ox-param-desc">GREAT parameters (upstream great_parameters)</p>
-<details class="ox-param-usedby"><summary>used by 3 rules</summary>
-<div class="ox-param-rules"><code>region_enrichment_analysis_GREAT_Azimuth_2023</code> <code>region_enrichment_analysis_GREAT_Reactome</code> <code>region_gene_association_GREAT</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>great_extension</code><span class="ox-param-default">1000000</span></div>
-<p class="ox-param-desc">GREAT parameters (upstream great_parameters)</p>
-<details class="ox-param-usedby"><summary>used by 3 rules</summary>
-<div class="ox-param-rules"><code>region_enrichment_analysis_GREAT_Azimuth_2023</code> <code>region_enrichment_analysis_GREAT_Reactome</code> <code>region_gene_association_GREAT</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>great_map_associated_regions</code><span class="ox-param-default">1</span></div>
-<p class="ox-param-desc">GREAT parameters (upstream great_parameters)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>region_enrichment_analysis_GREAT_Azimuth_2023</code> <code>region_enrichment_analysis_GREAT_Reactome</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>great_min_gene_set_size</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">GREAT parameters (upstream great_parameters)</p>
-<details class="ox-param-usedby"><summary>used by 3 rules</summary>
-<div class="ox-param-rules"><code>region_enrichment_analysis_GREAT_Azimuth_2023</code> <code>region_enrichment_analysis_GREAT_Reactome</code> <code>region_gene_association_GREAT</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>great_mode</code><span class="ox-param-default">basalPlusExt</span></div>
-<p class="ox-param-desc">GREAT parameters (upstream great_parameters)</p>
-<details class="ox-param-usedby"><summary>used by 3 rules</summary>
-<div class="ox-param-rules"><code>region_enrichment_analysis_GREAT_Azimuth_2023</code> <code>region_enrichment_analysis_GREAT_Reactome</code> <code>region_gene_association_GREAT</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>lola_db_LOLACore</code><span class="ox-param-default">test/resources/LOLACore/hg38</span></div>
-<p class="ox-param-desc">databases (upstream local_databases / lola_databases)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>region_enrichment_analysis_LOLA</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>nes_cap</code><span class="ox-param-default">5</span></div>
-<p class="ox-param-desc">aggregate &amp; summarize (upstream top_terms_n / adjp_cap / or_cap / nes_cap / cluster_summary)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>visualize_preranked_GSEApy_Azimuth_2023_RNA</code> <code>visualize_preranked_GSEApy_Reactome_RNA</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>or_cap</code><span class="ox-param-default">5</span></div>
-<p class="ox-param-desc">aggregate &amp; summarize (upstream top_terms_n / adjp_cap / or_cap / nes_cap / cluster_summary)</p>
-<details class="ox-param-usedby"><summary>used by 7 rules</summary>
-<div class="ox-param-rules"><code>visualize_GREAT_Azimuth_2023_ATAC</code> <code>visualize_GREAT_Reactome_ATAC</code> <code>visualize_LOLA_LOLACore_ATAC</code> <code>visualize_ORA_GSEApy_Azimuth_2023_ATAC</code> <code>visualize_ORA_GSEApy_Reactome_ATAC</code> <code>visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</code> <code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>path_to_motif_annotations</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">user-provided motif annotation tbl; &quot;&quot; disables motif enrichment</p>
-<details class="ox-param-usedby"><summary>used by 5 rules</summary>
-<div class="ox-param-rules"><code>aggregate_pycisTarget_hg38_screen_v10clust_ATAC</code> <code>plot_enrichment_result_pycisTarget_hg38_screen_v10clust</code> <code>process_results_pycisTarget</code> <code>region_motif_enrichment_analysis_pycisTarget</code> <code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>project_name</code><span class="ox-param-default">Corces_CellTypes</span></div>
-<p class="ox-param-desc">general</p>
-<details class="ox-param-usedby"><summary>used by 11 rules</summary>
-<div class="ox-param-rules"><code>annot_export</code> <code>config_export</code> <code>gene_ORA_GSEApy_Azimuth_2023</code> <code>gene_ORA_GSEApy_Reactome</code> <code>gene_preranked_GSEApy_Azimuth_2023</code> <code>gene_preranked_GSEApy_Reactome</code> <code>prepare_databases_Azimuth_2023</code> <code>prepare_databases_Reactome</code> <code>region_enrichment_analysis_GREAT_Azimuth_2023</code> <code>region_enrichment_analysis_GREAT_Reactome</code> <code>region_gene_association_GREAT</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>pycistarget_annotation_version</code><span class="ox-param-default">v10nr_clust</span></div>
-<p class="ox-param-desc">pycisTarget parameters (upstream pycistarget_parameters)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>region_motif_enrichment_analysis_pycisTarget</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>pycistarget_annotations_to_use</code><span class="ox-param-default">[&#x27;Direct_annot&#x27;, &#x27;Motif_similarity_annot&#x27;, &#x27;Orthology_annot&#x27;, &#x27;Motif_similarity_and_Orthology_annot&#x27;]</span></div>
-<p class="ox-param-desc">upstream passes the python list literal; kept as a string so the rendered<br>command is byte-identical to upstream&#x27;s</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>region_motif_enrichment_analysis_pycisTarget</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>pycistarget_auc_threshold</code><span class="ox-param-default">0.005</span></div>
-<p class="ox-param-desc">pycisTarget parameters (upstream pycistarget_parameters)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>region_motif_enrichment_analysis_pycisTarget</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>pycistarget_db_hg38_screen_v10clust</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">user-provided pycisTarget rankings DB; &quot;&quot; disables motif enrichment</p>
-<details class="ox-param-usedby"><summary>used by 5 rules</summary>
-<div class="ox-param-rules"><code>aggregate_pycisTarget_hg38_screen_v10clust_ATAC</code> <code>plot_enrichment_result_pycisTarget_hg38_screen_v10clust</code> <code>process_results_pycisTarget</code> <code>region_motif_enrichment_analysis_pycisTarget</code> <code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>pycistarget_fraction_overlap_w_cistarget_database</code><span class="ox-param-default">0.4</span></div>
-<p class="ox-param-desc">pycisTarget parameters (upstream pycistarget_parameters)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>region_motif_enrichment_analysis_pycisTarget</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>pycistarget_motif_similarity_fdr</code><span class="ox-param-default">0.001</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>region_motif_enrichment_analysis_pycisTarget</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>pycistarget_nes_threshold</code><span class="ox-param-default">3</span></div>
-<p class="ox-param-desc">pycisTarget parameters (upstream pycistarget_parameters)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>region_motif_enrichment_analysis_pycisTarget</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>pycistarget_orthologous_identity_threshold</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>region_motif_enrichment_analysis_pycisTarget</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>pycistarget_rank_threshold</code><span class="ox-param-default">0.05</span></div>
-<p class="ox-param-desc">pycisTarget parameters (upstream pycistarget_parameters)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>region_motif_enrichment_analysis_pycisTarget</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>pycistarget_term_col</code><span class="ox-param-default">Direct_annot</span></div>
-<p class="ox-param-desc">first entry of annotations_to_use</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>process_results_pycisTarget</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>rcistarget_aucMaxRank_factor</code><span class="ox-param-default">0.05</span></div>
-<p class="ox-param-desc">aucMaxRank = factor * ncol(motifRankings)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>gene_motif_enrichment_analysis_RcisTarget</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>rcistarget_db_hg38_500bp_up_100bp_down_v10clust</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">gene-based TFBS motif enrichment (RcisTarget); &quot;&quot; disables both rules,<br>matching upstream&#x27;s &quot;to skip you have to leave one database entry with an<br>empty path&quot; convention</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>aggregate_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</code> <code>gene_motif_enrichment_analysis_RcisTarget</code> <code>plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust</code> <code>visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>rcistarget_geneErnMaxRank</code><span class="ox-param-default">5000</span></div>
-<p class="ox-param-desc">rcistarget tool parameter (upstream --rcistarget_geneErnMaxRank) <span class="ox-param-inferred">inferred</span></p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>gene_motif_enrichment_analysis_RcisTarget</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>rcistarget_geneErnMethod</code><span class="ox-param-default">aprox</span></div>
-<p class="ox-param-desc">alternatively exact but more intense: &quot;icistarget&quot;</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>gene_motif_enrichment_analysis_RcisTarget</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>rcistarget_motifAnnot_highConfCat</code><span class="ox-param-default">directAnnotation,inferredBy_Orthology</span></div>
-<p class="ox-param-desc">upstream python lists; comma-joined so the rendered command stays a single<br>token (values contain no commas)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>gene_motif_enrichment_analysis_RcisTarget</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>rcistarget_motifAnnot_lowConfCat</code><span class="ox-param-default">inferredBy_MotifSimilarity,inferredBy_MotifSimilarity_n_Orthology</span></div>
-<p class="ox-param-desc">upstream python lists; comma-joined so the rendered command stays a single<br>token (values contain no commas)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>gene_motif_enrichment_analysis_RcisTarget</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>rcistarget_motif_annot</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">user-provided motif-to-TF annotation tbl; &quot;&quot; disables</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>aggregate_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</code> <code>gene_motif_enrichment_analysis_RcisTarget</code> <code>plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust</code> <code>visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>rcistarget_nesThreshold</code><span class="ox-param-default">3</span></div>
-<p class="ox-param-desc">upstream python lists; comma-joined so the rendered command stays a single<br>token (values contain no commas)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>gene_motif_enrichment_analysis_RcisTarget</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>region_beds</code><span class="ox-param-default">test/data/CorcesATAC</span></div>
-<p class="ox-param-desc">feature sets (derived from config/annotation.csv at port time)</p>
-<details class="ox-param-usedby"><summary>used by 5 rules</summary>
-<div class="ox-param-rules"><code>region_enrichment_analysis_GREAT_Azimuth_2023</code> <code>region_enrichment_analysis_GREAT_Reactome</code> <code>region_enrichment_analysis_LOLA</code> <code>region_gene_association_GREAT</code> <code>region_motif_enrichment_analysis_pycisTarget</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>region_sets</code><span class="ox-param-default">Bcell_open_regions, Ery_open_regions</span></div>
-<p class="ox-param-desc">feature sets (derived from config/annotation.csv at port time)</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>result_path</code><span class="ox-param-default">test/results/enrichment_analysis</span></div>
-<p class="ox-param-desc">general</p>
-<details class="ox-param-usedby"><summary>used by 40 rules</summary>
-<div class="ox-param-rules"><code>aggregate_GREAT_Azimuth_2023_ATAC</code> <code>aggregate_GREAT_Reactome_ATAC</code> <code>aggregate_LOLA_LOLACore_ATAC</code> <code>aggregate_ORA_GSEApy_Azimuth_2023_ATAC</code> <code>aggregate_ORA_GSEApy_Reactome_ATAC</code> <code>aggregate_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</code> <code>aggregate_preranked_GSEApy_Azimuth_2023_RNA</code> <code>aggregate_preranked_GSEApy_Reactome_RNA</code> <code>aggregate_pycisTarget_hg38_screen_v10clust_ATAC</code> <code>annot_export</code> <code>config_export</code> <code>gene_ORA_GSEApy_Azimuth_2023</code> <code>gene_ORA_GSEApy_Reactome</code> <code>gene_motif_enrichment_analysis_RcisTarget</code> <code>gene_preranked_GSEApy_Azimuth_2023</code> <code>gene_preranked_GSEApy_Reactome</code> <code>plot_enrichment_result_GREAT_Azimuth_2023</code> <code>plot_enrichment_result_GREAT_Reactome</code> <code>plot_enrichment_result_LOLA_LOLACore</code> <code>plot_enrichment_result_ORA_GSEApy_Azimuth_2023</code> <code>plot_enrichment_result_ORA_GSEApy_Reactome</code> <code>plot_enrichment_result_RcisTarget_hg38_500bp_up_100bp_down_v10clust</code> <code>plot_enrichment_result_preranked_GSEApy_Azimuth_2023</code> <code>plot_enrichment_result_preranked_GSEApy_Reactome</code> <code>plot_enrichment_result_pycisTarget_hg38_screen_v10clust</code> <code>process_results_pycisTarget</code> <code>region_enrichment_analysis_GREAT_Azimuth_2023</code> <code>region_enrichment_analysis_GREAT_Reactome</code> <code>region_enrichment_analysis_LOLA</code> <code>region_gene_association_GREAT</code> <code>region_motif_enrichment_analysis_pycisTarget</code> <code>visualize_GREAT_Azimuth_2023_ATAC</code> <code>visualize_GREAT_Reactome_ATAC</code> <code>visualize_LOLA_LOLACore_ATAC</code> <code>visualize_ORA_GSEApy_Azimuth_2023_ATAC</code> <code>visualize_ORA_GSEApy_Reactome_ATAC</code> <code>visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</code> <code>visualize_preranked_GSEApy_Azimuth_2023_RNA</code> <code>visualize_preranked_GSEApy_Reactome_RNA</code> <code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>rnk_dir</code><span class="ox-param-default">test/data/CorcesRNA</span></div>
-<p class="ox-param-desc">{gene_set}.csv per entry of rnk_sets</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>gene_preranked_GSEApy_Azimuth_2023</code> <code>gene_preranked_GSEApy_Reactome</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>rnk_sets</code><span class="ox-param-default">Bcell_ranked, Ery_ranked</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>species</code><span class="ox-param-default">homo_sapiens</span></div>
-<p class="ox-param-desc">upstream derives species from genome (hg19/hg38 -&gt; homo_sapiens); ported as config key</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>region_motif_enrichment_analysis_pycisTarget</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>top_terms_n</code><span class="ox-param-default">5</span></div>
-<p class="ox-param-desc">aggregate &amp; summarize (upstream top_terms_n / adjp_cap / or_cap / nes_cap / cluster_summary)</p>
-<details class="ox-param-usedby"><summary>used by 9 rules</summary>
-<div class="ox-param-rules"><code>visualize_GREAT_Azimuth_2023_ATAC</code> <code>visualize_GREAT_Reactome_ATAC</code> <code>visualize_LOLA_LOLACore_ATAC</code> <code>visualize_ORA_GSEApy_Azimuth_2023_ATAC</code> <code>visualize_ORA_GSEApy_Reactome_ATAC</code> <code>visualize_RcisTarget_hg38_500bp_up_100bp_down_v10clust_ATAC</code> <code>visualize_preranked_GSEApy_Azimuth_2023_RNA</code> <code>visualize_preranked_GSEApy_Reactome_RNA</code> <code>visualize_pycisTarget_hg38_screen_v10clust_ATAC</code></div>
-</details>
-</div>
-</div>
+<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. Copy a row to paste the key directly. Click any parameter name to copy <code>key = value</code>; clicking <code>default</code> copies just the value.</p>
+<table class="ox-params">
+<thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+<tbody>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy adjp_cap = value" data-copy="adjp_cap = 4">adjp_cap</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>4</code></td>
+<td class="ox-p-desc">aggregate &amp; summarize (upstream top_terms_n / adjp_cap / or_cap / nes_cap / cluster_summary)<br><span class="ox-param-usedby">used by <code>9</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy adjp_th_GREAT = value" data-copy="adjp_th_GREAT = 0.01">adjp_th_GREAT</button></td>
+<td class="ox-p-t"><code>float</code></td>
+<td class="ox-p-d"><code>0.01</code></td>
+<td class="ox-p-desc">significance thresholds (upstream adjp_th)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy adjp_th_LOLA = value" data-copy="adjp_th_LOLA = 0.01">adjp_th_LOLA</button></td>
+<td class="ox-p-t"><code>float</code></td>
+<td class="ox-p-d"><code>0.01</code></td>
+<td class="ox-p-desc">significance thresholds (upstream adjp_th)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy adjp_th_ORA_GSEApy = value" data-copy="adjp_th_ORA_GSEApy = 0.05">adjp_th_ORA_GSEApy</button></td>
+<td class="ox-p-t"><code>float</code></td>
+<td class="ox-p-d"><code>0.05</code></td>
+<td class="ox-p-desc">significance thresholds (upstream adjp_th)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy adjp_th_RcisTarget = value" data-copy="adjp_th_RcisTarget = 5">adjp_th_RcisTarget</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>5</code></td>
+<td class="ox-p-desc">significance thresholds (upstream adjp_th)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy adjp_th_preranked_GSEApy = value" data-copy="adjp_th_preranked_GSEApy = 0.05">adjp_th_preranked_GSEApy</button></td>
+<td class="ox-p-t"><code>float</code></td>
+<td class="ox-p-d"><code>0.05</code></td>
+<td class="ox-p-desc">significance thresholds (upstream adjp_th)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy adjp_th_pycisTarget = value" data-copy="adjp_th_pycisTarget = 5">adjp_th_pycisTarget</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>5</code></td>
+<td class="ox-p-desc">significance thresholds (upstream adjp_th)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy all_region_sets = value" data-copy="all_region_sets = Bcell_open_regions, Ery_open_regions, all_regions">all_region_sets</button></td>
+<td class="ox-p-t"><code>array</code></td>
+<td class="ox-p-d"><code>Bcell_open_regions, Ery_open_regions, all_regions</code></td>
+<td class="ox-p-desc">feature sets (derived from config/annotation.csv at port time)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy annotation = value" data-copy="annotation = config/annotation.csv">annotation</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>config/annotation.csv</code></td>
+<td class="ox-p-desc">general<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy background_name = value" data-copy="background_name = all_regions">background_name</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>all_regions</code></td>
+<td class="ox-p-desc">upstream annotation background_name (all region sets)<br><span class="ox-param-usedby">used by <code>6</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cluster_summary = value" data-copy="cluster_summary = 1">cluster_summary</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>1</code></td>
+<td class="ox-p-desc">aggregate &amp; summarize (upstream top_terms_n / adjp_cap / or_cap / nes_cap / cluster_summary)<br><span class="ox-param-usedby">used by <code>9</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cn_GREAT_adj_pvalue = value" data-copy="cn_GREAT_adj_pvalue = p_adjust_hyper">cn_GREAT_adj_pvalue</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>p_adjust_hyper</code></td>
+<td class="ox-p-desc">tool-specific column names (upstream column_names)<br><span class="ox-param-usedby">used by <code>6</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cn_GREAT_effect_size = value" data-copy="cn_GREAT_effect_size = fold_enrichment_hyper">cn_GREAT_effect_size</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>fold_enrichment_hyper</code></td>
+<td class="ox-p-desc">tool-specific column names (upstream column_names)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cn_GREAT_overlap = value" data-copy="cn_GREAT_overlap = observed_region_hits">cn_GREAT_overlap</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>observed_region_hits</code></td>
+<td class="ox-p-desc">tool-specific column names (upstream column_names)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cn_GREAT_p_value = value" data-copy="cn_GREAT_p_value = p_value_hyper">cn_GREAT_p_value</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>p_value_hyper</code></td>
+<td class="ox-p-desc">tool-specific column names (upstream column_names)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cn_GREAT_term = value" data-copy="cn_GREAT_term = description">cn_GREAT_term</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>description</code></td>
+<td class="ox-p-desc">tool-specific column names (upstream column_names)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cn_GREAT_top_n = value" data-copy="cn_GREAT_top_n = 25">cn_GREAT_top_n</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>25</code></td>
+<td class="ox-p-desc">tool-specific column names (upstream column_names)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cn_LOLA_adj_pvalue = value" data-copy="cn_LOLA_adj_pvalue = qValue">cn_LOLA_adj_pvalue</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>qValue</code></td>
+<td class="ox-p-desc">tool-specific column names (upstream column_names)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cn_LOLA_effect_size = value" data-copy="cn_LOLA_effect_size = oddsRatio">cn_LOLA_effect_size</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>oddsRatio</code></td>
+<td class="ox-p-desc">tool-specific column names (upstream column_names)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cn_LOLA_overlap = value" data-copy="cn_LOLA_overlap = support">cn_LOLA_overlap</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>support</code></td>
+<td class="ox-p-desc">tool-specific column names (upstream column_names)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cn_LOLA_p_value = value" data-copy="cn_LOLA_p_value = pValue">cn_LOLA_p_value</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>pValue</code></td>
+<td class="ox-p-desc">tool-specific column names (upstream column_names)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cn_LOLA_term = value" data-copy="cn_LOLA_term = description">cn_LOLA_term</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>description</code></td>
+<td class="ox-p-desc">tool-specific column names (upstream column_names)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cn_LOLA_top_n = value" data-copy="cn_LOLA_top_n = 25">cn_LOLA_top_n</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>25</code></td>
+<td class="ox-p-desc">tool-specific column names (upstream column_names)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cn_ORA_GSEApy_adj_pvalue = value" data-copy="cn_ORA_GSEApy_adj_pvalue = Adjusted_P_value">cn_ORA_GSEApy_adj_pvalue</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>Adjusted_P_value</code></td>
+<td class="ox-p-desc">tool-specific column names (upstream column_names)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cn_ORA_GSEApy_effect_size = value" data-copy="cn_ORA_GSEApy_effect_size = Odds_Ratio">cn_ORA_GSEApy_effect_size</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>Odds_Ratio</code></td>
+<td class="ox-p-desc">tool-specific column names (upstream column_names)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cn_ORA_GSEApy_overlap = value" data-copy="cn_ORA_GSEApy_overlap = Overlap">cn_ORA_GSEApy_overlap</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>Overlap</code></td>
+<td class="ox-p-desc">tool-specific column names (upstream column_names)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cn_ORA_GSEApy_p_value = value" data-copy="cn_ORA_GSEApy_p_value = P_value">cn_ORA_GSEApy_p_value</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>P_value</code></td>
+<td class="ox-p-desc">tool-specific column names (upstream column_names)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cn_ORA_GSEApy_term = value" data-copy="cn_ORA_GSEApy_term = Term">cn_ORA_GSEApy_term</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>Term</code></td>
+<td class="ox-p-desc">tool-specific column names (upstream column_names)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cn_ORA_GSEApy_top_n = value" data-copy="cn_ORA_GSEApy_top_n = 25">cn_ORA_GSEApy_top_n</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>25</code></td>
+<td class="ox-p-desc">tool-specific column names (upstream column_names)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cn_RcisTarget_adj_pvalue = value" data-copy="cn_RcisTarget_adj_pvalue = NES">cn_RcisTarget_adj_pvalue</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>NES</code></td>
+<td class="ox-p-desc">tool-specific column names (upstream column_names)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cn_RcisTarget_effect_size = value" data-copy="cn_RcisTarget_effect_size = NES">cn_RcisTarget_effect_size</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>NES</code></td>
+<td class="ox-p-desc">NES combines significance and effect size<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cn_RcisTarget_overlap = value" data-copy="cn_RcisTarget_overlap = nEnrGenes">cn_RcisTarget_overlap</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>nEnrGenes</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cn_RcisTarget_p_value = value" data-copy="cn_RcisTarget_p_value = AUC">cn_RcisTarget_p_value</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>AUC</code></td>
+<td class="ox-p-desc">tool-specific column names (upstream column_names)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cn_RcisTarget_term = value" data-copy="cn_RcisTarget_term = description">cn_RcisTarget_term</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>description</code></td>
+<td class="ox-p-desc">motif name + highConfCat TFs<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cn_RcisTarget_top_n = value" data-copy="cn_RcisTarget_top_n = 25">cn_RcisTarget_top_n</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>25</code></td>
+<td class="ox-p-desc">tool-specific column names (upstream column_names)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cn_preranked_GSEApy_adj_pvalue = value" data-copy="cn_preranked_GSEApy_adj_pvalue = FDR_q_val">cn_preranked_GSEApy_adj_pvalue</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>FDR_q_val</code></td>
+<td class="ox-p-desc">tool-specific column names (upstream column_names)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cn_preranked_GSEApy_effect_size = value" data-copy="cn_preranked_GSEApy_effect_size = NES">cn_preranked_GSEApy_effect_size</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>NES</code></td>
+<td class="ox-p-desc">tool-specific column names (upstream column_names)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cn_preranked_GSEApy_overlap = value" data-copy="cn_preranked_GSEApy_overlap = Tag">cn_preranked_GSEApy_overlap</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>Tag</code></td>
+<td class="ox-p-desc">tool-specific column names (upstream column_names)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cn_preranked_GSEApy_p_value = value" data-copy="cn_preranked_GSEApy_p_value = NOM_p_val">cn_preranked_GSEApy_p_value</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>NOM_p_val</code></td>
+<td class="ox-p-desc">tool-specific column names (upstream column_names)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cn_preranked_GSEApy_term = value" data-copy="cn_preranked_GSEApy_term = Term">cn_preranked_GSEApy_term</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>Term</code></td>
+<td class="ox-p-desc">tool-specific column names (upstream column_names)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cn_preranked_GSEApy_top_n = value" data-copy="cn_preranked_GSEApy_top_n = 25">cn_preranked_GSEApy_top_n</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>25</code></td>
+<td class="ox-p-desc">tool-specific column names (upstream column_names)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cn_pycisTarget_adj_pvalue = value" data-copy="cn_pycisTarget_adj_pvalue = NES">cn_pycisTarget_adj_pvalue</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>NES</code></td>
+<td class="ox-p-desc">tool-specific column names (upstream column_names)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cn_pycisTarget_effect_size = value" data-copy="cn_pycisTarget_effect_size = NES">cn_pycisTarget_effect_size</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>NES</code></td>
+<td class="ox-p-desc">tool-specific column names (upstream column_names)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cn_pycisTarget_overlap = value" data-copy="cn_pycisTarget_overlap = Motif_hits">cn_pycisTarget_overlap</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>Motif_hits</code></td>
+<td class="ox-p-desc">tool-specific column names (upstream column_names)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cn_pycisTarget_p_value = value" data-copy="cn_pycisTarget_p_value = AUC">cn_pycisTarget_p_value</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>AUC</code></td>
+<td class="ox-p-desc">tool-specific column names (upstream column_names)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cn_pycisTarget_term = value" data-copy="cn_pycisTarget_term = description">cn_pycisTarget_term</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>description</code></td>
+<td class="ox-p-desc">tool-specific column names (upstream column_names)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cn_pycisTarget_top_n = value" data-copy="cn_pycisTarget_top_n = 25">cn_pycisTarget_top_n</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>25</code></td>
+<td class="ox-p-desc">tool-specific column names (upstream column_names)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy db_Azimuth_2023 = value" data-copy="db_Azimuth_2023 = test/resources/enrichment_analysis/Azimuth_2023.json">db_Azimuth_2023</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/resources/enrichment_analysis/Azimuth_2023.json</code></td>
+<td class="ox-p-desc">databases (upstream local_databases / lola_databases)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy db_Reactome = value" data-copy="db_Reactome = test/resources/enrichment_analysis/ReactomePathways.gmt">db_Reactome</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/resources/enrichment_analysis/ReactomePathways.gmt</code></td>
+<td class="ox-p-desc">databases (upstream local_databases / lola_databases)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy genome = value" data-copy="genome = hg38">genome</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>hg38</code></td>
+<td class="ox-p-desc">general<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy great_basal_downstream = value" data-copy="great_basal_downstream = 1000">great_basal_downstream</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>1000</code></td>
+<td class="ox-p-desc">GREAT parameters (upstream great_parameters)<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy great_basal_upstream = value" data-copy="great_basal_upstream = 5000">great_basal_upstream</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>5000</code></td>
+<td class="ox-p-desc">GREAT parameters (upstream great_parameters)<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy great_extension = value" data-copy="great_extension = 1000000">great_extension</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>1000000</code></td>
+<td class="ox-p-desc">GREAT parameters (upstream great_parameters)<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy great_map_associated_regions = value" data-copy="great_map_associated_regions = 1">great_map_associated_regions</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>1</code></td>
+<td class="ox-p-desc">GREAT parameters (upstream great_parameters)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy great_min_gene_set_size = value" data-copy="great_min_gene_set_size = 0">great_min_gene_set_size</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>0</code></td>
+<td class="ox-p-desc">GREAT parameters (upstream great_parameters)<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy great_mode = value" data-copy="great_mode = basalPlusExt">great_mode</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>basalPlusExt</code></td>
+<td class="ox-p-desc">GREAT parameters (upstream great_parameters)<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy lola_db_LOLACore = value" data-copy="lola_db_LOLACore = test/resources/LOLACore/hg38">lola_db_LOLACore</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/resources/LOLACore/hg38</code></td>
+<td class="ox-p-desc">databases (upstream local_databases / lola_databases)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy nes_cap = value" data-copy="nes_cap = 5">nes_cap</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>5</code></td>
+<td class="ox-p-desc">aggregate &amp; summarize (upstream top_terms_n / adjp_cap / or_cap / nes_cap / cluster_summary)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy or_cap = value" data-copy="or_cap = 5">or_cap</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>5</code></td>
+<td class="ox-p-desc">aggregate &amp; summarize (upstream top_terms_n / adjp_cap / or_cap / nes_cap / cluster_summary)<br><span class="ox-param-usedby">used by <code>7</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy path_to_motif_annotations = value" data-copy="path_to_motif_annotations = ">path_to_motif_annotations</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">user-provided motif annotation tbl; &quot;&quot; disables motif enrichment<br><span class="ox-param-usedby">used by <code>5</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy project_name = value" data-copy="project_name = Corces_CellTypes">project_name</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>Corces_CellTypes</code></td>
+<td class="ox-p-desc">general<br><span class="ox-param-usedby">used by <code>11</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pycistarget_annotation_version = value" data-copy="pycistarget_annotation_version = v10nr_clust">pycistarget_annotation_version</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>v10nr_clust</code></td>
+<td class="ox-p-desc">pycisTarget parameters (upstream pycistarget_parameters)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pycistarget_annotations_to_use = value" data-copy="pycistarget_annotations_to_use = [&#x27;Direct_annot&#x27;, &#x27;Motif_similarity_annot&#x27;, &#x27;Orthology_annot&#x27;, &#x27;Motif_similarity_and_Orthology_annot&#x27;]">pycistarget_annotations_to_use</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>[&#x27;Direct_annot&#x27;, &#x27;Motif_similarity_annot&#x27;, &#x27;Orthology_annot&#x27;, &#x27;Motif_similarity_and_Orthology_annot&#x27;]</code></td>
+<td class="ox-p-desc">upstream passes the python list literal; kept as a string so the rendered<br>command is byte-identical to upstream&#x27;s<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pycistarget_auc_threshold = value" data-copy="pycistarget_auc_threshold = 0.005">pycistarget_auc_threshold</button></td>
+<td class="ox-p-t"><code>float</code></td>
+<td class="ox-p-d"><code>0.005</code></td>
+<td class="ox-p-desc">pycisTarget parameters (upstream pycistarget_parameters)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pycistarget_db_hg38_screen_v10clust = value" data-copy="pycistarget_db_hg38_screen_v10clust = ">pycistarget_db_hg38_screen_v10clust</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">user-provided pycisTarget rankings DB; &quot;&quot; disables motif enrichment<br><span class="ox-param-usedby">used by <code>5</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pycistarget_fraction_overlap_w_cistarget_database = value" data-copy="pycistarget_fraction_overlap_w_cistarget_database = 0.4">pycistarget_fraction_overlap_w_cistarget_database</button></td>
+<td class="ox-p-t"><code>float</code></td>
+<td class="ox-p-d"><code>0.4</code></td>
+<td class="ox-p-desc">pycisTarget parameters (upstream pycistarget_parameters)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pycistarget_motif_similarity_fdr = value" data-copy="pycistarget_motif_similarity_fdr = 0.001">pycistarget_motif_similarity_fdr</button></td>
+<td class="ox-p-t"><code>float</code></td>
+<td class="ox-p-d"><code>0.001</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pycistarget_nes_threshold = value" data-copy="pycistarget_nes_threshold = 3">pycistarget_nes_threshold</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>3</code></td>
+<td class="ox-p-desc">pycisTarget parameters (upstream pycistarget_parameters)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pycistarget_orthologous_identity_threshold = value" data-copy="pycistarget_orthologous_identity_threshold = 0">pycistarget_orthologous_identity_threshold</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>0</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pycistarget_rank_threshold = value" data-copy="pycistarget_rank_threshold = 0.05">pycistarget_rank_threshold</button></td>
+<td class="ox-p-t"><code>float</code></td>
+<td class="ox-p-d"><code>0.05</code></td>
+<td class="ox-p-desc">pycisTarget parameters (upstream pycistarget_parameters)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pycistarget_term_col = value" data-copy="pycistarget_term_col = Direct_annot">pycistarget_term_col</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>Direct_annot</code></td>
+<td class="ox-p-desc">first entry of annotations_to_use<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy rcistarget_aucMaxRank_factor = value" data-copy="rcistarget_aucMaxRank_factor = 0.05">rcistarget_aucMaxRank_factor</button></td>
+<td class="ox-p-t"><code>float</code></td>
+<td class="ox-p-d"><code>0.05</code></td>
+<td class="ox-p-desc">aucMaxRank = factor * ncol(motifRankings)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy rcistarget_db_hg38_500bp_up_100bp_down_v10clust = value" data-copy="rcistarget_db_hg38_500bp_up_100bp_down_v10clust = ">rcistarget_db_hg38_500bp_up_100bp_down_v10clust</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">gene-based TFBS motif enrichment (RcisTarget); &quot;&quot; disables both rules,<br>matching upstream&#x27;s &quot;to skip you have to leave one database entry with an<br>empty path&quot; convention<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy rcistarget_geneErnMaxRank = value" data-copy="rcistarget_geneErnMaxRank = 5000">rcistarget_geneErnMaxRank</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>5000</code></td>
+<td class="ox-p-desc">rcistarget tool parameter (upstream --rcistarget_geneErnMaxRank) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy rcistarget_geneErnMethod = value" data-copy="rcistarget_geneErnMethod = aprox">rcistarget_geneErnMethod</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>aprox</code></td>
+<td class="ox-p-desc">alternatively exact but more intense: &quot;icistarget&quot;<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy rcistarget_motifAnnot_highConfCat = value" data-copy="rcistarget_motifAnnot_highConfCat = directAnnotation,inferredBy_Orthology">rcistarget_motifAnnot_highConfCat</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>directAnnotation,inferredBy_Orthology</code></td>
+<td class="ox-p-desc">upstream python lists; comma-joined so the rendered command stays a single<br>token (values contain no commas)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy rcistarget_motifAnnot_lowConfCat = value" data-copy="rcistarget_motifAnnot_lowConfCat = inferredBy_MotifSimilarity,inferredBy_MotifSimilarity_n_Orthology">rcistarget_motifAnnot_lowConfCat</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>inferredBy_MotifSimilarity,inferredBy_MotifSimilarity_n_Orthology</code></td>
+<td class="ox-p-desc">upstream python lists; comma-joined so the rendered command stays a single<br>token (values contain no commas)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy rcistarget_motif_annot = value" data-copy="rcistarget_motif_annot = ">rcistarget_motif_annot</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">user-provided motif-to-TF annotation tbl; &quot;&quot; disables<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy rcistarget_nesThreshold = value" data-copy="rcistarget_nesThreshold = 3">rcistarget_nesThreshold</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>3</code></td>
+<td class="ox-p-desc">upstream python lists; comma-joined so the rendered command stays a single<br>token (values contain no commas)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy region_beds = value" data-copy="region_beds = test/data/CorcesATAC">region_beds</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/data/CorcesATAC</code></td>
+<td class="ox-p-desc">feature sets (derived from config/annotation.csv at port time)<br><span class="ox-param-usedby">used by <code>5</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy region_sets = value" data-copy="region_sets = Bcell_open_regions, Ery_open_regions">region_sets</button></td>
+<td class="ox-p-t"><code>array</code></td>
+<td class="ox-p-d"><code>Bcell_open_regions, Ery_open_regions</code></td>
+<td class="ox-p-desc">feature sets (derived from config/annotation.csv at port time)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy result_path = value" data-copy="result_path = test/results/enrichment_analysis">result_path</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/results/enrichment_analysis</code></td>
+<td class="ox-p-desc">general<br><span class="ox-param-usedby">used by <code>40</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy rnk_dir = value" data-copy="rnk_dir = test/data/CorcesRNA">rnk_dir</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/data/CorcesRNA</code></td>
+<td class="ox-p-desc">{gene_set}.csv per entry of rnk_sets<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy rnk_sets = value" data-copy="rnk_sets = Bcell_ranked, Ery_ranked">rnk_sets</button></td>
+<td class="ox-p-t"><code>array</code></td>
+<td class="ox-p-d"><code>Bcell_ranked, Ery_ranked</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy species = value" data-copy="species = homo_sapiens">species</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>homo_sapiens</code></td>
+<td class="ox-p-desc">upstream derives species from genome (hg19/hg38 -&gt; homo_sapiens); ported as config key<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy top_terms_n = value" data-copy="top_terms_n = 5">top_terms_n</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>5</code></td>
+<td class="ox-p-desc">aggregate &amp; summarize (upstream top_terms_n / adjp_cap / or_cap / nes_cap / cluster_summary)<br><span class="ox-param-usedby">used by <code>9</code> rules</span></td>
+</tr>
+</tbody>
+</table>
 
 Descriptions are the workflow's own `#` comments from its `[config]` section (and the `[config]` sections of its included modules), surfaced by `oxo-flow info` — no schema file to maintain.
 
@@ -703,7 +630,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <details class="ox-flow-view">
 <summary>Exact rule DAG (multi-route truth — operational view)</summary>
 <div class="ox-dag-card ox-dag-card--wide">
-<a href="/assets/dag/oxo-flow-enrichment-rules.svg?v=8b3627be56" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-enrichment-rules.svg?v=8b3627be56" alt="oxo-flow-enrichment rule-level detail" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-enrichment-rules.svg?v=0055e95439" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-enrichment-rules.svg?v=0055e95439" alt="oxo-flow-enrichment rule-level detail" loading="lazy"></a>
 </div>
 </details>
 <details class="ox-flow-view" open>

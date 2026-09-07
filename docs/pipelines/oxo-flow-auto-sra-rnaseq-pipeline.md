@@ -46,6 +46,16 @@ title: "SRA-powered RNA-seq: .sra archives to differential expression"
 </div>
 </details>
 
+
+<div class="ox-tryit">
+<div class="ox-tryit-title">⬡ Try it — clone &amp; run</div>
+<pre class="ox-tryit-cmd" data-copy="git clone https://github.com/oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipeline.git &amp;&amp; cd oxo-flow-auto-sra-rnaseq-pipeline &amp;&amp; oxo-flow run main.oxoflow">git clone https://github.com/oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipeline.git
+cd oxo-flow-auto-sra-rnaseq-pipeline
+oxo-flow run main.oxoflow</pre>
+<p class="ox-tryit-note">The repository ships test fixtures (e.g. <code>test/fixtures/metadata/D21122.txt</code>, <code>test/fixtures/metadata/D21122_6sample.txt</code>, <code>test/fixtures/metadata/D21122_single_example.txt</code>, <code>test/fixtures/metadata/ENCODE_example.txt</code>) — point <code>input</code> at them or use the built-in sample group to <code>dry-run</code> first.</p>
+</div>
+
+
 ## Run it
 
 ```bash
@@ -87,107 +97,96 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipeline
 
 ## Parameters
 
-<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. The list below names the rules that read each key.</p>
-<div class="ox-params">
-<div class="ox-param">
-<div class="ox-param-head"><code>GTF</code><span class="ox-param-default">/data/reference/genome/GRCh38/Homo_sapiens.GRCh38.95.sort.gtf</span></div>
-<p class="ox-param-desc">STAR index dir and GTF (upstream keys index / GTF).</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>align_and_count</code> <code>align_and_count_single</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>bark</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Bark / feishu push notifications (upstream config.yaml keys). Consumed by<br>the batch runner scripts/run_batch.py after each metadata file finishes<br>(upstream run.py). Keep off unless the endpoints are configured.</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>bark_api</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Bark / feishu push notifications (upstream config.yaml keys). Consumed by<br>the batch runner scripts/run_batch.py after each metadata file finishes<br>(upstream run.py). Keep off unless the endpoints are configured.</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>db_id</code><span class="ox-param-default">D21122</span></div>
-<p class="ox-param-desc">DB_ID — upstream: basename(metadata).replace(&quot;.txt&quot;, &quot;&quot;).</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>DGE_analysis</code> <code>combine_count</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>feishu</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Bark / feishu push notifications (upstream config.yaml keys). Consumed by<br>the batch runner scripts/run_batch.py after each metadata file finishes<br>(upstream run.py). Keep off unless the endpoints are configured.</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>feishu_api</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Bark / feishu push notifications (upstream config.yaml keys). Consumed by<br>the batch runner scripts/run_batch.py after each metadata file finishes<br>(upstream run.py). Keep off unless the endpoints are configured.</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>index</code><span class="ox-param-default">/data/reference/genome/GRCh38/STAR</span></div>
-<p class="ox-param-desc">STAR index dir and GTF (upstream keys index / GTF).</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>align_and_count</code> <code>align_and_count_single</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>mail</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Email notification (upstream onsuccess + onerror). Keep off unless SMTP<br>is configured — the [workflow] on_error hook reuses these same keys.</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>mail_to</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Email notification (upstream onsuccess + onerror). Keep off unless SMTP<br>is configured — the [workflow] on_error hook reuses these same keys.</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>metadata</code><span class="ox-param-default">test/fixtures/metadata/D21122_6sample.txt</span></div>
-<p class="ox-param-desc">Metadata TSV (upstream key metadata). Columns:<br>Dataset GSE GSM gene method celline group group_name type platform SRR paired<br>The repo default points at the bundled example dataset (upstream doc/D21122.txt).</p>
-<details class="ox-param-usedby"><summary>used by 7 rules</summary>
-<div class="ox-param-rules"><code>DGE_analysis</code> <code>combine_count</code> <code>get_sra</code> <code>merge_R1_data</code> <code>merge_R2_data</code> <code>merge_data</code> <code>sra_dump</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>sender</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Email notification (upstream onsuccess + onerror). Keep off unless SMTP<br>is configured — the [workflow] on_error hook reuses these same keys.</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>sender_password</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Email notification (upstream onsuccess + onerror). Keep off unless SMTP<br>is configured — the [workflow] on_error hook reuses these same keys.</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>sra_data_path</code><span class="ox-param-default">sra</span></div>
-<p class="ox-param-desc">Directory holding pre-downloaded .sra files, layout &lt;dir&gt;/&lt;SRR&gt;/&lt;SRR&gt;.sra<br>(upstream key sra_data_path).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>get_sra</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>srr_separator</code><span class="ox-param-default">,</span></div>
-<p class="ox-param-desc">Separator joining multiple SRR runs per sample in the metadata SRR column.</p>
-<details class="ox-param-usedby"><summary>used by 5 rules</summary>
-<div class="ox-param-rules"><code>get_sra</code> <code>merge_R1_data</code> <code>merge_R2_data</code> <code>merge_data</code> <code>sra_dump</code></div>
-</details>
-</div>
-</div>
+<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. Copy a row to paste the key directly. Click any parameter name to copy <code>key = value</code>; clicking <code>default</code> copies just the value.</p>
+<table class="ox-params">
+<thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+<tbody>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy GTF = value" data-copy="GTF = /data/reference/genome/GRCh38/Homo_sapiens.GRCh38.95.sort.gtf">GTF</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>/data/reference/genome/GRCh38/Homo_sapiens.GRCh38.95.sort.gtf</code></td>
+<td class="ox-p-desc">STAR index dir and GTF (upstream keys index / GTF).<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bark = value" data-copy="bark = false">bark</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Bark / feishu push notifications (upstream config.yaml keys). Consumed by<br>the batch runner scripts/run_batch.py after each metadata file finishes<br>(upstream run.py). Keep off unless the endpoints are configured.<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bark_api = value" data-copy="bark_api = ">bark_api</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">Bark / feishu push notifications (upstream config.yaml keys). Consumed by<br>the batch runner scripts/run_batch.py after each metadata file finishes<br>(upstream run.py). Keep off unless the endpoints are configured.<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy db_id = value" data-copy="db_id = D21122">db_id</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>D21122</code></td>
+<td class="ox-p-desc">DB_ID — upstream: basename(metadata).replace(&quot;.txt&quot;, &quot;&quot;).<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy feishu = value" data-copy="feishu = false">feishu</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Bark / feishu push notifications (upstream config.yaml keys). Consumed by<br>the batch runner scripts/run_batch.py after each metadata file finishes<br>(upstream run.py). Keep off unless the endpoints are configured.<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy feishu_api = value" data-copy="feishu_api = ">feishu_api</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">Bark / feishu push notifications (upstream config.yaml keys). Consumed by<br>the batch runner scripts/run_batch.py after each metadata file finishes<br>(upstream run.py). Keep off unless the endpoints are configured.<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy index = value" data-copy="index = /data/reference/genome/GRCh38/STAR">index</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>/data/reference/genome/GRCh38/STAR</code></td>
+<td class="ox-p-desc">STAR index dir and GTF (upstream keys index / GTF).<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mail = value" data-copy="mail = false">mail</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Email notification (upstream onsuccess + onerror). Keep off unless SMTP<br>is configured — the [workflow] on_error hook reuses these same keys.<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mail_to = value" data-copy="mail_to = ">mail_to</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">Email notification (upstream onsuccess + onerror). Keep off unless SMTP<br>is configured — the [workflow] on_error hook reuses these same keys.<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy metadata = value" data-copy="metadata = test/fixtures/metadata/D21122_6sample.txt">metadata</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/metadata/D21122_6sample.txt</code></td>
+<td class="ox-p-desc">Metadata TSV (upstream key metadata). Columns:<br>Dataset GSE GSM gene method celline group group_name type platform SRR paired<br>The repo default points at the bundled example dataset (upstream doc/D21122.txt).<br><span class="ox-param-usedby">used by <code>7</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sender = value" data-copy="sender = ">sender</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">Email notification (upstream onsuccess + onerror). Keep off unless SMTP<br>is configured — the [workflow] on_error hook reuses these same keys.<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sender_password = value" data-copy="sender_password = ">sender_password</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">Email notification (upstream onsuccess + onerror). Keep off unless SMTP<br>is configured — the [workflow] on_error hook reuses these same keys.<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sra_data_path = value" data-copy="sra_data_path = sra">sra_data_path</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>sra</code></td>
+<td class="ox-p-desc">Directory holding pre-downloaded .sra files, layout &lt;dir&gt;/&lt;SRR&gt;/&lt;SRR&gt;.sra<br>(upstream key sra_data_path).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy srr_separator = value" data-copy="srr_separator = ,">srr_separator</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>,</code></td>
+<td class="ox-p-desc">Separator joining multiple SRR runs per sample in the metadata SRR column.<br><span class="ox-param-usedby">used by <code>5</code> rules</span></td>
+</tr>
+</tbody>
+</table>
 
 Descriptions are the workflow's own `#` comments from its `[config]` section (and the `[config]` sections of its included modules), surfaced by `oxo-flow info` — no schema file to maintain.
 

@@ -209,6 +209,45 @@ def render_flow_view(
 
 SEMANTIC_DIR = ROOT / "scripts" / "semantic_maps"
 
+# Catalog-repo contract (workflow-repo-spec.md §metadata.json): these fields
+# must exist in every staged repo's metadata.json. Ports additionally carry
+# the upstream identity (engine/source/upstream_license) — originals that
+# are written for oxo-flow have no source engine to record.
+COMMON_META = (
+    "name", "title", "description", "origin", "rating", "created",
+    "domain", "tags", "tools", "rule_count", "scope", "excluded",
+    "installation", "repo_url", "license",
+)
+PORT_META = ("engine", "source", "upstream_license")
+
+
+def check_catalog_meta(pipelines: list[dict]) -> list[str]:
+    """Gate: every cataloged repo carries a complete metadata.json so the
+    catalog data and the repositories stay aligned."""
+    bad = []
+    for p in pipelines:
+        name = p["name"]
+        repo = None
+        for d in (STAGING, ROOT.parent if ROOT.parent != STAGING else STAGING):
+            if (d / name).is_dir():
+                repo = d / name
+                break
+        if repo is None:
+            bad.append(f"{name}: repo missing from staging")
+            continue
+        meta = repo / "metadata.json"
+        if not meta.is_file():
+            bad.append(f"{name}: missing metadata.json")
+            continue
+        d = json.loads(meta.read_text())
+        required = COMMON_META + (PORT_META if d.get("origin") == "port" else ())
+        for k in required:
+            if k not in d:
+                bad.append(f"{name}: metadata.json missing '{k}'")
+        if d.get("name") != name:
+            bad.append(f"{name}: metadata.json name is '{d.get('name')}'")
+    return bad
+
 # Non-rule tokens that legitimately appear in the walkthroughs (config vars,
 # sample-group names) — anything else must name a real rule of the workflow.
 SEM_TEXT_ALLOW = {"ids", "nf_core_pipeline", "skip_fastq_download", "input", "out_dir", "config",
@@ -335,6 +374,12 @@ def main() -> int:
         print("semantic-overview name check FAILED (every `code` token must be a real rule):",
               file=sys.stderr)
         for b in bad:
+            print(f"  - {b}", file=sys.stderr)
+    meta_bad = check_catalog_meta(pipelines)
+    if meta_bad:
+        print("catalog metadata contract check FAILED (workflow-repo-spec.md):",
+              file=sys.stderr)
+        for b in meta_bad:
             print(f"  - {b}", file=sys.stderr)
     if failures:
         print(f"skipped {len(failures)} item(s) — kept their committed artifacts:",

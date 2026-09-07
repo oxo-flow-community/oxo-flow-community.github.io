@@ -59,11 +59,13 @@ markdown_extensions:
 
 nav:
   - Home: index.md
+  - Get started: about/getting-started.md
   - Pipelines: pipelines/index.md
   - Catalog:
       - Curation & ratings: about/curation.md
       - Selection: about/selection.md
       - Porting guide: about/porting.md
+      - Workflow repo spec: about/workflow-repo-spec.md
       - Live testing: about/live-testing.md
   - Project:
       - Contributing: about/contributing.md

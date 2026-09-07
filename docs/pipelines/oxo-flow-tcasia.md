@@ -46,6 +46,16 @@ title: "Paired-end RNA-seq alignment and four-caller alternative-splicing analys
 </div>
 </details>
 
+
+<div class="ox-tryit">
+<div class="ox-tryit-title">⬡ Try it — clone &amp; run</div>
+<pre class="ox-tryit-cmd" data-copy="git clone https://github.com/oxo-flow-community/oxo-flow-tcasia.git &amp;&amp; cd oxo-flow-tcasia &amp;&amp; oxo-flow run main.oxoflow">git clone https://github.com/oxo-flow-community/oxo-flow-tcasia.git
+cd oxo-flow-tcasia
+oxo-flow run main.oxoflow</pre>
+<p class="ox-tryit-note">The repository ships test fixtures (e.g. <code>test/fixtures/raw/sample_01_1.fastq.gz</code>, <code>test/fixtures/raw/sample_01_2.fastq.gz</code>, <code>test/fixtures/raw/sample_02_1.fastq.gz</code>, <code>test/fixtures/raw/sample_02_2.fastq.gz</code>) — point <code>input</code> at them or use the built-in sample group to <code>dry-run</code> first.</p>
+</div>
+
+
 ## Run it
 
 ```bash
@@ -85,212 +95,186 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-tcasia
 
 ## Parameters
 
-<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. The list below names the rules that read each key.</p>
-<div class="ox-params">
-<div class="ox-param">
-<div class="ox-param-head"><code>align_out_dir</code><span class="ox-param-default">results/alignment</span></div>
-<p class="ox-param-desc">01_alignment (upstream config.yml)</p>
-<details class="ox-param-usedby"><summary>used by 5 rules</summary>
-<div class="ox-param-rules"><code>alignment::fastp_qc</code> <code>alignment::featurecounts</code> <code>alignment::index_bam</code> <code>alignment::sort_bam</code> <code>alignment::star_align</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>aligned_dir</code><span class="ox-param-default">results/alignment/aligned</span></div>
-<p class="ox-param-desc">upstream: 01 output_dir/aligned == 02 bam_dir</p>
-<details class="ox-param-usedby"><summary>used by 7 rules</summary>
-<div class="ox-param-rules"><code>alignment::featurecounts</code> <code>alignment::index_bam</code> <code>alignment::sort_bam</code> <code>alignment::star_align</code> <code>as_calling::majiq_create_ini</code> <code>as_calling::rmats_create_input</code> <code>as_calling::spladder_run</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>as_out_dir</code><span class="ox-param-default">results/as_calling</span></div>
-<p class="ox-param-desc">02_as_calling (upstream config.yml)</p>
-<details class="ox-param-usedby"><summary>used by 12 rules</summary>
-<div class="ox-param-rules"><code>as_calling::format_suppa_fields</code> <code>as_calling::majiq_build</code> <code>as_calling::majiq_create_ini</code> <code>as_calling::majiq_psi</code> <code>as_calling::rmats_create_input</code> <code>as_calling::rmats_run</code> <code>as_calling::salmon_quant</code> <code>as_calling::select_suppa_fields</code> <code>as_calling::spladder_run</code> <code>as_calling::suppa_run</code> <code>as_calling::voila_modulize</code> <code>as_calling::voila_tsv</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>fastp_min_length</code><span class="ox-param-default">36</span></div>
-<p class="ox-param-desc">fastp (upstream fastp.*)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>alignment::fastp_qc</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>fastp_n_base_limit</code><span class="ox-param-default">5</span></div>
-<p class="ox-param-desc">fastp (upstream fastp.*)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>alignment::fastp_qc</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>fastp_qualified_quality_phred</code><span class="ox-param-default">20</span></div>
-<p class="ox-param-desc">fastp (upstream fastp.*)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>alignment::fastp_qc</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>fastp_unqualified_percent_limit</code><span class="ox-param-default">40</span></div>
-<p class="ox-param-desc">fastp (upstream fastp.*)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>alignment::fastp_qc</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>gff</code><span class="ox-param-default">test/fixtures/reference/genes.gff3</span></div>
-<p class="ox-param-desc">upstream: GFF (tiny synthetic)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>as_calling::majiq_build</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>majiq_genome</code><span class="ox-param-default">hg38</span></div>
-<p class="ox-param-desc">majiq tool parameter (upstream --majiq_genome) <span class="ox-param-inferred">inferred</span></p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>as_calling::majiq_create_ini</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>majiq_license</code><span class="ox-param-default">test/fixtures/reference/majiq_license.lic</span></div>
-<p class="ox-param-desc">MAJIQ requires the upstream academic license file — place it at<br>test/fixtures/reference/majiq_license.lic (obtain from MAJIQ) and set<br>run_majiq = true. Upstream fails hard without the license; the port<br>gates the whole MAJIQ chain on this flag instead (documented in the<br>README fidelity table).</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>as_calling::majiq_build</code> <code>as_calling::majiq_psi</code> <code>as_calling::voila_modulize</code> <code>as_calling::voila_tsv</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>majiq_minreads</code><span class="ox-param-default">10</span></div>
-<p class="ox-param-desc">majiq tool parameter (upstream --majiq_minreads) <span class="ox-param-inferred">inferred</span></p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>as_calling::majiq_build</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>majiq_strandness</code><span class="ox-param-default">reverse</span></div>
-<p class="ox-param-desc">fr-firststrand -&gt; reverse | fr-secondstrand -&gt; forward | fr-unstranded -&gt; none</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>as_calling::majiq_create_ini</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>read_len</code><span class="ox-param-default">150</span></div>
-<p class="ox-param-desc">salmon_index is auto-built below from the shipped transcripts.fa</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>as_calling::majiq_create_ini</code> <code>as_calling::rmats_run</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>reads_dir</code><span class="ox-param-default">test/fixtures/raw</span></div>
-<p class="ox-param-desc">point at your own fastq directory for real runs</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>alignment::fastp_qc</code> <code>as_calling::salmon_quant</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>ref</code><span class="ox-param-default">test/fixtures/reference/genes.gtf</span></div>
-<p class="ox-param-desc">featureCounts / rMATS / SplAdder annotation (tiny synthetic; GRCh38 GTF for real runs)</p>
-<details class="ox-param-usedby"><summary>used by 3 rules</summary>
-<div class="ox-param-rules"><code>alignment::featurecounts</code> <code>as_calling::rmats_run</code> <code>as_calling::spladder_run</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>rmats_cstat</code><span class="ox-param-default">0.0001</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>as_calling::rmats_run</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>rmats_extra</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>as_calling::rmats_run</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>run_majiq</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">MAJIQ requires the upstream academic license file — place it at<br>test/fixtures/reference/majiq_license.lic (obtain from MAJIQ) and set<br>run_majiq = true. Upstream fails hard without the license; the port<br>gates the whole MAJIQ chain on this flag instead (documented in the<br>README fidelity table).</p>
-<details class="ox-param-usedby"><summary>used by 5 rules</summary>
-<div class="ox-param-rules"><code>as_calling::majiq_build</code> <code>as_calling::majiq_create_ini</code> <code>as_calling::majiq_psi</code> <code>as_calling::voila_modulize</code> <code>as_calling::voila_tsv</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>salmon_index</code><span class="ox-param-default">test/fixtures/reference/salmon_index</span></div>
-<p class="ox-param-desc">salmon_index is auto-built below from the shipped transcripts.fa</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>as_calling::salmon_quant</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>salmon_library_type</code><span class="ox-param-default">ISR</span></div>
-<p class="ox-param-desc">Derived from <code>strandness</code> by upstream tcasia_config.py; kept explicit here:</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>as_calling::salmon_quant</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>spladder_confidence</code><span class="ox-param-default">3</span></div>
-<p class="ox-param-desc">spladder tool parameter (upstream --spladder_confidence) <span class="ox-param-inferred">inferred</span></p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>as_calling::spladder_run</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>spladder_event_types</code><span class="ox-param-default">exon_skip,intron_retention,alt_3prime,alt_5prime,mutex_exons</span></div>
-<p class="ox-param-desc">spladder tool parameter (upstream --spladder_event_types) <span class="ox-param-inferred">inferred</span></p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>as_calling::spladder_run</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>spladder_merge_strategy</code><span class="ox-param-default">single</span></div>
-<p class="ox-param-desc">spladder tool parameter (upstream --spladder_merge_strategy) <span class="ox-param-inferred">inferred</span></p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>as_calling::spladder_run</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>star_index_dir</code><span class="ox-param-default">test/fixtures/reference/STAR_index</span></div>
-<p class="ox-param-desc">star_index_dir is auto-built below from test/fixtures/reference (tiny<br>synthetic genome) — point it at a real GRCh38 STAR index for real runs.</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>alignment::star_align</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>star_limit_bam_sort_ram</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">0 = auto: the machine-effective memory (clamped declared value)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>alignment::star_align</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>star_out_filter_mismatch_nmax</code><span class="ox-param-default">15</span></div>
-<p class="ox-param-desc">STAR (upstream star.*)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>alignment::star_align</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>strandness</code><span class="ox-param-default">fr-firststrand</span></div>
-<p class="ox-param-desc">shared</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>as_calling::rmats_run</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>suppa2_events</code><span class="ox-param-default">test/fixtures/reference/events.ioe</span></div>
-<p class="ox-param-desc">suppa2_events is auto-built below from the shipped GTF (SUPPA2 generateEvents)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>as_calling::suppa_run</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>suppa2_min_tpm</code><span class="ox-param-default">1</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>as_calling::suppa_run</code></div>
-</details>
-</div>
-</div>
+<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. Copy a row to paste the key directly. Click any parameter name to copy <code>key = value</code>; clicking <code>default</code> copies just the value.</p>
+<table class="ox-params">
+<thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+<tbody>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy align_out_dir = value" data-copy="align_out_dir = results/alignment">align_out_dir</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>results/alignment</code></td>
+<td class="ox-p-desc">01_alignment (upstream config.yml)<br><span class="ox-param-usedby">used by <code>5</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy aligned_dir = value" data-copy="aligned_dir = results/alignment/aligned">aligned_dir</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>results/alignment/aligned</code></td>
+<td class="ox-p-desc">upstream: 01 output_dir/aligned == 02 bam_dir<br><span class="ox-param-usedby">used by <code>7</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy as_out_dir = value" data-copy="as_out_dir = results/as_calling">as_out_dir</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>results/as_calling</code></td>
+<td class="ox-p-desc">02_as_calling (upstream config.yml)<br><span class="ox-param-usedby">used by <code>12</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fastp_min_length = value" data-copy="fastp_min_length = 36">fastp_min_length</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>36</code></td>
+<td class="ox-p-desc">fastp (upstream fastp.*)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fastp_n_base_limit = value" data-copy="fastp_n_base_limit = 5">fastp_n_base_limit</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>5</code></td>
+<td class="ox-p-desc">fastp (upstream fastp.*)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fastp_qualified_quality_phred = value" data-copy="fastp_qualified_quality_phred = 20">fastp_qualified_quality_phred</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>20</code></td>
+<td class="ox-p-desc">fastp (upstream fastp.*)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fastp_unqualified_percent_limit = value" data-copy="fastp_unqualified_percent_limit = 40">fastp_unqualified_percent_limit</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>40</code></td>
+<td class="ox-p-desc">fastp (upstream fastp.*)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gff = value" data-copy="gff = test/fixtures/reference/genes.gff3">gff</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/reference/genes.gff3</code></td>
+<td class="ox-p-desc">upstream: GFF (tiny synthetic)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy majiq_genome = value" data-copy="majiq_genome = hg38">majiq_genome</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>hg38</code></td>
+<td class="ox-p-desc">majiq tool parameter (upstream --majiq_genome) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy majiq_license = value" data-copy="majiq_license = test/fixtures/reference/majiq_license.lic">majiq_license</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/reference/majiq_license.lic</code></td>
+<td class="ox-p-desc">MAJIQ requires the upstream academic license file — place it at<br>test/fixtures/reference/majiq_license.lic (obtain from MAJIQ) and set<br>run_majiq = true. Upstream fails hard without the license; the port<br>gates the whole MAJIQ chain on this flag instead (documented in the<br>README fidelity table).<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy majiq_minreads = value" data-copy="majiq_minreads = 10">majiq_minreads</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>10</code></td>
+<td class="ox-p-desc">majiq tool parameter (upstream --majiq_minreads) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy majiq_strandness = value" data-copy="majiq_strandness = reverse">majiq_strandness</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>reverse</code></td>
+<td class="ox-p-desc">fr-firststrand -&gt; reverse | fr-secondstrand -&gt; forward | fr-unstranded -&gt; none<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy read_len = value" data-copy="read_len = 150">read_len</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>150</code></td>
+<td class="ox-p-desc">salmon_index is auto-built below from the shipped transcripts.fa<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy reads_dir = value" data-copy="reads_dir = test/fixtures/raw">reads_dir</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/raw</code></td>
+<td class="ox-p-desc">point at your own fastq directory for real runs<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ref = value" data-copy="ref = test/fixtures/reference/genes.gtf">ref</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/reference/genes.gtf</code></td>
+<td class="ox-p-desc">featureCounts / rMATS / SplAdder annotation (tiny synthetic; GRCh38 GTF for real runs)<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy rmats_cstat = value" data-copy="rmats_cstat = 0.0001">rmats_cstat</button></td>
+<td class="ox-p-t"><code>float</code></td>
+<td class="ox-p-d"><code>0.0001</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy rmats_extra = value" data-copy="rmats_extra = ">rmats_extra</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_majiq = value" data-copy="run_majiq = false">run_majiq</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">MAJIQ requires the upstream academic license file — place it at<br>test/fixtures/reference/majiq_license.lic (obtain from MAJIQ) and set<br>run_majiq = true. Upstream fails hard without the license; the port<br>gates the whole MAJIQ chain on this flag instead (documented in the<br>README fidelity table).<br><span class="ox-param-usedby">used by <code>5</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy salmon_index = value" data-copy="salmon_index = test/fixtures/reference/salmon_index">salmon_index</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/reference/salmon_index</code></td>
+<td class="ox-p-desc">salmon_index is auto-built below from the shipped transcripts.fa<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy salmon_library_type = value" data-copy="salmon_library_type = ISR">salmon_library_type</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>ISR</code></td>
+<td class="ox-p-desc">Derived from <code>strandness</code> by upstream tcasia_config.py; kept explicit here:<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy spladder_confidence = value" data-copy="spladder_confidence = 3">spladder_confidence</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>3</code></td>
+<td class="ox-p-desc">spladder tool parameter (upstream --spladder_confidence) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy spladder_event_types = value" data-copy="spladder_event_types = exon_skip,intron_retention,alt_3prime,alt_5prime,mutex_exons">spladder_event_types</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>exon_skip,intron_retention,alt_3prime,alt_5prime,mutex_exons</code></td>
+<td class="ox-p-desc">spladder tool parameter (upstream --spladder_event_types) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy spladder_merge_strategy = value" data-copy="spladder_merge_strategy = single">spladder_merge_strategy</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>single</code></td>
+<td class="ox-p-desc">spladder tool parameter (upstream --spladder_merge_strategy) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy star_index_dir = value" data-copy="star_index_dir = test/fixtures/reference/STAR_index">star_index_dir</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/reference/STAR_index</code></td>
+<td class="ox-p-desc">star_index_dir is auto-built below from test/fixtures/reference (tiny<br>synthetic genome) — point it at a real GRCh38 STAR index for real runs.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy star_limit_bam_sort_ram = value" data-copy="star_limit_bam_sort_ram = 0">star_limit_bam_sort_ram</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>0</code></td>
+<td class="ox-p-desc">0 = auto: the machine-effective memory (clamped declared value)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy star_out_filter_mismatch_nmax = value" data-copy="star_out_filter_mismatch_nmax = 15">star_out_filter_mismatch_nmax</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>15</code></td>
+<td class="ox-p-desc">STAR (upstream star.*)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy strandness = value" data-copy="strandness = fr-firststrand">strandness</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>fr-firststrand</code></td>
+<td class="ox-p-desc">shared<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy suppa2_events = value" data-copy="suppa2_events = test/fixtures/reference/events.ioe">suppa2_events</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/reference/events.ioe</code></td>
+<td class="ox-p-desc">suppa2_events is auto-built below from the shipped GTF (SUPPA2 generateEvents)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy suppa2_min_tpm = value" data-copy="suppa2_min_tpm = 1">suppa2_min_tpm</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>1</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+</tbody>
+</table>
 
 Descriptions are the workflow's own `#` comments from its `[config]` section (and the `[config]` sections of its included modules), surfaced by `oxo-flow info` — no schema file to maintain.
 

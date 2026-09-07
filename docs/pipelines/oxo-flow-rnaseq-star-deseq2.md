@@ -47,6 +47,16 @@ title: "RNA-seq: STAR alignment, DESeq2 differential expression and QC"
 </div>
 </details>
 
+
+<div class="ox-tryit">
+<div class="ox-tryit-title">⬡ Try it — clone &amp; run</div>
+<pre class="ox-tryit-cmd" data-copy="git clone https://github.com/oxo-flow-community/oxo-flow-rnaseq-star-deseq2.git &amp;&amp; cd oxo-flow-rnaseq-star-deseq2 &amp;&amp; oxo-flow run main.oxoflow">git clone https://github.com/oxo-flow-community/oxo-flow-rnaseq-star-deseq2.git
+cd oxo-flow-rnaseq-star-deseq2
+oxo-flow run main.oxoflow</pre>
+<p class="ox-tryit-note">The repository ships test fixtures (e.g. <code>test/fixtures/generate_fixtures.py</code>, <code>test/fixtures/raw-synthetic/A-lane1_R1.fastq.gz</code>, <code>test/fixtures/raw-synthetic/A-lane1_R2.fastq.gz</code>, <code>test/fixtures/raw-synthetic/A-lane2_R1.fastq.gz</code>) — point <code>input</code> at them or use the built-in sample group to <code>dry-run</code> first.</p>
+</div>
+
+
 ## Run it
 
 ```bash
@@ -86,243 +96,220 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq-star-deseq2
 
 ## Parameters
 
-<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. The list below names the rules that read each key.</p>
-<div class="ox-params">
-<div class="ox-param">
-<div class="ox-param-head"><code>annotation_gtf</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Local reference overrides: set to a local FASTA/GTF to skip the Ensembl<br>download entirely (offline machines, tiny test runs). Empty = download<br>(the upstream-faithful default). A tiny synthetic kit ships at<br>test/fixtures/reference/ with matching reads in raw-synthetic/.</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>get_annotation</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>annotation_url</code><span class="ox-param-default">ftp://ftp.ensembl.org/pub/release-115/gtf/homo_sapiens/Homo_sapiens.GRCh38.115.gtf.gz</span></div>
-<p class="ox-param-desc">Local reference overrides: set to a local FASTA/GTF to skip the Ensembl<br>download entirely (offline machines, tiny test runs). Empty = download<br>(the upstream-faithful default). A tiny synthetic kit ships at<br>test/fixtures/reference/ with matching reads in raw-synthetic/.</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>get_annotation</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>biomart_species</code><span class="ox-param-default">hsapiens</span></div>
-<p class="ox-param-desc">biomaRt species dataset suffix (upstream get_bioc_species_name()).</p>
-<details class="ox-param-usedby"><summary>used by 3 rules</summary>
-<div class="ox-param-rules"><code>gene_2_symbol_counts</code> <code>gene_2_symbol_diffexp</code> <code>gene_2_symbol_normcounts</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>bwa_index_activate</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Activate the BWA index / samtools faidx rules. Upstream declares both but<br>its default path never requests them (snakemake lazy evaluation); oxo-flow<br>runs every rule in the file, so both are gated off unless activated.</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>bwa_index</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>contrast_exprs</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">String-form DESeq2 contrasts (upstream diffexp.contrasts string entries,<br>e.g. &#x27;list(c(&quot;treatment_1_treated_vs_untreated&quot;, ...))&#x27;). Semicolon-joined<br>list parallel to <code>contrasts</code>; an empty entry = list-form for that<br>contrast. Entries are R expressions evaluated by DESeq2: use single<br>quotes for R strings (the value is double-quoted on the shell command<br>line) and no semicolons inside an entry.</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>deseq2</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>contrast_levels</code><span class="ox-param-default">treated</span></div>
-<p class="ox-param-desc">Contrasts (upstream: diffexp.contrasts). One comma-joined entry per<br>contrast: contrast id, its variable_of_interest, its level_of_interest.<br>The base level comes from diffexp_base_levels.</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>deseq2</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>contrast_variables</code><span class="ox-param-default">treatment_1</span></div>
-<p class="ox-param-desc">Contrasts (upstream: diffexp.contrasts). One comma-joined entry per<br>contrast: contrast id, its variable_of_interest, its level_of_interest.<br>The base level comes from diffexp_base_levels.</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>deseq2</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>contrasts</code><span class="ox-param-default">treatment_1</span></div>
-<p class="ox-param-desc">Contrasts (upstream: diffexp.contrasts). One comma-joined entry per<br>contrast: contrast id, its variable_of_interest, its level_of_interest.<br>The base level comes from diffexp_base_levels.</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>deseq2</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>diffexp_base_levels</code><span class="ox-param-default">untreated,untreated</span></div>
-<p class="ox-param-desc">Differential expression (upstream: diffexp.*). Comma-joined lists mirror<br>the upstream nested tables; positions pair up (treatment_1 -&gt; untreated,<br>treatment_2 -&gt; untreated).</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>deseq2</code> <code>deseq2_init</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>diffexp_batch_effects</code><span class="ox-param-default">jointly_handled</span></div>
-<p class="ox-param-desc">Differential expression (upstream: diffexp.*). Comma-joined lists mirror<br>the upstream nested tables; positions pair up (treatment_1 -&gt; untreated,<br>treatment_2 -&gt; untreated).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>deseq2_init</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>diffexp_model</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Differential expression (upstream: diffexp.*). Comma-joined lists mirror<br>the upstream nested tables; positions pair up (treatment_1 -&gt; untreated,<br>treatment_2 -&gt; untreated).</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>diffexp_variables</code><span class="ox-param-default">treatment_1,treatment_2</span></div>
-<p class="ox-param-desc">Differential expression (upstream: diffexp.*). Comma-joined lists mirror<br>the upstream nested tables; positions pair up (treatment_1 -&gt; untreated,<br>treatment_2 -&gt; untreated).</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>deseq2</code> <code>deseq2_init</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>fastp_adapters</code><span class="ox-param-default">--detect_adapter_for_pe</span></div>
-<p class="ox-param-desc">fastp adapter args and extra args (upstream: per-unit columns<br>fastp_adapters / fastp_extra in config/units.tsv, looked up per unit via<br>the metadata binding — {meta.fastp_adapters} / {meta.fastp_extra} render<br>per unit and these global keys are the per-unit defaults when a unit&#x27;s<br>column is empty; equal the upstream defaults). fastp_adapters_se matches<br>the upstream single-end default (&quot;&quot;).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>fastp_pe</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>fastp_adapters_se</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">fastp adapter args and extra args (upstream: per-unit columns<br>fastp_adapters / fastp_extra in config/units.tsv, looked up per unit via<br>the metadata binding — {meta.fastp_adapters} / {meta.fastp_extra} render<br>per unit and these global keys are the per-unit defaults when a unit&#x27;s<br>column is empty; equal the upstream defaults). fastp_adapters_se matches<br>the upstream single-end default (&quot;&quot;).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>fastp_se</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>fastp_extra</code><span class="ox-param-default">--trim_poly_x --poly_x_min_len 7 --trim_poly_g --poly_g_min_len 7</span></div>
-<p class="ox-param-desc">fastp adapter args and extra args (upstream: per-unit columns<br>fastp_adapters / fastp_extra in config/units.tsv, looked up per unit via<br>the metadata binding — {meta.fastp_adapters} / {meta.fastp_extra} render<br>per unit and these global keys are the per-unit defaults when a unit&#x27;s<br>column is empty; equal the upstream defaults). fastp_adapters_se matches<br>the upstream single-end default (&quot;&quot;).</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>fastp_pe</code> <code>fastp_se</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>genome_faidx_activate</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Activate the BWA index / samtools faidx rules. Upstream declares both but<br>its default path never requests them (snakemake lazy evaluation); oxo-flow<br>runs every rule in the file, so both are gated off unless activated.</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>genome_faidx</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>genome_fasta</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Local reference overrides: set to a local FASTA/GTF to skip the Ensembl<br>download entirely (offline machines, tiny test runs). Empty = download<br>(the upstream-faithful default). A tiny synthetic kit ships at<br>test/fixtures/reference/ with matching reads in raw-synthetic/.</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>get_genome</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>genome_url</code><span class="ox-param-default">https://ftp.ensembl.org/pub/release-115/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz</span></div>
-<p class="ox-param-desc">Local reference overrides: set to a local FASTA/GTF to skip the Ensembl<br>download entirely (offline machines, tiny test runs). Empty = download<br>(the upstream-faithful default). A tiny synthetic kit ships at<br>test/fixtures/reference/ with matching reads in raw-synthetic/.</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>get_genome</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>genome_url_toplevel</code><span class="ox-param-default">https://ftp.ensembl.org/pub/release-115/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.toplevel.fa.gz</span></div>
-<p class="ox-param-desc">Local reference overrides: set to a local FASTA/GTF to skip the Ensembl<br>download entirely (offline machines, tiny test runs). Empty = download<br>(the upstream-faithful default). A tiny synthetic kit ships at<br>test/fixtures/reference/ with matching reads in raw-synthetic/.</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>get_genome</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>pca_activate</code><span class="ox-param-default">true</span></div>
-<p class="ox-param-desc">PCA (upstream: pca.activate / pca.labels). pca_variables is the derived<br>upstream list (variables_of_interest + batch_effects + labels), kept<br>explicit here — keep it in sync with the diffexp keys below.</p>
-<details class="ox-param-usedby"><summary>used by 3 rules</summary>
-<div class="ox-param-rules"><code>pca_jointly_handled</code> <code>pca_treatment_1</code> <code>pca_treatment_2</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>pca_labels</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">PCA (upstream: pca.activate / pca.labels). pca_variables is the derived<br>upstream list (variables_of_interest + batch_effects + labels), kept<br>explicit here — keep it in sync with the diffexp keys below.</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>pca_variables</code><span class="ox-param-default">treatment_1,treatment_2,jointly_handled</span></div>
-<p class="ox-param-desc">PCA (upstream: pca.activate / pca.labels). pca_variables is the derived<br>upstream list (variables_of_interest + batch_effects + labels), kept<br>explicit here — keep it in sync with the diffexp keys below.</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>raw_dir</code><span class="ox-param-default">test/fixtures/raw</span></div>
-<p class="ox-param-desc">Directory holding &lt;unit-key&gt;_R1.fastq.gz / _R2.fastq.gz per config/units.tsv.<br>The repo default ships the tiny test fixtures; point this at your data<br>(e.g. &quot;raw&quot;).</p>
-<details class="ox-param-usedby"><summary>used by 5 rules</summary>
-<div class="ox-param-rules"><code>fastp_pe</code> <code>fastp_se</code> <code>get_sra</code> <code>star_align_raw</code> <code>star_align_se_raw</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>ref_build</code><span class="ox-param-default">GRCh38</span></div>
-<p class="ox-param-desc">Reference (upstream: ref.species / ref.release / ref.build). The download<br>URLs below are the Ensembl URLs the wrappers resolve for these values.</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>ref_release</code><span class="ox-param-default">115</span></div>
-<p class="ox-param-desc">Reference (upstream: ref.species / ref.release / ref.build). The download<br>URLs below are the Ensembl URLs the wrappers resolve for these values.</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>ref_species</code><span class="ox-param-default">homo_sapiens</span></div>
-<p class="ox-param-desc">Reference (upstream: ref.species / ref.release / ref.build). The download<br>URLs below are the Ensembl URLs the wrappers resolve for these values.</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>single_end</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Single-end mode (upstream decides per sample from the units.tsv fq2/sra<br>columns; the port applies it globally — engine rules have fixed input<br>arities). Single-end units provide only &lt;unit-key&gt;_R1.fastq.gz. Default<br>false = the paired-end path.</p>
-<details class="ox-param-usedby"><summary>used by 6 rules</summary>
-<div class="ox-param-rules"><code>fastp_pe</code> <code>fastp_se</code> <code>star_align</code> <code>star_align_raw</code> <code>star_align_se</code> <code>star_align_se_raw</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>sra_accessions</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">SRA auto-feed master switch (upstream get_sra branch: units whose fq1/fq2<br>are empty carry an sra accession in config/units.tsv). Any non-empty value<br>enables the per-unit download; each unit&#x27;s accession comes from its units<br>sheet sra column (the {meta.sra} lookup), and reads land at<br>&lt;raw_dir&gt;/&lt;unit-key&gt;_R{1,2}.fastq.gz (the raw_dir convention) so the<br>trimming/alignment rules consume them automatically (upstream<br>get_units_fastqs). Default empty = no SRA download. Requires oxo-flow &gt;=<br>0.17.0 — on older engines keep this empty (the per-unit sra column is not<br>read, and the gate then stays closed).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>get_sra</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>star_align_extra</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">STAR extra params (upstream: params.star.index / params.star.align).</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>star_align</code> <code>star_align_raw</code> <code>star_align_se</code> <code>star_align_se_raw</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>star_index_extra</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">STAR extra params (upstream: params.star.index / params.star.align).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>star_index</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>trimming_activate</code><span class="ox-param-default">true</span></div>
-<p class="ox-param-desc">Trimming (upstream: trimming.activate). With trimming off, the port&#x27;s<br>star_align_raw / star_align_se_raw variants feed the raw reads to STAR,<br>mirroring the upstream rewiring (get_fq with trimming.activate = False).</p>
-<details class="ox-param-usedby"><summary>used by 6 rules</summary>
-<div class="ox-param-rules"><code>fastp_pe</code> <code>fastp_se</code> <code>star_align</code> <code>star_align_raw</code> <code>star_align_se</code> <code>star_align_se_raw</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>units_file</code><span class="ox-param-default">config/units.tsv</span></div>
-<p class="ox-param-desc">Sample sheet (TSV: sample_name, condition, ...) and unit sheet<br>(TSV: sample_name, unit_name, fq1, fq2, sra, fastp_adapters, fastp_extra,<br>strandedness). Upstream: config[&quot;samples&quot;] / config[&quot;units&quot;]. The unit<br>sheet&#x27;s first column is the composite unit key (&lt;sample&gt;-&lt;unit&gt;, the<br>{sample} wildcard) and doubles as the [workflow] metadata_file table<br>above; scripts/count-matrix.py reads the sample/unit/strandedness columns.</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>count_matrix</code></div>
-</details>
-</div>
-</div>
+<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. Copy a row to paste the key directly. Click any parameter name to copy <code>key = value</code>; clicking <code>default</code> copies just the value.</p>
+<table class="ox-params">
+<thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+<tbody>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy annotation_gtf = value" data-copy="annotation_gtf = ">annotation_gtf</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">Local reference overrides: set to a local FASTA/GTF to skip the Ensembl<br>download entirely (offline machines, tiny test runs). Empty = download<br>(the upstream-faithful default). A tiny synthetic kit ships at<br>test/fixtures/reference/ with matching reads in raw-synthetic/.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy annotation_url = value" data-copy="annotation_url = ftp://ftp.ensembl.org/pub/release-115/gtf/homo_sapiens/Homo_sapiens.GRCh38.115.gtf.gz">annotation_url</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>ftp://ftp.ensembl.org/pub/release-115/gtf/homo_sapiens/Homo_sapiens.GRCh38.115.gtf.gz</code></td>
+<td class="ox-p-desc">Local reference overrides: set to a local FASTA/GTF to skip the Ensembl<br>download entirely (offline machines, tiny test runs). Empty = download<br>(the upstream-faithful default). A tiny synthetic kit ships at<br>test/fixtures/reference/ with matching reads in raw-synthetic/.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy biomart_species = value" data-copy="biomart_species = hsapiens">biomart_species</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>hsapiens</code></td>
+<td class="ox-p-desc">biomaRt species dataset suffix (upstream get_bioc_species_name()).<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bwa_index_activate = value" data-copy="bwa_index_activate = false">bwa_index_activate</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Activate the BWA index / samtools faidx rules. Upstream declares both but<br>its default path never requests them (snakemake lazy evaluation); oxo-flow<br>runs every rule in the file, so both are gated off unless activated.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy contrast_exprs = value" data-copy="contrast_exprs = ">contrast_exprs</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">String-form DESeq2 contrasts (upstream diffexp.contrasts string entries,<br>e.g. &#x27;list(c(&quot;treatment_1_treated_vs_untreated&quot;, ...))&#x27;). Semicolon-joined<br>list parallel to <code>contrasts</code>; an empty entry = list-form for that<br>contrast. Entries are R expressions evaluated by DESeq2: use single<br>quotes for R strings (the value is double-quoted on the shell command<br>line) and no semicolons inside an entry.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy contrast_levels = value" data-copy="contrast_levels = treated">contrast_levels</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>treated</code></td>
+<td class="ox-p-desc">Contrasts (upstream: diffexp.contrasts). One comma-joined entry per<br>contrast: contrast id, its variable_of_interest, its level_of_interest.<br>The base level comes from diffexp_base_levels.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy contrast_variables = value" data-copy="contrast_variables = treatment_1">contrast_variables</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>treatment_1</code></td>
+<td class="ox-p-desc">Contrasts (upstream: diffexp.contrasts). One comma-joined entry per<br>contrast: contrast id, its variable_of_interest, its level_of_interest.<br>The base level comes from diffexp_base_levels.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy contrasts = value" data-copy="contrasts = treatment_1">contrasts</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>treatment_1</code></td>
+<td class="ox-p-desc">Contrasts (upstream: diffexp.contrasts). One comma-joined entry per<br>contrast: contrast id, its variable_of_interest, its level_of_interest.<br>The base level comes from diffexp_base_levels.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy diffexp_base_levels = value" data-copy="diffexp_base_levels = untreated,untreated">diffexp_base_levels</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>untreated,untreated</code></td>
+<td class="ox-p-desc">Differential expression (upstream: diffexp.*). Comma-joined lists mirror<br>the upstream nested tables; positions pair up (treatment_1 -&gt; untreated,<br>treatment_2 -&gt; untreated).<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy diffexp_batch_effects = value" data-copy="diffexp_batch_effects = jointly_handled">diffexp_batch_effects</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>jointly_handled</code></td>
+<td class="ox-p-desc">Differential expression (upstream: diffexp.*). Comma-joined lists mirror<br>the upstream nested tables; positions pair up (treatment_1 -&gt; untreated,<br>treatment_2 -&gt; untreated).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy diffexp_model = value" data-copy="diffexp_model = ">diffexp_model</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">Differential expression (upstream: diffexp.*). Comma-joined lists mirror<br>the upstream nested tables; positions pair up (treatment_1 -&gt; untreated,<br>treatment_2 -&gt; untreated).<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy diffexp_variables = value" data-copy="diffexp_variables = treatment_1,treatment_2">diffexp_variables</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>treatment_1,treatment_2</code></td>
+<td class="ox-p-desc">Differential expression (upstream: diffexp.*). Comma-joined lists mirror<br>the upstream nested tables; positions pair up (treatment_1 -&gt; untreated,<br>treatment_2 -&gt; untreated).<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fastp_adapters = value" data-copy="fastp_adapters = --detect_adapter_for_pe">fastp_adapters</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>--detect_adapter_for_pe</code></td>
+<td class="ox-p-desc">fastp adapter args and extra args (upstream: per-unit columns<br>fastp_adapters / fastp_extra in config/units.tsv, looked up per unit via<br>the metadata binding — {meta.fastp_adapters} / {meta.fastp_extra} render<br>per unit and these global keys are the per-unit defaults when a unit&#x27;s<br>column is empty; equal the upstream defaults). fastp_adapters_se matches<br>the upstream single-end default (&quot;&quot;).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fastp_adapters_se = value" data-copy="fastp_adapters_se = ">fastp_adapters_se</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">fastp adapter args and extra args (upstream: per-unit columns<br>fastp_adapters / fastp_extra in config/units.tsv, looked up per unit via<br>the metadata binding — {meta.fastp_adapters} / {meta.fastp_extra} render<br>per unit and these global keys are the per-unit defaults when a unit&#x27;s<br>column is empty; equal the upstream defaults). fastp_adapters_se matches<br>the upstream single-end default (&quot;&quot;).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fastp_extra = value" data-copy="fastp_extra = --trim_poly_x --poly_x_min_len 7 --trim_poly_g --poly_g_min_len 7">fastp_extra</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>--trim_poly_x --poly_x_min_len 7 --trim_poly_g --poly_g_min_len 7</code></td>
+<td class="ox-p-desc">fastp adapter args and extra args (upstream: per-unit columns<br>fastp_adapters / fastp_extra in config/units.tsv, looked up per unit via<br>the metadata binding — {meta.fastp_adapters} / {meta.fastp_extra} render<br>per unit and these global keys are the per-unit defaults when a unit&#x27;s<br>column is empty; equal the upstream defaults). fastp_adapters_se matches<br>the upstream single-end default (&quot;&quot;).<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy genome_faidx_activate = value" data-copy="genome_faidx_activate = false">genome_faidx_activate</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Activate the BWA index / samtools faidx rules. Upstream declares both but<br>its default path never requests them (snakemake lazy evaluation); oxo-flow<br>runs every rule in the file, so both are gated off unless activated.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy genome_fasta = value" data-copy="genome_fasta = ">genome_fasta</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">Local reference overrides: set to a local FASTA/GTF to skip the Ensembl<br>download entirely (offline machines, tiny test runs). Empty = download<br>(the upstream-faithful default). A tiny synthetic kit ships at<br>test/fixtures/reference/ with matching reads in raw-synthetic/.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy genome_url = value" data-copy="genome_url = https://ftp.ensembl.org/pub/release-115/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz">genome_url</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>https://ftp.ensembl.org/pub/release-115/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz</code></td>
+<td class="ox-p-desc">Local reference overrides: set to a local FASTA/GTF to skip the Ensembl<br>download entirely (offline machines, tiny test runs). Empty = download<br>(the upstream-faithful default). A tiny synthetic kit ships at<br>test/fixtures/reference/ with matching reads in raw-synthetic/.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy genome_url_toplevel = value" data-copy="genome_url_toplevel = https://ftp.ensembl.org/pub/release-115/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.toplevel.fa.gz">genome_url_toplevel</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>https://ftp.ensembl.org/pub/release-115/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.toplevel.fa.gz</code></td>
+<td class="ox-p-desc">Local reference overrides: set to a local FASTA/GTF to skip the Ensembl<br>download entirely (offline machines, tiny test runs). Empty = download<br>(the upstream-faithful default). A tiny synthetic kit ships at<br>test/fixtures/reference/ with matching reads in raw-synthetic/.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pca_activate = value" data-copy="pca_activate = true">pca_activate</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>true</code></td>
+<td class="ox-p-desc">PCA (upstream: pca.activate / pca.labels). pca_variables is the derived<br>upstream list (variables_of_interest + batch_effects + labels), kept<br>explicit here — keep it in sync with the diffexp keys below.<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pca_labels = value" data-copy="pca_labels = ">pca_labels</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">PCA (upstream: pca.activate / pca.labels). pca_variables is the derived<br>upstream list (variables_of_interest + batch_effects + labels), kept<br>explicit here — keep it in sync with the diffexp keys below.<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pca_variables = value" data-copy="pca_variables = treatment_1,treatment_2,jointly_handled">pca_variables</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>treatment_1,treatment_2,jointly_handled</code></td>
+<td class="ox-p-desc">PCA (upstream: pca.activate / pca.labels). pca_variables is the derived<br>upstream list (variables_of_interest + batch_effects + labels), kept<br>explicit here — keep it in sync with the diffexp keys below.<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy raw_dir = value" data-copy="raw_dir = test/fixtures/raw">raw_dir</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/raw</code></td>
+<td class="ox-p-desc">Directory holding &lt;unit-key&gt;_R1.fastq.gz / _R2.fastq.gz per config/units.tsv.<br>The repo default ships the tiny test fixtures; point this at your data<br>(e.g. &quot;raw&quot;).<br><span class="ox-param-usedby">used by <code>5</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ref_build = value" data-copy="ref_build = GRCh38">ref_build</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>GRCh38</code></td>
+<td class="ox-p-desc">Reference (upstream: ref.species / ref.release / ref.build). The download<br>URLs below are the Ensembl URLs the wrappers resolve for these values.<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ref_release = value" data-copy="ref_release = 115">ref_release</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>115</code></td>
+<td class="ox-p-desc">Reference (upstream: ref.species / ref.release / ref.build). The download<br>URLs below are the Ensembl URLs the wrappers resolve for these values.<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ref_species = value" data-copy="ref_species = homo_sapiens">ref_species</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>homo_sapiens</code></td>
+<td class="ox-p-desc">Reference (upstream: ref.species / ref.release / ref.build). The download<br>URLs below are the Ensembl URLs the wrappers resolve for these values.<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy single_end = value" data-copy="single_end = false">single_end</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Single-end mode (upstream decides per sample from the units.tsv fq2/sra<br>columns; the port applies it globally — engine rules have fixed input<br>arities). Single-end units provide only &lt;unit-key&gt;_R1.fastq.gz. Default<br>false = the paired-end path.<br><span class="ox-param-usedby">used by <code>6</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sra_accessions = value" data-copy="sra_accessions = ">sra_accessions</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">SRA auto-feed master switch (upstream get_sra branch: units whose fq1/fq2<br>are empty carry an sra accession in config/units.tsv). Any non-empty value<br>enables the per-unit download; each unit&#x27;s accession comes from its units<br>sheet sra column (the {meta.sra} lookup), and reads land at<br>&lt;raw_dir&gt;/&lt;unit-key&gt;_R{1,2}.fastq.gz (the raw_dir convention) so the<br>trimming/alignment rules consume them automatically (upstream<br>get_units_fastqs). Default empty = no SRA download. Requires oxo-flow &gt;=<br>0.17.0 — on older engines keep this empty (the per-unit sra column is not<br>read, and the gate then stays closed).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy star_align_extra = value" data-copy="star_align_extra = ">star_align_extra</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">STAR extra params (upstream: params.star.index / params.star.align).<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy star_index_extra = value" data-copy="star_index_extra = ">star_index_extra</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">STAR extra params (upstream: params.star.index / params.star.align).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy trimming_activate = value" data-copy="trimming_activate = true">trimming_activate</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>true</code></td>
+<td class="ox-p-desc">Trimming (upstream: trimming.activate). With trimming off, the port&#x27;s<br>star_align_raw / star_align_se_raw variants feed the raw reads to STAR,<br>mirroring the upstream rewiring (get_fq with trimming.activate = False).<br><span class="ox-param-usedby">used by <code>6</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy units_file = value" data-copy="units_file = config/units.tsv">units_file</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>config/units.tsv</code></td>
+<td class="ox-p-desc">Sample sheet (TSV: sample_name, condition, ...) and unit sheet<br>(TSV: sample_name, unit_name, fq1, fq2, sra, fastp_adapters, fastp_extra,<br>strandedness). Upstream: config[&quot;samples&quot;] / config[&quot;units&quot;]. The unit<br>sheet&#x27;s first column is the composite unit key (&lt;sample&gt;-&lt;unit&gt;, the<br>{sample} wildcard) and doubles as the [workflow] metadata_file table<br>above; scripts/count-matrix.py reads the sample/unit/strandedness columns.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+</tbody>
+</table>
 
 Descriptions are the workflow's own `#` comments from its `[config]` section (and the `[config]` sections of its included modules), surfaced by `oxo-flow info` — no schema file to maintain.
 
 ## Workflow graph
 
+<details class="ox-flow-view">
+<summary>Exact rule DAG (multi-route truth — operational view)</summary>
+<div class="ox-dag-card ox-dag-card--wide">
+<a href="/assets/dag/oxo-flow-rnaseq-star-deseq2-rules.svg?v=f0013b68ba" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-rnaseq-star-deseq2-rules.svg?v=f0013b68ba" alt="oxo-flow-rnaseq-star-deseq2 rule-level detail" loading="lazy"></a>
+</div>
+</details>
 <details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card ox-dag-card--wide" markdown="1">
 
-<a href="/assets/dag/oxo-flow-rnaseq-star-deseq2.svg?v=f0013b68ba" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-rnaseq-star-deseq2.svg?v=f0013b68ba" alt="oxo-flow-rnaseq-star-deseq2 pipeline overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-rnaseq-star-deseq2.svg?v=42ff01ca8f" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-rnaseq-star-deseq2.svg?v=42ff01ca8f" alt="oxo-flow-rnaseq-star-deseq2 pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-rnaseq-star-deseq2 — End-to-end RNA-seq differential-expression analysis with STAR and DESeq2: Ensembl reference download, fastp trimming, STAR alignment with gene counts, RSeQC QC + MultiQC, count matrix with technical-replicate collapse, Ensembl biomaRt gene-symbol annotation, and DESeq2 (normalized counts, PCA plots, per-contrast results with ashr shrinkage and MA plots).</p>
 

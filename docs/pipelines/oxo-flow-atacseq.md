@@ -48,6 +48,16 @@ title: "ATAC-seq: peak calling and QC"
 </div>
 </details>
 
+
+<div class="ox-tryit">
+<div class="ox-tryit-title">⬡ Try it — clone &amp; run</div>
+<pre class="ox-tryit-cmd" data-copy="git clone https://github.com/oxo-flow-community/oxo-flow-atacseq.git &amp;&amp; cd oxo-flow-atacseq &amp;&amp; oxo-flow run main.oxoflow">git clone https://github.com/oxo-flow-community/oxo-flow-atacseq.git
+cd oxo-flow-atacseq
+oxo-flow run main.oxoflow</pre>
+<p class="ox-tryit-note">The repository ships test fixtures (e.g. <code>test/fixtures/generate_fixtures.py</code>, <code>test/fixtures/genome/gene.bed</code>, <code>test/fixtures/genome/genes.gtf</code>, <code>test/fixtures/genome/genome.fa</code>) — point <code>input</code> at them or use the built-in sample group to <code>dry-run</code> first.</p>
+</div>
+
+
 ## Run it
 
 ```bash
@@ -87,338 +97,294 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-atacseq
 
 ## Parameters
 
-<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. The list below names the rules that read each key.</p>
-<div class="ox-params">
-<div class="ox-param">
-<div class="ox-param-head"><code>aligner</code><span class="ox-param-default">bwa</span></div>
-<p class="ox-param-desc">params.aligner: &quot;bwa&quot; (default) | &quot;bowtie2&quot; | &quot;chromap&quot; | &quot;star&quot; (SE only)</p>
-<details class="ox-param-usedby"><summary>used by 6 rules</summary>
-<div class="ox-param-rules"><code>alt::bowtie2_align</code> <code>alt::chromap_align</code> <code>alt::star_align</code> <code>bwa_mem</code> <code>pe::bwa_mem_pe</code> <code>ref::bwa_index</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>blacklist</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">params.blacklist — include-regions BED (complement of ENCODE</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>bamtools_filter</code> <code>pe::bamtools_filter_pe</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>bowtie2_index</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">params.bowtie2 — index prefix (.rev.1.bt2 etc. beside it) for aligner=&quot;bowtie2&quot;</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>alt::bowtie2_align</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>broad_cutoff</code><span class="ox-param-default">0.1</span></div>
-<p class="ox-param-desc">Upstream default params (kept as config so CLI overrides work)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>macs2_callpeak</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>bwa_index</code><span class="ox-param-default">test/fixtures/genome/genome.fa</span></div>
-<p class="ox-param-desc">params.bwa — index prefix (.amb/.ann/.bwt/.pac/.sa beside it)</p>
-<details class="ox-param-usedby"><summary>used by 3 rules</summary>
-<div class="ox-param-rules"><code>bwa_mem</code> <code>pe::bwa_mem_pe</code> <code>ref::bwa_index</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>chrom_sizes</code><span class="ox-param-default">test/fixtures/genome/genome.fa.sizes</span></div>
-<p class="ox-param-desc">CUSTOM_GETCHROMSIZES output</p>
-<details class="ox-param-usedby"><summary>used by 3 rules</summary>
-<div class="ox-param-rules"><code>mito::genome_blacklist_regions</code> <code>ref::custom_getchromsizes</code> <code>ucsc_bedgraphtobigwig</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>chromap_index</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">params.chromap — index file for aligner=&quot;chromap&quot;</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>alt::chromap_align</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>deseq2_vst</code><span class="ox-param-default">true</span></div>
-<p class="ox-param-desc">params.deseq2_vst</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>cons::deseq2_qc</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>fingerprint_bins</code><span class="ox-param-default">500000</span></div>
-<p class="ox-param-desc">Upstream default params (kept as config so CLI overrides work)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>pe::plotfingerprint_pe</code> <code>plotfingerprint</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>fragment_size</code><span class="ox-param-default">200</span></div>
-<p class="ox-param-desc">Upstream default params (kept as config so CLI overrides work)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>bedtools_genomecov</code> <code>plotfingerprint</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>gene_bed</code><span class="ox-param-default">test/fixtures/genome/gene.bed</span></div>
-<p class="ox-param-desc">params.gene_bed</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>deeptools_plots</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>gtf</code><span class="ox-param-default">test/fixtures/genome/genes.gtf</span></div>
-<p class="ox-param-desc">params.gtf</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>cons::homer_annotatepeaks_consensus</code> <code>homer_annotatepeaks</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>keep_dups</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Upstream default params (kept as config so CLI overrides work)</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>keep_mito</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">params.keep_mito — keep mitochondrial reads when mito_name set</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>mito::genome_blacklist_regions</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>keep_multi_map</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Upstream default params (kept as config so CLI overrides work)</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>macs_gsize</code><span class="ox-param-default">2.7e9</span></div>
-<p class="ox-param-desc">blacklist + chrM when keep_mito=false); empty = no -L filter</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>macs2_callpeak</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>merged_samples</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">base names of replicate groups (e.g. &quot;S1,S2&quot; for samples S1_REP1/S1_REP2/S2_REP1/S2_REP2) — feeds merged-replicate files into the MultiQC / IGV aggregation rules; empty = no-op</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>merge_replicates</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>min_reps_consensus</code><span class="ox-param-default">1</span></div>
-<p class="ox-param-desc">params.min_reps_consensus</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>cons::macs2_consensus</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>min_trimmed_reads</code><span class="ox-param-default">10000</span></div>
-<p class="ox-param-desc">Upstream default params (kept as config so CLI overrides work)</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>mito_name</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">params.mito_name, e.g. &quot;chrM&quot; — enables mitochondrial filtering (needs config.chrom_sizes)</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>bamtools_filter</code> <code>mito::genome_blacklist_regions</code> <code>pe::bamtools_filter_pe</code> <code>qce::ataqv</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>multiqc_custom_peaks</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">port-only switch: emit MULTIQC_CUSTOM_PEAKS peak-count/FRiP TSVs</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>qce::multiqc_custom_peaks</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>narrow_peak</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Upstream default params (kept as config so CLI overrides work)</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>out_dir</code><span class="ox-param-default">results</span></div>
-<p class="ox-param-desc">params.outdir</p>
-<details class="ox-param-usedby"><summary>used by 41 rules</summary>
-<div class="ox-param-rules"><code>alt::bowtie2_align</code> <code>alt::chromap_align</code> <code>alt::star_align</code> <code>bamtools_filter</code> <code>bedtools_genomecov</code> <code>bwa_mem</code> <code>cons::deseq2_qc</code> <code>cons::homer_annotatepeaks_consensus</code> <code>cons::macs2_consensus</code> <code>cons::subread_featurecounts</code> <code>deeptools_plots</code> <code>fastqc</code> <code>frip_score</code> <code>homer_annotatepeaks</code> <code>macs2_callpeak</code> <code>merge_replicates</code> <code>mito::genome_blacklist_regions</code> <code>multiqc</code> <code>pe::bamtools_filter_pe</code> <code>pe::bedtools_genomecov_pe</code> <code>pe::bwa_mem_pe</code> <code>pe::fastqc_pe</code> <code>pe::multiqc_pe</code> <code>pe::pe_name_sort_remove_orphans</code> <code>pe::plotfingerprint_pe</code> <code>pe::trimgalore_pe</code> <code>picard_markduplicates</code> <code>picard_mergesamfiles</code> <code>plotfingerprint</code> <code>qce::ataqv</code> <code>qce::get_autosomes</code> <code>qce::igv</code> <code>qce::mkarv</code> <code>qce::multiqc_custom_peaks</code> <code>qce::picard_collectmultiplemetrics</code> <code>qce::plot_homer_annotatepeaks</code> <code>qce::plot_macs2_qc</code> <code>qce::preseq_lcextrap</code> <code>samtools_sort_stats</code> <code>trimgalore</code> <code>ucsc_bedgraphtobigwig</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>paired</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Gated branches (defaults keep the default plan identical to the upstream<br>default main path; toggle one key at a time to activate its branch only)</p>
-<details class="ox-param-usedby"><summary>used by 24 rules</summary>
-<div class="ox-param-rules"><code>alt::bowtie2_align</code> <code>alt::chromap_align</code> <code>alt::star_align</code> <code>bamtools_filter</code> <code>bedtools_genomecov</code> <code>bwa_mem</code> <code>cons::subread_featurecounts</code> <code>fastqc</code> <code>multiqc</code> <code>pe::bamtools_filter_pe</code> <code>pe::bedtools_genomecov_pe</code> <code>pe::bwa_mem_pe</code> <code>pe::fastqc_pe</code> <code>pe::multiqc_pe</code> <code>pe::pe_name_sort_remove_orphans</code> <code>pe::plotfingerprint_pe</code> <code>pe::trimgalore_pe</code> <code>plotfingerprint</code> <code>qce::ataqv</code> <code>qce::get_autosomes</code> <code>qce::mkarv</code> <code>qce::picard_collectmultiplemetrics</code> <code>qce::preseq_lcextrap</code> <code>trimgalore</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>picard_xmx_gb</code><span class="ox-param-default">8</span></div>
-<p class="ox-param-desc">GB passed to picard -Xmx. Previously derived from the rule&#x27;s 36G<br>resource budget (Xmx≈30G), which thrash-killed the JVM on a 3.7 GB<br>machine (live run); the resource budget still drives scheduling.</p>
-<details class="ox-param-usedby"><summary>used by 3 rules</summary>
-<div class="ox-param-rules"><code>merge_replicates</code> <code>picard_markduplicates</code> <code>qce::picard_collectmultiplemetrics</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>prepare_reference</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">port switch: build BWA index + chrom sizes from config.reference</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>ref::bwa_index</code> <code>ref::custom_getchromsizes</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>raw_blacklist</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">params.blacklist — raw ENCODE blacklist BED (complemented into include-regions)</p>
-<details class="ox-param-usedby"><summary>used by 3 rules</summary>
-<div class="ox-param-rules"><code>bamtools_filter</code> <code>mito::genome_blacklist_regions</code> <code>pe::bamtools_filter_pe</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>raw_dir</code><span class="ox-param-default">test/fixtures/raw</span></div>
-<p class="ox-param-desc">input fastqs (raw/&lt;sample&gt;.fastq.gz for single-end)</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>fastqc</code> <code>pe::fastqc_pe</code> <code>pe::trimgalore_pe</code> <code>trimgalore</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>reference</code><span class="ox-param-default">test/fixtures/genome/genome.fa</span></div>
-<p class="ox-param-desc">Reference inputs. Upstream obtains these from nf-core iGenomes (--genome);<br>this port expects pre-built files (see README &quot;References&quot;).</p>
-<details class="ox-param-usedby"><summary>used by 13 rules</summary>
-<div class="ox-param-rules"><code>alt::chromap_align</code> <code>bamtools_filter</code> <code>cons::homer_annotatepeaks_consensus</code> <code>homer_annotatepeaks</code> <code>merge_replicates</code> <code>pe::pe_name_sort_remove_orphans</code> <code>picard_markduplicates</code> <code>qce::get_autosomes</code> <code>qce::igv</code> <code>qce::picard_collectmultiplemetrics</code> <code>ref::bwa_index</code> <code>ref::custom_getchromsizes</code> <code>samtools_sort_stats</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>save_trimmed</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Upstream default params (kept as config so CLI overrides work)</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_ataqv</code><span class="ox-param-default">true</span></div>
-<p class="ox-param-desc">upstream default false; port ships this branch OFF (set false to enable)</p>
-<details class="ox-param-usedby"><summary>used by 3 rules</summary>
-<div class="ox-param-rules"><code>qce::ataqv</code> <code>qce::get_autosomes</code> <code>qce::mkarv</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_consensus_peaks</code><span class="ox-param-default">true</span></div>
-<p class="ox-param-desc">upstream default false; port ships this branch OFF (set false to enable)</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>cons::deseq2_qc</code> <code>cons::homer_annotatepeaks_consensus</code> <code>cons::macs2_consensus</code> <code>cons::subread_featurecounts</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_deseq2_qc</code><span class="ox-param-default">true</span></div>
-<p class="ox-param-desc">upstream default false; port ships DESeq2 QC OFF (set false to enable)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>cons::deseq2_qc</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_fastqc</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Upstream default params (kept as config so CLI overrides work)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>fastqc</code> <code>pe::fastqc_pe</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_igv</code><span class="ox-param-default">true</span></div>
-<p class="ox-param-desc">upstream default false; port ships this branch OFF (set false to enable)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>qce::igv</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_merge_replicates</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">params.skip_merge_replicates (upstream default false = merged-replicate analysis ON when replicate samples are declared)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>merge_replicates</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_multiqc</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Upstream default params (kept as config so CLI overrides work)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>multiqc</code> <code>pe::multiqc_pe</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_peak_annotation</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">params.skip_peak_annotation (default false — HOMER annotation on by default, as upstream)</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>cons::homer_annotatepeaks_consensus</code> <code>homer_annotatepeaks</code> <code>qce::plot_homer_annotatepeaks</code> <code>qce::plot_macs2_qc</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_peak_qc</code><span class="ox-param-default">true</span></div>
-<p class="ox-param-desc">upstream default false; port ships the R QC plots OFF (set false to enable)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>qce::plot_homer_annotatepeaks</code> <code>qce::plot_macs2_qc</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_picard_metrics</code><span class="ox-param-default">true</span></div>
-<p class="ox-param-desc">upstream default false; port ships this branch OFF (set false to enable)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>qce::picard_collectmultiplemetrics</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_plot_fingerprint</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Upstream default params (kept as config so CLI overrides work)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>pe::plotfingerprint_pe</code> <code>plotfingerprint</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_plot_profile</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Upstream default params (kept as config so CLI overrides work)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>deeptools_plots</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_preseq</code><span class="ox-param-default">true</span></div>
-<p class="ox-param-desc">params.skip_preseq (upstream default true — preseq off by default)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>qce::preseq_lcextrap</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_qc</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Upstream default params (kept as config so CLI overrides work)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>fastqc</code> <code>pe::fastqc_pe</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_trimming</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">Upstream default params (kept as config so CLI overrides work)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>pe::trimgalore_pe</code> <code>trimgalore</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>star_index</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">params.star — STAR genome dir (built by STAR_GENOMEGENERATE upstream) for aligner=&quot;star&quot;</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>alt::star_align</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>tss_bed</code><span class="ox-param-default">test/fixtures/genome/tss.bed</span></div>
-<p class="ox-param-desc">params.tss_bed</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>deeptools_plots</code> <code>qce::ataqv</code></div>
-</details>
-</div>
-</div>
+<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. Copy a row to paste the key directly. Click any parameter name to copy <code>key = value</code>; clicking <code>default</code> copies just the value.</p>
+<table class="ox-params">
+<thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+<tbody>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy aligner = value" data-copy="aligner = bwa">aligner</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>bwa</code></td>
+<td class="ox-p-desc">params.aligner: &quot;bwa&quot; (default) | &quot;bowtie2&quot; | &quot;chromap&quot; | &quot;star&quot; (SE only)<br><span class="ox-param-usedby">used by <code>6</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy blacklist = value" data-copy="blacklist = ">blacklist</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">params.blacklist — include-regions BED (complement of ENCODE<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bowtie2_index = value" data-copy="bowtie2_index = ">bowtie2_index</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">params.bowtie2 — index prefix (.rev.1.bt2 etc. beside it) for aligner=&quot;bowtie2&quot;<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy broad_cutoff = value" data-copy="broad_cutoff = 0.1">broad_cutoff</button></td>
+<td class="ox-p-t"><code>float</code></td>
+<td class="ox-p-d"><code>0.1</code></td>
+<td class="ox-p-desc">Upstream default params (kept as config so CLI overrides work)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bwa_index = value" data-copy="bwa_index = test/fixtures/genome/genome.fa">bwa_index</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/genome/genome.fa</code></td>
+<td class="ox-p-desc">params.bwa — index prefix (.amb/.ann/.bwt/.pac/.sa beside it)<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy chrom_sizes = value" data-copy="chrom_sizes = test/fixtures/genome/genome.fa.sizes">chrom_sizes</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/genome/genome.fa.sizes</code></td>
+<td class="ox-p-desc">CUSTOM_GETCHROMSIZES output<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy chromap_index = value" data-copy="chromap_index = ">chromap_index</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">params.chromap — index file for aligner=&quot;chromap&quot;<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy deseq2_vst = value" data-copy="deseq2_vst = true">deseq2_vst</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>true</code></td>
+<td class="ox-p-desc">params.deseq2_vst<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fingerprint_bins = value" data-copy="fingerprint_bins = 500000">fingerprint_bins</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>500000</code></td>
+<td class="ox-p-desc">Upstream default params (kept as config so CLI overrides work)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fragment_size = value" data-copy="fragment_size = 200">fragment_size</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>200</code></td>
+<td class="ox-p-desc">Upstream default params (kept as config so CLI overrides work)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gene_bed = value" data-copy="gene_bed = test/fixtures/genome/gene.bed">gene_bed</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/genome/gene.bed</code></td>
+<td class="ox-p-desc">params.gene_bed<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtf = value" data-copy="gtf = test/fixtures/genome/genes.gtf">gtf</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/genome/genes.gtf</code></td>
+<td class="ox-p-desc">params.gtf<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy keep_dups = value" data-copy="keep_dups = false">keep_dups</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Upstream default params (kept as config so CLI overrides work)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy keep_mito = value" data-copy="keep_mito = false">keep_mito</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">params.keep_mito — keep mitochondrial reads when mito_name set<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy keep_multi_map = value" data-copy="keep_multi_map = false">keep_multi_map</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Upstream default params (kept as config so CLI overrides work)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy macs_gsize = value" data-copy="macs_gsize = 2.7e9">macs_gsize</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>2.7e9</code></td>
+<td class="ox-p-desc">blacklist + chrM when keep_mito=false); empty = no -L filter<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy merged_samples = value" data-copy="merged_samples = ">merged_samples</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">base names of replicate groups (e.g. &quot;S1,S2&quot; for samples S1_REP1/S1_REP2/S2_REP1/S2_REP2) — feeds merged-replicate files into the MultiQC / IGV aggregation rules; empty = no-op<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy min_reps_consensus = value" data-copy="min_reps_consensus = 1">min_reps_consensus</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>1</code></td>
+<td class="ox-p-desc">params.min_reps_consensus<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy min_trimmed_reads = value" data-copy="min_trimmed_reads = 10000">min_trimmed_reads</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>10000</code></td>
+<td class="ox-p-desc">Upstream default params (kept as config so CLI overrides work)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mito_name = value" data-copy="mito_name = ">mito_name</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">params.mito_name, e.g. &quot;chrM&quot; — enables mitochondrial filtering (needs config.chrom_sizes)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy multiqc_custom_peaks = value" data-copy="multiqc_custom_peaks = false">multiqc_custom_peaks</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">port-only switch: emit MULTIQC_CUSTOM_PEAKS peak-count/FRiP TSVs<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy narrow_peak = value" data-copy="narrow_peak = false">narrow_peak</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Upstream default params (kept as config so CLI overrides work)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy out_dir = value" data-copy="out_dir = results">out_dir</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>results</code></td>
+<td class="ox-p-desc">params.outdir<br><span class="ox-param-usedby">used by <code>41</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy paired = value" data-copy="paired = false">paired</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Gated branches (defaults keep the default plan identical to the upstream<br>default main path; toggle one key at a time to activate its branch only)<br><span class="ox-param-usedby">used by <code>24</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy picard_xmx_gb = value" data-copy="picard_xmx_gb = 8">picard_xmx_gb</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>8</code></td>
+<td class="ox-p-desc">GB passed to picard -Xmx. Previously derived from the rule&#x27;s 36G<br>resource budget (Xmx≈30G), which thrash-killed the JVM on a 3.7 GB<br>machine (live run); the resource budget still drives scheduling.<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy prepare_reference = value" data-copy="prepare_reference = false">prepare_reference</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">port switch: build BWA index + chrom sizes from config.reference<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy raw_blacklist = value" data-copy="raw_blacklist = ">raw_blacklist</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">params.blacklist — raw ENCODE blacklist BED (complemented into include-regions)<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy raw_dir = value" data-copy="raw_dir = test/fixtures/raw">raw_dir</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/raw</code></td>
+<td class="ox-p-desc">input fastqs (raw/&lt;sample&gt;.fastq.gz for single-end)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy reference = value" data-copy="reference = test/fixtures/genome/genome.fa">reference</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/genome/genome.fa</code></td>
+<td class="ox-p-desc">Reference inputs. Upstream obtains these from nf-core iGenomes (--genome);<br>this port expects pre-built files (see README &quot;References&quot;).<br><span class="ox-param-usedby">used by <code>13</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy save_trimmed = value" data-copy="save_trimmed = false">save_trimmed</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Upstream default params (kept as config so CLI overrides work)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_ataqv = value" data-copy="skip_ataqv = true">skip_ataqv</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>true</code></td>
+<td class="ox-p-desc">upstream default false; port ships this branch OFF (set false to enable)<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_consensus_peaks = value" data-copy="skip_consensus_peaks = true">skip_consensus_peaks</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>true</code></td>
+<td class="ox-p-desc">upstream default false; port ships this branch OFF (set false to enable)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_deseq2_qc = value" data-copy="skip_deseq2_qc = true">skip_deseq2_qc</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>true</code></td>
+<td class="ox-p-desc">upstream default false; port ships DESeq2 QC OFF (set false to enable)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_fastqc = value" data-copy="skip_fastqc = false">skip_fastqc</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Upstream default params (kept as config so CLI overrides work)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_igv = value" data-copy="skip_igv = true">skip_igv</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>true</code></td>
+<td class="ox-p-desc">upstream default false; port ships this branch OFF (set false to enable)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_merge_replicates = value" data-copy="skip_merge_replicates = false">skip_merge_replicates</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">params.skip_merge_replicates (upstream default false = merged-replicate analysis ON when replicate samples are declared)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_multiqc = value" data-copy="skip_multiqc = false">skip_multiqc</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Upstream default params (kept as config so CLI overrides work)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_peak_annotation = value" data-copy="skip_peak_annotation = false">skip_peak_annotation</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">params.skip_peak_annotation (default false — HOMER annotation on by default, as upstream)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_peak_qc = value" data-copy="skip_peak_qc = true">skip_peak_qc</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>true</code></td>
+<td class="ox-p-desc">upstream default false; port ships the R QC plots OFF (set false to enable)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_picard_metrics = value" data-copy="skip_picard_metrics = true">skip_picard_metrics</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>true</code></td>
+<td class="ox-p-desc">upstream default false; port ships this branch OFF (set false to enable)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_plot_fingerprint = value" data-copy="skip_plot_fingerprint = false">skip_plot_fingerprint</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Upstream default params (kept as config so CLI overrides work)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_plot_profile = value" data-copy="skip_plot_profile = false">skip_plot_profile</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Upstream default params (kept as config so CLI overrides work)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_preseq = value" data-copy="skip_preseq = true">skip_preseq</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>true</code></td>
+<td class="ox-p-desc">params.skip_preseq (upstream default true — preseq off by default)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_qc = value" data-copy="skip_qc = false">skip_qc</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Upstream default params (kept as config so CLI overrides work)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_trimming = value" data-copy="skip_trimming = false">skip_trimming</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">Upstream default params (kept as config so CLI overrides work)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy star_index = value" data-copy="star_index = ">star_index</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">params.star — STAR genome dir (built by STAR_GENOMEGENERATE upstream) for aligner=&quot;star&quot;<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy tss_bed = value" data-copy="tss_bed = test/fixtures/genome/tss.bed">tss_bed</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/genome/tss.bed</code></td>
+<td class="ox-p-desc">params.tss_bed<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+</tbody>
+</table>
 
 Descriptions are the workflow's own `#` comments from its `[config]` section (and the `[config]` sections of its included modules), surfaced by `oxo-flow info` — no schema file to maintain.
 

@@ -46,6 +46,16 @@ title: "Variant calling for non-model organisms: trimming, alignment, per-sample
 </div>
 </details>
 
+
+<div class="ox-tryit">
+<div class="ox-tryit-title">⬡ Try it — clone &amp; run</div>
+<pre class="ox-tryit-cmd" data-copy="git clone https://github.com/oxo-flow-community/oxo-flow-snparcher.git &amp;&amp; cd oxo-flow-snparcher &amp;&amp; oxo-flow run main.oxoflow reference_source=/path/to/genome.fa.gz">git clone https://github.com/oxo-flow-community/oxo-flow-snparcher.git
+cd oxo-flow-snparcher
+oxo-flow run main.oxoflow reference_source=/path/to/genome.fa.gz</pre>
+<p class="ox-tryit-note">The repository ships test fixtures (e.g. <code>test/fixtures/raw/sample1_1.fastq.gz</code>, <code>test/fixtures/raw/sample1_2.fastq.gz</code>, <code>test/fixtures/raw/sample2_1.fastq.gz</code>, <code>test/fixtures/raw/sample2_2.fastq.gz</code>) — point <code>input</code> at them or use the built-in sample group to <code>dry-run</code> first.</p>
+</div>
+
+
 ## Run it
 
 ```bash
@@ -85,289 +95,252 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-snparcher
 
 ## Parameters
 
-<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. The list below names the rules that read each key.</p>
-<div class="ox-params">
-<div class="ox-param">
-<div class="ox-param-head"><code>bcftools_max_depth</code><span class="ox-param-default">250</span></div>
-<p class="ox-param-desc">bcftools tool parameter (upstream --bcftools_max_depth) <span class="ox-param-inferred">inferred</span></p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>bcftools_call</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>bcftools_min_baseq</code><span class="ox-param-default">20</span></div>
-<p class="ox-param-desc">bcftools tool parameter (upstream --bcftools_min_baseq) <span class="ox-param-inferred">inferred</span></p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>bcftools_call</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>bcftools_min_mapq</code><span class="ox-param-default">20</span></div>
-<p class="ox-param-desc">bcftools tool parameter (upstream --bcftools_min_mapq) <span class="ox-param-inferred">inferred</span></p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>bcftools_call</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>callable_sites_enabled</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">callable tool parameter (upstream --callable_sites_enabled) <span class="ox-param-inferred">inferred</span></p>
-<details class="ox-param-usedby"><summary>used by 18 rules</summary>
-<div class="ox-param-rules"><code>callable_coverage_thresholds</code> <code>callable_sites_bed</code> <code>clam_collect</code> <code>clam_loci</code> <code>coverage_bed</code> <code>genmap_index</code> <code>genmap_mappability</code> <code>mappability_bed</code> <code>mosdepth</code> <code>mosdepth_external</code> <code>mosdepth_markdup</code> <code>postprocess_basic_filter</code> <code>postprocess_drop_indel_snps</code> <code>postprocess_filter_individuals</code> <code>postprocess_strict_filter</code> <code>postprocess_subset_indels</code> <code>postprocess_subset_snps</code> <code>postprocess_update_bed</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>callable_sites_fraction</code><span class="ox-param-default">1.0</span></div>
-<p class="ox-param-desc">callable tool parameter (upstream --callable_sites_fraction) <span class="ox-param-inferred">inferred</span></p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>coverage_bed</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>callable_sites_kmer</code><span class="ox-param-default">150</span></div>
-<p class="ox-param-desc">callable tool parameter (upstream --callable_sites_kmer) <span class="ox-param-inferred">inferred</span></p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>genmap_mappability</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>callable_sites_max_coverage</code><span class="ox-param-default">auto</span></div>
-<p class="ox-param-desc">callable tool parameter (upstream --callable_sites_max_coverage) <span class="ox-param-inferred">inferred</span></p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>callable_coverage_thresholds</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>callable_sites_merge_distance</code><span class="ox-param-default">100</span></div>
-<p class="ox-param-desc">callable tool parameter (upstream --callable_sites_merge_distance) <span class="ox-param-inferred">inferred</span></p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>coverage_bed</code> <code>mappability_bed</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>callable_sites_min_coverage</code><span class="ox-param-default">auto</span></div>
-<p class="ox-param-desc">callable tool parameter (upstream --callable_sites_min_coverage) <span class="ox-param-inferred">inferred</span></p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>callable_coverage_thresholds</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>callable_sites_min_score</code><span class="ox-param-default">1</span></div>
-<p class="ox-param-desc">callable tool parameter (upstream --callable_sites_min_score) <span class="ox-param-inferred">inferred</span></p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>mappability_bed</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>deepvariant_model_type</code><span class="ox-param-default">WGS</span></div>
-<p class="ox-param-desc">deepvariant tool parameter (upstream --deepvariant_model_type) <span class="ox-param-inferred">inferred</span></p>
-<details class="ox-param-usedby"><summary>used by 3 rules</summary>
-<div class="ox-param-rules"><code>deepvariant_call</code> <code>deepvariant_call_external</code> <code>deepvariant_call_markdup</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>expected_coverage</code><span class="ox-param-default">low</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>gatk_het_prior</code><span class="ox-param-default">0.005</span></div>
-<p class="ox-param-desc">gatk tool parameter (upstream --gatk_het_prior) <span class="ox-param-inferred">inferred</span></p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>gatk_genotype_gvcfs_interval</code> <code>joint_genotype_gvcfs</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>generate_filtered_vcf</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>variant_filtration</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>intervals_db_max_contigs_per_shard</code><span class="ox-param-default">200</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>create_db_intervals</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>intervals_db_max_intervals_per_shard</code><span class="ox-param-default">200</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>create_db_intervals</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>intervals_db_scatter_factor</code><span class="ox-param-default">0.15</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>create_db_intervals</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>intervals_enabled</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 16 rules</summary>
-<div class="ox-param-rules"><code>concat_interval_gvcfs</code> <code>concat_interval_vcfs</code> <code>create_db_intervals</code> <code>create_gvcf_intervals</code> <code>filter_picard_intervals</code> <code>gatk_genomics_db_import_interval</code> <code>gatk_genotype_gvcfs_interval</code> <code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_external</code> <code>gatk_haplotypecaller_interval</code> <code>gatk_haplotypecaller_interval_external</code> <code>gatk_haplotypecaller_interval_markdup</code> <code>gatk_haplotypecaller_markdup</code> <code>joint_genomics_db_import</code> <code>joint_genotype_gvcfs</code> <code>picard_intervals</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>intervals_min_contig_length</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>filter_picard_intervals</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>intervals_min_nmer</code><span class="ox-param-default">500</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>picard_intervals</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>intervals_scatter_count</code><span class="ox-param-default">50</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>create_db_intervals</code> <code>create_gvcf_intervals</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>joint_genotyping_enabled</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 9 rules</summary>
-<div class="ox-param-rules"><code>concat_interval_vcfs</code> <code>create_db_intervals</code> <code>create_db_mapfile</code> <code>gatk_genomics_db_import_interval</code> <code>gatk_genotype_gvcfs_interval</code> <code>glnexus_joint</code> <code>joint_genomics_db_import</code> <code>joint_genotype_gvcfs</code> <code>variant_filtration</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>mark_duplicates</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 15 rules</summary>
-<div class="ox-param-rules"><code>bam_stats</code> <code>bam_stats_markdup</code> <code>deepvariant_call</code> <code>deepvariant_call_markdup</code> <code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_interval</code> <code>gatk_haplotypecaller_interval_markdup</code> <code>gatk_haplotypecaller_markdup</code> <code>index_bam_csi</code> <code>index_bam_csi_markdup</code> <code>markdup_library</code> <code>merge_dedup_libraries</code> <code>merge_library_level_bams</code> <code>mosdepth</code> <code>mosdepth_markdup</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>modules_postprocess_enabled</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 7 rules</summary>
-<div class="ox-param-rules"><code>postprocess_basic_filter</code> <code>postprocess_drop_indel_snps</code> <code>postprocess_filter_individuals</code> <code>postprocess_strict_filter</code> <code>postprocess_subset_indels</code> <code>postprocess_subset_snps</code> <code>postprocess_update_bed</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>modules_qc_enabled</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 10 rules</summary>
-<div class="ox-param-rules"><code>generate_coords_file</code> <code>qc_admixture</code> <code>qc_contig_map</code> <code>qc_copy_qc_report</code> <code>qc_dashboard</code> <code>qc_plink</code> <code>qc_prepare_plink_inputs</code> <code>qc_setup_admixture</code> <code>qc_subsample_snps</code> <code>qc_vcftools_individuals</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>ploidy</code><span class="ox-param-default">2</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 7 rules</summary>
-<div class="ox-param-rules"><code>bcftools_call</code> <code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_external</code> <code>gatk_haplotypecaller_interval</code> <code>gatk_haplotypecaller_interval_external</code> <code>gatk_haplotypecaller_interval_markdup</code> <code>gatk_haplotypecaller_markdup</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>postprocess_contig_size</code><span class="ox-param-default">10000</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>postprocess_update_bed</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>postprocess_exclude_scaffolds</code><span class="ox-param-default">mtDNA,Y</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>postprocess_strict_filter</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>postprocess_maf</code><span class="ox-param-default">0.01</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>postprocess_strict_filter</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>postprocess_missingness</code><span class="ox-param-default">0.75</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>postprocess_strict_filter</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>qc_clusters</code><span class="ox-param-default">3</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>qc_dashboard</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>qc_exclude_scaffolds</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>qc_subsample_snps</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>qc_google_api_key</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>qc_dashboard</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>qc_max_sample_missingness</code><span class="ox-param-default">0.49</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>qc_plink</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>qc_min_depth</code><span class="ox-param-default">2</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>qc_vcftools_individuals</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>qc_pca_dims</code><span class="ox-param-default">10</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>qc_plink</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>reference_name</code><span class="ox-param-default">my_organism</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 27 rules</summary>
-<div class="ox-param-rules"><code>bcftools_call</code> <code>bcftools_regions</code> <code>bwa_mem</code> <code>create_db_intervals</code> <code>create_gvcf_intervals</code> <code>deepvariant_call</code> <code>deepvariant_call_external</code> <code>deepvariant_call_markdup</code> <code>gatk_genomics_db_import_interval</code> <code>gatk_genotype_gvcfs_interval</code> <code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_external</code> <code>gatk_haplotypecaller_interval</code> <code>gatk_haplotypecaller_interval_external</code> <code>gatk_haplotypecaller_interval_markdup</code> <code>gatk_haplotypecaller_markdup</code> <code>genmap_index</code> <code>index_reference</code> <code>joint_genomics_db_import</code> <code>joint_genotype_gvcfs</code> <code>picard_intervals</code> <code>postprocess_update_bed</code> <code>prepare_reference</code> <code>qc_contig_map</code> <code>qc_prepare_plink_inputs</code> <code>qc_subsample_snps</code> <code>variant_filtration</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>reference_source</code><span class="ox-param-default">test/fixtures/ref/genome.fa</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>prepare_reference</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>sample_metadata</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>generate_coords_file</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>variant_tool</code><span class="ox-param-default">gatk</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 25 rules</summary>
-<div class="ox-param-rules"><code>bcftools_call</code> <code>bcftools_concat_regions</code> <code>bcftools_regions</code> <code>concat_interval_gvcfs</code> <code>concat_interval_vcfs</code> <code>create_db_intervals</code> <code>create_db_mapfile</code> <code>create_gvcf_intervals</code> <code>deepvariant_call</code> <code>deepvariant_call_external</code> <code>deepvariant_call_markdup</code> <code>filter_picard_intervals</code> <code>gatk_genomics_db_import_interval</code> <code>gatk_genotype_gvcfs_interval</code> <code>gatk_haplotypecaller</code> <code>gatk_haplotypecaller_external</code> <code>gatk_haplotypecaller_interval</code> <code>gatk_haplotypecaller_interval_external</code> <code>gatk_haplotypecaller_interval_markdup</code> <code>gatk_haplotypecaller_markdup</code> <code>glnexus_joint</code> <code>joint_genomics_db_import</code> <code>joint_genotype_gvcfs</code> <code>picard_intervals</code> <code>variant_filtration</code></div>
-</details>
-</div>
-</div>
+<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. Copy a row to paste the key directly. Click any parameter name to copy <code>key = value</code>; clicking <code>default</code> copies just the value.</p>
+<table class="ox-params">
+<thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+<tbody>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bcftools_max_depth = value" data-copy="bcftools_max_depth = 250">bcftools_max_depth</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>250</code></td>
+<td class="ox-p-desc">bcftools tool parameter (upstream --bcftools_max_depth) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bcftools_min_baseq = value" data-copy="bcftools_min_baseq = 20">bcftools_min_baseq</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>20</code></td>
+<td class="ox-p-desc">bcftools tool parameter (upstream --bcftools_min_baseq) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bcftools_min_mapq = value" data-copy="bcftools_min_mapq = 20">bcftools_min_mapq</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>20</code></td>
+<td class="ox-p-desc">bcftools tool parameter (upstream --bcftools_min_mapq) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy callable_sites_enabled = value" data-copy="callable_sites_enabled = false">callable_sites_enabled</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">callable tool parameter (upstream --callable_sites_enabled) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>18</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy callable_sites_fraction = value" data-copy="callable_sites_fraction = 1.0">callable_sites_fraction</button></td>
+<td class="ox-p-t"><code>float</code></td>
+<td class="ox-p-d"><code>1.0</code></td>
+<td class="ox-p-desc">callable tool parameter (upstream --callable_sites_fraction) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy callable_sites_kmer = value" data-copy="callable_sites_kmer = 150">callable_sites_kmer</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>150</code></td>
+<td class="ox-p-desc">callable tool parameter (upstream --callable_sites_kmer) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy callable_sites_max_coverage = value" data-copy="callable_sites_max_coverage = auto">callable_sites_max_coverage</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>auto</code></td>
+<td class="ox-p-desc">callable tool parameter (upstream --callable_sites_max_coverage) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy callable_sites_merge_distance = value" data-copy="callable_sites_merge_distance = 100">callable_sites_merge_distance</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>100</code></td>
+<td class="ox-p-desc">callable tool parameter (upstream --callable_sites_merge_distance) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy callable_sites_min_coverage = value" data-copy="callable_sites_min_coverage = auto">callable_sites_min_coverage</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>auto</code></td>
+<td class="ox-p-desc">callable tool parameter (upstream --callable_sites_min_coverage) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy callable_sites_min_score = value" data-copy="callable_sites_min_score = 1">callable_sites_min_score</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>1</code></td>
+<td class="ox-p-desc">callable tool parameter (upstream --callable_sites_min_score) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy deepvariant_model_type = value" data-copy="deepvariant_model_type = WGS">deepvariant_model_type</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>WGS</code></td>
+<td class="ox-p-desc">deepvariant tool parameter (upstream --deepvariant_model_type) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy expected_coverage = value" data-copy="expected_coverage = low">expected_coverage</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>low</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gatk_het_prior = value" data-copy="gatk_het_prior = 0.005">gatk_het_prior</button></td>
+<td class="ox-p-t"><code>float</code></td>
+<td class="ox-p-d"><code>0.005</code></td>
+<td class="ox-p-desc">gatk tool parameter (upstream --gatk_het_prior) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy generate_filtered_vcf = value" data-copy="generate_filtered_vcf = false">generate_filtered_vcf</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy intervals_db_max_contigs_per_shard = value" data-copy="intervals_db_max_contigs_per_shard = 200">intervals_db_max_contigs_per_shard</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>200</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy intervals_db_max_intervals_per_shard = value" data-copy="intervals_db_max_intervals_per_shard = 200">intervals_db_max_intervals_per_shard</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>200</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy intervals_db_scatter_factor = value" data-copy="intervals_db_scatter_factor = 0.15">intervals_db_scatter_factor</button></td>
+<td class="ox-p-t"><code>float</code></td>
+<td class="ox-p-d"><code>0.15</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy intervals_enabled = value" data-copy="intervals_enabled = false">intervals_enabled</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>16</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy intervals_min_contig_length = value" data-copy="intervals_min_contig_length = 0">intervals_min_contig_length</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>0</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy intervals_min_nmer = value" data-copy="intervals_min_nmer = 500">intervals_min_nmer</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>500</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy intervals_scatter_count = value" data-copy="intervals_scatter_count = 50">intervals_scatter_count</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>50</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy joint_genotyping_enabled = value" data-copy="joint_genotyping_enabled = false">joint_genotyping_enabled</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>9</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mark_duplicates = value" data-copy="mark_duplicates = false">mark_duplicates</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>15</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy modules_postprocess_enabled = value" data-copy="modules_postprocess_enabled = false">modules_postprocess_enabled</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>7</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy modules_qc_enabled = value" data-copy="modules_qc_enabled = false">modules_qc_enabled</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>10</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ploidy = value" data-copy="ploidy = 2">ploidy</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>2</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>7</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy postprocess_contig_size = value" data-copy="postprocess_contig_size = 10000">postprocess_contig_size</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>10000</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy postprocess_exclude_scaffolds = value" data-copy="postprocess_exclude_scaffolds = mtDNA,Y">postprocess_exclude_scaffolds</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>mtDNA,Y</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy postprocess_maf = value" data-copy="postprocess_maf = 0.01">postprocess_maf</button></td>
+<td class="ox-p-t"><code>float</code></td>
+<td class="ox-p-d"><code>0.01</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy postprocess_missingness = value" data-copy="postprocess_missingness = 0.75">postprocess_missingness</button></td>
+<td class="ox-p-t"><code>float</code></td>
+<td class="ox-p-d"><code>0.75</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy qc_clusters = value" data-copy="qc_clusters = 3">qc_clusters</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>3</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy qc_exclude_scaffolds = value" data-copy="qc_exclude_scaffolds = ">qc_exclude_scaffolds</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy qc_google_api_key = value" data-copy="qc_google_api_key = ">qc_google_api_key</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy qc_max_sample_missingness = value" data-copy="qc_max_sample_missingness = 0.49">qc_max_sample_missingness</button></td>
+<td class="ox-p-t"><code>float</code></td>
+<td class="ox-p-d"><code>0.49</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy qc_min_depth = value" data-copy="qc_min_depth = 2">qc_min_depth</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>2</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy qc_pca_dims = value" data-copy="qc_pca_dims = 10">qc_pca_dims</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>10</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy reference_name = value" data-copy="reference_name = my_organism">reference_name</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>my_organism</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>27</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy reference_source = value" data-copy="reference_source = test/fixtures/ref/genome.fa">reference_source</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/ref/genome.fa</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sample_metadata = value" data-copy="sample_metadata = ">sample_metadata</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy variant_tool = value" data-copy="variant_tool = gatk">variant_tool</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>gatk</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>25</code> rules</span></td>
+</tr>
+</tbody>
+</table>
 
 Descriptions are the workflow's own `#` comments from its `[config]` section (and the `[config]` sections of its included modules), surfaced by `oxo-flow info` — no schema file to maintain.
 

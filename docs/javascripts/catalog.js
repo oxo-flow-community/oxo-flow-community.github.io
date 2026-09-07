@@ -1,8 +1,24 @@
 /* oxo-flow-community catalog renderer — no dependencies, vanilla JS.
    Reads window.OXO_PIPELINES (generated registry data) and renders stats,
-   featured cards, and the searchable catalog grid. */
+   featured cards, and the searchable catalog grid. Since the script is
+   loaded on every page it also carries the ONE copy-to-clipboard handler
+   for every [data-copy] element (parameter rows, hero commands, …). */
 (() => {
   "use strict";
+
+  // ---- copy-to-clipboard (single source; elements opt in via data-copy) ----
+  document.addEventListener("click", (ev) => {
+    const btn = ev.target.closest("[data-copy]");
+    if (!btn) return;
+    const text = btn.getAttribute("data-copy");
+    const flash = () => {
+      btn.classList.add("copied");
+      setTimeout(() => btn.classList.remove("copied"), 1200);
+    };
+    (navigator.clipboard?.writeText(text) || Promise.reject())
+      .then(flash)
+      .catch(() => {});
+  });
 
   const P = window.OXO_PIPELINES || [];
   const FEATURED = [

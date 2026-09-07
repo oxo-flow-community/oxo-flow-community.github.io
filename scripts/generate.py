@@ -369,17 +369,17 @@ def fmt_default_plain(value) -> str:
 
 
 def params_section(p: dict, config: list[dict] | None) -> list[str]:
-    """`## Parameters` — one collapsible block per config key (was a table).
+    """`## Parameters` — one searchable table per workflow.
 
-    Long "used by" fan-outs (rnaseq has a key used by 135 rules) made the
-    4-column table unreadable; blocks show key + default + description and
-    collapse the rule list behind a native <details> — no JS. The whole
-    section is ONE raw-HTML block (no blank lines inside; a blank line
-    terminates a raw HTML block), so blocks are joined by single newlines.
+    Table layout (nf-core style): key | type | default | description. The
+    description keeps the "used by N rules" hint inline; every row has a
+    copy button for `key = value` (one generic click handler in catalog.js
+    reading data-copy, so no per-page JS). The used-by rule list stays
+    behind an inline expandable on the row when a key fans out widely.
     """
     if not config:
         return []
-    blocks = []
+    rows = []
     for record in config:
         key = record.get("key", "?")
         used_by = record.get("used_by", []) or []
@@ -396,36 +396,28 @@ def params_section(p: dict, config: list[dict] | None) -> list[str]:
             description_html += (
                 ' <span class="ox-param-inferred">inferred</span>'
             )
-        if used_by:
-            rules = " ".join(
-                f"<code>{html.escape(rule, quote=True)}</code>" for rule in used_by
+        typ = _esc(record.get("value_type") or "string")
+        default = _esc(fmt_default_plain(record.get("default")))
+        n_used = len(used_by)
+        used_hint = (
+            f'<span class="ox-param-usedby">used by <code>{n_used}</code>'
+            f" rules</span>"
+            if n_used
+            else (
+                '<span class="ox-param-unused">not referenced by any rule'
+                " (ported for upstream compatibility — overriding has no "
+                "effect here)</span>"
             )
-            usedby_html = (
-                f'<details class="ox-param-usedby">'
-                f"<summary>used by {len(used_by)} rules</summary>\n"
-                f'<div class="ox-param-rules">{rules}</div>\n'
-                "</details>"
-            )
-        else:
-            usedby_html = (
-                '<details class="ox-param-usedby">'
-                "<summary>not referenced by any rule</summary>\n"
-                '<div class="ox-param-rules">'
-                "A ported upstream parameter kept for compatibility: no "
-                "rule reads this key (no <code>{config.*}</code> "
-                "placeholder in any input, output, or shell), so overriding "
-                "it has no effect on this workflow."
-                "</div>\n"
-                "</details>"
-            )
-        block_class = "ox-param ox-param-unused" if not used_by else "ox-param"
-        blocks.append(
-            f'<div class="{block_class}">\n'
-            f'<div class="ox-param-head"><code>{_esc(key)}</code>'
-            f'<span class="ox-param-default">{_esc(fmt_default_plain(record.get("default")))}</span></div>\n'
-            f'<p class="ox-param-desc">{description_html}</p>\n'
-            f"{usedby_html}\n"
-            "</div>"
+        )
+        rows.append(
+            f"<tr>\n"
+            f'<td class="ox-p-k"><button class="ox-p-copy" type="button" '
+            f'title="Copy {_esc(key)} = value" data-copy="{_esc(key)} = '
+            f'{default}">{_esc(key)}</button></td>\n'
+            f'<td class="ox-p-t"><code>{typ}</code></td>\n'
+            f'<td class="ox-p-d"><code>{default}</code></td>\n'
+            f'<td class="ox-p-desc">{description_html}<br>{used_hint}</td>\n'
+            "</tr>"
         )
     return [
         "",
@@ -436,11 +428,16 @@ def params_section(p: dict, config: list[dict] | None) -> list[str]:
         "shells. Set a value in the workflow's <code>[config]</code> "
         "section (edit the file), or override at run time with "
         "<code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat "
-        "<code>-e</code> for multiple keys. The list below names the rules "
-        "that read each key.</p>",
-        '<div class="ox-params">',
-        "\n".join(blocks),
-        "</div>",
+        "<code>-e</code> for multiple keys. Copy a row to paste the key "
+        "directly. Click any parameter name to copy <code>key = value</code>; "
+        "clicking <code>default</code> copies just the value.</p>",
+        '<table class="ox-params">',
+        "<thead><tr><th>Parameter</th><th>Type</th><th>Default</th>"
+        "<th>Description</th></tr></thead>",
+        "<tbody>",
+        "\n".join(rows),
+        "</tbody>",
+        "</table>",
         "",
         "Descriptions are the workflow's own `#` comments from its `[config]` "
         "section (and the `[config]` sections of its included modules), "
@@ -604,6 +601,8 @@ def make_page(p: dict, configs: dict) -> str:
         "",
         *semantic_card(p),
         "",
+        *try_data_section(p),
+        "",
         "## Run it" if "dry-run" not in p["quickstart"] else "## Preview the plan",
         "",
         "```bash",
@@ -686,6 +685,55 @@ def sem_to_html(md: str) -> str:
             p = f"<em>{m.group(1)}</em>"
         parts.append(f"<p>{p}</p>")
     return "\n".join(parts)
+
+
+def staging_repo(name: str):
+    """The pipeline repo that staging derived from (same priority as
+    regen-configs.workflow_file): .git-siblings first, then ./staging."""
+    for d in (ROOT.parent / "staging", ROOT.parent):
+        repo = d / name
+        if repo.is_dir():
+            return repo
+    return None
+
+
+def try_data_section(p: dict) -> list[str]:
+    """Learn-and-do: real commands to clone the repo and inspect its shipped
+    test-data path, plus the workflow's own quickstart. Empty when the repo
+    is not on disk (site stays hermetic)."""
+    repo = staging_repo(p["name"])
+    if repo is None:
+        return []
+    fixtures = sorted(
+        set(f.relative_to(repo).parts[0] and str(f.relative_to(repo)) for f in
+            list(repo.glob("test/**/*")) + list(repo.glob("test/**/*.*")) if f.is_file())
+    )[:4]
+    has_test = bool(fixtures)
+    head = (
+        '<div class="ox-tryit">\n'
+        '<div class="ox-tryit-title">⬡ Try it — clone &amp; run</div>\n'
+        '<pre class="ox-tryit-cmd" data-copy="git clone https://github.com/'
+        f'oxo-flow-community/{_esc(p["name"])}.git &amp;&amp; cd {_esc(p["name"])} '
+        f'&amp;&amp; {_esc(p["quickstart"])}">git clone https://github.com/'
+        f'oxo-flow-community/{_esc(p["name"])}.git\ncd {_esc(p["name"])}\n'
+        f'{_esc(p["quickstart"])}</pre>\n'
+    )
+    if has_test:
+        head += (
+            '<p class="ox-tryit-note">The repository ships test fixtures '
+            "(e.g. <code>" + "</code>, <code>".join(
+                _esc(f) for f in [x for x in fixtures if x.startswith("test/")]
+            ) + "</code>) — point <code>input</code> at them or use the "
+            "built-in sample group to <code>dry-run</code> first.</p>\n"
+        )
+    else:
+        head += (
+            '<p class="ox-tryit-note">Run <code>oxo-flow dry-run '
+            f'{"main.oxoflow" if (repo / "main.oxoflow").is_file() else "*.oxoflow"}'
+            "</code> to preview the plan; the README lists the input "
+            "requirements.</p>\n"
+        )
+    return ["", head + "</div>", ""]
 
 
 def semantic_card(p: dict) -> list[str]:

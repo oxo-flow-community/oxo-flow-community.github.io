@@ -48,6 +48,16 @@ title: "Ancient DNA (aDNA): QC, mapping, damage estimation and genotyping"
 </div>
 </details>
 
+
+<div class="ox-tryit">
+<div class="ox-tryit-title">⬡ Try it — clone &amp; run</div>
+<pre class="ox-tryit-cmd" data-copy="git clone https://github.com/oxo-flow-community/oxo-flow-eager.git &amp;&amp; cd oxo-flow-eager &amp;&amp; oxo-flow run main.oxoflow">git clone https://github.com/oxo-flow-community/oxo-flow-eager.git
+cd oxo-flow-eager
+oxo-flow run main.oxoflow</pre>
+<p class="ox-tryit-note">The repository ships test fixtures (e.g. <code>test/fixtures/generate_fixtures.py</code>, <code>test/fixtures/groups.tsv</code>, <code>test/fixtures/raw/S1_R1.fastq.gz</code>, <code>test/fixtures/raw/S1_R2.fastq.gz</code>) — point <code>input</code> at them or use the built-in sample group to <code>dry-run</code> first.</p>
+</div>
+
+
 ## Run it
 
 ```bash
@@ -91,1129 +101,972 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-eager
 
 ## Parameters
 
-<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. The list below names the rules that read each key.</p>
-<div class="ox-params">
-<div class="ox-param">
-<div class="ox-param-head"><code>angsd_fasta_arg</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>genotyping_angsd</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>angsd_glformat</code><span class="ox-param-default">4</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>genotyping_angsd</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>angsd_glmodel</code><span class="ox-param-default">1</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>genotyping_angsd</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>angsd_majorminor_arg</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>genotyping_angsd</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>anno_file</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>bedtools_coverage</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>anno_file_is_unsorted_neg</code><span class="ox-param-default">-sorted</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>bedtools_coverage</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>bam_input</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>convert_bam</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>bam_mapping_quality_threshold</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>samtools_filter_bowtie2</code> <code>samtools_filter_bwaaln</code> <code>samtools_filter_bwamem</code> <code>samtools_filter_circularmapper</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>bam_unmapped_type</code><span class="ox-param-default">discard</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 9 rules</summary>
-<div class="ox-param-rules"><code>kraken</code> <code>kraken_merge</code> <code>kraken_parse</code> <code>malt</code> <code>metagenomic_complexity_filter</code> <code>samtools_filter_bowtie2</code> <code>samtools_filter_bwaaln</code> <code>samtools_filter_bwamem</code> <code>samtools_filter_circularmapper</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>bamutils_clip_double_stranded_none_udg_left</code><span class="ox-param-default">1</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>bam_trim</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>bamutils_clip_double_stranded_none_udg_right</code><span class="ox-param-default">1</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>bam_trim</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>bamutils_softclip_arg</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>bam_trim</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>bcftools_stats_source</code><span class="ox-param-default">haplotypecaller</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>bcftools_stats</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>bt2_preset</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>bowtie2</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>bwaalnk</code><span class="ox-param-default">2</span></div>
-<p class="ox-param-desc">mapping</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>bwa_aln</code> <code>circularmapper</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>bwaalnl</code><span class="ox-param-default">1024</span></div>
-<p class="ox-param-desc">mapping</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>bwa_aln</code> <code>circularmapper</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>bwaalnn</code><span class="ox-param-default">0.01</span></div>
-<p class="ox-param-desc">mapping</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>bwa_aln</code> <code>circularmapper</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>bwaalno</code><span class="ox-param-default">2</span></div>
-<p class="ox-param-desc">mapping</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>bwa_aln</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>circularextension</code><span class="ox-param-default">100</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>circulargenerator</code> <code>circularmapper</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>circularfilter_arg</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>circularmapper</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>circulartarget</code><span class="ox-param-default">chrMT</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>circulargenerator</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>clip_forward_adaptor</code><span class="ox-param-default">AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC</span></div>
-<p class="ox-param-desc">read clipping / merging</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>adapter_removal</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>clip_min_read_quality</code><span class="ox-param-default">20</span></div>
-<p class="ox-param-desc">read clipping / merging</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>adapter_removal</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>clip_readlength</code><span class="ox-param-default">30</span></div>
-<p class="ox-param-desc">read clipping / merging</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>adapter_removal</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>clip_reverse_adaptor</code><span class="ox-param-default">AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTA</span></div>
-<p class="ox-param-desc">read clipping / merging</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>adapter_removal</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>colour_chemistry</code><span class="ox-param-default">4</span></div>
-<p class="ox-param-desc">input / library metadata (directory-input mode defaults)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>fastp</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>complexity_filter_poly_g</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">complexity (poly-G) filter</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>fastp</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>complexity_filter_poly_g_min</code><span class="ox-param-default">10</span></div>
-<p class="ox-param-desc">complexity (poly-G) filter</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>fastp</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>damage_calculation_tool</code><span class="ox-param-default">damageprofiler</span></div>
-<p class="ox-param-desc">damage estimation</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>damageprofiler</code> <code>mapdamage_calculation</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>damageprofiler_length</code><span class="ox-param-default">100</span></div>
-<p class="ox-param-desc">damage estimation</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>damageprofiler</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>damageprofiler_threshold</code><span class="ox-param-default">15</span></div>
-<p class="ox-param-desc">damage estimation</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>damageprofiler</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>damageprofiler_yaxis</code><span class="ox-param-default">0.30</span></div>
-<p class="ox-param-desc">damage estimation</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>damageprofiler</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>dedup_all_merged</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">deduplication</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>dedupper</code><span class="ox-param-default">markduplicates</span></div>
-<p class="ox-param-desc">deduplication</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>dedup</code> <code>markduplicates</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>fasta</code><span class="ox-param-default">test/fixtures/reference/genome.fa</span></div>
-<p class="ox-param-desc">input / library metadata (directory-input mode defaults)</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>make_bwa_index</code> <code>make_fasta_index</code> <code>make_seq_dict</code> <code>unzip_reference</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>freebayes_C</code><span class="ox-param-default">2</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>genotyping_freebayes</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>freebayes_g_arg</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>genotyping_freebayes</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>freebayes_p</code><span class="ox-param-default">1</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>genotyping_freebayes</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>gatk_call_conf</code><span class="ox-param-default">30</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>genotyping_hc</code> <code>genotyping_ug</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>gatk_downsample</code><span class="ox-param-default">250</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>genotyping_ug</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>gatk_hc_emitrefconf</code><span class="ox-param-default">NONE</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>genotyping_hc</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>gatk_hc_out_mode</code><span class="ox-param-default">EMIT_VARIANTS_ONLY</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>genotyping_hc</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>gatk_ploidy</code><span class="ox-param-default">2</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>genotyping_hc</code> <code>genotyping_ug</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>gatk_ug_defaultbasequalities_arg</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>genotyping_ug</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>gatk_ug_genotype_model</code><span class="ox-param-default">SNP</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>genotyping_ug</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>gatk_ug_out_mode</code><span class="ox-param-default">EMIT_VARIANTS_ONLY</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>genotyping_ug</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>genotyping_source</code><span class="ox-param-default">raw</span></div>
-<p class="ox-param-desc">genotyping (pileupCaller branch)</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>genotyping_tool</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">genotyping (pileupCaller branch)</p>
-<details class="ox-param-usedby"><summary>used by 8 rules</summary>
-<div class="ox-param-rules"><code>eigenstrat_snp_coverage</code> <code>genotyping_angsd</code> <code>genotyping_freebayes</code> <code>genotyping_hc</code> <code>genotyping_pileupcaller</code> <code>genotyping_ug</code> <code>multivcfanalyzer</code> <code>picard_addorreplacereadgroups</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>hostremoval_input_fastq</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>hostremoval_input_fastq</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>hostremoval_mode</code><span class="ox-param-default">mapped</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>hostremoval_input_fastq</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>input_bam</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>convert_bam</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>kraken2_db</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>kraken</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>lane</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">input / library metadata (directory-input mode defaults)</p>
-<details class="ox-param-usedby"><summary>used by 5 rules</summary>
-<div class="ox-param-rules"><code>adapter_removal</code> <code>bwa_aln</code> <code>fastp</code> <code>fastqc_after_clipping</code> <code>post_ar_fastq_trimming</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>large_ref</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">mapping</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>malt_alignment_mode</code><span class="ox-param-default">SemiGlobal</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>malt</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>malt_db</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>malt</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>malt_max_queries</code><span class="ox-param-default">100</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>malt</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>malt_memory_mode</code><span class="ox-param-default">load</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>malt</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>malt_min_support_mode</code><span class="ox-param-default">percent</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>malt</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>malt_min_support_percent</code><span class="ox-param-default">0.01</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>malt</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>malt_mode</code><span class="ox-param-default">BlastN</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>malt</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>malt_sam_output</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>malt</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>malt_top_percent</code><span class="ox-param-default">1</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>malt</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>maltextract_destackingoff</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>maltextract</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>maltextract_downsamplingoff</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>maltextract</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>maltextract_duplicateremovaloff</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>maltextract</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>maltextract_filter</code><span class="ox-param-default">def_anc</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>maltextract</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>maltextract_matches</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>maltextract</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>maltextract_megansummary</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>maltextract</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>maltextract_ncbifiles</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>maltextract</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>maltextract_percentidentity</code><span class="ox-param-default">85.0</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>maltextract</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>maltextract_taxon_list</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>maltextract</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>maltextract_topalignment</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>maltextract</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>maltextract_toppercent</code><span class="ox-param-default">0.01</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>maltextract</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>mapdamage_downsample_arg</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>mapdamage_calculation</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>mapdamage_singlestranded_arg</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>mapdamage_calculation</code> <code>mapdamage_rescaling</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>mapdamage_yaxis</code><span class="ox-param-default">0.25</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>mapdamage_calculation</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>mapper</code><span class="ox-param-default">bwaaln</span></div>
-<p class="ox-param-desc">mapping</p>
-<details class="ox-param-usedby"><summary>used by 10 rules</summary>
-<div class="ox-param-rules"><code>bowtie2</code> <code>bwa_aln</code> <code>bwamem</code> <code>circulargenerator</code> <code>circularmapper</code> <code>make_bt2_index</code> <code>samtools_filter_bowtie2</code> <code>samtools_filter_bwaaln</code> <code>samtools_filter_bwamem</code> <code>samtools_filter_circularmapper</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>mergedonly</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">read clipping / merging</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>metagenomic_complexity_entropy</code><span class="ox-param-default">0.3</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>metagenomic_complexity_filter</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>metagenomic_complexity_filter</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 3 rules</summary>
-<div class="ox-param-rules"><code>kraken</code> <code>malt</code> <code>metagenomic_complexity_filter</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>metagenomic_min_support_reads</code><span class="ox-param-default">1</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>kraken_parse</code> <code>malt</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>metagenomic_tool</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 5 rules</summary>
-<div class="ox-param-rules"><code>kraken</code> <code>kraken_merge</code> <code>kraken_parse</code> <code>malt</code> <code>maltextract</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>min_adap_overlap</code><span class="ox-param-default">1</span></div>
-<p class="ox-param-desc">read clipping / merging</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>adapter_removal</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>min_allele_freq_het</code><span class="ox-param-default">0.2</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>multivcfanalyzer</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>min_allele_freq_hom</code><span class="ox-param-default">0.8</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>multivcfanalyzer</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>min_base_coverage</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>multivcfanalyzer</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>min_genotype_quality</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>multivcfanalyzer</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>mtnucratio_header</code><span class="ox-param-default">MT</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>mtnucratio</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>multivcf_samples</code><span class="ox-param-default">S1, S2</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>nuclear_contamination_header</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>nuclear_contamination</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>out_dir</code><span class="ox-param-default">results</span></div>
-<p class="ox-param-desc">input / library metadata (directory-input mode defaults)</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>percent_identity</code><span class="ox-param-default">85</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>malt</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>pileupcaller_bedfile</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">genotyping (pileupCaller branch)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>genotyping_pileupcaller</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>pileupcaller_method</code><span class="ox-param-default">randomHaploid</span></div>
-<p class="ox-param-desc">genotyping (pileupCaller branch)</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>pileupcaller_min_base_quality</code><span class="ox-param-default">30</span></div>
-<p class="ox-param-desc">genotyping (pileupCaller branch)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>genotyping_pileupcaller</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>pileupcaller_min_map_quality</code><span class="ox-param-default">30</span></div>
-<p class="ox-param-desc">genotyping (pileupCaller branch)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>genotyping_pileupcaller</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>pileupcaller_snpfile</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">genotyping (pileupCaller branch)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>genotyping_pileupcaller</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>pileupcaller_transitions_mode</code><span class="ox-param-default">AllSites</span></div>
-<p class="ox-param-desc">genotyping (pileupCaller branch)</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>pmdtools_mask_bed</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>mask_reference_for_pmdtools</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>pmdtools_max_reads</code><span class="ox-param-default">1000000</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>pmdtools</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>pmdtools_platypus_arg</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>pmdtools</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>pmdtools_range</code><span class="ox-param-default">10</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>pmdtools</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>pmdtools_reference_mask</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>mask_reference_for_pmdtools</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>pmdtools_threshold</code><span class="ox-param-default">3</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>pmdtools</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>pmdtools_treatment_arg</code><span class="ox-param-default">--UDGminus</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>pmdtools</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>post_ar_trim_front</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>post_ar_fastq_trimming</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>post_ar_trim_front2</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>post_ar_trim_tail</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>post_ar_fastq_trimming</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>post_ar_trim_tail2</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>preseq_bootstrap</code><span class="ox-param-default">100</span></div>
-<p class="ox-param-desc">preseq</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>preseq_cval</code><span class="ox-param-default">0.95</span></div>
-<p class="ox-param-desc">preseq</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>preseq_maxextrap</code><span class="ox-param-default">10000000000</span></div>
-<p class="ox-param-desc">preseq</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>preseq_mode</code><span class="ox-param-default">c_curve</span></div>
-<p class="ox-param-desc">preseq</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>preseq_step_size</code><span class="ox-param-default">1000</span></div>
-<p class="ox-param-desc">preseq</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>preseq</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>preseq_terms</code><span class="ox-param-default">100</span></div>
-<p class="ox-param-desc">preseq</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>preserve5p</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">read clipping / merging</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>qualitymax</code><span class="ox-param-default">41</span></div>
-<p class="ox-param-desc">read clipping / merging</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>adapter_removal</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>reference_gff_annotations</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>multivcfanalyzer</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>reference_gff_exclude</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>multivcfanalyzer</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>rescale_length_3p_arg</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>mapdamage_rescaling</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>rescale_length_5p_arg</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>mapdamage_rescaling</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>rescale_seqlength</code><span class="ox-param-default">12</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>mapdamage_rescaling</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>run_bam_filtering</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 10 rules</summary>
-<div class="ox-param-rules"><code>kraken</code> <code>kraken_merge</code> <code>kraken_parse</code> <code>malt</code> <code>metagenomic_complexity_filter</code> <code>samtools_filter_bowtie2</code> <code>samtools_filter_bwaaln</code> <code>samtools_filter_bwamem</code> <code>samtools_filter_circularmapper</code> <code>samtools_flagstat_after_filter</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>run_bcftools_stats</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>bcftools_stats</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>run_bedtools_coverage</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>bedtools_coverage</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>run_endor_spy</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>endor_spy</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>run_genotyping</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">genotyping (pileupCaller branch)</p>
-<details class="ox-param-usedby"><summary>used by 8 rules</summary>
-<div class="ox-param-rules"><code>eigenstrat_snp_coverage</code> <code>genotyping_angsd</code> <code>genotyping_freebayes</code> <code>genotyping_hc</code> <code>genotyping_pileupcaller</code> <code>genotyping_ug</code> <code>multivcfanalyzer</code> <code>picard_addorreplacereadgroups</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>run_maltextract</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>maltextract</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>run_mapdamage_rescaling</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>mapdamage_rescaling</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>run_metagenomic_screening</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>kraken</code> <code>kraken_merge</code> <code>kraken_parse</code> <code>malt</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>run_mtnucratio</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>mtnucratio</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>run_multivcfanalyzer</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>multivcfanalyzer</code> <code>picard_addorreplacereadgroups</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>run_nuclear_contamination</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>nuclear_contamination</code> <code>print_nuclear_contamination</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>run_pmdtools</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>mask_reference_for_pmdtools</code> <code>pmdtools</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>run_post_ar_trimming</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>post_ar_fastq_trimming</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>run_sexdeterrmine</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>sexdeterrmine</code> <code>sexdeterrmine_prep</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>run_trim_bam</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>bam_trim</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>run_vcf2genome</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>vcf2genome</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>save_reference</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">mapping</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>seqtype</code><span class="ox-param-default">PE</span></div>
-<p class="ox-param-desc">input / library metadata (directory-input mode defaults)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>bwa_aln</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>sexdeterrmine_prep_s</code><span class="ox-param-default">1000000</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>sexdeterrmine_prep</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>sexdeterrmine_s</code><span class="ox-param-default">1000000</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>sexdeterrmine</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>single_end</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">input / library metadata (directory-input mode defaults)</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>single_stranded</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>maltextract</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_adapterremoval</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">skipping (upstream defaults: run everything except optional branches)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>adapter_removal</code> <code>fastqc_after_clipping</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>skip_collapse</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">read clipping / merging</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_damage_calculation</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">skipping (upstream defaults: run everything except optional branches)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>damageprofiler</code> <code>mapdamage_calculation</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_deduplication</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">skipping (upstream defaults: run everything except optional branches)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>dedup</code> <code>markduplicates</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_fastqc</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">skipping (upstream defaults: run everything except optional branches)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>fastqc</code> <code>fastqc_after_clipping</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_preseq</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">skipping (upstream defaults: run everything except optional branches)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>preseq</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>skip_qualimap</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">skipping (upstream defaults: run everything except optional branches)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>qualimap</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>skip_trim</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">read clipping / merging</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>snp_eff_results</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>multivcfanalyzer</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>udg_type</code><span class="ox-param-default">none</span></div>
-<p class="ox-param-desc">input / library metadata (directory-input mode defaults)</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>unzip_reference</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>unzip_reference</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>vcf2genome_minc</code><span class="ox-param-default">5</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>vcf2genome</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>vcf2genome_minfreq</code><span class="ox-param-default">0.5</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>vcf2genome</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>vcf2genome_minq</code><span class="ox-param-default">30</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>vcf2genome</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>write_allele_frequencies_arg</code><span class="ox-param-default">F</span></div>
-<p class="ox-param-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>multivcfanalyzer</code></div>
-</details>
-</div>
-</div>
+<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. Copy a row to paste the key directly. Click any parameter name to copy <code>key = value</code>; clicking <code>default</code> copies just the value.</p>
+<table class="ox-params">
+<thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+<tbody>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy angsd_fasta_arg = value" data-copy="angsd_fasta_arg = ">angsd_fasta_arg</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy angsd_glformat = value" data-copy="angsd_glformat = 4">angsd_glformat</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>4</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy angsd_glmodel = value" data-copy="angsd_glmodel = 1">angsd_glmodel</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>1</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy angsd_majorminor_arg = value" data-copy="angsd_majorminor_arg = ">angsd_majorminor_arg</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy anno_file = value" data-copy="anno_file = ">anno_file</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy anno_file_is_unsorted_neg = value" data-copy="anno_file_is_unsorted_neg = -sorted">anno_file_is_unsorted_neg</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>-sorted</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bam_input = value" data-copy="bam_input = false">bam_input</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bam_mapping_quality_threshold = value" data-copy="bam_mapping_quality_threshold = 0">bam_mapping_quality_threshold</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>0</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bam_unmapped_type = value" data-copy="bam_unmapped_type = discard">bam_unmapped_type</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>discard</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>9</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bamutils_clip_double_stranded_none_udg_left = value" data-copy="bamutils_clip_double_stranded_none_udg_left = 1">bamutils_clip_double_stranded_none_udg_left</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>1</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bamutils_clip_double_stranded_none_udg_right = value" data-copy="bamutils_clip_double_stranded_none_udg_right = 1">bamutils_clip_double_stranded_none_udg_right</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>1</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bamutils_softclip_arg = value" data-copy="bamutils_softclip_arg = ">bamutils_softclip_arg</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bcftools_stats_source = value" data-copy="bcftools_stats_source = haplotypecaller">bcftools_stats_source</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>haplotypecaller</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bt2_preset = value" data-copy="bt2_preset = ">bt2_preset</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bwaalnk = value" data-copy="bwaalnk = 2">bwaalnk</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>2</code></td>
+<td class="ox-p-desc">mapping<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bwaalnl = value" data-copy="bwaalnl = 1024">bwaalnl</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>1024</code></td>
+<td class="ox-p-desc">mapping<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bwaalnn = value" data-copy="bwaalnn = 0.01">bwaalnn</button></td>
+<td class="ox-p-t"><code>float</code></td>
+<td class="ox-p-d"><code>0.01</code></td>
+<td class="ox-p-desc">mapping<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bwaalno = value" data-copy="bwaalno = 2">bwaalno</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>2</code></td>
+<td class="ox-p-desc">mapping<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy circularextension = value" data-copy="circularextension = 100">circularextension</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>100</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy circularfilter_arg = value" data-copy="circularfilter_arg = ">circularfilter_arg</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy circulartarget = value" data-copy="circulartarget = chrMT">circulartarget</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>chrMT</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy clip_forward_adaptor = value" data-copy="clip_forward_adaptor = AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC">clip_forward_adaptor</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC</code></td>
+<td class="ox-p-desc">read clipping / merging<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy clip_min_read_quality = value" data-copy="clip_min_read_quality = 20">clip_min_read_quality</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>20</code></td>
+<td class="ox-p-desc">read clipping / merging<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy clip_readlength = value" data-copy="clip_readlength = 30">clip_readlength</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>30</code></td>
+<td class="ox-p-desc">read clipping / merging<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy clip_reverse_adaptor = value" data-copy="clip_reverse_adaptor = AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTA">clip_reverse_adaptor</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTA</code></td>
+<td class="ox-p-desc">read clipping / merging<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy colour_chemistry = value" data-copy="colour_chemistry = 4">colour_chemistry</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>4</code></td>
+<td class="ox-p-desc">input / library metadata (directory-input mode defaults)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy complexity_filter_poly_g = value" data-copy="complexity_filter_poly_g = false">complexity_filter_poly_g</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">complexity (poly-G) filter<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy complexity_filter_poly_g_min = value" data-copy="complexity_filter_poly_g_min = 10">complexity_filter_poly_g_min</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>10</code></td>
+<td class="ox-p-desc">complexity (poly-G) filter<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy damage_calculation_tool = value" data-copy="damage_calculation_tool = damageprofiler">damage_calculation_tool</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>damageprofiler</code></td>
+<td class="ox-p-desc">damage estimation<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy damageprofiler_length = value" data-copy="damageprofiler_length = 100">damageprofiler_length</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>100</code></td>
+<td class="ox-p-desc">damage estimation<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy damageprofiler_threshold = value" data-copy="damageprofiler_threshold = 15">damageprofiler_threshold</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>15</code></td>
+<td class="ox-p-desc">damage estimation<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy damageprofiler_yaxis = value" data-copy="damageprofiler_yaxis = 0.30">damageprofiler_yaxis</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>0.30</code></td>
+<td class="ox-p-desc">damage estimation<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dedup_all_merged = value" data-copy="dedup_all_merged = false">dedup_all_merged</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">deduplication<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dedupper = value" data-copy="dedupper = markduplicates">dedupper</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>markduplicates</code></td>
+<td class="ox-p-desc">deduplication<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fasta = value" data-copy="fasta = test/fixtures/reference/genome.fa">fasta</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/reference/genome.fa</code></td>
+<td class="ox-p-desc">input / library metadata (directory-input mode defaults)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy freebayes_C = value" data-copy="freebayes_C = 2">freebayes_C</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>2</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy freebayes_g_arg = value" data-copy="freebayes_g_arg = ">freebayes_g_arg</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy freebayes_p = value" data-copy="freebayes_p = 1">freebayes_p</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>1</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gatk_call_conf = value" data-copy="gatk_call_conf = 30">gatk_call_conf</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>30</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gatk_downsample = value" data-copy="gatk_downsample = 250">gatk_downsample</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>250</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gatk_hc_emitrefconf = value" data-copy="gatk_hc_emitrefconf = NONE">gatk_hc_emitrefconf</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>NONE</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gatk_hc_out_mode = value" data-copy="gatk_hc_out_mode = EMIT_VARIANTS_ONLY">gatk_hc_out_mode</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>EMIT_VARIANTS_ONLY</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gatk_ploidy = value" data-copy="gatk_ploidy = 2">gatk_ploidy</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>2</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gatk_ug_defaultbasequalities_arg = value" data-copy="gatk_ug_defaultbasequalities_arg = ">gatk_ug_defaultbasequalities_arg</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gatk_ug_genotype_model = value" data-copy="gatk_ug_genotype_model = SNP">gatk_ug_genotype_model</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>SNP</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gatk_ug_out_mode = value" data-copy="gatk_ug_out_mode = EMIT_VARIANTS_ONLY">gatk_ug_out_mode</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>EMIT_VARIANTS_ONLY</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy genotyping_source = value" data-copy="genotyping_source = raw">genotyping_source</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>raw</code></td>
+<td class="ox-p-desc">genotyping (pileupCaller branch)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy genotyping_tool = value" data-copy="genotyping_tool = ">genotyping_tool</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">genotyping (pileupCaller branch)<br><span class="ox-param-usedby">used by <code>8</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy hostremoval_input_fastq = value" data-copy="hostremoval_input_fastq = false">hostremoval_input_fastq</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy hostremoval_mode = value" data-copy="hostremoval_mode = mapped">hostremoval_mode</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>mapped</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy input_bam = value" data-copy="input_bam = ">input_bam</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy kraken2_db = value" data-copy="kraken2_db = ">kraken2_db</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy lane = value" data-copy="lane = 0">lane</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>0</code></td>
+<td class="ox-p-desc">input / library metadata (directory-input mode defaults)<br><span class="ox-param-usedby">used by <code>5</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy large_ref = value" data-copy="large_ref = false">large_ref</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">mapping<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy malt_alignment_mode = value" data-copy="malt_alignment_mode = SemiGlobal">malt_alignment_mode</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>SemiGlobal</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy malt_db = value" data-copy="malt_db = ">malt_db</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy malt_max_queries = value" data-copy="malt_max_queries = 100">malt_max_queries</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>100</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy malt_memory_mode = value" data-copy="malt_memory_mode = load">malt_memory_mode</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>load</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy malt_min_support_mode = value" data-copy="malt_min_support_mode = percent">malt_min_support_mode</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>percent</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy malt_min_support_percent = value" data-copy="malt_min_support_percent = 0.01">malt_min_support_percent</button></td>
+<td class="ox-p-t"><code>float</code></td>
+<td class="ox-p-d"><code>0.01</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy malt_mode = value" data-copy="malt_mode = BlastN">malt_mode</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>BlastN</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy malt_sam_output = value" data-copy="malt_sam_output = false">malt_sam_output</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy malt_top_percent = value" data-copy="malt_top_percent = 1">malt_top_percent</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>1</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy maltextract_destackingoff = value" data-copy="maltextract_destackingoff = false">maltextract_destackingoff</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy maltextract_downsamplingoff = value" data-copy="maltextract_downsamplingoff = false">maltextract_downsamplingoff</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy maltextract_duplicateremovaloff = value" data-copy="maltextract_duplicateremovaloff = false">maltextract_duplicateremovaloff</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy maltextract_filter = value" data-copy="maltextract_filter = def_anc">maltextract_filter</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>def_anc</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy maltextract_matches = value" data-copy="maltextract_matches = false">maltextract_matches</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy maltextract_megansummary = value" data-copy="maltextract_megansummary = false">maltextract_megansummary</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy maltextract_ncbifiles = value" data-copy="maltextract_ncbifiles = ">maltextract_ncbifiles</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy maltextract_percentidentity = value" data-copy="maltextract_percentidentity = 85.0">maltextract_percentidentity</button></td>
+<td class="ox-p-t"><code>float</code></td>
+<td class="ox-p-d"><code>85.0</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy maltextract_taxon_list = value" data-copy="maltextract_taxon_list = ">maltextract_taxon_list</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy maltextract_topalignment = value" data-copy="maltextract_topalignment = false">maltextract_topalignment</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy maltextract_toppercent = value" data-copy="maltextract_toppercent = 0.01">maltextract_toppercent</button></td>
+<td class="ox-p-t"><code>float</code></td>
+<td class="ox-p-d"><code>0.01</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mapdamage_downsample_arg = value" data-copy="mapdamage_downsample_arg = ">mapdamage_downsample_arg</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mapdamage_singlestranded_arg = value" data-copy="mapdamage_singlestranded_arg = ">mapdamage_singlestranded_arg</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mapdamage_yaxis = value" data-copy="mapdamage_yaxis = 0.25">mapdamage_yaxis</button></td>
+<td class="ox-p-t"><code>float</code></td>
+<td class="ox-p-d"><code>0.25</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mapper = value" data-copy="mapper = bwaaln">mapper</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>bwaaln</code></td>
+<td class="ox-p-desc">mapping<br><span class="ox-param-usedby">used by <code>10</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mergedonly = value" data-copy="mergedonly = false">mergedonly</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">read clipping / merging<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy metagenomic_complexity_entropy = value" data-copy="metagenomic_complexity_entropy = 0.3">metagenomic_complexity_entropy</button></td>
+<td class="ox-p-t"><code>float</code></td>
+<td class="ox-p-d"><code>0.3</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy metagenomic_complexity_filter = value" data-copy="metagenomic_complexity_filter = false">metagenomic_complexity_filter</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy metagenomic_min_support_reads = value" data-copy="metagenomic_min_support_reads = 1">metagenomic_min_support_reads</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>1</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy metagenomic_tool = value" data-copy="metagenomic_tool = ">metagenomic_tool</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>5</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy min_adap_overlap = value" data-copy="min_adap_overlap = 1">min_adap_overlap</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>1</code></td>
+<td class="ox-p-desc">read clipping / merging<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy min_allele_freq_het = value" data-copy="min_allele_freq_het = 0.2">min_allele_freq_het</button></td>
+<td class="ox-p-t"><code>float</code></td>
+<td class="ox-p-d"><code>0.2</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy min_allele_freq_hom = value" data-copy="min_allele_freq_hom = 0.8">min_allele_freq_hom</button></td>
+<td class="ox-p-t"><code>float</code></td>
+<td class="ox-p-d"><code>0.8</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy min_base_coverage = value" data-copy="min_base_coverage = 0">min_base_coverage</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>0</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy min_genotype_quality = value" data-copy="min_genotype_quality = 0">min_genotype_quality</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>0</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mtnucratio_header = value" data-copy="mtnucratio_header = MT">mtnucratio_header</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>MT</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy multivcf_samples = value" data-copy="multivcf_samples = S1, S2">multivcf_samples</button></td>
+<td class="ox-p-t"><code>array</code></td>
+<td class="ox-p-d"><code>S1, S2</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy nuclear_contamination_header = value" data-copy="nuclear_contamination_header = ">nuclear_contamination_header</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy out_dir = value" data-copy="out_dir = results">out_dir</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>results</code></td>
+<td class="ox-p-desc">input / library metadata (directory-input mode defaults)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy percent_identity = value" data-copy="percent_identity = 85">percent_identity</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>85</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pileupcaller_bedfile = value" data-copy="pileupcaller_bedfile = ">pileupcaller_bedfile</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">genotyping (pileupCaller branch)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pileupcaller_method = value" data-copy="pileupcaller_method = randomHaploid">pileupcaller_method</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>randomHaploid</code></td>
+<td class="ox-p-desc">genotyping (pileupCaller branch)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pileupcaller_min_base_quality = value" data-copy="pileupcaller_min_base_quality = 30">pileupcaller_min_base_quality</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>30</code></td>
+<td class="ox-p-desc">genotyping (pileupCaller branch)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pileupcaller_min_map_quality = value" data-copy="pileupcaller_min_map_quality = 30">pileupcaller_min_map_quality</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>30</code></td>
+<td class="ox-p-desc">genotyping (pileupCaller branch)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pileupcaller_snpfile = value" data-copy="pileupcaller_snpfile = ">pileupcaller_snpfile</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">genotyping (pileupCaller branch)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pileupcaller_transitions_mode = value" data-copy="pileupcaller_transitions_mode = AllSites">pileupcaller_transitions_mode</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>AllSites</code></td>
+<td class="ox-p-desc">genotyping (pileupCaller branch)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pmdtools_mask_bed = value" data-copy="pmdtools_mask_bed = ">pmdtools_mask_bed</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pmdtools_max_reads = value" data-copy="pmdtools_max_reads = 1000000">pmdtools_max_reads</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>1000000</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pmdtools_platypus_arg = value" data-copy="pmdtools_platypus_arg = ">pmdtools_platypus_arg</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pmdtools_range = value" data-copy="pmdtools_range = 10">pmdtools_range</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>10</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pmdtools_reference_mask = value" data-copy="pmdtools_reference_mask = false">pmdtools_reference_mask</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pmdtools_threshold = value" data-copy="pmdtools_threshold = 3">pmdtools_threshold</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>3</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pmdtools_treatment_arg = value" data-copy="pmdtools_treatment_arg = --UDGminus">pmdtools_treatment_arg</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>--UDGminus</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy post_ar_trim_front = value" data-copy="post_ar_trim_front = 0">post_ar_trim_front</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>0</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy post_ar_trim_front2 = value" data-copy="post_ar_trim_front2 = 0">post_ar_trim_front2</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>0</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy post_ar_trim_tail = value" data-copy="post_ar_trim_tail = 0">post_ar_trim_tail</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>0</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy post_ar_trim_tail2 = value" data-copy="post_ar_trim_tail2 = 0">post_ar_trim_tail2</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>0</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy preseq_bootstrap = value" data-copy="preseq_bootstrap = 100">preseq_bootstrap</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>100</code></td>
+<td class="ox-p-desc">preseq<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy preseq_cval = value" data-copy="preseq_cval = 0.95">preseq_cval</button></td>
+<td class="ox-p-t"><code>float</code></td>
+<td class="ox-p-d"><code>0.95</code></td>
+<td class="ox-p-desc">preseq<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy preseq_maxextrap = value" data-copy="preseq_maxextrap = 10000000000">preseq_maxextrap</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>10000000000</code></td>
+<td class="ox-p-desc">preseq<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy preseq_mode = value" data-copy="preseq_mode = c_curve">preseq_mode</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>c_curve</code></td>
+<td class="ox-p-desc">preseq<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy preseq_step_size = value" data-copy="preseq_step_size = 1000">preseq_step_size</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>1000</code></td>
+<td class="ox-p-desc">preseq<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy preseq_terms = value" data-copy="preseq_terms = 100">preseq_terms</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>100</code></td>
+<td class="ox-p-desc">preseq<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy preserve5p = value" data-copy="preserve5p = false">preserve5p</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">read clipping / merging<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy qualitymax = value" data-copy="qualitymax = 41">qualitymax</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>41</code></td>
+<td class="ox-p-desc">read clipping / merging<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy reference_gff_annotations = value" data-copy="reference_gff_annotations = ">reference_gff_annotations</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy reference_gff_exclude = value" data-copy="reference_gff_exclude = ">reference_gff_exclude</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy rescale_length_3p_arg = value" data-copy="rescale_length_3p_arg = ">rescale_length_3p_arg</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy rescale_length_5p_arg = value" data-copy="rescale_length_5p_arg = ">rescale_length_5p_arg</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy rescale_seqlength = value" data-copy="rescale_seqlength = 12">rescale_seqlength</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>12</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_bam_filtering = value" data-copy="run_bam_filtering = false">run_bam_filtering</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>10</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_bcftools_stats = value" data-copy="run_bcftools_stats = false">run_bcftools_stats</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_bedtools_coverage = value" data-copy="run_bedtools_coverage = false">run_bedtools_coverage</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_endor_spy = value" data-copy="run_endor_spy = false">run_endor_spy</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_genotyping = value" data-copy="run_genotyping = false">run_genotyping</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">genotyping (pileupCaller branch)<br><span class="ox-param-usedby">used by <code>8</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_maltextract = value" data-copy="run_maltextract = false">run_maltextract</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_mapdamage_rescaling = value" data-copy="run_mapdamage_rescaling = false">run_mapdamage_rescaling</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_metagenomic_screening = value" data-copy="run_metagenomic_screening = false">run_metagenomic_screening</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_mtnucratio = value" data-copy="run_mtnucratio = false">run_mtnucratio</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_multivcfanalyzer = value" data-copy="run_multivcfanalyzer = false">run_multivcfanalyzer</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_nuclear_contamination = value" data-copy="run_nuclear_contamination = false">run_nuclear_contamination</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_pmdtools = value" data-copy="run_pmdtools = false">run_pmdtools</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_post_ar_trimming = value" data-copy="run_post_ar_trimming = false">run_post_ar_trimming</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_sexdeterrmine = value" data-copy="run_sexdeterrmine = false">run_sexdeterrmine</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_trim_bam = value" data-copy="run_trim_bam = false">run_trim_bam</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_vcf2genome = value" data-copy="run_vcf2genome = false">run_vcf2genome</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy save_reference = value" data-copy="save_reference = false">save_reference</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">mapping<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy seqtype = value" data-copy="seqtype = PE">seqtype</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>PE</code></td>
+<td class="ox-p-desc">input / library metadata (directory-input mode defaults)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sexdeterrmine_prep_s = value" data-copy="sexdeterrmine_prep_s = 1000000">sexdeterrmine_prep_s</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>1000000</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sexdeterrmine_s = value" data-copy="sexdeterrmine_s = 1000000">sexdeterrmine_s</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>1000000</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy single_end = value" data-copy="single_end = false">single_end</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">input / library metadata (directory-input mode defaults)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy single_stranded = value" data-copy="single_stranded = false">single_stranded</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_adapterremoval = value" data-copy="skip_adapterremoval = false">skip_adapterremoval</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">skipping (upstream defaults: run everything except optional branches)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_collapse = value" data-copy="skip_collapse = false">skip_collapse</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">read clipping / merging<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_damage_calculation = value" data-copy="skip_damage_calculation = false">skip_damage_calculation</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">skipping (upstream defaults: run everything except optional branches)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_deduplication = value" data-copy="skip_deduplication = false">skip_deduplication</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">skipping (upstream defaults: run everything except optional branches)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_fastqc = value" data-copy="skip_fastqc = false">skip_fastqc</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">skipping (upstream defaults: run everything except optional branches)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_preseq = value" data-copy="skip_preseq = false">skip_preseq</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">skipping (upstream defaults: run everything except optional branches)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_qualimap = value" data-copy="skip_qualimap = false">skip_qualimap</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">skipping (upstream defaults: run everything except optional branches)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_trim = value" data-copy="skip_trim = false">skip_trim</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">read clipping / merging<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy snp_eff_results = value" data-copy="snp_eff_results = ">snp_eff_results</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy udg_type = value" data-copy="udg_type = none">udg_type</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>none</code></td>
+<td class="ox-p-desc">input / library metadata (directory-input mode defaults)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy unzip_reference = value" data-copy="unzip_reference = false">unzip_reference</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy vcf2genome_minc = value" data-copy="vcf2genome_minc = 5">vcf2genome_minc</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>5</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy vcf2genome_minfreq = value" data-copy="vcf2genome_minfreq = 0.5">vcf2genome_minfreq</button></td>
+<td class="ox-p-t"><code>float</code></td>
+<td class="ox-p-d"><code>0.5</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy vcf2genome_minq = value" data-copy="vcf2genome_minq = 30">vcf2genome_minq</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>30</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy write_allele_frequencies_arg = value" data-copy="write_allele_frequencies_arg = F">write_allele_frequencies_arg</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>F</code></td>
+<td class="ox-p-desc">see rules/branches.oxoflow for the ported rules + the structural<br>exclusions (lane/library merging, nf-core boilerplate).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+</tbody>
+</table>
 
 Descriptions are the workflow's own `#` comments from its `[config]` section (and the `[config]` sections of its included modules), surfaced by `oxo-flow info` — no schema file to maintain.
 

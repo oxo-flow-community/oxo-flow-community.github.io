@@ -51,6 +51,16 @@ title: "Cancer genome & transcriptome analysis (WES/WGS/RNA, single entry): soma
 </div>
 </details>
 
+
+<div class="ox-tryit">
+<div class="ox-tryit-title">⬡ Try it — clone &amp; run</div>
+<pre class="ox-tryit-cmd" data-copy="git clone https://github.com/oxo-flow-community/oxo-flow-clindet.git &amp;&amp; cd oxo-flow-clindet &amp;&amp; oxo-flow run main.oxoflow">git clone https://github.com/oxo-flow-community/oxo-flow-clindet.git
+cd oxo-flow-clindet
+oxo-flow run main.oxoflow</pre>
+<p class="ox-tryit-note">The repository ships test fixtures (e.g. <code>test/extend_fixture_ref.py</code>, <code>test/fixtures/bed/exome_target_hg38_chr21.bed</code>, <code>test/fixtures/bed/exome_target_hg38_chr21.bed.gz</code>, <code>test/fixtures/cnv/ascat_alleles/21.txt</code>) — point <code>input</code> at them or use the built-in sample group to <code>dry-run</code> first.</p>
+</div>
+
+
 ## Run it
 
 ```bash
@@ -90,478 +100,414 @@ oxo-flow pull gh:WangLabCSU/oxo-flow-clindet
 
 ## Parameters
 
-<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. The list below names the rules that read each key.</p>
-<div class="ox-params">
-<div class="ox-param">
-<div class="ox-param-head"><code>annotate_beds_file</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">BED tracks used by mutation_flag — name/path TSV mirroring upstream<br>softwares_params[genome].annotate_beds dict (empty = header-only, no flags)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>make_region_bed_list</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>arriba_blacklist</code><span class="ox-param-default">test/fixtures/refs/annotations/arriba_blacklist.tsv</span></div>
-<p class="ox-param-desc">Arriba databases (upstream softwares_params[genome].arriba.database).<br>Mini-test: blacklist + mini known_fusions/protein_domains/cytobands are<br>local files matching the 922 bp fixture reference (the whole-genome DBs<br>in the uhrigs/arriba:2.4.0 image fail to parse against it, observed live).<br>Real hg38 runs keep the container paths; the mini DBs mirror the formats 1:1.</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>arriba_fusion</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>arriba_cytobands</code><span class="ox-param-default">test/fixtures/refs/annotations/arriba_cytobands_mini.tsv</span></div>
-<p class="ox-param-desc">Arriba databases (upstream softwares_params[genome].arriba.database).<br>Mini-test: blacklist + mini known_fusions/protein_domains/cytobands are<br>local files matching the 922 bp fixture reference (the whole-genome DBs<br>in the uhrigs/arriba:2.4.0 image fail to parse against it, observed live).<br>Real hg38 runs keep the container paths; the mini DBs mirror the formats 1:1.</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>arriba_draw</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>arriba_known_fusions</code><span class="ox-param-default">test/fixtures/refs/annotations/arriba_known_fusions_mini.tsv.gz</span></div>
-<p class="ox-param-desc">Arriba databases (upstream softwares_params[genome].arriba.database).<br>Mini-test: blacklist + mini known_fusions/protein_domains/cytobands are<br>local files matching the 922 bp fixture reference (the whole-genome DBs<br>in the uhrigs/arriba:2.4.0 image fail to parse against it, observed live).<br>Real hg38 runs keep the container paths; the mini DBs mirror the formats 1:1.</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>arriba_fusion</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>arriba_protein_domains</code><span class="ox-param-default">test/fixtures/refs/annotations/arriba_protein_domains_mini.gff3</span></div>
-<p class="ox-param-desc">Arriba databases (upstream softwares_params[genome].arriba.database).<br>Mini-test: blacklist + mini known_fusions/protein_domains/cytobands are<br>local files matching the 922 bp fixture reference (the whole-genome DBs<br>in the uhrigs/arriba:2.4.0 image fail to parse against it, observed live).<br>Real hg38 runs keep the container paths; the mini DBs mirror the formats 1:1.</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>arriba_draw</code> <code>arriba_fusion</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>ascat_alleles_prefix</code><span class="ox-param-default">test/fixtures/cnv/ascat_alleles/</span></div>
-<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>CNA_ASCAT</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>ascat_chroms</code><span class="ox-param-default">21</span></div>
-<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>CNA_ASCAT</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>ascat_gc_file</code><span class="ox-param-default">test/fixtures/cnv/ascat_gc.txt</span></div>
-<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>CNA_ASCAT</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>ascat_loci_prefix</code><span class="ox-param-default">test/fixtures/cnv/ascat_loci/</span></div>
-<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>CNA_ASCAT</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>ascat_rt_file</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>CNA_ASCAT</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cnv_enabled</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
-<details class="ox-param-usedby"><summary>used by 10 rules</summary>
-<div class="ox-param-rules"><code>ASCAT_EXTRACT_PURITYPLOIDY</code> <code>CNA_ASCAT</code> <code>CNA_exomedepth</code> <code>all_cnv</code> <code>freec_call_paired</code> <code>freec_config</code> <code>plot_freec</code> <code>sequenza_bam2seqz</code> <code>sequenza_call</code> <code>sequenza_seqz_binning</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>dbsnp</code><span class="ox-param-default">test/fixtures/refs/annotations/dbsnp_146.hg38_chr21.vcf.gz</span></div>
-<p class="ox-param-desc">cgpFlagCaVEMan configs (bed-based flags dropped: no chr21 flag data)</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>dbsnp_gz</code><span class="ox-param-default">test/fixtures/refs/annotations/dbsnp_146.hg38_chr21.vcf.gz</span></div>
-<p class="ox-param-desc">MuSE sump needs a gzipped dbSNP</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>muse_sump</code> <code>muse_sump_wgs</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>dbsnp_indel</code><span class="ox-param-default">test/fixtures/refs/annotations/Mills_and_1000G_gold_standard.indels.hg38_chr21.vcf.gz</span></div>
-<p class="ox-param-desc">cgpFlagCaVEMan configs (bed-based flags dropped: no chr21 flag data)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>SV_svaba</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>exomedepth_bed</code><span class="ox-param-default">test/fixtures/cnv/exomedepth_regions.bed</span></div>
-<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>CNA_exomedepth</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>exomedepth_use_target_bed</code><span class="ox-param-default">true</span></div>
-<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>CNA_exomedepth</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>flag_config_dir</code><span class="ox-param-default">test/fixtures/flag</span></div>
-<p class="ox-param-desc">cgpFlagCaVEMan configs (bed-based flags dropped: no chr21 flag data)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>CM_flag</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>freec_chr_files</code><span class="ox-param-default">test/fixtures/cnv/freec_chr_fasta</span></div>
-<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>freec_config</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>freec_chr_len_file</code><span class="ox-param-default">test/fixtures/cnv/freec_chrlen.txt</span></div>
-<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>freec_config</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>freec_ini_template</code><span class="ox-param-default">scripts/config_exome.mini.ini</span></div>
-<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>freec_config</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>freec_sambamba</code><span class="ox-param-default">sambamba</span></div>
-<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>freec_config</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>genome_version</code><span class="ox-param-default">hg38_chr21</span></div>
-<p class="ox-param-desc">Upstream Snakefile dispatch key (VALID_RUN_TYPES): wes | wgs | rna</p>
-<details class="ox-param-usedby"><summary>used by 188 rules</summary>
-<div class="ox-param-rules"><code>ASCAT_EXTRACT_PURITYPLOIDY</code> <code>CM_call</code> <code>CM_cnv</code> <code>CM_flag</code> <code>CM_germ_flag</code> <code>CNA_ASCAT</code> <code>CNA_exomedepth</code> <code>M2_SNC</code> <code>M2_SNC_wgs</code> <code>M2_ST</code> <code>M2_ST_wgs</code> <code>M2_contam</code> <code>M2_contam_wgs</code> <code>M2_filter</code> <code>M2_filter_unpaired</code> <code>M2_filter_unpaired_rna</code> <code>M2_filter_wgs</code> <code>RSEM_sort_genome</code> <code>STAR_1_pass</code> <code>STAR_arriba_map</code> <code>STAR_isofox_map</code> <code>STAR_mut_map</code> <code>SV_delly</code> <code>SV_delly_filter_somatic</code> <code>SV_delly_germ</code> <code>SV_delly_sample_tsv</code> <code>SV_delly_to_vcf</code> <code>SV_sansa_anno_svaba</code> <code>SV_sansa_annodelly</code> <code>SV_svaba</code> <code>SV_svanno_svaba</code> <code>SplitNCigarReads</code> <code>TRUST4_TBCR</code> <code>all</code> <code>all_cnv</code> <code>all_sv</code> <code>all_unpaired</code> <code>all_unpaired_maf</code> <code>all_vcf</code> <code>apply_base_quality_recalibration_normal</code> <code>apply_base_quality_recalibration_tumor</code> <code>apply_base_quality_recalibration_tumor_unpaired</code> <code>arriba_draw</code> <code>arriba_fusion</code> <code>bam_flagstat_normal</code> <code>bam_flagstat_tumor</code> <code>bed_to_interval_list</code> <code>cal_exp_RSEM</code> <code>call_config_strelka</code> <code>call_config_strelka_wgs</code> <code>call_strelka_manta_germline</code> <code>call_strelka_manta_wgs</code> <code>call_strelka_somatic_manta</code> <code>call_strelka_somatic_manta_wgs</code> <code>call_variants_HaplotypeCaller</code> <code>call_variants_HaplotypeCaller_rna</code> <code>call_variants_HaplotypeCaller_wgs</code> <code>combined_multiqc</code> <code>combined_multiqc_prep_multiqc_data</code> <code>delly2bnd</code> <code>delly_filter</code> <code>fastp_normal_sample</code> <code>fastp_trim</code> <code>fastp_tumor_sample</code> <code>fastp_tumor_sample_unpaired</code> <code>flag_mutation_pairead_maf</code> <code>freec_call_paired</code> <code>freec_config</code> <code>isofox_call</code> <code>kallisto</code> <code>link_bam</code> <code>lofreq_call_up</code> <code>lofreq_norm_filter</code> <code>lofreq_somatic_unpaired</code> <code>make_region_bed_list</code> <code>map_reads_normal</code> <code>map_reads_tumor</code> <code>map_reads_tumor_unpaired</code> <code>mark_duplicates_normal</code> <code>mark_duplicates_tumor</code> <code>mark_duplicates_tumor_unpaired</code> <code>merge_paired_germ_maf</code> <code>merge_paired_maf</code> <code>merge_paired_vcf</code> <code>merge_rna_maf</code> <code>merge_strelka_manta</code> <code>merge_strelka_manta_wgs</code> <code>merge_strelka_somatic_manta</code> <code>merge_strelka_somatic_manta_wgs</code> <code>merge_unpaired_maf</code> <code>merge_unpaired_vcf</code> <code>muse_call</code> <code>muse_call_wgs</code> <code>muse_sump</code> <code>muse_sump_wgs</code> <code>mutect2</code> <code>mutect2_call</code> <code>mutect2_wgs</code> <code>norm_filter_HaplotypeCaller</code> <code>norm_filter_freebayes</code> <code>picard_collect_wes_normal</code> <code>picard_collect_wes_tumor</code> <code>picard_collect_wgs_normal</code> <code>picard_collect_wgs_tumor</code> <code>picard_flength_wgs_normal</code> <code>picard_flength_wgs_tumor</code> <code>plot_freec</code> <code>prep_multiqc_data</code> <code>prep_multiqc_data_tumor_only</code> <code>prep_multiqc_data_wgs</code> <code>recal_link_normal</code> <code>recal_link_tumor</code> <code>recal_link_tumor_unpaired</code> <code>recalibrate_base_qualities_normal</code> <code>recalibrate_base_qualities_tumor</code> <code>recalibrate_base_qualities_tumor_unpaired</code> <code>run_cancer_report</code> <code>salmon</code> <code>sequenza_bam2seqz</code> <code>sequenza_call</code> <code>sequenza_seqz_binning</code> <code>unpair_lofreq_filter</code> <code>unpaired_call_config_strelka</code> <code>unpaired_call_config_strelka_rna</code> <code>unpaired_call_strelka_manta</code> <code>unpaired_call_strelka_manta_rna</code> <code>unpaired_call_variants_HaplotypeCaller</code> <code>unpaired_filter_vardict</code> <code>unpaired_filter_vardict_rna</code> <code>unpaired_freebayes</code> <code>unpaired_freebayes_rna</code> <code>unpaired_mutect2_call</code> <code>unpaired_strelka_filter</code> <code>unpaired_strelka_filter_rna</code> <code>unpaired_vardict_single_mode</code> <code>unpaired_vardict_single_mode_rna</code> <code>vardict_filter_somatic</code> <code>vardict_filter_somatic_wgs</code> <code>vardict_paired_mode</code> <code>vardict_paired_mode_wgs</code> <code>vardict_wgs_bed_wgs</code> <code>varscan2_call</code> <code>varscan2_call_unpaired_indel</code> <code>varscan2_call_unpaired_indel_rna</code> <code>varscan2_call_unpaired_snp</code> <code>varscan2_call_unpaired_snp_rna</code> <code>varscan2_call_wgs</code> <code>varscan2_filter_indel</code> <code>varscan2_filter_snp</code> <code>varscan2_merge_somatic</code> <code>varscan2_merge_somatic_wgs</code> <code>varscan2_merge_unpaired</code> <code>varscan2_merge_unpaired_rna</code> <code>varscan2_mpileup</code> <code>varscan2_mpileup_unpaired</code> <code>varscan2_mpileup_unpaired_rna</code> <code>varscan2_mpileup_wgs</code> <code>varscan2_processSomatic</code> <code>varscan2_processSomatic_wgs</code> <code>varscan2_som_filter</code> <code>varscan2_som_filter_wgs</code> <code>vcf2maf_HaplotypeCaller</code> <code>vcf2maf_Mutect2</code> <code>vcf2maf_germ_caveman</code> <code>vcf2maf_germ_strelkamanta</code> <code>vcf2maf_muse</code> <code>vcf2maf_rna_HaplotypeCaller</code> <code>vcf2maf_rna_Mutect2</code> <code>vcf2maf_rna_freebayes</code> <code>vcf2maf_rna_lofreq</code> <code>vcf2maf_rna_vardict</code> <code>vcf2maf_rna_varscan2</code> <code>vcf2maf_unpaired_HaplotypeCaller</code> <code>vcf2maf_unpaired_Mutect2</code> <code>vcf2maf_unpaired_freebayes</code> <code>vcf2maf_unpaired_lofreq</code> <code>vcf2maf_unpaired_strelka</code> <code>vcf2maf_unpaired_vardict</code> <code>vcf2maf_unpaired_varscan2</code> <code>vcf2maf_vardict</code> <code>vcf2maf_varscan2</code> <code>vcf_norm_HaplotypeCaller</code> <code>vcf_norm_Mutect2</code> <code>vcf_norm_germline_caveman</code> <code>vcf_norm_germline_strelkamanta</code> <code>vcf_norm_muse</code> <code>vcf_norm_vardict</code> <code>vcf_norm_varscan2</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>germ_caller_list</code><span class="ox-param-default">strelkamanta, caveman</span></div>
-<p class="ox-param-desc">Caller lists (upstream run_params)</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>hmftools_ensembl_data_dir</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">HMF tools (isofox; excluded for hg38_chr21 upstream — needs the multi-GB<br>hmf_pipeline_resources tree, not shipped in the mini-test)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>isofox_call</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>isofox_mem_mb</code><span class="ox-param-default">30000</span></div>
-<p class="ox-param-desc">HMF tools (isofox; excluded for hg38_chr21 upstream — needs the multi-GB<br>hmf_pipeline_resources tree, not shipped in the mini-test)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>isofox_call</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>java_temp_dir</code><span class="ox-param-default">/tmp</span></div>
-<p class="ox-param-desc">Java temp dir (upstream: config[&#x27;params&#x27;][&#x27;java&#x27;][&#x27;temp_directory&#x27;])</p>
-<details class="ox-param-usedby"><summary>used by 36 rules</summary>
-<div class="ox-param-rules"><code>M2_SNC</code> <code>M2_SNC_wgs</code> <code>M2_ST</code> <code>M2_ST_wgs</code> <code>M2_contam</code> <code>M2_contam_wgs</code> <code>M2_filter</code> <code>M2_filter_unpaired</code> <code>M2_filter_unpaired_rna</code> <code>M2_filter_wgs</code> <code>SV_svanno_svaba</code> <code>SplitNCigarReads</code> <code>apply_base_quality_recalibration_normal</code> <code>apply_base_quality_recalibration_tumor</code> <code>apply_base_quality_recalibration_tumor_unpaired</code> <code>bed_to_interval_list</code> <code>call_variants_HaplotypeCaller</code> <code>call_variants_HaplotypeCaller_rna</code> <code>call_variants_HaplotypeCaller_wgs</code> <code>mark_duplicates_normal</code> <code>mark_duplicates_tumor</code> <code>mark_duplicates_tumor_unpaired</code> <code>mutect2</code> <code>mutect2_call</code> <code>mutect2_wgs</code> <code>picard_collect_wes_normal</code> <code>picard_collect_wes_tumor</code> <code>picard_collect_wgs_normal</code> <code>picard_collect_wgs_tumor</code> <code>picard_flength_wgs_normal</code> <code>picard_flength_wgs_tumor</code> <code>recalibrate_base_qualities_normal</code> <code>recalibrate_base_qualities_tumor</code> <code>recalibrate_base_qualities_tumor_unpaired</code> <code>unpaired_call_variants_HaplotypeCaller</code> <code>unpaired_mutect2_call</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>kallisto_index</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Quant indexes are empty in the upstream hg38_chr21 test config — the<br>RSEM/kallisto/salmon rules only run when explicitly targeted</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>kallisto</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>known_sites1</code><span class="ox-param-default">test/fixtures/refs/annotations/known_sites1.mini.vcf.gz</span></div>
-<p class="ox-param-desc">BQSR (upstream config[&#x27;project&#x27;][&#x27;recal_BQSR&#x27;] + resources[&#x27;varanno&#x27;][genome]):<br>recal_bqsr = false is the upstream mini-test default (recal_link symlinks the<br>dedup BAM); set true to run BaseRecalibrator + ApplyBQSR instead.</p>
-<details class="ox-param-usedby"><summary>used by 3 rules</summary>
-<div class="ox-param-rules"><code>recalibrate_base_qualities_normal</code> <code>recalibrate_base_qualities_tumor</code> <code>recalibrate_base_qualities_tumor_unpaired</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>known_sites2</code><span class="ox-param-default">test/fixtures/refs/annotations/known_sites2.mini.vcf.gz</span></div>
-<p class="ox-param-desc">BQSR (upstream config[&#x27;project&#x27;][&#x27;recal_BQSR&#x27;] + resources[&#x27;varanno&#x27;][genome]):<br>recal_bqsr = false is the upstream mini-test default (recal_link symlinks the<br>dedup BAM); set true to run BaseRecalibrator + ApplyBQSR instead.</p>
-<details class="ox-param-usedby"><summary>used by 3 rules</summary>
-<div class="ox-param-rules"><code>recalibrate_base_qualities_normal</code> <code>recalibrate_base_qualities_tumor</code> <code>recalibrate_base_qualities_tumor_unpaired</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>mutect2_germline_vcf</code><span class="ox-param-default">test/fixtures/refs/annotations/gnomAD.r2.1.1.GRCh38.PASS.AC.AF.only_chr21.vcf.gz</span></div>
-<p class="ox-param-desc">Mutect2 GetPileupSummaries sites + germline resource</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>mutect2</code> <code>mutect2_call</code> <code>mutect2_wgs</code> <code>unpaired_mutect2_call</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>mutect2_vcf</code><span class="ox-param-default">test/fixtures/refs/annotations/gnomAD.r2.1.1.GRCh38.PASS.AC.AF.only_chr21.vcf.gz</span></div>
-<p class="ox-param-desc">Mutect2 GetPileupSummaries sites + germline resource</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>M2_SNC</code> <code>M2_SNC_wgs</code> <code>M2_ST</code> <code>M2_ST_wgs</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>ncbi_build</code><span class="ox-param-default">GRCh38</span></div>
-<p class="ox-param-desc">vcf2maf / VEP (upstream: config[&#x27;softwares_params&#x27;][genome_version][&#x27;vcf2maf&#x27;])</p>
-<details class="ox-param-usedby"><summary>used by 20 rules</summary>
-<div class="ox-param-rules"><code>vcf2maf_HaplotypeCaller</code> <code>vcf2maf_Mutect2</code> <code>vcf2maf_germ_caveman</code> <code>vcf2maf_germ_strelkamanta</code> <code>vcf2maf_muse</code> <code>vcf2maf_rna_HaplotypeCaller</code> <code>vcf2maf_rna_Mutect2</code> <code>vcf2maf_rna_freebayes</code> <code>vcf2maf_rna_lofreq</code> <code>vcf2maf_rna_vardict</code> <code>vcf2maf_rna_varscan2</code> <code>vcf2maf_unpaired_HaplotypeCaller</code> <code>vcf2maf_unpaired_Mutect2</code> <code>vcf2maf_unpaired_freebayes</code> <code>vcf2maf_unpaired_lofreq</code> <code>vcf2maf_unpaired_strelka</code> <code>vcf2maf_unpaired_vardict</code> <code>vcf2maf_unpaired_varscan2</code> <code>vcf2maf_vardict</code> <code>vcf2maf_varscan2</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>normal_fastq_r1</code><span class="ox-param-default">test/fixtures/reads/mini-NC_R1.fq.gz</span></div>
-<p class="ox-param-desc">Reads (upstream samplesheet columns Tumor_R1_file_path / Normal_R1_file_path<br>...). The sample-sheet pairs (pairs_file above) drive {pair_id}/{experiment}/<br>{control} fan-out; these config paths are the fixture FASTQ locations.</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>fastp_normal_sample</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>normal_fastq_r2</code><span class="ox-param-default">test/fixtures/reads/mini-NC_R2.fq.gz</span></div>
-<p class="ox-param-desc">Reads (upstream samplesheet columns Tumor_R1_file_path / Normal_R1_file_path<br>...). The sample-sheet pairs (pairs_file above) drive {pair_id}/{experiment}/<br>{control} fan-out; these config paths are the fixture FASTQ locations.</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>fastp_normal_sample</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>output_dir</code><span class="ox-param-default">mini_test</span></div>
-<p class="ox-param-desc">Upstream Snakefile dispatch key (VALID_RUN_TYPES): wes | wgs | rna</p>
-<details class="ox-param-usedby"><summary>used by 188 rules</summary>
-<div class="ox-param-rules"><code>ASCAT_EXTRACT_PURITYPLOIDY</code> <code>CM_call</code> <code>CM_cnv</code> <code>CM_flag</code> <code>CM_germ_flag</code> <code>CNA_ASCAT</code> <code>CNA_exomedepth</code> <code>M2_SNC</code> <code>M2_SNC_wgs</code> <code>M2_ST</code> <code>M2_ST_wgs</code> <code>M2_contam</code> <code>M2_contam_wgs</code> <code>M2_filter</code> <code>M2_filter_unpaired</code> <code>M2_filter_unpaired_rna</code> <code>M2_filter_wgs</code> <code>RSEM_sort_genome</code> <code>STAR_1_pass</code> <code>STAR_arriba_map</code> <code>STAR_isofox_map</code> <code>STAR_mut_map</code> <code>SV_delly</code> <code>SV_delly_filter_somatic</code> <code>SV_delly_germ</code> <code>SV_delly_sample_tsv</code> <code>SV_delly_to_vcf</code> <code>SV_sansa_anno_svaba</code> <code>SV_sansa_annodelly</code> <code>SV_svaba</code> <code>SV_svanno_svaba</code> <code>SplitNCigarReads</code> <code>TRUST4_TBCR</code> <code>all</code> <code>all_cnv</code> <code>all_sv</code> <code>all_unpaired</code> <code>all_unpaired_maf</code> <code>all_vcf</code> <code>apply_base_quality_recalibration_normal</code> <code>apply_base_quality_recalibration_tumor</code> <code>apply_base_quality_recalibration_tumor_unpaired</code> <code>arriba_draw</code> <code>arriba_fusion</code> <code>bam_flagstat_normal</code> <code>bam_flagstat_tumor</code> <code>bed_to_interval_list</code> <code>cal_exp_RSEM</code> <code>call_config_strelka</code> <code>call_config_strelka_wgs</code> <code>call_strelka_manta_germline</code> <code>call_strelka_manta_wgs</code> <code>call_strelka_somatic_manta</code> <code>call_strelka_somatic_manta_wgs</code> <code>call_variants_HaplotypeCaller</code> <code>call_variants_HaplotypeCaller_rna</code> <code>call_variants_HaplotypeCaller_wgs</code> <code>combined_multiqc</code> <code>combined_multiqc_prep_multiqc_data</code> <code>delly2bnd</code> <code>delly_filter</code> <code>fastp_normal_sample</code> <code>fastp_trim</code> <code>fastp_tumor_sample</code> <code>fastp_tumor_sample_unpaired</code> <code>flag_mutation_pairead_maf</code> <code>freec_call_paired</code> <code>freec_config</code> <code>isofox_call</code> <code>kallisto</code> <code>link_bam</code> <code>lofreq_call_up</code> <code>lofreq_norm_filter</code> <code>lofreq_somatic_unpaired</code> <code>make_region_bed_list</code> <code>map_reads_normal</code> <code>map_reads_tumor</code> <code>map_reads_tumor_unpaired</code> <code>mark_duplicates_normal</code> <code>mark_duplicates_tumor</code> <code>mark_duplicates_tumor_unpaired</code> <code>merge_paired_germ_maf</code> <code>merge_paired_maf</code> <code>merge_paired_vcf</code> <code>merge_rna_maf</code> <code>merge_strelka_manta</code> <code>merge_strelka_manta_wgs</code> <code>merge_strelka_somatic_manta</code> <code>merge_strelka_somatic_manta_wgs</code> <code>merge_unpaired_maf</code> <code>merge_unpaired_vcf</code> <code>muse_call</code> <code>muse_call_wgs</code> <code>muse_sump</code> <code>muse_sump_wgs</code> <code>mutect2</code> <code>mutect2_call</code> <code>mutect2_wgs</code> <code>norm_filter_HaplotypeCaller</code> <code>norm_filter_freebayes</code> <code>picard_collect_wes_normal</code> <code>picard_collect_wes_tumor</code> <code>picard_collect_wgs_normal</code> <code>picard_collect_wgs_tumor</code> <code>picard_flength_wgs_normal</code> <code>picard_flength_wgs_tumor</code> <code>plot_freec</code> <code>prep_multiqc_data</code> <code>prep_multiqc_data_tumor_only</code> <code>prep_multiqc_data_wgs</code> <code>recal_link_normal</code> <code>recal_link_tumor</code> <code>recal_link_tumor_unpaired</code> <code>recalibrate_base_qualities_normal</code> <code>recalibrate_base_qualities_tumor</code> <code>recalibrate_base_qualities_tumor_unpaired</code> <code>run_cancer_report</code> <code>salmon</code> <code>sequenza_bam2seqz</code> <code>sequenza_call</code> <code>sequenza_seqz_binning</code> <code>unpair_lofreq_filter</code> <code>unpaired_call_config_strelka</code> <code>unpaired_call_config_strelka_rna</code> <code>unpaired_call_strelka_manta</code> <code>unpaired_call_strelka_manta_rna</code> <code>unpaired_call_variants_HaplotypeCaller</code> <code>unpaired_filter_vardict</code> <code>unpaired_filter_vardict_rna</code> <code>unpaired_freebayes</code> <code>unpaired_freebayes_rna</code> <code>unpaired_mutect2_call</code> <code>unpaired_strelka_filter</code> <code>unpaired_strelka_filter_rna</code> <code>unpaired_vardict_single_mode</code> <code>unpaired_vardict_single_mode_rna</code> <code>vardict_filter_somatic</code> <code>vardict_filter_somatic_wgs</code> <code>vardict_paired_mode</code> <code>vardict_paired_mode_wgs</code> <code>vardict_wgs_bed_wgs</code> <code>varscan2_call</code> <code>varscan2_call_unpaired_indel</code> <code>varscan2_call_unpaired_indel_rna</code> <code>varscan2_call_unpaired_snp</code> <code>varscan2_call_unpaired_snp_rna</code> <code>varscan2_call_wgs</code> <code>varscan2_filter_indel</code> <code>varscan2_filter_snp</code> <code>varscan2_merge_somatic</code> <code>varscan2_merge_somatic_wgs</code> <code>varscan2_merge_unpaired</code> <code>varscan2_merge_unpaired_rna</code> <code>varscan2_mpileup</code> <code>varscan2_mpileup_unpaired</code> <code>varscan2_mpileup_unpaired_rna</code> <code>varscan2_mpileup_wgs</code> <code>varscan2_processSomatic</code> <code>varscan2_processSomatic_wgs</code> <code>varscan2_som_filter</code> <code>varscan2_som_filter_wgs</code> <code>vcf2maf_HaplotypeCaller</code> <code>vcf2maf_Mutect2</code> <code>vcf2maf_germ_caveman</code> <code>vcf2maf_germ_strelkamanta</code> <code>vcf2maf_muse</code> <code>vcf2maf_rna_HaplotypeCaller</code> <code>vcf2maf_rna_Mutect2</code> <code>vcf2maf_rna_freebayes</code> <code>vcf2maf_rna_lofreq</code> <code>vcf2maf_rna_vardict</code> <code>vcf2maf_rna_varscan2</code> <code>vcf2maf_unpaired_HaplotypeCaller</code> <code>vcf2maf_unpaired_Mutect2</code> <code>vcf2maf_unpaired_freebayes</code> <code>vcf2maf_unpaired_lofreq</code> <code>vcf2maf_unpaired_strelka</code> <code>vcf2maf_unpaired_vardict</code> <code>vcf2maf_unpaired_varscan2</code> <code>vcf2maf_vardict</code> <code>vcf2maf_varscan2</code> <code>vcf_norm_HaplotypeCaller</code> <code>vcf_norm_Mutect2</code> <code>vcf_norm_germline_caveman</code> <code>vcf_norm_germline_strelkamanta</code> <code>vcf_norm_muse</code> <code>vcf_norm_vardict</code> <code>vcf_norm_varscan2</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>recal_bqsr</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">BQSR (upstream config[&#x27;project&#x27;][&#x27;recal_BQSR&#x27;] + resources[&#x27;varanno&#x27;][genome]):<br>recal_bqsr = false is the upstream mini-test default (recal_link symlinks the<br>dedup BAM); set true to run BaseRecalibrator + ApplyBQSR instead.</p>
-<details class="ox-param-usedby"><summary>used by 9 rules</summary>
-<div class="ox-param-rules"><code>apply_base_quality_recalibration_normal</code> <code>apply_base_quality_recalibration_tumor</code> <code>apply_base_quality_recalibration_tumor_unpaired</code> <code>recal_link_normal</code> <code>recal_link_tumor</code> <code>recal_link_tumor_unpaired</code> <code>recalibrate_base_qualities_normal</code> <code>recalibrate_base_qualities_tumor</code> <code>recalibrate_base_qualities_tumor_unpaired</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>reference</code><span class="ox-param-default">test/fixtures/refs/sequence/Homo_sapiens_assembly38_chr21.fasta</span></div>
-<p class="ox-param-desc">Resources (upstream: config[&#x27;resources&#x27;][genome_version])</p>
-<details class="ox-param-usedby"><summary>used by 103 rules</summary>
-<div class="ox-param-rules"><code>CM_call</code> <code>CM_flag</code> <code>CNA_exomedepth</code> <code>M2_SNC</code> <code>M2_SNC_wgs</code> <code>M2_ST</code> <code>M2_ST_wgs</code> <code>M2_filter</code> <code>M2_filter_unpaired</code> <code>M2_filter_unpaired_rna</code> <code>M2_filter_wgs</code> <code>STAR_1_pass</code> <code>SV_delly</code> <code>SV_delly_germ</code> <code>SV_svaba</code> <code>SplitNCigarReads</code> <code>apply_base_quality_recalibration_normal</code> <code>apply_base_quality_recalibration_tumor</code> <code>apply_base_quality_recalibration_tumor_unpaired</code> <code>arriba_fusion</code> <code>call_config_strelka</code> <code>call_config_strelka_wgs</code> <code>call_strelka_manta_germline</code> <code>call_strelka_manta_wgs</code> <code>call_strelka_somatic_manta</code> <code>call_strelka_somatic_manta_wgs</code> <code>call_variants_HaplotypeCaller</code> <code>call_variants_HaplotypeCaller_rna</code> <code>call_variants_HaplotypeCaller_wgs</code> <code>delly2bnd</code> <code>freec_config</code> <code>isofox_call</code> <code>lofreq_call_up</code> <code>lofreq_norm_filter</code> <code>lofreq_somatic_unpaired</code> <code>map_reads_normal</code> <code>map_reads_tumor</code> <code>map_reads_tumor_unpaired</code> <code>muse_call</code> <code>muse_call_wgs</code> <code>mutect2</code> <code>mutect2_call</code> <code>mutect2_wgs</code> <code>norm_filter_HaplotypeCaller</code> <code>norm_filter_freebayes</code> <code>picard_collect_wes_normal</code> <code>picard_collect_wes_tumor</code> <code>picard_collect_wgs_normal</code> <code>picard_collect_wgs_tumor</code> <code>picard_flength_wgs_normal</code> <code>picard_flength_wgs_tumor</code> <code>recalibrate_base_qualities_normal</code> <code>recalibrate_base_qualities_tumor</code> <code>recalibrate_base_qualities_tumor_unpaired</code> <code>sequenza_bam2seqz</code> <code>unpair_lofreq_filter</code> <code>unpaired_call_config_strelka</code> <code>unpaired_call_config_strelka_rna</code> <code>unpaired_call_strelka_manta</code> <code>unpaired_call_strelka_manta_rna</code> <code>unpaired_call_variants_HaplotypeCaller</code> <code>unpaired_freebayes</code> <code>unpaired_freebayes_rna</code> <code>unpaired_mutect2_call</code> <code>unpaired_vardict_single_mode</code> <code>unpaired_vardict_single_mode_rna</code> <code>vardict_paired_mode</code> <code>vardict_paired_mode_wgs</code> <code>vardict_wgs_bed_wgs</code> <code>varscan2_call</code> <code>varscan2_call_unpaired_indel_rna</code> <code>varscan2_call_unpaired_snp_rna</code> <code>varscan2_mpileup</code> <code>varscan2_mpileup_unpaired</code> <code>varscan2_mpileup_unpaired_rna</code> <code>varscan2_mpileup_wgs</code> <code>vcf2maf_HaplotypeCaller</code> <code>vcf2maf_Mutect2</code> <code>vcf2maf_germ_caveman</code> <code>vcf2maf_germ_strelkamanta</code> <code>vcf2maf_muse</code> <code>vcf2maf_rna_HaplotypeCaller</code> <code>vcf2maf_rna_Mutect2</code> <code>vcf2maf_rna_freebayes</code> <code>vcf2maf_rna_lofreq</code> <code>vcf2maf_rna_vardict</code> <code>vcf2maf_rna_varscan2</code> <code>vcf2maf_unpaired_HaplotypeCaller</code> <code>vcf2maf_unpaired_Mutect2</code> <code>vcf2maf_unpaired_freebayes</code> <code>vcf2maf_unpaired_lofreq</code> <code>vcf2maf_unpaired_strelka</code> <code>vcf2maf_unpaired_vardict</code> <code>vcf2maf_unpaired_varscan2</code> <code>vcf2maf_vardict</code> <code>vcf2maf_varscan2</code> <code>vcf_norm_HaplotypeCaller</code> <code>vcf_norm_Mutect2</code> <code>vcf_norm_germline_caveman</code> <code>vcf_norm_germline_strelkamanta</code> <code>vcf_norm_muse</code> <code>vcf_norm_vardict</code> <code>vcf_norm_varscan2</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>reference_dict</code><span class="ox-param-default">test/fixtures/refs/sequence/Homo_sapiens_assembly38_chr21.dict</span></div>
-<p class="ox-param-desc">Resources (upstream: config[&#x27;resources&#x27;][genome_version])</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>bed_to_interval_list</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>rna_caller_list</code><span class="ox-param-default">freebayes, HaplotypeCaller, lofreq, Mutect2, vardict, varscan2</span></div>
-<p class="ox-param-desc">RNA SNV callers for the vcf2maf merge tail (upstream<br>run_params.rna_caller_list in mini_test_data/rna/fusion/data/test_rna.yaml;<br>matches the six unrolled vcf2maf_rna_* rules in rules/rna/60_vcf2maf_merge.oxoflow)</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>rna_fastq_r1</code><span class="ox-param-default">test/fixtures/reads/mini-T_RNA_R1.fq.gz</span></div>
-<p class="ox-param-desc">RNA (upstream wrapper/rna.smk; run_type = &quot;rna&quot;). Default stages:<br>[arriba, call_mut]; quant/isofox rules run when explicitly targeted.</p>
-<details class="ox-param-usedby"><summary>used by 8 rules</summary>
-<div class="ox-param-rules"><code>STAR_1_pass</code> <code>STAR_arriba_map</code> <code>STAR_isofox_map</code> <code>STAR_mut_map</code> <code>cal_exp_RSEM</code> <code>fastp_trim</code> <code>kallisto</code> <code>salmon</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>rna_fastq_r2</code><span class="ox-param-default">test/fixtures/reads/mini-T_RNA_R2.fq.gz</span></div>
-<p class="ox-param-desc">RNA (upstream wrapper/rna.smk; run_type = &quot;rna&quot;). Default stages:<br>[arriba, call_mut]; quant/isofox rules run when explicitly targeted.</p>
-<details class="ox-param-usedby"><summary>used by 8 rules</summary>
-<div class="ox-param-rules"><code>STAR_1_pass</code> <code>STAR_arriba_map</code> <code>STAR_isofox_map</code> <code>STAR_mut_map</code> <code>cal_exp_RSEM</code> <code>fastp_trim</code> <code>kallisto</code> <code>salmon</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>rna_gtf</code><span class="ox-param-default">test/fixtures/refs/annotations/mini_chr21.gtf</span></div>
-<p class="ox-param-desc">RNA (upstream wrapper/rna.smk; run_type = &quot;rna&quot;). Default stages:<br>[arriba, call_mut]; quant/isofox rules run when explicitly targeted.</p>
-<details class="ox-param-usedby"><summary>used by 6 rules</summary>
-<div class="ox-param-rules"><code>STAR_1_pass</code> <code>STAR_arriba_map</code> <code>STAR_isofox_map</code> <code>STAR_mut_map</code> <code>arriba_draw</code> <code>arriba_fusion</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>rsem_index</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Quant indexes are empty in the upstream hg38_chr21 test config — the<br>RSEM/kallisto/salmon rules only run when explicitly targeted</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>cal_exp_RSEM</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>run_report</code><span class="ox-param-default">true</span></div>
-<p class="ox-param-desc">Report stages (upstream <code>stages</code>): case_report + multiqc are ON in the port<br>default; set run_report = false to match the upstream mini-test default.</p>
-<details class="ox-param-usedby"><summary>used by 6 rules</summary>
-<div class="ox-param-rules"><code>combined_multiqc</code> <code>combined_multiqc_prep_multiqc_data</code> <code>prep_multiqc_data</code> <code>prep_multiqc_data_tumor_only</code> <code>prep_multiqc_data_wgs</code> <code>run_cancer_report</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>run_type</code><span class="ox-param-default">wes</span></div>
-<p class="ox-param-desc">Upstream Snakefile dispatch key (VALID_RUN_TYPES): wes | wgs | rna</p>
-<details class="ox-param-usedby"><summary>used by 188 rules</summary>
-<div class="ox-param-rules"><code>ASCAT_EXTRACT_PURITYPLOIDY</code> <code>CM_call</code> <code>CM_cnv</code> <code>CM_flag</code> <code>CM_germ_flag</code> <code>CNA_ASCAT</code> <code>CNA_exomedepth</code> <code>M2_SNC</code> <code>M2_SNC_wgs</code> <code>M2_ST</code> <code>M2_ST_wgs</code> <code>M2_contam</code> <code>M2_contam_wgs</code> <code>M2_filter</code> <code>M2_filter_unpaired</code> <code>M2_filter_unpaired_rna</code> <code>M2_filter_wgs</code> <code>RSEM_sort_genome</code> <code>STAR_1_pass</code> <code>STAR_arriba_map</code> <code>STAR_isofox_map</code> <code>STAR_mut_map</code> <code>SV_delly</code> <code>SV_delly_filter_somatic</code> <code>SV_delly_germ</code> <code>SV_delly_sample_tsv</code> <code>SV_delly_to_vcf</code> <code>SV_sansa_anno_svaba</code> <code>SV_sansa_annodelly</code> <code>SV_svaba</code> <code>SV_svanno_svaba</code> <code>SplitNCigarReads</code> <code>TRUST4_TBCR</code> <code>all</code> <code>all_cnv</code> <code>all_sv</code> <code>all_unpaired</code> <code>all_unpaired_maf</code> <code>all_vcf</code> <code>apply_base_quality_recalibration_normal</code> <code>apply_base_quality_recalibration_tumor</code> <code>apply_base_quality_recalibration_tumor_unpaired</code> <code>arriba_draw</code> <code>arriba_fusion</code> <code>bam_flagstat_normal</code> <code>bam_flagstat_tumor</code> <code>bed_to_interval_list</code> <code>cal_exp_RSEM</code> <code>call_config_strelka</code> <code>call_config_strelka_wgs</code> <code>call_strelka_manta_germline</code> <code>call_strelka_manta_wgs</code> <code>call_strelka_somatic_manta</code> <code>call_strelka_somatic_manta_wgs</code> <code>call_variants_HaplotypeCaller</code> <code>call_variants_HaplotypeCaller_rna</code> <code>call_variants_HaplotypeCaller_wgs</code> <code>combined_multiqc</code> <code>combined_multiqc_prep_multiqc_data</code> <code>delly2bnd</code> <code>delly_filter</code> <code>fastp_normal_sample</code> <code>fastp_trim</code> <code>fastp_tumor_sample</code> <code>fastp_tumor_sample_unpaired</code> <code>flag_mutation_pairead_maf</code> <code>freec_call_paired</code> <code>freec_config</code> <code>isofox_call</code> <code>kallisto</code> <code>link_bam</code> <code>lofreq_call_up</code> <code>lofreq_norm_filter</code> <code>lofreq_somatic_unpaired</code> <code>make_region_bed_list</code> <code>map_reads_normal</code> <code>map_reads_tumor</code> <code>map_reads_tumor_unpaired</code> <code>mark_duplicates_normal</code> <code>mark_duplicates_tumor</code> <code>mark_duplicates_tumor_unpaired</code> <code>merge_paired_germ_maf</code> <code>merge_paired_maf</code> <code>merge_paired_vcf</code> <code>merge_rna_maf</code> <code>merge_strelka_manta</code> <code>merge_strelka_manta_wgs</code> <code>merge_strelka_somatic_manta</code> <code>merge_strelka_somatic_manta_wgs</code> <code>merge_unpaired_maf</code> <code>merge_unpaired_vcf</code> <code>muse_call</code> <code>muse_call_wgs</code> <code>muse_sump</code> <code>muse_sump_wgs</code> <code>mutect2</code> <code>mutect2_call</code> <code>mutect2_wgs</code> <code>norm_filter_HaplotypeCaller</code> <code>norm_filter_freebayes</code> <code>picard_collect_wes_normal</code> <code>picard_collect_wes_tumor</code> <code>picard_collect_wgs_normal</code> <code>picard_collect_wgs_tumor</code> <code>picard_flength_wgs_normal</code> <code>picard_flength_wgs_tumor</code> <code>plot_freec</code> <code>prep_multiqc_data</code> <code>prep_multiqc_data_tumor_only</code> <code>prep_multiqc_data_wgs</code> <code>recal_link_normal</code> <code>recal_link_tumor</code> <code>recal_link_tumor_unpaired</code> <code>recalibrate_base_qualities_normal</code> <code>recalibrate_base_qualities_tumor</code> <code>recalibrate_base_qualities_tumor_unpaired</code> <code>run_cancer_report</code> <code>salmon</code> <code>sequenza_bam2seqz</code> <code>sequenza_call</code> <code>sequenza_seqz_binning</code> <code>unpair_lofreq_filter</code> <code>unpaired_call_config_strelka</code> <code>unpaired_call_config_strelka_rna</code> <code>unpaired_call_strelka_manta</code> <code>unpaired_call_strelka_manta_rna</code> <code>unpaired_call_variants_HaplotypeCaller</code> <code>unpaired_filter_vardict</code> <code>unpaired_filter_vardict_rna</code> <code>unpaired_freebayes</code> <code>unpaired_freebayes_rna</code> <code>unpaired_mutect2_call</code> <code>unpaired_strelka_filter</code> <code>unpaired_strelka_filter_rna</code> <code>unpaired_vardict_single_mode</code> <code>unpaired_vardict_single_mode_rna</code> <code>vardict_filter_somatic</code> <code>vardict_filter_somatic_wgs</code> <code>vardict_paired_mode</code> <code>vardict_paired_mode_wgs</code> <code>vardict_wgs_bed_wgs</code> <code>varscan2_call</code> <code>varscan2_call_unpaired_indel</code> <code>varscan2_call_unpaired_indel_rna</code> <code>varscan2_call_unpaired_snp</code> <code>varscan2_call_unpaired_snp_rna</code> <code>varscan2_call_wgs</code> <code>varscan2_filter_indel</code> <code>varscan2_filter_snp</code> <code>varscan2_merge_somatic</code> <code>varscan2_merge_somatic_wgs</code> <code>varscan2_merge_unpaired</code> <code>varscan2_merge_unpaired_rna</code> <code>varscan2_mpileup</code> <code>varscan2_mpileup_unpaired</code> <code>varscan2_mpileup_unpaired_rna</code> <code>varscan2_mpileup_wgs</code> <code>varscan2_processSomatic</code> <code>varscan2_processSomatic_wgs</code> <code>varscan2_som_filter</code> <code>varscan2_som_filter_wgs</code> <code>vcf2maf_HaplotypeCaller</code> <code>vcf2maf_Mutect2</code> <code>vcf2maf_germ_caveman</code> <code>vcf2maf_germ_strelkamanta</code> <code>vcf2maf_muse</code> <code>vcf2maf_rna_HaplotypeCaller</code> <code>vcf2maf_rna_Mutect2</code> <code>vcf2maf_rna_freebayes</code> <code>vcf2maf_rna_lofreq</code> <code>vcf2maf_rna_vardict</code> <code>vcf2maf_rna_varscan2</code> <code>vcf2maf_unpaired_HaplotypeCaller</code> <code>vcf2maf_unpaired_Mutect2</code> <code>vcf2maf_unpaired_freebayes</code> <code>vcf2maf_unpaired_lofreq</code> <code>vcf2maf_unpaired_strelka</code> <code>vcf2maf_unpaired_vardict</code> <code>vcf2maf_unpaired_varscan2</code> <code>vcf2maf_vardict</code> <code>vcf2maf_varscan2</code> <code>vcf_norm_HaplotypeCaller</code> <code>vcf_norm_Mutect2</code> <code>vcf_norm_germline_caveman</code> <code>vcf_norm_germline_strelkamanta</code> <code>vcf_norm_muse</code> <code>vcf_norm_vardict</code> <code>vcf_norm_varscan2</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>sage_ref_genome_version</code><span class="ox-param-default">38</span></div>
-<p class="ox-param-desc">HMF tools (isofox; excluded for hg38_chr21 upstream — needs the multi-GB<br>hmf_pipeline_resources tree, not shipped in the mini-test)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>isofox_call</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>salmon_index</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Quant indexes are empty in the upstream hg38_chr21 test config — the<br>RSEM/kallisto/salmon rules only run when explicitly targeted</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>salmon</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>sansa_call</code><span class="ox-param-default">sansa</span></div>
-<p class="ox-param-desc">SV annotation branch (issue #7; upstream WGS SV rules gate on the sansa<br>software config being present — absent upstream by default, so these are<br>off by default and the port mirrors that with empty keys = zero instances).<br>sansa_db/sansa_g: the sansa annotate -a database and -g gene-model inputs<br>(upstream softwares.sansa[&lt;genome_version&gt;].{db,g}); sansa_call: the<br>binary/invocation (upstream config[softwares][sansa][call]).</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>SV_sansa_anno_svaba</code> <code>SV_sansa_annodelly</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>sansa_db</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">SV annotation branch (issue #7; upstream WGS SV rules gate on the sansa<br>software config being present — absent upstream by default, so these are<br>off by default and the port mirrors that with empty keys = zero instances).<br>sansa_db/sansa_g: the sansa annotate -a database and -g gene-model inputs<br>(upstream softwares.sansa[&lt;genome_version&gt;].{db,g}); sansa_call: the<br>binary/invocation (upstream config[softwares][sansa][call]).</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>SV_sansa_anno_svaba</code> <code>SV_sansa_annodelly</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>sansa_g</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">SV annotation branch (issue #7; upstream WGS SV rules gate on the sansa<br>software config being present — absent upstream by default, so these are<br>off by default and the port mirrors that with empty keys = zero instances).<br>sansa_db/sansa_g: the sansa annotate -a database and -g gene-model inputs<br>(upstream softwares.sansa[&lt;genome_version&gt;].{db,g}); sansa_call: the<br>binary/invocation (upstream config[softwares][sansa][call]).</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>SV_sansa_anno_svaba</code> <code>SV_sansa_annodelly</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>sequenza_gc_wiggle</code><span class="ox-param-default">test/fixtures/cnv/sequenza_gc.wig</span></div>
-<p class="ox-param-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>sequenza_bam2seqz</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>somatic_caller_list</code><span class="ox-param-default">HaplotypeCaller, vardict, varscan2, muse, Mutect2</span></div>
-<p class="ox-param-desc">Caller lists (upstream run_params)</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>star_index</code><span class="ox-param-default">test/fixtures/refs/star_index</span></div>
-<p class="ox-param-desc">STAR index built inline by STAR_1_pass when missing (upstream ships a<br>pre-built index; the synthetic fixture reference needs its own)</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>STAR_1_pass</code> <code>STAR_arriba_map</code> <code>STAR_isofox_map</code> <code>STAR_mut_map</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>svanno_gtf</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">svanno: gatk SVAnnotate needs a protein-coding GTF (upstream<br>resources[genome_version].GTF). Empty default = rule never runs.</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>SV_svanno_svaba</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>target_bed</code><span class="ox-param-default">test/fixtures/bed/exome_target_hg38_chr21.bed</span></div>
-<p class="ox-param-desc">Resources (upstream: config[&#x27;resources&#x27;][genome_version])</p>
-<details class="ox-param-usedby"><summary>used by 33 rules</summary>
-<div class="ox-param-rules"><code>M2_SNC</code> <code>M2_SNC_wgs</code> <code>M2_ST</code> <code>M2_ST_wgs</code> <code>M2_filter</code> <code>bed_to_interval_list</code> <code>call_config_strelka</code> <code>call_strelka_manta_germline</code> <code>call_strelka_somatic_manta</code> <code>call_variants_HaplotypeCaller</code> <code>call_variants_HaplotypeCaller_rna</code> <code>freec_config</code> <code>lofreq_somatic_unpaired</code> <code>muse_call</code> <code>mutect2</code> <code>mutect2_call</code> <code>unpaired_call_config_strelka</code> <code>unpaired_call_config_strelka_rna</code> <code>unpaired_call_strelka_manta</code> <code>unpaired_call_strelka_manta_rna</code> <code>unpaired_call_variants_HaplotypeCaller</code> <code>unpaired_freebayes</code> <code>unpaired_freebayes_rna</code> <code>unpaired_mutect2_call</code> <code>unpaired_vardict_single_mode</code> <code>unpaired_vardict_single_mode_rna</code> <code>vardict_paired_mode</code> <code>varscan2_call</code> <code>varscan2_call_unpaired_indel_rna</code> <code>varscan2_call_unpaired_snp_rna</code> <code>varscan2_mpileup</code> <code>varscan2_mpileup_unpaired</code> <code>varscan2_mpileup_unpaired_rna</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>trust4_dir</code><span class="ox-param-default">resources/softwares/TRUST4</span></div>
-<p class="ox-param-desc">TRUST4 (upstream softwares_params[genome].trust4; git-cloned at rule<br>runtime into trust4_dir when trust4_f is missing — not in default stages)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>TRUST4_TBCR</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>trust4_f</code><span class="ox-param-default">resources/softwares/TRUST4/hg38_bcrtcr.fa</span></div>
-<p class="ox-param-desc">TRUST4 (upstream softwares_params[genome].trust4; git-cloned at rule<br>runtime into trust4_dir when trust4_f is missing — not in default stages)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>TRUST4_TBCR</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>trust4_ref</code><span class="ox-param-default">resources/softwares/TRUST4/human_IMGT+C.fa</span></div>
-<p class="ox-param-desc">TRUST4 (upstream softwares_params[genome].trust4; git-cloned at rule<br>runtime into trust4_dir when trust4_f is missing — not in default stages)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>TRUST4_TBCR</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>tumor_fastq_r1</code><span class="ox-param-default">test/fixtures/reads/mini-T_R1.fq.gz</span></div>
-<p class="ox-param-desc">Reads (upstream samplesheet columns Tumor_R1_file_path / Normal_R1_file_path<br>...). The sample-sheet pairs (pairs_file above) drive {pair_id}/{experiment}/<br>{control} fan-out; these config paths are the fixture FASTQ locations.</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>fastp_tumor_sample</code> <code>fastp_tumor_sample_unpaired</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>tumor_fastq_r2</code><span class="ox-param-default">test/fixtures/reads/mini-T_R2.fq.gz</span></div>
-<p class="ox-param-desc">Reads (upstream samplesheet columns Tumor_R1_file_path / Normal_R1_file_path<br>...). The sample-sheet pairs (pairs_file above) drive {pair_id}/{experiment}/<br>{control} fan-out; these config paths are the fixture FASTQ locations.</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>fastp_tumor_sample</code> <code>fastp_tumor_sample_unpaired</code></div>
-</details>
-</div>
-<div class="ox-param ox-param-unused">
-<div class="ox-param-head"><code>unpaired_caller_list</code><span class="ox-param-default">Mutect2, HaplotypeCaller, varscan2, strelka, vardict, lofreq, freebayes</span></div>
-<p class="ox-param-desc">Tumor-only callers (upstream run_params.tumor_only_caller; upstream default<br>is [sage] — needs the custom hmftools container, so the port defaults to<br>the seven portable callers, see rules/70_unpaired.oxoflow)</p>
-<details class="ox-param-usedby"><summary>not referenced by any rule</summary>
-<div class="ox-param-rules">A ported upstream parameter kept for compatibility: no rule reads this key (no <code>{config.*}</code> placeholder in any input, output, or shell), so overriding it has no effect on this workflow.</div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>vep_cache_ready</code><span class="ox-param-default">false</span></div>
-<p class="ox-param-desc">VEP needs a local cache at {vep_data}/{vep_species} (~10GB download; the<br>fixture kit does not ship it). The vcf2maf rules and the downstream MAF<br>merge/flag/cancer-report tail gate on this flag — set true once the cache<br>is in place (upstream fails hard without it).</p>
-<details class="ox-param-usedby"><summary>used by 28 rules</summary>
-<div class="ox-param-rules"><code>all</code> <code>all_unpaired_maf</code> <code>flag_mutation_pairead_maf</code> <code>merge_paired_germ_maf</code> <code>merge_paired_maf</code> <code>merge_rna_maf</code> <code>merge_unpaired_maf</code> <code>run_cancer_report</code> <code>vcf2maf_HaplotypeCaller</code> <code>vcf2maf_Mutect2</code> <code>vcf2maf_germ_caveman</code> <code>vcf2maf_germ_strelkamanta</code> <code>vcf2maf_muse</code> <code>vcf2maf_rna_HaplotypeCaller</code> <code>vcf2maf_rna_Mutect2</code> <code>vcf2maf_rna_freebayes</code> <code>vcf2maf_rna_lofreq</code> <code>vcf2maf_rna_vardict</code> <code>vcf2maf_rna_varscan2</code> <code>vcf2maf_unpaired_HaplotypeCaller</code> <code>vcf2maf_unpaired_Mutect2</code> <code>vcf2maf_unpaired_freebayes</code> <code>vcf2maf_unpaired_lofreq</code> <code>vcf2maf_unpaired_strelka</code> <code>vcf2maf_unpaired_vardict</code> <code>vcf2maf_unpaired_varscan2</code> <code>vcf2maf_vardict</code> <code>vcf2maf_varscan2</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>vep_cache_version</code><span class="ox-param-default">110</span></div>
-<p class="ox-param-desc">vcf2maf / VEP (upstream: config[&#x27;softwares_params&#x27;][genome_version][&#x27;vcf2maf&#x27;])</p>
-<details class="ox-param-usedby"><summary>used by 20 rules</summary>
-<div class="ox-param-rules"><code>vcf2maf_HaplotypeCaller</code> <code>vcf2maf_Mutect2</code> <code>vcf2maf_germ_caveman</code> <code>vcf2maf_germ_strelkamanta</code> <code>vcf2maf_muse</code> <code>vcf2maf_rna_HaplotypeCaller</code> <code>vcf2maf_rna_Mutect2</code> <code>vcf2maf_rna_freebayes</code> <code>vcf2maf_rna_lofreq</code> <code>vcf2maf_rna_vardict</code> <code>vcf2maf_rna_varscan2</code> <code>vcf2maf_unpaired_HaplotypeCaller</code> <code>vcf2maf_unpaired_Mutect2</code> <code>vcf2maf_unpaired_freebayes</code> <code>vcf2maf_unpaired_lofreq</code> <code>vcf2maf_unpaired_strelka</code> <code>vcf2maf_unpaired_vardict</code> <code>vcf2maf_unpaired_varscan2</code> <code>vcf2maf_vardict</code> <code>vcf2maf_varscan2</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>vep_data</code><span class="ox-param-default">resources/ref_genome/hg38/vep</span></div>
-<p class="ox-param-desc">vcf2maf / VEP (upstream: config[&#x27;softwares_params&#x27;][genome_version][&#x27;vcf2maf&#x27;])</p>
-<details class="ox-param-usedby"><summary>used by 20 rules</summary>
-<div class="ox-param-rules"><code>vcf2maf_HaplotypeCaller</code> <code>vcf2maf_Mutect2</code> <code>vcf2maf_germ_caveman</code> <code>vcf2maf_germ_strelkamanta</code> <code>vcf2maf_muse</code> <code>vcf2maf_rna_HaplotypeCaller</code> <code>vcf2maf_rna_Mutect2</code> <code>vcf2maf_rna_freebayes</code> <code>vcf2maf_rna_lofreq</code> <code>vcf2maf_rna_vardict</code> <code>vcf2maf_rna_varscan2</code> <code>vcf2maf_unpaired_HaplotypeCaller</code> <code>vcf2maf_unpaired_Mutect2</code> <code>vcf2maf_unpaired_freebayes</code> <code>vcf2maf_unpaired_lofreq</code> <code>vcf2maf_unpaired_strelka</code> <code>vcf2maf_unpaired_vardict</code> <code>vcf2maf_unpaired_varscan2</code> <code>vcf2maf_vardict</code> <code>vcf2maf_varscan2</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>vep_species</code><span class="ox-param-default">homo_sapiens</span></div>
-<p class="ox-param-desc">vcf2maf / VEP (upstream: config[&#x27;softwares_params&#x27;][genome_version][&#x27;vcf2maf&#x27;])</p>
-<details class="ox-param-usedby"><summary>used by 20 rules</summary>
-<div class="ox-param-rules"><code>vcf2maf_HaplotypeCaller</code> <code>vcf2maf_Mutect2</code> <code>vcf2maf_germ_caveman</code> <code>vcf2maf_germ_strelkamanta</code> <code>vcf2maf_muse</code> <code>vcf2maf_rna_HaplotypeCaller</code> <code>vcf2maf_rna_Mutect2</code> <code>vcf2maf_rna_freebayes</code> <code>vcf2maf_rna_lofreq</code> <code>vcf2maf_rna_vardict</code> <code>vcf2maf_rna_varscan2</code> <code>vcf2maf_unpaired_HaplotypeCaller</code> <code>vcf2maf_unpaired_Mutect2</code> <code>vcf2maf_unpaired_freebayes</code> <code>vcf2maf_unpaired_lofreq</code> <code>vcf2maf_unpaired_strelka</code> <code>vcf2maf_unpaired_vardict</code> <code>vcf2maf_unpaired_varscan2</code> <code>vcf2maf_vardict</code> <code>vcf2maf_varscan2</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>wes_pon</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Upstream hg38_chr21 has no panel of normals (WES_PON: null) — leave empty</p>
-<details class="ox-param-usedby"><summary>used by 3 rules</summary>
-<div class="ox-param-rules"><code>mutect2</code> <code>mutect2_call</code> <code>unpaired_mutect2_call</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>wgs_pon</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">Upstream hg38_chr21 has no panel of normals (WES_PON: null) — leave empty</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>mutect2_wgs</code></div>
-</details>
-</div>
-</div>
+<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. Copy a row to paste the key directly. Click any parameter name to copy <code>key = value</code>; clicking <code>default</code> copies just the value.</p>
+<table class="ox-params">
+<thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+<tbody>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy annotate_beds_file = value" data-copy="annotate_beds_file = ">annotate_beds_file</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">BED tracks used by mutation_flag — name/path TSV mirroring upstream<br>softwares_params[genome].annotate_beds dict (empty = header-only, no flags)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy arriba_blacklist = value" data-copy="arriba_blacklist = test/fixtures/refs/annotations/arriba_blacklist.tsv">arriba_blacklist</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/refs/annotations/arriba_blacklist.tsv</code></td>
+<td class="ox-p-desc">Arriba databases (upstream softwares_params[genome].arriba.database).<br>Mini-test: blacklist + mini known_fusions/protein_domains/cytobands are<br>local files matching the 922 bp fixture reference (the whole-genome DBs<br>in the uhrigs/arriba:2.4.0 image fail to parse against it, observed live).<br>Real hg38 runs keep the container paths; the mini DBs mirror the formats 1:1.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy arriba_cytobands = value" data-copy="arriba_cytobands = test/fixtures/refs/annotations/arriba_cytobands_mini.tsv">arriba_cytobands</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/refs/annotations/arriba_cytobands_mini.tsv</code></td>
+<td class="ox-p-desc">Arriba databases (upstream softwares_params[genome].arriba.database).<br>Mini-test: blacklist + mini known_fusions/protein_domains/cytobands are<br>local files matching the 922 bp fixture reference (the whole-genome DBs<br>in the uhrigs/arriba:2.4.0 image fail to parse against it, observed live).<br>Real hg38 runs keep the container paths; the mini DBs mirror the formats 1:1.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy arriba_known_fusions = value" data-copy="arriba_known_fusions = test/fixtures/refs/annotations/arriba_known_fusions_mini.tsv.gz">arriba_known_fusions</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/refs/annotations/arriba_known_fusions_mini.tsv.gz</code></td>
+<td class="ox-p-desc">Arriba databases (upstream softwares_params[genome].arriba.database).<br>Mini-test: blacklist + mini known_fusions/protein_domains/cytobands are<br>local files matching the 922 bp fixture reference (the whole-genome DBs<br>in the uhrigs/arriba:2.4.0 image fail to parse against it, observed live).<br>Real hg38 runs keep the container paths; the mini DBs mirror the formats 1:1.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy arriba_protein_domains = value" data-copy="arriba_protein_domains = test/fixtures/refs/annotations/arriba_protein_domains_mini.gff3">arriba_protein_domains</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/refs/annotations/arriba_protein_domains_mini.gff3</code></td>
+<td class="ox-p-desc">Arriba databases (upstream softwares_params[genome].arriba.database).<br>Mini-test: blacklist + mini known_fusions/protein_domains/cytobands are<br>local files matching the 922 bp fixture reference (the whole-genome DBs<br>in the uhrigs/arriba:2.4.0 image fail to parse against it, observed live).<br>Real hg38 runs keep the container paths; the mini DBs mirror the formats 1:1.<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ascat_alleles_prefix = value" data-copy="ascat_alleles_prefix = test/fixtures/cnv/ascat_alleles/">ascat_alleles_prefix</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/cnv/ascat_alleles/</code></td>
+<td class="ox-p-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ascat_chroms = value" data-copy="ascat_chroms = 21">ascat_chroms</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>21</code></td>
+<td class="ox-p-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ascat_gc_file = value" data-copy="ascat_gc_file = test/fixtures/cnv/ascat_gc.txt">ascat_gc_file</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/cnv/ascat_gc.txt</code></td>
+<td class="ox-p-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ascat_loci_prefix = value" data-copy="ascat_loci_prefix = test/fixtures/cnv/ascat_loci/">ascat_loci_prefix</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/cnv/ascat_loci/</code></td>
+<td class="ox-p-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ascat_rt_file = value" data-copy="ascat_rt_file = ">ascat_rt_file</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cnv_enabled = value" data-copy="cnv_enabled = false">cnv_enabled</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).<br><span class="ox-param-usedby">used by <code>10</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dbsnp = value" data-copy="dbsnp = test/fixtures/refs/annotations/dbsnp_146.hg38_chr21.vcf.gz">dbsnp</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/refs/annotations/dbsnp_146.hg38_chr21.vcf.gz</code></td>
+<td class="ox-p-desc">cgpFlagCaVEMan configs (bed-based flags dropped: no chr21 flag data)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dbsnp_gz = value" data-copy="dbsnp_gz = test/fixtures/refs/annotations/dbsnp_146.hg38_chr21.vcf.gz">dbsnp_gz</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/refs/annotations/dbsnp_146.hg38_chr21.vcf.gz</code></td>
+<td class="ox-p-desc">MuSE sump needs a gzipped dbSNP<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dbsnp_indel = value" data-copy="dbsnp_indel = test/fixtures/refs/annotations/Mills_and_1000G_gold_standard.indels.hg38_chr21.vcf.gz">dbsnp_indel</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/refs/annotations/Mills_and_1000G_gold_standard.indels.hg38_chr21.vcf.gz</code></td>
+<td class="ox-p-desc">cgpFlagCaVEMan configs (bed-based flags dropped: no chr21 flag data)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy exomedepth_bed = value" data-copy="exomedepth_bed = test/fixtures/cnv/exomedepth_regions.bed">exomedepth_bed</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/cnv/exomedepth_regions.bed</code></td>
+<td class="ox-p-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy exomedepth_use_target_bed = value" data-copy="exomedepth_use_target_bed = true">exomedepth_use_target_bed</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>true</code></td>
+<td class="ox-p-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy flag_config_dir = value" data-copy="flag_config_dir = test/fixtures/flag">flag_config_dir</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/flag</code></td>
+<td class="ox-p-desc">cgpFlagCaVEMan configs (bed-based flags dropped: no chr21 flag data)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy freec_chr_files = value" data-copy="freec_chr_files = test/fixtures/cnv/freec_chr_fasta">freec_chr_files</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/cnv/freec_chr_fasta</code></td>
+<td class="ox-p-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy freec_chr_len_file = value" data-copy="freec_chr_len_file = test/fixtures/cnv/freec_chrlen.txt">freec_chr_len_file</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/cnv/freec_chrlen.txt</code></td>
+<td class="ox-p-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy freec_ini_template = value" data-copy="freec_ini_template = scripts/config_exome.mini.ini">freec_ini_template</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>scripts/config_exome.mini.ini</code></td>
+<td class="ox-p-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy freec_sambamba = value" data-copy="freec_sambamba = sambamba">freec_sambamba</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>sambamba</code></td>
+<td class="ox-p-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy genome_version = value" data-copy="genome_version = hg38_chr21">genome_version</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>hg38_chr21</code></td>
+<td class="ox-p-desc">Upstream Snakefile dispatch key (VALID_RUN_TYPES): wes | wgs | rna<br><span class="ox-param-usedby">used by <code>188</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy germ_caller_list = value" data-copy="germ_caller_list = strelkamanta, caveman">germ_caller_list</button></td>
+<td class="ox-p-t"><code>array</code></td>
+<td class="ox-p-d"><code>strelkamanta, caveman</code></td>
+<td class="ox-p-desc">Caller lists (upstream run_params)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy hmftools_ensembl_data_dir = value" data-copy="hmftools_ensembl_data_dir = ">hmftools_ensembl_data_dir</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">HMF tools (isofox; excluded for hg38_chr21 upstream — needs the multi-GB<br>hmf_pipeline_resources tree, not shipped in the mini-test)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy isofox_mem_mb = value" data-copy="isofox_mem_mb = 30000">isofox_mem_mb</button></td>
+<td class="ox-p-t"><code>int</code></td>
+<td class="ox-p-d"><code>30000</code></td>
+<td class="ox-p-desc">HMF tools (isofox; excluded for hg38_chr21 upstream — needs the multi-GB<br>hmf_pipeline_resources tree, not shipped in the mini-test)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy java_temp_dir = value" data-copy="java_temp_dir = /tmp">java_temp_dir</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>/tmp</code></td>
+<td class="ox-p-desc">Java temp dir (upstream: config[&#x27;params&#x27;][&#x27;java&#x27;][&#x27;temp_directory&#x27;])<br><span class="ox-param-usedby">used by <code>36</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy kallisto_index = value" data-copy="kallisto_index = ">kallisto_index</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">Quant indexes are empty in the upstream hg38_chr21 test config — the<br>RSEM/kallisto/salmon rules only run when explicitly targeted<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy known_sites1 = value" data-copy="known_sites1 = test/fixtures/refs/annotations/known_sites1.mini.vcf.gz">known_sites1</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/refs/annotations/known_sites1.mini.vcf.gz</code></td>
+<td class="ox-p-desc">BQSR (upstream config[&#x27;project&#x27;][&#x27;recal_BQSR&#x27;] + resources[&#x27;varanno&#x27;][genome]):<br>recal_bqsr = false is the upstream mini-test default (recal_link symlinks the<br>dedup BAM); set true to run BaseRecalibrator + ApplyBQSR instead.<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy known_sites2 = value" data-copy="known_sites2 = test/fixtures/refs/annotations/known_sites2.mini.vcf.gz">known_sites2</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/refs/annotations/known_sites2.mini.vcf.gz</code></td>
+<td class="ox-p-desc">BQSR (upstream config[&#x27;project&#x27;][&#x27;recal_BQSR&#x27;] + resources[&#x27;varanno&#x27;][genome]):<br>recal_bqsr = false is the upstream mini-test default (recal_link symlinks the<br>dedup BAM); set true to run BaseRecalibrator + ApplyBQSR instead.<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mutect2_germline_vcf = value" data-copy="mutect2_germline_vcf = test/fixtures/refs/annotations/gnomAD.r2.1.1.GRCh38.PASS.AC.AF.only_chr21.vcf.gz">mutect2_germline_vcf</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/refs/annotations/gnomAD.r2.1.1.GRCh38.PASS.AC.AF.only_chr21.vcf.gz</code></td>
+<td class="ox-p-desc">Mutect2 GetPileupSummaries sites + germline resource<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mutect2_vcf = value" data-copy="mutect2_vcf = test/fixtures/refs/annotations/gnomAD.r2.1.1.GRCh38.PASS.AC.AF.only_chr21.vcf.gz">mutect2_vcf</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/refs/annotations/gnomAD.r2.1.1.GRCh38.PASS.AC.AF.only_chr21.vcf.gz</code></td>
+<td class="ox-p-desc">Mutect2 GetPileupSummaries sites + germline resource<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ncbi_build = value" data-copy="ncbi_build = GRCh38">ncbi_build</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>GRCh38</code></td>
+<td class="ox-p-desc">vcf2maf / VEP (upstream: config[&#x27;softwares_params&#x27;][genome_version][&#x27;vcf2maf&#x27;])<br><span class="ox-param-usedby">used by <code>20</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy normal_fastq_r1 = value" data-copy="normal_fastq_r1 = test/fixtures/reads/mini-NC_R1.fq.gz">normal_fastq_r1</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/reads/mini-NC_R1.fq.gz</code></td>
+<td class="ox-p-desc">Reads (upstream samplesheet columns Tumor_R1_file_path / Normal_R1_file_path<br>...). The sample-sheet pairs (pairs_file above) drive {pair_id}/{experiment}/<br>{control} fan-out; these config paths are the fixture FASTQ locations.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy normal_fastq_r2 = value" data-copy="normal_fastq_r2 = test/fixtures/reads/mini-NC_R2.fq.gz">normal_fastq_r2</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/reads/mini-NC_R2.fq.gz</code></td>
+<td class="ox-p-desc">Reads (upstream samplesheet columns Tumor_R1_file_path / Normal_R1_file_path<br>...). The sample-sheet pairs (pairs_file above) drive {pair_id}/{experiment}/<br>{control} fan-out; these config paths are the fixture FASTQ locations.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy output_dir = value" data-copy="output_dir = mini_test">output_dir</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>mini_test</code></td>
+<td class="ox-p-desc">Upstream Snakefile dispatch key (VALID_RUN_TYPES): wes | wgs | rna<br><span class="ox-param-usedby">used by <code>188</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy recal_bqsr = value" data-copy="recal_bqsr = false">recal_bqsr</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">BQSR (upstream config[&#x27;project&#x27;][&#x27;recal_BQSR&#x27;] + resources[&#x27;varanno&#x27;][genome]):<br>recal_bqsr = false is the upstream mini-test default (recal_link symlinks the<br>dedup BAM); set true to run BaseRecalibrator + ApplyBQSR instead.<br><span class="ox-param-usedby">used by <code>9</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy reference = value" data-copy="reference = test/fixtures/refs/sequence/Homo_sapiens_assembly38_chr21.fasta">reference</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/refs/sequence/Homo_sapiens_assembly38_chr21.fasta</code></td>
+<td class="ox-p-desc">Resources (upstream: config[&#x27;resources&#x27;][genome_version])<br><span class="ox-param-usedby">used by <code>103</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy reference_dict = value" data-copy="reference_dict = test/fixtures/refs/sequence/Homo_sapiens_assembly38_chr21.dict">reference_dict</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/refs/sequence/Homo_sapiens_assembly38_chr21.dict</code></td>
+<td class="ox-p-desc">Resources (upstream: config[&#x27;resources&#x27;][genome_version])<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy rna_caller_list = value" data-copy="rna_caller_list = freebayes, HaplotypeCaller, lofreq, Mutect2, vardict, varscan2">rna_caller_list</button></td>
+<td class="ox-p-t"><code>array</code></td>
+<td class="ox-p-d"><code>freebayes, HaplotypeCaller, lofreq, Mutect2, vardict, varscan2</code></td>
+<td class="ox-p-desc">RNA SNV callers for the vcf2maf merge tail (upstream<br>run_params.rna_caller_list in mini_test_data/rna/fusion/data/test_rna.yaml;<br>matches the six unrolled vcf2maf_rna_* rules in rules/rna/60_vcf2maf_merge.oxoflow)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy rna_fastq_r1 = value" data-copy="rna_fastq_r1 = test/fixtures/reads/mini-T_RNA_R1.fq.gz">rna_fastq_r1</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/reads/mini-T_RNA_R1.fq.gz</code></td>
+<td class="ox-p-desc">RNA (upstream wrapper/rna.smk; run_type = &quot;rna&quot;). Default stages:<br>[arriba, call_mut]; quant/isofox rules run when explicitly targeted.<br><span class="ox-param-usedby">used by <code>8</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy rna_fastq_r2 = value" data-copy="rna_fastq_r2 = test/fixtures/reads/mini-T_RNA_R2.fq.gz">rna_fastq_r2</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/reads/mini-T_RNA_R2.fq.gz</code></td>
+<td class="ox-p-desc">RNA (upstream wrapper/rna.smk; run_type = &quot;rna&quot;). Default stages:<br>[arriba, call_mut]; quant/isofox rules run when explicitly targeted.<br><span class="ox-param-usedby">used by <code>8</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy rna_gtf = value" data-copy="rna_gtf = test/fixtures/refs/annotations/mini_chr21.gtf">rna_gtf</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/refs/annotations/mini_chr21.gtf</code></td>
+<td class="ox-p-desc">RNA (upstream wrapper/rna.smk; run_type = &quot;rna&quot;). Default stages:<br>[arriba, call_mut]; quant/isofox rules run when explicitly targeted.<br><span class="ox-param-usedby">used by <code>6</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy rsem_index = value" data-copy="rsem_index = ">rsem_index</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">Quant indexes are empty in the upstream hg38_chr21 test config — the<br>RSEM/kallisto/salmon rules only run when explicitly targeted<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_report = value" data-copy="run_report = true">run_report</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>true</code></td>
+<td class="ox-p-desc">Report stages (upstream <code>stages</code>): case_report + multiqc are ON in the port<br>default; set run_report = false to match the upstream mini-test default.<br><span class="ox-param-usedby">used by <code>6</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_type = value" data-copy="run_type = wes">run_type</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>wes</code></td>
+<td class="ox-p-desc">Upstream Snakefile dispatch key (VALID_RUN_TYPES): wes | wgs | rna<br><span class="ox-param-usedby">used by <code>188</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sage_ref_genome_version = value" data-copy="sage_ref_genome_version = 38">sage_ref_genome_version</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>38</code></td>
+<td class="ox-p-desc">HMF tools (isofox; excluded for hg38_chr21 upstream — needs the multi-GB<br>hmf_pipeline_resources tree, not shipped in the mini-test)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy salmon_index = value" data-copy="salmon_index = ">salmon_index</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">Quant indexes are empty in the upstream hg38_chr21 test config — the<br>RSEM/kallisto/salmon rules only run when explicitly targeted<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sansa_call = value" data-copy="sansa_call = sansa">sansa_call</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>sansa</code></td>
+<td class="ox-p-desc">SV annotation branch (issue #7; upstream WGS SV rules gate on the sansa<br>software config being present — absent upstream by default, so these are<br>off by default and the port mirrors that with empty keys = zero instances).<br>sansa_db/sansa_g: the sansa annotate -a database and -g gene-model inputs<br>(upstream softwares.sansa[&lt;genome_version&gt;].{db,g}); sansa_call: the<br>binary/invocation (upstream config[softwares][sansa][call]).<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sansa_db = value" data-copy="sansa_db = ">sansa_db</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">SV annotation branch (issue #7; upstream WGS SV rules gate on the sansa<br>software config being present — absent upstream by default, so these are<br>off by default and the port mirrors that with empty keys = zero instances).<br>sansa_db/sansa_g: the sansa annotate -a database and -g gene-model inputs<br>(upstream softwares.sansa[&lt;genome_version&gt;].{db,g}); sansa_call: the<br>binary/invocation (upstream config[softwares][sansa][call]).<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sansa_g = value" data-copy="sansa_g = ">sansa_g</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">SV annotation branch (issue #7; upstream WGS SV rules gate on the sansa<br>software config being present — absent upstream by default, so these are<br>off by default and the port mirrors that with empty keys = zero instances).<br>sansa_db/sansa_g: the sansa annotate -a database and -g gene-model inputs<br>(upstream softwares.sansa[&lt;genome_version&gt;].{db,g}); sansa_call: the<br>binary/invocation (upstream config[softwares][sansa][call]).<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sequenza_gc_wiggle = value" data-copy="sequenza_gc_wiggle = test/fixtures/cnv/sequenza_gc.wig">sequenza_gc_wiggle</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/cnv/sequenza_gc.wig</code></td>
+<td class="ox-p-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy somatic_caller_list = value" data-copy="somatic_caller_list = HaplotypeCaller, vardict, varscan2, muse, Mutect2">somatic_caller_list</button></td>
+<td class="ox-p-t"><code>array</code></td>
+<td class="ox-p-d"><code>HaplotypeCaller, vardict, varscan2, muse, Mutect2</code></td>
+<td class="ox-p-desc">Caller lists (upstream run_params)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy star_index = value" data-copy="star_index = test/fixtures/refs/star_index">star_index</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/refs/star_index</code></td>
+<td class="ox-p-desc">STAR index built inline by STAR_1_pass when missing (upstream ships a<br>pre-built index; the synthetic fixture reference needs its own)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy svanno_gtf = value" data-copy="svanno_gtf = ">svanno_gtf</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">svanno: gatk SVAnnotate needs a protein-coding GTF (upstream<br>resources[genome_version].GTF). Empty default = rule never runs.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy target_bed = value" data-copy="target_bed = test/fixtures/bed/exome_target_hg38_chr21.bed">target_bed</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/bed/exome_target_hg38_chr21.bed</code></td>
+<td class="ox-p-desc">Resources (upstream: config[&#x27;resources&#x27;][genome_version])<br><span class="ox-param-usedby">used by <code>33</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy trust4_dir = value" data-copy="trust4_dir = resources/softwares/TRUST4">trust4_dir</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>resources/softwares/TRUST4</code></td>
+<td class="ox-p-desc">TRUST4 (upstream softwares_params[genome].trust4; git-cloned at rule<br>runtime into trust4_dir when trust4_f is missing — not in default stages)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy trust4_f = value" data-copy="trust4_f = resources/softwares/TRUST4/hg38_bcrtcr.fa">trust4_f</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>resources/softwares/TRUST4/hg38_bcrtcr.fa</code></td>
+<td class="ox-p-desc">TRUST4 (upstream softwares_params[genome].trust4; git-cloned at rule<br>runtime into trust4_dir when trust4_f is missing — not in default stages)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy trust4_ref = value" data-copy="trust4_ref = resources/softwares/TRUST4/human_IMGT+C.fa">trust4_ref</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>resources/softwares/TRUST4/human_IMGT+C.fa</code></td>
+<td class="ox-p-desc">TRUST4 (upstream softwares_params[genome].trust4; git-cloned at rule<br>runtime into trust4_dir when trust4_f is missing — not in default stages)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy tumor_fastq_r1 = value" data-copy="tumor_fastq_r1 = test/fixtures/reads/mini-T_R1.fq.gz">tumor_fastq_r1</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/reads/mini-T_R1.fq.gz</code></td>
+<td class="ox-p-desc">Reads (upstream samplesheet columns Tumor_R1_file_path / Normal_R1_file_path<br>...). The sample-sheet pairs (pairs_file above) drive {pair_id}/{experiment}/<br>{control} fan-out; these config paths are the fixture FASTQ locations.<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy tumor_fastq_r2 = value" data-copy="tumor_fastq_r2 = test/fixtures/reads/mini-T_R2.fq.gz">tumor_fastq_r2</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/reads/mini-T_R2.fq.gz</code></td>
+<td class="ox-p-desc">Reads (upstream samplesheet columns Tumor_R1_file_path / Normal_R1_file_path<br>...). The sample-sheet pairs (pairs_file above) drive {pair_id}/{experiment}/<br>{control} fan-out; these config paths are the fixture FASTQ locations.<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy unpaired_caller_list = value" data-copy="unpaired_caller_list = Mutect2, HaplotypeCaller, varscan2, strelka, vardict, lofreq, freebayes">unpaired_caller_list</button></td>
+<td class="ox-p-t"><code>array</code></td>
+<td class="ox-p-d"><code>Mutect2, HaplotypeCaller, varscan2, strelka, vardict, lofreq, freebayes</code></td>
+<td class="ox-p-desc">Tumor-only callers (upstream run_params.tumor_only_caller; upstream default<br>is [sage] — needs the custom hmftools container, so the port defaults to<br>the seven portable callers, see rules/70_unpaired.oxoflow)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy vep_cache_ready = value" data-copy="vep_cache_ready = false">vep_cache_ready</button></td>
+<td class="ox-p-t"><code>bool</code></td>
+<td class="ox-p-d"><code>false</code></td>
+<td class="ox-p-desc">VEP needs a local cache at {vep_data}/{vep_species} (~10GB download; the<br>fixture kit does not ship it). The vcf2maf rules and the downstream MAF<br>merge/flag/cancer-report tail gate on this flag — set true once the cache<br>is in place (upstream fails hard without it).<br><span class="ox-param-usedby">used by <code>28</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy vep_cache_version = value" data-copy="vep_cache_version = 110">vep_cache_version</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>110</code></td>
+<td class="ox-p-desc">vcf2maf / VEP (upstream: config[&#x27;softwares_params&#x27;][genome_version][&#x27;vcf2maf&#x27;])<br><span class="ox-param-usedby">used by <code>20</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy vep_data = value" data-copy="vep_data = resources/ref_genome/hg38/vep">vep_data</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>resources/ref_genome/hg38/vep</code></td>
+<td class="ox-p-desc">vcf2maf / VEP (upstream: config[&#x27;softwares_params&#x27;][genome_version][&#x27;vcf2maf&#x27;])<br><span class="ox-param-usedby">used by <code>20</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy vep_species = value" data-copy="vep_species = homo_sapiens">vep_species</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>homo_sapiens</code></td>
+<td class="ox-p-desc">vcf2maf / VEP (upstream: config[&#x27;softwares_params&#x27;][genome_version][&#x27;vcf2maf&#x27;])<br><span class="ox-param-usedby">used by <code>20</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy wes_pon = value" data-copy="wes_pon = ">wes_pon</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">Upstream hg38_chr21 has no panel of normals (WES_PON: null) — leave empty<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy wgs_pon = value" data-copy="wgs_pon = ">wgs_pon</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">Upstream hg38_chr21 has no panel of normals (WES_PON: null) — leave empty<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+</tbody>
+</table>
 
 Descriptions are the workflow's own `#` comments from its `[config]` section (and the `[config]` sections of its included modules), surfaced by `oxo-flow info` — no schema file to maintain.
 

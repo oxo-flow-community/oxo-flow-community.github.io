@@ -45,6 +45,16 @@ title: "Pooled CRISPR perturbation analysis with Seurat Mixscape"
 </div>
 </details>
 
+
+<div class="ox-tryit">
+<div class="ox-tryit-title">⬡ Try it — clone &amp; run</div>
+<pre class="ox-tryit-cmd" data-copy="git clone https://github.com/oxo-flow-community/oxo-flow-mixscape.git &amp;&amp; cd oxo-flow-mixscape &amp;&amp; oxo-flow run main.oxoflow">git clone https://github.com/oxo-flow-community/oxo-flow-mixscape.git
+cd oxo-flow-mixscape
+oxo-flow run main.oxoflow</pre>
+<p class="ox-tryit-note">The repository ships test fixtures (e.g. <code>test/fixtures/annotation.csv</code>, <code>test/fixtures/data/S1.rds</code>, <code>test/fixtures/data/S2.rds</code>, <code>test/fixtures/make_fixtures.R</code>) — point <code>input</code> at them or use the built-in sample group to <code>dry-run</code> first.</p>
+</div>
+
+
 ## Run it
 
 ```bash
@@ -84,170 +94,150 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-mixscape
 
 ## Parameters
 
-<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. The list below names the rules that read each key.</p>
-<div class="ox-params">
-<div class="ox-param">
-<div class="ox-param-head"><code>annotation</code><span class="ox-param-default">test/fixtures/annotation.csv</span></div>
-<p class="ox-param-desc">GENERAL</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>annot_export</code> <code>config_export</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>antibody_capture</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">VISUALIZATION</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>config_export</code> <code>visualize</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>assay</code><span class="ox-param-default">SCT</span></div>
-<p class="ox-param-desc">assay to analyse (&quot;SCT&quot; or &quot;RNA&quot;) — upstream default &quot;SCT&quot;</p>
-<details class="ox-param-usedby"><summary>used by 3 rules</summary>
-<div class="ox-param-rules"><code>config_export</code> <code>lda</code> <code>mixscape</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>cps_split_by_col</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">CalcPerturbSig (upstream nested keys flattened; values identical)</p>
-<details class="ox-param-usedby"><summary>used by 3 rules</summary>
-<div class="ox-param-rules"><code>config_export</code> <code>mixscape</code> <code>visualize</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>data_dir</code><span class="ox-param-default">test/fixtures/data</span></div>
-<p class="ox-param-desc">per-sample Seurat .rds inputs: {data_dir}/{sample}.rds</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>mixscape</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>fine_mode</code><span class="ox-param-default">FALSE</span></div>
-<p class="ox-param-desc">RunMixscape (flattened)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>config_export</code> <code>mixscape</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>gene_col</code><span class="ox-param-default">KOcall</span></div>
-<p class="ox-param-desc">CalcPerturbSig (upstream nested keys flattened; values identical)</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>config_export</code> <code>lda</code> <code>mixscape</code> <code>visualize</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>grna_col</code><span class="ox-param-default">gRNAcall</span></div>
-<p class="ox-param-desc">CalcPerturbSig (upstream nested keys flattened; values identical)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>config_export</code> <code>mixscape</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>grna_split_symbol</code><span class="ox-param-default">-</span></div>
-<p class="ox-param-desc">MIXSCAPE</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>config_export</code> <code>mixscape</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>lda_npcs</code><span class="ox-param-default">10</span></div>
-<p class="ox-param-desc">LDA</p>
-<details class="ox-param-usedby"><summary>used by 3 rules</summary>
-<div class="ox-param-rules"><code>config_export</code> <code>lda</code> <code>mixscape</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>lfc_th</code><span class="ox-param-default">0.1</span></div>
-<p class="ox-param-desc">RunMixscape (flattened)</p>
-<details class="ox-param-usedby"><summary>used by 3 rules</summary>
-<div class="ox-param-rules"><code>config_export</code> <code>lda</code> <code>mixscape</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>mem</code><span class="ox-param-default">32000</span></div>
-<p class="ox-param-desc">RESOURCES (upstream config/config.yaml)</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>config_export</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>min_cells</code><span class="ox-param-default">5</span></div>
-<p class="ox-param-desc">RunMixscape (flattened)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>config_export</code> <code>mixscape</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>min_de_genes</code><span class="ox-param-default">5</span></div>
-<p class="ox-param-desc">RunMixscape (flattened)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>config_export</code> <code>mixscape</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>mixscape_split_by_col</code><span class="ox-param-default"></span></div>
-<p class="ox-param-desc">RunMixscape (flattened)</p>
-<details class="ox-param-usedby"><summary>used by 3 rules</summary>
-<div class="ox-param-rules"><code>config_export</code> <code>mixscape</code> <code>visualize</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>n_neighbors</code><span class="ox-param-default">30</span></div>
-<p class="ox-param-desc">CalcPerturbSig (upstream nested keys flattened; values identical)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>config_export</code> <code>mixscape</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>ndims</code><span class="ox-param-default">40</span></div>
-<p class="ox-param-desc">CalcPerturbSig (upstream nested keys flattened; values identical)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>config_export</code> <code>mixscape</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>nt_term</code><span class="ox-param-default">NonTargeting</span></div>
-<p class="ox-param-desc">CalcPerturbSig (upstream nested keys flattened; values identical)</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>config_export</code> <code>lda</code> <code>mixscape</code> <code>visualize</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>project_name</code><span class="ox-param-default">myCROPseq</span></div>
-<p class="ox-param-desc">—</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>annot_export</code> <code>config_export</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>prtb_type</code><span class="ox-param-default">KO</span></div>
-<p class="ox-param-desc">RunMixscape (flattened)</p>
-<details class="ox-param-usedby"><summary>used by 4 rules</summary>
-<div class="ox-param-rules"><code>config_export</code> <code>lda</code> <code>mixscape</code> <code>visualize</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>result_path</code><span class="ox-param-default">results</span></div>
-<p class="ox-param-desc">upstream result_path; results land under result_path/mixscape_seurat</p>
-<details class="ox-param-usedby"><summary>used by 7 rules</summary>
-<div class="ox-param-rules"><code>annot_export</code> <code>config_export</code> <code>env_export_lda</code> <code>env_export_mixscape</code> <code>lda</code> <code>mixscape</code> <code>visualize</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>threads</code><span class="ox-param-default">1</span></div>
-<p class="ox-param-desc">upstream threads; mixscape rule runs 8x</p>
-<details class="ox-param-usedby"><summary>used by 1 rules</summary>
-<div class="ox-param-rules"><code>config_export</code></div>
-</details>
-</div>
-<div class="ox-param">
-<div class="ox-param-head"><code>variable_features_only</code><span class="ox-param-default">0</span></div>
-<p class="ox-param-desc">(objects carry SCTransform normalization; the bundled fixtures<br>are generated that way via make_fixtures.R)</p>
-<details class="ox-param-usedby"><summary>used by 2 rules</summary>
-<div class="ox-param-rules"><code>config_export</code> <code>mixscape</code></div>
-</details>
-</div>
-</div>
+<p class="ox-param-usage">Parameters are consumed by rules through <code>{config.key}</code> placeholders in inputs, outputs, and shells. Set a value in the workflow's <code>[config]</code> section (edit the file), or override at run time with <code>oxo-flow run -e key=value workflow.oxoflow</code> — repeat <code>-e</code> for multiple keys. Copy a row to paste the key directly. Click any parameter name to copy <code>key = value</code>; clicking <code>default</code> copies just the value.</p>
+<table class="ox-params">
+<thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+<tbody>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy annotation = value" data-copy="annotation = test/fixtures/annotation.csv">annotation</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/annotation.csv</code></td>
+<td class="ox-p-desc">GENERAL<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy antibody_capture = value" data-copy="antibody_capture = ">antibody_capture</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">VISUALIZATION<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy assay = value" data-copy="assay = SCT">assay</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>SCT</code></td>
+<td class="ox-p-desc">assay to analyse (&quot;SCT&quot; or &quot;RNA&quot;) — upstream default &quot;SCT&quot;<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cps_split_by_col = value" data-copy="cps_split_by_col = ">cps_split_by_col</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">CalcPerturbSig (upstream nested keys flattened; values identical)<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy data_dir = value" data-copy="data_dir = test/fixtures/data">data_dir</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>test/fixtures/data</code></td>
+<td class="ox-p-desc">per-sample Seurat .rds inputs: {data_dir}/{sample}.rds<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fine_mode = value" data-copy="fine_mode = FALSE">fine_mode</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>FALSE</code></td>
+<td class="ox-p-desc">RunMixscape (flattened)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gene_col = value" data-copy="gene_col = KOcall">gene_col</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>KOcall</code></td>
+<td class="ox-p-desc">CalcPerturbSig (upstream nested keys flattened; values identical)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy grna_col = value" data-copy="grna_col = gRNAcall">grna_col</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>gRNAcall</code></td>
+<td class="ox-p-desc">CalcPerturbSig (upstream nested keys flattened; values identical)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy grna_split_symbol = value" data-copy="grna_split_symbol = -">grna_split_symbol</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>-</code></td>
+<td class="ox-p-desc">MIXSCAPE<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy lda_npcs = value" data-copy="lda_npcs = 10">lda_npcs</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>10</code></td>
+<td class="ox-p-desc">LDA<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy lfc_th = value" data-copy="lfc_th = 0.1">lfc_th</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>0.1</code></td>
+<td class="ox-p-desc">RunMixscape (flattened)<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mem = value" data-copy="mem = 32000">mem</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>32000</code></td>
+<td class="ox-p-desc">RESOURCES (upstream config/config.yaml)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy min_cells = value" data-copy="min_cells = 5">min_cells</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>5</code></td>
+<td class="ox-p-desc">RunMixscape (flattened)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy min_de_genes = value" data-copy="min_de_genes = 5">min_de_genes</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>5</code></td>
+<td class="ox-p-desc">RunMixscape (flattened)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mixscape_split_by_col = value" data-copy="mixscape_split_by_col = ">mixscape_split_by_col</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code></code></td>
+<td class="ox-p-desc">RunMixscape (flattened)<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy n_neighbors = value" data-copy="n_neighbors = 30">n_neighbors</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>30</code></td>
+<td class="ox-p-desc">CalcPerturbSig (upstream nested keys flattened; values identical)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ndims = value" data-copy="ndims = 40">ndims</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>40</code></td>
+<td class="ox-p-desc">CalcPerturbSig (upstream nested keys flattened; values identical)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy nt_term = value" data-copy="nt_term = NonTargeting">nt_term</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>NonTargeting</code></td>
+<td class="ox-p-desc">CalcPerturbSig (upstream nested keys flattened; values identical)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy project_name = value" data-copy="project_name = myCROPseq">project_name</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>myCROPseq</code></td>
+<td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy prtb_type = value" data-copy="prtb_type = KO">prtb_type</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>KO</code></td>
+<td class="ox-p-desc">RunMixscape (flattened)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy result_path = value" data-copy="result_path = results">result_path</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>results</code></td>
+<td class="ox-p-desc">upstream result_path; results land under result_path/mixscape_seurat<br><span class="ox-param-usedby">used by <code>7</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy threads = value" data-copy="threads = 1">threads</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>1</code></td>
+<td class="ox-p-desc">upstream threads; mixscape rule runs 8x<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
+</tr>
+<tr>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy variable_features_only = value" data-copy="variable_features_only = 0">variable_features_only</button></td>
+<td class="ox-p-t"><code>string</code></td>
+<td class="ox-p-d"><code>0</code></td>
+<td class="ox-p-desc">(objects carry SCTransform normalization; the bundled fixtures<br>are generated that way via make_fixtures.R)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
+</tr>
+</tbody>
+</table>
 
 Descriptions are the workflow's own `#` comments from its `[config]` section (and the `[config]` sections of its included modules), surfaced by `oxo-flow info` — no schema file to maintain.
 

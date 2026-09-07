@@ -803,100 +803,6 @@ a.ox-cta:hover {
   white-space: nowrap;
 }
 
-/* ---- Parameters list (detail pages) ----
-   One collapsible block per config key; the used-by rule list collapses
-   behind a native <details> — no JS. (Replaces the old 4-column table.) */
-.ox-params {
-  display: block;
-  margin: 1rem 0;
-}
-
-.ox-param {
-  border: 1px solid var(--edge);
-  border-radius: 10px;
-  background: var(--panel);
-  box-shadow: var(--shadow);
-  padding: 0.7rem 0.9rem;
-  margin: 0 0 0.6rem;
-}
-
-.ox-param-head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.5rem;
-}
-
-.ox-param-head code {
-  font-family: "JetBrains Mono", monospace;
-  font-weight: 600;
-  font-size: 0.82rem;
-  color: var(--brand);
-  background: transparent;
-  padding: 0;
-}
-
-.ox-param-default {
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.68rem;
-  color: var(--muted);
-  background: var(--panel-2);
-  border-radius: 5px;
-  padding: 0.1rem 0.4rem;
-  overflow-wrap: anywhere;
-}
-
-.ox-param-desc {
-  margin: 0.35rem 0 0.45rem;
-  font-size: 0.82rem;
-  color: var(--ink-2);
-  line-height: 1.55;
-}
-
-.ox-param-desc code {
-  background: var(--panel-2);
-  padding: 0 0.2rem;
-  border-radius: 4px;
-  font-size: 0.74rem;
-}
-
-.ox-param-usedby summary {
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.68rem;
-  color: var(--faint);
-  cursor: pointer;
-  list-style: none;
-}
-
-.ox-param-usedby summary::before {
-  content: "▸ ";
-  color: var(--brand);
-}
-
-.ox-param-usedby[open] summary::before {
-  content: "▾ ";
-}
-
-.ox-param-usedby summary::-webkit-details-marker {
-  display: none;
-}
-
-.ox-param-rules {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.3rem;
-  margin-top: 0.4rem;
-}
-
-.ox-param-rules code {
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.68rem;
-  color: var(--ink-2);
-  background: var(--panel-2);
-  border-radius: 5px;
-  padding: 0.1rem 0.35rem;
-}
-
 /* ---- Dark scheme (D2 · instrument) component overrides ---- */
 [data-md-color-scheme="slate"] .ox-eyebrow-light { display: none; }
 [data-md-color-scheme="slate"] .ox-eyebrow-dark { display: block; }
@@ -1274,3 +1180,115 @@ a.ox-cta:hover {
   border-color: color-mix(in srgb, var(--brand) 30%, transparent);
   text-decoration: none;
 }
+
+/* ---- Parameters as a table (nf-core style, easier to scan) ---- */
+table.ox-params {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  background: var(--panel);
+  border: 1px solid var(--edge);
+  border-radius: 10px;
+  overflow: hidden;
+  display: table;
+}
+table.ox-params thead th {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: left;
+  padding: 0.55rem 0.7rem;
+  background: var(--panel-2);
+  border-bottom: 1px solid var(--edge);
+}
+table.ox-params tbody td {
+  padding: 0.5rem 0.7rem;
+  border-bottom: 1px solid var(--panel-2);
+  vertical-align: top;
+  line-height: 1.45;
+}
+table.ox-params tbody tr:last-child td { border-bottom: none; }
+table.ox-params tr:hover td { background: var(--brand-soft); }
+.ox-p-k { white-space: nowrap; }
+.ox-p-d { white-space: nowrap; min-width: 8rem; }
+.ox-p-t { white-space: nowrap; }
+.ox-p-desc { min-width: 22ch; }
+.ox-p-desc .ox-param-usedby,
+.ox-p-desc .ox-param-unused {
+  display: inline-block;
+  margin-top: 0.35rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.65rem;
+  color: var(--muted);
+}
+.ox-param-unused { color: var(--faint); }
+.ox-p-copy {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ink);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+.ox-p-copy:hover { color: var(--brand); text-decoration: underline dashed; }
+.ox-p-copy::after {
+  content: " ⧉";
+  font-size: 0.72rem;
+  color: var(--faint);
+}
+.ox-p-copy.copied::after { content: " ✓"; color: var(--ok); }
+@media (max-width: 760px) {
+  table.ox-params { display: block; overflow-x: auto; }
+  .ox-p-desc { min-width: 0; }
+}
+
+/* ---- Try-it panel (learn-and-do) ---- */
+.ox-tryit {
+  margin: 0.4rem 0 1.6rem;
+  padding: 0.8rem 0.9rem 0.7rem;
+  background: var(--panel);
+  border: 1px solid var(--edge);
+  border-left: 3px solid var(--cyan);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+}
+.ox-tryit-title {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 0.5rem;
+}
+.ox-tryit-cmd {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: var(--ink);
+  background: var(--cmd-bg);
+  border: 1px solid var(--edge);
+  border-radius: 8px;
+  padding: 0.6rem 0.75rem;
+  margin: 0 0 0.5rem;
+  overflow-x: auto;
+  cursor: pointer;
+  white-space: pre-wrap;
+}
+.ox-tryit-cmd.copying::after,
+.ox-tryit-cmd.copied::after {
+  content: " ✓ copied";
+  color: var(--ok);
+  font-size: 0.72rem;
+  margin-left: 0.5rem;
+}
+.ox-tryit-note {
+  font-size: 0.78rem;
+  color: var(--ink-2);
+  line-height: 1.5;
+  margin: 0;
+}
+.ox-tryit-note code { font-size: 0.72rem; }
