@@ -15,8 +15,8 @@ engine; search by name, tool, or tag.
   <input type="search" id="ox-search" placeholder="search: rna, star, variant, bam…" aria-label="Search workflows">
 </div>
 <div class="ox-filter" id="ox-chips" role="group" aria-label="Workflow filters"></div>
-<p class="ox-mono" id="ox-count" aria-live="polite"></p>
-<div id="ox-all" class="ox-cards"></div>
+<p class="ox-mono" id="ox-count" role="status"></p>
+<div id="ox-all" class="ox-cards"><noscript><p class="ox-empty">The interactive catalog needs JavaScript — the workflows and their run notes are linked from the navigation.</p></noscript></div>
 <div id="ox-empty" class="ox-empty" hidden>
   no workflows match — clear a filter to widen the search
 </div>
