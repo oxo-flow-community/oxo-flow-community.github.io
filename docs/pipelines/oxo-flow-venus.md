@@ -43,7 +43,7 @@ Runs straight from the catalog — `oxo-flow` checks the repo out under `.oxo-fl
 Preview the plan first: `oxo-flow pull gh:oxo-flow-community/oxo-flow-venus` fetches the repo, then `oxo-flow dry-run main.oxoflow`.
 
 
-Data-gated tumor multi-omics pipeline (WGS/WES + bulk/scRNA inputs, cohort sheets); the committed test fixtures exercise the manifest layout. Dry-run validates the DAG without compute.
+Data-gated tumor multi-omics pipeline (WGS/WES + bulk/scRNA inputs, cohort sheets). Dry-run validates the DAG without compute; committed `tests/` parse and cross-check the shipped workflow fragments and pixi environments.
 
 ## Installation
 
