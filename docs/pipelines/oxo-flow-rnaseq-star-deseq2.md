@@ -20,7 +20,7 @@ title: "RNA-seq: STAR alignment, DESeq2 differential expression and QC"
 <div class="ox-kv"><span class="k">Origin</span><span class="v">Official port</span></div>
 <div class="ox-kv"><span class="k">Domain</span><span class="v">transcriptomics</span></div>
 <div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/snakemake-workflows/rna-seq-star-deseq2">snakemake-workflows/rna-seq-star-deseq2</a></span></div>
-<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>v3.1.1</code></span></div>
+<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>v3.1.2</code></span></div>
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2290.1"><code>10.48546/workflowhub.workflow.2290.1</code></a></span></div>
@@ -62,14 +62,14 @@ Needs reference genome, annotation and reads — see Requirements.
 
 ## Installation
 
-**Engine.** oxo-flow >= 0.12.0 (per-unit metadata features — per-unit fastp_adapters/fastp_extra lookup and the SRA auto-feed — require >= 0.17.0; on older engines the global config defaults apply)
+**Engine.** oxo-flow >= 0.12.0 (per-unit metadata features — per-unit fastp_adapters/fastp_extra lookup and the SRA auto-feed — and the report = caption annotations require >= 0.17.0; on older engines the global config defaults apply and report annotations are ignored)
 
 **Toolchain.** conda envs — pinned
 
 **Requirements.**
 
 - paired-end FASTQ reads per config/units.tsv (raw/<unit-key>_R1.fastq.gz / _R2.fastq.gz) and sample conditions in config/samples.tsv
-- reference genome + annotation downloaded automatically from Ensembl release 115 (GRCh38) — network access required (also for biomaRt gene-symbol annotation)
+- reference genome + annotation downloaded automatically from Ensembl release 114 (GRCh38) — network access required (also for biomaRt gene-symbol annotation)
 - compute: up to 24 CPUs per rule (star_align); 8 (fastp_pe); 4 (fastp_se, star_index); no per-rule memory limits configured in the workflow
 - disk: several tens of GB — ~30 GB GRCh38 STAR index, plus BAMs and trimmed reads
 
@@ -355,7 +355,11 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 **Excluded**
 
-- Snakemake report artifacts — per-rule .rst captions (workflow/report/fastp.rst, pca.rst, diffexp.rst, ma.rst) ported as report = "…" annotations on the 6 report()-wrapped rules (fastp_pe, fastp_se, 3x pca, deseq2), rendered by the engine rule-captions report section (needs oxo-flow >= 0.17.0; older engines ignore the key); the workflow-level report: directive (workflow/report/workflow.rst) and the sphinx-based snakemake --report HTML book (self-contained, figures embedded, categories/subcategories/labels) have no oxo-flow equivalent
+- none
+
+**Not applicable** (upstream-absent features, boilerplate, dead code, deliberate non-goals — see the excluded-key taxonomy in [Traitome/oxo-flow#267](https://github.com/Traitome/oxo-flow/issues/267))
+
+- Snakemake report artifacts — the per-rule caption half IS ported: fastp_pe/fastp_se/pca_*/deseq2 carry `report = "…"` annotations (engine 0.17.0+, rendered by the engine's rule-captions report section), translating the StaticText content of upstream workflow/report/fastp.rst, pca.rst, diffexp.rst. The remaining machinery (workflow-level `report:` directive, snakemake --report sphinx HTML book with figures embedded) is Snakemake-specific reporting infrastructure, not analysis logic — covered by the engine-native report (`oxo-flow report`, html/md/pdf) which renders execution state and rule captions natively.
 
 ## Fidelity
 
@@ -426,7 +430,7 @@ to the global config defaults (upstream `lookup()` semantics).
 ## Links
 
 - Repository: [oxo-flow-rnaseq-star-deseq2](https://github.com/oxo-flow-community/oxo-flow-rnaseq-star-deseq2)
-- Upstream: [snakemake-workflows/rna-seq-star-deseq2](https://github.com/snakemake-workflows/rna-seq-star-deseq2) @ `v3.1.1`
+- Upstream: [snakemake-workflows/rna-seq-star-deseq2](https://github.com/snakemake-workflows/rna-seq-star-deseq2) @ `v3.1.2`
 - License: Apache-2.0 (this workflow) · MIT (upstream)
 
 Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
