@@ -223,6 +223,8 @@ def rating_badge(rating: str, coverage: str = "") -> str:
         label = "✔ Live-tested"
     elif rating == "verified":
         label = "★ Verified"
+    elif rating == "dry-run-verified":
+        label = "◆ Dry-run verified"
     else:
         label = "☆ Community"
     if coverage == "full-line":
@@ -232,6 +234,7 @@ def rating_badge(rating: str, coverage: str = "") -> str:
     cls = {
         "live-verified": "ox-badge--live",
         "verified": "ox-badge--star",
+        "dry-run-verified": "ox-badge--dry",
     }.get(rating, "")
     return f'<span class="ox-badge {cls}">{label}</span>'
 
@@ -243,6 +246,7 @@ ORIGIN_TEXT = {"port": "Official port", "original": "Original",
 ENGINE_BADGE = {
     "nextflow": '<span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span>',
     "snakemake": '<span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span>',
+    "oxo-flow": '<span class="ox-badge ox-badge--native"><span class="dot"></span>oxo-flow native</span>',
 }
 
 
@@ -278,6 +282,7 @@ def glance_panel(p: dict) -> str:
     rating_text = {
         "live-verified": "✔ Live-tested",
         "verified": "★ Verified",
+        "dry-run-verified": "◆ Dry-run verified",
         "community": "☆ Community",
     }.get(rating, "☆ Community")
     coverage = p.get("coverage", "")

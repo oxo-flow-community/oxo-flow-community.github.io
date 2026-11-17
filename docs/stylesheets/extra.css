@@ -52,6 +52,7 @@
   --cyan: #0b93b8;
   --nf: #0c8a5d;
   --sn: #1a64b8;
+  --native: #6b3fbf;
   --star: #b45309;
   --code-bg: #eff4f1;
   --shadow: 0 1px 2px rgb(23 33 28 / 0.05), 0 4px 14px rgb(23 33 28 / 0.04);
@@ -78,6 +79,7 @@
   --cyan: #22b8d4;
   --nf: #34d399;
   --sn: #2e86d9;
+  --native: #a78bff;
   --star: #e5a44b;
   --code-bg: #0c1310;
   --term-bg: #0e1613;
@@ -559,6 +561,15 @@ a.ox-cta:hover {
 
 .ox-badge--nf .dot { background: var(--nf); }
 .ox-badge--sn .dot { background: var(--sn); }
+.ox-badge--native .dot { background: var(--native); }
+
+.ox-badge--dry {
+  color: var(--star);
+  border-style: dashed;
+  border-color: color-mix(in srgb, var(--star) 35%, var(--edge));
+  background: color-mix(in srgb, var(--star) 6%, var(--panel));
+  font-weight: 600;
+}
 
 .ox-badge--star {
   color: var(--star);
