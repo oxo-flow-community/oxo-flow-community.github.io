@@ -6,7 +6,7 @@ title: "Tumor multi-omics WGS/WES: somatic SNV/indel, CNV, SV, MSI and signature
 <div class="ox-detail-cols">
 <div class="ox-detail-main">
 <h1>Tumor multi-omics WGS/WES: somatic SNV/indel, CNV, SV, MSI and signature analysis with bulk/scRNA-seq cohort clinical reporting</h1>
-<div class="ox-page-badges"><span class="ox-badge ">☆ Community</span> <span class="ox-badge ox-badge--origin">Original</span> <span class="ox-badge ox-badge--native"><span class="dot"></span>oxo-flow native</span><span class=ox-tag-sep></span><span class="ox-tag">tumor-multi-omics</span><span class="ox-tag">wgs</span><span class="ox-tag">wes</span><span class="ox-tag">somatic-calling</span><span class="ox-tag">mutect2</span><span class="ox-tag">copy-number-analysis</span><span class="ox-tag">structural-variants</span><span class="ox-tag">msi</span><span class="ox-tag">mutational-signatures</span><span class="ox-tag">bulk-rna-seq</span><span class="ox-tag">single-cell-rna-seq</span><span class="ox-tag">ecdna</span><span class="ox-tag">neoantigen</span><span class="ox-tag">clinical-report</span><span class="ox-tag">hla</span></div>
+<div class="ox-page-badges"><span class="ox-badge ">☆ Community</span> <span class="ox-badge ox-badge--origin">Original</span> <span class="ox-badge ox-badge--native"><span class="dot" aria-hidden="true"></span>oxo-flow native</span><span class=ox-tag-sep></span><span class="ox-tag">tumor-multi-omics</span><span class="ox-tag">wgs</span><span class="ox-tag">wes</span><span class="ox-tag">somatic-calling</span><span class="ox-tag">mutect2</span><span class="ox-tag">copy-number-analysis</span><span class="ox-tag">structural-variants</span><span class="ox-tag">msi</span><span class="ox-tag">mutational-signatures</span><span class="ox-tag">bulk-rna-seq</span><span class="ox-tag">single-cell-rna-seq</span><span class="ox-tag">ecdna</span><span class="ox-tag">neoantigen</span><span class="ox-tag">clinical-report</span><span class="ox-tag">hla</span></div>
 <p class="ox-desc">Tumor multi-omics pipeline covering the full path from raw FASTQ to a cohort clinical report with an auto-generated methods section. DNA chain: BWA-MEM2 alignment with MarkDuplicates and BQSR, Mutect2 somatic SNV/indel calling in paired and tumor-only modes with orientation-bias filtering, CNVkit copy-number profiles, ASCAT purity/ploidy fits, AmpliconSuite ecDNA classification, Manta SVs, MSIsensor MSI and in-house SBS96/COSMIC signature fits, annotated with vep-rs and tiered by CIViC-based clinical interpretation. RNA chain: two-pass STAR + featureCounts bulk RNA-seq with fusion screening, dnbc4tools single-cell counting, and SpecHLA -&gt; VEP -&gt; pVACseq/pVACfuse neoantigen prediction. Cohort reports (TMB, clinical evidence tables, MSI/frameshift and ICB pages) aggregate exactly the runs that executed, per the engine rule_runs checkpoint.</p>
 <div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#preview-the-plan">▶ Run it</a><a class="ox-btn" href="https://github.com/WangLabCSU/oxo-flow-venus" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow dry-run venus.oxoflow</code></div>
 </div>
@@ -16,7 +16,7 @@ title: "Tumor multi-omics WGS/WES: somatic SNV/indel, CNV, SV, MSI and signature
 <div class="ox-kv"><span class="k">Rating</span><span class="v live">☆ Community</span></div>
 <div class="ox-kv"><span class="k">Rules</span><span class="v">78</span></div>
 <div class="ox-kv"><span class="k">Compute</span><span class="v">—</span></div>
-<div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--native"><span class="dot"></span>oxo-flow native</span></span></div>
+<div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--native"><span class="dot" aria-hidden="true"></span>oxo-flow native</span></span></div>
 <div class="ox-kv"><span class="k">Origin</span><span class="v">Original</span></div>
 <div class="ox-kv"><span class="k">Domain</span><span class="v">cancer genomics (WES/WGS/RNA)</span></div>
 <div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/WangLabCSU/oxo-flow-venus">WangLabCSU/oxo-flow-venus</a></span></div>
@@ -29,7 +29,7 @@ title: "Tumor multi-omics WGS/WES: somatic SNV/indel, CNV, SV, MSI and signature
 </div>
 </div>
 
-<nav class="ox-tabs" aria-label="Page sections"><a href="#semantic-overview">Introduction</a><a href="#preview-the-plan">Usage</a><a href="#parameters">Parameters</a><a href="#workflow-graph">Workflow graph</a><a href="#scope">Scope</a></nav>
+<nav class="ox-tabs" aria-label="Page sections"><a href="#preview-the-plan">Usage</a><a href="#scope">Scope</a></nav>
 
 
 ## Preview the plan
