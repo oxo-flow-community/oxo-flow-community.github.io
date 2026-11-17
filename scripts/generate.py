@@ -186,7 +186,7 @@ def _validate_quickstart(p: dict) -> None:
     if STAGING.is_dir():
         repo = STAGING / name
         if not (repo / wf).is_file():
-            present = sorted(f.name for f in repo.iterdir() if f.suffix == ".oxoflow")
+            present = sorted(f.name for f in repo.iterdir() if f.suffix == ".oxoflow") if repo.is_dir() else []
             raise SystemExit(
                 f"registry entry '{name}': quickstart references '{wf}' but the "
                 f"staging repo has none (present: {present or 'none'})"
