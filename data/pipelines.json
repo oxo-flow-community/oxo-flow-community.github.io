@@ -4022,6 +4022,6 @@
   "repo_url": "https://github.com/WangLabCSU/oxo-flow-venus",
   "license": "Apache-2.0",
   "quickstart": "oxo-flow dry-run venus.oxoflow",
-  "quickstart_note": "Data-gated tumor multi-omics pipeline (WGS/WES + bulk/scRNA inputs, cohort sheets); the committed test fixtures exercise the manifest layout. Dry-run validates the DAG without compute."
+  "quickstart_note": "Data-gated tumor multi-omics pipeline (WGS/WES + bulk/scRNA inputs, cohort sheets). Dry-run validates the DAG without compute; committed `tests/` parse and cross-check the shipped workflow fragments and pixi environments."
  }
 ]
