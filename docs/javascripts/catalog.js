@@ -40,12 +40,16 @@
       ? '<span class="ox-badge ox-badge--live">✔ Live-tested</span>'
       : p.rating === "verified"
         ? '<span class="ox-badge ox-badge--star">★ Verified</span>'
-        : '<span class="ox-badge">☆ Community</span>';
+        : p.rating === "dry-run-verified"
+          ? '<span class="ox-badge ox-badge--dry">◆ Dry-run verified</span>'
+          : '<span class="ox-badge">☆ Community</span>';
     const engBadge = p.engine === "nextflow"
       ? '<span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core</span>'
       : p.engine === "snakemake"
         ? '<span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake</span>'
-        : "";
+        : p.engine === "oxo-flow"
+          ? '<span class="ox-badge ox-badge--native"><span class="dot"></span>oxo-flow native</span>'
+          : "";
     // Catalog cards show the fetch-to-runs path: pull the repo, run from it
     const cmd = `oxo-flow pull gh:oxo-flow-community/${esc(p.name)}`;
     // Compute badge on its own line — long strings never squeeze the tool chips
@@ -173,7 +177,8 @@
       P.filter((p) => p.domain === d).length)));
     origins.forEach((o) => chips.appendChild(chip(ORIGIN_LABEL[o] || o, o, state.origins,
       P.filter((p) => (p.origin || "curated") === o).length)));
-    engines.forEach((e) => chips.appendChild(chip(e === "nextflow" ? "nf-core ports" : "snakemake ports", e, state.engines,
+    engines.forEach((e) => chips.appendChild(chip(e === "nextflow" ? "nf-core ports"
+      : e === "snakemake" ? "snakemake ports" : "oxo-flow native", e, state.engines,
       P.filter((p) => p.engine === e).length)));
 
     function matches(p) {

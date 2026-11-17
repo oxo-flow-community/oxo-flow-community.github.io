@@ -1,20 +1,20 @@
 ---
-title: "Viral assembly and intrahost variant calling for Illumina amplicon data"
+title: "Viral assembly and intrahost variant calling for Illumina and Oxford Nanopore amplicon data"
 ---
 
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-viralrecon</span></div>
 <div class="ox-detail-cols">
 <div class="ox-detail-main">
-<h1>Viral assembly and intrahost variant calling for Illumina amplicon data</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span><span class=ox-tag-sep></span><span class="ox-tag">viral</span><span class="ox-tag">sars-cov-2</span><span class="ox-tag">amplicon</span><span class="ox-tag">metagenomic</span><span class="ox-tag">variant-calling</span><span class="ox-tag">assembly</span><span class="ox-tag">nf-core</span><span class="ox-tag">illumina</span></div>
-<p class="ox-desc">Turns paired-end Illumina reads into a complete viral genomics report: read QC and trimming (FastQC, fastp), host-sequence removal (Kraken2), alignment to a user-provided reference genome (Bowtie2), primer trimming for amplicon runs, intrahost variant calling and annotation (iVar or bcftools, snpEff/SnpSift), consensus building with low-coverage masking (bcftools or ivar), lineage assignment and deconvolution (Pangolin, Nextclade, Freyja), de novo assembly with QC (SPAdes, Unicycler, minia, Bandage, BLAST, QUAST, ABACAS, plasmidID), and a single MultiQC report. The amplicon + iVar path is the default; the bcftools caller, ivar consensus, metagenomic protocol, alternative assemblers (any comma-separated combination of spades/unicycler/minia in one run), MarkDuplicates, plasmidID, network-driven database updates and additional annotation are ported as gated branches off by default.</p>
+<h1>Viral assembly and intrahost variant calling for Illumina and Oxford Nanopore amplicon data</h1>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span><span class=ox-tag-sep></span><span class="ox-tag">viral</span><span class="ox-tag">sars-cov-2</span><span class="ox-tag">amplicon</span><span class="ox-tag">metagenomic</span><span class="ox-tag">variant-calling</span><span class="ox-tag">assembly</span><span class="ox-tag">nf-core</span><span class="ox-tag">illumina</span><span class="ox-tag">nanopore</span><span class="ox-tag">ont</span></div>
+<p class="ox-desc">Turns Illumina paired-end or Oxford Nanopore barcode reads into a complete viral genomics report. Illumina path: read QC and trimming (FastQC, fastp), host-sequence removal (Kraken2), alignment to a user-provided reference genome (Bowtie2), primer trimming for amplicon runs, intrahost variant calling and annotation (iVar or bcftools, snpEff/SnpSift), consensus building with low-coverage masking (bcftools or ivar), lineage assignment and deconvolution (Pangolin, Nextclade, Freyja), de novo assembly with QC (SPAdes, Unicycler, minia, Bandage, BLAST, QUAST, ABACAS, plasmidID). Nanopore path (config.platform=&#x27;nanopore&#x27;): per-barcode QC manifest (barcode_qc_manifest), read-length/quality filtering and primer trimming (artic guppyplex), alignment and variant calling with the ARTIC field-bioinformatics pipeline (artic minion), nanopore read QC (NanoPlot, PycoQC), nanopolish-style VCF dedup (vcflib vcfuniq), and the same downstream snpEff/Freyja/mosdepth/QUAST/Pangolin/Nextclade chain — both paths converge on a single MultiQC report. The amplicon + iVar Illumina path is the default; the bcftools caller, ivar consensus, metagenomic protocol, alternative assemblers (any comma-separated combination of spades/unicycler/minia in one run), MarkDuplicates, plasmidID, network-driven database updates, additional annotation and the nanopore platform are ported as gated branches off by default.</p>
 <div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#run-it">▶ Run it</a><a class="ox-btn" href="https://github.com/oxo-flow-community/oxo-flow-viralrecon" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow run main.oxoflow --samples first:1</code></div>
 </div>
 <div>
 <div class="ox-glance">
 <div class="ox-glance-title">At a glance</div>
 <div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested</span></div>
-<div class="ox-kv"><span class="k">Rules</span><span class="v">84</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">96</span></div>
 <div class="ox-kv"><span class="k">Compute</span><span class="v"><span title="up to 12 CPUs / 72 GB per rule">up to 12 CPUs / 72 GB per rule</span></span></div>
 <div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span></span></div>
 <div class="ox-kv"><span class="k">Origin</span><span class="v">Official port</span></div>
@@ -24,7 +24,7 @@ title: "Viral assembly and intrahost variant calling for Illumina amplicon data"
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2287.1"><code>10.48546/workflowhub.workflow.2287.1</code></a></span></div>
-<div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">abacas</span><span class="tchip">bandage</span><span class="tchip">bcftools</span><span class="tchip">bedtools</span><span class="tchip">blast</span><span class="tchip">bowtie2</span><span class="tchip">cutadapt</span><span class="tchip">fastp</span></div></div>
+<div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">abacas</span><span class="tchip">artic</span><span class="tchip">bandage</span><span class="tchip">bcftools</span><span class="tchip">bedtools</span><span class="tchip">blast</span><span class="tchip">bowtie2</span><span class="tchip">cutadapt</span></div></div>
 <p class="cmd">$ oxo-flow pull gh:oxo-flow-community/oxo-flow-viralrecon</p>
 </div>
 </div>
@@ -62,7 +62,7 @@ Needs a reference genome bundle — see Requirements; `--samples first:1` runs a
 
 ## Installation
 
-**Engine.** oxo-flow >= 0.17.0
+**Engine.** oxo-flow >= 0.17.2
 
 **Toolchain.** conda envs — pinned versions (envs/*.yaml, conda-forge + bioconda channels; no containers)
 
@@ -73,7 +73,7 @@ Needs a reference genome bundle — see Requirements; `--samples first:1` runs a
 - Kraken2 host-removal database as a tar.gz (config.kraken2_db)
 - Pangolin data directory (config.pango_database) and Freyja barcodes/lineages CSVs (config.freyja_barcodes / config.freyja_lineages)
 - Nextclade dataset: downloaded automatically by default; set config.nextclade_dataset to a local dataset directory to skip the download
-- paired-end Illumina FASTQs at <raw_dir>/<sample>_R1.fastq.gz and _R2.fastq.gz (config.raw_dir)
+- paired-end Illumina FASTQs at <raw_dir>/<sample>_R1.fastq.gz and _R2.fastq.gz (config.raw_dir), or nanopore reads as <fastq_dir>/<barcode>XX/reads.fastq.gz per the samplesheet (config.fastq_dir + config.samples_list; requires artic-consistent ONT reads basecalled outside the workflow — guppy_basecaller is a commercial ONT GPU tool)
 - compute: up to 12 CPUs / 72 GB per rule (resource pool queues rather than oversubscribes)
 - conda or mamba to build the pinned per-rule environments
 
@@ -514,7 +514,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 <a href="/assets/dag/oxo-flow-viralrecon.svg?v=6492441e7b" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-viralrecon.svg?v=6492441e7b" alt="oxo-flow-viralrecon pipeline overview" loading="lazy"></a>
 
-<p class="ox-dag-caption">figure · oxo-flow-viralrecon — Turns paired-end Illumina reads into a complete viral genomics report: read QC and trimming (FastQC, fastp), host-sequence removal (Kraken2), alignment to a user-provided reference genome (Bowtie2), primer trimming for amplicon runs, intrahost variant calling and annotation (iVar or bcftools, snpEff/SnpSift), consensus building with low-coverage masking (bcftools or ivar), lineage assignment and deconvolution (Pangolin, Nextclade, Freyja), de novo assembly with QC (SPAdes, Unicycler, minia, Bandage, BLAST, QUAST, ABACAS, plasmidID), and a single MultiQC report.</p>
+<p class="ox-dag-caption">figure · oxo-flow-viralrecon — Turns Illumina paired-end or Oxford Nanopore barcode reads into a complete viral genomics report.</p>
 
 </div>
 </details>
@@ -612,12 +612,24 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - plasmidid
 - plasmidid_unicycler
 - plasmidid_minia
+- barcode_qc_manifest
+- pycoqc
+- artic_guppyplex
+- kraken2_nanopore
+- nanoplot
+- artic_minion
+- vcfuniq_nanopore
+- bcftools_stats_nanopore
+- filter_bam_samtools_nanopore
+- mosdepth_genome_nanopore
+- mosdepth_amplicon_nanopore
+- freyja_variants_nanopore
 - multiqc
 
 **Excluded**
 
-- nanopore platform branch (ARTIC_GUPPYPLEX, ARTIC_MINION, NANOPLOT, PYCOQC, VCFLIB_VCFUNIQ, PREPARE_GENOME_NANOPORE) — upstream discovers per-barcode read directories (fastq_dir/barcode* + sequencing_summary, workflows/viralrecon.nf:693-920) with single-end meta flags, requires ONT reads basecalled by the commercial guppy_basecaller/guppy_barcoder, and no port-side nanopore fixture exists (upstream ships nanopore nf-tests: tests/test_nanopore.nf.test); the port is paired-end Illumina filesystem discovery only (structural)
-- channel-level runtime filters, partially adopted — the fastp empty-after-filtering drop IS ported as `reads_count('fastp/{sample}_1.fastp.fastq.gz') > 0` gates on the trimmed-reads consumers (kraken2, align_bowtie2, assembly_fastq; engine 0.17.0 `when` runtime functions). The remaining DROPS are documented deviations: the min_mapped_reads flagstat gate (a strict `>` on the mapped count parsed out of samtools flagstat text — no engine runtime fn can extract it, so only the reporting half is ported as fail_mapped_samples_mqc.tsv inside the multiqc rule) and the zero-variant-sample filters (ivar: `wc_lines(tsv) > 1` is expressible but the port deliberately keeps zero-variant samples flowing downstream with a placeholder-header VCF for live-fixture robustness; bcftools: the record count needs a regex over `bcftools stats` output — fail_mapped_reads_mqc.tsv reports fastp failures inside the multiqc rule)
+- nanopore platform, partially ported — the ARTIC chain IS ported as gated `platform='nanopore'` rules with a dedicated samplesheet (test/fixtures/samplesheet_nanopore.tsv: sample→barcode) and fixture reads (raw_nanopore/barcode*/reads.fastq.gz): barcode_qc_manifest, pycoqc (gated on sequencing_summary), artic_guppyplex, kraken2_nanopore, nanoplot, artic_minion, vcfuniq_nanopore, bcftools_stats_nanopore, filter_bam_samtools_nanopore, mosdepth_genome_nanopore, mosdepth_amplicon_nanopore, freyja_variants_nanopore, plus the nanopore multiqc pass (scripts/multiqc_config_nanopore.yml — upstream config ported verbatim minus the kraken module). Deviations: ARTIC_MINION's optional artic JSON report emit is not declared (inert to MultiQC); guppy_basecaller/guppy_barcoder remain excluded — commercial ONT GPU tools (structural)
+- channel-level runtime filters, adopted — the fastp empty-after-filtering drop IS ported as `reads_count('fastp/{sample}_1.fastp.fastq.gz') > 0` gates on the trimmed-reads consumers (kraken2, align_bowtie2, assembly_fastq); the min_mapped_reads flagstat gate IS ported as a strict `>` `regex_extract` on the flagstat mapped count (engine 0.17.2) on the consumers of the mapped BAM (mosdepth, markduplicates, picard, freyja, call/consensus chains, plus the nanopore mosdepth/freyja rules); the zero-variant-sample filters ARE ported as platform-conditional `regex_extract` gates over the ivar bcftools-stats record count on the annotated/consensus/long-table consumers (snpeff_ann, snpsift_extract, consensus_filter*, consensus_call*, variants_long_table*) — platform-conditional because nanopore has no upstream zero-variant filter, and the `config.platform == 'nanopore'` disjunct short-circuits the file read. Residuals (ungated variant-chain rules, mirroring upstream's unfiltered fasta/vcf paths): consensus_ivar, quast_consensus, pangolin, nextclade, plot_base_density, nextclade_clade_mqc. The reporting half (fail_mapped_reads_mqc.tsv / fail_mapped_samples_mqc.tsv) is ported inside the multiqc rule
 
 ## Fidelity
 

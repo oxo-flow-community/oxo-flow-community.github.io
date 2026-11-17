@@ -24,6 +24,7 @@ tags. Domains and tags are searchable on the [catalog page](../pipelines/index.m
 |---|---|---|
 | **Live-tested** | ✔ | Everything **Verified** requires, PLUS a real end-to-end execution on reference data with the released engine: exit 0, every rule completed, report snapshot written. Live evidence is the strongest proof a workflow actually runs. |
 | **Verified** | ★ | Official or community-team maintained; every rule pinned to a tool version; `validate` and `dry-run` green in CI; ports additionally carry a complete fidelity table and have passed rule-by-rule review against the source. |
+| **Dry-run verified** | ◆ | Maintained like Verified, `validate` and `dry-run` green in CI with the released engine, but no full end-to-end run yet on reference data; the middle rung between ★ and ☆. |
 | **Community** | ☆ | Public repository; the workflow validates with the released oxo-flow engine; installation and usage documented; maintained by its author. |
 
 The badge is an **evidence ladder**, not a quality judgement: `dry-run` proves
