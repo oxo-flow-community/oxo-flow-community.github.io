@@ -82,6 +82,29 @@ with `--resume`.
 - `oxo-flow status` / `oxo-flow inspect <run-dir>` — what ran, what awaits
   a retry, resource usage.
 
+## Already have a Nextflow or Snakemake pipeline?
+
+There are two ways in, depending on how much dynamic logic the source uses:
+
+- **Fast path — try the importer first.** `oxo-flow import` translates a
+  deterministic subset of Nextflow DSL2 and Snakemake into a structurally
+  valid `.oxoflow` workflow, and hard-errors on anything outside that subset
+  instead of writing a workflow it could not translate. It is a starting
+  point, not a finished port: run `validate` → `lint` → `dry-run` → a small
+  pilot before trusting the output. See the engine's
+  [migration guide](https://traitome.github.io/oxo-flow/dev/how-to/migrate-from-nextflow-snakemake/)
+  (current development docs; it moves to `/latest/` with the next release) and
+  the
+  [`oxo-flow import` reference](https://traitome.github.io/oxo-flow/latest/commands/import/).
+- **Full-fidelity path — hand-port.** When the source depends on dynamic
+  constructs (channel operators, `params`, `run:`/`script:` bodies, lambdas),
+  follow the community [Porting Playbook](porting.md) — the execution spec for
+  reproducing an upstream pipeline line for line.
+
+Neither path claims semantic parity: a clean import proves the workflow is
+structurally valid, not that it reproduces the source engine's behavior for
+every tool and dataset.
+
 ## Where to go next
 
 - [Pick the right workflow](selection.md) — a decision guide by domain.

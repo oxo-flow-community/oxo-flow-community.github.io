@@ -36,6 +36,19 @@ commands in §7.4, and if something does not pass, fix the TOML — do not
 
 ---
 
+## Fast path: try the importer first
+
+**`oxo-flow import` is the first stop for Nextflow DSL2 and Snakemake sources.** It translates a deterministic subset and hard-errors — naming the unsupported construct, with a source line for parse-level failures — on anything outside that subset (Groovy channel operators, `params`, `run:`/`script:` bodies, lambdas, fan-in `expand(...)`, …) instead of emitting a workflow it could not translate.
+
+- Start with the engine's [migration guide](https://traitome.github.io/oxo-flow/dev/how-to/migrate-from-nextflow-snakemake/) (current development docs; it moves to `/latest/` with the next release, and the source also lives [in the engine repo](https://github.com/Traitome/oxo-flow/blob/main/docs/guide/src/how-to/migrate-from-nextflow-snakemake.md)) and the [`oxo-flow import` reference](https://traitome.github.io/oxo-flow/latest/commands/import/) for the construct-by-construct supported-subset tables.
+- Use **this playbook** for full-fidelity hand-porting — reproducing the upstream full line — when the importer hard-fails, when the source needs dynamic logic the deterministic subset cannot express, or when a catalog entry must meet the full compliance kit.
+
+A clean import is a structural translation, not a semantic-parity claim: the generated workflow still needs `validate` → `lint` → `dry-run` → a pilot run.
+
+**Version note:** this playbook is pinned to engine **0.12.0** (see §0), while the importer and migration guide track current releases. Verify any syntax against the engine's current [workflow-format reference](https://traitome.github.io/oxo-flow/latest/reference/workflow-format/) before running.
+
+---
+
 ## 0. Environment facts (fixed, do not re-derive)
 
 | Item | Value |
