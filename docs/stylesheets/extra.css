@@ -46,6 +46,9 @@
   --ink-2: #3f5047;
   --muted: #6b7d73;
   --faint: #97a69e;
+  /* Badge ink — AA for the 0.68rem mono pill text on --panel-2; --muted is
+     decorative elsewhere but failed contrast inside rating/domain pills. */
+  --badge-ink: #4d6156;
   --brand: #0e7a5f;
   --brand-deep: #0a5c47;
   --brand-soft: #e4f2ec;
@@ -54,6 +57,10 @@
   --sn: #1a64b8;
   --native: #6b3fbf;
   --star: #b45309;
+  /* reserved ink for small semantic text on panel surfaces (live badges):
+     raw --ok hits only ~3.5:1 on white — this pair reaches > 5:1 while
+     staying the same green hue family */
+  --ok-ink: #0a7a55;
   --code-bg: #eff4f1;
   --shadow: 0 1px 2px rgb(23 33 28 / 0.05), 0 4px 14px rgb(23 33 28 / 0.04);
   --shadow-hover: 0 2px 4px rgb(23 33 28 / 0.06), 0 10px 28px rgb(23 33 28 / 0.08);
@@ -73,6 +80,7 @@
   --ink-2: #8ca096;
   --muted: #5e6f65;
   --faint: #5e6f65;
+  --badge-ink: #8fa298;
   --brand: #34d399;
   --brand-deep: #6ee7b7;
   --brand-soft: #0f2a1e;
@@ -81,6 +89,8 @@
   --sn: #2e86d9;
   --native: #a78bff;
   --star: #e5a44b;
+  /* dark scheme: panel is near-black, the raw --ok already clears > 7:1 */
+  --ok-ink: #34d399;
   --code-bg: #0c1310;
   --term-bg: #0e1613;
   --cmd-bg: #0c1310;
@@ -187,6 +197,41 @@ html {
 
 .md-tabs { background: var(--bg); }
 
+/* Material collapses the header's search-option slot to max-width:0 when
+   the search toggle is checked (a ?q= deep link auto-opens it) — with
+   overflow visible the slot's full-width form kept bleeding into the
+   header, and the header then stretched the page to ~2600px of scroll on
+   narrow widths. The collapsed slot must clip its content. */
+.md-header__option { overflow: hidden; }
+
+/* The v2 compact header also keeps a search input as a direct flex item of
+   the header row (basis 0). A ?q= deep link opens it: the theme's expansion
+   selector does not match this DOM, so the box stayed 0-wide with visible
+   overflow and its ~1000px of intrinsic form content escaped into the page
+   flow, dragging the document to a 1000–1800px horizontal scroll. When the
+   search toggle is checked, grow the box into the row so the content it
+   already paints is owned by its own layout box. */
+[data-md-toggle="search"]:checked ~ .md-header .md-search {
+  flex-grow: 1;
+  min-width: 0;
+}
+/* The box grows (measured 318px at 768 viewport) but its form/field/input
+   still carried their intrinsic widths (input alone painted 768px), keeping
+   the scroll contribution at ~848. Let every row of the opened form shrink
+   into the grown box. */
+[data-md-toggle="search"]:checked ~ .md-header .md-search :is(form, .md-search__field, input) {
+  min-width: 0;
+  max-width: 100%;
+  width: auto;
+}
+/* Last line of defense: the search-open scrim (a scaled label animating over
+   ~400ms) is absolute-positioned in this DOM rather than fixed, so its
+   mid-animation footprint used to inflate the document's scrollable area for
+   the animation's duration. The header row is full-width — nothing inside it
+   legitimately overflows horizontally — so clip the inline axis only and
+   leave the block axis visible for the suggestion dropdown. */
+.md-header__inner { overflow-x: clip; }
+
 .md-footer {
   /* Material v2 ships a near-black footer ground in light mode — override
      per theme (panel white in light, card in dark), text as ink. Hard
@@ -252,6 +297,13 @@ html {
   align-items: center;
   margin: 1.2rem 0 2.4rem;
 }
+
+/* auto-minimum guard for the two hero columns (same class of trap as the
+   .ox-stats strip above): fr tracks may not shrink below an item's min-
+   content — the terminal window and the stats strip must be allowed to
+   shrink and scroll instead of widening the grid. */
+.ox-hero-split > * { min-width: 0; }
+.ox-hero-split .ox-term { min-width: 0; }
 
 .ox-eyebrow-dark { display: none; }
 
@@ -356,9 +408,14 @@ a.ox-cta:hover {
 .ox-term-body .faint { color: var(--faint); }
 
 /* ---- Stats ---- */
+/* Two-by-two is the honest base layout here: the four items' min-content
+   sum (~540px of tracked mono labels and bold figures) never fits the
+   hero's right column (~483px at the 1220px content cap), so a 4-across
+   strip clipped its fourth stat at every desktop width. Borders re-skinned
+   for the wrapped pairs. */
 .ox-stats {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   border: 1px solid var(--edge);
   border-radius: 12px;
   overflow: hidden;
@@ -371,7 +428,8 @@ a.ox-cta:hover {
   padding: 1.1rem 1.3rem;
   border-left: 1px solid var(--edge);
 }
-.ox-stat:first-child { border-left: none; }
+.ox-stat:nth-child(2n+1) { border-left: none; }
+.ox-stat:nth-child(n+3) { border-top: 1px solid var(--edge); }
 
 .ox-stat .v {
   font-family: "Space Grotesk", sans-serif;
@@ -444,6 +502,13 @@ a.ox-cta:hover {
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
+  /* generic overflow guard (clindet audit): a long domain chip is a single
+     nowrap pill whose min-content width can exceed a card's inner width —
+     without wrap it bleeds past the card border into the neighbouring grid
+     column ("card spans many rows" symptom). Letting the row wrap drops the
+     chip onto its own line instead. Applies to every card, no per-pipeline
+     patch. */
+  flex-wrap: wrap;
 }
 
 .ox-card .name {
@@ -452,6 +517,9 @@ a.ox-cta:hover {
   font-size: 0.94rem;
   color: var(--ink);
   text-decoration: none;
+  /* flex auto-minimum trap: allow the name link to shrink and break */
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .ox-card .name:hover { color: var(--brand); }
@@ -473,7 +541,9 @@ a.ox-cta:hover {
   border-radius: 5px;
   padding: 0.18rem 0.5rem;
   align-self: flex-start;
+  max-width: 100%;
   white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .ox-card .meta {
@@ -481,6 +551,7 @@ a.ox-cta:hover {
   flex-wrap: wrap;
   gap: 0.4rem;
   align-items: center;
+  min-width: 0;
 }
 
 .tchip {
@@ -525,6 +596,11 @@ a.ox-cta:hover {
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
+  /* long rating + engine pills ("◆ Dry-run verified" + "snakemake port",
+     "☆ Community" + "oxo-flow native") overflowed the card's inner width in
+     the 3-column grid — let them stack instead of bleeding into the
+     neighbouring column (same guard as .row above) */
+  flex-wrap: wrap;
   margin-top: auto;
   padding-top: 0.55rem;
   border-top: 1px solid var(--panel-2);
@@ -547,7 +623,7 @@ a.ox-cta:hover {
   padding: 0.14rem 0.55rem;
   border: 1px solid var(--edge);
   border-radius: 999px;
-  color: var(--muted);
+  color: var(--badge-ink);
   background: var(--panel-2);
   white-space: nowrap;
 }
@@ -579,7 +655,7 @@ a.ox-cta:hover {
 }
 
 .ox-badge--live {
-  color: var(--ok);
+  color: var(--ok-ink);
   border-color: color-mix(in srgb, var(--ok) 40%, var(--edge));
   background: color-mix(in srgb, var(--ok) 10%, var(--panel));
   font-weight: 600;
@@ -620,6 +696,14 @@ a.ox-cta:hover {
 .ox-filter input[type="search"]:focus {
   border-color: var(--brand);
   outline: none;
+}
+
+/* the outline:none above (mouse focus, border carries the cue) also killed
+   the global :focus-visible ring for the search box — restore a real ring
+   for keyboard users */
+.ox-filter input[type="search"]:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
 }
 
 .ox-filter input[type="search"]::placeholder { color: var(--faint); }
@@ -825,7 +909,14 @@ a.ox-cta:hover {
   text-align: right;
 }
 
-.ox-kv .v.live { color: var(--ok); }
+.ox-kv .v.live { color: var(--ok-ink); }
+
+/* Engine/rating values embed ox-badge pills (nowrap by design). In the
+   glance's narrow right column the widest ones ("snakemake port") could not
+   break into the ~148px of available width and pushed their row past the
+   panel edge; inside key/value rows only, let the pill wrap at word breaks
+   and keep the break right-aligned to match the value column. */
+.ox-kv .v .ox-badge { white-space: normal; text-align: right; overflow-wrap: anywhere; }
 
 .ox-kv .v a { color: var(--brand); }
 
@@ -887,13 +978,37 @@ a.ox-cta:hover {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .ox-card { transition: none; }
+  /* every transition the design system introduces, in one place */
+  .ox-card,
+  .ox-domain-pill,
+  .ox-chip,
+  .ox-btn,
+  .ox-issue-link {
+    transition: none;
+  }
+  .ox-card:hover,
+  .ox-domain-pill:hover {
+    transform: none;
+  }
+}
+
+/* ---- Print ---- */
+@media print {
+  /* page chrome carries no value on paper: header, nav drawers, tab strip,
+     hero call-to-action, footer meta band */
+  .md-header,
+  .md-nav,
+  .md-footer-meta,
+  .ox-tabs,
+  .ox-issue-link,
+  .ox-hero-cta {
+    display: none !important;
+  }
+  .ox-card:hover { box-shadow: none; transform: none; }
+  .ox-dag-card { box-shadow: none; }
 }
 
 @media (max-width: 720px) {
-  .ox-stats { grid-template-columns: repeat(2, 1fr); }
-  .ox-stat:nth-child(3) { border-left: none; }
-  .ox-stat:nth-child(n+3) { border-top: 1px solid var(--edge); }
   .ox-term-body { font-size: 0.72rem; }
   .ox-hero-split { grid-template-columns: 1fr; }
   .ox-detail-cols { grid-template-columns: 1fr; }
@@ -1235,15 +1350,32 @@ a.ox-cta:hover {
 }
 
 /* ---- Parameters as a table (nf-core style, easier to scan) ---- */
+/* The 4-column table's min-content width (nowrap key/type/default cells +
+   the 22ch description floor) exceeds the content column on tablets — as an
+   auto-sized table box it then pushed the whole .md-content wider than the
+   viewport (measured: ampliseq @768 scrollWidth 771>768). Same policy as the
+   mobile rule below but at every width: a scroll affordance on the table
+   itself, never page blowout. */
 table.ox-params {
   width: 100%;
+  max-width: 100%;
   border-collapse: collapse;
   font-size: 0.82rem;
   background: var(--panel);
   border: 1px solid var(--edge);
   border-radius: 10px;
-  overflow: hidden;
-  display: table;
+  display: block;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+/* markdown-fidelity / scope tables get the same affordance: the material
+   wrapper around .md-typeset tables has overflow visible, so a wide
+   fidelity table (clinetc: 4 long columns, min-content ~880px) bled into
+   the TOC rail — scroll it at the wrapper level, columns intact */
+.md-typeset__table {
+  overflow-x: auto;
+  max-width: 100%;
+  scrollbar-width: thin;
 }
 table.ox-params thead th {
   font-family: "JetBrains Mono", monospace;
@@ -1299,7 +1431,8 @@ table.ox-params tr:hover td { background: var(--brand-soft); }
 }
 .ox-p-copy.copied::after { content: " ✓"; color: var(--ok); }
 @media (max-width: 760px) {
-  table.ox-params { display: block; overflow-x: auto; }
+  /* the params table already scrolls at every width (see the block above);
+     only the description column's floor relaxes here */
   .ox-p-desc { min-width: 0; }
 }
 

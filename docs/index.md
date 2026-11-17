@@ -13,9 +13,9 @@ title: Curated workflows. Ready to run.
 <a class="ox-cta" href="/pipelines/">Browse the catalog →</a>
 </div>
 <div>
-<div class="ox-term" aria-label="Example oxo-flow session">
+<div class="ox-term" role="group" aria-label="Example oxo-flow session">
 <div class="ox-term-head">
-<span class="ox-term-dot"></span><span class="ox-term-dot"></span><span class="ox-term-dot"></span>
+<span class="ox-term-dot" aria-hidden="true"></span><span class="ox-term-dot" aria-hidden="true"></span><span class="ox-term-dot" aria-hidden="true"></span>
 <span class="ox-term-title">oxo-flow — run</span>
 </div>
 <div class="ox-term-body">
@@ -25,7 +25,7 @@ title: Curated workflows. Ready to run.
 <div><span class="faint"># classified, rated, and documented in the catalog</span></div>
 </div>
 </div>
-<div class="ox-stats" id="ox-stats" aria-label="Catalog statistics"></div>
+<div class="ox-stats" id="ox-stats" role="group" aria-label="Catalog statistics"></div>
 </div>
 </div>
 
@@ -43,7 +43,7 @@ title: Curated workflows. Ready to run.
 
 ## Start here {: .ox-display }
 
-<div id="ox-featured" class="ox-cards"></div>
+<div id="ox-featured" class="ox-cards"><noscript><p class="ox-empty">Featured workflows are rendered with JavaScript — see the <a href="/pipelines/">full catalog</a>.</p></noscript></div>
 
 <p class="ox-more"><a class="md-button md-button--primary" href="/pipelines/">Browse the full catalog</a></p>
 

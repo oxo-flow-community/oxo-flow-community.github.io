@@ -44,11 +44,11 @@
           ? '<span class="ox-badge ox-badge--dry">◆ Dry-run verified</span>'
           : '<span class="ox-badge">☆ Community</span>';
     const engBadge = p.engine === "nextflow"
-      ? '<span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core</span>'
+      ? '<span class="ox-badge ox-badge--nf"><span class="dot" aria-hidden="true"></span>nf-core</span>'
       : p.engine === "snakemake"
-        ? '<span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake</span>'
+        ? '<span class="ox-badge ox-badge--sn"><span class="dot" aria-hidden="true"></span>snakemake</span>'
         : p.engine === "oxo-flow"
-          ? '<span class="ox-badge ox-badge--native"><span class="dot"></span>oxo-flow native</span>'
+          ? '<span class="ox-badge ox-badge--native"><span class="dot" aria-hidden="true"></span>oxo-flow native</span>'
           : "";
     // Catalog cards show the fetch-to-runs path: pull the repo, run from it
     const cmd = `oxo-flow pull gh:oxo-flow-community/${esc(p.name)}`;
@@ -131,7 +131,7 @@
       .sort((a, b) => b[1].length - a[1].length)
       .map(([dom, items]) =>
         `<a class="ox-domain-pill" href="/pipelines/?domain=${encodeURIComponent(dom)}">` +
-        `<span class="ox-domain-ico">${ICONS[dom] || "▦"}</span><span class="ox-domain-name">${esc(dom)}</span>` +
+        `<span class="ox-domain-ico" aria-hidden="true">${ICONS[dom] || "▦"}</span><span class="ox-domain-name">${esc(dom)}</span>` +
         `<span class="ox-domain-count">${items.length}</span></a>`)
       .join("");
   }
@@ -152,11 +152,19 @@
     const origins = [...new Set(P.map((p) => p.origin || "curated"))].sort();
     const engines = [...new Set(P.map((p) => p.engine).filter(Boolean))].sort();
 
+    let chipSeq = 0;
     function chip(label, key, values, count) {
       const b = document.createElement("button");
       b.type = "button";
       b.className = "ox-chip";
-      b.textContent = label;
+      // The chip's accessible name is "44 rules workflows" — the count is part
+      // of what the button filters on, so it is announced with the label
+      // (aria-labelledby references both the live count line and this label).
+      const lid = "ox-chip-label-" + (++chipSeq);
+      const l = document.createElement("span");
+      l.id = lid;
+      l.textContent = label;
+      b.appendChild(l);
       if (count !== undefined) {
         const c = document.createElement("span");
         c.className = "ox-chip-count";
@@ -164,6 +172,7 @@
         b.appendChild(c);
       }
       b.setAttribute("aria-pressed", values.has(key) ? "true" : "false");
+      b.setAttribute("aria-labelledby", "ox-count " + lid);
       b.addEventListener("click", () => {
         if (values.has(key)) { values.delete(key); b.setAttribute("aria-pressed", "false"); }
         else { values.add(key); b.setAttribute("aria-pressed", "true"); }
