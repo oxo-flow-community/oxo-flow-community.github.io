@@ -1791,7 +1791,7 @@ window.OXO_PIPELINES = [
   },
   {
     "name": "oxo-flow-viralrecon",
-    "title": "Viral assembly and intrahost variant calling for Illumina amplicon data",
+    "title": "Viral assembly and intrahost variant calling for Illumina and Oxford Nanopore amplicon data",
     "origin": "port",
     "rating": "live-verified",
     "engine": "nextflow",
@@ -3726,5 +3726,133 @@ window.OXO_PIPELINES = [
       "doi": "10.48546/workflowhub.workflow.2301.1",
       "doi_url": "https://doi.org/10.48546/workflowhub.workflow.2301.1"
     }
+  },
+  {
+    "name": "oxo-flow-erv",
+    "title": "ERV / transposable-element quantification with four tools on one annotation",
+    "origin": "port",
+    "rating": "dry-run-verified",
+    "engine": "snakemake",
+    "source": {
+      "repo": "SunPast/ERV-pipeline",
+      "url": "https://github.com/SunPast/ERV-pipeline",
+      "tag": "main@02ae748",
+      "sha": "02ae7481ff8e967ee6532830d0060547b967e57d",
+      "license": "MIT"
+    },
+    "created": "2026-11-05",
+    "domain": "transcriptomics",
+    "tags": [
+      "erv",
+      "transposable-elements",
+      "rna-seq",
+      "ervmap",
+      "telescope",
+      "squire",
+      "tetranscripts",
+      "star",
+      "featurecounts",
+      "snakemake"
+    ],
+    "description": "RNA-seq from FASTQ to a comparable ERV expression table. fastp trims and STAR aligns; four published tools quantify endogenous retroviruses on one RepeatMasker-derived annotation (ERVmap at provirus level from the official 3,220-provirus BED, Telescope and TEtranscripts at locus level, SQuIRE at locus and subfamily level); featureCounts gives gene counts from the same BAMs; the aggregation layer writes a unified long table, per-sample QC and per-subfamily cross-tool evidence. Sample groups (cohorts) are a first-class directory level, and ERVmap is computed here instead of imported, with guards for the BED chromosome-name and contig-order pitfalls. ERVmap is quantified here instead of imported, using the official wrapper's STAR parameters and bedtools coverage step. Paired- and single-end layouts are both supported.",
+    "scope": [
+      "fastp_pe",
+      "fastp_se",
+      "star_align_pe",
+      "star_align_se",
+      "samtools_sort",
+      "featurecounts_pe",
+      "featurecounts_se",
+      "genome_fai",
+      "build_locus_gtf",
+      "build_full_locus_map",
+      "squire_clean_folder",
+      "ervmap_bed_sorted",
+      "ervmap_annotate",
+      "ervmap_star_pe",
+      "ervmap_star_se",
+      "ervmap_count",
+      "ervmap_normalize",
+      "telescope_assign",
+      "tetranscripts_count",
+      "squire_count",
+      "aggregate_sample",
+      "merge_aggregate"
+    ],
+    "excluded": [
+      "merge_gene_counts",
+      "compute_gene_factors",
+      "import_external_gene_counts",
+      "export_standard",
+      "squire_map"
+    ],
+    "rule_count": 22,
+    "tools": [
+      "fastp",
+      "star",
+      "samtools",
+      "subread",
+      "bedtools",
+      "ervmap",
+      "telescope",
+      "tetranscripts",
+      "squire",
+      "python"
+    ],
+    "installation": {
+      "engine": "oxo-flow >= 0.13.1",
+      "toolchain": "conda envs \u2014 pinned versions (fastp 0.23.4, STAR 2.7.7a, samtools 1.15/1.18, subread 2.0.1, bedtools 2.31.1, telescope 1.0.3, tetranscripts 2.2.3, squire 0.9.9.92, python 3.10; conda-forge + bioconda)",
+      "requirements": [
+        "GRCh38 genome FASTA, GENCODE GTF, UCSC hg38_rmsk.txt and the official ERVmap BED with a chr prefix (3,220 proviruses)",
+        "reads at reads_dir/<sample>_1.fastq.gz (+ _2.fastq.gz for layout = \"pe\") for every sample in [[sample_groups]]",
+        "compute: up to 10 threads per rule (STAR), 32 GB for STAR",
+        "conda or mamba at runtime to create the pinned envs/*.yaml environments"
+      ]
+    },
+    "repo_url": "https://github.com/oxo-flow-community/oxo-flow-erv",
+    "license": "Apache-2.0",
+    "upstream_license": "MIT",
+    "quickstart": "oxo-flow run main.oxoflow"
+  },
+  {
+    "name": "oxo-flow-immune-repertoire",
+    "title": "TCGA bulk RNA-seq TCR/BCR immune repertoire profiling (MiXCR + TRUST4)",
+    "origin": "original",
+    "rating": "community",
+    "engine": "oxo-flow",
+    "created": "2026-11-16",
+    "domain": "immunology",
+    "tags": [
+      "immune-repertoire",
+      "TCR",
+      "BCR",
+      "CDR3",
+      "MiXCR",
+      "TRUST4",
+      "TCGA",
+      "RNA-seq",
+      "AIRR",
+      "clonotypes"
+    ],
+    "scope": [
+      "mixcr",
+      "trust4",
+      "standardize",
+      "cleanup"
+    ],
+    "quickstart": "oxo-flow dry-run main.oxoflow",
+    "quickstart_note": "Data-gated: MiXCR/TRUST4 need BAM inputs and the TRUST4 reference FASTAs (hg38_bcrtcr.fa, human_IMGT+C.fa, not committed). Dry-run works against the committed manifests; the shard variant demonstrates the production layout.",
+    "compute": "4 CPUs / 48 GB per mixcr rule, 4 CPUs / 24 GB per trust4 rule; production runs 5 rules per node (20 CPUs, <=48 GB each)",
+    "description": "Extracts TCR/BCR clonotypes from bulk RNA-seq BAMs (TCGA GDC harmonized) with MiXCR and TRUST4, normalizes both tools' outputs into one 14-column unified clonotype schema, and reports per-sample repertoire metrics; designed for Slurm clusters (shard layout for production cohorts).",
+    "tools": [
+      "MiXCR",
+      "TRUST4"
+    ],
+    "installation": {
+      "engine": "oxo-flow >= 0.12.0",
+      "toolchain": "pixi (pixi.toml) \u2014 pinned MiXCR/TRUST4 and dependencies; TRUST4 reference FASTAs (hg38_bcrtcr.fa, human_IMGT+C.fa) are provisioned outside the repo (not committed)"
+    },
+    "repo_url": "https://github.com/oxo-flow-community/oxo-flow-immune-repertoire",
+    "license": "Apache-2.0"
   }
 ];
