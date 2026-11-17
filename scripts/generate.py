@@ -244,9 +244,9 @@ def rating_badge(rating: str, coverage: str = "") -> str:
 ORIGIN_TEXT = {"port": "Official port", "original": "Original",
                "curated": "Community listing"}
 ENGINE_BADGE = {
-    "nextflow": '<span class="ox-badge ox-badge--nf"><span class="dot"></span>nf-core port</span>',
-    "snakemake": '<span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span>',
-    "oxo-flow": '<span class="ox-badge ox-badge--native"><span class="dot"></span>oxo-flow native</span>',
+    "nextflow": '<span class="ox-badge ox-badge--nf"><span class="dot" aria-hidden="true"></span>nf-core port</span>',
+    "snakemake": '<span class="ox-badge ox-badge--sn"><span class="dot" aria-hidden="true"></span>snakemake port</span>',
+    "oxo-flow": '<span class="ox-badge ox-badge--native"><span class="dot" aria-hidden="true"></span>oxo-flow native</span>',
 }
 
 
@@ -592,6 +592,13 @@ def make_page(p: dict, configs: dict) -> str:
     # separate heading so excluded reads as "genuinely blocked/missing".
     not_applicable = "\n".join(f"- {s}" for s in p.get("not_applicable", []))
     fidelity = p.get("fidelity_md")
+    # Section-presence flags for the section tabs — must mirror exactly the
+    # gates used below for the Parameters table, the Workflow graph and the
+    # semantic card, so no tab ever links to an unrendered heading.
+    cfg = configs.get(p["name"], {})
+    has_semantic = (
+        pathlib.Path(ROOT) / "scripts" / "semantic_maps" / f"{p['name']}.md"
+    ).is_file()
     parts = [
         "---",
         f"title: {json.dumps(p['title'])}",
@@ -614,7 +621,8 @@ def make_page(p: dict, configs: dict) -> str:
         "</div>",
         "</div>",
         "",
-        section_tabs(p, bool(src), bool(fidelity)),
+        section_tabs(p, bool(src), bool(fidelity), has_semantic,
+                     bool(cfg.get("config")), p["name"] in configs),
         "",
         *semantic_card(p),
         "",
@@ -748,15 +756,26 @@ def semantic_card(p: dict) -> list[str]:
     ]
 
 
-def section_tabs(p: dict, has_scope: bool, has_fidelity: bool) -> str:
+def section_tabs(p: dict, has_scope: bool, has_fidelity: bool,
+                 has_semantic: bool, has_params: bool, has_graph: bool) -> str:
     """genomeqc-style pipeline sub-navigation: sticky anchor tabs for the
-    page's own sections (Introduction → Usage → Parameters → …)."""
-    anchors = [
-        ("#semantic-overview", "Introduction"),
-        ("#preview-the-plan" if "dry-run" in p["quickstart"] else "#run-it", "Usage"),
-        ("#parameters", "Parameters"),
-        ("#workflow-graph", "Workflow graph"),
-    ]
+    page's own sections (Introduction → Usage → Parameters → …).
+
+    A tab is emitted only when its section actually rendered — entries
+    without a committed `oxo-flow info` record (no Parameters table, no DAG)
+    or without a semantic map (live: erv, immune-repertoire) would else
+    carry tabs that jump nowhere. The flags mirror the exact gates in
+    make_page/params_section/dag_section/semantic_card."""
+    anchors = []
+    if has_semantic:
+        anchors.append(("#semantic-overview", "Introduction"))
+    anchors.append(
+        ("#preview-the-plan" if "dry-run" in p["quickstart"] else "#run-it", "Usage")
+    )
+    if has_params:
+        anchors.append(("#parameters", "Parameters"))
+    if has_graph:
+        anchors.append(("#workflow-graph", "Workflow graph"))
     if has_scope:
         anchors.append(("#scope", "Scope"))
     if has_fidelity:

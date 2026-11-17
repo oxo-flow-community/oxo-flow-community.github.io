@@ -6,7 +6,7 @@ title: "ERV / transposable-element quantification with four tools on one annotat
 <div class="ox-detail-cols">
 <div class="ox-detail-main">
 <h1>ERV / transposable-element quantification with four tools on one annotation</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--dry">◆ Dry-run verified</span> <span class="ox-badge ox-badge--origin">Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span><span class=ox-tag-sep></span><span class="ox-tag">erv</span><span class="ox-tag">transposable-elements</span><span class="ox-tag">rna-seq</span><span class="ox-tag">ervmap</span><span class="ox-tag">telescope</span><span class="ox-tag">squire</span><span class="ox-tag">tetranscripts</span><span class="ox-tag">star</span><span class="ox-tag">featurecounts</span><span class="ox-tag">snakemake</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--dry">◆ Dry-run verified</span> <span class="ox-badge ox-badge--origin">Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot" aria-hidden="true"></span>snakemake port</span><span class=ox-tag-sep></span><span class="ox-tag">erv</span><span class="ox-tag">transposable-elements</span><span class="ox-tag">rna-seq</span><span class="ox-tag">ervmap</span><span class="ox-tag">telescope</span><span class="ox-tag">squire</span><span class="ox-tag">tetranscripts</span><span class="ox-tag">star</span><span class="ox-tag">featurecounts</span><span class="ox-tag">snakemake</span></div>
 <p class="ox-desc">RNA-seq from FASTQ to a comparable ERV expression table. fastp trims and STAR aligns; four published tools quantify endogenous retroviruses on one RepeatMasker-derived annotation (ERVmap at provirus level from the official 3,220-provirus BED, Telescope and TEtranscripts at locus level, SQuIRE at locus and subfamily level); featureCounts gives gene counts from the same BAMs; the aggregation layer writes a unified long table, per-sample QC and per-subfamily cross-tool evidence. Sample groups (cohorts) are a first-class directory level, and ERVmap is computed here instead of imported, with guards for the BED chromosome-name and contig-order pitfalls. ERVmap is quantified here instead of imported, using the official wrapper&#x27;s STAR parameters and bedtools coverage step. Paired- and single-end layouts are both supported.</p>
 <div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#run-it">▶ Run it</a><a class="ox-btn" href="https://github.com/oxo-flow-community/oxo-flow-erv" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow run main.oxoflow</code></div>
 </div>
@@ -16,7 +16,7 @@ title: "ERV / transposable-element quantification with four tools on one annotat
 <div class="ox-kv"><span class="k">Rating</span><span class="v live">◆ Dry-run verified</span></div>
 <div class="ox-kv"><span class="k">Rules</span><span class="v">22</span></div>
 <div class="ox-kv"><span class="k">Compute</span><span class="v">—</span></div>
-<div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--sn"><span class="dot"></span>snakemake port</span></span></div>
+<div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--sn"><span class="dot" aria-hidden="true"></span>snakemake port</span></span></div>
 <div class="ox-kv"><span class="k">Origin</span><span class="v">Official port</span></div>
 <div class="ox-kv"><span class="k">Domain</span><span class="v">transcriptomics</span></div>
 <div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/SunPast/ERV-pipeline">SunPast/ERV-pipeline</a></span></div>
@@ -29,7 +29,7 @@ title: "ERV / transposable-element quantification with four tools on one annotat
 </div>
 </div>
 
-<nav class="ox-tabs" aria-label="Page sections"><a href="#semantic-overview">Introduction</a><a href="#run-it">Usage</a><a href="#parameters">Parameters</a><a href="#workflow-graph">Workflow graph</a><a href="#scope">Scope</a></nav>
+<nav class="ox-tabs" aria-label="Page sections"><a href="#run-it">Usage</a><a href="#scope">Scope</a></nav>
 
 
 ## Run it

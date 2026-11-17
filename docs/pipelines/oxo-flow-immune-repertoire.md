@@ -6,7 +6,7 @@ title: "TCGA bulk RNA-seq TCR/BCR immune repertoire profiling (MiXCR + TRUST4)"
 <div class="ox-detail-cols">
 <div class="ox-detail-main">
 <h1>TCGA bulk RNA-seq TCR/BCR immune repertoire profiling (MiXCR + TRUST4)</h1>
-<div class="ox-page-badges"><span class="ox-badge ">☆ Community</span> <span class="ox-badge ox-badge--origin">Original</span> <span class="ox-badge ox-badge--native"><span class="dot"></span>oxo-flow native</span><span class=ox-tag-sep></span><span class="ox-tag">immune-repertoire</span><span class="ox-tag">TCR</span><span class="ox-tag">BCR</span><span class="ox-tag">CDR3</span><span class="ox-tag">MiXCR</span><span class="ox-tag">TRUST4</span><span class="ox-tag">TCGA</span><span class="ox-tag">RNA-seq</span><span class="ox-tag">AIRR</span><span class="ox-tag">clonotypes</span></div>
+<div class="ox-page-badges"><span class="ox-badge ">☆ Community</span> <span class="ox-badge ox-badge--origin">Original</span> <span class="ox-badge ox-badge--native"><span class="dot" aria-hidden="true"></span>oxo-flow native</span><span class=ox-tag-sep></span><span class="ox-tag">immune-repertoire</span><span class="ox-tag">TCR</span><span class="ox-tag">BCR</span><span class="ox-tag">CDR3</span><span class="ox-tag">MiXCR</span><span class="ox-tag">TRUST4</span><span class="ox-tag">TCGA</span><span class="ox-tag">RNA-seq</span><span class="ox-tag">AIRR</span><span class="ox-tag">clonotypes</span></div>
 <p class="ox-desc">Extracts TCR/BCR clonotypes from bulk RNA-seq BAMs (TCGA GDC harmonized) with MiXCR and TRUST4, normalizes both tools&#x27; outputs into one 14-column unified clonotype schema, and reports per-sample repertoire metrics; designed for Slurm clusters (shard layout for production cohorts).</p>
 <div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#preview-the-plan">▶ Run it</a><a class="ox-btn" href="https://github.com/oxo-flow-community/oxo-flow-immune-repertoire" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow dry-run main.oxoflow</code></div>
 </div>
@@ -16,7 +16,7 @@ title: "TCGA bulk RNA-seq TCR/BCR immune repertoire profiling (MiXCR + TRUST4)"
 <div class="ox-kv"><span class="k">Rating</span><span class="v live">☆ Community</span></div>
 <div class="ox-kv"><span class="k">Rules</span><span class="v">—</span></div>
 <div class="ox-kv"><span class="k">Compute</span><span class="v"><span title="4 CPUs / 48 GB per mixcr rule, 4 CPUs / 24 GB per trust4 rule; production runs 5 rules per node (20 CPUs, &lt;=48 GB each)">4 CPUs / 48 GB per mixcr rule, 4 CPUs / 24 GB per trust4 rule…</span></span></div>
-<div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--native"><span class="dot"></span>oxo-flow native</span></span></div>
+<div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--native"><span class="dot" aria-hidden="true"></span>oxo-flow native</span></span></div>
 <div class="ox-kv"><span class="k">Origin</span><span class="v">Original</span></div>
 <div class="ox-kv"><span class="k">Domain</span><span class="v">immunology</span></div>
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-11-16</span></div>
@@ -27,7 +27,7 @@ title: "TCGA bulk RNA-seq TCR/BCR immune repertoire profiling (MiXCR + TRUST4)"
 </div>
 </div>
 
-<nav class="ox-tabs" aria-label="Page sections"><a href="#semantic-overview">Introduction</a><a href="#preview-the-plan">Usage</a><a href="#parameters">Parameters</a><a href="#workflow-graph">Workflow graph</a></nav>
+<nav class="ox-tabs" aria-label="Page sections"><a href="#preview-the-plan">Usage</a></nav>
 
 
 ## Preview the plan
