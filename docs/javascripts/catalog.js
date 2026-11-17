@@ -177,7 +177,8 @@
       P.filter((p) => p.domain === d).length)));
     origins.forEach((o) => chips.appendChild(chip(ORIGIN_LABEL[o] || o, o, state.origins,
       P.filter((p) => (p.origin || "curated") === o).length)));
-    engines.forEach((e) => chips.appendChild(chip(e === "nextflow" ? "nf-core ports" : "snakemake ports", e, state.engines,
+    engines.forEach((e) => chips.appendChild(chip(e === "nextflow" ? "nf-core ports"
+      : e === "snakemake" ? "snakemake ports" : "oxo-flow native", e, state.engines,
       P.filter((p) => p.engine === e).length)));
 
     function matches(p) {
