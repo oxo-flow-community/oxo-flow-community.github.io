@@ -45,7 +45,7 @@ Data-gated: MiXCR/TRUST4 need BAM inputs and the TRUST4 reference FASTAs (hg38_b
 
 ## Installation
 
-**Engine.** oxo-flow >= 0.12.0
+**Engine.** oxo-flow >= 0.30
 
 **Toolchain.** pixi (pixi.toml) — pinned MiXCR/TRUST4 and dependencies; TRUST4 reference FASTAs (hg38_bcrtcr.fa, human_IMGT+C.fa) are provisioned outside the repo (not committed)
 
