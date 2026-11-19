@@ -3410,6 +3410,7 @@ window.OXO_PIPELINES = [
     "title": "circRNA detection: four callers with ensemble aggregation",
     "origin": "original",
     "rating": "live-verified",
+    "engine": "oxo-flow",
     "created": "2026-08-15",
     "domain": "transcriptomics (circRNA)",
     "tags": [
