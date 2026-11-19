@@ -6,21 +6,21 @@ title: "Variant calling for non-model organisms: trimming, alignment, per-sample
 <div class="ox-detail-cols">
 <div class="ox-detail-main">
 <h1>Variant calling for non-model organisms: trimming, alignment, per-sample gVCFs, joint genotyping, callable sites, postprocessing and QC dashboard</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot" aria-hidden="true"></span>snakemake port</span><span class=ox-tag-sep></span><span class="ox-tag">variant-calling</span><span class="ox-tag">population-genomics</span><span class="ox-tag">gatk</span><span class="ox-tag">bwa</span><span class="ox-tag">non-model-organisms</span><span class="ox-tag">snakemake</span><span class="ox-tag">deepvariant</span><span class="ox-tag">sra</span><span class="ox-tag">callable-sites</span></div>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot" aria-hidden="true"></span>snakemake port</span><span class=ox-tag-sep></span><span class="ox-tag">variant-calling</span><span class="ox-tag">population-genomics</span><span class="ox-tag">gatk</span><span class="ox-tag">bwa</span><span class="ox-tag">non-model-organisms</span><span class="ox-tag">snakemake</span><span class="ox-tag">deepvariant</span><span class="ox-tag">sra</span><span class="ox-tag">callable-sites</span></div>
 <p class="ox-desc">Variant calling for non-model organisms: paired FASTQ reads (or SRA accessions, or external BAMs) are trimmed and filtered with fastp, aligned with BWA-MEM, optionally duplicate-marked with sambamba, and called to per-sample gVCFs with GATK HaplotypeCaller or DeepVariant (low-coverage defaults: -ploidy 2, --min-pruning 1). Optional upstream branches are gated by config keys: joint genotyping (GenomicsDBImport + GenotypeGVCFs, or GLnexus for DeepVariant), GATK hard variant filtration, callable-sites BED (mosdepth/clam coverage + genmap mappability), the postprocess module (clean SNP/indel call sets), the qc module (PLINK PCA/relatedness, ADMIXTURE, interactive dashboard), and a cohort QC metrics report. Two runtime-fan-out branches are ported with the engine&#x27;s output_pattern primitive (oxo-flow &gt;= 0.17): interval scatter (per-interval gVCF calling and per-shard joint genotyping) and the per-region bcftools caller; both default off. Long-contig (CSI) VCF indexing is auto-selected when any reference contig exceeds the 512 Mb TBI limit (long_contig_mode config: auto/true/false), mirroring upstream&#x27;s TBI_MAX_CONTIG_LENGTH decision; the postprocess module (basic/strict filtering, clean SNP/indel sets) follows the same CSI twin pattern.</p>
 <div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#run-it">▶ Run it</a><a class="ox-btn" href="https://github.com/oxo-flow-community/oxo-flow-snparcher" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow run main.oxoflow reference_source=/path/to/genome.fa.gz</code></div>
 </div>
 <div>
 <div class="ox-glance">
 <div class="ox-glance-title">At a glance</div>
-<div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested</span></div>
-<div class="ox-kv"><span class="k">Rules</span><span class="v">74</span></div>
+<div class="ox-kv"><span class="k">Rating</span><span class="v live">★ Verified</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">108</span></div>
 <div class="ox-kv"><span class="k">Compute</span><span class="v"><span title="up to 8 CPUs / 8 GB per rule (bwa_mem)">up to 8 CPUs / 8 GB per rule (bwa_mem)</span></span></div>
 <div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--sn"><span class="dot" aria-hidden="true"></span>snakemake port</span></span></div>
 <div class="ox-kv"><span class="k">Origin</span><span class="v">Official port</span></div>
 <div class="ox-kv"><span class="k">Domain</span><span class="v">genomics</span></div>
 <div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/harvardinformatics/snparcher">harvardinformatics/snparcher</a></span></div>
-<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>v2.2</code></span></div>
+<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>v2.3.0</code></span></div>
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2292.1"><code>10.48546/workflowhub.workflow.2292.1</code></a></span></div>
@@ -364,6 +364,7 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 - prepare_reference
 - index_reference
+- resolve_long_contig_mode
 - fastp
 - download_sra
 - fastp_srr
@@ -377,17 +378,59 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - index_bam_csi_markdup
 - index_bam_csi_external
 - normalize_external_gvcf_for_gatk
+- normalize_external_gvcf_for_gatk_long
+- picard_intervals
+- filter_picard_intervals
+- create_gvcf_intervals
+- gatk_haplotypecaller_interval
+- gatk_haplotypecaller_interval_long
+- gatk_haplotypecaller_interval_markdup
+- gatk_haplotypecaller_interval_markdup_long
+- gatk_haplotypecaller_interval_external
+- gatk_haplotypecaller_interval_external_long
+- concat_interval_gvcfs
+- concat_interval_gvcfs_long
+- create_db_intervals
+- gatk_genomics_db_import_interval
+- gatk_genomics_db_import_interval_long
+- gatk_genotype_gvcfs_interval
+- gatk_genotype_gvcfs_interval_long
+- concat_interval_vcfs
+- concat_interval_vcfs_long
+- compress_interval_raw_vcf
 - gatk_haplotypecaller
 - gatk_haplotypecaller_markdup
 - gatk_haplotypecaller_external
+- gatk_haplotypecaller_long
+- gatk_haplotypecaller_markdup_long
+- gatk_haplotypecaller_external_long
+- archive_gatk_gvcf
+- archive_gatk_gvcf_markdup
+- archive_gatk_gvcf_external
 - deepvariant_call
 - deepvariant_call_markdup
 - deepvariant_call_external
+- deepvariant_call_long
+- deepvariant_call_markdup_long
+- deepvariant_call_external_long
+- archive_deepvariant_gvcf
 - create_db_mapfile
+- create_db_mapfile_long
 - joint_genomics_db_import
+- joint_genomics_db_import_long
 - joint_genotype_gvcfs
+- joint_genotype_gvcfs_long
+- compress_joint_raw_vcf
 - glnexus_joint
+- glnexus_joint_long
+- bcftools_regions
+- bcftools_call
+- bcftools_call_long
+- bcftools_concat_regions
+- bcftools_concat_regions_long
 - variant_filtration
+- variant_filtration_long
+- compress_filtered_vcf
 - collect_fastp_stats
 - bam_stats
 - bam_stats_markdup
@@ -427,47 +470,45 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - qc_admixture
 - generate_coords_file
 - qc_dashboard
-- picard_intervals
-- filter_picard_intervals
-- create_gvcf_intervals
-- gatk_haplotypecaller_interval
-- gatk_haplotypecaller_interval_markdup
-- gatk_haplotypecaller_interval_external
-- concat_interval_gvcfs
-- create_db_intervals
-- gatk_genomics_db_import_interval
-- gatk_genotype_gvcfs_interval
-- concat_interval_vcfs
-- resolve_long_contig_mode
-- gatk_haplotypecaller_interval_long
-- gatk_haplotypecaller_interval_markdup_long
-- gatk_haplotypecaller_interval_external_long
-- concat_interval_gvcfs_long
-- create_db_mapfile_long
-- gatk_genomics_db_import_interval_long
-- gatk_genotype_gvcfs_interval_long
-- concat_interval_vcfs_long
-- variant_filtration_long
-- bcftools_regions
-- bcftools_call
-- bcftools_concat_regions
 
 **Excluded**
 
-- parabricks — every rule runs with --nv GPU passthrough (workflow/rules/parabricks.smk); the oxo-flow docker backend has no --nv support, plus NVIDIA EULA/license cannot be enforced
-- sentieon — proprietary SENTIEON_LICENSE server gating (config/config.yaml sentieon section); cannot be distributed or verified
+- none
 
 **Not applicable** (upstream-absent features, boilerplate, dead code, deliberate non-goals — see the excluded-key taxonomy in [Traitome/oxo-flow#267](https://github.com/Traitome/oxo-flow/issues/267))
 
 - denovo — no such step in upstream v2.2
 - structural_variants — no such step in upstream v2.2
+- parabricks — every rule runs with --nv GPU passthrough (workflow/rules/parabricks.smk); not portable: NVIDIA Parabricks is a commercial GPU-licensed accelerator (EULA cannot be enforced in an open distribution) and the oxo-flow docker backend has no --nv support
+- sentieon — not portable: Sentieon is proprietary software gated on a SENTIEON_LICENSE server (config/config.yaml sentieon section); it cannot be distributed or license-verified in an open conda-portable toolchain
 
 ## Fidelity
 
 > **Port-side renames of upstream rules** (for upstream claim tracing): `concat_interval_gvcfs_stage` → `concat_interval_gvcfs` / `concat_interval_gvcfs_long`; `concat_interval_vcfs_stage` → `concat_interval_vcfs` / `concat_interval_vcfs_long`; `drop_indel_SNPs` → `postprocess_drop_indel_snps` / `postprocess_drop_indel_snps_long`. The commercial families (see Excluded) cover: `parabricks_haplotypecaller`, `parse_sentieon_stats`, `sentieon_combine_gvcf`, `sentieon_haplotyper` (plus the `sentieon_dedup`/`sentieon_*` gate rules).
 
 
-74 rules ported from upstream v2.2 (up from 60), covering every branch that
+### v2.3.0 re-port (2026-11-19)
+
+Delta from the `v2.2 @ e0e7a947` baseline (`compare v2.2...v2.3.0`, 7 commits), adopted or declined per area with upstream-file evidence:
+
+| Area (upstream file) | Verdict | Evidence |
+|---|---|---|
+| Callable-sites coverage mask redesign (`callable_sites.smk`, `scripts/callable_coverage_thresholds.py`) | adopted | new config keys `callable_sites_max_depth` / `_max_depth_k` / `_min_sample_depth`, `fraction` 1.0→0.25; script delta matches upstream 1:1 (251/251 change lines); old `min_coverage`/`max_coverage` keys removed |
+| cSRA expected-reads census (`workflow/scripts/csra_expected_reads.awk`, added upstream) | adopted | `scripts/csra_expected_reads.awk` byte-identical to upstream (`diff` empty); wired into the `download_sra` cSRA branch |
+| SRA env deps (`workflow/envs/sra.yaml`) | adopted | `samtools>=1.23` + `coreutils` added; dependency set equals upstream at v2.3.0 |
+| QC flagstat parsing (`rules/qc_metrics.smk`) | adopted | description-keyed lookups (`primary`, `primary duplicates`, `primary mapped %`, `properly paired %`) and `N/A`→NA for unpaired BAMs in `scripts/parse_bam_stats.py` / `combine_qc_metrics.py` |
+| Long-contig interval-list shared-contig rewrite (`scripts/interval_list_tools.py`) | adopted | verbatim delta 54/54 (`shared_contigs` + `rewrite_pathological_contig_chunk`); fixes the release-noted double genotyping of contigs split across shards (delete `results/intervals/db/` on long-contig projects) |
+| gVCF archives + GenomicsDB mapfile (`variant_calling/gatk_gvcf.smk`, `genomicsdb_mapfile.smk`, added upstream) | adopted | new `archive_*_gvcf*` rules and the `_long` caller/joint families keep the plain work gVCF + `.idx` for GATK (`get_gatk_joint_gvcf`); `write_joint_gvcf_mapfile.py` selects one representative path per sample and never emits an index companion |
+| Hard-filter call set (`hard_filters.smk`) | adopted | `filtered.vcf.gz` stays the call set with FILTER tags retained; `compress_filtered_vcf` / `compress_*_raw_vcf` produce the archives |
+| bcftools / DeepVariant sample naming (`bcftools.smk`, `deepvariant.smk`, `joint_gvcf*.smk`) | adopted | samples named by `sample_id` (`--sample_name {sample}`, `--sample-name-map`) instead of the BAM read-group `SM` |
+| Postprocess (`modules/postprocess/Snakefile`) | adopted | `-T` streaming callable filter; indels anchored at non-callable bases dropped; excluded scaffolds removed by `update_bed` (no `-t ^` branch) |
+| QC module (`modules/qc/Snakefile`, `qc/scripts/*`) | adopted | two-sided MAF (`AF>0.99`) with `-f .,PASS` after a `fill-tags` AF recompute (PASS retained post hard filtering); seeded `+prune --random-seed 42` (reruns give the same PCA/ADMIXTURE); QC indexes CSI; `qcctgN` contig labels unconditional (`scripts/contig_map.py`); `plink2` split into bed-then-PCA with `min(N-1, qc_pca_dims)` PCs and a ≥3-sample floor; ADMIXTURE private work dir (symlinked bed/fam); dashboard `qc_dashboard_render.R` + `qc_dashboard_interactive.Rmd` swapped to the verbatim v2.3.0 files (107 changed lines, `min_depth` param, kmeans clamp, FILTER/PASS tally); `min_depth` wipe-out now hard-fails in `scripts/vcftools_individuals.py` |
+| Startup assertions (`workflow/Snakefile`, `rules/common.smk`: ploidy guards, FASTQ-row shape, duplicate accessions, reference-source form, `exclude` bool coercion, `maf ≤ 0.5`) | declined | Snakemake start-up Python asserts over the job graph; the oxo-flow DAG build exposes no rule-level assert hook — equivalents are engine features, not port files |
+| QC module sample-sheet rework (`modules/qc/Snakefile` `samples=` + dtype `converters`) | declined | module-local sample-sheet loader; the port feeds cohorts through the engine's `--samples`, there is no sheet to coerce |
+| Sentieon / Parabricks deltas (`sentieon.smk`, `parabricks.smk` touched by 2.3.0) | declined | commercial families stay `not_applicable` (see Excluded and `metadata.excluded`) |
+| Packaging/docs surfaces (`pixi.lock`, `pyproject.toml`, `run-*.sh`, `tests/*`, `website/*`) | not-applicable | upstream packaging/CI/docs; the port's equivalents are `envs/*.yaml`, `test/run.sh` and this README |
+
+108 rules ported from upstream v2.3.0 (up from 89 at v2.2), covering every branch that
 can be expressed in oxo-flow's DAG. Commands are ported verbatim
 (same flags, same output paths); upstream's snakemake `{{...}}` shell escaping
 is unwrapped to literal braces, and snakemake `{params.*}`/`{resources.*}`
@@ -535,7 +576,7 @@ plan unchanged.
 |---|---|---|
 | parabricks (all `parabricks_*` rules) | requires `--nv` GPU passthrough (upstream `parabricks.smk` runs `--nv` images with `nvidia-docker`); the oxo-flow docker backend has no `--nv` support and no GPU device declaration; additionally NVIDIA EULA/license enforcement cannot be guaranteed in CI | `variant_calling/parabricks.smk` (every rule is `--nv`) |
 | sentieon (all `sentieon_*` rules) | proprietary tool gated on a `SENTIEON_LICENSE` server and a pre-installed license; cannot be distributed or verified in a community port | `config/config.yaml` `sentieon` section; `workflow/rules/sentieon.smk` |
-| `denovo` and `structural_variants` pipeline sections | do not exist as rules in upstream v2.2 | grep of `workflow/` at e0e7a94 finds neither rule set |
+| `denovo` and `structural_variants` pipeline sections | do not exist as rules in upstream v2.3.0 | grep of `workflow/` at e0e7a94 finds neither rule set, and the 7-commit `v2.2...v2.3.0` compare adds or modifies no file carrying either |
 | multi-library / multi-unit rows (library_id, input_unit) | `{library}` fan-out via the `library` [[values]] table (`values_from = "config.library_ids"`, default `u1` = the single-library port byte-identical); `--arg library_ids=u1,u2` fans fastp_srr/bwa_mem/markdup per library and the merge chain gathers into the per-sample BAM | multi-library FASTQ cohorts on the fastq branch name per-library sources through the SRR branch or external BAM staging (v1: the fastq branch's raw path is per-sample) |
 
 ### Documented deviations from upstream
@@ -565,7 +606,7 @@ rules' own declarations (4 and 8).
 ## Links
 
 - Repository: [oxo-flow-snparcher](https://github.com/oxo-flow-community/oxo-flow-snparcher)
-- Upstream: [harvardinformatics/snparcher](https://github.com/harvardinformatics/snparcher) @ `v2.2`
+- Upstream: [harvardinformatics/snparcher](https://github.com/harvardinformatics/snparcher) @ `v2.3.0`
 - License: Apache-2.0 (this workflow) · MIT (upstream)
 
 Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
