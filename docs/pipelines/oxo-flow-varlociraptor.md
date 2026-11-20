@@ -6,21 +6,21 @@ title: "Small and structural variant calling with Varlociraptor"
 <div class="ox-detail-cols">
 <div class="ox-detail-main">
 <h1>Small and structural variant calling with Varlociraptor</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot" aria-hidden="true"></span>snakemake port</span><span class=ox-tag-sep></span><span class="ox-tag">variant-calling</span><span class="ox-tag">structural-variants</span><span class="ox-tag">varlociraptor</span><span class="ox-tag">vg</span><span class="ox-tag">freebayes</span><span class="ox-tag">delly</span><span class="ox-tag">pangenome</span><span class="ox-tag">snakemake-workflows</span></div>
-<p class="ox-desc">Scenario-driven somatic small and structural variant calling with Varlociraptor: paired-end reads are aligned against the 1000 Genomes human pangenome with vg giraffe, QC&#x27;d with FastQC/MultiQC, covered with mosdepth, and used for freebayes and delly candidate calling; Varlociraptor then estimates alignment properties and calls variants under a tumor scenario (events present + somatic_tumor_high + somatic_tumor_medium, FDR 0.05), FDR is controlled per variant type (SNV/INS/DEL/MNV/BND/INV/DUP/REP) with merge and phred decoding, and the calls are annotated with VEP (LoFtool/REVEL plugins) and dbSNFP/dbSNP, filtered, turned into a 34-column variant table with oncoprint label-sorting, and rendered as interactive datavzrd variant and gene-coverage reports. All reference data (GRCh38 FASTA and GTF, VEP cache/plugins, REVEL scores, known-variants VCFs, HPRC pangenome graph) is downloaded automatically into resources/.</p>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">Official port</span> <span class="ox-badge ox-badge--sn"><span class="dot" aria-hidden="true"></span>snakemake port</span><span class=ox-tag-sep></span><span class="ox-tag">variant-calling</span><span class="ox-tag">structural-variants</span><span class="ox-tag">varlociraptor</span><span class="ox-tag">vg</span><span class="ox-tag">freebayes</span><span class="ox-tag">delly</span><span class="ox-tag">pangenome</span><span class="ox-tag">snakemake-workflows</span></div>
+<p class="ox-desc">Scenario-driven somatic small and structural variant calling with Varlociraptor: paired-end reads are aligned against the 1000 Genomes human pangenome with vg giraffe, QC&#x27;d with FastQC/MultiQC, covered with mosdepth, and used for freebayes and delly candidate calling; Varlociraptor then estimates alignment properties and calls variants under a tumor scenario (events present + somatic_tumor_high + somatic_tumor_medium, FDR 0.05), FDR is controlled per variant type (SNV/INS/DEL/MNV/BND/INV/DUP/REP) with merge and phred decoding, and the calls are annotated with VEP (LoFtool/REVEL plugins) and dbSNFP/dbSNP, filtered, turned into a 34-column variant table (plus the fusions table joined with arriba annotations, when the group calls fusions) with oncoprint label-sorting, and rendered as interactive datavzrd variant, fusion-call and gene-coverage reports. All reference data (GRCh38 FASTA and GTF, VEP cache/plugins, REVEL scores, known-variants VCFs, HPRC pangenome graph) is downloaded automatically into resources/.</p>
 <div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#run-it">▶ Run it</a><a class="ox-btn" href="https://github.com/oxo-flow-community/oxo-flow-varlociraptor" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow run main.oxoflow</code></div>
 </div>
 <div>
 <div class="ox-glance">
 <div class="ox-glance-title">At a glance</div>
-<div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested</span></div>
-<div class="ox-kv"><span class="k">Rules</span><span class="v">149</span></div>
+<div class="ox-kv"><span class="k">Rating</span><span class="v live">★ Verified</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">189</span></div>
 <div class="ox-kv"><span class="k">Compute</span><span class="v"><span title="up to 64 CPUs / 32 GB per rule (freebayes candidates 48 threads; vg giraffe 64 threads)">up to 64 CPUs / 32 GB per rule (freebayes candidates 48 threa…</span></span></div>
 <div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--sn"><span class="dot" aria-hidden="true"></span>snakemake port</span></span></div>
 <div class="ox-kv"><span class="k">Origin</span><span class="v">Official port</span></div>
 <div class="ox-kv"><span class="k">Domain</span><span class="v">genomics</span></div>
 <div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/snakemake-workflows/dna-seq-varlociraptor">snakemake-workflows/dna-seq-varlociraptor</a></span></div>
-<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>v6.10.0</code></span></div>
+<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>v6.11.4</code></span></div>
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2291.1"><code>10.48546/workflowhub.workflow.2291.1</code></a></span></div>
@@ -271,7 +271,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 <a href="/assets/dag/oxo-flow-varlociraptor.svg?v=4de87fc1a0" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-varlociraptor.svg?v=4de87fc1a0" alt="oxo-flow-varlociraptor pipeline overview" loading="lazy"></a>
 
-<p class="ox-dag-caption">figure · oxo-flow-varlociraptor — Scenario-driven somatic small and structural variant calling with Varlociraptor: paired-end reads are aligned against the 1000 Genomes human pangenome with vg giraffe, QC&#x27;d with FastQC/MultiQC, covered with mosdepth, and used for freebayes and delly candidate calling; Varlociraptor then estimates alignment properties and calls variants under a tumor scenario (events present + somatic_tumor_high + somatic_tumor_medium, FDR 0.05), FDR is controlled per variant type (SNV/INS/DEL/MNV/BND/INV/DUP/REP) with merge and phred decoding, and the calls are annotated with VEP (LoFtool/REVEL plugins) and dbSNFP/dbSNP, filtered, turned into a 34-column variant table with oncoprint label-sorting, and rendered as interactive datavzrd variant and gene-coverage reports.</p>
+<p class="ox-dag-caption">figure · oxo-flow-varlociraptor — Scenario-driven somatic small and structural variant calling with Varlociraptor: paired-end reads are aligned against the 1000 Genomes human pangenome with vg giraffe, QC&#x27;d with FastQC/MultiQC, covered with mosdepth, and used for freebayes and delly candidate calling; Varlociraptor then estimates alignment properties and calls variants under a tumor scenario (events present + somatic_tumor_high + somatic_tumor_medium, FDR 0.05), FDR is controlled per variant type (SNV/INS/DEL/MNV/BND/INV/DUP/REP) with merge and phred decoding, and the calls are annotated with VEP (LoFtool/REVEL plugins) and dbSNFP/dbSNP, filtered, turned into a 34-column variant table (plus the fusions table joined with arriba annotations, when the group calls fusions) with oncoprint label-sorting, and rendered as interactive datavzrd variant, fusion-call and gene-coverage reports.</p>
 
 </div>
 </details>
@@ -288,15 +288,32 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 
 - annotate_candidate_variants_delly
 - annotate_candidate_variants_freebayes
+- annotate_descriptions
+- annotate_dgidb
+- annotate_exons
+- annotate_mutational_signatures
+- annotate_umis
 - annotate_variants
 - annotate_vcfs
+- annotated_index
 - apply_bqsr
+- apply_bqsr_consensus
+- apply_bqsr_rna
+- arriba
+- assign_primers
+- bam_index_consensus
 - bam_index_dedup
+- bam_index_sorted
+- bam_index_split
 - bcf_index_arriba
+- bcf_index_arriba_candidates
 - bcf_index_candidate_delly
 - bcf_index_candidate_freebayes
+- bcf_index_cleaned_db
+- bcf_index_db_annotated
 - bcf_index_delly
 - bcf_index_fdr_BND
+- bcf_index_fdr_BND_fusions
 - bcf_index_fdr_DEL
 - bcf_index_fdr_DUP
 - bcf_index_fdr_INS
@@ -305,14 +322,27 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - bcf_index_fdr_REP
 - bcf_index_fdr_SNV
 - bcf_index_filtered
+- bcf_index_final
 - bcf_index_freebayes
 - bcf_index_fusions_callset
+- bcf_index_population_filtered
 - bcf_index_vep_annotated
 - bcftools_concat
+- bcftools_concat_candidates
 - bcftools_concat_fusions
-- bcf_index_fdr_BND_fusions
 - bedtools_merge
+- build_primer_regions
 - build_sample_regions
+- bwa_index
+- calc_consensus_reads
+- calculate_covered_coding_sites
+- chm_eval
+- chm_eval_kit
+- chm_eval_sample
+- chm_namesort
+- chm_to_fastq
+- chromosome_map
+- clean_population_db
 - control_fdr_BND
 - control_fdr_BND_fusions
 - control_fdr_DEL
@@ -322,14 +352,25 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - control_fdr_MNV
 - control_fdr_REP
 - control_fdr_SNV
+- convert_fusions
 - convert_phred_scores
 - convert_phred_scores_fusions
 - coverage_table
+- create_mutational_context_file
 - datavzrd_coverage
+- datavzrd_fusion_calls
 - datavzrd_variants_calls
 - delly
+- determine_coding_regions
+- download_cadd_scores_for_vep
+- download_cosmic_signatures
 - download_delly_excluded_regions
 - download_revel
+- estimate_mutational_burden_curve
+- estimate_mutational_burden_hist
+- fastp_pe
+- fastp_pipe
+- fastp_se
 - fastqc_r1
 - fastqc_r2
 - filter_by_annotation
@@ -339,10 +380,18 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - filter_group_regions_expanded
 - filter_offtarget_variants_delly
 - filter_offtarget_variants_freebayes
+- filter_primerless_reads
+- filter_unmapped_primers
 - fix_delly_calls
 - freebayes
-- gather_calls
+- freebayes_atomize
+- freebayes_atomize_sort
+- gather_annotated_calls
 - gather_annotated_calls_fusions
+- gather_benchmark_calls
+- gather_calls
+- gather_observations_delly
+- gather_observations_freebayes
 - genome_dict
 - genome_faidx
 - get_annotation
@@ -350,38 +399,72 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - get_known_variants
 - get_pangenome
 - get_reference_paths
+- get_sra
 - get_target_regions
 - get_vep_cache
 - get_vep_plugins
+- group_bcf_to_vcf_fusions
+- group_bcf_to_vcf_variants
+- group_vcf_to_maf_fusions
+- group_vcf_to_maf_variants
+- join_mutational_signatures
+- map_consensus_reads_pe
+- map_consensus_reads_se
+- map_primers
+- map_reads_bwa
 - map_reads_vg
 - mark_duplicates
+- mark_duplicates_umi
 - merge_calls
 - merge_calls_fusions
+- merge_consensus_reads
 - merge_covered_group_regions
 - merge_expanded_group_regions
 - merge_trimmed_fastqs_r1
 - merge_trimmed_fastqs_r2
 - multiqc
 - pangenome_autoindex
+- plot_mutational_signatures
+- plot_putative_sample_swaps
+- population_db_update
+- population_filter_variants
 - postprocess_vg_alignments
 - prepare_oncoprint
+- primer_to_bed
 - process_call_tables
+- process_fusion_call_tables
 - process_revel_scores
 - recalibrate_base_qualities
+- recalibrate_base_qualities_consensus
+- recalibrate_base_qualities_rna
 - remove_iupac_codes
+- rename_chromosomes
 - render_scenario
 - samtools_idxstats
 - samtools_stats
 - scatter_candidates_delly
 - scatter_candidates_freebayes
+- scatter_candidates_freebayes_atomized
+- somalier_extract
+- somalier_find_sites
+- somalier_groups
+- somalier_relate
 - sort_alignments
+- sort_arriba_calls
 - sort_calls_arriba
 - sort_calls_delly
 - sort_calls_freebayes
+- sort_consensus_reads
+- splitncigarreads
+- star_align
+- star_index
 - tabix_noiupac
 - tabix_revel
 - tabix_variation
+- testcase_delly
+- testcase_freebayes
 - transform_gene_annotations
+- trim_primers
 - varlociraptor_alignment_properties
 - varlociraptor_call_arriba
 - varlociraptor_call_delly
@@ -389,74 +472,14 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - varlociraptor_preprocess_arriba
 - varlociraptor_preprocess_delly
 - varlociraptor_preprocess_freebayes
+- varlociraptor_preprocess_freebayes_atomized
 - vembrane_table
-- annotate_dgidb
-- gather_benchmark_calls
-- chm_eval_sample
-- chm_namesort
-- chm_to_fastq
-- chm_eval_kit
-- chromosome_map
-- rename_chromosomes
-- chm_eval
-- determine_coding_regions
-- bcf_index_final
-- calculate_covered_coding_sites
-- estimate_mutational_burden_curve
-- estimate_mutational_burden_hist
-- create_mutational_context_file
-- download_cosmic_signatures
-- annotate_mutational_signatures
-- join_mutational_signatures
-- annotate_descriptions
-- plot_mutational_signatures
-- calc_consensus_reads
-- map_consensus_reads_pe
-- map_consensus_reads_se
-- merge_consensus_reads
-- sort_consensus_reads
-- bam_index_consensus
-- recalibrate_base_qualities_consensus
-- apply_bqsr_consensus
-- star_index
-- star_align
-- arriba
-- annotate_exons
-- convert_fusions
-- sort_arriba_calls
-- bcftools_concat_candidates
-- group_bcf_to_vcf_variants
-- group_bcf_to_vcf_fusions
-- group_vcf_to_maf_variants
-- group_vcf_to_maf_fusions
-- bwa_index
-- map_reads_bwa
-- download_cadd_scores_for_vep
-- clean_population_db
-- gather_annotated_calls
-- annotated_index
-- bcf_index_cleaned_db
-- population_filter_variants
-- bcf_index_population_filtered
-- population_db_update
-- assign_primers
-- filter_primerless_reads
-- trim_primers
-- map_primers
-- filter_unmapped_primers
-- primer_to_bed
-- build_primer_regions
-- get_sra
-- fastp_pipe
-- fastp_se
-- fastp_pe
-- bcf_index_arriba_candidates
+- vembrane_table_fusions
 
 **Excluded**
 
-- fusions report and table exports (upstream datavzrd.smk: `datavzrd_fusion_calls` + `process_fusion_call_tables`; and the fusions instance of the single wildcard `vembrane_table` rule) — the ported fusions FDR-control chain (filtering.oxoflow) ends at the fdr-controlled/normal-probs callsets; the port's `vembrane_table` hardcodes the variants path, so the fusions table/report datasets are missing. `fusion_activate` is the port's config key (upstream gates on the `types: ["variants","fusions"]` list). Note: upstream has no fusions oncoprint output — `get_oncoprint_input` is variants-only, so nothing to port there
-- annotate_umis (upstream mapping.smk:77, UMI branch via umi_tools group; activates for samples with a non-empty `umi_read` column) and splitncigarreads (upstream mapping.smk:173, RNA-datatype branch in get_recalibrate_quality_input) — not ported; the port models DNA data with the default empty samples columns
-- upstream testcase.smk debug module (`gather_observations` + `testcase`: varlociraptor call --testcase-prefix/--testcase-locus mode, results/testcases/) — not ported. (The upstream `bcf_to_vcf_gz`, `vg2svg` and `only_alignment` tools have no consumers/producers in the upstream tree at the pinned tag — dead tools, intentionally not ported)
+- annotate_umis (upstream mapping.smk:77, UMI branch via umi_tools group) and splitncigarreads (upstream mapping.smk:173, RNA-datatype branch in get_recalibrate_quality_input) — now ported as gated rules (mapping.oxoflow): config.umi_read (empty default = UMI flow off, mirroring an empty upstream samples.tsv column) and config.datatype = "rna" (default "dna" keeps the DNA path). The remaining datatype branches of the upstream samples.tsv columns (e.g. long-read datatypes) stay unported — the port models DNA/RNA short-read data only.
+- upstream testcase.smk debug module (`gather_observations` + `testcase`: varlociraptor call --testcase-prefix/--testcase-locus mode, results/testcases/) — now ported as the gated testcase.oxoflow module (config.testcase_activate + config.testcase_locus; opt-in like upstream, no rule-all consumer). (The upstream `bcf_to_vcf_gz`, `vg2svg` and `only_alignment` tools have no consumers/producers in the upstream tree at the pinned tag — dead tools, intentionally not ported)
 
 ## Fidelity
 
@@ -478,22 +501,32 @@ deliberate deviations:
 | per-rule conda environments | one env per tool pin set (`envs/`) | same packages, same pins, consolidated |
 | snakemake `before_update`/`update` flags (population db) | no input edge; the db path is read/written as-is | oxo-flow has no such flags; a declared input would create a DAG cycle (`validate` rejects it) |
 | snakemake `temp()` outputs of the gated branch modules | plain outputs (`temporary = true` where the default path used it) | see the module headers; `join_mutational_signatures` writes with `>` instead of the upstream `>>` because the engine does not pre-delete outputs |
-| snakemake script API (`snakemake.input/output/params`) in the 6 branch scripts | argv ports (`--output`/`--log` flags, comma-joined lists) | same logic verbatim, cf. the default-path script ports |
+| snakemake script API (`snakemake.input/output/params`) in the 8 branch scripts | argv ports (`--output`/`--log` flags, comma-joined lists) | same logic verbatim, cf. the default-path script ports |
 | chm sample group vertical slice (benchmarking) | not ported | the ported CHM-eval flow (`chm_eval_sample` ... `chm_eval`) re-derives the CHM1 FASTQs, but the chm sample is not in the port's `config/samples.tsv`, so the chm reads do not flow through mapping -> calling -> `control_fdr`; `rename_chromosomes`/`chm_eval` keep orphan inputs (validate warns, like upstream without the chm sample) |
 | consensus-read calling (`calc_consensus_reads` flow) | `consensus.oxoflow`, gated on `consensus_activate` | upstream switches the `recalibrate_base_qualities`/`apply_bqsr` input via `get_recalibrate_quality_input`; the port models this as gated duplicate rules with the same outputs and exclusive `when` gates (`!consensus_activate` vs `consensus_activate`) |
+| `annotate_umis` (mapping.smk UMI branch) + `get_markduplicates_input`/`get_markduplicates_extra` UMI branch | `mapping.oxoflow` `annotate_umis`/`mark_duplicates_umi` twins, gated on `umi_read` | upstream switches MarkDuplicates to the umi_tools-annotated BAM with `--BARCODE_TAG BX` when the samples.tsv `umi_read` column is set; the port models this as exclusive twins of the plain dedup rules (`umi_tools group`, `umi_tools` env), with the sorted-BAM index (`bam_index_sorted`) gated like its only consumer |
+| `splitncigarreads` (mapping.smk) + `get_recalibrate_quality_input` RNA branch | `mapping.oxoflow` `splitncigarreads`/`bam_index_split`/`*_rna` twins, gated on `datatype = "rna"` | upstream inserts SplitNCigarReads and re-sources BQSR from the split BAM when the samples.tsv `datatype` column is `rna`; the port models this as `*_rna` twins of the BQSR chain, with the three-way gate (dna / rna / consensus) shared with `consensus.oxoflow` |
+| `testcase.smk` debug module (`gather_observations`, `testcase`) | `testcase.oxoflow`, gated on `testcase_activate` + `testcase_locus` | upstream debug rules with no rule-all consumer (opt-in via invocation); the port freezes the caller wildcard to the two ported callers and `{locus}` to `config.testcase_locus`, the `directory()` output becomes a directory + `.completed` marker, and the `--obs tumor=` group alias is hardcoded like upstream `get_varlociraptor_obs_args` |
 | `annotate_dgidb` | `annotation::annotate_dgidb`, gated on `dgidb_activate` + `annotation_selection` | upstream `get_final_selected_annotation` switches the annotated callset consumed by filtering and the final-calls chain; the port exposes the same selection as `config.annotation_selection` |
 | `filter_offtarget_variants` (wrapper v2.3.2/bio/bcftools/filter, `params.extra=""`) | pass-through `bcftools filter -o/-O b` on the fixed calls; the `regions`/index inputs are declared (as upstream) so `get_target_regions` and the candidate indexes exist pre-scatter | the pinned wrapper consumes only `input[0]` (verified against its source); the actual target-region restriction is the `filter_group_regions` bedtools intersect below |
-| `target_regions` list config | single BED path (`config.target_regions`) | upstream merges one or more files; the port freezes one path |
+| `target_regions` list config | single BED path or a list of BED paths (`config.target_regions`, `len(...) > 0` gate) | upstream merges one or more files; the port merges all configured files with the same `sort -k1,1 -k2,2n | mergeBed` pipeline |
 | `filter_group_regions` `get_filter_targets` (bedtools intersect) | same command inline in the two `filter_group_regions_*` rules | byte-identical output; intersect branch only when `target_regions` is set |
-| per-group `calling` column of `config/samples.tsv` | `[sample_groups.metadata] calling` on each group | fusions continuation rules gate on `wildcard.calling == "fusions" || "variants,fusions"` |
+| per-group `calling` column of `config/samples.tsv` | `[sample_groups.metadata] calling` on each group | fusions continuation rules gate on `wildcard.calling == "fusions" || "variants,fusions"` — the `calling.oxoflow` continuation, the `filtering.oxoflow` fusions FDR-control chain, and the fusions exports (`table::vembrane_table_fusions`, `report::process_fusion_call_tables`, `report::datavzrd_fusion_calls`); per upstream `get_control_fdr_input`, the fusions chain bypasses the annotation filter and consumes the raw fusions callset |
+| `vembrane_table` (calling_type=fusions instance of the single wildcard rule) | `table::vembrane_table_fusions`, same `when` gate as the filtering fusions chain | the fusions instance of `get_vembrane_config` drops the ANN fields (fusions records carry no ANN annotation) and `INFO['EVENT']` (consumed by the partner pairing) — 23 columns, header/expr precomputed like the variants instance |
+| `process_fusion_call_tables` arriba input (`expand` over the group's rna/fusions samples) | frozen to the default sample `results/arriba/SRR702070.fusions.annotated.tsv` (producer `fusion::annotate_exons`) | single fixture sample; with more than one fusions sample the port would need one rule per sample |
 | `get_candidate_calls` for caller=arriba (UNFILTERED group concat) + `get_varlociraptor_params` (propagate-info-fields extra) | `calling::varlociraptor_preprocess_arriba`/`varlociraptor_call_arriba` consuming `results/candidate-calls/arriba/{group}/{group}.bcf` | command text identical; the arriba path has no scatter fan-out (no scatteritem) |
 | `scatter_candidates`/`filter_group_regions` conditional inputs (Python `if config.get("target_regions", None)`) | `optional = "any"` input pairs + `if [ -n "{config.target_regions}" ]` shell switch | engine equivalent of the upstream input selection |
 | upstream `get_target_regions` chr-strip (`awk '{sub("^chr","",$0); print}'`) | verbatim | target BEDs must be chr-less (Ensembl GRCh38 primary assembly); chr-prefixed files fail closed, exactly as upstream |
+| `calling/atomize` + `params/freebayes/use_best_n_alleles` switches (Python params) | `config.calling_atomize` + `config.freebayes_use_best_n_alleles` (empty = unset) with exclusive `when`-gated twin rules | upstream picks the atomized candidate input and the preprocess extra `--atomic-candidate-variants` in Python (`get_fixed_candidate_calls`, `get_varlociraptor_params`); the port models the two exclusive branches as twin rules on the same outputs (atomize chain `candidate_calling::freebayes_atomize` → `freebayes_atomize_sort` (temporary file) → `scatter_candidates_freebayes_atomized` + `calling::varlociraptor_preprocess_freebayes_atomized`), default off — with the flag empty/off the plan is rule-identical to v6.10.0 (the `freebayes` rule just splices an empty string where the upstream format string splices `get_freebayes_use_best_n_alleles()`) |
+| vembrane `{fmt,tsv|parquet}` wildcard + `vembrane table --output-fmt {fmt} ... --output {output}` (v6.11.0) | frozen to the `parquet` instance (`--output-fmt parquet`); the tsv/csv instance (`tables/activate`) stays unported like that switch | the parquet table is the only one consumed on the default path (datavzrd chain); both the variant and the fusions table rules, `process_call_tables`, `prepare_oncoprint` (gene/variant oncoprints + `color-domains.json`), the fusion join and the datavzrd variables files follow the parquet end-to-end; the v6.11.0 MAX_AF rename (`gnomad genome af`→`max population frequency`, `ANN['MAX_AF']`) is adopted in the 34-column header/expression; the user-annotation pass-through and SWISSPROT `sort_order` additions are default-config no-ops (`[EXON]` already position-fixed) |
+| `prepare_oncoprint` `min_recurrence` chi2 filter + shared color domains (`report/label_dependency/min_recurrence`, default config 5) | `--min-recurrence 5` argument, `--color-domains` output, `scripts/oncoprint.py` adopts the filtered-feature/`p-value dependency` index handling | the code lookup default is 1, the upstream default config sets 5 — frozen with a comment; `color-domains.json` is a declared input of `datavzrd_variants_calls` as upstream |
+| somalier sample-swap detection chain (`somalier find-sites`/`extract`/`groups`/`relate`/`plot`, v6.11.0, default targets via `get_final_output`) | `qc::somalier_*` + `qc::plot_putative_sample_swaps` (plots `target = true`) | shells verbatim; the script-API rules (samples sheet params) become argv ports with the frame-encoded JSON idiom; upstream `report()` category/subcategory/caption/labels annotations are report-decoration machinery the port has no counterpart for — plots ship as plain HTML (the `.rst` captions are not ported); env `envs/somalier.yaml` (somalier 0.3.2) added, the orphaned upstream `envs/kmc.yaml` deletion adopted |
+| `mapping.smk` quote fix, `Snakefile` `min_version` bump (Snakemake 9.25.2), `CHANGELOG.md`, `.test/` configs, `workflow/config.yaml` plugins `sort:` list (binned max vaf/impact/revel) | not ported | cosmetic; engine N/A (oxo-flow has no Snakemake min_version); changelog not a runtime artifact; test configs are upstream harness fixtures; the plugins `sort:` list has no consumer in any upstream rule at the tag (decline, recorded here — flagged for the reviewer) |
 
 ## Links
 
 - Repository: [oxo-flow-varlociraptor](https://github.com/oxo-flow-community/oxo-flow-varlociraptor)
-- Upstream: [snakemake-workflows/dna-seq-varlociraptor](https://github.com/snakemake-workflows/dna-seq-varlociraptor) @ `v6.10.0`
+- Upstream: [snakemake-workflows/dna-seq-varlociraptor](https://github.com/snakemake-workflows/dna-seq-varlociraptor) @ `v6.11.4`
 - License: Apache-2.0 (this workflow) · MIT (upstream)
 
 Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
