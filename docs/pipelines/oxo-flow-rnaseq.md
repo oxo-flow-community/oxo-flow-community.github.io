@@ -6,25 +6,25 @@ title: "RNA-seq: alignment, quantification and QC"
 <div class="ox-detail-cols">
 <div class="ox-detail-main">
 <h1>RNA-seq: alignment, quantification and QC</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested</span> <span class="ox-badge ox-badge--origin">Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot" aria-hidden="true"></span>nf-core port</span><span class=ox-tag-sep></span><span class="ox-tag">rna-seq</span><span class="ox-tag">star</span><span class="ox-tag">hisat2</span><span class="ox-tag">salmon</span><span class="ox-tag">rsem</span><span class="ox-tag">transcriptomics</span><span class="ox-tag">nf-core</span><span class="ox-tag">gene-expression</span></div>
-<p class="ox-desc">End-to-end bulk RNA-seq analysis for paired-end reads: fq lint and FastQC raw-read QC, TrimGalore adapter/quality trimming (including the UMI-extraction path), STAR, HISAT2 and Bowtie2-transcriptome (bowtie2_salmon) alignment with the BBSplit / SortMeRNA / Bowtie2 rRNA-filtered read variants, Picard MarkDuplicates or UMI-tools / UMICollapse dedup (genome and transcriptome chains), Salmon quantification in alignment mode (STAR and Bowtie2 orig_bams, raw and UMI-prepared) and pseudo-alignment mode (Salmon or Kallisto), RSEM alignment-mode quantification with per-sample results and merged count tables, tximport-merged gene/transcript count tables with SummarizedExperiment R objects, StringTie reference-guided assembly and quantification, featureCounts gene counts with biotype tables, RSeQC / dupRadar / Qualimap QC, DESeq2 sample-level QC (PCA, sample distances, size factors) per quantification branch, strand-specific bigWig tracks, and one final MultiQC report with the nf-core/rnaseq custom content (fail_trimmed / fail_mapped tables, strandedness checks, software versions). A faithful port of the nf-core/rnaseq 3.26.0 default star_salmon path plus the star_rsem, hisat2, bowtie2_salmon, with_umi, salmon-pseudo and kallisto-pseudo branches — same tools, same versions, same commands.</p>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot" aria-hidden="true"></span>nf-core port</span><span class=ox-tag-sep></span><span class="ox-tag">rna-seq</span><span class="ox-tag">star</span><span class="ox-tag">hisat2</span><span class="ox-tag">salmon</span><span class="ox-tag">rsem</span><span class="ox-tag">transcriptomics</span><span class="ox-tag">nf-core</span><span class="ox-tag">gene-expression</span></div>
+<p class="ox-desc">End-to-end bulk RNA-seq analysis for paired-end reads: fq lint and FastQC raw-read QC, TrimGalore adapter/quality trimming (including the UMI-extraction path), STAR, HISAT2 and Bowtie2-transcriptome (bowtie2_salmon) alignment with the BBSplit / SortMeRNA / Bowtie2 / Ribodetector rRNA-filtered read variants, Picard MarkDuplicates or UMI-tools / UMICollapse dedup (genome and transcriptome chains), Salmon quantification in alignment mode (STAR and Bowtie2 orig_bams, raw and UMI-prepared) and pseudo-alignment mode (Salmon or Kallisto), RSEM alignment-mode quantification with per-sample results and merged count tables, tximport-merged gene/transcript count tables with SummarizedExperiment R objects, StringTie reference-guided assembly and quantification, featureCounts gene counts with biotype tables, RSeQC / dupRadar / Qualimap QC, DESeq2 sample-level QC (PCA, sample distances, size factors) per quantification branch, strand-specific bigWig tracks, and one final MultiQC report with the nf-core/rnaseq custom content (fail_trimmed / fail_mapped tables, strandedness checks, software versions). A faithful port of the nf-core/rnaseq 3.28.0 default star_salmon path plus the star_rsem, hisat2, bowtie2_salmon, with_umi, salmon-pseudo, kallisto-pseudo and ribodetector rRNA-removal branches — same tools, same versions, same commands.</p>
 <div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#run-it">▶ Run it</a><a class="ox-btn" href="https://github.com/oxo-flow-community/oxo-flow-rnaseq" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow run main.oxoflow</code></div>
 </div>
 <div>
 <div class="ox-glance">
 <div class="ox-glance-title">At a glance</div>
-<div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested</span></div>
-<div class="ox-kv"><span class="k">Rules</span><span class="v">135</span></div>
+<div class="ox-kv"><span class="k">Rating</span><span class="v live">★ Verified</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">161</span></div>
 <div class="ox-kv"><span class="k">Compute</span><span class="v"><span title="up to 12 CPUs / 72 GB per rule (STAR align)">up to 12 CPUs / 72 GB per rule (STAR align)</span></span></div>
 <div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--nf"><span class="dot" aria-hidden="true"></span>nf-core port</span></span></div>
 <div class="ox-kv"><span class="k">Origin</span><span class="v">Official port</span></div>
 <div class="ox-kv"><span class="k">Domain</span><span class="v">transcriptomics</span></div>
 <div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/nf-core/rnaseq">nf-core/rnaseq</a></span></div>
-<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>3.26.0</code></span></div>
+<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>3.28.0</code></span></div>
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2278.1"><code>10.48546/workflowhub.workflow.2278.1</code></a></span></div>
-<div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">fastqc</span><span class="tchip">trim-galore</span><span class="tchip">fq</span><span class="tchip">star</span><span class="tchip">hisat2</span><span class="tchip">salmon</span><span class="tchip">kallisto</span><span class="tchip">rsem</span></div></div>
+<div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">bbmap</span><span class="tchip">bedtools</span><span class="tchip">bioconductor-biocparallel</span><span class="tchip">bioconductor-complexheatmap</span><span class="tchip">bioconductor-deseq2</span><span class="tchip">bioconductor-dupradar</span><span class="tchip">bioconductor-summarizedexperiment</span><span class="tchip">bioconductor-tximeta</span></div></div>
 <p class="cmd">$ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq</p>
 </div>
 </div>
@@ -65,7 +65,7 @@ The default config ships with `test/fixtures/` so the plan previews with no data
 
 **Engine.** oxo-flow >= 0.17.0
 
-**Toolchain.** conda envs — pinned (envs/*.yaml, versions pinned to the upstream nf-core/rnaseq 3.26.0 module environments; requires conda or mamba)
+**Toolchain.** conda envs — pinned (envs/*.yaml, versions pinned to the upstream nf-core/rnaseq 3.28.0 module environments; requires conda or mamba)
 
 **Requirements.**
 
@@ -474,7 +474,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 
 <a href="/assets/dag/oxo-flow-rnaseq.svg?v=16144f7da5" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-rnaseq.svg?v=16144f7da5" alt="oxo-flow-rnaseq pipeline overview" loading="lazy"></a>
 
-<p class="ox-dag-caption">figure · oxo-flow-rnaseq — End-to-end bulk RNA-seq analysis for paired-end reads: fq lint and FastQC raw-read QC, TrimGalore adapter/quality trimming (including the UMI-extraction path), STAR, HISAT2 and Bowtie2-transcriptome (bowtie2_salmon) alignment with the BBSplit / SortMeRNA / Bowtie2 rRNA-filtered read variants, Picard MarkDuplicates or UMI-tools / UMICollapse dedup (genome and transcriptome chains), Salmon quantification in alignment mode (STAR and Bowtie2 orig_bams, raw and UMI-prepared) and pseudo-alignment mode (Salmon or Kallisto), RSEM alignment-mode quantification with per-sample results and merged count tables, tximport-merged gene/transcript count tables with SummarizedExperiment R objects, StringTie reference-guided assembly and quantification, featureCounts gene counts with biotype tables, RSeQC / dupRadar / Qualimap QC, DESeq2 sample-level QC (PCA, sample distances, size factors) per quantification branch, strand-specific bigWig tracks, and one final MultiQC report with the nf-core/rnaseq custom content (fail_trimmed / fail_mapped tables, strandedness checks, software versions).</p>
+<p class="ox-dag-caption">figure · oxo-flow-rnaseq — End-to-end bulk RNA-seq analysis for paired-end reads: fq lint and FastQC raw-read QC, TrimGalore adapter/quality trimming (including the UMI-extraction path), STAR, HISAT2 and Bowtie2-transcriptome (bowtie2_salmon) alignment with the BBSplit / SortMeRNA / Bowtie2 / Ribodetector rRNA-filtered read variants, Picard MarkDuplicates or UMI-tools / UMICollapse dedup (genome and transcriptome chains), Salmon quantification in alignment mode (STAR and Bowtie2 orig_bams, raw and UMI-prepared) and pseudo-alignment mode (Salmon or Kallisto), RSEM alignment-mode quantification with per-sample results and merged count tables, tximport-merged gene/transcript count tables with SummarizedExperiment R objects, StringTie reference-guided assembly and quantification, featureCounts gene counts with biotype tables, RSeQC / dupRadar / Qualimap QC, DESeq2 sample-level QC (PCA, sample distances, size factors) per quantification branch, strand-specific bigWig tracks, and one final MultiQC report with the nf-core/rnaseq custom content (fail_trimmed / fail_mapped tables, strandedness checks, software versions).</p>
 
 </div>
 </details>
@@ -513,33 +513,47 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - bowtie2_align
 - bowtie2_align_bbsplit
 - bowtie2_align_bowtie2
+- bowtie2_align_ribodetector
 - bowtie2_align_rrna
 - bowtie2_align_rrna_bbsplit
 - bowtie2_align_sortmerna
 - bowtie2_index
 - bowtie2_rrna_index
+- bracken
+- cat_reads
 - chrom_sizes
 - deseq2_qc
 - deseq2_qc_pseudo
 - deseq2_qc_rsem
 - dupradar
+- fa_additional
+- fa_gunzip
 - fastqc_filtered_bbsplit
 - fastqc_filtered_bowtie2
+- fastqc_filtered_ribodetector
 - fastqc_filtered_sortmerna
 - fastqc_raw
 - featurecounts
 - fq_lint_bbsplit
 - fq_lint_raw
 - fq_lint_rrna_bowtie2
+- fq_lint_rrna_ribodetector
 - fq_lint_rrna_sortmerna
 - fq_lint_trimmed
 - gene_bed
 - genomecov_combined
 - genomecov_fw
 - genomecov_rev
+- gffread_gtf
+- gtf_additional
+- gtf_filter
+- gtf_filter_pass
+- gtf_gunzip
+- gtf_pass
 - hisat2_align
 - hisat2_align_bbsplit
 - hisat2_align_bowtie2
+- hisat2_align_ribodetector
 - hisat2_align_sortmerna
 - hisat2_index
 - hisat2_splicesites
@@ -547,12 +561,16 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - kallisto_quant_pseudo
 - kallisto_quant_pseudo_bbsplit
 - kallisto_quant_pseudo_bowtie2
+- kallisto_quant_pseudo_ribodetector
 - kallisto_quant_pseudo_sortmerna
+- kraken2
 - multiqc
 - multiqc_custom_content
 - multiqc_pseudo
 - picard_markduplicates
 - qualimap_rnaseq
+- ribodetector
+- ribodetector_bbsplit
 - rrna_fastas_prepare
 - rsem_calculateexpression
 - rsem_calculateexpression_umi
@@ -571,6 +589,7 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - salmon_quant_pseudo
 - salmon_quant_pseudo_bbsplit
 - salmon_quant_pseudo_bowtie2
+- salmon_quant_pseudo_ribodetector
 - salmon_quant_pseudo_sortmerna
 - salmon_quant_umi
 - samtools_fastq_rrna
@@ -599,21 +618,27 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - samtools_view_primary
 - samtools_view_primary_transcriptome
 - samtools_view_rrna
+- seqkit_stats
+- seqkit_stats_bbsplit
 - sortmerna
 - sortmerna_bbsplit
 - sortmerna_index
 - star_align
 - star_align_bbsplit
 - star_align_bowtie2
+- star_align_ribodetector
 - star_align_rsem
 - star_align_rsem_bbsplit
 - star_align_rsem_bowtie2
+- star_align_rsem_ribodetector
 - star_align_rsem_sortmerna
 - star_align_sortmerna
 - stringtie
 - summarizedexperiment
 - summarizedexperiment_pseudo
 - summarizedexperiment_rsem
+- sylph_profile
+- sylphtax_taxprof
 - transcript_fasta
 - trimgalore
 - trimgalore_umi
@@ -625,20 +650,10 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - tximport_rsem
 - umitools_extract_umis
 - umitools_prepareforrsem
-- cat_reads
-- fa_additional
-- fa_gunzip
-- gffread_gtf
-- gtf_additional
-- gtf_filter
-- gtf_filter_pass
-- gtf_gunzip
-- gtf_pass
 
 **Excluded**
 
-- PREPARE_GENOME `.tar.gz` reference bundles — bbsplit / sortmerna index archives (user-supplied `bbsplit_index` / `sortmerna_index` .tar.gz/.tgz/.tar archives are untarred into the canonical results/reference/ dir like upstream UNTAR_BBSPLIT_INDEX / UNTAR_SORTMERNA_INDEX; plain directories are symlinked; the GTF preprocessing chain itself (CUSTOM_GTFFILTER with the upstream filter_gtf_needed gate, gffread GFF->GTF, additional_fasta transgenes with biotype featurecounts_group_type / gene_type, GENCODE preprocessing, .gz references) is ported as gated prepare_genome::* builder rules with canonical results/reference/ artifacts)
-- QC/quantify branches not ported: kraken2 + bracken (modules/nf-core/kraken2, bracket, krakentools — optional taxon QC), sylph + sylphtax (modules/nf-core/sylph, sylphtax — taxonomic profiling; upstream main.nf 730-737/555-601), fastp as trimmer (upstream --trimmer fastp variant), preseq (nf-core/preseq lcextrap subsampling), ribodetector as ribo_removal_tool (the port wires sortmerna/bowtie2 only — setting ribodetector silently leaves rRNA removal off; see the main.oxoflow config comment), rustqc (modules/nf-core/rustqc bam QC), parabricks / sentieon (accelerated alignment — commercial). All are upstream options that need their own envs (and GPU for the accelerators); the reference-prep bundle gap above stays upstream-equivalent
+- none
 
 ## Fidelity
 
@@ -659,14 +674,14 @@ Known, documented deviations:
 | 5 | `min_trimmed_reads` gate drops failing samples from the downstream chain | The `fastqc_filtered_*` QC rules gate on the R2 trimmed-read count via `reads_count('{config.out_dir}/trimgalore/{sample}_trimmed_2_val_2.fq.gz') >= config.min_trimmed_reads` (matching the upstream drop filter `>=`); failing samples get their filtered-read QC skipped and the MultiQC fail_trimmed table is still produced | Requires oxo-flow >= 0.17.0. The port gates only the filtered-read QC steps — the upstream chain-wide per-sample drop (alignment, quantification and every other downstream step also excluded for failing samples) is data-dependent channel state and remains not ported; the fail_trimmed TSV keeps the upstream `n <= threshold` listing quirk (a sample exactly at the threshold passes the drop but is still listed) |
 | 6 | `skip_trimming` / `skip_markduplicates` rewire the downstream inputs (QC runs on raw / sorted BAM) | `skip_trimming=true` / `skip_markduplicates=true` break the downstream chain (trimmed reads / markdup BAM are rule inputs) | oxo-flow inputs are static paths; use the defaults |
 | 7 | `save_trimmed` / `save_align_intermeds` control publication; intermediates live in workdir | Trimmed FASTQs and intermediate BAMs are always kept at `results/` paths (they double as run checkpoints) | oxo-flow re-executes from declared outputs |
-| 8 | RSeQC PDFs are published upstream: `*.pdf` outputs of RSEQC_JUNCTIONANNOTATION (`splicing_events_pie.pdf`, `splicing_junction_pie.pdf`), RSEQC_JUNCTIONSATURATION (`junctionSaturation_plot.pdf`), read_duplication and inner_distance — plus two zero-byte touch placeholders (`junction.pdf`, `events.pdf`) | The same PDFs are kept under `junction_annotation/pdf/`, `junction_saturation/pdf/`, `read_duplication/pdf/`, `inner_distance/pdf/` with `<id>.`-prefixed names (e.g. `<id>.junction_events.pdf`); the zero-byte `junction.pdf` / `events.pdf` touch placeholders are not produced | Layout only — the published artifact set is the same; the touch placeholders are upstream artifacts MultiQC ignores |
+| 8 | RSeQC PDFs are published upstream: `*.pdf` outputs of RSEQC_JUNCTIONANNOTATION (`splice_events.pdf`, `splice_junction.pdf`), RSEQC_JUNCTIONSATURATION (`junctionSaturation_plot.pdf`), read_duplication and inner_distance — plus two zero-byte touch placeholders (`junction.pdf`, `events.pdf`) | The same PDFs are kept under `junction_annotation/pdf/`, `junction_saturation/pdf/`, `read_duplication/pdf/`, `inner_distance/pdf/` with `<id>.`-prefixed tool-native names (e.g. `<id>.splice_events.pdf`); the zero-byte `junction.pdf` / `events.pdf` touch placeholders are not produced. `junction_annotation` also publishes `bed/<id>.junction.Interact.bed` (upstream `interact_bed` emit) | Layout only — the published artifact set is the same; the touch placeholders are upstream artifacts MultiQC ignores |
 | 9 | `BEDTOOLS_GENOMECOV_FW/REV` swap their prefixes between forward and reverse libraries | `genomecov_fw` always emits `<id>.forward` (strand `+`), `genomecov_rev` always `<id>.reverse` (strand `-`) | With pipeline-level strandedness both rules never run together; the published artifact set is identical |
 | 10 | `workflow_summary_mqc.yaml` and `methods_description_mqc.yaml` MultiQC sections (Nextflow-param rendered) | Generated by `scripts/multiqc_custom_content.py` (`workflow_summary_mqc.yaml`, `methods_description_mqc.yaml`) | `paramsSummaryMap` runs only over params passed as `--config` CLI flags plus hardcoded port options (`strandedness`, `reads_dir`); Core group shows the engine version / command instead of Nextflow runtime info |
 | 11 | Merged-mode software versions are runtime-collated from per-process `versions.yml` | Static `nf_core_rnaseq_software_mqc_versions.yml` pinned to the env versions | Tools are pinned in `envs/*.yaml`; there are no per-process version captures in oxo-flow |
 | 12 | `CUSTOM_MULTIQCCUSTOMBIOTYPE` supports `--max_biotypes` via `ext.args` | Fixed at the upstream default `100` | The upstream pipeline never sets it |
 | 13 | STRINGTIE_STRINGTIE (default path, runs on the markdup BAM with `-G gtf -e`) | Ported as `quantification::stringtie` (`--fr`/`--rf` from strandedness like upstream) | The `<id>.ballgown/` directory is moved into `results/` but is not declared as a rule output (upstream emits it) |
 | 14 | DESEQ2_QC (default path, runs on `salmon.merged.gene_counts_length_scaled.tsv` with `--id_col 1 --sample_suffix '' --count_col 3`, `--vst TRUE` by default) | Ported as `quantification::deseq2_qc` with the upstream header sed (label `star_salmon`); the port script is byte-identical to upstream `bin/deseq2_qc.r` and the three args equal the script's defaults (upstream `conf/modules/deseq2_qc.config` passes them explicitly) | Blind design (`design=~1`, as upstream), with the upstream sample-name group decomposition (Group1/Group2 coldata columns split on `_` when the sample names decompose consistently) live in the byte-identical script; the `star_salmon.*_mqc.tsv` tables are kept in `results/` (upstream feeds them to MultiQC without publishing). Like `skip_qc` for the other QC files, `skip_deseq2_qc=true` / `skip_quantification_merge=true` leave the MultiQC rule's DESeq2 inputs missing — use the defaults |
-| 15 | UMI extraction (`umitools`), BBSplit, SortMeRNA/Bowtie2 rRNA removal | Ported as when-gated rules (off by default, same gates as upstream: `with_umi` / `!skip_bbsplit` / `remove_ribo_rna` + `ribo_removal_tool`) | The four trimmed-read variants each feed the aligners, quantification and MultiQC exactly like upstream; `cat_fastq` multi-pair read merging is ported as `fastq_qc::cat_reads` (input_groups, single-pair samples pass through byte-identically) |
+| 15 | UMI extraction (`umitools`), BBSplit, SortMeRNA/Bowtie2/Ribodetector rRNA removal | Ported as when-gated rules (off by default, same gates as upstream: `with_umi` / `!skip_bbsplit` / `remove_ribo_rna` + `ribo_removal_tool`) | The four trimmed-read variants each feed the aligners, quantification and MultiQC exactly like upstream; `cat_fastq` multi-pair read merging is ported as `fastq_qc::cat_reads` (input_groups, single-pair samples pass through byte-identically). All three upstream `ribo_removal_tool` values are wired (row 29 for ribodetector) |
 | 16 | UMI transcriptome intermediates are unpublished Nextflow work-dir files (`{id}.bam`, `{id}.sorted.bam`, `{id}.filtered.bam` from `bam_dedup_umi`'s SAMTOOLS_SORT / UMITOOLS_PREPAREFORRSEM) | Stable canonical names: `{sample}.transcriptome.sorted.bam` → `{sample}.umi_dedup.transcriptome.sorted.bam` → `{sample}.umi_dedup.transcriptome.bam` → `{sample}.umi_dedup.transcriptome.filtered.bam` | oxo-flow has no work dirs; every intermediate is a declared output. Published names are unchanged upstream (logs, stats, prepared BAM) |
 | 17 | UMI dedup outputs are tool-specific upstream (`{prefix}.dedup.bam` from UMITOOLS_DEDUP, `{prefix}.UMICollapse.bam` from UMICOLLAPSE) | All four umitools variants and the umicollapse variant write the shared path `{sample}.markdup.sorted.bam` (exclusive when-gates; downstream rules resolve one path) | Duplicate-output exclusive-gate idiom — same published artifact set per config; the `.log` / `_UMICollapse.log` logs keep their tool-specific names |
 | 18 | Transcriptome-side BAM stats (`samtools_stats` for `{prefix}.umi_dedup.transcriptome.sorted.bam`) | Only the dedup-side stats are ported (`{aligner}/samtools_stats/{sample}.umi_dedup.transcriptome.sorted.bam.{stats,flagstat,idxstats}`); the coordinate-sorted index + sort-side stats are not | Sort-side stats and the index are unpublished upstream unless `--save_umi_intermeds`; dedup-side stats publish unconditionally. MultiQC excludes the transcriptome stats upstream too (`bam_dedup_umi` never mixes them into `multiqc_files`) — the port mirrors that |
@@ -679,6 +694,12 @@ Known, documented deviations:
 | 25 | `kallisto` pseudo-aligner: `KALLISTO_INDEX` (`kallisto index -k 31 -i kallisto tx.fa`, process_medium) + `KALLISTO_QUANT` (process_high, `--gtf`, `--fr/--rf-stranded` from strandedness, `2> >(tee log)`) | Ported as `quantification::kallisto_index` + `kallisto_quant_pseudo` (+3 read-source variants) reusing the salmon pseudo branch's when gates; tx2gene/tximport/SE/DESeq2 pseudo rules are shared via widened when-gates with the tool label (`--quant-type`, MultiQC `KALLISTO DESeq2 ...` labels) | The port scripts (tx2gene.py / tximport.r) already handle kallisto (`abundance.tsv`, `dropInfReps=TRUE`); `-k` comes from `config.pseudo_aligner_kmer_size` (upstream default 31); extra_kallisto_quant_args stays at the upstream default (null) |
 | 26 | `KALLISTO_QUANT` logs: upstream publishes the work-dir `{prefix}.log` (the `.run_info.json` and `.log` copies are unpublished, saveAs null) and feeds MultiQC from the work dir | The port declares `{pseudo_aligner}/<id>/kallisto_quant.log` as a rule output and stages it into MultiQC as `<id>.kallisto_quant.log` | oxo-flow has no work dirs, so the log must be a declared output to reach MultiQC; the MultiQC kallisto module matches by content ("[quant] finding pseudoalignments for the reads"), so the per-sample rename is safe |
 | 27 | `DESEQ2_QC_PSEUDO` MultiQC labels come from `params.pseudo_aligner` (SALMON / KALLISTO) | The port derives the label from `config.pseudo_aligner` at render time (`tr [:lower:] [:upper:]`) | Config-derived label — same value as upstream's param-derived label |
+| 28 | `PREPARE_GENOME` output (transgenes from `additional_fasta` included) feeds `STAR_GENOMEGENERATE`, so the upstream STAR index contains the transgene sequences | The `[[references]]` `star_index` builder in `main.oxoflow` builds from the raw fixture paths (`config.fasta` / `config.gtf`) | `[[references]]` build before the rule DAG and cannot consume `prepare_genome` rule outputs (see `modules/prepare_genome.oxoflow` header); with `additional_fasta` set the STAR index lacks the transgene contigs while the other index builders (HISAT2 / RSEM / Salmon) use the processed `results/reference/` artifacts — point `config.star_index` at an externally built index if transgenes must be in the STAR index |
+| 29 | `RIBODETECTOR` rRNA removal (`--ribo_removal_tool ribodetector`): `SEQKIT_STATS` on the filtered reads derives the read length (`getReadLengthFromSeqkitStats`: mean of `avg_len` rounded, fallback 100), then `ribodetector_cpu` filters both reads (`-l <len> -t <cpus>`), process_medium 6/36G, conda `bioconda::ribodetector=0.3.3` (no openjdk — the CPU binary embeds its runtime) | Ported as `fastq_qc::seqkit_stats` (+`_bbsplit`) + `fastq_qc::ribodetector` (+`_bbsplit`) with the same awk mean/round/fallback read-length derivation, published as `ribodetector/{sample}_1/_2.non_rRNA.fastq.gz` + `{sample}.log`; aligner and pseudo-quantification read the ribodetector outputs via the `_ribodetector` twins (STAR ×2, HISAT2, Bowtie2, Salmon pseudo, Kallisto pseudo); `fq_lint_rrna_ribodetector` + `fastqc_filtered_ribodetector` mirror the other rRNA branches' QC | The GPU flag is dropped: upstream `--use_gpu_ribodetector` switches to the `ribodetector` binary + GPU accelerator profile; the port always runs `ribodetector_cpu` (no GPU resources in oxo-flow) — the config comment documents the divergence. Unlike SortMeRNA/Bowtie2, ribodetector is ML-based and reference-free, so `rrna_fastas` / `sortmerna_index` / `bowtie2_rrna_index` are not read on this branch (the `rrna_fastas_prepare` gate stays `sortmerna \|\| bowtie2` like upstream) |
+| 30 | Contaminant screening (`--contaminant_screening kraken2 \| kraken2_bracken \| sylph`, gated on `!params.skip_qc`): Kraken2 2.1.6 (`--confidence 0.05 --minimum-hit-groups 3` + `--gzip-compressed --report`), Bracken 3.1 (`-d -i -o` on the report), Sylph 0.9.0 (`profile -c 100 -u`), sylph-tax 1.2.0 (`taxprof <profiles> -t <taxonomy>`, output `.sylphmpa`) | Ported as `contaminant::kraken2` / `contaminant::bracken` / `contaminant::sylph_profile` / `contaminant::sylphtax_taxprof` (module `modules/contaminant_screening.oxoflow`, gated on `config.contaminant_screening`, published under `contaminant_screening/`); kraken DBs, sylph DB and taxonomy config are user-provided via `config.kraken_db` / `config.sylph_db` / `config.sylph_taxonomy` (fail-style like the GTDB/geNomad conventions — the engine cannot download them mid-run) | Two divergences: `contaminant_screening_input` is fixed to `trimmed` (upstream default `unmapped` reads STAR's `Unmapped.out` reads, which the port's star_align rules do not emit); a comma-separated `sylph_db` list is not supported (the port takes the whole value as one DB path) — both recorded in the config comments and Not ported |
+| 31 | `pipeline_info/` published (runtime-collated software versions + report); MultiQC custom content (`fail_trimmed` / `fail_mapped`, strand checks, deseq2 pca/dists, biotype, dupradar) is fed to MultiQC unpublished; no `reference/` or `read_merging/` top-level dirs | No `pipeline_info/` — the software-versions YAML publishes as `multiqc/nf_core_rnaseq_software_mqc_versions.yml` and feeds MultiQC from there (row 11 covers the collation gap); mqc custom content publishes to `results/multiqc/` (top level) and the producing rule's dir (`<aligner>/deseq2_qc/`, `featurecounts/`, `dupradar/multiqc/`); port-only top-level `reference/` (canonical reference chain) and `read_merging/` (CAT_FASTQ merges), `*.R_sessionInfo.log` files published next to their producers | oxo-flow re-executes from declared outputs, so every artifact MultiQC consumes stays published (rows 7/16 rationale); `pipeline_info` equivalents live next to the MultiQC inputs |
+| 32 | 3.28.0 module environments add dependencies the ported rules never invoke (tag-file verified): `pigz=2.8` (`modules/nf-core/bbmap/bbsplit/environment.yml`), `conda-forge::pigz=2.8` (`modules/nf-core/bowtie2/align/environment.yml`), `coreutils=9.5` + `pigz=2.8` (`modules/nf-core/kraken2/kraken2/environment.yml`), `conda-forge::jq=1.8.2` (`modules/nf-core/tximeta/tximport/environment.yml`), the umitools py stack `future=0.18.3 / matplotlib=3.8.2 / numpy=1.26.4 / pandas=2.2.0 / pybktree=1.1 / python=3.9.18 / regex=2023.12.25 / scipy=1.12.0` (`modules/nf-core/umitools/dedup/environment.yml`) | None present in port `envs/` (grep-verified absent) | Ported rule commands never shell those binaries; carrying them would grow conda-solver surface without fidelity gain. Separately: the merged `envs/python.yaml` (cat_additional_fasta + gtffilter) follows the newer gtffilter pin `conda-forge::python=3.14.5` (tag catadditionalfasta stays 3.12.2; merged env is stdlib-only), and the `python=3.12.12` / `rich` entries in `envs/multiqc.yaml` are port-carried additions, not tag-sourced |
+| 33 | 3.28.0 adds `conf/containers_{docker,singularity_oras,singularity_https,conda_lock_files}_{amd64,arm64}.config` profile wiring, reworks `.github` CI, and deletes `bin/fastq_dir_to_samplesheet.py` | Not ported — no oxo-flow expression | Container addressing is engine-level (`[rules.container]`) in oxo-flow, with no per-arch profile configs; cohorts come from `[[sample_groups]]`, so the samplesheet generator has no port entrypoint; the upstream `.github` surface is Nextflow-CI-specific |
 
 ## Not ported (metadata `excluded`)
 
@@ -688,16 +709,19 @@ and all other downstream steps of failing samples remain scheduled; only the
 `reads_count(...) >= config.min_trimmed_reads`, requires oxo-flow >= 0.17.0);
 `auto` strandedness inference without a metadata_file column (with the column,
 `auto` / empty values fall back to `config.strandedness` — no Salmon
-`--libType A` inference run). User-supplied
+`--libType A` inference run). The `--use_gpu_ribodetector` flag is dropped:
+the port always runs `ribodetector_cpu` (see fidelity row 29).
+User-supplied
 `bbsplit_index` / `sortmerna_index` bundles are staged like upstream
 (`.tar.gz`/`.tgz`/`.tar` archives untarred into the canonical dir, plain
 directories symlinked; gtf, gff, fasta, additional_fasta and
-transcript_fasta accept plain or `.gz` paths).
+transcript_fasta accept plain or `.gz` paths). The contaminant-screening
+`unmapped` input mode is not ported (see fidelity row 30).
 
 ## Links
 
 - Repository: [oxo-flow-rnaseq](https://github.com/oxo-flow-community/oxo-flow-rnaseq)
-- Upstream: [nf-core/rnaseq](https://github.com/nf-core/rnaseq) @ `3.26.0`
+- Upstream: [nf-core/rnaseq](https://github.com/nf-core/rnaseq) @ `3.28.0`
 - License: Apache-2.0 (this workflow) · MIT (upstream)
 
 Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
