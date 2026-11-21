@@ -6,21 +6,21 @@ title: "WGS/WES germline and somatic variant calling"
 <div class="ox-detail-cols">
 <div class="ox-detail-main">
 <h1>WGS/WES germline and somatic variant calling</h1>
-<div class="ox-page-badges"><span class="ox-badge ox-badge--live">✔ Live-tested · default-path</span> <span class="ox-badge ox-badge--origin">Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot" aria-hidden="true"></span>nf-core port</span><span class=ox-tag-sep></span><span class="ox-tag">wgs</span><span class="ox-tag">wes</span><span class="ox-tag">germline</span><span class="ox-tag">somatic</span><span class="ox-tag">variant-calling</span><span class="ox-tag">gatk</span><span class="ox-tag">bwa</span><span class="ox-tag">bwa-mem2</span><span class="ox-tag">vep</span><span class="ox-tag">umi</span><span class="ox-tag">nf-core</span></div>
-<p class="ox-desc">GATK best-practice variant calling for whole-genome and whole-exome sequencing (WGS/WES), germline by default: FastQC quality control, fastp trimming and splitting, BWA-MEM (or BWA-MEM2) alignment, MarkDuplicates with CRAM or BAM output, base quality score recalibration (BQSR), single-sample HaplotypeCaller variant calling with CNN 1D scoring and tranche filtering, VEP annotation, per-sample VCF QC and a final MultiQC report. Optional ported branches (all gated off by default): reference preparation (BWA/BWAmem2 index, .dict, .fai), UMI-aware consensus calling (fgbio chain + fastp), fastp split-parts fan-out (split_parts=true: runtime-discovered per-part BWA-MEM/BWA-MEM2 alignment + BAM merge + index, no input cap), FreeBayes, Strelka2 germline, Manta germline, bcftools mpileup, TIDDIT SV (germline only; somatic mode + SVDB merge excluded), goleft indexcov, DeepVariant, NGSCheckMate sample-identity QC, the joint-germline path (GVCF mode + GenomicsDBImport + GenotypeGVCFs + VQSR), per-caller VCF QC + VEP annotation (upstream fan-out over every enabled caller), and the per-chromosome scatter/gather branch (scatter_gatk=true) that ports upstream interval preparation + GATK4_GATHERBQSRREPORTS / CRAM/BAM_MERGE_INDEX_SAMTOOLS / GATK4_MERGEVCFS with one job per chromosome.</p>
+<div class="ox-page-badges"><span class="ox-badge ox-badge--star">★ Verified</span> <span class="ox-badge ox-badge--origin">Official port</span> <span class="ox-badge ox-badge--nf"><span class="dot" aria-hidden="true"></span>nf-core port</span><span class=ox-tag-sep></span><span class="ox-tag">wgs</span><span class="ox-tag">wes</span><span class="ox-tag">germline</span><span class="ox-tag">somatic</span><span class="ox-tag">variant-calling</span><span class="ox-tag">gatk</span><span class="ox-tag">bwa</span><span class="ox-tag">bwa-mem2</span><span class="ox-tag">vep</span><span class="ox-tag">umi</span><span class="ox-tag">nf-core</span></div>
+<p class="ox-desc">GATK best-practice variant calling for whole-genome and whole-exome sequencing (WGS/WES), germline by default: FastQC quality control, fastp trimming and splitting, BWA-MEM (or BWA-MEM2) alignment, MarkDuplicates with CRAM or BAM output, base quality score recalibration (BQSR), single-sample HaplotypeCaller variant calling with CNN 1D scoring and tranche filtering, VEP annotation, per-sample VCF QC and a final MultiQC report. Optional ported branches (all gated off by default): reference preparation (BWA/BWAmem2 index, .dict, .fai), UMI-aware consensus calling (fgbio chain + fastp), fastp split-parts fan-out (split_parts=true: runtime-discovered per-part BWA-MEM/BWA-MEM2 alignment + BAM merge + index, no input cap), FreeBayes, Strelka2 germline, Manta germline, bcftools mpileup, TIDDIT SV (germline plus somatic per-pair calling with SVDB merge via config/somatic_pairs.tsv), somatic FreeBayes (tumor-normal joint call plus tumor-only mode with the nf-core sort/tabix/vcffilter chain and per-caller QC) and somatic bcftools mpileup (tumor-only VCF published; paired leg shape-faithful for the future Control-FREEC feed), somatic MuSE (call_muse, tumor-normal pair via config/somatic_pairs.tsv, dbsnp-annotated sump with the upstream -ot guard), somatic MSIsensor-pro (call_msisensorpro, pair-fanned MSI scoring with a once-per-run msi-scan build unless the user supplies one), somatic CNVkit (call_cnvkit, pair-fanned CNV calling: batch coverage/segmentation with CRAM pre-conversion and the wes-flag hybrid/wgs method switch, gene-level metrics, VCF export), LoFreq SNV/indel calling (call_lofreq, cohort fan-out over every sample with call-parallel and --call-indels, CRAM pre-converted to BAM), Varlociraptor statistical calling (call_varlociraptor: germline leg cohort fan-out on the haplotypecaller VCF and tumor-only leg cohort fan-out on the mutect2 tumor-only VCF, each via estimate alignment-properties -&gt; preprocess -&gt; call variants generic --scenario --obs -&gt; bcftools sort -&gt; filter-calls control-fdr -&gt; final sort, with pre-rendered scenario yaml), somatic ASCAT copy-number and purity/ploidy (call_ascat, pair-fanned via config/somatic_pairs.tsv with the R pipeline as assets/ascat_run.R, G1000 allele/loci input and the 4-way purity/ploidy runAscat), somatic Control-FREEC (call_controlfreec, pair-fanned mpileup -&gt; FREEC with a verbatim config.txt, WES/WGS ternaries, assess-significance and BED export), tumor-only MSIsensor2 MSI scoring (call_msisensor2, empty-control rows only, user-provided models tarball), goleft indexcov, DeepVariant, NGSCheckMate sample-identity QC, the joint-germline path (GVCF mode + GenomicsDBImport + GenotypeGVCFs + VQSR), per-caller VCF QC + VEP annotation (upstream fan-out over every enabled caller), optional snpEff annotation of every caller VCF (annotate_snpeff, gated on snpeff_data_ready with fail-fast shells when snpeff_db is unset), and the per-chromosome scatter/gather branch (scatter_gatk=true) that ports upstream interval preparation + GATK4_GATHERBQSRREPORTS / CRAM/BAM_MERGE_INDEX_SAMTOOLS / GATK4_MERGEVCFS with one job per chromosome; the 3.12.0 keeps-set adds the mosdepth fast-mode parameter (#2351), ascat_penalty (#2328), Mutect2 force-call co-writers (#2365), the FilterMutectCalls --stats wiring (#2358) and the ApplyBQSR streaming/indexing form (#2318).</p>
 <div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#run-it">▶ Run it</a><a class="ox-btn" href="https://github.com/oxo-flow-community/oxo-flow-sarek" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow run main.oxoflow</code></div>
 </div>
 <div>
 <div class="ox-glance">
 <div class="ox-glance-title">At a glance</div>
-<div class="ox-kv"><span class="k">Rating</span><span class="v live">✔ Live-tested · default-path</span></div>
-<div class="ox-kv"><span class="k">Rules</span><span class="v">109</span></div>
+<div class="ox-kv"><span class="k">Rating</span><span class="v live">★ Verified</span></div>
+<div class="ox-kv"><span class="k">Rules</span><span class="v">165</span></div>
 <div class="ox-kv"><span class="k">Compute</span><span class="v"><span title="up to 24 CPUs / 36 GB per rule (BWA-MEM)">up to 24 CPUs / 36 GB per rule (BWA-MEM)</span></span></div>
 <div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--nf"><span class="dot" aria-hidden="true"></span>nf-core port</span></span></div>
 <div class="ox-kv"><span class="k">Origin</span><span class="v">Official port</span></div>
 <div class="ox-kv"><span class="k">Domain</span><span class="v">genomics</span></div>
 <div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/nf-core/sarek">nf-core/sarek</a></span></div>
-<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>3.10.0</code></span></div>
+<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>3.12.0</code></span></div>
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2279.1"><code>10.48546/workflowhub.workflow.2279.1</code></a></span></div>
@@ -71,10 +71,15 @@ Point the `[config]` fasta / bwa_index / dbsnp / known_indels paths at your GRCh
 - paired-end FASTQ reads at raw/{sample}_R1.fastq.gz / raw/{sample}_R2.fastq.gz
 - GRCh38 genome FASTA plus .fai and .dict
 - GRCh38 BWA index directory (bwa_index_dir); bwa_mem2_index_dir when aligner = "bwa-mem2"
+- config/somatic_pairs.tsv filled with pair_id/experiment/control rows when any somatic caller is enabled (MuSE, MSIsensor-pro, CNVkit, Varlociraptor, ASCAT and Control-FREEC included; Varlociraptor's tumor-only leg additionally needs the empty-control tumor-only rows so a mutect2 tumor-only VCF is produced; MSIsensor2 uses empty-control tumor-only rows plus msisensor2_models)
+- force-calling of somatic alleles: set force_call_alleles to a bgzip'd alleles VCF (Mutect2 --alleles co-writers; the .tbi is regenerated in-task, upstream #2365)
+- ASCAT (call_ascat = true): G1000 allele files (ascat_alleles) and loci files (ascat_loci) — directories ending in "_chr"-suffixed members or single _chr files
 - GATK bundle known-sites VCFs with .tbi: dbsnp_146.hg38.vcf.gz, Mills_and_1000G_gold_standard.indels.hg38.vcf.gz, Homo_sapiens_assembly38.known_indels.vcf.gz; known_snps + known_snps_tbi for joint VQSR
 - VEP cache (GRCh38, homo_sapiens, cache version 112) mounted at /.vep in the container
+- snpEff database under a snpEff data dir when annotate_snpeff = true (snpeff_db = db name, snpeff_data_ready = true)
 - NGSCheckMate SNP bed (ngscheckmate_bed) when tools_ngscheckmate = true
-- compute: up to 24 CPUs / 36 GB per rule (BWA-MEM 24 threads/30G; VEP 6 threads/36G)
+- MSIsensor2 (call_msisensor2 = true): msisensor2_models tarball with the pre-trained hg19 17-site panel (test/fixtures/models_hg19_17sites.tar.gz for the test sample)
+- compute: up to 24 CPUs / 36 GB per rule (BWA-MEM 24 threads/30G; VEP 6 threads/36G; Control-FREEC 8 threads/32G)
 - input cap: ~50M read pairs per sample when split_parts = false (fastp single-part mode); no cap with split_parts = true (runtime-discovered fan-out, requires mapped_bam = "sorted")
 - scatter_gatk = true: config.chromosomes must match the fasta .fai contigs
 - disk: results/ for per-sample CRAMs/VCFs/reports, plus the reference bundle and VEP cache
@@ -490,15 +495,21 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 **In scope**
 
 - bam_merge_index_samtools
+- ascat_somatic
 - bcftools_mpileup_call
+- bcftools_mpileup_call_somatic
+- bcftools_mpileup_call_somatic_tumor_only
 - bcftools_mpileup_ngscheckmate
 - bcftools_sort_freebayes
+- bcftools_sort_freebayes_somatic
 - bcftools_sort_joint
 - bcftools_sort_joint_scatter
 - bcftools_stats
 - bcftools_stats_deepvariant
 - bcftools_stats_freebayes
+- bcftools_stats_freebayes_somatic
 - bcftools_stats_joint
+- bcftools_stats_lofreq
 - bcftools_stats_manta
 - bcftools_stats_mpileup
 - bcftools_stats_strelka
@@ -510,12 +521,18 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - bwa_mem_split
 - bwa_mem_umi
 - bwamem2_index
+- controlfreec2bed
+- controlfreec_assesssignificance
+- controlfreec_freec
+- controlfreec_mpileup
 - create_intervals_bed
 - deepvariant
 - ensemblvep_vep
 - ensemblvep_vep_deepvariant
 - ensemblvep_vep_freebayes
+- ensemblvep_vep_freebayes_somatic
 - ensemblvep_vep_joint
+- ensemblvep_vep_lofreq
 - ensemblvep_vep_manta
 - ensemblvep_vep_mpileup
 - ensemblvep_vep_strelka
@@ -528,6 +545,8 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - fgbio_fastqtobam
 - fgbio_groupreadsbyumi
 - freebayes
+- freebayes_somatic
+- freebayes_somatic_tumor_only
 - gatk_applybqsr
 - gatk_applybqsr_scatter
 - gatk_applyvqsr_indel
@@ -556,44 +575,74 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - gatk_mergevcfs_joint_scatter
 - gatk_mergevcfs_scatter
 - gatk_mutect2_paired
+- gatk_mutect2_paired_alleles
 - gatk_mutect2_tumor_only
+- gatk_mutect2_tumor_only_alleles
 - gatk_variantrecalibrator_indel
 - gatk_variantrecalibrator_snp
 - goleft_indexcov
+- lofreq_call
 - manta_germline
 - manta_somatic
 - merge_index_samtools
 - mosdepth_md
 - mosdepth_recal
+- msisensor2_msi
 - multiqc
+- muse_call
+- muse_sump
+- msisensorpro_msi
+- msis_scan_stage
+- msisensorpro_scan
 - ngscheckmate_ncm
 - samtools_bam2fq_consensus
 - samtools_bam2fq_umi
 - samtools_faidx
-- samtools_index_recal
 - samtools_reindex_bam
 - samtools_stats_md
 - samtools_stats_recal
+- snpeff_snpeff
+- snpeff_snpeff_deepvariant
+- snpeff_snpeff_freebayes
+- snpeff_snpeff_freebayes_somatic
+- snpeff_snpeff_joint
+- snpeff_snpeff_manta
+- snpeff_snpeff_mpileup
+- snpeff_snpeff_strelka
+- snpeff_snpeff_tiddit
+- snpeff_snpeff_lofreq
+- cnvkit_batch
+- cnvkit_export
+- cnvkit_genemetrics
 - strelka_germline
 - strelka_somatic
 - tabix_freebayes
 - tabix_freebayes_filt
+- tabix_freebayes_somatic
+- tabix_freebayes_somatic_filt
 - tabix_interval
 - tabix_tiddit
 - tiddit_sv
+- tiddit_sv_somatic
+- svdb_merge_tiddit
 - vcffilter_freebayes
+- vcffilter_freebayes_somatic
 - vcftools_filter_summary
 - vcftools_filter_summary_deepvariant
 - vcftools_filter_summary_freebayes
+- vcftools_filter_summary_freebayes_somatic
 - vcftools_filter_summary_joint
 - vcftools_filter_summary_manta
 - vcftools_filter_summary_mpileup
 - vcftools_filter_summary_strelka
 - vcftools_filter_summary_tiddit
+- vcftools_filter_summary_lofreq
 - vcftools_tstv_count
 - vcftools_tstv_count_deepvariant
 - vcftools_tstv_count_freebayes
+- vcftools_tstv_count_freebayes_somatic
 - vcftools_tstv_count_joint
+- vcftools_tstv_count_lofreq
 - vcftools_tstv_count_manta
 - vcftools_tstv_count_mpileup
 - vcftools_tstv_count_strelka
@@ -601,20 +650,28 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - vcftools_tstv_qual
 - vcftools_tstv_qual_deepvariant
 - vcftools_tstv_qual_freebayes
+- vcftools_tstv_qual_freebayes_somatic
 - vcftools_tstv_qual_joint
+- vcftools_tstv_qual_lofreq
 - vcftools_tstv_qual_manta
 - vcftools_tstv_qual_mpileup
 - vcftools_tstv_qual_strelka
 - vcftools_tstv_qual_tiddit
+- varlociraptor_call_germline
+- varlociraptor_call_tumor_only
 
 **Excluded**
 
 - Sentieon / Parabricks / DRAGMAP — commercial accelerators (licensed binaries), out of scope
-- MUSE (upstream subworkflow bam_variant_calling_somatic_muse: MUSE_CALL + MUSE_SUMP) — somatic SNV caller not ported; needs its own env + tumor/normal fixtures
-- MSIsensorpro (modules/nf-core/msisensorpro: scan + msisomatic) — MSI caller not ported; needs own env + model data + fixtures
-- CNVkit / ASCAT / Control-FREEC / MSIsensor2 / LoFreq / Varlociraptor — the remaining somatic callers that exist in upstream 3.10.0; Mutect2 / Strelka2-somatic / Manta-somatic are ported (call_mutect2 / call_strelka_somatic / call_manta_somatic, pair-fanned via config/somatic_pairs.tsv); the rest need their own envs/fixtures. (SomaticSniper and VarDict are NOT upstream 3.10.0 features — absent from the nextflow_schema.json tools enum and from all wired subworkflows — so they are not listed)
-- TIDDIT somatic mode + SVDB merge (subworkflow bam_variant_calling_somatic_tiddit; modules/nf-core/svdb/merge) and FreeBayes / mpileup in somatic & tumor-only mode — not ported; port call_tiddit is germline single-sample (--skip_assembly), call_freebayes/call_mpileup are germline, and the tumor-only path is Mutect2 only
-- Annotation beyond VEP: snpEff / SnpSift (modules/nf-core/snpeff + snpsift, upstream prepare_snpsift_databases / vcf_annotate_all) and the upstream merge / bcftools annotate (bcfann) options — not ported; the port annotates every caller VCF with VEP only
+- MUSE (upstream subworkflow bam_variant_calling_somatic_muse: MUSE_CALL + MUSE_SUMP) — ported (call_muse, pair-fanned via config/somatic_pairs.tsv; uses dbsnp + the wes flag for the sump -E/-G switch)
+- MSIsensorpro (modules/nf-core/msisensorpro: scan + msisomatic) — ported (call_msisensorpro: msisensorpro_scan builds the msi-scan list once per run unless msisensorpro_scan_ready; msisensorpro_msi pair-fanned via config/somatic_pairs.tsv; needs the scan list as user data when ready)
+- CNVkit (modules/nf-core/cnvkit: batch/call/export/genemetrics) — ported (call_cnvkit: cnvkit_batch pair-fanned via config/somatic_pairs.tsv with samtools CRAM->BAM pre-conversion and the wes-flag hybrid/wgs method switch; cnvkit_genemetrics + cnvkit_export to VCF; generate_pon / reference cnn input and the SNV-VCF B-allele feed are not ported)
+- LoFreq (modules/nf-core/lofreq/callparallel) — ported (call_lofreq: lofreq_call cohort fan-out over every sample with --call-indels and samtools CRAM->BAM pre-conversion, matching the upstream tumor-only single-sample call-parallel leg; interval scatter/MergeVcfs is not ported)
+- ASCAT (upstream BAM_VARIANT_CALLING_SOMATIC_ASCAT: ascat main.nf R pipeline + alleleCounter) — ported (call_ascat: pair-fanned via config/somatic_pairs.tsv; the R pipeline ships as the pre-staged asset assets/ascat_run.R to keep oxo-flow's {token} substitution away from R braces; G1000 allele/loci prefix resolution, prepareHTS with the upstream -r fasta flag and seed 42, 4-way runAscat purity/ploidy override, outputs {pair}.segments.txt/.cnvs.txt/.purityploidy.txt/.metrics.txt; CRAMs are passed to alleleCounter directly, no CRAM->BAM conversion)
+- Control-FREEC (upstream BAM_VARIANT_CALLING_SOMATIC_CONTROLFREEC: MPILEUP pair legs -> FREEC_SOMATIC/FREEC_TUMORONLY -> ASSESS_SIGNIFICANCE + FREEC2BED) — ported (call_controlfreec: controlfreec_mpileup per pair member + controlfreec_freec regenerating config.txt verbatim with all cf_* keys and the WES/WGS ternaries, blank-line echoes for unset options as upstream, renames via quoted find -exec; controlfreec_assesssignificance + controlfreec2bed; FREEC2CIRCOS + MAKEGRAPH2 deliberately not ported)
+- MSIsensor2 (upstream MSISENSOR2_MSI on bam_variant_calling_tumor_only_all) — ported (call_msisensor2: msisensor2_msi tumor-only rows only (empty control in config/somatic_pairs.tsv), models tarball unpacked to models/, -c 20 WES / -c 15 WGS, outputs {experiment}.msi/_dis/_somatic; user-provided models tarball required)
+- Varlociraptor (upstream POST_VARIANTCALLING: VCF_VARLOCIRAPTOR_{GERMLINE,TUMOR_ONLY,SOMATIC}) — ported (call_varlociraptor: varlociraptor_call_germline cohort fan-out on the haplotypecaller VCF and varlociraptor_call_tumor_only cohort fan-out on the mutect2 tumor-only VCF, each with estimate alignment-properties -> preprocess -> call variants generic --scenario --obs alias=<candidate> -> bcftools sort -> filter-calls control-fdr local-smart -> final sort; scenarios ship as pre-rendered yaml for the port's fixed sex = "XX" and contamination fraction 0.0; the somatic tumor/normal pair leg and the yte templating are not ported)
+- Annotation beyond VEP: SnpSift annmem databases (modules/nf-core/snpsift; upstream prepare_snpsift_databases / SNPSIFT_ANNMEM / SNPSIFT_ANNMEMCREATE) and the upstream merge / bcftools annotate (bcfann) options — not ported; the port annotates every caller VCF with VEP or snpEff (annotate_snpeff, gated on snpeff_data_ready)
 - Non-default I/O and prep paths not ported: gatk4spark Spark BQSR/ApplyBQSR/MarkDuplicates (modules/nf-core/gatk4spark; subworkflows bam_applybqsr_spark / bam_baserecalibrator_spark / bam_markduplicates_spark), bbsplit/bbmap genomic-contaminant split (fastq_preprocess_gatk), SPRING compressed FASTQ input (samplesheet_to_channel spring_1/spring_2; nf-core/spring), and untar-based reference download in prepare_genome (UNTAR_BBSPLIT_INDEX / UNTAR_CHR_DIR / UNTAR_MSISENSOR2_MODELS) — the port runs non-Spark GATK4, accepts raw FASTQ.gz, and requires user-provided reference files
 
 ## Fidelity
@@ -625,18 +682,18 @@ every ported optional branch (gated by config flags — all default-off).
 
 | Upstream process/rule | oxo-flow rule | Tool (version) | Notes |
 |---|---|---|---|
-| FASTQC | `fastqc` | fastqc 0.12.1 | identical command |
-| FASTP | `fastp` | fastp 1.1.0 | upstream default trimming/splitting module (TrimGalore does not exist in 3.10.0 — `grep -ri trimgalore` over the upstream tree is empty; the `--trim_fastq_trimgalore` param was dropped in 3.10.0) |
+| FASTQC | `fastqc` | fastqc 0.13.0 (wave image `community.wave.seqera.io/library/fastqc:0.13.0--b342db7b694c9af4` — upstream `modules/nf-core/fastqc/main.nf` @ 3.12.0; the pre-rebaseline biocontainers 0.12.1 image is retired) | identical command |
+| FASTP | `fastp` | fastp 1.1.0 | upstream default trimming/splitting module (TrimGalore does not exist in 3.12.0 — `grep -ri trimgalore` over the upstream tree is empty; the `--trim_fastq_trimgalore` param was dropped in 3.10.0) |
 | BWA_MEM | `bwa_mem` | bwa 0.7.17 (envs/bwa-samtools.yaml; the 0.7.19 image is used by the prepare_reference rules) | upstream default aligner is `bwa-mem`, not `bwa-mem2`; read-group flags from sarek.nf; prefix `{meta.id}.{reads[0] token}` = `test.0001` under split_fastq; the same image also carries samtools 1.22.1 (used for `samtools sort`) |
 | BWA_MEM2 | `bwa_mem2` | bwa-mem2 2.2.1 | `aligner = "bwa-mem2"` (upstream `params.aligner`); same `-K 100000000 -Y -R` args as BWA_MEM; shares bwa_mem's output path — the two rules are mutually exclusive via `when`, all downstream rules are unchanged; index from `bwa_mem2_index_dir` |
 | GATK4_MARKDUPLICATES | `gatk_markduplicates` | gatk4 4.5.0.0 (envs/gatk4.yaml; upstream module pin at this tag is 4.6.2.0 for some processes) | default CRAM branch (`save_output_as_bam=false`) |
 | GATK4_MARKDUPLICATES (BAM branch) | `gatk_markduplicates_bam` | gatk4 4.5.0.0 (envs/gatk4.yaml; upstream module pin at this tag is 4.6.2.0 for some processes) | `save_output_as_bam = true`; `--CREATE_INDEX true`, no CRAM conversion; `.md.bai` renamed to `.md.bam.bai` (upstream BAM_MERGE_INDEX_SAMTOOLS); downstream rules read `{config.alignment_ext}` / `{config.recal_index_ext}` (set `"bam"` / `"bam.bai"` together) |
-| MOSDEPTH (post-MD) | `mosdepth_md` | mosdepth 0.3.14 (env pin >=0.3.9,<0.4) | ext.prefix `{meta.id}.md`; WGS `--by 500` mode |
+| MOSDEPTH (post-MD) | `mosdepth_md` | mosdepth 0.3.14 (env pin >=0.3.9,<0.4) | ext.prefix `{meta.id}.md`; `-n --by 500` + `--fast-mode` ride the `!wes` leg of upstream's MOSDEPTH ext.args, `--fast-mode` additionally gated on `config.mosdepth_fast_mode` (upstream 3.12.0 #2351, default true) |
 | SAMTOOLS_STATS (post-MD) | `samtools_stats_md` | samtools 1.24 | ext.prefix `{meta.id}.md.{alignment_ext}`; 1.24 is the version in the `htslib_samtools` stats/index images (the BWA image carries 1.22.1) |
 | GATK4_BASERECALIBRATOR | `gatk_baserecalibrator` | gatk4 4.5.0.0 (envs/gatk4.yaml; upstream module pin at this tag is 4.6.2.0 for some processes) | known-sites = dbsnp + Mills gold standard + known indels (GRCh38); single whole-genome job by default; per-chromosome jobs under `scatter_gatk = true` (see the scatter/gather row) |
-| GATK4_APPLYBQSR | `gatk_applybqsr` | gatk4 4.5.0.0 (envs/gatk4.yaml; upstream module pin at this tag is 4.6.2.0 for some processes) | output CRAM per default (BAM in the `save_output_as_bam` branch); single whole-genome job by default; per-chromosome jobs under `scatter_gatk = true` (see the scatter/gather row) |
-| SAMTOOLS_INDEX (recal) | `samtools_index_recal` | samtools 1.24 | indexes the recalibrated alignment (`.crai` or `.bam.bai`) |
-| MOSDEPTH (recal) | `mosdepth_recal` | mosdepth 0.3.14 (env pin >=0.3.9,<0.4) | ext.prefix `{meta.id}.recal` |
+| GATK4_APPLYBQSR | `gatk_applybqsr` | gatk4 4.5.0.0 + samtools 1.24 (envs/gatk4.yaml; upstream module pin at this tag is 4.6.2.0 for some processes) | streaming form (upstream 3.12.0 #2318 `bam_applybqsr`): GATK emits BAM on stdout, `samtools view --write-index` writes the CRAM + index — CRAM pinned `-O cram,version=3.0` (the env's samtools 1.24 writes 3.1 by default, which the GATK 4.5 reader rejects — cf. the #4 merge fix); BAM branch uses `-b`; single whole-genome job by default; per-chromosome jobs under `scatter_gatk = true` (see the scatter/gather row) |
+| SAMTOOLS_INDEX (recal) | — (collapsed into `gatk_applybqsr`) | — | the 3.12.0 streaming form writes the index inside the ApplyBQSR rule via `samtools view --write-index` (upstream #2318); the standalone `samtools_index_recal` rule is retired and `mosdepth_recal` now edges on the stream-produced `.crai` |
+| MOSDEPTH (recal) | `mosdepth_recal` | mosdepth 0.3.14 (env pin >=0.3.9,<0.4) | ext.prefix `{meta.id}.recal`; same `!wes` + `config.mosdepth_fast_mode` gating (#2351) |
 | SAMTOOLS_STATS (recal) | `samtools_stats_recal` | samtools 1.24 | ext.prefix `{meta.id}.recal.{alignment_ext}` |
 | GATK4_HAPLOTYPECALLER | `gatk_haplotypecaller` | gatk4 4.5.0.0 (envs/gatk4.yaml; upstream module pin at this tag is 4.6.2.0 for some processes) | default `tools=haplotypecaller,vep` → `call_haplotypecaller=true`; single-sample mode (no `-ERC GVCF`), `--pcr-indel-model CONSERVATIVE`; gated off when `joint_germline = true` (upstream picks the GVCF branch); single whole-genome job by default; per-chromosome jobs under `scatter_gatk = true` (see the scatter/gather row) |
 | GATK4_CNNSCOREVARIANTS | `gatk_cnnscorevariants` | gatk4 4.5.0.0 (envs/gatk4.yaml; upstream module pin at this tag is 4.6.2.0 for some processes) | VCF_VARIANT_FILTERING_GATK part 1; CNN 1D scoring (module default `--tensor-type 1D`); upstream keeps the `{sample}.cnn.vcf.gz` intermediate unpublished — the port stores it under `results/variant_calling/cnnscorevariants/` for DAG handoff; skipped in joint mode (upstream: no filtering of the joint VCF) |
@@ -661,18 +718,28 @@ every ported optional branch (gated by config flags — all default-off).
 | BAM_NGSCHECKMATE (BCFTOOLS_MPILEUP + NGSCHECKMATE_NCM) | `bcftools_mpileup_ngscheckmate`, `ngscheckmate_ncm` | bcftools 1.23.1, ngscheckmate 1.0.1 | `tools_ngscheckmate = true`; per-sample mpileup `--no-version --ploidy 1 -c` with `-T` SNP bed, reheader to `{sample}-{lane}`; cohort `NCM_REF=./reference.fasta ncm.py -d . -bed <bed> -O . -N ngscheckmate -V`; outputs published to `reports/ngscheckmate/` (live-verify: ncm.py's exact output filenames, see Test) |
 | Joint germline (GATK4_HAPLOTYPECALLER GVCF, GATK4_GENOMICSDBIMPORT, GATK4_GENOTYPEGVCFS, BCFTOOLS_SORT, GATK4_MERGEVCFS, GATK4_VARIANTRECALIBRATOR SNP+INDEL, GATK4_APPLYVQSR SNP+INDEL) | `gatk_haplotypecaller_gvcf`, `gatk_genomicsdbimport`, `gatk_genotypegvcfs`, `bcftools_sort_joint`, `gatk_mergevcfs_joint`, `gatk_variantrecalibrator_snp`, `gatk_variantrecalibrator_indel`, `gatk_applyvqsr_snp`, `gatk_applyvqsr_indel` | gatk4 4.5.0.0 (envs/gatk4.yaml; upstream module pin at this tag is 4.6.2.0 for some processes), bcftools 1.23.1 | `joint_germline = true`; VQSR resource labels from `conf/igenomes.config` GRCh38 (1000G omni2.5 SNP → `known_snps`, dbsnp; gatk+mills indels); upstream prefixes `joint_variant_calling_SNP/INDEL` (VQSR intermediates unpublished upstream — the port keeps them under `results/` for DAG handoff); final `joint_germline_recalibrated.vcf.gz`; one whole-genome interval from the fasta `.fai` by default, per-chromosome under `scatter_gatk = true` (see the scatter/gather row) |
 | Joint VCF QC + VEP | `bcftools_stats_joint`, `vcftools_tstv_count_joint`, `vcftools_tstv_qual_joint`, `vcftools_filter_summary_joint`, `ensemblvep_vep_joint` | bcftools 1.23.1, vcftools 0.1.17, ensembl-vep 112.0 | upstream runs VCF_QC + VEP on the joint VCF (`vcf_all`); the per-sample QC/VEP rules are gated off in joint mode and these cohort rules take over (prefix `joint_germline_recalibrated`) |
-| MULTIQC | `multiqc` | multiqc 1.35 | fan-in over all report producers (depends_on covers the gated branches — skipped rules auto-satisfy); scans the results dir with the upstream `assets/multiqc_config.yml` |
+| MULTIQC | `multiqc` | multiqc 1.35 | fan-in over all report producers (depends_on covers the gated branches — skipped rules auto-satisfy); scans the results dir with the upstream `assets/multiqc_config.yml` and links the shipped logo into the report via `--cl-config "custom_logo: …"`, mirroring the nf-core multiqc module's logo argument |
 | PREPARE_INTERVALS (BUILD_INTERVALS, CREATE_INTERVALS_BED, TABIX_BGZIPTABIX) + per-interval scatter/gather of BQSR / ApplyBQSR / HaplotypeCaller / joint GenotypeGVCFs (GATK4_GATHERBQSRREPORTS, CRAM/BAM_MERGE_INDEX_SAMTOOLS, GATK4_MERGEVCFS) | `create_intervals_bed`, `tabix_interval`, `gatk_baserecalibrator_scatter`, `gatk_gatherbqsrreports`, `gatk_applybqsr_scatter`, `merge_index_samtools`, `gatk_haplotypecaller_scatter`, `gatk_mergevcfs_scatter`, `gatk_haplotypecaller_gvcf_scatter`, `gatk_genomicsdbimport_scatter`, `gatk_genotypegvcfs_scatter`, `bcftools_sort_joint_scatter`, `gatk_mergevcfs_joint_scatter` | gawk 5.3.0, samtools 1.24, gatk4 4.5.0.0 | `scatter_gatk = true` (default off). Deviation: the engine's scatter fan-out takes a **static** value list, so intervals are one per chromosome (`config.chromosomes` — keep it in sync with the fasta `.fai`) instead of upstream's duration-binned windows (`nucleotides_per_second`); every downstream gather is exact and writes the same paths as the single-job branch, so results are identical — the branch adds per-contig parallelism, it does not change outputs. Live-verified on tx-ubuntu 2026-08-27 (`scatter_gatk=true`, 13 rules + gathers, 0 failed; surfaced + fixed the CRAM 3.0 merge issue — see Test) |
-| fastp split parts (multi-part BWA_MEM + BAM_MERGE_INDEX_SAMTOOLS) | `fastp_split`, `bwa_mem_split`, `bwa_mem2_split`, `bam_merge_index_samtools` | fastp 1.1.0, bwa 0.7.17 / bwa-mem2 2.2.1, samtools 1.24 | `split_parts = true` (default off) — fastp's `--split_by_lines` parts are enumerated at runtime via the engine's `output_pattern` primitive (data-dependent part count, exactly like upstream's channel scan) and the per-part BWA_MEM/BWA_MEM2 + BAM_MERGE_INDEX_SAMTOOLS fan-out is reproduced: every part is aligned (`{sample}.NNNN.bam`, upstream prefix `{meta.id}.{token}`) and merged + indexed into `{sample}.sorted.bam` (upstream MERGE_BAM prefix `{meta.id}.sorted`) before MarkDuplicates — no input cap. Requires `mapped_bam = "sorted"`; not supported with `umi_read_structure`. See the deviation note below for the merge gating design. Requires the engine's output_pattern primitive (Traitome/oxo-flow#235) — available on the oxo-flow 0.17 line (metadata engine floor is 0.17.0) |
-| Mutect2 (paired + tumor-only, FilterMutectCalls, optional GetPileupSummaries → CalculateContamination) | `call_mutect2` (+ `contamination_estimation`) | off | pair-fanned via `config/somatic_pairs.tsv` (`pair_id, experiment=tumor, control=normal`; empty control = tumor-only). Deviation: Mutect2's optional `--germline-resource` / `--panel-of-normals` inputs are not wired — the port has no config keys for them and contamination is estimated from the pair's pileups instead; to use a PoN, filter the Mutect2 VCF downstream (upstream passes them only when resource files are provided) |
+| fastp split parts (multi-part BWA_MEM + BAM_MERGE_INDEX_SAMTOOLS) | `fastp_split`, `bwa_mem_split`, `bwa_mem2_split`, `bam_merge_index_samtools` | fastp 1.1.0, bwa 0.7.17 / bwa-mem2 2.2.1, samtools 1.24 | `split_parts = true` (default on since the data-loss fix; the off state
+  pins `mapped_bam = "0001"` and aligns part 0001 only) — fastp's `--split_by_lines` parts are enumerated at runtime via the engine's `output_pattern` primitive (data-dependent part count, exactly like upstream's channel scan) and the per-part BWA_MEM/BWA_MEM2 + BAM_MERGE_INDEX_SAMTOOLS fan-out is reproduced: every part is aligned (`{sample}.NNNN.bam`, upstream prefix `{meta.id}.{token}`) and merged + indexed into `{sample}.sorted.bam` (upstream MERGE_BAM prefix `{meta.id}.sorted`) before MarkDuplicates — no input cap. Requires `mapped_bam = "sorted"`; not supported with `umi_read_structure`. See the deviation note below for the merge gating design. Requires the engine's output_pattern primitive (Traitome/oxo-flow#235) — available on the oxo-flow 0.17 line (metadata engine floor is 0.17.0) |
+| Mutect2 (paired + tumor-only, FilterMutectCalls, optional GetPileupSummaries → CalculateContamination) | `call_mutect2` (+ `contamination_estimation`) | off | pair-fanned via `config/somatic_pairs.tsv` (`pair_id, experiment=tumor, control=normal`; empty control = tumor-only). Deviation: Mutect2's optional `--germline-resource` / `--panel-of-normals` inputs are not wired — the port has no config keys for them and contamination is estimated from the pair's pileups instead; to use a PoN, filter the Mutect2 VCF downstream (upstream passes them only when resource files are provided). Adopted from 3.11/3.12: `FilterMutectCalls --stats` receives the caller stats file (upstream #2358, the rules stage `*.mutect2.stats` as an input); the paired vs tumor-only rule split carries the `meta.normal_id`-conditional normal-sample argument (upstream `conf/modules/mutect2.config:22`); `config.force_call_alleles` adds `--alleles` via the complementary when-gated co-writers `gatk_mutect2_{paired,tumor_only}_alleles` (upstream #2365; `--force_call_alleles_tbi` auto-generated in-task) |
 | Strelka2 somatic | `call_strelka_somatic` | off | paired only (upstream `configureStrelkaSomaticWorkflow.py` requires a normal BAM — tumor-only pairs skip it) |
 | Manta somatic SV | `call_manta_somatic` | off | paired only (tumor-only SV runs the per-sample germline `manta_germline`); publishes somaticSV.vcf.gz |
-| CNVkit, ASCAT, Control-FREEC, MSIsensor2, MSIsensorpro, MUSE, LoFreq, Varlociraptor | — not ported | — | the somatic callers that exist in upstream 3.10.0 (tools enum + `bam_variant_calling_somatic_all`); tumor/normal pairs required; further callers follow the same `[[pairs]]` pattern once their env fixtures exist. **SomaticSniper and VarDict are not upstream 3.10.0 features** (absent from the tools enum and every wired subworkflow) and are therefore not listed |
-| Annotation options beyond VEP (snpEff, SnpSift, merge, bcftools annotate `bcfann`) | — not ported | — | upstream `prepare_snpsift_databases` + `vcf_annotate_all`; the port annotates every caller VCF with VEP only |
-| TIDDIT somatic + SVDB merge; FreeBayes/mpileup somatic and tumor-only modes | — not ported | — | upstream `bam_variant_calling_somatic_tiddit` (TIDDIT_NORMAL/TIDDIT_TUMOR + `SVDB_MERGE`), `somatic_all`/`tumor_only_all` FreeBayes+mpileup legs; the port's `call_tiddit`/`call_freebayes`/`call_mpileup` are germline single-sample, and the tumor-only path is Mutect2 only |
-| gatk4spark / bbsplit / SPRING / untar | — not ported | — | upstream Spark BQSR/ApplyBQSR/MarkDuplicates (`modules/nf-core/gatk4spark` + `*_spark` subworkflows), `bbsplit` contaminant split (`fastq_preprocess_gatk`), SPRING compressed FASTQ input (`samplesheet_to_channel` spring_1/spring_2 + `nf-core/spring`), and untar-based reference download in `prepare_genome` (UNTAR_BBSPLIT_INDEX / UNTAR_CHR_DIR / UNTAR_MSISENSOR2_MODELS); the port runs non-Spark GATK4, accepts raw FASTQ.gz, and requires user-provided reference files (the `assets/multiqc_config.yml` snpeff/bbmap entries are inert MultiQC glob leftovers, not ported rules) |
+| TIDDIT somatic SV + SVDB merge | `call_tiddit` (paired via `config/somatic_pairs.tsv`) | off | the port's `call_tiddit` was the germline single-sample flag; the same flag now also drives the paired rules `tiddit_sv_somatic` + `svdb_merge_tiddit` (upstream `BAM_VARIANT_CALLING_SOMATIC_TIDDIT`: TIDDIT per pair member — `{id}.tiddit.normal`/`{id}.tiddit.tumor` prefixes, no `--skip_assembly` since these legs receive a bwa index — then `SVDB_MERGE` with args2 `--output-type z`; the merged VCF is deliberately not indexed here, upstream's CONCAT_VCF step indexes it) |
+| MuSE somatic SNV | `call_muse` (`muse_call`, `muse_sump`) | muse 2.1.2, htslib 1.22.1 | pair-fanned via `config/somatic_pairs.tsv` (paired only, like upstream `BAM_VARIANT_CALLING_SOMATIC_MUSE`). `muse_call` runs `MuSE call` on the pair (tumor BAM then normal BAM, per the upstream module) emitting `<pair>.MuSE.txt`; `muse_sump` runs `MuSE sump` against dbsnp with the upstream `-ot` timestamp guard, then bgzip + tabix → `<pair>.muse.vcf.gz` + `.tbi`. Both take the `wes` flag for the `-E`/`-G` WES/WGS mode switch (ext.args `params.wes ? '-E' : '-G'`). MuSE.txt is published upstream but MultiQC has no muse module, so nothing feeds multiqc |
+| MSIsensor-pro MSI | `call_msisensorpro` (`msisensorpro_scan`, `msisensorpro_msi`) | msisensor-pro 1.3.0 | pair-fanned via `config/somatic_pairs.tsv` (paired only, like upstream `MSISENSORPRO_MSISOMATIC`). `msisensorpro_scan` builds the msi-scan list from the reference once per run (`msisensor-pro scan`; when the user supplies one via `msisensorpro_scan_ready` the co-writer `msis_scan_stage` stages `config.msisensorpro_scan` onto the same canonical path — complementary when-gates) — upstream builds it in `prepare_genome` and only saves it with `save_reference`/`build_only_index`); `msisensorpro_msi` runs `msisensor-pro msi` per pair (`-d` the scan list, `-n` normal, `-t` tumor, `-g` fasta, `-b` threads; the port passes the pair BAMs directly — upstream combines the intervals channel but intervals are optional upstream too) → `<pair>`, `<pair>_dis`, `<pair>_all`, `<pair>_unstable` reports published to `variant_calling/msisensorpro/<pair>/` (upstream 3.12.0 #2370: the 3.10.0 `_germline`/`_somatic` pair is retired, `_all`/`_unstable` published per nf-core/modules#13613; the reference scan list publishes under `reference/msisensorpro/` per the same PR's doc correction). MultiQC has no msisensorpro module (sompy is a different tool), so nothing feeds multiqc |
+| CNVkit somatic CNV | `call_cnvkit` (`cnvkit_batch`, `cnvkit_genemetrics`, `cnvkit_export`) | cnvkit 0.9.12, htslib 1.21, samtools 1.21 | pair-fanned via `config/somatic_pairs.tsv` (paired only, like upstream `BAM_VARIANT_CALLING_CNVKIT` whose pair-shaped cram channel passes tumor then normal). `cnvkit_batch` converts both CRAMs to BAM with `samtools view` first (the upstream module does exactly this when inputs are CRAM — cnvkit runs natively on CRAM but is prohibitively slow; indexes are unused, the module re-indexes internally), then runs `cnvkit.py batch tumor.bam --normal normal.bam --fasta ref $([ "{config.wes}" = "true" ] && echo '-E --method hybrid ...' || echo '-E --method wgs ...')` (ext.args `params.wes ? "--method hybrid --diagram --scatter" : "--method wgs --diagram --scatter"`, no ternary in oxoflow) → target/antitarget beds, coverages, `.cnr`, `.cns`, `.call.cns`, diagrams/scatter plots published to `variant_calling/cnvkit/<pair>/`; `cnvkit_genemetrics` runs `cnvkit.py genemetrics` with `--segments` the call.cns (upstream prefix `{cnr.baseName}.genemetrics`); `cnvkit_export` runs `cnvkit.py export vcf` (upstream prefix `{meta.id}.cnvcall`). Not ported: `generate_pon` / user-supplied reference cnn (the port always builds `my_reference.cnn` from the pair), and the SNV-VCF B-allele feed into `CNVKIT_CALL -v` (upstream deliberately passes an empty VCF today). No MultiQC module in sarek's config, so nothing feeds multiqc |
+| LoFreq SNV/indel | `call_lofreq` (`lofreq_call` + the `bcftools_stats_lofreq`, `vcftools_tstv_count_lofreq`, `vcftools_tstv_qual_lofreq`, `vcftools_filter_summary_lofreq`, `ensemblvep_vep_lofreq`, `snpeff_snpeff_lofreq` family) | lofreq 2.1.5, htslib 1.21, samtools 1.21 | cohort fan-out over every sample (upstream 3.12.0 wires lofreq **only on the tumor-only path**: `LOFREQ_CALLPARALLEL` per samplesheet entry with `ext.args "--call-indels"` and prefix `${meta.id}.lofreq` — there is no paired lofreq leg, and pair members get the same call via the germline path). `lofreq_call` converts CRAM to BAM with `samtools view` first (lofreq cannot read CRAM natively), runs `lofreq call-parallel --pp-threads N --call-indels -f ref -o {sample}.lofreq.vcf.gz`, then tabix → `variant_calling/lofreq/{sample}/`. Interval scatter/MergeVcfs is not ported (the port runs without interval scatter, like the germline chain). QC/VEP/snpEff legs mirror the other small-variant callers; lofreq is in upstream's `small_variantcallers` eligibility list |
+| Varlociraptor statistical calling | `call_varlociraptor` (`varlociraptor_call_germline`, `varlociraptor_call_tumor_only`) | varlociraptor 8.12.0, htslib 1.21, samtools 1.21, bcftools 1.23.1 | cohort fan-out over every sample, matching upstream POST_VARIANTCALLING (3.12.0 wires varlociraptor via `VCF_VARLOCIRAPTOR_GERMLINE` on the published caller VCFs — per sample: `estimate alignment-properties`, `preprocess variants` (with `--atomic-candidate-variants` on both non-freebayes candidate legs — upstream `conf/modules/varlociraptor.config:48,175,191`), `call variants --output P.bcf generic --scenario S --obs alias=<candidate>`, `filter-calls control-fdr` (local-smart), final bcftools sort). The germline leg uses the haplotypecaller VCF as the candidate (`--obs normal=<candidate>`, events `germline`); the tumor-only leg runs on the same samples but only where a mutect2 tumor-only VCF exists (empty-control rows in `config/somatic_pairs.tsv`), with the candidate-caller infix (`test.mutect2.*`) keeping the two legs' outputs distinct. Scenarios ship as pre-rendered yaml: the upstream yte templates render `sex_string=female` for the port's fixed sex = "XX" and contamination fraction 0.0. Upstream runs no bcftools/vcftools QC on varlociraptor outputs (they feed annotation only), so no QC family is ported. The somatic tumor/normal pair leg (joint obs + CONCAT_SOMATIC_STRELKA) is not ported yet |
+| ASCAT somatic CNV | `call_ascat` (`ascat_somatic`) | ascat 3.2.0, cancerit-allelecount 4.3.0 | pair-fanned via `config/somatic_pairs.tsv` (paired only, like upstream `BAM_VARIANT_CALLING_SOMATIC_ASCAT`). The upstream R heredoc ships as `assets/ascat_run.R` (oxo-flow substitutes `{token}` patterns inside shell strings, so the R code is parameterized via `commandArgs` — same pattern as the varlociraptor scenario yamls): allele/loci prefix resolution (dir case `path/<basename>_chr`, file case strips `_chr<N>.txt` + `Sys.glob` guards), `ascat.prepareHTS` with alleleCounter (`-r "{config.fasta}"`, min_base_qual 20, min_map_qual 35, minCounts 10, seed 42, gender from `config.sex` as `"XX"` or literal `NULL`), `loadData`/`plotRawData`/`aspcf`/`plotSegmentedData` (aspcf `penalty` from `config.ascat_penalty`, default 70 — upstream 3.11.0 #2328), then the upstream 4-way `runAscat` branch (rho/psi from the optional `ascat_purity`/`ascat_ploidy`, empty = estimate), QC metrics. Outputs `{pair}.segments.txt/.cnvs.txt (cols 2:6)/.purityploidy.txt (tryCatch fallback 0,0)/.metrics.txt` published to `variant_calling/ascat/<pair>/`. CRAMs go straight to alleleCounter (htslib reads CRAM; upstream does not convert either). Allele/loci fixtures for the test genome ship in `test/fixtures/` |
+| Control-FREEC somatic CNV | `call_controlfreec` (`controlfreec_mpileup`, `controlfreec_freec`, `controlfreec_assesssignificance`, `controlfreec2bed`) | control-freec 11.6b, samtools 1.24 | pair-fanned via `config/somatic_pairs.tsv` (paired only, like upstream `BAM_VARIANT_CALLING_SOMATIC_CONTROLFREEC`). `controlfreec_mpileup` = SAMTOOLS_MPILEUP per pair member (`--fasta-ref` + bgzip; upstream MPILEUP_NORMAL/MPILEUP_TUMOR). `controlfreec_freec` regenerates the upstream config.txt verbatim: `[general]` (bedgraphoutput, breakPointThreshold/Type 1.2/4 WES vs 0.8/2 WGS, coefficientOfVariation=`cf_coeff`, contamination/contaminationAdjustment from `cf_contamination`/`cf_contamination_adjustment`, forceGCcontentNormalization, minimalSubclonePresence 30/20, noisyData, maxThreads, ploidy=`cf_ploidy`, printNA, readCountThreshold 50/10, sex=`config.sex`, window=`cf_window`), `[control]`/`[sample]` mpileup sections (pileup/FR), `[BAF]` (minimalCoveragePerPosition/minimalQualityPerPosition from `cf_mincov`/`cf_minqual`); unset options echo blank lines — FREEC ignores them, matching upstream where chrFiles/mappability/makePileup are empty on the default WGS path. FREEC renames (`*_info.txt` → `{pair}.info.txt` etc.) use quoted `"{}"` in `find -exec` (unquoted `{}` collides with oxo-flow's substitution braces). `controlfreec_assesssignificance` runs `cat $(which assess_significance.R) | R --slave --args {cnvs} {ratio}` → `{pair}.p.value.txt`; `controlfreec2bed` runs `freec2bed.pl -f {ratio} {cf_ploidy}` → `{pair}.bed`. FREEC2CIRCOS + MAKEGRAPH2 deliberately not ported (circos plots, heavy deps, no downstream consumer in the port) |
+| MSIsensor2 MSI | `call_msisensor2` (`msisensor2_msi`) | msisensor2 0.1 | tumor-only fan-out (`wildcard.control == ''` rows, like upstream MSISENSOR2_MSI wired only on `bam_variant_calling_tumor_only_all`): untars `{config.msisensor2_models}` (models must be a tarball unpacking to a `models/` dir — upstream UNTAR_MSISENSOR2_MODELS), runs `msisensor2 msi -b {threads} $([ "{config.wes}" = "true" ] && echo -c 20 || echo -c 15) -M models -t tumor.cram -o {sample}` → `{sample}.msi/_dis/_somatic` published to `variant_calling/msisensor2/{sample}/`. A `models_hg19_17sites.tar.gz` test fixture ships in `test/fixtures/` |
+| Annotation beyond VEP: snpEff | `annotate_snpeff` (`snpeff_snpeff{,_freebayes,_strelka,_mpileup,_deepvariant,_manta,_tiddit,_joint,_freebayes_somatic}`) | snpeff 5.4.0c | one rule per caller VCF, mirroring the VEP fan-out (upstream `VCF_ANNOTATE_SNPEFF` on `vcf_all`): `<stem>_snpeff.ann.vcf.gz` + `.tbi` + `-csvStats` CSV under `reports/SnpEff/<caller>/` for MultiQC; gated on `annotate_snpeff` + `snpeff_data_ready` (data dir is user data — upstream bundles it in the container), shells fail fast when `snpeff_db` is unset. SnpSift annmem/vardb, merge, and bcftools annotate `bcfann` remain — not ported |
+| FreeBayes/mpileup somatic and tumor-only modes | `freebayes_somatic` (+ `bcftools_sort_freebayes_somatic`, `tabix_freebayes_somatic`, `vcffilter_freebayes_somatic`, `tabix_freebayes_somatic_filt`), `freebayes_somatic_tumor_only`, `bcftools_mpileup_call_somatic`, `bcftools_mpileup_call_somatic_tumor_only` | freebayes 1.3.10, vcflib 1.0.14, bcftools 1.23.1 | pair-fanned via `config/somatic_pairs.tsv` (empty control = tumor-only). Paired FreeBayes is the upstream joint two-BAM call (`--min-alternate-fraction 0.1 --min-mapping-quality 1`, normal first, tumor second) followed by the nf-core BCFTOOLS_SORT → TABIX → VCFLIB_VCFFILTER (`QUAL > {config.freebayes_filter}`) → TABIX chain; the paired mpileup leg publishes no VCF upstream (feeds Control-FREEC text only — the port wires it shape-faithfully for the future controlfreec leg), while the tumor-only path publishes both freebayes and mpileup VCFs into `vcf_all`. Per-caller QC/VEP legs for the paired filtered VCF ride the same fan-out (see the VCF_QC row); VEP legs additionally require `vep_cache_ready` |
+| gatk4spark / bbsplit / SPRING / untar | — not ported | — | upstream Spark BQSR/ApplyBQSR/MarkDuplicates (`modules/nf-core/gatk4spark` + `*_spark` subworkflows), `bbsplit` contaminant split (`fastq_preprocess_gatk`), SPRING compressed FASTQ input (`samplesheet_to_channel` spring_1/spring_2 + `nf-core/spring`), and untar-based reference download in `prepare_genome` (UNTAR_BBSPLIT_INDEX / UNTAR_CHR_DIR / UNTAR_MSISENSOR2_MODELS); the port runs non-Spark GATK4, accepts raw FASTQ.gz, and requires user-provided reference files (the `assets/multiqc_config.yml` bbmap entry is an inert MultiQC glob leftover; the snpeff entry is now live — snpEff CSV stats auto-parse once `annotate_snpeff` runs) |
 | Sentieon / Parabricks / DRAGMAP | — not ported | — | commercial accelerators (licensed binaries); out of scope |
-| VCF_QC + ENSEMBLVEP_VEP fan-out over the optional callers | `bcftools_stats_{freebayes,strelka,mpileup,deepvariant,manta,tiddit}`, `vcftools_tstv_count_{...}`, `vcftools_tstv_qual_{...}`, `vcftools_filter_summary_{...}`, `ensemblvep_vep_{...}` | bcftools 1.23.1, vcftools 0.1.17, ensembl-vep 112.0 | upstream runs VCF_QC + VEP on every caller VCF (`vcf_all`); the port now mirrors that: when `call_freebayes`/`call_strelka`/`call_mpileup`/`call_deepvariant`/`call_manta`/`call_tiddit` enables a caller, its VCF is QC'd (`reports/bcftools/<caller>/`, `reports/vcftools/<caller>/`) and annotated (`annotation/<caller>/`) with the same prefix conventions as the haplotypecaller rules; tiddit's uncompressed `.vcf` uses `--vcf` instead of `--gzvcf` (as upstream). All 30 rules are gated on their caller's flag (+ `skip_bcftools`/`skip_vcftools`/`annotate_vep`/`vep_cache_ready`) and feed the multiqc `depends_on`. Needs live verification (see Test) |
+| Upstream 3.11/3.12 additions declined (not ported) | — | — | `--tools deepsomatic` / `parabricks_*` GPU callers (`modules/nf-core/deepsomatic`, `modules/nf-core/parabricks/{applybqsr,deepsomatic,deepvariant,fq2bam,haplotypecaller,mutectcaller}` @ 3.12.0 ship **no `environment.yml`** — containers-only GPU stacks, outside this conda-first port; the licensed ones ride the commercial row above); `--joint_mutect2` patient-level joint calling (#2349/#2358 — it rides the somatic interval scatter the port does not run); `samtools fixmate` before fgbio UMI consensus on the `bwa-mem2` path (#2333 — the port's UMI branch is bwa-mem-only, there is no bwa-mem2 UMI leg to patch); `bedtools sort` of `--intervals` before splitting (#2352 — the port's intervals are the static per-chromosome `config.chromosomes` list, there is no split BED to sort; bedtools accordingly stays out of the tools census); the `MUTECT2_PAIRED`→`MUTECT2` process-label merge (#2349 — pure Nextflow `withName` relabeling, the port has no process labels to retarget) |
+| VCF_QC + ENSEMBLVEP_VEP fan-out over the optional callers | `bcftools_stats_{freebayes,strelka,mpileup,deepvariant,manta,tiddit,lofreq}`, `vcftools_tstv_count_{...}`, `vcftools_tstv_qual_{...}`, `vcftools_filter_summary_{...}`, `ensemblvep_vep_{...}` (+ the paired `_somatic` variants for freebayes) | bcftools 1.23.1, vcftools 0.1.17, ensembl-vep 112.0 | upstream runs VCF_QC + VEP on every caller VCF (`vcf_all`); the port now mirrors that: when `call_freebayes`/`call_strelka`/`call_mpileup`/`call_deepvariant`/`call_manta`/`call_tiddit`/`call_lofreq` enables a caller, its VCF is QC'd (`reports/bcftools/<caller>/`, `reports/vcftools/<caller>/`) and annotated (`annotation/<caller>/`) with the same prefix conventions as the haplotypecaller rules; the somatic FreeBayes pair leg gets its own `_somatic` QC/VEP family over the paired filtered VCF (`reports/*/freebayessomatic/`, `annotation/freebayessomatic/`); tiddit's uncompressed `.vcf` uses `--vcf` instead of `--gzvcf` (as upstream). All rules are gated on their caller's flag (+ `skip_bcftools`/`skip_vcftools`/`annotate_vep`/`vep_cache_ready`) and feed the multiqc `depends_on`. Needs live verification (see Test) |
 
 Deviations (all documented, nothing silently dropped):
 
@@ -685,9 +752,11 @@ Deviations (all documented, nothing silently dropped):
   `fastp_split`'s final `mv` lands all parts at once — then runs
   BAM_MERGE_INDEX_SAMTOOLS exactly once. A failed per-part alignment fails the
   run (fail-fast cancels the waiting merge), so the wait cannot hang on a
-  healthy pipeline. `split_parts` is off by default and the default path is
-  unchanged: single part `0001.` -> `{sample}.0001.bam` (the upstream
-  `tokenize('.')[0]` behavior), so small/medium inputs never see the new
+  healthy pipeline. `split_parts = true` is the default (flipped by the
+  data-loss fix — the historical default aligned part `0001.` only, silently
+  dropping parts 0002+ that fastp's multi-thread `--split_by_lines` emits);
+  `split_parts = false` pins `mapped_bam = "0001"` and aligns part 0001 only,
+  which small/medium inputs that fit a single part may use to skip the merge
   machinery. UMI consensus mode (`umi_read_structure`) is not supported with
   `split_parts` — the two gates are mutually exclusive.
 - **scatter/gather is opt-in and uses per-chromosome intervals**: the
@@ -735,7 +804,7 @@ Deviations (all documented, nothing silently dropped):
 ## Links
 
 - Repository: [oxo-flow-sarek](https://github.com/oxo-flow-community/oxo-flow-sarek)
-- Upstream: [nf-core/sarek](https://github.com/nf-core/sarek) @ `3.10.0`
+- Upstream: [nf-core/sarek](https://github.com/nf-core/sarek) @ `3.12.0`
 - License: Apache-2.0 (this workflow) · MIT (upstream)
 
 Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
