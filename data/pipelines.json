@@ -3766,7 +3766,7 @@
   "source": {
    "repo": "xuzhougeng/auto_sra_rnaseq_pipeline",
    "url": "https://github.com/xuzhougeng/auto_sra_rnaseq_pipeline",
-   "tag": "main",
+   "tag": "v1.0",
    "sha": "923b9e98669a02d7b63ac8743e7ed960f3d0a86e",
    "license": "none"
   },
