@@ -20,7 +20,7 @@ title: "SRA-powered RNA-seq: .sra archives to differential expression"
 <div class="ox-kv"><span class="k">Origin</span><span class="v">Official port</span></div>
 <div class="ox-kv"><span class="k">Domain</span><span class="v">transcriptomics</span></div>
 <div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/xuzhougeng/auto_sra_rnaseq_pipeline">xuzhougeng/auto_sra_rnaseq_pipeline</a></span></div>
-<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>main</code></span></div>
+<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>v1.0</code></span></div>
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2300.1"><code>10.48546/workflowhub.workflow.2300.1</code></a></span></div>
@@ -274,7 +274,7 @@ ships as the default fixture at test/fixtures/metadata/D21122.txt.
 ## Links
 
 - Repository: [oxo-flow-auto-sra-rnaseq-pipeline](https://github.com/oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipeline)
-- Upstream: [xuzhougeng/auto_sra_rnaseq_pipeline](https://github.com/xuzhougeng/auto_sra_rnaseq_pipeline) @ `main`
+- Upstream: [xuzhougeng/auto_sra_rnaseq_pipeline](https://github.com/xuzhougeng/auto_sra_rnaseq_pipeline) @ `v1.0`
 - License: Apache-2.0 (this workflow) · none (upstream)
 
 Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
