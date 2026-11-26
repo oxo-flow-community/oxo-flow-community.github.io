@@ -5,22 +5,45 @@
    for every [data-copy] element (parameter rows, hero commands, …). */
 (() => {
   "use strict";
+  // Own src, captured while the parser still knows about us — used to load
+  // the registry data lazily (only pages with catalog mounts pay for it).
+  const SELF = (document.currentScript && document.currentScript.src) || "javascripts/catalog.js";
 
   // ---- copy-to-clipboard (single source; elements opt in via data-copy) ----
+  let liveRegion;
+  const announce = (msg) => {
+    if (!liveRegion) {
+      liveRegion = document.createElement("span");
+      liveRegion.setAttribute("role", "status");
+      liveRegion.setAttribute("aria-live", "polite");
+      Object.assign(liveRegion.style, {
+        position: "absolute", width: "1px", height: "1px",
+        overflow: "hidden", clip: "rect(0 0 0 0)", whiteSpace: "nowrap",
+      });
+      document.body.appendChild(liveRegion);
+    }
+    liveRegion.textContent = msg;
+  };
   document.addEventListener("click", (ev) => {
     const btn = ev.target.closest("[data-copy]");
     if (!btn) return;
     const text = btn.getAttribute("data-copy");
-    const flash = () => {
+    // aria-label outranks the CSS ::after glyph (" ⧉"/" ✓") in the
+    // accessible name — without it the button is spoken as its content.
+    if (!btn.getAttribute("aria-label")) {
+      btn.setAttribute("aria-label", "Copy " + text);
+    }
+    const flash = (ok) => {
       btn.classList.add("copied");
       setTimeout(() => btn.classList.remove("copied"), 1200);
+      announce(ok ? "Copied: " + text : "Copy failed — select the text manually");
     };
     (navigator.clipboard?.writeText(text) || Promise.reject())
-      .then(flash)
-      .catch(() => {});
+      .then(() => flash(true))
+      .catch(() => flash(false));
   });
 
-  const P = window.OXO_PIPELINES || [];
+  let P = [];
   const FEATURED = [
     "oxo-flow-rnaseq",
     "oxo-flow-sarek",
@@ -126,10 +149,15 @@
       if (!by.has(p.domain)) by.set(p.domain, []);
       by.get(p.domain).push(p);
     });
+    // Keys are the registry's actual domain values (data/pipelines.json) —
+    // the old set (rna-seq/proteomics/...) never matched and 8 of 11 domains
+    // fell back to ▦. Keep in sync when the domain vocabulary is normalized.
     const ICONS = {
-      genomics: "🧬", metagenomics: "🔬", "rna-seq": "🧫", "single-cell": "🦠",
-      "molecular-biology": "🧪", "cytogenetics": "📎", "proteomics": "🧂",
-      epigenetics: "🧿", "oncogenomics": "🎯",
+      genomics: "🧬", metagenomics: "🔬", "single-cell": "🦠",
+      transcriptomics: "🧫", "transcriptomics (circRNA)": "🌀",
+      amplicon: "🧪", epigenomics: "🧿", immunology: "🩸",
+      "cancer genomics (WES/WGS/RNA)": "🎯", "genome-mining": "⛏️",
+      other: "🧩",
     };
     el.innerHTML = [...by.entries()]
       .sort((a, b) => b[1].length - a[1].length)
@@ -161,9 +189,11 @@
       const b = document.createElement("button");
       b.type = "button";
       b.className = "ox-chip";
-      // The chip's accessible name is "44 rules workflows" — the count is part
-      // of what the button filters on, so it is announced with the label
-      // (aria-labelledby references both the live count line and this label).
+      // Accessible name via aria-label ("genomics (12)") — the previous
+      // aria-labelledby chained the shared #ox-count live region into every
+      // chip's name ("24 of 24 workflows genomics 12"), and every count
+      // update re-announced all chips. #ox-count keeps role=status for its
+      // own announcements only.
       const lid = "ox-chip-label-" + (++chipSeq);
       const l = document.createElement("span");
       l.id = lid;
@@ -174,9 +204,9 @@
         c.className = "ox-chip-count";
         c.textContent = count;
         b.appendChild(c);
+        b.setAttribute("aria-label", label + " (" + count + ")");
       }
       b.setAttribute("aria-pressed", values.has(key) ? "true" : "false");
-      b.setAttribute("aria-labelledby", "ox-count " + lid);
       b.addEventListener("click", () => {
         if (values.has(key)) { values.delete(key); b.setAttribute("aria-pressed", "false"); }
         else { values.add(key); b.setAttribute("aria-pressed", "true"); }
@@ -240,11 +270,24 @@
     apply();
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", () => {
-      renderStats(); renderFeatured(); renderDomains(); renderCatalog();
-    });
-  } else {
+  // The registry data file is ~0.5 MB — audit/pipeline pages must not fetch
+  // or parse it. Only pages hosting a catalog mount load it, lazily.
+  const MOUNTS = ["ox-stats", "ox-domains", "ox-featured", "ox-count"];
+  const wantsCatalog = MOUNTS.some((id) => document.getElementById(id));
+  const boot = () => {
+    P = window.OXO_PIPELINES || [];
     renderStats(); renderFeatured(); renderDomains(); renderCatalog();
+  };
+  const whenReady = (fn) => document.readyState === "loading"
+    ? document.addEventListener("DOMContentLoaded", fn)
+    : fn();
+  if (wantsCatalog) {
+    whenReady(() => {
+      if (window.OXO_PIPELINES) { boot(); return; }
+      const s = document.createElement("script");
+      s.src = SELF.replace("catalog.js", "pipelines-data.js");
+      s.onload = boot;
+      document.head.appendChild(s);
+    });
   }
 })();

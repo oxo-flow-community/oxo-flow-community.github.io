@@ -95,187 +95,187 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-unsupervised
 <thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
 <tbody>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy clustree_categorical_label_option = value" data-copy="clustree_categorical_label_option = majority">clustree_categorical_label_option</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy clustree_categorical_label_option = value" aria-label="Copy clustree_categorical_label_option = majority to clipboard" data-copy="clustree_categorical_label_option = majority">clustree_categorical_label_option</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>majority</code></td>
 <td class="ox-p-desc">CLUSTREE<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy clustree_count_filter = value" data-copy="clustree_count_filter = 0">clustree_count_filter</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy clustree_count_filter = value" aria-label="Copy clustree_count_filter = 0 to clipboard" data-copy="clustree_count_filter = 0">clustree_count_filter</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>0</code></td>
 <td class="ox-p-desc">CLUSTREE<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy clustree_layout = value" data-copy="clustree_layout = tree">clustree_layout</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy clustree_layout = value" aria-label="Copy clustree_layout = tree to clipboard" data-copy="clustree_layout = tree">clustree_layout</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>tree</code></td>
 <td class="ox-p-desc">CLUSTREE<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy clustree_numerical_aggregation_option = value" data-copy="clustree_numerical_aggregation_option = mean">clustree_numerical_aggregation_option</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy clustree_numerical_aggregation_option = value" aria-label="Copy clustree_numerical_aggregation_option = mean to clipboard" data-copy="clustree_numerical_aggregation_option = mean">clustree_numerical_aggregation_option</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>mean</code></td>
 <td class="ox-p-desc">CLUSTREE<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy clustree_prop_filter = value" data-copy="clustree_prop_filter = 0.1">clustree_prop_filter</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy clustree_prop_filter = value" aria-label="Copy clustree_prop_filter = 0.1 to clipboard" data-copy="clustree_prop_filter = 0.1">clustree_prop_filter</button></td>
 <td class="ox-p-t"><code>float</code></td>
 <td class="ox-p-d"><code>0.1</code></td>
 <td class="ox-p-desc">CLUSTREE<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy coord_fixed = value" data-copy="coord_fixed = 0">coord_fixed</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy coord_fixed = value" aria-label="Copy coord_fixed = 0 to clipboard" data-copy="coord_fixed = 0">coord_fixed</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>0</code></td>
 <td class="ox-p-desc">VISUALIZATION<br><span class="ox-param-usedby">used by <code>8</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy data_dir = value" data-copy="data_dir = test/fixtures">data_dir</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy data_dir = value" aria-label="Copy data_dir = test/fixtures to clipboard" data-copy="data_dir = test/fixtures">data_dir</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures</code></td>
 <td class="ox-p-desc">GENERAL<br><span class="ox-param-usedby">used by <code>40</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy features_to_plot = value" data-copy="features_to_plot = ">features_to_plot</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy features_to_plot = value" aria-label="Copy features_to_plot =  to clipboard" data-copy="features_to_plot = ">features_to_plot</button></td>
 <td class="ox-p-t"><code>array</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">METADATA<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy heatmap_hclust_method = value" data-copy="heatmap_hclust_method = complete">heatmap_hclust_method</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy heatmap_hclust_method = value" aria-label="Copy heatmap_hclust_method = complete to clipboard" data-copy="heatmap_hclust_method = complete">heatmap_hclust_method</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>complete</code></td>
 <td class="ox-p-desc">HEATMAP (upstream heatmap: metrics [correlation, cosine] -&gt; 2 rules)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy heatmap_n_features = value" data-copy="heatmap_n_features = 0.5">heatmap_n_features</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy heatmap_n_features = value" aria-label="Copy heatmap_n_features = 0.5 to clipboard" data-copy="heatmap_n_features = 0.5">heatmap_n_features</button></td>
 <td class="ox-p-t"><code>float</code></td>
 <td class="ox-p-d"><code>0.5</code></td>
 <td class="ox-p-desc">HEATMAP (upstream heatmap: metrics [correlation, cosine] -&gt; 2 rules)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy heatmap_n_observations = value" data-copy="heatmap_n_observations = 1">heatmap_n_observations</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy heatmap_n_observations = value" aria-label="Copy heatmap_n_observations = 1 to clipboard" data-copy="heatmap_n_observations = 1">heatmap_n_observations</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>1</code></td>
 <td class="ox-p-desc">HEATMAP (upstream heatmap: metrics [correlation, cosine] -&gt; 2 rules)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy leiden_metric = value" data-copy="leiden_metric = euclidean">leiden_metric</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy leiden_metric = value" aria-label="Copy leiden_metric = euclidean to clipboard" data-copy="leiden_metric = euclidean">leiden_metric</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>euclidean</code></td>
 <td class="ox-p-desc">LEIDEN (upstream leiden: metric euclidean / n_neighbors 15 -&gt; 6 rules)<br><span class="ox-param-usedby">used by <code>7</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy leiden_n_iterations = value" data-copy="leiden_n_iterations = 2">leiden_n_iterations</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy leiden_n_iterations = value" aria-label="Copy leiden_n_iterations = 2 to clipboard" data-copy="leiden_n_iterations = 2">leiden_n_iterations</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>2</code></td>
 <td class="ox-p-desc">LEIDEN (upstream leiden: metric euclidean / n_neighbors 15 -&gt; 6 rules)<br><span class="ox-param-usedby">used by <code>6</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy leiden_n_neighbors = value" data-copy="leiden_n_neighbors = 15">leiden_n_neighbors</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy leiden_n_neighbors = value" aria-label="Copy leiden_n_neighbors = 15 to clipboard" data-copy="leiden_n_neighbors = 15">leiden_n_neighbors</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>15</code></td>
 <td class="ox-p-desc">LEIDEN (upstream leiden: metric euclidean / n_neighbors 15 -&gt; 6 rules)<br><span class="ox-param-usedby">used by <code>7</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mem_mb = value" data-copy="mem_mb = 32000">mem_mb</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mem_mb = value" aria-label="Copy mem_mb = 32000 to clipboard" data-copy="mem_mb = 32000">mem_mb</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>32000</code></td>
 <td class="ox-p-desc">RESOURCES (upstream config: mem/threads)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy metadata_of_interest = value" data-copy="metadata_of_interest = target">metadata_of_interest</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy metadata_of_interest = value" aria-label="Copy metadata_of_interest = target to clipboard" data-copy="metadata_of_interest = target">metadata_of_interest</button></td>
 <td class="ox-p-t"><code>array</code></td>
 <td class="ox-p-d"><code>target</code></td>
 <td class="ox-p-desc">METADATA<br><span class="ox-param-usedby">used by <code>12</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pca_n_components = value" data-copy="pca_n_components = 0.9">pca_n_components</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pca_n_components = value" aria-label="Copy pca_n_components = 0.9 to clipboard" data-copy="pca_n_components = 0.9">pca_n_components</button></td>
 <td class="ox-p-t"><code>float</code></td>
 <td class="ox-p-d"><code>0.9</code></td>
 <td class="ox-p-desc">PCA (upstream pca: svd_solver, n_components)<br><span class="ox-param-usedby">used by <code>13</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pca_svd_solver = value" data-copy="pca_svd_solver = auto">pca_svd_solver</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pca_svd_solver = value" aria-label="Copy pca_svd_solver = auto to clipboard" data-copy="pca_svd_solver = auto">pca_svd_solver</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>auto</code></td>
 <td class="ox-p-desc">PCA (upstream pca: svd_solver, n_components)<br><span class="ox-param-usedby">used by <code>13</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy plot_dimred_features = value" data-copy="plot_dimred_features = false">plot_dimred_features</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy plot_dimred_features = value" aria-label="Copy plot_dimred_features = false to clipboard" data-copy="plot_dimred_features = false">plot_dimred_features</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">FEATURE PLOTS: upstream runs plot_dimred_features only when<br>len(features_to_plot) &gt; 0; the oxo-flow <code>when</code> evaluator compares<br>scalars, not arrays, so this boolean switch carries the gate (set it to<br>true together with a non-empty features_to_plot)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy project_name = value" data-copy="project_name = digits">project_name</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy project_name = value" aria-label="Copy project_name = digits to clipboard" data-copy="project_name = digits">project_name</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>digits</code></td>
 <td class="ox-p-desc">GENERAL<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy result_path = value" data-copy="result_path = results">result_path</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy result_path = value" aria-label="Copy result_path = results to clipboard" data-copy="result_path = results">result_path</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>results</code></td>
 <td class="ox-p-desc">GENERAL<br><span class="ox-param-usedby">used by <code>61</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sample_proportion = value" data-copy="sample_proportion = 1">sample_proportion</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sample_proportion = value" aria-label="Copy sample_proportion = 1 to clipboard" data-copy="sample_proportion = 1">sample_proportion</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>1</code></td>
 <td class="ox-p-desc">CLUSTER VALIDATION<br><span class="ox-param-usedby">used by <code>6</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy scatterplot2d_alpha = value" data-copy="scatterplot2d_alpha = 1">scatterplot2d_alpha</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy scatterplot2d_alpha = value" aria-label="Copy scatterplot2d_alpha = 1 to clipboard" data-copy="scatterplot2d_alpha = 1">scatterplot2d_alpha</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>1</code></td>
 <td class="ox-p-desc">VISUALIZATION<br><span class="ox-param-usedby">used by <code>15</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy scatterplot2d_size = value" data-copy="scatterplot2d_size = 1">scatterplot2d_size</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy scatterplot2d_size = value" aria-label="Copy scatterplot2d_size = 1 to clipboard" data-copy="scatterplot2d_size = 1">scatterplot2d_size</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>1</code></td>
 <td class="ox-p-desc">VISUALIZATION<br><span class="ox-param-usedby">used by <code>15</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy threads = value" data-copy="threads = 2">threads</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy threads = value" aria-label="Copy threads = 2 to clipboard" data-copy="threads = 2">threads</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>2</code></td>
 <td class="ox-p-desc">RESOURCES (upstream config: mem/threads)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy umap_connectivity = value" data-copy="umap_connectivity = 1">umap_connectivity</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy umap_connectivity = value" aria-label="Copy umap_connectivity = 1 to clipboard" data-copy="umap_connectivity = 1">umap_connectivity</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>1</code></td>
 <td class="ox-p-desc">UMAP &amp; densMAP (upstream umap: single default metric/neighbors/min_dist)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy umap_densmap = value" data-copy="umap_densmap = 1">umap_densmap</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy umap_densmap = value" aria-label="Copy umap_densmap = 1 to clipboard" data-copy="umap_densmap = 1">umap_densmap</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>1</code></td>
 <td class="ox-p-desc">UMAP &amp; densMAP (upstream umap: single default metric/neighbors/min_dist)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy umap_diagnostics = value" data-copy="umap_diagnostics = 1">umap_diagnostics</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy umap_diagnostics = value" aria-label="Copy umap_diagnostics = 1 to clipboard" data-copy="umap_diagnostics = 1">umap_diagnostics</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>1</code></td>
 <td class="ox-p-desc">UMAP &amp; densMAP (upstream umap: single default metric/neighbors/min_dist)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy umap_metric = value" data-copy="umap_metric = euclidean">umap_metric</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy umap_metric = value" aria-label="Copy umap_metric = euclidean to clipboard" data-copy="umap_metric = euclidean">umap_metric</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>euclidean</code></td>
 <td class="ox-p-desc">UMAP &amp; densMAP (upstream umap: single default metric/neighbors/min_dist)<br><span class="ox-param-usedby">used by <code>18</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy umap_min_dist = value" data-copy="umap_min_dist = 0.1">umap_min_dist</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy umap_min_dist = value" aria-label="Copy umap_min_dist = 0.1 to clipboard" data-copy="umap_min_dist = 0.1">umap_min_dist</button></td>
 <td class="ox-p-t"><code>float</code></td>
 <td class="ox-p-d"><code>0.1</code></td>
 <td class="ox-p-desc">UMAP &amp; densMAP (upstream umap: single default metric/neighbors/min_dist)<br><span class="ox-param-usedby">used by <code>17</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy umap_n_neighbors = value" data-copy="umap_n_neighbors = 15">umap_n_neighbors</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy umap_n_neighbors = value" aria-label="Copy umap_n_neighbors = 15 to clipboard" data-copy="umap_n_neighbors = 15">umap_n_neighbors</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>15</code></td>
 <td class="ox-p-desc">UMAP &amp; densMAP (upstream umap: single default metric/neighbors/min_dist)<br><span class="ox-param-usedby">used by <code>18</code> rules</span></td>
@@ -453,4 +453,4 @@ of the default-parameter path is executed, none are stubbed):
 - Upstream: [epigen/unsupervised_analysis](https://github.com/epigen/unsupervised_analysis) @ `v4.0.2`
 - License: Apache-2.0 (this workflow) · MIT (upstream)
 
-Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 — this entry may lag behind upstream releases. See the repository's NOTICE for full attribution.

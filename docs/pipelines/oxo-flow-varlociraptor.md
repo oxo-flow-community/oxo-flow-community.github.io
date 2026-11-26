@@ -21,6 +21,7 @@ title: "Small and structural variant calling with Varlociraptor"
 <div class="ox-kv"><span class="k">Domain</span><span class="v">genomics</span></div>
 <div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/snakemake-workflows/dna-seq-varlociraptor">snakemake-workflows/dna-seq-varlociraptor</a></span></div>
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>v6.11.4</code></span></div>
+<div class="ox-kv"><span class="k">Last verified</span><span class="v">2026-11-20</span></div>
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2291.1"><code>10.48546/workflowhub.workflow.2291.1</code></a></span></div>
@@ -97,163 +98,163 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-varlociraptor
 <thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
 <tbody>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy annotation_selection = value" data-copy="annotation_selection = db_annotated">annotation_selection</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy annotation_selection = value" aria-label="Copy annotation_selection = db_annotated to clipboard" data-copy="annotation_selection = db_annotated">annotation_selection</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>db_annotated</code></td>
 <td class="ox-p-desc">The annotated-callset selection for gather_annotated_calls (upstream<br>get_final_selected_annotation): &quot;db_annotated&quot; (annotations/vcfs active,<br>the default), &quot;dgidb_annotated&quot; when dgidb is activated, or &quot;vep_annotated&quot;<br>when annotations/vcfs is deactivated.<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy benchmarking_activate = value" data-copy="benchmarking_activate = false">benchmarking_activate</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy benchmarking_activate = value" aria-label="Copy benchmarking_activate = false to clipboard" data-copy="benchmarking_activate = false">benchmarking_activate</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">upstream config: benchmarking (Snakefile rule benchmark / benchmarking.smk;<br>the full CHM-eval flow is ported, except the chm sample group vertical<br>slice (see module header)).<br><span class="ox-param-usedby">used by <code>8</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bwa_align_activate = value" data-copy="bwa_align_activate = false">bwa_align_activate</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bwa_align_activate = value" aria-label="Copy bwa_align_activate = false to clipboard" data-copy="bwa_align_activate = false">bwa_align_activate</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">upstream config: linear-reference (bwa) aligner branch of mapping.smk<br>(map_reads_bwa + ref.smk bwa_index). The default path aligns with vg<br>giraffe to the pangenome (ref/pangenome/activate = true upstream).<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cadd_build = value" data-copy="cadd_build = GRCh38">cadd_build</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cadd_build = value" aria-label="Copy cadd_build = GRCh38 to clipboard" data-copy="cadd_build = GRCh38">cadd_build</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>GRCh38</code></td>
 <td class="ox-p-desc">upstream config: plugins (download_cadd_scores_for_vep; download_revel and<br>process_revel_scores are already ported in ref.oxoflow). cadd_build /<br>cadd_version / cadd_variant_type are the upstream wildcards of the same<br>rule with their upstream defaults.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cadd_variant_type = value" data-copy="cadd_variant_type = snv">cadd_variant_type</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cadd_variant_type = value" aria-label="Copy cadd_variant_type = snv to clipboard" data-copy="cadd_variant_type = snv">cadd_variant_type</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>snv</code></td>
 <td class="ox-p-desc">upstream config: plugins (download_cadd_scores_for_vep; download_revel and<br>process_revel_scores are already ported in ref.oxoflow). cadd_build /<br>cadd_version / cadd_variant_type are the upstream wildcards of the same<br>rule with their upstream defaults.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cadd_version = value" data-copy="cadd_version = v1.7">cadd_version</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cadd_version = value" aria-label="Copy cadd_version = v1.7 to clipboard" data-copy="cadd_version = v1.7">cadd_version</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>v1.7</code></td>
 <td class="ox-p-desc">upstream config: plugins (download_cadd_scores_for_vep; download_revel and<br>process_revel_scores are already ported in ref.oxoflow). cadd_build /<br>cadd_version / cadd_variant_type are the upstream wildcards of the same<br>rule with their upstream defaults.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy consensus_activate = value" data-copy="consensus_activate = false">consensus_activate</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy consensus_activate = value" aria-label="Copy consensus_activate = false to clipboard" data-copy="consensus_activate = false">consensus_activate</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">upstream config: calc_consensus_reads/activate (consensus.oxoflow: rbt<br>collapse-reads-to-fragments + re-mapping to the linear bwa reference).<br>Activating it also needs the bwa reference index (bwa_align_activate or<br>primers_activate builds it) and, upstream-faithful,<br>markduplicates_extra = &quot;--TAG_DUPLICATE_SET_MEMBERS true&quot; and<br>freebayes_min_alternate_count = 1 (see those keys below).<br><span class="ox-param-usedby">used by <code>10</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dgidb_activate = value" data-copy="dgidb_activate = false">dgidb_activate</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dgidb_activate = value" aria-label="Copy dgidb_activate = false to clipboard" data-copy="dgidb_activate = false">dgidb_activate</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">upstream config: annotations/dgidb (annotate_dgidb; datasources = [DrugBank]).<br>Activating dgidb changes which annotated callset the final-calls chain<br>consumes upstream (get_final_selected_annotation): set annotation_selection<br>below to &quot;dgidb_annotated&quot; together with this key.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy freebayes_min_alternate_count = value" data-copy="freebayes_min_alternate_count = 2">freebayes_min_alternate_count</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy freebayes_min_alternate_count = value" aria-label="Copy freebayes_min_alternate_count = 2 to clipboard" data-copy="freebayes_min_alternate_count = 2">freebayes_min_alternate_count</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>2</code></td>
 <td class="ox-p-desc">upstream config: params/freebayes — the min-alternate-count for candidate<br>calling (2, or 1 when calc_consensus_reads is active).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fusion_activate = value" data-copy="fusion_activate = false">fusion_activate</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fusion_activate = value" aria-label="Copy fusion_activate = false to clipboard" data-copy="fusion_activate = false">fusion_activate</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">upstream config: fusion calling branch (fusion_calling.smk star_arriba<br>meta wrapper: star_index / star_align / arriba / annotate_exons /<br>convert_fusions / sort_arriba_calls / bcftools_concat_candidates).<br><span class="ox-param-usedby">used by <code>8</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy maf_activate = value" data-copy="maf_activate = false">maf_activate</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy maf_activate = value" aria-label="Copy maf_activate = false to clipboard" data-copy="maf_activate = false">maf_activate</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">upstream config: maf/activate (group_bcf_to_vcf + group_vcf_to_maf).<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy markduplicates_extra = value" data-copy="markduplicates_extra = ">markduplicates_extra</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy markduplicates_extra = value" aria-label="Copy markduplicates_extra =  to clipboard" data-copy="markduplicates_extra = ">markduplicates_extra</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">upstream config: params/picard/MarkDuplicates + get_markduplicates_extra —<br>extra MarkDuplicates arguments (upstream adds<br>&quot;--TAG_DUPLICATE_SET_MEMBERS true&quot; when calc_consensus_reads is active;<br>empty by default).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mutational_burden_activate = value" data-copy="mutational_burden_activate = false">mutational_burden_activate</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mutational_burden_activate = value" aria-label="Copy mutational_burden_activate = false to clipboard" data-copy="mutational_burden_activate = false">mutational_burden_activate</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">upstream config: mutational_burden/activate + events<br>(calculate_covered_coding_sites + estimate_mutational_burden; events are<br>comma-joined, split to space-separated in the rule shells).<br><span class="ox-param-usedby">used by <code>6</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mutational_burden_events = value" data-copy="mutational_burden_events = somatic_tumor_low,somatic_tumor_medium,somatic_tumor_high">mutational_burden_events</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mutational_burden_events = value" aria-label="Copy mutational_burden_events = somatic_tumor_low,somatic_tumor_medium,somatic_tumor_high to clipboard" data-copy="mutational_burden_events = somatic_tumor_low,somatic_tumor_medium,somatic_tumor_high">mutational_burden_events</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>somatic_tumor_low,somatic_tumor_medium,somatic_tumor_high</code></td>
 <td class="ox-p-desc">upstream config: mutational_burden/activate + events<br>(calculate_covered_coding_sites + estimate_mutational_burden; events are<br>comma-joined, split to space-separated in the rule shells).<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mutational_signatures_activate = value" data-copy="mutational_signatures_activate = false">mutational_signatures_activate</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mutational_signatures_activate = value" aria-label="Copy mutational_signatures_activate = false to clipboard" data-copy="mutational_signatures_activate = false">mutational_signatures_activate</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">upstream config: mutational_signatures/activate<br>(create_mutational_context_file ... plot_mutational_signatures; upstream<br>default events = [some_id], samples = [tumor], frozen in the module).<br><span class="ox-param-usedby">used by <code>8</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy plugins_activate = value" data-copy="plugins_activate = false">plugins_activate</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy plugins_activate = value" aria-label="Copy plugins_activate = false to clipboard" data-copy="plugins_activate = false">plugins_activate</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">upstream config: plugins (download_cadd_scores_for_vep; download_revel and<br>process_revel_scores are already ported in ref.oxoflow). cadd_build /<br>cadd_version / cadd_variant_type are the upstream wildcards of the same<br>rule with their upstream defaults.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy population_db_activate = value" data-copy="population_db_activate = false">population_db_activate</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy population_db_activate = value" aria-label="Copy population_db_activate = false to clipboard" data-copy="population_db_activate = false">population_db_activate</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">upstream config: population/db/activate + path/alias/fdr/events<br>(rules clean_population_db / population_filter_variants / population_db_update).<br><span class="ox-param-usedby">used by <code>7</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy population_db_alias = value" data-copy="population_db_alias = tumor">population_db_alias</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy population_db_alias = value" aria-label="Copy population_db_alias = tumor to clipboard" data-copy="population_db_alias = tumor">population_db_alias</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>tumor</code></td>
 <td class="ox-p-desc">upstream config: population/db/activate + path/alias/fdr/events<br>(rules clean_population_db / population_filter_variants / population_db_update).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy population_db_events = value" data-copy="population_db_events = somatic_tumor_high,somatic_tumor_medium">population_db_events</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy population_db_events = value" aria-label="Copy population_db_events = somatic_tumor_high,somatic_tumor_medium to clipboard" data-copy="population_db_events = somatic_tumor_high,somatic_tumor_medium">population_db_events</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>somatic_tumor_high,somatic_tumor_medium</code></td>
 <td class="ox-p-desc">upstream config: population/db/activate + path/alias/fdr/events<br>(rules clean_population_db / population_filter_variants / population_db_update).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy population_db_fdr = value" data-copy="population_db_fdr = 0.05">population_db_fdr</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy population_db_fdr = value" aria-label="Copy population_db_fdr = 0.05 to clipboard" data-copy="population_db_fdr = 0.05">population_db_fdr</button></td>
 <td class="ox-p-t"><code>float</code></td>
 <td class="ox-p-d"><code>0.05</code></td>
 <td class="ox-p-desc">upstream config: population/db/activate + path/alias/fdr/events<br>(rules clean_population_db / population_filter_variants / population_db_update).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy population_db_path = value" data-copy="population_db_path = resources/population_db.variants.bcf">population_db_path</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy population_db_path = value" aria-label="Copy population_db_path = resources/population_db.variants.bcf to clipboard" data-copy="population_db_path = resources/population_db.variants.bcf">population_db_path</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>resources/population_db.variants.bcf</code></td>
 <td class="ox-p-desc">upstream config: population/db/activate + path/alias/fdr/events<br>(rules clean_population_db / population_filter_variants / population_db_update).<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy primers_activate = value" data-copy="primers_activate = false">primers_activate</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy primers_activate = value" aria-label="Copy primers_activate = false to clipboard" data-copy="primers_activate = false">primers_activate</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">upstream config: primers/trimming (rules assign_primers ... build_primer_regions).<br>primers_fa1/primers_fa2 are the upstream primers/trimming/primers_fa{1,2} fasta<br>files (empty upstream default = primers flow off); fa2 empty means single-end<br>primer fasta.<br><span class="ox-param-usedby">used by <code>8</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy primers_fa1 = value" data-copy="primers_fa1 = ">primers_fa1</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy primers_fa1 = value" aria-label="Copy primers_fa1 =  to clipboard" data-copy="primers_fa1 = ">primers_fa1</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">upstream config: primers/trimming (rules assign_primers ... build_primer_regions).<br>primers_fa1/primers_fa2 are the upstream primers/trimming/primers_fa{1,2} fasta<br>files (empty upstream default = primers flow off); fa2 empty means single-end<br>primer fasta.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy primers_fa2 = value" data-copy="primers_fa2 = ">primers_fa2</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy primers_fa2 = value" aria-label="Copy primers_fa2 =  to clipboard" data-copy="primers_fa2 = ">primers_fa2</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">upstream config: primers/trimming (rules assign_primers ... build_primer_regions).<br>primers_fa1/primers_fa2 are the upstream primers/trimming/primers_fa{1,2} fasta<br>files (empty upstream default = primers flow off); fa2 empty means single-end<br>primer fasta.<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy reads_dir = value" data-copy="reads_dir = test/fixtures/raw">reads_dir</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy reads_dir = value" aria-label="Copy reads_dir = test/fixtures/raw to clipboard" data-copy="reads_dir = test/fixtures/raw">reads_dir</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/raw</code></td>
 <td class="ox-p-desc">Path to the raw paired-end FASTQs of the single sample (upstream<br>config/units.tsv points at absolute /projects/... paths; the port reads<br>from the repository fixtures instead).<br><span class="ox-param-usedby">used by <code>7</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_ref_downloads = value" data-copy="skip_ref_downloads = false">skip_ref_downloads</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_ref_downloads = value" aria-label="Copy skip_ref_downloads = false to clipboard" data-copy="skip_ref_downloads = false">skip_ref_downloads</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Skip the ref:: download rules (genome, annotation, VEP cache/plugins,<br>pangenome, REVEL, known variants — ~5 GB of public databases). Set to<br>true when you have pre-placed the files at the resource paths the rules<br>declare (see README &quot;Reference databases&quot;); the downloads are hardcoded<br>upstream URLs and need unimpeded network access.<br><span class="ox-param-usedby">used by <code>7</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy trimming_activate = value" data-copy="trimming_activate = false">trimming_activate</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy trimming_activate = value" aria-label="Copy trimming_activate = false to clipboard" data-copy="trimming_activate = false">trimming_activate</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">upstream config: trimming (get_sra / fastp rules). The default path has no<br>trimming configured — reads pass through mapping::merge_trimmed_fastqs.<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
@@ -526,10 +527,16 @@ deliberate deviations:
 | `workflow/envs/varlociraptor.yaml`: `- varlociraptor =8.12.0`, `- vega-lite-cli =5.16`, `- bcftools =1.21` | `envs/varlociraptor.yaml`: same tool set with the vega-lite binding re-pinned to `- conda-forge::vega-lite-cli=6.4.3` | `5.16` is no longer on the channels (live `PackagesNotFoundError` on env setup, recorded in the env header comment); `6.4.3` is the remaining conda-forge build of the same binding as it co-ships with the varlociraptor CLI upstream; the varlociraptor/bcftools pins are unchanged |
 | datavzrd report environment: wrapper `v9.18.1/utils/datavzrd` `environment.yaml`: `- datavzrd =2.74.0`, `- yte`, `- numpy`, `- pandas`, `- polars` | `envs/datavzrd.yaml`: `- conda-forge::datavzrd=2.71.0` plus the yte/numpy/polars set (`python=3.12`); the three `datavzrd_*` report rules keep the wrapper CLI semantics via `scripts/datavzrd.py` | datavzrd is a conda-forge package (the bioconda prefix never had it) and the wrapper-era pin recorded in the env header comment (`2.70.0`) is gone from the channel (live `PackagesNotFoundError`), so the env pins the resolvable conda-forge build; the referenced wrapper tag pins `2.74.0` — recorded here because the general per-rule-conda row above claims "same packages, same pins" verbatim |
 
+<details class="ox-evidence" markdown="1"><summary>Verification evidence</summary>
+
+189 rules (default path: pangenome mapping, freebayes + delly candidates, Varlociraptor calling, VEP annotation, oncoprint report; somalier sample-swap chain on the default plan; gated modules/twins behind config toggles, incl. atomize/preprocess/scatter call modes). The 2026-11-20 re-port to upstream v6.11.4 is validate/lint/dry-run green in CI with the compiled engine 0.31.0 (0 errors; 116 warnings accepted by the repo gate policy). The historical live-verified bench runs (on the v6.10.0-era port) predate this re-port, so the badge rests at Verified per the ratings policy until the community test bench re-confirms end-to-end.
+
+</details>
+
 ## Links
 
 - Repository: [oxo-flow-varlociraptor](https://github.com/oxo-flow-community/oxo-flow-varlociraptor)
 - Upstream: [snakemake-workflows/dna-seq-varlociraptor](https://github.com/snakemake-workflows/dna-seq-varlociraptor) @ `v6.11.4`
 - License: Apache-2.0 (this workflow) · MIT (upstream)
 
-Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 · last catalog sync 2026-11-20. See the repository's NOTICE for full attribution.

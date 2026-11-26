@@ -117,4 +117,4 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - Upstream: [SunPast/ERV-pipeline](https://github.com/SunPast/ERV-pipeline) @ `main@02ae748`
 - License: Apache-2.0 (this workflow) · MIT (upstream)
 
-Created on 2026-11-05 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-11-05 — this entry may lag behind upstream releases. See the repository's NOTICE for full attribution.

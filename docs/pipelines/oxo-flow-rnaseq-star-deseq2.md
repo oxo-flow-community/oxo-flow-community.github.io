@@ -96,193 +96,193 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq-star-deseq2
 <thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
 <tbody>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy annotation_gtf = value" data-copy="annotation_gtf = ">annotation_gtf</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy annotation_gtf = value" aria-label="Copy annotation_gtf =  to clipboard" data-copy="annotation_gtf = ">annotation_gtf</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">Local reference overrides: set to a local FASTA/GTF to skip the Ensembl<br>download entirely (offline machines, tiny test runs). Empty = download<br>(the upstream-faithful default). A tiny synthetic kit ships at<br>test/fixtures/reference/ with matching reads in raw-synthetic/.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy annotation_url = value" data-copy="annotation_url = ftp://ftp.ensembl.org/pub/release-115/gtf/homo_sapiens/Homo_sapiens.GRCh38.115.gtf.gz">annotation_url</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy annotation_url = value" aria-label="Copy annotation_url = ftp://ftp.ensembl.org/pub/release-115/gtf/homo_sapiens/Homo_sapiens.GRCh38.115.gtf.gz to clipboard" data-copy="annotation_url = ftp://ftp.ensembl.org/pub/release-115/gtf/homo_sapiens/Homo_sapiens.GRCh38.115.gtf.gz">annotation_url</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>ftp://ftp.ensembl.org/pub/release-115/gtf/homo_sapiens/Homo_sapiens.GRCh38.115.gtf.gz</code></td>
 <td class="ox-p-desc">Local reference overrides: set to a local FASTA/GTF to skip the Ensembl<br>download entirely (offline machines, tiny test runs). Empty = download<br>(the upstream-faithful default). A tiny synthetic kit ships at<br>test/fixtures/reference/ with matching reads in raw-synthetic/.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy biomart_species = value" data-copy="biomart_species = hsapiens">biomart_species</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy biomart_species = value" aria-label="Copy biomart_species = hsapiens to clipboard" data-copy="biomart_species = hsapiens">biomart_species</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>hsapiens</code></td>
 <td class="ox-p-desc">biomaRt species dataset suffix (upstream get_bioc_species_name()).<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bwa_index_activate = value" data-copy="bwa_index_activate = false">bwa_index_activate</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bwa_index_activate = value" aria-label="Copy bwa_index_activate = false to clipboard" data-copy="bwa_index_activate = false">bwa_index_activate</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Activate the BWA index / samtools faidx rules. Upstream declares both but<br>its default path never requests them (snakemake lazy evaluation); oxo-flow<br>runs every rule in the file, so both are gated off unless activated.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy contrast_exprs = value" data-copy="contrast_exprs = ">contrast_exprs</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy contrast_exprs = value" aria-label="Copy contrast_exprs =  to clipboard" data-copy="contrast_exprs = ">contrast_exprs</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">String-form DESeq2 contrasts (upstream diffexp.contrasts string entries,<br>e.g. &#x27;list(c(&quot;treatment_1_treated_vs_untreated&quot;, ...))&#x27;). Semicolon-joined<br>list parallel to <code>contrasts</code>; an empty entry = list-form for that<br>contrast. Entries are R expressions evaluated by DESeq2: use single<br>quotes for R strings (the value is double-quoted on the shell command<br>line) and no semicolons inside an entry.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy contrast_levels = value" data-copy="contrast_levels = treated">contrast_levels</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy contrast_levels = value" aria-label="Copy contrast_levels = treated to clipboard" data-copy="contrast_levels = treated">contrast_levels</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>treated</code></td>
 <td class="ox-p-desc">Contrasts (upstream: diffexp.contrasts). One comma-joined entry per<br>contrast: contrast id, its variable_of_interest, its level_of_interest.<br>The base level comes from diffexp_base_levels.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy contrast_variables = value" data-copy="contrast_variables = treatment_1">contrast_variables</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy contrast_variables = value" aria-label="Copy contrast_variables = treatment_1 to clipboard" data-copy="contrast_variables = treatment_1">contrast_variables</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>treatment_1</code></td>
 <td class="ox-p-desc">Contrasts (upstream: diffexp.contrasts). One comma-joined entry per<br>contrast: contrast id, its variable_of_interest, its level_of_interest.<br>The base level comes from diffexp_base_levels.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy contrasts = value" data-copy="contrasts = treatment_1">contrasts</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy contrasts = value" aria-label="Copy contrasts = treatment_1 to clipboard" data-copy="contrasts = treatment_1">contrasts</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>treatment_1</code></td>
 <td class="ox-p-desc">Contrasts (upstream: diffexp.contrasts). One comma-joined entry per<br>contrast: contrast id, its variable_of_interest, its level_of_interest.<br>The base level comes from diffexp_base_levels.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy diffexp_base_levels = value" data-copy="diffexp_base_levels = untreated,untreated">diffexp_base_levels</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy diffexp_base_levels = value" aria-label="Copy diffexp_base_levels = untreated,untreated to clipboard" data-copy="diffexp_base_levels = untreated,untreated">diffexp_base_levels</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>untreated,untreated</code></td>
 <td class="ox-p-desc">Differential expression (upstream: diffexp.*). Comma-joined lists mirror<br>the upstream nested tables; positions pair up (treatment_1 -&gt; untreated,<br>treatment_2 -&gt; untreated).<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy diffexp_batch_effects = value" data-copy="diffexp_batch_effects = jointly_handled">diffexp_batch_effects</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy diffexp_batch_effects = value" aria-label="Copy diffexp_batch_effects = jointly_handled to clipboard" data-copy="diffexp_batch_effects = jointly_handled">diffexp_batch_effects</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>jointly_handled</code></td>
 <td class="ox-p-desc">Differential expression (upstream: diffexp.*). Comma-joined lists mirror<br>the upstream nested tables; positions pair up (treatment_1 -&gt; untreated,<br>treatment_2 -&gt; untreated).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy diffexp_model = value" data-copy="diffexp_model = ">diffexp_model</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy diffexp_model = value" aria-label="Copy diffexp_model =  to clipboard" data-copy="diffexp_model = ">diffexp_model</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">Differential expression (upstream: diffexp.*). Comma-joined lists mirror<br>the upstream nested tables; positions pair up (treatment_1 -&gt; untreated,<br>treatment_2 -&gt; untreated).<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy diffexp_variables = value" data-copy="diffexp_variables = treatment_1,treatment_2">diffexp_variables</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy diffexp_variables = value" aria-label="Copy diffexp_variables = treatment_1,treatment_2 to clipboard" data-copy="diffexp_variables = treatment_1,treatment_2">diffexp_variables</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>treatment_1,treatment_2</code></td>
 <td class="ox-p-desc">Differential expression (upstream: diffexp.*). Comma-joined lists mirror<br>the upstream nested tables; positions pair up (treatment_1 -&gt; untreated,<br>treatment_2 -&gt; untreated).<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fastp_adapters = value" data-copy="fastp_adapters = --detect_adapter_for_pe">fastp_adapters</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fastp_adapters = value" aria-label="Copy fastp_adapters = --detect_adapter_for_pe to clipboard" data-copy="fastp_adapters = --detect_adapter_for_pe">fastp_adapters</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>--detect_adapter_for_pe</code></td>
 <td class="ox-p-desc">fastp adapter args and extra args (upstream: per-unit columns<br>fastp_adapters / fastp_extra in config/units.tsv, looked up per unit via<br>the metadata binding — {meta.fastp_adapters} / {meta.fastp_extra} render<br>per unit and these global keys are the per-unit defaults when a unit&#x27;s<br>column is empty; equal the upstream defaults). fastp_adapters_se matches<br>the upstream single-end default (&quot;&quot;).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fastp_adapters_se = value" data-copy="fastp_adapters_se = ">fastp_adapters_se</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fastp_adapters_se = value" aria-label="Copy fastp_adapters_se =  to clipboard" data-copy="fastp_adapters_se = ">fastp_adapters_se</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">fastp adapter args and extra args (upstream: per-unit columns<br>fastp_adapters / fastp_extra in config/units.tsv, looked up per unit via<br>the metadata binding — {meta.fastp_adapters} / {meta.fastp_extra} render<br>per unit and these global keys are the per-unit defaults when a unit&#x27;s<br>column is empty; equal the upstream defaults). fastp_adapters_se matches<br>the upstream single-end default (&quot;&quot;).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fastp_extra = value" data-copy="fastp_extra = --trim_poly_x --poly_x_min_len 7 --trim_poly_g --poly_g_min_len 7">fastp_extra</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fastp_extra = value" aria-label="Copy fastp_extra = --trim_poly_x --poly_x_min_len 7 --trim_poly_g --poly_g_min_len 7 to clipboard" data-copy="fastp_extra = --trim_poly_x --poly_x_min_len 7 --trim_poly_g --poly_g_min_len 7">fastp_extra</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>--trim_poly_x --poly_x_min_len 7 --trim_poly_g --poly_g_min_len 7</code></td>
 <td class="ox-p-desc">fastp adapter args and extra args (upstream: per-unit columns<br>fastp_adapters / fastp_extra in config/units.tsv, looked up per unit via<br>the metadata binding — {meta.fastp_adapters} / {meta.fastp_extra} render<br>per unit and these global keys are the per-unit defaults when a unit&#x27;s<br>column is empty; equal the upstream defaults). fastp_adapters_se matches<br>the upstream single-end default (&quot;&quot;).<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy genome_faidx_activate = value" data-copy="genome_faidx_activate = false">genome_faidx_activate</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy genome_faidx_activate = value" aria-label="Copy genome_faidx_activate = false to clipboard" data-copy="genome_faidx_activate = false">genome_faidx_activate</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Activate the BWA index / samtools faidx rules. Upstream declares both but<br>its default path never requests them (snakemake lazy evaluation); oxo-flow<br>runs every rule in the file, so both are gated off unless activated.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy genome_fasta = value" data-copy="genome_fasta = ">genome_fasta</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy genome_fasta = value" aria-label="Copy genome_fasta =  to clipboard" data-copy="genome_fasta = ">genome_fasta</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">Local reference overrides: set to a local FASTA/GTF to skip the Ensembl<br>download entirely (offline machines, tiny test runs). Empty = download<br>(the upstream-faithful default). A tiny synthetic kit ships at<br>test/fixtures/reference/ with matching reads in raw-synthetic/.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy genome_url = value" data-copy="genome_url = https://ftp.ensembl.org/pub/release-115/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz">genome_url</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy genome_url = value" aria-label="Copy genome_url = https://ftp.ensembl.org/pub/release-115/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz to clipboard" data-copy="genome_url = https://ftp.ensembl.org/pub/release-115/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz">genome_url</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>https://ftp.ensembl.org/pub/release-115/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz</code></td>
 <td class="ox-p-desc">Local reference overrides: set to a local FASTA/GTF to skip the Ensembl<br>download entirely (offline machines, tiny test runs). Empty = download<br>(the upstream-faithful default). A tiny synthetic kit ships at<br>test/fixtures/reference/ with matching reads in raw-synthetic/.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy genome_url_toplevel = value" data-copy="genome_url_toplevel = https://ftp.ensembl.org/pub/release-115/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.toplevel.fa.gz">genome_url_toplevel</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy genome_url_toplevel = value" aria-label="Copy genome_url_toplevel = https://ftp.ensembl.org/pub/release-115/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.toplevel.fa.gz to clipboard" data-copy="genome_url_toplevel = https://ftp.ensembl.org/pub/release-115/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.toplevel.fa.gz">genome_url_toplevel</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>https://ftp.ensembl.org/pub/release-115/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.toplevel.fa.gz</code></td>
 <td class="ox-p-desc">Local reference overrides: set to a local FASTA/GTF to skip the Ensembl<br>download entirely (offline machines, tiny test runs). Empty = download<br>(the upstream-faithful default). A tiny synthetic kit ships at<br>test/fixtures/reference/ with matching reads in raw-synthetic/.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pca_activate = value" data-copy="pca_activate = true">pca_activate</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pca_activate = value" aria-label="Copy pca_activate = true to clipboard" data-copy="pca_activate = true">pca_activate</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>true</code></td>
 <td class="ox-p-desc">PCA (upstream: pca.activate / pca.labels). pca_variables is the derived<br>upstream list (variables_of_interest + batch_effects + labels), kept<br>explicit here — keep it in sync with the diffexp keys below.<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pca_labels = value" data-copy="pca_labels = ">pca_labels</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pca_labels = value" aria-label="Copy pca_labels =  to clipboard" data-copy="pca_labels = ">pca_labels</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">PCA (upstream: pca.activate / pca.labels). pca_variables is the derived<br>upstream list (variables_of_interest + batch_effects + labels), kept<br>explicit here — keep it in sync with the diffexp keys below.<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pca_variables = value" data-copy="pca_variables = treatment_1,treatment_2,jointly_handled">pca_variables</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pca_variables = value" aria-label="Copy pca_variables = treatment_1,treatment_2,jointly_handled to clipboard" data-copy="pca_variables = treatment_1,treatment_2,jointly_handled">pca_variables</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>treatment_1,treatment_2,jointly_handled</code></td>
 <td class="ox-p-desc">PCA (upstream: pca.activate / pca.labels). pca_variables is the derived<br>upstream list (variables_of_interest + batch_effects + labels), kept<br>explicit here — keep it in sync with the diffexp keys below.<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy raw_dir = value" data-copy="raw_dir = test/fixtures/raw">raw_dir</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy raw_dir = value" aria-label="Copy raw_dir = test/fixtures/raw to clipboard" data-copy="raw_dir = test/fixtures/raw">raw_dir</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/raw</code></td>
 <td class="ox-p-desc">Directory holding &lt;unit-key&gt;_R1.fastq.gz / _R2.fastq.gz per config/units.tsv.<br>The repo default ships the tiny test fixtures; point this at your data<br>(e.g. &quot;raw&quot;).<br><span class="ox-param-usedby">used by <code>5</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ref_build = value" data-copy="ref_build = GRCh38">ref_build</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ref_build = value" aria-label="Copy ref_build = GRCh38 to clipboard" data-copy="ref_build = GRCh38">ref_build</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>GRCh38</code></td>
 <td class="ox-p-desc">Reference (upstream: ref.species / ref.release / ref.build). The download<br>URLs below are the Ensembl URLs the wrappers resolve for these values.<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ref_release = value" data-copy="ref_release = 115">ref_release</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ref_release = value" aria-label="Copy ref_release = 115 to clipboard" data-copy="ref_release = 115">ref_release</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>115</code></td>
 <td class="ox-p-desc">Reference (upstream: ref.species / ref.release / ref.build). The download<br>URLs below are the Ensembl URLs the wrappers resolve for these values.<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ref_species = value" data-copy="ref_species = homo_sapiens">ref_species</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ref_species = value" aria-label="Copy ref_species = homo_sapiens to clipboard" data-copy="ref_species = homo_sapiens">ref_species</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>homo_sapiens</code></td>
 <td class="ox-p-desc">Reference (upstream: ref.species / ref.release / ref.build). The download<br>URLs below are the Ensembl URLs the wrappers resolve for these values.<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy single_end = value" data-copy="single_end = false">single_end</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy single_end = value" aria-label="Copy single_end = false to clipboard" data-copy="single_end = false">single_end</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Single-end mode (upstream decides per sample from the units.tsv fq2/sra<br>columns; the port applies it globally — engine rules have fixed input<br>arities). Single-end units provide only &lt;unit-key&gt;_R1.fastq.gz. Default<br>false = the paired-end path.<br><span class="ox-param-usedby">used by <code>6</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sra_accessions = value" data-copy="sra_accessions = ">sra_accessions</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sra_accessions = value" aria-label="Copy sra_accessions =  to clipboard" data-copy="sra_accessions = ">sra_accessions</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">SRA auto-feed master switch (upstream get_sra branch: units whose fq1/fq2<br>are empty carry an sra accession in config/units.tsv). Any non-empty value<br>enables the per-unit download; each unit&#x27;s accession comes from its units<br>sheet sra column (the {meta.sra} lookup), and reads land at<br>&lt;raw_dir&gt;/&lt;unit-key&gt;_R{1,2}.fastq.gz (the raw_dir convention) so the<br>trimming/alignment rules consume them automatically (upstream<br>get_units_fastqs). Default empty = no SRA download. Requires oxo-flow &gt;=<br>0.17.0 — on older engines keep this empty (the per-unit sra column is not<br>read, and the gate then stays closed).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy star_align_extra = value" data-copy="star_align_extra = ">star_align_extra</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy star_align_extra = value" aria-label="Copy star_align_extra =  to clipboard" data-copy="star_align_extra = ">star_align_extra</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">STAR extra params (upstream: params.star.index / params.star.align).<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy star_index_extra = value" data-copy="star_index_extra = ">star_index_extra</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy star_index_extra = value" aria-label="Copy star_index_extra =  to clipboard" data-copy="star_index_extra = ">star_index_extra</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">STAR extra params (upstream: params.star.index / params.star.align).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy trimming_activate = value" data-copy="trimming_activate = true">trimming_activate</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy trimming_activate = value" aria-label="Copy trimming_activate = true to clipboard" data-copy="trimming_activate = true">trimming_activate</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>true</code></td>
 <td class="ox-p-desc">Trimming (upstream: trimming.activate). With trimming off, the port&#x27;s<br>star_align_raw / star_align_se_raw variants feed the raw reads to STAR,<br>mirroring the upstream rewiring (get_fq with trimming.activate = False).<br><span class="ox-param-usedby">used by <code>6</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy units_file = value" data-copy="units_file = config/units.tsv">units_file</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy units_file = value" aria-label="Copy units_file = config/units.tsv to clipboard" data-copy="units_file = config/units.tsv">units_file</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>config/units.tsv</code></td>
 <td class="ox-p-desc">Sample sheet (TSV: sample_name, condition, ...) and unit sheet<br>(TSV: sample_name, unit_name, fq1, fq2, sra, fastp_adapters, fastp_extra,<br>strandedness). Upstream: config[&quot;samples&quot;] / config[&quot;units&quot;]. The unit<br>sheet&#x27;s first column is the composite unit key (&lt;sample&gt;-&lt;unit&gt;, the<br>{sample} wildcard) and doubles as the [workflow] metadata_file table<br>above; scripts/count-matrix.py reads the sample/unit/strandedness columns.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
@@ -433,4 +433,4 @@ to the global config defaults (upstream `lookup()` semantics).
 - Upstream: [snakemake-workflows/rna-seq-star-deseq2](https://github.com/snakemake-workflows/rna-seq-star-deseq2) @ `v3.1.2`
 - License: Apache-2.0 (this workflow) · MIT (upstream)
 
-Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 — this entry may lag behind upstream releases. See the repository's NOTICE for full attribution.

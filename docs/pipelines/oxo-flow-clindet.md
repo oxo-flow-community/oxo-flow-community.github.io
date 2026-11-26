@@ -100,403 +100,403 @@ oxo-flow pull gh:WangLabCSU/oxo-flow-clindet
 <thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
 <tbody>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy annotate_beds_file = value" data-copy="annotate_beds_file = ">annotate_beds_file</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy annotate_beds_file = value" aria-label="Copy annotate_beds_file =  to clipboard" data-copy="annotate_beds_file = ">annotate_beds_file</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">BED tracks used by mutation_flag — name/path TSV mirroring upstream<br>softwares_params[genome].annotate_beds dict (empty = header-only, no flags)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy arriba_blacklist = value" data-copy="arriba_blacklist = test/fixtures/refs/annotations/arriba_blacklist.tsv">arriba_blacklist</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy arriba_blacklist = value" aria-label="Copy arriba_blacklist = test/fixtures/refs/annotations/arriba_blacklist.tsv to clipboard" data-copy="arriba_blacklist = test/fixtures/refs/annotations/arriba_blacklist.tsv">arriba_blacklist</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/refs/annotations/arriba_blacklist.tsv</code></td>
 <td class="ox-p-desc">Arriba databases (upstream softwares_params[genome].arriba.database).<br>Mini-test: blacklist + mini known_fusions/protein_domains/cytobands are<br>local files matching the 922 bp fixture reference (the whole-genome DBs<br>in the uhrigs/arriba:2.4.0 image fail to parse against it, observed live).<br>Real hg38 runs keep the container paths; the mini DBs mirror the formats 1:1.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy arriba_cytobands = value" data-copy="arriba_cytobands = test/fixtures/refs/annotations/arriba_cytobands_mini.tsv">arriba_cytobands</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy arriba_cytobands = value" aria-label="Copy arriba_cytobands = test/fixtures/refs/annotations/arriba_cytobands_mini.tsv to clipboard" data-copy="arriba_cytobands = test/fixtures/refs/annotations/arriba_cytobands_mini.tsv">arriba_cytobands</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/refs/annotations/arriba_cytobands_mini.tsv</code></td>
 <td class="ox-p-desc">Arriba databases (upstream softwares_params[genome].arriba.database).<br>Mini-test: blacklist + mini known_fusions/protein_domains/cytobands are<br>local files matching the 922 bp fixture reference (the whole-genome DBs<br>in the uhrigs/arriba:2.4.0 image fail to parse against it, observed live).<br>Real hg38 runs keep the container paths; the mini DBs mirror the formats 1:1.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy arriba_known_fusions = value" data-copy="arriba_known_fusions = test/fixtures/refs/annotations/arriba_known_fusions_mini.tsv.gz">arriba_known_fusions</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy arriba_known_fusions = value" aria-label="Copy arriba_known_fusions = test/fixtures/refs/annotations/arriba_known_fusions_mini.tsv.gz to clipboard" data-copy="arriba_known_fusions = test/fixtures/refs/annotations/arriba_known_fusions_mini.tsv.gz">arriba_known_fusions</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/refs/annotations/arriba_known_fusions_mini.tsv.gz</code></td>
 <td class="ox-p-desc">Arriba databases (upstream softwares_params[genome].arriba.database).<br>Mini-test: blacklist + mini known_fusions/protein_domains/cytobands are<br>local files matching the 922 bp fixture reference (the whole-genome DBs<br>in the uhrigs/arriba:2.4.0 image fail to parse against it, observed live).<br>Real hg38 runs keep the container paths; the mini DBs mirror the formats 1:1.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy arriba_protein_domains = value" data-copy="arriba_protein_domains = test/fixtures/refs/annotations/arriba_protein_domains_mini.gff3">arriba_protein_domains</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy arriba_protein_domains = value" aria-label="Copy arriba_protein_domains = test/fixtures/refs/annotations/arriba_protein_domains_mini.gff3 to clipboard" data-copy="arriba_protein_domains = test/fixtures/refs/annotations/arriba_protein_domains_mini.gff3">arriba_protein_domains</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/refs/annotations/arriba_protein_domains_mini.gff3</code></td>
 <td class="ox-p-desc">Arriba databases (upstream softwares_params[genome].arriba.database).<br>Mini-test: blacklist + mini known_fusions/protein_domains/cytobands are<br>local files matching the 922 bp fixture reference (the whole-genome DBs<br>in the uhrigs/arriba:2.4.0 image fail to parse against it, observed live).<br>Real hg38 runs keep the container paths; the mini DBs mirror the formats 1:1.<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ascat_alleles_prefix = value" data-copy="ascat_alleles_prefix = test/fixtures/cnv/ascat_alleles/">ascat_alleles_prefix</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ascat_alleles_prefix = value" aria-label="Copy ascat_alleles_prefix = test/fixtures/cnv/ascat_alleles/ to clipboard" data-copy="ascat_alleles_prefix = test/fixtures/cnv/ascat_alleles/">ascat_alleles_prefix</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/cnv/ascat_alleles/</code></td>
 <td class="ox-p-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ascat_chroms = value" data-copy="ascat_chroms = 21">ascat_chroms</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ascat_chroms = value" aria-label="Copy ascat_chroms = 21 to clipboard" data-copy="ascat_chroms = 21">ascat_chroms</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>21</code></td>
 <td class="ox-p-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ascat_gc_file = value" data-copy="ascat_gc_file = test/fixtures/cnv/ascat_gc.txt">ascat_gc_file</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ascat_gc_file = value" aria-label="Copy ascat_gc_file = test/fixtures/cnv/ascat_gc.txt to clipboard" data-copy="ascat_gc_file = test/fixtures/cnv/ascat_gc.txt">ascat_gc_file</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/cnv/ascat_gc.txt</code></td>
 <td class="ox-p-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ascat_loci_prefix = value" data-copy="ascat_loci_prefix = test/fixtures/cnv/ascat_loci/">ascat_loci_prefix</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ascat_loci_prefix = value" aria-label="Copy ascat_loci_prefix = test/fixtures/cnv/ascat_loci/ to clipboard" data-copy="ascat_loci_prefix = test/fixtures/cnv/ascat_loci/">ascat_loci_prefix</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/cnv/ascat_loci/</code></td>
 <td class="ox-p-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ascat_rt_file = value" data-copy="ascat_rt_file = ">ascat_rt_file</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ascat_rt_file = value" aria-label="Copy ascat_rt_file =  to clipboard" data-copy="ascat_rt_file = ">ascat_rt_file</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cnv_enabled = value" data-copy="cnv_enabled = false">cnv_enabled</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cnv_enabled = value" aria-label="Copy cnv_enabled = false to clipboard" data-copy="cnv_enabled = false">cnv_enabled</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).<br><span class="ox-param-usedby">used by <code>10</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dbsnp = value" data-copy="dbsnp = test/fixtures/refs/annotations/dbsnp_146.hg38_chr21.vcf.gz">dbsnp</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dbsnp = value" aria-label="Copy dbsnp = test/fixtures/refs/annotations/dbsnp_146.hg38_chr21.vcf.gz to clipboard" data-copy="dbsnp = test/fixtures/refs/annotations/dbsnp_146.hg38_chr21.vcf.gz">dbsnp</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/refs/annotations/dbsnp_146.hg38_chr21.vcf.gz</code></td>
 <td class="ox-p-desc">cgpFlagCaVEMan configs (bed-based flags dropped: no chr21 flag data)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dbsnp_gz = value" data-copy="dbsnp_gz = test/fixtures/refs/annotations/dbsnp_146.hg38_chr21.vcf.gz">dbsnp_gz</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dbsnp_gz = value" aria-label="Copy dbsnp_gz = test/fixtures/refs/annotations/dbsnp_146.hg38_chr21.vcf.gz to clipboard" data-copy="dbsnp_gz = test/fixtures/refs/annotations/dbsnp_146.hg38_chr21.vcf.gz">dbsnp_gz</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/refs/annotations/dbsnp_146.hg38_chr21.vcf.gz</code></td>
 <td class="ox-p-desc">MuSE sump needs a gzipped dbSNP<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dbsnp_indel = value" data-copy="dbsnp_indel = test/fixtures/refs/annotations/Mills_and_1000G_gold_standard.indels.hg38_chr21.vcf.gz">dbsnp_indel</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dbsnp_indel = value" aria-label="Copy dbsnp_indel = test/fixtures/refs/annotations/Mills_and_1000G_gold_standard.indels.hg38_chr21.vcf.gz to clipboard" data-copy="dbsnp_indel = test/fixtures/refs/annotations/Mills_and_1000G_gold_standard.indels.hg38_chr21.vcf.gz">dbsnp_indel</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/refs/annotations/Mills_and_1000G_gold_standard.indels.hg38_chr21.vcf.gz</code></td>
 <td class="ox-p-desc">cgpFlagCaVEMan configs (bed-based flags dropped: no chr21 flag data)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy exomedepth_bed = value" data-copy="exomedepth_bed = test/fixtures/cnv/exomedepth_regions.bed">exomedepth_bed</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy exomedepth_bed = value" aria-label="Copy exomedepth_bed = test/fixtures/cnv/exomedepth_regions.bed to clipboard" data-copy="exomedepth_bed = test/fixtures/cnv/exomedepth_regions.bed">exomedepth_bed</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/cnv/exomedepth_regions.bed</code></td>
 <td class="ox-p-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy exomedepth_use_target_bed = value" data-copy="exomedepth_use_target_bed = true">exomedepth_use_target_bed</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy exomedepth_use_target_bed = value" aria-label="Copy exomedepth_use_target_bed = true to clipboard" data-copy="exomedepth_use_target_bed = true">exomedepth_use_target_bed</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>true</code></td>
 <td class="ox-p-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy flag_config_dir = value" data-copy="flag_config_dir = test/fixtures/flag">flag_config_dir</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy flag_config_dir = value" aria-label="Copy flag_config_dir = test/fixtures/flag to clipboard" data-copy="flag_config_dir = test/fixtures/flag">flag_config_dir</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/flag</code></td>
 <td class="ox-p-desc">cgpFlagCaVEMan configs (bed-based flags dropped: no chr21 flag data)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy freec_chr_files = value" data-copy="freec_chr_files = test/fixtures/cnv/freec_chr_fasta">freec_chr_files</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy freec_chr_files = value" aria-label="Copy freec_chr_files = test/fixtures/cnv/freec_chr_fasta to clipboard" data-copy="freec_chr_files = test/fixtures/cnv/freec_chr_fasta">freec_chr_files</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/cnv/freec_chr_fasta</code></td>
 <td class="ox-p-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy freec_chr_len_file = value" data-copy="freec_chr_len_file = test/fixtures/cnv/freec_chrlen.txt">freec_chr_len_file</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy freec_chr_len_file = value" aria-label="Copy freec_chr_len_file = test/fixtures/cnv/freec_chrlen.txt to clipboard" data-copy="freec_chr_len_file = test/fixtures/cnv/freec_chrlen.txt">freec_chr_len_file</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/cnv/freec_chrlen.txt</code></td>
 <td class="ox-p-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy freec_ini_template = value" data-copy="freec_ini_template = scripts/config_exome.mini.ini">freec_ini_template</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy freec_ini_template = value" aria-label="Copy freec_ini_template = scripts/config_exome.mini.ini to clipboard" data-copy="freec_ini_template = scripts/config_exome.mini.ini">freec_ini_template</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>scripts/config_exome.mini.ini</code></td>
 <td class="ox-p-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy freec_sambamba = value" data-copy="freec_sambamba = sambamba">freec_sambamba</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy freec_sambamba = value" aria-label="Copy freec_sambamba = sambamba to clipboard" data-copy="freec_sambamba = sambamba">freec_sambamba</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>sambamba</code></td>
 <td class="ox-p-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy genome_version = value" data-copy="genome_version = hg38_chr21">genome_version</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy genome_version = value" aria-label="Copy genome_version = hg38_chr21 to clipboard" data-copy="genome_version = hg38_chr21">genome_version</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>hg38_chr21</code></td>
 <td class="ox-p-desc">Upstream Snakefile dispatch key (VALID_RUN_TYPES): wes | wgs | rna<br><span class="ox-param-usedby">used by <code>188</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy germ_caller_list = value" data-copy="germ_caller_list = strelkamanta, caveman">germ_caller_list</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy germ_caller_list = value" aria-label="Copy germ_caller_list = strelkamanta, caveman to clipboard" data-copy="germ_caller_list = strelkamanta, caveman">germ_caller_list</button></td>
 <td class="ox-p-t"><code>array</code></td>
 <td class="ox-p-d"><code>strelkamanta, caveman</code></td>
 <td class="ox-p-desc">Caller lists (upstream run_params)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy hmftools_ensembl_data_dir = value" data-copy="hmftools_ensembl_data_dir = ">hmftools_ensembl_data_dir</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy hmftools_ensembl_data_dir = value" aria-label="Copy hmftools_ensembl_data_dir =  to clipboard" data-copy="hmftools_ensembl_data_dir = ">hmftools_ensembl_data_dir</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">HMF tools (isofox; excluded for hg38_chr21 upstream — needs the multi-GB<br>hmf_pipeline_resources tree, not shipped in the mini-test)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy isofox_mem_mb = value" data-copy="isofox_mem_mb = 30000">isofox_mem_mb</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy isofox_mem_mb = value" aria-label="Copy isofox_mem_mb = 30000 to clipboard" data-copy="isofox_mem_mb = 30000">isofox_mem_mb</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>30000</code></td>
 <td class="ox-p-desc">HMF tools (isofox; excluded for hg38_chr21 upstream — needs the multi-GB<br>hmf_pipeline_resources tree, not shipped in the mini-test)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy java_temp_dir = value" data-copy="java_temp_dir = /tmp">java_temp_dir</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy java_temp_dir = value" aria-label="Copy java_temp_dir = /tmp to clipboard" data-copy="java_temp_dir = /tmp">java_temp_dir</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>/tmp</code></td>
 <td class="ox-p-desc">Java temp dir (upstream: config[&#x27;params&#x27;][&#x27;java&#x27;][&#x27;temp_directory&#x27;])<br><span class="ox-param-usedby">used by <code>36</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy kallisto_index = value" data-copy="kallisto_index = ">kallisto_index</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy kallisto_index = value" aria-label="Copy kallisto_index =  to clipboard" data-copy="kallisto_index = ">kallisto_index</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">Quant indexes are empty in the upstream hg38_chr21 test config — the<br>RSEM/kallisto/salmon rules only run when explicitly targeted<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy known_sites1 = value" data-copy="known_sites1 = test/fixtures/refs/annotations/known_sites1.mini.vcf.gz">known_sites1</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy known_sites1 = value" aria-label="Copy known_sites1 = test/fixtures/refs/annotations/known_sites1.mini.vcf.gz to clipboard" data-copy="known_sites1 = test/fixtures/refs/annotations/known_sites1.mini.vcf.gz">known_sites1</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/refs/annotations/known_sites1.mini.vcf.gz</code></td>
 <td class="ox-p-desc">BQSR (upstream config[&#x27;project&#x27;][&#x27;recal_BQSR&#x27;] + resources[&#x27;varanno&#x27;][genome]):<br>recal_bqsr = false is the upstream mini-test default (recal_link symlinks the<br>dedup BAM); set true to run BaseRecalibrator + ApplyBQSR instead.<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy known_sites2 = value" data-copy="known_sites2 = test/fixtures/refs/annotations/known_sites2.mini.vcf.gz">known_sites2</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy known_sites2 = value" aria-label="Copy known_sites2 = test/fixtures/refs/annotations/known_sites2.mini.vcf.gz to clipboard" data-copy="known_sites2 = test/fixtures/refs/annotations/known_sites2.mini.vcf.gz">known_sites2</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/refs/annotations/known_sites2.mini.vcf.gz</code></td>
 <td class="ox-p-desc">BQSR (upstream config[&#x27;project&#x27;][&#x27;recal_BQSR&#x27;] + resources[&#x27;varanno&#x27;][genome]):<br>recal_bqsr = false is the upstream mini-test default (recal_link symlinks the<br>dedup BAM); set true to run BaseRecalibrator + ApplyBQSR instead.<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mutect2_germline_vcf = value" data-copy="mutect2_germline_vcf = test/fixtures/refs/annotations/gnomAD.r2.1.1.GRCh38.PASS.AC.AF.only_chr21.vcf.gz">mutect2_germline_vcf</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mutect2_germline_vcf = value" aria-label="Copy mutect2_germline_vcf = test/fixtures/refs/annotations/gnomAD.r2.1.1.GRCh38.PASS.AC.AF.only_chr21.vcf.gz to clipboard" data-copy="mutect2_germline_vcf = test/fixtures/refs/annotations/gnomAD.r2.1.1.GRCh38.PASS.AC.AF.only_chr21.vcf.gz">mutect2_germline_vcf</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/refs/annotations/gnomAD.r2.1.1.GRCh38.PASS.AC.AF.only_chr21.vcf.gz</code></td>
 <td class="ox-p-desc">Mutect2 GetPileupSummaries sites + germline resource<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mutect2_vcf = value" data-copy="mutect2_vcf = test/fixtures/refs/annotations/gnomAD.r2.1.1.GRCh38.PASS.AC.AF.only_chr21.vcf.gz">mutect2_vcf</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mutect2_vcf = value" aria-label="Copy mutect2_vcf = test/fixtures/refs/annotations/gnomAD.r2.1.1.GRCh38.PASS.AC.AF.only_chr21.vcf.gz to clipboard" data-copy="mutect2_vcf = test/fixtures/refs/annotations/gnomAD.r2.1.1.GRCh38.PASS.AC.AF.only_chr21.vcf.gz">mutect2_vcf</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/refs/annotations/gnomAD.r2.1.1.GRCh38.PASS.AC.AF.only_chr21.vcf.gz</code></td>
 <td class="ox-p-desc">Mutect2 GetPileupSummaries sites + germline resource<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ncbi_build = value" data-copy="ncbi_build = GRCh38">ncbi_build</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ncbi_build = value" aria-label="Copy ncbi_build = GRCh38 to clipboard" data-copy="ncbi_build = GRCh38">ncbi_build</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>GRCh38</code></td>
 <td class="ox-p-desc">vcf2maf / VEP (upstream: config[&#x27;softwares_params&#x27;][genome_version][&#x27;vcf2maf&#x27;])<br><span class="ox-param-usedby">used by <code>20</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy normal_fastq_r1 = value" data-copy="normal_fastq_r1 = test/fixtures/reads/mini-NC_R1.fq.gz">normal_fastq_r1</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy normal_fastq_r1 = value" aria-label="Copy normal_fastq_r1 = test/fixtures/reads/mini-NC_R1.fq.gz to clipboard" data-copy="normal_fastq_r1 = test/fixtures/reads/mini-NC_R1.fq.gz">normal_fastq_r1</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/reads/mini-NC_R1.fq.gz</code></td>
 <td class="ox-p-desc">Reads (upstream samplesheet columns Tumor_R1_file_path / Normal_R1_file_path<br>...). The sample-sheet pairs (pairs_file above) drive {pair_id}/{experiment}/<br>{control} fan-out; these config paths are the fixture FASTQ locations.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy normal_fastq_r2 = value" data-copy="normal_fastq_r2 = test/fixtures/reads/mini-NC_R2.fq.gz">normal_fastq_r2</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy normal_fastq_r2 = value" aria-label="Copy normal_fastq_r2 = test/fixtures/reads/mini-NC_R2.fq.gz to clipboard" data-copy="normal_fastq_r2 = test/fixtures/reads/mini-NC_R2.fq.gz">normal_fastq_r2</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/reads/mini-NC_R2.fq.gz</code></td>
 <td class="ox-p-desc">Reads (upstream samplesheet columns Tumor_R1_file_path / Normal_R1_file_path<br>...). The sample-sheet pairs (pairs_file above) drive {pair_id}/{experiment}/<br>{control} fan-out; these config paths are the fixture FASTQ locations.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy output_dir = value" data-copy="output_dir = mini_test">output_dir</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy output_dir = value" aria-label="Copy output_dir = mini_test to clipboard" data-copy="output_dir = mini_test">output_dir</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>mini_test</code></td>
 <td class="ox-p-desc">Upstream Snakefile dispatch key (VALID_RUN_TYPES): wes | wgs | rna<br><span class="ox-param-usedby">used by <code>188</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy recal_bqsr = value" data-copy="recal_bqsr = false">recal_bqsr</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy recal_bqsr = value" aria-label="Copy recal_bqsr = false to clipboard" data-copy="recal_bqsr = false">recal_bqsr</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">BQSR (upstream config[&#x27;project&#x27;][&#x27;recal_BQSR&#x27;] + resources[&#x27;varanno&#x27;][genome]):<br>recal_bqsr = false is the upstream mini-test default (recal_link symlinks the<br>dedup BAM); set true to run BaseRecalibrator + ApplyBQSR instead.<br><span class="ox-param-usedby">used by <code>9</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy reference = value" data-copy="reference = test/fixtures/refs/sequence/Homo_sapiens_assembly38_chr21.fasta">reference</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy reference = value" aria-label="Copy reference = test/fixtures/refs/sequence/Homo_sapiens_assembly38_chr21.fasta to clipboard" data-copy="reference = test/fixtures/refs/sequence/Homo_sapiens_assembly38_chr21.fasta">reference</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/refs/sequence/Homo_sapiens_assembly38_chr21.fasta</code></td>
 <td class="ox-p-desc">Resources (upstream: config[&#x27;resources&#x27;][genome_version])<br><span class="ox-param-usedby">used by <code>103</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy reference_dict = value" data-copy="reference_dict = test/fixtures/refs/sequence/Homo_sapiens_assembly38_chr21.dict">reference_dict</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy reference_dict = value" aria-label="Copy reference_dict = test/fixtures/refs/sequence/Homo_sapiens_assembly38_chr21.dict to clipboard" data-copy="reference_dict = test/fixtures/refs/sequence/Homo_sapiens_assembly38_chr21.dict">reference_dict</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/refs/sequence/Homo_sapiens_assembly38_chr21.dict</code></td>
 <td class="ox-p-desc">Resources (upstream: config[&#x27;resources&#x27;][genome_version])<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy rna_caller_list = value" data-copy="rna_caller_list = freebayes, HaplotypeCaller, lofreq, Mutect2, vardict, varscan2">rna_caller_list</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy rna_caller_list = value" aria-label="Copy rna_caller_list = freebayes, HaplotypeCaller, lofreq, Mutect2, vardict, varscan2 to clipboard" data-copy="rna_caller_list = freebayes, HaplotypeCaller, lofreq, Mutect2, vardict, varscan2">rna_caller_list</button></td>
 <td class="ox-p-t"><code>array</code></td>
 <td class="ox-p-d"><code>freebayes, HaplotypeCaller, lofreq, Mutect2, vardict, varscan2</code></td>
 <td class="ox-p-desc">RNA SNV callers for the vcf2maf merge tail (upstream<br>run_params.rna_caller_list in mini_test_data/rna/fusion/data/test_rna.yaml;<br>matches the six unrolled vcf2maf_rna_* rules in rules/rna/60_vcf2maf_merge.oxoflow)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy rna_fastq_r1 = value" data-copy="rna_fastq_r1 = test/fixtures/reads/mini-T_RNA_R1.fq.gz">rna_fastq_r1</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy rna_fastq_r1 = value" aria-label="Copy rna_fastq_r1 = test/fixtures/reads/mini-T_RNA_R1.fq.gz to clipboard" data-copy="rna_fastq_r1 = test/fixtures/reads/mini-T_RNA_R1.fq.gz">rna_fastq_r1</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/reads/mini-T_RNA_R1.fq.gz</code></td>
 <td class="ox-p-desc">RNA (upstream wrapper/rna.smk; run_type = &quot;rna&quot;). Default stages:<br>[arriba, call_mut]; quant/isofox rules run when explicitly targeted.<br><span class="ox-param-usedby">used by <code>8</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy rna_fastq_r2 = value" data-copy="rna_fastq_r2 = test/fixtures/reads/mini-T_RNA_R2.fq.gz">rna_fastq_r2</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy rna_fastq_r2 = value" aria-label="Copy rna_fastq_r2 = test/fixtures/reads/mini-T_RNA_R2.fq.gz to clipboard" data-copy="rna_fastq_r2 = test/fixtures/reads/mini-T_RNA_R2.fq.gz">rna_fastq_r2</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/reads/mini-T_RNA_R2.fq.gz</code></td>
 <td class="ox-p-desc">RNA (upstream wrapper/rna.smk; run_type = &quot;rna&quot;). Default stages:<br>[arriba, call_mut]; quant/isofox rules run when explicitly targeted.<br><span class="ox-param-usedby">used by <code>8</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy rna_gtf = value" data-copy="rna_gtf = test/fixtures/refs/annotations/mini_chr21.gtf">rna_gtf</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy rna_gtf = value" aria-label="Copy rna_gtf = test/fixtures/refs/annotations/mini_chr21.gtf to clipboard" data-copy="rna_gtf = test/fixtures/refs/annotations/mini_chr21.gtf">rna_gtf</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/refs/annotations/mini_chr21.gtf</code></td>
 <td class="ox-p-desc">RNA (upstream wrapper/rna.smk; run_type = &quot;rna&quot;). Default stages:<br>[arriba, call_mut]; quant/isofox rules run when explicitly targeted.<br><span class="ox-param-usedby">used by <code>6</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy rsem_index = value" data-copy="rsem_index = ">rsem_index</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy rsem_index = value" aria-label="Copy rsem_index =  to clipboard" data-copy="rsem_index = ">rsem_index</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">Quant indexes are empty in the upstream hg38_chr21 test config — the<br>RSEM/kallisto/salmon rules only run when explicitly targeted<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_report = value" data-copy="run_report = true">run_report</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_report = value" aria-label="Copy run_report = true to clipboard" data-copy="run_report = true">run_report</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>true</code></td>
 <td class="ox-p-desc">Report stages (upstream <code>stages</code>): case_report + multiqc are ON in the port<br>default; set run_report = false to match the upstream mini-test default.<br><span class="ox-param-usedby">used by <code>6</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_type = value" data-copy="run_type = wes">run_type</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_type = value" aria-label="Copy run_type = wes to clipboard" data-copy="run_type = wes">run_type</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>wes</code></td>
 <td class="ox-p-desc">Upstream Snakefile dispatch key (VALID_RUN_TYPES): wes | wgs | rna<br><span class="ox-param-usedby">used by <code>188</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sage_ref_genome_version = value" data-copy="sage_ref_genome_version = 38">sage_ref_genome_version</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sage_ref_genome_version = value" aria-label="Copy sage_ref_genome_version = 38 to clipboard" data-copy="sage_ref_genome_version = 38">sage_ref_genome_version</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>38</code></td>
 <td class="ox-p-desc">HMF tools (isofox; excluded for hg38_chr21 upstream — needs the multi-GB<br>hmf_pipeline_resources tree, not shipped in the mini-test)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy salmon_index = value" data-copy="salmon_index = ">salmon_index</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy salmon_index = value" aria-label="Copy salmon_index =  to clipboard" data-copy="salmon_index = ">salmon_index</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">Quant indexes are empty in the upstream hg38_chr21 test config — the<br>RSEM/kallisto/salmon rules only run when explicitly targeted<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sansa_call = value" data-copy="sansa_call = sansa">sansa_call</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sansa_call = value" aria-label="Copy sansa_call = sansa to clipboard" data-copy="sansa_call = sansa">sansa_call</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>sansa</code></td>
 <td class="ox-p-desc">SV annotation branch (issue #7; upstream WGS SV rules gate on the sansa<br>software config being present — absent upstream by default, so these are<br>off by default and the port mirrors that with empty keys = zero instances).<br>sansa_db/sansa_g: the sansa annotate -a database and -g gene-model inputs<br>(upstream softwares.sansa[&lt;genome_version&gt;].{db,g}); sansa_call: the<br>binary/invocation (upstream config[softwares][sansa][call]).<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sansa_db = value" data-copy="sansa_db = ">sansa_db</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sansa_db = value" aria-label="Copy sansa_db =  to clipboard" data-copy="sansa_db = ">sansa_db</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">SV annotation branch (issue #7; upstream WGS SV rules gate on the sansa<br>software config being present — absent upstream by default, so these are<br>off by default and the port mirrors that with empty keys = zero instances).<br>sansa_db/sansa_g: the sansa annotate -a database and -g gene-model inputs<br>(upstream softwares.sansa[&lt;genome_version&gt;].{db,g}); sansa_call: the<br>binary/invocation (upstream config[softwares][sansa][call]).<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sansa_g = value" data-copy="sansa_g = ">sansa_g</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sansa_g = value" aria-label="Copy sansa_g =  to clipboard" data-copy="sansa_g = ">sansa_g</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">SV annotation branch (issue #7; upstream WGS SV rules gate on the sansa<br>software config being present — absent upstream by default, so these are<br>off by default and the port mirrors that with empty keys = zero instances).<br>sansa_db/sansa_g: the sansa annotate -a database and -g gene-model inputs<br>(upstream softwares.sansa[&lt;genome_version&gt;].{db,g}); sansa_call: the<br>binary/invocation (upstream config[softwares][sansa][call]).<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sequenza_gc_wiggle = value" data-copy="sequenza_gc_wiggle = test/fixtures/cnv/sequenza_gc.wig">sequenza_gc_wiggle</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sequenza_gc_wiggle = value" aria-label="Copy sequenza_gc_wiggle = test/fixtures/cnv/sequenza_gc.wig to clipboard" data-copy="sequenza_gc_wiggle = test/fixtures/cnv/sequenza_gc.wig">sequenza_gc_wiggle</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/cnv/sequenza_gc.wig</code></td>
 <td class="ox-p-desc">CNV branch (upstream somatic_cnv_list; mini-test default = [notrun]<br>sentinel -&gt; off). Set true to run the ported subset<br>(freec/sequenza/exomedepth/ASCAT — purple/amber/cobalt/facets need the<br>upstream&#x27;s custom containers, see rules/80_cnv.oxoflow).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy somatic_caller_list = value" data-copy="somatic_caller_list = HaplotypeCaller, vardict, varscan2, muse, Mutect2">somatic_caller_list</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy somatic_caller_list = value" aria-label="Copy somatic_caller_list = HaplotypeCaller, vardict, varscan2, muse, Mutect2 to clipboard" data-copy="somatic_caller_list = HaplotypeCaller, vardict, varscan2, muse, Mutect2">somatic_caller_list</button></td>
 <td class="ox-p-t"><code>array</code></td>
 <td class="ox-p-d"><code>HaplotypeCaller, vardict, varscan2, muse, Mutect2</code></td>
 <td class="ox-p-desc">Caller lists (upstream run_params)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy star_index = value" data-copy="star_index = test/fixtures/refs/star_index">star_index</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy star_index = value" aria-label="Copy star_index = test/fixtures/refs/star_index to clipboard" data-copy="star_index = test/fixtures/refs/star_index">star_index</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/refs/star_index</code></td>
 <td class="ox-p-desc">STAR index built inline by STAR_1_pass when missing (upstream ships a<br>pre-built index; the synthetic fixture reference needs its own)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy svanno_gtf = value" data-copy="svanno_gtf = ">svanno_gtf</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy svanno_gtf = value" aria-label="Copy svanno_gtf =  to clipboard" data-copy="svanno_gtf = ">svanno_gtf</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">svanno: gatk SVAnnotate needs a protein-coding GTF (upstream<br>resources[genome_version].GTF). Empty default = rule never runs.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy target_bed = value" data-copy="target_bed = test/fixtures/bed/exome_target_hg38_chr21.bed">target_bed</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy target_bed = value" aria-label="Copy target_bed = test/fixtures/bed/exome_target_hg38_chr21.bed to clipboard" data-copy="target_bed = test/fixtures/bed/exome_target_hg38_chr21.bed">target_bed</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/bed/exome_target_hg38_chr21.bed</code></td>
 <td class="ox-p-desc">Resources (upstream: config[&#x27;resources&#x27;][genome_version])<br><span class="ox-param-usedby">used by <code>33</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy trust4_dir = value" data-copy="trust4_dir = resources/softwares/TRUST4">trust4_dir</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy trust4_dir = value" aria-label="Copy trust4_dir = resources/softwares/TRUST4 to clipboard" data-copy="trust4_dir = resources/softwares/TRUST4">trust4_dir</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>resources/softwares/TRUST4</code></td>
 <td class="ox-p-desc">TRUST4 (upstream softwares_params[genome].trust4; git-cloned at rule<br>runtime into trust4_dir when trust4_f is missing — not in default stages)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy trust4_f = value" data-copy="trust4_f = resources/softwares/TRUST4/hg38_bcrtcr.fa">trust4_f</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy trust4_f = value" aria-label="Copy trust4_f = resources/softwares/TRUST4/hg38_bcrtcr.fa to clipboard" data-copy="trust4_f = resources/softwares/TRUST4/hg38_bcrtcr.fa">trust4_f</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>resources/softwares/TRUST4/hg38_bcrtcr.fa</code></td>
 <td class="ox-p-desc">TRUST4 (upstream softwares_params[genome].trust4; git-cloned at rule<br>runtime into trust4_dir when trust4_f is missing — not in default stages)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy trust4_ref = value" data-copy="trust4_ref = resources/softwares/TRUST4/human_IMGT+C.fa">trust4_ref</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy trust4_ref = value" aria-label="Copy trust4_ref = resources/softwares/TRUST4/human_IMGT+C.fa to clipboard" data-copy="trust4_ref = resources/softwares/TRUST4/human_IMGT+C.fa">trust4_ref</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>resources/softwares/TRUST4/human_IMGT+C.fa</code></td>
 <td class="ox-p-desc">TRUST4 (upstream softwares_params[genome].trust4; git-cloned at rule<br>runtime into trust4_dir when trust4_f is missing — not in default stages)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy tumor_fastq_r1 = value" data-copy="tumor_fastq_r1 = test/fixtures/reads/mini-T_R1.fq.gz">tumor_fastq_r1</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy tumor_fastq_r1 = value" aria-label="Copy tumor_fastq_r1 = test/fixtures/reads/mini-T_R1.fq.gz to clipboard" data-copy="tumor_fastq_r1 = test/fixtures/reads/mini-T_R1.fq.gz">tumor_fastq_r1</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/reads/mini-T_R1.fq.gz</code></td>
 <td class="ox-p-desc">Reads (upstream samplesheet columns Tumor_R1_file_path / Normal_R1_file_path<br>...). The sample-sheet pairs (pairs_file above) drive {pair_id}/{experiment}/<br>{control} fan-out; these config paths are the fixture FASTQ locations.<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy tumor_fastq_r2 = value" data-copy="tumor_fastq_r2 = test/fixtures/reads/mini-T_R2.fq.gz">tumor_fastq_r2</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy tumor_fastq_r2 = value" aria-label="Copy tumor_fastq_r2 = test/fixtures/reads/mini-T_R2.fq.gz to clipboard" data-copy="tumor_fastq_r2 = test/fixtures/reads/mini-T_R2.fq.gz">tumor_fastq_r2</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/reads/mini-T_R2.fq.gz</code></td>
 <td class="ox-p-desc">Reads (upstream samplesheet columns Tumor_R1_file_path / Normal_R1_file_path<br>...). The sample-sheet pairs (pairs_file above) drive {pair_id}/{experiment}/<br>{control} fan-out; these config paths are the fixture FASTQ locations.<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy unpaired_caller_list = value" data-copy="unpaired_caller_list = Mutect2, HaplotypeCaller, varscan2, strelka, vardict, lofreq, freebayes">unpaired_caller_list</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy unpaired_caller_list = value" aria-label="Copy unpaired_caller_list = Mutect2, HaplotypeCaller, varscan2, strelka, vardict, lofreq, freebayes to clipboard" data-copy="unpaired_caller_list = Mutect2, HaplotypeCaller, varscan2, strelka, vardict, lofreq, freebayes">unpaired_caller_list</button></td>
 <td class="ox-p-t"><code>array</code></td>
 <td class="ox-p-d"><code>Mutect2, HaplotypeCaller, varscan2, strelka, vardict, lofreq, freebayes</code></td>
 <td class="ox-p-desc">Tumor-only callers (upstream run_params.tumor_only_caller; upstream default<br>is [sage] — needs the custom hmftools container, so the port defaults to<br>the seven portable callers, see rules/70_unpaired.oxoflow)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy vep_cache_ready = value" data-copy="vep_cache_ready = false">vep_cache_ready</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy vep_cache_ready = value" aria-label="Copy vep_cache_ready = false to clipboard" data-copy="vep_cache_ready = false">vep_cache_ready</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">VEP needs a local cache at {vep_data}/{vep_species} (~10GB download; the<br>fixture kit does not ship it). The vcf2maf rules and the downstream MAF<br>merge/flag/cancer-report tail gate on this flag — set true once the cache<br>is in place (upstream fails hard without it).<br><span class="ox-param-usedby">used by <code>28</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy vep_cache_version = value" data-copy="vep_cache_version = 110">vep_cache_version</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy vep_cache_version = value" aria-label="Copy vep_cache_version = 110 to clipboard" data-copy="vep_cache_version = 110">vep_cache_version</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>110</code></td>
 <td class="ox-p-desc">vcf2maf / VEP (upstream: config[&#x27;softwares_params&#x27;][genome_version][&#x27;vcf2maf&#x27;])<br><span class="ox-param-usedby">used by <code>20</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy vep_data = value" data-copy="vep_data = resources/ref_genome/hg38/vep">vep_data</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy vep_data = value" aria-label="Copy vep_data = resources/ref_genome/hg38/vep to clipboard" data-copy="vep_data = resources/ref_genome/hg38/vep">vep_data</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>resources/ref_genome/hg38/vep</code></td>
 <td class="ox-p-desc">vcf2maf / VEP (upstream: config[&#x27;softwares_params&#x27;][genome_version][&#x27;vcf2maf&#x27;])<br><span class="ox-param-usedby">used by <code>20</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy vep_species = value" data-copy="vep_species = homo_sapiens">vep_species</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy vep_species = value" aria-label="Copy vep_species = homo_sapiens to clipboard" data-copy="vep_species = homo_sapiens">vep_species</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>homo_sapiens</code></td>
 <td class="ox-p-desc">vcf2maf / VEP (upstream: config[&#x27;softwares_params&#x27;][genome_version][&#x27;vcf2maf&#x27;])<br><span class="ox-param-usedby">used by <code>20</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy wes_pon = value" data-copy="wes_pon = ">wes_pon</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy wes_pon = value" aria-label="Copy wes_pon =  to clipboard" data-copy="wes_pon = ">wes_pon</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">Upstream hg38_chr21 has no panel of normals (WES_PON: null) — leave empty<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy wgs_pon = value" data-copy="wgs_pon = ">wgs_pon</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy wgs_pon = value" aria-label="Copy wgs_pon =  to clipboard" data-copy="wgs_pon = ">wgs_pon</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">Upstream hg38_chr21 has no panel of normals (WES_PON: null) — leave empty<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
@@ -644,10 +644,16 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - non-human genomes: supported at config level (WBcel235/mm10 parity table
   above) — the upstream rule set itself is species-agnostic.
 
+<details class="ox-evidence" markdown="1"><summary>Verification evidence</summary>
+
+single entry (upstream Snakefile form): run_type wes/wgs/rna; paired vs unpaired WES derived per pair from the sample sheet. Merged form live-verified on tx-ubuntu (PR #187 engine): wes (paired+tumor-only in one DAG), wgs (paired-only), rna (default stages). The vcf2maf/VEP chain was live-verified in the 4-entry era and runs identical commands here.
+
+</details>
+
 ## Links
 
 - Repository: [oxo-flow-clindet](https://github.com/WangLabCSU/oxo-flow-clindet)
 - Upstream: [zyllifeworld/clindet](https://github.com/zyllifeworld/clindet) @ `582a9131`
 - License: Apache-2.0 (this workflow) · MIT (upstream)
 
-Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 — this entry may lag behind upstream releases. See the repository's NOTICE for full attribution.

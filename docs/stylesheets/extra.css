@@ -44,8 +44,11 @@
   --edge-strong: #c6d5cd;
   --ink: #17211c;
   --ink-2: #3f5047;
-  --muted: #6b7d73;
-  --faint: #97a69e;
+  /* AA floors for the small-text faces (chips, stat labels, terminal body,
+     crumbs, footer): previous #6b7d73/#97a69e measured ~4.3:1 / ~2.5:1 on
+     white panels — under the 4.5:1 small-text bar. */
+  --muted: #52635a;
+  --faint: #5f7168;
   /* Badge ink — AA for the 0.68rem mono pill text on --panel-2; --muted is
      decorative elsewhere but failed contrast inside rating/domain pills. */
   --badge-ink: #4d6156;
@@ -78,8 +81,10 @@
   --edge-strong: #2a3a32;
   --ink: #eef7f2;
   --ink-2: #8ca096;
-  --muted: #5e6f65;
-  --faint: #5e6f65;
+  /* Distinct muted/faint rungs again — the old collapsed #5e6f65 measured
+     ~3.4:1 on --panel and erased the two-step hierarchy. */
+  --muted: #86988e;
+  --faint: #7b8d84;
   --badge-ink: #8fa298;
   --brand: #34d399;
   --brand-deep: #6ee7b7;
@@ -962,7 +967,8 @@ a.ox-cta:hover {
 
 [data-md-color-scheme="slate"] .ox-badge {
   background: var(--cmd-bg);
-  text-transform: lowercase;
+  /* no text-transform: "Live-tested" must not become "live-tested" in one
+     theme only — screen readers may speak the transformed text */
 }
 
 [data-md-color-scheme="slate"] .ox-badge--live {
@@ -1006,6 +1012,13 @@ a.ox-cta:hover {
   }
   .ox-card:hover { box-shadow: none; transform: none; }
   .ox-dag-card { box-shadow: none; }
+  /* the screen blocks-scroll containers would clip their right columns
+     on paper/PDF — restore table flow and un-max the DAG view */
+  table.ox-params, .md-typeset__table {
+    display: table !important;
+    overflow: visible !important;
+  }
+  .ox-flow-view[open] .ox-dag-card { max-height: none; }
 }
 
 @media (max-width: 720px) {
@@ -1043,6 +1056,19 @@ a.ox-cta:hover {
   content: " · unused";
   font-size: 0.72rem;
   color: #b08968;
+}
+
+/* Slate variants — the light-only hexes above floated as pale islands in
+   dark mode and cut the brand-token system in half. */
+[data-md-color-scheme="slate"] .ox-param-usage {
+  color: var(--ink-2);
+  background: var(--panel-2);
+  border-left-color: var(--cyan);
+}
+[data-md-color-scheme="slate"] .ox-param-inferred {
+  color: #e5c07b;
+  background: #33280f;
+  border-color: #5a4a20;
 }
 
 /* ---- Flow-view accordion ---- */
@@ -1100,8 +1126,9 @@ a.ox-cta:hover {
 .ox-sem-text {
   margin: 0.2rem 0 1.2rem;
   padding: 0.9rem 1rem 0.6rem;
-  border-left: 3px solid var(--nfm-line--report, #F2CF5B);
-  background: var(--md-default-bg-color--subtle, rgba(0,0,0,0.03));
+  border-left: 3px solid #F2CF5B; /* semantic-accent: the one face that is
+                                     deliberately off-ladder (LLM-authored) */
+  background: var(--panel-2);
 }
 .ox-sem-text p { margin: 0.45rem 0; }
 .ox-sem-line { margin-top: 0.7rem; }
@@ -1265,7 +1292,8 @@ a.ox-cta:hover {
   font-size: 0.68rem;
   color: var(--muted);
 }
-.ox-domain-name { text-transform: capitalize; }
+/* No capitalize: it mangles slugs — "single-cell" → "Single-Cell",
+   "(circRNA)" → "(CircRNA)". Labels are already authored as wanted. */
 
 /* Domain groups: each group owns its own card grid */
 .ox-cards-group { margin: 0 0 2.2rem; }
@@ -1337,11 +1365,9 @@ a.ox-cta:hover {
   white-space: nowrap;
   flex: 0 0 auto;
 }
-.ox-tabs a:first-child {
-  color: var(--brand);
-  background: var(--brand-soft);
-  border-color: color-mix(in srgb, var(--brand) 30%, transparent);
-}
+/* No first-child special case: these are anchor links, not a tablist with a
+   real active state — a permanent highlight on "Introduction" lied about
+   the current section. Hover (below) is the only affordance we can honor. */
 .ox-tabs a:hover {
   color: var(--brand);
   background: var(--brand-soft);
@@ -1437,3 +1463,42 @@ table.ox-params tr:hover td { background: var(--brand-soft); }
 }
 
 
+
+/* ---- CLS guards for the JS-injected home/catalog regions ----
+   #ox-stats, #ox-domains, #ox-featured and the chip row are empty in the
+   built HTML and pop in when catalog.js runs, pushing the hero down.
+   Reserve their rendered heights so layout never jumps (min-height only —
+   the noscript fallbacks above cover the JS-disabled case). */
+#ox-stats { min-height: 7.5rem; }
+#ox-domains { min-height: 3rem; }
+#ox-featured { min-height: 14rem; }
+#ox-chips { min-height: 2.5rem; }
+
+/* ---- touch targets: the chip/pill/tab rows render ~26-27px tall, under
+   the 44px recommendation for coarse pointers ---- */
+@media (pointer: coarse) {
+  .ox-chip, .ox-tabs a, .ox-domain-pill {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+/* ---- Verification-evidence collapse (registry coverage long-text) ---- */
+details.ox-evidence {
+  border: 1px solid var(--edge);
+  border-radius: 8px;
+  background: var(--panel);
+  padding: 0.4rem 0.9rem;
+  margin: 0.9rem 0 0.4rem;
+}
+details.ox-evidence > summary {
+  cursor: pointer;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.78rem;
+  color: var(--muted);
+  list-style: none;
+}
+details.ox-evidence > summary::before { content: "▸ "; }
+details.ox-evidence[open] > summary::before { content: "▾ "; }
+details.ox-evidence[open] > summary { color: var(--ink-2); }

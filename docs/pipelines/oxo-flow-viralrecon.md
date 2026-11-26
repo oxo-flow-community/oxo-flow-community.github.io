@@ -21,6 +21,7 @@ title: "Viral assembly and intrahost variant calling for Illumina and Oxford Nan
 <div class="ox-kv"><span class="k">Domain</span><span class="v">genomics</span></div>
 <div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/nf-core/viralrecon">nf-core/viralrecon</a></span></div>
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>3.0.0</code></span></div>
+<div class="ox-kv"><span class="k">Last verified</span><span class="v">2026-09-09</span></div>
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2287.1"><code>10.48546/workflowhub.workflow.2287.1</code></a></span></div>
@@ -100,397 +101,397 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-viralrecon
 <thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
 <tbody>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy additional_annotation = value" data-copy="additional_annotation = ">additional_annotation</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy additional_annotation = value" aria-label="Copy additional_annotation =  to clipboard" data-copy="additional_annotation = ">additional_annotation</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">--- Additional annotation (upstream params.additional_annotation; empty =<br>off. A GFF/GTF to annotate the variants with in addition to the main<br>reference annotation, run through snpEff + SnpSift + the variants long<br>table. .gz files are gunzipped by build_snpeff_db_additional.) ---<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy assemblers = value" data-copy="assemblers = spades">assemblers</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy assemblers = value" aria-label="Copy assemblers = spades to clipboard" data-copy="assemblers = spades">assemblers</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>spades</code></td>
 <td class="ox-p-desc">--- Assembly (upstream params.assemblers is a comma-separated list, e.g.<br>&#x27;spades,unicycler&#x27;; the port&#x27;s when-language has no &#x27;in&#x27; operator, so<br>every combination of the three assemblers is enumerated with explicit<br>equality tests. Give the canonical lowercase form, commas with no<br>spaces: &#x27;spades&#x27; | &#x27;unicycler&#x27; | &#x27;minia&#x27; | &#x27;spades,unicycler&#x27; | ... ) ---<br><span class="ox-param-usedby">used by <code>17</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy consensus_caller = value" data-copy="consensus_caller = bcftools">consensus_caller</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy consensus_caller = value" aria-label="Copy consensus_caller = bcftools to clipboard" data-copy="consensus_caller = bcftools">consensus_caller</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>bcftools</code></td>
 <td class="ox-p-desc">--- Consensus caller (upstream params.consensus_caller; both the bcftools<br>and ivar branches are ported as when-gated rules) ---<br><span class="ox-param-usedby">used by <code>6</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fasta = value" data-copy="fasta = reference/genome.fa">fasta</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fasta = value" aria-label="Copy fasta = reference/genome.fa to clipboard" data-copy="fasta = reference/genome.fa">fasta</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>reference/genome.fa</code></td>
 <td class="ox-p-desc">The port expects uncompressed files at these paths. Set the *_ends_gz keys<br>to true to run the upstream GUNZIP_* steps first (outputs land at the same<br>fixed reference/ paths).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fasta_ends_gz = value" data-copy="fasta_ends_gz = false">fasta_ends_gz</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fasta_ends_gz = value" aria-label="Copy fasta_ends_gz = false to clipboard" data-copy="fasta_ends_gz = false">fasta_ends_gz</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">The port expects uncompressed files at these paths. Set the *_ends_gz keys<br>to true to run the upstream GUNZIP_* steps first (outputs land at the same<br>fixed reference/ paths).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy filter_duplicates = value" data-copy="filter_duplicates = false">filter_duplicates</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy filter_duplicates = value" aria-label="Copy filter_duplicates = false to clipboard" data-copy="filter_duplicates = false">filter_duplicates</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">upstream params.filter_duplicates (default false) — passed to<br>PICARD_MARKDUPLICATES as REMOVE_DUPLICATES=true when set<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy freyja_barcodes = value" data-copy="freyja_barcodes = test/fixtures/refs/freyja_barcodes.csv">freyja_barcodes</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy freyja_barcodes = value" aria-label="Copy freyja_barcodes = test/fixtures/refs/freyja_barcodes.csv to clipboard" data-copy="freyja_barcodes = test/fixtures/refs/freyja_barcodes.csv">freyja_barcodes</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/refs/freyja_barcodes.csv</code></td>
 <td class="ox-p-desc">--- Freyja (upstream --freyja_barcodes / --freyja_lineages. When either is<br>left empty the gated rules freyja_update + freyja_demix_updated /<br>freyja_boot_updated download and use the upstream DB instead.) ---<br><span class="ox-param-usedby">used by <code>5</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy freyja_db_name = value" data-copy="freyja_db_name = reference/freyja_db">freyja_db_name</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy freyja_db_name = value" aria-label="Copy freyja_db_name = reference/freyja_db to clipboard" data-copy="freyja_db_name = reference/freyja_db">freyja_db_name</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>reference/freyja_db</code></td>
 <td class="ox-p-desc">upstream params.freyja_db_name — where FREYJA_UPDATE writes its download<br>(upstream default &#x27;freyja_db&#x27;; the port points into reference/)<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy freyja_depthcutoff = value" data-copy="freyja_depthcutoff = 0">freyja_depthcutoff</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy freyja_depthcutoff = value" aria-label="Copy freyja_depthcutoff = 0 to clipboard" data-copy="freyja_depthcutoff = 0">freyja_depthcutoff</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>0</code></td>
 <td class="ox-p-desc">freyja&#x27;s meta format is the curated_lineages JSON (buildLineageMap<br>json.loads it — live: the CSV default died in freyja boot with<br>JSONDecodeError); the CSV sibling is kept as the barcodes-side table<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy freyja_lineages = value" data-copy="freyja_lineages = test/fixtures/refs/freyja_lineages.json">freyja_lineages</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy freyja_lineages = value" aria-label="Copy freyja_lineages = test/fixtures/refs/freyja_lineages.json to clipboard" data-copy="freyja_lineages = test/fixtures/refs/freyja_lineages.json">freyja_lineages</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/refs/freyja_lineages.json</code></td>
 <td class="ox-p-desc">freyja&#x27;s meta format is the curated_lineages JSON (buildLineageMap<br>json.loads it — live: the CSV default died in freyja boot with<br>JSONDecodeError); the CSV sibling is kept as the barcodes-side table<br><span class="ox-param-usedby">used by <code>5</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy freyja_repeats = value" data-copy="freyja_repeats = 100">freyja_repeats</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy freyja_repeats = value" aria-label="Copy freyja_repeats = 100 to clipboard" data-copy="freyja_repeats = 100">freyja_repeats</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>100</code></td>
 <td class="ox-p-desc">freyja&#x27;s meta format is the curated_lineages JSON (buildLineageMap<br>json.loads it — live: the CSV default died in freyja boot with<br>JSONDecodeError); the CSV sibling is kept as the barcodes-side table<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gff = value" data-copy="gff = reference/genome.gff">gff</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gff = value" aria-label="Copy gff = reference/genome.gff to clipboard" data-copy="gff = reference/genome.gff">gff</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>reference/genome.gff</code></td>
 <td class="ox-p-desc">The port expects uncompressed files at these paths. Set the *_ends_gz keys<br>to true to run the upstream GUNZIP_* steps first (outputs land at the same<br>fixed reference/ paths).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gff_ends_gz = value" data-copy="gff_ends_gz = false">gff_ends_gz</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gff_ends_gz = value" aria-label="Copy gff_ends_gz = false to clipboard" data-copy="gff_ends_gz = false">gff_ends_gz</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">The port expects uncompressed files at these paths. Set the *_ends_gz keys<br>to true to run the upstream GUNZIP_* steps first (outputs land at the same<br>fixed reference/ paths).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ivar_trim_noprimer = value" data-copy="ivar_trim_noprimer = false">ivar_trim_noprimer</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ivar_trim_noprimer = value" aria-label="Copy ivar_trim_noprimer = false to clipboard" data-copy="ivar_trim_noprimer = false">ivar_trim_noprimer</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">upstream params.min_mapped_reads — the per-sample channel DROP is a<br>documented runtime-filter deviation (no dynamic DAG); the reporting half<br>(fail_mapped_samples_mqc.tsv in the MultiQC data) is ported inside the<br>multiqc rule<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ivar_trim_offset = value" data-copy="ivar_trim_offset = ">ivar_trim_offset</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ivar_trim_offset = value" aria-label="Copy ivar_trim_offset =  to clipboard" data-copy="ivar_trim_offset = ">ivar_trim_offset</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">upstream params.min_mapped_reads — the per-sample channel DROP is a<br>documented runtime-filter deviation (no dynamic DAG); the reporting half<br>(fail_mapped_samples_mqc.tsv in the MultiQC data) is ported inside the<br>multiqc rule<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy kraken2_assembly_host_filter = value" data-copy="kraken2_assembly_host_filter = true">kraken2_assembly_host_filter</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy kraken2_assembly_host_filter = value" aria-label="Copy kraken2_assembly_host_filter = true to clipboard" data-copy="kraken2_assembly_host_filter = true">kraken2_assembly_host_filter</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>true</code></td>
 <td class="ox-p-desc">upstream params.kraken2_db_name — the library KRAKEN2_BUILD downloads when<br>kraken2_db is left empty (gated rule kraken2_build)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy kraken2_db = value" data-copy="kraken2_db = reference/kraken2_db.tar.gz">kraken2_db</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy kraken2_db = value" aria-label="Copy kraken2_db = reference/kraken2_db.tar.gz to clipboard" data-copy="kraken2_db = reference/kraken2_db.tar.gz">kraken2_db</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>reference/kraken2_db.tar.gz</code></td>
 <td class="ox-p-desc">Kraken2 host-removal database (upstream --kraken2_db, tar.gz)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy kraken2_db_name = value" data-copy="kraken2_db_name = human">kraken2_db_name</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy kraken2_db_name = value" aria-label="Copy kraken2_db_name = human to clipboard" data-copy="kraken2_db_name = human">kraken2_db_name</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>human</code></td>
 <td class="ox-p-desc">upstream params.kraken2_db_name — the library KRAKEN2_BUILD downloads when<br>kraken2_db is left empty (gated rule kraken2_build)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy kraken2_variants_host_filter = value" data-copy="kraken2_variants_host_filter = false">kraken2_variants_host_filter</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy kraken2_variants_host_filter = value" aria-label="Copy kraken2_variants_host_filter = false to clipboard" data-copy="kraken2_variants_host_filter = false">kraken2_variants_host_filter</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">upstream params.kraken2_db_name — the library KRAKEN2_BUILD downloads when<br>kraken2_db is left empty (gated rule kraken2_build)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy min_contig_length = value" data-copy="min_contig_length = 200">min_contig_length</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy min_contig_length = value" aria-label="Copy min_contig_length = 200 to clipboard" data-copy="min_contig_length = 200">min_contig_length</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>200</code></td>
 <td class="ox-p-desc">Consensus QC<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy min_mapped_reads = value" data-copy="min_mapped_reads = 1000">min_mapped_reads</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy min_mapped_reads = value" aria-label="Copy min_mapped_reads = 1000 to clipboard" data-copy="min_mapped_reads = 1000">min_mapped_reads</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>1000</code></td>
 <td class="ox-p-desc">upstream params.min_mapped_reads — the per-sample channel DROP is a<br>documented runtime-filter deviation (no dynamic DAG); the reporting half<br>(fail_mapped_samples_mqc.tsv in the MultiQC data) is ported inside the<br>multiqc rule<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy min_perc_contig_aligned = value" data-copy="min_perc_contig_aligned = 0.7">min_perc_contig_aligned</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy min_perc_contig_aligned = value" aria-label="Copy min_perc_contig_aligned = 0.7 to clipboard" data-copy="min_perc_contig_aligned = 0.7">min_perc_contig_aligned</button></td>
 <td class="ox-p-t"><code>float</code></td>
 <td class="ox-p-d"><code>0.7</code></td>
 <td class="ox-p-desc">Consensus QC<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy multiqc_title = value" data-copy="multiqc_title = ">multiqc_title</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy multiqc_title = value" aria-label="Copy multiqc_title =  to clipboard" data-copy="multiqc_title = ">multiqc_title</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">MultiQC<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy nextclade_dataset = value" data-copy="nextclade_dataset = ">nextclade_dataset</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy nextclade_dataset = value" aria-label="Copy nextclade_dataset =  to clipboard" data-copy="nextclade_dataset = ">nextclade_dataset</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">Nextclade dataset (upstream genome config for MN908947.3)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy nextclade_dataset_name = value" data-copy="nextclade_dataset_name = sars-cov-2">nextclade_dataset_name</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy nextclade_dataset_name = value" aria-label="Copy nextclade_dataset_name = sars-cov-2 to clipboard" data-copy="nextclade_dataset_name = sars-cov-2">nextclade_dataset_name</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>sars-cov-2</code></td>
 <td class="ox-p-desc">Nextclade dataset (upstream genome config for MN908947.3)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy nextclade_dataset_tag = value" data-copy="nextclade_dataset_tag = 2024-10-17--16-48-48Z">nextclade_dataset_tag</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy nextclade_dataset_tag = value" aria-label="Copy nextclade_dataset_tag = 2024-10-17--16-48-48Z to clipboard" data-copy="nextclade_dataset_tag = 2024-10-17--16-48-48Z">nextclade_dataset_tag</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>2024-10-17--16-48-48Z</code></td>
 <td class="ox-p-desc">Nextclade dataset (upstream genome config for MN908947.3)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy out_dir = value" data-copy="out_dir = results">out_dir</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy out_dir = value" aria-label="Copy out_dir = results to clipboard" data-copy="out_dir = results">out_dir</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>results</code></td>
 <td class="ox-p-desc">Directory holding raw/&lt;sample&gt;_R1.fastq.gz + raw/&lt;sample&gt;_R2.fastq.gz.<br>The repo default ships the tiny test fixtures; point this at your data.<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pango_database = value" data-copy="pango_database = test/fixtures/refs/pangolin_db">pango_database</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pango_database = value" aria-label="Copy pango_database = test/fixtures/refs/pangolin_db to clipboard" data-copy="pango_database = test/fixtures/refs/pangolin_db">pango_database</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/refs/pangolin_db</code></td>
 <td class="ox-p-desc">--- Pangolin (upstream --pango_database; a directory. When left empty the<br>gated rules pangolin_updatedata + pangolin_run_updated download the<br>data directory instead, mirroring upstream PANGOLIN_UPDATEDATA.) ---<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy platform = value" data-copy="platform = illumina">platform</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy platform = value" aria-label="Copy platform = illumina to clipboard" data-copy="platform = illumina">platform</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>illumina</code></td>
 <td class="ox-p-desc">Platform / protocol<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy primer_bed = value" data-copy="primer_bed = reference/primers.bed">primer_bed</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy primer_bed = value" aria-label="Copy primer_bed = reference/primers.bed to clipboard" data-copy="primer_bed = reference/primers.bed">primer_bed</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>reference/primers.bed</code></td>
 <td class="ox-p-desc">The port expects uncompressed files at these paths. Set the *_ends_gz keys<br>to true to run the upstream GUNZIP_* steps first (outputs land at the same<br>fixed reference/ paths).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy primer_bed_ends_gz = value" data-copy="primer_bed_ends_gz = false">primer_bed_ends_gz</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy primer_bed_ends_gz = value" aria-label="Copy primer_bed_ends_gz = false to clipboard" data-copy="primer_bed_ends_gz = false">primer_bed_ends_gz</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">The port expects uncompressed files at these paths. Set the *_ends_gz keys<br>to true to run the upstream GUNZIP_* steps first (outputs land at the same<br>fixed reference/ paths).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy primer_left_suffix = value" data-copy="primer_left_suffix = _LEFT">primer_left_suffix</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy primer_left_suffix = value" aria-label="Copy primer_left_suffix = _LEFT to clipboard" data-copy="primer_left_suffix = _LEFT">primer_left_suffix</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>_LEFT</code></td>
 <td class="ox-p-desc">Primer trimming for assembly<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy primer_right_suffix = value" data-copy="primer_right_suffix = _RIGHT">primer_right_suffix</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy primer_right_suffix = value" aria-label="Copy primer_right_suffix = _RIGHT to clipboard" data-copy="primer_right_suffix = _RIGHT">primer_right_suffix</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>_RIGHT</code></td>
 <td class="ox-p-desc">Primer trimming for assembly<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy protocol = value" data-copy="protocol = amplicon">protocol</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy protocol = value" aria-label="Copy protocol = amplicon to clipboard" data-copy="protocol = amplicon">protocol</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>amplicon</code></td>
 <td class="ox-p-desc">Platform / protocol<br><span class="ox-param-usedby">used by <code>31</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy raw_dir = value" data-copy="raw_dir = test/fixtures/raw">raw_dir</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy raw_dir = value" aria-label="Copy raw_dir = test/fixtures/raw to clipboard" data-copy="raw_dir = test/fixtures/raw">raw_dir</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/raw</code></td>
 <td class="ox-p-desc">Directory holding raw/&lt;sample&gt;_R1.fastq.gz + raw/&lt;sample&gt;_R2.fastq.gz.<br>The repo default ships the tiny test fixtures; point this at your data.<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy save_mpileup = value" data-copy="save_mpileup = false">save_mpileup</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy save_mpileup = value" aria-label="Copy save_mpileup = false to clipboard" data-copy="save_mpileup = false">save_mpileup</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">upstream params.save_mpileup — when true, call_variants_ivar tees the<br>samtools mpileup stream to variants/ivar/{sample}.mpileup (off by<br>default, exactly like upstream; the port emits an empty placeholder when<br>false so the declared output stays present)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy save_trimmed_fail = value" data-copy="save_trimmed_fail = false">save_trimmed_fail</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy save_trimmed_fail = value" aria-label="Copy save_trimmed_fail = false to clipboard" data-copy="save_trimmed_fail = false">save_trimmed_fail</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">upstream params.save_trimmed_fail — when true, fastp keeps the<br>reads that failed filtering (--failed_out + --unpaired1/2); off by<br>default, exactly like upstream (empty placeholders when false)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy save_unaligned = value" data-copy="save_unaligned = false">save_unaligned</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy save_unaligned = value" aria-label="Copy save_unaligned = false to clipboard" data-copy="save_unaligned = false">save_unaligned</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">upstream params.save_unaligned — NOT ported as a gate: the Kraken2<br>unclassified reads feed the assembly branch (upstream channel wiring),<br>so they always land in results/kraken2/ — the flag is effectively always<br>on in the port (benign over-emission vs upstream&#x27;s default publish)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_abacas = value" data-copy="skip_abacas = false">skip_abacas</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_abacas = value" aria-label="Copy skip_abacas = false to clipboard" data-copy="skip_abacas = false">skip_abacas</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Skip flags (identical defaults to upstream params)<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_assembly = value" data-copy="skip_assembly = false">skip_assembly</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_assembly = value" aria-label="Copy skip_assembly = false to clipboard" data-copy="skip_assembly = false">skip_assembly</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Skip flags (identical defaults to upstream params)<br><span class="ox-param-usedby">used by <code>22</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_assembly_quast = value" data-copy="skip_assembly_quast = false">skip_assembly_quast</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_assembly_quast = value" aria-label="Copy skip_assembly_quast = false to clipboard" data-copy="skip_assembly_quast = false">skip_assembly_quast</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Skip flags (identical defaults to upstream params)<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_bandage = value" data-copy="skip_bandage = false">skip_bandage</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_bandage = value" aria-label="Copy skip_bandage = false to clipboard" data-copy="skip_bandage = false">skip_bandage</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Skip flags (identical defaults to upstream params)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_blast = value" data-copy="skip_blast = false">skip_blast</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_blast = value" aria-label="Copy skip_blast = false to clipboard" data-copy="skip_blast = false">skip_blast</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Skip flags (identical defaults to upstream params)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_consensus = value" data-copy="skip_consensus = false">skip_consensus</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_consensus = value" aria-label="Copy skip_consensus = false to clipboard" data-copy="skip_consensus = false">skip_consensus</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Skip flags (identical defaults to upstream params)<br><span class="ox-param-usedby">used by <code>14</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_consensus_plots = value" data-copy="skip_consensus_plots = false">skip_consensus_plots</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_consensus_plots = value" aria-label="Copy skip_consensus_plots = false to clipboard" data-copy="skip_consensus_plots = false">skip_consensus_plots</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Skip flags (identical defaults to upstream params)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_cutadapt = value" data-copy="skip_cutadapt = false">skip_cutadapt</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_cutadapt = value" aria-label="Copy skip_cutadapt = false to clipboard" data-copy="skip_cutadapt = false">skip_cutadapt</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Skip flags (identical defaults to upstream params)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_fastp = value" data-copy="skip_fastp = false">skip_fastp</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_fastp = value" aria-label="Copy skip_fastp = false to clipboard" data-copy="skip_fastp = false">skip_fastp</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Skip flags (identical defaults to upstream params)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_fastqc = value" data-copy="skip_fastqc = false">skip_fastqc</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_fastqc = value" aria-label="Copy skip_fastqc = false to clipboard" data-copy="skip_fastqc = false">skip_fastqc</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Skip flags (identical defaults to upstream params)<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_freyja = value" data-copy="skip_freyja = false">skip_freyja</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_freyja = value" aria-label="Copy skip_freyja = false to clipboard" data-copy="skip_freyja = false">skip_freyja</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Skip flags (identical defaults to upstream params)<br><span class="ox-param-usedby">used by <code>7</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_freyja_boot = value" data-copy="skip_freyja_boot = false">skip_freyja_boot</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_freyja_boot = value" aria-label="Copy skip_freyja_boot = false to clipboard" data-copy="skip_freyja_boot = false">skip_freyja_boot</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Skip flags (identical defaults to upstream params)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_ivar_trim = value" data-copy="skip_ivar_trim = false">skip_ivar_trim</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_ivar_trim = value" aria-label="Copy skip_ivar_trim = false to clipboard" data-copy="skip_ivar_trim = false">skip_ivar_trim</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Skip flags (identical defaults to upstream params)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_kraken2 = value" data-copy="skip_kraken2 = false">skip_kraken2</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_kraken2 = value" aria-label="Copy skip_kraken2 = false to clipboard" data-copy="skip_kraken2 = false">skip_kraken2</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Skip flags (identical defaults to upstream params)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_markduplicates = value" data-copy="skip_markduplicates = true">skip_markduplicates</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_markduplicates = value" aria-label="Copy skip_markduplicates = true to clipboard" data-copy="skip_markduplicates = true">skip_markduplicates</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>true</code></td>
 <td class="ox-p-desc">Skip flags (identical defaults to upstream params)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_mosdepth = value" data-copy="skip_mosdepth = false">skip_mosdepth</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_mosdepth = value" aria-label="Copy skip_mosdepth = false to clipboard" data-copy="skip_mosdepth = false">skip_mosdepth</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Skip flags (identical defaults to upstream params)<br><span class="ox-param-usedby">used by <code>6</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_nextclade = value" data-copy="skip_nextclade = false">skip_nextclade</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_nextclade = value" aria-label="Copy skip_nextclade = false to clipboard" data-copy="skip_nextclade = false">skip_nextclade</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Skip flags (identical defaults to upstream params)<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_noninternal_primers = value" data-copy="skip_noninternal_primers = false">skip_noninternal_primers</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_noninternal_primers = value" aria-label="Copy skip_noninternal_primers = false to clipboard" data-copy="skip_noninternal_primers = false">skip_noninternal_primers</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Skip flags (identical defaults to upstream params)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_pangolin = value" data-copy="skip_pangolin = false">skip_pangolin</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_pangolin = value" aria-label="Copy skip_pangolin = false to clipboard" data-copy="skip_pangolin = false">skip_pangolin</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Skip flags (identical defaults to upstream params)<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_picard_metrics = value" data-copy="skip_picard_metrics = false">skip_picard_metrics</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_picard_metrics = value" aria-label="Copy skip_picard_metrics = false to clipboard" data-copy="skip_picard_metrics = false">skip_picard_metrics</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Skip flags (identical defaults to upstream params)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_plasmidid = value" data-copy="skip_plasmidid = true">skip_plasmidid</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_plasmidid = value" aria-label="Copy skip_plasmidid = true to clipboard" data-copy="skip_plasmidid = true">skip_plasmidid</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>true</code></td>
 <td class="ox-p-desc">Skip flags (identical defaults to upstream params)<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_snpeff = value" data-copy="skip_snpeff = false">skip_snpeff</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_snpeff = value" aria-label="Copy skip_snpeff = false to clipboard" data-copy="skip_snpeff = false">skip_snpeff</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Skip flags (identical defaults to upstream params)<br><span class="ox-param-usedby">used by <code>5</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_variants = value" data-copy="skip_variants = false">skip_variants</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_variants = value" aria-label="Copy skip_variants = false to clipboard" data-copy="skip_variants = false">skip_variants</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Skip flags (identical defaults to upstream params)<br><span class="ox-param-usedby">used by <code>33</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_variants_long_table = value" data-copy="skip_variants_long_table = false">skip_variants_long_table</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_variants_long_table = value" aria-label="Copy skip_variants_long_table = false to clipboard" data-copy="skip_variants_long_table = false">skip_variants_long_table</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Skip flags (identical defaults to upstream params)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_variants_quast = value" data-copy="skip_variants_quast = false">skip_variants_quast</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_variants_quast = value" aria-label="Copy skip_variants_quast = false to clipboard" data-copy="skip_variants_quast = false">skip_variants_quast</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Skip flags (identical defaults to upstream params)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy spades_mode = value" data-copy="spades_mode = rnaviral">spades_mode</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy spades_mode = value" aria-label="Copy spades_mode = rnaviral to clipboard" data-copy="spades_mode = rnaviral">spades_mode</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>rnaviral</code></td>
 <td class="ox-p-desc">--- Assembly (upstream params.assemblers is a comma-separated list, e.g.<br>&#x27;spades,unicycler&#x27;; the port&#x27;s when-language has no &#x27;in&#x27; operator, so<br>every combination of the three assemblers is enumerated with explicit<br>equality tests. Give the canonical lowercase form, commas with no<br>spaces: &#x27;spades&#x27; | &#x27;unicycler&#x27; | &#x27;minia&#x27; | &#x27;spades,unicycler&#x27; | ... ) ---<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy threeprime_adapters = value" data-copy="threeprime_adapters = false">threeprime_adapters</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy threeprime_adapters = value" aria-label="Copy threeprime_adapters = false to clipboard" data-copy="threeprime_adapters = false">threeprime_adapters</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Primer trimming for assembly<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy variant_caller = value" data-copy="variant_caller = ivar">variant_caller</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy variant_caller = value" aria-label="Copy variant_caller = ivar to clipboard" data-copy="variant_caller = ivar">variant_caller</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>ivar</code></td>
 <td class="ox-p-desc">--- Variant calling (upstream params.variant_caller defaults to &#x27;ivar&#x27; for<br>the amplicon protocol and &#x27;bcftools&#x27; otherwise; both branches are<br>ported as when-gated rules). The metagenomic branch auto-runs the<br>bcftools caller regardless of this key — upstream derives<br>variant_caller in nextflow.config (params.variant_caller = protocol ==<br>&#x27;metagenomic&#x27; ? &#x27;bcftools&#x27; : &#x27;ivar&#x27;), and the port mirrors that<br>derivation in the wgs rules&#x27; when conditions, so a metagenomic run<br>needs no extra --arg ---<br><span class="ox-param-usedby">used by <code>10</code> rules</span></td>
@@ -845,10 +846,16 @@ Resource labels map 1:1 to upstream `withLabel` profiles: `process_single`
 (6c/36 GB/8 h), `process_high` (12c/72 GB/16 h). Fastp/SPAdes memory and
 `-Xmx` JVM sizes are derived from the same values as upstream.
 
+<details class="ox-evidence" markdown="1"><summary>Verification evidence</summary>
+
+default amplicon path + 49 gated branch rules (96 total): bcftools variant caller, ivar consensus, metagenomic (wgs) protocol, alternative assemblers (any comma-separated spades/unicycler/minia combination), MarkDuplicates, plasmidID, kraken2/freyja/pangolin DB downloads, additional annotation, gz-reference gunzip steps — all dry-run-verified per branch — nanopore ARTIC chain ported as gated branch rules (see Excluded); default plan unchanged
+
+</details>
+
 ## Links
 
 - Repository: [oxo-flow-viralrecon](https://github.com/oxo-flow-community/oxo-flow-viralrecon)
 - Upstream: [nf-core/viralrecon](https://github.com/nf-core/viralrecon) @ `3.0.0`
 - License: Apache-2.0 (this workflow) · MIT (upstream)
 
-Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 · last catalog sync 2026-09-09. See the repository's NOTICE for full attribution.

@@ -10,7 +10,7 @@ Every workflow in the catalog. Ratings are an [evidence ladder](../about/curatio
 passes `validate` + `dry-run` in CI), **◆ dry-run verified** (maintained like
 ★ but no full end-to-end run yet), **☆ community** (meets listing
 requirements, maintained by its authors). Filter by domain, origin, or source
-engine; search by name, tool, or tag.
+engine; search by name, tool, tag, or description.
 
 <div class="ox-filter">
   <input type="search" id="ox-search" placeholder="search: rna, star, variant, bam…" aria-label="Search workflows">

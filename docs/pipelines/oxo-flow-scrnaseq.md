@@ -21,6 +21,7 @@ title: "Single-cell RNA-seq: alignment, quantification and QC"
 <div class="ox-kv"><span class="k">Domain</span><span class="v">single-cell</span></div>
 <div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/nf-core/scrnaseq">nf-core/scrnaseq</a></span></div>
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>4.2.0</code></span></div>
+<div class="ox-kv"><span class="k">Last verified</span><span class="v">2026-08-28</span></div>
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2280.1"><code>10.48546/workflowhub.workflow.2280.1</code></a></span></div>
@@ -99,319 +100,319 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-scrnaseq
 <thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
 <tbody>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy aligner = value" data-copy="aligner = cellranger">aligner</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy aligner = value" aria-label="Copy aligner = cellranger to clipboard" data-copy="aligner = cellranger">aligner</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>cellranger</code></td>
 <td class="ox-p-desc">--aligner / --protocol. The port implements ALL upstream aligner branches:<br>cellranger (default, matches upstream&#x27;s most-tested path), simpleaf (upstream<br>default aligner), kallisto (kallisto/bustools), star (STARsolo) and<br>cellrangerarc (multiome ATAC+GEX). Protocol values are mapped per aligner<br>inside the alignment rules (upstream protocols.json); &#x27;auto&#x27; is only valid<br>for cellranger/cellrangerarc, exactly like upstream.<br><span class="ox-param-usedby">used by <code>41</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy build_cellranger_index = value" data-copy="build_cellranger_index = true">build_cellranger_index</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy build_cellranger_index = value" aria-label="Copy build_cellranger_index = true to clipboard" data-copy="build_cellranger_index = true">build_cellranger_index</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>true</code></td>
 <td class="ox-p-desc">cellranger reference: build from fasta/gtf, or point transcriptome at an existing index<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cellranger_localmem = value" data-copy="cellranger_localmem = 0">cellranger_localmem</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cellranger_localmem = value" aria-label="Copy cellranger_localmem = 0 to clipboard" data-copy="cellranger_localmem = 0">cellranger_localmem</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>0</code></td>
 <td class="ox-p-desc">GB passed to cellranger&#x27;s --localmem (mkref/count). 0 = auto: 2/3 of<br>the actually-free physical memory (/proc/meminfo MemAvailable, 1 GB<br>floor) — never the engine&#x27;s effective memory, which counts swap:<br>cellranger&#x27;s jobmngr waits forever when --localmem exceeds the free<br>RAM (live: &#x27;Need 6 GB ... (2.6 GB available)&#x27; looped for hours on a<br>3.7GB box). Set a positive number to force a value.<br><span class="ox-param-usedby">used by <code>5</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cellranger_multi = value" data-copy="cellranger_multi = false">cellranger_multi</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cellranger_multi = value" aria-label="Copy cellranger_multi = false to clipboard" data-copy="cellranger_multi = false">cellranger_multi</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">cellranger multi (upstream aligner = cellrangermulti): the multiome<br>VDJ / Ab-seq / CRO branch. OFF by default. Enabling it supersedes<br>cellranger_count (upstream&#x27;s aligner branches are exclusive). Per-sample<br>per-modality FASTQs come from the [workflow] metadata_file table<br>(refs/cellranger_multi_metadata.tsv): one pair per modality per sample in<br>columns &lt;modality&gt;_fastq_1/&lt;modality&gt;_fastq_2 for vdj/ab/beam/crispr/cmo;<br>an empty cell = modality absent for that sample — the engine renders<br>{meta.&lt;col&gt;} as &#x27;&#x27;, the port&#x27;s equivalent of upstream&#x27;s EMPTY-file<br>injection (the exclusion is closed without an engine follow-up).<br><span class="ox-param-usedby">used by <code>7</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cellranger_multi_barcodes = value" data-copy="cellranger_multi_barcodes = ">cellranger_multi_barcodes</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cellranger_multi_barcodes = value" aria-label="Copy cellranger_multi_barcodes =  to clipboard" data-copy="cellranger_multi_barcodes = ">cellranger_multi_barcodes</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">upstream --cellranger_multi_barcodes: barcode table (sample,multiplexed_sample_id,description[,cmo_ids])<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cellranger_multi_fb_reference = value" data-copy="cellranger_multi_fb_reference = ">cellranger_multi_fb_reference</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cellranger_multi_fb_reference = value" aria-label="Copy cellranger_multi_fb_reference =  to clipboard" data-copy="cellranger_multi_fb_reference = ">cellranger_multi_fb_reference</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">upstream --fb_reference: feature-barcoding reference (antibody/CRISPR)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cellranger_multi_gex_reference = value" data-copy="cellranger_multi_gex_reference = ">cellranger_multi_gex_reference</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cellranger_multi_gex_reference = value" aria-label="Copy cellranger_multi_gex_reference =  to clipboard" data-copy="cellranger_multi_gex_reference = ">cellranger_multi_gex_reference</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">upstream --cellranger_index; empty = the built {config.transcriptome}<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cellranger_multi_vdj_reference = value" data-copy="cellranger_multi_vdj_reference = ">cellranger_multi_vdj_reference</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cellranger_multi_vdj_reference = value" aria-label="Copy cellranger_multi_vdj_reference =  to clipboard" data-copy="cellranger_multi_vdj_reference = ">cellranger_multi_vdj_reference</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">upstream --cellranger_vdj_index; empty = built by cellranger_mkvdjref<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cellrangerarc_config = value" data-copy="cellrangerarc_config = ">cellrangerarc_config</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cellrangerarc_config = value" aria-label="Copy cellrangerarc_config =  to clipboard" data-copy="cellrangerarc_config = ">cellrangerarc_config</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">optional mkref config json (upstream --cellrangerarc_config); auto-generated when empty<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cellrangerarc_reference = value" data-copy="cellrangerarc_reference = refs/cellrangerarc_reference">cellrangerarc_reference</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cellrangerarc_reference = value" aria-label="Copy cellrangerarc_reference = refs/cellrangerarc_reference to clipboard" data-copy="cellrangerarc_reference = refs/cellrangerarc_reference">cellrangerarc_reference</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>refs/cellrangerarc_reference</code></td>
 <td class="ox-p-desc">cellrangerarc reference (multiome ATAC+GEX)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy email = value" data-copy="email = ">email</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy email = value" aria-label="Copy email =  to clipboard" data-copy="email = ">email</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">completion notifications (nf-core PIPELINE_COMPLETION port): summary email<br>on success (<code>email</code>), failure address (<code>email_on_fail</code>) and a webhook<br>(<code>hook_url</code>). Empty = no notification, exactly like upstream&#x27;s empty email<br>params. Consumed by the workflow-level on_complete / on_error hooks above<br>(engine &gt;= 0.17.0); older engines ignore the hook keys and the run is<br>untouched.<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy email_on_fail = value" data-copy="email_on_fail = ">email_on_fail</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy email_on_fail = value" aria-label="Copy email_on_fail =  to clipboard" data-copy="email_on_fail = ">email_on_fail</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">failure-only recipient (upstream --email_on_fail; used when email is empty)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy expected_cells = value" data-copy="expected_cells = ">expected_cells</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy expected_cells = value" aria-label="Copy expected_cells =  to clipboard" data-copy="expected_cells = ">expected_cells</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">samplesheet <code>expected_cells</code> column -&gt; --expect-cells/--soloCellFilter when set<br><span class="ox-param-usedby">used by <code>5</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fasta = value" data-copy="fasta = refs/refdata.fa.gz">fasta</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fasta = value" aria-label="Copy fasta = refs/refdata.fa.gz to clipboard" data-copy="fasta = refs/refdata.fa.gz">fasta</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>refs/refdata.fa.gz</code></td>
 <td class="ox-p-desc">reference genome (upstream --fasta / --gtf; may be .gz)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fasta_gz = value" data-copy="fasta_gz = true">fasta_gz</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fasta_gz = value" aria-label="Copy fasta_gz = true to clipboard" data-copy="fasta_gz = true">fasta_gz</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>true</code></td>
 <td class="ox-p-desc">upstream --fasta gzipped flag (gunzipped by the prep rule)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fasta_prepared = value" data-copy="fasta_prepared = refs/refdata.fa">fasta_prepared</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fasta_prepared = value" aria-label="Copy fasta_prepared = refs/refdata.fa to clipboard" data-copy="fasta_prepared = refs/refdata.fa">fasta_prepared</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>refs/refdata.fa</code></td>
 <td class="ox-p-desc">derived reference files (README &quot;Reference genome&quot; explains the chain)<br><span class="ox-param-usedby">used by <code>9</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtf = value" data-copy="gtf = refs/refdata.gtf.gz">gtf</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtf = value" aria-label="Copy gtf = refs/refdata.gtf.gz to clipboard" data-copy="gtf = refs/refdata.gtf.gz">gtf</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>refs/refdata.gtf.gz</code></td>
 <td class="ox-p-desc">annotation GTF (upstream --gtf; may be .gz)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtf_filtered = value" data-copy="gtf_filtered = refs/refdata_genes.gtf">gtf_filtered</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtf_filtered = value" aria-label="Copy gtf_filtered = refs/refdata_genes.gtf to clipboard" data-copy="gtf_filtered = refs/refdata_genes.gtf">gtf_filtered</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>refs/refdata_genes.gtf</code></td>
 <td class="ox-p-desc">gene-level GTF for cellranger/count filtering (upstream filtered_gtf; the &quot;biotype = protein_coding&quot; filter)<br><span class="ox-param-usedby">used by <code>8</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtf_gz = value" data-copy="gtf_gz = true">gtf_gz</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtf_gz = value" aria-label="Copy gtf_gz = true to clipboard" data-copy="gtf_gz = true">gtf_gz</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>true</code></td>
 <td class="ox-p-desc">upstream --gtf gzipped flag (gunzipped by the prep rule)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtf_mkgtf = value" data-copy="gtf_mkgtf = refs/refdata_genes.filtered.gtf">gtf_mkgtf</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtf_mkgtf = value" aria-label="Copy gtf_mkgtf = refs/refdata_genes.filtered.gtf to clipboard" data-copy="gtf_mkgtf = refs/refdata_genes.filtered.gtf">gtf_mkgtf</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>refs/refdata_genes.filtered.gtf</code></td>
 <td class="ox-p-desc">cellranger mkgtf output (the filtered annotation)<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtf_mkgtf_input = value" data-copy="gtf_mkgtf_input = refs/refdata_genes.gtf">gtf_mkgtf_input</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtf_mkgtf_input = value" aria-label="Copy gtf_mkgtf_input = refs/refdata_genes.gtf to clipboard" data-copy="gtf_mkgtf_input = refs/refdata_genes.gtf">gtf_mkgtf_input</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>refs/refdata_genes.gtf</code></td>
 <td class="ox-p-desc">set to the source-fixed file when gtf_source_fix=true<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtf_prepared = value" data-copy="gtf_prepared = refs/refdata.gtf">gtf_prepared</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtf_prepared = value" aria-label="Copy gtf_prepared = refs/refdata.gtf to clipboard" data-copy="gtf_prepared = refs/refdata.gtf">gtf_prepared</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>refs/refdata.gtf</code></td>
 <td class="ox-p-desc">gunzipped GTF (prep-rule output)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtf_source_fix = value" data-copy="gtf_source_fix = false">gtf_source_fix</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtf_source_fix = value" aria-label="Copy gtf_source_fix = false to clipboard" data-copy="gtf_source_fix = false">gtf_source_fix</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">iGenomes GTF source-field rewrite (opt-in, upstream gtf_source_has_spaces)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtf_source_fixed = value" data-copy="gtf_source_fixed = refs/refdata_genes.source_fixed.gtf">gtf_source_fixed</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtf_source_fixed = value" aria-label="Copy gtf_source_fixed = refs/refdata_genes.source_fixed.gtf to clipboard" data-copy="gtf_source_fixed = refs/refdata_genes.source_fixed.gtf">gtf_source_fixed</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>refs/refdata_genes.source_fixed.gtf</code></td>
 <td class="ox-p-desc">source-field-rewritten GTF (gtf_source_fix output)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy hook_url = value" data-copy="hook_url = ">hook_url</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy hook_url = value" aria-label="Copy hook_url =  to clipboard" data-copy="hook_url = ">hook_url</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">webhook URL for the on_complete / on_error notifications<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy kallisto_index = value" data-copy="kallisto_index = ">kallisto_index</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy kallisto_index = value" aria-label="Copy kallisto_index =  to clipboard" data-copy="kallisto_index = ">kallisto_index</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">kallisto/bustools<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy kb_t1c = value" data-copy="kb_t1c = ">kb_t1c</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy kb_t1c = value" aria-label="Copy kb_t1c =  to clipboard" data-copy="kb_t1c = ">kb_t1c</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">optional cdna_t2c.txt override<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy kb_t2c = value" data-copy="kb_t2c = ">kb_t2c</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy kb_t2c = value" aria-label="Copy kb_t2c =  to clipboard" data-copy="kb_t2c = ">kb_t2c</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">optional intron_t2c.txt override<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy kb_workflow = value" data-copy="kb_workflow = standard">kb_workflow</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy kb_workflow = value" aria-label="Copy kb_workflow = standard to clipboard" data-copy="kb_workflow = standard">kb_workflow</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>standard</code></td>
 <td class="ox-p-desc">standard | lamanno | nac (any non-standard builds the intron index too)<br><span class="ox-param-usedby">used by <code>6</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy multiqc_config = value" data-copy="multiqc_config = assets/multiqc_config.yml">multiqc_config</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy multiqc_config = value" aria-label="Copy multiqc_config = assets/multiqc_config.yml to clipboard" data-copy="multiqc_config = assets/multiqc_config.yml">multiqc_config</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>assets/multiqc_config.yml</code></td>
 <td class="ox-p-desc">MultiQC config path (upstream --multiqc_config)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy multiqc_title = value" data-copy="multiqc_title = ">multiqc_title</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy multiqc_title = value" aria-label="Copy multiqc_title =  to clipboard" data-copy="multiqc_title = ">multiqc_title</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">-&gt; <code>--title</code> when set<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy out_dir = value" data-copy="out_dir = results">out_dir</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy out_dir = value" aria-label="Copy out_dir = results to clipboard" data-copy="out_dir = results">out_dir</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>results</code></td>
 <td class="ox-p-desc">results directory (upstream --outdir)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy protocol = value" data-copy="protocol = auto">protocol</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy protocol = value" aria-label="Copy protocol = auto to clipboard" data-copy="protocol = auto">protocol</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>auto</code></td>
 <td class="ox-p-desc">cellranger/arc: &#x27;auto&#x27; or 10XV1-4; simpleaf/kallisto/star: 10XV1-4/dropseq(/smartseq)<br><span class="ox-param-usedby">used by <code>13</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy qcatch_n_partitions = value" data-copy="qcatch_n_partitions = ">qcatch_n_partitions</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy qcatch_n_partitions = value" aria-label="Copy qcatch_n_partitions =  to clipboard" data-copy="qcatch_n_partitions = ">qcatch_n_partitions</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">qcatch --n_partitions when set (for protocols without a chemistry mapping)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy remove_doublets = value" data-copy="remove_doublets = false">remove_doublets</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy remove_doublets = value" aria-label="Copy remove_doublets = false to clipboard" data-copy="remove_doublets = false">remove_doublets</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">upstream --remove_doublets: doublet removal for simpleaf<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy samplesheet = value" data-copy="samplesheet = test/fixtures/samplesheet.csv">samplesheet</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy samplesheet = value" aria-label="Copy samplesheet = test/fixtures/samplesheet.csv to clipboard" data-copy="samplesheet = test/fixtures/samplesheet.csv">samplesheet</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/samplesheet.csv</code></td>
 <td class="ox-p-desc">consumed by CONCAT_H5AD (same columns as upstream)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy save_align_intermeds = value" data-copy="save_align_intermeds = true">save_align_intermeds</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy save_align_intermeds = value" aria-label="Copy save_align_intermeds = true to clipboard" data-copy="save_align_intermeds = true">save_align_intermeds</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>true</code></td>
 <td class="ox-p-desc">-&gt; <code>--create-bam true</code> (cellranger) / publish the BAM (star)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy seq_center = value" data-copy="seq_center = ">seq_center</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy seq_center = value" aria-label="Copy seq_center =  to clipboard" data-copy="seq_center = ">seq_center</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">--outSAMattrRGline CN field when set<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy simpleaf_index = value" data-copy="simpleaf_index = ">simpleaf_index</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy simpleaf_index = value" aria-label="Copy simpleaf_index =  to clipboard" data-copy="simpleaf_index = ">simpleaf_index</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">simpleaf (upstream default aligner)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy simpleaf_umi_resolution = value" data-copy="simpleaf_umi_resolution = cr-like">simpleaf_umi_resolution</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy simpleaf_umi_resolution = value" aria-label="Copy simpleaf_umi_resolution = cr-like to clipboard" data-copy="simpleaf_umi_resolution = cr-like">simpleaf_umi_resolution</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>cr-like</code></td>
 <td class="ox-p-desc">upstream --simpleaf_umi_resolution (cr-like | paired | naive)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_cellbender = value" data-copy="skip_cellbender = false">skip_cellbender</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_cellbender = value" aria-label="Copy skip_cellbender = false to clipboard" data-copy="skip_cellbender = false">skip_cellbender</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">upstream --skip_cellbender: skip ambient-RNA background removal<br><span class="ox-param-usedby">used by <code>10</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_cellrangermulti_vdjref = value" data-copy="skip_cellrangermulti_vdjref = false">skip_cellrangermulti_vdjref</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_cellrangermulti_vdjref = value" aria-label="Copy skip_cellrangermulti_vdjref = false to clipboard" data-copy="skip_cellrangermulti_vdjref = false">skip_cellrangermulti_vdjref</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">upstream same name: skip the VDJ reference build<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_fastqc = value" data-copy="skip_fastqc = false">skip_fastqc</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_fastqc = value" aria-label="Copy skip_fastqc = false to clipboard" data-copy="skip_fastqc = false">skip_fastqc</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">QC / reporting knobs<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_multiqc = value" data-copy="skip_multiqc = false">skip_multiqc</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_multiqc = value" aria-label="Copy skip_multiqc = false to clipboard" data-copy="skip_multiqc = false">skip_multiqc</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">upstream --skip_multiqc<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_qcatch = value" data-copy="skip_qcatch = false">skip_qcatch</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_qcatch = value" aria-label="Copy skip_qcatch = false to clipboard" data-copy="skip_qcatch = false">skip_qcatch</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">upstream --skip_qcatch: skip the qcatch QC step<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy star_feature = value" data-copy="star_feature = Gene">star_feature</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy star_feature = value" aria-label="Copy star_feature = Gene to clipboard" data-copy="star_feature = Gene">star_feature</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>Gene</code></td>
 <td class="ox-p-desc">--soloFeatures (Gene | Gene Velocyto | ...)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy star_ignore_sjdbgtf = value" data-copy="star_ignore_sjdbgtf = false">star_ignore_sjdbgtf</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy star_ignore_sjdbgtf = value" aria-label="Copy star_ignore_sjdbgtf = false to clipboard" data-copy="star_ignore_sjdbgtf = false">star_ignore_sjdbgtf</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">skip --sjdbGTFfile<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy star_index = value" data-copy="star_index = ">star_index</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy star_index = value" aria-label="Copy star_index =  to clipboard" data-copy="star_index = ">star_index</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">STARsolo<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy star_index_legacy = value" data-copy="star_index_legacy = false">star_index_legacy</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy star_index_legacy = value" aria-label="Copy star_index_legacy = false to clipboard" data-copy="star_index_legacy = false">star_index_legacy</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">upgrade a legacy 2.6.x iGenomes index (genomeParameters rewrite)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy transcript_fasta = value" data-copy="transcript_fasta = ">transcript_fasta</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy transcript_fasta = value" aria-label="Copy transcript_fasta =  to clipboard" data-copy="transcript_fasta = ">transcript_fasta</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">transcript FASTA for simpleaf index building (mutually exclusive with fasta/gtf)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy transcriptome = value" data-copy="transcriptome = refs/cellranger_reference">transcriptome</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy transcriptome = value" aria-label="Copy transcriptome = refs/cellranger_reference to clipboard" data-copy="transcriptome = refs/cellranger_reference">transcriptome</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>refs/cellranger_reference</code></td>
 <td class="ox-p-desc">cellranger reference dir (upstream --transcriptome): built by cellranger_mkref, or an existing index<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy txp2gene = value" data-copy="txp2gene = ">txp2gene</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy txp2gene = value" aria-label="Copy txp2gene =  to clipboard" data-copy="txp2gene = ">txp2gene</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">t2g map (required with transcript_fasta; also used as the kallisto t2g)<br><span class="ox-param-usedby">used by <code>5</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy whitelist = value" data-copy="whitelist = ">whitelist</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy whitelist = value" aria-label="Copy whitelist =  to clipboard" data-copy="whitelist = ">whitelist</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">barcode whitelist for simpleaf/star. Empty = mapped per protocol from<br>assets/whitelist/10x_V{1..4}_barcode_whitelist.txt.gz (upstream<br>protocols.json behavior); set a path to override.<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
@@ -647,10 +648,16 @@ transcripts crash simpleaf's grangers intron pass: polars "invalid series
 dtype: expected List, got null"); the fixture genome is padded to ~52kb (STAR
 double-frees on the original 1.9 kb genome).
 
+<details class="ox-evidence" markdown="1"><summary>Verification evidence</summary>
+
+five live-verified configurations on tx-ubuntu (engine 0.15.0, apptainer) 2026-08-27: aligner=cellranger, simpleaf, kallisto, star (10X), star+dropseq; the cellrangerarc branch is ported and validate/lint-clean but was not live-run; the cellranger_multi branch is ported and validate/lint/dry-run-clean with the expanded per-sample config.csv verified shell-level (needs the same cellranger container the count branch uses — live run queued for the next container wave)
+
+</details>
+
 ## Links
 
 - Repository: [oxo-flow-scrnaseq](https://github.com/oxo-flow-community/oxo-flow-scrnaseq)
 - Upstream: [nf-core/scrnaseq](https://github.com/nf-core/scrnaseq) @ `4.2.0`
 - License: Apache-2.0 (this workflow) · MIT (upstream)
 
-Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 · last catalog sync 2026-08-28. See the repository's NOTICE for full attribution.

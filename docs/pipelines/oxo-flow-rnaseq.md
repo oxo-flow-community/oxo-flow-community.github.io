@@ -21,6 +21,7 @@ title: "RNA-seq: alignment, quantification and QC"
 <div class="ox-kv"><span class="k">Domain</span><span class="v">transcriptomics</span></div>
 <div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/nf-core/rnaseq">nf-core/rnaseq</a></span></div>
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>3.28.0</code></span></div>
+<div class="ox-kv"><span class="k">Last verified</span><span class="v">2026-11-20</span></div>
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2278.1"><code>10.48546/workflowhub.workflow.2278.1</code></a></span></div>
@@ -102,355 +103,355 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq
 <thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
 <tbody>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy aligner = value" data-copy="aligner = star_salmon">aligner</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy aligner = value" aria-label="Copy aligner = star_salmon to clipboard" data-copy="aligner = star_salmon">aligner</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>star_salmon</code></td>
 <td class="ox-p-desc">Aligner selector (upstream: --aligner). The port supports the upstream<br>default &#x27;star_salmon&#x27; plus the non-default branches (star_rsem, hisat2,<br>bowtie2_salmon); all downstream results paths follow<br>{config.out_dir}/{config.aligner}/... exactly like upstream&#x27;s<br>params.aligner-based publishDirs. bowtie2_salmon maps reads to the<br>transcriptome with Bowtie2 and quantifies the orig_bam with Salmon<br>(upstream ALIGN_BOWTIE2 -&gt; QUANTIFY_BAM_SALMON).<br><span class="ox-param-usedby">used by <code>96</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bbsplit_fasta_list = value" data-copy="bbsplit_fasta_list = ">bbsplit_fasta_list</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bbsplit_fasta_list = value" aria-label="Copy bbsplit_fasta_list =  to clipboard" data-copy="bbsplit_fasta_list = ">bbsplit_fasta_list</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">BBSplit genome filtering (upstream: --skip_bbsplit / --bbsplit_fasta_list /<br>--save_bbsplit_reads; same defaults). bbsplit_fasta_list is a 2-column CSV<br>(short_name,path_to_fasta) plus the primary genome in config.fasta.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bbsplit_index = value" data-copy="bbsplit_index = ">bbsplit_index</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bbsplit_index = value" aria-label="Copy bbsplit_index =  to clipboard" data-copy="bbsplit_index = ">bbsplit_index</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">Non-default alignment branches (upstream: --aligner / --skip_alignment /<br>--rsem_index / --hisat2_index / --salmon_index / --bbsplit_index /<br>--sortmerna_index). Empty index keys are auto-built by when-gated builder<br>rules in modules/alignment.oxoflow / quantification.oxoflow from the<br>shipped fixtures when the branch is enabled (like star_index); a<br>user-supplied path is symlinked in instead.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bowtie2_index = value" data-copy="bowtie2_index = ">bowtie2_index</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bowtie2_index = value" aria-label="Copy bowtie2_index =  to clipboard" data-copy="bowtie2_index = ">bowtie2_index</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">Non-default alignment branches (upstream: --aligner / --skip_alignment /<br>--rsem_index / --hisat2_index / --salmon_index / --bbsplit_index /<br>--sortmerna_index). Empty index keys are auto-built by when-gated builder<br>rules in modules/alignment.oxoflow / quantification.oxoflow from the<br>shipped fixtures when the branch is enabled (like star_index); a<br>user-supplied path is symlinked in instead.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy chrom_sizes = value" data-copy="chrom_sizes = test/fixtures/reference/chrom_sizes.txt">chrom_sizes</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy chrom_sizes = value" aria-label="Copy chrom_sizes = test/fixtures/reference/chrom_sizes.txt to clipboard" data-copy="chrom_sizes = test/fixtures/reference/chrom_sizes.txt">chrom_sizes</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/reference/chrom_sizes.txt</code></td>
 <td class="ox-p-desc">Reference artifacts (upstream: --fasta / --gtf / --gene_bed / --chrom_sizes<br>/ --transcript_fasta / STAR index). fasta and gtf are always inputs; the<br>other three are inputs by default but are DERIVED from fasta+gtf when the<br>key is empty (modules/prepare_genome.oxoflow mirrors upstream PREPARE_GENOME:<br>gene_bed via ea-utils gtf2bed, chrom_sizes via samtools faidx, transcript_fasta<br>via RSEM). The STAR index is an input (auto-built from the shipped fixture<br>genome by the [[references]] builder below when SAindex is missing).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy deseq2_vst = value" data-copy="deseq2_vst = true">deseq2_vst</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy deseq2_vst = value" aria-label="Copy deseq2_vst = true to clipboard" data-copy="deseq2_vst = true">deseq2_vst</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>true</code></td>
 <td class="ox-p-desc">DESeq2 QC transform: variance stabilizing transformation (upstream<br>--deseq2_vst default true).<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy extra_fqlint_args = value" data-copy="extra_fqlint_args = --disable-validator P001">extra_fqlint_args</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy extra_fqlint_args = value" aria-label="Copy extra_fqlint_args = --disable-validator P001 to clipboard" data-copy="extra_fqlint_args = --disable-validator P001">extra_fqlint_args</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>--disable-validator P001</code></td>
 <td class="ox-p-desc">fq lint extra args (upstream: --extra_fqlint_args).<br><span class="ox-param-usedby">used by <code>5</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fasta = value" data-copy="fasta = test/fixtures/reference/genome.fa">fasta</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fasta = value" aria-label="Copy fasta = test/fixtures/reference/genome.fa to clipboard" data-copy="fasta = test/fixtures/reference/genome.fa">fasta</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/reference/genome.fa</code></td>
 <td class="ox-p-desc">Reference artifacts (upstream: --fasta / --gtf / --gene_bed / --chrom_sizes<br>/ --transcript_fasta / STAR index). fasta and gtf are always inputs; the<br>other three are inputs by default but are DERIVED from fasta+gtf when the<br>key is empty (modules/prepare_genome.oxoflow mirrors upstream PREPARE_GENOME:<br>gene_bed via ea-utils gtf2bed, chrom_sizes via samtools faidx, transcript_fasta<br>via RSEM). The STAR index is an input (auto-built from the shipped fixture<br>genome by the [[references]] builder below when SAindex is missing).<br><span class="ox-param-usedby">used by <code>18</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy featurecounts_feature_type = value" data-copy="featurecounts_feature_type = exon">featurecounts_feature_type</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy featurecounts_feature_type = value" aria-label="Copy featurecounts_feature_type = exon to clipboard" data-copy="featurecounts_feature_type = exon">featurecounts_feature_type</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>exon</code></td>
 <td class="ox-p-desc">featureCounts settings (upstream params with the same defaults).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy featurecounts_group_type = value" data-copy="featurecounts_group_type = gene_biotype">featurecounts_group_type</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy featurecounts_group_type = value" aria-label="Copy featurecounts_group_type = gene_biotype to clipboard" data-copy="featurecounts_group_type = gene_biotype">featurecounts_group_type</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>gene_biotype</code></td>
 <td class="ox-p-desc">featureCounts settings (upstream params with the same defaults).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gene_bed = value" data-copy="gene_bed = test/fixtures/reference/gene.bed">gene_bed</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gene_bed = value" aria-label="Copy gene_bed = test/fixtures/reference/gene.bed to clipboard" data-copy="gene_bed = test/fixtures/reference/gene.bed">gene_bed</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/reference/gene.bed</code></td>
 <td class="ox-p-desc">Reference artifacts (upstream: --fasta / --gtf / --gene_bed / --chrom_sizes<br>/ --transcript_fasta / STAR index). fasta and gtf are always inputs; the<br>other three are inputs by default but are DERIVED from fasta+gtf when the<br>key is empty (modules/prepare_genome.oxoflow mirrors upstream PREPARE_GENOME:<br>gene_bed via ea-utils gtf2bed, chrom_sizes via samtools faidx, transcript_fasta<br>via RSEM). The STAR index is an input (auto-built from the shipped fixture<br>genome by the [[references]] builder below when SAindex is missing).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtf = value" data-copy="gtf = test/fixtures/reference/genes.gtf">gtf</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtf = value" aria-label="Copy gtf = test/fixtures/reference/genes.gtf to clipboard" data-copy="gtf = test/fixtures/reference/genes.gtf">gtf</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/reference/genes.gtf</code></td>
 <td class="ox-p-desc">Reference artifacts (upstream: --fasta / --gtf / --gene_bed / --chrom_sizes<br>/ --transcript_fasta / STAR index). fasta and gtf are always inputs; the<br>other three are inputs by default but are DERIVED from fasta+gtf when the<br>key is empty (modules/prepare_genome.oxoflow mirrors upstream PREPARE_GENOME:<br>gene_bed via ea-utils gtf2bed, chrom_sizes via samtools faidx, transcript_fasta<br>via RSEM). The STAR index is an input (auto-built from the shipped fixture<br>genome by the [[references]] builder below when SAindex is missing).<br><span class="ox-param-usedby">used by <code>31</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtf_extra_attributes = value" data-copy="gtf_extra_attributes = gene_name">gtf_extra_attributes</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtf_extra_attributes = value" aria-label="Copy gtf_extra_attributes = gene_name to clipboard" data-copy="gtf_extra_attributes = gene_name">gtf_extra_attributes</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>gene_name</code></td>
 <td class="ox-p-desc">tximport gene attributes (upstream: --gtf_group_features /<br>--gtf_extra_attributes; same defaults).<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtf_group_features = value" data-copy="gtf_group_features = gene_id">gtf_group_features</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtf_group_features = value" aria-label="Copy gtf_group_features = gene_id to clipboard" data-copy="gtf_group_features = gene_id">gtf_group_features</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>gene_id</code></td>
 <td class="ox-p-desc">tximport gene attributes (upstream: --gtf_group_features /<br>--gtf_extra_attributes; same defaults).<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy hisat2_index = value" data-copy="hisat2_index = ">hisat2_index</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy hisat2_index = value" aria-label="Copy hisat2_index =  to clipboard" data-copy="hisat2_index = ">hisat2_index</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">Non-default alignment branches (upstream: --aligner / --skip_alignment /<br>--rsem_index / --hisat2_index / --salmon_index / --bbsplit_index /<br>--sortmerna_index). Empty index keys are auto-built by when-gated builder<br>rules in modules/alignment.oxoflow / quantification.oxoflow from the<br>shipped fixtures when the branch is enabled (like star_index); a<br>user-supplied path is symlinked in instead.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy kallisto_index = value" data-copy="kallisto_index = ">kallisto_index</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy kallisto_index = value" aria-label="Copy kallisto_index =  to clipboard" data-copy="kallisto_index = ">kallisto_index</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">Pseudo-alignment (upstream: --pseudo_aligner, &#x27;salmon&#x27; or &#x27;kallisto&#x27;;<br>default null = alignment-mode Salmon only). Both aligners are ported; the<br>index builders are when-gated on this key (salmon_index / kallisto_index<br>short-circuit with a user-supplied path). pseudo_aligner_kmer_size is the<br>upstream KALLISTO_INDEX -k default (31).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy min_mapped_reads = value" data-copy="min_mapped_reads = 5">min_mapped_reads</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy min_mapped_reads = value" aria-label="Copy min_mapped_reads = 5 to clipboard" data-copy="min_mapped_reads = 5">min_mapped_reads</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>5</code></td>
 <td class="ox-p-desc">Thresholds (upstream params with the same defaults).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy min_trimmed_reads = value" data-copy="min_trimmed_reads = 10000">min_trimmed_reads</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy min_trimmed_reads = value" aria-label="Copy min_trimmed_reads = 10000 to clipboard" data-copy="min_trimmed_reads = 10000">min_trimmed_reads</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>10000</code></td>
 <td class="ox-p-desc">Thresholds (upstream params with the same defaults).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy out_dir = value" data-copy="out_dir = results">out_dir</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy out_dir = value" aria-label="Copy out_dir = results to clipboard" data-copy="out_dir = results">out_dir</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>results</code></td>
 <td class="ox-p-desc">Output directory (upstream: --outdir).<br><span class="ox-param-usedby">used by <code>135</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pseudo_aligner = value" data-copy="pseudo_aligner = ">pseudo_aligner</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pseudo_aligner = value" aria-label="Copy pseudo_aligner =  to clipboard" data-copy="pseudo_aligner = ">pseudo_aligner</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">Pseudo-alignment (upstream: --pseudo_aligner, &#x27;salmon&#x27; or &#x27;kallisto&#x27;;<br>default null = alignment-mode Salmon only). Both aligners are ported; the<br>index builders are when-gated on this key (salmon_index / kallisto_index<br>short-circuit with a user-supplied path). pseudo_aligner_kmer_size is the<br>upstream KALLISTO_INDEX -k default (31).<br><span class="ox-param-usedby">used by <code>16</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pseudo_aligner_kmer_size = value" data-copy="pseudo_aligner_kmer_size = 31">pseudo_aligner_kmer_size</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pseudo_aligner_kmer_size = value" aria-label="Copy pseudo_aligner_kmer_size = 31 to clipboard" data-copy="pseudo_aligner_kmer_size = 31">pseudo_aligner_kmer_size</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>31</code></td>
 <td class="ox-p-desc">Pseudo-alignment (upstream: --pseudo_aligner, &#x27;salmon&#x27; or &#x27;kallisto&#x27;;<br>default null = alignment-mode Salmon only). Both aligners are ported; the<br>index builders are when-gated on this key (salmon_index / kallisto_index<br>short-circuit with a user-supplied path). pseudo_aligner_kmer_size is the<br>upstream KALLISTO_INDEX -k default (31).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy reads_dir = value" data-copy="reads_dir = test/fixtures/raw">reads_dir</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy reads_dir = value" aria-label="Copy reads_dir = test/fixtures/raw to clipboard" data-copy="reads_dir = test/fixtures/raw">reads_dir</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/raw</code></td>
 <td class="ox-p-desc">Input reads directory: reads_dir/&lt;sample&gt;_R1.fastq.gz + _R2.fastq.gz<br>(paired-end). The repo default ships the tiny committed fixtures; point<br>this at your data.<br><span class="ox-param-usedby">used by <code>5</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy remove_ribo_rna = value" data-copy="remove_ribo_rna = false">remove_ribo_rna</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy remove_ribo_rna = value" aria-label="Copy remove_ribo_rna = false to clipboard" data-copy="remove_ribo_rna = false">remove_ribo_rna</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Ribosomal RNA removal (upstream: --remove_ribo_rna / --ribo_removal_tool /<br>--ribo_database_manifest / --save_non_ribo_reads; same defaults). The<br>manifest is one fasta path per line; .gz entries are gunzipped before use.<br><span class="ox-param-usedby">used by <code>38</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ribo_database_manifest = value" data-copy="ribo_database_manifest = assets/rrna-db-defaults.txt">ribo_database_manifest</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ribo_database_manifest = value" aria-label="Copy ribo_database_manifest = assets/rrna-db-defaults.txt to clipboard" data-copy="ribo_database_manifest = assets/rrna-db-defaults.txt">ribo_database_manifest</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>assets/rrna-db-defaults.txt</code></td>
 <td class="ox-p-desc">Ribosomal RNA removal (upstream: --remove_ribo_rna / --ribo_removal_tool /<br>--ribo_database_manifest / --save_non_ribo_reads; same defaults). The<br>manifest is one fasta path per line; .gz entries are gunzipped before use.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ribo_removal_tool = value" data-copy="ribo_removal_tool = sortmerna">ribo_removal_tool</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ribo_removal_tool = value" aria-label="Copy ribo_removal_tool = sortmerna to clipboard" data-copy="ribo_removal_tool = sortmerna">ribo_removal_tool</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>sortmerna</code></td>
 <td class="ox-p-desc">Ribosomal RNA removal (upstream: --remove_ribo_rna / --ribo_removal_tool /<br>--ribo_database_manifest / --save_non_ribo_reads; same defaults). The<br>manifest is one fasta path per line; .gz entries are gunzipped before use.<br><span class="ox-param-usedby">used by <code>25</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy rsem_index = value" data-copy="rsem_index = ">rsem_index</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy rsem_index = value" aria-label="Copy rsem_index =  to clipboard" data-copy="rsem_index = ">rsem_index</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">Non-default alignment branches (upstream: --aligner / --skip_alignment /<br>--rsem_index / --hisat2_index / --salmon_index / --bbsplit_index /<br>--sortmerna_index). Empty index keys are auto-built by when-gated builder<br>rules in modules/alignment.oxoflow / quantification.oxoflow from the<br>shipped fixtures when the branch is enabled (like star_index); a<br>user-supplied path is symlinked in instead.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy salmon_index = value" data-copy="salmon_index = ">salmon_index</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy salmon_index = value" aria-label="Copy salmon_index =  to clipboard" data-copy="salmon_index = ">salmon_index</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">Non-default alignment branches (upstream: --aligner / --skip_alignment /<br>--rsem_index / --hisat2_index / --salmon_index / --bbsplit_index /<br>--sortmerna_index). Empty index keys are auto-built by when-gated builder<br>rules in modules/alignment.oxoflow / quantification.oxoflow from the<br>shipped fixtures when the branch is enabled (like star_index); a<br>user-supplied path is symlinked in instead.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy salmon_quant_libtype = value" data-copy="salmon_quant_libtype = ">salmon_quant_libtype</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy salmon_quant_libtype = value" aria-label="Copy salmon_quant_libtype =  to clipboard" data-copy="salmon_quant_libtype = ">salmon_quant_libtype</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">Salmon quantification (upstream default path, alignment mode on the STAR<br>toTranscriptome BAM). --libType is derived from config.strandedness<br>(forward -&gt; ISF, reverse -&gt; ISR, unstranded -&gt; IU); set<br>salmon_quant_libtype to override (e.g. &quot;A&quot; for auto-detection).<br><span class="ox-param-usedby">used by <code>7</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy save_align_intermeds = value" data-copy="save_align_intermeds = false">save_align_intermeds</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy save_align_intermeds = value" aria-label="Copy save_align_intermeds = false to clipboard" data-copy="save_align_intermeds = false">save_align_intermeds</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Publication controls (upstream: --save_trimmed / --save_align_intermeds).<br>The port keeps trimmed FASTQs and intermediate BAMs at results/ paths<br>regardless (they double as checkpoints); these keys are accepted for<br>upstream parity and reserved for future use.<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy save_bbsplit_reads = value" data-copy="save_bbsplit_reads = false">save_bbsplit_reads</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy save_bbsplit_reads = value" aria-label="Copy save_bbsplit_reads = false to clipboard" data-copy="save_bbsplit_reads = false">save_bbsplit_reads</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">BBSplit genome filtering (upstream: --skip_bbsplit / --bbsplit_fasta_list /<br>--save_bbsplit_reads; same defaults). bbsplit_fasta_list is a 2-column CSV<br>(short_name,path_to_fasta) plus the primary genome in config.fasta.<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy save_non_ribo_reads = value" data-copy="save_non_ribo_reads = false">save_non_ribo_reads</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy save_non_ribo_reads = value" aria-label="Copy save_non_ribo_reads = false to clipboard" data-copy="save_non_ribo_reads = false">save_non_ribo_reads</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Ribosomal RNA removal (upstream: --remove_ribo_rna / --ribo_removal_tool /<br>--ribo_database_manifest / --save_non_ribo_reads; same defaults). The<br>manifest is one fasta path per line; .gz entries are gunzipped before use.<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy save_trimmed = value" data-copy="save_trimmed = false">save_trimmed</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy save_trimmed = value" aria-label="Copy save_trimmed = false to clipboard" data-copy="save_trimmed = false">save_trimmed</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Publication controls (upstream: --save_trimmed / --save_align_intermeds).<br>The port keeps trimmed FASTQs and intermediate BAMs at results/ paths<br>regardless (they double as checkpoints); these keys are accepted for<br>upstream parity and reserved for future use.<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy save_umi_intermeds = value" data-copy="save_umi_intermeds = false">save_umi_intermeds</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy save_umi_intermeds = value" aria-label="Copy save_umi_intermeds = false to clipboard" data-copy="save_umi_intermeds = false">save_umi_intermeds</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Empty = no --umi-separator flag (upstream default null).<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_alignment = value" data-copy="skip_alignment = false">skip_alignment</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_alignment = value" aria-label="Copy skip_alignment = false to clipboard" data-copy="skip_alignment = false">skip_alignment</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Non-default alignment branches (upstream: --aligner / --skip_alignment /<br>--rsem_index / --hisat2_index / --salmon_index / --bbsplit_index /<br>--sortmerna_index). Empty index keys are auto-built by when-gated builder<br>rules in modules/alignment.oxoflow / quantification.oxoflow from the<br>shipped fixtures when the branch is enabled (like star_index); a<br>user-supplied path is symlinked in instead.<br><span class="ox-param-usedby">used by <code>61</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_bbsplit = value" data-copy="skip_bbsplit = true">skip_bbsplit</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_bbsplit = value" aria-label="Copy skip_bbsplit = true to clipboard" data-copy="skip_bbsplit = true">skip_bbsplit</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>true</code></td>
 <td class="ox-p-desc">BBSplit genome filtering (upstream: --skip_bbsplit / --bbsplit_fasta_list /<br>--save_bbsplit_reads; same defaults). bbsplit_fasta_list is a 2-column CSV<br>(short_name,path_to_fasta) plus the primary genome in config.fasta.<br><span class="ox-param-usedby">used by <code>20</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_bigwig = value" data-copy="skip_bigwig = false">skip_bigwig</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_bigwig = value" aria-label="Copy skip_bigwig = false to clipboard" data-copy="skip_bigwig = false">skip_bigwig</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Skip options (upstream: --skip_fastqc / --skip_linting / --skip_trimming /<br>--skip_markduplicates / --skip_qc / --skip_bigwig). Same defaults as<br>upstream. NOTE: skip_trimming=true and skip_markduplicates=true break the<br>downstream chain (trimmed reads / markdup BAM are inputs of later rules);<br>unlike upstream there is no per-branch rewire, see README fidelity table.<br><span class="ox-param-usedby">used by <code>10</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_deseq2_qc = value" data-copy="skip_deseq2_qc = false">skip_deseq2_qc</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_deseq2_qc = value" aria-label="Copy skip_deseq2_qc = false to clipboard" data-copy="skip_deseq2_qc = false">skip_deseq2_qc</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">DESeq2 sample-level QC (PCA / sample distances / size factors; upstream<br>default path, runs on salmon.merged.gene_counts_length_scaled.tsv).<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_fastqc = value" data-copy="skip_fastqc = false">skip_fastqc</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_fastqc = value" aria-label="Copy skip_fastqc = false to clipboard" data-copy="skip_fastqc = false">skip_fastqc</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Skip options (upstream: --skip_fastqc / --skip_linting / --skip_trimming /<br>--skip_markduplicates / --skip_qc / --skip_bigwig). Same defaults as<br>upstream. NOTE: skip_trimming=true and skip_markduplicates=true break the<br>downstream chain (trimmed reads / markdup BAM are inputs of later rules);<br>unlike upstream there is no per-branch rewire, see README fidelity table.<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_linting = value" data-copy="skip_linting = false">skip_linting</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_linting = value" aria-label="Copy skip_linting = false to clipboard" data-copy="skip_linting = false">skip_linting</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Skip options (upstream: --skip_fastqc / --skip_linting / --skip_trimming /<br>--skip_markduplicates / --skip_qc / --skip_bigwig). Same defaults as<br>upstream. NOTE: skip_trimming=true and skip_markduplicates=true break the<br>downstream chain (trimmed reads / markdup BAM are inputs of later rules);<br>unlike upstream there is no per-branch rewire, see README fidelity table.<br><span class="ox-param-usedby">used by <code>5</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_markduplicates = value" data-copy="skip_markduplicates = false">skip_markduplicates</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_markduplicates = value" aria-label="Copy skip_markduplicates = false to clipboard" data-copy="skip_markduplicates = false">skip_markduplicates</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Skip options (upstream: --skip_fastqc / --skip_linting / --skip_trimming /<br>--skip_markduplicates / --skip_qc / --skip_bigwig). Same defaults as<br>upstream. NOTE: skip_trimming=true and skip_markduplicates=true break the<br>downstream chain (trimmed reads / markdup BAM are inputs of later rules);<br>unlike upstream there is no per-branch rewire, see README fidelity table.<br><span class="ox-param-usedby">used by <code>5</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_pseudo_alignment = value" data-copy="skip_pseudo_alignment = false">skip_pseudo_alignment</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_pseudo_alignment = value" aria-label="Copy skip_pseudo_alignment = false to clipboard" data-copy="skip_pseudo_alignment = false">skip_pseudo_alignment</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Pseudo-alignment (upstream: --pseudo_aligner, &#x27;salmon&#x27; or &#x27;kallisto&#x27;;<br>default null = alignment-mode Salmon only). Both aligners are ported; the<br>index builders are when-gated on this key (salmon_index / kallisto_index<br>short-circuit with a user-supplied path). pseudo_aligner_kmer_size is the<br>upstream KALLISTO_INDEX -k default (31).<br><span class="ox-param-usedby">used by <code>15</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_qc = value" data-copy="skip_qc = false">skip_qc</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_qc = value" aria-label="Copy skip_qc = false to clipboard" data-copy="skip_qc = false">skip_qc</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Skip options (upstream: --skip_fastqc / --skip_linting / --skip_trimming /<br>--skip_markduplicates / --skip_qc / --skip_bigwig). Same defaults as<br>upstream. NOTE: skip_trimming=true and skip_markduplicates=true break the<br>downstream chain (trimmed reads / markdup BAM are inputs of later rules);<br>unlike upstream there is no per-branch rewire, see README fidelity table.<br><span class="ox-param-usedby">used by <code>16</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_quantification_merge = value" data-copy="skip_quantification_merge = false">skip_quantification_merge</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_quantification_merge = value" aria-label="Copy skip_quantification_merge = false to clipboard" data-copy="skip_quantification_merge = false">skip_quantification_merge</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Cross-sample tximport merge + SummarizedExperiment RDS objects.<br><span class="ox-param-usedby">used by <code>10</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_stringtie = value" data-copy="skip_stringtie = false">skip_stringtie</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_stringtie = value" aria-label="Copy skip_stringtie = false to clipboard" data-copy="skip_stringtie = false">skip_stringtie</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">StringTie reference-guided assembly/quantification (-G gtf, -e, ballgown).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_trimming = value" data-copy="skip_trimming = false">skip_trimming</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_trimming = value" aria-label="Copy skip_trimming = false to clipboard" data-copy="skip_trimming = false">skip_trimming</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Skip options (upstream: --skip_fastqc / --skip_linting / --skip_trimming /<br>--skip_markduplicates / --skip_qc / --skip_bigwig). Same defaults as<br>upstream. NOTE: skip_trimming=true and skip_markduplicates=true break the<br>downstream chain (trimmed reads / markdup BAM are inputs of later rules);<br>unlike upstream there is no per-branch rewire, see README fidelity table.<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_umi_extract = value" data-copy="skip_umi_extract = false">skip_umi_extract</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_umi_extract = value" aria-label="Copy skip_umi_extract = false to clipboard" data-copy="skip_umi_extract = false">skip_umi_extract</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">UMI handling (upstream: --with_umi / --skip_umi_extract / --umi_dedup_tool /<br>--umitools_* / --umi_discard_read / --save_umi_intermeds; same defaults).<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sortmerna_index = value" data-copy="sortmerna_index = ">sortmerna_index</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sortmerna_index = value" aria-label="Copy sortmerna_index =  to clipboard" data-copy="sortmerna_index = ">sortmerna_index</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">Non-default alignment branches (upstream: --aligner / --skip_alignment /<br>--rsem_index / --hisat2_index / --salmon_index / --bbsplit_index /<br>--sortmerna_index). Empty index keys are auto-built by when-gated builder<br>rules in modules/alignment.oxoflow / quantification.oxoflow from the<br>shipped fixtures when the branch is enabled (like star_index); a<br>user-supplied path is symlinked in instead.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy star_index = value" data-copy="star_index = test/fixtures/reference/star_index">star_index</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy star_index = value" aria-label="Copy star_index = test/fixtures/reference/star_index to clipboard" data-copy="star_index = test/fixtures/reference/star_index">star_index</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/reference/star_index</code></td>
 <td class="ox-p-desc">Reference artifacts (upstream: --fasta / --gtf / --gene_bed / --chrom_sizes<br>/ --transcript_fasta / STAR index). fasta and gtf are always inputs; the<br>other three are inputs by default but are DERIVED from fasta+gtf when the<br>key is empty (modules/prepare_genome.oxoflow mirrors upstream PREPARE_GENOME:<br>gene_bed via ea-utils gtf2bed, chrom_sizes via samtools faidx, transcript_fasta<br>via RSEM). The STAR index is an input (auto-built from the shipped fixture<br>genome by the [[references]] builder below when SAindex is missing).<br><span class="ox-param-usedby">used by <code>8</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy stranded_threshold = value" data-copy="stranded_threshold = 0.8">stranded_threshold</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy stranded_threshold = value" aria-label="Copy stranded_threshold = 0.8 to clipboard" data-copy="stranded_threshold = 0.8">stranded_threshold</button></td>
 <td class="ox-p-t"><code>float</code></td>
 <td class="ox-p-d"><code>0.8</code></td>
 <td class="ox-p-desc">Thresholds (upstream params with the same defaults).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy strandedness = value" data-copy="strandedness = unstranded">strandedness</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy strandedness = value" aria-label="Copy strandedness = unstranded to clipboard" data-copy="strandedness = unstranded">strandedness</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>unstranded</code></td>
 <td class="ox-p-desc">Library strandedness. Upstream reads this per-sample from the samplesheet<br>(&#x27;auto&#x27; supported); the port is pipeline-level and supports the three<br>explicit values only. Used by featureCounts (-s), Qualimap (-p), dupRadar<br>and the forward/reverse bigWig gates.<br><span class="ox-param-usedby">used by <code>28</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy transcript_fasta = value" data-copy="transcript_fasta = test/fixtures/reference/transcripts.fa">transcript_fasta</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy transcript_fasta = value" aria-label="Copy transcript_fasta = test/fixtures/reference/transcripts.fa to clipboard" data-copy="transcript_fasta = test/fixtures/reference/transcripts.fa">transcript_fasta</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/reference/transcripts.fa</code></td>
 <td class="ox-p-desc">Reference artifacts (upstream: --fasta / --gtf / --gene_bed / --chrom_sizes<br>/ --transcript_fasta / STAR index). fasta and gtf are always inputs; the<br>other three are inputs by default but are DERIVED from fasta+gtf when the<br>key is empty (modules/prepare_genome.oxoflow mirrors upstream PREPARE_GENOME:<br>gene_bed via ea-utils gtf2bed, chrom_sizes via samtools faidx, transcript_fasta<br>via RSEM). The STAR index is an input (auto-built from the shipped fixture<br>genome by the [[references]] builder below when SAindex is missing).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy umi_dedup_tool = value" data-copy="umi_dedup_tool = umitools">umi_dedup_tool</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy umi_dedup_tool = value" aria-label="Copy umi_dedup_tool = umitools to clipboard" data-copy="umi_dedup_tool = umitools">umi_dedup_tool</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>umitools</code></td>
 <td class="ox-p-desc">UMI handling (upstream: --with_umi / --skip_umi_extract / --umi_dedup_tool /<br>--umitools_* / --umi_discard_read / --save_umi_intermeds; same defaults).<br><span class="ox-param-usedby">used by <code>14</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy umi_discard_read = value" data-copy="umi_discard_read = 0">umi_discard_read</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy umi_discard_read = value" aria-label="Copy umi_discard_read = 0 to clipboard" data-copy="umi_discard_read = 0">umi_discard_read</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>0</code></td>
 <td class="ox-p-desc">Empty = no --umi-separator flag (upstream default null).<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy umitools_dedup_primary_only = value" data-copy="umitools_dedup_primary_only = false">umitools_dedup_primary_only</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy umitools_dedup_primary_only = value" aria-label="Copy umitools_dedup_primary_only = false to clipboard" data-copy="umitools_dedup_primary_only = false">umitools_dedup_primary_only</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">UMI handling (upstream: --with_umi / --skip_umi_extract / --umi_dedup_tool /<br>--umitools_* / --umi_discard_read / --save_umi_intermeds; same defaults).<br><span class="ox-param-usedby">used by <code>12</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy umitools_dedup_stats = value" data-copy="umitools_dedup_stats = false">umitools_dedup_stats</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy umitools_dedup_stats = value" aria-label="Copy umitools_dedup_stats = false to clipboard" data-copy="umitools_dedup_stats = false">umitools_dedup_stats</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">UMI handling (upstream: --with_umi / --skip_umi_extract / --umi_dedup_tool /<br>--umitools_* / --umi_discard_read / --save_umi_intermeds; same defaults).<br><span class="ox-param-usedby">used by <code>8</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy umitools_grouping_method = value" data-copy="umitools_grouping_method = directional">umitools_grouping_method</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy umitools_grouping_method = value" aria-label="Copy umitools_grouping_method = directional to clipboard" data-copy="umitools_grouping_method = directional">umitools_grouping_method</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>directional</code></td>
 <td class="ox-p-desc">UMI handling (upstream: --with_umi / --skip_umi_extract / --umi_dedup_tool /<br>--umitools_* / --umi_discard_read / --save_umi_intermeds; same defaults).<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy umitools_umi_separator = value" data-copy="umitools_umi_separator = ">umitools_umi_separator</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy umitools_umi_separator = value" aria-label="Copy umitools_umi_separator =  to clipboard" data-copy="umitools_umi_separator = ">umitools_umi_separator</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">Empty = no --umi-separator flag (upstream default null).<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy unstranded_threshold = value" data-copy="unstranded_threshold = 0.1">unstranded_threshold</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy unstranded_threshold = value" aria-label="Copy unstranded_threshold = 0.1 to clipboard" data-copy="unstranded_threshold = 0.1">unstranded_threshold</button></td>
 <td class="ox-p-t"><code>float</code></td>
 <td class="ox-p-d"><code>0.1</code></td>
 <td class="ox-p-desc">Thresholds (upstream params with the same defaults).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy with_umi = value" data-copy="with_umi = false">with_umi</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy with_umi = value" aria-label="Copy with_umi = false to clipboard" data-copy="with_umi = false">with_umi</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">UMI handling (upstream: --with_umi / --skip_umi_extract / --umi_dedup_tool /<br>--umitools_* / --umi_discard_read / --save_umi_intermeds; same defaults).<br><span class="ox-param-usedby">used by <code>38</code> rules</span></td>
@@ -718,10 +719,16 @@ directories symlinked; gtf, gff, fasta, additional_fasta and
 transcript_fasta accept plain or `.gz` paths). The contaminant-screening
 `unmapped` input mode is not ported (see fidelity row 30).
 
+<details class="ox-evidence" markdown="1"><summary>Verification evidence</summary>
+
+161 rules across the default star_salmon path + gated branches: rRNA-removal variants (bbsplit / sortmerna / bowtie2 / ribodetector), UMI, pseudo-alignment (salmon/kallisto), RSEM/HISAT2/bowtie2_salmon, prepare_genome builders, and the contaminant module (contaminant::kraken2/bracken + sylph/sylphtax with seqkit QC) — the latter on when config.contaminant_screening is set, off by default. The 2026-11-20/21 re-port to upstream 3.28.0 is validate/lint/dry-run green in CI under the deterministic engine pin v0.21.1: 0 errors, 253 warnings accepted by the repo gate policy (test/run.sh: `lint (warnings are acceptable, errors are not)`), 2771 dry-run plan lines, DAG/ribo/contaminant suite assertions PASS (0.31.0-era builds prune the MultiQC chain — engine-side regression, follow-up filed; hence the pin). The historical live-verified bench runs (engine 0.15.0, 2026-08-27) predate the 3.26.0→3.28.0 re-ports, so the badge rests at Verified per the ratings policy until the community test bench re-confirms end-to-end.
+
+</details>
+
 ## Links
 
 - Repository: [oxo-flow-rnaseq](https://github.com/oxo-flow-community/oxo-flow-rnaseq)
 - Upstream: [nf-core/rnaseq](https://github.com/nf-core/rnaseq) @ `3.28.0`
 - License: Apache-2.0 (this workflow) · MIT (upstream)
 
-Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 · last catalog sync 2026-11-20. See the repository's NOTICE for full attribution.

@@ -94,139 +94,139 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-mixscape
 <thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
 <tbody>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy annotation = value" data-copy="annotation = test/fixtures/annotation.csv">annotation</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy annotation = value" aria-label="Copy annotation = test/fixtures/annotation.csv to clipboard" data-copy="annotation = test/fixtures/annotation.csv">annotation</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/annotation.csv</code></td>
 <td class="ox-p-desc">GENERAL<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy antibody_capture = value" data-copy="antibody_capture = ">antibody_capture</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy antibody_capture = value" aria-label="Copy antibody_capture =  to clipboard" data-copy="antibody_capture = ">antibody_capture</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">VISUALIZATION<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy assay = value" data-copy="assay = SCT">assay</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy assay = value" aria-label="Copy assay = SCT to clipboard" data-copy="assay = SCT">assay</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>SCT</code></td>
 <td class="ox-p-desc">assay to analyse (&quot;SCT&quot; or &quot;RNA&quot;) — upstream default &quot;SCT&quot;<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cps_split_by_col = value" data-copy="cps_split_by_col = ">cps_split_by_col</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cps_split_by_col = value" aria-label="Copy cps_split_by_col =  to clipboard" data-copy="cps_split_by_col = ">cps_split_by_col</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">CalcPerturbSig (upstream nested keys flattened; values identical)<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy data_dir = value" data-copy="data_dir = test/fixtures/data">data_dir</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy data_dir = value" aria-label="Copy data_dir = test/fixtures/data to clipboard" data-copy="data_dir = test/fixtures/data">data_dir</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/data</code></td>
 <td class="ox-p-desc">per-sample Seurat .rds inputs: {data_dir}/{sample}.rds<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fine_mode = value" data-copy="fine_mode = FALSE">fine_mode</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fine_mode = value" aria-label="Copy fine_mode = FALSE to clipboard" data-copy="fine_mode = FALSE">fine_mode</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>FALSE</code></td>
 <td class="ox-p-desc">RunMixscape (flattened)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gene_col = value" data-copy="gene_col = KOcall">gene_col</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gene_col = value" aria-label="Copy gene_col = KOcall to clipboard" data-copy="gene_col = KOcall">gene_col</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>KOcall</code></td>
 <td class="ox-p-desc">CalcPerturbSig (upstream nested keys flattened; values identical)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy grna_col = value" data-copy="grna_col = gRNAcall">grna_col</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy grna_col = value" aria-label="Copy grna_col = gRNAcall to clipboard" data-copy="grna_col = gRNAcall">grna_col</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>gRNAcall</code></td>
 <td class="ox-p-desc">CalcPerturbSig (upstream nested keys flattened; values identical)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy grna_split_symbol = value" data-copy="grna_split_symbol = -">grna_split_symbol</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy grna_split_symbol = value" aria-label="Copy grna_split_symbol = - to clipboard" data-copy="grna_split_symbol = -">grna_split_symbol</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>-</code></td>
 <td class="ox-p-desc">MIXSCAPE<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy lda_npcs = value" data-copy="lda_npcs = 10">lda_npcs</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy lda_npcs = value" aria-label="Copy lda_npcs = 10 to clipboard" data-copy="lda_npcs = 10">lda_npcs</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>10</code></td>
 <td class="ox-p-desc">LDA<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy lfc_th = value" data-copy="lfc_th = 0.1">lfc_th</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy lfc_th = value" aria-label="Copy lfc_th = 0.1 to clipboard" data-copy="lfc_th = 0.1">lfc_th</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>0.1</code></td>
 <td class="ox-p-desc">RunMixscape (flattened)<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mem = value" data-copy="mem = 32000">mem</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mem = value" aria-label="Copy mem = 32000 to clipboard" data-copy="mem = 32000">mem</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>32000</code></td>
 <td class="ox-p-desc">RESOURCES (upstream config/config.yaml)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy min_cells = value" data-copy="min_cells = 5">min_cells</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy min_cells = value" aria-label="Copy min_cells = 5 to clipboard" data-copy="min_cells = 5">min_cells</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>5</code></td>
 <td class="ox-p-desc">RunMixscape (flattened)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy min_de_genes = value" data-copy="min_de_genes = 5">min_de_genes</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy min_de_genes = value" aria-label="Copy min_de_genes = 5 to clipboard" data-copy="min_de_genes = 5">min_de_genes</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>5</code></td>
 <td class="ox-p-desc">RunMixscape (flattened)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mixscape_split_by_col = value" data-copy="mixscape_split_by_col = ">mixscape_split_by_col</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mixscape_split_by_col = value" aria-label="Copy mixscape_split_by_col =  to clipboard" data-copy="mixscape_split_by_col = ">mixscape_split_by_col</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">RunMixscape (flattened)<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy n_neighbors = value" data-copy="n_neighbors = 30">n_neighbors</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy n_neighbors = value" aria-label="Copy n_neighbors = 30 to clipboard" data-copy="n_neighbors = 30">n_neighbors</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>30</code></td>
 <td class="ox-p-desc">CalcPerturbSig (upstream nested keys flattened; values identical)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ndims = value" data-copy="ndims = 40">ndims</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ndims = value" aria-label="Copy ndims = 40 to clipboard" data-copy="ndims = 40">ndims</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>40</code></td>
 <td class="ox-p-desc">CalcPerturbSig (upstream nested keys flattened; values identical)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy nt_term = value" data-copy="nt_term = NonTargeting">nt_term</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy nt_term = value" aria-label="Copy nt_term = NonTargeting to clipboard" data-copy="nt_term = NonTargeting">nt_term</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>NonTargeting</code></td>
 <td class="ox-p-desc">CalcPerturbSig (upstream nested keys flattened; values identical)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy project_name = value" data-copy="project_name = myCROPseq">project_name</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy project_name = value" aria-label="Copy project_name = myCROPseq to clipboard" data-copy="project_name = myCROPseq">project_name</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>myCROPseq</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy prtb_type = value" data-copy="prtb_type = KO">prtb_type</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy prtb_type = value" aria-label="Copy prtb_type = KO to clipboard" data-copy="prtb_type = KO">prtb_type</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>KO</code></td>
 <td class="ox-p-desc">RunMixscape (flattened)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy result_path = value" data-copy="result_path = results">result_path</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy result_path = value" aria-label="Copy result_path = results to clipboard" data-copy="result_path = results">result_path</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>results</code></td>
 <td class="ox-p-desc">upstream result_path; results land under result_path/mixscape_seurat<br><span class="ox-param-usedby">used by <code>7</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy threads = value" data-copy="threads = 1">threads</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy threads = value" aria-label="Copy threads = 1 to clipboard" data-copy="threads = 1">threads</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>1</code></td>
 <td class="ox-p-desc">upstream threads; mixscape rule runs 8x<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy variable_features_only = value" data-copy="variable_features_only = 0">variable_features_only</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy variable_features_only = value" aria-label="Copy variable_features_only = 0 to clipboard" data-copy="variable_features_only = 0">variable_features_only</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>0</code></td>
 <td class="ox-p-desc">(objects carry SCTransform normalization; the bundled fixtures<br>are generated that way via make_fixtures.R)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
@@ -321,4 +321,4 @@ was dropped.
 - Upstream: [epigen/mixscape_seurat](https://github.com/epigen/mixscape_seurat) @ `v2.0.3`
 - License: Apache-2.0 (this workflow) · MIT (upstream)
 
-Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 — this entry may lag behind upstream releases. See the repository's NOTICE for full attribution.

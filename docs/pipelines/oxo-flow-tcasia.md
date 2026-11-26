@@ -95,175 +95,175 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-tcasia
 <thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
 <tbody>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy align_out_dir = value" data-copy="align_out_dir = results/alignment">align_out_dir</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy align_out_dir = value" aria-label="Copy align_out_dir = results/alignment to clipboard" data-copy="align_out_dir = results/alignment">align_out_dir</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>results/alignment</code></td>
 <td class="ox-p-desc">01_alignment (upstream config.yml)<br><span class="ox-param-usedby">used by <code>5</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy aligned_dir = value" data-copy="aligned_dir = results/alignment/aligned">aligned_dir</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy aligned_dir = value" aria-label="Copy aligned_dir = results/alignment/aligned to clipboard" data-copy="aligned_dir = results/alignment/aligned">aligned_dir</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>results/alignment/aligned</code></td>
 <td class="ox-p-desc">upstream: 01 output_dir/aligned == 02 bam_dir<br><span class="ox-param-usedby">used by <code>7</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy as_out_dir = value" data-copy="as_out_dir = results/as_calling">as_out_dir</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy as_out_dir = value" aria-label="Copy as_out_dir = results/as_calling to clipboard" data-copy="as_out_dir = results/as_calling">as_out_dir</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>results/as_calling</code></td>
 <td class="ox-p-desc">02_as_calling (upstream config.yml)<br><span class="ox-param-usedby">used by <code>12</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fastp_min_length = value" data-copy="fastp_min_length = 36">fastp_min_length</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fastp_min_length = value" aria-label="Copy fastp_min_length = 36 to clipboard" data-copy="fastp_min_length = 36">fastp_min_length</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>36</code></td>
 <td class="ox-p-desc">fastp (upstream fastp.*)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fastp_n_base_limit = value" data-copy="fastp_n_base_limit = 5">fastp_n_base_limit</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fastp_n_base_limit = value" aria-label="Copy fastp_n_base_limit = 5 to clipboard" data-copy="fastp_n_base_limit = 5">fastp_n_base_limit</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>5</code></td>
 <td class="ox-p-desc">fastp (upstream fastp.*)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fastp_qualified_quality_phred = value" data-copy="fastp_qualified_quality_phred = 20">fastp_qualified_quality_phred</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fastp_qualified_quality_phred = value" aria-label="Copy fastp_qualified_quality_phred = 20 to clipboard" data-copy="fastp_qualified_quality_phred = 20">fastp_qualified_quality_phred</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>20</code></td>
 <td class="ox-p-desc">fastp (upstream fastp.*)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fastp_unqualified_percent_limit = value" data-copy="fastp_unqualified_percent_limit = 40">fastp_unqualified_percent_limit</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fastp_unqualified_percent_limit = value" aria-label="Copy fastp_unqualified_percent_limit = 40 to clipboard" data-copy="fastp_unqualified_percent_limit = 40">fastp_unqualified_percent_limit</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>40</code></td>
 <td class="ox-p-desc">fastp (upstream fastp.*)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gff = value" data-copy="gff = test/fixtures/reference/genes.gff3">gff</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gff = value" aria-label="Copy gff = test/fixtures/reference/genes.gff3 to clipboard" data-copy="gff = test/fixtures/reference/genes.gff3">gff</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/reference/genes.gff3</code></td>
 <td class="ox-p-desc">upstream: GFF (tiny synthetic)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy majiq_genome = value" data-copy="majiq_genome = hg38">majiq_genome</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy majiq_genome = value" aria-label="Copy majiq_genome = hg38 to clipboard" data-copy="majiq_genome = hg38">majiq_genome</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>hg38</code></td>
 <td class="ox-p-desc">majiq tool parameter (upstream --majiq_genome) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy majiq_license = value" data-copy="majiq_license = test/fixtures/reference/majiq_license.lic">majiq_license</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy majiq_license = value" aria-label="Copy majiq_license = test/fixtures/reference/majiq_license.lic to clipboard" data-copy="majiq_license = test/fixtures/reference/majiq_license.lic">majiq_license</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/reference/majiq_license.lic</code></td>
 <td class="ox-p-desc">MAJIQ requires the upstream academic license file — place it at<br>test/fixtures/reference/majiq_license.lic (obtain from MAJIQ) and set<br>run_majiq = true. Upstream fails hard without the license; the port<br>gates the whole MAJIQ chain on this flag instead (documented in the<br>README fidelity table).<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy majiq_minreads = value" data-copy="majiq_minreads = 10">majiq_minreads</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy majiq_minreads = value" aria-label="Copy majiq_minreads = 10 to clipboard" data-copy="majiq_minreads = 10">majiq_minreads</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>10</code></td>
 <td class="ox-p-desc">majiq tool parameter (upstream --majiq_minreads) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy majiq_strandness = value" data-copy="majiq_strandness = reverse">majiq_strandness</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy majiq_strandness = value" aria-label="Copy majiq_strandness = reverse to clipboard" data-copy="majiq_strandness = reverse">majiq_strandness</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>reverse</code></td>
 <td class="ox-p-desc">fr-firststrand -&gt; reverse | fr-secondstrand -&gt; forward | fr-unstranded -&gt; none<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy read_len = value" data-copy="read_len = 150">read_len</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy read_len = value" aria-label="Copy read_len = 150 to clipboard" data-copy="read_len = 150">read_len</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>150</code></td>
 <td class="ox-p-desc">salmon_index is auto-built below from the shipped transcripts.fa<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy reads_dir = value" data-copy="reads_dir = test/fixtures/raw">reads_dir</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy reads_dir = value" aria-label="Copy reads_dir = test/fixtures/raw to clipboard" data-copy="reads_dir = test/fixtures/raw">reads_dir</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/raw</code></td>
 <td class="ox-p-desc">point at your own fastq directory for real runs<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ref = value" data-copy="ref = test/fixtures/reference/genes.gtf">ref</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ref = value" aria-label="Copy ref = test/fixtures/reference/genes.gtf to clipboard" data-copy="ref = test/fixtures/reference/genes.gtf">ref</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/reference/genes.gtf</code></td>
 <td class="ox-p-desc">featureCounts / rMATS / SplAdder annotation (tiny synthetic; GRCh38 GTF for real runs)<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy rmats_cstat = value" data-copy="rmats_cstat = 0.0001">rmats_cstat</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy rmats_cstat = value" aria-label="Copy rmats_cstat = 0.0001 to clipboard" data-copy="rmats_cstat = 0.0001">rmats_cstat</button></td>
 <td class="ox-p-t"><code>float</code></td>
 <td class="ox-p-d"><code>0.0001</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy rmats_extra = value" data-copy="rmats_extra = ">rmats_extra</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy rmats_extra = value" aria-label="Copy rmats_extra =  to clipboard" data-copy="rmats_extra = ">rmats_extra</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_majiq = value" data-copy="run_majiq = false">run_majiq</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_majiq = value" aria-label="Copy run_majiq = false to clipboard" data-copy="run_majiq = false">run_majiq</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">MAJIQ requires the upstream academic license file — place it at<br>test/fixtures/reference/majiq_license.lic (obtain from MAJIQ) and set<br>run_majiq = true. Upstream fails hard without the license; the port<br>gates the whole MAJIQ chain on this flag instead (documented in the<br>README fidelity table).<br><span class="ox-param-usedby">used by <code>5</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy salmon_index = value" data-copy="salmon_index = test/fixtures/reference/salmon_index">salmon_index</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy salmon_index = value" aria-label="Copy salmon_index = test/fixtures/reference/salmon_index to clipboard" data-copy="salmon_index = test/fixtures/reference/salmon_index">salmon_index</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/reference/salmon_index</code></td>
 <td class="ox-p-desc">salmon_index is auto-built below from the shipped transcripts.fa<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy salmon_library_type = value" data-copy="salmon_library_type = ISR">salmon_library_type</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy salmon_library_type = value" aria-label="Copy salmon_library_type = ISR to clipboard" data-copy="salmon_library_type = ISR">salmon_library_type</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>ISR</code></td>
 <td class="ox-p-desc">Derived from <code>strandness</code> by upstream tcasia_config.py; kept explicit here:<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy spladder_confidence = value" data-copy="spladder_confidence = 3">spladder_confidence</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy spladder_confidence = value" aria-label="Copy spladder_confidence = 3 to clipboard" data-copy="spladder_confidence = 3">spladder_confidence</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>3</code></td>
 <td class="ox-p-desc">spladder tool parameter (upstream --spladder_confidence) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy spladder_event_types = value" data-copy="spladder_event_types = exon_skip,intron_retention,alt_3prime,alt_5prime,mutex_exons">spladder_event_types</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy spladder_event_types = value" aria-label="Copy spladder_event_types = exon_skip,intron_retention,alt_3prime,alt_5prime,mutex_exons to clipboard" data-copy="spladder_event_types = exon_skip,intron_retention,alt_3prime,alt_5prime,mutex_exons">spladder_event_types</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>exon_skip,intron_retention,alt_3prime,alt_5prime,mutex_exons</code></td>
 <td class="ox-p-desc">spladder tool parameter (upstream --spladder_event_types) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy spladder_merge_strategy = value" data-copy="spladder_merge_strategy = single">spladder_merge_strategy</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy spladder_merge_strategy = value" aria-label="Copy spladder_merge_strategy = single to clipboard" data-copy="spladder_merge_strategy = single">spladder_merge_strategy</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>single</code></td>
 <td class="ox-p-desc">spladder tool parameter (upstream --spladder_merge_strategy) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy star_index_dir = value" data-copy="star_index_dir = test/fixtures/reference/STAR_index">star_index_dir</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy star_index_dir = value" aria-label="Copy star_index_dir = test/fixtures/reference/STAR_index to clipboard" data-copy="star_index_dir = test/fixtures/reference/STAR_index">star_index_dir</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/reference/STAR_index</code></td>
 <td class="ox-p-desc">star_index_dir is auto-built below from test/fixtures/reference (tiny<br>synthetic genome) — point it at a real GRCh38 STAR index for real runs.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy star_limit_bam_sort_ram = value" data-copy="star_limit_bam_sort_ram = 0">star_limit_bam_sort_ram</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy star_limit_bam_sort_ram = value" aria-label="Copy star_limit_bam_sort_ram = 0 to clipboard" data-copy="star_limit_bam_sort_ram = 0">star_limit_bam_sort_ram</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>0</code></td>
 <td class="ox-p-desc">0 = auto: the machine-effective memory (clamped declared value)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy star_out_filter_mismatch_nmax = value" data-copy="star_out_filter_mismatch_nmax = 15">star_out_filter_mismatch_nmax</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy star_out_filter_mismatch_nmax = value" aria-label="Copy star_out_filter_mismatch_nmax = 15 to clipboard" data-copy="star_out_filter_mismatch_nmax = 15">star_out_filter_mismatch_nmax</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>15</code></td>
 <td class="ox-p-desc">STAR (upstream star.*)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy strandness = value" data-copy="strandness = fr-firststrand">strandness</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy strandness = value" aria-label="Copy strandness = fr-firststrand to clipboard" data-copy="strandness = fr-firststrand">strandness</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>fr-firststrand</code></td>
 <td class="ox-p-desc">shared<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy suppa2_events = value" data-copy="suppa2_events = test/fixtures/reference/events.ioe">suppa2_events</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy suppa2_events = value" aria-label="Copy suppa2_events = test/fixtures/reference/events.ioe to clipboard" data-copy="suppa2_events = test/fixtures/reference/events.ioe">suppa2_events</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/reference/events.ioe</code></td>
 <td class="ox-p-desc">suppa2_events is auto-built below from the shipped GTF (SUPPA2 generateEvents)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy suppa2_min_tpm = value" data-copy="suppa2_min_tpm = 1">suppa2_min_tpm</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy suppa2_min_tpm = value" aria-label="Copy suppa2_min_tpm = 1 to clipboard" data-copy="suppa2_min_tpm = 1">suppa2_min_tpm</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>1</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
@@ -361,4 +361,4 @@ Scope: the **default-parameters main execution path** (upstream `rule all` of bo
 - Upstream: [OncoHarmony-Network/TCASIA_pipeline](https://github.com/OncoHarmony-Network/TCASIA_pipeline) @ `main@06564ff1`
 - License: Apache-2.0 (this workflow) · MIT (upstream)
 
-Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 — this entry may lag behind upstream releases. See the repository's NOTICE for full attribution.
