@@ -338,6 +338,8 @@ def glance_panel(p: dict) -> str:
         rows += [
             ("Pinned version", f'<code>{_esc(pin)}</code>', ""),
         ]
+        if p.get("updated"):
+            rows += [("Last verified", p["updated"], "")]
     rows += [
         ("Added" if p.get("origin") == "original" else "Ported", p.get("created", "2026-08-15"), ""),
         ("License", p.get("license", "Apache-2.0"), ""),
@@ -725,6 +727,20 @@ def make_page(p: dict, configs: dict) -> str:
         ]
     if fidelity:
         parts += ["", "## Fidelity", "", fidelity]
+    cov = (p.get("coverage") or "").strip()
+    if cov and cov not in ("full-line", "default-path"):
+        # Long-form coverage (why a ★ was pulled down from ✔ after a re-port,
+        # what evidence stands) was written into the registry but rendered
+        # nowhere — surface it as a collapsed evidence card. Raw <details> +
+        # md_in_html is this repo's collapsible idiom (no admonition ext).
+        parts += [
+            "",
+            '<details class="ox-evidence" markdown="1"><summary>Verification evidence</summary>',
+            "",
+            cov,
+            "",
+            "</details>",
+        ]
     parts += [
         "",
         "## Links",
@@ -739,8 +755,9 @@ def make_page(p: dict, configs: dict) -> str:
             + (f" · {p.get('upstream_license') or src.get('license')} (upstream)" if src else ""),
             "",
             "Created on " + p.get("created", "2026-08-15")
-            + " — this port may lag behind upstream releases. See the "
-            "repository's NOTICE for full attribution.",
+            + (f" · last catalog sync {p['updated']}." if p.get("updated")
+               else " — this entry may lag behind upstream releases.")
+            + " See the repository's NOTICE for full attribution.",
         ]
     return "\n".join(parts) + "\n"
 

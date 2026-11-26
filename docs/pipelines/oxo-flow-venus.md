@@ -168,4 +168,4 @@ Native oxo-flow design — no upstream port: steps implemented by this workflow 
 - Upstream: [WangLabCSU/oxo-flow-venus](https://github.com/WangLabCSU/oxo-flow-venus) @ `v0.5.0`
 - License: Apache-2.0 (this workflow) · Apache-2.0 (upstream)
 
-Created on 2026-05-19 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-05-19 — this entry may lag behind upstream releases. See the repository's NOTICE for full attribution.

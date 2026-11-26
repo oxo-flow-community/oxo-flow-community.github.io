@@ -467,10 +467,16 @@ are unreachable in upstream's own default DAG (no pipeline gate or consumer
 wires them in) and are therefore not ported; `diamond` survives only inside
 the eggnog DB build (`create_dbs.py -m diamond`).
 
+<details class="ox-evidence" markdown="1"><summary>Verification evidence</summary>
+
+default-path + branch module (42 rules, gated off by default); default path + tier-1 (seqfu/mash/fastani/roary) + tier-2 (checkm/amrfinderplus) branches live-verified on bioinfo-wsx (engine 0.14.1)
+
+</details>
+
 ## Links
 
 - Repository: [oxo-flow-bgcflow](https://github.com/oxo-flow-community/oxo-flow-bgcflow)
 - Upstream: [NBChub/bgcflow](https://github.com/NBChub/bgcflow) @ `v1.1.2`
 - License: Apache-2.0 (this workflow) · MIT (upstream)
 
-Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 — this entry may lag behind upstream releases. See the repository's NOTICE for full attribution.

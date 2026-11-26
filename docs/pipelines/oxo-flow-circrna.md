@@ -151,4 +151,4 @@ Native oxo-flow design — no upstream port: steps implemented by this workflow 
 - Upstream: [WangLabCSU/oxo-flow-circrna](https://github.com/WangLabCSU/oxo-flow-circrna) @ `main`
 - License: Apache-2.0 (this workflow) · Apache-2.0 (upstream)
 
-Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 — this entry may lag behind upstream releases. See the repository's NOTICE for full attribution.

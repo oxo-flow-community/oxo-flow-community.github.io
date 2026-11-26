@@ -21,6 +21,7 @@ title: "Variant calling for non-model organisms: trimming, alignment, per-sample
 <div class="ox-kv"><span class="k">Domain</span><span class="v">genomics</span></div>
 <div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/harvardinformatics/snparcher">harvardinformatics/snparcher</a></span></div>
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>v2.3.0</code></span></div>
+<div class="ox-kv"><span class="k">Last verified</span><span class="v">2026-11-19</span></div>
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2292.1"><code>10.48546/workflowhub.workflow.2292.1</code></a></span></div>
@@ -603,10 +604,16 @@ from bioconda/conda-forge at port time (2026-08-15). Upstream default-profile
 thread overrides (fastp 6, bwa_mem 16) are runtime knobs; the port keeps the
 rules' own declarations (4 and 8).
 
+<details class="ox-evidence" markdown="1"><summary>Verification evidence</summary>
+
+108 rules (default path + markdup / joint / callable / postprocess / qc branch modules). The 2026-11-19 re-port to upstream v2.3.0 is validate/lint/dry-run green in CI with the deterministic engine pin 1d279b59 (0 errors). The historical live-verified bench runs (on the v2.2-era port, engine 0.15.0) predate this re-port, so the badge rests at Verified per the ratings policy until the community test bench re-confirms end-to-end.
+
+</details>
+
 ## Links
 
 - Repository: [oxo-flow-snparcher](https://github.com/oxo-flow-community/oxo-flow-snparcher)
 - Upstream: [harvardinformatics/snparcher](https://github.com/harvardinformatics/snparcher) @ `v2.3.0`
 - License: Apache-2.0 (this workflow) · MIT (upstream)
 
-Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 · last catalog sync 2026-11-19. See the repository's NOTICE for full attribution.

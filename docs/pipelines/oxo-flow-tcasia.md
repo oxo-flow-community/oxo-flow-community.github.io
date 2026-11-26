@@ -361,4 +361,4 @@ Scope: the **default-parameters main execution path** (upstream `rule all` of bo
 - Upstream: [OncoHarmony-Network/TCASIA_pipeline](https://github.com/OncoHarmony-Network/TCASIA_pipeline) @ `main@06564ff1`
 - License: Apache-2.0 (this workflow) · MIT (upstream)
 
-Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 — this entry may lag behind upstream releases. See the repository's NOTICE for full attribution.

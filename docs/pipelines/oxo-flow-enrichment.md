@@ -748,4 +748,4 @@ commands are byte-identical to upstream.
 - Upstream: [epigen/enrichment_analysis](https://github.com/epigen/enrichment_analysis) @ `v3.0.1`
 - License: Apache-2.0 (this workflow) · MIT (upstream)
 
-Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 — this entry may lag behind upstream releases. See the repository's NOTICE for full attribution.

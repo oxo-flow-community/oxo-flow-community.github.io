@@ -644,10 +644,16 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - non-human genomes: supported at config level (WBcel235/mm10 parity table
   above) — the upstream rule set itself is species-agnostic.
 
+<details class="ox-evidence" markdown="1"><summary>Verification evidence</summary>
+
+single entry (upstream Snakefile form): run_type wes/wgs/rna; paired vs unpaired WES derived per pair from the sample sheet. Merged form live-verified on tx-ubuntu (PR #187 engine): wes (paired+tumor-only in one DAG), wgs (paired-only), rna (default stages). The vcf2maf/VEP chain was live-verified in the 4-entry era and runs identical commands here.
+
+</details>
+
 ## Links
 
 - Repository: [oxo-flow-clindet](https://github.com/WangLabCSU/oxo-flow-clindet)
 - Upstream: [zyllifeworld/clindet](https://github.com/zyllifeworld/clindet) @ `582a9131`
 - License: Apache-2.0 (this workflow) · MIT (upstream)
 
-Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 — this entry may lag behind upstream releases. See the repository's NOTICE for full attribution.

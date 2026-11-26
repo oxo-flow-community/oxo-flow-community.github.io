@@ -21,6 +21,7 @@ title: "WGS/WES germline and somatic variant calling"
 <div class="ox-kv"><span class="k">Domain</span><span class="v">genomics</span></div>
 <div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/nf-core/sarek">nf-core/sarek</a></span></div>
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>3.12.0</code></span></div>
+<div class="ox-kv"><span class="k">Last verified</span><span class="v">2026-11-20</span></div>
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2279.1"><code>10.48546/workflowhub.workflow.2279.1</code></a></span></div>
@@ -801,10 +802,16 @@ Deviations (all documented, nothing silently dropped):
 - **`known_indels`** is a TOML array (2 GRCh38 files); both it and
   `known_indels_tbi` must be updated together when changing references.
 
+<details class="ox-evidence" markdown="1"><summary>Verification evidence</summary>
+
+165 rules spanning the germline and somatic (paired + tumor-only) chains: Mutect2 with the force_call_alleles co-writer gates (gatk_mutect2_paired_alleles / gatk_mutect2_tumor_only_alleles), msis_scan_stage MSI scanning, freebayes/strelka/manta/svdb-tiddit/lofreq/varlociraptor fan-outs, cnvkit/ascat/controlfreec CNV chains and VEP/snpeff annotation, with gated branch modules off by default. The 2026-11-20 re-port to upstream 3.12.0 is validate/lint/dry-run green in CI at the merge commit 62b687e2 (push run) under the pinned release tarball engine oxo-flow 0.31.0 (ci.yml pins v0.31.0): ✓ main.oxoflow — 165 rules, 285 dependencies; lint Summary: 0 errors, 83 warnings, 211 info with warnings accepted by the repo gate policy (test/run.sh: `lint (warnings are acceptable, errors are not)`); the branch dry-run suites (somatic cnvkit, lofreq, varlociraptor, ascat/controlfreec/msisensor2, force_call_alleles) PASS. The earlier live-verified bench runs covered the pre-3.12.0 rule table and no longer back the badge — the re-port materially changes the rule/tool surface (165 rules, 30 tools, new Mutect2 paired/tumor-only alleles co-writer chain) — so per the ratings policy the badge rests at Verified until the community test bench re-confirms end-to-end.
+
+</details>
+
 ## Links
 
 - Repository: [oxo-flow-sarek](https://github.com/oxo-flow-community/oxo-flow-sarek)
 - Upstream: [nf-core/sarek](https://github.com/nf-core/sarek) @ `3.12.0`
 - License: Apache-2.0 (this workflow) · MIT (upstream)
 
-Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 · last catalog sync 2026-11-20. See the repository's NOTICE for full attribution.

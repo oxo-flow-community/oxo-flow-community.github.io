@@ -271,10 +271,16 @@ match the metadata file (see the repo README Usage). Upstream
 Upstream example metadata `doc/D21122.txt` (16 GSM samples, all PAIRED)
 ships as the default fixture at test/fixtures/metadata/D21122.txt.
 
+<details class="ox-evidence" markdown="1"><summary>Verification evidence</summary>
+
+full-line: paired default path + single-end branch — both live-verified on bioinfo-wsx (engine 0.15.0 with the wildcard-when fix #199): single-end 2v2 real-SRR run through DESeq2 PASS; ENCODE entry (main_encode.oxoflow) validate + dry-run verified — a live run needs pre-downloaded ENCODE FASTQs
+
+</details>
+
 ## Links
 
 - Repository: [oxo-flow-auto-sra-rnaseq-pipeline](https://github.com/oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipeline)
 - Upstream: [xuzhougeng/auto_sra_rnaseq_pipeline](https://github.com/xuzhougeng/auto_sra_rnaseq_pipeline) @ `v1.0`
 - License: Apache-2.0 (this workflow) · none (upstream)
 
-Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 — this entry may lag behind upstream releases. See the repository's NOTICE for full attribution.

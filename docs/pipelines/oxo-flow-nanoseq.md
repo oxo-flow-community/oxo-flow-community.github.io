@@ -530,10 +530,16 @@ Deviations (see README): (1) NanoLyse cannot reassign the reads channel — filt
 
 Live verification (tx-ubuntu, oxo-flow 0.15.0): default path, call_variants (medaka), structural_variant_caller (sniffles/cutesv) and the nanolyse branch PASS; cDNA/directRNA quantification tool-execution verified (mini-fixture reads lie off the annotated region — documented).
 
+<details class="ox-evidence" markdown="1"><summary>Verification evidence</summary>
+
+default DNA path + gated branches: NanoLyse, graphmap2, variant calling (medaka/deepvariant/pepper + sniffles/cutesv), BigBed, bambu/stringtie2 quantification + deseq2/dexseq, nanopolish/xpore/m6anet RNA modifications, pre-aligned BAM input. Live-verified on tx-ubuntu: default/call_variants/svcallers/nanolyse PASS; cDNA/directRNA quantification tool-execution verified (mini-fixture reads lie off the annotated region — documented).
+
+</details>
+
 ## Links
 
 - Repository: [oxo-flow-nanoseq](https://github.com/oxo-flow-community/oxo-flow-nanoseq)
 - Upstream: [nf-core/nanoseq](https://github.com/nf-core/nanoseq) @ `3.1.0`
 - License: Apache-2.0 (this workflow) · MIT (upstream)
 
-Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 — this entry may lag behind upstream releases. See the repository's NOTICE for full attribution.

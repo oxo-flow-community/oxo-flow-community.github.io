@@ -588,10 +588,16 @@ listed with reasons. `when`-gated rules carry the gate in the Notes column.
   channel to `size() > 1`; with one sample the consensus rules would
   produce degenerate output.
 
+<details class="ox-evidence" markdown="1"><summary>Verification evidence</summary>
+
+full-line: default single-end aligner=bwa path + 27 when-gated branch rules (paired-end, bowtie2/chromap/star aligners, reference prep, mito filter, consensus peaks/DESeq2, preseq/picard/ataqv/IGV/R QC) — 14/14 gate live-tests PASS on bioinfo-wsx (2026-08-26, engine 0.14.1, fixture from generate_fixtures.py)
+
+</details>
+
 ## Links
 
 - Repository: [oxo-flow-atacseq](https://github.com/oxo-flow-community/oxo-flow-atacseq)
 - Upstream: [nf-core/atacseq](https://github.com/nf-core/atacseq) @ `2.1.2`
 - License: Apache-2.0 (this workflow) · MIT (upstream)
 
-Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 — this entry may lag behind upstream releases. See the repository's NOTICE for full attribution.

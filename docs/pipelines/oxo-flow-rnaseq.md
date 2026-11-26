@@ -21,6 +21,7 @@ title: "RNA-seq: alignment, quantification and QC"
 <div class="ox-kv"><span class="k">Domain</span><span class="v">transcriptomics</span></div>
 <div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/nf-core/rnaseq">nf-core/rnaseq</a></span></div>
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>3.28.0</code></span></div>
+<div class="ox-kv"><span class="k">Last verified</span><span class="v">2026-11-20</span></div>
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2278.1"><code>10.48546/workflowhub.workflow.2278.1</code></a></span></div>
@@ -718,10 +719,16 @@ directories symlinked; gtf, gff, fasta, additional_fasta and
 transcript_fasta accept plain or `.gz` paths). The contaminant-screening
 `unmapped` input mode is not ported (see fidelity row 30).
 
+<details class="ox-evidence" markdown="1"><summary>Verification evidence</summary>
+
+161 rules across the default star_salmon path + gated branches: rRNA-removal variants (bbsplit / sortmerna / bowtie2 / ribodetector), UMI, pseudo-alignment (salmon/kallisto), RSEM/HISAT2/bowtie2_salmon, prepare_genome builders, and the contaminant module (contaminant::kraken2/bracken + sylph/sylphtax with seqkit QC) — the latter on when config.contaminant_screening is set, off by default. The 2026-11-20/21 re-port to upstream 3.28.0 is validate/lint/dry-run green in CI under the deterministic engine pin v0.21.1: 0 errors, 253 warnings accepted by the repo gate policy (test/run.sh: `lint (warnings are acceptable, errors are not)`), 2771 dry-run plan lines, DAG/ribo/contaminant suite assertions PASS (0.31.0-era builds prune the MultiQC chain — engine-side regression, follow-up filed; hence the pin). The historical live-verified bench runs (engine 0.15.0, 2026-08-27) predate the 3.26.0→3.28.0 re-ports, so the badge rests at Verified per the ratings policy until the community test bench re-confirms end-to-end.
+
+</details>
+
 ## Links
 
 - Repository: [oxo-flow-rnaseq](https://github.com/oxo-flow-community/oxo-flow-rnaseq)
 - Upstream: [nf-core/rnaseq](https://github.com/nf-core/rnaseq) @ `3.28.0`
 - License: Apache-2.0 (this workflow) · MIT (upstream)
 
-Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 · last catalog sync 2026-11-20. See the repository's NOTICE for full attribution.

@@ -21,6 +21,7 @@ title: "Fetching public sequencing data: FastQ download, metadata and sampleshee
 <div class="ox-kv"><span class="k">Domain</span><span class="v">genomics</span></div>
 <div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/nf-core/fetchngs">nf-core/fetchngs</a></span></div>
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>1.13.0</code></span></div>
+<div class="ox-kv"><span class="k">Last verified</span><span class="v">2026-11-19</span></div>
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2289.1"><code>10.48546/workflowhub.workflow.2289.1</code></a></span></div>
@@ -289,10 +290,16 @@ columns to help manual curation. The nf-core boilerplate (`versions.yml`
 collection) is covered by the engine-native export
 (`oxo-flow report --versions-yml <file> main.oxoflow`, see table).
 
+<details class="ox-evidence" markdown="1"><summary>Verification evidence</summary>
+
+17 rules (default + sra fastq-dl / aspera / sratools / fallback / dbGaP branch arms; branch-override dry-runs render in CI). The 2026-11-19 re-port to upstream 1.13.0 is validate/lint/dry-run green in CI with the pinned engine 0.31.0 (0 errors). The historical live-verified bench runs (SRA-download paths on the 1.12.0-era port) predate this re-port, so the badge rests at Verified per the ratings policy until the community test bench re-confirms end-to-end.
+
+</details>
+
 ## Links
 
 - Repository: [oxo-flow-fetchngs](https://github.com/oxo-flow-community/oxo-flow-fetchngs)
 - Upstream: [nf-core/fetchngs](https://github.com/nf-core/fetchngs) @ `1.13.0`
 - License: Apache-2.0 (this workflow) · MIT (upstream)
 
-Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 · last catalog sync 2026-11-19. See the repository's NOTICE for full attribution.

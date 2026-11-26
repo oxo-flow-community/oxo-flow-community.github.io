@@ -21,6 +21,7 @@ title: "Viral assembly and intrahost variant calling for Illumina and Oxford Nan
 <div class="ox-kv"><span class="k">Domain</span><span class="v">genomics</span></div>
 <div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/nf-core/viralrecon">nf-core/viralrecon</a></span></div>
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>3.0.0</code></span></div>
+<div class="ox-kv"><span class="k">Last verified</span><span class="v">2026-09-09</span></div>
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2287.1"><code>10.48546/workflowhub.workflow.2287.1</code></a></span></div>
@@ -845,10 +846,16 @@ Resource labels map 1:1 to upstream `withLabel` profiles: `process_single`
 (6c/36 GB/8 h), `process_high` (12c/72 GB/16 h). Fastp/SPAdes memory and
 `-Xmx` JVM sizes are derived from the same values as upstream.
 
+<details class="ox-evidence" markdown="1"><summary>Verification evidence</summary>
+
+default amplicon path + 49 gated branch rules (96 total): bcftools variant caller, ivar consensus, metagenomic (wgs) protocol, alternative assemblers (any comma-separated spades/unicycler/minia combination), MarkDuplicates, plasmidID, kraken2/freyja/pangolin DB downloads, additional annotation, gz-reference gunzip steps — all dry-run-verified per branch — nanopore ARTIC chain ported as gated branch rules (see Excluded); default plan unchanged
+
+</details>
+
 ## Links
 
 - Repository: [oxo-flow-viralrecon](https://github.com/oxo-flow-community/oxo-flow-viralrecon)
 - Upstream: [nf-core/viralrecon](https://github.com/nf-core/viralrecon) @ `3.0.0`
 - License: Apache-2.0 (this workflow) · MIT (upstream)
 
-Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 · last catalog sync 2026-09-09. See the repository's NOTICE for full attribution.

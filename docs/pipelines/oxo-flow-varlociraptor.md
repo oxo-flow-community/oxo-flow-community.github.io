@@ -21,6 +21,7 @@ title: "Small and structural variant calling with Varlociraptor"
 <div class="ox-kv"><span class="k">Domain</span><span class="v">genomics</span></div>
 <div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/snakemake-workflows/dna-seq-varlociraptor">snakemake-workflows/dna-seq-varlociraptor</a></span></div>
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>v6.11.4</code></span></div>
+<div class="ox-kv"><span class="k">Last verified</span><span class="v">2026-11-20</span></div>
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2291.1"><code>10.48546/workflowhub.workflow.2291.1</code></a></span></div>
@@ -526,10 +527,16 @@ deliberate deviations:
 | `workflow/envs/varlociraptor.yaml`: `- varlociraptor =8.12.0`, `- vega-lite-cli =5.16`, `- bcftools =1.21` | `envs/varlociraptor.yaml`: same tool set with the vega-lite binding re-pinned to `- conda-forge::vega-lite-cli=6.4.3` | `5.16` is no longer on the channels (live `PackagesNotFoundError` on env setup, recorded in the env header comment); `6.4.3` is the remaining conda-forge build of the same binding as it co-ships with the varlociraptor CLI upstream; the varlociraptor/bcftools pins are unchanged |
 | datavzrd report environment: wrapper `v9.18.1/utils/datavzrd` `environment.yaml`: `- datavzrd =2.74.0`, `- yte`, `- numpy`, `- pandas`, `- polars` | `envs/datavzrd.yaml`: `- conda-forge::datavzrd=2.71.0` plus the yte/numpy/polars set (`python=3.12`); the three `datavzrd_*` report rules keep the wrapper CLI semantics via `scripts/datavzrd.py` | datavzrd is a conda-forge package (the bioconda prefix never had it) and the wrapper-era pin recorded in the env header comment (`2.70.0`) is gone from the channel (live `PackagesNotFoundError`), so the env pins the resolvable conda-forge build; the referenced wrapper tag pins `2.74.0` — recorded here because the general per-rule-conda row above claims "same packages, same pins" verbatim |
 
+<details class="ox-evidence" markdown="1"><summary>Verification evidence</summary>
+
+189 rules (default path: pangenome mapping, freebayes + delly candidates, Varlociraptor calling, VEP annotation, oncoprint report; somalier sample-swap chain on the default plan; gated modules/twins behind config toggles, incl. atomize/preprocess/scatter call modes). The 2026-11-20 re-port to upstream v6.11.4 is validate/lint/dry-run green in CI with the compiled engine 0.31.0 (0 errors; 116 warnings accepted by the repo gate policy). The historical live-verified bench runs (on the v6.10.0-era port) predate this re-port, so the badge rests at Verified per the ratings policy until the community test bench re-confirms end-to-end.
+
+</details>
+
 ## Links
 
 - Repository: [oxo-flow-varlociraptor](https://github.com/oxo-flow-community/oxo-flow-varlociraptor)
 - Upstream: [snakemake-workflows/dna-seq-varlociraptor](https://github.com/snakemake-workflows/dna-seq-varlociraptor) @ `v6.11.4`
 - License: Apache-2.0 (this workflow) · MIT (upstream)
 
-Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 · last catalog sync 2026-11-20. See the repository's NOTICE for full attribution.

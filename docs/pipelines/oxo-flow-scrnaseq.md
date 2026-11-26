@@ -21,6 +21,7 @@ title: "Single-cell RNA-seq: alignment, quantification and QC"
 <div class="ox-kv"><span class="k">Domain</span><span class="v">single-cell</span></div>
 <div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/nf-core/scrnaseq">nf-core/scrnaseq</a></span></div>
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>4.2.0</code></span></div>
+<div class="ox-kv"><span class="k">Last verified</span><span class="v">2026-08-28</span></div>
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2280.1"><code>10.48546/workflowhub.workflow.2280.1</code></a></span></div>
@@ -647,10 +648,16 @@ transcripts crash simpleaf's grangers intron pass: polars "invalid series
 dtype: expected List, got null"); the fixture genome is padded to ~52kb (STAR
 double-frees on the original 1.9 kb genome).
 
+<details class="ox-evidence" markdown="1"><summary>Verification evidence</summary>
+
+five live-verified configurations on tx-ubuntu (engine 0.15.0, apptainer) 2026-08-27: aligner=cellranger, simpleaf, kallisto, star (10X), star+dropseq; the cellrangerarc branch is ported and validate/lint-clean but was not live-run; the cellranger_multi branch is ported and validate/lint/dry-run-clean with the expanded per-sample config.csv verified shell-level (needs the same cellranger container the count branch uses — live run queued for the next container wave)
+
+</details>
+
 ## Links
 
 - Repository: [oxo-flow-scrnaseq](https://github.com/oxo-flow-community/oxo-flow-scrnaseq)
 - Upstream: [nf-core/scrnaseq](https://github.com/nf-core/scrnaseq) @ `4.2.0`
 - License: Apache-2.0 (this workflow) · MIT (upstream)
 
-Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 · last catalog sync 2026-08-28. See the repository's NOTICE for full attribution.

@@ -21,6 +21,7 @@ title: "Metagenome assembly, binning and taxonomic classification"
 <div class="ox-kv"><span class="k">Domain</span><span class="v">metagenomics</span></div>
 <div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/nf-core/mag">nf-core/mag</a></span></div>
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>5.5.0</code></span></div>
+<div class="ox-kv"><span class="k">Last verified</span><span class="v">2026-09-04</span></div>
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2281.1"><code>10.48546/workflowhub.workflow.2281.1</code></a></span></div>
@@ -927,4 +928,4 @@ Each gate activates exactly its own branch: with the default config the executed
 - Upstream: [nf-core/mag](https://github.com/nf-core/mag) @ `5.5.0`
 - License: Apache-2.0 (this workflow) · MIT (upstream)
 
-Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 · last catalog sync 2026-09-04. See the repository's NOTICE for full attribution.

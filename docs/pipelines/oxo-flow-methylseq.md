@@ -661,10 +661,16 @@ outputs match upstream:
     report names, which are picked up exactly when present. Same effective
     behavior as the upstream per-sample `meta.single_end` branching.
 
+<details class="ox-evidence" markdown="1"><summary>Verification evidence</summary>
+
+full-line: default bismark (bowtie2) path live-verified end-to-end on reference data (2026-08-15); +40 when-gated branch rules (bismark_hisat/bwameth/bwamem aligners, TAPS-rastair, methyldackel, qualimap, preseq, targeted-sequencing, prebuilt-index untar) ported with upstream-default-off gates — per-key toggle matrix verified (validate + lint + dry-run per branch key) 2026-08-25; single-end (upstream single_end samplesheet column) ported via the engine metadata binding (metadata/samples.tsv + config.single_end_mode) and live-verified end-to-end on the SE fixture 2026-08-28; structural exclusion: CAT_FASTQ
+
+</details>
+
 ## Links
 
 - Repository: [oxo-flow-methylseq](https://github.com/oxo-flow-community/oxo-flow-methylseq)
 - Upstream: [nf-core/methylseq](https://github.com/nf-core/methylseq) @ `4.2.0`
 - License: Apache-2.0 (this workflow) · MIT (upstream)
 
-Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 — this entry may lag behind upstream releases. See the repository's NOTICE for full attribution.

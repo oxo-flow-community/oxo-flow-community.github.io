@@ -1483,3 +1483,22 @@ table.ox-params tr:hover td { background: var(--brand-soft); }
     align-items: center;
   }
 }
+
+/* ---- Verification-evidence collapse (registry coverage long-text) ---- */
+details.ox-evidence {
+  border: 1px solid var(--edge);
+  border-radius: 8px;
+  background: var(--panel);
+  padding: 0.4rem 0.9rem;
+  margin: 0.9rem 0 0.4rem;
+}
+details.ox-evidence > summary {
+  cursor: pointer;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.78rem;
+  color: var(--muted);
+  list-style: none;
+}
+details.ox-evidence > summary::before { content: "▸ "; }
+details.ox-evidence[open] > summary::before { content: "▾ "; }
+details.ox-evidence[open] > summary { color: var(--ink-2); }

@@ -21,6 +21,7 @@ title: "ChIP-seq: peak calling, QC and differential analysis"
 <div class="ox-kv"><span class="k">Domain</span><span class="v">genomics</span></div>
 <div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/nf-core/chipseq">nf-core/chipseq</a></span></div>
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>2.1.0</code></span></div>
+<div class="ox-kv"><span class="k">Last verified</span><span class="v">2026-09-05</span></div>
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2283.1"><code>10.48546/workflowhub.workflow.2283.1</code></a></span></div>
@@ -707,4 +708,4 @@ The default-parameters main path of the source pipeline was ported rule-for-rule
 - Upstream: [nf-core/chipseq](https://github.com/nf-core/chipseq) @ `2.1.0`
 - License: Apache-2.0 (this workflow) · MIT (upstream)
 
-Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 · last catalog sync 2026-09-05. See the repository's NOTICE for full attribution.

@@ -21,6 +21,7 @@ title: "Amplicon sequencing (16S/ITS): DADA2 denoising, taxonomy assignment, QII
 <div class="ox-kv"><span class="k">Domain</span><span class="v">amplicon</span></div>
 <div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/nf-core/ampliseq">nf-core/ampliseq</a></span></div>
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>3.1.0</code></span></div>
+<div class="ox-kv"><span class="k">Last verified</span><span class="v">2026-11-18</span></div>
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2282.1"><code>10.48546/workflowhub.workflow.2282.1</code></a></span></div>
@@ -770,10 +771,16 @@ Other notes:
     default-parameter configuration, so the port stays faithful without
     them until they can be ported with fixtures + live coverage.
 
+<details class="ox-evidence" markdown="1"><summary>Verification evidence</summary>
+
+100 rules (85 branch-gated). The 2026-11-18 re-port to upstream 3.1.0 is validate/lint/dry-run green in CI with the pinned engine 0.21.1; the registry now records the alternative classification chains (PPLACE gappa/clustalo/epa-ng, Kraken2, SINTAX, VSEARCH LCA) and the full SIDLE suite that the port already carried (the entry had been lagging). The historical live-verified run (tx-ubuntu, default path 25/25 rules, exit 0, singularity; qiime2 via quay.io/qiime2/amplicon:2026.1) predates the re-port, so the badge rests at Verified per the ratings policy until the community test bench re-confirms end-to-end.
+
+</details>
+
 ## Links
 
 - Repository: [oxo-flow-ampliseq](https://github.com/oxo-flow-community/oxo-flow-ampliseq)
 - Upstream: [nf-core/ampliseq](https://github.com/nf-core/ampliseq) @ `3.1.0`
 - License: Apache-2.0 (this workflow) · MIT (upstream)
 
-Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 · last catalog sync 2026-11-18. See the repository's NOTICE for full attribution.

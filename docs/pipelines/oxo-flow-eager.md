@@ -1346,10 +1346,16 @@ Additional deviations from upstream (all on the default path):
   `run_metagenomic_screening` with `metagenomic_tool` = `kraken`/`malt`) IS
   ported. Default values are kept in `[config]` where a config key exists.
 
+<details class="ox-evidence" markdown="1"><summary>Verification evidence</summary>
+
+default-path + run_bam_filtering (bwaaln) branches live-verified on tx-ubuntu (eager docker 2.5.3); metagenomic chain (bam_unmapped_type=fastq, kraken, malt) validate/dry-run-tested — live-verification pending; lanemerge gated multi-lane mode (run_lanemerge=true): merged-content E2E passed locally 2026-08-27 (byte-identical to single-pair inputs), full container run queued for tx-ubuntu
+
+</details>
+
 ## Links
 
 - Repository: [oxo-flow-eager](https://github.com/oxo-flow-community/oxo-flow-eager)
 - Upstream: [nf-core/eager](https://github.com/nf-core/eager) @ `2.5.3`
 - License: Apache-2.0 (this workflow) · MIT (upstream)
 
-Created on 2026-08-15 — this port may lag behind upstream releases. See the repository's NOTICE for full attribution.
+Created on 2026-08-15 — this entry may lag behind upstream releases. See the repository's NOTICE for full attribution.
