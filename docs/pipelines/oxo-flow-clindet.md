@@ -25,7 +25,7 @@ title: "Cancer genome & transcriptome analysis (WES/WGS/RNA, single entry): soma
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2299.1"><code>10.48546/workflowhub.workflow.2299.1</code></a></span></div>
 <div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">fastp</span><span class="tchip">bwa (&gt;=0.7.18)</span><span class="tchip">samtools</span><span class="tchip">gatk4 4.6.2.0 (container)</span><span class="tchip">bcftools &gt;=1.22</span><span class="tchip">bgzip</span><span class="tchip">tabix</span><span class="tchip">varscan 2.4.6</span></div></div>
-<p class="cmd">$ oxo-flow pull gh:oxo-flow-community/oxo-flow-clindet</p>
+<p class="cmd">$ oxo-flow pull gh:WangLabCSU/oxo-flow-clindet</p>
 </div>
 </div>
 </div>
@@ -54,12 +54,12 @@ title: "Cancer genome & transcriptome analysis (WES/WGS/RNA, single entry): soma
 ## Run it
 
 ```bash
-oxo-flow run gh:oxo-flow-community/oxo-flow-clindet
+oxo-flow run gh:WangLabCSU/oxo-flow-clindet
 ```
 
-Runs straight from the catalog — `oxo-flow` checks the repo out under `.oxo-flow/repos/oxo-flow-clindet` and keeps outputs/checkpoints in the current directory, no manual clone. Pin a revision with `gh:oxo-flow-community/oxo-flow-clindet@<branch-or-tag>`.
+Runs straight from the catalog — `oxo-flow` checks the repo out under `.oxo-flow/repos/oxo-flow-clindet` and keeps outputs/checkpoints in the current directory, no manual clone. Pin a revision with `gh:WangLabCSU/oxo-flow-clindet@<branch-or-tag>`.
 
-Preview the plan first: `oxo-flow pull gh:oxo-flow-community/oxo-flow-clindet` fetches the repo, then `oxo-flow dry-run main.oxoflow`.
+Preview the plan first: `oxo-flow pull gh:WangLabCSU/oxo-flow-clindet` fetches the repo, then `oxo-flow dry-run main.oxoflow`.
 
 
 Needs clinical sequencing inputs — see Requirements.
@@ -81,10 +81,10 @@ Needs clinical sequencing inputs — see Requirements.
 # 1. install oxo-flow (release binary, recommended)
 curl -fL -o oxo-flow.tar.gz https://github.com/Traitome/oxo-flow/releases/latest/download/oxo-flow-latest-x86_64-unknown-linux-gnu.tar.gz
 tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
-#    or, via conda (may lag behind releases):
+#    or, via conda (bioconda's oxo-flow-cli tracks releases with a lag):
 #    conda install -c bioconda oxo-flow-cli
-#    NOTE: bioconda currently ships 0.10.2, older than the >= 0.12.0
-#    minimum of every catalog entry — prefer the release binary.
+#    Check `oxo-flow --version` against the Engine minimum above — if
+#    bioconda trails it, use the release binary instead.
 
 # 2. get this workflow (clones the repo, auto-discovers the workflow,
 #    sanity-parses it with the engine)

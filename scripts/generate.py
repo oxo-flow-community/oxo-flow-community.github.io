@@ -139,6 +139,23 @@ def validate(pipelines: list[dict]) -> None:
         if missing:
             raise SystemExit(f"registry entry '{p.get('name', '?')}' missing: {', '.join(missing)}")
         _validate_quickstart(p)
+        # Copyable commands derive the gh: owner from repo_url (gh_slug) —
+        # fail at validate time, not as a 404 in the reader's shell.
+        gh_slug(p)
+        src = p.get("source") or {}
+        if src.get("url") == p.get("repo_url") and p.get("origin") != "original":
+            raise SystemExit(
+                f"registry entry '{name}': origin=port but source points at its "
+                "own repo — a port must name a real upstream (or origin=original)"
+            )
+        if p.get("rating") in ("dry-run-verified", "community") \
+                and not p.get("quickstart", "").startswith("oxo-flow dry-run") \
+                and not p.get("quickstart_note"):
+            raise SystemExit(
+                f"registry entry '{name}': rated {p['rating']} yet its quickstart "
+                "is a full run with no quickstart_note — never-presented "
+                "end-to-end entries must disclose that next to the command"
+            )
         names.append(p["name"])
     dupes = {n for n in names if names.count(n) > 1}
     if dupes:
@@ -263,10 +280,13 @@ def badge_row(p: dict) -> str:
 
 
 def hero_cta(p: dict, anchor: str) -> str:
-    """Hero call-to-action: run command + repository button."""
+    """Hero call-to-action: run command + repository button. The button
+    mirrors what the anchor section actually does — a dry-run entry's
+    section only previews, so the CTA must not promise "Run"."""
     cmd = _esc(p.get("quickstart") or "oxo-flow run main.oxoflow")
     repo = _esc(p.get("repo_url", ""))
-    return (f'<div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#{anchor}">▶ Run it</a>'
+    label = "▶ Preview the plan" if anchor == "preview-the-plan" else "▶ Run it"
+    return (f'<div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#{anchor}">{label}</a>'
             f'<a class="ox-btn" href="{repo}" rel="noopener">GitHub ↗</a>'
             f'<code class="ox-hero-cmd">$ {cmd}</code></div>')
 
@@ -291,7 +311,9 @@ def glance_panel(p: dict) -> str:
     origin = ORIGIN_TEXT.get(p.get("origin"), ORIGIN_TEXT["curated"])
     eng = ENGINE_BADGE.get(p.get("engine"), "")
     rows = [
-        ("Rating", rating_text, "live"),
+        # The "live" success-green is reserved for live-tested — rating rows
+        # must not paint ★/◆/☆ with it (evidence-ladder honesty).
+        ("Rating", rating_text, "live" if rating == "live-verified" else ""),
         ("Rules", str(p.get("rule_count", "—")), ""),
         ("Compute", compute_summary(p.get("compute")), ""),
         ("Engine", eng or "—", ""),
@@ -300,12 +322,21 @@ def glance_panel(p: dict) -> str:
     ]
     src = p.get("source")
     if src:
+        if not (p.get("origin") == "original" and src.get("url") == p.get("repo_url")):
+            # originals self-referencing their own repo don't need a Source
+            # row that duplicates the repo link — the pin below still shows.
+            rows += [
+                ("Source", f'<a href="{_esc(src["url"])}">{_esc(src["repo"])}</a>', ""),
+            ]
+        pin = src.get("tag") or src.get("sha", "")
+        if pin in ("main", "master", "develop") and src.get("sha"):
+            # A bare branch name is not a pin — render it anchored to its sha.
+            pin = f'{pin}@{src["sha"][:7]}'
         rows += [
-            ("Source", f'<a href="{_esc(src["url"])}">{_esc(src["repo"])}</a>', ""),
-            ("Pinned version", f'<code>{_esc(src.get("tag") or src.get("sha", ""))}</code>', ""),
+            ("Pinned version", f'<code>{_esc(pin)}</code>', ""),
         ]
     rows += [
-        ("Ported", p.get("created", "2026-08-15"), ""),
+        ("Added" if p.get("origin") == "original" else "Ported", p.get("created", "2026-08-15"), ""),
         ("License", p.get("license", "Apache-2.0"), ""),
     ]
     wh = p.get("workflowhub")
@@ -326,7 +357,7 @@ def glance_panel(p: dict) -> str:
         '<div class="ox-glance-title">At a glance</div>\n'
         f"{kv}\n"
         f'<div class="ox-glance-tools"><span class="k">Tools</span><div class="chips">{chips}</div></div>\n'
-        f'<p class="cmd">$ oxo-flow pull gh:oxo-flow-community/{_esc(p["name"])}</p>\n'
+        f'<p class="cmd">$ oxo-flow pull gh:{_esc(gh_slug(p))}</p>\n'
         "</div>"
     )
 
@@ -337,6 +368,18 @@ def gh_pull_url(repo_url: str) -> str:
     if repo_url.startswith("https://github.com/"):
         return "gh:" + repo_url.removeprefix("https://github.com/").rstrip("/")
     return repo_url
+
+
+def gh_slug(p: dict) -> str:
+    """`owner/repo` derived from the authoritative repo_url — some entries
+    are hosted outside the org (WangLabCSU/...); a hard-coded org prefix
+    would render copy-fails-with-404 commands on those pages."""
+    m = re.search(r"github\.com/([^/]+/[^/]+?)(?:\.git)?/?$", p["repo_url"])
+    if not m:
+        raise SystemExit(
+            f"registry entry '{p['name']}': repo_url is not a github repo: {p['repo_url']}"
+        )
+    return m.group(1)
 
 
 def install_section(p: dict) -> str:
@@ -358,10 +401,10 @@ def install_section(p: dict) -> str:
         "# 1. install oxo-flow (release binary, recommended)",
         f"curl -fL -o oxo-flow.tar.gz {ENGINE_URL}",
         "tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/",
-        "#    or, via conda (may lag behind releases):",
+        "#    or, via conda (bioconda's oxo-flow-cli tracks releases with a lag):",
         "#    conda install -c bioconda oxo-flow-cli",
-        "#    NOTE: bioconda currently ships 0.10.2, older than the >= 0.12.0",
-        "#    minimum of every catalog entry — prefer the release binary.",
+        "#    Check `oxo-flow --version` against the Engine minimum above — if",
+        "#    bioconda trails it, use the release binary instead.",
         "",
         "# 2. get this workflow (clones the repo, auto-discovers the workflow,",
         "#    sanity-parses it with the engine)",
@@ -643,12 +686,20 @@ def make_page(p: dict, configs: dict) -> str:
     if p["name"] in configs:
         parts += dag_section(p, configs)
     if src:
+        self_sourced = p.get("origin") == "original" and src.get("url") == p.get("repo_url")
+        intro = (
+            "Native oxo-flow design — no upstream port: steps implemented by "
+            "this workflow are listed as in scope; alternate paths of the "
+            "domain's conventional pipelines appear under excluded."
+            if self_sourced
+            else "The default-parameters main path of the source pipeline was ported "
+            "rule-for-rule; alternate paths are documented as excluded."
+        )
         parts += [
             "",
             "## Scope",
             "",
-            "The default-parameters main path of the source pipeline was ported "
-            "rule-for-rule; alternate paths are documented as excluded.",
+            intro,
             "",
             "**In scope**",
             "",
@@ -712,11 +763,21 @@ def sem_to_html(md: str) -> str:
 def run_cmd(p: dict) -> str:
     """Run-it section: the engine executes a catalog repo directly —
     `oxo-flow run gh:owner/repo[@ref]` checks the repo out under
-    .oxo-flow/repos/<name> and keeps outputs in the current directory."""
+    .oxo-flow/repos/<name> and keeps outputs in the current directory.
+
+    Positional args and flags come verbatim from the validated quickstart's
+    tail (everything after `oxo-flow run|dry-run <file>`). Entries whose
+    quickstart is a dry-run get the validated literal instead — we never
+    promote a never-tested workflow to a full-run example command."""
     name = p["name"]
-    argtail = p.get("quickstart", "oxo-flow run main.oxoflow")[len("oxo-flow run"):].strip()
-    argtail = " ".join(t for t in argtail.split() if not t.endswith(".oxoflow"))
-    cmd = f"oxo-flow run gh:oxo-flow-community/{name}" + (f" {argtail}" if argtail else "")
+    slug = gh_slug(p)
+    tokens = p.get("quickstart", "oxo-flow run main.oxoflow").split()
+    wf = next((t for t in tokens[2:] if t.endswith(".oxoflow")), "main.oxoflow")
+    if tokens[1] == "dry-run":
+        cmd = " ".join(tokens)
+    else:
+        argtail = " ".join(t for t in tokens[2:] if not t.endswith(".oxoflow"))
+        cmd = f"oxo-flow run gh:{slug}" + (f" {argtail}" if argtail else "")
     return "\n".join([
         "```bash",
         cmd,
@@ -725,10 +786,10 @@ def run_cmd(p: dict) -> str:
         f"Runs straight from the catalog — `oxo-flow` checks the repo out under "
         f"`.oxo-flow/repos/{name}` and keeps outputs/checkpoints in the current "
         "directory, no manual clone. Pin a revision with "
-        f"`gh:oxo-flow-community/{name}@<branch-or-tag>`.",
+        f"`gh:{slug}@<branch-or-tag>`.",
         "",
-        "Preview the plan first: `oxo-flow pull gh:oxo-flow-community/" + name +
-        "` fetches the repo, then `oxo-flow dry-run main.oxoflow`.",
+        "Preview the plan first: `oxo-flow pull gh:" + slug +
+        "` fetches the repo, then `oxo-flow dry-run " + wf + "`.",
     ])
 
 

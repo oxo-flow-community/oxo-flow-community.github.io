@@ -7,7 +7,8 @@ hide:
 
 Every workflow in the catalog. Ratings are an [evidence ladder](../about/curation.md):
 **✔ live-tested** end-to-end on real data, **★ verified** (fidelity-checked,
-passes `validate` + `dry-run` in CI), **☆ community** (meets listing
+passes `validate` + `dry-run` in CI), **◆ dry-run verified** (maintained like
+★ but no full end-to-end run yet), **☆ community** (meets listing
 requirements, maintained by its authors). Filter by domain, origin, or source
 engine; search by name, tool, or tag.
 

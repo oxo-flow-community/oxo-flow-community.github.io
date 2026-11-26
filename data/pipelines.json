@@ -4015,7 +4015,8 @@
   "repo_url": "https://github.com/oxo-flow-community/oxo-flow-erv",
   "license": "Apache-2.0",
   "upstream_license": "MIT",
-  "quickstart": "oxo-flow run main.oxoflow"
+  "quickstart": "oxo-flow run main.oxoflow",
+  "quickstart_note": "Rated ◆ — CI proves `validate` + `dry-run` green with the released engine, but this workflow has **not** run end-to-end on reference data yet. Check the plan before spending compute: `oxo-flow dry-run main.oxoflow` after fetching the repo (see Installation). Expect rough edges — report them via the issue link in the footer."
  },
  {
   "name": "oxo-flow-immune-repertoire",

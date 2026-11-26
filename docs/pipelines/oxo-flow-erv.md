@@ -13,7 +13,7 @@ title: "ERV / transposable-element quantification with four tools on one annotat
 <div>
 <div class="ox-glance">
 <div class="ox-glance-title">At a glance</div>
-<div class="ox-kv"><span class="k">Rating</span><span class="v live">◆ Dry-run verified</span></div>
+<div class="ox-kv"><span class="k">Rating</span><span class="v">◆ Dry-run verified</span></div>
 <div class="ox-kv"><span class="k">Rules</span><span class="v">22</span></div>
 <div class="ox-kv"><span class="k">Compute</span><span class="v">—</span></div>
 <div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--sn"><span class="dot" aria-hidden="true"></span>snakemake port</span></span></div>
@@ -43,6 +43,8 @@ Runs straight from the catalog — `oxo-flow` checks the repo out under `.oxo-fl
 Preview the plan first: `oxo-flow pull gh:oxo-flow-community/oxo-flow-erv` fetches the repo, then `oxo-flow dry-run main.oxoflow`.
 
 
+Rated ◆ — CI proves `validate` + `dry-run` green with the released engine, but this workflow has **not** run end-to-end on reference data yet. Check the plan before spending compute: `oxo-flow dry-run main.oxoflow` after fetching the repo (see Installation). Expect rough edges — report them via the issue link in the footer.
+
 ## Installation
 
 **Engine.** oxo-flow >= 0.13.1
@@ -60,10 +62,10 @@ Preview the plan first: `oxo-flow pull gh:oxo-flow-community/oxo-flow-erv` fetch
 # 1. install oxo-flow (release binary, recommended)
 curl -fL -o oxo-flow.tar.gz https://github.com/Traitome/oxo-flow/releases/latest/download/oxo-flow-latest-x86_64-unknown-linux-gnu.tar.gz
 tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
-#    or, via conda (may lag behind releases):
+#    or, via conda (bioconda's oxo-flow-cli tracks releases with a lag):
 #    conda install -c bioconda oxo-flow-cli
-#    NOTE: bioconda currently ships 0.10.2, older than the >= 0.12.0
-#    minimum of every catalog entry — prefer the release binary.
+#    Check `oxo-flow --version` against the Engine minimum above — if
+#    bioconda trails it, use the release binary instead.
 
 # 2. get this workflow (clones the repo, auto-discovers the workflow,
 #    sanity-parses it with the engine)

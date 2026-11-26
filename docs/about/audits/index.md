@@ -5,7 +5,7 @@ verdicts) plus the live-test evidence trail. Every audit ends with a
 `Re-verification` section from the latest live round.
 
 **[2026-08 24h full-campaign summary](2026-08-campaign-summary.md)** —
-all 24 workflows live-tested in one round: verdict matrix, repo fixes,
+the 2026-08 founding round live-tested the then-catalog in one round: verdict matrix, repo fixes,
 engine fixes, resource evidence, methodology lessons.
 
 | workflow | audit |

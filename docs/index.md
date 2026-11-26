@@ -32,8 +32,8 @@ title: Curated workflows. Ready to run.
 ## How to use this catalog {: .ox-display }
 
 <div class="ox-domains">
-<a class="ox-domain-pill" href="/about/curation/"><span class="ox-domain-ico">🎓</span><span class="ox-domain-name">Learn the ratings</span><span class="ox-domain-count">what ✔ ★ ☆ mean</span></a>
-<a class="ox-domain-pill" href="/about/selection/"><span class="ox-domain-ico">🧭</span><span class="ox-domain-name">Pick a workflow</span><span class="ox-domain-count">domain &amp; tool guide</span></a>
+<a class="ox-domain-pill" href="/about/curation/"><span class="ox-domain-ico">🎓</span><span class="ox-domain-name">Learn the ratings</span><span class="ox-domain-count">what ✔ ★ ◆ ☆ mean</span></a>
+<a class="ox-domain-pill" href="/about/selection/"><span class="ox-domain-ico">🧭</span><span class="ox-domain-name">How entries were picked</span><span class="ox-domain-count">scoring &amp; committee review</span></a>
 <a class="ox-domain-pill" href="/about/porting/"><span class="ox-domain-ico">🔁</span><span class="ox-domain-name">Port one yourself</span><span class="ox-domain-count">step-by-step guide</span></a>
 </div>
 
@@ -85,11 +85,11 @@ the rating criteria, and how to get a workflow listed.
 
     ```bash
     # straight from the repository — no clone or bundle needed
-    oxo-flow run oxo-flow-community/oxo-flow-rnaseq
+    oxo-flow run gh:oxo-flow-community/oxo-flow-rnaseq
 
-    # or clone a local copy first (pull keeps the gh: prefix)
-    oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq
-    oxo-flow run oxo-flow-rnaseq/main.oxoflow
+    # or work from a plain git clone
+    git clone https://github.com/oxo-flow-community/oxo-flow-rnaseq
+    cd oxo-flow-rnaseq && oxo-flow run main.oxoflow
     ```
 
    For `run`, `owner/repository` shorthand works for any public GitHub
