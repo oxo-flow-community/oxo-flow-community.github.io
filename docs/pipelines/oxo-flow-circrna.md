@@ -92,7 +92,7 @@ oxo-flow pull gh:WangLabCSU/oxo-flow-circrna
 <thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
 <tbody>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy reference_dir = value" data-copy="reference_dir = ./reference">reference_dir</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy reference_dir = value" aria-label="Copy reference_dir = ./reference to clipboard" data-copy="reference_dir = ./reference">reference_dir</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>./reference</code></td>
 <td class="ox-p-desc">=== The only path you need to set ===<br>reference_dir/ layout: genome.fa, genes.gtf, hg38_ref.txt,<br>bwa/genome.fa.{bwt,pac,ann,amb,sa}, hisat2/genome.fa.{1-8}.ht2,<br>bowtie2/genome.fa.*.bt2, star/<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>

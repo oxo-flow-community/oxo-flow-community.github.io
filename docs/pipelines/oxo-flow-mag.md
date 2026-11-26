@@ -100,349 +100,349 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-mag
 <thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
 <tbody>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy adapterremoval_adapter1 = value" data-copy="adapterremoval_adapter1 = AGATCGGAAGAGCACACGTCTGAACTCCAGTCACNNNNNNATCTCGTATGCCGTCTTCTGCTTG">adapterremoval_adapter1</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy adapterremoval_adapter1 = value" aria-label="Copy adapterremoval_adapter1 = AGATCGGAAGAGCACACGTCTGAACTCCAGTCACNNNNNNATCTCGTATGCCGTCTTCTGCTTG to clipboard" data-copy="adapterremoval_adapter1 = AGATCGGAAGAGCACACGTCTGAACTCCAGTCACNNNNNNATCTCGTATGCCGTCTTCTGCTTG">adapterremoval_adapter1</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>AGATCGGAAGAGCACACGTCTGAACTCCAGTCACNNNNNNATCTCGTATGCCGTCTTCTGCTTG</code></td>
 <td class="ox-p-desc">Clipping (upstream params with the same defaults; --clip_tool selects the<br>adapter trimmer, fastp is the upstream default)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy adapterremoval_adapter2 = value" data-copy="adapterremoval_adapter2 = AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT">adapterremoval_adapter2</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy adapterremoval_adapter2 = value" aria-label="Copy adapterremoval_adapter2 = AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT to clipboard" data-copy="adapterremoval_adapter2 = AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT">adapterremoval_adapter2</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT</code></td>
 <td class="ox-p-desc">Clipping (upstream params with the same defaults; --clip_tool selects the<br>adapter trimmer, fastp is the upstream default)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy adapterremoval_minquality = value" data-copy="adapterremoval_minquality = 2">adapterremoval_minquality</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy adapterremoval_minquality = value" aria-label="Copy adapterremoval_minquality = 2 to clipboard" data-copy="adapterremoval_minquality = 2">adapterremoval_minquality</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>2</code></td>
 <td class="ox-p-desc">Clipping (upstream params with the same defaults; --clip_tool selects the<br>adapter trimmer, fastp is the upstream default)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy adapterremoval_trim_quality_stretch = value" data-copy="adapterremoval_trim_quality_stretch = false">adapterremoval_trim_quality_stretch</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy adapterremoval_trim_quality_stretch = value" aria-label="Copy adapterremoval_trim_quality_stretch = false to clipboard" data-copy="adapterremoval_trim_quality_stretch = false">adapterremoval_trim_quality_stretch</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Clipping (upstream params with the same defaults; --clip_tool selects the<br>adapter trimmer, fastp is the upstream default)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ale_per_base_output = value" data-copy="ale_per_base_output = false">ale_per_base_output</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ale_per_base_output = value" aria-label="Copy ale_per_base_output = false to clipboard" data-copy="ale_per_base_output = false">ale_per_base_output</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">ALE (upstream --ale_per_base_output default false -&gt; --metagenome --nout)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bbnorm = value" data-copy="bbnorm = false">bbnorm</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bbnorm = value" aria-label="Copy bbnorm = false to clipboard" data-copy="bbnorm = false">bbnorm</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Read normalization (upstream --bbnorm; runs between phiX removal and assembly)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bbnorm_min = value" data-copy="bbnorm_min = 5">bbnorm_min</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bbnorm_min = value" aria-label="Copy bbnorm_min = 5 to clipboard" data-copy="bbnorm_min = 5">bbnorm_min</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>5</code></td>
 <td class="ox-p-desc">Read normalization (upstream --bbnorm; runs between phiX removal and assembly)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bbnorm_target = value" data-copy="bbnorm_target = 100">bbnorm_target</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bbnorm_target = value" aria-label="Copy bbnorm_target = 100 to clipboard" data-copy="bbnorm_target = 100">bbnorm_target</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>100</code></td>
 <td class="ox-p-desc">Read normalization (upstream --bbnorm; runs between phiX removal and assembly)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bin_concoct_chunksize = value" data-copy="bin_concoct_chunksize = 10000">bin_concoct_chunksize</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bin_concoct_chunksize = value" aria-label="Copy bin_concoct_chunksize = 10000 to clipboard" data-copy="bin_concoct_chunksize = 10000">bin_concoct_chunksize</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>10000</code></td>
 <td class="ox-p-desc">Binning options (upstream params with the same defaults)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bin_concoct_donotconcatlast = value" data-copy="bin_concoct_donotconcatlast = false">bin_concoct_donotconcatlast</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bin_concoct_donotconcatlast = value" aria-label="Copy bin_concoct_donotconcatlast = false to clipboard" data-copy="bin_concoct_donotconcatlast = false">bin_concoct_donotconcatlast</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Binning options (upstream params with the same defaults)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bin_concoct_overlap = value" data-copy="bin_concoct_overlap = 0">bin_concoct_overlap</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bin_concoct_overlap = value" aria-label="Copy bin_concoct_overlap = 0 to clipboard" data-copy="bin_concoct_overlap = 0">bin_concoct_overlap</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>0</code></td>
 <td class="ox-p-desc">Binning options (upstream params with the same defaults)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bin_domain_classification = value" data-copy="bin_domain_classification = false">bin_domain_classification</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bin_domain_classification = value" aria-label="Copy bin_domain_classification = false to clipboard" data-copy="bin_domain_classification = false">bin_domain_classification</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Domain classification with Tiara (upstream --bin_domain_classification / --tiara_min_length)<br><span class="ox-param-usedby">used by <code>39</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bin_max_size = value" data-copy="bin_max_size = ">bin_max_size</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bin_max_size = value" aria-label="Copy bin_max_size =  to clipboard" data-copy="bin_max_size = ">bin_max_size</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">Bin size filtering (upstream --bin_min_size / --bin_max_size; defaults<br>0/null make the seqkit-based filter a no-op)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bin_metabinner_scale = value" data-copy="bin_metabinner_scale = large">bin_metabinner_scale</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bin_metabinner_scale = value" aria-label="Copy bin_metabinner_scale = large to clipboard" data-copy="bin_metabinner_scale = large">bin_metabinner_scale</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>large</code></td>
 <td class="ox-p-desc">Binning options (upstream params with the same defaults)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bin_min_size = value" data-copy="bin_min_size = 0">bin_min_size</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bin_min_size = value" aria-label="Copy bin_min_size = 0 to clipboard" data-copy="bin_min_size = 0">bin_min_size</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>0</code></td>
 <td class="ox-p-desc">Bin size filtering (upstream --bin_min_size / --bin_max_size; defaults<br>0/null make the seqkit-based filter a no-op)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cat_allow_unofficial_lineages = value" data-copy="cat_allow_unofficial_lineages = false">cat_allow_unofficial_lineages</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cat_allow_unofficial_lineages = value" aria-label="Copy cat_allow_unofficial_lineages = false to clipboard" data-copy="cat_allow_unofficial_lineages = false">cat_allow_unofficial_lineages</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">CAT/BAT bin classification (upstream --cat_db; the CAT_prepare database<br>is user-provided — CAT_pack download + prepare, or the archive/directory<br>itself; db/ and tax/ directories are discovered inside it)<br><span class="ox-param-usedby">used by <code>24</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cat_db = value" data-copy="cat_db = ">cat_db</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cat_db = value" aria-label="Copy cat_db =  to clipboard" data-copy="cat_db = ">cat_db</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">CAT/BAT bin classification (upstream --cat_db; the CAT_prepare database<br>is user-provided — CAT_pack download + prepare, or the archive/directory<br>itself; db/ and tax/ directories are discovered inside it)<br><span class="ox-param-usedby">used by <code>38</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy checkm2_db = value" data-copy="checkm2_db = ">checkm2_db</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy checkm2_db = value" aria-label="Copy checkm2_db =  to clipboard" data-copy="checkm2_db = ">checkm2_db</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">CheckM2 bin QC (upstream --run_checkm2; the ~10GB .dmnd database is<br>user-provided — checkm2 database --download; fails fast when empty)<br><span class="ox-param-usedby">used by <code>12</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy checkm_db = value" data-copy="checkm_db = ">checkm_db</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy checkm_db = value" aria-label="Copy checkm_db =  to clipboard" data-copy="checkm_db = ">checkm_db</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">CheckM bin QC (upstream --run_checkm; the 1.1GB lineage database is<br>downloaded at env creation and unpacked at run time — see README)<br><span class="ox-param-usedby">used by <code>24</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy clip_tool = value" data-copy="clip_tool = fastp">clip_tool</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy clip_tool = value" aria-label="Copy clip_tool = fastp to clipboard" data-copy="clip_tool = fastp">clip_tool</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>fastp</code></td>
 <td class="ox-p-desc">Clipping (upstream params with the same defaults; --clip_tool selects the<br>adapter trimmer, fastp is the upstream default)<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cohort_samples = value" data-copy="cohort_samples = S1 S2">cohort_samples</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cohort_samples = value" aria-label="Copy cohort_samples = S1 S2 to clipboard" data-copy="cohort_samples = S1 S2">cohort_samples</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>S1 S2</code></td>
 <td class="ox-p-desc">Space-separated list of sample ids used by the binning-preparation<br>bowtie2 alignment rules (binning_map_mode=&#x27;group&#x27;: every assembly is<br>aligned against every sample&#x27;s reads). Keep in sync with the sample<br>group below.<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fastp_cut_mean_quality = value" data-copy="fastp_cut_mean_quality = 15">fastp_cut_mean_quality</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fastp_cut_mean_quality = value" aria-label="Copy fastp_cut_mean_quality = 15 to clipboard" data-copy="fastp_cut_mean_quality = 15">fastp_cut_mean_quality</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>15</code></td>
 <td class="ox-p-desc">Clipping (upstream params with the same defaults; --clip_tool selects the<br>adapter trimmer, fastp is the upstream default)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fastp_qualified_quality = value" data-copy="fastp_qualified_quality = 15">fastp_qualified_quality</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fastp_qualified_quality = value" aria-label="Copy fastp_qualified_quality = 15 to clipboard" data-copy="fastp_qualified_quality = 15">fastp_qualified_quality</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>15</code></td>
 <td class="ox-p-desc">Clipping (upstream params with the same defaults; --clip_tool selects the<br>adapter trimmer, fastp is the upstream default)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fastp_trim_polyg = value" data-copy="fastp_trim_polyg = false">fastp_trim_polyg</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fastp_trim_polyg = value" aria-label="Copy fastp_trim_polyg = false to clipboard" data-copy="fastp_trim_polyg = false">fastp_trim_polyg</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Clipping (upstream params with the same defaults; --clip_tool selects the<br>adapter trimmer, fastp is the upstream default)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy genomad_db = value" data-copy="genomad_db = ">genomad_db</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy genomad_db = value" aria-label="Copy genomad_db =  to clipboard" data-copy="genomad_db = ">genomad_db</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">Virus identification (upstream --run_virus_identification; the geNomad<br>database is user-provided — genomad download-database; fails fast when empty)<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtdb_db = value" data-copy="gtdb_db = ">gtdb_db</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtdb_db = value" aria-label="Copy gtdb_db =  to clipboard" data-copy="gtdb_db = ">gtdb_db</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">GTDB-Tk database: local path to the release .tar.gz or an unpacked<br>directory (upstream --gtdb_db, ~100GB). oxo-flow cannot download it<br>mid-run (the prep rule only unpacks), so the default is empty and<br>run_gtdbtk=true fails fast until a local path is set.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtdbtk_max_contamination = value" data-copy="gtdbtk_max_contamination = 10.0">gtdbtk_max_contamination</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtdbtk_max_contamination = value" aria-label="Copy gtdbtk_max_contamination = 10.0 to clipboard" data-copy="gtdbtk_max_contamination = 10.0">gtdbtk_max_contamination</button></td>
 <td class="ox-p-t"><code>float</code></td>
 <td class="ox-p-d"><code>10.0</code></td>
 <td class="ox-p-desc">GTDB-Tk (upstream params with the same defaults)<br><span class="ox-param-usedby">used by <code>12</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtdbtk_min_af = value" data-copy="gtdbtk_min_af = 0.65">gtdbtk_min_af</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtdbtk_min_af = value" aria-label="Copy gtdbtk_min_af = 0.65 to clipboard" data-copy="gtdbtk_min_af = 0.65">gtdbtk_min_af</button></td>
 <td class="ox-p-t"><code>float</code></td>
 <td class="ox-p-d"><code>0.65</code></td>
 <td class="ox-p-desc">GTDB-Tk (upstream params with the same defaults)<br><span class="ox-param-usedby">used by <code>12</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtdbtk_min_completeness = value" data-copy="gtdbtk_min_completeness = 50.0">gtdbtk_min_completeness</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtdbtk_min_completeness = value" aria-label="Copy gtdbtk_min_completeness = 50.0 to clipboard" data-copy="gtdbtk_min_completeness = 50.0">gtdbtk_min_completeness</button></td>
 <td class="ox-p-t"><code>float</code></td>
 <td class="ox-p-d"><code>50.0</code></td>
 <td class="ox-p-desc">GTDB-Tk (upstream params with the same defaults)<br><span class="ox-param-usedby">used by <code>12</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtdbtk_min_perc_aa = value" data-copy="gtdbtk_min_perc_aa = 10">gtdbtk_min_perc_aa</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtdbtk_min_perc_aa = value" aria-label="Copy gtdbtk_min_perc_aa = 10 to clipboard" data-copy="gtdbtk_min_perc_aa = 10">gtdbtk_min_perc_aa</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>10</code></td>
 <td class="ox-p-desc">GTDB-Tk (upstream params with the same defaults)<br><span class="ox-param-usedby">used by <code>12</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtdbtk_place_species = value" data-copy="gtdbtk_place_species = false">gtdbtk_place_species</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtdbtk_place_species = value" aria-label="Copy gtdbtk_place_species = false to clipboard" data-copy="gtdbtk_place_species = false">gtdbtk_place_species</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">GTDB-Tk (upstream params with the same defaults)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtdbtk_pplacer_cpus = value" data-copy="gtdbtk_pplacer_cpus = 1">gtdbtk_pplacer_cpus</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtdbtk_pplacer_cpus = value" aria-label="Copy gtdbtk_pplacer_cpus = 1 to clipboard" data-copy="gtdbtk_pplacer_cpus = 1">gtdbtk_pplacer_cpus</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>1</code></td>
 <td class="ox-p-desc">GTDB-Tk (upstream params with the same defaults)<br><span class="ox-param-usedby">used by <code>12</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtdbtk_use_full_tree = value" data-copy="gtdbtk_use_full_tree = false">gtdbtk_use_full_tree</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtdbtk_use_full_tree = value" aria-label="Copy gtdbtk_use_full_tree = false to clipboard" data-copy="gtdbtk_use_full_tree = false">gtdbtk_use_full_tree</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">GTDB-Tk (upstream params with the same defaults)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gunc_db = value" data-copy="gunc_db = ">gunc_db</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gunc_db = value" aria-label="Copy gunc_db =  to clipboard" data-copy="gunc_db = ">gunc_db</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">GUNC contamination QC (upstream --run_gunc; the reference database is<br>user-provided — gunc download_db; fails fast when empty)<br><span class="ox-param-usedby">used by <code>12</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy host_fasta = value" data-copy="host_fasta = ">host_fasta</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy host_fasta = value" aria-label="Copy host_fasta =  to clipboard" data-copy="host_fasta = ">host_fasta</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">Host read removal (upstream --host_fasta / --host_fasta_bowtie2index; the<br>reference fasta is required, the prebuilt bowtie2 index is optional and<br>skips the build rule)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy host_fasta_bowtie2index = value" data-copy="host_fasta_bowtie2index = ">host_fasta_bowtie2index</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy host_fasta_bowtie2index = value" aria-label="Copy host_fasta_bowtie2index =  to clipboard" data-copy="host_fasta_bowtie2index = ">host_fasta_bowtie2index</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">Host read removal (upstream --host_fasta / --host_fasta_bowtie2index; the<br>reference fasta is required, the prebuilt bowtie2 index is optional and<br>skips the build rule)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy host_removal_verysensitive = value" data-copy="host_removal_verysensitive = false">host_removal_verysensitive</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy host_removal_verysensitive = value" aria-label="Copy host_removal_verysensitive = false to clipboard" data-copy="host_removal_verysensitive = false">host_removal_verysensitive</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Host read removal (upstream --host_fasta / --host_fasta_bowtie2index; the<br>reference fasta is required, the prebuilt bowtie2 index is optional and<br>skips the build rule)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy input_dir = value" data-copy="input_dir = test/fixtures/raw">input_dir</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy input_dir = value" aria-label="Copy input_dir = test/fixtures/raw to clipboard" data-copy="input_dir = test/fixtures/raw">input_dir</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/raw</code></td>
 <td class="ox-p-desc">Input directory containing {sample}_R1.fastq.gz / {sample}_R2.fastq.gz<br>paired-end read files (upstream --input samplesheet; single-end and<br>multi-library lanes are not ported). The repo default ships tiny test<br>fixtures; point this at your data.<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy max_unbinned_contigs = value" data-copy="max_unbinned_contigs = 100">max_unbinned_contigs</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy max_unbinned_contigs = value" aria-label="Copy max_unbinned_contigs = 100 to clipboard" data-copy="max_unbinned_contigs = 100">max_unbinned_contigs</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>100</code></td>
 <td class="ox-p-desc">Bin size filtering (upstream --bin_min_size / --bin_max_size; defaults<br>0/null make the seqkit-based filter a no-op)<br><span class="ox-param-usedby">used by <code>6</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy metabat_rng_seed = value" data-copy="metabat_rng_seed = 1">metabat_rng_seed</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy metabat_rng_seed = value" aria-label="Copy metabat_rng_seed = 1 to clipboard" data-copy="metabat_rng_seed = 1">metabat_rng_seed</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>1</code></td>
 <td class="ox-p-desc">Binning options (upstream params with the same defaults)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy min_contig_size = value" data-copy="min_contig_size = 1500">min_contig_size</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy min_contig_size = value" aria-label="Copy min_contig_size = 1500 to clipboard" data-copy="min_contig_size = 1500">min_contig_size</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>1500</code></td>
 <td class="ox-p-desc">Bin size filtering (upstream --bin_min_size / --bin_max_size; defaults<br>0/null make the seqkit-based filter a no-op)<br><span class="ox-param-usedby">used by <code>18</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy min_length_unbinned_contigs = value" data-copy="min_length_unbinned_contigs = 1000000">min_length_unbinned_contigs</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy min_length_unbinned_contigs = value" aria-label="Copy min_length_unbinned_contigs = 1000000 to clipboard" data-copy="min_length_unbinned_contigs = 1000000">min_length_unbinned_contigs</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>1000000</code></td>
 <td class="ox-p-desc">Bin size filtering (upstream --bin_min_size / --bin_max_size; defaults<br>0/null make the seqkit-based filter a no-op)<br><span class="ox-param-usedby">used by <code>6</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy out_dir = value" data-copy="out_dir = results">out_dir</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy out_dir = value" aria-label="Copy out_dir = results to clipboard" data-copy="out_dir = results">out_dir</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>results</code></td>
 <td class="ox-p-desc">Input directory containing {sample}_R1.fastq.gz / {sample}_R2.fastq.gz<br>paired-end read files (upstream --input samplesheet; single-end and<br>multi-library lanes are not ported). The repo default ships tiny test<br>fixtures; point this at your data.<br><span class="ox-param-usedby">used by <code>276</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy phix_reference = value" data-copy="phix_reference = assets/data/GCA_002596845.1_ASM259684v1_genomic.fna.gz">phix_reference</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy phix_reference = value" aria-label="Copy phix_reference = assets/data/GCA_002596845.1_ASM259684v1_genomic.fna.gz to clipboard" data-copy="phix_reference = assets/data/GCA_002596845.1_ASM259684v1_genomic.fna.gz">phix_reference</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>assets/data/GCA_002596845.1_ASM259684v1_genomic.fna.gz</code></td>
 <td class="ox-p-desc">phiX reference (upstream --phix_reference default =<br>projectDir/assets/data/GCA_002596845.1_ASM259684v1_genomic.fna.gz)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy prokka_fast_mode = value" data-copy="prokka_fast_mode = false">prokka_fast_mode</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy prokka_fast_mode = value" aria-label="Copy prokka_fast_mode = false to clipboard" data-copy="prokka_fast_mode = false">prokka_fast_mode</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">PROKKA (upstream params with the same defaults)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy prokka_with_compliance = value" data-copy="prokka_with_compliance = false">prokka_with_compliance</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy prokka_with_compliance = value" aria-label="Copy prokka_with_compliance = false to clipboard" data-copy="prokka_with_compliance = false">prokka_with_compliance</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">PROKKA (upstream params with the same defaults)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy reads_minlength = value" data-copy="reads_minlength = 15">reads_minlength</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy reads_minlength = value" aria-label="Copy reads_minlength = 15 to clipboard" data-copy="reads_minlength = 15">reads_minlength</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>15</code></td>
 <td class="ox-p-desc">Clipping (upstream params with the same defaults; --clip_tool selects the<br>adapter trimmer, fastp is the upstream default)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy refine_bins_dastool = value" data-copy="refine_bins_dastool = false">refine_bins_dastool</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy refine_bins_dastool = value" aria-label="Copy refine_bins_dastool = false to clipboard" data-copy="refine_bins_dastool = false">refine_bins_dastool</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">DAS Tool bin refinement (upstream --refine_bins_dastool / --refine_bins_dastool_threshold)<br><span class="ox-param-usedby">used by <code>28</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy refine_bins_dastool_threshold = value" data-copy="refine_bins_dastool_threshold = 0.5">refine_bins_dastool_threshold</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy refine_bins_dastool_threshold = value" aria-label="Copy refine_bins_dastool_threshold = 0.5 to clipboard" data-copy="refine_bins_dastool_threshold = 0.5">refine_bins_dastool_threshold</button></td>
 <td class="ox-p-t"><code>float</code></td>
 <td class="ox-p-d"><code>0.5</code></td>
 <td class="ox-p-desc">DAS Tool bin refinement (upstream --refine_bins_dastool / --refine_bins_dastool_threshold)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_checkm = value" data-copy="run_checkm = false">run_checkm</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_checkm = value" aria-label="Copy run_checkm = false to clipboard" data-copy="run_checkm = false">run_checkm</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">CheckM bin QC (upstream --run_checkm; the 1.1GB lineage database is<br>downloaded at env creation and unpacked at run time — see README)<br><span class="ox-param-usedby">used by <code>38</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_checkm2 = value" data-copy="run_checkm2 = false">run_checkm2</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_checkm2 = value" aria-label="Copy run_checkm2 = false to clipboard" data-copy="run_checkm2 = false">run_checkm2</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">CheckM2 bin QC (upstream --run_checkm2; the ~10GB .dmnd database is<br>user-provided — checkm2 database --download; fails fast when empty)<br><span class="ox-param-usedby">used by <code>13</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_gtdbtk = value" data-copy="run_gtdbtk = true">run_gtdbtk</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_gtdbtk = value" aria-label="Copy run_gtdbtk = true to clipboard" data-copy="run_gtdbtk = true">run_gtdbtk</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>true</code></td>
 <td class="ox-p-desc">GTDB-Tk gate: the ~100GB reference database is user-provided (see the<br>README requirements); run_gtdbtk=false runs the full pipeline minus the<br>GTDB-Tk classification (the documented live-test contract).<br><span class="ox-param-usedby">used by <code>14</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_gunc = value" data-copy="run_gunc = false">run_gunc</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_gunc = value" aria-label="Copy run_gunc = false to clipboard" data-copy="run_gunc = false">run_gunc</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">GUNC contamination QC (upstream --run_gunc; the reference database is<br>user-provided — gunc download_db; fails fast when empty)<br><span class="ox-param-usedby">used by <code>26</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_virus_identification = value" data-copy="run_virus_identification = false">run_virus_identification</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_virus_identification = value" aria-label="Copy run_virus_identification = false to clipboard" data-copy="run_virus_identification = false">run_virus_identification</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Virus identification (upstream --run_virus_identification; the geNomad<br>database is user-provided — genomad download-database; fails fast when empty)<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy semibin_environment = value" data-copy="semibin_environment = global">semibin_environment</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy semibin_environment = value" aria-label="Copy semibin_environment = global to clipboard" data-copy="semibin_environment = global">semibin_environment</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>global</code></td>
 <td class="ox-p-desc">Binning options (upstream params with the same defaults)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy semibin_rng_seed = value" data-copy="semibin_rng_seed = 1">semibin_rng_seed</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy semibin_rng_seed = value" aria-label="Copy semibin_rng_seed = 1 to clipboard" data-copy="semibin_rng_seed = 1">semibin_rng_seed</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>1</code></td>
 <td class="ox-p-desc">Binning options (upstream params with the same defaults)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy shortread_percentidentity = value" data-copy="shortread_percentidentity = ">shortread_percentidentity</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy shortread_percentidentity = value" aria-label="Copy shortread_percentidentity =  to clipboard" data-copy="shortread_percentidentity = ">shortread_percentidentity</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">Binning options (upstream params with the same defaults)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy tiara_min_length = value" data-copy="tiara_min_length = 3000">tiara_min_length</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy tiara_min_length = value" aria-label="Copy tiara_min_length = 3000 to clipboard" data-copy="tiara_min_length = 3000">tiara_min_length</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>3000</code></td>
 <td class="ox-p-desc">Domain classification with Tiara (upstream --bin_domain_classification / --tiara_min_length)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>

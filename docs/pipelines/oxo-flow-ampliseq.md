@@ -98,343 +98,343 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-ampliseq
 <thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
 <tbody>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy FW_primer = value" data-copy="FW_primer = ">FW_primer</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy FW_primer = value" aria-label="Copy FW_primer =  to clipboard" data-copy="FW_primer = ">FW_primer</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">--- primers (upstream default null renders literal &quot;null&quot; adapters;<br>port uses empty strings — see README fidelity table) ---<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy RV_primer = value" data-copy="RV_primer = ">RV_primer</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy RV_primer = value" aria-label="Copy RV_primer =  to clipboard" data-copy="RV_primer = ">RV_primer</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">--- primers (upstream default null renders literal &quot;null&quot; adapters;<br>port uses empty strings — see README fidelity table) ---<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ancom = value" data-copy="ancom = false">ancom</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ancom = value" aria-label="Copy ancom = false to clipboard" data-copy="ancom = false">ancom</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ancombc = value" data-copy="ancombc = false">ancombc</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ancombc = value" aria-label="Copy ancombc = false to clipboard" data-copy="ancombc = false">ancombc</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ancombc2 = value" data-copy="ancombc2 = false">ancombc2</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ancombc2 = value" aria-label="Copy ancombc2 = false to clipboard" data-copy="ancombc2 = false">ancombc2</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ancombc2_formula = value" data-copy="ancombc2_formula = ">ancombc2_formula</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ancombc2_formula = value" aria-label="Copy ancombc2_formula =  to clipboard" data-copy="ancombc2_formula = ">ancombc2_formula</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ancombc_effect_size = value" data-copy="ancombc_effect_size = 1">ancombc_effect_size</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ancombc_effect_size = value" aria-label="Copy ancombc_effect_size = 1 to clipboard" data-copy="ancombc_effect_size = 1">ancombc_effect_size</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>1</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ancombc_formula = value" data-copy="ancombc_formula = ">ancombc_formula</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ancombc_formula = value" aria-label="Copy ancombc_formula =  to clipboard" data-copy="ancombc_formula = ">ancombc_formula</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">comma-separated formulas<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ancombc_significance = value" data-copy="ancombc_significance = 0.05">ancombc_significance</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ancombc_significance = value" aria-label="Copy ancombc_significance = 0.05 to clipboard" data-copy="ancombc_significance = 0.05">ancombc_significance</button></td>
 <td class="ox-p-t"><code>float</code></td>
 <td class="ox-p-d"><code>0.05</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy classifier = value" data-copy="classifier = ">classifier</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy classifier = value" aria-label="Copy classifier =  to clipboard" data-copy="classifier = ">classifier</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">--- QIIME2 taxonomy classifier (upstream params.qiime_ref_taxonomy /<br>params.classifier — off by default; DADA2 taxonomy is the<br>default path). qiime_ref_taxonomy trains a Naive-Bayes<br>classifier on the primer-extracted reference below; classifier<br>is a path to a pre-trained .qza (skips training). ---<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cut_its = value" data-copy="cut_its = none">cut_its</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cut_its = value" aria-label="Copy cut_its = none to clipboard" data-copy="cut_its = none">cut_its</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>none</code></td>
 <td class="ox-p-desc">truncation (truncLen=0) + a second cutadapt<br>read-through pass removing revcomp primers<br><span class="ox-param-usedby">used by <code>9</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cutadapt_max_error_rate = value" data-copy="cutadapt_max_error_rate = 0.1">cutadapt_max_error_rate</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cutadapt_max_error_rate = value" aria-label="Copy cutadapt_max_error_rate = 0.1 to clipboard" data-copy="cutadapt_max_error_rate = 0.1">cutadapt_max_error_rate</button></td>
 <td class="ox-p-t"><code>float</code></td>
 <td class="ox-p-d"><code>0.1</code></td>
 <td class="ox-p-desc">cutadapt<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cutadapt_min_overlap = value" data-copy="cutadapt_min_overlap = 3">cutadapt_min_overlap</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cutadapt_min_overlap = value" aria-label="Copy cutadapt_min_overlap = 3 to clipboard" data-copy="cutadapt_min_overlap = 3">cutadapt_min_overlap</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>3</code></td>
 <td class="ox-p-desc">cutadapt<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dada_addspecies_allowmultiple = value" data-copy="dada_addspecies_allowmultiple = false">dada_addspecies_allowmultiple</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dada_addspecies_allowmultiple = value" aria-label="Copy dada_addspecies_allowmultiple = false to clipboard" data-copy="dada_addspecies_allowmultiple = false">dada_addspecies_allowmultiple</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">DADA2 taxonomy assignment<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dada_assign_chunksize = value" data-copy="dada_assign_chunksize = 10000">dada_assign_chunksize</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dada_assign_chunksize = value" aria-label="Copy dada_assign_chunksize = 10000 to clipboard" data-copy="dada_assign_chunksize = 10000">dada_assign_chunksize</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>10000</code></td>
 <td class="ox-p-desc">DADA2 taxonomy assignment<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dada_assign_taxlevels = value" data-copy="dada_assign_taxlevels = Domain,Kingdom,Phylum,Class,Order,Family,Genus,Species">dada_assign_taxlevels</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dada_assign_taxlevels = value" aria-label="Copy dada_assign_taxlevels = Domain,Kingdom,Phylum,Class,Order,Family,Genus,Species to clipboard" data-copy="dada_assign_taxlevels = Domain,Kingdom,Phylum,Class,Order,Family,Genus,Species">dada_assign_taxlevels</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>Domain,Kingdom,Phylum,Class,Order,Family,Genus,Species</code></td>
 <td class="ox-p-desc">DADA2 taxonomy assignment<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dada_min_boot = value" data-copy="dada_min_boot = 50">dada_min_boot</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dada_min_boot = value" aria-label="Copy dada_min_boot = 50 to clipboard" data-copy="dada_min_boot = 50">dada_min_boot</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>50</code></td>
 <td class="ox-p-desc">DADA2 taxonomy assignment<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dada_ref_taxonomy = value" data-copy="dada_ref_taxonomy = sbdi-gtdb=R11-RS232-1">dada_ref_taxonomy</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dada_ref_taxonomy = value" aria-label="Copy dada_ref_taxonomy = sbdi-gtdb=R11-RS232-1 to clipboard" data-copy="dada_ref_taxonomy = sbdi-gtdb=R11-RS232-1">dada_ref_taxonomy</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>sbdi-gtdb=R11-RS232-1</code></td>
 <td class="ox-p-desc">DADA2 taxonomy assignment<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dada_ref_taxonomy_citation = value" data-copy="dada_ref_taxonomy_citation = Lundin D, Andersson A. SBDI Sativa curated 16S GTDB database. FigShare. doi: 10.17044/scilifelab.14869077.v12">dada_ref_taxonomy_citation</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dada_ref_taxonomy_citation = value" aria-label="Copy dada_ref_taxonomy_citation = Lundin D, Andersson A. SBDI Sativa curated 16S GTDB database. FigShare. doi: 10.17044/scilifelab.14869077.v12 to clipboard" data-copy="dada_ref_taxonomy_citation = Lundin D, Andersson A. SBDI Sativa curated 16S GTDB database. FigShare. doi: 10.17044/scilifelab.14869077.v12">dada_ref_taxonomy_citation</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>Lundin D, Andersson A. SBDI Sativa curated 16S GTDB database. FigShare. doi: 10.17044/scilifelab.14869077.v12</code></td>
 <td class="ox-p-desc">DADA2 taxonomy assignment<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dada_ref_taxonomy_dbversion = value" data-copy="dada_ref_taxonomy_dbversion = SBDI-GTDB-R11-RS232-1 (https://figshare.scilifelab.se/articles/dataset/SBDI_Sativa_curated_16S_GTDB_database/14869077/10)">dada_ref_taxonomy_dbversion</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dada_ref_taxonomy_dbversion = value" aria-label="Copy dada_ref_taxonomy_dbversion = SBDI-GTDB-R11-RS232-1 (https://figshare.scilifelab.se/articles/dataset/SBDI_Sativa_curated_16S_GTDB_database/14869077/10) to clipboard" data-copy="dada_ref_taxonomy_dbversion = SBDI-GTDB-R11-RS232-1 (https://figshare.scilifelab.se/articles/dataset/SBDI_Sativa_curated_16S_GTDB_database/14869077/10)">dada_ref_taxonomy_dbversion</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>SBDI-GTDB-R11-RS232-1 (https://figshare.scilifelab.se/articles/dataset/SBDI_Sativa_curated_16S_GTDB_database/14869077/10)</code></td>
 <td class="ox-p-desc">DADA2 taxonomy assignment<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dada_ref_taxonomy_title = value" data-copy="dada_ref_taxonomy_title = SBDI-GTDB - Sativa curated 16S GTDB database - Release R11-RS232-1">dada_ref_taxonomy_title</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dada_ref_taxonomy_title = value" aria-label="Copy dada_ref_taxonomy_title = SBDI-GTDB - Sativa curated 16S GTDB database - Release R11-RS232-1 to clipboard" data-copy="dada_ref_taxonomy_title = SBDI-GTDB - Sativa curated 16S GTDB database - Release R11-RS232-1">dada_ref_taxonomy_title</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>SBDI-GTDB - Sativa curated 16S GTDB database - Release R11-RS232-1</code></td>
 <td class="ox-p-desc">DADA2 taxonomy assignment<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dada_ref_taxonomy_urls = value" data-copy="dada_ref_taxonomy_urls = https://ndownloader.figshare.com/files/64711203,https://ndownloader.figshare.com/files/64711218">dada_ref_taxonomy_urls</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dada_ref_taxonomy_urls = value" aria-label="Copy dada_ref_taxonomy_urls = https://ndownloader.figshare.com/files/64711203,https://ndownloader.figshare.com/files/64711218 to clipboard" data-copy="dada_ref_taxonomy_urls = https://ndownloader.figshare.com/files/64711203,https://ndownloader.figshare.com/files/64711218">dada_ref_taxonomy_urls</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>https://ndownloader.figshare.com/files/64711203,https://ndownloader.figshare.com/files/64711218</code></td>
 <td class="ox-p-desc">DADA2 taxonomy assignment<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dada_taxonomy_rc = value" data-copy="dada_taxonomy_rc = false">dada_taxonomy_rc</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dada_taxonomy_rc = value" aria-label="Copy dada_taxonomy_rc = false to clipboard" data-copy="dada_taxonomy_rc = false">dada_taxonomy_rc</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">DADA2 taxonomy assignment<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy diversity_rarefaction_depth = value" data-copy="diversity_rarefaction_depth = 500">diversity_rarefaction_depth</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy diversity_rarefaction_depth = value" aria-label="Copy diversity_rarefaction_depth = 500 to clipboard" data-copy="diversity_rarefaction_depth = 500">diversity_rarefaction_depth</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>500</code></td>
 <td class="ox-p-desc">floor for core-metrics depth<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy illumina_pe_its = value" data-copy="illumina_pe_its = false">illumina_pe_its</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy illumina_pe_its = value" aria-label="Copy illumina_pe_its = false to clipboard" data-copy="illumina_pe_its = false">illumina_pe_its</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">--- ITS branch (upstream params.illumina_pe_its / cut_its /<br>its_partial / its_extractor — all default off -&gt; 16S path) ---<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy its_extractor = value" data-copy="its_extractor = itsx">its_extractor</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy its_extractor = value" aria-label="Copy its_extractor = itsx to clipboard" data-copy="its_extractor = itsx">its_extractor</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>itsx</code></td>
 <td class="ox-p-desc">&quot;itsx&quot; | &quot;itsxrust&quot;<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy its_partial = value" data-copy="its_partial = 0">its_partial</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy its_partial = value" aria-label="Copy its_partial = 0 to clipboard" data-copy="its_partial = 0">its_partial</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>0</code></td>
 <td class="ox-p-desc">keep partial ITS hits (ITSx --partial N)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy max_ee = value" data-copy="max_ee = 2">max_ee</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy max_ee = value" aria-label="Copy max_ee = 2 to clipboard" data-copy="max_ee = 2">max_ee</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>2</code></td>
 <td class="ox-p-desc">DADA2 filtering / denoising<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy max_len = value" data-copy="max_len = Inf">max_len</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy max_len = value" aria-label="Copy max_len = Inf to clipboard" data-copy="max_len = Inf">max_len</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>Inf</code></td>
 <td class="ox-p-desc">DADA2 filtering / denoising<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy merge_runs = value" data-copy="merge_runs = false">merge_runs</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy merge_runs = value" aria-label="Copy merge_runs = false to clipboard" data-copy="merge_runs = false">merge_runs</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">--- multi-run merge (upstream DADA2_MERGE globs *.stats.tsv /<br>*.ASVtable.rds when several --run_ids are given) ---<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mergepairs_strategy = value" data-copy="mergepairs_strategy = merge">mergepairs_strategy</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mergepairs_strategy = value" aria-label="Copy mergepairs_strategy = merge to clipboard" data-copy="mergepairs_strategy = merge">mergepairs_strategy</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>merge</code></td>
 <td class="ox-p-desc">&quot;merge&quot; | &quot;consensus&quot; | &quot;concatenate&quot;<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy metadata_file = value" data-copy="metadata_file = test/fixtures/metadata.tsv">metadata_file</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy metadata_file = value" aria-label="Copy metadata_file = test/fixtures/metadata.tsv to clipboard" data-copy="metadata_file = test/fixtures/metadata.tsv">metadata_file</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/metadata.tsv</code></td>
 <td class="ox-p-desc">run / metadata<br><span class="ox-param-usedby">used by <code>11</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy min_len = value" data-copy="min_len = 50">min_len</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy min_len = value" aria-label="Copy min_len = 50 to clipboard" data-copy="min_len = 50">min_len</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>50</code></td>
 <td class="ox-p-desc">DADA2 filtering / denoising<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy picrust = value" data-copy="picrust = false">picrust</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy picrust = value" aria-label="Copy picrust = false to clipboard" data-copy="picrust = false">picrust</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">picrust (upstream params.picrust, default false)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy qiime_adonis_formula = value" data-copy="qiime_adonis_formula = ">qiime_adonis_formula</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy qiime_adonis_formula = value" aria-label="Copy qiime_adonis_formula =  to clipboard" data-copy="qiime_adonis_formula = ">qiime_adonis_formula</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">comma-separated, e.g. &quot;group&quot;<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy qiime_ref_taxonomy = value" data-copy="qiime_ref_taxonomy = ">qiime_ref_taxonomy</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy qiime_ref_taxonomy = value" aria-label="Copy qiime_ref_taxonomy =  to clipboard" data-copy="qiime_ref_taxonomy = ">qiime_ref_taxonomy</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">--- QIIME2 taxonomy classifier (upstream params.qiime_ref_taxonomy /<br>params.classifier — off by default; DADA2 taxonomy is the<br>default path). qiime_ref_taxonomy trains a Naive-Bayes<br>classifier on the primer-extracted reference below; classifier<br>is a path to a pre-trained .qza (skips training). ---<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy qiime_ref_taxonomy_urls = value" data-copy="qiime_ref_taxonomy_urls = https://data.qiime2.org/2023.7/common/silva-138-99-seqs.qza,https://data.qiime2.org/2023.7/common/silva-138-99-tax.qza">qiime_ref_taxonomy_urls</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy qiime_ref_taxonomy_urls = value" aria-label="Copy qiime_ref_taxonomy_urls = https://data.qiime2.org/2023.7/common/silva-138-99-seqs.qza,https://data.qiime2.org/2023.7/common/silva-138-99-tax.qza to clipboard" data-copy="qiime_ref_taxonomy_urls = https://data.qiime2.org/2023.7/common/silva-138-99-seqs.qza,https://data.qiime2.org/2023.7/common/silva-138-99-tax.qza">qiime_ref_taxonomy_urls</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>https://data.qiime2.org/2023.7/common/silva-138-99-seqs.qza,https://data.qiime2.org/2023.7/common/silva-138-99-tax.qza</code></td>
 <td class="ox-p-desc">--- QIIME2 taxonomy classifier (upstream params.qiime_ref_taxonomy /<br>params.classifier — off by default; DADA2 taxonomy is the<br>default path). qiime_ref_taxonomy trains a Naive-Bayes<br>classifier on the primer-extracted reference below; classifier<br>is a path to a pre-trained .qza (skips training). ---<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy quality_type = value" data-copy="quality_type = Auto">quality_type</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy quality_type = value" aria-label="Copy quality_type = Auto to clipboard" data-copy="quality_type = Auto">quality_type</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>Auto</code></td>
 <td class="ox-p-desc">DADA2 filtering / denoising<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_id = value" data-copy="run_id = 1">run_id</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_id = value" aria-label="Copy run_id = 1 to clipboard" data-copy="run_id = 1">run_id</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>1</code></td>
 <td class="ox-p-desc">run / metadata<br><span class="ox-param-usedby">used by <code>5</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_qiime2 = value" data-copy="run_qiime2 = false">run_qiime2</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_qiime2 = value" aria-label="Copy run_qiime2 = false to clipboard" data-copy="run_qiime2 = false">run_qiime2</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">the four qiime2 rules run in the quay.io/qiime2/amplicon container<br>(~20GB unpacked — needs ~25GB free disk for the pull; there is no<br>conda qiime2 on common mirrors). Upstream runs qiime2 always; the<br>port gates it (default false) so a fresh clone completes the DADA2<br>analysis without the container. Set true (with the disk) to enable.<br><span class="ox-param-usedby">used by <code>22</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sample_inference = value" data-copy="sample_inference = independent">sample_inference</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sample_inference = value" aria-label="Copy sample_inference = independent to clipboard" data-copy="sample_inference = independent">sample_inference</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>independent</code></td>
 <td class="ox-p-desc">&quot;independent&quot; | &quot;pooled&quot; | &quot;pseudo&quot;<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy seed = value" data-copy="seed = 100">seed</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy seed = value" aria-label="Copy seed = 100 to clipboard" data-copy="seed = 100">seed</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>100</code></td>
 <td class="ox-p-desc">DADA2 filtering / denoising<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_abundance_tables = value" data-copy="skip_abundance_tables = false">skip_abundance_tables</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_abundance_tables = value" aria-label="Copy skip_abundance_tables = false to clipboard" data-copy="skip_abundance_tables = false">skip_abundance_tables</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">feature-table exports (abs/rel)<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_alpha_rarefaction = value" data-copy="skip_alpha_rarefaction = false">skip_alpha_rarefaction</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_alpha_rarefaction = value" aria-label="Copy skip_alpha_rarefaction = false to clipboard" data-copy="skip_alpha_rarefaction = false">skip_alpha_rarefaction</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Skip alpha rarefaction (upstream --skip_alpha_rarefaction) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_barplot = value" data-copy="skip_barplot = false">skip_barplot</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_barplot = value" aria-label="Copy skip_barplot = false to clipboard" data-copy="skip_barplot = false">skip_barplot</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">skip flags (upstream params.skip_*, all default false -&gt; full default path)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_dada_taxonomy = value" data-copy="skip_dada_taxonomy = false">skip_dada_taxonomy</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_dada_taxonomy = value" aria-label="Copy skip_dada_taxonomy = false to clipboard" data-copy="skip_dada_taxonomy = false">skip_dada_taxonomy</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">skip flags (upstream params.skip_*, all default false -&gt; full default path)<br><span class="ox-param-usedby">used by <code>6</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_diversity_indices = value" data-copy="skip_diversity_indices = false">skip_diversity_indices</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_diversity_indices = value" aria-label="Copy skip_diversity_indices = false to clipboard" data-copy="skip_diversity_indices = false">skip_diversity_indices</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Skip diversity indices (upstream --skip_diversity_indices) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>7</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_fastqc = value" data-copy="skip_fastqc = false">skip_fastqc</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_fastqc = value" aria-label="Copy skip_fastqc = false to clipboard" data-copy="skip_fastqc = false">skip_fastqc</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">skip flags (upstream params.skip_*, all default false -&gt; full default path)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_multiqc = value" data-copy="skip_multiqc = false">skip_multiqc</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_multiqc = value" aria-label="Copy skip_multiqc = false to clipboard" data-copy="skip_multiqc = false">skip_multiqc</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">skip flags (upstream params.skip_*, all default false -&gt; full default path)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_qiime = value" data-copy="skip_qiime = false">skip_qiime</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_qiime = value" aria-label="Copy skip_qiime = false to clipboard" data-copy="skip_qiime = false">skip_qiime</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">skip flags (upstream params.skip_*, all default false -&gt; full default path)<br><span class="ox-param-usedby">used by <code>6</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_qiime_downstream = value" data-copy="skip_qiime_downstream = false">skip_qiime_downstream</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_qiime_downstream = value" aria-label="Copy skip_qiime_downstream = false to clipboard" data-copy="skip_qiime_downstream = false">skip_qiime_downstream</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">--- QIIME2 downstream analyses beyond the taxa barplot (upstream<br>params.skip_qiime_downstream default false; the port gates all<br>of these on run_qiime2 as well) ---<br><span class="ox-param-usedby">used by <code>14</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_taxonomy = value" data-copy="skip_taxonomy = false">skip_taxonomy</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_taxonomy = value" aria-label="Copy skip_taxonomy = false to clipboard" data-copy="skip_taxonomy = false">skip_taxonomy</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">skip flags (upstream params.skip_*, all default false -&gt; full default path)<br><span class="ox-param-usedby">used by <code>14</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy tax_agglom_max = value" data-copy="tax_agglom_max = 6">tax_agglom_max</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy tax_agglom_max = value" aria-label="Copy tax_agglom_max = 6 to clipboard" data-copy="tax_agglom_max = 6">tax_agglom_max</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>6</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>5</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy tax_agglom_min = value" data-copy="tax_agglom_min = 2">tax_agglom_min</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy tax_agglom_min = value" aria-label="Copy tax_agglom_min = 2 to clipboard" data-copy="tax_agglom_min = 2">tax_agglom_min</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>2</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>5</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy trunc_qmin = value" data-copy="trunc_qmin = 25">trunc_qmin</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy trunc_qmin = value" aria-label="Copy trunc_qmin = 25 to clipboard" data-copy="trunc_qmin = 25">trunc_qmin</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>25</code></td>
 <td class="ox-p-desc">DADA2 filtering / denoising<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy trunc_rmin = value" data-copy="trunc_rmin = 0.75">trunc_rmin</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy trunc_rmin = value" aria-label="Copy trunc_rmin = 0.75 to clipboard" data-copy="trunc_rmin = 0.75">trunc_rmin</button></td>
 <td class="ox-p-t"><code>float</code></td>
 <td class="ox-p-d"><code>0.75</code></td>
 <td class="ox-p-desc">DADA2 filtering / denoising<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy truncq = value" data-copy="truncq = 2">truncq</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy truncq = value" aria-label="Copy truncq = 2 to clipboard" data-copy="truncq = 2">truncq</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>2</code></td>
 <td class="ox-p-desc">DADA2 filtering / denoising<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>

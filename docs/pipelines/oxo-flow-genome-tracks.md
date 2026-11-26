@@ -99,133 +99,133 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-genome-tracks
 <thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
 <tbody>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bamCoverage_parameters = value" data-copy="bamCoverage_parameters = -p max --binSize 10  --normalizeUsing RPGC --effectiveGenomeSize 2407883318">bamCoverage_parameters</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bamCoverage_parameters = value" aria-label="Copy bamCoverage_parameters = -p max --binSize 10  --normalizeUsing RPGC --effectiveGenomeSize 2407883318 to clipboard" data-copy="bamCoverage_parameters = -p max --binSize 10  --normalizeUsing RPGC --effectiveGenomeSize 2407883318">bamCoverage_parameters</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>-p max --binSize 10  --normalizeUsing RPGC --effectiveGenomeSize 2407883318</code></td>
 <td class="ox-p-desc">upstream config/config.yaml defaults, adapted paths<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bam_dir = value" data-copy="bam_dir = test/fixtures/bams">bam_dir</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bam_dir = value" aria-label="Copy bam_dir = test/fixtures/bams to clipboard" data-copy="bam_dir = test/fixtures/bams">bam_dir</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/bams</code></td>
 <td class="ox-p-desc">upstream config/config.yaml defaults, adapted paths<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy base_buffer = value" data-copy="base_buffer = 2000">base_buffer</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy base_buffer = value" aria-label="Copy base_buffer = 2000 to clipboard" data-copy="base_buffer = 2000">base_buffer</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>2000</code></td>
 <td class="ox-p-desc">upstream config/config.yaml defaults, adapted paths<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy email = value" data-copy="email = sreichl@cemm.at">email</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy email = value" aria-label="Copy email = sreichl@cemm.at to clipboard" data-copy="email = sreichl@cemm.at">email</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>sreichl@cemm.at</code></td>
 <td class="ox-p-desc">upstream config/config.yaml defaults, adapted paths<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy env_export_enabled = value" data-copy="env_export_enabled = false">env_export_enabled</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy env_export_enabled = value" aria-label="Copy env_export_enabled = false to clipboard" data-copy="env_export_enabled = false">env_export_enabled</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">export the built conda environments as results/genome_tracks/envs/*.yaml<br>(upstream &#x27;env_export&#x27; runs in rule all; the port keeps it opt-in so the<br>default graph is unchanged — the checked-in envs/*.yaml already document<br>the pinned versions; see README &quot;Fidelity&quot;)<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy file_type = value" data-copy="file_type = pdf">file_type</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy file_type = value" aria-label="Copy file_type = pdf to clipboard" data-copy="file_type = pdf">file_type</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>pdf</code></td>
 <td class="ox-p-desc">upstream config/config.yaml defaults, adapted paths<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gene_list = value" data-copy="gene_list = test/fixtures/genes.csv">gene_list</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gene_list = value" aria-label="Copy gene_list = test/fixtures/genes.csv to clipboard" data-copy="gene_list = test/fixtures/genes.csv">gene_list</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/genes.csv</code></td>
 <td class="ox-p-desc">upstream config/config.yaml defaults, adapted paths<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy genome = value" data-copy="genome = mm10">genome</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy genome = value" aria-label="Copy genome = mm10 to clipboard" data-copy="genome = mm10">genome</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>mm10</code></td>
 <td class="ox-p-desc">upstream config/config.yaml defaults, adapted paths<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy genome_bed = value" data-copy="genome_bed = test/fixtures/genome_bed/ref.bed.gz">genome_bed</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy genome_bed = value" aria-label="Copy genome_bed = test/fixtures/genome_bed/ref.bed.gz to clipboard" data-copy="genome_bed = test/fixtures/genome_bed/ref.bed.gz">genome_bed</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/genome_bed/ref.bed.gz</code></td>
 <td class="ox-p-desc">upstream config/config.yaml defaults, adapted paths<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy igv_report_enabled = value" data-copy="igv_report_enabled = false">igv_report_enabled</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy igv_report_enabled = value" aria-label="Copy igv_report_enabled = false to clipboard" data-copy="igv_report_enabled = false">igv_report_enabled</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">IGV report (igv-reports), deactivated upstream (commented out of rule all)<br>— opt-in: set igv_report_enabled = true, then <code>-t igv_report</code>.<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy igv_report_memory = value" data-copy="igv_report_memory = 8000M">igv_report_memory</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy igv_report_memory = value" aria-label="Copy igv_report_memory = 8000M to clipboard" data-copy="igv_report_memory = 8000M">igv_report_memory</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>8000M</code></td>
 <td class="ox-p-desc">upstream&#x27;s dynamic <code>max(2 * input.size_mb, 8000)</code> memory is not expressible<br>statically in oxo-flow — fixed at the upstream 8000 MB minimum<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy plot_enabled = value" data-copy="plot_enabled = true">plot_enabled</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy plot_enabled = value" aria-label="Copy plot_enabled = true to clipboard" data-copy="plot_enabled = true">plot_enabled</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>true</code></td>
 <td class="ox-p-desc">pair-level gtracks plots: needs gene-named bigWigs (upstream&#x27;s data<br>layout); set false for the generic-named mini fixtures.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy project_name = value" data-copy="project_name = myData">project_name</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy project_name = value" aria-label="Copy project_name = myData to clipboard" data-copy="project_name = myData">project_name</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>myData</code></td>
 <td class="ox-p-desc">upstream config/config.yaml defaults, adapted paths<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy result_path = value" data-copy="result_path = results">result_path</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy result_path = value" aria-label="Copy result_path = results to clipboard" data-copy="result_path = results">result_path</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>results</code></td>
 <td class="ox-p-desc">upstream config/config.yaml defaults, adapted paths<br><span class="ox-param-usedby">used by <code>16</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sample_annotation = value" data-copy="sample_annotation = test/fixtures/annotation.csv">sample_annotation</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sample_annotation = value" aria-label="Copy sample_annotation = test/fixtures/annotation.csv to clipboard" data-copy="sample_annotation = test/fixtures/annotation.csv">sample_annotation</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/annotation.csv</code></td>
 <td class="ox-p-desc">upstream config/config.yaml defaults, adapted paths<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sc_bam_dir = value" data-copy="sc_bam_dir = test/fixtures/sc_bams">sc_bam_dir</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sc_bam_dir = value" aria-label="Copy sc_bam_dir = test/fixtures/sc_bams to clipboard" data-copy="sc_bam_dir = test/fixtures/sc_bams">sc_bam_dir</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/sc_bams</code></td>
 <td class="ox-p-desc">one aligned BAM per sc sample: {sc_bam_dir}/{sc_id}.bam (BAMs need a CB<br>cell-barcode tag per read, see test/fixtures/make_sc_fixtures.py)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sc_enabled = value" data-copy="sc_enabled = true">sc_enabled</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sc_enabled = value" aria-label="Copy sc_enabled = true to clipboard" data-copy="sc_enabled = true">sc_enabled</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>true</code></td>
 <td class="ox-p-desc">Single-cell mode (upstream: any annotation &#x27;group&#x27; value ending in .tsv<br>switches that sample to sinto barcode splitting). oxo-flow cannot discover<br>groups from TSV contents at load time, so the sc samples, their BAM/metadata<br>paths and the sc groups are declared explicitly. Set sc_enabled = false if<br>you have no single-cell samples.<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sc_groups = value" data-copy="sc_groups = g1,g2">sc_groups</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sc_groups = value" aria-label="Copy sc_groups = g1,g2 to clipboard" data-copy="sc_groups = g1,g2">sc_groups</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>g1,g2</code></td>
 <td class="ox-p-desc">unique group values of the sc metadata TSV col-2 (merged + sorted into<br>samples_list above)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sc_metadata = value" data-copy="sc_metadata = test/fixtures/sc_metadata">sc_metadata</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sc_metadata = value" aria-label="Copy sc_metadata = test/fixtures/sc_metadata to clipboard" data-copy="sc_metadata = test/fixtures/sc_metadata">sc_metadata</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/sc_metadata</code></td>
 <td class="ox-p-desc">one 2-column barcode TSV (barcode&lt;TAB&gt;group, no header) per sc sample:<br>{sc_metadata}/{sc_id}.tsv — the group values of col 2 become the sc groups<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy track_colors = value" data-copy="track_colors = untreated=#800080,treated=#00FFFF">track_colors</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy track_colors = value" aria-label="Copy track_colors = untreated=#800080,treated=#00FFFF to clipboard" data-copy="track_colors = untreated=#800080,treated=#00FFFF">track_colors</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>untreated=#800080,treated=#00FFFF</code></td>
 <td class="ox-p-desc">upstream config/config.yaml defaults, adapted paths<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy width = value" data-copy="width = 20">width</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy width = value" aria-label="Copy width = 20 to clipboard" data-copy="width = 20">width</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>20</code></td>
 <td class="ox-p-desc">upstream config/config.yaml defaults, adapted paths<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy x_axis = value" data-copy="x_axis = bottom">x_axis</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy x_axis = value" aria-label="Copy x_axis = bottom to clipboard" data-copy="x_axis = bottom">x_axis</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>bottom</code></td>
 <td class="ox-p-desc">upstream config/config.yaml defaults, adapted paths<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>

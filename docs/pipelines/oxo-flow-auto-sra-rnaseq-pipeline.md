@@ -97,85 +97,85 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipeline
 <thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
 <tbody>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy GTF = value" data-copy="GTF = /data/reference/genome/GRCh38/Homo_sapiens.GRCh38.95.sort.gtf">GTF</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy GTF = value" aria-label="Copy GTF = /data/reference/genome/GRCh38/Homo_sapiens.GRCh38.95.sort.gtf to clipboard" data-copy="GTF = /data/reference/genome/GRCh38/Homo_sapiens.GRCh38.95.sort.gtf">GTF</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>/data/reference/genome/GRCh38/Homo_sapiens.GRCh38.95.sort.gtf</code></td>
 <td class="ox-p-desc">STAR index dir and GTF (upstream keys index / GTF).<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bark = value" data-copy="bark = false">bark</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bark = value" aria-label="Copy bark = false to clipboard" data-copy="bark = false">bark</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Bark / feishu push notifications (upstream config.yaml keys). Consumed by<br>the batch runner scripts/run_batch.py after each metadata file finishes<br>(upstream run.py). Keep off unless the endpoints are configured.<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bark_api = value" data-copy="bark_api = ">bark_api</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bark_api = value" aria-label="Copy bark_api =  to clipboard" data-copy="bark_api = ">bark_api</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">Bark / feishu push notifications (upstream config.yaml keys). Consumed by<br>the batch runner scripts/run_batch.py after each metadata file finishes<br>(upstream run.py). Keep off unless the endpoints are configured.<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy db_id = value" data-copy="db_id = D21122">db_id</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy db_id = value" aria-label="Copy db_id = D21122 to clipboard" data-copy="db_id = D21122">db_id</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>D21122</code></td>
 <td class="ox-p-desc">DB_ID — upstream: basename(metadata).replace(&quot;.txt&quot;, &quot;&quot;).<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy feishu = value" data-copy="feishu = false">feishu</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy feishu = value" aria-label="Copy feishu = false to clipboard" data-copy="feishu = false">feishu</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Bark / feishu push notifications (upstream config.yaml keys). Consumed by<br>the batch runner scripts/run_batch.py after each metadata file finishes<br>(upstream run.py). Keep off unless the endpoints are configured.<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy feishu_api = value" data-copy="feishu_api = ">feishu_api</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy feishu_api = value" aria-label="Copy feishu_api =  to clipboard" data-copy="feishu_api = ">feishu_api</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">Bark / feishu push notifications (upstream config.yaml keys). Consumed by<br>the batch runner scripts/run_batch.py after each metadata file finishes<br>(upstream run.py). Keep off unless the endpoints are configured.<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy index = value" data-copy="index = /data/reference/genome/GRCh38/STAR">index</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy index = value" aria-label="Copy index = /data/reference/genome/GRCh38/STAR to clipboard" data-copy="index = /data/reference/genome/GRCh38/STAR">index</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>/data/reference/genome/GRCh38/STAR</code></td>
 <td class="ox-p-desc">STAR index dir and GTF (upstream keys index / GTF).<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mail = value" data-copy="mail = false">mail</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mail = value" aria-label="Copy mail = false to clipboard" data-copy="mail = false">mail</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Email notification (upstream onsuccess + onerror). Keep off unless SMTP<br>is configured — the [workflow] on_error hook reuses these same keys.<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mail_to = value" data-copy="mail_to = ">mail_to</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mail_to = value" aria-label="Copy mail_to =  to clipboard" data-copy="mail_to = ">mail_to</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">Email notification (upstream onsuccess + onerror). Keep off unless SMTP<br>is configured — the [workflow] on_error hook reuses these same keys.<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy metadata = value" data-copy="metadata = test/fixtures/metadata/D21122_6sample.txt">metadata</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy metadata = value" aria-label="Copy metadata = test/fixtures/metadata/D21122_6sample.txt to clipboard" data-copy="metadata = test/fixtures/metadata/D21122_6sample.txt">metadata</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/metadata/D21122_6sample.txt</code></td>
 <td class="ox-p-desc">Metadata TSV (upstream key metadata). Columns:<br>Dataset GSE GSM gene method celline group group_name type platform SRR paired<br>The repo default points at the bundled example dataset (upstream doc/D21122.txt).<br><span class="ox-param-usedby">used by <code>7</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sender = value" data-copy="sender = ">sender</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sender = value" aria-label="Copy sender =  to clipboard" data-copy="sender = ">sender</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">Email notification (upstream onsuccess + onerror). Keep off unless SMTP<br>is configured — the [workflow] on_error hook reuses these same keys.<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sender_password = value" data-copy="sender_password = ">sender_password</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sender_password = value" aria-label="Copy sender_password =  to clipboard" data-copy="sender_password = ">sender_password</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">Email notification (upstream onsuccess + onerror). Keep off unless SMTP<br>is configured — the [workflow] on_error hook reuses these same keys.<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sra_data_path = value" data-copy="sra_data_path = sra">sra_data_path</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sra_data_path = value" aria-label="Copy sra_data_path = sra to clipboard" data-copy="sra_data_path = sra">sra_data_path</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>sra</code></td>
 <td class="ox-p-desc">Directory holding pre-downloaded .sra files, layout &lt;dir&gt;/&lt;SRR&gt;/&lt;SRR&gt;.sra<br>(upstream key sra_data_path).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy srr_separator = value" data-copy="srr_separator = ,">srr_separator</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy srr_separator = value" aria-label="Copy srr_separator = , to clipboard" data-copy="srr_separator = ,">srr_separator</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>,</code></td>
 <td class="ox-p-desc">Separator joining multiple SRR runs per sample in the metadata SRR column.<br><span class="ox-param-usedby">used by <code>5</code> rules</span></td>

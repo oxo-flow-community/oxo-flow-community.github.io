@@ -101,253 +101,253 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-nanoseq
 <thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
 <tbody>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy aligner = value" data-copy="aligner = minimap2">aligner</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy aligner = value" aria-label="Copy aligner = minimap2 to clipboard" data-copy="aligner = minimap2">aligner</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>minimap2</code></td>
 <td class="ox-p-desc">-- Alignment<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bam_suffix = value" data-copy="bam_suffix = .sorted.bam">bam_suffix</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bam_suffix = value" aria-label="Copy bam_suffix = .sorted.bam to clipboard" data-copy="bam_suffix = .sorted.bam">bam_suffix</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>.sorted.bam</code></td>
 <td class="ox-p-desc">-- Suffix appended to per-sample bam names wherever rules consume reads:<br>&quot;.sorted.bam&quot; (alignment branch) or &quot;.bam&quot; (skip_alignment branch,<br>user bams linked by bam_rename). Mirrors the upstream channel swap<br>between BAM_SORT_INDEX_SAMTOOLS.out.sortbam and BAM_RENAME.out.bam.<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy barcode_kit = value" data-copy="barcode_kit = RBK001">barcode_kit</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy barcode_kit = value" aria-label="Copy barcode_kit = RBK001 to clipboard" data-copy="barcode_kit = RBK001">barcode_kit</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>RBK001</code></td>
 <td class="ox-p-desc">-- Demultiplexing (upstream defaults)<br>RBK001 matches the shipped barcoded fixture (qcat Auto-detection needs<br>at least two distinct barcodes to guess the kit; the explicit kit makes<br>the test path deterministic).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy call_variants = value" data-copy="call_variants = false">call_variants</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy call_variants = value" aria-label="Copy call_variants = false to clipboard" data-copy="call_variants = false">call_variants</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">-- Variant calling (upstream default: off; also gated upstream on<br>protocol == DNA). The three short-variant callers are mutually<br>exclusive on variant_caller; structural callers on<br>structural_variant_caller (upstream defaults: medaka / sniffles).<br><span class="ox-param-usedby">used by <code>17</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy deepvariant_gpu = value" data-copy="deepvariant_gpu = false">deepvariant_gpu</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy deepvariant_gpu = value" aria-label="Copy deepvariant_gpu = false to clipboard" data-copy="deepvariant_gpu = false">deepvariant_gpu</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">-- Variant calling (upstream default: off; also gated upstream on<br>protocol == DNA). The three short-variant callers are mutually<br>exclusive on variant_caller; structural callers on<br>structural_variant_caller (upstream defaults: medaka / sniffles).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtf = value" data-copy="gtf = ">gtf</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtf = value" aria-label="Copy gtf =  to clipboard" data-copy="gtf = ">gtf</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">-- GTF annotation (upstream samplesheet gtf column; empty on the default path)<br><span class="ox-param-usedby">used by <code>7</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtf_base = value" data-copy="gtf_base = ">gtf_base</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gtf_base = value" aria-label="Copy gtf_base =  to clipboard" data-copy="gtf_base = ">gtf_base</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">-- GTF annotation (upstream samplesheet gtf column; empty on the default path)<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy input = value" data-copy="input = test/fixtures/samplesheet.csv">input</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy input = value" aria-label="Copy input = test/fixtures/samplesheet.csv to clipboard" data-copy="input = test/fixtures/samplesheet.csv">input</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/samplesheet.csv</code></td>
 <td class="ox-p-desc">-- Samplesheet and demultiplexing input (upstream: --input / --input_path)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy input_path = value" data-copy="input_path = test/fixtures/raw/sample.fastq.gz">input_path</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy input_path = value" aria-label="Copy input_path = test/fixtures/raw/sample.fastq.gz to clipboard" data-copy="input_path = test/fixtures/raw/sample.fastq.gz">input_path</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/raw/sample.fastq.gz</code></td>
 <td class="ox-p-desc">-- Samplesheet and demultiplexing input (upstream: --input / --input_path)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy multiqc_config = value" data-copy="multiqc_config = ">multiqc_config</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy multiqc_config = value" aria-label="Copy multiqc_config =  to clipboard" data-copy="multiqc_config = ">multiqc_config</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">-- MultiQC options<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy multiqc_title = value" data-copy="multiqc_title = ">multiqc_title</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy multiqc_title = value" aria-label="Copy multiqc_title =  to clipboard" data-copy="multiqc_title = ">multiqc_title</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">-- MultiQC options<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy nanolyse_fasta = value" data-copy="nanolyse_fasta = test/fixtures/refs/lambda.fasta.gz">nanolyse_fasta</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy nanolyse_fasta = value" aria-label="Copy nanolyse_fasta = test/fixtures/refs/lambda.fasta.gz to clipboard" data-copy="nanolyse_fasta = test/fixtures/refs/lambda.fasta.gz">nanolyse_fasta</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/refs/lambda.fasta.gz</code></td>
 <td class="ox-p-desc">-- Raw read cleaning (upstream default: off). Upstream downloads the<br>lambda genome when --nanolyse_fasta is unset (GET_NANOLYSE_FASTA);<br>the port ships it as a checked-in fixture.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy nanopolish_fast5 = value" data-copy="nanopolish_fast5 = ">nanopolish_fast5</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy nanopolish_fast5 = value" aria-label="Copy nanopolish_fast5 =  to clipboard" data-copy="nanopolish_fast5 = ">nanopolish_fast5</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">-- RNA modification analysis (upstream default: on, gated to protocol<br>directRNA; the fast5 dir comes from the upstream samplesheet<br>nanopolish_fast5 column — the port takes one dir for all samples)<br><span class="ox-param-usedby">used by <code>5</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy out_dir = value" data-copy="out_dir = results">out_dir</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy out_dir = value" aria-label="Copy out_dir = results to clipboard" data-copy="out_dir = results">out_dir</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>results</code></td>
 <td class="ox-p-desc">-- Output directory (upstream: --outdir, default ./results)<br><span class="ox-param-usedby">used by <code>52</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy phase_vcf = value" data-copy="phase_vcf = false">phase_vcf</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy phase_vcf = value" aria-label="Copy phase_vcf = false to clipboard" data-copy="phase_vcf = false">phase_vcf</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">-- Variant calling (upstream default: off; also gated upstream on<br>protocol == DNA). The three short-variant callers are mutually<br>exclusive on variant_caller; structural callers on<br>structural_variant_caller (upstream defaults: medaka / sniffles).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy protocol = value" data-copy="protocol = DNA">protocol</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy protocol = value" aria-label="Copy protocol = DNA to clipboard" data-copy="protocol = DNA">protocol</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>DNA</code></td>
 <td class="ox-p-desc">-- Protocol (upstream: --protocol; mandatory upstream, one of DNA/cDNA/directRNA)<br><span class="ox-param-usedby">used by <code>32</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy qcat_detect_middle = value" data-copy="qcat_detect_middle = false">qcat_detect_middle</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy qcat_detect_middle = value" aria-label="Copy qcat_detect_middle = false to clipboard" data-copy="qcat_detect_middle = false">qcat_detect_middle</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">-- Demultiplexing (upstream defaults)<br>RBK001 matches the shipped barcoded fixture (qcat Auto-detection needs<br>at least two distinct barcodes to guess the kit; the explicit kit makes<br>the test path deterministic).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy qcat_min_score = value" data-copy="qcat_min_score = 60">qcat_min_score</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy qcat_min_score = value" aria-label="Copy qcat_min_score = 60 to clipboard" data-copy="qcat_min_score = 60">qcat_min_score</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>60</code></td>
 <td class="ox-p-desc">-- Demultiplexing (upstream defaults)<br>RBK001 matches the shipped barcoded fixture (qcat Auto-detection needs<br>at least two distinct barcodes to guess the kit; the explicit kit makes<br>the test path deterministic).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy quantification_method = value" data-copy="quantification_method = bambu">quantification_method</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy quantification_method = value" aria-label="Copy quantification_method = bambu to clipboard" data-copy="quantification_method = bambu">quantification_method</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>bambu</code></td>
 <td class="ox-p-desc">-- Quantification and differential analysis (upstream defaults: on, but<br>gated upstream to protocol cDNA/directRNA — never on the DNA path)<br><span class="ox-param-usedby">used by <code>8</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy reference = value" data-copy="reference = test/fixtures/refs/genome.fa">reference</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy reference = value" aria-label="Copy reference = test/fixtures/refs/genome.fa to clipboard" data-copy="reference = test/fixtures/refs/genome.fa">reference</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/refs/genome.fa</code></td>
 <td class="ox-p-desc">-- Reference genome (collapses the samplesheet fasta column; the default<br>path uses a single reference for all samples, as in the upstream test data)<br><span class="ox-param-usedby">used by <code>14</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy reference_name = value" data-copy="reference_name = genome.fa">reference_name</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy reference_name = value" aria-label="Copy reference_name = genome.fa to clipboard" data-copy="reference_name = genome.fa">reference_name</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>genome.fa</code></td>
 <td class="ox-p-desc">Basename of the reference; mirrors the upstream staged-file name so that<br>indexes keep the upstream naming (genome.fa.mmi / genome.fa.sizes / genome.fa.fai)<br><span class="ox-param-usedby">used by <code>10</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_nanolyse = value" data-copy="run_nanolyse = false">run_nanolyse</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_nanolyse = value" aria-label="Copy run_nanolyse = false to clipboard" data-copy="run_nanolyse = false">run_nanolyse</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">-- Raw read cleaning (upstream default: off). Upstream downloads the<br>lambda genome when --nanolyse_fasta is unset (GET_NANOLYSE_FASTA);<br>the port ships it as a checked-in fixture.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sample_bams = value" data-copy="sample_bams = ">sample_bams</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sample_bams = value" aria-label="Copy sample_bams =  to clipboard" data-copy="sample_bams = ">sample_bams</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">-- Pre-aligned BAM input (upstream: the samplesheet input_file column<br>carrying .bam files, used only when --skip_alignment; the port takes a<br>comma-separated list of bam paths, one per barcode in samples_list<br>order, linked by the bam_rename rule)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_alignment = value" data-copy="skip_alignment = false">skip_alignment</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_alignment = value" aria-label="Copy skip_alignment = false to clipboard" data-copy="skip_alignment = false">skip_alignment</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">-- Alignment<br><span class="ox-param-usedby">used by <code>18</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_bigbed = value" data-copy="skip_bigbed = false">skip_bigbed</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_bigbed = value" aria-label="Copy skip_bigbed = false to clipboard" data-copy="skip_bigbed = false">skip_bigbed</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">-- Visualisation (upstream defaults: bigwig/bigbed ON; bigbed is<br>protocol-gated upstream to cDNA/directRNA and so never runs on the<br>default DNA path)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_bigwig = value" data-copy="skip_bigwig = false">skip_bigwig</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_bigwig = value" aria-label="Copy skip_bigwig = false to clipboard" data-copy="skip_bigwig = false">skip_bigwig</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">-- Visualisation (upstream defaults: bigwig/bigbed ON; bigbed is<br>protocol-gated upstream to cDNA/directRNA and so never runs on the<br>default DNA path)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_demultiplexing = value" data-copy="skip_demultiplexing = false">skip_demultiplexing</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_demultiplexing = value" aria-label="Copy skip_demultiplexing = false to clipboard" data-copy="skip_demultiplexing = false">skip_demultiplexing</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">-- Demultiplexing (upstream defaults)<br>RBK001 matches the shipped barcoded fixture (qcat Auto-detection needs<br>at least two distinct barcodes to guess the kit; the explicit kit makes<br>the test path deterministic).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_differential_analysis = value" data-copy="skip_differential_analysis = false">skip_differential_analysis</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_differential_analysis = value" aria-label="Copy skip_differential_analysis = false to clipboard" data-copy="skip_differential_analysis = false">skip_differential_analysis</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">-- Quantification and differential analysis (upstream defaults: on, but<br>gated upstream to protocol cDNA/directRNA — never on the DNA path)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_fastqc = value" data-copy="skip_fastqc = false">skip_fastqc</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_fastqc = value" aria-label="Copy skip_fastqc = false to clipboard" data-copy="skip_fastqc = false">skip_fastqc</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">-- QC (upstream defaults: all QC on)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_m6anet = value" data-copy="skip_m6anet = false">skip_m6anet</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_m6anet = value" aria-label="Copy skip_m6anet = false to clipboard" data-copy="skip_m6anet = false">skip_m6anet</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">-- RNA modification analysis (upstream default: on, gated to protocol<br>directRNA; the fast5 dir comes from the upstream samplesheet<br>nanopolish_fast5 column — the port takes one dir for all samples)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_modification_analysis = value" data-copy="skip_modification_analysis = false">skip_modification_analysis</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_modification_analysis = value" aria-label="Copy skip_modification_analysis = false to clipboard" data-copy="skip_modification_analysis = false">skip_modification_analysis</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">-- RNA modification analysis (upstream default: on, gated to protocol<br>directRNA; the fast5 dir comes from the upstream samplesheet<br>nanopolish_fast5 column — the port takes one dir for all samples)<br><span class="ox-param-usedby">used by <code>5</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_multiqc = value" data-copy="skip_multiqc = false">skip_multiqc</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_multiqc = value" aria-label="Copy skip_multiqc = false to clipboard" data-copy="skip_multiqc = false">skip_multiqc</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">-- QC (upstream defaults: all QC on)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_nanoplot = value" data-copy="skip_nanoplot = false">skip_nanoplot</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_nanoplot = value" aria-label="Copy skip_nanoplot = false to clipboard" data-copy="skip_nanoplot = false">skip_nanoplot</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">-- QC (upstream defaults: all QC on)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_qc = value" data-copy="skip_qc = false">skip_qc</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_qc = value" aria-label="Copy skip_qc = false to clipboard" data-copy="skip_qc = false">skip_qc</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">-- QC (upstream defaults: all QC on)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_quantification = value" data-copy="skip_quantification = false">skip_quantification</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_quantification = value" aria-label="Copy skip_quantification = false to clipboard" data-copy="skip_quantification = false">skip_quantification</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">-- Quantification and differential analysis (upstream defaults: on, but<br>gated upstream to protocol cDNA/directRNA — never on the DNA path)<br><span class="ox-param-usedby">used by <code>8</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_sv = value" data-copy="skip_sv = false">skip_sv</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_sv = value" aria-label="Copy skip_sv = false to clipboard" data-copy="skip_sv = false">skip_sv</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">-- Variant calling (upstream default: off; also gated upstream on<br>protocol == DNA). The three short-variant callers are mutually<br>exclusive on variant_caller; structural callers on<br>structural_variant_caller (upstream defaults: medaka / sniffles).<br><span class="ox-param-usedby">used by <code>6</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_vc = value" data-copy="skip_vc = false">skip_vc</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_vc = value" aria-label="Copy skip_vc = false to clipboard" data-copy="skip_vc = false">skip_vc</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">-- Variant calling (upstream default: off; also gated upstream on<br>protocol == DNA). The three short-variant callers are mutually<br>exclusive on variant_caller; structural callers on<br>structural_variant_caller (upstream defaults: medaka / sniffles).<br><span class="ox-param-usedby">used by <code>7</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_xpore = value" data-copy="skip_xpore = false">skip_xpore</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_xpore = value" aria-label="Copy skip_xpore = false to clipboard" data-copy="skip_xpore = false">skip_xpore</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">-- RNA modification analysis (upstream default: on, gated to protocol<br>directRNA; the fast5 dir comes from the upstream samplesheet<br>nanopolish_fast5 column — the port takes one dir for all samples)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy split_mnps = value" data-copy="split_mnps = false">split_mnps</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy split_mnps = value" aria-label="Copy split_mnps = false to clipboard" data-copy="split_mnps = false">split_mnps</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">-- Variant calling (upstream default: off; also gated upstream on<br>protocol == DNA). The three short-variant callers are mutually<br>exclusive on variant_caller; structural callers on<br>structural_variant_caller (upstream defaults: medaka / sniffles).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy stranded = value" data-copy="stranded = false">stranded</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy stranded = value" aria-label="Copy stranded = false to clipboard" data-copy="stranded = false">stranded</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">-- Alignment<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy structural_variant_caller = value" data-copy="structural_variant_caller = sniffles">structural_variant_caller</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy structural_variant_caller = value" aria-label="Copy structural_variant_caller = sniffles to clipboard" data-copy="structural_variant_caller = sniffles">structural_variant_caller</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>sniffles</code></td>
 <td class="ox-p-desc">-- Variant calling (upstream default: off; also gated upstream on<br>protocol == DNA). The three short-variant callers are mutually<br>exclusive on variant_caller; structural callers on<br>structural_variant_caller (upstream defaults: medaka / sniffles).<br><span class="ox-param-usedby">used by <code>6</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy variant_caller = value" data-copy="variant_caller = medaka">variant_caller</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy variant_caller = value" aria-label="Copy variant_caller = medaka to clipboard" data-copy="variant_caller = medaka">variant_caller</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>medaka</code></td>
 <td class="ox-p-desc">-- Variant calling (upstream default: off; also gated upstream on<br>protocol == DNA). The three short-variant callers are mutually<br>exclusive on variant_caller; structural callers on<br>structural_variant_caller (upstream defaults: medaka / sniffles).<br><span class="ox-param-usedby">used by <code>7</code> rules</span></td>

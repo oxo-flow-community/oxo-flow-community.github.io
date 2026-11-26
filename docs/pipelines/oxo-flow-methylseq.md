@@ -96,337 +96,337 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-methylseq
 <thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
 <tbody>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy accel = value" data-copy="accel = false">accel</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy accel = value" aria-label="Copy accel = false to clipboard" data-copy="accel = false">accel</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Library presets (upstream params with the same defaults).<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy aligner = value" data-copy="aligner = bismark">aligner</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy aligner = value" aria-label="Copy aligner = bismark to clipboard" data-copy="aligner = bismark">aligner</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>bismark</code></td>
 <td class="ox-p-desc">Aligner (upstream: --aligner, default &#x27;bismark&#x27;). One of:<br>&#x27;bismark&#x27;       - bowtie2, the default main path<br>&#x27;bismark_hisat&#x27; - hisat2 (needs a --known_splices GTF for splice sites)<br>&#x27;bwameth&#x27;       - bwa-meth (needs a --use_mem2 flag to use the mem2 index)<br>&#x27;bwamem&#x27;        - BWA-MEM (TAPS-optimized)<br><span class="ox-param-usedby">used by <code>52</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy all_contexts = value" data-copy="all_contexts = false">all_contexts</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy all_contexts = value" aria-label="Copy all_contexts = false to clipboard" data-copy="all_contexts = false">all_contexts</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Methyldackel options (upstream params with the same defaults, active on<br>the bwameth branch when TAPS is off)<br><span class="ox-param-usedby">used by <code>6</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bamqc_regions_file = value" data-copy="bamqc_regions_file = ">bamqc_regions_file</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bamqc_regions_file = value" aria-label="Copy bamqc_regions_file =  to clipboard" data-copy="bamqc_regions_file = ">bamqc_regions_file</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">Targeted-sequencing inputs (upstream: --target_regions_file /<br>--bamqc_regions_file, default empty)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bismark_index = value" data-copy="bismark_index = ">bismark_index</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bismark_index = value" aria-label="Copy bismark_index =  to clipboard" data-copy="bismark_index = ">bismark_index</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">Prebuilt Bismark index archive (.tar.gz/.tar.bz2, as produced by<br>bismark_genome_preparation). Empty string (default) = build the index from<br>config.fasta (upstream default). When set, the archive is untarred into<br>refs/BismarkIndex and the build is skipped, like the upstream UNTAR module.<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cat_fastq = value" data-copy="cat_fastq = true">cat_fastq</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cat_fastq = value" aria-label="Copy cat_fastq = true to clipboard" data-copy="cat_fastq = true">cat_fastq</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>true</code></td>
 <td class="ox-p-desc">Concatenate multi-pair fastqs (upstream: CAT_FASTQ — always active for<br>samples with &gt;1 fastq pair; upstream has no param for it). Set to false<br>only when every sample has a single pair: multi-pair samples would then<br>lack the merged reads the downstream rules consume.<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy clip_r1 = value" data-copy="clip_r1 = 0">clip_r1</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy clip_r1 = value" aria-label="Copy clip_r1 = 0 to clipboard" data-copy="clip_r1 = 0">clip_r1</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>0</code></td>
 <td class="ox-p-desc">Trimming options (upstream params with the same defaults)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy clip_r2 = value" data-copy="clip_r2 = 0">clip_r2</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy clip_r2 = value" aria-label="Copy clip_r2 = 0 to clipboard" data-copy="clip_r2 = 0">clip_r2</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>0</code></td>
 <td class="ox-p-desc">Trimming options (upstream params with the same defaults)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy collecthsmetrics = value" data-copy="collecthsmetrics = false">collecthsmetrics</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy collecthsmetrics = value" aria-label="Copy collecthsmetrics = false to clipboard" data-copy="collecthsmetrics = false">collecthsmetrics</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Collect Picard HS metrics within the targeted-sequencing branch<br>(upstream: --collecthsmetrics, default false)<br><span class="ox-param-usedby">used by <code>7</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy comprehensive = value" data-copy="comprehensive = true">comprehensive</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy comprehensive = value" aria-label="Copy comprehensive = true to clipboard" data-copy="comprehensive = true">comprehensive</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>true</code></td>
 <td class="ox-p-desc">The port&#x27;s DAG consumes the merged (--comprehensive) methylation-call<br>outputs, so the default differs from upstream (false): the per-strand<br>split files would leave the declared outputs unmoved.<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cytosine_report = value" data-copy="cytosine_report = false">cytosine_report</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy cytosine_report = value" aria-label="Copy cytosine_report = false to clipboard" data-copy="cytosine_report = false">cytosine_report</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Bismark options<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy em_seq = value" data-copy="em_seq = false">em_seq</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy em_seq = value" aria-label="Copy em_seq = false to clipboard" data-copy="em_seq = false">em_seq</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Library presets (upstream params with the same defaults).<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fasta = value" data-copy="fasta = test/fixtures/refs/genome.fa">fasta</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fasta = value" aria-label="Copy fasta = test/fixtures/refs/genome.fa to clipboard" data-copy="fasta = test/fixtures/refs/genome.fa">fasta</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/refs/genome.fa</code></td>
 <td class="ox-p-desc">Reference genome (upstream: --fasta). Uncompressed FASTA (a .gz FASTA is<br>decompressed automatically before indexing, like the upstream GUNZIP<br>module). The Bismark index is built from it automatically (upstream default<br>when --bismark_index is not supplied). Point this at your genome; the repo<br>default ships the tiny test fixture.<br><span class="ox-param-usedby">used by <code>5</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ignore_3prime_r1 = value" data-copy="ignore_3prime_r1 = 0">ignore_3prime_r1</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ignore_3prime_r1 = value" aria-label="Copy ignore_3prime_r1 = 0 to clipboard" data-copy="ignore_3prime_r1 = 0">ignore_3prime_r1</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>0</code></td>
 <td class="ox-p-desc">The port&#x27;s DAG consumes the merged (--comprehensive) methylation-call<br>outputs, so the default differs from upstream (false): the per-strand<br>split files would leave the declared outputs unmoved.<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ignore_3prime_r2 = value" data-copy="ignore_3prime_r2 = 2">ignore_3prime_r2</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ignore_3prime_r2 = value" aria-label="Copy ignore_3prime_r2 = 2 to clipboard" data-copy="ignore_3prime_r2 = 2">ignore_3prime_r2</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>2</code></td>
 <td class="ox-p-desc">The port&#x27;s DAG consumes the merged (--comprehensive) methylation-call<br>outputs, so the default differs from upstream (false): the per-strand<br>split files would leave the declared outputs unmoved.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ignore_flags = value" data-copy="ignore_flags = false">ignore_flags</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ignore_flags = value" aria-label="Copy ignore_flags = false to clipboard" data-copy="ignore_flags = false">ignore_flags</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Methyldackel options (upstream params with the same defaults, active on<br>the bwameth branch when TAPS is off)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ignore_r1 = value" data-copy="ignore_r1 = 0">ignore_r1</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ignore_r1 = value" aria-label="Copy ignore_r1 = 0 to clipboard" data-copy="ignore_r1 = 0">ignore_r1</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>0</code></td>
 <td class="ox-p-desc">The port&#x27;s DAG consumes the merged (--comprehensive) methylation-call<br>outputs, so the default differs from upstream (false): the per-strand<br>split files would leave the declared outputs unmoved.<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ignore_r2 = value" data-copy="ignore_r2 = 2">ignore_r2</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ignore_r2 = value" aria-label="Copy ignore_r2 = 2 to clipboard" data-copy="ignore_r2 = 2">ignore_r2</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>2</code></td>
 <td class="ox-p-desc">The port&#x27;s DAG consumes the merged (--comprehensive) methylation-call<br>outputs, so the default differs from upstream (false): the per-strand<br>split files would leave the declared outputs unmoved.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy known_splices = value" data-copy="known_splices = ">known_splices</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy known_splices = value" aria-label="Copy known_splices =  to clipboard" data-copy="known_splices = ">known_splices</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">bismark_hisat splice-site GTF (upstream: --known_splices, default empty).<br>When set and aligner = &#x27;bismark_hisat&#x27;, bismark is given the splice sites<br>extracted from this file (upstream uses process substitution for the same<br>data).<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy length_trim = value" data-copy="length_trim = 0">length_trim</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy length_trim = value" aria-label="Copy length_trim = 0 to clipboard" data-copy="length_trim = 0">length_trim</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>0</code></td>
 <td class="ox-p-desc">Trimming options (upstream params with the same defaults)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy local_alignment = value" data-copy="local_alignment = false">local_alignment</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy local_alignment = value" aria-label="Copy local_alignment = false to clipboard" data-copy="local_alignment = false">local_alignment</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">The port&#x27;s DAG consumes the merged (--comprehensive) methylation-call<br>outputs, so the default differs from upstream (false): the per-strand<br>split files would leave the declared outputs unmoved.<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy maxins = value" data-copy="maxins = ">maxins</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy maxins = value" aria-label="Copy maxins =  to clipboard" data-copy="maxins = ">maxins</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">The port&#x27;s DAG consumes the merged (--comprehensive) methylation-call<br>outputs, so the default differs from upstream (false): the per-strand<br>split files would leave the declared outputs unmoved.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy merge_context = value" data-copy="merge_context = false">merge_context</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy merge_context = value" aria-label="Copy merge_context = false to clipboard" data-copy="merge_context = false">merge_context</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Methyldackel options (upstream params with the same defaults, active on<br>the bwameth branch when TAPS is off)<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy meth_cutoff = value" data-copy="meth_cutoff = ">meth_cutoff</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy meth_cutoff = value" aria-label="Copy meth_cutoff =  to clipboard" data-copy="meth_cutoff = ">meth_cutoff</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">The port&#x27;s DAG consumes the merged (--comprehensive) methylation-call<br>outputs, so the default differs from upstream (false): the per-strand<br>split files would leave the declared outputs unmoved.<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy methyl_kit = value" data-copy="methyl_kit = false">methyl_kit</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy methyl_kit = value" aria-label="Copy methyl_kit = false to clipboard" data-copy="methyl_kit = false">methyl_kit</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Methyldackel options (upstream params with the same defaults, active on<br>the bwameth branch when TAPS is off)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy min_depth = value" data-copy="min_depth = 0">min_depth</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy min_depth = value" aria-label="Copy min_depth = 0 to clipboard" data-copy="min_depth = 0">min_depth</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>0</code></td>
 <td class="ox-p-desc">Methyldackel options (upstream params with the same defaults, active on<br>the bwameth branch when TAPS is off)<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy minins = value" data-copy="minins = ">minins</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy minins = value" aria-label="Copy minins =  to clipboard" data-copy="minins = ">minins</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">The port&#x27;s DAG consumes the merged (--comprehensive) methylation-call<br>outputs, so the default differs from upstream (false): the per-strand<br>split files would leave the declared outputs unmoved.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy multiqc_title = value" data-copy="multiqc_title = ">multiqc_title</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy multiqc_title = value" aria-label="Copy multiqc_title =  to clipboard" data-copy="multiqc_title = ">multiqc_title</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">MultiQC<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy nextseq_trim = value" data-copy="nextseq_trim = 0">nextseq_trim</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy nextseq_trim = value" aria-label="Copy nextseq_trim = 0 to clipboard" data-copy="nextseq_trim = 0">nextseq_trim</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>0</code></td>
 <td class="ox-p-desc">Trimming options (upstream params with the same defaults)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy no_overlap = value" data-copy="no_overlap = true">no_overlap</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy no_overlap = value" aria-label="Copy no_overlap = true to clipboard" data-copy="no_overlap = true">no_overlap</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>true</code></td>
 <td class="ox-p-desc">The port&#x27;s DAG consumes the merged (--comprehensive) methylation-call<br>outputs, so the default differs from upstream (false): the per-strand<br>split files would leave the declared outputs unmoved.<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy nomeseq = value" data-copy="nomeseq = false">nomeseq</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy nomeseq = value" aria-label="Copy nomeseq = false to clipboard" data-copy="nomeseq = false">nomeseq</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Bismark options<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy non_directional = value" data-copy="non_directional = false">non_directional</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy non_directional = value" aria-label="Copy non_directional = false to clipboard" data-copy="non_directional = false">non_directional</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Library presets (upstream params with the same defaults).<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy num_mismatches = value" data-copy="num_mismatches = 0.6">num_mismatches</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy num_mismatches = value" aria-label="Copy num_mismatches = 0.6 to clipboard" data-copy="num_mismatches = 0.6">num_mismatches</button></td>
 <td class="ox-p-t"><code>float</code></td>
 <td class="ox-p-d"><code>0.6</code></td>
 <td class="ox-p-desc">The port&#x27;s DAG consumes the merged (--comprehensive) methylation-call<br>outputs, so the default differs from upstream (false): the per-strand<br>split files would leave the declared outputs unmoved.<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy out_dir = value" data-copy="out_dir = results">out_dir</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy out_dir = value" aria-label="Copy out_dir = results to clipboard" data-copy="out_dir = results">out_dir</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>results</code></td>
 <td class="ox-p-desc">Input reads directory: raw/&lt;sample&gt;_R1.fastq.gz + _R2.fastq.gz (paired-end).<br>The repo default ships the tiny test fixtures; point this at your data.<br><span class="ox-param-usedby">used by <code>55</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pbat = value" data-copy="pbat = false">pbat</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy pbat = value" aria-label="Copy pbat = false to clipboard" data-copy="pbat = false">pbat</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Library presets (upstream params with the same defaults).<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy raw_dir = value" data-copy="raw_dir = test/fixtures/raw">raw_dir</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy raw_dir = value" aria-label="Copy raw_dir = test/fixtures/raw to clipboard" data-copy="raw_dir = test/fixtures/raw">raw_dir</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/raw</code></td>
 <td class="ox-p-desc">Input reads directory: raw/&lt;sample&gt;_R1.fastq.gz + _R2.fastq.gz (paired-end).<br>The repo default ships the tiny test fixtures; point this at your data.<br><span class="ox-param-usedby">used by <code>6</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy relax_mismatches = value" data-copy="relax_mismatches = false">relax_mismatches</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy relax_mismatches = value" aria-label="Copy relax_mismatches = false to clipboard" data-copy="relax_mismatches = false">relax_mismatches</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">The port&#x27;s DAG consumes the merged (--comprehensive) methylation-call<br>outputs, so the default differs from upstream (false): the per-strand<br>split files would leave the declared outputs unmoved.<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy rrbs = value" data-copy="rrbs = false">rrbs</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy rrbs = value" aria-label="Copy rrbs = false to clipboard" data-copy="rrbs = false">rrbs</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Library presets (upstream params with the same defaults).<br><span class="ox-param-usedby">used by <code>7</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_preseq = value" data-copy="run_preseq = false">run_preseq</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_preseq = value" aria-label="Copy run_preseq = false to clipboard" data-copy="run_preseq = false">run_preseq</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Optional QC branches (upstream params, all off by default)<br><span class="ox-param-usedby">used by <code>5</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_qualimap = value" data-copy="run_qualimap = false">run_qualimap</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_qualimap = value" aria-label="Copy run_qualimap = false to clipboard" data-copy="run_qualimap = false">run_qualimap</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Optional QC branches (upstream params, all off by default)<br><span class="ox-param-usedby">used by <code>5</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_targeted_sequencing = value" data-copy="run_targeted_sequencing = false">run_targeted_sequencing</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy run_targeted_sequencing = value" aria-label="Copy run_targeted_sequencing = false to clipboard" data-copy="run_targeted_sequencing = false">run_targeted_sequencing</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Optional QC branches (upstream params, all off by default)<br><span class="ox-param-usedby">used by <code>10</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy single_cell = value" data-copy="single_cell = false">single_cell</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy single_cell = value" aria-label="Copy single_cell = false to clipboard" data-copy="single_cell = false">single_cell</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Library presets (upstream params with the same defaults).<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy single_end_mode = value" data-copy="single_end_mode = false">single_end_mode</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy single_end_mode = value" aria-label="Copy single_end_mode = false to clipboard" data-copy="single_end_mode = false">single_end_mode</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Single-end reads (upstream: the samplesheet <code>single_end</code> column, absent<br>fastq_2 -&gt; single_end). Off by default (all samples paired-end, the<br>byte-identical default). Set to true AND uncomment [workflow]<br>metadata_file to route samples per-row: metadata/samples.tsv lists each<br>sample&#x27;s <code>endedness</code> (SE or PE); a sample without a row — or with no<br>metadata_file at all — stays paired-end. The SE branches are separate<br>gated rules mirroring the upstream per-sample routing (bismark chain:<br>fastqc_se -&gt; trimgalore_se -&gt; bismark_align_se -&gt; bismark_deduplicate_se<br>-&gt; bismark_methylationextractor_se -&gt; bismark_report_se; the bwameth/<br>bwamem aligners take the trimmed single read directly). Requires<br>oxo-flow &gt;= 0.17.0: on older engines <code>{meta.*}</code> is inert, so the SE rules<br>stay closed while this key is false.<br><span class="ox-param-usedby">used by <code>6</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_deduplication = value" data-copy="skip_deduplication = false">skip_deduplication</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_deduplication = value" aria-label="Copy skip_deduplication = false to clipboard" data-copy="skip_deduplication = false">skip_deduplication</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Skip options (upstream: --skip_fastqc / --skip_trimming / --skip_deduplication /<br>--skip_multiqc). Same defaults as upstream.<br><span class="ox-param-usedby">used by <code>9</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_fastqc = value" data-copy="skip_fastqc = false">skip_fastqc</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_fastqc = value" aria-label="Copy skip_fastqc = false to clipboard" data-copy="skip_fastqc = false">skip_fastqc</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Skip options (upstream: --skip_fastqc / --skip_trimming / --skip_deduplication /<br>--skip_multiqc). Same defaults as upstream.<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_multiqc = value" data-copy="skip_multiqc = false">skip_multiqc</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_multiqc = value" aria-label="Copy skip_multiqc = false to clipboard" data-copy="skip_multiqc = false">skip_multiqc</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Skip options (upstream: --skip_fastqc / --skip_trimming / --skip_deduplication /<br>--skip_multiqc). Same defaults as upstream.<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_trimming = value" data-copy="skip_trimming = false">skip_trimming</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_trimming = value" aria-label="Copy skip_trimming = false to clipboard" data-copy="skip_trimming = false">skip_trimming</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Skip options (upstream: --skip_fastqc / --skip_trimming / --skip_deduplication /<br>--skip_multiqc). Same defaults as upstream.<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_trimming_presets = value" data-copy="skip_trimming_presets = false">skip_trimming_presets</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_trimming_presets = value" aria-label="Copy skip_trimming_presets = false to clipboard" data-copy="skip_trimming_presets = false">skip_trimming_presets</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Trimming options (upstream params with the same defaults)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy slamseq = value" data-copy="slamseq = false">slamseq</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy slamseq = value" aria-label="Copy slamseq = false to clipboard" data-copy="slamseq = false">slamseq</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Library presets (upstream params with the same defaults).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy taps = value" data-copy="taps = false">taps</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy taps = value" aria-label="Copy taps = false to clipboard" data-copy="taps = false">taps</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">TAPS protocol (upstream: --taps, default false). Runs rastair conversion<br>on the alignments. Only meaningful with the bwameth or bwamem aligners<br>(upstream builds no fasta index for TAPS on the bismark aligners, so<br>rastair silently produces nothing there — replicated).<br><span class="ox-param-usedby">used by <code>14</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy target_regions_file = value" data-copy="target_regions_file = ">target_regions_file</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy target_regions_file = value" aria-label="Copy target_regions_file =  to clipboard" data-copy="target_regions_file = ">target_regions_file</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">Targeted-sequencing inputs (upstream: --target_regions_file /<br>--bamqc_regions_file, default empty)<br><span class="ox-param-usedby">used by <code>5</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy three_prime_clip_r1 = value" data-copy="three_prime_clip_r1 = 0">three_prime_clip_r1</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy three_prime_clip_r1 = value" aria-label="Copy three_prime_clip_r1 = 0 to clipboard" data-copy="three_prime_clip_r1 = 0">three_prime_clip_r1</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>0</code></td>
 <td class="ox-p-desc">Trimming options (upstream params with the same defaults)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy three_prime_clip_r2 = value" data-copy="three_prime_clip_r2 = 0">three_prime_clip_r2</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy three_prime_clip_r2 = value" aria-label="Copy three_prime_clip_r2 = 0 to clipboard" data-copy="three_prime_clip_r2 = 0">three_prime_clip_r2</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>0</code></td>
 <td class="ox-p-desc">Trimming options (upstream params with the same defaults)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy unmapped = value" data-copy="unmapped = false">unmapped</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy unmapped = value" aria-label="Copy unmapped = false to clipboard" data-copy="unmapped = false">unmapped</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">The port&#x27;s DAG consumes the merged (--comprehensive) methylation-call<br>outputs, so the default differs from upstream (false): the per-strand<br>split files would leave the declared outputs unmoved.<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy use_mem2 = value" data-copy="use_mem2 = false">use_mem2</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy use_mem2 = value" aria-label="Copy use_mem2 = false to clipboard" data-copy="use_mem2 = false">use_mem2</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">bwameth index variant (upstream: --use_mem2, default false).<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy zymo = value" data-copy="zymo = false">zymo</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy zymo = value" aria-label="Copy zymo = false to clipboard" data-copy="zymo = false">zymo</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Library presets (upstream params with the same defaults).<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>

@@ -25,7 +25,7 @@ title: Curated workflows. Ready to run.
 <div><span class="faint"># classified, rated, and documented in the catalog</span></div>
 </div>
 </div>
-<div class="ox-stats" id="ox-stats" role="group" aria-label="Catalog statistics"></div>
+<div class="ox-stats" id="ox-stats" role="group" aria-label="Catalog statistics"><noscript><p class="ox-empty">Live catalog statistics are rendered with JavaScript — the <a href="/pipelines/">full catalog</a> shows every entry with its rating badge.</p></noscript></div>
 </div>
 </div>
 
@@ -39,7 +39,7 @@ title: Curated workflows. Ready to run.
 
 ## Browse by domain {: .ox-display }
 
-<div id="ox-domains" class="ox-domains"></div>
+<div id="ox-domains" class="ox-domains"><noscript><p class="ox-empty">Domain overview is rendered with JavaScript — filter by domain in the <a href="/pipelines/">catalog</a>.</p></noscript></div>
 
 ## Start here {: .ox-display }
 

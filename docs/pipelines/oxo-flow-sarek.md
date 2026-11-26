@@ -107,355 +107,355 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-sarek
 <thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
 <tbody>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy aligner = value" data-copy="aligner = bwa-mem">aligner</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy aligner = value" aria-label="Copy aligner = bwa-mem to clipboard" data-copy="aligner = bwa-mem">aligner</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>bwa-mem</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy alignment_ext = value" data-copy="alignment_ext = cram">alignment_ext</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy alignment_ext = value" aria-label="Copy alignment_ext = cram to clipboard" data-copy="alignment_ext = cram">alignment_ext</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>cram</code></td>
 <td class="ox-p-desc">Alignment-file mode: &#x27;cram&#x27; (default) or &#x27;bam&#x27; (when save_output_as_bam=true).<br>recal_index_ext must match the mode (&#x27;cram.crai&#x27; vs &#x27;bam.bai&#x27;).<br><span class="ox-param-usedby">used by <code>22</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy annotate_vep = value" data-copy="annotate_vep = true">annotate_vep</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy annotate_vep = value" aria-label="Copy annotate_vep = true to clipboard" data-copy="annotate_vep = true">annotate_vep</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>true</code></td>
 <td class="ox-p-desc">tools / skip_tools equivalents (upstream comma-list params expressed as booleans)<br><span class="ox-param-usedby">used by <code>8</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bwa_index_dir = value" data-copy="bwa_index_dir = /data/references/GRCh38/Sequence/BWAIndex/">bwa_index_dir</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bwa_index_dir = value" aria-label="Copy bwa_index_dir = /data/references/GRCh38/Sequence/BWAIndex/ to clipboard" data-copy="bwa_index_dir = /data/references/GRCh38/Sequence/BWAIndex/">bwa_index_dir</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>/data/references/GRCh38/Sequence/BWAIndex/</code></td>
 <td class="ox-p-desc">Reference data (user-provided; GRCh38 GATK bundle layout from upstream<br>conf/igenomes.config, substituted at port time)<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bwa_mem2_index_dir = value" data-copy="bwa_mem2_index_dir = /data/references/GRCh38/Sequence/BWAmem2Index/">bwa_mem2_index_dir</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bwa_mem2_index_dir = value" aria-label="Copy bwa_mem2_index_dir = /data/references/GRCh38/Sequence/BWAmem2Index/ to clipboard" data-copy="bwa_mem2_index_dir = /data/references/GRCh38/Sequence/BWAmem2Index/">bwa_mem2_index_dir</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>/data/references/GRCh38/Sequence/BWAmem2Index/</code></td>
 <td class="ox-p-desc">Optional branches (all default-off; upstream equivalents in parentheses)<br>Reference preparation — upstream PREPARE_GENOME builds the BWA/BWAmem2<br>indexes + .dict + .fai when the reference lacks them; the port gates this on<br>prepare_reference and writes into results/reference/. Point bwa_index_dir /<br>bwa_mem2_index_dir / fasta_fai / dict at the built files to use them.<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy call_deepvariant = value" data-copy="call_deepvariant = false">call_deepvariant</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy call_deepvariant = value" aria-label="Copy call_deepvariant = false to clipboard" data-copy="call_deepvariant = false">call_deepvariant</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>6</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy call_freebayes = value" data-copy="call_freebayes = false">call_freebayes</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy call_freebayes = value" aria-label="Copy call_freebayes = false to clipboard" data-copy="call_freebayes = false">call_freebayes</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Optional callers (upstream --tools list, one boolean per tool)<br><span class="ox-param-usedby">used by <code>10</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy call_haplotypecaller = value" data-copy="call_haplotypecaller = true">call_haplotypecaller</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy call_haplotypecaller = value" aria-label="Copy call_haplotypecaller = true to clipboard" data-copy="call_haplotypecaller = true">call_haplotypecaller</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>true</code></td>
 <td class="ox-p-desc">tools / skip_tools equivalents (upstream comma-list params expressed as booleans)<br><span class="ox-param-usedby">used by <code>22</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy call_indexcov = value" data-copy="call_indexcov = false">call_indexcov</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy call_indexcov = value" aria-label="Copy call_indexcov = false to clipboard" data-copy="call_indexcov = false">call_indexcov</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">upstream runs indexcov on WGS only (germline)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy call_manta = value" data-copy="call_manta = false">call_manta</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy call_manta = value" aria-label="Copy call_manta = false to clipboard" data-copy="call_manta = false">call_manta</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Optional callers (upstream --tools list, one boolean per tool)<br><span class="ox-param-usedby">used by <code>6</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy call_mpileup = value" data-copy="call_mpileup = false">call_mpileup</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy call_mpileup = value" aria-label="Copy call_mpileup = false to clipboard" data-copy="call_mpileup = false">call_mpileup</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Optional callers (upstream --tools list, one boolean per tool)<br><span class="ox-param-usedby">used by <code>6</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy call_strelka = value" data-copy="call_strelka = false">call_strelka</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy call_strelka = value" aria-label="Copy call_strelka = false to clipboard" data-copy="call_strelka = false">call_strelka</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Optional callers (upstream --tools list, one boolean per tool)<br><span class="ox-param-usedby">used by <code>6</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy call_tiddit = value" data-copy="call_tiddit = false">call_tiddit</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy call_tiddit = value" aria-label="Copy call_tiddit = false to clipboard" data-copy="call_tiddit = false">call_tiddit</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Optional callers (upstream --tools list, one boolean per tool)<br><span class="ox-param-usedby">used by <code>7</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy chromosomes = value" data-copy="chromosomes = chr1, chr2, chr3, chr4, chr5, chr6, chr7, chr8, chr9, chr10, chr11, chr12, chr13, chr14, chr15, chr16, chr17, chr18, chr19, chr20, chr21, chr22, chrX, chrY, chrM">chromosomes</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy chromosomes = value" aria-label="Copy chromosomes = chr1, chr2, chr3, chr4, chr5, chr6, chr7, chr8, chr9, chr10, chr11, chr12, chr13, chr14, chr15, chr16, chr17, chr18, chr19, chr20, chr21, chr22, chrX, chrY, chrM to clipboard" data-copy="chromosomes = chr1, chr2, chr3, chr4, chr5, chr6, chr7, chr8, chr9, chr10, chr11, chr12, chr13, chr14, chr15, chr16, chr17, chr18, chr19, chr20, chr21, chr22, chrX, chrY, chrM">chromosomes</button></td>
 <td class="ox-p-t"><code>array</code></td>
 <td class="ox-p-d"><code>chr1, chr2, chr3, chr4, chr5, chr6, chr7, chr8, chr9, chr10, chr11, chr12, chr13, chr14, chr15, chr16, chr17, chr18, chr19, chr20, chr21, chr22, chrX, chrY, chrM</code></td>
 <td class="ox-p-desc">Optional per-chromosome scatter/gather branch (default off). When<br>scatter_gatk = true, BQSR / ApplyBQSR / HaplotypeCaller (and the joint<br>GenotypeGVCFs) run one job per chromosome and the per-chromosome outputs<br>are gathered (GatherBQSRReports / samtools merge+index / MergeVcfs) —<br>results identical to the single whole-genome job (gathers are exact), with<br>per-chromosome parallelism. Upstream scatters over dynamic duration-binned<br>interval files; the engine&#x27;s scatter takes a static value list, so the port<br>uses one interval per chromosome. Keep <code>chromosomes</code> in sync with the<br>contigs of your fasta .fai (each entry must exist in the .fai).<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dbsnp = value" data-copy="dbsnp = /data/references/GRCh38/Annotation/GATKBundle/dbsnp_146.hg38.vcf.gz">dbsnp</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dbsnp = value" aria-label="Copy dbsnp = /data/references/GRCh38/Annotation/GATKBundle/dbsnp_146.hg38.vcf.gz to clipboard" data-copy="dbsnp = /data/references/GRCh38/Annotation/GATKBundle/dbsnp_146.hg38.vcf.gz">dbsnp</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>/data/references/GRCh38/Annotation/GATKBundle/dbsnp_146.hg38.vcf.gz</code></td>
 <td class="ox-p-desc">Reference data (user-provided; GRCh38 GATK bundle layout from upstream<br>conf/igenomes.config, substituted at port time)<br><span class="ox-param-usedby">used by <code>11</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dbsnp_tbi = value" data-copy="dbsnp_tbi = /data/references/GRCh38/Annotation/GATKBundle/dbsnp_146.hg38.vcf.gz.tbi">dbsnp_tbi</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dbsnp_tbi = value" aria-label="Copy dbsnp_tbi = /data/references/GRCh38/Annotation/GATKBundle/dbsnp_146.hg38.vcf.gz.tbi to clipboard" data-copy="dbsnp_tbi = /data/references/GRCh38/Annotation/GATKBundle/dbsnp_146.hg38.vcf.gz.tbi">dbsnp_tbi</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>/data/references/GRCh38/Annotation/GATKBundle/dbsnp_146.hg38.vcf.gz.tbi</code></td>
 <td class="ox-p-desc">Reference data (user-provided; GRCh38 GATK bundle layout from upstream<br>conf/igenomes.config, substituted at port time)<br><span class="ox-param-usedby">used by <code>11</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dict = value" data-copy="dict = /data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.dict">dict</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy dict = value" aria-label="Copy dict = /data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.dict to clipboard" data-copy="dict = /data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.dict">dict</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>/data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.dict</code></td>
 <td class="ox-p-desc">Reference data (user-provided; GRCh38 GATK bundle layout from upstream<br>conf/igenomes.config, substituted at port time)<br><span class="ox-param-usedby">used by <code>19</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fasta = value" data-copy="fasta = /data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.fasta">fasta</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fasta = value" aria-label="Copy fasta = /data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.fasta to clipboard" data-copy="fasta = /data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.fasta">fasta</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>/data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.fasta</code></td>
 <td class="ox-p-desc">Reference data (user-provided; GRCh38 GATK bundle layout from upstream<br>conf/igenomes.config, substituted at port time)<br><span class="ox-param-usedby">used by <code>41</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fasta_fai = value" data-copy="fasta_fai = /data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.fasta.fai">fasta_fai</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy fasta_fai = value" aria-label="Copy fasta_fai = /data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.fasta.fai to clipboard" data-copy="fasta_fai = /data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.fasta.fai">fasta_fai</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>/data/references/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.fasta.fai</code></td>
 <td class="ox-p-desc">Reference data (user-provided; GRCh38 GATK bundle layout from upstream<br>conf/igenomes.config, substituted at port time)<br><span class="ox-param-usedby">used by <code>26</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy freebayes_filter = value" data-copy="freebayes_filter = 30">freebayes_filter</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy freebayes_filter = value" aria-label="Copy freebayes_filter = 30 to clipboard" data-copy="freebayes_filter = 30">freebayes_filter</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>30</code></td>
 <td class="ox-p-desc">upstream params.freebayes_filter<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gatk_pcr_indel_model = value" data-copy="gatk_pcr_indel_model = CONSERVATIVE">gatk_pcr_indel_model</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gatk_pcr_indel_model = value" aria-label="Copy gatk_pcr_indel_model = CONSERVATIVE to clipboard" data-copy="gatk_pcr_indel_model = CONSERVATIVE">gatk_pcr_indel_model</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>CONSERVATIVE</code></td>
 <td class="ox-p-desc">gatk tool parameter (upstream --gatk_pcr_indel_model) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy genome = value" data-copy="genome = GRCh38">genome</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy genome = value" aria-label="Copy genome = GRCh38 to clipboard" data-copy="genome = GRCh38">genome</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>GRCh38</code></td>
 <td class="ox-p-desc">Reference genome build name (upstream --genome, iGenomes key) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy group_by_umi_strategy = value" data-copy="group_by_umi_strategy = Adjacency">group_by_umi_strategy</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy group_by_umi_strategy = value" aria-label="Copy group_by_umi_strategy = Adjacency to clipboard" data-copy="group_by_umi_strategy = Adjacency">group_by_umi_strategy</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>Adjacency</code></td>
 <td class="ox-p-desc">upstream params.group_by_umi_strategy<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy joint_germline = value" data-copy="joint_germline = false">joint_germline</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy joint_germline = value" aria-label="Copy joint_germline = false to clipboard" data-copy="joint_germline = false">joint_germline</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>29</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy joint_interval_name = value" data-copy="joint_interval_name = whole_genome">joint_interval_name</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy joint_interval_name = value" aria-label="Copy joint_interval_name = whole_genome to clipboard" data-copy="joint_interval_name = whole_genome">joint_interval_name</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>whole_genome</code></td>
 <td class="ox-p-desc">Joint germline: the port runs without interval scatter; a single whole-genome<br>interval is built from the fasta .fai (upstream: per-contig BED_PREPARE_INTERVALS)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy known_indels = value" data-copy="known_indels = /data/references/GRCh38/Annotation/GATKBundle/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz, /data/references/GRCh38/Annotation/GATKBundle/Homo_sapiens_assembly38.known_indels.vcf.gz">known_indels</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy known_indels = value" aria-label="Copy known_indels = /data/references/GRCh38/Annotation/GATKBundle/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz, /data/references/GRCh38/Annotation/GATKBundle/Homo_sapiens_assembly38.known_indels.vcf.gz to clipboard" data-copy="known_indels = /data/references/GRCh38/Annotation/GATKBundle/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz, /data/references/GRCh38/Annotation/GATKBundle/Homo_sapiens_assembly38.known_indels.vcf.gz">known_indels</button></td>
 <td class="ox-p-t"><code>array</code></td>
 <td class="ox-p-d"><code>/data/references/GRCh38/Annotation/GATKBundle/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz, /data/references/GRCh38/Annotation/GATKBundle/Homo_sapiens_assembly38.known_indels.vcf.gz</code></td>
 <td class="ox-p-desc">Reference data (user-provided; GRCh38 GATK bundle layout from upstream<br>conf/igenomes.config, substituted at port time)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy known_indels_tbi = value" data-copy="known_indels_tbi = /data/references/GRCh38/Annotation/GATKBundle/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz.tbi, /data/references/GRCh38/Annotation/GATKBundle/Homo_sapiens_assembly38.known_indels.vcf.gz.tbi">known_indels_tbi</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy known_indels_tbi = value" aria-label="Copy known_indels_tbi = /data/references/GRCh38/Annotation/GATKBundle/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz.tbi, /data/references/GRCh38/Annotation/GATKBundle/Homo_sapiens_assembly38.known_indels.vcf.gz.tbi to clipboard" data-copy="known_indels_tbi = /data/references/GRCh38/Annotation/GATKBundle/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz.tbi, /data/references/GRCh38/Annotation/GATKBundle/Homo_sapiens_assembly38.known_indels.vcf.gz.tbi">known_indels_tbi</button></td>
 <td class="ox-p-t"><code>array</code></td>
 <td class="ox-p-d"><code>/data/references/GRCh38/Annotation/GATKBundle/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz.tbi, /data/references/GRCh38/Annotation/GATKBundle/Homo_sapiens_assembly38.known_indels.vcf.gz.tbi</code></td>
 <td class="ox-p-desc">Reference data (user-provided; GRCh38 GATK bundle layout from upstream<br>conf/igenomes.config, substituted at port time)<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy known_snps = value" data-copy="known_snps = /data/references/GRCh38/Annotation/GATKBundle/1000G_omni2.5.hg38.vcf.gz">known_snps</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy known_snps = value" aria-label="Copy known_snps = /data/references/GRCh38/Annotation/GATKBundle/1000G_omni2.5.hg38.vcf.gz to clipboard" data-copy="known_snps = /data/references/GRCh38/Annotation/GATKBundle/1000G_omni2.5.hg38.vcf.gz">known_snps</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>/data/references/GRCh38/Annotation/GATKBundle/1000G_omni2.5.hg38.vcf.gz</code></td>
 <td class="ox-p-desc">VQSR resources for joint germline (upstream conf/igenomes.config known_snps)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy known_snps_tbi = value" data-copy="known_snps_tbi = /data/references/GRCh38/Annotation/GATKBundle/1000G_omni2.5.hg38.vcf.gz.tbi">known_snps_tbi</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy known_snps_tbi = value" aria-label="Copy known_snps_tbi = /data/references/GRCh38/Annotation/GATKBundle/1000G_omni2.5.hg38.vcf.gz.tbi to clipboard" data-copy="known_snps_tbi = /data/references/GRCh38/Annotation/GATKBundle/1000G_omni2.5.hg38.vcf.gz.tbi">known_snps_tbi</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>/data/references/GRCh38/Annotation/GATKBundle/1000G_omni2.5.hg38.vcf.gz.tbi</code></td>
 <td class="ox-p-desc">VQSR resources for joint germline (upstream conf/igenomes.config known_snps)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy lane = value" data-copy="lane = L1">lane</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy lane = value" aria-label="Copy lane = L1 to clipboard" data-copy="lane = L1">lane</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>L1</code></td>
 <td class="ox-p-desc">Sample metadata — mirrors tests/csv/3.0/fastq_single.csv (single-lane model:<br>nf-core/sarek meta.id = &quot;{sample}-{lane}&quot;, read-group ID = &quot;{sample}.{lane}&quot;)<br><span class="ox-param-usedby">used by <code>15</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy length_required = value" data-copy="length_required = 15">length_required</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy length_required = value" aria-label="Copy length_required = 15 to clipboard" data-copy="length_required = 15">length_required</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>15</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mapped_bam = value" data-copy="mapped_bam = 0001">mapped_bam</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mapped_bam = value" aria-label="Copy mapped_bam = 0001 to clipboard" data-copy="mapped_bam = 0001">mapped_bam</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>0001</code></td>
 <td class="ox-p-desc">mapped bam stem fed to markduplicates: {sample}.{mapped_bam}.bam (&quot;sorted&quot; with split_parts = true)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ngscheckmate_bed = value" data-copy="ngscheckmate_bed = /data/references/GRCh38/Annotation/NGSCheckMate/SNP_GRCh38_hg38_wChr.bed">ngscheckmate_bed</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ngscheckmate_bed = value" aria-label="Copy ngscheckmate_bed = /data/references/GRCh38/Annotation/NGSCheckMate/SNP_GRCh38_hg38_wChr.bed to clipboard" data-copy="ngscheckmate_bed = /data/references/GRCh38/Annotation/NGSCheckMate/SNP_GRCh38_hg38_wChr.bed">ngscheckmate_bed</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>/data/references/GRCh38/Annotation/NGSCheckMate/SNP_GRCh38_hg38_wChr.bed</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy out_dir = value" data-copy="out_dir = results">out_dir</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy out_dir = value" aria-label="Copy out_dir = results to clipboard" data-copy="out_dir = results">out_dir</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>results</code></td>
 <td class="ox-p-desc">Output directory (upstream --outdir) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>109</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy patient = value" data-copy="patient = test">patient</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy patient = value" aria-label="Copy patient = test to clipboard" data-copy="patient = test">patient</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test</code></td>
 <td class="ox-p-desc">Sample metadata — mirrors tests/csv/3.0/fastq_single.csv (single-lane model:<br>nf-core/sarek meta.id = &quot;{sample}-{lane}&quot;, read-group ID = &quot;{sample}.{lane}&quot;)<br><span class="ox-param-usedby">used by <code>5</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy prepare_reference = value" data-copy="prepare_reference = false">prepare_reference</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy prepare_reference = value" aria-label="Copy prepare_reference = false to clipboard" data-copy="prepare_reference = false">prepare_reference</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Optional branches (all default-off; upstream equivalents in parentheses)<br>Reference preparation — upstream PREPARE_GENOME builds the BWA/BWAmem2<br>indexes + .dict + .fai when the reference lacks them; the port gates this on<br>prepare_reference and writes into results/reference/. Point bwa_index_dir /<br>bwa_mem2_index_dir / fasta_fai / dict at the built files to use them.<br><span class="ox-param-usedby">used by <code>4</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy recal_index_ext = value" data-copy="recal_index_ext = cram.crai">recal_index_ext</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy recal_index_ext = value" aria-label="Copy recal_index_ext = cram.crai to clipboard" data-copy="recal_index_ext = cram.crai">recal_index_ext</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>cram.crai</code></td>
 <td class="ox-p-desc">Alignment-file mode: &#x27;cram&#x27; (default) or &#x27;bam&#x27; (when save_output_as_bam=true).<br>recal_index_ext must match the mode (&#x27;cram.crai&#x27; vs &#x27;bam.bai&#x27;).<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy save_output_as_bam = value" data-copy="save_output_as_bam = false">save_output_as_bam</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy save_output_as_bam = value" aria-label="Copy save_output_as_bam = false to clipboard" data-copy="save_output_as_bam = false">save_output_as_bam</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">CRAM output mode (upstream default)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy scatter_gatk = value" data-copy="scatter_gatk = false">scatter_gatk</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy scatter_gatk = value" aria-label="Copy scatter_gatk = false to clipboard" data-copy="scatter_gatk = false">scatter_gatk</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Optional per-chromosome scatter/gather branch (default off). When<br>scatter_gatk = true, BQSR / ApplyBQSR / HaplotypeCaller (and the joint<br>GenotypeGVCFs) run one job per chromosome and the per-chromosome outputs<br>are gathered (GatherBQSRReports / samtools merge+index / MergeVcfs) —<br>results identical to the single whole-genome job (gathers are exact), with<br>per-chromosome parallelism. Upstream scatters over dynamic duration-binned<br>interval files; the engine&#x27;s scatter takes a static value list, so the port<br>uses one interval per chromosome. Keep <code>chromosomes</code> in sync with the<br>contigs of your fasta .fai (each entry must exist in the .fai).<br><span class="ox-param-usedby">used by <code>22</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy seq_platform = value" data-copy="seq_platform = ILLUMINA">seq_platform</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy seq_platform = value" aria-label="Copy seq_platform = ILLUMINA to clipboard" data-copy="seq_platform = ILLUMINA">seq_platform</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>ILLUMINA</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>5</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sex = value" data-copy="sex = XX">sex</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sex = value" aria-label="Copy sex = XX to clipboard" data-copy="sex = XX">sex</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>XX</code></td>
 <td class="ox-p-desc">Sample metadata — mirrors tests/csv/3.0/fastq_single.csv (single-lane model:<br>nf-core/sarek meta.id = &quot;{sample}-{lane}&quot;, read-group ID = &quot;{sample}.{lane}&quot;)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_bcftools = value" data-copy="skip_bcftools = false">skip_bcftools</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_bcftools = value" aria-label="Copy skip_bcftools = false to clipboard" data-copy="skip_bcftools = false">skip_bcftools</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">tools / skip_tools equivalents (upstream comma-list params expressed as booleans)<br><span class="ox-param-usedby">used by <code>8</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_fastqc = value" data-copy="skip_fastqc = false">skip_fastqc</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_fastqc = value" aria-label="Copy skip_fastqc = false to clipboard" data-copy="skip_fastqc = false">skip_fastqc</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">tools / skip_tools equivalents (upstream comma-list params expressed as booleans)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_mosdepth = value" data-copy="skip_mosdepth = false">skip_mosdepth</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_mosdepth = value" aria-label="Copy skip_mosdepth = false to clipboard" data-copy="skip_mosdepth = false">skip_mosdepth</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">tools / skip_tools equivalents (upstream comma-list params expressed as booleans)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_multiqc = value" data-copy="skip_multiqc = false">skip_multiqc</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_multiqc = value" aria-label="Copy skip_multiqc = false to clipboard" data-copy="skip_multiqc = false">skip_multiqc</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">tools / skip_tools equivalents (upstream comma-list params expressed as booleans)<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_samtools = value" data-copy="skip_samtools = false">skip_samtools</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_samtools = value" aria-label="Copy skip_samtools = false to clipboard" data-copy="skip_samtools = false">skip_samtools</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">tools / skip_tools equivalents (upstream comma-list params expressed as booleans)<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_vcftools = value" data-copy="skip_vcftools = false">skip_vcftools</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy skip_vcftools = value" aria-label="Copy skip_vcftools = false to clipboard" data-copy="skip_vcftools = false">skip_vcftools</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">tools / skip_tools equivalents (upstream comma-list params expressed as booleans)<br><span class="ox-param-usedby">used by <code>24</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy split_fastq = value" data-copy="split_fastq = 50000000">split_fastq</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy split_fastq = value" aria-label="Copy split_fastq = 50000000 to clipboard" data-copy="split_fastq = 50000000">split_fastq</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>50000000</code></td>
 <td class="ox-p-desc">fastp --split_by_lines = split_fastq * 4<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy split_parts = value" data-copy="split_parts = false">split_parts</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy split_parts = value" aria-label="Copy split_parts = false to clipboard" data-copy="split_parts = false">split_parts</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">Runtime-discovered split parts: when true, fastp&#x27;s --split_by_lines parts<br>are discovered by filesystem scan (engine output_pattern primitive) and the<br>BWA_MEM + BAM_MERGE_INDEX_SAMTOOLS stages fan out per part — no 0001-only<br>cap. Requires mapped_bam = &quot;sorted&quot; (the merge output name). Not supported<br>with umi_read_structure. Off by default (upstream single-part behavior).<br><span class="ox-param-usedby">used by <code>8</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy status = value" data-copy="status = 0">status</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy status = value" aria-label="Copy status = 0 to clipboard" data-copy="status = 0">status</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>0</code></td>
 <td class="ox-p-desc">Sample metadata — mirrors tests/csv/3.0/fastq_single.csv (single-lane model:<br>nf-core/sarek meta.id = &quot;{sample}-{lane}&quot;, read-group ID = &quot;{sample}.{lane}&quot;)<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy tools_ngscheckmate = value" data-copy="tools_ngscheckmate = false">tools_ngscheckmate</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy tools_ngscheckmate = value" aria-label="Copy tools_ngscheckmate = false to clipboard" data-copy="tools_ngscheckmate = false">tools_ngscheckmate</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy trim_fastq = value" data-copy="trim_fastq = false">trim_fastq</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy trim_fastq = value" aria-label="Copy trim_fastq = false to clipboard" data-copy="trim_fastq = false">trim_fastq</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy umi_read_structure = value" data-copy="umi_read_structure = ">umi_read_structure</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy umi_read_structure = value" aria-label="Copy umi_read_structure =  to clipboard" data-copy="umi_read_structure = ">umi_read_structure</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">UMI consensus preprocessing (upstream params.umi_read_structure, e.g.<br>&#x27;3M2S+T&#x27; or &#x27;5M2S+T&#x27;; empty string disables the whole UMI chain)<br><span class="ox-param-usedby">used by <code>9</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy vep_cache_ready = value" data-copy="vep_cache_ready = false">vep_cache_ready</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy vep_cache_ready = value" aria-label="Copy vep_cache_ready = false to clipboard" data-copy="vep_cache_ready = false">vep_cache_ready</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">The VEP cache version must match the VEP binary in envs/vep.yaml<br>(upstream&#x27;s image pins 116; this env ships ensembl-vep 112, whose<br>cache format is version-locked — a 116 cache is unreadable).<br>The cache itself is user data (upstream bundles it in the container<br>at /.vep; ~30GB for whole-genome GRCh38, or a gtf2vep subset) —<br>the VEP rule gates on vep_cache_ready. Upstream fails hard without<br>the cache; set the flag after placing it at vep_dir_cache (see<br>README fidelity table).<br><span class="ox-param-usedby">used by <code>8</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy vep_cache_version = value" data-copy="vep_cache_version = 112">vep_cache_version</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy vep_cache_version = value" aria-label="Copy vep_cache_version = 112 to clipboard" data-copy="vep_cache_version = 112">vep_cache_version</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>112</code></td>
 <td class="ox-p-desc">The VEP cache version must match the VEP binary in envs/vep.yaml<br>(upstream&#x27;s image pins 116; this env ships ensembl-vep 112, whose<br>cache format is version-locked — a 116 cache is unreadable).<br>The cache itself is user data (upstream bundles it in the container<br>at /.vep; ~30GB for whole-genome GRCh38, or a gtf2vep subset) —<br>the VEP rule gates on vep_cache_ready. Upstream fails hard without<br>the cache; set the flag after placing it at vep_dir_cache (see<br>README fidelity table).<br><span class="ox-param-usedby">used by <code>8</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy vep_dir_cache = value" data-copy="vep_dir_cache = /.vep">vep_dir_cache</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy vep_dir_cache = value" aria-label="Copy vep_dir_cache = /.vep to clipboard" data-copy="vep_dir_cache = /.vep">vep_dir_cache</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>/.vep</code></td>
 <td class="ox-p-desc">The VEP cache version must match the VEP binary in envs/vep.yaml<br>(upstream&#x27;s image pins 116; this env ships ensembl-vep 112, whose<br>cache format is version-locked — a 116 cache is unreadable).<br>The cache itself is user data (upstream bundles it in the container<br>at /.vep; ~30GB for whole-genome GRCh38, or a gtf2vep subset) —<br>the VEP rule gates on vep_cache_ready. Upstream fails hard without<br>the cache; set the flag after placing it at vep_dir_cache (see<br>README fidelity table).<br><span class="ox-param-usedby">used by <code>8</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy vep_genome = value" data-copy="vep_genome = GRCh38">vep_genome</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy vep_genome = value" aria-label="Copy vep_genome = GRCh38 to clipboard" data-copy="vep_genome = GRCh38">vep_genome</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>GRCh38</code></td>
 <td class="ox-p-desc">vep tool parameter (upstream --vep_genome) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>8</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy vep_species = value" data-copy="vep_species = homo_sapiens">vep_species</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy vep_species = value" aria-label="Copy vep_species = homo_sapiens to clipboard" data-copy="vep_species = homo_sapiens">vep_species</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>homo_sapiens</code></td>
 <td class="ox-p-desc">vep tool parameter (upstream --vep_species) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>8</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy wes = value" data-copy="wes = false">wes</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy wes = value" aria-label="Copy wes = false to clipboard" data-copy="wes = false">wes</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>

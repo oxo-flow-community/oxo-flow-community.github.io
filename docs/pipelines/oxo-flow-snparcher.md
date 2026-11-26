@@ -95,241 +95,241 @@ oxo-flow pull gh:oxo-flow-community/oxo-flow-snparcher
 <thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
 <tbody>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bcftools_max_depth = value" data-copy="bcftools_max_depth = 250">bcftools_max_depth</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bcftools_max_depth = value" aria-label="Copy bcftools_max_depth = 250 to clipboard" data-copy="bcftools_max_depth = 250">bcftools_max_depth</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>250</code></td>
 <td class="ox-p-desc">bcftools tool parameter (upstream --bcftools_max_depth) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bcftools_min_baseq = value" data-copy="bcftools_min_baseq = 20">bcftools_min_baseq</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bcftools_min_baseq = value" aria-label="Copy bcftools_min_baseq = 20 to clipboard" data-copy="bcftools_min_baseq = 20">bcftools_min_baseq</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>20</code></td>
 <td class="ox-p-desc">bcftools tool parameter (upstream --bcftools_min_baseq) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bcftools_min_mapq = value" data-copy="bcftools_min_mapq = 20">bcftools_min_mapq</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy bcftools_min_mapq = value" aria-label="Copy bcftools_min_mapq = 20 to clipboard" data-copy="bcftools_min_mapq = 20">bcftools_min_mapq</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>20</code></td>
 <td class="ox-p-desc">bcftools tool parameter (upstream --bcftools_min_mapq) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy callable_sites_enabled = value" data-copy="callable_sites_enabled = false">callable_sites_enabled</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy callable_sites_enabled = value" aria-label="Copy callable_sites_enabled = false to clipboard" data-copy="callable_sites_enabled = false">callable_sites_enabled</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">callable tool parameter (upstream --callable_sites_enabled) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>18</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy callable_sites_fraction = value" data-copy="callable_sites_fraction = 1.0">callable_sites_fraction</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy callable_sites_fraction = value" aria-label="Copy callable_sites_fraction = 1.0 to clipboard" data-copy="callable_sites_fraction = 1.0">callable_sites_fraction</button></td>
 <td class="ox-p-t"><code>float</code></td>
 <td class="ox-p-d"><code>1.0</code></td>
 <td class="ox-p-desc">callable tool parameter (upstream --callable_sites_fraction) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy callable_sites_kmer = value" data-copy="callable_sites_kmer = 150">callable_sites_kmer</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy callable_sites_kmer = value" aria-label="Copy callable_sites_kmer = 150 to clipboard" data-copy="callable_sites_kmer = 150">callable_sites_kmer</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>150</code></td>
 <td class="ox-p-desc">callable tool parameter (upstream --callable_sites_kmer) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy callable_sites_max_coverage = value" data-copy="callable_sites_max_coverage = auto">callable_sites_max_coverage</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy callable_sites_max_coverage = value" aria-label="Copy callable_sites_max_coverage = auto to clipboard" data-copy="callable_sites_max_coverage = auto">callable_sites_max_coverage</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>auto</code></td>
 <td class="ox-p-desc">callable tool parameter (upstream --callable_sites_max_coverage) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy callable_sites_merge_distance = value" data-copy="callable_sites_merge_distance = 100">callable_sites_merge_distance</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy callable_sites_merge_distance = value" aria-label="Copy callable_sites_merge_distance = 100 to clipboard" data-copy="callable_sites_merge_distance = 100">callable_sites_merge_distance</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>100</code></td>
 <td class="ox-p-desc">callable tool parameter (upstream --callable_sites_merge_distance) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy callable_sites_min_coverage = value" data-copy="callable_sites_min_coverage = auto">callable_sites_min_coverage</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy callable_sites_min_coverage = value" aria-label="Copy callable_sites_min_coverage = auto to clipboard" data-copy="callable_sites_min_coverage = auto">callable_sites_min_coverage</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>auto</code></td>
 <td class="ox-p-desc">callable tool parameter (upstream --callable_sites_min_coverage) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy callable_sites_min_score = value" data-copy="callable_sites_min_score = 1">callable_sites_min_score</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy callable_sites_min_score = value" aria-label="Copy callable_sites_min_score = 1 to clipboard" data-copy="callable_sites_min_score = 1">callable_sites_min_score</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>1</code></td>
 <td class="ox-p-desc">callable tool parameter (upstream --callable_sites_min_score) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy deepvariant_model_type = value" data-copy="deepvariant_model_type = WGS">deepvariant_model_type</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy deepvariant_model_type = value" aria-label="Copy deepvariant_model_type = WGS to clipboard" data-copy="deepvariant_model_type = WGS">deepvariant_model_type</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>WGS</code></td>
 <td class="ox-p-desc">deepvariant tool parameter (upstream --deepvariant_model_type) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>3</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy expected_coverage = value" data-copy="expected_coverage = low">expected_coverage</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy expected_coverage = value" aria-label="Copy expected_coverage = low to clipboard" data-copy="expected_coverage = low">expected_coverage</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>low</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-unused">not referenced by any rule (ported for upstream compatibility — overriding has no effect here)</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gatk_het_prior = value" data-copy="gatk_het_prior = 0.005">gatk_het_prior</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy gatk_het_prior = value" aria-label="Copy gatk_het_prior = 0.005 to clipboard" data-copy="gatk_het_prior = 0.005">gatk_het_prior</button></td>
 <td class="ox-p-t"><code>float</code></td>
 <td class="ox-p-d"><code>0.005</code></td>
 <td class="ox-p-desc">gatk tool parameter (upstream --gatk_het_prior) <span class="ox-param-inferred">inferred</span><br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy generate_filtered_vcf = value" data-copy="generate_filtered_vcf = false">generate_filtered_vcf</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy generate_filtered_vcf = value" aria-label="Copy generate_filtered_vcf = false to clipboard" data-copy="generate_filtered_vcf = false">generate_filtered_vcf</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy intervals_db_max_contigs_per_shard = value" data-copy="intervals_db_max_contigs_per_shard = 200">intervals_db_max_contigs_per_shard</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy intervals_db_max_contigs_per_shard = value" aria-label="Copy intervals_db_max_contigs_per_shard = 200 to clipboard" data-copy="intervals_db_max_contigs_per_shard = 200">intervals_db_max_contigs_per_shard</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>200</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy intervals_db_max_intervals_per_shard = value" data-copy="intervals_db_max_intervals_per_shard = 200">intervals_db_max_intervals_per_shard</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy intervals_db_max_intervals_per_shard = value" aria-label="Copy intervals_db_max_intervals_per_shard = 200 to clipboard" data-copy="intervals_db_max_intervals_per_shard = 200">intervals_db_max_intervals_per_shard</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>200</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy intervals_db_scatter_factor = value" data-copy="intervals_db_scatter_factor = 0.15">intervals_db_scatter_factor</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy intervals_db_scatter_factor = value" aria-label="Copy intervals_db_scatter_factor = 0.15 to clipboard" data-copy="intervals_db_scatter_factor = 0.15">intervals_db_scatter_factor</button></td>
 <td class="ox-p-t"><code>float</code></td>
 <td class="ox-p-d"><code>0.15</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy intervals_enabled = value" data-copy="intervals_enabled = false">intervals_enabled</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy intervals_enabled = value" aria-label="Copy intervals_enabled = false to clipboard" data-copy="intervals_enabled = false">intervals_enabled</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>16</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy intervals_min_contig_length = value" data-copy="intervals_min_contig_length = 0">intervals_min_contig_length</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy intervals_min_contig_length = value" aria-label="Copy intervals_min_contig_length = 0 to clipboard" data-copy="intervals_min_contig_length = 0">intervals_min_contig_length</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>0</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy intervals_min_nmer = value" data-copy="intervals_min_nmer = 500">intervals_min_nmer</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy intervals_min_nmer = value" aria-label="Copy intervals_min_nmer = 500 to clipboard" data-copy="intervals_min_nmer = 500">intervals_min_nmer</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>500</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy intervals_scatter_count = value" data-copy="intervals_scatter_count = 50">intervals_scatter_count</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy intervals_scatter_count = value" aria-label="Copy intervals_scatter_count = 50 to clipboard" data-copy="intervals_scatter_count = 50">intervals_scatter_count</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>50</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>2</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy joint_genotyping_enabled = value" data-copy="joint_genotyping_enabled = false">joint_genotyping_enabled</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy joint_genotyping_enabled = value" aria-label="Copy joint_genotyping_enabled = false to clipboard" data-copy="joint_genotyping_enabled = false">joint_genotyping_enabled</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>9</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mark_duplicates = value" data-copy="mark_duplicates = false">mark_duplicates</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy mark_duplicates = value" aria-label="Copy mark_duplicates = false to clipboard" data-copy="mark_duplicates = false">mark_duplicates</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>15</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy modules_postprocess_enabled = value" data-copy="modules_postprocess_enabled = false">modules_postprocess_enabled</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy modules_postprocess_enabled = value" aria-label="Copy modules_postprocess_enabled = false to clipboard" data-copy="modules_postprocess_enabled = false">modules_postprocess_enabled</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>7</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy modules_qc_enabled = value" data-copy="modules_qc_enabled = false">modules_qc_enabled</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy modules_qc_enabled = value" aria-label="Copy modules_qc_enabled = false to clipboard" data-copy="modules_qc_enabled = false">modules_qc_enabled</button></td>
 <td class="ox-p-t"><code>bool</code></td>
 <td class="ox-p-d"><code>false</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>10</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ploidy = value" data-copy="ploidy = 2">ploidy</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy ploidy = value" aria-label="Copy ploidy = 2 to clipboard" data-copy="ploidy = 2">ploidy</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>2</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>7</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy postprocess_contig_size = value" data-copy="postprocess_contig_size = 10000">postprocess_contig_size</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy postprocess_contig_size = value" aria-label="Copy postprocess_contig_size = 10000 to clipboard" data-copy="postprocess_contig_size = 10000">postprocess_contig_size</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>10000</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy postprocess_exclude_scaffolds = value" data-copy="postprocess_exclude_scaffolds = mtDNA,Y">postprocess_exclude_scaffolds</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy postprocess_exclude_scaffolds = value" aria-label="Copy postprocess_exclude_scaffolds = mtDNA,Y to clipboard" data-copy="postprocess_exclude_scaffolds = mtDNA,Y">postprocess_exclude_scaffolds</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>mtDNA,Y</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy postprocess_maf = value" data-copy="postprocess_maf = 0.01">postprocess_maf</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy postprocess_maf = value" aria-label="Copy postprocess_maf = 0.01 to clipboard" data-copy="postprocess_maf = 0.01">postprocess_maf</button></td>
 <td class="ox-p-t"><code>float</code></td>
 <td class="ox-p-d"><code>0.01</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy postprocess_missingness = value" data-copy="postprocess_missingness = 0.75">postprocess_missingness</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy postprocess_missingness = value" aria-label="Copy postprocess_missingness = 0.75 to clipboard" data-copy="postprocess_missingness = 0.75">postprocess_missingness</button></td>
 <td class="ox-p-t"><code>float</code></td>
 <td class="ox-p-d"><code>0.75</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy qc_clusters = value" data-copy="qc_clusters = 3">qc_clusters</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy qc_clusters = value" aria-label="Copy qc_clusters = 3 to clipboard" data-copy="qc_clusters = 3">qc_clusters</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>3</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy qc_exclude_scaffolds = value" data-copy="qc_exclude_scaffolds = ">qc_exclude_scaffolds</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy qc_exclude_scaffolds = value" aria-label="Copy qc_exclude_scaffolds =  to clipboard" data-copy="qc_exclude_scaffolds = ">qc_exclude_scaffolds</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy qc_google_api_key = value" data-copy="qc_google_api_key = ">qc_google_api_key</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy qc_google_api_key = value" aria-label="Copy qc_google_api_key =  to clipboard" data-copy="qc_google_api_key = ">qc_google_api_key</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy qc_max_sample_missingness = value" data-copy="qc_max_sample_missingness = 0.49">qc_max_sample_missingness</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy qc_max_sample_missingness = value" aria-label="Copy qc_max_sample_missingness = 0.49 to clipboard" data-copy="qc_max_sample_missingness = 0.49">qc_max_sample_missingness</button></td>
 <td class="ox-p-t"><code>float</code></td>
 <td class="ox-p-d"><code>0.49</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy qc_min_depth = value" data-copy="qc_min_depth = 2">qc_min_depth</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy qc_min_depth = value" aria-label="Copy qc_min_depth = 2 to clipboard" data-copy="qc_min_depth = 2">qc_min_depth</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>2</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy qc_pca_dims = value" data-copy="qc_pca_dims = 10">qc_pca_dims</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy qc_pca_dims = value" aria-label="Copy qc_pca_dims = 10 to clipboard" data-copy="qc_pca_dims = 10">qc_pca_dims</button></td>
 <td class="ox-p-t"><code>int</code></td>
 <td class="ox-p-d"><code>10</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy reference_name = value" data-copy="reference_name = my_organism">reference_name</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy reference_name = value" aria-label="Copy reference_name = my_organism to clipboard" data-copy="reference_name = my_organism">reference_name</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>my_organism</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>27</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy reference_source = value" data-copy="reference_source = test/fixtures/ref/genome.fa">reference_source</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy reference_source = value" aria-label="Copy reference_source = test/fixtures/ref/genome.fa to clipboard" data-copy="reference_source = test/fixtures/ref/genome.fa">reference_source</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>test/fixtures/ref/genome.fa</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sample_metadata = value" data-copy="sample_metadata = ">sample_metadata</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy sample_metadata = value" aria-label="Copy sample_metadata =  to clipboard" data-copy="sample_metadata = ">sample_metadata</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code></code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>1</code> rules</span></td>
 </tr>
 <tr>
-<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy variant_tool = value" data-copy="variant_tool = gatk">variant_tool</button></td>
+<td class="ox-p-k"><button class="ox-p-copy" type="button" title="Copy variant_tool = value" aria-label="Copy variant_tool = gatk to clipboard" data-copy="variant_tool = gatk">variant_tool</button></td>
 <td class="ox-p-t"><code>string</code></td>
 <td class="ox-p-d"><code>gatk</code></td>
 <td class="ox-p-desc">—<br><span class="ox-param-usedby">used by <code>25</code> rules</span></td>

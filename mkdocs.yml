@@ -41,7 +41,9 @@ extra_css:
   - stylesheets/extra.css
 
 extra_javascript:
-  - javascripts/pipelines-data.js
+  # catalog.js stays global (it carries the copy-to-clipboard handler);
+  # the 0.5 MB pipelines-data.js registry is NOT listed here — catalog.js
+  # loads it lazily only on pages that host a catalog mount.
   - javascripts/catalog.js
 
 markdown_extensions:
