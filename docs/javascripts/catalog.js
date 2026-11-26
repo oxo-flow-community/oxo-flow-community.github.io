@@ -50,8 +50,12 @@
         : p.engine === "oxo-flow"
           ? '<span class="ox-badge ox-badge--native"><span class="dot" aria-hidden="true"></span>oxo-flow native</span>'
           : "";
-    // Catalog cards show the fetch-to-runs path: pull the repo, run from it
-    const cmd = `oxo-flow pull gh:oxo-flow-community/${esc(p.name)}`;
+    // Cards show the fetch-to-runs path: pull the repo, run from it.
+    // The owner comes from repo_url — community entries live outside the
+    // org (WangLabCSU/...); a hard-coded org prefix would 404 on those.
+    const m = /github\.com\/([^/]+\/[^/]+?)\/?$/.exec(p.repo_url || "");
+    const ghSlug = m ? m[1] : "oxo-flow-community/" + p.name;
+    const cmd = `oxo-flow pull gh:${ghSlug}`;
     // Compute badge on its own line — long strings never squeeze the tool chips
     const compute = p.compute
       ? `<div class="compute">⚙ <span title="Peak compute per rule">${esc(p.compute)}</span></div>`
@@ -70,7 +74,7 @@
       <p class="title">${esc(p.title)}</p>
       ${compute}
       <div class="meta">
-        <span class="ox-badge">${Number(p.rule_count) || 0} rules</span>
+        <span class="ox-badge">${p.rule_count != null ? `${Number(p.rule_count) || 0} rules` : "rules —"}</span>
         ${toolChips}
         ${more}
       </div>
@@ -191,7 +195,8 @@
       P.filter((p) => p.engine === e).length)));
 
     function matches(p) {
-      const hay = [p.name, p.title, p.domain, ...(p.tags || []), ...(p.tools || [])]
+      const hay = [p.name, p.title, p.domain, p.description,
+                   ...(p.tags || []), ...(p.tools || [])]
         .join(" ").toLowerCase();
       const q = state.q.trim().toLowerCase();
       if (q && !hay.includes(q)) return false;

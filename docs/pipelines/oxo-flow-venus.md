@@ -8,23 +8,22 @@ title: "Tumor multi-omics WGS/WES: somatic SNV/indel, CNV, SV, MSI and signature
 <h1>Tumor multi-omics WGS/WES: somatic SNV/indel, CNV, SV, MSI and signature analysis with bulk/scRNA-seq cohort clinical reporting</h1>
 <div class="ox-page-badges"><span class="ox-badge ">☆ Community</span> <span class="ox-badge ox-badge--origin">Original</span> <span class="ox-badge ox-badge--native"><span class="dot" aria-hidden="true"></span>oxo-flow native</span><span class=ox-tag-sep></span><span class="ox-tag">tumor-multi-omics</span><span class="ox-tag">wgs</span><span class="ox-tag">wes</span><span class="ox-tag">somatic-calling</span><span class="ox-tag">mutect2</span><span class="ox-tag">copy-number-analysis</span><span class="ox-tag">structural-variants</span><span class="ox-tag">msi</span><span class="ox-tag">mutational-signatures</span><span class="ox-tag">bulk-rna-seq</span><span class="ox-tag">single-cell-rna-seq</span><span class="ox-tag">ecdna</span><span class="ox-tag">neoantigen</span><span class="ox-tag">clinical-report</span><span class="ox-tag">hla</span></div>
 <p class="ox-desc">Tumor multi-omics pipeline covering the full path from raw FASTQ to a cohort clinical report with an auto-generated methods section. DNA chain: BWA-MEM2 alignment with MarkDuplicates and BQSR, Mutect2 somatic SNV/indel calling in paired and tumor-only modes with orientation-bias filtering, CNVkit copy-number profiles, ASCAT purity/ploidy fits, AmpliconSuite ecDNA classification, Manta SVs, MSIsensor MSI and in-house SBS96/COSMIC signature fits, annotated with vep-rs and tiered by CIViC-based clinical interpretation. RNA chain: two-pass STAR + featureCounts bulk RNA-seq with fusion screening, dnbc4tools single-cell counting, and SpecHLA -&gt; VEP -&gt; pVACseq/pVACfuse neoantigen prediction. Cohort reports (TMB, clinical evidence tables, MSI/frameshift and ICB pages) aggregate exactly the runs that executed, per the engine rule_runs checkpoint.</p>
-<div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#preview-the-plan">▶ Run it</a><a class="ox-btn" href="https://github.com/WangLabCSU/oxo-flow-venus" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow dry-run venus.oxoflow</code></div>
+<div class="ox-hero-cta"><a class="ox-btn ox-btn--run" href="#preview-the-plan">▶ Preview the plan</a><a class="ox-btn" href="https://github.com/WangLabCSU/oxo-flow-venus" rel="noopener">GitHub ↗</a><code class="ox-hero-cmd">$ oxo-flow dry-run venus.oxoflow</code></div>
 </div>
 <div>
 <div class="ox-glance">
 <div class="ox-glance-title">At a glance</div>
-<div class="ox-kv"><span class="k">Rating</span><span class="v live">☆ Community</span></div>
+<div class="ox-kv"><span class="k">Rating</span><span class="v">☆ Community</span></div>
 <div class="ox-kv"><span class="k">Rules</span><span class="v">78</span></div>
 <div class="ox-kv"><span class="k">Compute</span><span class="v">—</span></div>
 <div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--native"><span class="dot" aria-hidden="true"></span>oxo-flow native</span></span></div>
 <div class="ox-kv"><span class="k">Origin</span><span class="v">Original</span></div>
 <div class="ox-kv"><span class="k">Domain</span><span class="v">cancer genomics (WES/WGS/RNA)</span></div>
-<div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/WangLabCSU/oxo-flow-venus">WangLabCSU/oxo-flow-venus</a></span></div>
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>v0.5.0</code></span></div>
-<div class="ox-kv"><span class="k">Ported</span><span class="v">2026-05-19</span></div>
+<div class="ox-kv"><span class="k">Added</span><span class="v">2026-05-19</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">fastp</span><span class="tchip">fastqc</span><span class="tchip">multiqc</span><span class="tchip">bwa-mem2</span><span class="tchip">picard</span><span class="tchip">gatk4</span><span class="tchip">mutect2</span><span class="tchip">vep-rs</span></div></div>
-<p class="cmd">$ oxo-flow pull gh:oxo-flow-community/oxo-flow-venus</p>
+<p class="cmd">$ oxo-flow pull gh:WangLabCSU/oxo-flow-venus</p>
 </div>
 </div>
 </div>
@@ -35,12 +34,12 @@ title: "Tumor multi-omics WGS/WES: somatic SNV/indel, CNV, SV, MSI and signature
 ## Preview the plan
 
 ```bash
-oxo-flow run gh:oxo-flow-community/oxo-flow-venus -run
+oxo-flow dry-run venus.oxoflow
 ```
 
-Runs straight from the catalog — `oxo-flow` checks the repo out under `.oxo-flow/repos/oxo-flow-venus` and keeps outputs/checkpoints in the current directory, no manual clone. Pin a revision with `gh:oxo-flow-community/oxo-flow-venus@<branch-or-tag>`.
+Runs straight from the catalog — `oxo-flow` checks the repo out under `.oxo-flow/repos/oxo-flow-venus` and keeps outputs/checkpoints in the current directory, no manual clone. Pin a revision with `gh:WangLabCSU/oxo-flow-venus@<branch-or-tag>`.
 
-Preview the plan first: `oxo-flow pull gh:oxo-flow-community/oxo-flow-venus` fetches the repo, then `oxo-flow dry-run main.oxoflow`.
+Preview the plan first: `oxo-flow pull gh:WangLabCSU/oxo-flow-venus` fetches the repo, then `oxo-flow dry-run venus.oxoflow`.
 
 
 Data-gated tumor multi-omics pipeline (WGS/WES + bulk/scRNA inputs, cohort sheets). Dry-run validates the DAG without compute; committed `tests/` parse and cross-check the shipped workflow fragments and pixi environments.
@@ -62,10 +61,10 @@ Data-gated tumor multi-omics pipeline (WGS/WES + bulk/scRNA inputs, cohort sheet
 # 1. install oxo-flow (release binary, recommended)
 curl -fL -o oxo-flow.tar.gz https://github.com/Traitome/oxo-flow/releases/latest/download/oxo-flow-latest-x86_64-unknown-linux-gnu.tar.gz
 tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
-#    or, via conda (may lag behind releases):
+#    or, via conda (bioconda's oxo-flow-cli tracks releases with a lag):
 #    conda install -c bioconda oxo-flow-cli
-#    NOTE: bioconda currently ships 0.10.2, older than the >= 0.12.0
-#    minimum of every catalog entry — prefer the release binary.
+#    Check `oxo-flow --version` against the Engine minimum above — if
+#    bioconda trails it, use the release binary instead.
 
 # 2. get this workflow (clones the repo, auto-discovers the workflow,
 #    sanity-parses it with the engine)
@@ -76,7 +75,7 @@ oxo-flow pull gh:WangLabCSU/oxo-flow-venus
 
 ## Scope
 
-The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.
+Native oxo-flow design — no upstream port: steps implemented by this workflow are listed as in scope; alternate paths of the domain's conventional pipelines appear under excluded.
 
 **In scope**
 

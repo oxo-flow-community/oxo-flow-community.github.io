@@ -75,10 +75,10 @@ Point `data_dir=` and `annotation=` at your inputs (see README); the shipped fix
 # 1. install oxo-flow (release binary, recommended)
 curl -fL -o oxo-flow.tar.gz https://github.com/Traitome/oxo-flow/releases/latest/download/oxo-flow-latest-x86_64-unknown-linux-gnu.tar.gz
 tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
-#    or, via conda (may lag behind releases):
+#    or, via conda (bioconda's oxo-flow-cli tracks releases with a lag):
 #    conda install -c bioconda oxo-flow-cli
-#    NOTE: bioconda currently ships 0.10.2, older than the >= 0.12.0
-#    minimum of every catalog entry — prefer the release binary.
+#    Check `oxo-flow --version` against the Engine minimum above — if
+#    bioconda trails it, use the release binary instead.
 
 # 2. get this workflow (clones the repo, auto-discovers the workflow,
 #    sanity-parses it with the engine)

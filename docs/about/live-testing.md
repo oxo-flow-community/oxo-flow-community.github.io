@@ -1,9 +1,10 @@
 # Live testing — the community practice
 
-This page codifies the practice developed while live-testing all 24
-catalog workflows end-to-end on a real server with the oxo-flow CLI
-(2026-08 campaign, 23 live-verified and counting). It is a **reference
-paradigm**, not a policy: follow the checklist with or without an AI
+This page codifies the practice developed while live-testing catalog
+workflows end-to-end on a real server with the oxo-flow CLI
+(2026-08 founding campaign; today's per-rating counts are the live counters
+on the [catalog home page](../index.md) — ratings re-verify as ports move).
+It is a **reference paradigm**, not a policy: follow the checklist with or without an AI
 assistant — the AI layer (the [`live-test` skill](https://github.com/oxo-flow-community/oxo-flow-community.github.io/blob/main/skills/live-test/SKILL.md))
 just executes the same steps faster.
 

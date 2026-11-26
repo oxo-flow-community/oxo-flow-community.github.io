@@ -107,8 +107,8 @@ every tool and dataset.
 
 ## Where to go next
 
-- [Pick the right workflow](selection.md) — a decision guide by domain.
-- [Curation and ratings](curation.md) — what ✔ live-tested, ★ verified and
-  ☆ community actually guarantee.
+- [How the founding entries were picked](selection.md) — the 2026-08 scoring report.
+- [Curation and ratings](curation.md) — what ✔ live-tested, ★ verified,
+  ◆ dry-run verified and ☆ community actually guarantee.
 - [Port a pipeline yourself](porting.md) — from a source Nextflow/Snakemake
   workflow to a catalog entry.

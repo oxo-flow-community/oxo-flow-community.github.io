@@ -13,7 +13,7 @@ title: "WGS/WES germline and somatic variant calling"
 <div>
 <div class="ox-glance">
 <div class="ox-glance-title">At a glance</div>
-<div class="ox-kv"><span class="k">Rating</span><span class="v live">★ Verified</span></div>
+<div class="ox-kv"><span class="k">Rating</span><span class="v">★ Verified</span></div>
 <div class="ox-kv"><span class="k">Rules</span><span class="v">165</span></div>
 <div class="ox-kv"><span class="k">Compute</span><span class="v"><span title="up to 24 CPUs / 36 GB per rule (BWA-MEM)">up to 24 CPUs / 36 GB per rule (BWA-MEM)</span></span></div>
 <div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--nf"><span class="dot" aria-hidden="true"></span>nf-core port</span></span></div>
@@ -88,10 +88,10 @@ Point the `[config]` fasta / bwa_index / dbsnp / known_indels paths at your GRCh
 # 1. install oxo-flow (release binary, recommended)
 curl -fL -o oxo-flow.tar.gz https://github.com/Traitome/oxo-flow/releases/latest/download/oxo-flow-latest-x86_64-unknown-linux-gnu.tar.gz
 tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
-#    or, via conda (may lag behind releases):
+#    or, via conda (bioconda's oxo-flow-cli tracks releases with a lag):
 #    conda install -c bioconda oxo-flow-cli
-#    NOTE: bioconda currently ships 0.10.2, older than the >= 0.12.0
-#    minimum of every catalog entry — prefer the release binary.
+#    Check `oxo-flow --version` against the Engine minimum above — if
+#    bioconda trails it, use the release binary instead.
 
 # 2. get this workflow (clones the repo, auto-discovers the workflow,
 #    sanity-parses it with the engine)

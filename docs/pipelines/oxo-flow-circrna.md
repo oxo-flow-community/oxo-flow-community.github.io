@@ -19,13 +19,12 @@ title: "circRNA detection: four callers with ensemble aggregation"
 <div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--native"><span class="dot" aria-hidden="true"></span>oxo-flow native</span></span></div>
 <div class="ox-kv"><span class="k">Origin</span><span class="v">Original</span></div>
 <div class="ox-kv"><span class="k">Domain</span><span class="v">transcriptomics (circRNA)</span></div>
-<div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/WangLabCSU/oxo-flow-circrna">WangLabCSU/oxo-flow-circrna</a></span></div>
-<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>main</code></span></div>
-<div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
+<div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>main@13660b0</code></span></div>
+<div class="ox-kv"><span class="k">Added</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2298.1"><code>10.48546/workflowhub.workflow.2298.1</code></a></span></div>
 <div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">fastp</span><span class="tchip">ciriquant</span><span class="tchip">circexplorer2</span><span class="tchip">find_circ</span><span class="tchip">circrna_finder</span><span class="tchip">r-base</span><span class="tchip">multiqc</span></div></div>
-<p class="cmd">$ oxo-flow pull gh:oxo-flow-community/oxo-flow-circrna</p>
+<p class="cmd">$ oxo-flow pull gh:WangLabCSU/oxo-flow-circrna</p>
 </div>
 </div>
 </div>
@@ -47,12 +46,12 @@ title: "circRNA detection: four callers with ensemble aggregation"
 ## Run it
 
 ```bash
-oxo-flow run gh:oxo-flow-community/oxo-flow-circrna -j 16
+oxo-flow run gh:WangLabCSU/oxo-flow-circrna -j 16
 ```
 
-Runs straight from the catalog — `oxo-flow` checks the repo out under `.oxo-flow/repos/oxo-flow-circrna` and keeps outputs/checkpoints in the current directory, no manual clone. Pin a revision with `gh:oxo-flow-community/oxo-flow-circrna@<branch-or-tag>`.
+Runs straight from the catalog — `oxo-flow` checks the repo out under `.oxo-flow/repos/oxo-flow-circrna` and keeps outputs/checkpoints in the current directory, no manual clone. Pin a revision with `gh:WangLabCSU/oxo-flow-circrna@<branch-or-tag>`.
 
-Preview the plan first: `oxo-flow pull gh:oxo-flow-community/oxo-flow-circrna` fetches the repo, then `oxo-flow dry-run main.oxoflow`.
+Preview the plan first: `oxo-flow pull gh:WangLabCSU/oxo-flow-circrna` fetches the repo, then `oxo-flow dry-run circrna.oxoflow`.
 
 
 Set `reference_dir` in `circrna.oxoflow` and place FASTQ pairs in `raw/`; indexes and environments build on first run.
@@ -74,10 +73,10 @@ Set `reference_dir` in `circrna.oxoflow` and place FASTQ pairs in `raw/`; indexe
 # 1. install oxo-flow (release binary, recommended)
 curl -fL -o oxo-flow.tar.gz https://github.com/Traitome/oxo-flow/releases/latest/download/oxo-flow-latest-x86_64-unknown-linux-gnu.tar.gz
 tar xzf oxo-flow.tar.gz && sudo mv oxo-flow /usr/local/bin/
-#    or, via conda (may lag behind releases):
+#    or, via conda (bioconda's oxo-flow-cli tracks releases with a lag):
 #    conda install -c bioconda oxo-flow-cli
-#    NOTE: bioconda currently ships 0.10.2, older than the >= 0.12.0
-#    minimum of every catalog entry — prefer the release binary.
+#    Check `oxo-flow --version` against the Engine minimum above — if
+#    bioconda trails it, use the release binary instead.
 
 # 2. get this workflow (clones the repo, auto-discovers the workflow,
 #    sanity-parses it with the engine)
@@ -128,7 +127,7 @@ The graph is derived at catalog-build time from `oxo-flow graph -f metro` throug
 
 ## Scope
 
-The default-parameters main path of the source pipeline was ported rule-for-rule; alternate paths are documented as excluded.
+Native oxo-flow design — no upstream port: steps implemented by this workflow are listed as in scope; alternate paths of the domain's conventional pipelines appear under excluded.
 
 **In scope**
 
