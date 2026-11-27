@@ -1,3 +1,7 @@
+---
+description: "How to propose, port, or submit an oxo-flow workflow to the community catalog — entry requirements and the review path."
+---
+
 # Contributing
 
 The catalog grows one workflow at a time — a port, an original design, or a

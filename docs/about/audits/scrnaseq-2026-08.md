@@ -1,3 +1,8 @@
+---
+title: scrnaseq completeness audit (2026-08-21)
+description: "scrnaseq completeness audit (2026-08-21) — Upstream: nf-core/scrnaseq @ 4.2.0 · Port: oxo-flow-scrnaseq (23 rules,"
+---
+
 # scrnaseq completeness audit (2026-08-21)
 
 Upstream: nf-core/scrnaseq @ 4.2.0 · Port: `oxo-flow-scrnaseq` (23 rules,

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-     width="353" height="306" viewBox="-20 0 393 306" style="color-scheme: light">
+     width="353" height="306" viewBox="-20 0 393 306" style="color-scheme: light" role="img"><title>oxo-flow-scrnaseq workflow DAG</title>
 <defs>
 </defs>
 <metadata id="diagram-manifest" data-schema-version="1.0"><![CDATA[{"groups":[{"color":"#79706E","id":"generic","label":"Analysis"},{"color":"#F2CF5B","id":"report","label":"Reporting"}],"height":306,"match":{"flags":"i","target":"fqProcessName","type":"regex"},"nodes":[{"groups":["report"],"h":10.0,"id":"g_qc_report","label":"Read QC","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":80.0,"y":184.0},{"groups":["generic","report"],"h":14.0,"id":"g_generic_align_generic","label":"Analysis · Alignment","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":80.0,"y":122.0},{"groups":["generic"],"h":10.0,"id":"g_quantify_quantify","label":"Quantification","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":293.0,"y":120.0},{"groups":["report"],"h":10.0,"id":"g_report_report","label":"Reporting","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":293.0,"y":184.0}],"regions":[],"title":"","version":"1.0","width":353}]]></metadata>

@@ -1,5 +1,9 @@
 ---
 title: "Biosynthetic gene cluster (BGC) genome mining: annotation, antiSMASH and data warehouse"
+description: "Biosynthetic gene cluster (BGC) genome mining: annotation, antiSMASH and data warehouse — the live-tested (✔) entry, genome-mining, snakemake workflow, 60 rules, 8 tools."
+---
+---
+title: "Biosynthetic gene cluster (BGC) genome mining: annotation, antiSMASH and data warehouse"
 ---
 
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-bgcflow</span></div>
@@ -25,7 +29,8 @@ title: "Biosynthetic gene cluster (BGC) genome mining: annotation, antiSMASH and
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2296.1"><code>10.48546/workflowhub.workflow.2296.1</code></a></span></div>
 <div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">prokka</span><span class="tchip">antismash</span><span class="tchip">python</span><span class="tchip">pandas</span><span class="tchip">pyarrow</span><span class="tchip">biopython</span><span class="tchip">requests</span><span class="tchip">alive_progress</span></div></div>
-<p class="cmd">$ oxo-flow pull gh:oxo-flow-community/oxo-flow-bgcflow</p>
+<p class="cmd">$ oxo-flow pull \
+  gh:oxo-flow-community/oxo-flow-bgcflow</p>
 </div>
 </div>
 </div>
@@ -323,7 +328,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 
-<a href="/assets/dag/oxo-flow-bgcflow.svg?v=2b3dd9f22e" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-bgcflow.svg?v=2b3dd9f22e" alt="oxo-flow-bgcflow pipeline overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-bgcflow.svg?v=389f641bcb" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-bgcflow.svg?v=389f641bcb" alt="oxo-flow-bgcflow pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-bgcflow — End-to-end biosynthetic gene cluster (BGC) analysis of user-provided bacterial genomes: prokka annotation, antiSMASH 7 secondary-metabolite mining with automated database setup, per-genome BGC counts and overview tables, GTDB taxonomy lookup, MIBiG reference table download, BigSCAPE-compatible comparison preparation (symlinks, taxonomy, dataset registry, visualization mapping), and conversion of all result tables into a parquet data warehouse — ready for downstream comparison and exploration.</p>
 

@@ -1,5 +1,9 @@
 ---
 title: "Region set and gene set enrichment: LOLA, GREAT, pycisTarget and GSEA"
+description: "Region set and gene set enrichment: LOLA, GREAT, pycisTarget and GSEA — the live-tested (✔) entry, genomics, snakemake workflow, 42 rules, 14 tools."
+---
+---
+title: "Region set and gene set enrichment: LOLA, GREAT, pycisTarget and GSEA"
 ---
 
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-enrichment</span></div>
@@ -25,7 +29,8 @@ title: "Region set and gene set enrichment: LOLA, GREAT, pycisTarget and GSEA"
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2293.1"><code>10.48546/workflowhub.workflow.2293.1</code></a></span></div>
 <div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">gseapy</span><span class="tchip">pandas</span><span class="tchip">pycistarget</span><span class="tchip">bioconductor-rcistarget</span><span class="tchip">bioconductor-lola</span><span class="tchip">bioconductor-rgreat</span><span class="tchip">r-base</span><span class="tchip">r-ggplot2</span></div></div>
-<p class="cmd">$ oxo-flow pull gh:oxo-flow-community/oxo-flow-enrichment</p>
+<p class="cmd">$ oxo-flow pull \
+  gh:oxo-flow-community/oxo-flow-enrichment</p>
 </div>
 </div>
 </div>
@@ -625,14 +630,14 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <details class="ox-flow-view">
 <summary>Exact rule DAG (multi-route truth — operational view)</summary>
 <div class="ox-dag-card ox-dag-card--wide">
-<a href="/assets/dag/oxo-flow-enrichment-rules.svg?v=0055e95439" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-enrichment-rules.svg?v=0055e95439" alt="oxo-flow-enrichment rule-level detail" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-enrichment-rules.svg?v=65dae7a49c" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-enrichment-rules.svg?v=65dae7a49c" alt="oxo-flow-enrichment rule-level detail" loading="lazy"></a>
 </div>
 </details>
 <details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 
-<a href="/assets/dag/oxo-flow-enrichment.svg?v=6157d94671" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-enrichment.svg?v=6157d94671" alt="oxo-flow-enrichment pipeline overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-enrichment.svg?v=ea393d6ef1" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-enrichment.svg?v=ea393d6ef1" alt="oxo-flow-enrichment pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-enrichment — Run a complete region set and gene set enrichment analysis on your own data: region overlap enrichment (LOLA), genomic region enrichment of annotated terms (rGREAT), region TFBS motif enrichment (pycisTarget), gene TFBS motif enrichment (RcisTarget), and gene over-representation analysis (ORA) and preranked GSEA (GSEApy).</p>
 

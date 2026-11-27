@@ -1,5 +1,9 @@
 ---
 title: "Unsupervised analysis of omics matrices: PCA, UMAP, clustering and validation"
+description: "Unsupervised analysis of omics matrices: PCA, UMAP, clustering and validation — the live-tested (✔) entry, other, snakemake workflow, 61 rules, 34 tools."
+---
+---
+title: "Unsupervised analysis of omics matrices: PCA, UMAP, clustering and validation"
 ---
 
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-unsupervised</span></div>
@@ -25,7 +29,8 @@ title: "Unsupervised analysis of omics matrices: PCA, UMAP, clustering and valid
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2297.1"><code>10.48546/workflowhub.workflow.2297.1</code></a></span></div>
 <div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">igraph</span><span class="tchip">leidenalg</span><span class="tchip">scikit-learn</span><span class="tchip">python</span><span class="tchip">pandas</span><span class="tchip">scipy</span><span class="tchip">numpy</span><span class="tchip">pynndescent</span></div></div>
-<p class="cmd">$ oxo-flow pull gh:oxo-flow-community/oxo-flow-unsupervised</p>
+<p class="cmd">$ oxo-flow pull \
+  gh:oxo-flow-community/oxo-flow-unsupervised</p>
 </div>
 </div>
 </div>
@@ -290,14 +295,14 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <details class="ox-flow-view">
 <summary>Exact rule DAG (multi-route truth — operational view)</summary>
 <div class="ox-dag-card ox-dag-card--wide">
-<a href="/assets/dag/oxo-flow-unsupervised-rules.svg?v=91b51a5f7f" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-unsupervised-rules.svg?v=91b51a5f7f" alt="oxo-flow-unsupervised rule-level detail" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-unsupervised-rules.svg?v=a3b6485c1c" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-unsupervised-rules.svg?v=a3b6485c1c" alt="oxo-flow-unsupervised rule-level detail" loading="lazy"></a>
 </div>
 </details>
 <details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card ox-dag-card--wide" markdown="1">
 
-<a href="/assets/dag/oxo-flow-unsupervised.svg?v=f47d2ccd2e" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-unsupervised.svg?v=f47d2ccd2e" alt="oxo-flow-unsupervised pipeline overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-unsupervised.svg?v=350a464cf7" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-unsupervised.svg?v=350a464cf7" alt="oxo-flow-unsupervised pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-unsupervised — Unsupervised analysis of omics matrices: PCA, UMAP and densMAP embeddings (2D/3D), distance matrices, hierarchical clustering heatmaps, Leiden clustering across partition types and resolutions, clustree analysis, external and internal cluster validation with TOPSIS ranking, static and interactive visualizations, per-feature dimred scatter plots (when-gated), and resolved-environment snapshots.</p>
 

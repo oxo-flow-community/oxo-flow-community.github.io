@@ -1,5 +1,9 @@
 ---
 title: "ChIP-seq: peak calling, QC and differential analysis"
+description: "ChIP-seq: peak calling, QC and differential analysis — the live-tested (✔) entry, genomics, nextflow workflow, 83 rules, 22 tools."
+---
+---
+title: "ChIP-seq: peak calling, QC and differential analysis"
 ---
 
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-chipseq</span></div>
@@ -26,7 +30,8 @@ title: "ChIP-seq: peak calling, QC and differential analysis"
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2283.1"><code>10.48546/workflowhub.workflow.2283.1</code></a></span></div>
 <div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">fastqc</span><span class="tchip">trim-galore</span><span class="tchip">bwa</span><span class="tchip">bowtie2</span><span class="tchip">chromap</span><span class="tchip">star</span><span class="tchip">samtools</span><span class="tchip">picard</span></div></div>
-<p class="cmd">$ oxo-flow pull gh:oxo-flow-community/oxo-flow-chipseq</p>
+<p class="cmd">$ oxo-flow pull \
+  gh:oxo-flow-community/oxo-flow-chipseq</p>
 </div>
 </div>
 </div>
@@ -464,14 +469,14 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <details class="ox-flow-view">
 <summary>Exact rule DAG (multi-route truth — operational view)</summary>
 <div class="ox-dag-card ox-dag-card--wide">
-<a href="/assets/dag/oxo-flow-chipseq-rules.svg?v=d000bad0c9" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-chipseq-rules.svg?v=d000bad0c9" alt="oxo-flow-chipseq rule-level detail" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-chipseq-rules.svg?v=d39f0319dd" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-chipseq-rules.svg?v=d39f0319dd" alt="oxo-flow-chipseq rule-level detail" loading="lazy"></a>
 </div>
 </details>
 <details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 
-<a href="/assets/dag/oxo-flow-chipseq.svg?v=fe6759ff5f" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-chipseq.svg?v=fe6759ff5f" alt="oxo-flow-chipseq pipeline overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-chipseq.svg?v=ea33d3c1a7" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-chipseq.svg?v=ea33d3c1a7" alt="oxo-flow-chipseq pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-chipseq — ChIP-seq peak calling, QC and differential analysis for paired-end reads: FastQC and Trim Galore read QC, BWA-MEM (default), Bowtie2, Chromap or STAR alignment, library merge and Picard mark-duplicates, BAMTools filtering against a blacklist with orphan-read removal, preseq and phantompeakqualtools library complexity QC, bigWig tracks and deepTools QC plots, MACS3 peak calling with input controls in broad (default) or narrow mode, HOMER peak annotation, FRiP scoring, consensus peaks across replicates (MACS3 merge, featureCounts quantification, DESeq2 QC), an IGV session and a MultiQC report.</p>
 

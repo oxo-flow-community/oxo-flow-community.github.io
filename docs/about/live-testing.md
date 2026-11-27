@@ -1,3 +1,7 @@
+---
+description: "The community practice for live-testing catalog workflows end-to-end on a real server: the checklist, the evidence a run must leave, and the rating it can earn."
+---
+
 # Live testing — the community practice
 
 This page codifies the practice developed while live-testing catalog

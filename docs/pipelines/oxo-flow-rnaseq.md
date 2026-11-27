@@ -1,5 +1,9 @@
 ---
 title: "RNA-seq: alignment, quantification and QC"
+description: "RNA-seq: alignment, quantification and QC — the verified (★) entry, transcriptomics, nextflow workflow, 161 rules, 42 tools."
+---
+---
+title: "RNA-seq: alignment, quantification and QC"
 ---
 
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-rnaseq</span></div>
@@ -26,7 +30,8 @@ title: "RNA-seq: alignment, quantification and QC"
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2278.1"><code>10.48546/workflowhub.workflow.2278.1</code></a></span></div>
 <div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">bbmap</span><span class="tchip">bedtools</span><span class="tchip">bioconductor-biocparallel</span><span class="tchip">bioconductor-complexheatmap</span><span class="tchip">bioconductor-deseq2</span><span class="tchip">bioconductor-dupradar</span><span class="tchip">bioconductor-summarizedexperiment</span><span class="tchip">bioconductor-tximeta</span></div></div>
-<p class="cmd">$ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq</p>
+<p class="cmd">$ oxo-flow pull \
+  gh:oxo-flow-community/oxo-flow-rnaseq</p>
 </div>
 </div>
 </div>
@@ -466,14 +471,14 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <details class="ox-flow-view">
 <summary>Exact rule DAG (multi-route truth — operational view)</summary>
 <div class="ox-dag-card ox-dag-card--wide">
-<a href="/assets/dag/oxo-flow-rnaseq-rules.svg?v=2ba4aea64a" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-rnaseq-rules.svg?v=2ba4aea64a" alt="oxo-flow-rnaseq rule-level detail" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-rnaseq-rules.svg?v=afa13aece8" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-rnaseq-rules.svg?v=afa13aece8" alt="oxo-flow-rnaseq rule-level detail" loading="lazy"></a>
 </div>
 </details>
 <details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 
-<a href="/assets/dag/oxo-flow-rnaseq.svg?v=16144f7da5" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-rnaseq.svg?v=16144f7da5" alt="oxo-flow-rnaseq pipeline overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-rnaseq.svg?v=f462a4c466" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-rnaseq.svg?v=f462a4c466" alt="oxo-flow-rnaseq pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-rnaseq — End-to-end bulk RNA-seq analysis for paired-end reads: fq lint and FastQC raw-read QC, TrimGalore adapter/quality trimming (including the UMI-extraction path), STAR, HISAT2 and Bowtie2-transcriptome (bowtie2_salmon) alignment with the BBSplit / SortMeRNA / Bowtie2 / Ribodetector rRNA-filtered read variants, Picard MarkDuplicates or UMI-tools / UMICollapse dedup (genome and transcriptome chains), Salmon quantification in alignment mode (STAR and Bowtie2 orig_bams, raw and UMI-prepared) and pseudo-alignment mode (Salmon or Kallisto), RSEM alignment-mode quantification with per-sample results and merged count tables, tximport-merged gene/transcript count tables with SummarizedExperiment R objects, StringTie reference-guided assembly and quantification, featureCounts gene counts with biotype tables, RSeQC / dupRadar / Qualimap QC, DESeq2 sample-level QC (PCA, sample distances, size factors) per quantification branch, strand-specific bigWig tracks, and one final MultiQC report with the nf-core/rnaseq custom content (fail_trimmed / fail_mapped tables, strandedness checks, software versions).</p>
 

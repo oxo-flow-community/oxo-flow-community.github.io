@@ -1,3 +1,8 @@
+---
+title: genome-tracks completeness audit (2026-08-21)
+description: "genome-tracks completeness audit (2026-08-21) — Upstream: epigen/genome_tracks @ v2.0.5 · Port: oxo-flow-genome-tracks"
+---
+
 # genome-tracks completeness audit (2026-08-21)
 
 Upstream: epigen/genome_tracks @ v2.0.5 · Port: `oxo-flow-genome-tracks`

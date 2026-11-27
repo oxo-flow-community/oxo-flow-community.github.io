@@ -78,7 +78,12 @@
     // org (WangLabCSU/...); a hard-coded org prefix would 404 on those.
     const m = /github\.com\/([^/]+\/[^/]+?)\/?$/.exec(p.repo_url || "");
     const ghSlug = m ? m[1] : "oxo-flow-community/" + p.name;
-    const cmd = `oxo-flow pull gh:${ghSlug}`;
+    // Mirrors generate.py pull_bar_body EXACTLY (same 52-char threshold):
+    // six slugs sit in the 53–54 band and must not render one-line on cards
+    // while the page shows the continuation pair.
+    const cmd = ("$ oxo-flow pull gh:" + ghSlug).length > 52
+      ? "oxo-flow pull \\\n  gh:" + ghSlug
+      : "oxo-flow pull gh:" + ghSlug;
     // Compute badge on its own line — long strings never squeeze the tool chips
     const compute = p.compute
       ? `<div class="compute">⚙ <span title="Peak compute per rule">${esc(p.compute)}</span></div>`
@@ -184,7 +189,6 @@
     const origins = [...new Set(P.map((p) => p.origin || "curated"))].sort();
     const engines = [...new Set(P.map((p) => p.engine).filter(Boolean))].sort();
 
-    let chipSeq = 0;
     function chip(label, key, values, count) {
       const b = document.createElement("button");
       b.type = "button";
@@ -194,9 +198,7 @@
       // chip's name ("24 of 24 workflows genomics 12"), and every count
       // update re-announced all chips. #ox-count keeps role=status for its
       // own announcements only.
-      const lid = "ox-chip-label-" + (++chipSeq);
       const l = document.createElement("span");
-      l.id = lid;
       l.textContent = label;
       b.appendChild(l);
       if (count !== undefined) {

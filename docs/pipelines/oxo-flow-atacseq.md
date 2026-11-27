@@ -1,5 +1,9 @@
 ---
 title: "ATAC-seq: peak calling and QC"
+description: "ATAC-seq: peak calling and QC — the live-tested (✔) entry, epigenomics, nextflow workflow, 43 rules, 20 tools."
+---
+---
+title: "ATAC-seq: peak calling and QC"
 ---
 
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-atacseq</span></div>
@@ -25,7 +29,8 @@ title: "ATAC-seq: peak calling and QC"
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2284.1"><code>10.48546/workflowhub.workflow.2284.1</code></a></span></div>
 <div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">fastqc</span><span class="tchip">trim-galore</span><span class="tchip">bwa</span><span class="tchip">bowtie2</span><span class="tchip">chromap</span><span class="tchip">star</span><span class="tchip">samtools</span><span class="tchip">picard</span></div></div>
-<p class="cmd">$ oxo-flow pull gh:oxo-flow-community/oxo-flow-atacseq</p>
+<p class="cmd">$ oxo-flow pull \
+  gh:oxo-flow-community/oxo-flow-atacseq</p>
 </div>
 </div>
 </div>
@@ -388,14 +393,14 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <details class="ox-flow-view">
 <summary>Exact rule DAG (multi-route truth — operational view)</summary>
 <div class="ox-dag-card ox-dag-card--wide">
-<a href="/assets/dag/oxo-flow-atacseq-rules.svg?v=ceae994d1e" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-atacseq-rules.svg?v=ceae994d1e" alt="oxo-flow-atacseq rule-level detail" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-atacseq-rules.svg?v=0ea7af04e8" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-atacseq-rules.svg?v=0ea7af04e8" alt="oxo-flow-atacseq rule-level detail" loading="lazy"></a>
 </div>
 </details>
 <details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 
-<a href="/assets/dag/oxo-flow-atacseq.svg?v=1d43bd0965" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-atacseq.svg?v=1d43bd0965" alt="oxo-flow-atacseq pipeline overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-atacseq.svg?v=66c0800618" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-atacseq.svg?v=66c0800618" alt="oxo-flow-atacseq pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-atacseq — ATAC-seq peak calling and QC: FastQC raw-read QC, Trim Galore adapter trimming, BWA-MEM alignment, Picard mark-duplicates, BAMTools filtering, MACS2 broad-peak calling, HOMER peak annotation, FRiP scoring, normalised bigWig tracks, deepTools QC plots and a combined MultiQC report.</p>
 

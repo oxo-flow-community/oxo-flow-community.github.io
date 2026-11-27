@@ -1,5 +1,9 @@
 ---
 title: "Bisulfite methylation analysis: alignment, methylation calls and QC"
+description: "Bisulfite methylation analysis: alignment, methylation calls and QC — the live-tested (✔) entry, genomics, nextflow workflow, 61 rules, 20 tools."
+---
+---
+title: "Bisulfite methylation analysis: alignment, methylation calls and QC"
 ---
 
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-methylseq</span></div>
@@ -25,7 +29,8 @@ title: "Bisulfite methylation analysis: alignment, methylation calls and QC"
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2285.1"><code>10.48546/workflowhub.workflow.2285.1</code></a></span></div>
 <div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">fastqc</span><span class="tchip">trim-galore</span><span class="tchip">cutadapt</span><span class="tchip">pigz</span><span class="tchip">bismark</span><span class="tchip">samtools</span><span class="tchip">htslib</span><span class="tchip">bwa</span></div></div>
-<p class="cmd">$ oxo-flow pull gh:oxo-flow-community/oxo-flow-methylseq</p>
+<p class="cmd">$ oxo-flow pull \
+  gh:oxo-flow-community/oxo-flow-methylseq</p>
 </div>
 </div>
 </div>
@@ -442,7 +447,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card ox-dag-card--wide" markdown="1">
 
-<a href="/assets/dag/oxo-flow-methylseq.svg?v=d12f150830" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-methylseq.svg?v=d12f150830" alt="oxo-flow-methylseq pipeline overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-methylseq.svg?v=768e09cdc2" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-methylseq.svg?v=768e09cdc2" alt="oxo-flow-methylseq pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-methylseq — Run end-to-end bisulfite methylation analysis (WGBS, and RRBS-compatible) of paired-end reads (default) and single-end reads (upstream single_end samplesheet column, via the engine metadata binding): FastQC quality control, TrimGalore adapter trimming, alignment to the bisulfite-converted reference genome with any of the four upstream aligners — Bismark bowtie2 (default), Bismark hisat2, bwameth (bwa-meth) or BWA-MEM — PCR-deduplication, samtools sort/index, methylation calls (bismark_methylation_extractor, MethylDackel on bwameth, rastair for TAPS), per-sample and project-wide Bismark HTML reports, optional QualiMap BamQC, preseq complexity estimates and targeted-sequencing (bedtools intersect + Picard HS metrics), and a final MultiQC report.</p>
 

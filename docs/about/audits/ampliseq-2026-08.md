@@ -1,3 +1,8 @@
+---
+title: ampliseq completeness audit (2026-08-21)
+description: "ampliseq completeness audit (2026-08-21) — Upstream: nf-core/ampliseq @ 2.18.0 · Port: oxo-flow-ampliseq"
+---
+
 # ampliseq completeness audit (2026-08-21)
 
 Upstream: nf-core/ampliseq @ 2.18.0 · Port: `oxo-flow-ampliseq`

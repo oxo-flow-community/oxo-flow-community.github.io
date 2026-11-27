@@ -1,5 +1,9 @@
 ---
 title: "Fetching public sequencing data: FastQ download, metadata and samplesheets"
+description: "Fetching public sequencing data: FastQ download, metadata and samplesheets — the verified (★) entry, genomics, nextflow workflow, 17 rules, 8 tools."
+---
+---
+title: "Fetching public sequencing data: FastQ download, metadata and samplesheets"
 ---
 
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-fetchngs</span></div>
@@ -26,7 +30,8 @@ title: "Fetching public sequencing data: FastQ download, metadata and sampleshee
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2289.1"><code>10.48546/workflowhub.workflow.2289.1</code></a></span></div>
 <div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">python</span><span class="tchip">wget</span><span class="tchip">coreutils</span><span class="tchip">curl</span><span class="tchip">sra-tools</span><span class="tchip">pigz</span><span class="tchip">fastq-dl</span><span class="tchip">aspera-cli</span></div></div>
-<p class="cmd">$ oxo-flow pull gh:oxo-flow-community/oxo-flow-fetchngs</p>
+<p class="cmd">$ oxo-flow pull \
+  gh:oxo-flow-community/oxo-flow-fetchngs</p>
 </div>
 </div>
 </div>
@@ -185,7 +190,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card ox-dag-card--wide" markdown="1">
 
-<a href="/assets/dag/oxo-flow-fetchngs.svg?v=599dc4bcd4" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-fetchngs.svg?v=599dc4bcd4" alt="oxo-flow-fetchngs pipeline overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-fetchngs.svg?v=d71e35fef1" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-fetchngs.svg?v=d71e35fef1" alt="oxo-flow-fetchngs pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-fetchngs — Fetch metadata and raw FastQ files from public sequence databases (SRA/ENA/DDBJ/GEO).</p>
 

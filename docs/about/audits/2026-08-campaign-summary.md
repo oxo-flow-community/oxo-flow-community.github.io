@@ -1,3 +1,8 @@
+---
+title: 24h full-campaign summary (2026-08-23)
+description: 24h full-campaign summary (2026-08-23) — One-round live re-verification of all 24 workflow repos against the
+---
+
 # 24h full-campaign summary (2026-08-23)
 
 One-round live re-verification of **all 24 workflow repos** against the

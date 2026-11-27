@@ -1,3 +1,7 @@
+---
+description: "Install oxo-flow, run your first catalog workflow, and learn to read the evidence ladder — the 10-minute path for working bioinformaticians."
+---
+
 # Get started — run your first workflow in 10 minutes
 
 The catalog is **to be used, not just read**: every workflow page ships real

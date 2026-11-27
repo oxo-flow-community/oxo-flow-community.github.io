@@ -1,5 +1,9 @@
 ---
 title: "circRNA detection: four callers with ensemble aggregation"
+description: "circRNA detection: four callers with ensemble aggregation — the live-tested (✔) entry, transcriptomics (circRNA), oxo-flow workflow, 9 rules, 7 tools."
+---
+---
+title: "circRNA detection: four callers with ensemble aggregation"
 ---
 
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-circrna</span></div>
@@ -107,14 +111,14 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <details class="ox-flow-view">
 <summary>Exact rule DAG (multi-route truth — operational view)</summary>
 <div class="ox-dag-card">
-<a href="/assets/dag/oxo-flow-circrna-rules.svg?v=9b291a99bf" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-circrna-rules.svg?v=9b291a99bf" alt="oxo-flow-circrna rule-level detail" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-circrna-rules.svg?v=43363e99b7" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-circrna-rules.svg?v=43363e99b7" alt="oxo-flow-circrna rule-level detail" loading="lazy"></a>
 </div>
 </details>
 <details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 
-<a href="/assets/dag/oxo-flow-circrna.svg?v=a360e1848c" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-circrna.svg?v=a360e1848c" alt="oxo-flow-circrna pipeline overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-circrna.svg?v=f2a8884590" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-circrna.svg?v=f2a8884590" alt="oxo-flow-circrna pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-circrna — Circular RNA detection with four independent callers (CIRIquant, CIRCexplorer2, find_circ, circRNA_finder) and ensemble aggregation of calls supported by at least two methods.</p>
 

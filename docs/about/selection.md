@@ -1,3 +1,7 @@
+---
+description: "How the founding twenty catalog entries were selected in 2026-08: GitHub API data scored against pre-registered criteria by a selection committee agent, then maintainer-reviewed."
+---
+
 # Selection Report — the founding twenty
 
 **Date:** 2026-08-15 · **Method:** GitHub API data + snakemake catalog, scored by a selection

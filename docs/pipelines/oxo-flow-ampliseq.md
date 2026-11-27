@@ -1,5 +1,9 @@
 ---
 title: "Amplicon sequencing (16S/ITS): DADA2 denoising, taxonomy assignment, QIIME2 diversity/ANCOM, PICRUSt, SBDI export, phyloseq/TSE objects and QC"
+description: "Amplicon sequencing (16S/ITS): DADA2 denoising, taxonomy assignment, QIIME2 diversity/ANCOM, PICRUSt, SBDI export, phyloseq/TSE objects and QC — the verified (★) entry, amplicon, nextflow workflow, 100 rules, 26 tools."
+---
+---
+title: "Amplicon sequencing (16S/ITS): DADA2 denoising, taxonomy assignment, QIIME2 diversity/ANCOM, PICRUSt, SBDI export, phyloseq/TSE objects and QC"
 ---
 
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-ampliseq</span></div>
@@ -26,7 +30,8 @@ title: "Amplicon sequencing (16S/ITS): DADA2 denoising, taxonomy assignment, QII
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2282.1"><code>10.48546/workflowhub.workflow.2282.1</code></a></span></div>
 <div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">fastqc</span><span class="tchip">cutadapt</span><span class="tchip">python</span><span class="tchip">pandas</span><span class="tchip">r-base</span><span class="tchip">dada2</span><span class="tchip">bioconductor-digest</span><span class="tchip">bioconductor-biostrings</span></div></div>
-<p class="cmd">$ oxo-flow pull gh:oxo-flow-community/oxo-flow-ampliseq</p>
+<p class="cmd">$ oxo-flow pull \
+  gh:oxo-flow-community/oxo-flow-ampliseq</p>
 </div>
 </div>
 </div>
@@ -450,14 +455,14 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <details class="ox-flow-view">
 <summary>Exact rule DAG (multi-route truth — operational view)</summary>
 <div class="ox-dag-card ox-dag-card--wide">
-<a href="/assets/dag/oxo-flow-ampliseq-rules.svg?v=ab829f5c0f" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-ampliseq-rules.svg?v=ab829f5c0f" alt="oxo-flow-ampliseq rule-level detail" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-ampliseq-rules.svg?v=7bb213943b" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-ampliseq-rules.svg?v=7bb213943b" alt="oxo-flow-ampliseq rule-level detail" loading="lazy"></a>
 </div>
 </details>
 <details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 
-<a href="/assets/dag/oxo-flow-ampliseq.svg?v=c158105bb1" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-ampliseq.svg?v=c158105bb1" alt="oxo-flow-ampliseq pipeline overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-ampliseq.svg?v=96c80ad65a" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-ampliseq.svg?v=96c80ad65a" alt="oxo-flow-ampliseq pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-ampliseq — Amplicon sequencing analysis (16S/ITS) that takes raw paired-end reads through FastQC quality control, cutadapt primer trimming (incl.</p>
 

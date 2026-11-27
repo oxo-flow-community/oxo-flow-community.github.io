@@ -1,4 +1,8 @@
 ---
+title: Small and structural variant calling with Varlociraptor
+description: Small and structural variant calling with Varlociraptor — the verified (★) entry, genomics, snakemake workflow, 189 rules, 46 tools.
+---
+---
 title: "Small and structural variant calling with Varlociraptor"
 ---
 
@@ -26,7 +30,8 @@ title: "Small and structural variant calling with Varlociraptor"
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2291.1"><code>10.48546/workflowhub.workflow.2291.1</code></a></span></div>
 <div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">altair</span><span class="tchip">arriba</span><span class="tchip">bcftools</span><span class="tchip">bedtools</span><span class="tchip">biopython</span><span class="tchip">bwa</span><span class="tchip">curl</span><span class="tchip">datavzrd</span></div></div>
-<p class="cmd">$ oxo-flow pull gh:oxo-flow-community/oxo-flow-varlociraptor</p>
+<p class="cmd">$ oxo-flow pull \
+  gh:oxo-flow-community/oxo-flow-varlociraptor</p>
 </div>
 </div>
 </div>
@@ -270,7 +275,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card ox-dag-card--wide" markdown="1">
 
-<a href="/assets/dag/oxo-flow-varlociraptor.svg?v=4de87fc1a0" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-varlociraptor.svg?v=4de87fc1a0" alt="oxo-flow-varlociraptor pipeline overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-varlociraptor.svg?v=a4b2037492" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-varlociraptor.svg?v=a4b2037492" alt="oxo-flow-varlociraptor pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-varlociraptor — Scenario-driven somatic small and structural variant calling with Varlociraptor: paired-end reads are aligned against the 1000 Genomes human pangenome with vg giraffe, QC&#x27;d with FastQC/MultiQC, covered with mosdepth, and used for freebayes and delly candidate calling; Varlociraptor then estimates alignment properties and calls variants under a tumor scenario (events present + somatic_tumor_high + somatic_tumor_medium, FDR 0.05), FDR is controlled per variant type (SNV/INS/DEL/MNV/BND/INV/DUP/REP) with merge and phred decoding, and the calls are annotated with VEP (LoFtool/REVEL plugins) and dbSNFP/dbSNP, filtered, turned into a 34-column variant table (plus the fusions table joined with arriba annotations, when the group calls fusions) with oncoprint label-sorting, and rendered as interactive datavzrd variant, fusion-call and gene-coverage reports.</p>
 

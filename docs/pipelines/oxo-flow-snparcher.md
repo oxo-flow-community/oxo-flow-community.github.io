@@ -1,5 +1,9 @@
 ---
 title: "Variant calling for non-model organisms: trimming, alignment, per-sample gVCFs, joint genotyping, callable sites, postprocessing and QC dashboard"
+description: "Variant calling for non-model organisms: trimming, alignment, per-sample gVCFs, joint genotyping, callable sites, postprocessing and QC dashboard — the verified (★) entry, genomics, snakemake workflow, 108 rules, 19 tools."
+---
+---
+title: "Variant calling for non-model organisms: trimming, alignment, per-sample gVCFs, joint genotyping, callable sites, postprocessing and QC dashboard"
 ---
 
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-snparcher</span></div>
@@ -26,7 +30,8 @@ title: "Variant calling for non-model organisms: trimming, alignment, per-sample
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2292.1"><code>10.48546/workflowhub.workflow.2292.1</code></a></span></div>
 <div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">fastp</span><span class="tchip">bwa</span><span class="tchip">samtools</span><span class="tchip">gatk4</span><span class="tchip">picard</span><span class="tchip">sambamba</span><span class="tchip">sra-tools</span><span class="tchip">deepvariant</span></div></div>
-<p class="cmd">$ oxo-flow pull gh:oxo-flow-community/oxo-flow-snparcher</p>
+<p class="cmd">$ oxo-flow pull \
+  gh:oxo-flow-community/oxo-flow-snparcher</p>
 </div>
 </div>
 </div>
@@ -50,7 +55,8 @@ title: "Variant calling for non-model organisms: trimming, alignment, per-sample
 ## Run it
 
 ```bash
-oxo-flow run gh:oxo-flow-community/oxo-flow-snparcher reference_source=/path/to/genome.fa.gz
+oxo-flow run gh:oxo-flow-community/oxo-flow-snparcher \
+  reference_source=/path/to/genome.fa.gz
 ```
 
 Runs straight from the catalog — `oxo-flow` checks the repo out under `.oxo-flow/repos/oxo-flow-snparcher` and keeps outputs/checkpoints in the current directory, no manual clone. Pin a revision with `gh:oxo-flow-community/oxo-flow-snparcher@<branch-or-tag>`.
@@ -346,7 +352,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 
-<a href="/assets/dag/oxo-flow-snparcher.svg?v=d355d91b08" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-snparcher.svg?v=d355d91b08" alt="oxo-flow-snparcher pipeline overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-snparcher.svg?v=fe5dea19d8" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-snparcher.svg?v=fe5dea19d8" alt="oxo-flow-snparcher pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-snparcher — Variant calling for non-model organisms: paired FASTQ reads (or SRA accessions, or external BAMs) are trimmed and filtered with fastp, aligned with BWA-MEM, optionally duplicate-marked with sambamba, and called to per-sample gVCFs with GATK HaplotypeCaller or DeepVariant (low-coverage defaults: -ploidy 2, --min-pruning 1).</p>
 

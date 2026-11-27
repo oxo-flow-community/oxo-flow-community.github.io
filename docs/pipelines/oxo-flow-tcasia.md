@@ -1,4 +1,8 @@
 ---
+title: Paired-end RNA-seq alignment and four-caller alternative-splicing analysis
+description: Paired-end RNA-seq alignment and four-caller alternative-splicing analysis — the live-tested (✔) entry, transcriptomics, snakemake workflow, 17 rules, 11 tools.
+---
+---
 title: "Paired-end RNA-seq alignment and four-caller alternative-splicing analysis"
 ---
 
@@ -25,7 +29,8 @@ title: "Paired-end RNA-seq alignment and four-caller alternative-splicing analys
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2301.1"><code>10.48546/workflowhub.workflow.2301.1</code></a></span></div>
 <div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">fastp</span><span class="tchip">star</span><span class="tchip">samtools</span><span class="tchip">subread</span><span class="tchip">salmon</span><span class="tchip">suppa</span><span class="tchip">rmats</span><span class="tchip">majiq</span></div></div>
-<p class="cmd">$ oxo-flow pull gh:oxo-flow-community/oxo-flow-tcasia</p>
+<p class="cmd">$ oxo-flow pull \
+  gh:oxo-flow-community/oxo-flow-tcasia</p>
 </div>
 </div>
 </div>
@@ -279,7 +284,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card ox-dag-card--wide" markdown="1">
 
-<a href="/assets/dag/oxo-flow-tcasia.svg?v=5828140598" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-tcasia.svg?v=5828140598" alt="oxo-flow-tcasia pipeline overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-tcasia.svg?v=4e3835de04" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-tcasia.svg?v=4e3835de04" alt="oxo-flow-tcasia pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-tcasia — Paired-end RNA-seq from FASTQ to per-sample alternative-splicing calls: reads are trimmed with fastp, aligned with two-pass STAR and counted per gene with featureCounts; each sample&#x27;s splicing is then quantified independently with four callers — rMATS, MAJIQ (with Voila export), SUPPA2 (via Salmon transcript quantification) and SplAdder.</p>
 

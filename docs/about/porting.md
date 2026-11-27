@@ -1,3 +1,7 @@
+---
+description: "The community porting playbook: toolchain facts, the porting workflow, and the fidelity evidence standard for turning an nf-core or Snakemake pipeline into an oxo-flow entry."
+---
+
 # oxo-flow Porting Playbook
 
 **Porting Nextflow (nf-core DSL2) and Snakemake workflows to oxo-flow v0.12.0 TOML repositories.**

@@ -1,5 +1,9 @@
 ---
 title: "Single-cell RNA-seq: alignment, quantification and QC"
+description: "Single-cell RNA-seq: alignment, quantification and QC — the live-tested (✔) entry, single-cell, nextflow workflow, 46 rules, 22 tools."
+---
+---
+title: "Single-cell RNA-seq: alignment, quantification and QC"
 ---
 
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-scrnaseq</span></div>
@@ -26,7 +30,8 @@ title: "Single-cell RNA-seq: alignment, quantification and QC"
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2280.1"><code>10.48546/workflowhub.workflow.2280.1</code></a></span></div>
 <div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">cellranger</span><span class="tchip">cellranger-arc</span><span class="tchip">simpleaf</span><span class="tchip">alevin-fry</span><span class="tchip">piscem</span><span class="tchip">salmon</span><span class="tchip">qcatch</span><span class="tchip">kallisto-bustools</span></div></div>
-<p class="cmd">$ oxo-flow pull gh:oxo-flow-community/oxo-flow-scrnaseq</p>
+<p class="cmd">$ oxo-flow pull \
+  gh:oxo-flow-community/oxo-flow-scrnaseq</p>
 </div>
 </div>
 </div>
@@ -427,14 +432,14 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <details class="ox-flow-view">
 <summary>Exact rule DAG (multi-route truth — operational view)</summary>
 <div class="ox-dag-card ox-dag-card--wide">
-<a href="/assets/dag/oxo-flow-scrnaseq-rules.svg?v=e8d438a5ab" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-scrnaseq-rules.svg?v=e8d438a5ab" alt="oxo-flow-scrnaseq rule-level detail" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-scrnaseq-rules.svg?v=fd0ea86b76" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-scrnaseq-rules.svg?v=fd0ea86b76" alt="oxo-flow-scrnaseq rule-level detail" loading="lazy"></a>
 </div>
 </details>
 <details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 
-<a href="/assets/dag/oxo-flow-scrnaseq.svg?v=c9c8344cf5" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-scrnaseq.svg?v=c9c8344cf5" alt="oxo-flow-scrnaseq pipeline overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-scrnaseq.svg?v=be0d1203ab" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-scrnaseq.svg?v=be0d1203ab" alt="oxo-flow-scrnaseq pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-scrnaseq — Single-cell RNA-seq analysis from raw FASTQ reads to a final MultiQC report, on all six upstream aligner branches of nf-core/scrnaseq 4.2.0: cellranger (default, count or multi with per-modality GEX/VDJ/Ab/BEAM/CRISPR/CMO via the metadata table), simpleaf (upstream default; index + quant + optional QCatch), kallisto/bustools (standard/lamanno/nac), STARsolo (incl.</p>
 

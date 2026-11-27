@@ -1,3 +1,8 @@
+---
+title: viralrecon completeness audit (2026-08-21)
+description: "viralrecon completeness audit (2026-08-21) — Upstream: nf-core/viralrecon @ 3.0.0 · Port: oxo-flow-viralrecon"
+---
+
 # viralrecon completeness audit (2026-08-21)
 
 Upstream: nf-core/viralrecon @ 3.0.0 · Port: `oxo-flow-viralrecon`

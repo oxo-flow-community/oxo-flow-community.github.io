@@ -1,5 +1,9 @@
 ---
 title: "Nanopore long-read: demultiplexing, QC and alignment"
+description: "Nanopore long-read: demultiplexing, QC and alignment — the live-tested (✔) entry, genomics, nextflow workflow, 52 rules, 31 tools."
+---
+---
+title: "Nanopore long-read: demultiplexing, QC and alignment"
 ---
 
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-nanoseq</span></div>
@@ -25,7 +29,8 @@ title: "Nanopore long-read: demultiplexing, QC and alignment"
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2286.1"><code>10.48546/workflowhub.workflow.2286.1</code></a></span></div>
 <div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">bambu</span><span class="tchip">bcftools</span><span class="tchip">bedtools</span><span class="tchip">curl</span><span class="tchip">cutesv</span><span class="tchip">deepvariant</span><span class="tchip">deseq2</span><span class="tchip">dexseq</span></div></div>
-<p class="cmd">$ oxo-flow pull gh:oxo-flow-community/oxo-flow-nanoseq</p>
+<p class="cmd">$ oxo-flow pull \
+  gh:oxo-flow-community/oxo-flow-nanoseq</p>
 </div>
 </div>
 </div>
@@ -362,14 +367,14 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <details class="ox-flow-view">
 <summary>Exact rule DAG (multi-route truth — operational view)</summary>
 <div class="ox-dag-card ox-dag-card--wide">
-<a href="/assets/dag/oxo-flow-nanoseq-rules.svg?v=72a3eb250c" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-nanoseq-rules.svg?v=72a3eb250c" alt="oxo-flow-nanoseq rule-level detail" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-nanoseq-rules.svg?v=69ce2dc6aa" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-nanoseq-rules.svg?v=69ce2dc6aa" alt="oxo-flow-nanoseq rule-level detail" loading="lazy"></a>
 </div>
 </details>
 <details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card ox-dag-card--wide" markdown="1">
 
-<a href="/assets/dag/oxo-flow-nanoseq.svg?v=09aa42dfd3" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-nanoseq.svg?v=09aa42dfd3" alt="oxo-flow-nanoseq pipeline overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-nanoseq.svg?v=ebe9009154" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-nanoseq.svg?v=ebe9009154" alt="oxo-flow-nanoseq pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-nanoseq — A nanopore long-read pipeline: samplesheet check, qcat barcode demultiplexing, NanoPlot + FastQC QC, minimap2 (or graphmap2) alignment, samtools view/sort/index, samtools stats/flagstat/idxstats, BigWig/BigBed tracks, NanoLyse contamination filtering, medaka/DeepVariant/PEPPER-Margin-DeepVariant short variant calling, Sniffles/cuteSV structural variant calling, bambu/StringTie2+featureCounts quantification with DESeq2/DEXSeq differential analysis, Nanopolish+xPore/m6anet RNA modification analysis, JAFFA RNA fusion detection (cDNA/directRNA; reference bundle auto-downloaded from figshare or supplied via config.jaffal_ref_dir as a directory or tar.gz), pre-aligned-BAM input, and a MultiQC report.</p>
 

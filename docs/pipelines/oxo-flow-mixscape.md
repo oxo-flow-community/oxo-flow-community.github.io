@@ -1,4 +1,8 @@
 ---
+title: Pooled CRISPR perturbation analysis with Seurat Mixscape
+description: Pooled CRISPR perturbation analysis with Seurat Mixscape — the live-tested (✔) entry, single-cell, snakemake workflow, 7 rules, 11 tools.
+---
+---
 title: "Pooled CRISPR perturbation analysis with Seurat Mixscape"
 ---
 
@@ -25,7 +29,8 @@ title: "Pooled CRISPR perturbation analysis with Seurat Mixscape"
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2295.1"><code>10.48546/workflowhub.workflow.2295.1</code></a></span></div>
 <div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">Seurat</span><span class="tchip">seuratobject</span><span class="tchip">irlba</span><span class="tchip">matrix</span><span class="tchip">mixtools</span><span class="tchip">ggplot2</span><span class="tchip">scales</span><span class="tchip">patchwork</span></div></div>
-<p class="cmd">$ oxo-flow pull gh:oxo-flow-community/oxo-flow-mixscape</p>
+<p class="cmd">$ oxo-flow pull \
+  gh:oxo-flow-community/oxo-flow-mixscape</p>
 </div>
 </div>
 </div>
@@ -242,7 +247,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 
-<a href="/assets/dag/oxo-flow-mixscape.svg?v=8f9a0a18df" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-mixscape.svg?v=8f9a0a18df" alt="oxo-flow-mixscape pipeline overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-mixscape.svg?v=992cb5d724" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-mixscape.svg?v=992cb5d724" alt="oxo-flow-mixscape pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-mixscape — Pooled CRISPR perturbation analysis (scCRISPR-seq / CROP-seq / Perturb-seq) with Seurat Mixscape: per-cell perturbation signatures (CalcPerturbSig), perturbed vs.</p>
 

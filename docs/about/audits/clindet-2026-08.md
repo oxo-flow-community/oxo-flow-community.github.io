@@ -1,3 +1,8 @@
+---
+title: clindet completeness audit (2026-08-21, pilot)
+description: "clindet completeness audit (2026-08-21, pilot) — Upstream: zyllifeworld/clindet @"
+---
+
 # clindet completeness audit (2026-08-21, pilot)
 
 Upstream: [zyllifeworld/clindet](https://github.com/zyllifeworld/clindet) @
