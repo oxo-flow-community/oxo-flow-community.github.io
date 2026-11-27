@@ -1,6 +1,6 @@
 ---
 title: "Cancer genome & transcriptome analysis (WES/WGS/RNA, single entry): somatic+germline+CNV+SV calling, MAF annotation, case report"
-description: "Cancer genome & transcriptome analysis (WES/WGS/RNA, single entry): somatic+germline+CNV+SV calling, MAF annotation, case report — the live-tested (✔) entry, cancer genomics (WES/WGS/RNA), snakemake workflow, 188 rules, 18 tools."
+description: "Cancer genome & transcriptome analysis (WES/WGS/RNA, single entry): somatic+germline+CNV+SV calling, MAF annotation, case report — the live-tested (✔) entry, cancer genomics, snakemake workflow, 188 rules, 18 tools."
 ---
 ---
 title: "Cancer genome & transcriptome analysis (WES/WGS/RNA, single entry): somatic+germline+CNV+SV calling, MAF annotation, case report"
@@ -22,7 +22,7 @@ title: "Cancer genome & transcriptome analysis (WES/WGS/RNA, single entry): soma
 <div class="ox-kv"><span class="k">Compute</span><span class="v"><span title="up to 30 threads / 10 GB per rule">up to 30 threads / 10 GB per rule</span></span></div>
 <div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--sn"><span class="dot" aria-hidden="true"></span>snakemake port</span></span></div>
 <div class="ox-kv"><span class="k">Origin</span><span class="v">Official port</span></div>
-<div class="ox-kv"><span class="k">Domain</span><span class="v">cancer genomics (WES/WGS/RNA)</span></div>
+<div class="ox-kv"><span class="k">Domain</span><span class="v">cancer genomics</span></div>
 <div class="ox-kv"><span class="k">Source</span><span class="v"><a href="https://github.com/zyllifeworld/clindet">zyllifeworld/clindet</a></span></div>
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>582a9131</code></span></div>
 <div class="ox-kv"><span class="k">Ported</span><span class="v">2026-08-15</span></div>
