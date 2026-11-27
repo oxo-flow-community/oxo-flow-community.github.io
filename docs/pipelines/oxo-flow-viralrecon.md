@@ -1,4 +1,8 @@
 ---
+title: Viral assembly and intrahost variant calling for Illumina and Oxford Nanopore amplicon data
+description: Viral assembly and intrahost variant calling for Illumina and Oxford Nanopore amplicon data — the live-tested (✔) entry, genomics, nextflow workflow, 96 rules, 33 tools.
+---
+---
 title: "Viral assembly and intrahost variant calling for Illumina and Oxford Nanopore amplicon data"
 ---
 
@@ -26,7 +30,8 @@ title: "Viral assembly and intrahost variant calling for Illumina and Oxford Nan
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2287.1"><code>10.48546/workflowhub.workflow.2287.1</code></a></span></div>
 <div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">abacas</span><span class="tchip">artic</span><span class="tchip">bandage</span><span class="tchip">bcftools</span><span class="tchip">bedtools</span><span class="tchip">blast</span><span class="tchip">bowtie2</span><span class="tchip">cutadapt</span></div></div>
-<p class="cmd">$ oxo-flow pull gh:oxo-flow-community/oxo-flow-viralrecon</p>
+<p class="cmd">$ oxo-flow pull \
+  gh:oxo-flow-community/oxo-flow-viralrecon</p>
 </div>
 </div>
 </div>
@@ -506,14 +511,14 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <details class="ox-flow-view">
 <summary>Exact rule DAG (multi-route truth — operational view)</summary>
 <div class="ox-dag-card ox-dag-card--wide">
-<a href="/assets/dag/oxo-flow-viralrecon-rules.svg?v=7012af587b" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-viralrecon-rules.svg?v=7012af587b" alt="oxo-flow-viralrecon rule-level detail" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-viralrecon-rules.svg?v=fbf48ab899" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-viralrecon-rules.svg?v=fbf48ab899" alt="oxo-flow-viralrecon rule-level detail" loading="lazy"></a>
 </div>
 </details>
 <details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 
-<a href="/assets/dag/oxo-flow-viralrecon.svg?v=6492441e7b" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-viralrecon.svg?v=6492441e7b" alt="oxo-flow-viralrecon pipeline overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-viralrecon.svg?v=1326e84377" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-viralrecon.svg?v=1326e84377" alt="oxo-flow-viralrecon pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-viralrecon — Turns Illumina paired-end or Oxford Nanopore barcode reads into a complete viral genomics report.</p>
 

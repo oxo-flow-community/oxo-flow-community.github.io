@@ -9,6 +9,20 @@
      class="ox-issue-link">Report an issue</a>
 {% endblock %}
 
+{% block extrahead %}
+  {{ super() }}
+  <meta property="og:title" content="{{ page.title | default(config.site_name, true) }} · {{ config.site_name }}">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="{{ config.site_name }}">
+  {% if page.meta and page.meta.description %}
+  <meta property="og:description" content="{{ page.meta.description }}">
+  {% else %}
+  <meta property="og:description" content="{{ config.site_description | replace('\n', ' ') }}">
+  {% endif %}
+  <meta property="og:image" content="{{ config.site_url }}assets/logo.png">
+  <meta name="twitter:card" content="summary">
+{% endblock %}
+
 {% block scripts %}
   {{ super() }}
   <script>

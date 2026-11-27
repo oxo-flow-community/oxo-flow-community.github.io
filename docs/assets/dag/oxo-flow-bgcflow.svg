@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-     width="534" height="390" viewBox="-20 0 574 390" style="color-scheme: light">
+     width="534" height="390" viewBox="-20 0 574 390" style="color-scheme: light" role="img"><title>oxo-flow-bgcflow workflow DAG</title>
 <defs>
 </defs>
 <metadata id="diagram-manifest" data-schema-version="1.0"><![CDATA[{"groups":[{"color":"#0072B2","id":"input","label":"input"},{"color":"#009E73","id":"data_warehouse","label":"data-warehouse"},{"color":"#B6992D","id":"phylogeny","label":"phylogeny"}],"height":390,"match":{"flags":"i","target":"fqProcessName","type":"regex"},"nodes":[{"groups":["input"],"h":10.0,"id":"g_input_input","label":"input","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":80.0,"y":120.0},{"groups":["data_warehouse","phylogeny"],"h":14.0,"id":"g_taxonomy_phylogeny","label":"taxonomy","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":80.0,"y":186.0},{"groups":["data_warehouse","input","phylogeny"],"h":18.0,"id":"g_annotate_antismash_bgc_branches_antismash","label":"bgc · Annotation · Antismash · Bgc · +1","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":351.5,"y":124.0},{"groups":["data_warehouse"],"h":10.0,"id":"g_mibig_mibig","label":"mibig","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":80.0,"y":244.0},{"groups":["data_warehouse"],"h":10.0,"id":"g_data_warehouse_generic","label":"data-warehouse","patterns":[],"r":5.0,"rx":5.0,"w":10.0,"x":474.5,"y":184.0}],"regions":[],"title":"","version":"1.0","width":534}]]></metadata>

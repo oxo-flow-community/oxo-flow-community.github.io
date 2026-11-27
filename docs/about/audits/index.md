@@ -1,3 +1,7 @@
+---
+description: "Completeness audits of catalog workflows: per-rule verdict matrices, repo and engine fixes, and the 2026-08 full-campaign summary."
+---
+
 # Completeness audits
 
 Per-workflow completeness audits (gap tiers vs upstream, mode matrix,

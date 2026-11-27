@@ -1,4 +1,8 @@
 ---
+title: TCGA bulk RNA-seq TCR/BCR immune repertoire profiling (MiXCR + TRUST4)
+description: TCGA bulk RNA-seq TCR/BCR immune repertoire profiling (MiXCR + TRUST4) — the community-listed (☆) entry, immunology, oxo-flow workflow, 2 tools.
+---
+---
 title: "TCGA bulk RNA-seq TCR/BCR immune repertoire profiling (MiXCR + TRUST4)"
 ---
 
@@ -22,7 +26,8 @@ title: "TCGA bulk RNA-seq TCR/BCR immune repertoire profiling (MiXCR + TRUST4)"
 <div class="ox-kv"><span class="k">Added</span><span class="v">2026-11-16</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">MiXCR</span><span class="tchip">TRUST4</span></div></div>
-<p class="cmd">$ oxo-flow pull gh:oxo-flow-community/oxo-flow-immune-repertoire</p>
+<p class="cmd">$ oxo-flow pull \
+  gh:oxo-flow-community/oxo-flow-immune-repertoire</p>
 </div>
 </div>
 </div>

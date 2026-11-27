@@ -1,5 +1,9 @@
 ---
 title: "Tumor multi-omics WGS/WES: somatic SNV/indel, CNV, SV, MSI and signature analysis with bulk/scRNA-seq cohort clinical reporting"
+description: "Tumor multi-omics WGS/WES: somatic SNV/indel, CNV, SV, MSI and signature analysis with bulk/scRNA-seq cohort clinical reporting — the community-listed (☆) entry, cancer genomics (WES/WGS/RNA), oxo-flow workflow, 78 rules, 19 tools."
+---
+---
+title: "Tumor multi-omics WGS/WES: somatic SNV/indel, CNV, SV, MSI and signature analysis with bulk/scRNA-seq cohort clinical reporting"
 ---
 
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-venus</span></div>

@@ -1,4 +1,8 @@
 ---
+title: Metagenome assembly, binning and taxonomic classification
+description: Metagenome assembly, binning and taxonomic classification — the live-tested (✔) entry, metagenomics, nextflow workflow, 311 rules, 36 tools.
+---
+---
 title: "Metagenome assembly, binning and taxonomic classification"
 ---
 
@@ -458,14 +462,14 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <details class="ox-flow-view">
 <summary>Exact rule DAG (multi-route truth — operational view)</summary>
 <div class="ox-dag-card ox-dag-card--wide">
-<a href="/assets/dag/oxo-flow-mag-rules.svg?v=2de5a88219" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-mag-rules.svg?v=2de5a88219" alt="oxo-flow-mag rule-level detail" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-mag-rules.svg?v=4a6725eeb4" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-mag-rules.svg?v=4a6725eeb4" alt="oxo-flow-mag rule-level detail" loading="lazy"></a>
 </div>
 </details>
 <details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 
-<a href="/assets/dag/oxo-flow-mag.svg?v=98ac7cc136" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-mag.svg?v=98ac7cc136" alt="oxo-flow-mag pipeline overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-mag.svg?v=1f8cabe861" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-mag.svg?v=1f8cabe861" alt="oxo-flow-mag pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-mag — Turn paired-end metagenomic reads into quality-checked, taxonomically classified draft genomes: FastQC and fastp QC with phiX removal, SPAdes and MEGAHIT assembly, QUAST and Prodigal assessment, bowtie2 mapping, binning with six binners (MetaBAT2, MaxBin2, CONCOCT, COMEBin, MetaBinner, SemiBin2), BUSCO bin QC, GTDB-Tk classification with a combined summary, PROKKA annotation, ALE evaluation and a final MultiQC report.</p>
 

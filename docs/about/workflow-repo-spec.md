@@ -1,3 +1,7 @@
+---
+description: "The repository specification catalog workflows follow: layout, configuration, tests, and the CI evidence a workflow repo must carry to be listed."
+---
+
 # Workflow repository specification
 
 Every catalog repository must follow the same structure so the catalog,

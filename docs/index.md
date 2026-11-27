@@ -2,6 +2,10 @@
 hide:
   - toc
 title: Curated workflows. Ready to run.
+description: >-
+  27 oxo-flow workflows, rated on an evidence ladder (live-tested, verified,
+  dry-run verified, community): search by domain, tool, or tag; copy the run
+  command; see exactly what backs each rating.
 ---
 
 <div class="ox-hero-split">

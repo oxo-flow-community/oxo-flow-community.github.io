@@ -1,5 +1,9 @@
 ---
 title: "Genome browser tracks: coverage, gene plots and UCSC hub"
+description: "Genome browser tracks: coverage, gene plots and UCSC hub — the live-tested (✔) entry, genomics, snakemake workflow, 16 rules, 6 tools."
+---
+---
+title: "Genome browser tracks: coverage, gene plots and UCSC hub"
 ---
 
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-genome-tracks</span></div>
@@ -25,7 +29,8 @@ title: "Genome browser tracks: coverage, gene plots and UCSC hub"
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2294.1"><code>10.48546/workflowhub.workflow.2294.1</code></a></span></div>
 <div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">samtools</span><span class="tchip">deeptools</span><span class="tchip">pygenometracks</span><span class="tchip">gtracks</span><span class="tchip">sinto</span><span class="tchip">igv-reports</span></div></div>
-<p class="cmd">$ oxo-flow pull gh:oxo-flow-community/oxo-flow-genome-tracks</p>
+<p class="cmd">$ oxo-flow pull \
+  gh:oxo-flow-community/oxo-flow-genome-tracks</p>
 </div>
 </div>
 </div>
@@ -241,7 +246,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card ox-dag-card--wide" markdown="1">
 
-<a href="/assets/dag/oxo-flow-genome-tracks.svg?v=0ea0380792" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-genome-tracks.svg?v=0ea0380792" alt="oxo-flow-genome-tracks pipeline overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-genome-tracks.svg?v=0cb0c6e293" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-genome-tracks.svg?v=0cb0c6e293" alt="oxo-flow-genome-tracks pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-genome-tracks — Merge BAM files per experimental group with samtools, compute normalized bigWig coverage with deepTools bamCoverage (RPGC by default), plot isoform-aware per-gene and per-region genome tracks with gtracks/pyGenomeTracks, and publish a UCSC genome browser track hub — end-to-end track generation for RNA-seq, ATAC-seq and other aligned BAM data, plus the single-cell branch (sinto per-cell-barcode splitting of sc BAMs into per-group BAMs), an opt-in IGV report of all merged BAMs over the annotated gene regions, and opt-in conda environment export rules (env_export_*, conda env export).</p>
 

@@ -1,3 +1,7 @@
+---
+description: "How catalog entries are curated and rated: the ✔ live-tested / ★ verified / ◆ dry-run verified / ☆ community evidence ladder and what each rung actually guarantees."
+---
+
 # Curation &amp; ratings
 
 The catalog is more than a list of repositories: every entry is classified,

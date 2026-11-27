@@ -1,4 +1,8 @@
 ---
+title: ERV / transposable-element quantification with four tools on one annotation
+description: ERV / transposable-element quantification with four tools on one annotation — the dry-run verified (◆) entry, transcriptomics, snakemake workflow, 22 rules, 10 tools.
+---
+---
 title: "ERV / transposable-element quantification with four tools on one annotation"
 ---
 

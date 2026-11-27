@@ -591,8 +591,12 @@ a.ox-cta:hover {
   border: 1px solid var(--edge);
   border-radius: 6px;
   padding: 0.5rem 0.65rem;
-  overflow-x: auto;
-  white-space: nowrap;
+  /* wrap, don't scroll: these cards are ~3 columns wide and a horizontal
+     scrollbar hid the tail of long `pull gh:owner/repo` commands (they read
+     as truncated). The generator/JS break long pulls at ` gh:` with a
+     continuation pair; anything still too long breaks anywhere. */
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
   margin: 0;
 }
 
@@ -938,8 +942,10 @@ a.ox-cta:hover {
   border: 1px solid var(--edge);
   border-radius: 6px;
   padding: 0.45rem 0.6rem;
-  overflow-x: auto;
-  white-space: nowrap;
+  /* see .ox-card .cmd — wrap (generator emits a ` \`+newline continuation
+     past ~52 chars) instead of scrolling the tail past the panel edge */
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
 
 /* ---- Dark scheme (D2 · instrument) component overrides ---- */
@@ -1230,8 +1236,10 @@ a.ox-cta:hover {
   border: 1px solid var(--edge);
   border-radius: 8px;
   padding: 0.42rem 0.7rem;
-  white-space: nowrap;
-  overflow-x: auto;
+  /* the run command sits beside two CTA buttons in a flex row — nowrap hid
+     its tail (snparcher/circrna/viralrecon carry args); wrap instead */
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
   max-width: 100%;
 }
 

@@ -1,5 +1,9 @@
 ---
 title: "SRA-powered RNA-seq: .sra archives to differential expression"
+description: "SRA-powered RNA-seq: .sra archives to differential expression — the live-tested (✔) entry, transcriptomics, snakemake workflow, 13 rules, 9 tools."
+---
+---
+title: "SRA-powered RNA-seq: .sra archives to differential expression"
 ---
 
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-auto-sra-rnaseq-pipeline</span></div>
@@ -25,7 +29,8 @@ title: "SRA-powered RNA-seq: .sra archives to differential expression"
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2300.1"><code>10.48546/workflowhub.workflow.2300.1</code></a></span></div>
 <div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">sra-tools</span><span class="tchip">fastp</span><span class="tchip">star</span><span class="tchip">samtools</span><span class="tchip">deeptools</span><span class="tchip">pandas</span><span class="tchip">bioconductor-deseq2</span><span class="tchip">r-ashr</span></div></div>
-<p class="cmd">$ oxo-flow pull gh:oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipeline</p>
+<p class="cmd">$ oxo-flow pull \
+  gh:oxo-flow-community/oxo-flow-auto-sra-rnaseq-pipeline</p>
 </div>
 </div>
 </div>
@@ -191,7 +196,7 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card" markdown="1">
 
-<a href="/assets/dag/oxo-flow-auto-sra-rnaseq-pipeline.svg?v=5a8452bb72" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-auto-sra-rnaseq-pipeline.svg?v=5a8452bb72" alt="oxo-flow-auto-sra-rnaseq-pipeline pipeline overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-auto-sra-rnaseq-pipeline.svg?v=76223b9572" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-auto-sra-rnaseq-pipeline.svg?v=76223b9572" alt="oxo-flow-auto-sra-rnaseq-pipeline pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-auto-sra-rnaseq-pipeline — Automated RNA-seq analysis from locally downloaded SRA archives to differential expression results: verify and symlink .sra files, fasterq-dump conversion to FASTQ, read merging across multiple SRR runs per sample, fastp trimming, STAR alignment with gene counts, BAM indexing, BPM-normalized bigWig signal tracks, a merged count matrix, and DESeq2 differential analysis with ashr shrinkage.</p>
 

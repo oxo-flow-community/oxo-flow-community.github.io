@@ -1,6 +1,10 @@
 ---
 hide:
   - toc
+description: >-
+  The full oxo-flow catalog — every workflow with its rating rung, engine,
+  domain, tool chips, and the exact run command. Filter by domain, origin,
+  or engine; search names, tools, tags, descriptions.
 ---
 
 # Pipeline catalog

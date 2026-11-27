@@ -13,6 +13,10 @@ theme:
   font: false
   logo: assets/logo.svg
   favicon: assets/favicon.svg
+  meta:
+    # og:image for link previews (Material emits og:/twitter: tags; per-page
+    # og:description comes from front-matter description / generated meta).
+    og:image: https://oxo-flow-community.github.io/assets/logo.png
   features:
     - content.code.copy
     - content.code.annotate

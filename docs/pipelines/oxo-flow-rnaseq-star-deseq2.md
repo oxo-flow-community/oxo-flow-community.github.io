@@ -1,5 +1,9 @@
 ---
 title: "RNA-seq: STAR alignment, DESeq2 differential expression and QC"
+description: "RNA-seq: STAR alignment, DESeq2 differential expression and QC — the live-tested (✔) entry, transcriptomics, snakemake workflow, 31 rules, 16 tools."
+---
+---
+title: "RNA-seq: STAR alignment, DESeq2 differential expression and QC"
 ---
 
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-rnaseq-star-deseq2</span></div>
@@ -25,7 +29,8 @@ title: "RNA-seq: STAR alignment, DESeq2 differential expression and QC"
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>
 <div class="ox-kv"><span class="k">Cite</span><span class="v"><a href="https://doi.org/10.48546/workflowhub.workflow.2290.1"><code>10.48546/workflowhub.workflow.2290.1</code></a></span></div>
 <div class="ox-glance-tools"><span class="k">Tools</span><div class="chips"><span class="tchip">star</span><span class="tchip">fastp</span><span class="tchip">rseqc</span><span class="tchip">gffutils</span><span class="tchip">pandas</span><span class="tchip">multiqc</span><span class="tchip">bioconductor-deseq2</span><span class="tchip">r-stringr</span></div></div>
-<p class="cmd">$ oxo-flow pull gh:oxo-flow-community/oxo-flow-rnaseq-star-deseq2</p>
+<p class="cmd">$ oxo-flow pull \
+  gh:oxo-flow-community/oxo-flow-rnaseq-star-deseq2</p>
 </div>
 </div>
 </div>
@@ -297,14 +302,14 @@ Descriptions are the workflow's own `#` comments from its `[config]` section (an
 <details class="ox-flow-view">
 <summary>Exact rule DAG (multi-route truth — operational view)</summary>
 <div class="ox-dag-card ox-dag-card--wide">
-<a href="/assets/dag/oxo-flow-rnaseq-star-deseq2-rules.svg?v=f0013b68ba" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-rnaseq-star-deseq2-rules.svg?v=f0013b68ba" alt="oxo-flow-rnaseq-star-deseq2 rule-level detail" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-rnaseq-star-deseq2-rules.svg?v=9f376aa803" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-rnaseq-star-deseq2-rules.svg?v=9f376aa803" alt="oxo-flow-rnaseq-star-deseq2 rule-level detail" loading="lazy"></a>
 </div>
 </details>
 <details class="ox-flow-view" open>
 <summary>Overview — all modules</summary>
 <div class="ox-dag-card ox-dag-card--wide" markdown="1">
 
-<a href="/assets/dag/oxo-flow-rnaseq-star-deseq2.svg?v=42ff01ca8f" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-rnaseq-star-deseq2.svg?v=42ff01ca8f" alt="oxo-flow-rnaseq-star-deseq2 pipeline overview" loading="lazy"></a>
+<a href="/assets/dag/oxo-flow-rnaseq-star-deseq2.svg?v=5347fe2c76" target="_blank" rel="noopener" title="Open at native resolution"><img src="/assets/dag/oxo-flow-rnaseq-star-deseq2.svg?v=5347fe2c76" alt="oxo-flow-rnaseq-star-deseq2 pipeline overview" loading="lazy"></a>
 
 <p class="ox-dag-caption">figure · oxo-flow-rnaseq-star-deseq2 — End-to-end RNA-seq differential-expression analysis with STAR and DESeq2: Ensembl reference download, fastp trimming, STAR alignment with gene counts, RSeQC QC + MultiQC, count matrix with technical-replicate collapse, Ensembl biomaRt gene-symbol annotation, and DESeq2 (normalized counts, PCA plots, per-contrast results with ashr shrinkage and MA plots).</p>
 
