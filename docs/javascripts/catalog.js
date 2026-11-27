@@ -44,6 +44,11 @@
   });
 
   let P = [];
+  // "Start here" curation — deliberate order, not a ranking bug: the two
+  // field-flagship ports (rnaseq, sarek) lead as the most recognizable
+  // entry points even though they are ★ verified, then four ✔ live-tested
+  // picks spanning both engines and three domains. Ratings on every card
+  // carry the evidence truth, so ordering may favor recognition.
   const FEATURED = [
     "oxo-flow-rnaseq",
     "oxo-flow-sarek",
@@ -76,8 +81,11 @@
     // Cards show the fetch-to-runs path: pull the repo, run from it.
     // The owner comes from repo_url — community entries live outside the
     // org (WangLabCSU/...); a hard-coded org prefix would 404 on those.
-    const m = /github\.com\/([^/]+\/[^/]+?)\/?$/.exec(p.repo_url || "");
-    const ghSlug = m ? m[1] : "oxo-flow-community/" + p.name;
+    // Mirrors generate.py gh_slug — including the optional .git suffix; a
+    // malformed repo_url falls back to org+name (the generator hard-fails
+    // at build time, so by the time this runs the URL is already vetted).
+    const gm = /github\.com\/([^/]+\/[^/]+?)(?:\.git)?\/?$/.exec(p.repo_url || "");
+    const ghSlug = gm ? gm[1] : "oxo-flow-community/" + p.name;
     // Mirrors generate.py pull_bar_body EXACTLY (same 52-char threshold):
     // six slugs sit in the 53–54 band and must not render one-line on cards
     // while the page shows the continuation pair.
@@ -155,13 +163,15 @@
       by.get(p.domain).push(p);
     });
     // Keys are the registry's actual domain values (data/pipelines.json) —
-    // the old set (rna-seq/proteomics/...) never matched and 8 of 11 domains
-    // fell back to ▦. Keep in sync when the domain vocabulary is normalized.
+    // an unmatched key silently degrades to ▦, so any vocabulary change must
+    // land here in the same commit (2026-11 normalization merged the
+    // "(circRNA)" variant into transcriptomics and shortened the
+    // cancer-genomics label; "other" stays for cross-cutting utilities).
     const ICONS = {
       genomics: "🧬", metagenomics: "🔬", "single-cell": "🦠",
-      transcriptomics: "🧫", "transcriptomics (circRNA)": "🌀",
+      transcriptomics: "🧫",
       amplicon: "🧪", epigenomics: "🧿", immunology: "🩸",
-      "cancer genomics (WES/WGS/RNA)": "🎯", "genome-mining": "⛏️",
+      "cancer genomics": "🎯", "genome-mining": "⛏️",
       other: "🧩",
     };
     el.innerHTML = [...by.entries()]

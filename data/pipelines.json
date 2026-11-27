@@ -3545,7 +3545,7 @@
   "rating": "live-verified",
   "engine": "oxo-flow",
   "created": "2026-08-15",
-  "domain": "transcriptomics (circRNA)",
+  "domain": "transcriptomics",
   "tags": [
    "circrna",
    "ciriquant",
@@ -3621,7 +3621,7 @@
    "license": "MIT"
   },
   "created": "2026-08-15",
-  "domain": "cancer genomics (WES/WGS/RNA)",
+  "domain": "cancer genomics",
   "tags": [
    "wes",
    "wgs",
@@ -4073,7 +4073,7 @@
    "license": "Apache-2.0"
   },
   "created": "2026-05-19",
-  "domain": "cancer genomics (WES/WGS/RNA)",
+  "domain": "cancer genomics",
   "tags": [
    "tumor-multi-omics",
    "wgs",

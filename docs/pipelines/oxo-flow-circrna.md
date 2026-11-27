@@ -1,6 +1,6 @@
 ---
 title: "circRNA detection: four callers with ensemble aggregation"
-description: "circRNA detection: four callers with ensemble aggregation — the live-tested (✔) entry, transcriptomics (circRNA), oxo-flow workflow, 9 rules, 7 tools."
+description: "circRNA detection: four callers with ensemble aggregation — the live-tested (✔) entry, transcriptomics, oxo-flow workflow, 9 rules, 7 tools."
 ---
 ---
 title: "circRNA detection: four callers with ensemble aggregation"
@@ -22,7 +22,7 @@ title: "circRNA detection: four callers with ensemble aggregation"
 <div class="ox-kv"><span class="k">Compute</span><span class="v"><span title="up to 8 threads / 32 GB per rule">up to 8 threads / 32 GB per rule</span></span></div>
 <div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--native"><span class="dot" aria-hidden="true"></span>oxo-flow native</span></span></div>
 <div class="ox-kv"><span class="k">Origin</span><span class="v">Original</span></div>
-<div class="ox-kv"><span class="k">Domain</span><span class="v">transcriptomics (circRNA)</span></div>
+<div class="ox-kv"><span class="k">Domain</span><span class="v">transcriptomics</span></div>
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>main@13660b0</code></span></div>
 <div class="ox-kv"><span class="k">Added</span><span class="v">2026-08-15</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>

@@ -1,6 +1,6 @@
 ---
 title: "Tumor multi-omics WGS/WES: somatic SNV/indel, CNV, SV, MSI and signature analysis with bulk/scRNA-seq cohort clinical reporting"
-description: "Tumor multi-omics WGS/WES: somatic SNV/indel, CNV, SV, MSI and signature analysis with bulk/scRNA-seq cohort clinical reporting — the community-listed (☆) entry, cancer genomics (WES/WGS/RNA), oxo-flow workflow, 78 rules, 19 tools."
+description: "Tumor multi-omics WGS/WES: somatic SNV/indel, CNV, SV, MSI and signature analysis with bulk/scRNA-seq cohort clinical reporting — the community-listed (☆) entry, cancer genomics, oxo-flow workflow, 78 rules, 19 tools."
 ---
 ---
 title: "Tumor multi-omics WGS/WES: somatic SNV/indel, CNV, SV, MSI and signature analysis with bulk/scRNA-seq cohort clinical reporting"
@@ -22,7 +22,7 @@ title: "Tumor multi-omics WGS/WES: somatic SNV/indel, CNV, SV, MSI and signature
 <div class="ox-kv"><span class="k">Compute</span><span class="v">—</span></div>
 <div class="ox-kv"><span class="k">Engine</span><span class="v"><span class="ox-badge ox-badge--native"><span class="dot" aria-hidden="true"></span>oxo-flow native</span></span></div>
 <div class="ox-kv"><span class="k">Origin</span><span class="v">Original</span></div>
-<div class="ox-kv"><span class="k">Domain</span><span class="v">cancer genomics (WES/WGS/RNA)</span></div>
+<div class="ox-kv"><span class="k">Domain</span><span class="v">cancer genomics</span></div>
 <div class="ox-kv"><span class="k">Pinned version</span><span class="v"><code>v0.5.0</code></span></div>
 <div class="ox-kv"><span class="k">Added</span><span class="v">2026-05-19</span></div>
 <div class="ox-kv"><span class="k">License</span><span class="v">Apache-2.0</span></div>

@@ -11,6 +11,15 @@
 
 {% block extrahead %}
   {{ super() }}
+  {# Self-hosted woff2 with font-display:swap — without preload the faces
+     are only discovered after extra.css parses, causing visible FOUT on
+     the hero title (SG 700) and command text (JB 400), the two above-the-
+     fold faces. crossorigin is mandatory for font preloads or the fetch
+     is treated as a separate, unshared resource. #}
+  <link rel="preload" href="{{ config.site_url }}assets/fonts/space-grotesk-latin-700-normal.woff2"
+        as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{ config.site_url }}assets/fonts/jetbrains-mono-latin-400-normal.woff2"
+        as="font" type="font/woff2" crossorigin>
   <meta property="og:title" content="{{ page.title | default(config.site_name, true) }} · {{ config.site_name }}">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="{{ config.site_name }}">
