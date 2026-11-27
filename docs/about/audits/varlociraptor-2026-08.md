@@ -1,3 +1,8 @@
+---
+title: varlociraptor completeness audit (2026-08-21)
+description: "varlociraptor completeness audit (2026-08-21) — Upstream: snakemake-workflows/dna-seq-varlociraptor @ v6.10.0"
+---
+
 # varlociraptor completeness audit (2026-08-21)
 
 Upstream: snakemake-workflows/dna-seq-varlociraptor @ v6.10.0

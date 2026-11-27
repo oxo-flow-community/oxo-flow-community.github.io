@@ -1,3 +1,8 @@
+---
+title: chipseq completeness audit (2026-08-21)
+description: "chipseq completeness audit (2026-08-21) — Upstream: nf-core/chipseq @ 2.1.0 · Port: oxo-flow-chipseq (live-verified)."
+---
+
 # chipseq completeness audit (2026-08-21)
 
 Upstream: nf-core/chipseq @ 2.1.0 · Port: `oxo-flow-chipseq` (live-verified).

@@ -945,8 +945,13 @@ def yaml_safe_dump(d: dict) -> str:
 
 def _yaml_scalar(v) -> str:
     s = str(v)
-    # Empty must be quoted too: bare `key: ` would parse back as None.
-    if s == "" or re.search(r'[:#"\']', s) or s.strip() != s:
+    # Empty must be quoted too: bare `key: ` would parse back as None. And
+    # YAML type-homing words (yes/no/null/~/numbers/True, tabs) would reload
+    # as bool/None/int or blow the parse — quote anything not plain-safe.
+    if (s == "" or s.strip() != s or "\t" in s
+            or s.lower() in ("yes", "no", "true", "false", "null", "~", "on", "off")
+            or re.fullmatch(r"[-+]?[0-9.]+", s)
+            or re.search(r'[:#"\']', s)):
         return '"' + s.replace('\\', '\\\\').replace('"', '\\"') + '"'
     return s
 

@@ -1,3 +1,8 @@
+---
+title: snparcher completeness audit (2026-08-21)
+description: "snparcher completeness audit (2026-08-21) — Upstream: harvardinformatics/snparcher @ v2.2 · Port: oxo-flow-snparcher"
+---
+
 # snparcher completeness audit (2026-08-21)
 
 Upstream: harvardinformatics/snparcher @ v2.2 · Port: `oxo-flow-snparcher`

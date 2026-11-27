@@ -1,3 +1,8 @@
+---
+title: atacseq completeness audit (2026-08-21)
+description: "atacseq completeness audit (2026-08-21) — Upstream: nf-core/atacseq @ 2.1.2 · Port: oxo-flow-atacseq (live-verified)."
+---
+
 # atacseq completeness audit (2026-08-21)
 
 Upstream: nf-core/atacseq @ 2.1.2 · Port: `oxo-flow-atacseq` (live-verified).

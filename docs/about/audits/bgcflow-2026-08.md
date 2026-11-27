@@ -1,3 +1,8 @@
+---
+title: bgcflow completeness audit (2026-08-21)
+description: "bgcflow completeness audit (2026-08-21) — Upstream: NBChub/bgcflow @ v1.1.2 · Port: oxo-flow-bgcflow (live-verified)."
+---
+
 # bgcflow completeness audit (2026-08-21)
 
 Upstream: NBChub/bgcflow @ v1.1.2 · Port: `oxo-flow-bgcflow` (live-verified).

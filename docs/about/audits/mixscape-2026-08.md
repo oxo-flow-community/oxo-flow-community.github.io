@@ -1,3 +1,8 @@
+---
+title: mixscape completeness audit (2026-08-21)
+description: "mixscape completeness audit (2026-08-21) — Upstream: epigen/mixscape_seurat @ v2.0.3 · Port: oxo-flow-mixscape"
+---
+
 # mixscape completeness audit (2026-08-21)
 
 Upstream: epigen/mixscape_seurat @ v2.0.3 · Port: `oxo-flow-mixscape`

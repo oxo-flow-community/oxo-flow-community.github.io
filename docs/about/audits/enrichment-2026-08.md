@@ -1,3 +1,8 @@
+---
+title: enrichment_analysis completeness audit (2026-08-21)
+description: "enrichment_analysis completeness audit (2026-08-21) — Upstream: epigen/enrichment_analysis @ v3.0.1 · Port: oxo-flow-enrichment"
+---
+
 # enrichment_analysis completeness audit (2026-08-21)
 
 Upstream: epigen/enrichment_analysis @ v3.0.1 · Port: `oxo-flow-enrichment`

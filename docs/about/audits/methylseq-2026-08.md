@@ -1,3 +1,8 @@
+---
+title: methylseq completeness audit (2026-08-21)
+description: "methylseq completeness audit (2026-08-21) — Upstream: nf-core/methylseq @ 4.2.0 · Port: oxo-flow-methylseq"
+---
+
 # methylseq completeness audit (2026-08-21)
 
 Upstream: nf-core/methylseq @ 4.2.0 · Port: `oxo-flow-methylseq`

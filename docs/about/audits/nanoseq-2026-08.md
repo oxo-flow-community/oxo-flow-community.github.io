@@ -1,3 +1,8 @@
+---
+title: nanoseq completeness audit (2026-08-21)
+description: "nanoseq completeness audit (2026-08-21) — Upstream: nf-core/nanoseq @ 3.1.0 · Port: oxo-flow-nanoseq (live-verified)."
+---
+
 # nanoseq completeness audit (2026-08-21)
 
 Upstream: nf-core/nanoseq @ 3.1.0 · Port: `oxo-flow-nanoseq` (live-verified).

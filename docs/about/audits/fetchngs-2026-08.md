@@ -1,3 +1,8 @@
+---
+title: fetchngs completeness audit (2026-08-21)
+description: "fetchngs completeness audit (2026-08-21) — Upstream: nf-core/fetchngs @ 1.12.0 · Port: oxo-flow-fetchngs"
+---
+
 # fetchngs completeness audit (2026-08-21)
 
 Upstream: nf-core/fetchngs @ 1.12.0 · Port: `oxo-flow-fetchngs`

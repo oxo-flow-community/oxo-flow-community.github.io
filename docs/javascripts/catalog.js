@@ -78,9 +78,10 @@
     // org (WangLabCSU/...); a hard-coded org prefix would 404 on those.
     const m = /github\.com\/([^/]+\/[^/]+?)\/?$/.exec(p.repo_url || "");
     const ghSlug = m ? m[1] : "oxo-flow-community/" + p.name;
-    // Mirrors generate.py pull_bar_body: past ~52 rendered chars the bar's
-    // tail would scroll out of sight, so show a shell continuation pair.
-    const cmd = ("$ oxo-flow pull gh:" + ghSlug).length > 54
+    // Mirrors generate.py pull_bar_body EXACTLY (same 52-char threshold):
+    // six slugs sit in the 53–54 band and must not render one-line on cards
+    // while the page shows the continuation pair.
+    const cmd = ("$ oxo-flow pull gh:" + ghSlug).length > 52
       ? "oxo-flow pull \\\n  gh:" + ghSlug
       : "oxo-flow pull gh:" + ghSlug;
     // Compute badge on its own line — long strings never squeeze the tool chips

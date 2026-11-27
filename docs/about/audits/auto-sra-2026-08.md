@@ -1,3 +1,8 @@
+---
+title: auto-sra-rnaseq completeness audit (2026-08-21)
+description: "auto-sra-rnaseq completeness audit (2026-08-21) — Upstream: xuzhougeng/auto_sra_rnaseq_pipeline @ main — pin weakness:"
+---
+
 # auto-sra-rnaseq completeness audit (2026-08-21)
 
 Upstream: xuzhougeng/auto_sra_rnaseq_pipeline @ main — **pin weakness**:

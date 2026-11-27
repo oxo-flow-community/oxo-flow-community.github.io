@@ -1,3 +1,8 @@
+---
+title: rna-seq-star-deseq2 completeness audit (2026-08-21)
+description: "rna-seq-star-deseq2 completeness audit (2026-08-21) — Upstream: snakemake-workflows/rna-seq-star-deseq2 @ v3.1.1 · Port:"
+---
+
 # rna-seq-star-deseq2 completeness audit (2026-08-21)
 
 Upstream: snakemake-workflows/rna-seq-star-deseq2 @ v3.1.1 · Port:
