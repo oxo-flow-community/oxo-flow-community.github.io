@@ -47,7 +47,7 @@
   // "Start here" curation — deliberate order, not a ranking bug: the two
   // field-flagship ports (rnaseq, sarek) lead as the most recognizable
   // entry points even though they are ★ verified, then four ✔ live-tested
-  // picks spanning both engines and four domains. Ratings on every card
+  // picks spanning both engines and three domains. Ratings on every card
   // carry the evidence truth, so ordering may favor recognition.
   const FEATURED = [
     "oxo-flow-rnaseq",
