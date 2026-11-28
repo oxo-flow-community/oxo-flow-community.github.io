@@ -2,10 +2,6 @@
 title: Paired-end RNA-seq alignment and four-caller alternative-splicing analysis
 description: Paired-end RNA-seq alignment and four-caller alternative-splicing analysis — the live-tested (✔) entry, transcriptomics, snakemake workflow, 17 rules, 11 tools.
 ---
----
-title: "Paired-end RNA-seq alignment and four-caller alternative-splicing analysis"
----
-
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-tcasia</span></div>
 <div class="ox-detail-cols">
 <div class="ox-detail-main">

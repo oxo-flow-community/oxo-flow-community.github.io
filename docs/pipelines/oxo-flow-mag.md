@@ -2,10 +2,6 @@
 title: Metagenome assembly, binning and taxonomic classification
 description: Metagenome assembly, binning and taxonomic classification — the live-tested (✔) entry, metagenomics, nextflow workflow, 311 rules, 36 tools.
 ---
----
-title: "Metagenome assembly, binning and taxonomic classification"
----
-
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-mag</span></div>
 <div class="ox-detail-cols">
 <div class="ox-detail-main">

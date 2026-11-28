@@ -2,10 +2,6 @@
 title: "Ancient DNA (aDNA): QC, mapping, damage estimation and genotyping"
 description: "Ancient DNA (aDNA): QC, mapping, damage estimation and genotyping — the live-tested (✔) entry, genomics, nextflow workflow, 57 rules, 21 tools."
 ---
----
-title: "Ancient DNA (aDNA): QC, mapping, damage estimation and genotyping"
----
-
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-eager</span></div>
 <div class="ox-detail-cols">
 <div class="ox-detail-main">

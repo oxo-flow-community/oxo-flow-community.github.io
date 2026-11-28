@@ -2,10 +2,6 @@
 title: "Single-cell RNA-seq: alignment, quantification and QC"
 description: "Single-cell RNA-seq: alignment, quantification and QC — the live-tested (✔) entry, single-cell, nextflow workflow, 46 rules, 22 tools."
 ---
----
-title: "Single-cell RNA-seq: alignment, quantification and QC"
----
-
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-scrnaseq</span></div>
 <div class="ox-detail-cols">
 <div class="ox-detail-main">

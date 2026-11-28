@@ -2,10 +2,6 @@
 title: "Cancer genome & transcriptome analysis (WES/WGS/RNA, single entry): somatic+germline+CNV+SV calling, MAF annotation, case report"
 description: "Cancer genome & transcriptome analysis (WES/WGS/RNA, single entry): somatic+germline+CNV+SV calling, MAF annotation, case report — the live-tested (✔) entry, cancer genomics, snakemake workflow, 188 rules, 18 tools."
 ---
----
-title: "Cancer genome & transcriptome analysis (WES/WGS/RNA, single entry): somatic+germline+CNV+SV calling, MAF annotation, case report"
----
-
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-clindet</span></div>
 <div class="ox-detail-cols">
 <div class="ox-detail-main">

@@ -2,10 +2,6 @@
 title: "Bisulfite methylation analysis: alignment, methylation calls and QC"
 description: "Bisulfite methylation analysis: alignment, methylation calls and QC — the live-tested (✔) entry, genomics, nextflow workflow, 61 rules, 20 tools."
 ---
----
-title: "Bisulfite methylation analysis: alignment, methylation calls and QC"
----
-
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-methylseq</span></div>
 <div class="ox-detail-cols">
 <div class="ox-detail-main">

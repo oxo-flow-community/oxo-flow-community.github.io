@@ -2,10 +2,6 @@
 title: "ChIP-seq: peak calling, QC and differential analysis"
 description: "ChIP-seq: peak calling, QC and differential analysis — the live-tested (✔) entry, genomics, nextflow workflow, 83 rules, 22 tools."
 ---
----
-title: "ChIP-seq: peak calling, QC and differential analysis"
----
-
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-chipseq</span></div>
 <div class="ox-detail-cols">
 <div class="ox-detail-main">

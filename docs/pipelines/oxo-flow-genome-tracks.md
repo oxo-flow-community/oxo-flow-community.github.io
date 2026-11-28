@@ -2,10 +2,6 @@
 title: "Genome browser tracks: coverage, gene plots and UCSC hub"
 description: "Genome browser tracks: coverage, gene plots and UCSC hub — the live-tested (✔) entry, genomics, snakemake workflow, 16 rules, 6 tools."
 ---
----
-title: "Genome browser tracks: coverage, gene plots and UCSC hub"
----
-
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-genome-tracks</span></div>
 <div class="ox-detail-cols">
 <div class="ox-detail-main">

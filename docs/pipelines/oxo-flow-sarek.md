@@ -2,10 +2,6 @@
 title: WGS/WES germline and somatic variant calling
 description: WGS/WES germline and somatic variant calling — the verified (★) entry, genomics, nextflow workflow, 165 rules, 30 tools.
 ---
----
-title: "WGS/WES germline and somatic variant calling"
----
-
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-sarek</span></div>
 <div class="ox-detail-cols">
 <div class="ox-detail-main">

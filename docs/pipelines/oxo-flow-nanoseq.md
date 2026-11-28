@@ -2,10 +2,6 @@
 title: "Nanopore long-read: demultiplexing, QC and alignment"
 description: "Nanopore long-read: demultiplexing, QC and alignment — the live-tested (✔) entry, genomics, nextflow workflow, 52 rules, 31 tools."
 ---
----
-title: "Nanopore long-read: demultiplexing, QC and alignment"
----
-
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-nanoseq</span></div>
 <div class="ox-detail-cols">
 <div class="ox-detail-main">

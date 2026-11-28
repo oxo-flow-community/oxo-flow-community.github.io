@@ -2,10 +2,6 @@
 title: "Region set and gene set enrichment: LOLA, GREAT, pycisTarget and GSEA"
 description: "Region set and gene set enrichment: LOLA, GREAT, pycisTarget and GSEA — the live-tested (✔) entry, genomics, snakemake workflow, 42 rules, 14 tools."
 ---
----
-title: "Region set and gene set enrichment: LOLA, GREAT, pycisTarget and GSEA"
----
-
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-enrichment</span></div>
 <div class="ox-detail-cols">
 <div class="ox-detail-main">

@@ -2,10 +2,6 @@
 title: Small and structural variant calling with Varlociraptor
 description: Small and structural variant calling with Varlociraptor — the verified (★) entry, genomics, snakemake workflow, 189 rules, 46 tools.
 ---
----
-title: "Small and structural variant calling with Varlociraptor"
----
-
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-varlociraptor</span></div>
 <div class="ox-detail-cols">
 <div class="ox-detail-main">
