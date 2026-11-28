@@ -2,10 +2,6 @@
 title: "RNA-seq: alignment, quantification and QC"
 description: "RNA-seq: alignment, quantification and QC — the verified (★) entry, transcriptomics, nextflow workflow, 161 rules, 42 tools."
 ---
----
-title: "RNA-seq: alignment, quantification and QC"
----
-
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-rnaseq</span></div>
 <div class="ox-detail-cols">
 <div class="ox-detail-main">

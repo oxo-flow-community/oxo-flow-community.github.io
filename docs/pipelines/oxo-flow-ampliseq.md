@@ -2,10 +2,6 @@
 title: "Amplicon sequencing (16S/ITS): DADA2 denoising, taxonomy assignment, QIIME2 diversity/ANCOM, PICRUSt, SBDI export, phyloseq/TSE objects and QC"
 description: "Amplicon sequencing (16S/ITS): DADA2 denoising, taxonomy assignment, QIIME2 diversity/ANCOM, PICRUSt, SBDI export, phyloseq/TSE objects and QC — the verified (★) entry, amplicon, nextflow workflow, 100 rules, 26 tools."
 ---
----
-title: "Amplicon sequencing (16S/ITS): DADA2 denoising, taxonomy assignment, QIIME2 diversity/ANCOM, PICRUSt, SBDI export, phyloseq/TSE objects and QC"
----
-
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-ampliseq</span></div>
 <div class="ox-detail-cols">
 <div class="ox-detail-main">

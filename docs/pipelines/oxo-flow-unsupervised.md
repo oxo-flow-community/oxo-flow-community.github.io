@@ -2,10 +2,6 @@
 title: "Unsupervised analysis of omics matrices: PCA, UMAP, clustering and validation"
 description: "Unsupervised analysis of omics matrices: PCA, UMAP, clustering and validation — the live-tested (✔) entry, other, snakemake workflow, 61 rules, 34 tools."
 ---
----
-title: "Unsupervised analysis of omics matrices: PCA, UMAP, clustering and validation"
----
-
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-unsupervised</span></div>
 <div class="ox-detail-cols">
 <div class="ox-detail-main">

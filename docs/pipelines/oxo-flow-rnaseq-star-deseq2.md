@@ -2,10 +2,6 @@
 title: "RNA-seq: STAR alignment, DESeq2 differential expression and QC"
 description: "RNA-seq: STAR alignment, DESeq2 differential expression and QC — the live-tested (✔) entry, transcriptomics, snakemake workflow, 31 rules, 16 tools."
 ---
----
-title: "RNA-seq: STAR alignment, DESeq2 differential expression and QC"
----
-
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-rnaseq-star-deseq2</span></div>
 <div class="ox-detail-cols">
 <div class="ox-detail-main">

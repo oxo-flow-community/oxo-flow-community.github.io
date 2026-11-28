@@ -2,10 +2,6 @@
 title: "SRA-powered RNA-seq: .sra archives to differential expression"
 description: "SRA-powered RNA-seq: .sra archives to differential expression — the live-tested (✔) entry, transcriptomics, snakemake workflow, 13 rules, 9 tools."
 ---
----
-title: "SRA-powered RNA-seq: .sra archives to differential expression"
----
-
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-auto-sra-rnaseq-pipeline</span></div>
 <div class="ox-detail-cols">
 <div class="ox-detail-main">

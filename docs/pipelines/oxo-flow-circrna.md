@@ -2,10 +2,6 @@
 title: "circRNA detection: four callers with ensemble aggregation"
 description: "circRNA detection: four callers with ensemble aggregation — the live-tested (✔) entry, transcriptomics, oxo-flow workflow, 9 rules, 7 tools."
 ---
----
-title: "circRNA detection: four callers with ensemble aggregation"
----
-
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-circrna</span></div>
 <div class="ox-detail-cols">
 <div class="ox-detail-main">

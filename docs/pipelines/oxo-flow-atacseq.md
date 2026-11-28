@@ -2,10 +2,6 @@
 title: "ATAC-seq: peak calling and QC"
 description: "ATAC-seq: peak calling and QC — the live-tested (✔) entry, epigenomics, nextflow workflow, 43 rules, 20 tools."
 ---
----
-title: "ATAC-seq: peak calling and QC"
----
-
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-atacseq</span></div>
 <div class="ox-detail-cols">
 <div class="ox-detail-main">

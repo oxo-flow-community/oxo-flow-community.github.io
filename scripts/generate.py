@@ -683,10 +683,9 @@ def make_page(p: dict, configs: dict) -> str:
         pathlib.Path(ROOT) / "scripts" / "semantic_maps" / f"{p['name']}.md"
     ).is_file()
     parts = [
-        "---",
-        f"title: {json.dumps(p['title'])}",
-        "---",
-        "",
+        # No front matter here: main() prepends page_meta() (title +
+        # description) — emitting a second block here leaked into the body
+        # as <hr/><h2>title: "…"</h2> (and a junk TOC entry) on every page.
         f'<div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>{_esc(p["name"])}</span></div>',
         # The header is ONE raw-HTML block: a raw HTML block ends at the
         # first blank line, so there must be no blank lines inside the

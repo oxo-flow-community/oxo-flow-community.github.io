@@ -2,10 +2,6 @@
 title: ERV / transposable-element quantification with four tools on one annotation
 description: ERV / transposable-element quantification with four tools on one annotation — the dry-run verified (◆) entry, transcriptomics, snakemake workflow, 22 rules, 10 tools.
 ---
----
-title: "ERV / transposable-element quantification with four tools on one annotation"
----
-
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-erv</span></div>
 <div class="ox-detail-cols">
 <div class="ox-detail-main">

@@ -2,10 +2,6 @@
 title: Pooled CRISPR perturbation analysis with Seurat Mixscape
 description: Pooled CRISPR perturbation analysis with Seurat Mixscape — the live-tested (✔) entry, single-cell, snakemake workflow, 7 rules, 11 tools.
 ---
----
-title: "Pooled CRISPR perturbation analysis with Seurat Mixscape"
----
-
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-mixscape</span></div>
 <div class="ox-detail-cols">
 <div class="ox-detail-main">

@@ -2,10 +2,6 @@
 title: Viral assembly and intrahost variant calling for Illumina and Oxford Nanopore amplicon data
 description: Viral assembly and intrahost variant calling for Illumina and Oxford Nanopore amplicon data — the live-tested (✔) entry, genomics, nextflow workflow, 96 rules, 33 tools.
 ---
----
-title: "Viral assembly and intrahost variant calling for Illumina and Oxford Nanopore amplicon data"
----
-
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-viralrecon</span></div>
 <div class="ox-detail-cols">
 <div class="ox-detail-main">

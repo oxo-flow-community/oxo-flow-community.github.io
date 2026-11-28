@@ -2,10 +2,6 @@
 title: "Fetching public sequencing data: FastQ download, metadata and samplesheets"
 description: "Fetching public sequencing data: FastQ download, metadata and samplesheets — the verified (★) entry, genomics, nextflow workflow, 17 rules, 8 tools."
 ---
----
-title: "Fetching public sequencing data: FastQ download, metadata and samplesheets"
----
-
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-fetchngs</span></div>
 <div class="ox-detail-cols">
 <div class="ox-detail-main">

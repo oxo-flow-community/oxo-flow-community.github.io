@@ -2,10 +2,6 @@
 title: "Variant calling for non-model organisms: trimming, alignment, per-sample gVCFs, joint genotyping, callable sites, postprocessing and QC dashboard"
 description: "Variant calling for non-model organisms: trimming, alignment, per-sample gVCFs, joint genotyping, callable sites, postprocessing and QC dashboard — the verified (★) entry, genomics, snakemake workflow, 108 rules, 19 tools."
 ---
----
-title: "Variant calling for non-model organisms: trimming, alignment, per-sample gVCFs, joint genotyping, callable sites, postprocessing and QC dashboard"
----
-
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-snparcher</span></div>
 <div class="ox-detail-cols">
 <div class="ox-detail-main">

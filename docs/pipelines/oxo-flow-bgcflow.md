@@ -2,10 +2,6 @@
 title: "Biosynthetic gene cluster (BGC) genome mining: annotation, antiSMASH and data warehouse"
 description: "Biosynthetic gene cluster (BGC) genome mining: annotation, antiSMASH and data warehouse — the live-tested (✔) entry, genome-mining, snakemake workflow, 60 rules, 8 tools."
 ---
----
-title: "Biosynthetic gene cluster (BGC) genome mining: annotation, antiSMASH and data warehouse"
----
-
 <div class="ox-crumb"><a href="/pipelines/">Pipelines</a> / <span>oxo-flow-bgcflow</span></div>
 <div class="ox-detail-cols">
 <div class="ox-detail-main">
